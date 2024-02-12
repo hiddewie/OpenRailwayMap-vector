@@ -39,9 +39,12 @@ jobs:
 
       - name: Download data
         run: |
-          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output netherlands.osm.pbf
+          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data.osm.pbf
 
       - name: Import data
+        env:
+          OSM2PGSQL_NUMPROC: 4
+          OSM2PGSQL_CACHE: 2000
         run: |
           docker compose run --build import
 
