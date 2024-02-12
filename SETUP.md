@@ -29,8 +29,8 @@ Therefore, the following options are required for Osm2pgsql: `--slim --merc --st
 After importing OSM data into the database, you have to create a couple of views, install some custom functions and compute the label ranking of stations. Please run the following SQL scripts in the following order:
 
 ```sh
-psql -d gis -f sql/osm_carto_views.sql
 psql -d gis -f sql/functions.sql
+psql -d gis -f sql/osm_carto_views.sql
 psql -d gis -f sql/get_station_importance.sql
 ```
 
@@ -126,8 +126,8 @@ osm2pgsql --create --database gis --hstore --slim --merc --style setup/openstree
 The map style accesses the database through a couple of views. In addition, it requires a few custom functions and a precomputed station label ranking. Please run the following SQL scripts in the described order:
 
 ```sh
-psql -d gis -f sql/osm_carto_views.sql
 psql -d gis -f sql/functions.sql
+psql -d gis -f sql/osm_carto_views.sql
 psql -d gis -f sql/get_station_importance.sql
 ```
 

@@ -70,8 +70,8 @@ EOF
     /tmp/filtered.osm.pbf
 
   # Post processing imported data
-  psql -d gis -f sql/osm_carto_views.sql && \
   psql -d gis -f sql/functions.sql && \
+  psql -d gis -f sql/osm_carto_views.sql && \
   psql -d gis -f sql/get_station_importance.sql
   ;;
 
