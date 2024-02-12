@@ -21,14 +21,38 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy
-        run: flyctl deploy --config proxy.fly.toml --local-only
+        run: |
+          flyctl deploy --config proxy.fly.toml --local-only
 
-#  deploy-tiles:
-#    name: Deploy proxy
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#
-#      - uses: superfly/flyctl-actions/setup-flyctl@master
-#
-#      - run: flyctl deploy --config proxy.fly.toml --local-only
+  deploy-tiles:
+    name: Deploy tiles
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup Fly
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Download data
+        run: |
+          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output netherlands.osm.pbf
+
+      - name: Import data
+        run: |
+          docker compose run --build import
+
+      - name: Generate tiles
+        run: |
+          docker compose up --build martin-cp
+
+      - name: Print tiles summary
+        run: |
+          docker run --rm -it -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/tiles.mbtiles
+
+      - name: Deploy
+        run: |
+          flyctl deploy --config martin-static.fly.toml --local-only
