@@ -74,6 +74,511 @@ CREATE OR REPLACE VIEW openrailwaymap_osm_signals AS
     tags AS tags
   FROM planet_osm_point;
 
+CREATE OR REPLACE VIEW railway_tunnel AS
+  SELECT
+     way, railway, usage, service, highspeed,
+     disused, abandoned, razed, construction, proposed,
+     disused_railway, abandoned_railway,
+     razed_railway, construction_railway,
+     proposed_railway,
+     CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+          WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+          WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+          WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+          WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+          WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+          WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+          WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+          WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+          WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+          WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+          WHEN railway IN ('preserved', 'construction') THEN 400
+          WHEN railway = 'proposed' THEN 350
+          WHEN railway = 'disused' THEN 300
+          WHEN railway = 'abandoned' THEN 250
+          WHEN railway = 'razed' THEN 200
+          ELSE 50
+       END AS rank,
+     layer
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed') AND tunnel IS NOT NULL AND tunnel != 'no'
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_line_casing AS
+  SELECT
+    way, railway, usage, service, highspeed,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+         ELSE 50
+      END AS rank
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed') AND (tunnel IS NULL OR tunnel = 'no')
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_line_low AS
+  SELECT
+    way, railway, usage, highspeed,
+    NULL AS service,
+    NULL AS disused, NULL AS abandoned, NULL AS razed, NULL AS construction, NULL AS proposed,
+    NULL AS disused_railway, NULL AS abandoned_railway,
+    NULL AS razed_railway, NULL AS construction_railway,
+    NULL AS proposed_railway,
+    NULL AS disused_usage, NULL AS disused_service,
+    NULL AS abandoned_usage, NULL AS abandoned_service,
+    NULL AS razed_usage, NULL AS razed_service,
+    NULL AS construction_usage, NULL AS construction_service,
+    NULL AS proposed_usage, NULL AS proposed_service,
+    NULL AS preserved_railway, NULL AS preserved_service,
+    NULL AS preserved_usage,
+    CASE WHEN railway = 'rail' AND usage = 'main' AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' THEN 1000
+         ELSE 50
+      END AS rank
+  FROM
+    (SELECT
+       way, railway, usage, tags->'highspeed' AS highspeed,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_line_med AS
+  SELECT
+    way, railway, usage, highspeed,
+    NULL AS service,
+    NULL AS disused, NULL AS abandoned, NULL AS razed, NULL AS construction, NULL AS proposed,
+    NULL AS disused_railway, NULL AS abandoned_railway,
+    NULL AS razed_railway, NULL AS construction_railway,
+    NULL AS proposed_railway,
+    NULL AS disused_usage, NULL AS disused_service,
+    NULL AS abandoned_usage, NULL AS abandoned_service,
+    NULL AS razed_usage, NULL AS razed_service,
+    NULL AS construction_usage, NULL AS construction_service,
+    NULL AS proposed_usage, NULL AS proposed_service,
+    NULL AS preserved_railway, NULL AS preserved_service,
+    NULL AS preserved_usage,
+    CASE WHEN railway = 'rail' AND usage = 'main' AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' THEN 1000
+         ELSE 50
+      END AS rank
+  FROM
+    (SELECT
+       way, railway, usage, tags->'highspeed' AS highspeed,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_turntables AS
+  SELECT
+    way, railway
+  FROM openrailwaymap_osm_polygon
+  WHERE railway IN ('turntable', 'traverser');
+
+CREATE OR REPLACE VIEW railway_line_fill AS
+  SELECT
+    way, railway, usage, service, highspeed,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    disused_usage, disused_service,
+    abandoned_usage, abandoned_service,
+    razed_usage, razed_service,
+    construction_usage, construction_service,
+    proposed_usage, proposed_service,
+    preserved_railway, preserved_service,
+    preserved_usage,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+
+         ELSE 50
+      END AS rank
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       tags->'disused:usage' AS disused_usage, tags->'disused:service' AS disused_service,
+       tags->'abandoned:usage' AS abandoned_usage, tags->'abandoned:service' AS abandoned_service,
+       tags->'razed:usage' AS razed_usage, tags->'razed:service' AS razed_service,
+       tags->'construction:usage' AS construction_usage, tags->'construction:service' AS construction_service,
+       tags->'proposed:usage' AS proposed_usage, tags->'proposed:service' AS proposed_service,
+       tags->'preserved:railway' AS preserved_railway, tags->'preserved:service' AS preserved_service,
+       tags->'preserved:usage' AS preserved_usage,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed') AND (tunnel IS NULL OR tunnel = 'no')
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_bridge AS
+  SELECT
+    way, railway, usage, service, highspeed,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+         ELSE 50
+      END AS rank,
+    ST_Length(way) / NULLIF(!scale_denominator!*0.001*0.28, 0) AS length_pixels,
+    layer
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed') AND bridge IS NOT NULL AND bridge != 'no'
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_text_stations_med AS
+  SELECT
+    way, railway, station,
+    CASE WHEN railway = 'station' AND station = 'light_rail' THEN 450
+         WHEN railway = 'station' AND station = 'subway' THEN 400
+         WHEN railway = 'station' THEN 800
+         WHEN railway = 'halt' AND station = 'light_rail' THEN 500
+         WHEN railway = 'halt' THEN 550
+         WHEN railway = 'tram_stop' THEN 300
+         WHEN railway = 'service_station' THEN 600
+         WHEN railway = 'yard' THEN 700
+         WHEN railway = 'junction' THEN 650
+         WHEN railway = 'spur_junction' THEN 420
+         WHEN railway = 'site' THEN 600
+         WHEN railway = 'crossover' THEN 700
+         ELSE 50
+      END AS rank,
+    label
+  FROM
+    (SELECT
+       way,
+       railway,
+       route_count,
+       tags->'station' AS station,
+       tags->'railway:ref' AS label
+     FROM stations_with_route_counts
+     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+       AND (name IS NOT NULL OR tags ? 'short_name')
+    ) AS r
+  ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_text_stations_high AS
+  SELECT
+    way, railway, station,
+    CASE WHEN railway = 'station' AND station = 'light_rail' THEN 450
+         WHEN railway = 'station' AND station = 'subway' THEN 400
+         WHEN railway = 'station' THEN 800
+         WHEN railway = 'halt' AND station = 'light_rail' THEN 500
+         WHEN railway = 'halt' THEN 550
+         WHEN railway = 'tram_stop' THEN 300
+         WHEN railway = 'service_station' THEN 600
+         WHEN railway = 'yard' THEN 700
+         WHEN railway = 'junction' THEN 650
+         WHEN railway = 'spur_junction' THEN 420
+         WHEN railway = 'site' THEN 600
+         WHEN railway = 'crossover' THEN 700
+         ELSE 50
+      END AS rank,
+    label
+  FROM
+    (SELECT
+       way,
+       railway,
+       CASE
+         WHEN railway = 'tram_stop' OR (tags?'station' AND tags->'station' IN ('subway', 'light_rail', 'miniature')) THEN route_count / 2
+         WHEN railway IN ('station', 'service_station', 'yard') AND route_count < 4 THEN 4::int
+         WHEN railway IN ('halt', 'junction') AND route_count < 2 THEN 2::int
+         ELSE route_count::int
+         END AS route_count,
+       tags->'station' AS station,
+       COALESCE(tags->'short_name', name) AS label
+     FROM stations_with_route_counts
+     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+       AND (name IS NOT NULL OR tags ? 'short_name')
+    ) AS r
+  ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_symbols AS
+  SELECT
+    way,
+    railway,
+    man_made,
+    CASE
+      WHEN railway = 'crossing' THEN -1::int
+      WHEN railway = 'tram_stop' THEN 1::int
+      ELSE 0
+      END AS prio
+  FROM openrailwaymap_osm_point
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio')
+  ORDER BY prio DESC;
+
+CREATE OR REPLACE VIEW railway_text_med AS
+  SELECT
+    way, railway, usage, service,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+
+         ELSE 50
+      END AS rank,
+    ref AS label
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       ref,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed') AND (tunnel IS NULL OR tunnel = 'no')
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_text_high AS
+  SELECT
+    way, railway, usage, service,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+         ELSE 50
+      END AS rank,
+    CASE
+      WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+      ELSE COALESCE(ref, label_name)
+      END AS label
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       tags, tunnel, bridge,
+       ref,
+       CASE
+         WHEN railway = 'abandoned' THEN
+           railway_label_name(COALESCE(tags->'abandoned:name',name), tags, tunnel, bridge)
+         WHEN railway = 'razed' THEN
+           railway_label_name(COALESCE(tags->'razed:name',name), tags, tunnel, bridge)
+         ELSE railway_label_name(name, tags, tunnel, bridge)
+         END AS label_name,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE
+       railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
+       AND (ref IS NOT NULL OR name IS NOT NULL OR tags ? 'bridge:name' OR tags ? 'tunnel:name')
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
+CREATE OR REPLACE VIEW railway_text_km_med AS
+  SELECT
+    way,
+    railway,
+    pos
+  FROM
+    (SELECT
+       way,
+       railway,
+       COALESCE(railway_position, railway_pos_round(railway_position_detail)::text) AS pos
+     FROM openrailwaymap_osm_point
+     WHERE railway IN ('milestone', 'level_crossing', 'crossing')
+       AND (railway_position IS NOT NULL OR railway_position_detail IS NOT NULL)
+    ) AS r
+  WHERE railway_pos_decimal(pos) = '0';
+
+CREATE OR REPLACE VIEW railway_text_km_high AS
+  SELECT
+    way,
+    railway,
+    pos
+  FROM
+    (SELECT
+       way,
+       railway,
+       COALESCE(railway_position, railway_pos_round(railway_position_detail)::text) AS pos
+     FROM openrailwaymap_osm_point
+     WHERE railway IN ('milestone', 'level_crossing', 'crossing')
+       AND (railway_position IS NOT NULL OR railway_position_detail IS NOT NULL)
+    ) AS r
+  WHERE pos IS NOT NULL
+  ORDER by (railway_pos_decimal(pos) = '0');
+
+CREATE OR REPLACE VIEW railway_switch_ref AS
+  SELECT
+    way, railway, ref, railway_local_operated
+  FROM openrailwaymap_osm_point
+  WHERE railway IN ('switch', 'railway_crossing') AND ref IS NOT NULL
+  ORDER by char_length(ref) ASC;
+
+CREATE OR REPLACE VIEW railway_text_detail AS
+  SELECT
+    way, railway, usage, service,
+    disused, abandoned, razed, construction, proposed,
+    disused_railway, abandoned_railway,
+    razed_railway, construction_railway,
+    proposed_railway,
+    CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+         WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed = 'yes' THEN 2000
+         WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+         WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+         WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+         WHEN railway IN ('preserved', 'construction') THEN 400
+         WHEN railway = 'proposed' THEN 350
+         WHEN railway = 'disused' THEN 300
+         WHEN railway = 'abandoned' THEN 250
+         WHEN railway = 'razed' THEN 200
+         ELSE 50
+      END AS rank,
+    CASE
+      WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+      ELSE COALESCE(ref, label_name)
+      END AS label,
+    track_ref
+  FROM
+    (SELECT
+       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
+       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
+       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
+       tags->'proposed:railway' AS proposed_railway,
+       tags,
+       name, ref,
+       tags->'railway:track_ref' AS track_ref,
+       tunnel, bridge,
+       CASE
+         WHEN railway = 'abandoned' THEN
+           railway_label_name(COALESCE(tags->'abandoned:name',name), tags, tunnel, bridge)
+         WHEN railway = 'razed' THEN
+           railway_label_name(COALESCE(tags->'razed:name',name), tags, tunnel, bridge)
+         ELSE railway_label_name(name, tags, tunnel, bridge)
+         END AS label_name,
+       layer
+     FROM openrailwaymap_osm_line
+     WHERE
+       railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
+       AND (ref IS NOT NULL OR name IS NOT NULL OR tags ? 'bridge:name' OR tags ? 'tunnel:name' OR tags ? 'railway:track_ref')
+    ) AS r
+  ORDER by layer, rank NULLS LAST;
+
 CREATE OR REPLACE VIEW railway_line AS
   SELECT
     way,
