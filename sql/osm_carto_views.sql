@@ -293,7 +293,7 @@ CREATE OR REPLACE VIEW railway_bridge AS
          WHEN railway = 'razed' THEN 200
          ELSE 50
       END AS rank,
-    ST_Length(way) / NULLIF(!scale_denominator!*0.001*0.28, 0) AS length_pixels,
+--     ST_Length(way) / NULLIF(!scale_denominator!*0.001*0.28, 0) AS length_pixels,
     layer
   FROM
     (SELECT
