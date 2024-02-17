@@ -88,6 +88,8 @@ services:
   martin-proxy:
     build:
       dockerfile: proxy.Dockerfile
+    volumes:
+      - ./proxy/index.html:/etc/nginx/public/index.html
     ports:
       - '8000:8000'
     environment:

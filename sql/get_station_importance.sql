@@ -2,7 +2,7 @@
 
 -- Relevant objects referenced by route relations: railway=station, railway=halt, public_transport=stop_position, public_transport=platform, railway=platform
 
---CREATE OR REPLACE VIEW stops_platforms AS
+-- CREATE OR REPLACE VIEW stops_platforms AS
 --  SELECT osm_id, name, railway, public_transport, tags, way AS geom, 1::smallint AS objtype
 --    FROM planet_osm_point
 --    WHERE railway IN ('station', 'halt', 'platform') OR public_transport IN ('stop_position', 'platform')
