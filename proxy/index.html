@@ -492,6 +492,41 @@
     'line-dasharray': dashArray,
   });
 
+  const main_color = '#ff8100';
+  const highspeed_color = '#ff0c00';
+  const branch_color = '#c4b600';
+  const narrow_gauge_color = '#c0da00';
+  const no_usage_color = '#000000';
+  const disused_color = '#70584d';
+  const abandoned_color = '#7f6a62';
+  const razed_color = '#94847e';
+  const tram_color = '#d877b8';
+  const subway_color = '#0300c3';
+  const light_rail_color = '#00bd14';
+  const siding_color = '#000000';
+  const yard_color = '#000000';
+  const spur_color = '#87491d';
+  const industrial_color = '#87491d';
+
+  const railway_casing_color = '#ffffff';
+  const bridge_casing_color = '#000000';
+  const tunnel_color = '#979797';
+
+  const turntable_fill = '#ababab';
+  const turntable_casing = '#808080';
+  const turntable_casing_width = 2;
+
+  const railway_casing_add = 2;
+
+  /* additional width of the casing of dashed lines */
+  const railway_tunnel_casing_add = 2;
+  const bridge_casing_add = 4;
+
+  const abandoned_dasharray = [5,5];
+  const razed_dasharray = [3,7];
+  const construction_dasharray = [9,9];
+  const proposed_dasharray = [2,8];
+
   const style = {
     center: [12.55, 51.14], // default
     zoom: 3.75, // default
@@ -562,14 +597,30 @@
 
       // --- Style: Standard ---
       {
-        id: 'railway_tunnel',
+        id: 'railway_bridge_railing',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_bridge',
+        paint: {
+          'line-color': bridge_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': bridge_casing_add,
+        }
+      },
+      {
+        id: 'railway_tunnel_casing',
         type: 'line',
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'railway_tunnel',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'line-color': 'pink',
-          'line-width': 2,
+          'line-color': railway_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': railway_casing_add,
         }
       },
       {
@@ -578,169 +629,413 @@
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'railway_line_casing',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'line-color': 'pink',
-          'line-width': 2,
+          'line-color': railway_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': railway_casing_add,
         }
       },
       {
-        id: 'railway_line_low',
+        id: 'railway_line_low_casing',
         type: 'line',
         minzoom: 7,
         source: 'openrailwaymap',
         'source-layer': 'railway_line_low',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'line-color': 'pink',
-          'line-width': 2,
+          'line-color': railway_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': railway_casing_add,
         }
       },
       {
-        id: 'railway_line_med',
+        id: 'railway_line_med_casing',
         type: 'line',
         minzoom: 8,
         maxzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'railway_line_med',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'line-color': 'pink',
-          'line-width': 2,
+          'line-color': railway_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': railway_casing_add,
         }
       },
       {
-        id: 'railway_turntables',
+        id: 'railway_bridge_casing',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_bridge',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          'line-color': railway_casing_color,
+          'line-width': 2, // TODO zoom and tag dependent
+          'line-gap-width': railway_casing_add,
+        }
+      },
+      {
+        id: 'railway_turntables_fill',
         type: 'fill',
         minzoom: 11,
         source: 'openrailwaymap',
         'source-layer': 'railway_turntables',
         paint: {
-          'fill-color': 'pink',
-          // 'line-width': 2,
+          'fill-color': turntable_fill,
+        }
+      },
+      {
+        id: 'railway_turntables_casing',
+        type: 'line',
+        minzoom: 16,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_turntables',
+        paint: {
+          'line-color': turntable_casing,
+          'line-width': turntable_casing_width,
         }
       },
       {
         id: 'railway_line_fill',
-        type: 'fill',
+        type: 'line',
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'railway_line_fill',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'fill-color': 'pink',
-          // 'line-width': 2,
+          'line-color': main_color,
+          'line-width': 2,
         }
       },
       {
-        id: 'railway_bridge',
-        type: 'fill',
+        id: 'railway_line_low_fill',
+        type: 'line',
+        minzoom: 7,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line_low',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          'line-color': main_color,
+          'line-width': 2, // TODO zoom and tag dependent
+        }
+      },
+      {
+        id: 'railway_line_med_fill',
+        type: 'line',
+        minzoom: 8,
+        maxzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line_med',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          'line-color': main_color,
+          'line-width': 2, // TODO zoom and tag dependent
+        }
+      },
+      {
+        id: 'railway_tunnel_fill',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_tunnel',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          'line-color': main_color,
+          'line-width': 2, // TODO zoom and tag dependent
+        }
+      },
+      // TODO blending: https://github.com/maplibre/maplibre-gl-js/issues/48
+      // {
+      //   id: 'railway_tunnel_bright',
+      //   type: 'line',
+      //   minzoom: 9,
+      //   source: 'openrailwaymap',
+      //   'source-layer': 'railway_tunnel',
+      //   layout: {
+      //     'line-join': 'round',
+      //   },
+      //   paint: {
+      //     'line-color': railway_casing_color,
+      //     'line-width': 2, // TODO zoom and tag dependent
+      //     'line-gap-width': railway_casing_add,
+      //   }
+      // },
+      {
+        id: 'railway_bridge_fill',
+        type: 'line',
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'railway_bridge',
+        layout: {
+          'line-join': 'round',
+        },
         paint: {
-          'fill-color': 'pink',
-          // 'line-width': 2,
+          'line-color': main_color,
+          'line-width': 2, // TODO zoom and tag dependent
         }
       },
       {
         id: 'railway_text_stations_med',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 6,
         maxzoom: 11,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_stations_med',
+        // TODO filter
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': ['case',
+            ['==', ['get', 'railway'], 'yard'], '#87491D',
+            ['==', ['get', 'railway'], 'tram_stop'], '#D877B8',
+            ['==', ['get', 'railway'], 'station'], 'blue',
+            ['==', ['get', 'railway'], 'halt'], 'blue',
+            '#616161',
+          ],
+          'text-halo-color': ['case',
+            ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
+            ['==', ['get', 'railway'], 'tram_stop'], 'white',
+            ['==', ['get', 'railway'], 'station'], 'white',
+            ['==', ['get', 'railway'], 'halt'], 'white',
+            '#F1F1F1',
+          ],
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'text-field': '{label}',
+          // TODO light rail / subway oblique font
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+          'text-offset': ['case',
+            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 9]],
+            ['literal', [0, 0]]
+          ],
+        },
       },
       {
         id: 'railway_text_stations_high',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 11,
         source: 'openrailwaymap',
-        'source-layer': 'railway_text_stations_high',
+        'source-layer': 'railway_text_stations_med',
+        // TODO filter
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': ['case',
+            ['==', ['get', 'railway'], 'yard'], '#87491D',
+            ['==', ['get', 'railway'], 'tram_stop'], '#D877B8',
+            ['==', ['get', 'railway'], 'station'], 'blue',
+            ['==', ['get', 'railway'], 'halt'], 'blue',
+            '#616161',
+          ],
+          'text-halo-color': ['case',
+            ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
+            ['==', ['get', 'railway'], 'tram_stop'], 'white',
+            ['==', ['get', 'railway'], 'station'], 'white',
+            ['==', ['get', 'railway'], 'halt'], 'white',
+            '#F1F1F1',
+          ],
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'text-field': '{label}',
+          // TODO light rail / subway oblique font
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+          'text-offset': ['case',
+            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 9]],
+            ['literal', [0, 0]]
+          ],
+        },
       },
       {
         id: 'railway_symbols',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 11,
         source: 'openrailwaymap',
         'source-layer': 'railway_symbols',
-        paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
+        layout: {
+          // ['image', ['get', 'feature']]
+          // TODO: fix size of feature icons
+          'icon-image': ['case',
+            ['==', ['get', 'railway'], 'level_crossing'], 'general:level-crossing',
+            ['==', ['get', 'railway'], 'crossing'], 'general:crossing',
+            ['==', ['get', 'railway'], 'tram_stop'], 'general:tram-stop',
+            ['==', ['get', 'railway'], 'border'], 'general:border',
+            ['==', ['get', 'railway'], 'owner_change'], 'general:border',
+            ['==', ['get', 'railway'], 'phone'], 'general:phone',
+            ['==', ['get', 'railway'], 'radio'], ['case',
+              ['==', ['get', 'man_made'], 'mast'], 'general:radio-mast',
+              ['==', ['get', 'man_made'], 'tower'], 'general:radio-mast',
+              ['==', ['get', 'man_made'], 'antenna'], 'general:radio-antenna',
+              '',
+            ],
+            '',
+          ],
         }
       },
       {
         id: 'railway_text_med',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 8,
         maxzoom: 15,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_med',
+        // TODO filter
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': '#585858',
+          'text-halo-color': 'white',
+          'text-halo-width': 1,
+        },
+        layout: {
+          'symbol-placement': 'line',
+          'text-field': '{label}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+          'symbol-spacing': 200,
+        },
       },
       {
         id: 'railway_text_high',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 15,
         maxzoom: 17,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_high',
+        // TODO filter
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': '#585858',
+          'text-halo-color': 'white',
+          'text-halo-width': 1,
+        },
+        layout: {
+          'symbol-placement': 'line',
+          'text-field': '{label}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+          'symbol-spacing': 200,
+        },
       },
       {
         id: 'railway_text_km_med',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 11,
         maxzoom: 14,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_km_med',
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': 'black',
+          'text-halo-color': 'white',
+          'text-halo-width': 1,
+        },
+        layout: {
+          'text-field': '{pos}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+        },
       },
       {
         id: 'railway_text_km_high',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 14,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_km_high',
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': 'black',
+          'text-halo-color': 'white',
+          'text-halo-width': 1,
+        },
+        layout: {
+          'text-field': '{pos}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+        },
       },
       {
         id: 'railway_switch_ref',
-        type: 'circle',
+        type: 'symbol',
         minzoom: 16,
         source: 'openrailwaymap',
         'source-layer': 'railway_switch_ref',
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-halo-color': ['case',
+            ['==', ['get', 'railway_local_operated'], 'yes'], 'yellow',
+            'white'
+          ],
+          'text-halo-width': 2,
+        },
+        layout: {
+          'text-field': '{ref}',
+          'text-font': ['Noto Sans Medium'],
+          'text-size': 11,
+          'text-padding': 20,
+        },
       },
       {
-        id: 'railway_text_detail',
-        type: 'circle',
+        id: 'railway_text_detail_line_numbers',
+        type: 'symbol',
         minzoom: 17,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_detail',
+        // TODO filter
         paint: {
-          // 'line-color': 'pink',
-          // 'line-width': 2,
-        }
+          'text-color': '#585858',
+          'text-halo-color': 'white',
+          'text-halo-width': 1,
+        },
+        layout: {
+          'symbol-placement': 'line',
+          'text-field': '{label}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+          'symbol-spacing': 200,
+        },
+      },
+      {
+        id: 'railway_text_detail_track_numbers',
+        type: 'symbol',
+        minzoom: 17,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_text_detail',
+        // filter: ['!=', ['get', 'track_ref'], null],
+        paint: {
+          'text-color': 'white',
+          'text-halo-color': 'blue',
+          'text-halo-width': 4,
+          'text-halo-blur': 2,
+        },
+        layout: {
+          'symbol-placement': 'line',
+          'text-field': '{track_ref}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 10,
+          'text-padding': 10,
+        },
       },
 
 
