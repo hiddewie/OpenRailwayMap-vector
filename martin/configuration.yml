@@ -48,6 +48,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_line_casing:
       schema: public
@@ -59,6 +60,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_line_low:
       schema: public
@@ -70,6 +72,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_line_med:
       schema: public
@@ -81,6 +84,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_turntables:
       schema: public
@@ -101,6 +105,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_bridge:
       schema: public
@@ -112,6 +117,7 @@ postgres:
         railway: string
         usage: string
         service: string
+        highspeed: string
 
     railway_text_stations_med:
       schema: public

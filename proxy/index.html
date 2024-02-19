@@ -516,16 +516,49 @@
   const turntable_casing = '#808080';
   const turntable_casing_width = 2;
 
-  const railway_casing_add = 2;
+  const railway_casing_add = 1;
 
   /* additional width of the casing of dashed lines */
-  const railway_tunnel_casing_add = 2;
+  const railway_tunnel_casing_add = 1;
   const bridge_casing_add = 4;
 
-  const abandoned_dasharray = [5,5];
-  const razed_dasharray = [3,7];
-  const construction_dasharray = [9,9];
-  const proposed_dasharray = [2,8];
+  const abandoned_dasharray = [5, 5];
+  const razed_dasharray = [3, 7];
+  const construction_dasharray = [9, 9];
+  const proposed_dasharray = [2, 8];
+
+  const standardFillPaint = dashArray => ({
+    // TODO handle construction and proposed: color and dasharray
+    'line-color': ['case',
+      ['==', ['get', 'railway'], 'rail'],
+      ['case',
+        ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], spur_color,
+        ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], yard_color,
+        ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], siding_color,
+        ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], siding_color,
+        ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], no_usage_color,
+        ['==', ['get', 'usage'], 'industrial'], industrial_color,
+        ['==', ['get', 'usage'], 'branch'], branch_color,
+        ['all', ['==', ['get', 'usage'], 'main'], ['==', ['get', 'highspeed'], 'yes']], highspeed_color,
+        ['==', ['get', 'usage'], 'main'], main_color,
+        'rgba(255, 255, 255, 1.0)',
+      ],
+      ['==', ['get', 'railway'], 'narrow_gauge'],
+      ['case',
+        ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], industrial_color,
+        narrow_gauge_color,
+      ],
+      ['==', ['get', 'railway'], 'disused'], disused_color,
+      ['==', ['get', 'railway'], 'abandoned'], abandoned_color,
+      ['==', ['get', 'railway'], 'razed'], razed_color,
+      ['==', ['get', 'railway'], 'subway'], subway_color,
+      ['==', ['get', 'railway'], 'light_rail'], light_rail_color,
+      ['==', ['get', 'railway'], 'tram'], tram_color,
+      'rgba(255, 255, 255, 1.0)',
+    ],
+    'line-width': railwayLineWidth,
+    'line-dasharray': dashArray,
+  });
 
   const style = {
     center: [12.55, 51.14], // default
@@ -546,6 +579,7 @@
         type: 'vector',
         // url: `${location.origin}/tiles`,
         url: `${location.origin}/railway_tunnel,railway_line_casing,railway_line_low,railway_line_med,railway_turntables,railway_line_fill,railway_bridge,railway_text_stations_med,railway_text_stations_high,railway_symbols,railway_text_med,railway_text_high,railway_text_km_med,railway_text_km_high,railway_switch_ref,railway_text_detail`,
+        // url: `${location.origin}/railway_bridge,railway_line_casing,railway_line_fill,railway_line_low,railway_line_med,railway_switch_ref,railway_symbols,railway_text_detail,railway_text_high,railway_text_km_high,railway_text_km_med,railway_text_med,railway_text_stations_med,railway_tunnel,railway_turntables`,
         attribution: '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>'
       },
     },
@@ -604,7 +638,7 @@
         'source-layer': 'railway_bridge',
         paint: {
           'line-color': bridge_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'line-width': railwayLineWidth,
           'line-gap-width': bridge_casing_add,
         }
       },
@@ -619,8 +653,8 @@
         },
         paint: {
           'line-color': railway_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
-          'line-gap-width': railway_casing_add,
+          'line-width': railwayLineWidth,
+          'line-gap-width': railway_tunnel_casing_add,
         }
       },
       {
@@ -634,7 +668,7 @@
         },
         paint: {
           'line-color': railway_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'line-width': railwayLineWidth,
           'line-gap-width': railway_casing_add,
         }
       },
@@ -649,7 +683,7 @@
         },
         paint: {
           'line-color': railway_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'line-width': railwayLineWidth,
           'line-gap-width': railway_casing_add,
         }
       },
@@ -665,7 +699,7 @@
         },
         paint: {
           'line-color': railway_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'line-width': railwayLineWidth,
           'line-gap-width': railway_casing_add,
         }
       },
@@ -680,29 +714,8 @@
         },
         paint: {
           'line-color': railway_casing_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'line-width': railwayLineWidth,
           'line-gap-width': railway_casing_add,
-        }
-      },
-      {
-        id: 'railway_turntables_fill',
-        type: 'fill',
-        minzoom: 11,
-        source: 'openrailwaymap',
-        'source-layer': 'railway_turntables',
-        paint: {
-          'fill-color': turntable_fill,
-        }
-      },
-      {
-        id: 'railway_turntables_casing',
-        type: 'line',
-        minzoom: 16,
-        source: 'openrailwaymap',
-        'source-layer': 'railway_turntables',
-        paint: {
-          'line-color': turntable_casing,
-          'line-width': turntable_casing_width,
         }
       },
       {
@@ -714,10 +727,7 @@
         layout: {
           'line-join': 'round',
         },
-        paint: {
-          'line-color': main_color,
-          'line-width': 2,
-        }
+        paint: standardFillPaint([1]),
       },
       {
         id: 'railway_line_low_fill',
@@ -728,10 +738,7 @@
         layout: {
           'line-join': 'round',
         },
-        paint: {
-          'line-color': main_color,
-          'line-width': 2, // TODO zoom and tag dependent
-        }
+        paint: standardFillPaint([1]),
       },
       {
         id: 'railway_line_med_fill',
@@ -743,10 +750,7 @@
         layout: {
           'line-join': 'round',
         },
-        paint: {
-          'line-color': main_color,
-          'line-width': 2, // TODO zoom and tag dependent
-        }
+        paint: standardFillPaint([1]),
       },
       {
         id: 'railway_tunnel_fill',
@@ -757,10 +761,7 @@
         layout: {
           'line-join': 'round',
         },
-        paint: {
-          'line-color': main_color,
-          'line-width': 2, // TODO zoom and tag dependent
-        }
+        paint: standardFillPaint([1]),
       },
       // TODO blending: https://github.com/maplibre/maplibre-gl-js/issues/48
       // {
@@ -787,9 +788,27 @@
         layout: {
           'line-join': 'round',
         },
+        paint: standardFillPaint([1]),
+      },
+      {
+        id: 'railway_turntables_fill',
+        type: 'fill',
+        minzoom: 11,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_turntables',
         paint: {
-          'line-color': main_color,
-          'line-width': 2, // TODO zoom and tag dependent
+          'fill-color': turntable_fill,
+        }
+      },
+      {
+        id: 'railway_turntables_casing',
+        type: 'line',
+        minzoom: 16,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_turntables',
+        paint: {
+          'line-color': turntable_casing,
+          'line-width': turntable_casing_width,
         }
       },
       {

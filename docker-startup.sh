@@ -56,8 +56,8 @@ EOF
     r/route=subway
 
   # Importing data to a database
+  # --slim \
   osm2pgsql \
-    --slim \
     --create \
     --database gis \
     --hstore \
