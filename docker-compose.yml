@@ -28,6 +28,7 @@ services:
       - '5432:5432'
     volumes:
       - ./postgres-data:/var/lib/postgresql/postgres-data
+    shm_size: 1g
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - PG_WORK_MEM
