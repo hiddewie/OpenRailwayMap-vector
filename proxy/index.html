@@ -763,22 +763,20 @@
         },
         paint: standardFillPaint([1]),
       },
-      // TODO blending: https://github.com/maplibre/maplibre-gl-js/issues/48
-      // {
-      //   id: 'railway_tunnel_bright',
-      //   type: 'line',
-      //   minzoom: 9,
-      //   source: 'openrailwaymap',
-      //   'source-layer': 'railway_tunnel',
-      //   layout: {
-      //     'line-join': 'round',
-      //   },
-      //   paint: {
-      //     'line-color': railway_casing_color,
-      //     'line-width': 2, // TODO zoom and tag dependent
-      //     'line-gap-width': railway_casing_add,
-      //   }
-      // },
+      {
+        id: 'railway_tunnel_bright',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_tunnel',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          ...standardFillPaint([1]),
+          'line-color': 'rgba(255, 255, 255, 50%)',
+        }
+      },
       {
         id: 'railway_bridge_fill',
         type: 'line',
@@ -809,6 +807,18 @@
         paint: {
           'line-color': turntable_casing,
           'line-width': turntable_casing_width,
+        }
+      },
+      {
+        id: 'railway_symbols_tram_stop',
+        type: 'symbol',
+        minzoom: 11,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_symbols',
+        filter: ['==', ['get', 'railway'], 'tram_stop'],
+        layout: {
+          'icon-overlap': 'always',
+          'icon-image': 'general:tram-stop',
         }
       },
       {
@@ -844,7 +854,7 @@
           'text-padding': 10,
           'text-max-width': 5,
           'text-offset': ['case',
-            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 9]],
+            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 1]],
             ['literal', [0, 0]]
           ],
         },
@@ -854,7 +864,7 @@
         type: 'symbol',
         minzoom: 11,
         source: 'openrailwaymap',
-        'source-layer': 'railway_text_stations_med',
+        'source-layer': 'railway_text_stations_high',
         // TODO filter
         paint: {
           'text-color': ['case',
@@ -881,7 +891,7 @@
           'text-padding': 10,
           'text-max-width': 5,
           'text-offset': ['case',
-            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 9]],
+            ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 1]],
             ['literal', [0, 0]]
           ],
         },
@@ -892,13 +902,13 @@
         minzoom: 11,
         source: 'openrailwaymap',
         'source-layer': 'railway_symbols',
+        filter: ['!=', ['get', 'railway'], 'tram_stop'],
         layout: {
           // ['image', ['get', 'feature']]
           // TODO: fix size of feature icons
           'icon-image': ['case',
             ['==', ['get', 'railway'], 'level_crossing'], 'general:level-crossing',
             ['==', ['get', 'railway'], 'crossing'], 'general:crossing',
-            ['==', ['get', 'railway'], 'tram_stop'], 'general:tram-stop',
             ['==', ['get', 'railway'], 'border'], 'general:border',
             ['==', ['get', 'railway'], 'owner_change'], 'general:border',
             ['==', ['get', 'railway'], 'phone'], 'general:phone',
