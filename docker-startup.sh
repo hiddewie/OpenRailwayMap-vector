@@ -56,11 +56,11 @@ EOF
     r/route=subway
 
   # Importing data to a database
-  # --slim \
   osm2pgsql \
     --create \
     --database gis \
     --hstore \
+    --slim \
     --merc \
     --style setup/openstreetmap-carto.style \
     --tag-transform setup/openstreetmap-carto.lua \

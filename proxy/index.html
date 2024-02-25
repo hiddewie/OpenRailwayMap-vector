@@ -719,6 +719,31 @@
         }
       },
       {
+        id: 'railway_tunnel_fill',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_tunnel',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: standardFillPaint([1]),
+      },
+      {
+        id: 'railway_tunnel_bright',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_tunnel',
+        layout: {
+          'line-join': 'round',
+        },
+        paint: {
+          ...standardFillPaint([1]),
+          'line-color': 'rgba(255, 255, 255, 50%)',
+        }
+      },
+      {
         id: 'railway_line_fill',
         type: 'line',
         minzoom: 9,
@@ -751,31 +776,6 @@
           'line-join': 'round',
         },
         paint: standardFillPaint([1]),
-      },
-      {
-        id: 'railway_tunnel_fill',
-        type: 'line',
-        minzoom: 9,
-        source: 'openrailwaymap',
-        'source-layer': 'railway_tunnel',
-        layout: {
-          'line-join': 'round',
-        },
-        paint: standardFillPaint([1]),
-      },
-      {
-        id: 'railway_tunnel_bright',
-        type: 'line',
-        minzoom: 9,
-        source: 'openrailwaymap',
-        'source-layer': 'railway_tunnel',
-        layout: {
-          'line-join': 'round',
-        },
-        paint: {
-          ...standardFillPaint([1]),
-          'line-color': 'rgba(255, 255, 255, 50%)',
-        }
       },
       {
         id: 'railway_bridge_fill',
@@ -812,7 +812,7 @@
       {
         id: 'railway_symbols_tram_stop',
         type: 'symbol',
-        minzoom: 11,
+        minzoom: 13,
         source: 'openrailwaymap',
         'source-layer': 'railway_symbols',
         filter: ['==', ['get', 'railway'], 'tram_stop'],
@@ -847,6 +847,7 @@
           'text-halo-width': 1.5,
         },
         layout: {
+          'symbol-z-order': 'source',
           'text-field': '{label}',
           // TODO light rail / subway oblique font
           'text-font': ['Noto Sans Bold'],
@@ -884,6 +885,7 @@
           'text-halo-width': 1.5,
         },
         layout: {
+          'symbol-z-order': 'source',
           'text-field': '{label}',
           // TODO light rail / subway oblique font
           'text-font': ['Noto Sans Bold'],
@@ -897,21 +899,30 @@
         },
       },
       {
-        id: 'railway_symbols',
+        id: 'railway_symbols_low',
         type: 'symbol',
         minzoom: 11,
         source: 'openrailwaymap',
         'source-layer': 'railway_symbols',
-        filter: ['!=', ['get', 'railway'], 'tram_stop'],
+        filter: ['==', ['get', 'railway'], 'border'],
         layout: {
-          // ['image', ['get', 'feature']]
-          // TODO: fix size of feature icons
+          'icon-image': 'general:border',
+        }
+      },
+      {
+        id: 'railway_symbols_med',
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_symbols',
+        filter: ['any',
+          ['==', ['get', 'railway'], 'owner_change'],
+          ['==', ['get', 'railway'], 'radio'],
+        ],
+        layout: {
+          'symbol-z-order': 'source',
           'icon-image': ['case',
-            ['==', ['get', 'railway'], 'level_crossing'], 'general:level-crossing',
-            ['==', ['get', 'railway'], 'crossing'], 'general:crossing',
-            ['==', ['get', 'railway'], 'border'], 'general:border',
             ['==', ['get', 'railway'], 'owner_change'], 'general:border',
-            ['==', ['get', 'railway'], 'phone'], 'general:phone',
             ['==', ['get', 'railway'], 'radio'], ['case',
               ['==', ['get', 'man_made'], 'mast'], 'general:radio-mast',
               ['==', ['get', 'man_made'], 'tower'], 'general:radio-mast',
@@ -920,6 +931,37 @@
             ],
             '',
           ],
+        }
+      },
+      {
+        id: 'railway_symbols_med_high',
+        type: 'symbol',
+        minzoom: 14,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_symbols',
+        filter: ['any',
+          ['==', ['get', 'railway'], 'crossing'],
+          ['==', ['get', 'railway'], 'level_crossing'],
+        ],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-image': ['case',
+            ['==', ['get', 'railway'], 'level_crossing'], 'general:level-crossing',
+            ['==', ['get', 'railway'], 'crossing'], 'general:crossing',
+            '',
+          ],
+        }
+      },
+      {
+        id: 'railway_symbols_high',
+        type: 'symbol',
+        minzoom: 17,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_symbols',
+        filter: ['==', ['get', 'railway'], 'phone'],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-image': 'general:phone',
         }
       },
       {
@@ -936,6 +978,7 @@
           'text-halo-width': 1,
         },
         layout: {
+          'symbol-z-order': 'source',
           'symbol-placement': 'line',
           'text-field': '{label}',
           'text-font': ['Noto Sans Bold'],
@@ -959,6 +1002,7 @@
           'text-halo-width': 1,
         },
         layout: {
+          'symbol-z-order': 'source',
           'symbol-placement': 'line',
           'text-field': '{label}',
           'text-font': ['Noto Sans Bold'],
@@ -981,6 +1025,7 @@
           'text-halo-width': 1,
         },
         layout: {
+          'symbol-z-order': 'source',
           'text-field': '{pos}',
           'text-font': ['Noto Sans Bold'],
           'text-size': 11,
@@ -998,6 +1043,7 @@
           'text-halo-width': 1,
         },
         layout: {
+          'symbol-z-order': 'source',
           'text-field': '{pos}',
           'text-font': ['Noto Sans Bold'],
           'text-size': 11,
@@ -1017,6 +1063,7 @@
           'text-halo-width': 2,
         },
         layout: {
+          'symbol-z-order': 'source',
           'text-field': '{ref}',
           'text-font': ['Noto Sans Medium'],
           'text-size': 11,
@@ -1036,6 +1083,7 @@
           'text-halo-width': 1,
         },
         layout: {
+          'symbol-z-order': 'source',
           'symbol-placement': 'line',
           'text-field': '{label}',
           'text-font': ['Noto Sans Bold'],
@@ -1059,6 +1107,7 @@
           'text-halo-blur': 2,
         },
         layout: {
+          'symbol-z-order': 'source',
           'symbol-placement': 'line',
           'text-field': '{track_ref}',
           'text-font': ['Noto Sans Bold'],
@@ -1315,7 +1364,7 @@
   const map = new maplibregl.Map({
     container: 'map',
     style,
-    hash: true,
+    hash: 'view',
     maxZoom: 18,
     minPitch: 0,
     maxPitch: 0,
