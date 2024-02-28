@@ -38,30 +38,6 @@ postgres:
 
     # --- Standard --- #
 
-    railway_tunnel:
-      schema: public
-      table: railway_tunnel
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        usage: string
-        service: string
-        highspeed: string
-
-    railway_line_casing:
-      schema: public
-      table: railway_line_casing
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        usage: string
-        service: string
-        highspeed: string
-
     railway_line_low:
       schema: public
       table: railway_line_low
@@ -70,9 +46,12 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         highspeed: string
+        tunnel: boolean
+        bridge: boolean
 
     railway_line_med:
       schema: public
@@ -82,9 +61,12 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         highspeed: string
+        tunnel: boolean
+        bridge: boolean
 
     railway_turntables:
       schema: public
@@ -103,21 +85,12 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         highspeed: string
-
-    railway_bridge:
-      schema: public
-      table: railway_bridge
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        usage: string
-        service: string
-        highspeed: string
+        tunnel: boolean
+        bridge: boolean
 
     railway_text_stations_med:
       schema: public
@@ -229,11 +202,11 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         layer: number
         rank: number
-        construction_railway: string
         train_protection: string
 
     railway_signals:
