@@ -75,6 +75,14 @@
       .search-container #cancel-icon {
           display: none;
       }
+
+      .maplibregl-ctrl-style {
+          font-size: 1rem;
+          padding: .5rem;
+      }
+      .maplibregl-ctrl-style .form-check.form-check-inline:last-child {
+          margin-right: 0;
+      }
   </style>
   <title>OpenRailwayMap</title>
 </head>
@@ -148,6 +156,51 @@
   });
 </script>
 <script>
+  function createDomElement(tagName, className, container) {
+    const el = window.document.createElement(tagName);
+    if (className !== undefined) el.className = className;
+    if (container) container.appendChild(el);
+    return el;
+  }
+
+  function removeDomElement(node) {
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+  }
+</script>
+<script>
+  const knownStyles = {
+    standard: 'Standard',
+    signals: 'Train protection',
+  };
+  function hashToObject(hash) {
+    if (!hash) {
+      return {};
+    } else {
+      const strippedHash = hash.replace('#', '');
+      const hashEntries = strippedHash
+        .split('&')
+        .map(item => item.split('=', 2))
+      return Object.fromEntries(hashEntries);
+    }
+  }
+  function determineStyleFromHash(hash) {
+    const defaultStyle = Object.keys(knownStyles)[0];
+    const hashObject = hashToObject(hash);
+    if (hashObject.style && hashObject.style in knownStyles) {
+      return hashObject.style
+    } else {
+      return defaultStyle;
+    }
+  }
+  function putStyleInHash(hash, style) {
+    const hashObject = hashToObject(hash);
+    hashObject.style = style;
+    return `#${Object.entries(hashObject).map(([key, value]) => `${key}=${value}`).join('&')}`;
+  }
+  const selectedStyle = determineStyleFromHash(window.location.hash)
+
   const railwayLineWidth = ['step', ['zoom'],
     ['case',
       ['all',
@@ -560,76 +613,61 @@
     'line-dasharray': dashArray,
   });
 
-  const style = {
-    center: [12.55, 51.14], // default
-    zoom: 3.75, // default
-    glyphs: `${location.origin}/font/{fontstack}/{range}`,
-    metadata: {},
-    name: 'OpenRailwayMap',
-    sources: {
-      openstreetmap: {
-        type: 'raster',
-        tiles: [
-          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        ],
-        tileSize: 256,
-        attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
-      },
+  const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>';
+
+  const openstreetmap = {
+    type: 'raster',
+    tiles: [
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    ],
+    tileSize: 256,
+    attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
+  };
+  const openrailwaymap = {
+    type: 'vector',
+    // url: `${location.origin}/tiles`,
+    url: `${location.origin}/railway_tunnel,railway_line_casing,railway_line_low,railway_line_med,railway_turntables,railway_line_fill,railway_bridge,railway_text_stations_med,railway_text_stations_high,railway_symbols,railway_text_med,railway_text_high,railway_text_km_med,railway_text_km_high,railway_switch_ref,railway_text_detail`,
+    attribution,
+  }
+  const sources = {
+    standard: {
+      openstreetmap,
       openrailwaymap: {
         type: 'vector',
-        // url: `${location.origin}/tiles`,
-        url: `${location.origin}/railway_tunnel,railway_line_casing,railway_line_low,railway_line_med,railway_turntables,railway_line_fill,railway_bridge,railway_text_stations_med,railway_text_stations_high,railway_symbols,railway_text_med,railway_text_high,railway_text_km_med,railway_text_km_high,railway_switch_ref,railway_text_detail`,
-        // url: `${location.origin}/railway_bridge,railway_line_casing,railway_line_fill,railway_line_low,railway_line_med,railway_switch_ref,railway_symbols,railway_text_detail,railway_text_high,railway_text_km_high,railway_text_km_med,railway_text_med,railway_text_stations_med,railway_tunnel,railway_turntables`,
-        attribution: '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>'
+          url: `${location.origin}/railway_tunnel,railway_line_casing,railway_line_low,railway_line_med,railway_turntables,railway_line_fill,railway_bridge,railway_text_stations_med,railway_text_stations_high,railway_symbols,railway_text_med,railway_text_high,railway_text_km_med,railway_text_km_high,railway_switch_ref,railway_text_detail`,
+        attribution,
       },
     },
-    sprite: [
-      {
-        id: 'general',
-        url: `${location.origin}/sprite/general`,
+    signals: {
+      openstreetmap,
+      openrailwaymap: {
+        type: 'vector',
+        url: `${location.origin}/railway_line,railway_signals,signal_boxes_point,signal_boxes_polygon,signal_boxes_text`,
+        attribution,
       },
-      {
-        id: 'at',
-        url: `${location.origin}/sprite/at`,
-      },
-      {
-        id: 'de',
-        url: `${location.origin}/sprite/de`,
-      },
-      {
-        id: 'fi',
-        url: `${location.origin}/sprite/fi`,
-      },
-      {
-        id: 'nl',
-        url: `${location.origin}/sprite/nl`,
-      },
-      {
-        id: 'flex',
-        url: `${location.origin}/sprite/flex`,
-      },
-    ],
-    version: 8,
-    layers: [
-      {
-        id: 'background',
-        type: 'background',
-        paint: {
-          'background-color': 'rgb(242, 243, 240)'
-        }
-      },
+    },
+  };
 
-      // --- Background: OpenStreetMap ---
-      {
-        id: "openstreetmap",
-        type: "raster",
-        source: "openstreetmap",
-        paint: {
-          'raster-saturation': -1.0, // or 0.0 for colorful
-        }
-      },
+  const backgroundColor = {
+    id: 'background',
+    type: 'background',
+    paint: {
+      'background-color': 'rgb(242, 243, 240)'
+    }
+  };
+  const backgroundMap = {
+    id: "openstreetmap",
+    type: "raster",
+    source: "openstreetmap",
+    paint: {
+      'raster-saturation': -1.0, // or 0.0 for colorful
+    }
+  };
 
-      // --- Style: Standard ---
+  const layers = {
+    standard: [
+      backgroundColor,
+      backgroundMap,
       {
         id: 'railway_bridge_railing',
         type: 'line',
@@ -851,6 +889,7 @@
           'text-field': '{label}',
           // TODO light rail / subway oblique font
           'text-font': ['Noto Sans Bold'],
+          // TODO text-variable-anchor-offset
           'text-size': 11,
           'text-padding': 10,
           'text-max-width': 5,
@@ -889,6 +928,7 @@
           'text-field': '{label}',
           // TODO light rail / subway oblique font
           'text-font': ['Noto Sans Bold'],
+          // TODO text-variable-anchor-offset
           'text-size': 11,
           'text-padding': 10,
           'text-max-width': 5,
@@ -1115,262 +1155,345 @@
           'text-padding': 10,
         },
       },
+    ],
 
+    signals: [
+      backgroundColor,
+      backgroundMap,
+      {
+        id: 'railway_line_low_casing',
+        type: 'line',
+        source: 'openrailwaymap',
+        maxzoom: 8,
+        'source-layer': 'railway_line',
+        filter: ['all',
+          ['==', ['get', 'railway'], 'rail'],
+          ['==', ['get', 'usage'], 'main'],
+          ['==', ['get', 'service'], null],
+        ],
+        paint: casingPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_med_casing',
+        type: 'line',
+        minzoom: 8,
+        maxzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line',
+        filter: ['all',
+          ['==', ['get', 'railway'], 'rail'],
+          ['any',
+            ['==', ['get', 'usage'], 'main'],
+            ['==', ['get', 'usage'], 'branch'],
+          ],
+          ['==', ['get', 'service'], null],
+        ],
+        paint: casingPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_casing_construction',
+        type: 'line',
+        source: 'openrailwaymap',
+        minzoom: 9,
+        'source-layer': 'railway_line',
+        filter: ['==', ['get', 'railway'], 'construction'],
+        paint: casingPaint([2, 2]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_casing',
+        type: 'line',
+        source: 'openrailwaymap',
+        minzoom: 9,
+        'source-layer': 'railway_line',
+        filter: ['!=', ['get', 'railway'], 'construction'],
+        paint: casingPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_low_fill',
+        type: 'line',
+        source: 'openrailwaymap',
+        maxzoom: 8,
+        'source-layer': 'railway_line',
+        filter: ['all',
+          ['==', ['get', 'railway'], 'rail'],
+          ['==', ['get', 'usage'], 'main'],
+          ['==', ['get', 'service'], null],
+        ],
+        paint: fillPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_med_fill',
+        type: 'line',
+        minzoom: 8,
+        maxzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line',
+        filter: ['all',
+          ['==', ['get', 'railway'], 'rail'],
+          ['any',
+            ['==', ['get', 'usage'], 'main'],
+            ['==', ['get', 'usage'], 'branch'],
+          ],
+          ['==', ['get', 'service'], null],
+        ],
+        paint: fillPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_fill_construction',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line',
+        filter: ['==', ['get', 'railway'], 'construction'],
+        paint: fillPaint([2, 2]),
+        layout: casingLayout,
+      },
+      {
+        id: 'railway_line_fill',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_line',
+        filter: ['!=', ['get', 'railway'], 'construction'],
+        paint: fillPaint([1]),
+        layout: casingLayout,
+      },
+      {
+        id: 'signal_boxes_point',
+        type: 'circle',
+        minzoom: 11,
+        source: 'openrailwaymap',
+        'source-layer': 'signal_boxes_point',
+        paint: {
+          'circle-color': '#008206',
+          'circle-radius': ['step', ['zoom'],
+            7,
+            15, 12,
+            17, 18,
+          ],
+          'circle-stroke-color': 'white',
+          'circle-stroke-width': 1,
+        },
+      },
+      {
+        id: 'signal_boxes_polygon',
+        type: 'fill',
+        minzoom: 13,
+        source: 'openrailwaymap',
+        'source-layer': 'signal_boxes_polygon',
+        paint: {
+          'fill-color': '#008206',
+          'fill-outline-color': 'white',
+        },
+      },
+      {
+        id: 'signal_boxes_polygon_outline',
+        type: 'line',
+        minzoom: 13,
+        source: 'openrailwaymap',
+        'source-layer': 'signal_boxes_polygon',
+        paint: {
+          'line-color': 'white',
+          'line-width': 1,
+        },
+      },
+      {
+        id: 'railway_signals_base',
+        type: 'circle',
+        minzoom: 12,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_signals',
+        paint: {
+          'circle-radius': 2.2,
+        },
+      },
+      {
+        id: 'railway_signals',
+        type: 'symbol',
+        minzoom: 14,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_signals',
+        paint: {
+          // TODO https://github.com/maplibre/martin/issues/1075
+          // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
+          // 'icon-halo-blur': 0,
+          // 'icon-halo-width': 2.0,
 
-      // --- Style: Railway protection and signals ---
-
-    //   {
-    //     id: 'railway_line_low_casing',
-    //     type: 'line',
-    //     source: 'openrailwaymap',
-    //     maxzoom: 8,
-    //     'source-layer': 'railway_line',
-    //     filter: ['all',
-    //       ['==', ['get', 'railway'], 'rail'],
-    //       ['==', ['get', 'usage'], 'main'],
-    //       ['==', ['get', 'service'], null],
-    //     ],
-    //     paint: casingPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_med_casing',
-    //     type: 'line',
-    //     minzoom: 8,
-    //     maxzoom: 9,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_line',
-    //     filter: ['all',
-    //       ['==', ['get', 'railway'], 'rail'],
-    //       ['any',
-    //         ['==', ['get', 'usage'], 'main'],
-    //         ['==', ['get', 'usage'], 'branch'],
-    //       ],
-    //       ['==', ['get', 'service'], null],
-    //     ],
-    //     paint: casingPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_casing_construction',
-    //     type: 'line',
-    //     source: 'openrailwaymap',
-    //     minzoom: 9,
-    //     'source-layer': 'railway_line',
-    //     filter: ['==', ['get', 'railway'], 'construction'],
-    //     paint: casingPaint([2, 2]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_casing',
-    //     type: 'line',
-    //     source: 'openrailwaymap',
-    //     minzoom: 9,
-    //     'source-layer': 'railway_line',
-    //     filter: ['!=', ['get', 'railway'], 'construction'],
-    //     paint: casingPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_low_fill',
-    //     type: 'line',
-    //     source: 'openrailwaymap',
-    //     maxzoom: 8,
-    //     'source-layer': 'railway_line',
-    //     filter: ['all',
-    //       ['==', ['get', 'railway'], 'rail'],
-    //       ['==', ['get', 'usage'], 'main'],
-    //       ['==', ['get', 'service'], null],
-    //     ],
-    //     paint: fillPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_med_fill',
-    //     type: 'line',
-    //     minzoom: 8,
-    //     maxzoom: 9,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_line',
-    //     filter: ['all',
-    //       ['==', ['get', 'railway'], 'rail'],
-    //       ['any',
-    //         ['==', ['get', 'usage'], 'main'],
-    //         ['==', ['get', 'usage'], 'branch'],
-    //       ],
-    //       ['==', ['get', 'service'], null],
-    //     ],
-    //     paint: fillPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_fill_construction',
-    //     type: 'line',
-    //     minzoom: 9,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_line',
-    //     filter: ['==', ['get', 'railway'], 'construction'],
-    //     paint: fillPaint([2, 2]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'railway_line_fill',
-    //     type: 'line',
-    //     minzoom: 9,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_line',
-    //     filter: ['!=', ['get', 'railway'], 'construction'],
-    //     paint: fillPaint([1]),
-    //     layout: casingLayout,
-    //   },
-    //   {
-    //     id: 'signal_boxes_point',
-    //     type: 'circle',
-    //     minzoom: 11,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'signal_boxes_point',
-    //     paint: {
-    //       'circle-color': '#008206',
-    //       'circle-radius': ['step', ['zoom'],
-    //         7,
-    //         15, 12,
-    //         17, 18,
-    //       ],
-    //       'circle-stroke-color': 'white',
-    //       'circle-stroke-width': 1,
-    //     },
-    //   },
-    //   {
-    //     id: 'signal_boxes_polygon',
-    //     type: 'fill',
-    //     minzoom: 13,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'signal_boxes_polygon',
-    //     paint: {
-    //       'fill-color': '#008206',
-    //       'fill-outline-color': 'white',
-    //     },
-    //   },
-    //   {
-    //     id: 'signal_boxes_polygon_outline',
-    //     type: 'line',
-    //     minzoom: 13,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'signal_boxes_polygon',
-    //     paint: {
-    //       'line-color': 'white',
-    //       'line-width': 1,
-    //     },
-    //   },
-    //   {
-    //     id: 'railway_signals_base',
-    //     type: 'circle',
-    //     minzoom: 12,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_signals',
-    //     paint: {
-    //       'circle-radius': 2.2,
-    //     },
-    //   },
-    //   {
-    //     id: 'railway_signals',
-    //     type: 'symbol',
-    //     minzoom: 14,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_signals',
-    //     paint: {
-    //       // TODO https://github.com/maplibre/martin/issues/1075
-    //       // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
-    //       // 'icon-halo-blur': 0,
-    //       // 'icon-halo-width': 2.0,
-    //
-    //       'text-halo-color': 'white',
-    //       'text-halo-width': 1.5,
-    //       'text-halo-blur': 1,
-    //     },
-    //     layout: {
-    //       'icon-overlap': 'always',
-    //       'icon-image': ['image', ['get', 'feature']],
-    //       'text-field': '{ref}',
-    //       'text-font': ['Noto Sans Medium'],
-    //       'text-size': 9,
-    //       'text-anchor': 'top',
-    //       'text-offset': ['case',
-    //         ['==', ['get', 'main_height'], 'dwarf'], ['literal', [0, 1]],
-    //         ['any',
-    //           ['all',
-    //             ['==', ['get', 'main_form'], 'light'],
-    //             ['==', ['get', 'speed_limit_form'], 'light'],
-    //           ],
-    //           ['all',
-    //             ['==', ['get', 'distant_form'], 'light'],
-    //             ['==', ['get', 'speed_limit_form'], 'light'],
-    //           ],
-    //         ], ['literal', [0, 2]],
-    //         ['literal', [0, 1.5]],
-    //       ],
-    //     }
-    //   },
-    //   {
-    //     id: 'railway_signals_deactivated',
-    //     type: 'symbol',
-    //     minzoom: 14,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'railway_signals',
-    //     filter: ['get', 'deactivated'],
-    //     layout: {
-    //       'icon-overlap': 'always',
-    //       'icon-image': 'general:signal-deactivated',
-    //     }
-    //   },
-    //   {
-    //     id: 'signal_boxes_text_medium',
-    //     type: 'symbol',
-    //     minzoom: 13,
-    //     maxzoom: 16,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'signal_boxes_text',
-    //     paint: {
-    //       'text-color': '#404040',
-    //       'text-halo-color': '#bfffb3',
-    //       'text-halo-width': 1.5,
-    //     },
-    //     layout: {
-    //       'text-field': '{ref}',
-    //       'text-font': ['Noto Sans Bold'],
-    //       'text-size': 11,
-    //     }
-    //   },
-    //   {
-    //     id: 'signal_boxes_text_high',
-    //     type: 'symbol',
-    //     minzoom: 16,
-    //     source: 'openrailwaymap',
-    //     'source-layer': 'signal_boxes_text',
-    //     paint: {
-    //       'text-color': '#404040',
-    //       'text-halo-color': '#bfffb3',
-    //       'text-halo-width': 1.5,
-    //     },
-    //     layout: {
-    //       'text-field': '{name}',
-    //       'text-font': ['Noto Sans Bold'],
-    //       'text-size': 11,
-    //     }
-    //   },
+          'text-halo-color': 'white',
+          'text-halo-width': 1.5,
+          'text-halo-blur': 1,
+        },
+        layout: {
+          'icon-overlap': 'always',
+          'icon-image': ['image', ['get', 'feature']],
+          'text-field': '{ref}',
+          'text-font': ['Noto Sans Medium'],
+          'text-size': 9,
+          'text-anchor': 'top',
+          'text-offset': ['case',
+            ['==', ['get', 'main_height'], 'dwarf'], ['literal', [0, 1]],
+            ['any',
+              ['all',
+                ['==', ['get', 'main_form'], 'light'],
+                ['==', ['get', 'speed_limit_form'], 'light'],
+              ],
+              ['all',
+                ['==', ['get', 'distant_form'], 'light'],
+                ['==', ['get', 'speed_limit_form'], 'light'],
+              ],
+            ], ['literal', [0, 2]],
+            ['literal', [0, 1.5]],
+          ],
+        }
+      },
+      {
+        id: 'railway_signals_deactivated',
+        type: 'symbol',
+        minzoom: 14,
+        source: 'openrailwaymap',
+        'source-layer': 'railway_signals',
+        filter: ['get', 'deactivated'],
+        layout: {
+          'icon-overlap': 'always',
+          'icon-image': 'general:signal-deactivated',
+        }
+      },
+      {
+        id: 'signal_boxes_text_medium',
+        type: 'symbol',
+        minzoom: 13,
+        maxzoom: 16,
+        source: 'openrailwaymap',
+        'source-layer': 'signal_boxes_text',
+        paint: {
+          'text-color': '#404040',
+          'text-halo-color': '#bfffb3',
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'text-field': '{ref}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+        }
+      },
+      {
+        id: 'signal_boxes_text_high',
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap',
+        'source-layer': 'signal_boxes_text',
+        paint: {
+          'text-color': '#404040',
+          'text-halo-color': '#bfffb3',
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'text-field': '{name}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+        }
+      },
     ],
   };
 
+  const makeStyle = selectedStyle => ({
+    center: [12.55, 51.14], // default
+    zoom: 3.75, // default
+    glyphs: `${location.origin}/font/{fontstack}/{range}`,
+    metadata: {},
+    name: 'OpenRailwayMap',
+    sources: sources[selectedStyle],
+    sprite: [
+      {
+        id: 'general',
+        url: `${location.origin}/sprite/general`,
+      },
+      {
+        id: 'at',
+        url: `${location.origin}/sprite/at`,
+      },
+      {
+        id: 'de',
+        url: `${location.origin}/sprite/de`,
+      },
+      {
+        id: 'fi',
+        url: `${location.origin}/sprite/fi`,
+      },
+      {
+        id: 'nl',
+        url: `${location.origin}/sprite/nl`,
+      },
+      {
+        id: 'flex',
+        url: `${location.origin}/sprite/flex`,
+      },
+    ],
+    version: 8,
+    layers: layers[selectedStyle],
+  });
+
   const map = new maplibregl.Map({
     container: 'map',
-    style,
+    style: makeStyle(selectedStyle),
     hash: 'view',
     maxZoom: 18,
     minPitch: 0,
     maxPitch: 0,
   });
 
+  class StyleControl {
+    constructor(options) {
+      this.options = options
+    }
+
+    onAdd(map) {
+      this._map = map;
+      this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
+      const form = createDomElement('form', 'form form-inline', this._container);
+      const span = createDomElement('span', '', form);
+      span.innerHTML = 'Style:&nbsp;'
+
+      Object.entries(knownStyles).forEach(([name, styleLabel]) => {
+        const id = `style-${name}`
+        const wrapper = createDomElement('div', 'form-check form-check-inline', form);
+        const button = createDomElement('input', 'form-check-input', wrapper);
+        button.id = id
+        button.type = 'radio'
+        button.name = 'style'
+        button.value = name
+        button.onclick = () => this.options.onStyleChange(name)
+        button.checked = (this.options.initialSelection === name)
+        const label = createDomElement('label', 'form-check-label', wrapper);
+        label.htmlFor = id
+        label.innerText = styleLabel
+      });
+
+      return this._container;
+    }
+
+    onRemove() {
+      removeDomElement(this._container);
+      this._map = undefined;
+    }
+  }
+
   map.on('load', () => {
+    map.addControl(new StyleControl({
+      initialSelection: selectedStyle,
+      onStyleChange: changedStyle => {
+        map.setStyle(makeStyle(changedStyle));
+        const updatedHash = putStyleInHash(window.location.hash, changedStyle);
+        const location = window.location.href.replace(/(#.+)?$/, updatedHash);
+        window.history.replaceState(window.history.state, null, location);
+      }
+    }));
     map.addControl(new maplibregl.NavigationControl({
       showCompass: false,
       visualizePitch: false,
