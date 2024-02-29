@@ -187,7 +187,7 @@ CREATE OR REPLACE VIEW railway_symbols AS
       WHEN railway = 'crossing' THEN -1::int
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
-      END AS prio
+    END AS prio
   FROM openrailwaymap_osm_point
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio')
   ORDER BY prio DESC;

@@ -18,11 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# python3-psycopg2 \
-# python3-yaml \
-# python3-requests \
-# unzip \
-
 ADD setup/openstreetmap-carto.style setup
 
 RUN mkdir -p /openrailwaymap
