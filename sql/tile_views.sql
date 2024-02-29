@@ -194,11 +194,18 @@ CREATE OR REPLACE VIEW railway_symbols AS
 
 CREATE OR REPLACE VIEW railway_text_med AS
   SELECT
-    way, railway, usage, service,
-    disused, abandoned, razed, construction, proposed,
-    disused_railway, abandoned_railway,
-    razed_railway, construction_railway,
-    proposed_railway,
+    way,
+    railway,
+    usage,
+    service,
+    CASE
+      WHEN railway = 'proposed' THEN proposed_railway
+      WHEN railway = 'construction' THEN construction_railway
+      WHEN railway = 'razed' THEN razed_railway
+      WHEN railway = 'abandoned' THEN abandoned_railway
+      WHEN railway = 'disused' THEN disused_railway
+      ELSE railway
+    END as feature,
     CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
@@ -222,7 +229,6 @@ CREATE OR REPLACE VIEW railway_text_med AS
   FROM
     (SELECT
        way, railway, usage, service, tags->'highspeed' AS highspeed,
-       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
        tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
        tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
        tags->'proposed:railway' AS proposed_railway,
@@ -235,11 +241,18 @@ CREATE OR REPLACE VIEW railway_text_med AS
 
 CREATE OR REPLACE VIEW railway_text_high AS
   SELECT
-    way, railway, usage, service,
-    disused, abandoned, razed, construction, proposed,
-    disused_railway, abandoned_railway,
-    razed_railway, construction_railway,
-    proposed_railway,
+    way,
+    railway,
+    usage,
+    service,
+    CASE
+      WHEN railway = 'proposed' THEN proposed_railway
+      WHEN railway = 'construction' THEN construction_railway
+      WHEN railway = 'razed' THEN razed_railway
+      WHEN railway = 'abandoned' THEN abandoned_railway
+      WHEN railway = 'disused' THEN disused_railway
+      ELSE railway
+    END as feature,
     CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
@@ -265,7 +278,6 @@ CREATE OR REPLACE VIEW railway_text_high AS
   FROM
     (SELECT
        way, railway, usage, service, tags->'highspeed' AS highspeed,
-       tags->'disused' AS disused, tags->'abandoned' AS abandoned, tags->'razed' AS razed, construction, tags->'proposed' AS proposed,
        tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
        tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
        tags->'proposed:railway' AS proposed_railway,
@@ -328,11 +340,18 @@ CREATE OR REPLACE VIEW railway_switch_ref AS
 
 CREATE OR REPLACE VIEW railway_text_detail AS
   SELECT
-    way, railway, usage, service,
-    disused, abandoned, razed, construction, proposed,
-    disused_railway, abandoned_railway,
-    razed_railway, construction_railway,
-    proposed_railway,
+    way,
+    railway,
+    usage,
+    service,
+    CASE
+      WHEN railway = 'proposed' THEN proposed_railway
+      WHEN railway = 'construction' THEN construction_railway
+      WHEN railway = 'razed' THEN razed_railway
+      WHEN railway = 'abandoned' THEN abandoned_railway
+      WHEN railway = 'disused' THEN disused_railway
+      ELSE railway
+    END as feature,
     CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
@@ -354,7 +373,7 @@ CREATE OR REPLACE VIEW railway_text_detail AS
     CASE
       WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
       ELSE COALESCE(ref, label_name)
-      END AS label,
+    END AS label,
     track_ref
   FROM
     (SELECT
@@ -379,7 +398,6 @@ CREATE OR REPLACE VIEW railway_text_detail AS
      WHERE
        railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
        AND (ref IS NOT NULL OR name IS NOT NULL OR tags ? 'bridge:name' OR tags ? 'tunnel:name' OR tags ? 'railway:track_ref')
-       AND (label is not null and label != '')
     ) AS r
   ORDER by layer, rank NULLS LAST;
 

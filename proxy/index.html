@@ -1536,6 +1536,7 @@
         minzoom: 17,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_detail',
+        filter: ['!=', ['get', 'label'], null],
         paint: {
           'text-color': '#585858',
           'text-halo-color': 'white',
@@ -1558,7 +1559,7 @@
         minzoom: 17,
         source: 'openrailwaymap',
         'source-layer': 'railway_text_detail',
-        // filter: ['!=', ['get', 'track_ref'], null],
+        filter: ['!=', ['get', 'track_ref'], null],
         paint: {
           'text-color': 'white',
           'text-halo-color': 'blue',

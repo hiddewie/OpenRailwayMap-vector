@@ -132,6 +132,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         label: string
@@ -144,6 +145,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
+        feature: string
         usage: string
         service: string
         label: string
