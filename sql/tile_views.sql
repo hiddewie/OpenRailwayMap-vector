@@ -379,6 +379,7 @@ CREATE OR REPLACE VIEW railway_text_detail AS
      WHERE
        railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
        AND (ref IS NOT NULL OR name IS NOT NULL OR tags ? 'bridge:name' OR tags ? 'tunnel:name' OR tags ? 'railway:track_ref')
+       AND (label is not null and label != '')
     ) AS r
   ORDER by layer, rank NULLS LAST;
 
