@@ -1998,10 +1998,20 @@
       },
       {
         id: 'electrification_signals',
-        type: 'line',
-        minzoom: 15,
+        type: 'symbol',
+        minzoom: 17,
         source: 'openrailwaymap',
         'source-layer': 'electrification_signals',
+        paint: {
+          // TODO https://github.com/maplibre/martin/issues/1075
+          // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
+          // 'icon-halo-blur': 0,
+          // 'icon-halo-width': 2.0,
+        },
+        layout: {
+          'icon-overlap': 'always',
+          'icon-image': ['image', ['get', 'feature']],
+        }
       },
       {
         id: 'electrification_railway_text_med',

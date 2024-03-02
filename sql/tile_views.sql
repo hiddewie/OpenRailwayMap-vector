@@ -1458,16 +1458,62 @@ CREATE OR REPLACE VIEW electrification_future AS
 CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
     way,
-    railway,
-    tags->'railway:signal:electricity' AS signal_electricity,
-    tags->'railway:signal:electricity:form' AS electricity_form,
-    tags->'railway:signal:electricity:turn_direction' AS electricity_turn_direction,
-    tags->'railway:signal:electricity:type' AS electricity_type,
-    signal_direction
-  FROM openrailwaymap_osm_signals
-  WHERE
-    railway = 'signal'
-    AND tags ? 'railway:signal:electricity';
+    CASE
+
+      -- DE pantograph down advance El 3
+      -- AT Ankündigung Stromabnehmer tief
+      WHEN electricity_type = 'pantograph_down_advance' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el3', 'AT-V2:andkündigung_stromabnehmer_tief') THEN 'de/el3'
+
+      -- DE power off advance sign El 1v
+      -- AT Ankündigung Hauptschalter aus
+      WHEN electricity_type = 'power_off_advance' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el1v', 'AT-V2:ankündigung_hauptschalter_aus') THEN 'de/el1v'
+
+      -- DE end of catenary sign El 6
+      -- AT Halt für Fahrzeuge mit angehobenem Stromabnehmer
+      WHEN electricity_type = 'end_of_catenary' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el6', 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer') THEN
+        CASE
+          WHEN electricity_turn_direction = 'left' THEN 'de/el6-left'
+          WHEN electricity_turn_direction = 'through' THEN 'de/el6-through'
+          WHEN electricity_turn_direction = 'right' THEN 'de/el6-right'
+          ELSE 'de/el6'
+        END
+
+      -- DE power on sign El 2
+      -- AT Hauptschalter ein
+      WHEN electricity_type = 'power_on' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el2', 'AT-V2:hauptschalter_ein') THEN 'de/el2'
+
+      -- DE pantograph up El 5
+      -- AT Stromabnehmer hoch
+      WHEN electricity_type = 'pantograph_up' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el5', 'AT-V2:stromabnehmer_hoch') THEN 'de/el5'
+
+      -- DE power off sign El 1
+      -- AT Hauptschalter aus
+      WHEN electricity_type = 'power_off' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el1', 'AT-V2:hauptschalter_aus') THEN 'de/el1'
+
+      -- DE pantograph down El 4
+      -- AT Stromabnehmer tief
+      WHEN electricity_type = 'pantograph_down' AND electricity_form = 'sign' AND signal_electricity IN ('DE-ESO:el4', 'AT-V2:stromabnehmer_tief') THEN 'de/el4'
+
+      -- DE tram power off shortly signal (St 7)
+      WHEN electricity_type = 'power_off_shortly' AND electricity_form = 'sign' AND signal_electricity IN ('DE-BOStrab:st7', 'DE-AVG:st7') THEN 'de/bostrab/st7'
+
+    END as feature
+  FROM (
+    SELECT
+      way,
+      railway,
+      tags->'railway:signal:electricity' AS signal_electricity,
+      tags->'railway:signal:electricity:form' AS electricity_form,
+      tags->'railway:signal:electricity:turn_direction' AS electricity_turn_direction,
+      tags->'railway:signal:electricity:type' AS electricity_type,
+      signal_direction
+    FROM openrailwaymap_osm_signals
+    WHERE
+      railway = 'signal'
+      AND signal_direction IS NOT NULL
+      AND tags ? 'railway:signal:electricity'
+  );
+
 
 CREATE OR REPLACE VIEW electrification_railway_text_med AS
   SELECT

@@ -294,7 +294,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
-        # feature: string
+        feature: string
 
     electrification_railway_text_med:
       schema: public
