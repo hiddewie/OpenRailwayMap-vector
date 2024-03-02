@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16.853933" height="15" viewBox="0 0 16.853933 15">
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="10.15501" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 189.455729 164.292076 L 0.0989583 164.292076 L 95.078646 -0.218862 L 189.919271 164.060305 " transform="matrix(0.0842697, 0, 0, 0.0842697, 0.421348, 0.448131)"/>
-<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.730469 6.40625 L 5.898438 7.273438 L 5.898438 8.636719 L 6.714844 7.757812 L 6.714844 12.976562 L 7.601562 12.976562 L 7.601562 6.40625 Z M 6.730469 6.40625 "/>
-<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 9.511719 6.40625 L 8.679688 7.273438 L 8.679688 8.636719 L 9.496094 7.757812 L 9.496094 12.976562 L 10.382812 12.976562 L 10.382812 6.40625 Z M 9.511719 6.40625 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21.348316" height="19" viewBox="0 0 21.348316 19">
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="10.15501" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 189.467842 164.301756 L 0.0867635 164.301756 L 95.088364 -0.231061 L 189.906987 164.045589 " transform="matrix(0.106742, 0, 0, 0.106742, 0.533707, 0.567633)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 8.523438 8.113281 L 7.472656 9.214844 L 7.472656 10.941406 L 8.503906 9.828125 L 8.503906 16.4375 L 9.628906 16.4375 L 9.628906 8.113281 Z M 8.523438 8.113281 "/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 12.046875 8.113281 L 10.996094 9.214844 L 10.996094 10.941406 L 12.027344 9.828125 L 12.027344 16.4375 L 13.152344 16.4375 L 13.152344 8.113281 Z M 12.046875 8.113281 "/>
 </svg>

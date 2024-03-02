@@ -394,7 +394,6 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     way,
-    railway,
     CASE
       -- AT --
 
@@ -451,10 +450,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       -- German speed signals (Zs 3) as signs
       WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'zs3-empty-sign-up'
-          WHEN signal_speed_limit_speed ~ '^(1[0-6]|[1-9])0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-sign-up')
-        END
+        'de/zs3-empty-sign-up'
 
       -- German speed signals (Zs 3) as light signals
       WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'light' THEN
@@ -520,26 +516,29 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- NL speed limit light (part of main signal)
       WHEN feature = 'NL' AND signal_speed_limit_form = 'light' THEN 'nl/speed_limit_light'
 
-    END as feature,
-    signal_speed_limit_form AS signal_speed_limit_form,
-    -- We cast the lowest speed to text to make it possible to only select those speeds in
-    -- CartoCSS we have an icon for. Otherwise we might render an icon for 40 kph if
-    -- 42 is tagged (but invalid tagging).
-    railway_largest_speed_noconvert(signal_speed_limit_speed)::text AS signal_speed_limit_speed,
-    signal_speed_limit_distant_form AS signal_speed_limit_distant_form,
-    railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed
-  FROM (select
-          *,
-          COALESCE(signal_speed_limit, signal_speed_limit_distant) AS feature
-        from openrailwaymap_osm_point
-        ) as signals
-  WHERE
-    railway = 'signal'
-    AND signal_direction IS NOT NULL
-    AND (
-    signal_speed_limit IS NOT NULL
-        OR signal_speed_limit_distant IS NOT NULL
-    )
+    END as feature
+  FROM (
+    SELECT
+      way,
+      signal_speed_limit,
+      signal_speed_limit_distant,
+      signal_speed_limit_form,
+      signal_speed_limit_distant_form,
+      COALESCE(signal_speed_limit, signal_speed_limit_distant) AS feature,
+      -- We cast the lowest speed to text to make it possible to only select those speeds in
+      -- CartoCSS we have an icon for. Otherwise we might render an icon for 40 kph if
+      -- 42 is tagged (but invalid tagging).
+      railway_largest_speed_noconvert(signal_speed_limit_speed)::text AS signal_speed_limit_speed,
+      railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed
+    FROM openrailwaymap_osm_point
+    WHERE
+      railway = 'signal'
+      AND signal_direction IS NOT NULL
+      AND (
+        signal_speed_limit IS NOT NULL
+          OR signal_speed_limit_distant IS NOT NULL
+      )
+  ) AS signals
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
     (CASE WHEN signal_speed_limit IS NOT NULL THEN 1 ELSE 2 END) DESC NULLS FIRST,
@@ -555,11 +554,12 @@ CREATE OR REPLACE VIEW speed_railway_line_text AS
       WHEN railway = 'preserved' THEN preserved_railway
       ELSE railway
     END as feature,
-    CASE WHEN speed_arr[3] = 4 THEN speed_arr[1]
-         WHEN speed_arr[3] = 3 THEN speed_arr[1]
-         WHEN speed_arr[3] = 2 THEN speed_arr[2]
-         WHEN speed_arr[3] = 1 THEN speed_arr[1]
-      END AS maxspeed,
+    CASE
+      WHEN speed_arr[3] = 4 THEN speed_arr[1]
+      WHEN speed_arr[3] = 3 THEN speed_arr[1]
+      WHEN speed_arr[3] = 2 THEN speed_arr[2]
+      WHEN speed_arr[3] = 1 THEN speed_arr[1]
+    END AS maxspeed,
     railway_speed_label(speed_arr) AS label,
     disused, construction,
     disused_railway,

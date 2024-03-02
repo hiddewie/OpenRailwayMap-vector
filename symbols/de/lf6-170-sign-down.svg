@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.549925" height="15" viewBox="0 0 17.549925 15">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.50082 -205.289267 L 224.540929 170.179172 L 444.481019 -205.289267 Z M 4.50082 -205.289267 " transform="matrix(0.0390554, 0, 0, 0.0390554, 0, 8.177807)"/>
-<path fill-rule="nonzero" fill="rgb(85.09804%, 44.313726%, 0%)" fill-opacity="1" d="M 1.453125 0.902344 L 8.769531 13.386719 L 16.082031 0.902344 Z M 1.453125 0.902344 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.882812 1.863281 L 5.890625 2.839844 L 5.890625 4.015625 L 6.820312 3.074219 L 6.820312 8.894531 L 7.691406 8.894531 L 7.691406 1.863281 Z M 6.882812 1.863281 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 10.277344 8.894531 L 12.226562 2.808594 L 12.226562 1.863281 L 9.074219 1.863281 L 9.074219 3.441406 L 9.945312 3.441406 L 9.945312 2.734375 L 11.335938 2.734375 L 9.363281 8.894531 Z M 10.277344 8.894531 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22.229905" height="19" viewBox="0 0 22.229905 19">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.500818 -205.283907 L 224.567135 170.179078 L 444.475529 -205.283907 Z M 4.500818 -205.283907 " transform="matrix(0.0494702, 0, 0, 0.0494702, 0, 10.358555)"/>
+<path fill-rule="nonzero" fill="rgb(85.09804%, 44.313726%, 0%)" fill-opacity="1" d="M 1.839844 1.144531 L 11.109375 16.957031 L 20.371094 1.144531 Z M 1.839844 1.144531 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8.71875 2.359375 L 7.460938 3.597656 L 7.460938 5.085938 L 8.640625 3.894531 L 8.640625 11.265625 L 9.742188 11.265625 L 9.742188 2.359375 Z M 8.71875 2.359375 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 13.019531 11.265625 L 15.488281 3.558594 L 15.488281 2.359375 L 11.492188 2.359375 L 11.492188 4.359375 L 12.597656 4.359375 L 12.597656 3.464844 L 14.359375 3.464844 L 11.859375 11.265625 Z M 13.019531 11.265625 "/>
 </svg>

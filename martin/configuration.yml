@@ -15,7 +15,7 @@ postgres:
   # # 'calc' - compute table geometry bounds on startup.
   # # 'quick' - same as 'calc', but the calculation will be aborted if it takes more than 5 seconds.
   # # 'skip' - do not compute table geometry bounds on startup.
-  auto_bounds: calc
+  auto_bounds: skip
 
   # # Enable automatic discovery of tables and functions.
   # # You may set this to `false` to disable.
@@ -183,12 +183,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
-        railway: string
         feature: string
-        signal_speed_limit_form: string
-        signal_speed_limit_speed: string
-        signal_speed_limit_distant_form: string
-        signal_speed_limit_distant_speed: string
 
     speed_railway_line_text:
       schema: public
