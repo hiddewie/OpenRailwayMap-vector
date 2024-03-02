@@ -9,6 +9,7 @@ jobs:
   deploy-proxy:
     name: Deploy proxy
     runs-on: ubuntu-latest
+    environment: proxy-production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +27,7 @@ jobs:
   deploy-tiles:
     name: Deploy tiles
     runs-on: ubuntu-latest
-    environment: production
+    environment: tiles-production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
