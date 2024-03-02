@@ -54,6 +54,7 @@ jobs:
       - name: Print tiles summary
         run: |
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/standard.mbtiles
+          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/speed.mbtiles
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/signals.mbtiles
 
       - name: Deploy
