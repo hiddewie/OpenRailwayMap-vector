@@ -225,5 +225,100 @@ postgres:
         ref: string
         name: string
 
+    # --- Electrification --- #
+
+    electrification_railway_line_casing:
+      schema: public
+      table: electrification_railway_line_casing
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_railway_line_low:
+      schema: public
+      table: electrification_railway_line_low
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_railway_line_med:
+      schema: public
+      table: electrification_railway_line_med
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_railway_line_fill:
+      schema: public
+      table: electrification_railway_line_fill
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_future:
+      schema: public
+      table: electrification_future
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_signals:
+      schema: public
+      table: electrification_signals
+      srid: 3857
+      geometry_column: way
+      geometry_type: POINT
+      properties:
+        feature: string
+
+    electrification_railway_text_med:
+      schema: public
+      table: electrification_railway_text_med
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    electrification_railway_text_high:
+      schema: public
+      table: electrification_railway_text_high
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
 fonts:
   - /config/fonts
