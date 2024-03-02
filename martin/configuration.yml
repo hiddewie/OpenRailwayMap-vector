@@ -184,6 +184,7 @@ postgres:
       geometry_type: POINT
       properties:
         feature: string
+        type: string
 
     speed_railway_line_text:
       schema: public

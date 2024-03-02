@@ -1599,10 +1599,24 @@
         id: 'speed_railway_signals',
         type: 'symbol',
         source: 'openrailwaymap',
-        // TODO filter zoom
         minzoom: 14,
         'source-layer': 'speed_railway_signals',
-        filter: ['!=', ['get', 'feature'], null],
+        filter: ['step', ['zoom'],
+          ['all',
+            ['!=', ['get', 'feature'], null],
+            ['==', ['get', 'type'], 'line'],
+          ],
+          15,
+          ['all',
+            ['!=', ['get', 'feature'], null],
+            ['any',
+              ['==', ['get', 'type'], 'line'],
+              ['==', ['get', 'type'], 'tram'],
+            ]
+          ],
+          17,
+          ['!=', ['get', 'feature'], null],
+        ],
         paint: {
           // TODO https://github.com/maplibre/martin/issues/1075
           // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
