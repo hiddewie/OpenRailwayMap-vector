@@ -99,15 +99,12 @@ $$ LANGUAGE plpgsql;
 
 -- Convert a speed number from text to integer and miles to kilometre
 CREATE OR REPLACE FUNCTION railway_speed_int(value TEXT) RETURNS INTEGER AS $$
-DECLARE
-  mph_value TEXT;
 BEGIN
   IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::INTEGER;
+    RETURN value::NUMERIC;
   END IF;
   IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    mph_value := substring(value FROM '^([0-9]+(\.[0-9]+)?)')::FLOAT;
-    RETURN (mph_value::FLOAT * 1.609344)::INTEGER;
+    RETURN (substring(value FROM '^([0-9]+(\.[0-9]+)?)')::NUMERIC) * 1.609344;
   END IF;
   RETURN NULL;
 END;
@@ -115,14 +112,12 @@ $$ LANGUAGE plpgsql;
 
 -- Convert a speed number from text to integer but not convert units
 CREATE OR REPLACE FUNCTION railway_speed_int_noconvert(value TEXT) RETURNS INTEGER AS $$
-DECLARE
-  mph_value TEXT;
 BEGIN
   IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::INTEGER;
+    RETURN value::NUMERIC;
   END IF;
   IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN substring(value FROM '^([0-9]+(\.[0-9]+)?)');
+    RETURN substring(value FROM '^([0-9]+(\.[0-9]+)?)')::NUMERIC;
   END IF;
   RETURN NULL;
 END;
