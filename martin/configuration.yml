@@ -2,20 +2,8 @@ cache_size_mb: 0
 
 # Database configuration. This can also be a list of PG configs.
 postgres:
-  # Database connection string. You can use env vars too, for example:
-  #   $DATABASE_URL
-  #   ${DATABASE_URL:-postgresql://postgres@localhost/db}
+  # Database connection string
   connection_string: ${DATABASE_URL}
-
-  # # Same as PGSSLCERT for psql
-  # ssl_cert: './postgresql.crt'
-  # # Same as PGSSLKEY for psql
-  # ssl_key: './postgresql.key'
-  # # Same as PGSSLROOTCERT for psql
-  # ssl_root_cert: './root.crt'
-
-  # #  If a spatial table has SRID 0, then this SRID will be used as a fallback
-  # default_srid: 4326
 
   # # Maximum Postgres connections pool size [default: 20]
   # pool_size: 20
@@ -27,11 +15,11 @@ postgres:
   # # 'calc' - compute table geometry bounds on startup.
   # # 'quick' - same as 'calc', but the calculation will be aborted if it takes more than 5 seconds.
   # # 'skip' - do not compute table geometry bounds on startup.
-  # auto_bounds: skip
+  auto_bounds: calc
 
   # # Enable automatic discovery of tables and functions.
   # # You may set this to `false` to disable.
-  # auto_publish: false
+  auto_publish: false
 
   # Associative arrays of table sources
   tables:
@@ -134,6 +122,86 @@ postgres:
         railway: string
         ref: string
         railway_local_operated: string
+
+    # --- Speed --- #
+
+    speed_railway_line_casing:
+      schema: public
+      table: speed_railway_line_casing
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+
+    speed_railway_line_low:
+      schema: public
+      table: speed_railway_line_low
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+        maxspeed: number
+
+    speed_railway_line_med:
+      schema: public
+      table: speed_railway_line_med
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+        maxspeed: number
+
+    speed_railway_line_fill:
+      schema: public
+      table: speed_railway_line_fill
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+        maxspeed: number
+
+    speed_railway_signals:
+      schema: public
+      table: speed_railway_signals
+      srid: 3857
+      geometry_column: way
+      geometry_type: POINT
+      properties:
+        railway: string
+        feature: string
+        signal_speed_limit_form: string
+        signal_speed_limit_speed: string
+        signal_speed_limit_distant_form: string
+        signal_speed_limit_distant_speed: string
+
+    speed_railway_line_text:
+      schema: public
+      table: speed_railway_line_text
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+        label: string
 
     # --- Signals --- #
 

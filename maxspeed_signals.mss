@@ -1,6 +1,6 @@
 #railway_signals {
   [zoom>=17] {
-  /* German speed signals (Zs 10) */
+  /*  */
     ["feature"="DE-ESO:db:zs10"]["signal_speed_limit_speed"="none"] {
       ["signal_speed_limit_form"="sign"] {
         marker-allow-overlap: true;
@@ -86,7 +86,7 @@
       }
       ["signal_speed_limit_distant_speed"=null],
       ["signal_speed_limit_distant_speed"="^off;\?$"] {
-        marker-file: url('symbols/de/zs2v-unknown.svg'); /* for light signals: empty Zs3v "looks" exactly like empty Zs2v*/
+        marker-file: url('symbols/de/zs2v-unknown.svg'); /* */
       }
       ["signal_speed_limit_distant_speed"="20"] {
         marker-file: url('symbols/de/zs3v-20-light.svg');

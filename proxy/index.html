@@ -172,6 +172,7 @@
 <script>
   const knownStyles = {
     standard: 'Infrastructure',
+    speed: 'Speed',
     signals: 'Train protection',
   };
   function hashToObject(hash) {
@@ -627,7 +628,15 @@
       openstreetmap,
       openrailwaymap: {
         type: 'vector',
-          url: `${location.origin}/standard`,
+        url: `${location.origin}/standard`,
+        attribution,
+      },
+    },
+    speed: {
+      openstreetmap,
+      openrailwaymap: {
+        type: 'vector',
+        url: `${location.origin}/speed`,
         attribution,
       },
     },
@@ -1464,6 +1473,60 @@
           'text-size': 10,
           'text-padding': 10,
         },
+      },
+    ],
+
+    speed: [
+      backgroundColor,
+      backgroundMap,
+      {
+        id: 'speed_railway_line_casing',
+        type: 'line',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_line_casing',
+      },
+      {
+        id: 'speed_railway_line_low',
+        type: 'line',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_line_low',
+      },
+      {
+        id: 'speed_railway_line_med',
+        type: 'line',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_line_med',
+      },
+      {
+        id: 'speed_railway_line_fill',
+        type: 'line',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_line_fill',
+      },
+      {
+        id: 'speed_railway_signals',
+        type: 'symbol',
+        source: 'openrailwaymap',
+        // TODO filter zoom
+        minzoom: 14,
+        'source-layer': 'speed_railway_signals',
+        paint: {
+          // TODO https://github.com/maplibre/martin/issues/1075
+          // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
+          // 'icon-halo-blur': 0,
+          // 'icon-halo-width': 2.0,
+        },
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': ['image', ['get', 'feature']],
+        }
+      },
+      {
+        id: 'speed_railway_line_text',
+        type: 'line',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_line_text',
       },
     ],
 
