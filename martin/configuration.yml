@@ -38,9 +38,9 @@ postgres:
 
     # --- Standard --- #
 
-    railway_line_med:
+    standard_railway_line_med:
       schema: public
-      table: railway_line_med
+      table: standard_railway_line_med
       srid: 3857
       geometry_column: way
       geometry_type: LINESTRING
@@ -53,18 +53,18 @@ postgres:
         tunnel: boolean
         bridge: boolean
 
-    railway_turntables:
+    standard_railway_turntables:
       schema: public
-      table: railway_turntables
+      table: standard_railway_turntables
       srid: 3857
       geometry_column: way
       geometry_type: POLYGON
       properties:
         railway: string
 
-    railway_line_fill:
+    standard_railway_line_fill:
       schema: public
-      table: railway_line_fill
+      table: standard_railway_line_fill
       srid: 3857
       geometry_column: way
       geometry_type: LINESTRING
@@ -77,9 +77,9 @@ postgres:
         tunnel: boolean
         bridge: boolean
 
-    railway_text_stations:
+    standard_railway_text_stations:
       schema: public
-      table: railway_text_stations
+      table: standard_railway_text_stations
       srid: 3857
       geometry_column: way
       geometry_type: POINT
@@ -88,9 +88,9 @@ postgres:
         station: string
         label: string
 
-    railway_symbols:
+    standard_railway_symbols:
       schema: public
-      table: railway_symbols
+      table: standard_railway_symbols
       srid: 3857
       geometry_column: way
       geometry_type: POINT
@@ -98,9 +98,9 @@ postgres:
         railway: string
         man_made: string
 
-    railway_text:
+    standard_railway_text:
       schema: public
-      table: railway_text
+      table: standard_railway_text
       srid: 3857
       geometry_column: way
       geometry_type: LINESTRING
@@ -113,9 +113,9 @@ postgres:
         track_ref: string
         label: string
 
-    railway_text_km:
+    standard_railway_text_km:
       schema: public
-      table: railway_text_km
+      table: standard_railway_text_km
       srid: 3857
       geometry_column: way
       geometry_type: POINT
@@ -124,9 +124,9 @@ postgres:
         pos: string
         zero: boolean
 
-    railway_switch_ref:
+    standard_railway_switch_ref:
       schema: public
-      table: railway_switch_ref
+      table: standard_railway_switch_ref
       srid: 3857
       geometry_column: way
       geometry_type: POINT
@@ -135,11 +135,11 @@ postgres:
         ref: string
         railway_local_operated: string
 
-    # --- Signalling --- #
+    # --- Signals --- #
 
-    railway_line:
+    signals_railway_line:
       schema: public
-      table: railway_line
+      table: signals_railway_line
       srid: 3857
       geometry_column: way
       geometry_type: LINESTRING
@@ -152,9 +152,9 @@ postgres:
         rank: number
         train_protection: string
 
-    railway_signals:
+    signals_railway_signals:
       schema: public
-      table: railway_signals
+      table: signals_railway_signals
       srid: 3857
       geometry_column: way
       geometry_type: POINT
@@ -164,9 +164,9 @@ postgres:
         feature: string
         deactivated: boolean
 
-    signal_boxes:
+    signals_signal_boxes:
       schema: public
-      table: signal_boxes
+      table: signals_signal_boxes
       srid: 3857
       geometry_column: way
       geometry_type: GEOMETRY

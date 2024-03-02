@@ -1,4 +1,6 @@
-CREATE OR REPLACE VIEW railway_line_med AS
+--- Standard ---
+
+CREATE OR REPLACE VIEW standard_railway_line_med AS
   SELECT
     way,
     railway,
@@ -26,14 +28,14 @@ CREATE OR REPLACE VIEW railway_line_med AS
     ) AS r
   ORDER by layer, rank NULLS LAST;
 
-CREATE OR REPLACE VIEW railway_turntables AS
+CREATE OR REPLACE VIEW standard_railway_turntables AS
   SELECT
     way,
     railway
   FROM openrailwaymap_osm_polygon
   WHERE railway IN ('turntable', 'traverser');
 
-CREATE OR REPLACE VIEW railway_line_fill AS
+CREATE OR REPLACE VIEW standard_railway_line_fill AS
   SELECT
     way,
     railway,
@@ -83,7 +85,7 @@ CREATE OR REPLACE VIEW railway_line_fill AS
     ) AS r
   ORDER by layer, rank NULLS LAST;
 
-CREATE OR REPLACE VIEW railway_text_stations AS
+CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
     way, railway, station,
     CASE
@@ -115,7 +117,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     ) AS r
   ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
 
-CREATE OR REPLACE VIEW railway_symbols AS
+CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
     way,
     railway,
@@ -129,7 +131,7 @@ CREATE OR REPLACE VIEW railway_symbols AS
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio')
   ORDER BY prio DESC;
 
-CREATE OR REPLACE VIEW railway_text AS
+CREATE OR REPLACE VIEW standard_railway_text AS
   SELECT
     way,
     railway,
@@ -190,7 +192,7 @@ CREATE OR REPLACE VIEW railway_text AS
     ) AS r
   ORDER BY layer, rank NULLS LAST;
 
-CREATE OR REPLACE VIEW railway_text_km AS
+CREATE OR REPLACE VIEW standard_railway_text_km AS
   SELECT
     way,
     railway,
@@ -208,14 +210,17 @@ CREATE OR REPLACE VIEW railway_text_km AS
   WHERE pos IS NOT NULL
   ORDER by zero;
 
-CREATE OR REPLACE VIEW railway_switch_ref AS
+CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   SELECT
     way, railway, ref, railway_local_operated
   FROM openrailwaymap_osm_point
   WHERE railway IN ('switch', 'railway_crossing') AND ref IS NOT NULL
   ORDER by char_length(ref) ASC;
 
-CREATE OR REPLACE VIEW railway_line AS
+
+--- Signals ---
+
+CREATE OR REPLACE VIEW signals_railway_line AS
   SELECT
     way,
     railway,
@@ -266,7 +271,7 @@ CREATE OR REPLACE VIEW railway_line AS
       COALESCE(layer, 0),
       rank NULLS LAST;
 
-CREATE OR REPLACE VIEW signal_boxes AS
+CREATE OR REPLACE VIEW signals_signal_boxes AS
   (SELECT
      way,
      tags->'railway:ref' AS ref,
@@ -284,7 +289,7 @@ CREATE OR REPLACE VIEW signal_boxes AS
    FROM openrailwaymap_osm_point
    WHERE railway = 'signal_box');
 
-CREATE OR REPLACE VIEW railway_signals AS
+CREATE OR REPLACE VIEW signals_railway_signals AS
   WITH pre_signals AS (
     SELECT
       way,

@@ -64,7 +64,7 @@ services:
       # DE: --bbox=5.864417,47.26543,15.05078,55.14777
       # FI: --bbox=19.02427,59.28783,31.6159,70.09959
       # NL: --bbox=2.99,50.74753,7.230455,54.01786
-      'martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 14 "--bbox=2.99,50.74753,7.230455,54.01786" --source railway_line_med,railway_turntables,railway_line_fill,railway_text_stations,railway_symbols,railway_text,railway_text_km,railway_switch_ref --output-file /tiles/standard.mbtiles --on-duplicate override && martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 14 "--bbox=2.99,50.74753,7.230455,54.01786" --source railway_line,railway_signals,signal_boxes --output-file /tiles/signals.mbtiles --on-duplicate override'
+      'martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 14 "--bbox=2.99,50.74753,7.230455,54.01786" --source standard_railway_line_med,standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles --on-duplicate override && martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 14 "--bbox=2.99,50.74753,7.230455,54.01786" --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles --on-duplicate override'
     ]
     volumes:
       - ./martin:/config
