@@ -235,7 +235,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -247,7 +247,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -259,7 +259,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -271,7 +271,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -283,7 +283,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -294,7 +294,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
-        feature: string
+        # feature: string
 
     electrification_railway_text_med:
       schema: public
@@ -304,7 +304,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
@@ -316,7 +316,7 @@ postgres:
       geometry_type: LINESTRING
       properties:
         railway: string
-        feature: string
+        # feature: string
         usage: string
         service: string
 
