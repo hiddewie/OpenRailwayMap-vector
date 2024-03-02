@@ -260,42 +260,6 @@ CREATE OR REPLACE VIEW speed_railway_line_casing AS
     ) AS r
   ORDER by layer, rank NULLS LAST;
 
-CREATE OR REPLACE VIEW speed_railway_line_low AS
-  SELECT
-    way,
-    railway,
-    railway as feature,
-    usage,
-    -- speeds are converted to kph in this layer because it is used for colouring
-    railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-    NULL AS service,
-    NULL AS disused, NULL AS construction,
-    NULL AS disused_railway,
-    NULL AS construction_railway,
-    NULL AS disused_usage, NULL AS disused_service,
-    NULL AS construction_usage, NULL AS construction_service,
-    NULL AS preserved_railway, NULL AS preserved_service,
-    NULL AS preserved_usage,
-    CASE WHEN railway = 'rail' AND usage = 'main' THEN 1100
-         WHEN railway = 'rail' AND usage = 'branch' THEN 1000
-         ELSE 50
-      END AS rank
-  FROM
-    (SELECT
-       way, railway, usage,
-       maxspeed,
-       maxspeed_forward,
-       maxspeed_backward,
-       preferred_direction,
-       layer
-     FROM openrailwaymap_osm_line
-     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST,
-    maxspeed ASC NULLS FIRST;
-
 CREATE OR REPLACE VIEW speed_railway_line_med AS
   SELECT
     way,
@@ -312,10 +276,11 @@ CREATE OR REPLACE VIEW speed_railway_line_med AS
     NULL AS construction_usage, NULL AS construction_service,
     NULL AS preserved_railway, NULL AS preserved_service,
     NULL AS preserved_usage,
-    CASE WHEN railway = 'rail' AND usage = 'main' THEN 1100
-         WHEN railway = 'rail' AND usage = 'branch' THEN 1000
-         ELSE 50
-      END AS rank
+    CASE
+      WHEN railway = 'rail' AND usage = 'main' THEN 1100
+      WHEN railway = 'rail' AND usage = 'branch' THEN 1000
+      ELSE 50
+    END AS rank
   FROM
     (SELECT
        way, railway, usage,
@@ -325,7 +290,7 @@ CREATE OR REPLACE VIEW speed_railway_line_med AS
        preferred_direction,
        layer
      FROM openrailwaymap_osm_line
-     WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
+     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER BY
     layer,

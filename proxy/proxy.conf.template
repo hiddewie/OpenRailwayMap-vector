@@ -40,7 +40,7 @@ server {
 
   location / {
     # rewrite ^/standard$ /standard_railway_line_med,standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text,standard_railway_text_km,standard_railway_switch_ref last;
-    # rewrite ^/speed$ /speed_railway_line_casing,speed_railway_line_low,speed_railway_line_med,speed_railway_line_fill,speed_railway_signals,speed_railway_line_text last;
+    # rewrite ^/speed$ /speed_railway_line_casing,speed_railway_line_med,speed_railway_line_fill,speed_railway_signals,speed_railway_line_text last;
     # rewrite ^/signals$ /signals_railway_line,signals_railway_signals,signals_signal_boxes last;
 
     proxy_pass http://${PROXY_UPSTREAM};
@@ -54,6 +54,7 @@ server {
     proxy_set_header X-Rewrite-URL $uri;
     proxy_set_header X-Forwarded-Host ${PUBLIC_HOST};
     proxy_set_header X-Forwarded-Proto ${PUBLIC_PROTOCOL};
+    proxy_read_timeout 600;
     proxy_redirect off;
 
     add_header X-Cache-Status $upstream_cache_status;

@@ -137,19 +137,6 @@ postgres:
         usage: string
         service: string
 
-    speed_railway_line_low:
-      schema: public
-      table: speed_railway_line_low
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        maxspeed: number
-
     speed_railway_line_med:
       schema: public
       table: speed_railway_line_med
