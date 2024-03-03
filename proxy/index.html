@@ -698,8 +698,8 @@
     'line-width': railwayLineWidth,
   };
 
-  const electrification_construction_dashes = [5, 5];
-  const electrification_proposed_dashes = [4, 8];
+  const electrification_construction_dashes = [2.5, 2.5];
+  const electrification_proposed_dashes = [2, 4];
 
   const color_no = 'black';
   const color_delectrified = '#70584D';
@@ -727,7 +727,7 @@
   const electrificationCasingPaint = {
     'line-color': 'white',
     'line-width': railwayLineWidth,
-    'line-gap-width': 2,
+    'line-gap-width': 0.75,
   };
 
   const electrificationFillPaint = dashArray => ({
@@ -2067,7 +2067,7 @@
         id: 'electrification_railway_line_med_casing',
         type: 'line',
         minzoom: 8,
-        maxzoom: 8,
+        maxzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_line_med',
         paint: electrificationCasingPaint,
@@ -2095,7 +2095,7 @@
         id: 'electrification_railway_line_med_fill',
         type: 'line',
         minzoom: 8,
-        maxzoom: 8,
+        maxzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_line_med',
         paint: electrificationFillPaint([1]),
