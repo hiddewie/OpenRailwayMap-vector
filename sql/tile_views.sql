@@ -1248,6 +1248,10 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 CREATE OR REPLACE VIEW electrification_railway_line_casing AS
   SELECT
      way, railway, usage, service,
+    CASE
+      WHEN railway = 'construction' THEN construction_railway
+      ELSE railway
+    END as feature,
      construction,
      construction_railway,
      CASE WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
@@ -1293,6 +1297,7 @@ CREATE OR REPLACE VIEW electrification_railway_line_casing AS
 CREATE OR REPLACE VIEW electrification_railway_line_low AS
   SELECT
     way, railway, usage,
+    railway as feature,
     NULL AS service,
     NULL AS construction,
     NULL AS construction_railway,
@@ -1325,6 +1330,7 @@ CREATE OR REPLACE VIEW electrification_railway_line_low AS
 CREATE OR REPLACE VIEW electrification_railway_line_med AS
   SELECT
     way, railway, usage,
+    railway as feature,
     NULL AS service,
     NULL AS construction,
     NULL AS construction_railway,
@@ -1363,6 +1369,10 @@ CREATE OR REPLACE VIEW electrification_railway_line_med AS
 CREATE OR REPLACE VIEW electrification_railway_line_fill AS
   SELECT
     way, railway, usage, service,
+    CASE
+      WHEN railway = 'construction' THEN construction_railway
+      ELSE railway
+    END as feature,
     construction,
     construction_railway,
     construction_usage, construction_service,
@@ -1411,6 +1421,10 @@ CREATE OR REPLACE VIEW electrification_railway_line_fill AS
 CREATE OR REPLACE VIEW electrification_future AS
   SELECT
     way, railway, usage, service,
+    CASE
+      WHEN railway = 'construction' THEN construction_railway
+      ELSE railway
+    END as feature,
     construction,
     construction_railway,
     construction_usage, construction_service,
@@ -1501,24 +1515,25 @@ CREATE OR REPLACE VIEW electrification_signals AS
   FROM (
     SELECT
       way,
-      railway,
       tags->'railway:signal:electricity' AS signal_electricity,
       tags->'railway:signal:electricity:form' AS electricity_form,
       tags->'railway:signal:electricity:turn_direction' AS electricity_turn_direction,
-      tags->'railway:signal:electricity:type' AS electricity_type,
-      signal_direction
+      tags->'railway:signal:electricity:type' AS electricity_type
     FROM openrailwaymap_osm_signals
     WHERE
       railway = 'signal'
       AND signal_direction IS NOT NULL
       AND tags ? 'railway:signal:electricity'
-  );
-
+  ) as signals;
 
 CREATE OR REPLACE VIEW electrification_railway_text_med AS
   SELECT
     way, railway, usage, service,
     construction,
+    CASE
+      WHEN railway = 'construction' THEN tags->'construction:railway'
+      ELSE railway
+    END as feature,
     tags->'construction:railway' AS construction_railway,
     CASE WHEN railway = 'rail' AND usage = 'main' THEN 1100
          WHEN railway = 'rail' AND usage = 'branch' THEN 1000
@@ -1543,6 +1558,10 @@ CREATE OR REPLACE VIEW electrification_railway_text_high AS
     way, railway, usage, service,
     construction,
     tags->'construction:railway' AS construction_railway,
+    CASE
+      WHEN railway = 'construction' THEN tags->'construction:railway'
+      ELSE railway
+    END as feature,
     CASE WHEN railway = 'rail' AND usage IN ('usage', 'military', 'test') AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
          WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870

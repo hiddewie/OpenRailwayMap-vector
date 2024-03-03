@@ -621,40 +621,40 @@
   const speedLayout = {
     'line-join': 'round',
   };
-  maxspeed_fill_color_10 = '#0100CB';
-  maxspeed_fill_color_20 = '#001ECB';
-  maxspeed_fill_color_30 = '#003DCB';
-  maxspeed_fill_color_40 = '#005BCB';
-  maxspeed_fill_color_50 = '#007ACB';
-  maxspeed_fill_color_60 = '#0098CB';
-  maxspeed_fill_color_70 = '#00B7CB';
-  maxspeed_fill_color_80 = '#00CBC1';
-  maxspeed_fill_color_90 = '#00CBA2';
-  maxspeed_fill_color_100 = '#00CB84';
-  maxspeed_fill_color_110 = '#00CB66';
-  maxspeed_fill_color_120 = '#00CB47';
-  maxspeed_fill_color_130 = '#00CB29';
-  maxspeed_fill_color_140 = '#00CB0A';
-  maxspeed_fill_color_150 = '#14CB00';
-  maxspeed_fill_color_160 = '#33CB00';
-  maxspeed_fill_color_170 = '#51CB00';
-  maxspeed_fill_color_180 = '#70CB00';
-  maxspeed_fill_color_190 = '#8ECB00';
-  maxspeed_fill_color_200 = '#ADCB00';
-  maxspeed_fill_color_210 = '#CBCB00';
-  maxspeed_fill_color_220 = '#CBAD00';
-  maxspeed_fill_color_230 = '#CB8E00';
-  maxspeed_fill_color_240 = '#CB7000';
-  maxspeed_fill_color_250 = '#CB5100';
-  maxspeed_fill_color_260 = '#CB3300';
-  maxspeed_fill_color_270 = '#CB1400';
-  maxspeed_fill_color_280 = '#CB0007';
-  maxspeed_fill_color_290 = '#CB0025';
-  maxspeed_fill_color_300 = '#CB0044';
-  maxspeed_fill_color_320 = '#CB0062';
-  maxspeed_fill_color_340 = '#CB0081';
-  maxspeed_fill_color_360 = '#CB009F';
-  maxspeed_fill_color_380 = '#CB00BD';
+  const maxspeed_fill_color_10 = '#0100CB';
+  const maxspeed_fill_color_20 = '#001ECB';
+  const maxspeed_fill_color_30 = '#003DCB';
+  const maxspeed_fill_color_40 = '#005BCB';
+  const maxspeed_fill_color_50 = '#007ACB';
+  const maxspeed_fill_color_60 = '#0098CB';
+  const maxspeed_fill_color_70 = '#00B7CB';
+  const maxspeed_fill_color_80 = '#00CBC1';
+  const maxspeed_fill_color_90 = '#00CBA2';
+  const maxspeed_fill_color_100 = '#00CB84';
+  const maxspeed_fill_color_110 = '#00CB66';
+  const maxspeed_fill_color_120 = '#00CB47';
+  const maxspeed_fill_color_130 = '#00CB29';
+  const maxspeed_fill_color_140 = '#00CB0A';
+  const maxspeed_fill_color_150 = '#14CB00';
+  const maxspeed_fill_color_160 = '#33CB00';
+  const maxspeed_fill_color_170 = '#51CB00';
+  const maxspeed_fill_color_180 = '#70CB00';
+  const maxspeed_fill_color_190 = '#8ECB00';
+  const maxspeed_fill_color_200 = '#ADCB00';
+  const maxspeed_fill_color_210 = '#CBCB00';
+  const maxspeed_fill_color_220 = '#CBAD00';
+  const maxspeed_fill_color_230 = '#CB8E00';
+  const maxspeed_fill_color_240 = '#CB7000';
+  const maxspeed_fill_color_250 = '#CB5100';
+  const maxspeed_fill_color_260 = '#CB3300';
+  const maxspeed_fill_color_270 = '#CB1400';
+  const maxspeed_fill_color_280 = '#CB0007';
+  const maxspeed_fill_color_290 = '#CB0025';
+  const maxspeed_fill_color_300 = '#CB0044';
+  const maxspeed_fill_color_320 = '#CB0062';
+  const maxspeed_fill_color_340 = '#CB0081';
+  const maxspeed_fill_color_360 = '#CB009F';
+  const maxspeed_fill_color_380 = '#CB00BD';
 
   const speedFillPaint = {
     'line-color': ['case',
@@ -696,6 +696,100 @@
       'gray',
     ],
     'line-width': railwayLineWidth,
+  };
+
+  const electrification_construction_dashes = [5, 5];
+  const electrification_proposed_dashes = [4, 8];
+
+  const color_no = 'black';
+  const color_delectrified = '#70584D';
+  const color_lt750v_dc = '#FF79B8';
+  const color_750v_dc = '#F930FF';
+  const color_gt750v_lt1kv_dc = '#D033FF';
+  const color_1kv_dc = '#5C1CCB';
+  const color_gt1kv_lt1500v_dc = '#007ACB';
+  const color_1500v_dc = '#0098CB';
+  const color_gt1500v_lt3kv_dc = '#00B7CB';
+  const color_3kv_dc = '#0000FF';
+  const color_gt3kv_dc = '#1969FF';
+  const color_lt15kv_ac = '#97FF2F';
+  const color_gte15kv_lt25kv_ac = '#F1F100';
+  const color_gte25kv_ac = '#FF9F19';
+  const color_15kv_16_67hz = '#00FF00';
+  const color_15kv_16_7hz = '#00CB66';
+  const color_25kv_50hz = '#FF0000';
+  const color_25kv_60hz = '#C00000';
+  const color_12kv_25hz = '#CCCC00';
+  const color_12_5kv_60hz = '#999900';
+  const color_20kv_50hz = '#FFCC66';
+  const color_20kv_60hz = '#FF9966';
+
+  const electrificationCasingPaint = {
+    'line-color': 'white',
+    'line-width': railwayLineWidth,
+    'line-gap-width': 2,
+  };
+
+  const electrificationFillPaint = dashArray => ({
+    'line-color': ['case',
+      ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 25000]], color_25kv_60hz,
+      ['all', ['==', ['get', 'frequency'], 50], ['==', ['get', 'voltage'], 25000]], color_25kv_50hz,
+      ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 20000]], color_20kv_60hz,
+      ['all', ['==', ['get', 'frequency'], 50], ['==', ['get', 'voltage'], 20000]], color_20kv_50hz,
+      ['all', ['==', ['get', 'frequency'], 16.7], ['==', ['get', 'voltage'], 15000]], color_15kv_16_7hz,
+      ['all', ['==', ['get', 'frequency'], 16.67], ['==', ['get', 'voltage'], 15000]], color_15kv_16_67hz,
+      ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 12500]], color_12_5kv_60hz,
+      ['all', ['==', ['get', 'frequency'], 25], ['==', ['get', 'voltage'], 12000]], color_12kv_25hz,
+      ['all', ['==', ['get', 'frequency'], 0], ['!=', ['get', 'voltage'], null], ['>', ['get', 'voltage'], 3000]], color_gt3kv_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['==', ['get', 'voltage'], 3000]], color_3kv_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['!=', ['get', 'voltage'], null], ['>', 3000, ['get', 'voltage']], ['>', ['get', 'voltage'], 1500]], color_gt1500v_lt3kv_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['==', ['get', 'voltage'], 1500]], color_1500v_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['!=', ['get', 'voltage'], null], ['>', 1500, ['get', 'voltage']], ['>', ['get', 'voltage'], 1000]], color_gt1kv_lt1500v_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['==', ['get', 'voltage'], 1000]], color_1kv_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['!=', ['get', 'voltage'], null], ['>', 1000, ['get', 'voltage']], ['>', ['get', 'voltage'], 750]], color_gt750v_lt1kv_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['==', ['get', 'voltage'], 750]], color_750v_dc,
+      ['all', ['==', ['get', 'frequency'], 0], ['!=', ['get', 'voltage'], null], ['>', 750, ['get', 'voltage']]], color_lt750v_dc,
+      ['all',
+        ['!=', ['get', 'frequency'], 0],
+        ['!=', ['get', 'voltage'], null],
+        ['any',
+          ['>', ['get', 'voltage'], 25000],
+          ['all', ['!=', ['get', 'frequency'], 50], ['!=', ['get', 'frequency'], 60], ['>', ['get', 'voltage'], 25000]],
+        ],
+      ], color_gte25kv_ac,
+      ['all',
+        ['!=', ['get', 'frequency'], 0],
+        ['!=', ['get', 'voltage'], null],
+        ['any',
+          ['all', ['!=', ['get', 'frequency'], 16.67], ['!=', ['get', 'frequency'], '16.7'], ['==', ['get', 'voltage'], 15000]],
+          ['all', ['>', 20000, ['get', 'voltage']], ['>', ['get', 'voltage'], 15000]],
+          ['all', ['!=', ['get', 'frequency'], 50], ['!=', ['get', 'frequency'], '60'], ['==', ['get', 'voltage'], 20000]],
+          ['all', ['>', 25000, ['get', 'voltage']], ['>', ['get', 'voltage'], 20000]],
+        ],
+      ], color_gte15kv_lt25kv_ac,
+      ['all',
+        ['!=', ['get', 'frequency'], 0],
+        ['!=', ['get', 'voltage'], null],
+        ['any',
+          ['>', 12000, ['get', 'voltage']],
+          ['all', ['!=', ['get', 'frequency'], 25], ['==', ['get', 'voltage'], 12000]],
+          ['all', ['>', 12500, ['get', 'voltage']], ['>', ['get', 'voltage'], 12000]],
+          ['all', ['!=', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 12500]],
+          ['all', ['>', 15000, ['get', 'voltage']], ['>', ['get', 'voltage'], 12500]],
+        ],
+      ], color_lt15kv_ac,
+      ['any',
+        ['==', ['get', 'state'], 'deelectrified'],
+        ['==', ['get', 'state'], 'abandoned'],
+      ], color_delectrified,
+      ['==', ['get', 'state'], 'no'], color_no,
+      'gray',
+    ],
+    'line-width': railwayLineWidth,
+    'line-dasharray': dashArray,
+  });
+  const electrificationLayout = {
+    'line-join': 'round',
   };
 
   const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>';
@@ -1961,26 +2055,51 @@
       backgroundColor,
       backgroundMap,
       {
-        id: 'electrification_railway_line_casing',
-        type: 'line',
-        minzoom: 9,
-        source: 'openrailwaymap',
-        'source-layer': 'electrification_railway_line_casing',
-      },
-      {
-        id: 'electrification_railway_line_low',
+        id: 'electrification_railway_line_low_casing',
         type: 'line',
         maxzoom: 8,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_line_low',
+        paint: electrificationCasingPaint,
+        layout: electrificationLayout,
       },
       {
-        id: 'electrification_railway_line_med',
+        id: 'electrification_railway_line_med_casing',
         type: 'line',
         minzoom: 8,
         maxzoom: 8,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_line_med',
+        paint: electrificationCasingPaint,
+        layout: electrificationLayout,
+      },
+      {
+        id: 'electrification_railway_line_casing',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'electrification_railway_line_casing',
+        paint: electrificationCasingPaint,
+        layout: electrificationLayout,
+      },
+      {
+        id: 'electrification_railway_line_low_fill',
+        type: 'line',
+        maxzoom: 8,
+        source: 'openrailwaymap',
+        'source-layer': 'electrification_railway_line_low',
+        paint: electrificationFillPaint([1]),
+        layout: electrificationLayout,
+      },
+      {
+        id: 'electrification_railway_line_med_fill',
+        type: 'line',
+        minzoom: 8,
+        maxzoom: 8,
+        source: 'openrailwaymap',
+        'source-layer': 'electrification_railway_line_med',
+        paint: electrificationFillPaint([1]),
+        layout: electrificationLayout,
       },
       {
         id: 'electrification_railway_line_fill',
@@ -1988,13 +2107,28 @@
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_line_fill',
+        paint: electrificationFillPaint([1]),
+        layout: electrificationLayout,
       },
       {
-        id: 'electrification_future',
+        id: 'electrification_future_proposed',
         type: 'line',
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_future',
+        filter: ['==', ['get', 'state'], 'proposed'],
+        paint: electrificationFillPaint(electrification_proposed_dashes),
+        layout: electrificationLayout,
+      },
+      {
+        id: 'electrification_future_construction',
+        type: 'line',
+        minzoom: 9,
+        source: 'openrailwaymap',
+        'source-layer': 'electrification_future',
+        filter: ['==', ['get', 'state'], 'construction'],
+        paint: electrificationFillPaint(electrification_construction_dashes),
+        layout: electrificationLayout,
       },
       {
         id: 'electrification_signals',
@@ -2015,18 +2149,171 @@
       },
       {
         id: 'electrification_railway_text_med',
-        type: 'line',
+        type: 'symbol',
         minzoom: 8,
         maxzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_text_med',
+        filter: ['all',
+          ['==', ['get', 'railway'], 'rail'],
+          ['any',
+            ['==', ['get', 'usage'], 'main'],
+            ['==', ['get', 'usage'], 'branch'],
+          ],
+          ['==', ['get', 'service'], null],
+        ],
+        paint: {
+          'text-halo-color': 'white',
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'symbol-z-order': 'source',
+          'symbol-placement': 'line',
+          'text-field': '{label}',
+          // TODO not present: oblique font
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 30,
+          'symbol-spacing': 100,
+        },
       },
       {
         id: 'electrification_railway_text_high',
-        type: 'line',
+        type: 'symbol',
         minzoom: 9,
         source: 'openrailwaymap',
         'source-layer': 'electrification_railway_text_high',
+        filter: ['step', ['zoom'],
+          ['all',
+            ['==', ['get', 'railway'], 'rail'],
+            ['any',
+              ['==', ['get', 'usage'], 'main'],
+              ['==', ['get', 'usage'], 'branch'],
+            ],
+            ['==', ['get', 'service'], null],
+          ],
+          10,
+          ['all',
+            ['==', ['get', 'railway'], 'rail'],
+            ['any',
+              ['==', ['get', 'usage'], 'main'],
+              ['==', ['get', 'usage'], 'branch'],
+              ['==', ['get', 'usage'], 'industrial'],
+            ],
+            ['==', ['get', 'service'], null],
+          ],
+          11,
+          ['any',
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['any',
+                ['==', ['get', 'usage'], 'main'],
+                ['==', ['get', 'usage'], 'branch'],
+              ],
+              ['==', ['get', 'service'], null],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['==', ['get', 'usage'], 'industrial'],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['==', ['get', 'usage'], null],
+              ['any',
+                ['==', ['get', 'service'], 'siding'],
+                ['==', ['get', 'service'], 'crossover'],
+                ['==', ['get', 'service'], 'spur'],
+              ],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'narrow_gauge'],
+              ['any',
+                ['==', ['get', 'service'], null],
+                ['==', ['get', 'service'], 'siding'],
+                ['==', ['get', 'service'], 'crossover'],
+                ['==', ['get', 'service'], 'spur'],
+              ],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'construction'],
+              ['==', ['get', 'feature'], 'rail'],
+              ['any',
+                ['==', ['get', 'usage'], 'main'],
+                ['==', ['get', 'usage'], 'branch'],
+              ],
+              ['==', ['get', 'service'], null],
+            ],
+          ],
+          12,
+          ['any',
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['any',
+                ['==', ['get', 'usage'], 'main'],
+                ['==', ['get', 'usage'], 'branch'],
+              ],
+              ['==', ['get', 'service'], null],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['==', ['get', 'usage'], 'industrial'],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'rail'],
+              ['==', ['get', 'usage'], null],
+              ['any',
+                ['==', ['get', 'service'], 'siding'],
+                ['==', ['get', 'service'], 'crossover'],
+                ['==', ['get', 'service'], 'spur'],
+                ['==', ['get', 'service'], 'yard'],
+              ],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'narrow_gauge'],
+              ['any',
+                ['==', ['get', 'service'], null],
+                ['==', ['get', 'service'], 'siding'],
+                ['==', ['get', 'service'], 'crossover'],
+                ['==', ['get', 'service'], 'spur'],
+                ['==', ['get', 'service'], 'yard'],
+              ],
+            ],
+            ['all',
+              ['==', ['get', 'railway'], 'construction'],
+              ['==', ['get', 'feature'], 'rail'],
+              ['any',
+                ['==', ['get', 'usage'], 'main'],
+                ['==', ['get', 'usage'], 'branch'],
+                ['==', ['get', 'usage'], 'subway'],
+                ['==', ['get', 'usage'], 'light_rail'],
+              ],
+              ['==', ['get', 'service'], null],
+            ],
+            ['all',
+              ['any',
+                ['==', ['get', 'railway'], 'subway'],
+                ['==', ['get', 'railway'], 'light_rail'],
+              ],
+              ['==', ['get', 'service'], null],
+            ],
+          ],
+          13,
+          true,
+        ],
+        paint: {
+          'text-halo-color': 'white',
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'symbol-z-order': 'source',
+          'symbol-placement': 'line',
+          'text-field': '{label}',
+          // TODO not present: oblique font
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 30,
+          'symbol-spacing': 100,
+        },
       },
     ],
   };
@@ -2088,36 +2375,34 @@
     }
   }
 
-  map.on('load', () => {
-    map.addControl(new StyleControl({
-      initialSelection: selectedStyle,
-      onStyleChange: changedStyle => {
-        map.setStyle(makeStyle(changedStyle));
-        const updatedHash = putStyleInHash(window.location.hash, changedStyle);
-        const location = window.location.href.replace(/(#.+)?$/, updatedHash);
-        window.history.replaceState(window.history.state, null, location);
-      }
-    }));
-    map.addControl(new maplibregl.NavigationControl({
-      showCompass: false,
-      visualizePitch: false,
-    }));
-    map.addControl(
-      new maplibregl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true,
-        showAccuracyCircle: false,
-        showUserLocation: true,
-      })
-    );
-    map.addControl(new maplibregl.FullscreenControl());
-    map.addControl(new maplibregl.ScaleControl({
-      maxWidth: 150,
-      unit: 'metric',
-    }), 'bottom-right');
-  })
+  map.addControl(new StyleControl({
+    initialSelection: selectedStyle,
+    onStyleChange: changedStyle => {
+      map.setStyle(makeStyle(changedStyle));
+      const updatedHash = putStyleInHash(window.location.hash, changedStyle);
+      const location = window.location.href.replace(/(#.+)?$/, updatedHash);
+      window.history.replaceState(window.history.state, null, location);
+    }
+  }));
+  map.addControl(new maplibregl.NavigationControl({
+    showCompass: false,
+    visualizePitch: false,
+  }));
+  map.addControl(
+    new maplibregl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showAccuracyCircle: false,
+      showUserLocation: true,
+    })
+  );
+  map.addControl(new maplibregl.FullscreenControl());
+  map.addControl(new maplibregl.ScaleControl({
+    maxWidth: 150,
+    unit: 'metric',
+  }), 'bottom-right');
 </script>
 </body>
 
