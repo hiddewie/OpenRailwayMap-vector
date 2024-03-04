@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="5.16609" height="16" viewBox="0 0 5.16609 16">
-<defs>
-<image id="source-8" x="0" y="0" width="6" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAQCAYAAAA1Qw7OAAAABmJLR0QA/wD/AP+gvaeTAAAASElEQVQYld2OoQ3AIAAEjzJBdWV3YQJ2YLFuV4UjJORqKtBITn7uk4MllKQ8Sp7HqFRFpSsnwBECA3h/rwJtfl1KUe61mJ34ALUDHqFaOqFXAAAAAElFTkSuQmCC"/>
-<image id="source-14" x="0" y="0" width="6" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAQCAYAAAA1Qw7OAAAABmJLR0QA/wD/AP+gvaeTAAAARklEQVQYle2NIQ6AMBTF+scR5naruUnuyIWweHAsxSAmlnABKl/6UviZoVRlU9ZxXJRLUbmVDJAi6MD+egdwjq+sNKV8dh/R9x6YIPg6MwAAAABJRU5ErkJggg=="/>
-</defs>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5.167969 0 L 0 0 L 0 16 L 5.167969 16 Z M 5.167969 0 "/>
-<use xlink:href="#source-8" transform="matrix(1, 0, 0, 1, 0, 0)"/>
-<use xlink:href="#source-14" transform="matrix(1, 0, 0, 1, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 0%)" fill-opacity="1" d="M 0.949219 3.878906 C 0.949219 4.75 1.664062 5.453125 2.550781 5.453125 C 3.433594 5.453125 4.148438 4.75 4.148438 3.878906 C 4.148438 3.007812 3.433594 2.304688 2.550781 2.304688 C 1.664062 2.304688 0.949219 3.007812 0.949219 3.878906 Z M 0.949219 3.878906 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 0%)" fill-opacity="1" d="M 0.949219 12.820312 C 0.949219 13.691406 1.664062 14.394531 2.550781 14.394531 C 3.433594 14.394531 4.148438 13.691406 4.148438 12.820312 C 4.148438 11.953125 3.433594 11.246094 2.550781 11.246094 C 1.664062 11.246094 0.949219 11.953125 0.949219 12.820312 Z M 0.949219 12.820312 "/>
 </svg>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
-<defs>
-<image id="source-8" x="0" y="0" width="15" height="15" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABmJLR0QA/wD/AP+gvaeTAAAAnklEQVQokdWSPQrCQBBG3wqCjUWwsbJU7+ElvIaX8QIWwQvYewD7mCKQNmCROsJnoQur7LDbBQc+WGZ589gfGKtcrKl3fwssgcZBmzVNsBPcBQpyFaxzwOEH9OkEKwt0gsoAfU4WvEmAEvQhMwnWRcaVzAXTmHkheCbMddTs4AGcE+ajuSMoBDfDWur7mNEBM8Hh87aV4CLYy/hQf1gvGBN0Yp/sRiAAAAAASUVORK5CYII="/>
-</defs>
 <rect x="-1.5" y="-1.5" width="18" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
-<use xlink:href="#source-8"/>
+<path fill-rule="nonzero" fill="rgb(100%, 0%, 0%)" fill-opacity="1" d="M 2.753906 7.300781 C 2.753906 9.824219 4.835938 11.871094 7.402344 11.871094 C 9.964844 11.871094 12.046875 9.824219 12.046875 7.300781 C 12.046875 4.773438 9.964844 2.726562 7.402344 2.726562 C 4.835938 2.726562 2.753906 4.773438 2.753906 7.300781 Z M 2.753906 7.300781 "/>
 </svg>
