@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10.376797" height="16" viewBox="0 0 10.376797 16">
-<defs>
-<image id="source-8" x="0" y="0" width="11" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAQCAYAAADAvYV+AAAABmJLR0QA/wD/AP+gvaeTAAAA4klEQVQoke2QPUoDURRGz/dmJj6j0cpRZMQfBHcg2KXNRtyHuxDdg6sIWlinshAxTOFAkMAk0cmbazU6kt7KU124h/vziRZGPy52Rj4K227WXVTZeLwQWNNXU4ygs7V5dOGicCmUmhjGVXSdls+FoP4lF73js6XCnYkTQVRD6XA3tvF5tZ/nMwDXyFUUzk06ALxBIuiZwsDPfdI433JApUHg50YDTU3OVuRkGQ9l3IOmQCnjTYHbyYSPlQcN3Ev3cNd3GNRmqVQ/7L3XjyKft7a1o0NPnK69Ztm6QWytYf/8HV/quFCjJbcN1wAAAABJRU5ErkJggg=="/>
-</defs>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 10.375 0 L 10.375 16 L 0 16 Z M 0 0 "/>
-<use xlink:href="#source-8"/>
+<path fill-rule="nonzero" fill="rgb(90.196079%, 5.882353%, 11.764706%)" fill-opacity="1" d="M 7.980469 3.847656 C 7.980469 5.34375 6.769531 6.558594 5.269531 6.558594 C 3.773438 6.558594 2.558594 5.34375 2.558594 3.847656 C 2.558594 2.351562 3.773438 1.136719 5.269531 1.136719 C 6.769531 1.136719 7.980469 2.351562 7.980469 3.847656 Z M 7.980469 3.847656 "/>
 </svg>

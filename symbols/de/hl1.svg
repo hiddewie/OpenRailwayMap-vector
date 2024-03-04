@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7.433069" height="16" viewBox="0 0 7.433069 16">
-<defs>
-<image id="source-8" x="0" y="0" width="8" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAQCAYAAAArij59AAAABmJLR0QA/wD/AP+gvaeTAAAAWUlEQVQokWNgIAAYkTlp/9NYmd9zTWRgYFRk+suYP1W07xYTsgKm9zzuDAyMmQwMDB7/mP5XMTAwMKAoYGT6f42BgeEz1OwTWO3M+FwilvWmQJOQ20YB1QEA7DoS3bAkPkQAAAAASUVORK5CYII="/>
-</defs>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 1.007812 L 1.007812 0 L 6.535156 0.015625 L 7.433594 1.007812 L 7.433594 16 L 0 16 Z M 0 1.007812 "/>
-<use xlink:href="#source-8"/>
+<path fill-rule="nonzero" fill="rgb(41.176471%, 93.333334%, 44.313726%)" fill-opacity="1" d="M 6.691406 2.726562 C 6.691406 3.570312 6.007812 4.25 5.167969 4.25 C 4.324219 4.25 3.640625 3.570312 3.640625 2.726562 C 3.640625 1.882812 4.324219 1.203125 5.167969 1.203125 C 6.007812 1.203125 6.691406 1.882812 6.691406 2.726562 Z M 6.691406 2.726562 "/>
 </svg>

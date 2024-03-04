@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7.433069" height="16" viewBox="0 0 7.433069 16">
-<defs>
-<filter id="filter-remove-color-and-invert-alpha" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -1 1"/>
-</filter>
-<filter id="filter-0" x="0%" y="0%" width="100%" height="100%">
-<feImage xlink:href="#compositing-group-1" result="source" x="0" y="0" width="8.919683" height="19.2"/>
-<feImage xlink:href="#compositing-group-2" result="destination" x="0" y="0" width="8.919683" height="19.2"/>
-<feComposite in="source" in2="destination" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" color-interpolation-filters="sRGB"/>
-</filter>
-<image id="source-7" x="0" y="0" width="34" height="67" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAABDCAYAAAD579c9AAAABmJLR0QA/wD/AP+gvaeTAAADE0lEQVRoge2YS1LbQBCGvx7bYGyMAUMlpMgqOREXyCYnyC1yk1RlkTuRRaqA4mls+aHpLNQjxKSQH5CCxfxVU6PHSP1Nq7tHkvBYJ8APoMXyGgPZkmN/AV8BrRt0Akxt0P9s398CRGjf3gKEAh74UoUQg1glJl5KI6AbdtwrQRDbda8E8Y8SSKwEEiuBxEogsRJIrAQSq1l3svGoCS27oGXbHsiBOZCjzIFZ2S94H1wWROzkJsKG9dsIXWvbCFOUCZChZCgjYIQyQvEG9CIgLYQ2QseMDxD2cAwQ9nGMUYYod9bf4Lmm8ES2kj8WgsAW0EPoI7zD8R7HEY4jGtzhuUa5QrnC0wIUT4bSWAljAUgbYQfHAcJhBeCDbQ8Reig9PDuVuLlHuUKYoOVL6togDuggHCAc0+AjjkMcB9YPcHRQOih9hAFKkyJIb1HOLW68wS0CqgXpAgMcxzg+02AXxx5S9jOEvhmc2HVDlDM8baCJkJv5/Dke6ZYecXyiQc+yZRuhh8Oj5Ag5IY2VCxy/cbQRmiggqHlmLY9Us6aHsGeZ0yl7zMiD2/s4ugibFLVHrC2jJ0HUZjhFGaPcozgLyLwy5qGgwcTGzyrHcgvYtUGwG00pvrKHKC2UNpDbPL0ZnJnxDGVKqK5KXnkki2CeXGvCbINHRhaUUx48UoAUx0LAFh7R0iMhaxap9tEUEHCHconSQGmibOLZwpUAY5QMuMVzb9vzFVK3FiQUpjM8GxTP+tzqR9E8E2BsIGOUUzyneK7w5Vf9sqoFGaKc4/EWrHsou3j2rY5MeFjkxgb9B8+lBW14JM8K1uARxXOPcGEQfYQ+jj5CVgEZodyi3OK5sbhZxSNSN16itmM1JbTMYEfmsWqQzheDzICNsFObvvGNZhaIjhDMIVtCui6fJbFqQWKgOcVfO7WZz6EsYLMKxLIr7kog1RvOKhATwquilmtNtdyvqqU8EoCCF6SCuI7RZ4HEUC+tN/M5kUBiJZBYCSRWAomVQGIlkFgJJFYCiZVAYiWQWAkkVgKJ1QR+vpLtR/+A/wK7ILp85QqmOQAAAABJRU5ErkJggg=="/>
-<g id="compositing-group-0" transform="translate(0.743307, 1.6)">
-<rect x="-0.743307" y="-1.6" width="8.919683" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0"/>
-<rect x="-0.743307" y="-1.6" width="8.919683" height="19.2" fill="rgb(100%, 100%, 100%)" fill-opacity="1"/>
-</g>
-<mask id="mask-0">
-<use xlink:href="#compositing-group-0"/>
-</mask>
-<mask id="mask-1">
-<use xlink:href="#compositing-group-0" filter="url(#filter-remove-color-and-invert-alpha)"/>
-</mask>
-<g id="compositing-group-1" mask="url(#mask-0)">
-<g transform="translate(0.743307, 1.6)">
-<use xlink:href="#source-7" transform="matrix(0.24, 0, 0, 0.24, 0, 0)"/>
-</g>
-</g>
-<g id="compositing-group-2" mask="url(#mask-1)">
-<g transform="translate(0.743307, 1.6)">
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 1.007812 L 1.007812 0 L 6.535156 0.015625 L 7.433594 1.007812 L 7.433594 16 L 0 16 Z M 0 1.007812 "/>
-</g>
-</g>
-</defs>
-<g filter="url(#filter-0)" transform="translate(-0.743307, -1.6)">
-<rect x="0" y="0" width="8.919683" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
-</g>
+<path fill-rule="nonzero" fill="rgb(100%, 0%, 8.627451%)" fill-opacity="1" d="M 5.140625 6.765625 C 5.140625 7.605469 4.457031 8.289062 3.617188 8.289062 C 2.773438 8.289062 2.09375 7.605469 2.09375 6.765625 C 2.09375 5.921875 2.773438 5.242188 3.617188 5.242188 C 4.457031 5.242188 5.140625 5.921875 5.140625 6.765625 Z M 5.140625 6.765625 "/>
 </svg>

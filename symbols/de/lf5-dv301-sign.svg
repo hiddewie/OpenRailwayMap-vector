@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.548133" height="16" viewBox="0 0 11.548133 16">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.548134" height="16" viewBox="0 0 11.548134 16">
 <defs>
 <filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
 <feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
 </filter>
-<image id="source-12" x="0" y="0" width="12" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAQCAYAAAAiYZ4HAAAABmJLR0QA/wD/AP+gvaeTAAAAGklEQVQokWNkYGD4ykACYCJF8aiGUQ1DSwMAHrkBFSny6yoAAAAASUVORK5CYII="/>
 <mask id="mask-0">
 <g filter="url(#filter-remove-color)">
-<use xlink:href="#source-12"/>
+<rect x="-1.154813" y="-1.6" width="13.85776" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.96"/>
 </g>
 </mask>
 <clipPath id="clip-0">
-<path clip-rule="nonzero" d="M 0 0 L 11.734375 0 L 11.734375 16 L 0 16 Z M 0 0 "/>
+<path clip-rule="nonzero" d="M 0 0 L 12 0 L 12 16 L 0 16 Z M 0 0 "/>
 </clipPath>
 <clipPath id="clip-1">
 <rect x="0" y="0" width="12" height="16"/>
 </clipPath>
-<g id="source-11" clip-path="url(#clip-1)">
+<g id="source-5" clip-path="url(#clip-1)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0.265625 0.00390625 L 11.28125 0.00390625 C 11.425781 0.00390625 11.542969 0.101562 11.542969 0.21875 L 11.542969 15.78125 C 11.542969 15.898438 11.425781 15.996094 11.28125 15.996094 L 0.265625 15.996094 C 0.121094 15.996094 0.00390625 15.898438 0.00390625 15.78125 L 0.00390625 0.21875 C 0.00390625 0.101562 0.121094 0.00390625 0.265625 0.00390625 Z M 0.265625 0.00390625 "/>
 <g clip-path="url(#clip-0)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.181272" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.410539 0.0648609 L 187.383046 0.0648609 C 189.718038 0.0648609 191.663864 1.686383 191.663864 3.567348 L 191.663864 262.102766 C 191.663864 263.983731 189.718038 265.605253 187.383046 265.605253 L 4.410539 265.605253 C 2.010687 265.605253 0.0648609 263.983731 0.0648609 262.102766 L 0.0648609 3.567348 C 0.0648609 1.686383 2.010687 0.0648609 4.410539 0.0648609 Z M 4.410539 0.0648609 " transform="matrix(0.0602251, 0, 0, 0.0602251, 0, 0)"/>
-</g>
-</g>
-<clipPath id="clip-2">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-14" clip-path="url(#clip-2)">
-<g mask="url(#mask-0)">
-<use xlink:href="#source-11"/>
+<path fill="none" stroke-width="0.181272" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.410539 0.0648609 L 187.318179 0.0648609 C 189.718032 0.0648609 191.663857 1.686383 191.663857 3.632208 L 191.663857 262.037897 C 191.663857 263.983722 189.718032 265.605244 187.318179 265.605244 L 4.410539 265.605244 C 2.010687 265.605244 0.0648609 263.983722 0.0648609 262.037897 L 0.0648609 3.632208 C 0.0648609 1.686383 2.010687 0.0648609 4.410539 0.0648609 Z M 4.410539 0.0648609 " transform="matrix(0.0602251, 0, 0, 0.0602251, 0, 0)"/>
 </g>
 </g>
 </defs>
-<use xlink:href="#source-14"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 0 L 11.550781 0 L 11.550781 16 L 0 16 Z M 0 0 "/>
+<g mask="url(#mask-0)">
+<use xlink:href="#source-5"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 0 L 11.546875 0 L 11.546875 16 L 0 16 Z M 0 0 "/>
 <path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 3.613281 0 L 0 3.613281 Z M 0 0 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.550781 0 L 7.933594 0 L 11.550781 3.613281 Z M 11.550781 0 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.546875 0 L 7.933594 0 L 11.546875 3.613281 Z M 11.546875 0 "/>
 <path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 16 L 3.613281 16 L 0 12.386719 Z M 0 16 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.550781 16 L 7.933594 16 L 11.550781 12.386719 Z M 11.550781 16 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.546875 16 L 7.933594 16 L 11.546875 12.386719 Z M 11.546875 16 "/>
 </svg>
