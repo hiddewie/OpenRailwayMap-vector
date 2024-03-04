@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7.857508" height="16" viewBox="0 0 7.857508 16">
-<defs>
-<image id="source-8" x="0" y="0" width="8" height="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAQCAYAAAArij59AAAABmJLR0QA/wD/AP+gvaeTAAAANElEQVQokWNgGAUDAf4zCMn+ZxDlwSEpKf+fQeznfwaxY8jiTAjm948MDAxXGRgYz1DXXQDgZwr7ALUkogAAAABJRU5ErkJggg=="/>
-</defs>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 7.859375 0 L 7.859375 16 L 0 16 Z M 0 0 "/>
-<use xlink:href="#source-8"/>
+<path fill-rule="nonzero" fill="rgb(100%, 0%, 8.627451%)" fill-opacity="1" d="M 4.90625 12.863281 C 4.90625 13.449219 4.429688 13.925781 3.839844 13.925781 C 3.253906 13.925781 2.777344 13.449219 2.777344 12.863281 C 2.777344 12.273438 3.253906 11.796875 3.839844 11.796875 C 4.429688 11.796875 4.90625 12.273438 4.90625 12.863281 Z M 4.90625 12.863281 "/>
 </svg>
