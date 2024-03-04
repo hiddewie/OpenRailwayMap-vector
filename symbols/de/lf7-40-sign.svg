@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.508085" height="16" viewBox="0 0 12.508085 16">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 6.033352 -96.956578 L 211.099543 -96.956578 L 211.099543 168.646508 L 6.033352 168.646508 Z M 6.033352 -96.956578 " transform="matrix(0.0576224, 0, 0, 0.0576224, 0, 5.934527)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 6.033353 -96.956579 L 211.099549 -96.956579 L 211.099549 168.646515 L 6.033353 168.646515 Z M 6.033353 -96.956579 " transform="matrix(0.0576224, 0, 0, 0.0576224, 0, 5.934527)"/>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.253906 2.667969 L 3.492188 10.179688 L 3.492188 11.429688 L 6.636719 11.429688 L 6.636719 13.0625 L 7.886719 13.0625 L 7.886719 11.429688 L 8.496094 11.429688 L 8.496094 10.179688 L 7.886719 10.179688 L 7.886719 7.382812 L 6.636719 7.382812 L 6.636719 10.179688 L 4.871094 10.179688 L 7.617188 2.667969 Z M 6.253906 2.667969 "/>
 </svg>
