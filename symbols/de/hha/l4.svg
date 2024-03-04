@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.231282" height="16" viewBox="0 0 11.231282 16">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 0%)" fill-opacity="1" stroke-width="10.4" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.196839 5.196839 L 135.755156 5.196839 L 135.755156 195.616855 L 5.196839 195.616855 Z M 5.196839 5.196839 " transform="matrix(0.0796758, 0, 0, 0.0796758, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 0%)" fill-opacity="1" stroke-width="10.4" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.196841 5.196841 L 135.755224 5.196841 L 135.755224 195.616954 L 5.196841 195.616954 Z M 5.196841 5.196841 " transform="matrix(0.0796758, 0, 0, 0.0796758, 0, 0)"/>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5.585938 4.074219 L 4.097656 9.429688 L 7.085938 9.429688 Z M 4.964844 2.640625 L 6.210938 2.640625 L 9.3125 13.398438 L 8.171875 13.398438 L 7.429688 10.640625 L 3.761719 10.640625 L 3.019531 13.398438 L 1.863281 13.398438 Z M 4.964844 2.640625 "/>
 </svg>
