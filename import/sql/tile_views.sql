@@ -40,10 +40,8 @@ CREATE OR REPLACE VIEW standard_railway_line_med AS
 
 CREATE OR REPLACE VIEW standard_railway_turntables AS
   SELECT
-    way,
-    railway
-  FROM openrailwaymap_osm_polygon
-  WHERE railway IN ('turntable', 'traverser');
+    way
+  FROM turntables;
 
 CREATE OR REPLACE VIEW standard_railway_line_fill AS
   SELECT
@@ -169,9 +167,7 @@ CREATE OR REPLACE VIEW standard_railway_text_km AS
        way,
        railway,
        COALESCE(railway_position, railway_pos_round(railway_position_detail)::text) AS pos
-     FROM openrailwaymap_osm_point
-     WHERE railway IN ('milestone', 'level_crossing', 'crossing')
-       AND (railway_position IS NOT NULL OR railway_position_detail IS NOT NULL)
+     FROM railway_positions
     ) AS r
   WHERE pos IS NOT NULL
   ORDER by zero;
@@ -182,8 +178,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     railway,
     ref,
     railway_local_operated
-  FROM openrailwaymap_osm_point
-  WHERE railway IN ('switch', 'railway_crossing') AND ref IS NOT NULL
+  FROM railway_switches
   ORDER by char_length(ref) ASC;
 
 

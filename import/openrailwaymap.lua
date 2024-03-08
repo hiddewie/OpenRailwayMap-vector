@@ -125,10 +125,22 @@ local railway_positions = osm2pgsql.define_table({
   },
 })
 
+local railway_switches = osm2pgsql.define_table({
+  name = 'railway_switches',
+  ids = { type = 'node', id_column = 'osm_id' },
+  columns = {
+    { column = 'way', type = 'point' },
+    { column = 'railway', type = 'text' },
+    { column = 'ref', type = 'text' },
+    { column = 'railway_local_operated', type = 'text' },
+  },
+})
+
 local railway_point_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
   -- TODO, include derail?
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
+local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 function osm2pgsql.process_node(object)
   local tags = object.tags
 
@@ -160,12 +172,23 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if railway_position_values(tags.railway) then
+  if railway_position_values(tags.railway)
+    and (tags['railway:position'] or tags['railway:position:detail'])
+    then
     railway_positions:insert({
       way = object:as_point(),
       railway = tags.railway,
       railway_position = tags['railway:position'],
       railway_position_detail = tags['railway:position:detail'],
+    })
+  end
+
+  if railway_switch_values(tags.railway) and tags.ref then
+    railway_switches:insert({
+      way = object:as_point(),
+      railway = tags.railway,
+      ref = tags.ref,
+      railway_local_operated = tags['railway:local_operated'],
     })
   end
 end
