@@ -40,7 +40,7 @@ jobs:
 
       - name: Download data
         run: |
-          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data.osm.pbf
+          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data/data.osm.pbf
 
       - name: Import data
         env:

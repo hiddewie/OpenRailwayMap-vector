@@ -48,8 +48,6 @@ postgres:
       srid: 3857
       geometry_column: way
       geometry_type: POLYGON
-      properties:
-        railway: string
 
     standard_railway_line_fill:
       schema: public
@@ -66,8 +64,8 @@ postgres:
         tunnel: boolean
         bridge: boolean
         ref: string
-        track_ref: string
         label: string
+        track_ref: string
 
     standard_railway_text_stations:
       schema: public
