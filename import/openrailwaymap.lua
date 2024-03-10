@@ -47,19 +47,6 @@ local openrailwaymap_osm_line = osm2pgsql.define_table({
   },
 })
 
-local openrailwaymap_osm_polygon = osm2pgsql.define_table({
-  name = 'openrailwaymap_osm_polygon',
-  ids = { type = 'way', id_column = 'osm_id' },
-  columns = {
-    { column = 'way', type = 'polygon' },
-    { column = 'railway', type = 'text' },
-    { column = 'public_transport', type = 'text' },
-    { column = 'name', type = 'text' },
-    { column = 'way_area', type = 'real' },
-    { column = 'tags', type = 'hstore' },
-  },
-})
-
 local openrailwaymap_osm_point = osm2pgsql.define_table({
   name = 'openrailwaymap_osm_point',
   ids = { type = 'node', id_column = 'osm_id' },
@@ -286,18 +273,6 @@ function osm2pgsql.process_way(object)
     platforms:insert({
       way = object:as_linestring(),
       name = tags.name,
-    })
-  end
-
-  if tags.public_transport == 'platform' or tags.railway == 'platform' then
-    local polygon = object:as_polygon():transform(3857)
-    openrailwaymap_osm_polygon:insert({
-      way = polygon,
-      way_area = polygon:area(),
-      railway = tags.railway,
-      public_transport = tags.public_transport,
-      name = tags.name,
-      tags = tags,
     })
   end
 
