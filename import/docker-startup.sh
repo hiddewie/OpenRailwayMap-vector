@@ -27,12 +27,10 @@ echo "Importing data"
 osm2pgsql \
   --create \
   --database gis \
-  --hstore \
+  --drop \
   --slim \
-  --merc \
   --output flex \
   --style openrailwaymap.lua \
-  --multi-geometry \
   --cache $OSM2PGSQL_CACHE \
   --number-processes $OSM2PGSQL_NUMPROC \
   "/data/${OSM2PGSQL_DATAFILE}"
@@ -42,3 +40,6 @@ psql -d gis -f sql/functions.sql
 psql -d gis -f sql/osm_carto_views.sql
 psql -d gis -f sql/get_station_importance.sql
 psql -d gis -f sql/tile_views.sql
+
+echo "Import summary"
+psql -d gis -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"

@@ -55,7 +55,7 @@ local openrailwaymap_osm_polygon = osm2pgsql.define_table({
     { column = 'railway', type = 'text' },
     { column = 'public_transport', type = 'text' },
     { column = 'name', type = 'text' },
-    { column = 'way_area', type = 'area' },
+    { column = 'way_area', type = 'real' },
     { column = 'tags', type = 'hstore' },
   },
 })
@@ -81,6 +81,24 @@ local openrailwaymap_osm_point = osm2pgsql.define_table({
     { column = "signal_speed_limit_distant_speed", type = "text" },
     { column = "railway_local_operated", type = "text" },
     { column = 'tags', type = 'hstore' },
+  },
+})
+
+local stop_positions = osm2pgsql.define_table({
+  name = 'stop_positions',
+  ids = { type = 'node', id_column = 'osm_id' },
+  columns = {
+    { column = 'way', type = 'point' },
+    { column = 'name', type = 'text' },
+  },
+})
+
+local platforms = osm2pgsql.define_table({
+  name = 'platforms',
+  ids = { type = 'any', id_column = 'osm_id' },
+  columns = {
+    { column = 'way', type = 'geometry' },
+    { column = 'name', type = 'text' },
   },
 })
 
@@ -136,6 +154,21 @@ local railway_switches = osm2pgsql.define_table({
   },
 })
 
+local routes = osm2pgsql.define_table({
+  name = 'routes',
+  ids = { type = 'relation', id_column = 'osm_id' },
+  columns = {
+    { column = 'platform_ref_ids', sql_type = 'int8[]' },
+    { column = 'stop_ref_ids', sql_type = 'int8[]' },
+  },
+  indexes = {
+    { column = 'platform_ref_ids', method = 'gin' },
+    { column = 'stop_ref_ids', method = 'gin' },
+  },
+})
+
+-- TODO clean up unneeded tags
+
 local railway_point_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
   -- TODO, include derail?
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop'})
@@ -159,6 +192,22 @@ function osm2pgsql.process_node(object)
       public_transport = tags.public_transport,
       name = tags.name,
       tags = tags,
+    })
+  end
+
+  if tags.public_transport == 'stop_position' then
+    stop_positions:insert({
+      way = object:as_point(),
+      railway = tags.railway,
+      name = tags.name,
+      tags = tags,
+    })
+  end
+
+  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+    platforms:insert({
+      way = object:as_point(),
+      name = tags.name,
     })
   end
 
@@ -231,10 +280,18 @@ function osm2pgsql.process_way(object)
     })
   end
 
-  -- TODO route relations
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
+    platforms:insert({
+      way = object:as_linestring(),
+      name = tags.name,
+    })
+  end
+
+  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+    local polygon = object:as_polygon():transform(3857)
     openrailwaymap_osm_polygon:insert({
-      way = object:as_polygon(),
+      way = polygon,
+      way_area = polygon:area(),
       railway = tags.railway,
       public_transport = tags.public_transport,
       name = tags.name,
@@ -257,8 +314,30 @@ function osm2pgsql.process_way(object)
   end
 end
 
+local route_values = osm2pgsql.make_check_values_func({'train', 'subway', 'tram', 'light_rail'})
+local route_stop_relation_roles = osm2pgsql.make_check_values_func({'stop', 'station', 'stop_exit_only', 'stop_entry_only', 'forward_stop', 'backward_stop', 'forward:stop', 'backward:stop', 'stop_position', 'halt'})
+local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platform', 'platform_exit_only', 'platform_entry_only', 'forward:platform', 'backward:platform'})
 function osm2pgsql.process_relation(object)
-  -- Ignored
+  local tags = object.tags
 
-  -- TODO route relations
+  if tags.type == 'route' and route_values(tags.route) then
+    local stop_members = {}
+    local platform_members = {}
+    for _, member in ipairs(object.members) do
+      if route_stop_relation_roles(member.role) then
+        table.insert(stop_members, member.ref)
+      end
+
+      if route_platform_relation_roles(member.role) then
+        table.insert(platform_members, member.ref)
+      end
+    end
+
+    if (#stop_members > 0) or (#platform_members > 0) then
+      routes:insert({
+        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
+        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
+      })
+    end
+  end
 end

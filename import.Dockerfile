@@ -1,4 +1,4 @@
-FROM debian:12-slim
+FROM debian:unstable-20240211-slim
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
