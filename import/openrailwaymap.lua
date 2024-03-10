@@ -119,6 +119,7 @@ local signal_boxes = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id' },
   columns = {
     { column = 'way', type = 'geometry' },
+    { column = 'way_area', type = 'real' },
     { column = 'ref', type = 'text' },
     { column = 'name', type = 'text' },
   },
@@ -170,7 +171,7 @@ local routes = osm2pgsql.define_table({
 -- TODO clean up unneeded tags
 
 local railway_point_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
-  -- TODO, include derail?
+-- TODO, include derail?
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
@@ -180,6 +181,7 @@ function osm2pgsql.process_node(object)
   if tags.railway == 'signal_box' then
     signal_boxes:insert({
       way = object:as_point(),
+      way_area = 0,
       ref = tags['railway:ref'],
       name = tags.name,
     })
@@ -306,8 +308,10 @@ function osm2pgsql.process_way(object)
   end
 
   if tags.railway == 'signal_box' then
+    local polygon = object:as_polygon():transform(3857)
     signal_boxes:insert({
-      way = object:as_polygon(),
+      way = polygon,
+      way_area = polygon:area(),
       ref = tags['railway:ref'],
       name = tags.name,
     })

@@ -522,22 +522,12 @@ CREATE OR REPLACE VIEW signals_railway_line AS
       rank NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_signal_boxes AS
-  (SELECT
-     way,
-     tags->'railway:ref' AS ref,
-     name
-   FROM openrailwaymap_osm_polygon
-   WHERE railway = 'signal_box'
-   ORDER BY way_area DESC NULLS LAST)
-
-  UNION ALL
-
-  (SELECT
-     way,
-     tags->'railway:ref' AS ref,
-     name
-   FROM openrailwaymap_osm_point
-   WHERE railway = 'signal_box');
+  SELECT
+    way,
+    ref,
+    name
+  FROM signal_boxes
+  ORDER BY way_area DESC NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
   WITH pre_signals AS (
