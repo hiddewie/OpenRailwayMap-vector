@@ -64,7 +64,8 @@ local stations = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'name', type = 'text' },
-    { column = 'tags', type = 'hstore' },
+    { column = 'station', type = 'text' },
+    { column = 'label', type = 'text' },
   },
 })
 
@@ -175,8 +176,9 @@ function osm2pgsql.process_node(object)
     stations:insert({
       way = object:as_point(),
       railway = tags.railway,
-      name = tags.name,
-      tags = tags,
+      name = tags.short_name or tags.name,
+      station = tags.station,
+      label = tags['railway:ref'],
     })
   end
 

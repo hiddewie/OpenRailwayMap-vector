@@ -133,12 +133,12 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
        way,
        railway,
        route_count,
-       tags->'station' AS station,
-       tags->'railway:ref' AS label,
-       COALESCE(tags->'short_name', name) AS name
+       station,
+       label,
+       name
      FROM stations_with_route_counts
      WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
-       AND (name IS NOT NULL OR tags ? 'short_name')
+       AND name IS NOT NULL
     ) AS r
   ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
 
