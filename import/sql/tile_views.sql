@@ -456,8 +456,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     FROM (
       SELECT
         way,
-        railway,
-        tags->'railway:signal:direction' AS signal_direction,
         tags->'railway:signal:speed_limit' AS signal_speed_limit,
         tags->'railway:signal:speed_limit:form' AS signal_speed_limit_form,
         tags->'railway:signal:speed_limit:speed' AS signal_speed_limit_speed,
@@ -465,14 +463,10 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         tags->'railway:signal:speed_limit_distant:form' AS signal_speed_limit_distant_form,
         tags->'railway:signal:speed_limit_distant:speed' AS signal_speed_limit_distant_speed
       FROM signals
-    ) as mapped_signals
-    WHERE
-      railway = 'signal'
-      AND signal_direction IS NOT NULL
-      AND (
-        signal_speed_limit IS NOT NULL
-          OR signal_speed_limit_distant IS NOT NULL
-      )
+      WHERE railway = 'signal'
+        AND tags ? 'railway:signal:direction'
+        AND (tags ? 'railway:signal:speed_limit' OR tags ? 'railway:signal:speed_limit_distant')
+      ) as mapped_signals
   ) AS feature_signals
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
@@ -725,7 +719,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     FROM signals
     WHERE
       (railway IN ('signal', 'buffer_stop'))
-        AND "signal_direction" IS NOT NULL
+        AND tags ? 'railway:signal:direction'
        OR railway = 'derail'
   )
   SELECT
@@ -1333,7 +1327,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     FROM signals
     WHERE
       railway = 'signal'
-      AND signal_direction IS NOT NULL
+      AND tags ? 'railway:signal:direction'
       AND tags ? 'railway:signal:electricity'
   ) as feature_signals;
 

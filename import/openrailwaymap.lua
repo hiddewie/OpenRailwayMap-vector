@@ -93,7 +93,6 @@ local signals = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
-    { column = 'signal_direction', type = 'text' },
     { column = 'tags', type = 'hstore' },
   },
 })
@@ -194,7 +193,6 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       name = tags.name,
-      tags = tags,
     })
   end
 
@@ -210,14 +208,11 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
-      signal_direction = tags['railway:signal:direction'],
       tags = tags,
     })
   end
 
-  if railway_position_values(tags.railway)
-    and (tags['railway:position'] or tags['railway:position:detail'])
-    then
+  if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:detail']) then
     railway_positions:insert({
       way = object:as_point(),
       railway = tags.railway,

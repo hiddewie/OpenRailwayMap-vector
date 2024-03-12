@@ -4,7 +4,7 @@ services:
     image: db:v1
     build:
       context: .
-      dockerfile: Dockerfile.db
+      dockerfile: db.Dockerfile
     ports:
       - '5432:5432'
     volumes:
