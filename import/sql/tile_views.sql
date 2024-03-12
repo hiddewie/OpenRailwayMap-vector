@@ -213,7 +213,6 @@ CREATE OR REPLACE VIEW speed_railway_line_casing AS
   FROM
     (SELECT
        way, railway, usage, service,
-       tags->'disused' AS disused, construction,
        tags->'disused:railway' AS disused_railway,
        tags->'construction:railway' AS construction_railway,
        layer
@@ -293,16 +292,11 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
        preferred_direction,
        -- does no unit conversion
        railway_direction_speed_limit(tags->'railway:preferred_direction',tags->'maxspeed', tags->'maxspeed:forward', tags->'maxspeed:backward') AS speed_arr,
-       tags->'disused' AS disused, construction,
        tags->'disused:railway' AS disused_railway,
        tags->'construction:railway' AS construction_railway,
-       tags->'disused:usage' AS disused_usage, tags->'disused:service' AS disused_service,
-       tags->'construction:usage' AS construction_usage, tags->'construction:service' AS construction_service,
-       tags->'preserved:railway' AS preserved_railway, tags->'preserved:service' AS preserved_service,
-       tags->'preserved:usage' AS preserved_usage,
+       tags->'preserved:railway' AS preserved_railway,
        layer
      FROM openrailwaymap_osm_line
-     --                'rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved'
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved')
     ) AS r
   ORDER BY
@@ -1204,10 +1198,6 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
        way, railway, usage, service,
        construction,
        tags->'construction:railway' AS construction_railway,
-       tags->'construction:usage' AS construction_usage, tags->'construction:service' AS construction_service,
-       tags->'preserved:railway' AS preserved_railway, tags->'preserved:service' AS preserved_service,
-       tags->'preserved:usage' AS preserved_usage,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, FALSE) AS electrification_state,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, TRUE) AS electrification_state_without_future,
        railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
        frequency AS frequency,
@@ -1256,9 +1246,6 @@ CREATE OR REPLACE VIEW electrification_future AS
        way, railway, usage, service,
        construction,
        tags->'construction:railway' AS construction_railway,
-       tags->'construction:usage' AS construction_usage, tags->'construction:service' AS construction_service,
-       tags->'preserved:railway' AS preserved_railway, tags->'preserved:service' AS preserved_service,
-       tags->'preserved:usage' AS preserved_usage,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, FALSE) AS electrification_state,
        frequency AS frequency,
        voltage AS voltage,
@@ -1344,7 +1331,9 @@ CREATE OR REPLACE VIEW gauge_railway_line_low AS
     gauge as gauge0
   FROM
     (SELECT
-       way, railway, usage,
+       way,
+       railway,
+       usage,
        railway_desired_value_from_list(1, tags->'gauge') AS gauge,
        layer
      FROM openrailwaymap_osm_line
@@ -1369,7 +1358,9 @@ CREATE OR REPLACE VIEW gauge_railway_line_med AS
     label
   FROM
     (SELECT
-       way, railway, usage,
+       way,
+       railway,
+       usage,
        railway_desired_value_from_list(1, tags->'gauge') AS gauge,
        railway_gauge_label(COALESCE(tags->'gauge', tags->'construction:gauge')) AS label,
        layer
@@ -1417,11 +1408,7 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
        way, railway, usage, service,
        construction,
        tags->'construction:railway' AS construction_railway,
-       tags->'construction:usage' AS construction_usage,
-       tags->'construction:service' AS construction_service,
        tags->'preserved:railway' AS preserved_railway,
-       tags->'preserved:usage' AS preserved_usage,
-       tags->'preserved:service' AS preserved_service,
        railway_desired_value_from_list(1, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge0,
        railway_desired_value_from_list(2, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge1,
        railway_desired_value_from_list(3, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge2,
