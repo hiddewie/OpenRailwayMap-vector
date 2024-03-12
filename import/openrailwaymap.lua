@@ -47,26 +47,23 @@ local openrailwaymap_osm_line = osm2pgsql.define_table({
   },
 })
 
-local openrailwaymap_osm_point = osm2pgsql.define_table({
-  name = 'openrailwaymap_osm_point',
+local pois = osm2pgsql.define_table({
+  name = 'pois',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
-    { column = 'ref', type = 'text' },
-    { column = 'name', type = 'text' },
     { column = 'man_made', type = 'text' },
-    { column = "railway_position", type = "text" },
-    { column = "railway_position_detail", type = "text" },
-    { column = "public_transport", type = "text" },
-    { column = "signal_direction", type = "text" },
-    { column = "signal_speed_limit", type = "text" },
-    { column = "signal_speed_limit_form", type = "text" },
-    { column = "signal_speed_limit_speed", type = "text" },
-    { column = "signal_speed_limit_distant", type = "text" },
-    { column = "signal_speed_limit_distant_form", type = "text" },
-    { column = "signal_speed_limit_distant_speed", type = "text" },
-    { column = "railway_local_operated", type = "text" },
+  },
+})
+
+local stations = osm2pgsql.define_table({
+  name = 'stations',
+  ids = { type = 'node', id_column = 'osm_id' },
+  columns = {
+    { column = 'way', type = 'point' },
+    { column = 'railway', type = 'text' },
+    { column = 'name', type = 'text' },
     { column = 'tags', type = 'hstore' },
   },
 })
@@ -89,8 +86,8 @@ local platforms = osm2pgsql.define_table({
   },
 })
 
-local openrailwaymap_osm_signals = osm2pgsql.define_table({
-  name = 'openrailwaymap_osm_signals',
+local signals = osm2pgsql.define_table({
+  name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
     { column = 'way', type = 'point' },
@@ -157,7 +154,8 @@ local routes = osm2pgsql.define_table({
 
 -- TODO clean up unneeded tags
 
-local railway_point_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
+local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
+local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio'})
 -- TODO, include derail?
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
@@ -174,13 +172,20 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if railway_point_values(tags.railway) then
-    openrailwaymap_osm_point:insert({
+  if railway_station_values(tags.railway) then
+    stations:insert({
       way = object:as_point(),
       railway = tags.railway,
-      public_transport = tags.public_transport,
       name = tags.name,
       tags = tags,
+    })
+  end
+
+  if railway_poi_values(tags.railway) then
+    pois:insert({
+      way = object:as_point(),
+      railway = tags.railway,
+      man_made = tags.man_made,
     })
   end
 
@@ -201,7 +206,7 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_signal_values(tags.railway) then
-    openrailwaymap_osm_signals:insert({
+    signals:insert({
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,

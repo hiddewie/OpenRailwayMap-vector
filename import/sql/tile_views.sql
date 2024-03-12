@@ -152,7 +152,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
     END AS prio
-  FROM openrailwaymap_osm_point
+  FROM pois
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio')
   ORDER BY prio DESC;
 
@@ -453,7 +453,19 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- 42 is tagged (but invalid tagging).
       railway_largest_speed_noconvert(signal_speed_limit_speed)::text AS signal_speed_limit_speed,
       railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed
-    FROM openrailwaymap_osm_point
+    FROM (
+      SELECT
+        way,
+        railway,
+        tags->'railway:signal:direction' AS signal_direction,
+        tags->'railway:signal:speed_limit' AS signal_speed_limit,
+        tags->'railway:signal:speed_limit:form' AS signal_speed_limit_form,
+        tags->'railway:signal:speed_limit:speed' AS signal_speed_limit_speed,
+        tags->'railway:signal:speed_limit_distant' AS signal_speed_limit_distant,
+        tags->'railway:signal:speed_limit_distant:form' AS signal_speed_limit_distant_form,
+        tags->'railway:signal:speed_limit_distant:speed' AS signal_speed_limit_distant_speed
+      FROM signals
+    ) as mapped_signals
     WHERE
       railway = 'signal'
       AND signal_direction IS NOT NULL
@@ -461,7 +473,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         signal_speed_limit IS NOT NULL
           OR signal_speed_limit_distant IS NOT NULL
       )
-  ) AS signals
+  ) AS feature_signals
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
     (CASE WHEN signal_speed_limit IS NOT NULL THEN 1 ELSE 2 END) DESC NULLS FIRST,
@@ -710,7 +722,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
       tags->'railway:signal:departure:type' AS departure_type,
       tags->'railway:signal:train_protection:shape' AS train_protection_shape,
       tags
-    FROM openrailwaymap_osm_signals
+    FROM signals
     WHERE
       (railway IN ('signal', 'buffer_stop'))
         AND "signal_direction" IS NOT NULL
@@ -1318,12 +1330,12 @@ CREATE OR REPLACE VIEW electrification_signals AS
       tags->'railway:signal:electricity:form' AS electricity_form,
       tags->'railway:signal:electricity:turn_direction' AS electricity_turn_direction,
       tags->'railway:signal:electricity:type' AS electricity_type
-    FROM openrailwaymap_osm_signals
+    FROM signals
     WHERE
       railway = 'signal'
       AND signal_direction IS NOT NULL
       AND tags ? 'railway:signal:electricity'
-  ) as signals;
+  ) as feature_signals;
 
 --- Gauge ---
 

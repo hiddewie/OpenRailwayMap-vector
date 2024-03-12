@@ -43,7 +43,7 @@ CREATE OR REPLACE VIEW platforms_and_their_routes_clustered AS
 -- Join clustered stop positions with station nodes
 CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
   SELECT s.osm_id, s.name AS name, s.tags AS tags, s.railway AS railway, sprc.route_ids AS route_ids, s.way AS way
-    FROM openrailwaymap_osm_point AS s
+    FROM stations AS s
     LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
       ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400))
     WHERE s.railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop');
@@ -51,7 +51,7 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
 -- Join clustered platforms with station nodes
 CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   SELECT s.osm_id AS osm_id, s.name AS name, s.tags AS tags, s.railway AS railway, sprc.route_ids AS route_ids, s.way AS way
-    FROM openrailwaymap_osm_point AS s
+    FROM stations AS s
     JOIN platforms_and_their_routes_clustered AS sprc
       ON (ST_DWithin(s.way, sprc.geom, 60))
     WHERE s.railway IN ('station', 'halt', 'tram_stop');
@@ -73,7 +73,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
         GROUP BY osm_id, name, tags, railway, way
       UNION ALL
       SELECT osm_id, name, tags, railway, 0 AS route_count, way
-        FROM openrailwaymap_osm_point
+        FROM stations
         WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
     ) AS facilities
     -- ORDER BY is required to ensure that the larger route_count is used.
