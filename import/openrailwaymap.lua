@@ -11,8 +11,8 @@ function dump(o)
    end
 end
 
-local openrailwaymap_osm_line = osm2pgsql.define_table({
-  name = 'openrailwaymap_osm_line',
+local railway_line = osm2pgsql.define_table({
+  name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
     { column = 'way', type = 'linestring' },
@@ -239,7 +239,7 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
-    openrailwaymap_osm_line:insert({
+    railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
       service = tags['service'],

@@ -33,7 +33,7 @@ CREATE OR REPLACE VIEW standard_railway_line_med AS
         WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name', name), tags, tunnel, bridge)
         ELSE railway_label_name(name, tags, tunnel, bridge)
       END AS label_name
-      FROM openrailwaymap_osm_line
+      FROM railway_line
       WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER by layer, rank NULLS LAST;
@@ -100,7 +100,7 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
          WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name',name), tags, tunnel, bridge)
          ELSE railway_label_name(name, tags, tunnel, bridge)
        END AS label_name
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
     ) AS r
   ORDER by layer, rank NULLS LAST;
@@ -218,7 +218,7 @@ CREATE OR REPLACE VIEW speed_railway_line_casing AS
        tags->'disused:railway' AS disused_railway,
        tags->'construction:railway' AS construction_railway,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction')
     ) AS r
   ORDER by layer, rank NULLS LAST;
@@ -247,7 +247,7 @@ CREATE OR REPLACE VIEW speed_railway_line_med AS
         WHEN railway = 'rail' AND usage = 'branch' THEN 1000
         ELSE 50
       END AS rank
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER BY
@@ -301,7 +301,7 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
        tags->'construction:railway' AS construction_railway,
        tags->'preserved:railway' AS preserved_railway,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved')
     ) AS r
   ORDER BY
@@ -520,7 +520,7 @@ CREATE OR REPLACE VIEW signals_railway_line AS
       WHEN tags->'railway:pzb' = 'yes' THEN 'pzb'
       WHEN (tags->'railway:pzb' = 'no' AND tags->'railway:lzb' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:atb' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:atc' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:scmt' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:asfa' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:kvb' = 'no' AND tags->'railway:tvm' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:zsi127' = 'no') THEN 'other'
     END as train_protection
-    FROM openrailwaymap_osm_line
+    FROM railway_line
     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'preserved', 'construction')
     ORDER BY
       layer,
@@ -1165,7 +1165,7 @@ CREATE OR REPLACE VIEW electrification_railway_line_med AS
        proposed_frequency,
        proposed_voltage,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER BY
@@ -1216,7 +1216,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
        proposed_frequency,
        proposed_voltage,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
     ) AS r
   ORDER BY
@@ -1265,7 +1265,7 @@ CREATE OR REPLACE VIEW electrification_future AS
        proposed_frequency,
        proposed_voltage,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
     ) AS r
   ORDER BY
@@ -1347,7 +1347,7 @@ CREATE OR REPLACE VIEW gauge_railway_line_low AS
        usage,
        railway_desired_value_from_list(1, tags->'gauge') AS gauge,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
     ) AS r
   ORDER BY layer NULLS LAST;
@@ -1375,7 +1375,7 @@ CREATE OR REPLACE VIEW gauge_railway_line_med AS
        railway_desired_value_from_list(1, tags->'gauge') AS gauge,
        railway_gauge_label(COALESCE(tags->'gauge', tags->'construction:gauge')) AS label,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER BY
@@ -1427,7 +1427,7 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
        railway_desired_value_from_list(3, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge2,
        railway_gauge_label(tags->'gauge') AS label,
        layer
-     FROM openrailwaymap_osm_line
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature')
     ) AS r
   ORDER BY
