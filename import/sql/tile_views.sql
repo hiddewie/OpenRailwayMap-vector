@@ -29,19 +29,14 @@ CREATE OR REPLACE VIEW standard_railway_line_med AS
       layer,
       ref,
       CASE
-        WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(tags->'abandoned:name',name), tags, tunnel, bridge)
-        WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name',name), tags, tunnel, bridge)
+        WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(tags->'abandoned:name', name), tags, tunnel, bridge)
+        WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name', name), tags, tunnel, bridge)
         ELSE railway_label_name(name, tags, tunnel, bridge)
       END AS label_name
       FROM openrailwaymap_osm_line
       WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER by layer, rank NULLS LAST;
-
-CREATE OR REPLACE VIEW standard_railway_turntables AS
-  SELECT
-    way
-  FROM turntables;
 
 CREATE OR REPLACE VIEW standard_railway_line_fill AS
   SELECT
@@ -87,7 +82,11 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
     END AS rank
   FROM
     (SELECT
-       way, railway, usage, service, tags->'highspeed' AS highspeed,
+       way,
+       railway,
+       usage,
+       service,
+       tags->'highspeed' AS highspeed,
        tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
        tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
        tags->'proposed:railway' AS proposed_railway,
@@ -212,7 +211,10 @@ CREATE OR REPLACE VIEW speed_railway_line_casing AS
     END AS rank
   FROM
     (SELECT
-       way, railway, usage, service,
+       way,
+       railway,
+       usage,
+       service,
        tags->'disused:railway' AS disused_railway,
        tags->'construction:railway' AS construction_railway,
        layer
@@ -285,7 +287,10 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
     railway_speed_label(speed_arr) AS label
   FROM
     (SELECT
-       way, railway, usage, service,
+       way,
+       railway,
+       usage,
+       service,
        maxspeed,
        maxspeed_forward,
        maxspeed_backward,
@@ -1147,16 +1152,18 @@ CREATE OR REPLACE VIEW electrification_railway_line_med AS
     label
   FROM
     (SELECT
-       way, railway, usage,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, FALSE) AS electrification_state,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, TRUE) AS electrification_state_without_future,
+       way,
+       railway,
+       usage,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
        railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
-       frequency AS frequency,
-       voltage AS voltage,
-       construction_frequency AS construction_frequency,
-       construction_voltage AS construction_voltage,
-       proposed_frequency AS proposed_frequency,
-       proposed_voltage AS proposed_voltage,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
        layer
      FROM openrailwaymap_osm_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
@@ -1195,17 +1202,19 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
     label
   FROM
     (SELECT
-       way, railway, usage, service,
-       construction,
+       way,
+       railway,
+       usage,
+       service,
        tags->'construction:railway' AS construction_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, TRUE) AS electrification_state_without_future,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
        railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
-       frequency AS frequency,
-       voltage AS voltage,
-       construction_frequency AS construction_frequency,
-       construction_voltage AS construction_voltage,
-       proposed_frequency AS proposed_frequency,
-       proposed_voltage AS proposed_voltage,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
        layer
      FROM openrailwaymap_osm_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
@@ -1243,16 +1252,18 @@ CREATE OR REPLACE VIEW electrification_future AS
     railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
   FROM
     (SELECT
-       way, railway, usage, service,
-       construction,
+       way,
+       railway,
+       usage,
+       service,
        tags->'construction:railway' AS construction_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, FALSE) AS electrification_state,
-       frequency AS frequency,
-       voltage AS voltage,
-       construction_frequency AS construction_frequency,
-       construction_voltage AS construction_voltage,
-       proposed_frequency AS proposed_frequency,
-       proposed_voltage AS proposed_voltage,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
        layer
      FROM openrailwaymap_osm_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
@@ -1405,8 +1416,10 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
     label
   FROM
     (SELECT
-       way, railway, usage, service,
-       construction,
+       way,
+       railway,
+       usage,
+       service,
        tags->'construction:railway' AS construction_railway,
        tags->'preserved:railway' AS preserved_railway,
        railway_desired_value_from_list(1, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge0,

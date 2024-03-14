@@ -44,7 +44,7 @@ postgres:
 
     standard_railway_turntables:
       schema: public
-      table: standard_railway_turntables
+      table: turntables
       srid: 3857
       geometry_column: way
       geometry_type: POLYGON
