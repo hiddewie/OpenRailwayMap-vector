@@ -25,6 +25,7 @@ A number of changes have been made from the [upstream `OpenRailwayMap-CartoCSS` 
 - Database views have been collapsed into single views to minimize data transfer.
 - Lua code is used to minimize imported data, while retaining the ability to change the database views for adding new features. 
 - Visualization of additional signalling has been added.
+- Direction of railway signals has been added.
 - Fixes have been made for non-functional visualization rules.
 
 Upstream changes will be merged into this project.
