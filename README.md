@@ -23,6 +23,7 @@ A number of changes have been made from the [upstream `OpenRailwayMap-CartoCSS` 
 - The raster tiles have been replaced with vector tiles.
 - MapCSS and Mapnik have been replaced with the MapLibre Style Specification and Martin.
 - Database views have been collapsed into single views to minimize data transfer.
+- Lua code is used to minimize imported data, while retaining the ability to change the database views for adding new features. 
 - Visualization of additional signalling has been added.
 - Fixes have been made for non-functional visualization rules.
 

@@ -17,6 +17,7 @@ local railway_line = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'linestring' },
     { column = 'railway', type = 'text' },
+    -- TODO build feature column
     { column = 'feature', type = 'text' },
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
@@ -25,7 +26,6 @@ local railway_line = osm2pgsql.define_table({
     { column = 'ref', type = 'text' },
     { column = 'track_ref', type = 'text' },
     { column = 'name', type = 'text' },
-    { column = 'public_transport', type = 'text' },
     { column = 'construction', type = 'text' },
     { column = 'tunnel', type = 'text' },
     { column = 'tunnel_name', type = 'text' },
@@ -107,8 +107,56 @@ local signals = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
+    { column = 'feature', type = 'text' },
+    { column = 'rank', type = 'smallint' },
+    { column = 'deactivated', type = 'boolean' },
     { column = 'ref', type = 'text' },
-    { column = 'tags', type = 'hstore' },
+    { column = 'signal_direction', type = 'text' },
+    { column = 'wrong_road', type = 'text' },
+    { column = 'wrong_road_form', type = 'text' },
+    { column = 'combined_form', type = 'text' },
+    { column = 'main_form', type = 'text' },
+    { column = 'distant_form', type = 'text' },
+    { column = 'train_protection_form', type = 'text' },
+    { column = 'main_repeated_form', type = 'text' },
+    { column = 'minor_form', type = 'text' },
+    { column = 'passing_form', type = 'text' },
+    { column = 'shunting_form', type = 'text' },
+    { column = 'stop_form', type = 'text' },
+    { column = 'stop_demand_form', type = 'text' },
+    { column = 'station_distant_form', type = 'text' },
+    { column = 'crossing_form', type = 'text' },
+    { column = 'departure_form', type = 'text' },
+    { column = 'speed_limit_form', type = 'text' },
+    { column = 'main_height', type = 'text' },
+    { column = 'minor_height', type = 'text' },
+    { column = 'combined_states', type = 'text' },
+    { column = 'main_states', type = 'text' },
+    { column = 'distant_states', type = 'text' },
+    { column = 'minor_states', type = 'text' },
+    { column = 'shunting_states', type = 'text' },
+    { column = 'main_repeated_states', type = 'text' },
+    { column = 'speed_limit_states', type = 'text' },
+    { column = 'distant_repeated', type = 'text' },
+    { column = 'crossing_repeated', type = 'text' },
+    { column = 'combined_shortened', type = 'text' },
+    { column = 'distant_shortened', type = 'text' },
+    { column = 'crossing_distant_shortened', type = 'text' },
+    { column = 'crossing_shortened', type = 'text' },
+    { column = 'ring_only_transit', type = 'text' },
+    { column = 'train_protection_type', type = 'text' },
+    { column = 'passing_type', type = 'text' },
+    { column = 'train_protection_shape', type = 'text' },
+    { column = 'signal_speed_limit', type = 'text' },
+    { column = 'signal_speed_limit_form', type = 'text' },
+    { column = 'signal_speed_limit_speed', type = 'text' },
+    { column = 'signal_speed_limit_distant', type = 'text' },
+    { column = 'signal_speed_limit_distant_form', type = 'text' },
+    { column = 'signal_speed_limit_distant_speed', type = 'text' },
+    { column = 'signal_electricity', type = 'text'},
+    { column = 'electricity_form', type = 'text'},
+    { column = 'electricity_turn_direction', type = 'text'},
+    { column = 'electricity_type', type = 'text'},
   },
 })
 
@@ -258,11 +306,121 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_signal_values(tags.railway) then
+    local feature = (
+      tags['railway:signal:combined'] or
+      tags['railway:signal:main'] or
+      tags['railway:signal:distant'] or
+      tags['railway:signal:train_protection'] or
+      tags['railway:signal:main_repeated'] or
+      tags['railway:signal:minor'] or
+      tags['railway:signal:passing'] or
+      tags['railway:signal:shunting'] or
+      tags['railway:signal:stop'] or
+      tags['railway:signal:stop_demand'] or
+      tags['railway:signal:station_distant'] or
+      tags['railway:signal:crossing_distant'] or
+      tags['railway:signal:crossing'] or
+      tags['railway:signal:ring'] or
+      tags['railway:signal:whistle'] or
+      tags['railway:signal:departure'] or
+      tags['railway:signal:main_repeated'] or
+      tags['railway:signal:humping'] or
+      tags['railway:signal:speed_limit']
+    )
+    local rank = (
+      (tags['railway:signal:main'] and tags['railway:signal:main'] and 10000) or
+      (tags['railway:signal:combined'] and tags['railway:signal:combined'] and 10000) or
+      (tags['railway:signal:distant'] and tags['railway:signal:distant'] and 9000) or
+      (tags['railway:signal:train_protection'] and tags['railway:signal:train_protection'] and 8500) or
+      (tags['railway:signal:main_repeated'] and tags['railway:signal:main_repeated'] and 8000) or
+      (tags['railway:signal:minor'] and tags['railway:signal:minor'] and 4000) or
+      (tags['railway:signal:passing'] and tags['railway:signal:passing'] and 3500) or
+      (tags['railway:signal:shunting'] and tags['railway:signal:shunting'] and 3000) or
+      (tags['railway:signal:stop'] and tags['railway:signal:stop'] and 1000) or
+      (tags['railway:signal:stop_demand'] and tags['railway:signal:stop_demand'] and 900) or
+      (tags['railway:signal:station_distant'] and tags['railway:signal:station_distant'] and 550) or
+      (tags['railway:signal:crossing'] and tags['railway:signal:crossing'] and 1000) or
+      (tags['railway:signal:crossing_distant'] and tags['railway:signal:crossing_distant'] and 500) or
+      (tags['railway:signal:ring'] and tags['railway:signal:ring'] and 500) or
+      (tags['railway:signal:whistle'] and tags['railway:signal:whistle'] and 500) or
+      (tags['railway:signal:departure'] and tags['railway:signal:departure'] and 400) or
+      0
+    )
+    local deactivated = (
+      tags['railway:signal:combined:deactivated'] or
+      tags['railway:signal:main:deactivated'] or
+      tags['railway:signal:distant:deactivated'] or
+      tags['railway:signal:train_protection:deactivated'] or
+      tags['railway:signal:main_repeated:deactivated'] or
+      tags['railway:signal:minor:deactivated'] or
+      tags['railway:signal:passing:deactivated'] or
+      tags['railway:signal:shunting:deactivated'] or
+      tags['railway:signal:stop:deactivated'] or
+      tags['railway:signal:stop_demand:deactivated'] or
+      tags['railway:signal:station_distant:deactivated'] or
+      tags['railway:signal:crossing_distant:deactivated'] or
+      tags['railway:signal:crossing:deactivated'] or
+      tags['railway:signal:ring:deactivated'] or
+      tags['railway:signal:whistle:deactivated'] or
+      tags['railway:signal:departure:deactivated'] or
+      tags['railway:signal:main_repeated:deactivated'] or
+      tags['railway:signal:humping:deactivated'] or
+      tags['railway:signal:speed_limit:deactivated']
+    ) == 'yes'
+
     signals:insert({
       way = object:as_point(),
       railway = tags.railway,
+      feature = feature,
+      rank = rank,
+      deactivated = deactivated,
       ref = tags.ref,
-      tags = tags,
+      signal_direction = tags['railway:signal:direction'],
+      wrong_road = tags['railway:signal:wrong_road'],
+      wrong_road_form = tags['railway:signal:wrong_road:form'],
+      combined_form = tags['railway:signal:combined:form'],
+      main_form = tags['railway:signal:main:form'],
+      distant_form = tags['railway:signal:distant:form'],
+      train_protection_form = tags['railway:signal:train_protection:form'],
+      main_repeated_form = tags['railway:signal:main_repeated:form'],
+      minor_form = tags['railway:signal:minor:form'],
+      passing_form = tags['railway:signal:passing:form'],
+      shunting_form = tags['railway:signal:shunting:form'],
+      stop_form = tags['railway:signal:stop:form'],
+      stop_demand_form = tags['railway:signal:stop_demand:form'],
+      station_distant_form = tags['railway:signal:station:distant:form'],
+      crossing_form = tags['railway:signal:crossing:form'],
+      departure_form = tags['railway:signal:departure:form'],
+      speed_limit_form = tags['railway:signal:speed_limit:form'],
+      main_height = tags['railway:signal:main:height'],
+      minor_height = tags['railway:signal:minor:height'],
+      combined_states = tags['railway:signal:combined:states'],
+      main_states = tags['railway:signal:main:states'],
+      distant_states = tags['railway:signal:distant:states'],
+      minor_states = tags['railway:signal:minor:states'],
+      shunting_states = tags['railway:signal:shunting:states'],
+      main_repeated_states = tags['railway:signal:main_repeated:states'],
+      speed_limit_states = tags['railway:signal:speed_limit:states'],
+      distant_repeated = tags['railway:signal:distant:repeated'],
+      crossing_repeated = tags['railway:signal:crossing:repeated'],
+      combined_shortened = tags['railway:signal:combined:shortened'],
+      distant_shortened = tags['railway:signal:distant:shortened'],
+      crossing_distant_shortened = tags['railway:signal:crossing:distant:shortened'],
+      crossing_shortened = tags['railway:signal:crossing:shortened'],
+      ring_only_transit = tags['railway:signal:ring:only_transit'],
+      train_protection_type = tags['railway:signal:train_protection:type'],
+      passing_type = tags['railway:signal:passing:type'],
+      train_protection_shape = tags['railway:signal:train_protection:shape'],
+      signal_speed_limit = tags['railway:signal:speed_limit'],
+      signal_speed_limit_form = tags['railway:signal:speed_limit:form'],
+      signal_speed_limit_speed = tags['railway:signal:speed_limit:speed'],
+      signal_speed_limit_distant = tags['railway:signal:speed_limit_distant'],
+      signal_speed_limit_distant_form = tags['railway:signal:speed_limit_distant:form'],
+      signal_speed_limit_distant_speed = tags['railway:signal:speed_limit_distant:speed'],
+      signal_electricity = tags['railway:signal:electricity'],
+      electricity_form = tags['railway:signal:electricity:form'],
+      electricity_turn_direction = tags['railway:signal:electricity:turn_direction'],
+      electricity_type = tags['railway:signal:electricity:type'],
     })
   end
 
@@ -291,7 +449,7 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
-    railway_train_protection, railway_train_protection_rank = train_protection(tags)
+    local railway_train_protection, railway_train_protection_rank = train_protection(tags)
 
     railway_line:insert({
       way = object:as_linestring(),
