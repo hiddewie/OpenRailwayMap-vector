@@ -1,4 +1,4 @@
-version: '2'
+version: '3.9'
 services:
   db:
     image: db:v1
@@ -25,7 +25,8 @@ services:
       context: .
       dockerfile: import.Dockerfile
     env_file:
-      - .env
+      - path: .env
+        required: false
     depends_on:
       - db
     volumes:
