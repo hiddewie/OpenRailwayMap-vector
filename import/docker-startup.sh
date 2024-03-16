@@ -20,7 +20,7 @@ psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || create
 psql -d gis -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 psql -d gis -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
 
-echo "Using osm2psql cache ${OSM2PGSQL_CACHE}MB, ${OSM2PGSQL_NUMPROC} processes and data file ${OSM2PGSQL_DATAFILE}"
+echo "Using osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes and data file ${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
 echo "Importing data"
 # Importing data to a database
@@ -31,9 +31,9 @@ osm2pgsql \
   --slim \
   --output flex \
   --style openrailwaymap.lua \
-  --cache $OSM2PGSQL_CACHE \
-  --number-processes $OSM2PGSQL_NUMPROC \
-  "/data/${OSM2PGSQL_DATAFILE}"
+  --cache "${OSM2PGSQL_CACHE:-256}" \
+  --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
+  "/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
 echo "Post processing imported data"
 psql -d gis -f sql/functions.sql
