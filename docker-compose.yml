@@ -1,4 +1,4 @@
-version: '3.9'
+version: '2'
 services:
   db:
     image: db:v1
@@ -24,9 +24,6 @@ services:
     build:
       context: .
       dockerfile: import.Dockerfile
-    env_file:
-      - path: .env
-        required: false
     depends_on:
       - db
     volumes:
@@ -39,7 +36,6 @@ services:
       - OSM2PGSQL_CACHE
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
-      - EXTERNAL_DATA_SCRIPT_FLAGS
 
   martin-cp:
     image: ghcr.io/maplibre/martin
