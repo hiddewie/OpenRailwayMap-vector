@@ -78,3 +78,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
     ) AS facilities
     -- ORDER BY is required to ensure that the larger route_count is used.
     ORDER BY osm_id, name, station, label, railway, route_count DESC;
+
+CREATE INDEX IF NOT EXISTS stations_with_route_counts_geom_index
+  ON stations_with_route_counts
+  USING GIST(way);
