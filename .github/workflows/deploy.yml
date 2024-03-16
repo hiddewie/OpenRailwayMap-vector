@@ -77,6 +77,7 @@ jobs:
           docker compose up --build martin-cp
 
       - name: Print tiles summary
+        continue-on-error: true
         run: |
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/standard.mbtiles
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/speed.mbtiles
