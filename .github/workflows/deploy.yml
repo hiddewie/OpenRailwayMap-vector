@@ -38,14 +38,37 @@ jobs:
       - name: Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      - name: Install Osmium
+        run: |
+          sudo apt install osmium-tool
+
+      - name: Generate cache key
+        id: cache-key
+        run: |
+          echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
+
+      - name: Cache downloaded OpenStreetMap data
+        id: cache-data
+        uses: actions/cache@v3
+        with:
+          key: 'data-${{ steps.cache-key.outputs.key }}'
+          path: data/filtered.osm.pbf
+
       - name: Download data
+        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
           curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data/data.osm.pbf
+
+      - name: Filter data
+        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
+        run: |
+          osmium tags-filter --progress --output data/filtered.osm.pbf data/data.osm.pbf nwr/railway nwr/disused:railway nwr/abandoned:railway nwr/razed:railway  nwr/construction:railway nwr/proposed:railway  n/public_transport=stop_position  nwr/public_transport=platform  r/route=train  r/route=tram  r/route=light_rail  r/route=subway
 
       - name: Import data
         env:
           OSM2PGSQL_NUMPROC: 4
           OSM2PGSQL_CACHE: 2000
+          OSM2PGSQL_DATAFILE: filtered.osm.pbf
         run: |
           docker compose run --build import
 
