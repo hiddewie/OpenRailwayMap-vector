@@ -488,43 +488,13 @@ CREATE OR REPLACE VIEW signals_railway_line AS
       WHEN railway = 'preserved' THEN preserved_railway
       ELSE railway
     END as feature,
-    railway_train_protection_rank(
-      tags->'railway:pzb',
-      railway_null_to_no(tags->'railway:lzb'),
-      tags->'railway:atb',
-      tags->'railway:atb-eg',
-      tags->'railway:atb-ng',
-      tags->'railway:atb-vv',
-      tags->'railway:atc',
-      tags->'railway:kvb',
-      tags->'railway:tvm',
-      tags->'railway:scmt',
-      tags->'railway:asfa',
-      railway_null_or_zero_to_no(tags->'railway:ptc'),
-      tags->'railway:zsi127',
-      railway_null_or_zero_to_no(tags->'railway:etcs'),
-      railway_null_or_zero_to_no(tags->'construction:railway:etcs')
-    ) as rank,
-    CASE
-      WHEN railway_null_or_zero_to_no(tags->'railway:etcs') != 'no' THEN 'etcs'
-      WHEN railway_null_or_zero_to_no(tags->'railway:ptc') != 'no' THEN 'ptc'
-      WHEN railway_null_or_zero_to_no(tags->'construction:railway:etcs') != 'no' THEN 'construction_etcs'
-      WHEN tags->'railway:asfa' = 'yes' THEN 'asfa'
-      WHEN tags->'railway:scmt' = 'yes' THEN 'scmt'
-      WHEN railway_null_or_zero_to_no(tags->'railway:tvm') != 'no' THEN 'tvm'
-      WHEN tags->'railway:kvb' = 'yes' THEN 'kvb'
-      WHEN tags->'railway:atc' = 'yes' THEN 'atc'
-      WHEN COALESCE(tags->'railway:atb', tags->'railway:atb-eg', tags->'railway:atb-ng', tags->'railway:atb-vv') = 'yes' THEN 'atb'
-      WHEN tags->'railway:zsi127' = 'yes' THEN 'zsi127'
-      WHEN tags->'railway:lzb' = 'yes' THEN 'lzb'
-      WHEN tags->'railway:pzb' = 'yes' THEN 'pzb'
-      WHEN (tags->'railway:pzb' = 'no' AND tags->'railway:lzb' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:atb' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:atc' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:scmt' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:asfa' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:kvb' = 'no' AND tags->'railway:tvm' = 'no' AND tags->'railway:etcs' = 'no') OR (tags->'railway:zsi127' = 'no') THEN 'other'
-    END as train_protection
-    FROM railway_line
-    WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'preserved', 'construction')
-    ORDER BY
-      layer,
-      rank NULLS LAST;
+    train_protection_rank as rank,
+    train_protection
+  FROM railway_line
+  WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'preserved', 'construction')
+  ORDER BY
+    layer,
+    rank NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_signal_boxes AS
   SELECT

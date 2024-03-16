@@ -279,99 +279,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
--- Set a value to 'no' if it is null.
-CREATE OR REPLACE FUNCTION railway_null_to_no(field TEXT) RETURNS
-TEXT AS $$
-BEGIN
-  RETURN COALESCE(field, 'no');
-END;
-$$ LANGUAGE plpgsql;
-
-
--- Set a value to 'no' if it is null or 0.
-CREATE OR REPLACE FUNCTION railway_null_or_zero_to_no(field TEXT) RETURNS
-TEXT AS $$
-BEGIN
-  IF field = '0' THEN
-    RETURN 'no';
-  END IF;
-  RETURN COALESCE(field, 'no');
-END;
-$$ LANGUAGE plpgsql;
-
-
--- Get rank by train protection a track is equipped with
--- Other code expects 1 for no protection, 0 for default/unknown
-CREATE OR REPLACE FUNCTION railway_train_protection_rank(
-  pzb TEXT,
-  lzb TEXT,
-  atb TEXT,
-  atb_eg TEXT,
-  atb_ng TEXT,
-  atb_vv TEXT,
-  atc TEXT,
-  kvb TEXT,
-  tvm TEXT,
-  scmt TEXT,
-  asfa TEXT,
-  ptc TEXT,
-  zsi127 TEXT,
-  etcs TEXT,
-  construction_etcs TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF etcs <> 'no' THEN
-    RETURN 10;
-  END IF;
-  IF ptc <> 'no' THEN
-    RETURN 10;
-  END IF;  
-  IF construction_etcs <> 'no' THEN
-    RETURN 9;
-  END IF;
-  IF asfa = 'yes' THEN
-    RETURN 8;
-  END IF;
-  IF scmt = 'yes' THEN
-    RETURN 7;
-  END IF;
-  IF tvm = 'yes' OR tvm = '430' OR tvm = '300' THEN
-    RETURN 6;
-  END IF;
-  IF kvb = 'yes' THEN
-    RETURN 5;
-  END IF;
-  IF atc = 'yes' THEN
-    RETURN 5;
-  END IF;
-  IF COALESCE(atb, atb_eg, atb_ng, atb_vv) = 'yes' THEN
-    RETURN 4;
-  END IF;
-  IF zsi127 = 'yes' THEN
-    RETURN 3;
-  END IF;
-  IF lzb = 'yes' THEN
-    RETURN 3;
-  END IF;
-  IF pzb = 'yes' THEN
-    RETURN 2;
-  END IF;
-  IF (pzb = 'no' AND lzb = 'no' AND etcs = 'no') OR (atb = 'no' AND etcs = 'no') OR (atc = 'no' AND etcs = 'no') OR (scmt = 'no' AND etcs = 'no') OR (asfa = 'no' AND etcs = 'no') OR (kvb = 'no' AND tvm = 'no' AND etcs = 'no') OR (zsi127 = 'no') THEN
-    RETURN 1;
-  END IF;
-  RETURN 0;
-END;
-$$ LANGUAGE plpgsql;
-
-
 -- Get name for labelling in standard style depending whether it is a bridge, a tunnel or none of these two.
-CREATE OR REPLACE FUNCTION railway_label_name(name TEXT, tags HSTORE, tunnel TEXT, bridge TEXT) RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION railway_label_name(name TEXT, tunnel TEXT, tunnel_name TEXT, bridge TEXT, bridge_name TEXT) RETURNS TEXT AS $$
 BEGIN
   IF tunnel IS NOT NULL AND tunnel != 'no' THEN
-    RETURN COALESCE(tags->'tunnel:name', name);
+    RETURN COALESCE(tunnel_name, name);
   END IF;
   IF bridge IS NOT NULL AND bridge != 'no' THEN
-    RETURN COALESCE(tags->'bridge:name', name);
+    RETURN COALESCE(bridge_name, name);
   END IF;
   RETURN name;
 END;

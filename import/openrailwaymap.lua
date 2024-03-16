@@ -56,6 +56,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'razed_railway', type = 'text' },
     { column = 'razed_name', type = 'text' },
     { column = 'preserved_railway', type = 'text' },
+    { column = 'train_protection', type = 'text' },
+    { column = 'train_protection_rank', type = 'smallint' },
   },
 })
 
@@ -164,6 +166,44 @@ local routes = osm2pgsql.define_table({
   },
 })
 
+-- Set a value to 'no' if it is null or 0.
+function railway_null_or_zero_to_no(value)
+  if value == '0' or (not value) then
+    return 'no'
+  else
+    return value
+  end
+end
+
+-- Get rank by train protection a track is equipped with
+-- Other code expects 1 for no protection, 0 for default/unknown
+function train_protection(tags)
+  if railway_null_or_zero_to_no(tags['railway:ptc']) ~= 'no' then return 'ptc', 13 end
+  if railway_null_or_zero_to_no(tags['railway:etcs']) ~= 'no' then return 'etcs', 12 end
+  if railway_null_or_zero_to_no(tags['construction:railway:etcs']) ~= 'no' then return 'construction_etcs', 11 end
+  if tags['railway:asfa'] == 'yes' then return 'asfa', 10 end
+  if tags['railway:scmt'] == 'yes' then return 'scmt', 9 end
+  if railway_null_or_zero_to_no(tags['railway:tvm']) ~= 'no' then return 'tvm', 8 end
+  if tags['railway:kvb'] == 'yes' then return 'kvb', 7 end
+  if tags['railway:atc'] == 'yes' then return 'atc', 6 end
+  if (tags['railway:atb'] or tags['railway:atb-eg'] or tags['railway:atb-ng'] or tags['railway:atb-vv']) == 'yes' then return 'atb', 5 end
+  if tags['railway:zsi127'] == 'yes' then return 'zsi127', 4 end
+  if tags['railway:lzb'] == 'yes' then return 'lzb', 3 end
+  if tags['railway:pzb'] == 'yes' then return 'pzb', 2 end
+
+  if (tags['railway:pzb'] == 'no' and tags['railway:lzb'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:atb'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:atc'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:scmt'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:asfa'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:kvb'] == 'no' and tags['railway:tvm'] == 'no' and tags['railway:etcs'] == 'no')
+    or (tags['railway:zsi127'] == 'no') then
+    return 'other', 1
+  end
+
+  return nil, 0
+end
+
 -- TODO clean up unneeded tags
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
@@ -251,6 +291,8 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
+    railway_train_protection, railway_train_protection_rank = train_protection(tags)
+
     railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
@@ -292,6 +334,8 @@ function osm2pgsql.process_way(object)
       razed_railway = tags['razed:railway'],
       razed_name = tags['razed:name'],
       preserved_railway = tags['preserved:railway'],
+      train_protection = railway_train_protection,
+      train_protection_rank = railway_train_protection_rank,
     })
   end
 
