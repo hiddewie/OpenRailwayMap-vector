@@ -161,6 +161,7 @@ postgres:
       properties:
         feature: string
         type: string
+        azimuth: number
 
     # --- Signals --- #
 
@@ -190,6 +191,7 @@ postgres:
         ref: string
         feature: string
         deactivated: boolean
+        azimuth: number
 
     signals_signal_boxes:
       schema: public
@@ -258,6 +260,7 @@ postgres:
       geometry_type: POINT
       properties:
         feature: string
+        azimuth: number
 
     # --- Gauge --- #
 

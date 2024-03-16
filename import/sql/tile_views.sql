@@ -374,7 +374,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'light' THEN
         CASE
           -- for light signals: empty Zs3 "looks" exactly like empty Zs2
-          WHEN signal_speed_limit_speed is null OR signal_speed_limit_speed ~ '^off;\?$' THEN 'zs2-unknown'
+          WHEN signal_speed_limit_speed is null OR signal_speed_limit_speed ~ '^off;\?$' THEN 'de/zs2-unknown'
           WHEN signal_speed_limit_speed ~ '^(1[0-2]|[2-9])0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-light')
         END
 
@@ -438,7 +438,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     CASE
       WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1') THEN 'line'
       WHEN feature IN ('DE-BOStrab:g2a', 'DE-BOStrab:g4', 'DE-BOStrab:g1a', 'DE-BOStrab:g3') THEN 'tram'
-    END as type
+    END as type,
+    azimuth
   FROM (
     SELECT
       way,
@@ -451,7 +452,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- CartoCSS we have an icon for. Otherwise we might render an icon for 40 kph if
       -- 42 is tagged (but invalid tagging).
       railway_largest_speed_noconvert(signal_speed_limit_speed)::text AS signal_speed_limit_speed,
-      railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed
+      railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed,
+      azimuth
     FROM (
       SELECT
         way,
@@ -460,8 +462,9 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         signal_speed_limit_speed,
         signal_speed_limit_distant,
         signal_speed_limit_distant_form,
-        signal_speed_limit_distant_speed
-      FROM signals
+        signal_speed_limit_distant_speed,
+        azimuth
+      FROM signals_with_azimuth s
       WHERE railway = 'signal'
         AND signal_direction IS NOT NULL
         AND (signal_speed_limit IS NOT NULL OR signal_speed_limit_distant IS NOT NULL)
@@ -547,8 +550,9 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
       ring_only_transit,
       train_protection_type,
       passing_type,
-      train_protection_shape
-    FROM signals
+      train_protection_shape,
+      azimuth
+    FROM signals_with_azimuth
     WHERE
       (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
        OR railway = 'derail'
@@ -834,7 +838,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
               WHEN distant_shortened = 'yes' THEN 'de/ks-distant-shortened'
               ELSE 'de/ks-distant'
             END
-          WHEN main_form = 'light' AND distant_form IS NULL AND combined_form IS NULL THEN 'ks-main'
+          WHEN main_form = 'light' AND distant_form IS NULL AND combined_form IS NULL THEN 'de/ks-main'
           WHEN main_form IS NULL AND distant_form IS NULL AND combined_form = 'light' THEN
             CASE
               WHEN combined_shortened = 'yes' THEN 'de/ks-combined-shortened'
@@ -932,12 +936,13 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
       -- NL train protection block markers
       WHEN feature IN ('NL:227b', 'DE-ESO:ne14') AND train_protection_form = 'sign' AND train_protection_type = 'block_marker' THEN
         CASE
-          WHEN feature = 'NL:227b' AND train_protection_shape = 'triangle' THEN 'general/:etcs-stop-marker-arrow-left'
-          ELSE 'general/:etcs-stop-marker-triangle-left'
+          WHEN feature = 'NL:227b' AND train_protection_shape = 'triangle' THEN 'general/etcs-stop-marker-arrow-left'
+          ELSE 'general/etcs-stop-marker-triangle-left'
         END
 
       ELSE ''
-    END as feature
+    END as feature,
+    azimuth
   FROM pre_signals
   ORDER BY rank NULLS FIRST;
 
@@ -1126,15 +1131,17 @@ CREATE OR REPLACE VIEW electrification_signals AS
       -- DE tram power off shortly signal (St 7)
       WHEN electricity_type = 'power_off_shortly' AND electricity_form = 'sign' AND signal_electricity IN ('DE-BOStrab:st7', 'DE-AVG:st7') THEN 'de/bostrab/st7'
 
-    END as feature
+    END as feature,
+    azimuth
   FROM (
     SELECT
       way,
+      azimuth,
       signal_electricity,
       electricity_form,
       electricity_turn_direction,
       electricity_type
-    FROM signals
+    FROM signals_with_azimuth
     WHERE
       railway = 'signal'
       AND signal_direction IS NOT NULL
