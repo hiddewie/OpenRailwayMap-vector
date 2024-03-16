@@ -1149,33 +1149,23 @@ CREATE OR REPLACE VIEW electrification_railway_line_med AS
     railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS merged_frequency,
     railway_to_int(voltage) AS voltage,
     railway_to_float(frequency) AS frequency,
-    railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) as label
+    label
   FROM
     (SELECT
-       *,
+       way,
+       railway,
+       usage,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future
-    FROM (
-      SELECT
-        way,
-        railway,
-        usage,
-        service,
-        layer,
-        tags->'electrified' as electrified,
-        tags->'deelectrified' as deelectrified,
-        tags->'frequency' as frequency,
-        tags->'voltage' as voltage,
-        tags->'construction:electrified' as construction_electrified,
-        tags->'construction:frequency' as construction_frequency,
-        tags->'construction:voltage' as construction_voltage,
-        tags->'proposed:electrified' as proposed_electrified,
-        tags->'proposed:frequency' as proposed_frequency,
-        tags->'proposed:voltage' as proposed_voltage,
-        tags->'abandoned:electrified' as abandoned_electrified,
-        tags
-      FROM railway_line
-    ) as railway_line_outer
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
+       railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
+       layer
+     FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r
   ORDER BY
@@ -1209,33 +1199,24 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
     electrification_state_without_future AS state,
     railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
     railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
-    railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label
+    label
   FROM
     (SELECT
-       *,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future
-    FROM (
-      SELECT
-        way,
-        railway,
-        usage,
-        service,
-        layer,
-        tags->'electrified' as electrified,
-        tags->'deelectrified' as deelectrified,
-        tags->'frequency' as frequency,
-        tags->'voltage' as voltage,
-        tags->'construction:railway' as construction_railway,
-        tags->'construction:electrified' as construction_electrified,
-        tags->'construction:frequency' as construction_frequency,
-        tags->'construction:voltage' as construction_voltage,
-        tags->'proposed:electrified' as proposed_electrified,
-        tags->'proposed:frequency' as proposed_frequency,
-        tags->'proposed:voltage' as proposed_voltage,
-        tags->'abandoned:electrified' as abandoned_electrified,
-        tags
-      FROM railway_line
-    ) as railway_line_outer
+       way,
+       railway,
+       usage,
+       service,
+       tags->'construction:railway' AS construction_railway,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
+       railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
+       layer
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
     ) AS r
   ORDER BY
@@ -1271,30 +1252,20 @@ CREATE OR REPLACE VIEW electrification_future AS
     railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
   FROM
     (SELECT
-       *,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state
-    FROM (
-      SELECT
-        way,
-        railway,
-        usage,
-        service,
-        layer,
-        tags->'electrified' as electrified,
-        tags->'deelectrified' as deelectrified,
-        tags->'frequency' as frequency,
-        tags->'voltage' as voltage,
-        tags->'construction:railway' as construction_railway,
-        tags->'construction:electrified' as construction_electrified,
-        tags->'construction:frequency' as construction_frequency,
-        tags->'construction:voltage' as construction_voltage,
-        tags->'proposed:electrified' as proposed_electrified,
-        tags->'proposed:frequency' as proposed_frequency,
-        tags->'proposed:voltage' as proposed_voltage,
-        tags->'abandoned:electrified' as abandoned_electrified,
-        tags
-      FROM railway_line
-    ) as railway_line_outer
+       way,
+       railway,
+       usage,
+       service,
+       tags->'construction:railway' AS construction_railway,
+       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
+       frequency,
+       voltage,
+       construction_frequency,
+       construction_voltage,
+       proposed_frequency,
+       proposed_voltage,
+       layer
+     FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
     ) AS r
   ORDER BY
