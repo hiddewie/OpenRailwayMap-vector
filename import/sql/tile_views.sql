@@ -237,10 +237,10 @@ CREATE OR REPLACE VIEW speed_railway_line_med AS
       way,
       railway,
       usage,
-      tags->'maxspeed' as maxspeed,
-      tags->'maxspeed:forward' as maxspeed_forward,
-      tags->'maxspeed:backward' as maxspeed_backward,
-      tags->'railway:preferred_direction' as preferred_direction,
+      maxspeed,
+      maxspeed_forward,
+      maxspeed_backward,
+      preferred_direction,
       layer,
       CASE
         WHEN railway = 'rail' AND usage = 'main' THEN 1100
@@ -291,12 +291,12 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
        railway,
        usage,
        service,
-       tags->'maxspeed' as maxspeed,
-       tags->'maxspeed:forward' as maxspeed_forward,
-       tags->'maxspeed:backward' as maxspeed_backward,
-       tags->'railway:preferred_direction' as preferred_direction,
+       maxspeed,
+       maxspeed_forward,
+       maxspeed_backward,
+       preferred_direction,
        -- does no unit conversion
-       railway_direction_speed_limit(tags->'railway:preferred_direction',tags->'maxspeed', tags->'maxspeed:forward', tags->'maxspeed:backward') AS speed_arr,
+       railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
        disused_railway,
        construction_railway,
        preserved_railway,
@@ -483,9 +483,9 @@ CREATE OR REPLACE VIEW signals_railway_line AS
     service,
     layer,
     CASE
-      WHEN railway = 'construction' THEN tags->'construction:railway'
-      WHEN railway = 'disused' THEN tags->'disused:railway'
-      WHEN railway = 'preserved' THEN tags->'preserved:railway'
+      WHEN railway = 'construction' THEN construction_railway
+      WHEN railway = 'disused' THEN disused_railway
+      WHEN railway = 'preserved' THEN preserved_railway
       ELSE railway
     END as feature,
     railway_train_protection_rank(
