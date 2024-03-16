@@ -29,7 +29,7 @@ CREATE OR REPLACE VIEW stop_positions_and_their_routes_clustered AS
 CREATE OR REPLACE VIEW platforms_and_their_routes_clustered AS
   WITH clusters as (
     SELECT
-      ST_ClusterDBSCAN(srr.geom, 40, 1) OVER () AS cluster_id,
+      ST_ClusterDBSCAN(srr.geom, 50, 1) OVER () AS cluster_id,
       srr.geom,
       srr.rel_id
     FROM platforms_route_relations AS srr

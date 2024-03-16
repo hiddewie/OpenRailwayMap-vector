@@ -96,7 +96,7 @@ local platforms = osm2pgsql.define_table({
   name = 'platforms',
   ids = { type = 'any', id_column = 'osm_id' },
   columns = {
-    { column = 'way', type = 'geometry' },
+    { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
   },
 })
@@ -499,7 +499,7 @@ function osm2pgsql.process_way(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
-      way = object:as_linestring(),
+      way = object:as_linestring():centroid(),
       name = tags.name,
     })
   end
