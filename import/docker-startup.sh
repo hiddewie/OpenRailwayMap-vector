@@ -38,8 +38,8 @@ osm2pgsql \
 echo "Post processing imported data"
 psql -d gis -f sql/functions.sql
 psql -d gis -f sql/get_station_importance.sql
-psql -d gis -f sql/tile_views.sql
 psql -d gis -f sql/signals_with_azimuth.sql
+psql -d gis -f sql/tile_views.sql
 
 echo "Import summary"
 psql -d gis -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"

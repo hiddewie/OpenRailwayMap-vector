@@ -62,7 +62,7 @@ jobs:
       - name: Filter data
         if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
-          osmium tags-filter --progress --output data/filtered.osm.pbf data/data.osm.pbf nwr/railway nwr/disused:railway nwr/abandoned:railway nwr/razed:railway  nwr/construction:railway nwr/proposed:railway  n/public_transport=stop_position  nwr/public_transport=platform  r/route=train  r/route=tram  r/route=light_rail  r/route=subway
+          osmium tags-filter --progress --output data/filtered.osm.pbf data/data.osm.pbf nwr/railway nwr/disused:railway nwr/abandoned:railway nwr/razed:railway nwr/construction:railway nwr/proposed:railway n/public_transport=stop_position nwr/public_transport=platform r/route=train r/route=tram r/route=light_rail r/route=subway
 
       - name: Import data
         env:
@@ -77,7 +77,6 @@ jobs:
           docker compose up --build martin-cp
 
       - name: Print tiles summary
-        continue-on-error: true
         run: |
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/standard.mbtiles
           docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/speed.mbtiles
