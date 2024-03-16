@@ -25,13 +25,13 @@ CREATE OR REPLACE VIEW standard_railway_line_med AS
       way,
       railway,
       usage,
-      tags->'highspeed' AS highspeed,
+      highspeed,
       layer,
       ref,
       CASE
-        WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(tags->'abandoned:name', name), tags, tunnel, bridge)
-        WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name', name), tags, tunnel, bridge)
-        ELSE railway_label_name(name, tags, tunnel, bridge)
+        WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name,  name), tunnel, tunnel_name, bridge, bridge_name)
+        WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name,  name), tunnel, tunnel_name, bridge, bridge_name)
+        ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
       END AS label_name
       FROM railway_line
       WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
@@ -86,19 +86,19 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
        railway,
        usage,
        service,
-       tags->'highspeed' AS highspeed,
-       tags->'disused:railway' AS disused_railway, tags->'abandoned:railway' AS abandoned_railway,
-       tags->'razed:railway' AS razed_railway, tags->'construction:railway' AS construction_railway,
-       tags->'proposed:railway' AS proposed_railway,
+       highspeed,
+       disused_railway, abandoned_railway,
+       razed_railway, construction_railway,
+       proposed_railway,
        layer,
        bridge,
        tunnel,
-       tags->'railway:track_ref' AS track_ref,
+       track_ref,
        ref,
        CASE
-         WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(tags->'abandoned:name',name), tags, tunnel, bridge)
-         WHEN railway = 'razed' THEN railway_label_name(COALESCE(tags->'razed:name',name), tags, tunnel, bridge)
-         ELSE railway_label_name(name, tags, tunnel, bridge)
+         WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
+         WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
+         ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
        END AS label_name
      FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed')
@@ -215,8 +215,8 @@ CREATE OR REPLACE VIEW speed_railway_line_casing AS
        railway,
        usage,
        service,
-       tags->'disused:railway' AS disused_railway,
-       tags->'construction:railway' AS construction_railway,
+       disused_railway,
+       construction_railway,
        layer
      FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction')
@@ -297,9 +297,9 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
        tags->'railway:preferred_direction' as preferred_direction,
        -- does no unit conversion
        railway_direction_speed_limit(tags->'railway:preferred_direction',tags->'maxspeed', tags->'maxspeed:forward', tags->'maxspeed:backward') AS speed_arr,
-       tags->'disused:railway' AS disused_railway,
-       tags->'construction:railway' AS construction_railway,
-       tags->'preserved:railway' AS preserved_railway,
+       disused_railway,
+       construction_railway,
+       preserved_railway,
        layer
      FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved')
@@ -1206,7 +1206,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
        railway,
        usage,
        service,
-       tags->'construction:railway' AS construction_railway,
+       construction_railway,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
        railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
        frequency,
@@ -1256,7 +1256,7 @@ CREATE OR REPLACE VIEW electrification_future AS
        railway,
        usage,
        service,
-       tags->'construction:railway' AS construction_railway,
+       construction_railway,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
        frequency,
        voltage,
@@ -1345,7 +1345,7 @@ CREATE OR REPLACE VIEW gauge_railway_line_low AS
        way,
        railway,
        usage,
-       railway_desired_value_from_list(1, tags->'gauge') AS gauge,
+       railway_desired_value_from_list(1, gauge) AS gauge,
        layer
      FROM railway_line
      WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
@@ -1372,8 +1372,8 @@ CREATE OR REPLACE VIEW gauge_railway_line_med AS
        way,
        railway,
        usage,
-       railway_desired_value_from_list(1, tags->'gauge') AS gauge,
-       railway_gauge_label(COALESCE(tags->'gauge', tags->'construction:gauge')) AS label,
+       railway_desired_value_from_list(1, gauge) AS gauge,
+       railway_gauge_label(COALESCE(gauge, construction_gauge)) AS label,
        layer
      FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
@@ -1420,12 +1420,12 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
        railway,
        usage,
        service,
-       tags->'construction:railway' AS construction_railway,
-       tags->'preserved:railway' AS preserved_railway,
-       railway_desired_value_from_list(1, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge0,
-       railway_desired_value_from_list(2, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge1,
-       railway_desired_value_from_list(3, COALESCE(tags->'gauge', tags->'construction:gauge')) AS gauge2,
-       railway_gauge_label(tags->'gauge') AS label,
+       construction_railway,
+       preserved_railway,
+       railway_desired_value_from_list(1, COALESCE(gauge, construction_gauge)) AS gauge0,
+       railway_desired_value_from_list(2, COALESCE(gauge, construction_gauge)) AS gauge1,
+       railway_desired_value_from_list(3, COALESCE(gauge, construction_gauge)) AS gauge2,
+       railway_gauge_label(gauge) AS label,
        layer
      FROM railway_line
      WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature')
