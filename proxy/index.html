@@ -2014,6 +2014,17 @@
         }
       },
       {
+        id: 'speed_railway_signals_unknown',
+        type: 'circle',
+        source: 'openrailwaymap',
+        'source-layer': 'speed_railway_signals',
+        filter: ['==', ['get', 'feature'], null],
+        paint: {
+          'circle-color': '#f00',
+          'circle-blur': 1,
+        },
+      },
+      {
         id: 'speed_railway_line_text',
         type: 'symbol',
         minzoom: 8,
@@ -2205,6 +2216,17 @@
         paint: {
           'line-color': 'white',
           'line-width': 1,
+        },
+      },
+      {
+        id: 'railway_signals_unknown',
+        type: 'circle',
+        source: 'openrailwaymap',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', 'feature'], null],
+        paint: {
+          'circle-color': '#f00',
+          'circle-blur': 1,
         },
       },
       {
@@ -2443,6 +2465,17 @@
           'icon-overlap': 'always',
           'icon-image': ['image', ['get', 'feature']],
         }
+      },
+      {
+        id: 'electrification_signals_unknown',
+        type: 'circle',
+        source: 'openrailwaymap',
+        'source-layer': 'electrification_signals',
+        filter: ['==', ['get', 'feature'], null],
+        paint: {
+          'circle-color': '#f00',
+          'circle-blur': 1,
+        },
       },
       {
         id: 'electrification_railway_text_med',
