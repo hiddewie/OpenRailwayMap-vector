@@ -429,7 +429,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'DE-HHA:l4' AND signal_speed_limit_form = 'sign' THEN 'de/hha/l4'
 
-      WHEN feature = 'DE-ESO:lf2' AND signal_speed_limit_form = 'sign' THEN 'de/lf2-sign'
+      WHEN feature IN ('DE-ESO:lf2', 'DE-ESO:db:lf2') AND signal_speed_limit_form = 'sign' THEN 'de/lf2-sign'
       WHEN feature = 'DE-ESO:lf3' AND signal_speed_limit_form = 'sign' THEN 'de/lf3-sign'
 
       -- NL --
