@@ -368,7 +368,10 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       -- German speed signals (Zs 3) as signs
       WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'sign' THEN
-        'de/zs3-empty-sign-up'
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'de/zs3-empty-sign-up'
+          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-6])0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-sign-up')
+        END
 
       -- German speed signals (Zs 3) as light signals
       WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'light' THEN
