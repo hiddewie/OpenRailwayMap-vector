@@ -219,7 +219,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Get the speed limit in the primary and secondary dirction.
+-- Get the speed limit in the primary and secondary direction.
 -- No unit conversion is preformed.
 -- Returns an array with 3 integers:
 --   * forward speed
