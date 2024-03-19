@@ -402,6 +402,12 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_distant_speed ~ '^((1[0-9]|[1-9])0|5|15)$' THEN CONCAT('de/lf6-', signal_speed_limit_distant_speed, '-sign-down')
         END
 
+      WHEN feature = 'DE-ESO:lf1' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf1-empty-sign-down'
+          WHEN signal_speed_limit_distant_speed ~ '^(5|15|[1-9]0|1[0-9]0|200)$' THEN CONCAT('de/lf1-', signal_speed_limit_distant_speed, '-sign-down')
+        END
+
       WHEN feature = 'DE-HHA:l1' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/hha/l1-empty-sign'
