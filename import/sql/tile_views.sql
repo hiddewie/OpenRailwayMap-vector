@@ -382,10 +382,17 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         END
 
       -- West German branch line speed signals (Lf 4 DS 301)
-      WHEN feature IN ('DE-ESO:db:lf4', 'DE-ESO:dr:lf4') AND signal_speed_limit_distant_form = 'sign' THEN
+      WHEN feature = 'DE-ESO:db:lf4' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/lf4-ds301-empty-sign-down'
           WHEN signal_speed_limit_distant_speed ~ '^(100|[2-8]0|1?[05])$' THEN CONCAT('de/lf4-ds301-', signal_speed_limit_distant_speed, '-sign-down')
+        END
+
+      WHEN feature = 'DE-ESO:dr:lf4' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          -- DB and DR variant have the same empty sign
+          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf4-ds301-empty-sign-down'
+          WHEN signal_speed_limit_distant_speed ~ '^(100|[2-8]0|1?[05])$' THEN CONCAT('de/lf4-dr-', signal_speed_limit_distant_speed, '-sign-down')
         END
 
       -- German line speed signals (Lf 6)
