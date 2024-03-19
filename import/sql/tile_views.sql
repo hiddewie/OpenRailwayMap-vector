@@ -378,7 +378,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         CASE
           -- for light signals: empty Zs3 "looks" exactly like empty Zs2
           WHEN signal_speed_limit_speed is null OR signal_speed_limit_speed ~ '^off;\?$' THEN 'de/zs2-unknown'
-          WHEN signal_speed_limit_speed ~ '^(1[0-2]|[2-9])0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-light')
+          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-6]|20)0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-light')
         END
 
       -- West German branch line speed signals (Lf 4 DS 301)
