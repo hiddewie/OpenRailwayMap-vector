@@ -449,6 +449,10 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'DE-ESO:lf3' AND signal_speed_limit_form = 'sign' THEN 'de/lf3-sign'
 
+      WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'sign' THEN 'de/zs10-sign'
+
+      WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'light' THEN 'de/zs10-light'
+
       -- NL --
 
       -- NL speed limit light (part of main signal)
