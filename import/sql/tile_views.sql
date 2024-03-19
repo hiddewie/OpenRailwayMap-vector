@@ -385,7 +385,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature IN ('DE-ESO:db:lf4', 'DE-ESO:dr:lf4') AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/lf4-ds301-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^([2-8]0|1?[05])$' THEN CONCAT('de/lf4-ds301-', signal_speed_limit_distant_speed, '-sign-down')
+          WHEN signal_speed_limit_distant_speed ~ '^(100|[2-8]0|1?[05])$' THEN CONCAT('de/lf4-ds301-', signal_speed_limit_distant_speed, '-sign-down')
         END
 
       -- German line speed signals (Lf 6)
