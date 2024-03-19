@@ -363,7 +363,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         CASE
           -- for light signals: empty Zs3v "looks" exactly like empty Zs2v
           WHEN signal_speed_limit_distant_speed is null OR signal_speed_limit_distant_speed ~ '^off;\?$' THEN 'de/zs2v-unknown'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[0-2]|[2-9])0$' THEN CONCAT('de/zs3v-', signal_speed_limit_distant_speed, '-light')
+          WHEN signal_speed_limit_distant_speed ~ '^([1-9]|1[0-6]|20)0$' THEN CONCAT('de/zs3v-', signal_speed_limit_distant_speed, '-light')
         END
 
       -- German speed signals (Zs 3) as signs
