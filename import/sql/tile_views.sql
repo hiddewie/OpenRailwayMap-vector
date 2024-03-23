@@ -444,7 +444,12 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^([1-3]?5|[1-6]0)$' THEN CONCAT('de/bostrab/g2a-', signal_speed_limit_speed)
         END
 
-      -- TODO DE-BOStrab:g2b
+      -- German tram speed limit signals as lights (G 2b)
+      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2b', 'DE-BSVG:g2b') AND signal_speed_limit_form = 'light' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2b-empty'
+          WHEN signal_speed_limit_speed ~ '^[1-6]0$' THEN CONCAT('de/bostrab/g2b-', signal_speed_limit_speed)
+        END
 
       -- East German line speed signal "Eckentafel" (Lf 5)
       WHEN feature = 'DE-ESO:dr:lf5' AND signal_speed_limit_form = 'sign' THEN 'de/lf5-dv301-sign'
