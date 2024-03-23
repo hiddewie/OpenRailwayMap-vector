@@ -313,6 +313,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     way,
     CASE
+
       -- AT --
 
       -- Austrian speed signals (Geschwindigkeitsvoranzeiger) as signs
