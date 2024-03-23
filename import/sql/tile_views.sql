@@ -417,25 +417,35 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'DE-BOStrab:g3' AND signal_speed_limit_form = 'sign' THEN 'de/bostrab/g3'
 
       -- German tram distance speed limit signals as signs (G 1a)
-      WHEN feature = 'DE-BOStrab:g1a' AND signal_speed_limit_distant_form = 'sign' THEN
+      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1a') AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1a-empty'
+          -- TODO support 5, 45, 55, 65
           WHEN signal_speed_limit_distant_speed ~ '^([1-6]0|[1-3]5)$' THEN CONCAT('de/bostrab/g1a-', signal_speed_limit_distant_speed)
         END
+
+      -- TODO DE-BOStrab:g1b (speed 50)
 
       -- German tram speed limit signals as signs (G 4)
       WHEN feature = 'DE-BOStrab:g4' AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g4-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^[(2-7]0$|[23]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_distant_speed ~ '^([(2-7]0$|[23]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_distant_speed)
         END
 
+      -- TODO support DE-BOStrab:g4 light form
+
+      -- TODO support DE-UESTRA:g5 hannover
+
       -- German tram speed limit signals as signs (G 2a)
-      WHEN feature = 'DE-BOStrab:g2a' AND signal_speed_limit_form = 'sign' THEN
+      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2a') AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2a-empty'
+          -- TODO support 45, 55, 65, 70, 75
           WHEN signal_speed_limit_speed ~ '^([1-3]?5|[1-6]0)$' THEN CONCAT('de/bostrab/g2a-', signal_speed_limit_speed)
         END
+
+      -- TODO DE-BOStrab:g2b
 
       -- East German line speed signal "Eckentafel" (Lf 5)
       WHEN feature = 'DE-ESO:dr:lf5' AND signal_speed_limit_form = 'sign' THEN 'de/lf5-dv301-sign'
