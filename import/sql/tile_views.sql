@@ -492,6 +492,15 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- NL speed limit light (part of main signal)
       WHEN feature = 'NL' AND signal_speed_limit_form = 'light' THEN 'nl/speed_limit_light'
 
+      -- PL --
+
+      -- TODO PL-PKP:d6
+      -- TODO PL-PKP:w21
+      -- TODO PL-PKP:w27a
+      -- TODO PL-PKP:w30
+      -- TODO PL-PKP:w8
+      -- TODO PL-PKP:w9
+
     END as feature,
     CASE
       WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1') THEN 'line'
