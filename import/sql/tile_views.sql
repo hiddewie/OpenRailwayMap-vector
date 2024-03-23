@@ -420,8 +420,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a') AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1a-empty'
-          -- TODO support 5, 45, 55, 65
-          WHEN signal_speed_limit_distant_speed ~ '^([1-6]0|[1-3]5)$' THEN CONCAT('de/bostrab/g1a-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_distant_speed ~ '^(5|[1-6][0-5])$' THEN CONCAT('de/bostrab/g1a-', signal_speed_limit_distant_speed)
         END
 
       -- TODO DE-BOStrab:g1b (speed 50)
