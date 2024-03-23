@@ -423,7 +423,12 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_distant_speed ~ '^(5|[1-6][0-5])$' THEN CONCAT('de/bostrab/g1a-', signal_speed_limit_distant_speed)
         END
 
-      -- TODO DE-BOStrab:g1b (speed 50)
+      -- German tram distance speed limit signals as lights (G 1b)
+      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1b', 'DE-BSVG:g1b') AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1b-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^[1-6]0' THEN CONCAT('de/bostrab/g1b-', signal_speed_limit_distant_speed)
+        END
 
       -- German tram speed limit signals as signs (G 4)
       WHEN feature = 'DE-BOStrab:g4' AND signal_speed_limit_form = 'sign' THEN
