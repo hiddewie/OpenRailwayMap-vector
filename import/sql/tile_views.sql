@@ -449,16 +449,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- German tram speed limit signals as signs (G 4)
       WHEN feature = 'DE-BOStrab:g4' AND signal_speed_limit_form = 'sign' THEN
         CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g4-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^([2-7]0$|[23]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g4-empty'
+          WHEN signal_speed_limit_speed ~ '^([2-7]0$|[23]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_speed)
         END
-
-      -- TODO support DE-BOStrab:g4 light form
 
       WHEN feature = 'DE-UESTRA:g5' AND signal_speed_limit_form = 'sign' THEN
         CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g5-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^5|[1-6][05]$' THEN CONCAT('de/bostrab/g5-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g5-empty'
+          WHEN signal_speed_limit_speed ~ '^5|[1-6][05]$' THEN CONCAT('de/bostrab/g5-', signal_speed_limit_speed)
         END
 
       -- East German line speed signal "Eckentafel" (Lf 5)
