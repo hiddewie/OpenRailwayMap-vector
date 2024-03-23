@@ -450,7 +450,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'DE-BOStrab:g4' AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g4-empty'
-          WHEN signal_speed_limit_speed ~ '^([2-7]0$|[23]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_speed)
+          WHEN signal_speed_limit_speed ~ '^(100|[2-9]0|[235]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_speed)
         END
 
       WHEN feature = 'DE-UESTRA:g5' AND signal_speed_limit_form = 'sign' THEN
