@@ -455,7 +455,11 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       -- TODO support DE-BOStrab:g4 light form
 
-      -- TODO support DE-UESTRA:g5 hannover
+      WHEN feature = 'DE-UESTRA:g5' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g5-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^5|[1-6][05]$' THEN CONCAT('de/bostrab/g5-', signal_speed_limit_distant_speed)
+        END
 
       -- East German line speed signal "Eckentafel" (Lf 5)
       WHEN feature = 'DE-ESO:dr:lf5' AND signal_speed_limit_form = 'sign' THEN 'de/lf5-dv301-sign'
