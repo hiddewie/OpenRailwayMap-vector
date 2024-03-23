@@ -433,8 +433,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a') AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2a-empty'
-          -- TODO support 45, 55, 65, 70, 75
-          WHEN signal_speed_limit_speed ~ '^(5|[1-3]5|[1-6]0)$' THEN CONCAT('de/bostrab/g2a-', signal_speed_limit_speed)
+          WHEN signal_speed_limit_speed ~ '^(5|[1-7][05])$' THEN CONCAT('de/bostrab/g2a-', signal_speed_limit_speed)
         END
 
       -- German tram speed limit signals as lights (G 2b)
