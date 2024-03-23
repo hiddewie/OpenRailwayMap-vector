@@ -417,7 +417,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'DE-BOStrab:g3' AND signal_speed_limit_form = 'sign' THEN 'de/bostrab/g3'
 
       -- German tram distance speed limit signals as signs (G 1a)
-      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1a') AND signal_speed_limit_distant_form = 'sign' THEN
+      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a') AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1a-empty'
           -- TODO support 5, 45, 55, 65
@@ -438,7 +438,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- TODO support DE-UESTRA:g5 hannover
 
       -- German tram speed limit signals as signs (G 2a)
-      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2a') AND signal_speed_limit_form = 'sign' THEN
+      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a') AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2a-empty'
           -- TODO support 45, 55, 65, 70, 75
