@@ -350,6 +350,24 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^(1[0-6]0|[1-9][05])$' THEN CONCAT('at/geschwindigkeitstafel-', signal_speed_limit_speed, '-sign')
         END
 
+      -- TODO: AT-GKB:ankündigung_ek_20 	2
+      -- TODO: AT-GKB:ek_20 	2
+      -- TODO: AT-GKB:ek_60 	24
+      -- TODO: AT-IVB 	53
+      -- TODO: AT-SLB:geschwindigkeitstafel 	1
+      -- TODO: AT-SLB:x40 	9
+      -- TODO: AT-V2:anfangssignal 	10
+      -- TODO: AT-V2:ankündigung_ek-sicht 	37
+      -- TODO: AT-V2:ankündigungssignal 	3
+      -- TODO: AT-V2:ankündigungstafel 	42
+      -- TODO: AT-V2:ek-sicht 	18
+      -- TODO: AT-V2:ek-sicht_gruppenpfeiftafel 	8
+      -- TODO: AT-V2:ek-sicht_pfeiftafel 	27
+      -- TODO: AT-V2:endsignal 	6
+      -- TODO: AT-V2:geschwindigkeitsanzeiger 	48
+      -- TODO: AT-V2:geschwindigkeitstafel 	17
+      -- TODO: AT-V2:geschwindigkeitsvoranzeiger 	17
+
       -- CH --
 
       -- Vorsignal verminderte Geschwindigkeit
