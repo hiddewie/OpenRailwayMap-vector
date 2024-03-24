@@ -326,9 +326,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Austrian speed signals (Geschwindigkeitsvoranzeiger) as light signals
       WHEN feature = 'AT-V2:geschwindigkeitsvoranzeiger' AND signal_speed_limit_distant_form = 'light' THEN
         CASE
-          -- TODO 20, 140
           WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/geschwindigkeitsvoranzeiger-empty-light'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[0-2]|[3-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-light')
+          WHEN signal_speed_limit_distant_speed ~ '^(1[0-4]|[2-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-light')
         END
 
       -- Austrian speed signals (Geschwindigkeitsanzeiger)
