@@ -381,14 +381,18 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Merktafel für Änderung der Höchstgeschwindigkeit
       WHEN feature = 'CH-FDV:217' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-217'
 
-      -- TODO CH-FDV:540 	65
-      -- Geschwindigkeits-Ankündigung
-
-      -- TODO CH-FDV:541 	173
-      -- Geschwindigkeits-Ankündigung
-
-      -- TODO CH-FDV:549 	462
-      -- Geschwindigkeits-Ausführung
+      -- Geschwindigkeits-Ankündigung & Geschwindigkeits-Ausführung
+      WHEN feature IN ('CH-FDV:540', 'CH-FDV:541') AND signal_speed_limit_distant_form = 'light' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'ch/fdv-540-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^([4-9]|1[0-2])0$' THEN CONCAT('ch/fdv-540-', signal_speed_limit_distant_speed)
+        END
+      WHEN feature = 'CH-FDV:549' AND signal_speed_limit_form = 'light' THEN
+        CASE
+          -- Same form as CH-FDV:540 and CH-FDV:541
+          WHEN signal_speed_limit_speed IS NULL THEN 'ch/fdv-540-empty'
+          WHEN signal_speed_limit_speed ~ '^([4-9]|1[0-2])0$' THEN CONCAT('ch/fdv-540-', signal_speed_limit_speed)
+        END
 
       -- TODO CH-FDV:569 	2
       -- Merktafel für Streckengeschwindigkeit beim Signalsystem N
