@@ -367,10 +367,15 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^[1-6]0$' THEN CONCAT('at/anfangssignal-', signal_speed_limit_speed)
         END
 
+      WHEN feature = 'AT-V2:ankündigungssignal' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/ankündigungssignal-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^[1-6]0$' THEN CONCAT('at/ankündigungssignal-', signal_speed_limit_distant_speed)
+        END
+
       WHEN feature = 'AT-V2:endsignal' AND signal_speed_limit_form = 'sign' THEN 'at/endsignal'
 
       -- TODO: AT-V2:ankündigung_ek-sicht 	37
-      -- TODO: AT-V2:ankündigungssignal 	3
       -- TODO: AT-V2:ankündigungstafel 	42
       -- TODO: AT-V2:ek-sicht 	18
       -- TODO: AT-V2:ek-sicht_gruppenpfeiftafel 	8
