@@ -536,8 +536,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^5$' THEN CONCAT('pl/w30-', signal_speed_limit_speed)
         END
 
-      -- TODO PL-PKP:w9
-
     END as feature,
     CASE
       WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a') THEN 'line'
