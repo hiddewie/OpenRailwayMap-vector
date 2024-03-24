@@ -336,7 +336,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'AT-V2:geschwindigkeitsanzeiger' AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed IS NULL THEN 'at/geschwindigkeitsanzeiger-empty-sign'
-          WHEN signal_speed_limit_speed ~ '^(1[0-26]|[1-9])0$' THEN CONCAT('at/geschwindigkeitsanzeiger-', signal_speed_limit_speed, '-sign')
+          WHEN signal_speed_limit_speed ~ '^(1[0-6]|[1-9])0$' THEN CONCAT('at/geschwindigkeitsanzeiger-', signal_speed_limit_speed, '-sign')
         END
       WHEN feature = 'AT-V2:geschwindigkeitsanzeiger' AND signal_speed_limit_form = 'light' THEN
         CASE
