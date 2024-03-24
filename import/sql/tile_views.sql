@@ -375,7 +375,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'AT-V2:endsignal' AND signal_speed_limit_form = 'sign' THEN 'at/endsignal'
 
-      -- TODO: AT-V2:ankündigung_ek-sicht 	37
+      WHEN feature = 'AT-V2:ankündigung_ek-sicht' AND signal_speed_limit_distant_form = 'sign' THEN 'at/ankündigung-ek-sicht'
+
       -- TODO: AT-V2:ankündigungstafel 	42
       -- TODO: AT-V2:ek-sicht 	18
       -- TODO: AT-V2:ek-sicht_gruppenpfeiftafel 	8
