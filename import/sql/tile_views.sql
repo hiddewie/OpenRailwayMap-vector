@@ -361,6 +361,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
       WHEN feature = 'AT-SLB:x40' AND signal_speed_limit_form = 'sign' THEN 'at/x40'
 
+      WHEN feature = 'AT-V2:endsignal' AND signal_speed_limit_form = 'sign' THEN 'at/endsignal'
+
       -- TODO: AT-GKB:ankündigung_ek_20 	2
       -- TODO: AT-GKB:ek_20 	2
       -- TODO: AT-GKB:ek_60 	24
@@ -373,8 +375,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- TODO: AT-V2:ek-sicht 	18
       -- TODO: AT-V2:ek-sicht_gruppenpfeiftafel 	8
       -- TODO: AT-V2:ek-sicht_pfeiftafel 	27
-      -- TODO: AT-V2:endsignal 	6
-      -- TODO: AT-V2:geschwindigkeitsanzeiger 	48
 
       -- CH --
 
