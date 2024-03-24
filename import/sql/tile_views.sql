@@ -378,8 +378,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Endesignal verminderte Geschwindigkeit
       WHEN feature = 'CH-FDV:215' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-215'
 
-      -- TODO CH-FDV:217 	4
       -- Merktafel für Änderung der Höchstgeschwindigkeit
+      WHEN feature = 'CH-FDV:217' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-217'
 
       -- TODO CH-FDV:540 	65
       -- Geschwindigkeits-Ankündigung
