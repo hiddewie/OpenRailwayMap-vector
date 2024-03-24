@@ -355,14 +355,15 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Vorsignal verminderte Geschwindigkeit
       WHEN feature IN ('CH-FDV:209', 'CH-FDV:210') AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
-          WHEN signal_speed_limit_distant_speed ~ '^125$' THEN CONCAT('ch/fdv-209-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'ch/fdv-209-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^([6-9][05]|1[0-1][05])$' THEN CONCAT('ch/fdv-209-', signal_speed_limit_distant_speed)
         END
 
-      -- TODO CH-FDV:211 	41
       -- Anfangssignal verminderte Geschwindigkeit
+      WHEN feature = 'CH-FDV:211' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-211'
 
-      -- TODO CH-FDV:212 	35
       -- Endesignal verminderte Geschwindigkeit
+      WHEN feature = 'CH-FDV:212' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-212'
 
       -- TODO CH-FDV:213 	4
       -- Vorsignal verminderte Geschwindigkeit für Neigetechnikzüge
