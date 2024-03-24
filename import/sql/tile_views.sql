@@ -494,6 +494,13 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       -- PL --
 
+      -- D6 Tarcza zwolnić bieg
+      WHEN feature = 'PL-PKP:d6' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'pl/d6-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^[1-9]0$' THEN CONCAT('pl/d6-', signal_speed_limit_distant_speed)
+        END
+
       -- W8 Wskaźnik ograniczenia prędkości
       WHEN feature = 'PL-PKP:w8' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
@@ -529,7 +536,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^5$' THEN CONCAT('pl/w30-', signal_speed_limit_speed)
         END
 
-      -- TODO PL-PKP:d6
       -- TODO PL-PKP:w9
 
     END as feature,
