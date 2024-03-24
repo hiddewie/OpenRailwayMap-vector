@@ -501,6 +501,13 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_distant_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w8-', signal_speed_limit_distant_speed)
         END
 
+      -- W9 Wskaźnik odcinka ograniczonej prędkości
+      WHEN feature = 'PL-PKP:w9' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'pl/w9-empty'
+          WHEN signal_speed_limit_speed ~ '^([2-9]|1[0-4])0$' THEN CONCAT('pl/w9-', signal_speed_limit_speed)
+        END
+
       -- W21 Wskaźniki podwyższenia prędkości
       WHEN feature = 'PL-PKP:w21' AND signal_speed_limit_form = 'light' THEN
         CASE
