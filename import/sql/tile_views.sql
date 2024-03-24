@@ -347,7 +347,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'AT-V2:ankündigungstafel' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/ankuendigungstafel-empty-sign'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[0-26]|[1-9])0$' THEN CONCAT('at/ankuendigungstafel-', signal_speed_limit_distant_speed, '-sign')
+          WHEN signal_speed_limit_distant_speed ~ '^(1[0-4]0|10|[2-9][05])$' THEN CONCAT('at/ankuendigungstafel-', signal_speed_limit_distant_speed, '-sign')
         END
 
       -- Austrian line speed signals (Geschwindigkeitstafel)
@@ -379,10 +379,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'AT-V2:ankündigung_ek-sicht' AND signal_speed_limit_distant_form = 'sign' THEN 'at/ankündigung-ek-sicht'
 
       WHEN feature = 'AT-V2:ek-sicht_pfeiftafel' AND signal_speed_limit_form = 'sign' THEN 'at/ek-sicht-pfeiftafel'
-
-      -- TODO: AT-V2:ankündigungstafel 	42
-      -- TODO: AT-V2:ek-sicht 	18
-      -- TODO: AT-V2:ek-sicht_gruppenpfeiftafel 	8
 
       -- CH --
 
