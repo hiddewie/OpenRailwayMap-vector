@@ -320,29 +320,34 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'AT-V2:geschwindigkeitsvoranzeiger' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           -- TODO 55, 120
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/geschwindigkeitsvoranzeiger-empty-sign'
           WHEN signal_speed_limit_distant_speed ~ '^(10|[1-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-sign')
         END
 
       -- Austrian speed signals (Geschwindigkeitsvoranzeiger) as light signals
       WHEN feature = 'AT-V2:geschwindigkeitsvoranzeiger' AND signal_speed_limit_distant_form = 'light' THEN
         CASE
-          -- TODO 20, 140, empty
+          -- TODO 20, 140
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/geschwindigkeitsvoranzeiger-empty-light'
           WHEN signal_speed_limit_distant_speed ~ '^(1[0-2]|[3-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-light')
         END
 
       -- Austrian speed signals (Geschwindigkeitsanzeiger)
       WHEN feature = 'AT-V2:geschwindigkeitsanzeiger' AND signal_speed_limit_form = 'sign' THEN
         CASE
+          WHEN signal_speed_limit_speed IS NULL THEN 'at/geschwindigkeitsanzeiger-empty-sign'
           WHEN signal_speed_limit_speed ~ '^(1[0-26]|[1-9])0$' THEN CONCAT('at/geschwindigkeitsanzeiger-', signal_speed_limit_speed, '-sign')
         END
       WHEN feature = 'AT-V2:geschwindigkeitsanzeiger' AND signal_speed_limit_form = 'light' THEN
         CASE
-          WHEN signal_speed_limit_speed ~ '^(1[02]|[3-9])0$' THEN CONCAT('at/geschwindigkeitsanzeiger-', signal_speed_limit_speed, '-light')
+          WHEN signal_speed_limit_speed IS NULL THEN 'at/geschwindigkeitsanzeiger-empty-light'
+          WHEN signal_speed_limit_speed ~ '^(1[024]|[2-9])0$' THEN CONCAT('at/geschwindigkeitsanzeiger-', signal_speed_limit_speed, '-light')
         END
 
       -- Austrian line speed signals (Ankündigungstafel)
       WHEN feature = 'AT-V2:ankündigungstafel' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'at/ankuendigungstafel-empty-sign'
           WHEN signal_speed_limit_distant_speed ~ '^(1[0-26]|[1-9])0$' THEN CONCAT('at/ankuendigungstafel-', signal_speed_limit_distant_speed, '-sign')
         END
 
