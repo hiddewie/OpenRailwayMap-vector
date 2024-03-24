@@ -522,8 +522,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w27a-', signal_speed_limit_speed)
         END
 
+      -- W30 Wskaźnik ważenia składu
+      WHEN feature = 'PL-PKP:w30' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'pl/w30-empty'
+          WHEN signal_speed_limit_speed ~ '^5$' THEN CONCAT('pl/w30-', signal_speed_limit_speed)
+        END
+
       -- TODO PL-PKP:d6
-      -- TODO PL-PKP:w30
       -- TODO PL-PKP:w9
 
     END as feature,
