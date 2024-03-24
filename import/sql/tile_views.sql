@@ -319,12 +319,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Austrian speed signals (Geschwindigkeitsvoranzeiger) as signs
       WHEN feature = 'AT-V2:geschwindigkeitsvoranzeiger' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
+          -- TODO 55, 120
           WHEN signal_speed_limit_distant_speed ~ '^(10|[1-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-sign')
         END
 
       -- Austrian speed signals (Geschwindigkeitsvoranzeiger) as light signals
       WHEN feature = 'AT-V2:geschwindigkeitsvoranzeiger' AND signal_speed_limit_distant_form = 'light' THEN
         CASE
+          -- TODO 20, 140, empty
           WHEN signal_speed_limit_distant_speed ~ '^(1[0-2]|[3-9])0$' THEN CONCAT('at/geschwindigkeitsvoranzeiger-', signal_speed_limit_distant_speed, '-light')
         END
 
@@ -347,7 +349,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Austrian line speed signals (Geschwindigkeitstafel)
       WHEN feature = 'AT-V2:geschwindigkeitstafel' AND signal_speed_limit_form = 'sign' THEN
         CASE
-          WHEN signal_speed_limit_speed ~ '^(1[0-6]0|[1-9][05])$' THEN CONCAT('at/geschwindigkeitstafel-', signal_speed_limit_speed, '-sign')
+          WHEN signal_speed_limit_speed IS NULL THEN 'at/geschwindigkeitstafel-empty-sign'
+          WHEN signal_speed_limit_speed ~ '^(1[0-6]0|[1-9][05]|5)$' THEN CONCAT('at/geschwindigkeitstafel-', signal_speed_limit_speed, '-sign')
         END
 
       -- Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
@@ -367,8 +370,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- TODO: AT-V2:ek-sicht_pfeiftafel 	27
       -- TODO: AT-V2:endsignal 	6
       -- TODO: AT-V2:geschwindigkeitsanzeiger 	48
-      -- TODO: AT-V2:geschwindigkeitstafel 	17
-      -- TODO: AT-V2:geschwindigkeitsvoranzeiger 	17
 
       -- CH --
 
