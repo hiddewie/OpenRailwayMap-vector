@@ -494,6 +494,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       -- PL --
 
+      -- W21 Wskaźniki podwyższenia prędkości
+      WHEN feature = 'PL-PKP:w21' AND signal_speed_limit_form = 'light' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'pl/w21-empty'
+          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w21-', signal_speed_limit_speed)
+        END
+
+      -- W22 Wskaźnik jazdy pociągu towarowego
       WHEN feature = 'PL-PKP:w27a' AND signal_speed_limit_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_speed is null THEN 'pl/w27a-empty'
@@ -508,7 +516,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
     END as feature,
     CASE
-      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w27a') THEN 'line'
+      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a') THEN 'line'
       WHEN feature IN ('DE-BOStrab:g2a', 'DE-BOStrab:g4', 'DE-BOStrab:g1a', 'DE-BOStrab:g3') THEN 'tram'
     END as type,
     azimuth
