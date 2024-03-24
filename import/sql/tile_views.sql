@@ -365,14 +365,18 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Endesignal verminderte Geschwindigkeit
       WHEN feature = 'CH-FDV:212' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-212'
 
-      -- TODO CH-FDV:213 	4
       -- Vorsignal verminderte Geschwindigkeit für Neigetechnikzüge
+      WHEN feature = 'CH-FDV:213' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed IS NULL THEN 'ch/fdv-213-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^1[1-4]0$' THEN CONCAT('ch/fdv-213-', signal_speed_limit_distant_speed)
+        END
 
-      -- TODO CH-FDV:214 	4
       -- Anfangssignal verminderte Geschwindigkeit
+      WHEN feature = 'CH-FDV:214' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-214'
 
-      -- TODO CH-FDV:215 	4
       -- Endesignal verminderte Geschwindigkeit
+      WHEN feature = 'CH-FDV:215' AND signal_speed_limit_form = 'sign' THEN 'ch/fdv-215'
 
       -- TODO CH-FDV:217 	4
       -- Merktafel für Änderung der Höchstgeschwindigkeit
