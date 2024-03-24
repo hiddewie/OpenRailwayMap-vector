@@ -350,6 +350,44 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^(1[0-6]0|[1-9][05])$' THEN CONCAT('at/geschwindigkeitstafel-', signal_speed_limit_speed, '-sign')
         END
 
+      -- CH --
+
+      -- Vorsignal verminderte Geschwindigkeit
+      WHEN feature IN ('CH-FDV:209', 'CH-FDV:210') AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed ~ '^125$' THEN CONCAT('ch/fdv-209-', signal_speed_limit_distant_speed)
+        END
+
+      -- TODO CH-FDV:211 	41
+      -- Anfangssignal verminderte Geschwindigkeit
+
+      -- TODO CH-FDV:212 	35
+      -- Endesignal verminderte Geschwindigkeit
+
+      -- TODO CH-FDV:213 	4
+      -- Vorsignal verminderte Geschwindigkeit für Neigetechnikzüge
+
+      -- TODO CH-FDV:214 	4
+      -- Anfangssignal verminderte Geschwindigkeit
+
+      -- TODO CH-FDV:215 	4
+      -- Endesignal verminderte Geschwindigkeit
+
+      -- TODO CH-FDV:217 	4
+      -- Merktafel für Änderung der Höchstgeschwindigkeit
+
+      -- TODO CH-FDV:540 	65
+      -- Geschwindigkeits-Ankündigung
+
+      -- TODO CH-FDV:541 	173
+      -- Geschwindigkeits-Ankündigung
+
+      -- TODO CH-FDV:549 	462
+      -- Geschwindigkeits-Ausführung
+
+      -- TODO CH-FDV:569 	2
+      -- Merktafel für Streckengeschwindigkeit beim Signalsystem N
+
       -- DE --
 
       -- German speed signals (Zs 3v) as signs
