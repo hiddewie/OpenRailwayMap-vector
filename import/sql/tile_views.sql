@@ -361,14 +361,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
       WHEN feature = 'AT-SLB:x40' AND signal_speed_limit_form = 'sign' THEN 'at/x40'
 
+      WHEN feature = 'AT-V2:anfangssignal' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed IS NULL THEN 'at/anfangssignal-empty'
+          WHEN signal_speed_limit_speed ~ '^[1-6]0$' THEN CONCAT('at/anfangssignal-', signal_speed_limit_speed)
+        END
+
       WHEN feature = 'AT-V2:endsignal' AND signal_speed_limit_form = 'sign' THEN 'at/endsignal'
 
-      -- TODO: AT-GKB:ankündigung_ek_20 	2
-      -- TODO: AT-GKB:ek_20 	2
-      -- TODO: AT-GKB:ek_60 	24
-      -- TODO: AT-IVB 	53
-      -- TODO: AT-SLB:geschwindigkeitstafel 	1
-      -- TODO: AT-V2:anfangssignal 	10
       -- TODO: AT-V2:ankündigung_ek-sicht 	37
       -- TODO: AT-V2:ankündigungssignal 	3
       -- TODO: AT-V2:ankündigungstafel 	42
