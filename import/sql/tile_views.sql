@@ -350,12 +350,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^(1[0-6]0|[1-9][05])$' THEN CONCAT('at/geschwindigkeitstafel-', signal_speed_limit_speed, '-sign')
         END
 
+      -- Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
+      WHEN feature = 'AT-SLB:x40' AND signal_speed_limit_form = 'sign' THEN 'at/x40'
+
       -- TODO: AT-GKB:ankündigung_ek_20 	2
       -- TODO: AT-GKB:ek_20 	2
       -- TODO: AT-GKB:ek_60 	24
       -- TODO: AT-IVB 	53
       -- TODO: AT-SLB:geschwindigkeitstafel 	1
-      -- TODO: AT-SLB:x40 	9
       -- TODO: AT-V2:anfangssignal 	10
       -- TODO: AT-V2:ankündigung_ek-sicht 	37
       -- TODO: AT-V2:ankündigungssignal 	3
