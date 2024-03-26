@@ -595,6 +595,7 @@
   const trainProtectionLayout = {
     'line-sort-key': ['get', 'rank'],
     'line-join': 'round',
+    'line-cap': 'round',
   };
   const trainProtectionFillPaint = dashArray => ({
     'line-color': ['match', ['get', 'train_protection'],
@@ -689,6 +690,7 @@
   };
   const speedLayout = {
     'line-join': 'round',
+    'line-cap': 'round',
   };
   const maxspeed_fill_color_10 = '#0100CB';
   const maxspeed_fill_color_20 = '#001ECB';
@@ -859,6 +861,7 @@
   });
   const electrificationLayout = {
     'line-join': 'round',
+    'line-cap': 'round',
   };
 
   const gauge_construction_dashes = [3, 3];
@@ -1054,6 +1057,7 @@
   });
   const gaugeLayout = {
     'line-join': 'round',
+    'line-cap': 'round',
   };
 
   const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>';
@@ -1163,6 +1167,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1186,6 +1191,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1202,6 +1208,7 @@
         filter: ['==', ['get', 'railway'], 'construction'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1219,6 +1226,7 @@
         filter: ['==', ['get', 'railway'], 'proposed'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1236,6 +1244,7 @@
         filter: ['==', ['get', 'railway'], 'abandoned'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1253,6 +1262,7 @@
         filter: ['==', ['get', 'railway'], 'razed'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1269,6 +1279,7 @@
         'source-layer': 'standard_railway_line_med',
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1291,6 +1302,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           'line-color': railway_casing_color,
@@ -1313,6 +1325,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint([1]),
       },
@@ -1331,6 +1344,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: {
           ...standardFillPaint([1]),
@@ -1346,6 +1360,7 @@
         filter: ['==', ['get', 'railway'], 'construction'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint(construction_dasharray),
       },
@@ -1358,6 +1373,7 @@
         filter: ['==', ['get', 'railway'], 'proposed'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint(proposed_dasharray),
       },
@@ -1370,6 +1386,7 @@
         filter: ['==', ['get', 'railway'], 'abandoned'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint(abandoned_dasharray),
       },
@@ -1382,6 +1399,7 @@
         filter: ['==', ['get', 'railway'], 'razed'],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint(razed_dasharray),
       },
@@ -1401,6 +1419,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint([1]),
       },
@@ -1412,6 +1431,7 @@
         'source-layer': 'standard_railway_line_med',
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint([1]),
       },
@@ -1430,6 +1450,7 @@
         ],
         layout: {
           'line-join': 'round',
+          'line-cap': 'round',
         },
         paint: standardFillPaint([1]),
       },
