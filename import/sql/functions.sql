@@ -101,10 +101,10 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION railway_speed_int(value TEXT) RETURNS INTEGER AS $$
 BEGIN
   IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::NUMERIC;
+    RETURN value::DOUBLE PRECISION;
   END IF;
   IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN (substring(value FROM '^([0-9]+(\.[0-9]+)?)')::NUMERIC) * 1.609344;
+    RETURN (substring(value FROM '^([0-9]+(\.[0-9]+)?)')::DOUBLE PRECISION) * 1.609344;
   END IF;
   RETURN NULL;
 END;
@@ -114,10 +114,10 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION railway_speed_int_noconvert(value TEXT) RETURNS INTEGER AS $$
 BEGIN
   IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::NUMERIC;
+    RETURN value::DOUBLE PRECISION;
   END IF;
   IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN substring(value FROM '^([0-9]+(\.[0-9]+)?)')::NUMERIC;
+    RETURN substring(value FROM '^([0-9]+(\.[0-9]+)?)')::DOUBLE PRECISION;
   END IF;
   RETURN NULL;
 END;
@@ -392,7 +392,7 @@ BEGIN
   ELSIF volt_int % 1000 = 0 THEN
     volt_text := (volt_int/1000)::TEXT || 'kV';
   ELSE
-    volt_text := (volt_int::FLOAT / 1000::FLOAT)::NUMERIC(3, 1)::TEXT || 'kV';
+    volt_text := round((volt_int::FLOAT / 1000::FLOAT)::numeric, 1) || 'kV';
   END IF;
   -- Output voltage and frequency
   IF freq = '0' THEN
