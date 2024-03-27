@@ -24,7 +24,41 @@ postgres:
   # Associative arrays of table sources
   tables:
 
+    # --- Shared --- #
+
+    railway_line_low:
+      schema: public
+      table: railway_line_low
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        railway: string
+        feature: string
+        usage: string
+        service: string
+        highspeed: string
+        standard_label: string
+        maxspeed: integer
+        train_protection: string
+        electrification_state: string
+        electrification_state_now: string
+        frequency: double
+        voltage: integer
+        electrification_label: string
+        gaugeint0: integer
+        gauge0: string
+
     # --- Standard --- #
+
+    standard_railway_text_stations_low:
+      schema: public
+      table: standard_railway_text_stations_low
+      srid: 3857
+      geometry_column: way
+      geometry_type: POINT
+      properties:
+        label: string
 
     standard_railway_line_med:
       schema: public
@@ -276,7 +310,7 @@ postgres:
         usage: string
         service: string
         gauge0: string
-        gaugeint0: number
+        gaugeint0: int4
 
     gauge_railway_line_med:
       schema: public
