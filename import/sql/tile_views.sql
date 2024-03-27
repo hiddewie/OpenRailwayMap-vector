@@ -1,3 +1,85 @@
+--- Shared ---
+
+CREATE OR REPLACE VIEW railway_line_low AS
+  SELECT
+    way,
+    railway,
+    railway as feature,
+    usage,
+    NULL AS service,
+    highspeed,
+    false as tunnel,
+    false as bridge,
+    CASE
+      WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+      ELSE COALESCE(ref, label_name)
+    END AS standard_label,
+    CASE
+      WHEN railway = 'rail' AND usage = 'main' AND highspeed = 'yes' THEN 2000
+      WHEN railway = 'rail' AND usage = 'main' THEN 1100
+      WHEN railway = 'rail' AND usage = 'branch' THEN 1000
+      ELSE 50
+    END AS rank,
+    -- speeds are converted to kph in this layer because it is used for colouring
+    railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
+    train_protection,
+    electrification_state as electrification_state,
+    electrification_state_without_future AS electrification_state_now,
+    railway_to_int(voltage) AS voltage,
+    railway_to_float(frequency) AS frequency,
+    electrification_label,
+    railway_to_int(gauge) AS gaugeint0,
+    gauge as gauge0
+  FROM
+    (SELECT
+      way,
+      railway,
+      usage,
+      maxspeed,
+      maxspeed_forward,
+      maxspeed_backward,
+      preferred_direction,
+      highspeed,
+      layer,
+      ref,
+      CASE
+        WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name,  name), tunnel, tunnel_name, bridge, bridge_name)
+        WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name,  name), tunnel, tunnel_name, bridge, bridge_name)
+        ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
+      END AS label_name,
+      train_protection_rank,
+      train_protection,
+      railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
+      railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
+      railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS electrification_label,
+      frequency,
+      voltage,
+      construction_frequency,
+      construction_voltage,
+      proposed_frequency,
+      proposed_voltage,
+      railway_desired_value_from_list(1, gauge) AS gauge
+      FROM railway_line
+      WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
+    ) AS r
+  ORDER by
+    layer,
+    rank NULLS LAST,
+    train_protection_rank NULLS LAST,
+    maxspeed NULLS FIRST;
+
+CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
+  SELECT
+    way,
+    label
+  FROM stations_with_route_counts
+  WHERE
+    railway = 'station'
+    AND label IS NOT NULL
+    AND route_count >= 8
+  ORDER BY
+    route_count DESC NULLS LAST;
+
 --- Standard ---
 
 CREATE OR REPLACE VIEW standard_railway_line_med AS
@@ -1142,8 +1224,6 @@ CREATE OR REPLACE VIEW electrification_railway_line_med AS
     END AS rank,
     electrification_state AS state,
     electrification_state_without_future AS state_now,
-    railway_voltage_for_state(electrification_state, voltage, construction_voltage, proposed_voltage) AS merged_voltage,
-    railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS merged_frequency,
     railway_to_int(voltage) AS voltage,
     railway_to_float(frequency) AS frequency,
     label
