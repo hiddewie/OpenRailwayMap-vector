@@ -800,7 +800,6 @@
     'line-width': railwayLineWidth,
     'line-gap-width': 0.75,
   };
-
   const electrificationFillPaint = dashArray => ({
     'line-color': ['case',
       ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 25000]], color_25kv_60hz,
@@ -1073,6 +1072,11 @@
   const sources = {
     standard: {
       openstreetmap,
+      openrailwaymap_low: {
+        type: 'vector',
+        url: `${location.origin}/railway_line_low,standard_railway_text_stations_low`,
+        attribution,
+      },
       openrailwaymap: {
         type: 'vector',
         url: `${location.origin}/standard`,
@@ -1081,6 +1085,11 @@
     },
     speed: {
       openstreetmap,
+      openrailwaymap_low: {
+        type: 'vector',
+        url: `${location.origin}/railway_line_low`,
+        attribution,
+      },
       openrailwaymap: {
         type: 'vector',
         url: `${location.origin}/speed`,
@@ -1089,6 +1098,11 @@
     },
     signals: {
       openstreetmap,
+      openrailwaymap_low: {
+        type: 'vector',
+        url: `${location.origin}/railway_line_low`,
+        attribution,
+      },
       openrailwaymap: {
         type: 'vector',
         url: `${location.origin}/signals`,
@@ -1097,6 +1111,11 @@
     },
     electrification: {
       openstreetmap,
+      openrailwaymap_low: {
+        type: 'vector',
+        url: `${location.origin}/railway_line_low`,
+        attribution,
+      },
       openrailwaymap: {
         type: 'vector',
         url: `${location.origin}/electrification`,
@@ -1105,6 +1124,11 @@
     },
     gauge: {
       openstreetmap,
+      openrailwaymap_low: {
+        type: 'vector',
+        url: `${location.origin}/railway_line_low`,
+        attribution,
+      },
       openrailwaymap: {
         type: 'vector',
         url: `${location.origin}/gauge`,
@@ -1133,6 +1157,64 @@
     standard: [
       backgroundColor,
       backgroundMap,
+      {
+        id: 'railway_line_low_casing',
+        type: 'line',
+        maxzoom: 7,
+        source: 'openrailwaymap_low',
+        'source-layer': 'railway_line_low',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': railway_casing_color,
+          'line-width': railwayLineWidth,
+          'line-gap-width': railway_casing_add,
+        }
+      },
+      {
+        id: 'railway_line_low_fill',
+        type: 'line',
+        maxzoom: 7,
+        source: 'openrailwaymap_low',
+        'source-layer': 'railway_line_low',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: standardFillPaint([1]),
+      },
+      {
+        id: 'railway_line_med_casing',
+        type: 'line',
+        minzoom: 7,
+        maxzoom: 8,
+        source: 'openrailwaymap',
+        'source-layer': 'standard_railway_line_med',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': railway_casing_color,
+          'line-width': railwayLineWidth,
+          'line-gap-width': railway_casing_add,
+        }
+      },
+      {
+        id: 'railway_line_med_fill',
+        type: 'line',
+        minzoom: 7,
+        maxzoom: 8,
+        source: 'openrailwaymap',
+        'source-layer': 'standard_railway_line_med',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: standardFillPaint([1]),
+      },
       {
         id: 'railway_bridge_railing',
         type: 'line',
@@ -1272,22 +1354,6 @@
         }
       },
       {
-        id: 'railway_line_med_casing',
-        type: 'line',
-        maxzoom: 8,
-        source: 'openrailwaymap',
-        'source-layer': 'standard_railway_line_med',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
-        },
-        paint: {
-          'line-color': railway_casing_color,
-          'line-width': railwayLineWidth,
-          'line-gap-width': railway_casing_add,
-        }
-      },
-      {
         id: 'railway_bridge_casing',
         type: 'line',
         minzoom: 8,
@@ -1424,18 +1490,6 @@
         paint: standardFillPaint([1]),
       },
       {
-        id: 'railway_line_med_fill',
-        type: 'line',
-        maxzoom: 8,
-        source: 'openrailwaymap',
-        'source-layer': 'standard_railway_line_med',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
-        },
-        paint: standardFillPaint([1]),
-      },
-      {
         id: 'railway_bridge_fill',
         type: 'line',
         minzoom: 8,
@@ -1488,9 +1542,30 @@
         }
       },
       {
-        id: 'railway_text_stations',
+        id: 'railway_text_stations_low',
         type: 'symbol',
         minzoom: 5,
+        maxzoom: 7,
+        source: 'openrailwaymap_low',
+        'source-layer': 'standard_railway_text_stations_low',
+        paint: {
+          'text-color': 'blue',
+          'text-halo-color': 'white',
+          'text-halo-width': 1.5,
+        },
+        layout: {
+          'symbol-z-order': 'source',
+          'text-field': '{label}',
+          'text-font': ['Noto Sans Bold'],
+          'text-size': 11,
+          'text-padding': 10,
+          'text-max-width': 5,
+        },
+      },
+      {
+        id: 'railway_text_stations',
+        type: 'symbol',
+        minzoom: 8,
         source: 'openrailwaymap',
         'source-layer': 'standard_railway_text_stations',
         filter: ['step', ['zoom'],
@@ -2730,9 +2805,8 @@
         id: 'gauge_railway_line_low_casing',
         type: 'line',
         maxzoom: 7,
-        source: 'openrailwaymap',
-        'source-layer': 'gauge_railway_line_med',
-        filter: ['==', ['get', 'usage'], 'main'],
+        source: 'openrailwaymap_low',
+        'source-layer': 'railway_line_low',
         paint: gaugeCasingPaint,
         layout: gaugeLayout,
       },
@@ -2774,9 +2848,8 @@
         id: 'gauge_railway_line_low_fill',
         type: 'line',
         maxzoom: 7,
-        source: 'openrailwaymap',
-        'source-layer': 'gauge_railway_line_med',
-        filter: ['==', ['get', 'usage'], 'main'],
+        source: 'openrailwaymap_low',
+        'source-layer': 'railway_line_low',
         paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
         layout: gaugeLayout,
       },
