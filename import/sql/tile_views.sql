@@ -1175,7 +1175,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
       WHEN railway IN ('preserved', 'construction') THEN 400
       ELSE 50
     END AS rank,
-    electrification_state_without_future AS state,
+    electrification_state_without_future AS electrification_state,
     railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
     railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
     label
@@ -1226,7 +1226,7 @@ CREATE OR REPLACE VIEW electrification_future AS
       WHEN railway IN ('preserved', 'construction') THEN 400
       ELSE 50
     END AS rank,
-    electrification_state AS state,
+    electrification_state,
     railway_voltage_for_state(electrification_state, voltage, construction_voltage, proposed_voltage) AS voltage,
     railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
   FROM

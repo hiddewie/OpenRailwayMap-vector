@@ -239,7 +239,7 @@ postgres:
       properties:
         railway: string
         feature: string
-        state: string
+        electrification_state: string
         usage: string
         service: string
         frequency: number
@@ -255,7 +255,7 @@ postgres:
       properties:
         railway: string
         feature: string
-        state: string
+        electrification_state: string
         usage: string
         service: string
         frequency: number
