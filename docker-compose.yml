@@ -43,6 +43,7 @@ services:
     command: [
       'sh',
       '-c',
+      # TODO refactor for low, med and high tile layer split
       'martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source standard_railway_line_med,standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles --on-duplicate override &&
        martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source speed_railway_line_casing,speed_railway_line_med,speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles --on-duplicate override && 
        martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles --on-duplicate override &&

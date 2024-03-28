@@ -456,7 +456,7 @@ function osm2pgsql.process_way(object)
       railway = tags['railway'],
       service = tags['service'],
       usage = tags['usage'],
-      highspeed = tags['highspeed'],
+      highspeed = tags['highspeed'], -- TODO: import boolean
       layer = tags['layer'],
       ref = tags['ref'],
       track_ref = tags['railway:track_ref'],

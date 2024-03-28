@@ -33,21 +33,34 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        highspeed: string
-        standard_label: string
+        highspeed: boolean
         maxspeed: integer
         train_protection: string
-        electrification_state: string
-        electrification_state_now: string
+        train_protection_rank: integer
+        frequency: double
+        voltage: integer
+        gaugeint0: integer
+        gauge0: string
+
+    railway_line_med:
+      schema: public
+      table: railway_line_med
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        usage: string
+        highspeed: boolean
+        maxspeed: integer
+        ref: string
+        train_protection: string
+        train_protection_rank: integer
         frequency: double
         voltage: integer
         electrification_label: string
         gaugeint0: integer
         gauge0: string
+        gauge_label: string
 
     # --- Standard --- #
 
@@ -60,20 +73,13 @@ postgres:
       properties:
         label: string
 
-    standard_railway_line_med:
+    standard_railway_text_stations_med:
       schema: public
-      table: standard_railway_line_med
+      table: standard_railway_text_stations_med
       srid: 3857
       geometry_column: way
-      geometry_type: LINESTRING
+      geometry_type: POINT
       properties:
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        highspeed: string
-        tunnel: boolean
-        bridge: boolean
         label: string
 
     standard_railway_turntables:
@@ -94,7 +100,7 @@ postgres:
         feature: string
         usage: string
         service: string
-        highspeed: string
+        highspeed: boolean
         tunnel: boolean
         bridge: boolean
         ref: string
@@ -159,19 +165,6 @@ postgres:
         usage: string
         service: string
 
-    speed_railway_line_med:
-      schema: public
-      table: speed_railway_line_med
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        maxspeed: number
-
     speed_railway_line_fill:
       schema: public
       table: speed_railway_line_fill
@@ -211,8 +204,8 @@ postgres:
         usage: string
         service: string
         layer: number
-        rank: number
         train_protection: string
+        train_protection_rank: integer
 
     signals_railway_signals:
       schema: public
@@ -238,22 +231,6 @@ postgres:
         name: string
 
     # --- Electrification --- #
-
-    electrification_railway_line_med:
-      schema: public
-      table: electrification_railway_line_med
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        feature: string
-        state: string
-        usage: string
-        service: string
-        frequency: number
-        voltage: number
-        label: string
 
     electrification_railway_line:
       schema: public
@@ -311,21 +288,6 @@ postgres:
         service: string
         gauge0: string
         gaugeint0: int4
-
-    gauge_railway_line_med:
-      schema: public
-      table: gauge_railway_line_med
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        gauge0: string
-        gaugeint0: number
-        label: string
 
     gauge_railway_line:
       schema: public
