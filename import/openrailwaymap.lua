@@ -21,7 +21,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
-    { column = 'highspeed', type = 'text' },
+    { column = 'highspeed', type = 'boolean' },
     { column = 'layer', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'track_ref', type = 'text' },
@@ -456,7 +456,7 @@ function osm2pgsql.process_way(object)
       railway = tags['railway'],
       service = tags['service'],
       usage = tags['usage'],
-      highspeed = tags['highspeed'], -- TODO: import boolean
+      highspeed = tags['highspeed'] == 'yes',
       layer = tags['layer'],
       ref = tags['ref'],
       track_ref = tags['railway:track_ref'],

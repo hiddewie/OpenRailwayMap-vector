@@ -16,7 +16,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     SELECT
       way,
       railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-      (highspeed is not null and highspeed = 'yes') as highspeed,
+      highspeed,
       train_protection,
       train_protection_rank,
       frequency,
@@ -47,7 +47,7 @@ CREATE OR REPLACE VIEW railway_line_med AS
        way,
        railway,
        usage,
-       (highspeed is not null and highspeed = 'yes') as highspeed,
+       highspeed,
        -- speeds are converted to kph in this layer because it is used for colouring
        railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
        train_protection_rank,
@@ -141,7 +141,7 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
        railway,
        usage,
        service,
-       (highspeed is not null and highspeed = 'yes') as highspeed,
+       highspeed,
        disused_railway, abandoned_railway,
        razed_railway, construction_railway,
        proposed_railway,
