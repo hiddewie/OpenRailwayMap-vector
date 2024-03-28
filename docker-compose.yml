@@ -43,12 +43,15 @@ services:
     command: [
       'sh',
       '-c',
-      # TODO refactor for low, med and high tile layer split
-      'martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source standard_railway_line_med,standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles --on-duplicate override &&
-       martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source speed_railway_line_casing,speed_railway_line_med,speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles --on-duplicate override && 
-       martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles --on-duplicate override &&
-       martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source electrification_railway_line_med,electrification_railway_line,electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles --on-duplicate override &&
-       martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom "$$MIN_ZOOM" --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source gauge_railway_line_low,gauge_railway_line_med,gauge_railway_line --output-file /tiles/gauge.mbtiles --on-duplicate override'
+      'martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 6 "--bbox=$$BBOX" --source railway_line_low --output-file /tiles/railway_line_low.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 0 --max-zoom 6 "--bbox=$$BBOX" --source standard_railway_text_stations_low --output-file /tiles/standard_railway_text_stations_low.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 7 --max-zoom 7 "--bbox=$$BBOX" --source railway_line_med --output-file /tiles/railway_line_med.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 7 --max-zoom 7 "--bbox=$$BBOX" --source standard_railway_text_stations_med --output-file /tiles/standard_railway_text_stations_med.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 8 --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles --on-duplicate override && 
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 8 --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source speed_railway_line_casing,speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles --on-duplicate override && 
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 8 --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 8 --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source electrification_railway_line,electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles --on-duplicate override &&
+      martin-cp --config /config/configuration.yml --mbtiles-type flat --min-zoom 8 --max-zoom "$$MAX_ZOOM" "--bbox=$$BBOX" --source gauge_railway_line_low,gauge_railway_line --output-file /tiles/gauge.mbtiles --on-duplicate override'
     ]
     volumes:
       - ./martin:/config

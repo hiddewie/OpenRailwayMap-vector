@@ -1071,12 +1071,22 @@
       openstreetmap,
       openrailwaymap_low: {
         type: 'vector',
-        url: `${location.origin}/railway_line_low,standard_railway_text_stations_low`,
+        url: `${location.origin}/railway_line_low`,
+        attribution,
+      },
+      standard_railway_text_stations_low: {
+        type: 'vector',
+        url: `${location.origin}/standard_railway_text_stations_low`,
         attribution,
       },
       openrailwaymap_med: {
         type: 'vector',
-        url: `${location.origin}/railway_line_med,standard_railway_text_stations_med`,
+        url: `${location.origin}/railway_line_med`,
+        attribution,
+      },
+      standard_railway_text_stations_med: {
+        type: 'vector',
+        url: `${location.origin}/standard_railway_text_stations_med`,
         attribution,
       },
       openrailwaymap: {
@@ -1218,7 +1228,7 @@
         type: 'symbol',
         minzoom: 5,
         maxzoom: 7,
-        source: 'openrailwaymap_low',
+        source: 'standard_railway_text_stations_low',
         'source-layer': 'standard_railway_text_stations_low',
         paint: {
           'text-color': 'blue',
@@ -1269,7 +1279,7 @@
         type: 'symbol',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_med',
+        source: 'standard_railway_text_stations_med',
         'source-layer': 'standard_railway_text_stations_med',
         paint: {
           'text-color': 'blue',
