@@ -35,16 +35,13 @@ CREATE OR REPLACE VIEW railway_line_med AS
     usage,
     highspeed,
     maxspeed,
-    ref,
     train_protection_rank,
     train_protection,
     electrification_state,
     voltage,
     frequency,
-    electrification_label,
     railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0,
-    gauge_label
+    gauge as gauge0
   FROM
     (SELECT
        way,
@@ -53,15 +50,12 @@ CREATE OR REPLACE VIEW railway_line_med AS
        (highspeed is not null and highspeed = 'yes') as highspeed,
        -- speeds are converted to kph in this layer because it is used for colouring
        railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-       ref,
        train_protection_rank,
        train_protection,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state,
        railway_to_int(voltage) AS voltage,
        railway_to_float(frequency) AS frequency,
-       railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS electrification_label,
-       railway_desired_value_from_list(1, gauge) AS gauge,
-         railway_gauge_label(COALESCE(gauge, construction_gauge)) AS gauge_label
+       railway_desired_value_from_list(1, gauge) AS gauge
      FROM railway_line
      WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
     ) AS r

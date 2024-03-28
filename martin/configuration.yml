@@ -52,15 +52,13 @@ postgres:
         usage: string
         highspeed: boolean
         maxspeed: integer
-        ref: string
         train_protection: string
         train_protection_rank: integer
+        electrification_state: string
         frequency: double
         voltage: integer
-        electrification_label: string
         gaugeint0: integer
         gauge0: string
-        gauge_label: string
 
     # --- Standard --- #
 
