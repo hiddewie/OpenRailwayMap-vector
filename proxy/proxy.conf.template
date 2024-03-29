@@ -63,7 +63,7 @@ server {
     proxy_redirect off;
 
     add_header X-Cache-Status $upstream_cache_status;
-    # add_header Cache-Control "public, max-age=8182, stale-while-revalidate=604800, stale-if-error=604800";
-    add_header Cache-Control "public, max-age=0";
+    add_header Cache-Control "public, max-age=8182, stale-while-revalidate=604800, stale-if-error=604800";
+    # add_header Cache-Control "public, max-age=0";
   }
 }

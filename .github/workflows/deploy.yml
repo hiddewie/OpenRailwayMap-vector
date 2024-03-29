@@ -51,38 +51,25 @@ jobs:
         id: cache-data
         uses: actions/cache@v4
         with:
-          key: 'data-${{ steps.cache-key.outputs.key }}'
-          path: data/filtered.osm.pbf
+          key: 'data-europe-${{ steps.cache-key.outputs.key }}'
+          path: data/filtered/europe.osm.pbf
 
       - name: Download data
         if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
-          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data/data.osm.pbf
-
-      - name: Filter data
-        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
-        run: |
-          osmium tags-filter --progress --output data/filtered.osm.pbf data/data.osm.pbf nwr/railway nwr/disused:railway nwr/abandoned:railway nwr/razed:railway nwr/construction:railway nwr/proposed:railway n/public_transport=stop_position nwr/public_transport=platform r/route=train r/route=tram r/route=light_rail r/route=subway
+          curl --progress-bar http://ftp.snt.utwente.nl/pub/misc/openstreetmap/europe-latest.osm.pbf --output data/europe.osm.pbf
 
       - name: Import data
         env:
           OSM2PGSQL_NUMPROC: 4
           OSM2PGSQL_CACHE: 2000
-          OSM2PGSQL_DATAFILE: filtered.osm.pbf
+          OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
           docker compose run --build import
 
       - name: Generate tiles
         run: |
           docker compose up --build martin-cp
-
-      - name: Print tiles summary
-        run: |
-          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/standard.mbtiles
-          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/speed.mbtiles
-          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/signals.mbtiles
-          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/electrification.mbtiles
-          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/gauge.mbtiles
 
       - name: Deploy
         run: |
