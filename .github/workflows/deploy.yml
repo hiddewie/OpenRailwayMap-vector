@@ -76,28 +76,28 @@ jobs:
           docker image ls ghcr.io/hiddewie/openrailwaymap-import-db:latest
           docker compose up --no-build --pull never --detach db
 
-#      - name: Import data
-      - name: Ensure data is up to date
-        env:
-          # Available cores: 4
-          OSM2PGSQL_NUMPROC: 4
-          # Available memory: 16GB
-          OSM2PGSQL_CACHE: 14000
-#          OSM2PGSQL_DATAFILE: europe.osm.pbf
-        run: |
-          docker compose pull import
-          docker compose build import
-          docker compose run import
-          docker compose push import
-
-      - name: Commit and push new database image
-        run: |
-          docker compose stop db
-          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
-          docker commit "$DB_CONTAINER_ID" "$DB_IMAGE"
-          docker image ls "$DB_IMAGE"
-#          docker push "$DB_IMAGE"
+##      - name: Import data
+#      - name: Ensure data is up to date
+#        env:
+#          # Available cores: 4
+#          OSM2PGSQL_NUMPROC: 4
+#          # Available memory: 16GB
+#          OSM2PGSQL_CACHE: 14000
+##          OSM2PGSQL_DATAFILE: europe.osm.pbf
+#        run: |
+#          docker compose pull import
+#          docker compose build import
+#          docker compose run import
+#          docker compose push import
+#
+#      - name: Commit and push new database image
+#        run: |
+#          docker compose stop db
+#          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+#          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
+#          docker commit "$DB_CONTAINER_ID" "$DB_IMAGE"
+#          docker image ls "$DB_IMAGE"
+##          docker push "$DB_IMAGE"
 
       - name: Generate tiles
         run: |
