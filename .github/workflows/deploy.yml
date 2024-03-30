@@ -49,10 +49,10 @@ jobs:
 #        run: |
 #          sudo apt install osmium-tool
 
-      - name: Generate cache key
-        id: cache-key
-        run: |
-          echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
+#      - name: Generate cache key
+#        id: cache-key
+#        run: |
+#          echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
 
 #      - name: Cache downloaded OpenStreetMap data
 #        id: cache-data
