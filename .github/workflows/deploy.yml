@@ -61,8 +61,10 @@ jobs:
 
       - name: Import data
         env:
+          # Available cores: 4
           OSM2PGSQL_NUMPROC: 4
-          OSM2PGSQL_CACHE: 2000
+          # Available memory: 16GB
+          OSM2PGSQL_CACHE: 14000
           OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
           docker compose run --build import
