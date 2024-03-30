@@ -59,6 +59,12 @@ echo "Using osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} pr
 #
 #osm2pgsql-replication init --database gis
 
+#echo "Post processing imported data"
+#psql -d gis -f sql/functions.sql
+#psql -d gis -f sql/get_station_importance.sql
+#psql -d gis -f sql/signals_with_azimuth.sql
+#psql -d gis -f sql/tile_views.sql
+
 echo "Updating data"
 osm2pgsql-replication update --database gis -- \
   --slim \
@@ -67,11 +73,9 @@ osm2pgsql-replication update --database gis -- \
   --cache "${OSM2PGSQL_CACHE:-256}" \
   --number-processes "${OSM2PGSQL_NUMPROC:-4}"
 
-echo "Post processing imported data"
-psql -d gis -f sql/functions.sql
-psql -d gis -f sql/get_station_importance.sql
-psql -d gis -f sql/signals_with_azimuth.sql
-psql -d gis -f sql/tile_views.sql
+echo "Updating materialized views"
+psql -d gis -f sql/update_signals_with_azimuth.sql
+psql -d gis -f sql/update_station_importance.sql
 
 echo "Vacuuming database"
 psql -d gis -c "VACUUM FULL;"
