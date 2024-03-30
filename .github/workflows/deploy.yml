@@ -69,6 +69,7 @@ jobs:
       - name: Pull import database
         run: |
           docker compose pull db
+          docker image ls ghcr.io/hiddewie/openrailwaymap-import-db:latest
           docker compose up --no-build --pull never --detach db
 
 #      - name: Import data
