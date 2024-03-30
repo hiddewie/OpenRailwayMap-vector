@@ -68,8 +68,8 @@ jobs:
 
       - name: Pull import database
         run: |
-          docker compose up --no-build --pull always --detach db
-
+          docker compose pull db
+          docker compose up --no-build --pull never --detach db
 
 #      - name: Import data
       - name: Ensure data is up to date
@@ -80,12 +80,13 @@ jobs:
           OSM2PGSQL_CACHE: 14000
 #          OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
-          docker compose up --pull always --build import
+          docker compose pull import
+          docker compose up --pull never --build import
           docker compose push import
 
       - name: Commit and push new database image
         run: |
-          docker compose down
+          docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
           docker commit "$DB_CONTAINER_ID" "$DB_IMAGE"
