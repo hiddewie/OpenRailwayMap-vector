@@ -66,6 +66,10 @@ jobs:
 #        run: |
 #          curl --progress-bar http://ftp.snt.utwente.nl/pub/misc/openstreetmap/europe-latest.osm.pbf --output data/europe.osm.pbf
 
+      # The disk and memory in the Github runners is too small to do large imports.
+      # A Docker image with a pre-imported database state is used.
+      # During the deployment run, the docker image is updated through the replication updated,
+      # comitted to a new image and pushed for future used.
       - name: Pull import database
         run: |
           docker compose pull db
@@ -98,7 +102,8 @@ jobs:
       - name: Generate tiles
         run: |
           docker compose up --no-build --pull never --detach db
-          docker compose up --build martin-cp
+          docker compose build martin-cp
+          docker compose run --no-build martin-cp
 
       - name: Deploy
         run: |
