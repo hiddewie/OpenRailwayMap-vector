@@ -45,9 +45,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Osmium
-        run: |
-          sudo apt install osmium-tool
+#      - name: Install Osmium
+#        run: |
+#          sudo apt install osmium-tool
 
       - name: Generate cache key
         id: cache-key
