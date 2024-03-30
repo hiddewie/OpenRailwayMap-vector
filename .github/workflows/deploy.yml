@@ -103,7 +103,7 @@ jobs:
         run: |
           docker compose up --no-build --pull never --detach db
           docker compose build martin-cp
-          docker compose run --no-build martin-cp
+          docker compose run martin-cp
 
       - name: Deploy
         run: |
