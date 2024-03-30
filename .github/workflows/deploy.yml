@@ -81,7 +81,7 @@ jobs:
 #          OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
           docker compose pull import
-          docker compose up --pull never --build import
+          docker compose up --pull never --build --exit-code-from import import
           docker compose push import
 
       - name: Commit and push new database image
@@ -91,7 +91,7 @@ jobs:
           DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
           docker commit "$DB_CONTAINER_ID" "$DB_IMAGE"
           docker image ls "$DB_IMAGE"
-          docker push "$DB_IMAGE"
+#          docker push "$DB_IMAGE"
 
       - name: Generate tiles
         run: |
