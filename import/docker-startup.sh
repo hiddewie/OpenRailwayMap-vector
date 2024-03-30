@@ -44,24 +44,37 @@ echo "Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE"
     r/route=light_rail \
     r/route=subway
 
-echo "Importing data"
-# Importing data to a database
-osm2pgsql \
-  --create \
-  --database gis \
-  --drop \
+#echo "Importing data"
+## Importing data to a database
+#osm2pgsql \
+#  --create \
+#  --database gis \
+#  --slim \
+#  --middle-database-format new \
+#  --output flex \
+#  --style openrailwaymap.lua \
+#  --cache "${OSM2PGSQL_CACHE:-256}" \
+#  --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
+#  "$OSM2PGSQL_FILTERED_FILE"
+#
+#osm2pgsql-replication init --database gis
+
+echo "Updating data"
+osm2pgsql-replication update --database gis -- \
   --slim \
   --output flex \
   --style openrailwaymap.lua \
   --cache "${OSM2PGSQL_CACHE:-256}" \
-  --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
-  "$OSM2PGSQL_FILTERED_FILE"
+  --number-processes "${OSM2PGSQL_NUMPROC:-4}"
 
 echo "Post processing imported data"
 psql -d gis -f sql/functions.sql
 psql -d gis -f sql/get_station_importance.sql
 psql -d gis -f sql/signals_with_azimuth.sql
 psql -d gis -f sql/tile_views.sql
+
+echo "Vacuuming database"
+psql -d gis -c "VACUUM FULL;"
 
 echo "Import summary"
 psql -d gis -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"

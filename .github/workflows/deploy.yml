@@ -47,30 +47,46 @@ jobs:
         run: |
           echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
 
-      - name: Cache downloaded OpenStreetMap data
-        id: cache-data
-        uses: actions/cache@v4
-        with:
-          key: 'data-europe-${{ steps.cache-key.outputs.key }}'
-          path: data/filtered/europe.osm.pbf
+#      - name: Cache downloaded OpenStreetMap data
+#        id: cache-data
+#        uses: actions/cache@v4
+#        with:
+#          key: 'data-europe-${{ steps.cache-key.outputs.key }}'
+#          path: data/filtered/europe.osm.pbf
+#
+#      - name: Download data
+#        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
+#        run: |
+#          curl --progress-bar http://ftp.snt.utwente.nl/pub/misc/openstreetmap/europe-latest.osm.pbf --output data/europe.osm.pbf
 
-      - name: Download data
-        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
+      - name: Pull import database
         run: |
-          curl --progress-bar http://ftp.snt.utwente.nl/pub/misc/openstreetmap/europe-latest.osm.pbf --output data/europe.osm.pbf
+          docker compose up --no-build --pull always --detach db
 
-      - name: Import data
+
+#      - name: Import data
+      - name: Ensure data is up to date
         env:
           # Available cores: 4
           OSM2PGSQL_NUMPROC: 4
           # Available memory: 16GB
           OSM2PGSQL_CACHE: 14000
-          OSM2PGSQL_DATAFILE: europe.osm.pbf
+#          OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
           docker compose run --build import
 
+      - name: Commit and push new database image
+        run: |
+          docker compose down
+          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
+          docker compose commit "$DB_CONTAINER_ID" "$DB_IMAGE"
+          docker image ls "$DB_IMAGE"
+          docker push "$DB_IMAGE"
+
       - name: Generate tiles
         run: |
+          docker compose up --no-build --pull never --detach db
           docker compose up --build martin-cp
 
       - name: Deploy

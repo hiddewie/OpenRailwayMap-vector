@@ -1,6 +1,6 @@
 services:
   db:
-    image: db:v1
+    image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
       context: .
       dockerfile: db.Dockerfile
@@ -9,8 +9,8 @@ services:
       -c shared_preload_libraries='pg_stat_statements'
     ports:
       - '5432:5432'
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/postgres-data
+#    volumes:
+#      - ./postgres-data:/var/lib/postgresql/postgres-data
     shm_size: 1g
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
@@ -19,7 +19,6 @@ services:
       - PGDATA=/var/lib/postgresql/postgres-data
 
   import:
-    image: import:v1
     build:
       context: .
       dockerfile: import.Dockerfile
