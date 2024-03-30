@@ -80,7 +80,8 @@ jobs:
           OSM2PGSQL_CACHE: 14000
 #          OSM2PGSQL_DATAFILE: europe.osm.pbf
         run: |
-          docker compose run --build import
+          docker compose up --pull always --build import
+          docker compose push import
 
       - name: Commit and push new database image
         run: |

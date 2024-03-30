@@ -19,6 +19,7 @@ services:
       - PGDATA=/var/lib/postgresql/postgres-data
 
   import:
+    image: ghcr.io/hiddewie/openrailwaymap-import:latest
     build:
       context: .
       dockerfile: import.Dockerfile
