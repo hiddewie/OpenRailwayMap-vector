@@ -86,7 +86,7 @@ jobs:
         run: |
           docker compose pull db
           docker image ls ghcr.io/hiddewie/openrailwaymap-import-db:latest
-          docker compose up --no-build --pull never --detach db
+          docker compose up --no-build --pull never --wait db
 
       - name: Ensure data is up to date
         env:
@@ -154,7 +154,7 @@ jobs:
       - name: Pull database
         run: |
           docker compose pull db
-          docker compose up --no-build --pull never --detach db
+          docker compose up --no-build --pull never --wait db
 
       - name: Generate tiles
         env:
