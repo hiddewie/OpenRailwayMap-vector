@@ -106,10 +106,16 @@ jobs:
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
           
-          # docker container commit "$DB_CONTAINER_ID" "$DB_IMAGE"
+          docker container commit "$DB_CONTAINER_ID" updated-db
           # docker image ls "$DB_IMAGE"
-          docker export "$DB_CONTAINER_ID" | docker import - "$DB_IMAGE"
-          docker image ls "$DB_IMAGE"
+          #docker export "$DB_CONTAINER_ID" | docker import - "$DB_IMAGE"
+          # docker image ls "$DB_IMAGE"
+          
+          # Persist and squash data in new image
+          echo "COPY --from=updated-db /var/lib/postgresql/postgres-data /var/lib/postgresql/postgres-data' >> db.Dockerfile
+          
+          # Build and push including the new data
+          docker compose build --push db
               
           # Squash image to reduce size by removing duplicated added/removed files in Docker layers
           # Docker container commit does not support squashing, see https://github.com/docker/for-linux/issues/453#issuecomment-668645475
@@ -117,7 +123,7 @@ jobs:
           # docker build --squash -t squashed .
           # docker tag squashed "$DB_IMAGE"
           
-          docker push "$DB_IMAGE"
+          # docker push "$DB_IMAGE"
 
 #  generate-tiles:
 #    name: Generate tiles
