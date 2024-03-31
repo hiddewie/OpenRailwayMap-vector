@@ -53,8 +53,7 @@ server {
     proxy_cache_lock on;
     proxy_cache_lock_age 1m;
     proxy_cache_revalidate on;
-    proxy_cache_valid 200 204 302 1d;
-    proxy_cache_valid 404 10m;
+    proxy_cache_valid 200 204 302 404 ${NGINX_CACHE_TTL}s;
     proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
     proxy_set_header X-Rewrite-URL $uri;
     proxy_set_header X-Forwarded-Host ${PUBLIC_HOST};
@@ -63,7 +62,6 @@ server {
     proxy_redirect off;
 
     add_header X-Cache-Status $upstream_cache_status;
-    add_header Cache-Control "public, max-age=8182, stale-while-revalidate=604800, stale-if-error=604800";
-    # add_header Cache-Control "public, max-age=0";
+    add_header Cache-Control "public, max-age=${NGINX_CACHE_TTL_FRESH}, stale-while-revalidate=${NGINX_CACHE_TTL_STALE}, stale-if-error=${NGINX_CACHE_TTL_STALE}";
   }
 }

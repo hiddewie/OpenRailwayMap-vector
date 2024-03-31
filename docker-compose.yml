@@ -8,8 +8,6 @@ services:
       -c shared_preload_libraries='pg_stat_statements'
     ports:
       - '5432:5432'
-#    volumes:
-#      - ./postgres-data:/var/lib/postgresql/postgres-data
     shm_size: 1g
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
@@ -106,3 +104,6 @@ services:
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
       NGINX_RESOLVER: '127.0.0.11 ipv6=off'
+      NGINX_CACHE_TTL: '0'
+      CLIENT_CACHE_FRESH_TTL: '0'
+      CLIENT_CACHE_STALE_TTL: '0'
