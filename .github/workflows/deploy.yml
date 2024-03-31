@@ -95,10 +95,10 @@ jobs:
           # Available memory: 16GB
           OSM2PGSQL_CACHE: 14000
         run: |
-#          docker compose pull import
-#          docker compose build import
+          # docker compose pull import
+          # docker compose build import
           docker compose run import update
-#          docker compose push import
+          # docker compose push import
 
       - name: Commit and push new database image
         run: |
