@@ -597,6 +597,28 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'light' THEN 'de/zs10-light'
 
+      -- FI --
+
+      -- Nopeusmerkki, speed signal
+      WHEN feature = 'FI:T-101' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'fi/t-101-empty'
+          WHEN signal_speed_limit_speed ~ '^([2-6]0)$' THEN CONCAT('fi/t-101-', signal_speed_limit_speed)
+        END
+
+      -- Nopeusmerkin etumerkki, distant signal
+      WHEN feature = 'FI:T-102' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fi/t-102-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^([2-6]0)$' THEN CONCAT('fi/t-102-', signal_speed_limit_distant_speed)
+        END
+
+      -- Merkitty nopeus päättyy -merkki, end of speed limit
+      WHEN feature = 'FI:T-110' AND signal_speed_limit_form = 'sign' THEN 'fi/t-110'
+
+      -- JKV-nopeus, JKV speed limit
+      WHEN feature = 'FI:T-115' AND signal_speed_limit_form = 'sign' THEN 'fi/t-115'
+
       -- NL --
 
       -- NL speed limit light (part of main signal)
