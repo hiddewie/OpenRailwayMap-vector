@@ -402,6 +402,15 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'AT-V2:ek-sicht_pfeiftafel' AND signal_speed_limit_form = 'sign' THEN 'at/ek-sicht-pfeiftafel'
 
+      -- BE --
+
+      -- BE speed limit light (part of main signal)
+      WHEN feature = 'BE:VIS' AND signal_speed_limit_form = 'light' THEN
+        CASE
+          WHEN signal_speed_limit_speed IS NULL THEN 'be/chiffre-vitesse-empty'
+          WHEN signal_speed_limit_speed ~ '^([4-9]0)$' THEN CONCAT('be/chiffre-vitesse-', signal_speed_limit_speed)
+        END
+
       -- CH --
 
       -- Vorsignal verminderte Geschwindigkeit

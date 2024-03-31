@@ -287,13 +287,25 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_station_values(tags.railway) then
-    stations:insert({
-      way = object:as_point(),
-      railway = tags.railway,
-      name = tags.short_name or tags.name,
-      station = tags.station,
-      label = tags['railway:ref'],
-    })
+    if tags.station then
+      for station in string.gmatch(tags.station, '[^;]+') do
+        stations:insert({
+          way = object:as_point(),
+          railway = tags.railway,
+          name = tags.short_name or tags.name,
+          station = station,
+          label = tags['railway:ref'],
+        })
+      end
+    else
+      stations:insert({
+        way = object:as_point(),
+        railway = tags.railway,
+        name = tags.short_name or tags.name,
+        station = nil,
+        label = tags['railway:ref'],
+      })
+    end
   end
 
   if railway_poi_values(tags.railway) then
