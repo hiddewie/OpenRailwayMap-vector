@@ -25,41 +25,6 @@ jobs:
         run: |
           flyctl deploy --config proxy.fly.toml --local-only
 
-# Import steps
-  #      - name: Install Osmium
-  #        run: |
-  #          sudo apt install osmium-tool
-
-  #      - name: Generate cache key
-  #        id: cache-key
-  #        run: |
-  #          echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
-
-  #      - name: Cache downloaded OpenStreetMap data
-  #        id: cache-data
-  #        uses: actions/cache@v4
-  #        with:
-  #          key: 'data-europe-${{ steps.cache-key.outputs.key }}'
-  #          path: data/filtered/europe.osm.pbf
-  #
-  #      - name: Download data
-  #        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
-  #        run: |
-  #          curl --progress-bar http://ftp.snt.utwente.nl/pub/misc/openstreetmap/europe-latest.osm.pbf --output data/europe.osm.pbf
-
-#      - name: Import data
-#        env:
-#          # Available cores: 4
-#          OSM2PGSQL_NUMPROC: 4
-#          # Available memory: 16GB
-#          OSM2PGSQL_CACHE: 14000
-#          OSM2PGSQL_DATAFILE: europe.osm.pbf
-#        run: |
-#          docker compose pull import
-#          docker compose build import
-#          docker compose run import import
-#          docker compose push import
-
   update-data:
     name: Update data
     runs-on: ubuntu-latest

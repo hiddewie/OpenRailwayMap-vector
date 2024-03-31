@@ -105,5 +105,5 @@ services:
       PUBLIC_HOST: localhost:8000
       NGINX_RESOLVER: '127.0.0.11 ipv6=off'
       NGINX_CACHE_TTL: '0'
-      CLIENT_CACHE_FRESH_TTL: '0'
-      CLIENT_CACHE_STALE_TTL: '0'
+      CLIENT_CACHE_TTL_FRESH: '0'
+      CLIENT_CACHE_TTL_STALE: '0'

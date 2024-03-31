@@ -18,8 +18,8 @@ primary_region = 'ams'
   PUBLIC_HOST = "openrailwaymap.fly.dev"
   NGINX_RESOLVER = "[fdaa::3] valid=10m ipv6=on"
   NGINX_CACHE_TTL = "86400"
-  CLIENT_CACHE_FRESH_TTL = "8182"
-  CLIENT_CACHE_STALE_TTL = "604800"
+  CLIENT_CACHE_TTL_FRESH = "8182"
+  CLIENT_CACHE_TTL_STALE = "604800"
 
 [[vm]]
   cpu_kind = 'shared'
