@@ -22,9 +22,10 @@ RUN apt-get update \
 RUN mkdir -p /openrailwaymap
 WORKDIR /openrailwaymap
 
-COPY import/sql sql
-COPY import/openrailwaymap.lua openrailwaymap.lua
-COPY import/docker-startup.sh docker-startup.sh
+COPY sql sql
+COPY openrailwaymap.lua openrailwaymap.lua
+COPY docker-startup.sh docker-startup.sh
+COPY replication replication
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 

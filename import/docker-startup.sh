@@ -72,16 +72,15 @@ import)
 update)
 
   echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
-  osm2pgsql-replication update --database gis -- \
+  osm2pgsql-replication update \
+    --database gis \
+    --post-processing ./replication/post-process-update.sh \
+    -- \
     --slim \
     --output flex \
     --style openrailwaymap.lua \
     --cache "${OSM2PGSQL_CACHE:-256}" \
     --number-processes "${OSM2PGSQL_NUMPROC:-4}"
-
-  echo "Updating materialized views"
-  psql -d gis -f sql/update_signals_with_azimuth.sql
-  psql -d gis -f sql/update_station_importance.sql
 
   ;;
 
