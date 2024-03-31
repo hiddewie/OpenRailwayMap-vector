@@ -700,7 +700,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       END as feature,
     CASE
-      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a', 'SE:hastighetstavla', 'SE:hastighetstavla med pilspets uppåt') THEN 'line'
+      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a', 'SE:hastighetstavla', 'SE:hastighetstavla med pilspets uppåt', 'SE:lägre_hastighet', 'SE:atc_överskridande') THEN 'line'
       WHEN feature IN ('DE-BOStrab:g2a', 'DE-BOStrab:g4', 'DE-BOStrab:g1a', 'DE-BOStrab:g3') THEN 'tram'
     END as type,
     azimuth
