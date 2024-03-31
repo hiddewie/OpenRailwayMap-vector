@@ -115,7 +115,7 @@ jobs:
           docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
           echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
           docker system prune --force --all --volumes 
-          docker compose build --push db
+          # docker compose build --push db
               
           # Squash image to reduce size by removing duplicated added/removed files in Docker layers
           # Docker container commit does not support squashing, see https://github.com/docker/for-linux/issues/453#issuecomment-668645475
@@ -124,6 +124,15 @@ jobs:
           # docker tag squashed "$DB_IMAGE"
           
           # docker push "$DB_IMAGE"
+
+      - name: Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: db
+          load: false
+          push: true
+          tags: ghcr.io/hiddewie/openrailwaymap-import-db:latest
 
 #  generate-tiles:
 #    name: Generate tiles
