@@ -3,18 +3,6 @@
 set -e
 set -o pipefail
 
-# Testing if database is ready
-i=1
-MAXCOUNT=60
-echo "Waiting for PostgreSQL to be running"
-while [ $i -le $MAXCOUNT ]
-do
-  pg_isready -q && echo "PostgreSQL running" && break
-  sleep 2
-  i=$((i+1))
-done
-test $i -gt $MAXCOUNT && echo "Timeout while waiting for PostgreSQL to be running"
-
 case "$1" in
 import)
 

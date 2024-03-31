@@ -151,7 +151,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull import database
+      - name: Pull database
         run: |
           docker compose pull db
           docker compose up --no-build --pull never --detach db

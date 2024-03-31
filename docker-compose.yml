@@ -16,6 +16,10 @@ services:
       - PG_WORK_MEM
       - PG_MAINTENANCE_WORK_MEM
       - PGDATA=/var/lib/postgresql/postgres-data
+    healthcheck:
+      test: pg_isready -U postgres -d gis
+      interval: 1s
+      timeout: 1s
 
   import:
     image: ghcr.io/hiddewie/openrailwaymap-import:latest
@@ -24,7 +28,8 @@ services:
       cache_from:
         - ghcr.io/hiddewie/openrailwaymap-import:latest
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./data:/data
     environment:
@@ -39,7 +44,8 @@ services:
   martin-cp:
     image: ghcr.io/maplibre/martin
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     entrypoint: ['sh', '-c']
     command: |
       '
@@ -75,7 +81,8 @@ services:
     build:
       dockerfile: martin.Dockerfile
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./martin:/config
     environment:
