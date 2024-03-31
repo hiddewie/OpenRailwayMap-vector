@@ -20,6 +20,8 @@ services:
       test: pg_isready -U postgres -d gis
       interval: 1s
       timeout: 1s
+      retries: 3
+      start_period: 5m
 
   import:
     image: ghcr.io/hiddewie/openrailwaymap-import:latest
