@@ -43,7 +43,7 @@ services:
     entrypoint: ['sh', '-c']
     command: |
       '
-      export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate override \"--bbox=$$BBOX\""
+      export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate override --bbox=$$BBOX"
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 0 --max-zoom 6 --source railway_line_low --output-file /tiles/railway_line_low.mbtiles && mbtiles summary /tiles/railway_line_low.mbtiles
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file /tiles/standard_railway_text_stations_low.mbtiles && mbtiles summary /tiles/standard_railway_text_stations_low.mbtiles
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 7 --max-zoom 7 --source railway_line_med --output-file /tiles/railway_line_med.mbtiles && mbtiles summary /tiles/railway_line_med.mbtiles
