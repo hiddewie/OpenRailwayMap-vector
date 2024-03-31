@@ -817,6 +817,14 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
           ELSE 'at/hauptsignal-halt'
         END
 
+      -- BE --
+
+      WHEN feature = 'BE:GSA' THEN 'be/GSA-V'
+
+      WHEN feature = 'BE:SAS' THEN 'be/SAS'
+
+      WHEN feature = 'BE:PSA' THEN 'be/PSA'
+
       -- DE --
 
       -- DE crossing distant sign Bü 2
