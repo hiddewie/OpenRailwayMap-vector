@@ -668,9 +668,39 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_speed ~ '^5$' THEN CONCAT('pl/w30-', signal_speed_limit_speed)
         END
 
-    END as feature,
+      -- SE --
+
+      -- Hastighetstavla
+      WHEN feature = 'SE:hastighetstavla' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'se/hastighetstavla-empty'
+          WHEN signal_speed_limit_speed ~ '^([3-9]0|1[0-5]0|1[01]5)$' THEN CONCAT('se/hastighetstavla-', signal_speed_limit_speed)
+        END
+
+      -- Hastighetstavla med pilspets uppåt
+      WHEN feature = 'SE:hastighetstavla med pilspets uppåt' AND signal_speed_limit_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_speed is null THEN 'se/hastighetstavla-pilspets-uppåt-empty'
+          WHEN signal_speed_limit_speed ~ '^140$' THEN CONCAT('se/hastighetstavla-pilspets-uppåt-', signal_speed_limit_speed)
+        END
+
+      -- Orienteringstavla för lägre hastighet
+      WHEN feature = 'SE:lägre_hastighet' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'se/orienteringstavla-hastighet-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^(1[0-4]0|[7-9]0)|105$' THEN CONCAT('se/orienteringstavla-hastighet-', signal_speed_limit_distant_speed)
+        END
+
+      -- Orienteringstavla med tilläggsskylt ”ATC-överskridande”
+      WHEN feature = 'SE:atc_överskridande' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'se/orienteringstavla-hastighet-atc-överskridande-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^150$' THEN CONCAT('se/orienteringstavla-hastighet-atc-överskridande-', signal_speed_limit_distant_speed)
+        END
+
+      END as feature,
     CASE
-      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a') THEN 'line'
+      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a', 'SE:hastighetstavla', 'SE:hastighetstavla med pilspets uppåt') THEN 'line'
       WHEN feature IN ('DE-BOStrab:g2a', 'DE-BOStrab:g4', 'DE-BOStrab:g1a', 'DE-BOStrab:g3') THEN 'tram'
     END as type,
     azimuth
