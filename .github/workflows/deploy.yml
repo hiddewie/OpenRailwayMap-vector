@@ -95,10 +95,10 @@ jobs:
           # Available memory: 16GB
           OSM2PGSQL_CACHE: 14000
         run: |
-          docker compose pull import
-          docker compose build import
+#          docker compose pull import
+#          docker compose build import
           docker compose run import update
-          docker compose push import
+#          docker compose push import
 
       - name: Commit and push new database image
         run: |
@@ -109,13 +109,11 @@ jobs:
           docker container commit "$DB_CONTAINER_ID" "$DB_IMAGE"
           docker image ls "$DB_IMAGE"
     
-          docker commit container-name "$DB_IMAGE"
-          
           # Squash image to reduce size by removing duplicated added/removed files in Docker layers
           # Docker container commit does not support squashing, see https://github.com/docker/for-linux/issues/453#issuecomment-668645475
           echo "FROM $DB_IMAGE" > Dockerfile
           docker build --squash -t squashed .
-          docker tag squashed $DB_IMAGE
+          docker tag squashed "$DB_IMAGE"
           
           docker image ls "$DB_IMAGE"
           docker push "$DB_IMAGE"
