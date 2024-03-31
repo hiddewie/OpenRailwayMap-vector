@@ -2,8 +2,7 @@ services:
   db:
     image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
-      context: .
-      dockerfile: db.Dockerfile
+      context: db
     command: |
       postgres 
       -c shared_preload_libraries='pg_stat_statements'
@@ -21,8 +20,7 @@ services:
   import:
     image: ghcr.io/hiddewie/openrailwaymap-import:latest
     build:
-      context: .
-      dockerfile: import.Dockerfile
+      context: import
       cache_from:
         - ghcr.io/hiddewie/openrailwaymap-import:latest
     depends_on:
