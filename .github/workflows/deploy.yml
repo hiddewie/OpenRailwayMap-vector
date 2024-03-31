@@ -112,7 +112,7 @@ jobs:
           # docker image ls "$DB_IMAGE"
           
           # Persist and squash data in new image
-          echo "COPY --from=updated-db /var/lib/postgresql/postgres-data /var/lib/postgresql/postgres-data' >> db.Dockerfile
+          echo "COPY --from=updated-db /var/lib/postgresql/postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
           
           # Build and push including the new data
           docker compose build --push db
