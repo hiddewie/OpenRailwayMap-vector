@@ -106,7 +106,6 @@ jobs:
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
           
-          
           # docker container commit "$DB_CONTAINER_ID" updated-db
           # docker image ls "$DB_IMAGE"
           #docker export "$DB_CONTAINER_ID" | docker import - "$DB_IMAGE"
@@ -114,9 +113,8 @@ jobs:
           
           # Persist and squash data in new image
           docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
-          echo "COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
-          
-          # Build and push including the new data
+          echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
+          docker system prune --force --all --volumes 
           docker compose build --push db
               
           # Squash image to reduce size by removing duplicated added/removed files in Docker layers
