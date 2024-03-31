@@ -28,12 +28,14 @@ The OpenRailwayMap is now available on http://localhost:8000.
 
 Import the data:
 ```shell
-docker compose up --build import
+docker compose run --build import import
 ```
 
 Build the tiles:
 ```shell
-docker compose up --build martin-cp
+for tile in low-med standard speed signals electrification gauge do
+    docker compose up --build martin-cp
+done
 ```
 
 Build and deploy the tile server:
