@@ -81,7 +81,7 @@ jobs:
       # The disk and memory in the Github runners is too small to do large imports.
       # A Docker image with a pre-imported database state is used.
       # During the deployment run, the docker image is updated through the replication updated,
-      # comitted to a new image and pushed for future used.
+      # built into a new image and pushed for future use.
       - name: Pull import database
         run: |
           docker compose pull db
@@ -95,10 +95,9 @@ jobs:
           # Available memory: 16GB
           OSM2PGSQL_CACHE: 14000
         run: |
-          # docker compose pull import
-          # docker compose build import
+          docker compose build import
           docker compose run import update
-          # docker compose push import
+          docker compose push import
 
       - name: Commit and push new database image
         run: |
@@ -106,24 +105,13 @@ jobs:
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
           
-          # docker container commit "$DB_CONTAINER_ID" updated-db
-          # docker image ls "$DB_IMAGE"
-          #docker export "$DB_CONTAINER_ID" | docker import - "$DB_IMAGE"
-          # docker image ls "$DB_IMAGE"
-          
           # Persist and squash data in new image
           docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
           echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
-          docker system prune --force --all --volumes 
-          # docker compose build --push db
-              
-          # Squash image to reduce size by removing duplicated added/removed files in Docker layers
-          # Docker container commit does not support squashing, see https://github.com/docker/for-linux/issues/453#issuecomment-668645475
-          # echo "FROM $DB_IMAGE" > Dockerfile
-          # docker build --squash -t squashed .
-          # docker tag squashed "$DB_IMAGE"
-          
-          # docker push "$DB_IMAGE"
+
+      - name: Clean up unused Docker system data
+        run: |
+          docker system prune --force --all --volumes
 
       - name: Push
         id: docker_build
@@ -134,90 +122,90 @@ jobs:
           push: true
           tags: ghcr.io/hiddewie/openrailwaymap-import-db:latest
 
-#  generate-tiles:
-#    name: Generate tiles
-#    runs-on: ubuntu-latest
-##    needs: update-data
-#
-#    strategy:
-#      matrix:
-#        tiles:
-#          - low-med
-#          - standard
-#          - speed
-#          - signals
-#          - electrification
-#          - gauge
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Pull import database
-#        run: |
-#          docker compose pull db
-#          docker compose up --no-build --pull never --detach db
-#
-#      - name: Generate tiles
-#        env:
-#          TILES: ${{ matrix.tiles }}
-#        run: |
-#          docker compose run martin-cp
-#          ls -las tiles/
-#
-#      - uses: actions/upload-artifact@v4
-#        with:
-#          name: tiles-${{ matrix.tiles }}
-#          path: |
-#            tiles/*.mbtiles
-#          if-no-files-found: error
-#          retention-days: 3
-#
-#  deploy-tiles:
-#    name: Deploy tiles
-#    runs-on: ubuntu-latest
-#    needs: generate-tiles
-#    environment: tiles-production
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Setup Fly
-#        uses: superfly/flyctl-actions/setup-flyctl@master
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - uses: actions/download-artifact@v4
-#        with:
-#          # No name: download everything
-#          path: tiles
-#          merge-multiple: true
-#
-#      - name: List generated tiles
-#        run: |
-#          ls -lah tiles/
-#
-#      - name: Deploy
-#        env:
-#          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-#        run: |
-#          flyctl deploy --config martin-static.fly.toml --local-only
+  generate-tiles:
+    name: Generate tiles
+    runs-on: ubuntu-latest
+    needs: update-data
+
+    strategy:
+      matrix:
+        tiles:
+          - low-med
+          - standard
+          - speed
+          - signals
+          - electrification
+          - gauge
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull import database
+        run: |
+          docker compose pull db
+          docker compose up --no-build --pull never --detach db
+
+      - name: Generate tiles
+        env:
+          TILES: ${{ matrix.tiles }}
+        run: |
+          docker compose run martin-cp
+          ls -las tiles/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tiles-${{ matrix.tiles }}
+          path: |
+            tiles/*.mbtiles
+          if-no-files-found: error
+          retention-days: 3
+
+  deploy-tiles:
+    name: Deploy tiles
+    runs-on: ubuntu-latest
+    needs: generate-tiles
+    environment: tiles-production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup Fly
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          # No name: download everything
+          path: tiles
+          merge-multiple: true
+
+      - name: List generated tiles
+        run: |
+          ls -lah tiles/
+
+      - name: Deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl deploy --config martin-static.fly.toml --local-only
