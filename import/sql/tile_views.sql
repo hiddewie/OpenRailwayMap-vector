@@ -613,6 +613,10 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'FR:tableau_P' AND signal_speed_limit_distant_form = 'sign' THEN 'fr/Tableau_P'
 
+      WHEN feature = 'FR:chevron pointe en bas' AND signal_speed_limit_form = 'sign' THEN 'fr/chevron pointe en bas'
+
+      WHEN feature = 'FR:chevron pointe en haut' AND signal_speed_limit_form = 'sign' THEN 'fr/chevron pointe en haut'
+
       WHEN feature = 'FR:TIV-D_O' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-empty-sign'
@@ -1222,7 +1226,6 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 
       -- FI combined block signal type So
       WHEN feature = 'FI:So' AND combined_form = 'light' AND combined_states ~ '^(.*;)?FI:Po1(;.*)?$' AND combined_states ~ '^(.*;)?FI:Eo1(;.*)?$' THEN 'fi/eo1-po1-combined-block'
-
 
       -- NL --
 
