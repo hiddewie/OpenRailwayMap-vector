@@ -597,6 +597,46 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
       WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'light' THEN 'de/zs10-light'
 
+      -- FR --
+
+      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign'
+        AND signal_speed_limit_distant = 'FR:TIV-D_O' and signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fr/Z-TIV-distance-empty-sign'
+          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/Z-TIV-distance-', signal_speed_limit_distant_speed, '-sign')
+        END
+
+      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign'
+        AND signal_speed_limit_distant = 'FR:TIV-D_O' and signal_speed_limit_distant_form = 'sign' THEN 'fr/Tableau_Z'
+
+      WHEN feature = 'FR:pancarte_R' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_R'
+
+      WHEN feature = 'FR:tableau_P' AND signal_speed_limit_distant_form = 'sign' THEN 'fr/Tableau_P'
+
+      WHEN feature = 'FR:TIV-D_O' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-empty-sign'
+          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/TIV-distance-', signal_speed_limit_distant_speed, '-sign')
+        END
+
+      WHEN feature = 'FR:TIV-D_O' AND signal_speed_limit_distant_form = 'light' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-empty-light'
+          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/TIV-distance-', signal_speed_limit_distant_speed, '-light')
+        END
+
+      WHEN feature = 'FR:TIV-D_type_B' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-type-B-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0)$' THEN CONCAT('fr/TIV-distance-type-B-', signal_speed_limit_distant_speed)
+        END
+
+      WHEN feature = 'FR:TIV-D_type_C' AND signal_speed_limit_distant_form = 'sign' THEN
+        CASE
+          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-type-C-empty'
+          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0)$' THEN CONCAT('fr/TIV-distance-type-C-', signal_speed_limit_distant_speed)
+        END
+
       -- FI --
 
       -- Nopeusmerkki, speed signal
