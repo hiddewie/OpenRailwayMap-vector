@@ -606,8 +606,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
           WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/Z-TIV-distance-', signal_speed_limit_distant_speed, '-sign')
         END
 
-      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign'
-        AND signal_speed_limit_distant = 'FR:TIV-D_O' and signal_speed_limit_distant_form = 'sign' THEN 'fr/Tableau_Z'
+      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_Z'
 
       WHEN feature = 'FR:pancarte_R' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_R'
 
