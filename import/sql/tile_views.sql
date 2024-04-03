@@ -610,7 +610,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
         AND signal_speed_limit_distant = 'FR:TIV-D_type_B' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'fr/Z-TIV-type-B-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0)$' THEN CONCAT('fr/Z-TIV-type-B-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0|200)$' THEN CONCAT('fr/Z-TIV-type-B-', signal_speed_limit_distant_speed)
         END
 
       WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_Z'
@@ -638,7 +638,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       WHEN feature = 'FR:TIV-D_type_B' AND signal_speed_limit_distant_form = 'sign' THEN
         CASE
           WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-type-B-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0)$' THEN CONCAT('fr/TIV-distance-type-B-', signal_speed_limit_distant_speed)
+          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0|200)$' THEN CONCAT('fr/TIV-distance-type-B-', signal_speed_limit_distant_speed)
         END
 
       WHEN feature = 'FR:TIV-D_type_C' AND signal_speed_limit_distant_form = 'sign' THEN
