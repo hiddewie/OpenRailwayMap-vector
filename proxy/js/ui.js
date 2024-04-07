@@ -54,156 +54,6 @@
       legend.style.display = 'none';
     } else {
       legend.style.display = 'block';
-
-      const sourceStyle = makeStyle(selectedStyle)
-      const style= {
-        ...sourceStyle,
-        // layers: [{
-        //   // {
-        //     id: 'railway_switch_ref',
-        //     type: 'symbol',
-        //     // minzoom: 15,
-        //     source: 'openrailwaymap_standard-standard_railway_switch_ref',
-        //     // 'source-layer': 'standard_railway_switch_ref',
-        //     paint: {
-        //       'text-halo-color': ['case',
-        //         ['==', ['get', 'railway_local_operated'], 'yes'], 'yellow',
-        //         'white'
-        //       ],
-        //       'text-halo-width': 2,
-        //     },
-        //     layout: {
-        //       'symbol-z-order': 'source',
-        //       'text-field': '{ref}',
-        //       'text-font': ['Noto Sans Medium'],
-        //       'text-size': 11,
-        //       'text-padding': 20,
-        //     },
-        //   // },
-        // }],
-        layers: sourceStyle.layers
-          .filter(layer => layer.type !== 'raster' && layer.type !== 'background')
-          .map(({['source-layer']: sourceLayer, source, ...rest}) => ({
-            ...rest,
-            source: `${source}-${sourceLayer}`,
-          })),
-        sources: {
-          'openrailwaymap_low-railway_line_low': {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [
-                {
-                  type: 'Feature',
-                  "geometry": {
-                    "type": "LineString",
-                    "coordinates": [
-                      [0, 0],
-                      [1, 0],
-                    ],
-                  },
-                  properties: {
-                    highspeed: true,
-                  },
-                },
-                {
-                  type: 'Feature',
-                  "geometry": {
-                    "type": "LineString",
-                    "coordinates": [
-                      [0, 1],
-                      [1, 1],
-                    ],
-                  },
-                  properties: {
-                    highspeed: false,
-                  },
-                },
-              ],
-            },
-          },
-          "standard_railway_text_stations_low-standard_railway_text_stations_low": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_med-railway_line_med": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "standard_railway_text_stations_med-standard_railway_text_stations_med": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_line_fill": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_turntables": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_symbols": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_text_stations": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_text_km": {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: [],
-            }
-          },
-          "openrailwaymap_standard-standard_railway_switch_ref": {
-            type: 'geojson',
-            data: {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [0, 0],
-
-              },
-              properties: {
-                railway: 'switch',
-                ref: '123a',
-                railway_local_operated: 'yes',
-              }
-            }
-          },
-        }
-      };
-      new maplibregl.Map({
-        container: 'legend-map',
-        style,
-        zoom: 5,
-        center: [0, 0],
-        attributionControl: false,
-        interactive: false,
-      });
     }
   }
 
@@ -3016,6 +2866,7 @@
     ],
   };
 
+  // TODO move this to build-time generation, serve JSON
   const makeStyle = selectedStyle => ({
     center: [12.55, 51.14], // default
     zoom: 3.75, // default
@@ -3026,6 +2877,192 @@
     sprite: `${location.origin}/sprite/symbols`,
     version: 8,
     layers: layers[selectedStyle],
+  });
+
+  const sourceStyle = makeStyle(selectedStyle)
+  const legendStyle= {
+    ...sourceStyle,
+    name: `${sourceStyle.name} legend`,
+    layers: sourceStyle.layers
+      .filter(layer => layer.type !== 'raster' && layer.type !== 'background')
+      .flatMap(({['source-layer']: sourceLayer, source, ...rest}) => [
+        {
+          ...rest,
+          source: `${source}-${sourceLayer}`,
+        },
+        {
+          ...rest,
+          type: 'symbol',
+          id: `${rest.id}-legend`,
+          source: `${source}-${sourceLayer}`,
+          paint: {},
+          layout: {
+            'text-field': '{legend}',
+            'text-font': ['Noto Sans Medium'],
+            'text-size': 10,
+            'text-anchor': 'left',
+          },
+        },
+      ]),
+    sources: {
+      // TODO automate coordinate calculation
+      // TODO automate legend feature duplication
+      'openrailwaymap_low-railway_line_low': {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [-0.5, 0],
+                  [0.5, 0],
+                ],
+              },
+              properties: {
+                highspeed: true,
+              },
+            },
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "Point",
+                "coordinates": [1, 0]
+              },
+              properties: {
+                legend: 'Highspeed main line'
+              },
+            },
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [-0.5, 1],
+                  [0.5, 1],
+                ],
+              },
+              properties: {
+                highspeed: false,
+              },
+            },
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "Point",
+                "coordinates": [1, 1],
+              },
+              properties: {
+                legend: 'Main line'
+              },
+            },
+          ],
+        },
+      },
+      "standard_railway_text_stations_low-standard_railway_text_stations_low": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "Point",
+                "coordinates": [0, 2]
+              },
+              properties: {
+                label: 'BSA',
+              },
+            },
+            {
+              type: 'Feature',
+              "geometry": {
+                "type": "Point",
+                "coordinates": [1, 2]
+              },
+              properties: {
+                legend: 'Station'
+              },
+            },
+          ],
+        }
+      },
+      "openrailwaymap_med-railway_line_med": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "standard_railway_text_stations_med-standard_railway_text_stations_med": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_line_fill": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_turntables": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_symbols": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_text_stations": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_text_km": {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        }
+      },
+      "openrailwaymap_standard-standard_railway_switch_ref": {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [0, 0],
+
+          },
+          properties: {
+            railway: 'switch',
+            ref: '123a',
+            railway_local_operated: 'yes',
+          }
+        }
+      },
+    }
+  };
+  new maplibregl.Map({
+    container: 'legend-map',
+    style: legendStyle,
+    zoom: 5,
+    center: [0, 0],
+    attributionControl: false,
+    interactive: false,
   });
 
   const map = new maplibregl.Map({
