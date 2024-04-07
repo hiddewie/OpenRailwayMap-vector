@@ -97,6 +97,8 @@ services:
       dockerfile: proxy.Dockerfile
     volumes:
       - ./proxy/index.html:/etc/nginx/public/index.html
+      - ./proxy/js/ui.js:/etc/nginx/public/js/ui.js
+      - ./proxy/css/ui.css:/etc/nginx/public/css/ui.css
     ports:
       - '8000:8000'
     environment:
