@@ -480,7 +480,7 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
-      railway_local_operated = tags['railway:local_operated'],
+      railway_local_operated = tags['railway:local_operated'], -- TODO make boolean
     })
   end
 end

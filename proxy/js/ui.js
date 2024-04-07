@@ -56,30 +56,37 @@
       legend.style.display = 'block';
 
       const sourceStyle = makeStyle(selectedStyle)
-      const style = {
+      const style= {
         ...sourceStyle,
-        layers: [
-          ...sourceStyle.layers
-            .filter(layer => layer.type !== 'raster' && layer.type !== 'background')
-            .map(layer => ({
-              ...layer,
-              source: `${layer.source}-${layer['source-layer']}`,
-            }))
-          // {
-          //   id: 'railway_line_low_casing',
-          //   type: 'line',
-          //   source: 'openrailwaymap_low',
-          //   layout: {
-          //     'line-join': 'round',
-          //     'line-cap': 'round',
-          //   },
-          //   paint: {
-          //     // 'line-color': railway_casing_color,
-          //     // 'line-width': railwayLineWidth,
-          //     // 'line-gap-width': railway_casing_add,
-          //   }
-          // },
-        ],
+        // layers: [{
+        //   // {
+        //     id: 'railway_switch_ref',
+        //     type: 'symbol',
+        //     // minzoom: 15,
+        //     source: 'openrailwaymap_standard-standard_railway_switch_ref',
+        //     // 'source-layer': 'standard_railway_switch_ref',
+        //     paint: {
+        //       'text-halo-color': ['case',
+        //         ['==', ['get', 'railway_local_operated'], 'yes'], 'yellow',
+        //         'white'
+        //       ],
+        //       'text-halo-width': 2,
+        //     },
+        //     layout: {
+        //       'symbol-z-order': 'source',
+        //       'text-field': '{ref}',
+        //       'text-font': ['Noto Sans Medium'],
+        //       'text-size': 11,
+        //       'text-padding': 20,
+        //     },
+        //   // },
+        // }],
+        layers: sourceStyle.layers
+          .filter(layer => layer.type !== 'raster' && layer.type !== 'background')
+          .map(({['source-layer']: sourceLayer, source, ...rest}) => ({
+            ...rest,
+            source: `${source}-${sourceLayer}`,
+          })),
         sources: {
           'openrailwaymap_low-railway_line_low': {
             type: 'geojson',
@@ -91,8 +98,8 @@
                   "geometry": {
                     "type": "LineString",
                     "coordinates": [
-                      [2.149663, 41.375404],
-                      [3.149663, 41.375404],
+                      [0, 0],
+                      [1, 0],
                     ],
                   },
                   properties: {
@@ -104,8 +111,8 @@
                   "geometry": {
                     "type": "LineString",
                     "coordinates": [
-                      [2.148663, 41.376404],
-                      [3.148663, 41.376404],
+                      [0, 1],
+                      [1, 1],
                     ],
                   },
                   properties: {
@@ -174,8 +181,17 @@
           "openrailwaymap_standard-standard_railway_switch_ref": {
             type: 'geojson',
             data: {
-              type: 'FeatureCollection',
-              features: [],
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [0, 0],
+
+              },
+              properties: {
+                railway: 'switch',
+                ref: '123a',
+                railway_local_operated: 'yes',
+              }
             }
           },
         }
@@ -183,9 +199,8 @@
       new maplibregl.Map({
         container: 'legend-map',
         style,
-        hash: 'view',
-        zoom: 6,
-        center: [2.149663, 41.375404],
+        zoom: 5,
+        center: [0, 0],
         attributionControl: false,
         interactive: false,
       });
