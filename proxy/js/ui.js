@@ -2965,7 +2965,7 @@ const legendSources = Object.fromEntries(
     let entry = 0;
     let done = new Set();
 
-    const featureSourceLayers = sourceLayers.map(layer => {
+    const featureSourceLayers = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = `${legendLayerName}-z${legendZoom}`
       if (done.has(sourceName)) {
@@ -2977,36 +2977,36 @@ const legendSources = Object.fromEntries(
       const features = data.map(item => {
         const feature = {
           type: 'Feature',
-          "geometry": {
-            "type": item.type === 'line' ? "LineString" : "Point",
-            "coordinates": item.type === 'line'
+          geometry: {
+            type: item.type === 'line' ? "LineString" : "Point",
+            coordinates: item.type === 'line'
               ? [
-                [-0.5 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)],
-                [0.5 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)],
+                [-0.5 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)],
+                [0.5 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)],
               ]
-              : [0, entry * coordinateFactor(legendZoom)],
+              : [0, - entry * coordinateFactor(legendZoom)],
           },
           properties: item.properties,
         };
-        console.info(entry, layer.id, feature )
+        console.info(legendZoom, entry, layer.id, feature )
         entry ++;
         return feature;
       });
-      done.add(legendLayerName);
+      done.add(sourceName);
 
-      return [sourceName, {
+      return [[sourceName, {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
           features,
         },
-      }];
+      }]];
     });
 
     entry = 0;
     done = new Set();
 
-    const legendFeatures = sourceLayers.map(layer => {
+    const legendFeatures = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = `${legendLayerName}-z${legendZoom}`
       if (done.has(sourceName)) {
@@ -3016,38 +3016,35 @@ const legendSources = Object.fromEntries(
       const applicable = ((layer.minzoom ?? globalMinZoom) <= legendZoom) && (legendZoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
       const data = applicable ? (legendData[legendLayerName] ?? []) : [];
       const features = data.map(item => {
-        const feature =    {
+        const feature = {
           type: 'Feature',
-          "geometry": {
-            "type": "Point",
-            "coordinates": [1.0 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)]
+          geometry: {
+            type: "Point",
+            coordinates: [1.0 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)]
           },
           properties: {
             legend: item.legend,
           },
         };
-        console.info(entry, layer.id, feature )
         entry ++;
         return feature;
       });
-      done.add(legendLayerName);
+      done.add(sourceName);
 
       return features;
     })
 
-    const legendSourceLayer = [[`legend-z${legendZoom}`, {
+    const legendSourceLayer = [`legend-z${legendZoom}`, {
       type: 'geojson',
       data: {
         type: 'FeatureCollection',
         features: legendFeatures,
       },
-    }]]
+    }]
 
-    return [...featureSourceLayers, ...legendSourceLayer];
+    return [...featureSourceLayers, legendSourceLayer];
   })
 );
-
-console.info(legendSources)
 
 const legendMap = new maplibregl.Map({
   container: 'legend-map',
