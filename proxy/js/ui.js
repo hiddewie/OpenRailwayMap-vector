@@ -81,6 +81,9 @@
     }
   }
 
+  const globalMinZoom = 1;
+  const glodalMaxZoom= 18;
+
   const knownStyles = {
     standard: 'Infrastructure',
     speed: 'Speed',
@@ -2879,186 +2882,181 @@
     layers: layers[selectedStyle],
   });
 
-  const sourceStyle = makeStyle(selectedStyle)
-  const legendStyle= {
-    ...sourceStyle,
-    name: `${sourceStyle.name} legend`,
-    layers: sourceStyle.layers
-      .filter(layer => layer.type !== 'raster' && layer.type !== 'background')
-      .flatMap(({['source-layer']: sourceLayer, source, ...rest}) => [
-        {
-          ...rest,
-          source: `${source}-${sourceLayer}`,
-        },
-        {
-          ...rest,
-          type: 'symbol',
-          id: `${rest.id}-legend`,
-          source: `${source}-${sourceLayer}`,
-          paint: {},
-          layout: {
-            'text-field': '{legend}',
-            'text-font': ['Noto Sans Medium'],
-            'text-size': 10,
-            'text-anchor': 'left',
-          },
-        },
-      ]),
-    sources: {
-      // TODO automate coordinate calculation
-      // TODO automate legend feature duplication
-      'openrailwaymap_low-railway_line_low': {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [-0.5, 0],
-                  [0.5, 0],
-                ],
-              },
-              properties: {
-                highspeed: true,
-              },
-            },
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "Point",
-                "coordinates": [1, 0]
-              },
-              properties: {
-                legend: 'Highspeed main line'
-              },
-            },
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                  [-0.5, 1],
-                  [0.5, 1],
-                ],
-              },
-              properties: {
-                highspeed: false,
-              },
-            },
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "Point",
-                "coordinates": [1, 1],
-              },
-              properties: {
-                legend: 'Main line'
-              },
-            },
-          ],
+  const legendData = {
+    'openrailwaymap_low-railway_line_low': [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
         },
       },
-      "standard_railway_text_stations_low-standard_railway_text_stations_low": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "Point",
-                "coordinates": [0, 2]
-              },
-              properties: {
-                label: 'BSA',
-              },
-            },
-            {
-              type: 'Feature',
-              "geometry": {
-                "type": "Point",
-                "coordinates": [1, 2]
-              },
-              properties: {
-                legend: 'Station'
-              },
-            },
-          ],
+      {
+        legend: 'Highspeed line',
+        type: 'line',
+        properties: {
+          highspeed: false,
         }
       },
-      "openrailwaymap_med-railway_line_med": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
+    ],
+    'standard_railway_text_stations_low-standard_railway_text_stations_low': [
+      {
+        legend: 'Station',
+        type: 'point',
+        properties: {
+          label: 'BSA',
+        },
+      }
+    ],
+    "openrailwaymap_med-railway_line_med": [],
+    "standard_railway_text_stations_med-standard_railway_text_stations_med": [],
+    "openrailwaymap_standard-standard_railway_line_fill": [],
+    "openrailwaymap_standard-standard_railway_turntables": [],
+    "openrailwaymap_standard-standard_railway_symbols": [],
+    "openrailwaymap_standard-standard_railway_text_stations": [],
+    "openrailwaymap_standard-standard_railway_text_km": [],
+    "openrailwaymap_standard-standard_railway_switch_ref": [
+      {
+        legend: 'Locally operated switch',
+        type: 'point',
+        properties: {
+          railway: 'switch',
+          ref: '123a',
+          railway_local_operated: 'yes',
+        },
       },
-      "standard_railway_text_stations_med-standard_railway_text_stations_med": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_line_fill": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_turntables": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_symbols": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_text_stations": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_text_km": {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        }
-      },
-      "openrailwaymap_standard-standard_railway_switch_ref": {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [0, 0],
+    ],
+  }
 
-          },
-          properties: {
-            railway: 'switch',
-            ref: '123a',
-            railway_local_operated: 'yes',
-          }
-        }
+  const sourceStyle = makeStyle(selectedStyle);
+  const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
+  const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
+  const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
+
+  const legendLayers = legendZoomLevels.flatMap(legendZoom => {
+    const styleZoomLayers = sourceLayers.map(({['source-layer']: sourceLayer, source, ...rest}) => ({
+      ...rest,
+      id: `${rest.id}-z${legendZoom}`,
+      source: `${source}-${sourceLayer}-z${legendZoom}`,
+      minzoom: legendZoom,
+      maxzoom: legendZoom + 1,
+    }))
+
+    const legendZoomLayer = {
+      type: 'symbol',
+      id: `legend-z${legendZoom}`,
+      source: `legend-z${legendZoom}`,
+      minzoom: legendZoom,
+      maxzoom: legendZoom + 1,
+      paint: {},
+      layout: {
+        'text-field': '{legend}',
+        'text-font': ['Noto Sans Medium'],
+        'text-size': 10,
+        'text-anchor': 'left',
       },
-    }
-  };
-  new maplibregl.Map({
+    };
+
+    return [...styleZoomLayers, legendZoomLayer];
+  });
+
+  const legendSources = Object.fromEntries(
+    legendZoomLevels.flatMap(legendZoom => {
+      let entry = 0;
+      let done = new Set();
+      
+      const featureSourceLayers = sourceLayers.map(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = `${legendLayerName}-z${legendZoom}`
+        if (done.has(sourceName)) {
+          return [];
+        }
+
+        const applicable = ((layer.minzoom ?? globalMinZoom) <= legendZoom) && (legendZoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data.map(item => {
+          const feature = {
+            type: 'Feature',
+            "geometry": {
+              "type": item.type === 'line' ? "LineString" : "Point",
+              "coordinates": item.type === 'line'
+                ? [
+                  [-0.5 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)],
+                  [0.5 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)],
+                ]
+                : [0, entry * coordinateFactor(legendZoom)],
+            },
+            properties: item.properties,
+          };
+          console.info(entry, layer.id, feature )
+          entry ++;
+          return feature;
+        });
+        done.add(legendLayerName);
+
+        return [sourceName, {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features,
+          },
+        }];
+      });
+
+      entry = 0;
+      done = new Set();
+      
+      const legendFeatures = sourceLayers.map(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = `${legendLayerName}-z${legendZoom}`
+        if (done.has(sourceName)) {
+          return [];
+        }
+
+        const applicable = ((layer.minzoom ?? globalMinZoom) <= legendZoom) && (legendZoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data.map(item => {
+          const feature =    {
+            type: 'Feature',
+            "geometry": {
+              "type": "Point",
+              "coordinates": [1.0 * coordinateFactor(legendZoom), entry * coordinateFactor(legendZoom)]
+            },
+            properties: {
+              legend: item.legend,
+            },
+          };
+          console.info(entry, layer.id, feature )
+          entry ++;
+          return feature;
+        });
+        done.add(legendLayerName);
+        
+        return features;
+      })
+      
+      const legendSourceLayer = [[`legend-z${legendZoom}`, {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: legendFeatures,
+        },
+      }]]
+
+      return [...featureSourceLayers, ...legendSourceLayer];
+    })
+  );
+
+  console.info(legendSources)
+
+  const legendMap = new maplibregl.Map({
     container: 'legend-map',
-    style: legendStyle,
+    style: {
+      ...sourceStyle,
+      name: `${sourceStyle.name} legend`,
+      layers: legendLayers,
+      sources: legendSources,
+    },
     zoom: 5,
     center: [0, 0],
     attributionControl: false,
@@ -3069,7 +3067,8 @@
     container: 'map',
     style: makeStyle(selectedStyle),
     hash: 'view',
-    maxZoom: 18,
+    minZoom: globalMinZoom,
+    maxZoom: glodalMaxZoom,
     minPitch: 0,
     maxPitch: 0,
   });
@@ -3207,3 +3206,5 @@
   map.addControl(new LegendControl({
     onLegendToggle: toggleLegend,
   }), 'bottom-left');
+
+  map.on('zoomend', () => legendMap.zoomTo(Math.floor(map.getZoom()), {animate: false}));

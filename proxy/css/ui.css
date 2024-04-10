@@ -21,6 +21,7 @@ body {
   height: 100%;
   z-index: 100;
   background: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(3px);
 }
 #cancel-search {
   margin: 20px;
