@@ -2900,15 +2900,6 @@ const legendData = {
       }
     },
   ],
-  'standard_railway_text_stations_low-standard_railway_text_stations_low': [
-    {
-      legend: 'Station',
-      type: 'point',
-      properties: {
-        label: 'BSA',
-      },
-    },
-  ],
   "openrailwaymap_med-railway_line_med": [
     {
       legend: 'Highspeed main line',
@@ -2933,15 +2924,6 @@ const legendData = {
         highspeed: false,
         usage: 'branch',
       }
-    },
-  ],
-  "standard_railway_text_stations_med-standard_railway_text_stations_med": [
-    {
-      legend: 'Station',
-      type: 'point',
-      properties: {
-        label: 'BSA',
-      },
     },
   ],
   "openrailwaymap_standard-standard_railway_line_fill": [
@@ -3102,7 +3084,7 @@ const legendData = {
         tunnel: false,
         bridge: false,
         ref: 'L1',
-        label: 'Name',
+        label: null,
         track_ref: '8b',
       }
     },
@@ -3121,6 +3103,56 @@ const legendData = {
         label: 'Name',
         track_ref: '8b',
       }
+    },
+  ],
+  'standard_railway_text_stations_low-standard_railway_text_stations_low': [
+    {
+      legend: 'Station',
+      type: 'point',
+      properties: {
+        label: 'BSA',
+      },
+    },
+  ],
+  "standard_railway_text_stations_med-standard_railway_text_stations_med": [
+    {
+      legend: 'Station',
+      type: 'point',
+      properties: {
+        label: 'BSA',
+      },
+    },
+  ],
+  "openrailwaymap_standard-standard_railway_text_stations": [
+    {
+      legend: 'Railway station / halt',
+      type: 'point',
+      properties: {
+        railway: 'station',
+        station: null,
+        label: 'Gd',
+        name: 'Gouda',
+      },
+    },
+    {
+      legend: 'Tram station',
+      type: 'point',
+      properties: {
+        railway: 'tram_stop',
+        station: null,
+        label: null,
+        name: 'Llacuna',
+      },
+    },
+    {
+      legend: 'Railway yard',
+      type: 'point',
+      properties: {
+        railway: 'yard',
+        station: null,
+        label: null,
+        name: 'Kijfhoek',
+      },
     },
   ],
   "openrailwaymap_standard-standard_railway_turntables": [
@@ -3190,7 +3222,6 @@ const legendData = {
       },
     },
   ],
-  "openrailwaymap_standard-standard_railway_text_stations": [],
   "openrailwaymap_standard-standard_railway_text_km": [],
   "openrailwaymap_standard-standard_railway_switch_ref": [
     {
@@ -3228,7 +3259,7 @@ const legendLayers = legendZoomLevels.flatMap(legendZoom => {
   const styleZoomLayers = sourceLayers
     .filter(layerVisibleAtZoom(legendZoom))
     .map(layer => ({... layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
-    .map(({['source-layer']: sourceLayer, source, layout: { ['text-padding']: textPadding, ...layoutRest}, ...rest}) => ({
+    .map(({['source-layer']: sourceLayer, source, layout: { ['text-padding']: textPadding, ['text-offset']: textOffset, ...layoutRest}, ...rest}) => ({
       ...rest,
       id: `${rest.id}-z${legendZoom}`,
       source: `${source}-${sourceLayer}-z${legendZoom}`,
