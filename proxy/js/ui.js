@@ -1931,6 +1931,7 @@ const layers = {
       type: 'line',
       source: 'openrailwaymap_speed',
       minzoom: 8,
+      // TODO merge with speed_railway_line_fill source
       'source-layer': 'speed_railway_line_casing',
       paint: speedCasingPaint,
       layout: speedLayout,
@@ -2885,367 +2886,441 @@ const makeStyle = selectedStyle => ({
 });
 
 const legendData = {
-  'openrailwaymap_low-railway_line_low': [
-    {
-      legend: 'Highspeed main line',
-      type: 'line',
-      properties: {
-        highspeed: true,
+  standard: {
+    'openrailwaymap_low-railway_line_low': [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
+        },
       },
-    },
-    {
-      legend: 'Main line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-      }
-    },
-  ],
-  "openrailwaymap_med-railway_line_med": [
-    {
-      legend: 'Highspeed main line',
-      type: 'line',
-      properties: {
-        highspeed: true,
-        usage: 'main',
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+        }
       },
-    },
-    {
-      legend: 'Main line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        usage: 'main',
-      }
-    },
-    {
-      legend: 'Branch line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        usage: 'branch',
-      }
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_line_fill": [
-    {
-      legend: 'Highspeed main line',
-      type: 'line',
-      properties: {
-        highspeed: true,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'main',
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
+    ],
+    "openrailwaymap_med-railway_line_med": [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
+          usage: 'main',
+        },
       },
-    },
-    {
-      legend: 'Main line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'main',
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    // TODO support variants
-    {
-      legend: 'Main line (tunnel)',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'main',
-        service: null,
-        tunnel: true,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Main line (bridge)',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'main',
-        service: null,
-        tunnel: false,
-        bridge: true,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Railway under construction',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'construction',
-        feature: 'rail',
-        usage: 'main',
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Branch line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'branch',
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Industrial line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'rail',
-        feature: 'rail',
-        usage: 'industrial',
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Narrow gauge line',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'narrow_gauge',
-        feature: 'narrow_gauge',
-        usage: null,
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Subway',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'subway',
-        feature: 'subway',
-        usage: null,
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Light rail',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'light_rail',
-        feature: 'light_rail',
-        usage: null,
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: null,
-        track_ref: '8b',
-      }
-    },
-    {
-      legend: 'Tram',
-      type: 'line',
-      properties: {
-        highspeed: false,
-        railway: 'tram',
-        feature: 'tram',
-        usage: null,
-        service: null,
-        tunnel: false,
-        bridge: false,
-        ref: 'L1',
-        label: 'Name',
-        track_ref: '8b',
-      }
-    },
-  ],
-  'standard_railway_text_stations_low-standard_railway_text_stations_low': [
-    {
-      legend: 'Station',
-      type: 'point',
-      properties: {
-        label: 'BSA',
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          usage: 'main',
+        }
       },
-    },
-  ],
-  "standard_railway_text_stations_med-standard_railway_text_stations_med": [
-    {
-      legend: 'Station',
-      type: 'point',
-      properties: {
-        label: 'BSA',
+      {
+        legend: 'Branch line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          usage: 'branch',
+        }
       },
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_text_stations": [
-    {
-      legend: 'Railway station / halt',
-      type: 'point',
-      properties: {
-        railway: 'station',
-        station: null,
-        label: 'Gd',
-        name: 'Gouda',
+    ],
+    "openrailwaymap_standard-standard_railway_line_fill": [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        },
       },
-    },
-    {
-      legend: 'Tram station',
-      type: 'point',
-      properties: {
-        railway: 'tram_stop',
-        station: null,
-        label: null,
-        name: 'Llacuna',
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Railway yard',
-      type: 'point',
-      properties: {
-        railway: 'yard',
-        station: null,
-        label: null,
-        name: 'Kijfhoek',
+      // TODO support variants
+      {
+        legend: 'Main line (tunnel)',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: true,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_turntables": [
-    {
-      legend: 'Turntable',
-      type: 'polygon',
-      properties: {},
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_symbols": [
-    {
-      legend: 'Tram stop',
-      type: 'point',
-      properties: {
-        railway: 'tram_stop',
+      {
+        legend: 'Main line (bridge)',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: true,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Border crossing / owner change',
-      type: 'point',
-      properties: {
-        railway: 'border',
+      {
+        legend: 'Railway under construction',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'construction',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Radio mast',
-      type: 'point',
-      properties: {
-        railway: 'radio',
-        man_made: 'mast',
+      {
+        legend: 'Branch line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'branch',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Radio antenna',
-      type: 'point',
-      properties: {
-        railway: 'radio',
-        man_made: 'antenna',
+      {
+        legend: 'Industrial line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'industrial',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Crossing',
-      type: 'point',
-      properties: {
-        railway: 'crossing',
+      {
+        legend: 'Narrow gauge line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'narrow_gauge',
+          feature: 'narrow_gauge',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Level crossing',
-      type: 'point',
-      properties: {
-        railway: 'level_crossing',
+      {
+        legend: 'Subway',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'subway',
+          feature: 'subway',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-    {
-      legend: 'Phone',
-      type: 'point',
-      properties: {
-        railway: 'phone',
+      {
+        legend: 'Light rail',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'light_rail',
+          feature: 'light_rail',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: null,
+          track_ref: '8b',
+        }
       },
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_text_km": [
-    {
-      legend: 'Milestone',
-      type: 'point',
-      properties: {
-        zero: true,
-        pos: '47.0',
+      {
+        legend: 'Tram',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'tram',
+          feature: 'tram',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          label: 'Name',
+          track_ref: '8b',
+        }
       },
-    },
-  ],
-  "openrailwaymap_standard-standard_railway_switch_ref": [
-    {
-      legend: 'Switch',
-      type: 'point',
-      properties: {
-        railway: 'switch',
-        ref: '123a',
-        railway_local_operated: 'no',
+    ],
+    'standard_railway_text_stations_low-standard_railway_text_stations_low': [
+      {
+        legend: 'Station',
+        type: 'point',
+        properties: {
+          label: 'BSA',
+        },
       },
-    },
-    {
-      legend: 'Locally operated switch',
-      type: 'point',
-      properties: {
-        railway: 'switch',
-        ref: '456z',
-        railway_local_operated: 'yes',
+    ],
+    "standard_railway_text_stations_med-standard_railway_text_stations_med": [
+      {
+        legend: 'Station',
+        type: 'point',
+        properties: {
+          label: 'BSA',
+        },
       },
-    },
-  ],
+    ],
+    "openrailwaymap_standard-standard_railway_text_stations": [
+      {
+        legend: 'Railway station / halt',
+        type: 'point',
+        properties: {
+          railway: 'station',
+          station: null,
+          label: 'Gd',
+          name: 'Gouda',
+        },
+      },
+      {
+        legend: 'Tram station',
+        type: 'point',
+        properties: {
+          railway: 'tram_stop',
+          station: null,
+          label: null,
+          name: 'Llacuna',
+        },
+      },
+      {
+        legend: 'Railway yard',
+        type: 'point',
+        properties: {
+          railway: 'yard',
+          station: null,
+          label: null,
+          name: 'Kijfhoek',
+        },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_turntables": [
+      {
+        legend: 'Turntable',
+        type: 'polygon',
+        properties: {},
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_symbols": [
+      {
+        legend: 'Tram stop',
+        type: 'point',
+        properties: {
+          railway: 'tram_stop',
+        },
+      },
+      {
+        legend: 'Border crossing / owner change',
+        type: 'point',
+        properties: {
+          railway: 'border',
+        },
+      },
+      {
+        legend: 'Radio mast',
+        type: 'point',
+        properties: {
+          railway: 'radio',
+          man_made: 'mast',
+        },
+      },
+      {
+        legend: 'Radio antenna',
+        type: 'point',
+        properties: {
+          railway: 'radio',
+          man_made: 'antenna',
+        },
+      },
+      {
+        legend: 'Crossing',
+        type: 'point',
+        properties: {
+          railway: 'crossing',
+        },
+      },
+      {
+        legend: 'Level crossing',
+        type: 'point',
+        properties: {
+          railway: 'level_crossing',
+        },
+      },
+      {
+        legend: 'Phone',
+        type: 'point',
+        properties: {
+          railway: 'phone',
+        },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos: '47.0',
+        },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_switch_ref": [
+      {
+        legend: 'Switch',
+        type: 'point',
+        properties: {
+          railway: 'switch',
+          ref: '123a',
+          railway_local_operated: 'no',
+        },
+      },
+      {
+        legend: 'Locally operated switch',
+        type: 'point',
+        properties: {
+          railway: 'switch',
+          ref: '456z',
+          railway_local_operated: 'yes',
+        },
+      },
+    ],
+  },
+  speed: {
+    'openrailwaymap_low-railway_line_low': [
+      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+        legend: `${speed} km/h`,
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: speed,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: null,
+        },
+      },
+    ],
+    'openrailwaymap_med-railway_line_med': [
+      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+        legend: `${speed} km/h`,
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: speed,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: null,
+        },
+      },
+    ],
+    'openrailwaymap_speed-speed_railway_line_fill': [
+      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+        legend: `${speed} km/h`,
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: speed,
+          label: `${speed}`,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          railway: 'rail',
+          feature: 'rail',
+          usage: 'main',
+          maxspeed: null,
+        },
+      },
+    ],
+  },
+  signals: {},
+  electrification: {},
+  gauge: {},
 }
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
@@ -3269,16 +3344,23 @@ function makeLegendStyle(style) {
       .map(({
               ['source-layer']: sourceLayer,
               source,
-              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ...layoutRest},
+              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ...layoutRest},
               ...rest
-            }) => ({
-        ...rest,
-        id: `${rest.id}-z${legendZoom}`,
-        source: `${source}-${sourceLayer}-z${legendZoom}`,
-        minzoom: legendZoom,
-        maxzoom: legendZoom + 1,
-        layout: layoutRest,
-      }))
+            }) => {
+        const resultLayout = {...layoutRest};
+        if (symbolPlacement === 'line') {
+          resultLayout['symbol-placement'] = 'line-center';
+        }
+
+        return {
+          ...rest,
+          id: `${rest.id}-z${legendZoom}`,
+          source: `${source}-${sourceLayer}-z${legendZoom}`,
+          minzoom: legendZoom,
+          maxzoom: legendZoom + 1,
+          layout: resultLayout,
+        };
+      })
 
     const legendZoomLayer = {
       type: 'symbol',
@@ -3312,7 +3394,7 @@ function makeLegendStyle(style) {
         }
 
         const applicable = layerVisibleAtZoom(legendZoom)(layer);
-        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
         const features = data.map(item => {
           const feature = {
             type: 'Feature',
@@ -3322,12 +3404,12 @@ function makeLegendStyle(style) {
                 : 'Point',
               coordinates:
                 item.type === 'line' ? [
-                  legendPointToMapPoint(legendZoom, [-1.0, -entry * 0.6]),
+                  legendPointToMapPoint(legendZoom, [-1.5, -entry * 0.6]),
                   legendPointToMapPoint(legendZoom, [-0.0, -entry * 0.6]),
                 ] :
                 item.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
                     legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 - 0.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                : legendPointToMapPoint(legendZoom, [-0.5, -entry * 0.6]),
+                : legendPointToMapPoint(legendZoom, [-0.75, -entry * 0.6]),
             },
             properties: item.properties,
           };
@@ -3356,7 +3438,7 @@ function makeLegendStyle(style) {
         }
 
         const applicable = layerVisibleAtZoom(legendZoom)(layer);
-        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
         const features = data.map(item => {
           const feature = {
             type: 'Feature',
