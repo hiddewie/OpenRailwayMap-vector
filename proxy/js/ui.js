@@ -2892,7 +2892,7 @@ const legendData = {
       },
     },
     {
-      legend: 'Highspeed line',
+      legend: 'Main line',
       type: 'line',
       properties: {
         highspeed: false,
@@ -2906,26 +2906,257 @@ const legendData = {
       properties: {
         label: 'BSA',
       },
+    },
+  ],
+  "openrailwaymap_med-railway_line_med": [
+    {
+      legend: 'Highspeed main line',
+      type: 'line',
+      properties: {
+        highspeed: true,
+        usage: 'main',
+      },
+    },
+    {
+      legend: 'Main line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        usage: 'main',
+      }
+    },
+    {
+      legend: 'Branch line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        usage: 'branch',
+      }
+    },
+  ],
+  "standard_railway_text_stations_med-standard_railway_text_stations_med": [
+    {
+      legend: 'Station',
+      type: 'point',
+      properties: {
+        label: 'BSA',
+      },
+    },
+  ],
+  "openrailwaymap_standard-standard_railway_line_fill": [
+    {
+      legend: 'Highspeed main line',
+      type: 'line',
+      properties: {
+        highspeed: true,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'main',
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      },
+    },
+    {
+      legend: 'Main line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'main',
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    // TODO support variants
+    {
+      legend: 'Main line (tunnel)',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'main',
+        service: null,
+        tunnel: true,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Main line (bridge)',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'main',
+        service: null,
+        tunnel: false,
+        bridge: true,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Railway under construction',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'construction',
+        feature: 'rail',
+        usage: 'main',
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Branch line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'branch',
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Industrial line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'rail',
+        feature: 'rail',
+        usage: 'industrial',
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Narrow gauge line',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'narrow_gauge',
+        feature: 'narrow_gauge',
+        usage: null,
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Subway',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'subway',
+        feature: 'subway',
+        usage: null,
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Light rail',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'light_rail',
+        feature: 'light_rail',
+        usage: null,
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+    {
+      legend: 'Tram',
+      type: 'line',
+      properties: {
+        highspeed: false,
+        railway: 'tram',
+        feature: 'tram',
+        usage: null,
+        service: null,
+        tunnel: false,
+        bridge: false,
+        ref: 'L1',
+        label: 'Name',
+        track_ref: '8b',
+      }
+    },
+  ],
+  "openrailwaymap_standard-standard_railway_turntables": [
+    {
+      legend: 'Turntable',
+      type: 'polygon',
+      properties: {},
     }
   ],
-  "openrailwaymap_med-railway_line_med": [],
-  "standard_railway_text_stations_med-standard_railway_text_stations_med": [],
-  "openrailwaymap_standard-standard_railway_line_fill": [],
-  "openrailwaymap_standard-standard_railway_turntables": [],
   "openrailwaymap_standard-standard_railway_symbols": [],
   "openrailwaymap_standard-standard_railway_text_stations": [],
   "openrailwaymap_standard-standard_railway_text_km": [],
   "openrailwaymap_standard-standard_railway_switch_ref": [
     {
-      legend: 'Locally operated switch',
+      legend: 'Switch',
       type: 'point',
       properties: {
         railway: 'switch',
         ref: '123a',
+        railway_local_operated: 'no',
+      },
+    },
+    {
+      legend: 'Locally operated switch',
+      type: 'point',
+      properties: {
+        railway: 'switch',
+        ref: '456z',
         railway_local_operated: 'yes',
       },
     },
   ],
+}
+
+function layerVisibleAtZoom(zoom) {
+  return layer =>
+    ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
 }
 
 const sourceStyle = makeStyle(selectedStyle);
@@ -2934,13 +3165,17 @@ const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].ma
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
 const legendLayers = legendZoomLevels.flatMap(legendZoom => {
-  const styleZoomLayers = sourceLayers.map(({['source-layer']: sourceLayer, source, ...rest}) => ({
-    ...rest,
-    id: `${rest.id}-z${legendZoom}`,
-    source: `${source}-${sourceLayer}-z${legendZoom}`,
-    minzoom: legendZoom,
-    maxzoom: legendZoom + 1,
-  }))
+  const styleZoomLayers = sourceLayers
+    .filter(layerVisibleAtZoom(legendZoom))
+    .map(layer => ({... layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
+    .map(({['source-layer']: sourceLayer, source, layout: { ['text-padding']: textPadding, ...layoutRest}, ...rest}) => ({
+      ...rest,
+      id: `${rest.id}-z${legendZoom}`,
+      source: `${source}-${sourceLayer}-z${legendZoom}`,
+      minzoom: legendZoom,
+      maxzoom: legendZoom + 1,
+      layout: layoutRest,
+    }))
 
   const legendZoomLayer = {
     type: 'symbol',
@@ -2960,6 +3195,9 @@ const legendLayers = legendZoomLevels.flatMap(legendZoom => {
   return [...styleZoomLayers, legendZoomLayer];
 });
 
+const legendPointToMapPoint = (zoom, [x, y]) =>
+  [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
+
 const legendSources = Object.fromEntries(
   legendZoomLevels.flatMap(legendZoom => {
     let entry = 0;
@@ -2972,23 +3210,26 @@ const legendSources = Object.fromEntries(
         return [];
       }
 
-      const applicable = ((layer.minzoom ?? globalMinZoom) <= legendZoom) && (legendZoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
+      const applicable = layerVisibleAtZoom(legendZoom)(layer);
       const data = applicable ? (legendData[legendLayerName] ?? []) : [];
       const features = data.map(item => {
         const feature = {
           type: 'Feature',
           geometry: {
-            type: item.type === 'line' ? "LineString" : "Point",
-            coordinates: item.type === 'line'
-              ? [
-                [-0.5 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)],
-                [0.5 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)],
-              ]
-              : [0, - entry * coordinateFactor(legendZoom)],
+            type: item.type === 'line' || item.type === 'polygon'
+              ? 'LineString'
+              : 'Point',
+            coordinates:
+              item.type === 'line' ? [
+                legendPointToMapPoint(legendZoom, [-1.0, -entry * 0.6]),
+                legendPointToMapPoint(legendZoom, [-0.0, -entry * 0.6]),
+              ] :
+              item.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                  legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 - 0.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+              : legendPointToMapPoint(legendZoom, [-0.5, -entry * 0.6]),
           },
           properties: item.properties,
         };
-        console.info(legendZoom, entry, layer.id, feature )
         entry ++;
         return feature;
       });
@@ -3013,14 +3254,14 @@ const legendSources = Object.fromEntries(
         return [];
       }
 
-      const applicable = ((layer.minzoom ?? globalMinZoom) <= legendZoom) && (legendZoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
+      const applicable = layerVisibleAtZoom(legendZoom)(layer);
       const data = applicable ? (legendData[legendLayerName] ?? []) : [];
       const features = data.map(item => {
         const feature = {
           type: 'Feature',
           geometry: {
             type: "Point",
-            coordinates: [1.0 * coordinateFactor(legendZoom), - entry * coordinateFactor(legendZoom)]
+            coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
           },
           properties: {
             legend: item.legend,
@@ -3204,4 +3445,11 @@ map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
 }), 'bottom-left');
 
-map.on('zoomend', () => legendMap.zoomTo(Math.floor(map.getZoom()), {animate: false}));
+const onMapZoom = zoom =>
+  legendMap.jumpTo({
+    zoom: Math.floor(zoom),
+    center: legendPointToMapPoint(Math.floor(zoom), [1, -11 * 0.6]),
+  });
+
+map.on('load', () => onMapZoom(map.getZoom()));
+map.on('zoomend', () => onMapZoom(map.getZoom()));
