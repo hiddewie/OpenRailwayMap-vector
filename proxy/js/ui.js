@@ -3864,18 +3864,6 @@ const legendData = {
         },
       },
       {
-        legend: 'Miniature',
-        type: 'line',
-        properties: {
-          railway: 'miniature',
-          feature: 'miniature',
-          usage: 'main',
-          service: null,
-          gauge0: 'standard',
-          gaugeint0: null,
-        },
-      },
-      {
         legend: 'Standard',
         type: 'line',
         properties: {
@@ -3997,18 +3985,6 @@ const legendData = {
           usage: 'main',
           service: null,
           gauge0: 'broad',
-          gaugeint0: null,
-        },
-      },
-      {
-        legend: 'Miniature',
-        type: 'line',
-        properties: {
-          railway: 'miniature',
-          feature: 'miniature',
-          usage: 'main',
-          service: null,
-          gauge0: 'standard',
           gaugeint0: null,
         },
       },
