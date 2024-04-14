@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:   
+  update-data:   
     machine:
       image: default
     resource_class: medium
@@ -9,6 +9,17 @@ jobs:
       - run: echo "Hello executor!"
       
 workflows:
-  example:
+  commit:
     jobs:
-      - test
+      - update-data
+  update-data:
+    triggers:
+      - schedule:
+          # Run daily at 3:47 UTC
+          cron: "47 3 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update-data
