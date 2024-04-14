@@ -41,7 +41,7 @@ server {
   location / {
     if ($http_referer ~ ^http://localhost) {
       rewrite ^/standard$ /standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref last;
-      rewrite ^/speed$ /speed_railway_line_casing,speed_railway_line_fill,speed_railway_signals last;
+      rewrite ^/speed$ /speed_railway_line_fill,speed_railway_signals last;
       rewrite ^/signals$ /signals_railway_line,signals_railway_signals,signals_signal_boxes last;
       rewrite ^/electrification$ /electrification_railway_line,electrification_future,electrification_signals last;
       rewrite ^/gauge$ /gauge_railway_line_low,gauge_railway_line last;

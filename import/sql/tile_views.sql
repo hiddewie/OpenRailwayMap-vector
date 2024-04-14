@@ -238,46 +238,6 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 
 --- Speed ---
 
-CREATE OR REPLACE VIEW speed_railway_line_casing AS
-  SELECT
-    way,
-    railway,
-    CASE
-      WHEN railway = 'construction' THEN construction_railway
-      WHEN railway = 'disused' THEN disused_railway
-      ELSE railway
-    END as feature,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      WHEN railway = 'disused' THEN 300
-      ELSE 50
-    END AS rank
-  FROM
-    (SELECT
-       way,
-       railway,
-       usage,
-       service,
-       disused_railway,
-       construction_railway,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction')
-    ) AS r
-  ORDER by layer, rank NULLS LAST;
-
 CREATE OR REPLACE VIEW speed_railway_line_fill AS
   SELECT
     way,

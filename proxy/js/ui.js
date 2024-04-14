@@ -1931,8 +1931,7 @@ const layers = {
       type: 'line',
       source: 'openrailwaymap_speed',
       minzoom: 8,
-      // TODO merge with speed_railway_line_fill source
-      'source-layer': 'speed_railway_line_casing',
+      'source-layer': 'speed_railway_line_fill',
       paint: speedCasingPaint,
       layout: speedLayout,
     },
