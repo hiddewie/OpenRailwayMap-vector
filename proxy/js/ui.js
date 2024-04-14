@@ -3222,7 +3222,16 @@ const legendData = {
       },
     },
   ],
-  "openrailwaymap_standard-standard_railway_text_km": [],
+  "openrailwaymap_standard-standard_railway_text_km": [
+    {
+      legend: 'Milestone',
+      type: 'point',
+      properties: {
+        zero: true,
+        pos: '47.0',
+      },
+    },
+  ],
   "openrailwaymap_standard-standard_railway_switch_ref": [
     {
       legend: 'Switch',
