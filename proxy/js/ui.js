@@ -4,6 +4,7 @@ const searchResults = document.getElementById('search-results');
 const searchIcon = document.getElementById('search-icon');
 const cancelIcon = document.getElementById('cancel-icon');
 const legend = document.getElementById('legend')
+const legendMapContainer = document.getElementById('legend-map')
 function searchFor(term) {
   if (!term || term.length < 3) {
     hideSearchResults();
@@ -3127,9 +3128,68 @@ const legendData = {
       legend: 'Turntable',
       type: 'polygon',
       properties: {},
-    }
+    },
   ],
-  "openrailwaymap_standard-standard_railway_symbols": [],
+  "openrailwaymap_standard-standard_railway_symbols": [
+    {
+      legend: 'Tram stop',
+      type: 'point',
+      properties: {
+        railway: 'tram_stop',
+      },
+    },
+    {
+      legend: 'Border crossing',
+      type: 'point',
+      properties: {
+        railway: 'border',
+      },
+    },
+    {
+      legend: 'Owner change',
+      type: 'point',
+      properties: {
+        railway: 'owner_change',
+      },
+    },
+    {
+      legend: 'Radio mast',
+      type: 'point',
+      properties: {
+        railway: 'radio',
+        man_made: 'mast',
+      },
+    },
+    {
+      legend: 'Radio antenna',
+      type: 'point',
+      properties: {
+        railway: 'radio',
+        man_made: 'antenna',
+      },
+    },
+    {
+      legend: 'Crossing',
+      type: 'point',
+      properties: {
+        railway: 'crossing',
+      },
+    },
+    {
+      legend: 'Level crossing',
+      type: 'point',
+      properties: {
+        railway: 'level_crossing',
+      },
+    },
+    {
+      legend: 'Phone',
+      type: 'point',
+      properties: {
+        railway: 'phone',
+      },
+    },
+  ],
   "openrailwaymap_standard-standard_railway_text_stations": [],
   "openrailwaymap_standard-standard_railway_text_km": [],
   "openrailwaymap_standard-standard_railway_switch_ref": [
@@ -3189,6 +3249,7 @@ const legendLayers = legendZoomLevels.flatMap(legendZoom => {
       'text-font': ['Noto Sans Medium'],
       'text-size': 10,
       'text-anchor': 'left',
+      'text-max-width': 20,
     },
   };
 
@@ -3445,11 +3506,17 @@ map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
 }), 'bottom-left');
 
-const onMapZoom = zoom =>
+const onMapZoom = zoom => {
+  const legendZoom = Math.floor(zoom);
+  const numberOfLegendEntries = legendSources[`legend-z${legendZoom}`].data.features.length
+
   legendMap.jumpTo({
-    zoom: Math.floor(zoom),
-    center: legendPointToMapPoint(Math.floor(zoom), [1, -11 * 0.6]),
+    zoom: legendZoom,
+    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 2) / 2) * 0.6]),
   });
+  legendMapContainer.style.height = `${numberOfLegendEntries * 30}px`;
+}
+
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
