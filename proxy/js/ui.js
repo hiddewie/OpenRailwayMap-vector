@@ -991,6 +991,7 @@ const backgroundMap = {
   }
 };
 
+// TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
     backgroundColor,
@@ -3171,17 +3172,10 @@ const legendData = {
       },
     },
     {
-      legend: 'Border crossing',
+      legend: 'Border crossing / owner change',
       type: 'point',
       properties: {
         railway: 'border',
-      },
-    },
-    {
-      legend: 'Owner change',
-      type: 'point',
-      properties: {
-        railway: 'owner_change',
       },
     },
     {
@@ -3254,148 +3248,167 @@ const legendData = {
   ],
 }
 
-function layerVisibleAtZoom(zoom) {
-  return layer =>
-    ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
-}
-
-const sourceStyle = makeStyle(selectedStyle);
-const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
-const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
-const legendLayers = legendZoomLevels.flatMap(legendZoom => {
-  const styleZoomLayers = sourceLayers
-    .filter(layerVisibleAtZoom(legendZoom))
-    .map(layer => ({... layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
-    .map(({['source-layer']: sourceLayer, source, layout: { ['text-padding']: textPadding, ['text-offset']: textOffset, ...layoutRest}, ...rest}) => ({
-      ...rest,
-      id: `${rest.id}-z${legendZoom}`,
-      source: `${source}-${sourceLayer}-z${legendZoom}`,
-      minzoom: legendZoom,
-      maxzoom: legendZoom + 1,
-      layout: layoutRest,
-    }))
-
-  const legendZoomLayer = {
-    type: 'symbol',
-    id: `legend-z${legendZoom}`,
-    source: `legend-z${legendZoom}`,
-    minzoom: legendZoom,
-    maxzoom: legendZoom + 1,
-    paint: {},
-    layout: {
-      'text-field': '{legend}',
-      'text-font': ['Noto Sans Medium'],
-      'text-size': 10,
-      'text-anchor': 'left',
-      'text-max-width': 20,
-    },
-  };
-
-  return [...styleZoomLayers, legendZoomLayer];
-});
+const layerVisibleAtZoom = (zoom) =>
+  layer =>
+    ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
 
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
-const legendSources = Object.fromEntries(
-  legendZoomLevels.flatMap(legendZoom => {
-    let entry = 0;
-    let done = new Set();
+function makeLegendStyle(style) {
+  const sourceStyle = makeStyle(style);
+  const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
+  const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
-    const featureSourceLayers = sourceLayers.flatMap(layer => {
-      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-      const sourceName = `${legendLayerName}-z${legendZoom}`
-      if (done.has(sourceName)) {
-        return [];
-      }
+  const legendLayers = legendZoomLevels.flatMap(legendZoom => {
+    const styleZoomLayers = sourceLayers
+      .filter(layerVisibleAtZoom(legendZoom))
+      .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
+      .map(({
+              ['source-layer']: sourceLayer,
+              source,
+              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ...layoutRest},
+              ...rest
+            }) => ({
+        ...rest,
+        id: `${rest.id}-z${legendZoom}`,
+        source: `${source}-${sourceLayer}-z${legendZoom}`,
+        minzoom: legendZoom,
+        maxzoom: legendZoom + 1,
+        layout: layoutRest,
+      }))
 
-      const applicable = layerVisibleAtZoom(legendZoom)(layer);
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
-      const features = data.map(item => {
-        const feature = {
-          type: 'Feature',
-          geometry: {
-            type: item.type === 'line' || item.type === 'polygon'
-              ? 'LineString'
-              : 'Point',
-            coordinates:
-              item.type === 'line' ? [
-                legendPointToMapPoint(legendZoom, [-1.0, -entry * 0.6]),
-                legendPointToMapPoint(legendZoom, [-0.0, -entry * 0.6]),
-              ] :
-              item.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                  legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 - 0.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-              : legendPointToMapPoint(legendZoom, [-0.5, -entry * 0.6]),
+    const legendZoomLayer = {
+      type: 'symbol',
+      id: `legend-z${legendZoom}`,
+      source: `legend-z${legendZoom}`,
+      minzoom: legendZoom,
+      maxzoom: legendZoom + 1,
+      paint: {},
+      layout: {
+        'text-field': '{legend}',
+        'text-font': ['Noto Sans Medium'],
+        'text-size': 10,
+        'text-anchor': 'left',
+        'text-max-width': 20,
+      },
+    };
+
+    return [...styleZoomLayers, legendZoomLayer];
+  });
+
+  const legendSources = Object.fromEntries(
+    legendZoomLevels.flatMap(legendZoom => {
+      let entry = 0;
+      let done = new Set();
+
+      const featureSourceLayers = sourceLayers.flatMap(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = `${legendLayerName}-z${legendZoom}`
+        if (done.has(sourceName)) {
+          return [];
+        }
+
+        const applicable = layerVisibleAtZoom(legendZoom)(layer);
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data.map(item => {
+          const feature = {
+            type: 'Feature',
+            geometry: {
+              type: item.type === 'line' || item.type === 'polygon'
+                ? 'LineString'
+                : 'Point',
+              coordinates:
+                item.type === 'line' ? [
+                  legendPointToMapPoint(legendZoom, [-1.0, -entry * 0.6]),
+                  legendPointToMapPoint(legendZoom, [-0.0, -entry * 0.6]),
+                ] :
+                item.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                    legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 - 0.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                : legendPointToMapPoint(legendZoom, [-0.5, -entry * 0.6]),
+            },
+            properties: item.properties,
+          };
+          entry ++;
+          return feature;
+        });
+        done.add(sourceName);
+
+        return [[sourceName, {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features,
           },
-          properties: item.properties,
-        };
-        entry ++;
-        return feature;
+        }]];
       });
-      done.add(sourceName);
 
-      return [[sourceName, {
+      entry = 0;
+      done = new Set();
+
+      const legendFeatures = sourceLayers.flatMap(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = `${legendLayerName}-z${legendZoom}`
+        if (done.has(sourceName)) {
+          return [];
+        }
+
+        const applicable = layerVisibleAtZoom(legendZoom)(layer);
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data.map(item => {
+          const feature = {
+            type: 'Feature',
+            geometry: {
+              type: "Point",
+              coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
+            },
+            properties: {
+              legend: item.legend,
+            },
+          };
+          entry ++;
+          return feature;
+        });
+        done.add(sourceName);
+
+        return features;
+      })
+
+      const legendSourceLayer = [`legend-z${legendZoom}`, {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
-          features,
+          features: legendFeatures,
         },
-      }]];
-    });
+      }]
 
-    entry = 0;
-    done = new Set();
-
-    const legendFeatures = sourceLayers.flatMap(layer => {
-      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-      const sourceName = `${legendLayerName}-z${legendZoom}`
-      if (done.has(sourceName)) {
-        return [];
-      }
-
-      const applicable = layerVisibleAtZoom(legendZoom)(layer);
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
-      const features = data.map(item => {
-        const feature = {
-          type: 'Feature',
-          geometry: {
-            type: "Point",
-            coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
-          },
-          properties: {
-            legend: item.legend,
-          },
-        };
-        entry ++;
-        return feature;
-      });
-      done.add(sourceName);
-
-      return features;
+      return [...featureSourceLayers, legendSourceLayer];
     })
+  );
 
-    const legendSourceLayer = [`legend-z${legendZoom}`, {
-      type: 'geojson',
-      data: {
-        type: 'FeatureCollection',
-        features: legendFeatures,
-      },
-    }]
-
-    return [...featureSourceLayers, legendSourceLayer];
-  })
-);
-
-const legendMap = new maplibregl.Map({
-  container: 'legend-map',
-  style: {
+  return {
     ...sourceStyle,
     name: `${sourceStyle.name} legend`,
     layers: legendLayers,
     sources: legendSources,
-  },
+  };
+}
+
+const mapStyles = Object.fromEntries(
+  Object.keys(knownStyles)
+    .map(style => [style, makeStyle(style)])
+);
+
+const legendStyles = Object.fromEntries(
+  Object.keys(knownStyles)
+    .map(style => [style, makeLegendStyle(style)])
+);
+
+const legendMap = new maplibregl.Map({
+  container: 'legend-map',
+  style: legendStyles[selectedStyle],
   zoom: 5,
   center: [0, 0],
   attributionControl: false,
@@ -3404,7 +3417,7 @@ const legendMap = new maplibregl.Map({
 
 const map = new maplibregl.Map({
   container: 'map',
-  style: makeStyle(selectedStyle),
+  style: mapStyles[selectedStyle],
   hash: 'view',
   minZoom: globalMinZoom,
   maxZoom: glodalMaxZoom,
@@ -3515,7 +3528,8 @@ class LegendControl {
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: changedStyle => {
-    map.setStyle(makeStyle(changedStyle));
+    map.setStyle(mapStyles[changedStyle]);
+    legendMap.setStyle(legendStyles[changedStyle]);
     const updatedHash = putStyleInHash(window.location.hash, changedStyle);
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
     window.history.replaceState(window.history.state, null, location);
@@ -3550,7 +3564,11 @@ map.addControl(new LegendControl({
 
 const onMapZoom = zoom => {
   const legendZoom = Math.floor(zoom);
-  const numberOfLegendEntries = legendSources[`legend-z${legendZoom}`].data.features.length
+  const numberOfLegendEntries = legendStyles[selectedStyle]
+    .sources[`legend-z${legendZoom}`]
+    .data
+    .features
+    .length
 
   legendMap.jumpTo({
     zoom: legendZoom,
