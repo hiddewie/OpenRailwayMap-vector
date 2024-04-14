@@ -3317,6 +3317,20 @@ const legendData = {
         },
       },
     ],
+    'openrailwaymap_speed-speed_railway_signals': [
+      // TODO import from signals definition files
+      // TODO filter per country polygon
+      // TODO ensure direction shows
+      {
+        legend: 'zs3v',
+        type: 'point',
+        properties: {
+          feature: 'de/zs3v-100-sign-down',
+          type: 'line',
+          azimuth: 90.0,
+        },
+      },
+    ],
   },
   signals: {},
   electrification: {},
@@ -3344,7 +3358,7 @@ function makeLegendStyle(style) {
       .map(({
               ['source-layer']: sourceLayer,
               source,
-              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ...layoutRest},
+              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
               ...rest
             }) => {
         const resultLayout = {...layoutRest};
