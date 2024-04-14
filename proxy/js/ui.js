@@ -3454,9 +3454,11 @@ class LegendControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
-    const button = createDomElement('button', 'maplibregl-ctrl-icon', this._container);
-    createDomElement('span', '', button);
-    const text = createDomElement('span', '', button);
+    const button = createDomElement('button', 'maplibregl-ctrl-legend', this._container);
+    button.type = 'button';
+    button.title = 'Show/hide map legend';
+    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', icon);
     text.innerText = 'Legend'
 
     button.onclick = () => this.options.onLegendToggle()
