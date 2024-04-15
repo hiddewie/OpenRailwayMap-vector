@@ -22,9 +22,6 @@ jobs:
       - checkout
       - run:
           command: |
-            docker compose --version
-            docker --version
-            
             # Download data
             curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
             
