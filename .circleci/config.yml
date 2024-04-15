@@ -14,7 +14,13 @@ jobs:
       - checkout
       - run:
           command: |
-            echo "Hello executor!"
+            docker compose --version
+            docker --version
+            
+            # Install Fly
+            
+            # Download data
+            curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
 
 workflows:
   commit:
