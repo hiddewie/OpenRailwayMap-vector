@@ -31,7 +31,7 @@ jobs:
               OSM2PGSQL_DATAFILE=data.osm.pbf \
               OSM2PGSQL_CACHE=7000 \
               OSM2PGSQL_NUMPROC=2 \
-              docker compose run --build --rm import import
+              docker compose up --build import import
             
             env TILES=low-med docker compose run --build --rm martin-cp
             env TILES=standard docker compose run --build --rm martin-cp
