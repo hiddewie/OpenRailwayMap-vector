@@ -8,6 +8,14 @@ executors:
     resource_class: medium
 
 jobs:
+
+#  # Install Fly
+#  wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
+#  ./flyctl auth docker
+#  docker build -t registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM .
+#  docker push registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM
+#  ./flyctl deploy -i registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM -a $FLY_APP_NAME
+
   update-data:
     executor: default
     steps:
@@ -17,10 +25,23 @@ jobs:
             docker compose --version
             docker --version
             
-            # Install Fly
-            
             # Download data
             curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
+            
+            env \
+              OSM2PGSQL_DATAFILE=data.osm.pbf \
+              OSM2PGSQL_CACHE=7000 \
+              OSM2PGSQL_NUMPROC=2 \
+              docker compose run --build --rm import import
+            
+            env TILES=low-med docker compose run --build --rm martin-cp
+            env TILES=standard docker compose run --build --rm martin-cp
+            env TILES=speed docker compose run --build --rm martin-cp
+            env TILES=signals docker compose run --build --rm martin-cp
+            env TILES=electrification docker compose run --build --rm martin-cp
+            env TILES=gauge docker compose run --build --rm martin-cp
+            
+            ls -las tiles/
 
 workflows:
   commit:
