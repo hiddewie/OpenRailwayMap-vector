@@ -1,19 +1,20 @@
 version: 2.1
 
-jobs:
-  import-data:
+executors:
+  default:
     machine:
-      image: default
+      image: ubuntu-2204:current
       docker_layer_caching: true
     resource_class: medium
+
+jobs:
+  update-data:
+    executor: default
     steps:
       - checkout
       - run:
           command: |
-            # Install Fly
-            
-            # Download data
-            curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
+            echo "Hello executor!"
 
 workflows:
   commit:
