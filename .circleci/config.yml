@@ -26,7 +26,7 @@ jobs:
             curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
             
             docker compose build db
-            docker compose up --no-build --wait db
+#            docker compose up --no --wait db
             
             docker compose build import
             
@@ -34,7 +34,7 @@ jobs:
               OSM2PGSQL_DATAFILE=data.osm.pbf \
               OSM2PGSQL_CACHE=7000 \
               OSM2PGSQL_NUMPROC=2 \
-              docker compose run --rm import import
+              docker compose up import
             
             docker compose build martin-cp
             

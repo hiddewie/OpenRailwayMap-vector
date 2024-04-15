@@ -27,6 +27,8 @@ services:
       context: import
       cache_from:
         - ghcr.io/hiddewie/openrailwaymap-import:latest
+    command:
+      - import
     depends_on:
       db:
         condition: service_healthy
