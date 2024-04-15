@@ -38,12 +38,12 @@ jobs:
             
             docker compose build martin-cp
             
-            #            env TILES=low-med docker compose run --rm martin-cp
-            #            env TILES=standard docker compose run --rm martin-cp
-            #            env TILES=speed docker compose run --rm martin-cp
-            #            env TILES=signals docker compose run --rm martin-cp
-            #            env TILES=electrification docker compose run --rm martin-cp
-            #            env TILES=gauge docker compose run --rm martin-cp
+            env TILES=low-med docker compose run --rm martin-cp
+            env TILES=standard docker compose run --rm martin-cp
+            env TILES=speed docker compose run --rm martin-cp
+            env TILES=signals docker compose run --rm martin-cp
+            env TILES=electrification docker compose run --rm martin-cp
+            env TILES=gauge docker compose run --rm martin-cp
             
             ls -las tiles/
 
