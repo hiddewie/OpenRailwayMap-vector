@@ -33,12 +33,12 @@ jobs:
               OSM2PGSQL_NUMPROC=2 \
               docker compose run --build import import
             
-#            env TILES=low-med docker compose run --build --rm martin-cp
-#            env TILES=standard docker compose run --build --rm martin-cp
-#            env TILES=speed docker compose run --build --rm martin-cp
-#            env TILES=signals docker compose run --build --rm martin-cp
-#            env TILES=electrification docker compose run --build --rm martin-cp
-#            env TILES=gauge docker compose run --build --rm martin-cp
+            #            env TILES=low-med docker compose run --build --rm martin-cp
+            #            env TILES=standard docker compose run --build --rm martin-cp
+            #            env TILES=speed docker compose run --build --rm martin-cp
+            #            env TILES=signals docker compose run --build --rm martin-cp
+            #            env TILES=electrification docker compose run --build --rm martin-cp
+            #            env TILES=gauge docker compose run --build --rm martin-cp
             
             ls -las tiles/
 
