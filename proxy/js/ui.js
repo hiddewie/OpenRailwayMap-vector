@@ -117,7 +117,7 @@ function putStyleInHash(hash, style) {
   hashObject.style = style;
   return `#${Object.entries(hashObject).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
-const selectedStyle = determineStyleFromHash(window.location.hash)
+let selectedStyle = determineStyleFromHash(window.location.hash)
 
 const railwayLineWidth = ['step', ['zoom'],
   1.5,
@@ -2958,56 +2958,27 @@ const legendData = {
           ref: 'L1',
           label: 'Name',
           track_ref: '8b',
-        }
-      },
-      // TODO support variants
-      {
-        legend: 'Main line (tunnel)',
-        type: 'line',
-        properties: {
-          highspeed: false,
-          railway: 'rail',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          tunnel: true,
-          bridge: false,
-          ref: 'L1',
-          label: 'Name',
-          track_ref: '8b',
-        }
-      },
-      {
-        legend: 'Main line (bridge)',
-        type: 'line',
-        properties: {
-          highspeed: false,
-          railway: 'rail',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: true,
-          ref: 'L1',
-          label: 'Name',
-          track_ref: '8b',
-        }
-      },
-      {
-        legend: 'Railway under construction',
-        type: 'line',
-        properties: {
-          highspeed: false,
-          railway: 'construction',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: false,
-          ref: 'L1',
-          label: 'Name',
-          track_ref: '8b',
-        }
+        },
+        variants: [
+          {
+            legend: 'bridge',
+            properties: {
+              bridge: true,
+              label: null,
+              ref: null,
+              track_ref: null,
+            },
+          },
+          {
+            legend: 'tunnel',
+            properties: {
+              tunnel: true,
+              label: null,
+              ref: null,
+              track_ref: null,
+            },
+          },
+        ],
       },
       {
         legend: 'Branch line',
@@ -3105,6 +3076,22 @@ const legendData = {
           track_ref: '8b',
         }
       },
+      {
+        legend: 'Under construction',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          railway: 'construction',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          label: null,
+          track_ref: null,
+        }
+      },
     ],
     'standard_railway_text_stations_low-standard_railway_text_stations_low': [
       {
@@ -3185,14 +3172,14 @@ const legendData = {
           railway: 'radio',
           man_made: 'mast',
         },
-      },
-      {
-        legend: 'Radio antenna',
-        type: 'point',
-        properties: {
-          railway: 'radio',
-          man_made: 'antenna',
-        },
+        variants: [
+          {
+            legend: 'antenna',
+            properties: {
+              man_made: 'antenna',
+            }
+          }
+        ]
       },
       {
         legend: 'Crossing',
@@ -3200,13 +3187,14 @@ const legendData = {
         properties: {
           railway: 'crossing',
         },
-      },
-      {
-        legend: 'Level crossing',
-        type: 'point',
-        properties: {
-          railway: 'level_crossing',
-        },
+        variants: [
+          {
+            legend: 'level crossing',
+            properties: {
+              railway: 'level_crossing',
+            }
+          }
+        ]
       },
       {
         legend: 'Phone',
@@ -3235,15 +3223,15 @@ const legendData = {
           ref: '123a',
           railway_local_operated: 'no',
         },
-      },
-      {
-        legend: 'Locally operated switch',
-        type: 'point',
-        properties: {
-          railway: 'switch',
-          ref: '456z',
-          railway_local_operated: 'yes',
-        },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              railway_local_operated: 'yes',
+            },
+          },
+        ]
       },
     ],
   },
@@ -4303,26 +4291,26 @@ function makeLegendStyle(style) {
 
         const applicable = layerVisibleAtZoom(legendZoom)(layer);
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
-        const features = data.map(item => {
-          const feature = {
+        const features = data.flatMap(item => {
+          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
             type: 'Feature',
             geometry: {
-              type: item.type === 'line' || item.type === 'polygon'
+              type: subItem.type === 'line' || subItem.type === 'polygon'
                 ? 'LineString'
                 : 'Point',
               coordinates:
-                item.type === 'line' ? [
-                  legendPointToMapPoint(legendZoom, [-1.5, -entry * 0.6]),
-                  legendPointToMapPoint(legendZoom, [-0.0, -entry * 0.6]),
+                subItem.type === 'line' ? [
+                  legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                  legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
                 ] :
-                item.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                    legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 - 0.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                : legendPointToMapPoint(legendZoom, [-0.75, -entry * 0.6]),
+                subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                    legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                  : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
             },
-            properties: item.properties,
-          };
+            properties: subItem.properties,
+          }));
           entry ++;
-          return feature;
+          return itemFeatures;
         });
         done.add(sourceName);
 
@@ -4355,7 +4343,7 @@ function makeLegendStyle(style) {
               coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
             },
             properties: {
-              legend: item.legend,
+              legend: [item.legend, ...(item.variants ?? []).map(variant => variant.legend)].join(', '),
             },
           };
           entry ++;
@@ -4518,8 +4506,10 @@ class LegendControl {
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: changedStyle => {
+    selectedStyle = changedStyle;
     map.setStyle(mapStyles[changedStyle]);
     legendMap.setStyle(legendStyles[changedStyle]);
+    onMapZoom(map.getZoom());
     const updatedHash = putStyleInHash(window.location.hash, changedStyle);
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
     window.history.replaceState(window.history.state, null, location);
