@@ -1848,7 +1848,7 @@ const layers = {
       'source-layer': 'standard_railway_switch_ref',
       paint: {
         'text-halo-color': ['case',
-          ['==', ['get', 'railway_local_operated'], 'yes'], 'yellow',
+          ['get', 'railway_local_operated'], 'yellow',
           'white'
         ],
         'text-halo-width': 2,
@@ -3221,14 +3221,14 @@ const legendData = {
         properties: {
           railway: 'switch',
           ref: '123a',
-          railway_local_operated: 'no',
+          railway_local_operated: false,
         },
         variants: [
           {
             legend: '(locally operated)',
             type: 'point',
             properties: {
-              railway_local_operated: 'yes',
+              railway_local_operated: true,
             },
           },
         ]

@@ -147,7 +147,7 @@ postgres:
       properties:
         railway: string
         ref: string
-        railway_local_operated: string
+        railway_local_operated: boolean
 
     # --- Speed --- #
 

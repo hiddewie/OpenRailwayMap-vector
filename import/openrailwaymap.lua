@@ -211,7 +211,7 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
-    { column = 'railway_local_operated', type = 'text' },
+    { column = 'railway_local_operated', type = 'boolean' },
   },
 })
 
@@ -480,7 +480,7 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
-      railway_local_operated = tags['railway:local_operated'], -- TODO make boolean
+      railway_local_operated = tags['railway:local_operated'] == 'yes',
     })
   end
 end
