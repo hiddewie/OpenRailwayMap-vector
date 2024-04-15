@@ -27,6 +27,10 @@ jobs:
             
             docker compose up --build --wait db
             
+            docker ps
+            docker compose exec db pg_isready
+            docker compose exec db pg_isready -U postgres
+            
             env \
               OSM2PGSQL_DATAFILE=data.osm.pbf \
               OSM2PGSQL_CACHE=7000 \
