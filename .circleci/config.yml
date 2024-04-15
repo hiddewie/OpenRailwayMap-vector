@@ -25,6 +25,8 @@ jobs:
             # Download data
             curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
             
+            docker compose up --build --wait db
+            
             env \
               OSM2PGSQL_DATAFILE=data.osm.pbf \
               OSM2PGSQL_CACHE=7000 \
