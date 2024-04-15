@@ -3666,7 +3666,6 @@ const legendData = {
       },
     ],
     'openrailwaymap_electrification-electrification_railway_line': [
-      // TODO 3rd rail
       {
         legend: 'Not electrified',
         type: 'line',
