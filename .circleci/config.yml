@@ -63,8 +63,6 @@ jobs:
       - checkout
       - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
       - run:
-          environment:
-            FLY_API_TOKEN: ...
           command: ./flyctl deploy --config proxy.fly.toml --local-only
 
   deploy-tiles:
@@ -76,10 +74,14 @@ workflows:
   commit:
     jobs:
 #      - generate-tiles: {}
-      - deploy-proxy: {}
+      - deploy-proxy:
+          context:
+            - fly-proxy
 #      - deploy-tiles:
-#          requires:
-#            - generate-tiles
+#        requires:
+#          - generate-tiles
+#        context:
+#          - fly-tiles
 
   auto-deployment:
     triggers:
