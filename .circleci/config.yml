@@ -67,6 +67,11 @@ jobs:
             FLY_API_TOKEN: ...
           command: ./flyctl deploy --config proxy.fly.toml --local-only
 
+  deploy-tiles:
+    executor: default
+    steps:
+      - checkout
+
 workflows:
   commit:
     jobs:
