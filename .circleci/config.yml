@@ -62,8 +62,7 @@ jobs:
     steps:
       - checkout
       - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
-      - run:
-          command: ./flyctl deploy --config proxy.fly.toml --local-only
+      - run: ./flyctl deploy --config proxy.fly.toml --local-only
 
   deploy-tiles:
     executor: default
