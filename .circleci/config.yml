@@ -29,7 +29,7 @@ jobs:
             docker compose build import
             docker compose build martin-cp
             
-            docker compose up --no --wait db
+            docker compose up --wait db
             
             env \
               OSM2PGSQL_DATAFILE=data.osm.pbf \
