@@ -20,31 +20,41 @@ jobs:
     executor: default
     steps:
       - checkout
+      - run: docker compose build db
+      - run: docker compose build import
+      - run: docker compose build martin-cp
+      - run: docker compose up --wait db
+      - run: curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
       - run:
-          command: |
-            # Download data
-            curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
-            
-            docker compose build db
-            docker compose build import
-            docker compose build martin-cp
-            
-            docker compose up --wait db
-            
-            env \
-              OSM2PGSQL_DATAFILE=data.osm.pbf \
-              OSM2PGSQL_CACHE=7000 \
-              OSM2PGSQL_NUMPROC=2 \
-              docker compose up import
-                        
-            env TILES=low-med docker compose run --rm martin-cp
-            env TILES=standard docker compose run --rm martin-cp
-            env TILES=speed docker compose run --rm martin-cp
-            env TILES=signals docker compose run --rm martin-cp
-            env TILES=electrification docker compose run --rm martin-cp
-            env TILES=gauge docker compose run --rm martin-cp
-            
-            ls -las tiles/
+          environment:
+            OSM2PGSQL_DATAFILE: data.osm.pbf
+            OSM2PGSQL_CACHE: '7000'
+            OSM2PGSQL_NUMPROC: '2'
+          command: docker compose up import
+#          command: |
+#            # Download data
+#
+#            docker compose build db
+#            docker compose build import
+#            docker compose build martin-cp
+#
+#            docker compose up --wait db
+#
+#            curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
+#            env \
+#              OSM2PGSQL_DATAFILE=data.osm.pbf \
+#              OSM2PGSQL_CACHE=7000 \
+#              OSM2PGSQL_NUMPROC=2 \
+#              docker compose up import
+#
+#            env TILES=low-med docker compose run --rm martin-cp
+#            env TILES=standard docker compose run --rm martin-cp
+#            env TILES=speed docker compose run --rm martin-cp
+#            env TILES=signals docker compose run --rm martin-cp
+#            env TILES=electrification docker compose run --rm martin-cp
+#            env TILES=gauge docker compose run --rm martin-cp
+#
+#            ls -las tiles/
 
 workflows:
   commit:
