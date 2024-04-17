@@ -16,7 +16,7 @@ jobs:
 #  docker push registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM
 #  ./flyctl deploy -i registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM -a $FLY_APP_NAME
 
-  update-data:
+  generate-tiles:
     executor: default
     steps:
       - checkout
@@ -57,11 +57,26 @@ jobs:
           command: docker compose run --rm martin-cp
       - run: ls -las tiles/
 
+  deploy-proxy:
+    executor: default
+    steps:
+      - checkout
+      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
+      - run:
+          environment:
+            FLY_API_TOKEN: ...
+          command: ./flyctl deploy --config proxy.fly.toml --local-only
+
 workflows:
   commit:
     jobs:
-      - update-data
-  update-data:
+#      - generate-tiles: {}
+      - deploy-proxy: {}
+#      - deploy-tiles:
+#          requires:
+#            - generate-tiles
+
+  auto-deployment:
     triggers:
       - schedule:
           # Run daily at 3:47 UTC
@@ -71,4 +86,8 @@ workflows:
               only:
                 - master
     jobs:
-      - update-data
+      - generate-tiles: {}
+      - deploy-proxy: {}
+      - deploy-tiles:
+          requires:
+            - generate-tiles
