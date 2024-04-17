@@ -31,30 +31,31 @@ jobs:
             OSM2PGSQL_CACHE: '7000'
             OSM2PGSQL_NUMPROC: '2'
           command: docker compose up import
-#          command: |
-#            # Download data
-#
-#            docker compose build db
-#            docker compose build import
-#            docker compose build martin-cp
-#
-#            docker compose up --wait db
-#
-#            curl --progress-bar https://download.geofabrik.de/europe/andorra-latest.osm.pbf --output data/data.osm.pbf
-#            env \
-#              OSM2PGSQL_DATAFILE=data.osm.pbf \
-#              OSM2PGSQL_CACHE=7000 \
-#              OSM2PGSQL_NUMPROC=2 \
-#              docker compose up import
-#
-#            env TILES=low-med docker compose run --rm martin-cp
-#            env TILES=standard docker compose run --rm martin-cp
-#            env TILES=speed docker compose run --rm martin-cp
-#            env TILES=signals docker compose run --rm martin-cp
-#            env TILES=electrification docker compose run --rm martin-cp
-#            env TILES=gauge docker compose run --rm martin-cp
-#
-#            ls -las tiles/
+      - run:
+          environment:
+            TILES: low-med
+          command: docker compose run --rm martin-cp
+      - run:
+          environment:
+            TILES: standard
+          command: docker compose run --rm martin-cp
+      - run:
+          environment:
+            TILES: speed
+          command: docker compose run --rm martin-cp
+      - run:
+          environment:
+            TILES: signals
+          command: docker compose run --rm martin-cp
+      - run:
+          environment:
+            TILES: electrification
+          command: docker compose run --rm martin-cp
+      - run:
+          environment:
+            TILES: gauge
+          command: docker compose run --rm martin-cp
+      - run: ls -las tiles/
 
 workflows:
   commit:
