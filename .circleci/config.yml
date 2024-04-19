@@ -24,7 +24,7 @@ jobs:
       - run: docker compose build import
       - run: docker compose build martin-cp
       - run: docker compose up --wait db
-      - run: curl --progress-bar https://download.geofabrik.de/europe/switzerland-latest.osm.pbf --output data/data.osm.pbf
+      - run: curl --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
       - run:
           environment:
             OSM2PGSQL_DATAFILE: data.osm.pbf
@@ -34,32 +34,32 @@ jobs:
       - run:
           environment:
             TILES: low-med # << matrix.tiles >>
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run:
           environment:
             TILES: standard
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run:
           environment:
             TILES: speed
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run:
           environment:
             TILES: signals
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run:
           environment:
             TILES: electrification
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run:
           environment:
             TILES: gauge
-            BBOX: '6.0974,45.8269,10.5579,47.7941'
+            BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run: ls -las tiles/
       - persist_to_workspace:
