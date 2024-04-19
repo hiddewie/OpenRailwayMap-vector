@@ -19,6 +19,7 @@ jobs:
   generate-tiles:
     executor: default
     steps:
+      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
       - checkout
       - run: docker compose build db
       - run: docker compose build import
@@ -62,10 +63,11 @@ jobs:
             BBOX: '-11.3818,35.8891,25.0488,57.3976'
           command: docker compose run --rm martin-cp
       - run: ls -las tiles/
-      - persist_to_workspace:
-          root: tiles
-          paths:
-            - '*.mbtiles'
+#      - persist_to_workspace:
+#          root: tiles
+#          paths:
+#            - '*.mbtiles'
+      - run: ./flyctl deploy --config martin-static.fly.toml --local-only
 
   deploy-proxy:
     executor: default
@@ -74,21 +76,21 @@ jobs:
       - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
       - run: ./flyctl deploy --config proxy.fly.toml --local-only
 
-  deploy-tiles:
-    executor: default
-    steps:
-      - checkout
-      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: tiles
-      - run: ls -lah tiles/
-      - run: ./flyctl deploy --config martin-static.fly.toml --local-only
+#  deploy-tiles:
+#    executor: default
+#    steps:
+#      - checkout
+#      - attach_workspace:
+#          # Must be absolute path or relative path from working_directory
+#          at: tiles
+#      - run: ls -lah tiles/
 
 workflows:
   commit:
     jobs:
-      - generate-tiles: {}
+      - generate-tiles:
+          context:
+            - fly-tiles
 #          matrix:
 #            parameters:
 #              tiles:
@@ -101,11 +103,11 @@ workflows:
       - deploy-proxy:
           context:
             - fly-proxy
-      - deploy-tiles:
-          requires:
-            - generate-tiles
-          context:
-            - fly-tiles
+#      - deploy-tiles:
+#          requires:
+#            - generate-tiles
+#          context:
+#            - fly-tiles
 
   auto-deployment:
     triggers:
@@ -117,8 +119,9 @@ workflows:
               only:
                 - master
     jobs:
-      - generate-tiles: {}
-      - deploy-proxy: {}
-      - deploy-tiles:
-          requires:
-            - generate-tiles
+      - generate-tiles:
+          context:
+            - fly-tiles
+      - deploy-proxy:
+          context:
+            - fly-proxy
