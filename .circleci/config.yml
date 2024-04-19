@@ -19,8 +19,8 @@ jobs:
   generate-tiles:
     executor: default
     steps:
-      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
       - checkout
+      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
       - run: docker compose build db
       - run: docker compose build import
       - run: docker compose build martin-cp
