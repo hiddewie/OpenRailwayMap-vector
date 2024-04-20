@@ -192,6 +192,7 @@ jobs:
       - name: Generate tiles
         env:
           TILES: ${{ matrix.tiles }}
+          BBOX: '-11.3818,35.8891,25.0488,57.3976'
         run: |
           docker compose run martin-cp
           ls -las tiles/
