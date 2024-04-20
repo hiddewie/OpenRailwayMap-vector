@@ -46,12 +46,6 @@ jobs:
             -d "$(jq -c -n --arg branch "$CIRCLE_BRANCH" '{ref: $branch}')"
 
 workflows:
-  commit:
-    jobs:
-      - import-data:
-          context:
-            - github
-
   auto-deployment:
     triggers:
       - schedule:
