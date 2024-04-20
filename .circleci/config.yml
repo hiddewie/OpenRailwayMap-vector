@@ -26,8 +26,7 @@ jobs:
       - run: docker compose build import
       - run: docker compose build martin-cp
       - run: docker compose up --wait db
-#      - run: curl --location --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
-      - run: curl --location --progress-bar https://download.geofabrik.de/europe/switzerland-latest.osm.pbf --output data/data.osm.pbf
+      - run: curl --location --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
       - run:
           no_output_timeout: 1h
           environment:
