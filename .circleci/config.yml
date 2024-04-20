@@ -4,18 +4,9 @@ executors:
   default:
     machine:
       image: ubuntu-2204:current
-#      docker_layer_caching: true
     resource_class: medium
 
 jobs:
-
-#  # Install Fly
-#  wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
-#  ./flyctl auth docker
-#  docker build -t registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM .
-#  docker push registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM
-#  ./flyctl deploy -i registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM -a $FLY_APP_NAME
-
   import-data:
     executor: default
     steps:
@@ -54,96 +45,23 @@ jobs:
             https://api.github.com/repos/hiddewie/OpenRailwayMap-vector/actions/workflows/deploy.yml/dispatches \
             -d "$(jq -c -n --arg branch "$CIRCLE_BRANCH" '{ref: $branch}')"
 
-  #      - run:
-#          environment:
-#            TILES: low-med # << matrix.tiles >>
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run:
-#          environment:
-#            TILES: standard
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run:
-#          environment:
-#            TILES: speed
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run:
-#          environment:
-#            TILES: signals
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run:
-#          environment:
-#            TILES: electrification
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run:
-#          environment:
-#            TILES: gauge
-#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-#          command: docker compose run --rm martin-cp
-#      - run: ls -las tiles/
-##      - persist_to_workspace:
-##          root: tiles
-##          paths:
-##            - '*.mbtiles'
-#      - run: ./flyctl deploy --config martin-static.fly.toml --local-only
-
-  deploy-proxy:
-    executor: default
-    steps:
-      - checkout
-      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
-      - run: ./flyctl deploy --config proxy.fly.toml --local-only
-
-#  deploy-tiles:
-#    executor: default
-#    steps:
-#      - checkout
-#      - attach_workspace:
-#          # Must be absolute path or relative path from working_directory
-#          at: tiles
-#      - run: ls -lah tiles/
-
 workflows:
   commit:
     jobs:
       - import-data:
           context:
             - github
-#          matrix:
-#            parameters:
-#              tiles:
-#                - low-med
-#                - standard
-#                - speed
-#                - signals
-#                - electrification
-#                - gauge
-#      - deploy-proxy:
-#          context:
-#            - fly-proxy
-#      - deploy-tiles:
-#          requires:
-#            - generate-tiles
-#          context:
-#            - fly-tiles
 
-#  auto-deployment:
-#    triggers:
-#      - schedule:
-#          # Run daily at 3:47 UTC
-#          cron: "47 3 * * *"
-#          filters:
-#            branches:
-#              only:
-#                - master
-#    jobs:
-#      - generate-tiles:
-#          context:
-#            - fly-tiles
-#      - deploy-proxy:
-#          context:
-#            - fly-proxy
+  auto-deployment:
+    triggers:
+      - schedule:
+          # Run daily at 3:47 UTC
+          cron: "47 3 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - import-data:
+          context:
+            - github
