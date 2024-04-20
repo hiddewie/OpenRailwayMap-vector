@@ -16,16 +16,18 @@ jobs:
 #  docker push registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM
 #  ./flyctl deploy -i registry.fly.io/$FLY_APP_NAME:$CIRCLE_BUILD_NUM -a $FLY_APP_NAME
 
-  generate-tiles:
+  import-data:
     executor: default
     steps:
       - checkout
       - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
+      - run: echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_USERNAME" --password-stdin
       - run: docker compose build db
       - run: docker compose build import
       - run: docker compose build martin-cp
       - run: docker compose up --wait db
-      - run: curl --location --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
+#      - run: curl --location --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
+      - run: curl --location --progress-bar https://download.geofabrik.de/europe/switzerland-latest.osm.pbf --output data/data.osm.pbf
       - run:
           no_output_timeout: 1h
           environment:
@@ -33,42 +35,54 @@ jobs:
             OSM2PGSQL_CACHE: '7000'
             OSM2PGSQL_NUMPROC: '2'
           command: docker compose up import
-      - run:
-          environment:
-            TILES: low-med # << matrix.tiles >>
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run:
-          environment:
-            TILES: standard
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run:
-          environment:
-            TILES: speed
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run:
-          environment:
-            TILES: signals
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run:
-          environment:
-            TILES: electrification
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run:
-          environment:
-            TILES: gauge
-            BBOX: '-11.3818,35.8891,25.0488,57.3976'
-          command: docker compose run --rm martin-cp
-      - run: ls -las tiles/
-#      - persist_to_workspace:
-#          root: tiles
-#          paths:
-#            - '*.mbtiles'
-      - run: ./flyctl deploy --config martin-static.fly.toml --local-only
+      - run: |
+          docker compose stop db
+          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
+
+          # Persist and squash data in new image
+          docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
+          echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
+          
+          docker compose build db
+          docker compose push db
+
+  #      - run:
+#          environment:
+#            TILES: low-med # << matrix.tiles >>
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run:
+#          environment:
+#            TILES: standard
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run:
+#          environment:
+#            TILES: speed
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run:
+#          environment:
+#            TILES: signals
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run:
+#          environment:
+#            TILES: electrification
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run:
+#          environment:
+#            TILES: gauge
+#            BBOX: '-11.3818,35.8891,25.0488,57.3976'
+#          command: docker compose run --rm martin-cp
+#      - run: ls -las tiles/
+##      - persist_to_workspace:
+##          root: tiles
+##          paths:
+##            - '*.mbtiles'
+#      - run: ./flyctl deploy --config martin-static.fly.toml --local-only
 
   deploy-proxy:
     executor: default
@@ -89,9 +103,9 @@ jobs:
 workflows:
   commit:
     jobs:
-      - generate-tiles:
+      - import-data:
           context:
-            - fly-tiles
+            - github
 #          matrix:
 #            parameters:
 #              tiles:
@@ -101,28 +115,28 @@ workflows:
 #                - signals
 #                - electrification
 #                - gauge
-      - deploy-proxy:
-          context:
-            - fly-proxy
+#      - deploy-proxy:
+#          context:
+#            - fly-proxy
 #      - deploy-tiles:
 #          requires:
 #            - generate-tiles
 #          context:
 #            - fly-tiles
 
-  auto-deployment:
-    triggers:
-      - schedule:
-          # Run daily at 3:47 UTC
-          cron: "47 3 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - generate-tiles:
-          context:
-            - fly-tiles
-      - deploy-proxy:
-          context:
-            - fly-proxy
+#  auto-deployment:
+#    triggers:
+#      - schedule:
+#          # Run daily at 3:47 UTC
+#          cron: "47 3 * * *"
+#          filters:
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - generate-tiles:
+#          context:
+#            - fly-tiles
+#      - deploy-proxy:
+#          context:
+#            - fly-proxy
