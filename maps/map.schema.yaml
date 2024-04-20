@@ -1,0 +1,57 @@
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+title: Map
+description: Map of tags to features with icons
+type: object
+properties:
+  features:
+    description: The features in this file
+    type: array
+    items:
+      description: A single feature
+      type: object
+      properties:
+        description:
+          description: A human readable description of the feature
+          type: string
+        icon:
+          oneOf:
+            - type: string
+              description: The reference to the icon
+            - type: object
+              properties:
+                match:
+                  description: The tag to match values against
+                  type: string
+                value:
+                  type: array
+                  items:
+                    description: A matching of a regular expression against the tag value to determine the icon
+                    additionalProperties:
+                      type: string
+                      description: The icon reference. May contain $1, $2, etc. to replace matched regular expression groups in the icon reference.
+                    minProperties: 1
+                    maxProperties: 1
+                default:
+                  description: A default icon value if none of the values match
+                  type: string
+              required:
+                - match
+                - value
+        tags:
+          description: The tags which determine this feature
+          type: object
+          additionalProperties:
+            oneOf:
+              - type: string
+                description: A single tag value
+              - type: array
+                description: Multiple tag values. Any may match
+                items:
+                  description: The tag value
+                  type: string
+      required:
+        - description
+        - icon
+        - tags
+required:
+  - features
