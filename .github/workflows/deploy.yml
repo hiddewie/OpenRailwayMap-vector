@@ -2,9 +2,6 @@ name: Deploy
 
 on:
   workflow_dispatch: ~
-  schedule:
-    # Run daily at 3:47 UTC
-    - cron: '47 3 * * *'
 
 jobs:
   deploy-proxy:
@@ -28,137 +25,9 @@ jobs:
         run: |
           flyctl deploy --config proxy.fly.toml --local-only
 
-#  update-data:
-#    name: Update data
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      # The disk and memory in the Github runners is too small to do large imports.
-#      # A Docker image with a pre-imported database state is used.
-#      # During the deployment run, the docker image is updated through the replication updated,
-#      # built into a new image and pushed for future use.
-#      - name: Pull import database
-#        run: |
-#          docker compose pull db
-#          docker image ls ghcr.io/hiddewie/openrailwaymap-import-db:latest
-#          docker compose up --no-build --pull never --wait db
-#
-#      - name: Ensure data is up to date
-#        env:
-#          # Available cores: 4
-#          OSM2PGSQL_NUMPROC: 4
-#          # Available memory: 16GB
-#          OSM2PGSQL_CACHE: 14000
-#        run: |
-#          docker compose build import
-#          docker compose run import update
-#          docker compose push import
-#
-#      - name: Commit and push new database image
-#        run: |
-#          docker compose stop db
-#          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-#          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
-#
-#          # Persist and squash data in new image
-#          docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
-#          echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
-#
-#      - name: Clean up unused Docker system data
-#        run: |
-#          docker system prune --force --all --volumes
-#
-#      - name: Push
-#        id: docker_build
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: db
-#          load: false
-#          push: true
-#          tags: ghcr.io/hiddewie/openrailwaymap-import-db:latest
-
-#  import-deploy-tiles:
-#    name: Deploy tiles
-#    runs-on: ubuntu-latest
-#    environment: tiles-production
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Setup Fly
-#        uses: superfly/flyctl-actions/setup-flyctl@master
-#
-#      - name: Install Osmium
-#        run: |
-#          sudo apt install osmium-tool
-#
-#      - name: Generate cache key
-#        id: cache-key
-#        run: |
-#          echo "key=$(date +%Y-%W)" >> $GITHUB_OUTPUT
-#
-#      - name: Cache downloaded OpenStreetMap data
-#        id: cache-data
-#        uses: actions/cache@v4
-#        with:
-#          key: 'data-${{ steps.cache-key.outputs.key }}'
-#          path: data/filtered.osm.pbf
-#
-#      - name: Download data
-#        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
-#        run: |
-#          curl --progress-bar https://download.geofabrik.de/europe/netherlands-latest.osm.pbf --output data/data.osm.pbf
-#
-#      - name: Filter data
-#        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
-#        run: |
-#          osmium tags-filter --progress --output data/filtered.osm.pbf data/data.osm.pbf nwr/railway nwr/disused:railway nwr/abandoned:railway nwr/razed:railway nwr/construction:railway nwr/proposed:railway n/public_transport=stop_position nwr/public_transport=platform r/route=train r/route=tram r/route=light_rail r/route=subway
-#
-#      - name: Import data
-#        env:
-#          OSM2PGSQL_NUMPROC: 4
-#          OSM2PGSQL_CACHE: 2000
-#          OSM2PGSQL_DATAFILE: filtered.osm.pbf
-#        run: |
-#          docker compose run --build import
-#
-#      - name: Generate tiles
-#        run: |
-#          docker compose up --build martin-cp
-#
-#      - name: Print tiles summary
-#        run: |
-#          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/standard.mbtiles
-#          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/speed.mbtiles
-#          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/signals.mbtiles
-#          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/electrification.mbtiles
-#          docker run --rm -v $PWD:/code --entrypoint mbtiles ghcr.io/maplibre/martin summary /code/tiles/gauge.mbtiles
-#
-#      - name: Deploy
-#        run: |
-#          flyctl deploy --config martin-static.fly.toml --local-only
-
-
   generate-tiles:
     name: Generate tiles
     runs-on: ubuntu-latest
-#    needs: update-data
 
     strategy:
       matrix:
