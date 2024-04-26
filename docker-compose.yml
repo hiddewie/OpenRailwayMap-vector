@@ -24,7 +24,7 @@ services:
   import:
     image: ghcr.io/hiddewie/openrailwaymap-import:latest
     build:
-      context: import
+      dockerfile: import/Dockerfile
       cache_from:
         - ghcr.io/hiddewie/openrailwaymap-import:latest
     depends_on:
