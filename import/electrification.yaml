@@ -1,0 +1,132 @@
+features:
+  - description: pantograph down advance El 3
+    country: DE
+    icon: { default: 'de/el3' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el3' }
+
+  - description: Ankündigung Stromabnehmer tief
+    country: AT
+    icon: { default: 'de/el3' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:andkündigung_stromabnehmer_tief' }
+
+  - description: power off advance sign El 1v
+    country: DE
+    icon: { default: 'de/el1v' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1v' }
+
+  - description: Ankündigung Hauptschalter aus
+    country: AT
+    icon: { default: 'de/el1v' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_hauptschalter_aus' }
+
+  - description: end of catenary sign El 6
+    country: DE
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^left$', value: 'de/el6-left' }
+        - { regex: '^through$', value: 'de/el6-through' }
+        - { regex: '^right$', value: 'de/el6-right' }
+      default: 'de/el6'
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el6' }
+
+  - description: Halt für Fahrzeuge mit angehobenem Stromabnehmer
+    country: AT
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^left$', value: 'de/el6-left' }
+        - { regex: '^through$', value: 'de/el6-through' }
+        - { regex: '^right$', value: 'de/el6-right' }
+      default: 'de/el6'
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
+
+  - description: power on sign El 2
+    country: DE
+    icon: { default: 'de/el2' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el2' }
+
+  - description: Hauptschalter ein
+    country: AT
+    icon: { default: 'de/el2' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_ein' }
+
+  - description: pantograph up El 5
+    country: DE
+    icon: { default: 'de/el5' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el5' }
+
+  - description: Stromabnehmer hoch
+    country: AT
+    icon: { default: 'de/el5' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_hoch' }
+
+  - description: power off sign El 1
+    country: DE
+    icon: { default: 'de/el1' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1' }
+
+  - description: Hauptschalter aus
+    country: AT
+    icon: { default: 'de/el1' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_aus' }
+
+  - description: pantograph down El 4
+    country: DE
+    icon: { default: 'de/el4' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el4' }
+
+  - description: Stromabnehmer tief
+    country: AT
+    icon: { default: 'de/el4' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_tief' }
+
+  - description: tram power off shortly signal (St 7)
+    country: DE
+    icon: { default: 'de/bostrab/st7' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }

@@ -1,3 +1,19 @@
+FROM ghcr.io/hiddewie/template:gobble as build-lua
+
+WORKDIR /build
+
+RUN --mount=type=bind,source=openrailwaymap.lua,target=openrailwaymap.lua.tmpl \
+  --mount=type=bind,source=electrification.yaml,target=electrification.yaml \
+  template --configuration electrification.yaml --template openrailwaymap.lua.tmpl > /build/openrailwaymap.lua
+
+FROM ghcr.io/hiddewie/template:gobble as build-tile-views
+
+WORKDIR /build
+
+RUN --mount=type=bind,source=sql/tile_views.sql,target=tile_views.sql.tmpl \
+  --mount=type=bind,source=electrification.yaml,target=electrification.yaml \
+  template --configuration electrification.yaml --template tile_views.sql.tmpl > /build/tile_views.sql
+
 FROM debian:unstable-20240211-slim
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
@@ -23,8 +39,13 @@ RUN mkdir -p /openrailwaymap
 WORKDIR /openrailwaymap
 
 COPY sql sql
-COPY openrailwaymap.lua openrailwaymap.lua
 COPY docker-startup.sh docker-startup.sh
+
+COPY --from=build-lua \
+  /build/openrailwaymap.lua openrailwaymap.lua
+
+COPY --from=build-tile-views \
+  /build/tile_views.sql sql/tile_views.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 
