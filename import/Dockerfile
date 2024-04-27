@@ -4,7 +4,10 @@ WORKDIR /build
 
 RUN --mount=type=bind,source=import/openrailwaymap.lua,target=openrailwaymap.lua.tmpl \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  template --configuration electrification_signals.yaml --template openrailwaymap.lua.tmpl > /build/openrailwaymap.lua
+  --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
+  cat electrification_signals.yaml train_protection.yaml \
+    | template --configuration - --format yaml --template openrailwaymap.lua.tmpl \
+    > /build/openrailwaymap.lua
 
 FROM ghcr.io/hiddewie/template:v0.4.1 as build-tile-views
 
@@ -12,7 +15,9 @@ WORKDIR /build
 
 RUN --mount=type=bind,source=import/sql/tile_views.sql,target=tile_views.sql.tmpl \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  template --configuration electrification_signals.yaml --template tile_views.sql.tmpl > /build/tile_views.sql
+  cat electrification_signals.yaml \
+    | template --configuration - --format yaml --template tile_views.sql.tmpl \
+    > /build/tile_views.sql
 
 FROM debian:unstable-20240211-slim
 

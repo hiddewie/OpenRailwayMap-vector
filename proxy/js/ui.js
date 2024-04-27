@@ -441,19 +441,9 @@ const trainProtectionLayout = {
 };
 const trainProtectionFillPaint = dashArray => ({
   'line-color': ['match', ['get', 'train_protection'],
-    'zsi127', '#884400',
-    'ptc', '#cc0033',
-    'construction_etcs', '#87CEFA',
-    'etcs', 'blue',
-    'tvm', '#009966',
-    'kvb', '#66cc33',
-    'asfa', '#ff9092',
-    'scmt', '#dd11ff',
-    'atc', '#6600cc',
-    'atb', '#ff8c00',
-    'lzb', 'red',
-    'pzb', '#ffb900',
-    'other', 'black',
+    {% for train_protection in signals_railway_line.train_protections %}
+    '{% train_protection.train_protection %}', '{% train_protection.color %}',
+{% end %}
     'grey',
   ],
   'line-width': railwayLineWidth,
@@ -3320,44 +3310,20 @@ const legendData = {
   },
   signals: {
     'openrailwaymap_low-railway_line_low': [
-      // TODO source from definition file
-      ...[
-        { trainProtection: 'etcs', legend: 'European Train Control System (ETCS)' },
-        { trainProtection: 'construction_etcs', legend: 'European Train Control System (under construction)' },
-        { trainProtection: 'zsi127', legend: 'ZSI 127' },
-        { trainProtection: 'ptc', legend: 'Positive train control (PTC)' },
-        { trainProtection: 'tvm', legend: 'Transmission Voie-Machine (TVM)' },
-        { trainProtection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)' },
-        { trainProtection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)' },
-        { trainProtection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)' },
-        { trainProtection: 'atc', legend: 'Automatic train control (ATC)' },
-        { trainProtection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)' },
-        { trainProtection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)' },
-        { trainProtection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', }
-      ].map(({ trainProtection: train_protection, legend }) => ({
-        legend,
-        type: 'line',
-        properties: {
-          railway: 'rail',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          train_protection,
-          train_protection_rank: 1,
-        },
-      })),
+      {% for train_protection in signals_railway_line.train_protections %}
       {
-        legend: '(other)',
+        legend: '{% train_protection.legend %}',
         type: 'line',
         properties: {
-          railway: 'rail',
+        railway: 'rail',
           feature: 'rail',
           usage: 'main',
           service: null,
-          train_protection: 'other',
+          train_protection: '{% train_protection.train_protection %}',
           train_protection_rank: 1,
         },
       },
+{% end %}
       {
         legend: '(unknown)',
         type: 'line',
@@ -3367,49 +3333,25 @@ const legendData = {
           usage: 'main',
           service: null,
           train_protection: null,
-          train_protection_rank: null,
+          train_protection_rank: 0,
         },
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      // TODO source from definition file
-      ...[
-        { trainProtection: 'etcs', legend: 'European Train Control System (ETCS)' },
-        { trainProtection: 'construction_etcs', legend: 'European Train Control System (under construction)' },
-        { trainProtection: 'zsi127', legend: 'ZSI 127' },
-        { trainProtection: 'ptc', legend: 'Positive train control (PTC)' },
-        { trainProtection: 'tvm', legend: 'Transmission Voie-Machine (TVM)' },
-        { trainProtection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)' },
-        { trainProtection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)' },
-        { trainProtection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)' },
-        { trainProtection: 'atc', legend: 'Automatic train control (ATC)' },
-        { trainProtection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)' },
-        { trainProtection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)' },
-        { trainProtection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', }
-      ].map(({ trainProtection: train_protection, legend }) => ({
-        legend,
-        type: 'line',
-        properties: {
-          railway: 'rail',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          train_protection,
-          train_protection_rank: 1,
-        },
-      })),
+      {% for train_protection in signals_railway_line.train_protections %}
       {
-        legend: '(other)',
+        legend: '{% train_protection.legend %}',
         type: 'line',
         properties: {
-          railway: 'rail',
+        railway: 'rail',
           feature: 'rail',
           usage: 'main',
           service: null,
-          train_protection: 'other',
+          train_protection: '{% train_protection.train_protection %}',
           train_protection_rank: 1,
         },
       },
+{% end %}
       {
         legend: '(unknown)',
         type: 'line',
@@ -3419,49 +3361,25 @@ const legendData = {
           usage: 'main',
           service: null,
           train_protection: null,
-          train_protection_rank: null,
+          train_protection_rank: 0,
         },
       },
     ],
     'openrailwaymap_signals-signals_railway_line': [
-      // TODO source from definition file
-      ...[
-        { trainProtection: 'etcs', legend: 'European Train Control System (ETCS)' },
-        { trainProtection: 'construction_etcs', legend: 'European Train Control System (under construction)' },
-        { trainProtection: 'zsi127', legend: 'ZSI 127' },
-        { trainProtection: 'ptc', legend: 'Positive train control (PTC)' },
-        { trainProtection: 'tvm', legend: 'Transmission Voie-Machine (TVM)' },
-        { trainProtection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)' },
-        { trainProtection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)' },
-        { trainProtection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)' },
-        { trainProtection: 'atc', legend: 'Automatic train control (ATC)' },
-        { trainProtection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)' },
-        { trainProtection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)' },
-        { trainProtection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', }
-      ].map(({ trainProtection: train_protection, legend }) => ({
-        legend,
-        type: 'line',
-        properties: {
-          railway: 'rail',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          train_protection,
-          train_protection_rank: 1,
-        },
-      })),
+      {% for train_protection in signals_railway_line.train_protections %}
       {
-        legend: '(other)',
+        legend: '{% train_protection.legend %}',
         type: 'line',
         properties: {
-          railway: 'rail',
+        railway: 'rail',
           feature: 'rail',
           usage: 'main',
           service: null,
-          train_protection: 'other',
+          train_protection: '{% train_protection.train_protection %}',
           train_protection_rank: 1,
         },
       },
+{% end %}
       {
         legend: '(unknown)',
         type: 'line',
@@ -3471,7 +3389,7 @@ const legendData = {
           usage: 'main',
           service: null,
           train_protection: null,
-          train_protection_rank: null,
+          train_protection_rank: 0,
         },
       },
       {

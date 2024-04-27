@@ -1,0 +1,174 @@
+# TODO handle construction:*, proposed:*
+signals_railway_line:
+  train_protections:
+    - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'blue' }
+    - { train_protection: 'construction_etcs', legend: 'European Train Control System (under construction)', color: '#87CEFA' }
+    - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
+    - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
+    - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
+    - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
+    - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
+    - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
+    - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
+    - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
+    - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
+    - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
+    - { train_protection: 'other', legend: '(other)', color: 'black' }
+
+  features:
+    - train_protection: ptc
+      rank: 13
+      tags:
+        - { tag: 'railway:ptc', value: 'yes' }
+
+    - train_protection: etcs
+      rank: 12
+      tags:
+        - { tag: 'railway:etcs', value: 'yes' }
+
+    - train_protection: etcs
+      rank: 12
+      tags:
+        - { tag: 'railway:etcs', value: '1' }
+
+    - train_protection: etcs
+      rank: 12
+      tags:
+        - { tag: 'railway:etcs', value: '2' }
+
+    - train_protection: etcs
+      rank: 12
+      tags:
+        - { tag: 'railway:etcs', value: '1;2' }
+
+    - train_protection: etcs
+      rank: 12
+      tags:
+        - { tag: 'railway:etcs', value: '3' }
+
+    - train_protection: construction_etcs
+      rank: 11
+      tags:
+        - { tag: 'construction:railway:etcs', value: 'yes' }
+
+    - train_protection: construction_etcs
+      rank: 11
+      tags:
+        - { tag: 'construction:railway:etcs', value: '1' }
+
+    - train_protection: construction_etcs
+      rank: 11
+      tags:
+        - { tag: 'construction:railway:etcs', value: '2' }
+
+    - train_protection: construction_etcs
+      rank: 11
+      tags:
+        - { tag: 'construction:railway:etcs', value: '3' }
+
+    - train_protection: asfa
+      rank: 10
+      tags:
+        - { tag: 'railway:asfa', value: 'yes' }
+
+    - train_protection: asfa
+      rank: 10
+      tags:
+        - { tag: 'railway:asfa_200', value: 'yes' }
+
+    - train_protection: scmt
+      rank: 9
+      tags:
+        - { tag: 'railway:scmt', value: 'yes' }
+
+    - train_protection: tvm
+      rank: 8
+      tags:
+        - { tag: 'railway:tvm', values: ['300', '430'] }
+
+    - train_protection: kvb
+      rank: 7
+      tags:
+        - { tag: 'railway:kvb', value: 'yes' }
+
+    - train_protection: atc
+      rank: 6
+      tags:
+        - { tag: 'railway:atc', value: 'yes' }
+
+    - train_protection: atb
+      rank: 5
+      tags:
+        - { tag: 'railway:atb', value: 'yes' }
+
+    - train_protection: atb
+      rank: 5
+      tags:
+        - { tag: 'railway:atb-eg', value: 'yes' }
+
+    - train_protection: atb
+      rank: 5
+      tags:
+        - { tag: 'railway:atb-ng', value: 'yes' }
+
+    - train_protection: atb
+      rank: 5
+      tags:
+        - { tag: 'railway:atb-vv', value: 'yes' }
+
+    - train_protection: zsi127
+      rank: 4
+      tags:
+        - { tag: 'railway:zsi127', value: 'yes' }
+
+    - train_protection: lzb
+      rank: 3
+      tags:
+        - { tag: 'railway:lzb', value: 'yes' }
+
+    - train_protection: pzb
+      rank: 2
+      tags:
+        - { tag: 'railway:pzb', value: 'yes' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:pzb', value: 'no' }
+        - { tag: 'railway:lzb', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - rank: 1
+      tags:
+        - { tag: 'railway:atb', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:atc', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:scmt', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:asfa', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:kvb', value: 'no' }
+        - { tag: 'railway:tvm', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:zsi127', value: 'no' }
