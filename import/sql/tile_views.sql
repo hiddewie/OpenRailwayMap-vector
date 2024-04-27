@@ -1356,7 +1356,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
     way,
     CASE
-      {% for feature in features %}
+      {% for feature in electrification_signals.features %}
         -- ({% feature.country %}) {% feature.description %}
         WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
 

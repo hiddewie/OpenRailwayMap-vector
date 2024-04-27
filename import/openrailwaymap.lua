@@ -457,10 +457,9 @@ function osm2pgsql.process_node(object)
       signal_speed_limit_distant = tags['railway:signal:speed_limit_distant'],
       signal_speed_limit_distant_form = tags['railway:signal:speed_limit_distant:form'],
       signal_speed_limit_distant_speed = tags['railway:signal:speed_limit_distant:speed'],
-      ["railway:signal:electricity"] = tags['railway:signal:electricity'],
-      ["railway:signal:electricity:form"] = tags['railway:signal:electricity:form'],
-      ["railway:signal:electricity:turn_direction"] = tags['railway:signal:electricity:turn_direction'],
-      ["railway:signal:electricity:type"] = tags['railway:signal:electricity:type'],
+      {% for tag in electrification_signals.tags %}
+      ["{% tag %}"] = tags['{% tag %}'],
+{% end %}
       resetting_switch_form = tags['railway:signal:resetting_switch:form'],
       resetting_switch_distant_form = tags['railway:signal:resetting_switch_distant:form'],
     })
