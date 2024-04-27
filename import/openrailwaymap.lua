@@ -159,22 +159,12 @@ local signals = osm2pgsql.define_table({
     { column = 'train_protection_type', type = 'text' },
     { column = 'passing_type', type = 'text' },
     { column = 'train_protection_shape', type = 'text' },
-    { column = 'signal_speed_limit', type = 'text' },
-    { column = 'signal_speed_limit_form', type = 'text' },
-    { column = 'signal_speed_limit_speed', type = 'text' },
-    { column = 'signal_speed_limit_distant', type = 'text' },
-    { column = 'signal_speed_limit_distant_form', type = 'text' },
-    { column = 'signal_speed_limit_distant_speed', type = 'text' },
       {% for tag in speed_railway_signals.tags %}
     { column = '{% tag %}', type = 'text' },
 {% end %}
     {% for tag in electrification_signals.tags %}
     { column = '{% tag %}', type = 'text' },
 {% end %}
-    { column = 'railway:signal:electricity', type = 'text'},
-    { column = 'railway:signal:electricity:form', type = 'text'},
-    { column = 'railway:signal:electricity:turn_direction', type = 'text'},
-    { column = 'railway:signal:electricity:type', type = 'text'},
     { column = 'resetting_switch_form', type = 'text'},
     { column = 'resetting_switch_distant_form', type = 'text'},
   },
