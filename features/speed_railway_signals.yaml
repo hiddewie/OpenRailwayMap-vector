@@ -1,0 +1,229 @@
+electrification_signals:
+  tags:
+    - 'railway:signal:speed_limit'
+    - 'railway:signal:speed_limit:form'
+    - 'railway:signal:speed_limit:speed'
+    - 'railway:signal:speed_limit_distant'
+    - 'railway:signal:speed_limit_distant:form'
+    - 'railway:signal:speed_limit_distant:speed'
+
+  features:
+
+    # --- AT --- #
+
+    - description: Austrian speed signals (Geschwindigkeitsvoranzeiger) as signs
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'at/geschwindigkeitsvoranzeiger-empty-sign' }
+          - { regex: '^(1[02]|[1-9])0$', value: 'at/geschwindigkeitsvoranzeiger-{}-sign' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: Austrian speed signals (Geschwindigkeitsvoranzeiger) as light signals
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'at/geschwindigkeitsvoranzeiger-empty-light' }
+          - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-{}-light' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+    - description: Austrian speed signals (Geschwindigkeitsanzeiger)
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'at/geschwindigkeitsanzeiger-empty-sign' }
+          - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-{}-sign' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Austrian speed signals (Geschwindigkeitsanzeiger)
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'at/geschwindigkeitsanzeiger-empty-light' }
+          - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-{}-light' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: Austrian line speed signals (Ankündigungstafel)
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'at/ankuendigungstafel-empty-sign' }
+          - { regex: '^(1[0-4]0|10|[2-9][05])$', value: 'at/ankuendigungstafel-{}-sign' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungstafel' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: Austrian line speed signals (Geschwindigkeitstafel)
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'at/geschwindigkeitstafel-empty-sign' }
+          - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-{}-sign' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
+      country: AT
+      icon: { default: 'at/x40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-SLB:x40' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: ???
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'at/anfangssignal-empty' }
+          - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: ???
+      country: AT
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'at/ankündigungssignal-empty' }
+          - { regex: '^[1-6]0$', value: 'at/ankündigungssignal-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungssignal' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: ???
+      country: AT
+      icon: { default: 'at/endsignal' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:endsignal' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: ???
+      country: AT
+      icon: { default: 'at/ankündigung-ek-sicht' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigung_ek-sicht' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: ???
+      country: AT
+      icon: { default: 'at/ek-sicht-pfeiftafel' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'AT-V2:ek-sicht_pfeiftafel' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    # --- BE --- #
+
+    - description: Speed limit light (part of main signal)
+      country: BE
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'be/chiffre-vitesse-empty' }
+          - { regex: '^([4-9]0)$', value: 'be/chiffre-vitesse-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'BE:VIS' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    # --- CH --- #
+
+    - description: Vorsignal verminderte Geschwindigkeit
+      country: CH
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'ch/fdv-209-empty' }
+          - { regex: '^([6-9][05]|1[0-1][05])$', value: 'ch/fdv-209-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:209' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+    - description: Anfangssignal verminderte Geschwindigkeit
+      country: CH
+      icon: { default: 'ch/fdv-211' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:211' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Endesignal verminderte Geschwindigkeit
+      country: CH
+      icon: { default: 'ch/fdv-212' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:212' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Vorsignal verminderte Geschwindigkeit für Neigetechnikzüge
+      country: CH
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'ch/fdv-213-empty' }
+          - { regex: '^1[1-4]0$', value: 'ch/fdv-213-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:213' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: Anfangssignal verminderte Geschwindigkeit
+      country: CH
+      icon: { default: 'ch/fdv-214' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:214' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Endesignal verminderte Geschwindigkeit
+      country: CH
+      icon: { default: 'ch/fdv-215' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:215' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Merktafel für Änderung der Höchstgeschwindigkeit
+      country: CH
+      icon: { default: 'ch/fdv-217' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:217' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: Geschwindigkeits-Ankündigung
+      country: CH
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { null: true, value: 'ch/fdv-540-empty' }
+          - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:540' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+    - description: Geschwindigkeits-Ausführung
+      country: CH
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { null: true, value: 'ch/fdv-540-empty' }
+          - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:540' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: Merktafel für Streckengeschwindigkeit beim Signalsystem N
+      country: CH
+      icon: { default: 'ch/fdv-569' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:569' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }

@@ -165,6 +165,12 @@ local signals = osm2pgsql.define_table({
     { column = 'signal_speed_limit_distant', type = 'text' },
     { column = 'signal_speed_limit_distant_form', type = 'text' },
     { column = 'signal_speed_limit_distant_speed', type = 'text' },
+      {% for tag in speed_railway_signals.tags %}
+    { column = '{% tag %}', type = 'text' },
+{% end %}
+    {% for tag in electrification_signals.tags %}
+    { column = '{% tag %}', type = 'text' },
+{% end %}
     { column = 'railway:signal:electricity', type = 'text'},
     { column = 'railway:signal:electricity:form', type = 'text'},
     { column = 'railway:signal:electricity:turn_direction', type = 'text'},
@@ -421,12 +427,9 @@ function osm2pgsql.process_node(object)
       train_protection_type = tags['railway:signal:train_protection:type'],
       passing_type = tags['railway:signal:passing:type'],
       train_protection_shape = tags['railway:signal:train_protection:shape'],
-      signal_speed_limit = tags['railway:signal:speed_limit'],
-      signal_speed_limit_form = tags['railway:signal:speed_limit:form'],
-      signal_speed_limit_speed = tags['railway:signal:speed_limit:speed'],
-      signal_speed_limit_distant = tags['railway:signal:speed_limit_distant'],
-      signal_speed_limit_distant_form = tags['railway:signal:speed_limit_distant:form'],
-      signal_speed_limit_distant_speed = tags['railway:signal:speed_limit_distant:speed'],
+      {% for tag in speed_railway_signals.tags %}
+      ["{% tag %}"] = tags['{% tag %}'],
+{% end %}
       {% for tag in electrification_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
