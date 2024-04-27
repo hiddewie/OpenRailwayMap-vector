@@ -1,4 +1,4 @@
-FROM ghcr.io/hiddewie/template:gobble as build-lua
+FROM ghcr.io/hiddewie/template:v0.4.1 as build-lua
 
 WORKDIR /build
 
@@ -6,7 +6,7 @@ RUN --mount=type=bind,source=import/openrailwaymap.lua,target=openrailwaymap.lua
   --mount=type=bind,source=features/electrification.yaml,target=electrification.yaml \
   template --configuration electrification.yaml --template openrailwaymap.lua.tmpl > /build/openrailwaymap.lua
 
-FROM ghcr.io/hiddewie/template:gobble as build-tile-views
+FROM ghcr.io/hiddewie/template:v0.4.1 as build-tile-views
 
 WORKDIR /build
 

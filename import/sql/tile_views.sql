@@ -1358,17 +1358,17 @@ CREATE OR REPLACE VIEW electrification_signals AS
     CASE
       {% for feature in features %}
         -- ({% feature.country %}) {% feature.description %}
-        WHEN {% for tag in feature.tags %}{% unless loop.first %} AND{% end %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% end %}
-          THEN {% if feature.icon.match %}
-            CASE
-              {% for case in feature.icon.cases %}
-              WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
-              {% end %}
-              ELSE '{% feature.icon.default %}'
-            END
-          {% else %}'{% feature.icon.default %}'{% end %}
+        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
 
-      {% end %}
+          THEN {% if feature.icon.match %} CASE
+            {% for case in feature.icon.cases %}
+            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
+{% end %}
+            ELSE '{% feature.icon.default %}'
+          END{% else %} '{% feature.icon.default %}'{% end %}
+
+
+{% end %}
     END as feature,
     azimuth
   FROM signals_with_azimuth
