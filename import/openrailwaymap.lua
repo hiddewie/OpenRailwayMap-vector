@@ -159,7 +159,7 @@ local signals = osm2pgsql.define_table({
     { column = 'train_protection_type', type = 'text' },
     { column = 'passing_type', type = 'text' },
     { column = 'train_protection_shape', type = 'text' },
-      {% for tag in speed_railway_signals.tags %}
+    {% for tag in speed_railway_signals.tags %}
     { column = '{% tag %}', type = 'text' },
 {% end %}
     {% for tag in electrification_signals.tags %}
@@ -226,7 +226,7 @@ local routes = osm2pgsql.define_table({
 
 function train_protection(tags)
   {% for feature in signals_railway_line.features %}
-  if {% for tag in feature.tags %}{% unless loop.first %} and{% end %} tags['{% tag.tag %}']='{% tag.value %}'{% end %} then return '{% feature.train_protection %}', {% feature.rank %} end
+  if {% for tag in feature.tags %}{% unless loop.first %} and{% end %} tags['{% tag.tag %}'] == '{% tag.value %}'{% end %} then return '{% feature.train_protection %}', {% feature.rank %} end
 {% end %}
 
   return nil, 0

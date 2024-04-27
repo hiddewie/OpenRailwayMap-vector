@@ -138,7 +138,8 @@ signals_railway_line:
         - { tag: 'railway:lzb', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
-    - rank: 1
+    - train_protection: other
+      rank: 1
       tags:
         - { tag: 'railway:atb', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }

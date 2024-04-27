@@ -296,335 +296,60 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     way,
     CASE
+        {% for feature in speed_railway_signals.features %}
+        -- ({% feature.country %}) {% feature.description %}
+        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
 
-      -- DE --
+          THEN {% if feature.icon.match %} CASE
+            {% for case in feature.icon.cases %}
+            WHEN "{% feature.icon.match %}"{% if case.null %} IS NULL{% else %} ~ '{% case.regex %}'{% end %} THEN{% if case.value | contains("{}") %} CONCAT('{% case.value | regexReplace("\{\}.*$", "") %}', "{% feature.icon.match %}", '{% case.value | regexReplace("^.*\{\}", "") %}'){% else %} '{% case.value %}'{% end %}
 
-      -- German speed signals (Zs 3v) as signs
-      WHEN feature = 'DE-ESO:zs3v' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/zs3v-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[0-6]|[1-9])0$' THEN CONCAT('de/zs3v-', signal_speed_limit_distant_speed, '-sign-down')
-        END
+{% end %}
+            {% if feature.icon.default %}
+            ELSE '{% feature.icon.default %}'
+{% end %}
+          END{% else %} '{% feature.icon.default %}'{% end %}
 
-      -- German speed signals (Zs 3v) as light signals
-      WHEN feature = 'DE-ESO:zs3v' AND signal_speed_limit_distant_form = 'light' THEN
-        CASE
-          -- for light signals: empty Zs3v "looks" exactly like empty Zs2v
-          WHEN signal_speed_limit_distant_speed is null OR signal_speed_limit_distant_speed ~ '^off;\?$' THEN 'de/zs2v-unknown'
-          WHEN signal_speed_limit_distant_speed ~ '^([1-9]|1[0-6]|20)0$' THEN CONCAT('de/zs3v-', signal_speed_limit_distant_speed, '-light')
-        END
 
-      -- German speed signals (Zs 3) as signs
-      WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/zs3-empty-sign-up'
-          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-6])0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-sign-up')
-        END
-
-      -- German speed signals (Zs 3) as light signals
-      WHEN feature = 'DE-ESO:zs3' AND signal_speed_limit_form = 'light' THEN
-        CASE
-          -- for light signals: empty Zs3 "looks" exactly like empty Zs2
-          WHEN signal_speed_limit_speed is null OR signal_speed_limit_speed ~ '^off;\?$' THEN 'de/zs2-unknown'
-          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-6]|20)0$' THEN CONCAT('de/zs3-', signal_speed_limit_speed, '-light')
-        END
-
-      -- West German branch line speed signals (Lf 4 DS 301)
-      WHEN feature = 'DE-ESO:db:lf4' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf4-ds301-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^([2-8]0|1?[05])$' THEN CONCAT('de/lf4-ds301-', signal_speed_limit_distant_speed, '-sign-down')
-        END
-
-      WHEN feature = 'DE-ESO:dr:lf4' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          -- DB and DR variant have the same empty sign
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf4-ds301-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^(100|[2-8]0|1?[05])$' THEN CONCAT('de/lf4-dr-', signal_speed_limit_distant_speed, '-sign-down')
-        END
-
-      -- German line speed signals (Lf 6)
-      WHEN feature = 'DE-ESO:lf6' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf6-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^((1[0-9]|[1-9])0|5|15)$' THEN CONCAT('de/lf6-', signal_speed_limit_distant_speed, '-sign-down')
-        END
-
-      WHEN feature = 'DE-ESO:lf1' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/lf1-empty-sign-down'
-          WHEN signal_speed_limit_distant_speed ~ '^(5|15|[1-9]0|1[0-9]0|200)$' THEN CONCAT('de/lf1-', signal_speed_limit_distant_speed, '-sign-down')
-        END
-
-      WHEN feature = 'DE-HHA:l1' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/hha/l1-empty-sign'
-          WHEN signal_speed_limit_distant_speed ~ '^([3-7]0)$' THEN CONCAT('de/hha/l1-', signal_speed_limit_distant_speed, '-sign')
-        END
-
-      -- German tram distance speed limit signals as signs (G 1a)
-      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a') AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1a-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(5|[1-6][0-5])$' THEN CONCAT('de/bostrab/g1a-', signal_speed_limit_distant_speed)
-        END
-
-      -- German tram distance speed limit signals as lights (G 1b)
-      WHEN feature IN ('DE-BOStrab:g1', 'DE-BOStrab:g1b') AND signal_speed_limit_distant_form = 'light' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'de/bostrab/g1b-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^[1-7]0' THEN CONCAT('de/bostrab/g1b-', signal_speed_limit_distant_speed)
-        END
-
-      -- German tram speed limit signals as signs (G 2a)
-      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a') AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2a-empty'
-          WHEN signal_speed_limit_speed ~ '^(5|[1-7][05])$' THEN CONCAT('de/bostrab/g2a-', signal_speed_limit_speed)
-        END
-
-      -- German tram speed limit signals as lights (G 2b)
-      WHEN feature IN ('DE-BOStrab:g2', 'DE-BOStrab:g2b') AND signal_speed_limit_form = 'light' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g2b-empty'
-          WHEN signal_speed_limit_speed ~ '^[1-7]0$' THEN CONCAT('de/bostrab/g2b-', signal_speed_limit_speed)
-        END
-
-      WHEN feature = 'DE-BOStrab:g3' AND signal_speed_limit_form = 'sign' THEN 'de/bostrab/g3'
-
-      -- German tram speed limit signals as signs (G 4)
-      WHEN feature = 'DE-BOStrab:g4' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g4-empty'
-          WHEN signal_speed_limit_speed ~ '^(100|[2-9]0|[235]5)$' THEN CONCAT('de/bostrab/g4-', signal_speed_limit_speed)
-        END
-
-      WHEN feature = 'DE-UESTRA:g5' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/bostrab/g5-empty'
-          WHEN signal_speed_limit_speed ~ '^5|[1-6][05]$' THEN CONCAT('de/bostrab/g5-', signal_speed_limit_speed)
-        END
-
-      -- East German line speed signal "Eckentafel" (Lf 5)
-      WHEN feature = 'DE-ESO:dr:lf5' AND signal_speed_limit_form = 'sign' THEN 'de/lf5-dv301-sign'
-
-      -- West German line speed signal "Anfangstafel" (Lf 5)
-      WHEN feature = 'DE-ESO:db:lf5' AND signal_speed_limit_form = 'sign' THEN 'de/lf5-ds301-sign'
-
-      -- German line speed signals (Lf 7)
-      WHEN feature = 'DE-ESO:lf7' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/lf7-empty-sign'
-          WHEN signal_speed_limit_speed ~ '^(5|15|[1-9]0|1[0-9]0|200)$' THEN CONCAT('de/lf7-', signal_speed_limit_speed, '-sign')
-        END
-
-      WHEN feature = 'DE-HHA:l4' AND signal_speed_limit_form = 'sign' THEN 'de/hha/l4'
-
-      WHEN feature IN ('DE-ESO:lf2', 'DE-ESO:db:lf2') AND signal_speed_limit_form = 'sign' THEN 'de/lf2-sign'
-
-      WHEN feature = 'DE-ESO:dr:lf1/2' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'de/lf1-2-empty-sign'
-          WHEN signal_speed_limit_speed ~ '^(5|[1-9]0|1[0-2]0)$' THEN CONCAT('de/lf1-2-', signal_speed_limit_speed, '-sign')
-        END
-
-      WHEN feature = 'DE-ESO:lf3' AND signal_speed_limit_form = 'sign' THEN 'de/lf3-sign'
-
-      WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'sign' THEN 'de/zs10-sign'
-
-      WHEN feature = 'DE-ESO:db:zs10' AND signal_speed_limit_form = 'light' THEN 'de/zs10-light'
-
-      -- FR --
-
-      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign'
-        AND signal_speed_limit_distant = 'FR:TIV-D_O' and signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/Z-TIV-distance-empty-sign'
-          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/Z-TIV-distance-', signal_speed_limit_distant_speed, '-sign')
-        END
-
-      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_distant_form = 'sign'
-        AND signal_speed_limit_distant = 'FR:TIV-D_type_B' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/Z-TIV-type-B-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0|200)$' THEN CONCAT('fr/Z-TIV-type-B-', signal_speed_limit_distant_speed)
-        END
-
-      WHEN signal_speed_limit = 'FR:pancarte_Z' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_Z'
-
-      WHEN feature = 'FR:pancarte_R' AND signal_speed_limit_form = 'sign' THEN 'fr/Tableau_R'
-
-      WHEN feature = 'FR:tableau_P' AND signal_speed_limit_distant_form = 'sign' THEN 'fr/Tableau_P'
-
-      WHEN feature = 'FR:chevron pointe en bas' AND signal_speed_limit_form = 'sign' THEN 'fr/chevron pointe en bas'
-
-      WHEN feature = 'FR:chevron pointe en haut' AND signal_speed_limit_form = 'sign' THEN 'fr/chevron pointe en haut'
-
-      WHEN feature = 'FR:TIV-D_O' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-empty-sign'
-          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/TIV-distance-', signal_speed_limit_distant_speed, '-sign')
-        END
-
-      WHEN feature = 'FR:TIV-D_O' AND signal_speed_limit_distant_form = 'light' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-empty-light'
-          WHEN signal_speed_limit_distant_speed ~ '^([3-9]0|1[0-3]0)$' THEN CONCAT('fr/TIV-distance-', signal_speed_limit_distant_speed, '-light')
-        END
-
-      WHEN feature = 'FR:TIV-D_type_B' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-type-B-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0|200)$' THEN CONCAT('fr/TIV-distance-type-B-', signal_speed_limit_distant_speed)
-        END
-
-      WHEN feature = 'FR:TIV-D_type_C' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fr/TIV-distance-type-C-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[5-9]0)$' THEN CONCAT('fr/TIV-distance-type-C-', signal_speed_limit_distant_speed)
-        END
-
-      -- FI --
-
-      -- Nopeusmerkki, speed signal
-      WHEN feature = 'FI:T-101' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'fi/t-101-empty'
-          WHEN signal_speed_limit_speed ~ '^([2-6]0)$' THEN CONCAT('fi/t-101-', signal_speed_limit_speed)
-        END
-
-      -- Nopeusmerkin etumerkki, distant signal
-      WHEN feature = 'FI:T-102' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'fi/t-102-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^([2-6]0)$' THEN CONCAT('fi/t-102-', signal_speed_limit_distant_speed)
-        END
-
-      -- Merkitty nopeus päättyy -merkki, end of speed limit
-      WHEN feature = 'FI:T-110' AND signal_speed_limit_form = 'sign' THEN 'fi/t-110'
-
-      -- JKV-nopeus, JKV speed limit
-      WHEN feature = 'FI:T-115' AND signal_speed_limit_form = 'sign' THEN 'fi/t-115'
-
-      -- NL --
-
-      -- NL speed limit light (part of main signal)
-      WHEN feature = 'NL' AND signal_speed_limit_form = 'light' THEN 'nl/speed_limit_light'
-
-      -- PL --
-
-      -- D6 Tarcza zwolnić bieg
-      WHEN feature = 'PL-PKP:d6' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'pl/d6-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^[1-9]0$' THEN CONCAT('pl/d6-', signal_speed_limit_distant_speed)
-        END
-
-      -- W8 Wskaźnik ograniczenia prędkości
-      WHEN feature = 'PL-PKP:w8' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'pl/w8-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w8-', signal_speed_limit_distant_speed)
-        END
-
-      -- W9 Wskaźnik odcinka ograniczonej prędkości
-      WHEN feature = 'PL-PKP:w9' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'pl/w9-empty'
-          WHEN signal_speed_limit_speed ~ '^([2-9]|1[0-4])0$' THEN CONCAT('pl/w9-', signal_speed_limit_speed)
-        END
-
-      -- W21 Wskaźniki podwyższenia prędkości
-      WHEN feature = 'PL-PKP:w21' AND signal_speed_limit_form = 'light' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'pl/w21-empty'
-          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w21-', signal_speed_limit_speed)
-        END
-
-      -- W22 Wskaźnik jazdy pociągu towarowego
-      WHEN feature = 'PL-PKP:w27a' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'pl/w27a-empty'
-          WHEN signal_speed_limit_speed ~ '^([1-9]|1[0-9]|20)0$' THEN CONCAT('pl/w27a-', signal_speed_limit_speed)
-        END
-
-      -- W30 Wskaźnik ważenia składu
-      WHEN feature = 'PL-PKP:w30' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'pl/w30-empty'
-          WHEN signal_speed_limit_speed ~ '^5$' THEN CONCAT('pl/w30-', signal_speed_limit_speed)
-        END
-
-      -- SE --
-
-      -- Hastighetstavla
-      WHEN feature = 'SE:hastighetstavla' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'se/hastighetstavla-empty'
-          WHEN signal_speed_limit_speed ~ '^([3-9]0|1[0-5]0|1[01]5)$' THEN CONCAT('se/hastighetstavla-', signal_speed_limit_speed)
-        END
-
-      -- Hastighetstavla med pilspets uppåt
-      WHEN feature = 'SE:hastighetstavla med pilspets uppåt' AND signal_speed_limit_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_speed is null THEN 'se/hastighetstavla-pilspets-uppåt-empty'
-          WHEN signal_speed_limit_speed ~ '^140$' THEN CONCAT('se/hastighetstavla-pilspets-uppåt-', signal_speed_limit_speed)
-        END
-
-      -- Orienteringstavla för lägre hastighet
-      WHEN feature = 'SE:lägre_hastighet' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'se/orienteringstavla-hastighet-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^(1[0-4]0|[7-9]0)|105$' THEN CONCAT('se/orienteringstavla-hastighet-', signal_speed_limit_distant_speed)
-        END
-
-      -- Orienteringstavla med tilläggsskylt ”ATC-överskridande”
-      WHEN feature = 'SE:atc_överskridande' AND signal_speed_limit_distant_form = 'sign' THEN
-        CASE
-          WHEN signal_speed_limit_distant_speed is null THEN 'se/orienteringstavla-hastighet-atc-överskridande-empty'
-          WHEN signal_speed_limit_distant_speed ~ '^150$' THEN CONCAT('se/orienteringstavla-hastighet-atc-överskridande-', signal_speed_limit_distant_speed)
-        END
+{% end %}
 
       END as feature,
     CASE
-      WHEN feature IN ('NL', 'DE-HHA:l4', 'AT-V2:geschwindigkeitstafel', 'DE-ESO:lf7', 'DE-ESO:db:lf5', 'DE-ESO:dr:lf5', 'DE-ESO:db:lf4', 'DE-ESO:lf6', 'AT-V2:ankündigungstafel', 'DE-HHA:l1', 'PL-PKP:w21', 'PL-PKP:w27a', 'SE:hastighetstavla', 'SE:hastighetstavla med pilspets uppåt', 'SE:lägre_hastighet', 'SE:atc_överskridande') THEN 'line'
-      WHEN feature IN ('DE-BOStrab:g2a', 'DE-BOStrab:g4', 'DE-BOStrab:g1a', 'DE-BOStrab:g3') THEN 'tram'
+      {% for feature in speed_railway_signals.features %}
+        {% if feature.type %}
+        -- ({% feature.country %}) {% feature.description %}
+        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %} THEN '{% feature.type %}'
+
+{% end %}
+{% end %}
+
     END as type,
     azimuth
   FROM (
     SELECT
       way,
-      signal_speed_limit,
-      signal_speed_limit_distant,
-      signal_speed_limit_form,
-      signal_speed_limit_distant_form,
-      COALESCE(signal_speed_limit, signal_speed_limit_distant) AS feature,
+      {% for tag in speed_railway_signals.tags %}
+      {% unless tag | matches("railway:signal:speed_limit:speed") %}
+      {% unless tag | matches("railway:signal:speed_limit_distant:speed") %}
+      "{% tag %}",
+{% end %}
+{% end %}
+{% end %}
       -- We cast the lowest speed to text to make it possible to only select those speeds in
       -- CartoCSS we have an icon for. Otherwise we might render an icon for 40 kph if
       -- 42 is tagged (but invalid tagging).
-      railway_largest_speed_noconvert(signal_speed_limit_speed)::text AS signal_speed_limit_speed,
-      railway_largest_speed_noconvert(signal_speed_limit_distant_speed)::text AS signal_speed_limit_distant_speed,
+      railway_largest_speed_noconvert("railway:signal:speed_limit:speed")::text AS "railway:signal:speed_limit:speed",
+      railway_largest_speed_noconvert("railway:signal:speed_limit_distant:speed")::text AS "railway:signal:speed_limit_distant:speed",
       azimuth
-    FROM (
-      SELECT
-        way,
-        signal_speed_limit,
-        signal_speed_limit_form,
-        signal_speed_limit_speed,
-        signal_speed_limit_distant,
-        signal_speed_limit_distant_form,
-        signal_speed_limit_distant_speed,
-        azimuth
-      FROM signals_with_azimuth s
-      WHERE railway = 'signal'
-        AND signal_direction IS NOT NULL
-        AND (signal_speed_limit IS NOT NULL OR signal_speed_limit_distant IS NOT NULL)
-      ) as mapped_signals
+    FROM signals_with_azimuth s
+    WHERE railway = 'signal'
+      AND signal_direction IS NOT NULL
+      AND ("railway:signal:speed_limit" IS NOT NULL OR "railway:signal:speed_limit_distant" IS NOT NULL)
   ) AS feature_signals
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
-    (signal_speed_limit IS NOT NULL) DESC NULLS FIRST,
-    railway_speed_int(COALESCE(signal_speed_limit_speed, signal_speed_limit_distant_speed)) DESC NULLS FIRST;
+    ("railway:signal:speed_limit" IS NOT NULL) DESC NULLS FIRST,
+    railway_speed_int(COALESCE("railway:signal:speed_limit:speed", "railway:signal:speed_limit_distant:speed")) DESC NULLS FIRST;
 
 
 --- Signals ---
@@ -1239,7 +964,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
           THEN {% if feature.icon.match %} CASE
             {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
+            WHEN "{% feature.icon.match %}"{% if case.null %} IS NULL{% else %} ~ '{% case.regex %}'{% end %} THEN '{% case.value %}'
 {% end %}
             ELSE '{% feature.icon.default %}'
           END{% else %} '{% feature.icon.default %}'{% end %}
