@@ -3703,14 +3703,24 @@ const legendData = {
       },
     ],
     'openrailwaymap_electrification-electrification_signals': [
-      // TODO source from data file
+      {% for feature in electrification_signals.features %}
       {
-        legend: 'AT andkündigung stromabnehmer tief',
+        legend: '({% feature.country %}) {% feature.description %}',
         type: 'point',
         properties: {
-          feature: 'de/el3',
+          feature: '{% feature.icon.example | default(feature.icon.default) %}',
           type: 'line',
           azimuth: 90.0,
+        },
+      },
+{% end %}
+      {
+        legend: 'signal direction',
+        type: 'point',
+        properties: {
+          feature: 'does-not-exist',
+          type: 'line',
+          azimuth: 270.0,
         },
       },
     ],
