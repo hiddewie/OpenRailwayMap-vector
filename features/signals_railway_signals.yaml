@@ -1,0 +1,60 @@
+signals_railway_signals:
+  tags: []
+
+  features:
+
+    # --- AT --- #
+
+    - description: shunting light signals (Verschubverbot)
+      country: AT
+      icon: { default: 'at/verschubverbot-aufgehoben' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: minor light signals (Sperrsignale) as sign
+      country: AT
+      icon: { default: 'at/weiterfahrt-verboten' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:weiterfahrt_verboten' }
+        - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+    - description: minor light signals (Sperrsignale) as semaphore signals
+      country: AT
+      icon: { default: 'at/weiterfahrt-erlaubt' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:sperrsignal' }
+        - { tag: 'railway:signal:minor:form', value: 'semaphore' }
+
+    - description: distant light signals
+      country: AT
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60' }
+          - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40' }
+          - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei' }
+        default: 'at/vorsignal-vorsicht'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: distant semaphore signals
+      country: AT
+      icon: { default: 'at/vorsicht-semaphore' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+        - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+    - description: main light signals
+      country: AT
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60' }
+          - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40' }
+          - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei' }
+        default: 'at/hauptsignal-halt'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'AT-V2:hauptsignal' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
