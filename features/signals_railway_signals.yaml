@@ -49,12 +49,32 @@ signals_railway_signals:
     - description: main light signals
       country: AT
       icon:
-        match: 'railway:signal:distant:states'
+        match: 'railway:signal:main:states'
         cases:
           - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60' }
           - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40' }
           - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei' }
         default: 'at/hauptsignal-halt'
       tags:
-        - { tag: 'railway:signal:distant', value: 'AT-V2:hauptsignal' }
-        - { tag: 'railway:signal:distant:form', value: 'light' }
+        - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    # --- BE --- #
+
+    - description: grand signal d'arrêt
+      country: BE
+      icon: { default: 'be/GSA-V' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'BE:GSA' }
+
+    - description: signal d'arrêt simplifié
+      country: BE
+      icon: { default: 'be/SAS' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'BE:SAS' }
+
+    - description: petit signal d'arrêt
+      country: BE
+      icon: { default: 'be/PSA' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'BE:PSA' }
