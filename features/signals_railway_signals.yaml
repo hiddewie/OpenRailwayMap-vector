@@ -629,3 +629,85 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
         - { tag: 'railway:signal:main:form', value: 'light' }
+
+    # --- FI --- #
+
+    - description: crossing signal To
+      country: FI
+      icon: { default: 'fi/to1' }
+      tags:
+        - { tag: 'railway:signal:crossing', value: 'FI:To' }
+        - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+    - description: shunting light signals type Ro (new)
+      country: FI
+      icon:
+        match: 'railway:signal:shunting:states'
+        cases:
+          - { regex: '^(.*;)?FI:Ro0(;.*)?$', value: 'fi/ro0-new' }
+        # TODO add old as well
+        default: ''
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'FI:Ro' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: minor light signals type Lo at moveable bridges
+      country: FI
+      icon: { default: 'fi/lo0' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'FI:Lo' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+
+    - description: distant light signals (new)
+      country: FI
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?FI:Eo2(;.*)?$', value: 'fi/eo2-new' }
+          - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-new' }
+        default: 'fi/eo0-new'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'FI:Eo' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: distant light signals (old)
+      country: FI
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-old' }
+        default: 'fi/eo0-old'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: main light signals (new)
+      country: FI
+      icon:
+        match: 'railway:signal:main:states'
+        cases:
+          - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-new' }
+          - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-new' }
+        default: 'fi/po0-new'
+      tags:
+        - { tag: 'railway:signal:main', value: 'FI:Po' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: main light signals (old)
+      country: FI
+      icon:
+        match: 'railway:signal:main:states'
+        cases:
+          - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-old' }
+          - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-old' }
+        default: 'fi/po0-old'
+      tags:
+        - { tag: 'railway:signal:main', value: 'FI:Po-v' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: combined block signal type So
+      country: FI
+      icon: { default: 'fi/eo1-po1-combined-block' }
+      tags:
+        - { tag: 'railway:signal:combined', value: 'FI:So' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
