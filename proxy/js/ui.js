@@ -3294,9 +3294,8 @@ const legendData = {
       },
     ],
     'openrailwaymap_speed-speed_railway_signals': [
-      {% for feature in speed_railway_signals.features %}
       // TODO filter per country polygon
-      // TODO ensure direction shows
+      {% for feature in speed_railway_signals.features %}
       {
         legend: '({% feature.country %}) {% feature.description %}',
         type: 'point',
@@ -3307,6 +3306,15 @@ const legendData = {
         },
       },
 {% end %}
+      {
+        legend: 'signal direction',
+        type: 'point',
+        properties: {
+          feature: 'does-not-exist',
+          type: 'line',
+          azimuth: 270.0,
+        },
+      },
     ],
   },
   signals: {
