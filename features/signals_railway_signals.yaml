@@ -1,5 +1,60 @@
 signals_railway_signals:
-  tags: []
+  tags:
+    - 'railway:signal:combined'
+    - 'railway:signal:combined:form'
+    - 'railway:signal:combined:states'
+    - 'railway:signal:combined:shortened'
+    - 'railway:signal:crossing'
+    - 'railway:signal:crossing:form'
+    - 'railway:signal:crossing:repeated'
+    - 'railway:signal:crossing:shortened'
+    - 'railway:signal:crossing_distant'
+    - 'railway:signal:crossing_distant:shortened'
+    - 'railway:signal:departure'
+    - 'railway:signal:departure:form'
+    - 'railway:signal:distant'
+    - 'railway:signal:distant:form'
+    - 'railway:signal:distant:repeated'
+    - 'railway:signal:distant:shortened'
+    - 'railway:signal:distant:states'
+    - 'railway:signal:humping'
+    - 'railway:signal:main'
+    - 'railway:signal:main:form'
+    - 'railway:signal:main:height'
+    - 'railway:signal:main:states'
+    - 'railway:signal:main_repeated'
+    - 'railway:signal:main_repeated:form'
+    - 'railway:signal:minor'
+    - 'railway:signal:minor:form'
+    - 'railway:signal:minor:states'
+    - 'railway:signal:minor:height'
+    - 'railway:signal:passing'
+    - 'railway:signal:passing:form'
+    - 'railway:signal:passing:type'
+    - 'railway:signal:resetting_switch'
+    - 'railway:signal:resetting_switch:form'
+    - 'railway:signal:resetting_switch_distant'
+    - 'railway:signal:resetting_switch_distant:form'
+    - 'railway:signal:ring'
+    - 'railway:signal:ring:only_transit'
+    - 'railway:signal:shunting'
+    - 'railway:signal:shunting:form'
+    - 'railway:signal:shunting:states'
+    # Excludes most railway:signal:speed_limit and related tags because those are included as part of the speed signal tags
+    - 'railway:signal:speed_limit:states'
+    - 'railway:signal:station_distant'
+    - 'railway:signal:station_distant:form'
+    - 'railway:signal:stop:form'
+    - 'railway:signal:stop_demand'
+    - 'railway:signal:stop_demand:form'
+    - 'railway:signal:train_protection'
+    - 'railway:signal:train_protection:form'
+    - 'railway:signal:train_protection:shape'
+    - 'railway:signal:train_protection:type'
+    - 'railway:signal:whistle'
+    - 'railway:signal:whistle:only_transit'
+    - 'railway:signal:wrong_road'
+    - 'railway:signal:wrong_road:form'
 
   features:
 
@@ -711,3 +766,129 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:combined', value: 'FI:So' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
+
+    # --- NL --- #
+
+    - description: departure signal
+      country: NL
+      icon: { default: 'nl/departure' }
+      tags:
+        - { tag: 'railway:signal:departure', values: ['NL', 'NL:VL'] }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
+
+    - description: dwarf shunting signals
+      country: NL
+      icon: { default: 'nl/main_light_dwarf_shunting' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:main:height', value: 'dwarf' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: train protection block marker light
+      country: NL
+      icon: { default: 'nl/main_light_white_bar' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:train_protection:form', value: 'light' }
+        - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
+    - description: main dwarf signals
+      country: NL
+      icon: { default: 'nl/main_light_dwarf' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+    - description: main shunting light
+      country: NL
+      icon: { default: 'nl/main_light_shunting' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: main repeated light
+      country: NL
+      icon: { default: 'nl/main_repeated_light' }
+      tags:
+        - { tag: 'railway:signal:main_repeated', value: 'NL' }
+        - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+    - description: H signal
+      country: NL
+      icon: { default: 'nl/H' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+
+    - description: L signal
+      country: NL
+      icon: { default: 'nl/L' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+
+    - description: main signal with speed limit
+      country: NL
+      icon: { default: 'nl/main_light_speed_limit' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: distant signal with speed limit
+      country: NL
+      icon: { default: 'nl/distant_light_speed_limit' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: main light
+      country: NL
+      icon: { default: 'nl/main_light' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'NL' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: distant light
+      country: NL
+      icon: { default: 'nl/distant_light' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'NL' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: speed limit only
+      country: NL
+      icon: { default: 'nl/speed_limit_light' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: Humping ("heuvelen")
+      country: NL
+      icon: { default: 'nl/270a' }
+      tags:
+        - { tag: 'railway:signal:humping', value: 'NL:270' }
+
+    - description: ATB codewissel
+      country: NL
+      icon: { default: 'nl/atb-codewissel' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:330' }
+
+    - description: train protection block markers (arrow)
+      country: NL
+      icon: { default: 'general/etcs-stop-marker-arrow-left' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+        - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+        - { tag: 'railway:signal:train_protection:shape', value: 'triangle' }
+
+    - description: train protection block markers (triangle)
+      country: NL
+      icon: { default: 'general/etcs-stop-marker-triangle-left' }
+      tags:
+        - { tag: 'railway:signal:train_protection', values: ['NL:227b', 'DE-ESO:ne14'] }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+        - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
