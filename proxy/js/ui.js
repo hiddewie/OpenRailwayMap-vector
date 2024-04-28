@@ -3294,18 +3294,19 @@ const legendData = {
       },
     ],
     'openrailwaymap_speed-speed_railway_signals': [
-      // TODO import from signals definition files
+      {% for feature in speed_railway_signals.features %}
       // TODO filter per country polygon
       // TODO ensure direction shows
       {
-        legend: 'zs3v',
+        legend: '({% feature.country %}) {% feature.description %}',
         type: 'point',
         properties: {
-          feature: 'de/zs3v-100-sign-down',
+          feature: '{% feature.icon.example | default(feature.icon.default) %}',
           type: 'line',
           azimuth: 90.0,
         },
       },
+{% end %}
     ],
   },
   signals: {

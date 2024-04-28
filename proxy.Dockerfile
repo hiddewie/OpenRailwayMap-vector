@@ -4,7 +4,8 @@ WORKDIR /build
 
 RUN --mount=type=bind,source=proxy/js/ui.js,target=ui.js.tmpl \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
-  cat train_protection.yaml \
+  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
+  cat train_protection.yaml speed_railway_signals.yaml \
     | template --configuration - --format yaml --template ui.js.tmpl \
     > /build/ui.js
 
