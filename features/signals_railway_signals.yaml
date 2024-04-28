@@ -612,8 +612,8 @@ signals_railway_signals:
         # TODO add shortened
         match: 'railway:signal:combined:states'
         cases:
-          - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/hp0' }
-          - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv0' }
+          - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
+          - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
         default: ''
       tags:
         - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }

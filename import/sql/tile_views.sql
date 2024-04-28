@@ -302,7 +302,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
           THEN {% if feature.icon.match %} CASE
             {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}"{% if case.null %} IS NULL{% else %} ~ '{% case.regex %}'{% end %} THEN{% if case.value | contains("{}") %} CONCAT('{% case.value | regexReplace("\{\}.*$", "") %}', "{% feature.icon.match %}", '{% case.value | regexReplace("^.*\{\}", "") %}'){% else %} '{% case.value %}'{% end %}
+            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN{% if case.value | contains("{}") %} CONCAT('{% case.value | regexReplace("\{\}.*$", "") %}', "{% feature.icon.match %}", '{% case.value | regexReplace("^.*\{\}", "") %}'){% else %} '{% case.value %}'{% end %}
 
 {% end %}
             {% if feature.icon.default %}
@@ -398,7 +398,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 
           THEN {% if feature.icon.match %} CASE
             {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}"{% if case.null %} IS NULL{% else %} ~ '{% case.regex %}'{% end %} THEN '{% case.value %}'
+            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
 
 {% end %}
             {% if feature.icon.default %}
@@ -539,7 +539,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
           THEN {% if feature.icon.match %} CASE
             {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}"{% if case.null %} IS NULL{% else %} ~ '{% case.regex %}'{% end %} THEN '{% case.value %}'
+            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
 {% end %}
             ELSE '{% feature.icon.default %}'
           END{% else %} '{% feature.icon.default %}'{% end %}

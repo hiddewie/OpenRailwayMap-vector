@@ -3300,10 +3300,22 @@ const legendData = {
         legend: `({% feature.country %}) {% feature.description %}`,
         type: 'point',
         properties: {
-          feature: '{% feature.icon.example | default(feature.icon.default) %}',
+          feature: '{% feature.icon.default %}',
           type: 'line',
-          azimuth: 90.0,
+          azimuth: null,
         },
+        {% if feature.icon.cases %}
+        variants: [
+          {% for case in feature.icon.cases %}
+          {
+            legend: '???',
+            properties: {
+              feature: '{% case.example | default(case.value) %}',
+            },
+          },
+{% end %}
+        ],
+{% end %}
       },
 {% end %}
       {
@@ -3430,10 +3442,22 @@ const legendData = {
         legend: `({% feature.country %}) {% feature.description %}`,
         type: 'point',
         properties: {
-          feature: '{% feature.icon.example | default(feature.icon.default) %}',
-          type: 'line',
-          azimuth: 90.0,
+          feature: '{% feature.icon.default %}',
+          azimuth: null,
+          deactivated: false,
         },
+        {% if feature.icon.cases %}
+        variants: [
+          {% for case in feature.icon.cases %}
+          {
+            legend: '???',
+            properties: {
+              feature: '{% case.example | default(case.value) %}',
+            },
+          },
+{% end %}
+        ],
+{% end %}
       },
 {% end %}
       {
@@ -3441,8 +3465,8 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'does-not-exist',
-          type: 'line',
           azimuth: 270.0,
+          deactivated: false,
         },
       },
       // TODO country specific railway signals
@@ -3452,7 +3476,7 @@ const legendData = {
         properties: {
           feature: 'de/ks-combined',
           type: 'line',
-          azimuth: 90.0,
+          azimuth: null,
           deactivated: true,
         },
       },
@@ -3727,10 +3751,22 @@ const legendData = {
         legend: `({% feature.country %}) {% feature.description %}`,
         type: 'point',
         properties: {
-          feature: '{% feature.icon.example | default(feature.icon.default) %}',
+          feature: '{% feature.icon.default %}',
           type: 'line',
-          azimuth: 90.0,
+          azimuth: null,
         },
+        {% if feature.icon.cases %}
+        variants: [
+          {% for case in feature.icon.cases %}
+          {
+            legend: '???',
+            properties: {
+              feature: '{% case.example | default(case.value) %}',
+            },
+          },
+{% end %}
+        ],
+{% end %}
       },
 {% end %}
       {
