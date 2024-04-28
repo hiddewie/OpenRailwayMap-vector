@@ -6,7 +6,8 @@ RUN --mount=type=bind,source=proxy/js/ui.js,target=ui.js.tmpl \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  cat electrification_signals.yaml train_protection.yaml speed_railway_signals.yaml \
+  --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
+  cat electrification_signals.yaml train_protection.yaml speed_railway_signals.yaml signals_railway_signals.yaml \
     | template --configuration - --format yaml --template ui.js.tmpl \
     > /build/ui.js
 

@@ -3297,7 +3297,7 @@ const legendData = {
       // TODO filter per country polygon
       {% for feature in speed_railway_signals.features %}
       {
-        legend: '({% feature.country %}) {% feature.description %}',
+        legend: `({% feature.country %}) {% feature.description %}`,
         type: 'point',
         properties: {
           feature: '{% feature.icon.example | default(feature.icon.default) %}',
@@ -3425,7 +3425,26 @@ const legendData = {
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [
-      // TODO railway signals from definition file
+      {% for feature in signals_railway_signals.features %}
+      {
+        legend: `({% feature.country %}) {% feature.description %}`,
+        type: 'point',
+        properties: {
+          feature: '{% feature.icon.example | default(feature.icon.default) %}',
+          type: 'line',
+          azimuth: 90.0,
+        },
+      },
+{% end %}
+      {
+        legend: 'signal direction',
+        type: 'point',
+        properties: {
+          feature: 'does-not-exist',
+          type: 'line',
+          azimuth: 270.0,
+        },
+      },
       // TODO country specific railway signals
       {
         legend: '(deactivated)',
@@ -3705,7 +3724,7 @@ const legendData = {
     'openrailwaymap_electrification-electrification_signals': [
       {% for feature in electrification_signals.features %}
       {
-        legend: '({% feature.country %}) {% feature.description %}',
+        legend: `({% feature.country %}) {% feature.description %}`,
         type: 'point',
         properties: {
           feature: '{% feature.icon.example | default(feature.icon.default) %}',
