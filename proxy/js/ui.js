@@ -3308,7 +3308,7 @@ const legendData = {
         variants: [
           {% for case in feature.icon.cases %}
           {
-            legend: '???',
+            legend: {% if case.description %}`{% case.description %}`{% else %}null{%end %},
             properties: {
               feature: '{% case.example | default(case.value) %}',
             },
@@ -3450,7 +3450,7 @@ const legendData = {
         variants: [
           {% for case in feature.icon.cases %}
           {
-            legend: '???',
+            legend: {% if case.description %}`{% case.description %}`{% else %}null{%end %},
             properties: {
               feature: '{% case.example | default(case.value) %}',
             },
@@ -3759,7 +3759,7 @@ const legendData = {
         variants: [
           {% for case in feature.icon.cases %}
           {
-            legend: '???',
+            legend: {% if case.description %}`{% case.description %}`{% else %}null{%end %},
             properties: {
               feature: '{% case.example | default(case.value) %}',
             },
@@ -4366,6 +4366,11 @@ function makeLegendStyle(style) {
         const applicable = layerVisibleAtZoom(legendZoom)(layer);
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
         const features = data.map(item => {
+          const legend = [item.legend, ...(item.variants ?? [])
+            .filter(variant => variant.legend)
+            .map(variant => variant.legend)]
+            .join(', ');
+
           const feature = {
             type: 'Feature',
             geometry: {
@@ -4373,7 +4378,7 @@ function makeLegendStyle(style) {
               coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
             },
             properties: {
-              legend: [item.legend, ...(item.variants ?? []).map(variant => variant.legend)].join(', '),
+              legend,
             },
           };
           entry ++;
