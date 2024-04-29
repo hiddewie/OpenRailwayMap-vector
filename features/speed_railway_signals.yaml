@@ -11,7 +11,7 @@ speed_railway_signals:
 
     # --- AT --- #
 
-    - description: Austrian speed signals (Geschwindigkeitsvoranzeiger) as signs
+    - description: Geschwindigkeitsvoranzeiger (sign)
       country: AT
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -22,7 +22,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: Austrian speed signals (Geschwindigkeitsvoranzeiger) as light signals
+    - description: Geschwindigkeitsvoranzeiger (light)
       country: AT
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -33,7 +33,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-    - description: Austrian speed signals (Geschwindigkeitsanzeiger)
+    - description: Geschwindigkeitsanzeiger (sign)
       country: AT
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -44,7 +44,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: Austrian speed signals (Geschwindigkeitsanzeiger)
+    - description: Geschwindigkeitsanzeiger (light)
       country: AT
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -55,7 +55,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-    - description: Austrian line speed signals (Ankündigungstafel)
+    - description: Ankündigungstafel
       country: AT
       type: line
       icon:
@@ -67,7 +67,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungstafel' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: Austrian line speed signals (Geschwindigkeitstafel)
+    - description: Geschwindigkeitstafel
       country: AT
       type: line
       icon:
@@ -79,14 +79,14 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: Austrian Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
+    - description: Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
       country: AT
       icon: { default: 'at/x40' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'AT-SLB:x40' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Anfangssignal
       country: AT
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -97,7 +97,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Ankündigungssignal
       country: AT
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -108,21 +108,21 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungssignal' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Endsignal
       country: AT
       icon: { default: 'at/endsignal' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'AT-V2:endsignal' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Ankündigung EK sicht
       country: AT
       icon: { default: 'at/ankündigung-ek-sicht' }
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigung_ek-sicht' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: EK sicht Pfeiftafel
       country: AT
       icon: { default: 'at/ek-sicht-pfeiftafel' }
       tags:
@@ -233,7 +233,7 @@ speed_railway_signals:
 
     # --- DE --- #
 
-    - description: German speed signals (Zs 3v) as signs
+    - description: Speed signals (Zs 3v) (sign)
       country: DE
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -244,7 +244,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: German speed signals (Zs 3v) as light signals
+    - description: Speed signals (Zs 3v) (light)
       country: DE
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -257,7 +257,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-    - description: German speed signals (Zs 3) as signs
+    - description: Speed signals (Zs 3) (light)
       country: DE
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -268,7 +268,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: German speed signals (Zs 3) as light signals
+    - description: Speed signals (Zs 3) (light)
       country: DE
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -293,7 +293,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:db:lf4' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: West German branch line speed signals (Lf 4 DS 301)
+    - description: East German branch line speed signals (Lf 4)
       country: DE
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -317,7 +317,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf6' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Langsamfahrscheibe
       country: DE
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -328,7 +328,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf1' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Hamburger Hochbahn L1
       country: DE
       type: line
       icon:
@@ -340,7 +340,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'DE-HHA:l1' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: German tram distance speed limit signals as signs (G 1a)
+    - description: Tram distance speed limit (G 1a) (sign)
       country: DE
       type: tram
       icon:
@@ -352,7 +352,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: German tram distance speed limit signals as lights (G 1b)
+    - description: Tram distance speed limit (G 1b) (light)
       country: DE
       type: tram
       icon:
@@ -364,7 +364,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-    - description: German tram speed limit signals as signs (G 2a)
+    - description: Tram speed limit (G 2a) (sign)
       country: DE
       type: tram
       icon:
@@ -376,7 +376,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: German tram speed limit signals as lights (G 2b)
+    - description: Tram speed limit (G 2b) (light)
       country: DE
       type: tram
       icon:
@@ -388,7 +388,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-    - description: ???
+    - description: Tram signal G3
       country: DE
       type: tram
       icon: { default: 'de/bostrab/g3' }
@@ -408,7 +408,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Hannover tram speed limit G5
       country: DE
       type: tram
       icon:
@@ -448,7 +448,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf7' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Hamburger Hochbahn L4
       country: DE
       type: line
       icon: { default: 'de/hha/l4' }
@@ -456,14 +456,14 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'DE-HHA:l4' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Anfangsscheibe
       country: DE
       icon: { default: 'de/lf2-sign' }
       tags:
         - { tag: 'railway:signal:speed_limit', values: ['DE-ESO:lf2', 'DE-ESO:db:lf2'] }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Langsamfahrbeginnscheibe
       country: DE
       icon:
         match: 'railway:signal:speed_limit:speed'
@@ -474,21 +474,21 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf1/2' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Endscheibe
       country: DE
       icon: { default: 'de/lf3-sign' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf3' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Ende der Geschwindigkeitsbeschränkung (sign)
       country: DE
       icon: { default: 'de/zs10-sign' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Ende der Geschwindigkeitsbeschränkung (light)
       country: DE
       icon: { default: 'de/zs10-light' }
       tags:
@@ -497,7 +497,7 @@ speed_railway_signals:
 
     # --- FR --- #
 
-    - description: ???
+    - description: Pancarte Z & TIV
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -510,7 +510,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Pancarte Z & TIV Type B
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -523,42 +523,42 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_type_B' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Pancarte Z
       country: FR
       icon: { default: 'fr/Tableau_Z' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_Z' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Tableau R
       country: FR
       icon: { default: 'fr/Tableau_R' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_R' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Tableau P
       country: FR
       icon: { default: 'fr/Tableau_P' }
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:tableau_P' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: Chevron pointe en bas
       country: FR
       icon: { default: 'fr/chevron pointe en bas' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'FR:chevron pointe en bas' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: Chevron pointe en haut
       country: FR
       icon: { default: 'fr/chevron pointe en haut' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'FR:chevron pointe en haut' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: ???
+    - description: TIV (sign)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -569,7 +569,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: TIV (light)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -580,7 +580,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-    - description: ???
+    - description: TIV Type B
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -591,7 +591,7 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_type_B' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: ???
+    - description: TIV Type C
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
