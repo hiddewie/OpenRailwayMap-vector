@@ -15,7 +15,7 @@ services:
       - PG_MAINTENANCE_WORK_MEM
       - PGDATA=/var/lib/postgresql/postgres-data
     healthcheck:
-      test: pg_isready -U postgres -d gis
+      test: pg_isready -U postgres
       interval: 1s
       timeout: 1s
       retries: 3
@@ -27,6 +27,8 @@ services:
       dockerfile: import/Dockerfile
       cache_from:
         - ghcr.io/hiddewie/openrailwaymap-import:latest
+    command:
+      - import
     depends_on:
       db:
         condition: service_healthy
@@ -67,11 +69,12 @@ services:
       - ./tiles:/tiles
     environment:
       # Europe center: -11.3818,35.8891,25.0488,57.3976
-      # AT: --bbox=9.52678,46.36851,17.16273,48.90201
-      # DE: --bbox=5.864417,47.26543,15.05078,55.14777
-      # FI: --bbox=19.02427,59.28783,31.6159,70.09959
-      # NL: --bbox=2.99,50.74753,7.230455,54.01786
-      - BBOX=-11.3818,35.8891,25.0488,57.3976
+      # AT: 9.52678,46.36851,17.16273,48.90201
+      # CH: 6.0974,45.8269,10.5579,47.7941
+      # DE: 5.864417,47.26543,15.05078,55.14777
+      # FI: 19.02427,59.28783,31.6159,70.09959
+      # NL: 2.99,50.74753,7.230455,54.01786
+      - BBOX
       - MIN_ZOOM=0
       - MAX_ZOOM=14
       - DATABASE_URL=postgresql://postgres@db:5432/gis
@@ -95,10 +98,6 @@ services:
   martin-proxy:
     build:
       dockerfile: proxy.Dockerfile
-    volumes:
-      - ./proxy/index.html:/etc/nginx/public/index.html
-      - ./proxy/js/ui.js:/etc/nginx/public/js/ui.js
-      - ./proxy/css/ui.css:/etc/nginx/public/css/ui.css
     ports:
       - '8000:8000'
     environment:
@@ -109,3 +108,9 @@ services:
       NGINX_CACHE_TTL: '0'
       CLIENT_CACHE_TTL_FRESH: '0'
       CLIENT_CACHE_TTL_STALE: '0'
+    develop:
+      watch:
+        - action: rebuild
+          path: proxy
+        - action: rebuild
+          path: features

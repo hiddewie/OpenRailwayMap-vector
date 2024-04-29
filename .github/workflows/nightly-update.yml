@@ -1,0 +1,21 @@
+name: Nightly update
+
+on:
+  workflow_dispatch: ~
+  schedule:
+    # Run daily at 17:47 UTC
+    - cron: '47 17 * * *'
+
+jobs:
+  trigger-circle-ci:
+    name: Trigger CircleCI
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          curl \
+            -X POST \
+            -H "content-type: application/json" \
+            "https://internal.circleci.com/private/soc/e/4137caec-ceea-4722-9803-8ab90a8d2355?secret=$CIRCLECI_WEBHOOK_SECRET"
+        env:
+          CIRCLECI_WEBHOOK_SECRET: ${{ secrets.CIRCLECI_WEBHOOK_SECRET }}

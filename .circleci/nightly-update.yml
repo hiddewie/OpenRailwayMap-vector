@@ -1,0 +1,53 @@
+version: 2.1
+
+executors:
+  default:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
+
+jobs:
+  import-data:
+    executor: default
+    steps:
+      - checkout
+      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
+      - run: echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_USERNAME" --password-stdin
+      - run: docker compose build db
+      - run: docker compose build import
+      - run: docker compose build martin-cp
+      - run: docker compose up --wait db
+      - run: curl --location --progress-bar https://download.geofabrik.de/europe-latest.osm.pbf --output data/data.osm.pbf
+      - run:
+          no_output_timeout: 1h
+          environment:
+            OSM2PGSQL_DATAFILE: data.osm.pbf
+            OSM2PGSQL_CACHE: '7000'
+            OSM2PGSQL_NUMPROC: '2'
+          command: docker compose up import
+      - run: |
+          docker compose stop db
+          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .Image')"
+
+          # Persist and squash data in new image
+          docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
+          echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
+          
+          docker compose build db
+          docker compose push db
+      - run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/hiddewie/OpenRailwayMap-vector/actions/workflows/deploy.yml/dispatches \
+            -d "$(jq -c -n --arg branch "$CIRCLE_BRANCH" '{ref: $branch}')"
+
+workflows:
+  auto-deployment:
+    jobs:
+      - import-data:
+          context:
+            - github

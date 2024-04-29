@@ -24,6 +24,11 @@ docker compose up --build martin-proxy
 
 The OpenRailwayMap is now available on http://localhost:8000.
 
+To ease development, Docker Compose can automatically rebuild containers when dependent files change. Enable *watch mode* with:
+```shell
+docker compose watch
+```
+
 ## Deployment
 
 Import the data:
