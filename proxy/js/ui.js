@@ -1489,6 +1489,26 @@ const layers = {
       }
     },
     {
+      id: 'railway_symbols_med_high',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_symbols',
+      filter: ['any',
+        ['==', ['get', 'railway'], 'crossing'],
+        ['==', ['get', 'railway'], 'level_crossing'],
+      ],
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': ['case',
+          ['==', ['get', 'railway'], 'level_crossing'], 'general/level-crossing',
+          ['==', ['get', 'railway'], 'crossing'], 'general/crossing',
+          '',
+        ],
+      }
+    },
+    {
       id: 'railway_symbols_med',
       type: 'symbol',
       minzoom: 12,
@@ -1508,25 +1528,6 @@ const layers = {
             ['==', ['get', 'man_made'], 'antenna'], 'general/radio-antenna',
             '',
           ],
-          '',
-        ],
-      }
-    },
-    {
-      id: 'railway_symbols_med_high',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'railway'], 'crossing'],
-        ['==', ['get', 'railway'], 'level_crossing'],
-      ],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-image': ['case',
-          ['==', ['get', 'railway'], 'level_crossing'], 'general/level-crossing',
-          ['==', ['get', 'railway'], 'crossing'], 'general/crossing',
           '',
         ],
       }
