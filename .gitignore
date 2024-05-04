@@ -1,5 +1,6 @@
 *.swp
 data/
+db/postgres-data
 standard.xml
 maxspeed.xml
 signals.xml
