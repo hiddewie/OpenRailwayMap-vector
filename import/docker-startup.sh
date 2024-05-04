@@ -55,6 +55,7 @@ update)
 
   echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
   osm2pgsql-replication update \
+    --once \
     --database gis \
     -- \
     --slim \
