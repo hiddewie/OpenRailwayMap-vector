@@ -199,16 +199,32 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
     way,
-    railway,
-    man_made,
+    CASE
+      WHEN railway = 'crossing' THEN 'general/crossing'
+      WHEN railway = 'level_crossing' THEN
+        CASE
+          WHEN crossing_barrier AND crossing_light AND crossing_bells THEN 'general/level-crossing-barrier'
+          WHEN crossing_light AND crossing_bells THEN 'general/level-crossing-light'
+          ELSE 'general/level-crossing'
+        END
+      WHEN railway = 'phone' THEN 'general/phone'
+      WHEN railway = 'tram_stop' THEN 'general/tram-stop'
+      WHEN railway = 'border' THEN 'general/border'
+      WHEN railway = 'owner_change' THEN 'general/owner-change'
+      WHEN railway = 'radio' THEN
+        CASE
+          WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
+          WHEN man_made = 'antenna' THEN 'general/radio-antenna'
+        END
+    END AS feature,
     CASE
       WHEN railway = 'crossing' THEN -1::int
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
-    END AS prio
+    END AS priority
   FROM pois
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio')
-  ORDER BY prio DESC;
+  ORDER BY priority DESC;
 
 CREATE OR REPLACE VIEW standard_railway_text_km AS
   SELECT
