@@ -124,8 +124,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
-        railway: string
-        man_made: string
+        feature: string
 
     standard_railway_text_km:
       schema: public

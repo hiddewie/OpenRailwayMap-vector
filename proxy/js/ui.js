@@ -1479,7 +1479,7 @@ const layers = {
       minzoom: 12,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'railway'], 'tram_stop'],
+      filter: ['==', ['get', 'feature'], 'general/tram-stop'],
       layout: {
         'icon-overlap': 'always',
         'icon-image': 'general/tram-stop',
@@ -1556,33 +1556,9 @@ const layers = {
       minzoom: 10,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'railway'], 'border'],
+      filter: ['==', ['get', 'feature'], 'general/border'],
       layout: {
-        'icon-image': 'general/border',
-      }
-    },
-    {
-      id: 'railway_symbols_med',
-      type: 'symbol',
-      minzoom: 12,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'railway'], 'owner_change'],
-        ['==', ['get', 'railway'], 'radio'],
-      ],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-image': ['case',
-          ['==', ['get', 'railway'], 'owner_change'], 'general/border',
-          ['==', ['get', 'railway'], 'radio'], ['case',
-            ['==', ['get', 'man_made'], 'mast'], 'general/radio-mast',
-            ['==', ['get', 'man_made'], 'tower'], 'general/radio-mast',
-            ['==', ['get', 'man_made'], 'antenna'], 'general/radio-antenna',
-            '',
-          ],
-          '',
-        ],
+        'icon-image': ['image', ['get', 'feature']],
       }
     },
     {
@@ -1592,17 +1568,32 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
       filter: ['any',
-        ['==', ['get', 'railway'], 'crossing'],
-        ['==', ['get', 'railway'], 'level_crossing'],
+        ['==', ['get', 'feature'], 'general/crossing'],
+        ['==', ['get', 'feature'], 'general/level-crossing'],
+        ['==', ['get', 'feature'], 'general/level-crossing-light'],
+        ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
       ],
       layout: {
         'symbol-z-order': 'source',
-        'icon-image': ['case',
-          ['==', ['get', 'railway'], 'level_crossing'], 'general/level-crossing',
-          ['==', ['get', 'railway'], 'crossing'], 'general/crossing',
-          '',
-        ],
+        'icon-overlap': 'always',
+        'icon-image': ['image', ['get', 'feature']],
       }
+    },
+    {
+      id: 'railway_symbols_med',
+      type: 'symbol',
+      minzoom: 12,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_symbols',
+      filter: ['any',
+        ['==', ['get', 'feature'], 'general/owner-change'],
+        ['==', ['get', 'feature'], 'general/radio-mast'],
+        ['==', ['get', 'feature'], 'general/radio-antenna'],
+      ],
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-image': ['image', ['get', 'feature']],
+      },
     },
     {
       id: 'railway_symbols_high',
@@ -1610,10 +1601,10 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'railway'], 'phone'],
+      filter: ['==', ['get', 'feature'], 'general/phone'],
       layout: {
         'symbol-z-order': 'source',
-        'icon-image': 'general/phone',
+        'icon-image': ['image', ['get', 'feature']],
       }
     },
     {
@@ -3234,28 +3225,36 @@ const legendData = {
         legend: 'Tram stop',
         type: 'point',
         properties: {
-          railway: 'tram_stop',
+          feature: 'general/tram-stop',
         },
       },
       {
-        legend: 'Border crossing / owner change',
+        legend: 'Border crossing',
         type: 'point',
         properties: {
-          railway: 'border',
+          feature: 'general/border',
         },
+        variants: [
+          {
+            legend: 'owner change',
+            // TODO unique icon for owner change
+            properties: {
+              feature: 'general/owner-change',
+            },
+          },
+        ],
       },
       {
         legend: 'Radio mast',
         type: 'point',
         properties: {
-          railway: 'radio',
-          man_made: 'mast',
+          feature: 'general/radio-mast',
         },
         variants: [
           {
             legend: 'antenna',
             properties: {
-              man_made: 'antenna',
+              feature: 'general/radio-antenna',
             }
           }
         ]
@@ -3264,13 +3263,25 @@ const legendData = {
         legend: 'Crossing',
         type: 'point',
         properties: {
-          railway: 'crossing',
+          feature: 'general/crossing',
         },
         variants: [
           {
             legend: 'level crossing',
             properties: {
-              railway: 'level_crossing',
+              feature: 'general/level-crossing',
+            }
+          },
+          {
+            legend: 'lights',
+            properties: {
+              feature: 'general/level-crossing-light',
+            }
+          },
+          {
+            legend: 'barrier',
+            properties: {
+              feature: 'general/level-crossing-barrier',
             }
           }
         ]
@@ -3279,7 +3290,7 @@ const legendData = {
         legend: 'Phone',
         type: 'point',
         properties: {
-          railway: 'phone',
+          feature: 'general/phone',
         },
       },
     ],
