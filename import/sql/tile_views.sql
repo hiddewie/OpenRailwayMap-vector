@@ -366,6 +366,7 @@ CREATE OR REPLACE VIEW signals_railway_line AS
     CASE
       WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
       WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
+      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
       ELSE railway
     END as feature,
     train_protection_rank,
@@ -438,6 +439,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
     service,
     CASE
       WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
+      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
       ELSE railway
     END as feature,
     CASE
@@ -465,6 +467,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
        usage,
        service,
        construction_railway,
+       preserved_railway,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
        railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
        frequency,
@@ -489,6 +492,7 @@ CREATE OR REPLACE VIEW electrification_future AS
     service,
     CASE
       WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
+      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
       ELSE railway
     END as feature,
     CASE
@@ -515,6 +519,7 @@ CREATE OR REPLACE VIEW electrification_future AS
        usage,
        service,
        construction_railway,
+       preserved_railway,
        railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
        frequency,
        voltage,
