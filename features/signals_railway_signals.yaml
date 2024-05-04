@@ -172,13 +172,26 @@ signals_railway_signals:
       country: BE
       icon: { default: 'be/PSA' }
       tags:
-        - { tag: 'railway:signal:minor', values: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
+        - { tag: 'railway:signal:minor', value: 'BE:PSA' }
+
+    - description: (BME) Shunting signal, triangle
+      country: BE
+      icon: { default: 'be/PSA' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'BE-SME:small_signal_triangle' }
 
     - description: (BME) Shunting signal, 2 color
       country: BE
       icon: { default: 'be/bme/shunting_twocolour_ny' }
       tags:
         - { tag: 'railway:signal:shunting', value: 'BE-SME:small_signal_two_colour' }
+
+    - description: (BME) Approach (semaphore)
+      country: BE
+      icon: { default: 'be/bme/semaphore_approach' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
+        - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
     - description: (BME) Simplified main signal
       country: BE
@@ -190,13 +203,6 @@ signals_railway_signals:
         default: 'be/bme/simplified_unknown'
       tags:
         - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
-
-    - description: (BME) Approach (semaphore)
-      country: BE
-      icon: { default: 'be/bme/semaphore_approach' }
-      tags:
-        - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
-        - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
     # --- DE --- #
 
