@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="96" version="1.1" viewBox="0 0 60 96" xmlns="http://www.w3.org/2000/svg">
+	<g transform="translate(-339.17 -33.563)">
+		<rect x="339.17" y="33.563" width="60" height="96" rx="30" ry="30" style="paint-order:stroke fill markers"/>
+		<rect x="345.78" y="41.079" width="46.783" height="80.968" rx="23.392" ry="23.392" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="3.9391" style="paint-order:stroke fill markers"/>
+		<ellipse cx="369.17" cy="66.347" rx="9.5485" ry="9.5247" fill="#f40400" style="paint-order:stroke fill markers"/>
+		<ellipse cx="369.17" cy="96.009" rx="9.5485" ry="9.5247" fill="#edd000" style="paint-order:stroke fill markers"/>
+	</g>
+</svg>
