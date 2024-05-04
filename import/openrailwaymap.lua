@@ -246,9 +246,9 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       man_made = tags.man_made,
-      crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] != 'no'),
-      crossing_light = tags['crossing:light'] and (tags['crossing:light'] != 'no'),
-      crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] != 'no'),
+      crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] ~= 'no'),
+      crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
+      crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
     })
   end
 

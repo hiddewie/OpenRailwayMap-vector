@@ -1528,7 +1528,7 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'feature'], 'phone'],
+      filter: ['==', ['get', 'feature'], 'general/phone'],
       layout: {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['get', 'feature']],
@@ -3136,28 +3136,36 @@ const legendData = {
         legend: 'Tram stop',
         type: 'point',
         properties: {
-          railway: 'tram_stop',
+          feature: 'general/tram-stop',
         },
       },
       {
-        legend: 'Border crossing / owner change',
+        legend: 'Border crossing',
         type: 'point',
         properties: {
-          railway: 'border',
+          feature: 'general/border',
         },
+        variants: [
+          {
+            legend: 'owner change',
+            // TODO unique icon for owner change
+            properties: {
+              feature: 'general/owner-change',
+            },
+          },
+        ],
       },
       {
         legend: 'Radio mast',
         type: 'point',
         properties: {
-          railway: 'radio',
-          man_made: 'mast',
+          feature: 'general/radio-mast',
         },
         variants: [
           {
             legend: 'antenna',
             properties: {
-              man_made: 'antenna',
+              feature: 'general/radio-antenna',
             }
           }
         ]
@@ -3166,27 +3174,25 @@ const legendData = {
         legend: 'Crossing',
         type: 'point',
         properties: {
-          railway: 'crossing',
+          feature: 'general/crossing',
         },
         variants: [
           {
             legend: 'level crossing',
             properties: {
-              railway: 'level_crossing',
+              feature: 'general/level-crossing',
             }
           },
           {
             legend: 'lights',
             properties: {
-              railway: 'level_crossing',
-              lights: true,
+              feature: 'general/level-crossing-light',
             }
           },
           {
             legend: 'barrier',
             properties: {
-              railway: 'level_crossing',
-              barrier: true,
+              feature: 'general/level-crossing-barrier',
             }
           }
         ]
@@ -3195,7 +3201,7 @@ const legendData = {
         legend: 'Phone',
         type: 'point',
         properties: {
-          railway: 'phone',
+          feature: 'general/phone',
         },
       },
     ],
