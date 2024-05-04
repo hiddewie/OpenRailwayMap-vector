@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="45" height="75" version="1.1" viewBox="0 0 45 75" xmlns="http://www.w3.org/2000/svg">
-	<g transform="translate(-347.09 -44.198)">
-		<rect x="347.09" y="44.198" width="45" height="75" rx="7.8736" ry="7.8736" style="paint-order:stroke fill markers"/>
-		<ellipse cx="369.59" cy="66.867" rx="9.5485" ry="9.5247" fill="#993eff" style="paint-order:stroke fill markers"/>
-		<ellipse cx="369.59" cy="96.529" rx="9.5485" ry="9.5247" fill="#edd000" style="paint-order:stroke fill markers"/>
-	</g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="20" viewBox="0 0 12 20">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 2.101562 0 L 9.898438 0 C 11.058594 0 12 0.941406 12 2.101562 L 12 17.898438 C 12 19.058594 11.058594 20 9.898438 20 L 2.101562 20 C 0.941406 20 0 19.058594 0 17.898438 L 0 2.101562 C 0 0.941406 0.941406 0 2.101562 0 Z M 2.101562 0 "/>
+<path fill-rule="nonzero" fill="rgb(60%, 24.313725%, 100%)" fill-opacity="1" d="M 8.546875 6.046875 C 8.546875 7.449219 7.40625 8.585938 6 8.585938 C 4.59375 8.585938 3.453125 7.449219 3.453125 6.046875 C 3.453125 4.640625 4.59375 3.503906 6 3.503906 C 7.40625 3.503906 8.546875 4.640625 8.546875 6.046875 Z M 8.546875 6.046875 "/>
+<path fill-rule="nonzero" fill="rgb(92.941176%, 81.568627%, 0%)" fill-opacity="1" d="M 8.546875 13.953125 C 8.546875 15.359375 7.40625 16.496094 6 16.496094 C 4.59375 16.496094 3.453125 15.359375 3.453125 13.953125 C 3.453125 12.550781 4.59375 11.414062 6 11.414062 C 7.40625 11.414062 8.546875 12.550781 8.546875 13.953125 Z M 8.546875 13.953125 "/>
 </svg>
