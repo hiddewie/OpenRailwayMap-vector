@@ -66,9 +66,15 @@ update)
 
   ;;
 
+refresh)
+
+  echo "Refreshing tables and views"
+
+  ;;
+
 *)
 
-  echo "Invalid argument '$1'. Supported: import, update"
+  echo "Invalid argument '$1'. Supported: import, update, refresh"
   exit 1
 
   ;;
