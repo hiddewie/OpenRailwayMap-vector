@@ -32,6 +32,7 @@ jobs:
           # Persist and squash data in new image
           docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" db/postgres-data
           echo 'COPY postgres-data /var/lib/postgresql/postgres-data' >> db/Dockerfile
+          echo '!db/postgres-data' >> .dockerignore
           
           docker compose build db
           docker compose push db
