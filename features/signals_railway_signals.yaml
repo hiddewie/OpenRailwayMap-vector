@@ -805,12 +805,12 @@ signals_railway_signals:
         cases:
           - { regex: '^(.*;)?FR:Cv(;.*)?$', value: 'fr/C-Cv' }
           - { regex: '^(.*;)?FR:Mr?(;.*)?$', value: 'fr/C-M' }
-          - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
           - { regex: '^(.*;)?FR:RRc?(\(Ac?\))(;.*)?$', value: 'fr/C-RR-A' }
           - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/C-R-A' }
           - { regex: '^(.*;)?FR:RRc?(;.*)?$', value: 'fr/C-RR' }
           - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/C-R' }
           - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/C-A' }
+          - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
           - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/C-S' }
           - { regex: '^(.*;)?FR:C(;.*)?$', value: 'fr/C-C' }
         # TODO split on shape
@@ -822,9 +822,15 @@ signals_railway_signals:
     - description: Sémaphore
       country: FR
       icon:
-        # TODO match aspects
+        match: 'railway:signal:main:states'
+        cases:
+          - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/S-R-A' }
+          - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/S-R' }
+          - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/S-A' }
+          - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/S-VL' }
+          - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/S-S' }
         # TODO split on shape
-        default: 'fr/sémaphore'
+        default: 'fr/S-S'
       tags:
         - { tag: 'railway:signal:main', value: 'FR:S' }
         - { tag: 'railway:signal:main:form', value: 'light' }
@@ -832,8 +838,12 @@ signals_railway_signals:
     - description: Avertissement
       country: FR
       icon:
-        # TODO match aspects
-        default: 'fr/avertissement'
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?FR:R(;.*)?$', value: 'fr/A-R' }
+          - { regex: '^(.*;)?FR:A(;.*)?$', value: 'fr/A-A' }
+          - { regex: '^(.*;)?FR:VL(;.*)?$', value: 'fr/A-VL' }
+        default: 'fr/A-VL'
       tags:
         - { tag: 'railway:signal:distant', value: 'FR:A' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
