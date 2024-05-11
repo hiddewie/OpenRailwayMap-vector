@@ -497,7 +497,7 @@ speed_railway_signals:
 
     # --- FR --- #
 
-    - description: Pancarte Z & TIV
+    - description: Pancarte Z & TIV-D
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -505,12 +505,12 @@ speed_railway_signals:
           - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/Z-TIV-distance-{}-sign', example: 'fr/Z-TIV-distance-120-sign' }
         default: 'fr/Z-TIV-distance-empty-sign'
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_Z' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: Pancarte Z & TIV Type B
+    - description: Pancarte Z & TIV-D (B)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -518,58 +518,49 @@ speed_railway_signals:
           - { regex: '^(1[5-9]0|200)$', value: 'fr/Z-TIV-type-B-{}', example: 'fr/Z-TIV-type-B-160' }
         default: 'fr/Z-TIV-type-B-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_Z' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_type_B' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
     - description: Pancarte Z
       country: FR
       icon: { default: 'fr/Tableau_Z' }
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_Z' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
     - description: Tableau R
       country: FR
       icon: { default: 'fr/Tableau_R' }
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:pancarte_R' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:R' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
     - description: Tableau P
       country: FR
       icon: { default: 'fr/Tableau_P' }
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:tableau_P' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:P' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
     - description: Chevron pointe en bas
       country: FR
       icon: { default: 'fr/chevron pointe en bas' }
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:chevron pointe en bas' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
+        - { tag: 'railway:signal:speed_limit:pointing', value: 'downwards' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
     - description: Chevron pointe en haut
       country: FR
       icon: { default: 'fr/chevron pointe en haut' }
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'FR:chevron pointe en haut' }
+        - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
+        - { tag: 'railway:signal:speed_limit:pointing', value: 'upwards' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-    - description: TIV (sign)
-      country: FR
-      icon:
-        match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-{}-sign', example: 'fr/TIV-distance-110-sign' }
-        default: 'fr/TIV-distance-empty-sign'
-      tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
-        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-
-    - description: TIV (light)
+    - description: TIV-D (mobile)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -577,10 +568,33 @@ speed_railway_signals:
           - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-{}-light', example: 'fr/TIV-distance-80-light' }
         default: 'fr/TIV-distance-empty-light'
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_O' }
-        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+        - { tag: 'railway:signal:speed_limit_distant:mobile', value: 'yes' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: TIV Type B
+    - description: TIV-D (fixed)
+      country: FR
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-{}-sign', example: 'fr/TIV-distance-70-sign' }
+        default: 'fr/TIV-distance-empty-sign'
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: TIV-R
+      country: FR
+      icon:
+        match: 'railway:signal:speed_limit_reminder:speed'
+        cases:
+          - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-{}-sign', example: 'fr/TIV-reminder-110-sign' }
+        default: 'fr/TIV-reminder-empty-sign'
+      tags:
+        - { tag: 'railway:signal:speed_limit_reminder', value: 'FR:TIV-R' }
+        - { tag: 'railway:signal:speed_limit_reminder:form', value: 'sign' }
+
+    - description: TIV-D (B)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -588,10 +602,10 @@ speed_railway_signals:
           - { regex: '^(1[5-9]0|200)$', value: 'fr/TIV-type-B-{}', example: 'fr/TIV-type-B-160' }
         default: 'fr/TIV-type-B-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_type_B' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    - description: TIV Type C
+    - description: TIV-D (C)
       country: FR
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
@@ -599,7 +613,7 @@ speed_railway_signals:
           - { regex: '^(1[5-9]0)$', value: 'fr/TIV-type-C-{}', example: 'fr/TIV-type-C-160' }
         default: 'fr/TIV-type-C-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_type_C' }
+        - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_C' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
     # --- FI --- #
