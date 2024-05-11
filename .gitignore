@@ -13,3 +13,4 @@ tmp
 .env
 *.osm.pbf
 .idea
+tiles
