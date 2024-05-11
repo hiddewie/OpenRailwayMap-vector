@@ -796,6 +796,55 @@ signals_railway_signals:
         - { tag: 'railway:signal:combined', value: 'FI:So' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
+    # --- FR --- #
+
+    - description: Carré
+      country: FR
+      icon:
+        match: 'railway:signal:main:states'
+        cases:
+          - { regex: '^(.*;)?FR:Cv(;.*)?$', value: 'fr/C-Cv' }
+          - { regex: '^(.*;)?FR:Mr?(;.*)?$', value: 'fr/C-M' }
+          - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
+          - { regex: '^(.*;)?FR:RRc?(\(Ac?\))(;.*)?$', value: 'fr/C-RR-A' }
+          - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/C-R-A' }
+          - { regex: '^(.*;)?FR:RRc?(;.*)?$', value: 'fr/C-RR' }
+          - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/C-R' }
+          - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/C-A' }
+          - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/C-S' }
+          - { regex: '^(.*;)?FR:C(;.*)?$', value: 'fr/C-C' }
+        # TODO split on shape
+        default: 'fr/C-C'
+      tags:
+        - { tag: 'railway:signal:main', value: 'FR:C' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Sémaphore
+      country: FR
+      icon:
+        # TODO match aspects
+        # TODO split on shape
+        default: 'fr/sémaphore'
+      tags:
+        - { tag: 'railway:signal:main', value: 'FR:S' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Avertissement
+      country: FR
+      icon:
+        # TODO match aspects
+        default: 'fr/avertissement'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'FR:A' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: Disque
+      country: FR
+      icon: { default: 'fr/D-D' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'FR:D' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
     # --- NL --- #
 
     - description: departure signal
