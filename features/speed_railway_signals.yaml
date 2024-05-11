@@ -585,16 +585,17 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-#    - description: TIV-R
-#      country: FR
-#      icon:
-#        match: 'railway:signal:speed_limit_reminder:speed'
-#        cases:
-#          - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-{}-sign', example: 'fr/TIV-reminder-110-sign' }
-#        default: 'fr/TIV-reminder-empty-sign'
-#      tags:
-#        - { tag: 'railway:signal:speed_limit_reminder', value: 'FR:TIV-R' }
-#        - { tag: 'railway:signal:speed_limit_reminder:form', value: 'sign' }
+    # TODO support TIV-R
+    # - description: TIV-R
+    #   country: FR
+    #   icon:
+    #     match: 'railway:signal:speed_limit_reminder:speed'
+    #     cases:
+    #       - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-{}-sign', example: 'fr/TIV-reminder-110-sign' }
+    #     default: 'fr/TIV-reminder-empty-sign'
+    #   tags:
+    #     - { tag: 'railway:signal:speed_limit_reminder', value: 'FR:TIV-R' }
+    #     - { tag: 'railway:signal:speed_limit_reminder:form', value: 'sign' }
 
     - description: TIV-D (B)
       country: FR
