@@ -3254,7 +3254,6 @@ const legendData = {
         variants: [
           {
             legend: 'owner change',
-            // TODO unique icon for owner change
             properties: {
               feature: 'general/owner-change',
             },
