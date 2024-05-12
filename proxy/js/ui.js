@@ -4550,7 +4550,7 @@ class StyleControl {
 
     Object.entries(knownStyles).forEach(([name, styleLabel]) => {
       const id = `style-${name}`
-      const label = createDomElement('label', 'btn', buttonGroup);
+      const label = createDomElement('label', 'btn btn-light', buttonGroup);
       label.htmlFor = id
       label.innerText = styleLabel
       const radio = createDomElement('input', '', label);

@@ -102,9 +102,6 @@ body {
 .maplibregl-ctrl-style {
   font-size: 1rem;
 }
-.maplibregl-ctrl-style label.btn:hover {
-  background-color: #deece1;
-}
 .maplibregl-ctrl-style label.btn:has(input[type="radio"]:checked) {
   color: #fff;
   background-color: #1e7e34;
