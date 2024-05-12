@@ -358,7 +358,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
       -- 42 is tagged (but invalid tagging).
       railway_largest_speed_noconvert("railway:signal:speed_limit:speed")::text AS "railway:signal:speed_limit:speed",
       railway_largest_speed_noconvert("railway:signal:speed_limit_distant:speed")::text AS "railway:signal:speed_limit_distant:speed",
-      azimuth
+      azimuth,
+      (signal_direction = 'both') as direction_both
     FROM signals_with_azimuth s
     WHERE railway = 'signal'
       AND signal_direction IS NOT NULL
@@ -428,7 +429,8 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 {% end %}
 
     END as feature,
-    azimuth
+    azimuth,
+    (signal_direction = 'both') as direction_both
   FROM signals_with_azimuth
   WHERE ((railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
     OR railway = 'derail')
@@ -440,7 +442,8 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     ref_multiline,
     deactivated,
     feature,
-    azimuth
+    azimuth,
+    direction_both
   FROM pre_signals
   -- TODO investigate signals with null features
   WHERE feature IS NOT NULL;
@@ -569,7 +572,8 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
 {% end %}
     END as feature,
-    azimuth
+    azimuth,
+    (signal_direction = 'both') as direction_both
   FROM signals_with_azimuth
   WHERE
     railway = 'signal'

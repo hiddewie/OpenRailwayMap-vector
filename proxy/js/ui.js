@@ -2027,8 +2027,11 @@ const layers = {
       ],
       layout: {
         'icon-overlap': 'always',
-        'icon-image': 'general/signal-direction',
-        'icon-offset': ['literal', [0, 15]],
+        'icon-image': ['case',
+          ['get', 'direction_both'], 'general/signal-direction-both',
+          'general/signal-direction',
+        ],
+        'icon-anchor': 'top',
         'icon-rotate': ['get', 'azimuth'],
       }
     },
@@ -2245,10 +2248,12 @@ const layers = {
         ['!=', ['get', 'feature'], ''],
       ],
       layout: {
-        'symbol-z-order': 'source',
         'icon-overlap': 'always',
-        'icon-image': 'general/signal-direction',
-        'icon-offset': ['literal', [0, 15]],
+        'icon-image': ['case',
+          ['get', 'direction_both'], 'general/signal-direction-both',
+          'general/signal-direction',
+        ],
+        'icon-anchor': 'top',
         'icon-rotate': ['get', 'azimuth'],
       }
     },
@@ -2484,8 +2489,11 @@ const layers = {
       ],
       layout: {
         'icon-overlap': 'always',
-        'icon-image': 'general/signal-direction',
-        'icon-offset': ['literal', [0, 15]],
+        'icon-image': ['case',
+          ['get', 'direction_both'], 'general/signal-direction-both',
+          'general/signal-direction',
+        ],
+        'icon-anchor': 'top',
         'icon-rotate': ['get', 'azimuth'],
       }
     },
