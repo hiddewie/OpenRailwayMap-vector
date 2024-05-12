@@ -719,8 +719,8 @@ signals_railway_signals:
           - { regex: '^yes$', value: 'de/ks-combined-shortened' }
         default: 'de/ks-combined'
       tags:
-        - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
-        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
 
     # --- FI --- #
 
