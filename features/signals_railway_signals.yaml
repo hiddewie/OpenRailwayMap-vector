@@ -10,6 +10,7 @@ signals_railway_signals:
     - 'railway:signal:crossing:shortened'
     - 'railway:signal:crossing_distant'
     - 'railway:signal:crossing_distant:shortened'
+    - 'railway:signal:crossing_distant:form'
     - 'railway:signal:departure'
     - 'railway:signal:departure:form'
     - 'railway:signal:distant'
@@ -564,6 +565,13 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'DE-ESO:so106' }
         - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+    - description: distant crossing So 14
+      country: DE
+      icon: { default: 'de/so14' }
+      tags:
+        - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so14' }
+        - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
     - description: distant signal replacement by sign Ne 2
       country: DE
