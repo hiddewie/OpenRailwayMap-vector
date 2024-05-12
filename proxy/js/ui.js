@@ -4546,23 +4546,20 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
-    const form = createDomElement('form', 'form form-inline', this._container);
-    const span = createDomElement('span', '', form);
-    span.innerHTML = 'Style:&nbsp;'
+    const buttonGroup = createDomElement('div', 'btn-group-vertical btn-group-toggle', this._container);
 
     Object.entries(knownStyles).forEach(([name, styleLabel]) => {
       const id = `style-${name}`
-      const wrapper = createDomElement('div', 'form-check form-check-inline', form);
-      const button = createDomElement('input', 'form-check-input', wrapper);
-      button.id = id
-      button.type = 'radio'
-      button.name = 'style'
-      button.value = name
-      button.onclick = () => this.options.onStyleChange(name)
-      button.checked = (this.options.initialSelection === name)
-      const label = createDomElement('label', 'form-check-label', wrapper);
+      const label = createDomElement('label', 'btn', buttonGroup);
       label.htmlFor = id
       label.innerText = styleLabel
+      const radio = createDomElement('input', '', label);
+      radio.id = id
+      radio.type = 'radio'
+      radio.name = 'style'
+      radio.value = name
+      radio.onclick = () => this.options.onStyleChange(name)
+      radio.checked = (this.options.initialSelection === name)
     });
 
     return this._container;
@@ -4582,7 +4579,9 @@ class SearchControl {
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
-    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', icon);
+    text.innerText = 'Search'
 
     return this._container;
   }
@@ -4654,7 +4653,6 @@ map.addControl(new maplibregl.NavigationControl({
   showCompass: false,
   visualizePitch: false,
 }));
-map.addControl(new SearchControl());
 map.addControl(
   new maplibregl.GeolocateControl({
     positionOptions: {
@@ -4667,6 +4665,8 @@ map.addControl(
 );
 map.addControl(new maplibregl.FullscreenControl());
 map.addControl(new EditControl());
+
+map.addControl(new SearchControl(), 'top-left');
 
 map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
