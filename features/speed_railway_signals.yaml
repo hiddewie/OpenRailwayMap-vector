@@ -673,6 +673,7 @@ speed_railway_signals:
       country: PL
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
+        # TODO update signs from https://wiki.openstreetmap.org/wiki/Pl:OpenRailwayMap/Tagging_in_Poland#Tarcza_zwolnić_bieg_D_6
         cases:
           - { regex: '^[1-9]0$', value: 'pl/d6-{}', example: 'pl/d6-70' }
         default: 'pl/d6-empty'
