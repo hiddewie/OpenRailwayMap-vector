@@ -342,7 +342,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 {% end %}
 
     END as type,
-    azimuth
+    azimuth,
+    direction_both
   FROM (
     SELECT
       way,
