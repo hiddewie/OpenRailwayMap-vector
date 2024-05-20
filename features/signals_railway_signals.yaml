@@ -1331,3 +1331,105 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:radio', value: 'PL-PKP:w34' }
         - { tag: 'railway:signal:radio:form', value: 'sign' }
+
+    - description: ETCS L1 LS
+      country: PL
+      icon: { default: 'pl/wetcs1' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs1' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L1 LS
+      country: PL
+      icon: { default: 'pl/wetcs2' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs2' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L1 LS
+      country: PL
+      icon: { default: 'pl/wetcs3' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs3' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L1
+      country: PL
+      icon: { default: 'pl/wetcs4' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs4' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L1
+      country: PL
+      icon: { default: 'pl/wetcs5' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs5' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L1
+      country: PL
+      icon: { default: 'pl/wetcs6' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs6' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L2
+      country: PL
+      icon: { default: 'pl/wetcs7' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs7' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L2
+      country: PL
+      icon: { default: 'pl/wetcs8' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs8' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS L2
+      country: PL
+      icon: { default: 'pl/wetcs9' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs9' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS 10
+      country: PL
+      icon:
+        match: 'railway:signal:train_protection'
+        cases:
+          - { regex: '^left$', value: 'pl/wetcs10-left' }
+        default: 'pl/wetcs10-right'
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs10' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+        - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
+    - description: WKD W2
+      country: PL
+      icon: { default: 'pl/wkd/w2' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-WKD:w2' }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+    - description: miejsce zatrzymania czoła pociągu Wm 4
+      country: PL
+      icon: { default: 'pl/ztm-mw/wm4' }
+      tags:
+        - { tag: 'railway:signal:stop', value: 'ZTM-MW:wm4' }
+        - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+    - description: rozpocząć hamowanie przed peronem Wm 16
+      country: PL
+      icon: { default: 'pl/ztm-mw/wm16' }
+      tags:
+        - { tag: 'railway:signal:station_distant', value: 'ZTM-MW:wm16' }
+        - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+    - description: Wm 17
+      country: PL
+      icon: { default: 'pl/ztm-mw/wm17' }
+      tags:
+        - { tag: 'railway:signal:fouling_point', value: 'ZTM-MW:wm17' }
