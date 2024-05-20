@@ -1016,7 +1016,7 @@ signals_railway_signals:
         match: 'railway:signal:main:states'
         cases:
           - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-          - { regex: '^(.*;)?PL-PKP:sr2(;.*)?$', value: 'pl/sr2' }
+          - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
         default: 'pl/sr1'
       tags:
         - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
@@ -1054,13 +1054,11 @@ signals_railway_signals:
     - description: Sygnalizator powtarzający
       country: PL
       icon:
-#        match: 'railway:signal:main:states'
-        # TODO handle states
-#        cases:
-        # PL-PKP:sp1;PL-PKP:sp4 -> 2 lights
-#          - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-#          - { regex: '^(.*;)?PL-PKP:sr2(;.*)?$', value: 'pl/sr2' }
-        default: 'pl/sp1'
+        match: 'railway:signal:main_repeated'
+        cases:
+          - { regex: '^PL-PKP:sp1;PL-PKP:sp4$', value: 'pl/sp1-2' }
+          - { regex: '^(.*;)?PL-PKP:sp2(;.*)?$', value: 'pl/sp2-3' }
+        default: 'pl/sp1-3'
       tags:
         - { tag: 'railway:signal:main_repeated', value: 'PL-PKP:sp' }
         - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -1089,6 +1087,8 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:shunting', value: 'PL-PKP:ms' }
         - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    # TODO Tarcze rozrządowe https://www.transportszynowy.pl/Kolej/tarczerozrzadowe
 
     - description: Tarcza zaporowa kształtowa (Nieruchoma)
       country: PL
