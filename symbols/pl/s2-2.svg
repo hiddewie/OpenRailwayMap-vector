@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="9.4179688"
+   height="14.792968"
+   viewBox="0 0 9.4179689 14.792968"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="s1-2.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="22.627417"
+     inkscape:cx="-7.4025241"
+     inkscape:cy="5.7231455"
+     inkscape:window-width="2560"
+     inkscape:window-height="1368"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <path
+     fill-rule="nonzero"
+     fill="#262626"
+     fill-opacity="1"
+     d="m 0,4.660156 h 9.417969 v 5.472656 H 0 Z m 0,0"
+     id="path2"
+     style="stroke-width:0.707107" />
+  <path
+     fill-rule="nonzero"
+     fill="#262626"
+     fill-opacity="1"
+     d="m 9.417969,10.132812 c 0,2.574218 -2.109375,4.660156 -4.707031,4.660156 C 2.109375,14.792968 0,12.70703 0,10.132812 0,7.558593 2.109375,5.472656 4.710938,5.472656 c 2.597656,0 4.707031,2.085937 4.707031,4.660156 z m 0,0"
+     id="path4" />
+  <path
+     fill-rule="nonzero"
+     fill="#262626"
+     fill-opacity="1"
+     d="m 9.417969,4.660156 c 0,2.574219 -2.109375,4.660156 -4.707031,4.660156 C 2.109375,9.320312 0,7.234375 0,4.660156 0,2.085938 2.109375,0 4.710938,0 7.308594,0 9.417969,2.085938 9.417969,4.660156 Z m 0,0"
+     id="path6" />
+  <path
+     fill-rule="nonzero"
+     fill="#0e0e0e"
+     fill-opacity="1"
+     d="m 6.582031,4.660156 c 0,1.035156 -0.835937,1.875 -1.875,1.875 -1.035156,0 -1.875,-0.839844 -1.875,-1.875 0,-1.035156 0.839844,-1.875 1.875,-1.875 1.039063,0 1.875,0.839844 1.875,1.875 z m 0,0"
+     id="path10" />
+  <path
+     fill-rule="nonzero"
+     fill="#00c85e"
+     fill-opacity="1"
+     d="m 6.582031,10.132812 c 0,1.035157 -0.835937,1.875 -1.875,1.875 -1.035156,0 -1.875,-0.839843 -1.875,-1.875 0,-1.035156 0.839844,-1.875 1.875,-1.875 1.039063,0 1.875,0.839844 1.875,1.875 z m 0,0"
+     id="path12" />
+</svg>

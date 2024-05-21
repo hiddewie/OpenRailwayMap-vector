@@ -3419,6 +3419,7 @@ const legendData = {
           feature: '{% feature.icon.default %}',
           type: 'line',
           azimuth: null,
+          direction_both: false,
         },
         {% if feature.icon.cases %}
         variants: [
@@ -3440,8 +3441,17 @@ const legendData = {
         properties: {
           feature: 'does-not-exist',
           type: 'line',
-          azimuth: 270.0,
+          azimuth: 135.5,
+          direction_both: false,
         },
+        variants: [
+          {
+            legend: '(both)',
+            properties: {
+              direction_both: true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -3561,6 +3571,7 @@ const legendData = {
           feature: '{% feature.icon.default %}',
           azimuth: null,
           deactivated: false,
+          direction_both: false,
         },
         {% if feature.icon.cases %}
         variants: [
@@ -3581,9 +3592,18 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'does-not-exist',
-          azimuth: 270.0,
-          deactivated: false,
+          type: 'line',
+          azimuth: 135.5,
+          direction_both: false,
         },
+        variants: [
+          {
+            legend: '(both)',
+            properties: {
+              direction_both: true,
+            },
+          },
+        ],
       },
       // TODO country specific railway signals
       {
@@ -3594,6 +3614,7 @@ const legendData = {
           type: 'line',
           azimuth: null,
           deactivated: true,
+          direction_both: false,
         },
       },
     ],
@@ -3870,6 +3891,7 @@ const legendData = {
           feature: '{% feature.icon.default %}',
           type: 'line',
           azimuth: null,
+          direction_both: false,
         },
         {% if feature.icon.cases %}
         variants: [
@@ -3891,8 +3913,17 @@ const legendData = {
         properties: {
           feature: 'does-not-exist',
           type: 'line',
-          azimuth: 270.0,
+          azimuth: 135.5,
+          direction_both: false,
         },
+        variants: [
+          {
+            legend: '(both)',
+            properties: {
+              direction_both: true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -4658,7 +4689,7 @@ map.addControl(new StyleControl({
   onStyleChange: changedStyle => {
     selectedStyle = changedStyle;
     map.setStyle(mapStyles[changedStyle]);
-    legendMap.setStyle(legendStyles[changedStyle]);
+    setTimeout(() => legendMap.setStyle(legendStyles[changedStyle]), 0);
     onMapZoom(map.getZoom());
     const updatedHash = putStyleInHash(window.location.hash, changedStyle);
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
