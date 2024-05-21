@@ -4,6 +4,7 @@ signals_railway_signals:
     - 'railway:signal:combined:form'
     - 'railway:signal:combined:states'
     - 'railway:signal:combined:shortened'
+    - 'railway:signal:combined:substitute_signal'
     - 'railway:signal:crossing'
     - 'railway:signal:crossing:form'
     - 'railway:signal:crossing:repeated'
@@ -28,6 +29,7 @@ signals_railway_signals:
     - 'railway:signal:main:form'
     - 'railway:signal:main:height'
     - 'railway:signal:main:states'
+    - 'railway:signal:main:substitute_signal'
     - 'railway:signal:main_repeated'
     - 'railway:signal:main_repeated:form'
     - 'railway:signal:minor'
@@ -1022,34 +1024,54 @@ signals_railway_signals:
         - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
         - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+    - description: Semafor świetlny trzykomorowy
+      country: PL
+      icon: { default: 'pl/s2-3' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:main:states', values: ['PL-PKP:s1;PL-PKP:s2', 'off;PL-PKP:s1;PL-PKP:s2'] }
+        - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
+
     - description: Semafor świetlny dwukomorowy
       country: PL
-      icon:
-        #        match: 'railway:signal:main:states'
-        # TODO handle states
-        #        cases:
-        #          - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-        #          - { regex: '^(.*;)?PL-PKP:sr2(;.*)?$', value: 'pl/sr2' }
-        default: 'pl/s1'
+      icon: { default: 'pl/s2-2' }
       tags:
         - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
         - { tag: 'railway:signal:main:form', value: 'light' }
         - { tag: 'railway:signal:main:states', values: ['PL-PKP:s1;PL-PKP:s2', 'off;PL-PKP:s1;PL-PKP:s2'] }
 
-    # TODO handle 2, 3, 4 and 5 light signals
-
-    - description: Semafory świetlne
+    - description: Semafor świetlny czterokomorowy & pięciokomorowe
       country: PL
       icon:
-#        match: 'railway:signal:main:states'
-        # TODO handle states
-#        cases:
-#          - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-#          - { regex: '^(.*;)?PL-PKP:sr2(;.*)?$', value: 'pl/sr2' }
-        default: 'pl/s1'
+        match: 'railway:signal:combined:states'
+        cases:
+          - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s6;(.*;)?PL-PKP:s9(;.*)?$', value: 'pl/s6-5' }
+          - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s10a(;.*)?$', value: 'pl/s10a-5' }
+          - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s10(;.*)?$', value: 'pl/s10-5' }
+          - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
+          - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
+          - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
+          - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
+          - { regex: '^(.*;)?PL-PKP:s13(;.*)?$', value: 'pl/s13-4' }
+          - { regex: '^(.*;)?PL-PKP:s10(;.*)?$', value: 'pl/s10-4' }
+        default: 'pl/s1-4'
       tags:
-        - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+        - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
+
+    - description: Semafor świetlny trzykomorowy & czterokomorowy
+      country: PL
+      icon:
+        match: 'railway:signal:combined:states'
+        cases:
+          - { regex: '^PL-PKP:s1;PL-PKP:s1a;PL-PKP:s2;PL-PKP:s3;PL-PKP:s4;PL-PKP:s5$', value: 'pl/s1a-4' }
+          - { regex: '^(.*;)?PL-PKP:s13(;.*)?$', value: 'pl/s13-3' }
+        default: 'pl/s1-3'
+      tags:
+        - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
 
     - description: Sygnalizator powtarzający
       country: PL
@@ -1099,7 +1121,7 @@ signals_railway_signals:
 
     - description: Tarcza zaporowa kształtowa (Ruchoma)
       country: PL
-      icon: { default: 'pl/z-semphore' }
+      icon: { default: 'pl/z-semaphore' }
       tags:
         - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
         - { tag: 'railway:signal:minor:form', value: 'semaphore' }
