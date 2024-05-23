@@ -4574,6 +4574,8 @@ const legendMap = new maplibregl.Map({
   center: [0, 0],
   attributionControl: false,
   interactive: false,
+  // See https://github.com/maplibre/maplibre-gl-js/issues/3503
+  maxCanvasSize: [Infinity, Infinity],
 });
 
 const map = new maplibregl.Map({
