@@ -38,6 +38,11 @@ server {
     expires 1d;
   }
 
+  location /style {
+    root /etc/nginx/public;
+    expires 1h;
+  }
+
   location / {
     if ($http_referer ~ ^http://localhost) {
       rewrite ^/standard$ /standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref last;
