@@ -3915,7 +3915,7 @@ const legendData = {
           feature: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
-        direction_both: false,
+          direction_both: false,
         },
         variants: [
           {
