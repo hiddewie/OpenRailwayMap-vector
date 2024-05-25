@@ -3,13 +3,15 @@
 set -e
 set -o pipefail
 
+PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
+
 case "$1" in
 import)
 
   echo "Creating default database"
   psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || createdb gis
-  psql -d gis -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
-  psql -d gis -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
+  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
 
   # Filter the data for more efficient import
   # Store the filtered data for future use in the data directory
@@ -82,23 +84,23 @@ refresh)
 esac
 
 # Clear all tags from the Osm2Psql tables
-psql -d gis -c "update planet_osm_nodes set tags = null where tags is not null;"
-psql -d gis -c "update planet_osm_ways set tags = null where tags is not null;"
-psql -d gis -c "update planet_osm_rels set tags = null where tags is not null;"
+$PSQL -c "update planet_osm_nodes set tags = null where tags is not null;"
+$PSQL -c "update planet_osm_ways set tags = null where tags is not null;"
+$PSQL -c "update planet_osm_rels set tags = null where tags is not null;"
 
 echo "Post processing imported data"
-psql -d gis -f sql/functions.sql
-psql -d gis -f sql/get_station_importance.sql
-psql -d gis -f sql/signals_with_azimuth.sql
-psql -d gis -f sql/tile_views.sql
+$PSQL -f sql/functions.sql
+$PSQL -f sql/get_station_importance.sql
+$PSQL -f sql/signals_with_azimuth.sql
+$PSQL -f sql/tile_views.sql
 
 echo "Updating materialized views"
-psql -d gis -f sql/update_signals_with_azimuth.sql
-psql -d gis -f sql/update_station_importance.sql
+$PSQL -f sql/update_signals_with_azimuth.sql
+$PSQL -f sql/update_station_importance.sql
 
 echo "Vacuuming database"
-psql -d gis -c "VACUUM FULL;"
+$PSQL -c "VACUUM FULL;"
 
 echo "Database summary"
-psql -d gis -P pager=off -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"
-psql -d gis -P pager=off -c "select pg_size_pretty(sum(pg_total_relation_size(quote_ident(table_name)))) as total_size from information_schema.tables where table_schema = 'public';"
+$PSQL -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"
+$PSQL -c "select pg_size_pretty(sum(pg_total_relation_size(quote_ident(table_name)))) as total_size from information_schema.tables where table_schema = 'public';"
