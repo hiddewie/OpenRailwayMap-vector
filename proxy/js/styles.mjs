@@ -2840,13 +2840,12 @@ const layers = {
   ],
 };
 
-// TODO move this to build-time generation, serve JSON
 const makeStyle = selectedStyle => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
   glyphs: `${origin}/font/{fontstack}/{range}`,
   metadata: {},
-  name: 'OpenRailwayMap',
+  name: `OpenRailwayMap ${selectedStyle}`,
   sources,
   sprite: `${origin}/sprite/symbols`,
   version: 8,
@@ -4309,6 +4308,9 @@ function makeLegendStyle(style) {
       type: 'symbol',
       id: `legend-z${legendZoom}`,
       source: `legend-z${legendZoom}`,
+      metadata: {
+        ['legend:zoom']: legendZoom,
+      },
       minzoom: legendZoom,
       maxzoom: legendZoom + 1,
       paint: {},
@@ -4427,13 +4429,20 @@ function makeLegendStyle(style) {
     })
   );
 
+  legendZoomLevels.forEach(legendZoom => {
+    const legendLayer = legendLayers.find(layer => layer.id === `legend-z${legendZoom}`);
+    const legendSource = legendSources[`legend-z${legendZoom}`];
+
+    legendLayer.metadata['legend:count'] = legendSource.data.features.length;
+  });
+
   return {
     ...sourceStyle,
     name: `${sourceStyle.name} legend`,
     layers: legendLayers,
     sources: legendSources,
     metadata: {
-      ['legend:test']: 'test'
+      name: style,
     }
   };
 }

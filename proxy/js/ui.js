@@ -5,6 +5,7 @@ const searchIcon = document.getElementById('search-icon');
 const cancelIcon = document.getElementById('cancel-icon');
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
+
 function searchFor(term) {
   if (!term || term.length < 3) {
     hideSearchResults();
@@ -23,6 +24,7 @@ function searchFor(term) {
       });
   }
 }
+
 function showSearchResults(results) {
   let content = '';
   if (results.length === 0) {
@@ -37,19 +39,23 @@ function showSearchResults(results) {
   cancelIcon.style.display = 'block';
   searchIcon.style.display = 'none';
 }
+
 function hideSearchResults() {
   searchResults.style.display = 'none';
   cancelIcon.style.display = 'none';
   searchIcon.style.display = 'block';
 }
+
 function showSearch() {
   searchBackdrop.style.display = 'block';
   search.focus();
   search.select();
 }
+
 function hideSearch() {
   searchBackdrop.style.display = 'none';
 }
+
 function toggleLegend() {
   if (legend.style.display === 'block') {
     legend.style.display = 'none';
@@ -83,7 +89,7 @@ function removeDomElement(node) {
 }
 
 const globalMinZoom = 1;
-const glodalMaxZoom= 18;
+const glodalMaxZoom = 18;
 
 const knownStyles = {
   standard: 'Infrastructure',
@@ -92,6 +98,7 @@ const knownStyles = {
   electrification: 'Electrification',
   gauge: 'Gauge',
 };
+
 function hashToObject(hash) {
   if (!hash) {
     return {};
@@ -103,6 +110,7 @@ function hashToObject(hash) {
     return Object.fromEntries(hashEntries);
   }
 }
+
 function determineStyleFromHash(hash) {
   const defaultStyle = Object.keys(knownStyles)[0];
   const hashObject = hashToObject(hash);
@@ -112,11 +120,13 @@ function determineStyleFromHash(hash) {
     return defaultStyle;
   }
 }
+
 function putStyleInHash(hash, style) {
   const hashObject = hashToObject(hash);
   hashObject.style = style;
   return `#${Object.entries(hashObject).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
+
 let selectedStyle = determineStyleFromHash(window.location.hash)
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
@@ -254,13 +264,25 @@ class LegendControl {
   }
 }
 
+// Cache for the number of items in the legend, per style and zoom level
+const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key => [key, {}]));
+
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: changedStyle => {
     selectedStyle = changedStyle;
-    map.setStyle(mapStyles[changedStyle], { validate: false });
-    legendMap.setStyle(legendStyles[changedStyle], { validate: false })
-    onMapZoom(map.getZoom());
+
+    // Change styles
+    map.setStyle(mapStyles[changedStyle], {validate: false});
+    legendMap.setStyle(legendStyles[changedStyle], {
+      validate: false,
+      transformStyle: (previous, next) => {
+        onStylesheetChange(next);
+        return next;
+      },
+    });
+
+    // Update URL
     const updatedHash = putStyleInHash(window.location.hash, changedStyle);
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
     window.history.replaceState(window.history.state, null, location);
@@ -294,18 +316,9 @@ map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
 }), 'bottom-left');
 
-const items = {} // Object.fromEntries(Object.keys(knownStyles).map(key => [key, {}]));
-
 const onMapZoom = zoom => {
   const legendZoom = Math.floor(zoom);
-  const numberOfLegendEntries = items[legendZoom] ?? 20;
-  // legendStyles[selectedStyle]
-  //   .sources[`legend-z${legendZoom}`]
-  //   .data
-  //   .features
-  //   .length
-
-  console.info('map zoom z',legendZoom, items[legendZoom])
+  const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
     zoom: legendZoom,
@@ -314,27 +327,19 @@ const onMapZoom = zoom => {
   legendMapContainer.style.height = `${numberOfLegendEntries * 30}px`;
 }
 
+const onStylesheetChange = styleSheet => {
+  const styleName = styleSheet.metadata.name;
+  styleSheet.layers.forEach(layer => {
+    if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
+      legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
+    }
+  })
+  onMapZoom(map.getZoom());
+}
+
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 
-// legendMap.on('load', e => console.info('load', e))
-legendMap.on('data', event => {
-  console.info(event)
-  if (event.dataType === 'source' && event.sourceDataType === 'metadata' && event.sourceId.match(/legend-z\d+/)) {
-    const zoom = parseInt(event.sourceId.replace('legend-z', ''), 10);
-    items[zoom] = event.source.data.features.length;
-    console.info(event.sourceId.replace('legend-z', ''), zoom, items[zoom], items);
-    // console.info('data', event)
-  }
-})
-// legendMap.on('styledata', e => console.info('style data',e))
-// legendMap.on('sourcedata', event => {
-//   if (event.dataType === 'source' && event.type === 'sourcedata' && event.isSourceLoaded && event.sourceId.match(/legend-z\d+/)) {
-//     const zoom = parseInt(event.sourceId.replace('legend-z', ''), 10);
-//     items[zoom] = event.source.data.features.length;
-//     console.info(event.sourceId.replace('legend-z', ''), zoom, items[zoom], items);
-//     // console.info(event.sourceId, event.source.data);
-//   }
-// })
-//
-// legendMap.on('sourcedata')
+// Listen to the first stylesheet change
+// Followup stylesheet changes are handled by the style change callback
+legendMap.once('styledata', e => onStylesheetChange(e.style.stylesheet));
