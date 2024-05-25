@@ -39,7 +39,6 @@ There are multiple ways to contribute to this project:
 - Improving the code and/or tooling.
 - Providing more details for visualization on the map, for the infrastructure, speed limit, train protection, electrification or gauge layer.
 - Providing icons for visualizing features on the map.
-- Providing translations for currently supported or new languages.
 - Providing user interface improvements.
 - Providing technical or user documentation.
 
