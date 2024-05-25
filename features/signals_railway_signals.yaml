@@ -32,6 +32,7 @@ signals_railway_signals:
     - 'railway:signal:main:substitute_signal'
     - 'railway:signal:main_repeated'
     - 'railway:signal:main_repeated:form'
+    - 'railway:signal:main_repeated:states'
     - 'railway:signal:minor'
     - 'railway:signal:minor:form'
     - 'railway:signal:minor:states'
@@ -1076,7 +1077,7 @@ signals_railway_signals:
     - description: Sygnalizator powtarzający
       country: PL
       icon:
-        match: 'railway:signal:main_repeated'
+        match: 'railway:signal:main_repeated:states'
         cases:
           - { regex: '^PL-PKP:sp1;PL-PKP:sp4$', value: 'pl/sp1-2' }
           - { regex: '^(.*;)?PL-PKP:sp2(;.*)?$', value: 'pl/sp2-3' }
@@ -1084,6 +1085,17 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:main_repeated', value: 'PL-PKP:sp' }
         - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+    - description: Tarcza ostrzegawcza świetlna
+      country: PL
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^PL-PKP:os1;PL-PKP:os4$', value: 'pl/os1-1' }
+        default: 'pl/os1-2'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
 
     - description: Tarcze ostrzegawcze przejazdowe
       country: PL
@@ -1144,12 +1156,33 @@ signals_railway_signals:
         - { tag: 'railway:signal:minor_distant', value: 'PL-PKP:do' }
         - { tag: 'railway:signal:minor_distant:form', value: 'sign' }
 
+    - description: Tarcza ostrzegawcza kształtowa nieruchoma
+      country: PL
+      icon: { default: 'pl/do' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:on' }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+    - description: Tarcza ostrzegawcza kształtowa dwustawna
+      country: PL
+      icon: { default: 'pl/do' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:od' }
+        - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+    - description: Tarcza ostrzegawcza kształtowa trzystawna
+      country: PL
+      icon: { default: 'pl/ot3' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:ot' }
+        - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
     - description: Tarcza zatrzymania D 1
       country: PL
       icon: { default: 'pl/d1' }
       tags:
-        - { tag: 'railway:signal:minor_distant', value: 'PL-PKP:d1' }
-        - { tag: 'railway:signal:minor_distant:form', value: 'sign' }
+        - { tag: 'railway:signal:minor', value: 'PL-PKP:d1' }
+        - { tag: 'railway:signal:minor:form', value: 'sign' }
 
     - description: W 1 — wskaźnik usytuowania
       country: PL
