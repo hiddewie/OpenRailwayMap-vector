@@ -6,6 +6,11 @@ proxy_cache_path /var/cache/nginx/
                  use_temp_path=off
                  keys_zone=cache:50m;
 
+map $http_referer $cache_style {
+  ~^http://localhost 0s;
+  default 1h;
+}
+
 server {
   listen 8000 default_server;
   server_name localhost;
@@ -40,7 +45,7 @@ server {
 
   location /style {
     root /etc/nginx/public;
-    expires 1h;
+    expires $cache_style;
   }
 
   location / {
