@@ -25,6 +25,7 @@ signals_railway_signals:
     - 'railway:signal:helper_engine'
     - 'railway:signal:helper_engine:form'
     - 'railway:signal:humping'
+    - 'railway:signal:humping:form'
     - 'railway:signal:main'
     - 'railway:signal:main:form'
     - 'railway:signal:main:height'
@@ -1176,6 +1177,20 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'PL-PKP:ot' }
         - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+    - description: Tarcze rozrządowe (semaphore)
+      country: PL
+      icon: { default: 'pl/rt3-semaphore' }
+      tags:
+        - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
+        - { tag: 'railway:signal:humping:form', value: 'semaphore' }
+
+    - description: Tarcze rozrządowe (light)
+      country: PL
+      icon: { default: 'pl/rt3-light' }
+      tags:
+        - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
+        - { tag: 'railway:signal:humping:form', value: 'light' }
 
     - description: Tarcza zatrzymania D 1
       country: PL
