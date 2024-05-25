@@ -40,9 +40,9 @@ Open a pull request where you provide details about the new train protection sys
 ## I want to visualize a new railway signal
 
 Railway signals are present on three layers. Find and edit the relevant file:
-- Speed: [`features/features/speed_railway_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/features/speed_railway_signals.yaml)
+- Speed: [`features/speed_railway_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/speed_railway_signals.yaml)
 - Train protection: [`features/signals_railway_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/signals_railway_signals.yaml)
-- Electrification: [`features/features/electrification_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/electrification_signals.yaml)
+- Electrification: [`features/electrification_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/electrification_signals.yaml)
 
 The file contains a list of train protection systems, each with a code, a legend and a color.
 
