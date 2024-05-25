@@ -1266,6 +1266,20 @@ signals_railway_signals:
         - { tag: 'railway:signal:helper_engine', value: 'PL-PKP:w10b' }
         - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
 
+    - description: wskaźniki uprzedzające W11a (dwarf)
+      country: PL
+      icon:
+        match: 'railway:signal:distant:type'
+        cases:
+          - { regex: '^II$', value: 'pl/w11a-dwarf-II' }
+          - { regex: '^III$', value: 'pl/w11a-dwarf-III' }
+          - { regex: '^IV$', value: 'pl/w11a-dwarf-IV' }
+        default: 'pl/w11a-dwarf-I'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
+        - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
     - description: wskaźniki uprzedzające W11a (normal)
       country: PL
       icon:
@@ -1278,35 +1292,6 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
         - { tag: 'railway:signal:distant:form', value: 'sign' }
-        - { tag: 'railway:signal:distant:height', value: 'normal' }
-
-    - description: wskaźniki uprzedzające W11a (dwarf)
-      country: PL
-      icon:
-        match: 'railway:signal:distant:type'
-        cases:
-        - { regex: '^II$', value: 'pl/w11a-dwarf-II' }
-        - { regex: '^III$', value: 'pl/w11a-dwarf-III' }
-        - { regex: '^IV$', value: 'pl/w11a-dwarf-IV' }
-        default: 'pl/w11a-dwarf-I'
-      tags:
-        - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
-        - { tag: 'railway:signal:distant:form', value: 'sign' }
-        - { tag: 'railway:signal:distant:height', value: 'dwarf' }
-
-    - description: wskaźniki uprzedzające W11b (normal)
-      country: PL
-      icon:
-        match: 'railway:signal:distant:type'
-        cases:
-        - { regex: '^II$', value: 'pl/w11b-normal-II' }
-        - { regex: '^III$', value: 'pl/w11b-normal-III' }
-        - { regex: '^IV$', value: 'pl/w11b-normal-IV' }
-        default: 'pl/w11b-normal-I'
-      tags:
-        - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
-        - { tag: 'railway:signal:distant:form', value: 'sign' }
-        - { tag: 'railway:signal:distant:height', value: 'normal' }
 
     - description: wskaźniki uprzedzające W11b (dwarf)
       country: PL
@@ -1321,6 +1306,19 @@ signals_railway_signals:
         - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
         - { tag: 'railway:signal:distant:form', value: 'sign' }
         - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
+    - description: wskaźniki uprzedzające W11b (normal)
+      country: PL
+      icon:
+        match: 'railway:signal:distant:type'
+        cases:
+          - { regex: '^II$', value: 'pl/w11b-normal-II' }
+          - { regex: '^III$', value: 'pl/w11b-normal-III' }
+          - { regex: '^IV$', value: 'pl/w11b-normal-IV' }
+        default: 'pl/w11b-normal-I'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
 
     - description: wskaźnik przejazdowy W11p
       country: PL
