@@ -1096,7 +1096,7 @@ signals_railway_signals:
         default: 'pl/os1-2'
       tags:
         - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
-        - { tag: 'railway:signal:distant:form', value: 'light' }
+        - { tag: 'railway:signal:distant:form', values: ['light', 'semaphore'] }
 
     - description: Tarcze ostrzegawcze przejazdowe
       country: PL
