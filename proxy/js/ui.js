@@ -136,12 +136,12 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
 
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
-    .map(style => [style, `http://localhost:8000/style/${style}.json`])
+    .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
 const legendStyles = Object.fromEntries(
   Object.keys(knownStyles)
-    .map(style => [style, `http://localhost:8000/style/legend-${style}.json`])
+    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
 const legendMap = new maplibregl.Map({

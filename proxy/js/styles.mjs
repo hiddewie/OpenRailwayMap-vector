@@ -6,7 +6,7 @@ const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8')).signals_railway_signals
 const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8')).electrification_signals
 
-const origin = 'http://localhost:8000'
+const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
 const knownStyles = [
   'standard',

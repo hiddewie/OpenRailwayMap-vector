@@ -4,6 +4,10 @@ primary_region = 'ams'
 [build]
   dockerfile = 'proxy.Dockerfile'
 
+[build.args]
+  PUBLIC_PROTOCOL="https"
+  PUBLIC_HOST="openrailwaymap.fly.dev"
+
 [http_service]
   internal_port = 8000
   force_https = true

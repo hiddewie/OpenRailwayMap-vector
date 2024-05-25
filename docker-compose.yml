@@ -98,6 +98,9 @@ services:
   martin-proxy:
     build:
       dockerfile: proxy.Dockerfile
+      args:
+        PUBLIC_PROTOCOL: http
+        PUBLIC_HOST: localhost:8000
     ports:
       - '8000:8000'
     environment:

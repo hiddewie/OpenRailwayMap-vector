@@ -13,6 +13,9 @@ RUN --mount=type=bind,source=proxy/js/ui.js,target=ui.js.tmpl \
 
 FROM node:22-alpine as build-styles
 
+ARG PUBLIC_PROTOCOL
+ARG PUBLIC_HOST
+
 WORKDIR /build
 
 RUN npm install yaml
