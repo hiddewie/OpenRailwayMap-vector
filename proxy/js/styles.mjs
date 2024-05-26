@@ -3207,6 +3207,13 @@ const legendData = {
           feature: 'general/phone',
         },
       },
+      {
+        legend: 'Lubricator',
+        type: 'point',
+        properties: {
+          feature: 'general/lubricator',
+        },
+      },
     ],
     "openrailwaymap_standard-standard_railway_text_km": [
       {

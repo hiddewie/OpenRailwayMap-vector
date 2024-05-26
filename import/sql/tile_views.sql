@@ -213,6 +213,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'tram_stop' THEN 'general/tram-stop'
       WHEN railway = 'border' THEN 'general/border'
       WHEN railway = 'owner_change' THEN 'general/owner-change'
+      WHEN railway = 'lubricator' THEN 'general/lubricator'
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
