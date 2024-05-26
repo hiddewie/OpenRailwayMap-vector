@@ -56,11 +56,22 @@ services:
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file /tiles/standard_railway_text_stations_low.mbtiles && mbtiles summary /tiles/standard_railway_text_stations_low.mbtiles
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 7 --max-zoom 7 --source railway_line_med --output-file /tiles/railway_line_med.mbtiles && mbtiles summary /tiles/railway_line_med.mbtiles
       [ "$$TILES" = "low-med" ] && $$MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file /tiles/standard_railway_text_stations_med.mbtiles && mbtiles summary /tiles/standard_railway_text_stations_med.mbtiles
-      [ "$$TILES" = "standard" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles && mbtiles summary /tiles/standard.mbtiles
-      [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
-      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
-      [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source electrification_railway_line,electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
-      [ "$$TILES" = "gauge" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source gauge_railway_line_low,gauge_railway_line --output-file /tiles/gauge.mbtiles && mbtiles summary /tiles/gauge.mbtiles
+      
+      [ "$$TILES" = "standard" ] && $$MARTIN --min-zoom 8 --max-zoom 9 --source standard_railway_line_fill,standard_railway_text_stations --output-file /tiles/standard.mbtiles && mbtiles summary /tiles/standard.mbtiles
+      [ "$$TILES" = "standard" ] && $$MARTIN --min-zoom 10 --max-zoom 13 --source standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km --output-file /tiles/standard.mbtiles && mbtiles summary /tiles/standard.mbtiles
+      [ "$$TILES" = "standard" ] && $$MARTIN --min-zoom 14 --max-zoom 14 --source standard_railway_turntables,standard_railway_line_fill,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles && mbtiles summary /tiles/standard.mbtiles
+      
+      [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 8 --max-zoom 12 --source speed_railway_line_fill --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
+      [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 13 --max-zoom 14 --source speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
+      
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 8 --max-zoom 9 --source signals_railway_line --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 10 --max-zoom 12 --source signals_railway_line,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 13 --max-zoom 14 --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
+      
+      [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 8 --max-zoom 13 --source electrification_railway_line,electrification_future --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
+      [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 14 --max-zoom 14 --source electrification_railway_line,electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
+      
+      [ "$$TILES" = "gauge" ] && $$MARTIN --min-zoom 8 --max-zoom 14 --source gauge_railway_line --output-file /tiles/gauge.mbtiles && mbtiles summary /tiles/gauge.mbtiles
       true
       '
 
@@ -75,8 +86,6 @@ services:
       # FI: 19.02427,59.28783,31.6159,70.09959
       # NL: 2.99,50.74753,7.230455,54.01786
       - BBOX
-      - MIN_ZOOM=0
-      - MAX_ZOOM=14
       - DATABASE_URL=postgresql://postgres@db:5432/gis
       - TILES
 

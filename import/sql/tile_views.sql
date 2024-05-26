@@ -583,27 +583,6 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
 --- Gauge ---
 
-CREATE OR REPLACE VIEW gauge_railway_line_low AS
-  SELECT
-    way,
-    railway,
-    usage,
-    railway as feature,
-    NULL AS service,
-    railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0
-  FROM
-    (SELECT
-       way,
-       railway,
-       usage,
-       railway_desired_value_from_list(1, gauge) AS gauge,
-       layer
-     FROM railway_line
-     WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
-    ) AS r
-  ORDER BY layer NULLS LAST;
-
 CREATE OR REPLACE VIEW gauge_railway_line AS
   SELECT
     way,
