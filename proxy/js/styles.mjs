@@ -3214,6 +3214,21 @@ const legendData = {
           feature: 'general/lubricator',
         },
       },
+      {
+        legend: 'Axle counter',
+        type: 'point',
+        properties: {
+          feature: 'general/vacancy-detection-axle-counter',
+        },
+        variants: [
+          {
+            legend: 'insulated rail joint',
+            properties: {
+              feature: 'general/vacancy-detection-insulated-rail-joint',
+            }
+          },
+        ]
+      },
     ],
     "openrailwaymap_standard-standard_railway_text_km": [
       {

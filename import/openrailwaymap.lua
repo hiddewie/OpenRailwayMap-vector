@@ -75,6 +75,7 @@ local pois = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
+    { column = 'railway:vacancy_detection', type = 'text' },
     { column = 'man_made', type = 'text' },
     { column = 'crossing_bell', type = 'boolean' },
     { column = 'crossing_light', type = 'boolean' },
@@ -202,7 +203,7 @@ end
 -- TODO clean up unneeded tags
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop'})
-local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator'})
+local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'vacancy_detection'})
 -- TODO, include derail?
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
@@ -245,6 +246,7 @@ function osm2pgsql.process_node(object)
     pois:insert({
       way = object:as_point(),
       railway = tags.railway,
+      ['railway:vacancy_detection'] = tags['railway:vacancy_detection'],
       man_made = tags.man_made,
       crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] ~= 'no'),
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),

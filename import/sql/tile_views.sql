@@ -214,6 +214,11 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'border' THEN 'general/border'
       WHEN railway = 'owner_change' THEN 'general/owner-change'
       WHEN railway = 'lubricator' THEN 'general/lubricator'
+      WHEN railway = 'vacancy_detection' THEN
+        CASE
+          WHEN "railway:vacancy_detection" = 'insulated_rail_joint' THEN 'general/vacancy-detection-insulated-rail-joint'
+          WHEN "railway:vacancy_detection" = 'axle_counter' THEN 'general/vacancy-detection-axle-counter'
+        END
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
