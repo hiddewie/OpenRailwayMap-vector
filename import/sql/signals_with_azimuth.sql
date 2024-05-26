@@ -16,7 +16,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   ) as sl ON true
   WHERE
     (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-    OR railway = 'derail';
+    OR railway IN ('derail', 'vacancy_detection');
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth

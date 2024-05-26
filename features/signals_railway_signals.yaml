@@ -1,5 +1,6 @@
 signals_railway_signals:
   tags:
+    # railway tag is included by default
     - 'railway:signal:combined'
     - 'railway:signal:combined:form'
     - 'railway:signal:combined:states'
@@ -79,8 +80,21 @@ signals_railway_signals:
     - 'railway:signal:whistle:only_transit'
     - 'railway:signal:wrong_road'
     - 'railway:signal:wrong_road:form'
+    - 'railway:vacancy_detection'
 
   features:
+
+    # --- General --- #
+
+    - description: Vacancy detection
+      icon:
+        match: 'railway:vacancy_detection'
+        cases:
+          - { regex: '^insulated_rail_joint$', value: 'general/vacancy-detection-insulated-rail-joint', description: 'insulated rail joint' }
+          - { regex: '^axle_counter$', value: 'general/vacancy-detection-axle-counter', description: 'axle counter' }
+        default: 'general/vacancy-detection'
+      tags:
+        - { tag: 'railway', value: 'vacancy_detection' }
 
     # --- AT --- #
 

@@ -1471,6 +1471,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/level-crossing'],
         ['==', ['get', 'feature'], 'general/level-crossing-light'],
         ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
+        ['==', ['get', 'feature'], 'general/lubricator'],
       ],
       layout: {
         'symbol-z-order': 'source',
@@ -3470,7 +3471,7 @@ const legendData = {
     ],
     'openrailwaymap_signals-signals_railway_signals': [
       ...signals_railway_signals.features.map(feature => ({
-        legend: `(${feature.country}) ${feature.description}`,
+        legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}`,
         type: 'point',
         properties: {
           feature: feature.icon.default,

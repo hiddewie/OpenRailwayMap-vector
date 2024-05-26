@@ -214,11 +214,6 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'border' THEN 'general/border'
       WHEN railway = 'owner_change' THEN 'general/owner-change'
       WHEN railway = 'lubricator' THEN 'general/lubricator'
-      WHEN railway = 'vacancy_detection' THEN
-        CASE
-          WHEN "railway:vacancy_detection" = 'insulated_rail_joint' THEN 'general/vacancy-detection-insulated-rail-joint'
-          WHEN "railway:vacancy_detection" = 'axle_counter' THEN 'general/vacancy-detection-axle-counter'
-        END
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
@@ -440,7 +435,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     (signal_direction = 'both') as direction_both
   FROM signals_with_azimuth
   WHERE ((railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-    OR railway = 'derail')
+    OR railway IN ('derail', 'vacancy_detection'))
   ORDER BY rank NULLS FIRST)
   SELECT
     way,
