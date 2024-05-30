@@ -64,9 +64,10 @@ services:
       [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 8 --max-zoom 12 --source speed_railway_line_fill --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
       [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 13 --max-zoom 14 --source speed_railway_line_fill,speed_railway_signals --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
       
-      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 8 --max-zoom 9 --source signals_railway_line --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
-      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 10 --max-zoom 12 --source signals_railway_line,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
-      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 13 --max-zoom 14 --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 8 --max-zoom 9 --source signals_railway_line --output-file /tiles/signals-0.mbtiles && mbtiles summary /tiles/signals-0.mbtiles
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 10 --max-zoom 12 --source signals_railway_line,signals_signal_boxes --output-file /tiles/signals-1.mbtiles && mbtiles summary /tiles/signals-1.mbtiles
+      [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 13 --max-zoom 14 --source signals_railway_line,signals_railway_signals,signals_signal_boxes --output-file /tiles/signals-2.mbtiles && mbtiles summary /tiles/signals-2.mbtiles
+      [ "$$TILES" = "signals" ] && mbtiles copy /tiles/signals-0.mbtiles /tiles/signals-1.mbtiles /tiles/signals-2.mbtiles /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
       
       [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 8 --max-zoom 13 --source electrification_railway_line,electrification_future --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
       [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 14 --max-zoom 14 --source electrification_railway_line,electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
