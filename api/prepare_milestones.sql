@@ -3,7 +3,7 @@
 
 CREATE OR REPLACE FUNCTION railway_api_valid_float(value TEXT) RETURNS FLOAT AS $$
 BEGIN
-  IF value ~ '^-?[0-9]+(\.[0-9]+)$' THEN
+  IF value ~ '^-?[0-9]+(\.[0-9]+)?$' THEN
     RETURN value::FLOAT;
   END IF;
   RETURN NULL;
