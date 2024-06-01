@@ -11,9 +11,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
-  SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, tags, geom
+  SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, geom
     FROM (
-      SELECT osm_id, position, precision, railway, name, ref, tags, geom
+      SELECT osm_id, position, precision, railway, name, ref, geom
         FROM (
           SELECT
               osm_id,
@@ -24,7 +24,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
               NULL AS name,
               -- TODO import ref
               NULL AS ref,
-              NULL AS tags,
               way AS geom
             FROM railway_positions
             WHERE railway_position IS NOT NULL
@@ -36,7 +35,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
               railway,
               NULL AS name,
               NULL AS ref,
-              NULL AS tags,
               way AS geom
             FROM railway_positions
             WHERE railway_position_exact IS NOT NULL
@@ -59,7 +57,6 @@ CREATE OR REPLACE VIEW openrailwaymap_tracks_with_ref AS
       railway,
       name,
       ref,
---       tags,
       way AS geom
     FROM railway_line
     WHERE
