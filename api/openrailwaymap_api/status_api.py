@@ -2,7 +2,7 @@
 from openrailwaymap_api.abstract_api import AbstractAPI
 
 class StatusAPI(AbstractAPI):
-    def __init__(self): #, db_conn
+    def __init__(self, db_conn):
         self.data = []
         self.status_code = 200
 

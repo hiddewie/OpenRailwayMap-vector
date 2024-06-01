@@ -9,29 +9,29 @@ import os
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from werkzeug.routing import Map, Rule
 from werkzeug.wrappers import Request, Response
-# from openrailwaymap_api.facility_api import FacilityAPI
-# from openrailwaymap_api.milestone_api import MilestoneAPI
+from openrailwaymap_api.facility_api import FacilityAPI
+from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
 
-# def connect_db():
-#     conn = psycopg2.connect(dbname='gis', user='postgres', host='db')
-#     psycopg2.extras.register_hstore(conn)
-#     return conn
+def connect_db():
+    conn = psycopg2.connect(dbname='gis', user='postgres', host='db')
+    psycopg2.extras.register_hstore(conn)
+    return conn
 
 class OpenRailwayMapAPI:
 
-#     db_conn = connect_db()
+    db_conn = connect_db()
 
     def __init__(self):
         self.url_map = Map([
-#             Rule('/facility', endpoint=FacilityAPI, methods=('GET',)),
-#             Rule('/milestone', endpoint=MilestoneAPI, methods=('GET',)),
+            Rule('/api/facility', endpoint=FacilityAPI, methods=('GET',)),
+            Rule('/api/milestone', endpoint=MilestoneAPI, methods=('GET',)),
             Rule('/api/status', endpoint=StatusAPI, methods=('GET',)),
         ])
 
-#     def ensure_db_connection_alive(self):
-#         if self.db_conn.closed != 0:
-#             self.db_conn = connect_db()
+    def ensure_db_connection_alive(self):
+        if self.db_conn.closed != 0:
+            self.db_conn = connect_db()
 
     def dispatch_request(self, environ, start_response):
         request = Request(environ)
@@ -39,16 +39,17 @@ class OpenRailwayMapAPI:
         response = None
         try:
             endpoint, args = urls.match()
-#             self.ensure_db_connection_alive()
-            response = endpoint()(request.args) #self.db_conn
+            self.ensure_db_connection_alive()
+            response = endpoint(self.db_conn)(request.args)
         except HTTPException as e:
             return e
         except Exception as e:
+            print('Error during request:', e, file=sys.stderr)
             return InternalServerError()
-#         finally:
-#             if not response:
-#                 self.db_conn.close()
-#                 self.db_conn = connect_db()
+        finally:
+            if not response:
+                self.db_conn.close()
+                self.db_conn = connect_db()
         return response
 
     def wsgi_app(self, environ, start_response):
