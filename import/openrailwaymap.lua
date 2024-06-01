@@ -164,6 +164,8 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'railway', type = 'text' },
     { column = 'railway_position', type = 'text' },
     { column = 'railway_position_exact', type = 'text' },
+    { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
   },
 })
 
@@ -344,6 +346,8 @@ function osm2pgsql.process_node(object)
       railway = tags.railway,
       railway_position = tags['railway:position'],
       railway_position_exact = tags['railway:position:exact'],
+      name = tags['name'],
+      ref = tags['ref'],
     })
   end
 

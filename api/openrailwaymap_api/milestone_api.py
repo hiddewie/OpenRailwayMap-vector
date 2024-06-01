@@ -37,7 +37,6 @@ class MilestoneAPI(AbstractAPI):
                 self.data = {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
                 self.status_code = 400
                 return self.build_response()
-        print(ref, position)
         self.data = self.get_milestones()
         return self.build_response()
 
@@ -67,7 +66,7 @@ class MilestoneAPI(AbstractAPI):
                                  rank() OVER (PARTITION BY operator ORDER BY error) AS grouped_rank
                                FROM (
                                  SELECT
-                                   -- Sort out duplicates which origin from tracks being splitted at milestones
+                                   -- Sort out duplicates which origin from tracks being split at milestones
                                    DISTINCT ON (osm_id)
                                      osm_id[1] AS osm_id,
                                      railway[1] AS railway,
@@ -109,7 +108,6 @@ class MilestoneAPI(AbstractAPI):
                              ) AS ranked
                              WHERE grouped_rank <= %s
                              LIMIT %s;"""
-            print(sql_query,  (self.position, self.route_ref, self.position, self.position, self.limit, self.limit))
             cursor.execute(sql_query, (self.position, self.route_ref, self.position, self.position, self.limit, self.limit))
             results = cursor.fetchall()
             for r in results:

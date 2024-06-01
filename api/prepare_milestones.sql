@@ -20,10 +20,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
               railway_api_valid_float(unnest(string_to_array(railway_position, ';'))) AS position,
               1::SMALLINT AS precision,
               railway,
-              -- TODO import name
-              NULL AS name,
-              -- TODO import ref
-              NULL AS ref,
+              name,
+              ref,
               way AS geom
             FROM railway_positions
             WHERE railway_position IS NOT NULL
@@ -33,8 +31,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
               railway_api_valid_float(unnest(string_to_array(railway_position_exact, ';'))) AS position,
               3::SMALLINT AS precision,
               railway,
-              NULL AS name,
-              NULL AS ref,
+              name,
+              ref,
               way AS geom
             FROM railway_positions
             WHERE railway_position_exact IS NOT NULL
