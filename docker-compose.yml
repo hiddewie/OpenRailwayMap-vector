@@ -105,7 +105,8 @@ services:
     ports:
       - '8000:8000'
     environment:
-      PROXY_UPSTREAM: martin:3000
+      TILES_UPSTREAM: martin:3000
+      API_UPSTREAM: api:5000
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
       NGINX_RESOLVER: '127.0.0.11 ipv6=off'
