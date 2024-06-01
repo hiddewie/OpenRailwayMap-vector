@@ -880,16 +880,15 @@ const gaugeLayout = {
 
 const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a>';
 
-const openstreetmap = {
-  type: 'raster',
-  tiles: [
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-  ],
-  tileSize: 256,
-  attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
-};
 const sources = {
-  openstreetmap,
+  background_map: {
+    type: 'raster',
+    tiles: [
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    ],
+    tileSize: 256,
+    attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: `${origin}/railway_line_low`,
@@ -948,7 +947,7 @@ const backgroundColor = {
 const backgroundMap = {
   id: "background-map",
   type: "raster",
-  source: "openstreetmap",
+  source: "background_map",
   paint: {
     'raster-saturation': -1.0, // or 0.0 for colorful
     'raster-opacity': 1.0, // or 0.0 for transparent

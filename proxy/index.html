@@ -61,6 +61,13 @@
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
+          <div class="form-group">
+            <label for="backgroundRasterUrl">Background map tile URL</label>
+            <input type="url" required class="form-control" id="backgroundRasterUrl" onchange="updateConfiguration('backgroundRasterUrl', this.value)">
+            <small class="form-text text-muted">
+              The tile URL of the background map. Only supports raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers.
+            </small>
+          </div>
         </form>
       </div>
     </div>

@@ -20,6 +20,10 @@ body {
   background: rgba(0, 0, 0, .4);
   backdrop-filter: blur(3px);
 }
+.backdrop #backgroundRasterUrl {
+  font-family: monospace;
+  font-size: 0.8em;
+}
 #cancel-search {
   margin: 20px;
   padding: 0.4rem;

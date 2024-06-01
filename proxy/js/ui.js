@@ -6,6 +6,7 @@ const cancelIcon = document.getElementById('cancel-icon');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
+const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl');
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
@@ -60,9 +61,9 @@ function hideSearch() {
 }
 
 function showConfiguration() {
-  // TODO configure default values somewhere
-  backgroundSaturationControl.value = configuration.backgroundSaturation ?? -1.0;
-  backgroundOpacityControl.value = configuration.backgroundOpacity ?? 1.0;
+  backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
+  backgroundOpacityControl.value = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
+  backgroundRasterUrlControl.value = configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl;
   configurationBackdrop.style.display = 'block';
 }
 
@@ -176,6 +177,11 @@ function updateConfiguration(name, value) {
   onStyleChange(selectedStyle);
 }
 
+const defaultConfiguration = {
+  backgroundSaturation: -1.0,
+  backgroundOpacity: 1.0,
+  backgroundRasterUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+}
 let configuration = readConfiguration(localStorage);
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
@@ -195,8 +201,11 @@ const legendStyles = Object.fromEntries(
 
 const transformMapStyle = (style, configuration) => {
   const backgroundMapLayer = style.layers.find(it => it.id === 'background-map');
-  backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? -1.0;
-  backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? 1.0;
+  backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
+  backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
+
+  const backgroundMapSource = style.sources.background_map;
+  backgroundMapSource.tiles = [configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl];
 
   return style;
 }
