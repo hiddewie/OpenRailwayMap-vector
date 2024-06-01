@@ -5,6 +5,7 @@ import psycopg2
 import psycopg2.extras
 import json
 import sys
+import os
 from werkzeug.exceptions import HTTPException, NotFound, InternalServerError
 from werkzeug.routing import Map, Rule
 from werkzeug.wrappers import Request, Response
@@ -12,7 +13,7 @@ from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
 
 def connect_db():
-    conn = psycopg2.connect('dbname=gis')
+    conn = psycopg2.connect(dbname='gis', user='postgres', host='db')
     psycopg2.extras.register_hstore(conn)
     return conn
 
@@ -62,9 +63,5 @@ def application(environ, start_response):
 
 if __name__ == '__main__':
     openrailwaymap_api = OpenRailwayMapAPI()
-    if len(sys.argv) == 2 and sys.argv[1] == 'serve':
-        from werkzeug.serving import run_simple
-        run_simple('127.0.0.1', 5000, application, use_debugger=True, use_reloader=True)
-    else:
-        sys.stderr.write('ERROR: Missing argument \'serve\'. Cannot start in standalone development mode this way.\n')
-        exit(1)
+    from werkzeug.serving import run_simple
+    run_simple('127.0.0.1', int(os.environ['PORT']), application, use_debugger=True, use_reloader=True)

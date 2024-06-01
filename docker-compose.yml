@@ -118,3 +118,11 @@ services:
           path: proxy
         - action: rebuild
           path: features
+
+  api:
+    build:
+      context: api
+    environment:
+      - PORT=5000
+    ports:
+      - '5000:5000'
