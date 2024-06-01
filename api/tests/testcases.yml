@@ -1,0 +1,126 @@
+- name: Berlin
+  request:
+    path: "/facility"
+    params:
+      name: "Berlin"
+  response:
+    entries:
+      - name: "Hauptbahnhof"
+      - name: "Yorckstraße"
+      - name: "Berlin-Spandau"
+      - name: "Berlin Südkreuz"
+      - name: "Ostbahnhof"
+      - name: "Berlin Ostbahnhof"
+      - name: "Friedrichstraße"
+      - name: "Berlin Gesundbrunnen"
+      - name: "Berlin Hauptbahnhof"
+      - name: "Hirschgarten"
+      - name: "Hermannstraße"
+      - name: "Westkreuz"
+      - name: "Warschauer Straße"
+      - name: "Nordbahnhof"
+      - name: "Ostkreuz"
+      - name: "Bornholmer Straße"
+      - name: "Berlin Potsdamer Platz"
+      - name: "Baumschulenweg"
+      - name: "Priesterweg"
+      - name: "Gesundbrunnen"
+- name: result limit 5
+  request:
+    path: "/facility"
+    params:
+      name: "Berlin"
+      limit: 5
+  response:
+    count: 5
+- name: result limit 25
+  request:
+    path: "/facility"
+    params:
+      name: "Berlin"
+      limit: 25
+  response:
+    count: 25
+- name: "hyphen"
+  request:
+    path: "/facility"
+    params:
+      name: "Karlsruhe-Hagsfeld"
+  response:
+    match: regexp_full
+    count: 1
+    entries:
+      - name: "Karlsruhe[- ]Hagsfeld"
+- name: "space"
+  request:
+    path: "/facility"
+    params:
+      name: "Karlsruhe Hagsfeld"
+  response:
+    match: regexp_full
+    count: 1
+    entries:
+      - name: "Karlsruhe[- ]Hagsfeld"
+- name: Karlsruhe
+  request:
+    path: "/facility"
+    params:
+      name: Karlsruhe
+  response:
+    match: regexp_full
+    entries:
+      - name: "Karlsruhe (Hauptbahnhof|Hbf)"
+      - name: "Karlsruhe-Durlach"
+      - name: "Karlsruhe-Durlach"
+      - name: "Malsch( \\(K(reis)? Karslruhe\\))?"
+      - name: "Söllingen \\(b(ei)? Karlsruhe\\)"
+      - name: "Söllingen \\(b(ei)? Karlsruhe\\)"
+      - name: "Kunstakademie / Hochschule Karlsruhe"
+      - name: "Karlsruhe[- ]West"
+      - name: "Karlsruhe[- ]Knielingen"
+      - name: "Karlsruhe[- ]Mühlburg"
+      - name: "Karlsruhe[- ]Hafen"
+      - name: "Karlsruhe[- ]Brunnenstück"
+      - name: "Forchheim \\(b(ei)? Karlsruhe\\)"
+      - name: "Söllingen \\(b(ei)? Karlsruhe\\) Abzw"
+      - name: "Karlsruhe Gbf"
+      - name: "Karlsruhe[- ]Rheinbrücke"
+      - name: "Karlsruhe[- ]Dammerstock"
+      - name: "Karlsruhe[- ]Hagsfeld"
+- name: "'Württ' should not return results"
+  request:
+    path: "/facility"
+    params:
+      name: Württ
+      limit: 1
+  response:
+    count: 1
+- name: "'Württemberg' should not return results"
+  request:
+    path: "/facility"
+    params:
+      name: Württemberg
+      limit: 1
+  response:
+    count: 1
+- name: "'Walheim' should return one result"
+  request:
+    path: "/facility"
+    params:
+      name: Walheim
+  response:
+    match: str_equals
+    entries:
+      - name: "Walheim (Württemberg)"
+- name: "2160 km 9.4"
+  request:
+    path: "/milestone"
+    params:
+      ref: 2160
+      position: 9.4
+      limit: 1
+  response:
+    match: str_equals
+    entries:
+      - route_ref: "2160"
+        position: 9.4
