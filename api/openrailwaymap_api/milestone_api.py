@@ -81,7 +81,6 @@ class MilestoneAPI(AbstractAPI):
                                          array_agg(railway) AS railway,
                                          position AS position,
                                          array_agg(geom) AS geom,
-                                         unnest(ST_ClusterWithin(geom, 25)) AS geom_collection,
                                          route_ref,
                                          operator,
                                          error
