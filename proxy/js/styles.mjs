@@ -951,6 +951,7 @@ const backgroundMap = {
   source: "openstreetmap",
   paint: {
     'raster-saturation': -1.0, // or 0.0 for colorful
+    'raster-opacity': 1.0, // or 0.0 for transparent
   }
 };
 

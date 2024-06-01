@@ -5,6 +5,7 @@ const searchIcon = document.getElementById('search-icon');
 const cancelIcon = document.getElementById('cancel-icon');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
+const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
@@ -61,6 +62,7 @@ function hideSearch() {
 function showConfiguration() {
   // TODO configure default values somewhere
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? -1.0;
+  backgroundOpacityControl.value = configuration.backgroundOpacity ?? 1.0;
   configurationBackdrop.style.display = 'block';
 }
 
@@ -194,6 +196,7 @@ const legendStyles = Object.fromEntries(
 const transformMapStyle = (style, configuration) => {
   const backgroundMapLayer = style.layers.find(it => it.id === 'background-map');
   backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? -1.0;
+  backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? 1.0;
 
   return style;
 }
