@@ -11,6 +11,7 @@ from werkzeug.routing import Map, Rule
 from werkzeug.wrappers import Request, Response
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
+from openrailwaymap_api.status_api import StatusAPI
 
 def connect_db():
     conn = psycopg2.connect(dbname='gis', user='postgres', host='db')
@@ -25,6 +26,7 @@ class OpenRailwayMapAPI:
         self.url_map = Map([
             Rule('/facility', endpoint=FacilityAPI, methods=('GET',)),
             Rule('/milestone', endpoint=MilestoneAPI, methods=('GET',)),
+            Rule('/status', endpoint=StatusAPI, methods=('GET',)),
         ])
 
     def ensure_db_connection_alive(self):
@@ -64,4 +66,4 @@ def application(environ, start_response):
 if __name__ == '__main__':
     openrailwaymap_api = OpenRailwayMapAPI()
     from werkzeug.serving import run_simple
-    run_simple('127.0.0.1', int(os.environ['PORT']), application, use_debugger=True, use_reloader=True)
+    run_simple('0.0.0.0', int(os.environ['PORT']), application, use_debugger=True, use_reloader=True)
