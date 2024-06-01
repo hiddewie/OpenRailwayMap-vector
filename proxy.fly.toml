@@ -17,7 +17,8 @@ primary_region = 'ams'
   processes = ['app']
 
 [env]
-  PROXY_UPSTREAM = "ams.openrailwaymap-tiles.internal:3000"
+  TILES_UPSTREAM = "ams.openrailwaymap-tiles.internal:3000"
+  API_UPSTREAM = "ams.openrailwaymap-api.internal:5000"
   PUBLIC_PROTOCOL = "https"
   PUBLIC_HOST = "openrailwaymap.fly.dev"
   NGINX_RESOLVER = "[fdaa::3] valid=10m ipv6=on"
