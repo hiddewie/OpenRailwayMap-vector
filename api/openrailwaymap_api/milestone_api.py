@@ -30,13 +30,14 @@ class MilestoneAPI(AbstractAPI):
             try:
                 self.limit = int(args['limit'])
             except ValueError:
-                self.data = {'type': 'limit_not_integer', 'error': 'Invalid paramter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
+                self.data = {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
                 self.status_code = 400
                 return self.build_response()
             if self.limit > self.MAX_LIMIT:
-                self.data = {'type': 'limit_too_high', 'error': 'Invalid paramter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+                self.data = {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
                 self.status_code = 400
                 return self.build_response()
+        print(ref, position)
         self.data = self.get_milestones()
         return self.build_response()
 
@@ -92,13 +93,14 @@ class MilestoneAPI(AbstractAPI):
                                            m.position,
                                            ST_Transform(m.geom, 4326) AS geom,
                                            t.ref AS route_ref,
-                                           t.tags->'operator' AS operator,
+                                           -- TODO import operator
+                                           NULL AS operator,
                                            ABS(%s - m.position) AS error
                                          FROM openrailwaymap_milestones AS m
                                          JOIN openrailwaymap_tracks_with_ref AS t
                                            ON t.geom && m.geom AND ST_Intersects(t.geom, m.geom) AND t.ref = %s
                                          WHERE m.position BETWEEN (%s - 10.0)::FLOAT AND (%s + 10.0)::FLOAT
-                                         -- sort by distance from searched location, then osm_id for stable sorting 
+                                         -- sort by distance from searched location, then osm_id for stable sorting
                                          ORDER BY error ASC, m.osm_id
                                        ) AS milestones
                                        GROUP BY position, error, route_ref, operator
@@ -107,6 +109,7 @@ class MilestoneAPI(AbstractAPI):
                              ) AS ranked
                              WHERE grouped_rank <= %s
                              LIMIT %s;"""
+            print(sql_query,  (self.position, self.route_ref, self.position, self.position, self.limit, self.limit))
             cursor.execute(sql_query, (self.position, self.route_ref, self.position, self.position, self.limit, self.limit))
             results = cursor.fetchall()
             for r in results:

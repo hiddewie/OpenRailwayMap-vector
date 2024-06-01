@@ -17,43 +17,29 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
         FROM (
           SELECT
               osm_id,
-              railway_api_valid_float(unnest(string_to_array(tags->'railway:position', ';'))) AS position,
+              railway_api_valid_float(unnest(string_to_array(railway_position, ';'))) AS position,
               1::SMALLINT AS precision,
               railway,
-              name,
-              ref,
-              tags,
+              -- TODO import name
+              NULL AS name,
+              -- TODO import ref
+              NULL AS ref,
+              NULL AS tags,
               way AS geom
-            FROM planet_osm_point
-            WHERE
-              (
-                railway IS NOT NULL
-                OR tags?'disused:railway'
-                OR tags?'abandoned:railway'
-                OR tags?'construction:railway'
-                OR tags?'proposed:railway'
-                OR tags?'razed:railway'
-              ) AND tags?'railway:position'
+            FROM railway_positions
+            WHERE railway_position IS NOT NULL
           UNION ALL
           SELECT
               osm_id,
-              railway_api_valid_float(unnest(string_to_array(tags->'railway:position:exact', ';'))) AS position,
+              railway_api_valid_float(unnest(string_to_array(railway_position_exact, ';'))) AS position,
               3::SMALLINT AS precision,
               railway,
-              name,
-              ref,
-              tags,
+              NULL AS name,
+              NULL AS ref,
+              NULL AS tags,
               way AS geom
-            FROM planet_osm_point
-            WHERE
-              (
-                railway IS NOT NULL
-                OR tags?'disused:railway'
-                OR tags?'abandoned:railway'
-                OR tags?'construction:railway'
-                OR tags?'proposed:railway'
-                OR tags?'razed:railway'
-              ) AND tags?'railway:position:exact'
+            FROM railway_positions
+            WHERE railway_position_exact IS NOT NULL
           ) AS features_with_position
         WHERE position IS NOT NULL
         ORDER BY osm_id ASC, precision DESC
@@ -73,29 +59,29 @@ CREATE OR REPLACE VIEW openrailwaymap_tracks_with_ref AS
       railway,
       name,
       ref,
-      tags,
+--       tags,
       way AS geom
-    FROM planet_osm_line
+    FROM railway_line
     WHERE
       railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-      AND (NOT (tags?'service') OR tags->'usage' IN ('industrial', 'military', 'test'))
+      AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
       AND ref IS NOT NULL
       AND osm_id > 0;
 
 CREATE INDEX IF NOT EXISTS planet_osm_line_ref_geom_idx
-  ON planet_osm_line
+  ON railway_line
   USING gist(way)
-  WHERE 
+  WHERE
     railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-    AND (NOT tags?'service' OR tags->'usage' IN ('industrial', 'military', 'test'))
+    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
     AND ref IS NOT NULL
     AND osm_id > 0;
 
 CREATE INDEX IF NOT EXISTS planet_osm_line_ref_idx
-  ON planet_osm_line
+  ON railway_line
   USING btree(ref)
-  WHERE 
+  WHERE
     railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-    AND (NOT tags?'service' OR tags->'usage' IN ('industrial', 'military', 'test'))
+    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
     AND ref IS NOT NULL
     AND osm_id > 0;

@@ -163,7 +163,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'railway_position', type = 'text' },
-    { column = 'railway_position_detail', type = 'text' },
+    { column = 'railway_position_exact', type = 'text' },
   },
 })
 
@@ -338,12 +338,12 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:detail']) then
+  if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:exact']) then
     railway_positions:insert({
       way = object:as_point(),
       railway = tags.railway,
       railway_position = tags['railway:position'],
-      railway_position_detail = tags['railway:position:detail'],
+      railway_position_exact = tags['railway:position:exact'],
     })
   end
 
