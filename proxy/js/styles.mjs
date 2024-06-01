@@ -944,8 +944,9 @@ const backgroundColor = {
     'background-color': 'rgb(242, 243, 240)'
   }
 };
+
 const backgroundMap = {
-  id: "openstreetmap",
+  id: "background-map",
   type: "raster",
   source: "openstreetmap",
   paint: {
