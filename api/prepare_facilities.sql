@@ -11,22 +11,22 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_ref AS
   SELECT
       osm_id,
       name,
-      tags,
+--       tags,
       railway,
-      tags->'station' as station,
-      ref,
-      tags->'railway:ref' as railway_ref,
-      tags->'uic_ref' as uic_ref,
+      station,
+      null as ref, -- TODO
+      label as railway_ref,
+      null as uic_ref, -- TODO tags->'uic_ref' as uic_ref,
       way AS geom
-    FROM planet_osm_point
+    FROM stations
     WHERE
-      (tags ? 'railway:ref' OR tags ? 'uic_ref')
+      (label is not null) -- TODO OR tags ? 'uic_ref')
       AND (
         railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-        OR tags->'disused:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-        OR tags->'abandoned:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-        OR tags->'proposed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-        OR tags->'razed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--         OR tags->'disused:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--         OR tags->'abandoned:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--         OR tags->'proposed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--         OR tags->'razed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
       );
 
 CREATE INDEX IF NOT EXISTS openrailwaymap_ref_railway_ref_idx
@@ -44,18 +44,20 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
       name,
       key AS name_key,
       value AS name_value,
-      tags,
+--       tags,
       railway,
       station,
       ref,
       route_count,
       geom
     FROM (
-      SELECT DISTINCT ON (osm_id, key, value, tags, name, railway, station, ref, route_count, geom)
+      SELECT DISTINCT ON (osm_id, key, value, name, railway, station, ref, route_count, geom) -- key, value, tags
           osm_id,
-          (each(updated_tags)).key AS key,
-          (each(updated_tags)).value AS value,
-          tags,
+          'name' as key,
+          name as value,
+--           (each(updated_tags)).key AS key,
+--           (each(updated_tags)).value AS value,
+--           tags,
           name,
           railway,
           station,
@@ -65,24 +67,24 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
         FROM (
           SELECT
               osm_id,
-              CASE
-                WHEN name IS NOT NULL THEN tags || hstore('name', name)
-                ELSE tags
-              END AS updated_tags,
+--               CASE
+--                 WHEN name IS NOT NULL THEN tags || hstore('name', name)
+--                 ELSE tags
+--               END AS updated_tags,
               name,
-              tags,
+--               tags,
               railway,
-              tags->'station' AS station,
-              tags->'ref' AS ref,
+              station AS station,
+              null as ref, -- tags->'ref' AS ref,
               route_count,
               way AS geom
             FROM stations_with_route_counts
             WHERE
               railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-              OR tags->'disused:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-              OR tags->'abandoned:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-              OR tags->'proposed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-              OR tags->'razed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--               OR tags->'disused:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--               OR tags->'abandoned:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--               OR tags->'proposed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+--               OR tags->'razed:railway' IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
           ) AS organised
       ) AS duplicated
     WHERE

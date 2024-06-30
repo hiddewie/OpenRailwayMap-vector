@@ -13,6 +13,7 @@ class AbstractAPI:
     def build_result_item_dict(self, description, row):
         item = {}
         for i in range(len(row)):
+            # TODO handle general tags
             if description[i].name == 'tags' and row[i]:
                 for k, v in row[i].items():
                     item[k] = v

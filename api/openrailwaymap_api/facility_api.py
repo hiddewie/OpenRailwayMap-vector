@@ -110,4 +110,4 @@ class FacilityAPI(AbstractAPI):
         return self._search_by_ref("uic_ref", ref)
 
     def sql_select_fieldlist(self):
-        return "osm_id, name, railway, ref, tags"
+        return "osm_id, name, railway, ref"
