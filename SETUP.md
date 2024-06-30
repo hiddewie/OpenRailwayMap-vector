@@ -49,6 +49,11 @@ Build and deploy the tile server:
 flyctl deploy --config martin-static.fly.toml --local-only
 ```
 
+Build and deploy the API:
+```shell
+flyctl deploy --config api.fly.toml --local-only api
+```
+
 Build and deploy the caching proxy:
 ```shell
 flyctl deploy --config proxy.fly.toml --local-only
