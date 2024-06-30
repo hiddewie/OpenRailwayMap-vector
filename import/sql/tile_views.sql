@@ -239,7 +239,7 @@ CREATE OR REPLACE VIEW standard_railway_text_km AS
     (SELECT
        way,
        railway,
-       COALESCE(railway_position, railway_pos_round(railway_position_detail)::text) AS pos
+       COALESCE(railway_position, railway_pos_round(railway_position_exact)::text) AS pos
      FROM railway_positions
     ) AS r
   WHERE pos IS NOT NULL

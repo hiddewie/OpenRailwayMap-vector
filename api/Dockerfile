@@ -1,0 +1,21 @@
+FROM postgis/postgis:16-3.4-alpine
+
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    py3-werkzeug \
+    py3-psycopg2
+
+WORKDIR /app
+COPY openrailwaymap_api openrailwaymap_api
+COPY api.py api.py
+COPY start.sh start.sh
+
+COPY api.sql /sql/import.sql
+COPY prepare_facilities.sql /sql/prepare_facilities.sql
+COPY prepare_milestones.sql /sql/prepare_milestones.sql
+COPY init.sh /docker-entrypoint-initdb.d/20-init.sh
+
+ENV POSTGRES_DB gis
+ENV POSTGRES_HOST_AUTH_METHOD=trust
+CMD ["/app/start.sh"]
