@@ -3,6 +3,7 @@ primary_region = 'ams'
 
 [build]
   dockerfile = 'Dockerfile'
+  build-target = 'runtime'
 
 [env]
   PORT = "5000"
