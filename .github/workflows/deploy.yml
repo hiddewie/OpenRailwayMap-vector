@@ -135,6 +135,36 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Pull database
+        run: |
+          docker compose pull db
+          docker compose up --no-build --pull never --wait db
+
+      - name: Extract data from database
+        run: |
+          docker compose exec db pg_dump \
+            --host 127.0.0.1 \
+            --user postgres \
+            --port 5432 \
+            --dbname gis \
+            --table stations_with_route_counts \ 
+            --table railway_line \ 
+            --table railway_positions \ 
+            --table station_nodes_stop_positions_rel_count \ 
+            --table stations \ 
+            --table stations_with_route_counts \ 
+            --table stop_positions_and_their_routes_clustered \ 
+            --table stops_and_route_relations \ 
+            --table stop_positions \ 
+            --table routes \ 
+            --table station_nodes_platforms_rel_count \ 
+            --table platforms_and_their_routes_clustered \ 
+            --table station_nodes_platforms_rel_count \ 
+            --table stations_with_route_counts \ 
+            --table platforms_route_relations \ 
+            --table platforms \
+            > api/api.sql
+
       - name: Deploy
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
