@@ -11,7 +11,7 @@ jobs:
     executor: default
     steps:
       - checkout
-      - run: wget -qO- 'https://getfly.fly.dev/linux-x86-64/flyctl.tgz' | tar xz
+      - run: curl -L https://fly.io/install.sh | sh
       - run: echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_USERNAME" --password-stdin
       - run: docker compose pull db
       - run: docker image ls ghcr.io/hiddewie/openrailwaymap-import-db:latest
