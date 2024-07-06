@@ -172,7 +172,7 @@ jobs:
       - name: Build container
         run: |
           docker compose up --build --wait api-import
-          docker compose logs api-import
+          
           docker compose stop api-import
           
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "api-import") | .ID')"
@@ -183,6 +183,11 @@ jobs:
           
           docker compose build api
           docker compose push api
+
+      - name: Build container
+        if: ${{ always() }}
+        run: |
+          docker compose logs api-import
 
       - name: Deploy
         env:
