@@ -184,7 +184,7 @@ jobs:
           docker compose build api
           docker compose push api
 
-      - name: Build container
+      - name: Print import logs
         if: ${{ always() }}
         run: |
           docker compose logs api-import

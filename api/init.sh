@@ -10,5 +10,3 @@ psql -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 psql -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
 
 psql -d gis -f /sql/import.sql
-psql -d gis -f /sql/prepare_facilities.sql
-psql -d gis -f /sql/prepare_milestones.sql
