@@ -172,6 +172,7 @@ jobs:
       - name: Build container
         run: |
           docker compose up --build --wait api-import
+          docker compose logs api-import
           docker compose stop api-import
           
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "api-import") | .ID')"
