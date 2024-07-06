@@ -140,6 +140,22 @@ jobs:
           docker compose pull db
           docker compose up --no-build --pull never --wait db
 
+      - name: Prepare data
+        run: |
+          docker compose exec -T db psql \
+            --host 127.0.0.1 \
+            --user postgres \
+            --port 5432 \
+            --dbname gis \
+            < api/prepare_facilities.sql
+          
+          docker compose exec -T db psql \
+            --host 127.0.0.1 \
+            --user postgres \
+            --port 5432 \
+            --dbname gis \
+            < api/prepare_milestones.sql
+
       - name: Extract data from database
         run: |
           docker compose exec db pg_dump \
