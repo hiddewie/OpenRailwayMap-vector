@@ -7,7 +7,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_ref AS
+CREATE TABLE IF NOT EXISTS openrailwaymap_ref AS
   SELECT
       osm_id,
       name,
@@ -37,7 +37,7 @@ CREATE INDEX IF NOT EXISTS openrailwaymap_ref_uic_ref_idx
   ON openrailwaymap_ref
   USING BTREE(uic_ref);
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
+CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
   SELECT
       osm_id,
       to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space(value))) AS terms,

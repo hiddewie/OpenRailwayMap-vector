@@ -147,22 +147,10 @@ jobs:
             --user postgres \
             --port 5432 \
             --dbname gis \
-            --table stations_with_route_counts \
-            --table railway_line \
-            --table railway_positions \
-            --table station_nodes_stop_positions_rel_count \
-            --table stations \
-            --table stations_with_route_counts \
-            --table stop_positions_and_their_routes_clustered \
-            --table stops_and_route_relations \
-            --table stop_positions \
-            --table routes \
-            --table station_nodes_platforms_rel_count \
-            --table platforms_and_their_routes_clustered \
-            --table station_nodes_platforms_rel_count \
-            --table stations_with_route_counts \
-            --table platforms_route_relations \
-            --table platforms \
+            --table openrailwaymap_facilities_for_search \
+            --table openrailwaymap_ref \
+            --table openrailwaymap_milestones \
+            --table openrailwaymap_tracks_with_ref \
             > api/api.sql
 
       - name: Build container

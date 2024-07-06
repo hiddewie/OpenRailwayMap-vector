@@ -10,7 +10,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_milestones AS
+CREATE TABLE IF NOT EXISTS openrailwaymap_milestones AS
   SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, geom
     FROM (
       SELECT osm_id, position, precision, railway, name, ref, geom
@@ -49,7 +49,7 @@ CREATE INDEX IF NOT EXISTS openrailwaymap_milestones_position_idx
   ON openrailwaymap_milestones
   USING gist(geom);
 
-CREATE OR REPLACE VIEW openrailwaymap_tracks_with_ref AS
+CREATE TABLE IF NOT EXISTS openrailwaymap_tracks_with_ref AS
   SELECT
       osm_id,
       railway,
@@ -59,24 +59,14 @@ CREATE OR REPLACE VIEW openrailwaymap_tracks_with_ref AS
     FROM railway_line
     WHERE
       railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-      AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
+      AND ("service" IS NULL OR usage IN ('industrial', 'military', 'test'))
       AND ref IS NOT NULL
       AND osm_id > 0;
 
 CREATE INDEX IF NOT EXISTS planet_osm_line_ref_geom_idx
-  ON railway_line
-  USING gist(way)
-  WHERE
-    railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
-    AND ref IS NOT NULL
-    AND osm_id > 0;
+  ON openrailwaymap_tracks_with_ref
+  USING gist(geom);
 
 CREATE INDEX IF NOT EXISTS planet_osm_line_ref_idx
-  ON railway_line
-  USING btree(ref)
-  WHERE
-    railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
-    AND ref IS NOT NULL
-    AND osm_id > 0;
+  ON openrailwaymap_tracks_with_ref
+  USING btree(ref);
