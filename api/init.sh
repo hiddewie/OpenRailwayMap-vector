@@ -9,4 +9,5 @@ psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || create
 psql -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
 psql -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
 
+psql -d gis -f /sql/facility_functions.sql
 psql -d gis -f /sql/import.sql

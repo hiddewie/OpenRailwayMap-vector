@@ -1,6 +1,7 @@
 FROM postgis/postgis:16-3.4-alpine as import
 
 COPY api.sql /sql/import.sql
+COPY facility_functions.sql /sql/facility_functions.sql
 COPY init.sh /docker-entrypoint-initdb.d/20-init.sh
 
 ENV POSTGRES_DB gis

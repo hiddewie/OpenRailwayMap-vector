@@ -147,6 +147,13 @@ jobs:
             --user postgres \
             --port 5432 \
             --dbname gis \
+            < api/facility_functions.sql
+          
+          docker compose exec -T db psql \
+            --host 127.0.0.1 \
+            --user postgres \
+            --port 5432 \
+            --dbname gis \
             < api/prepare_facilities.sql
           
           docker compose exec -T db psql \
