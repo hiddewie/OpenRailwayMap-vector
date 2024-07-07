@@ -5,6 +5,7 @@ COPY init.sh /docker-entrypoint-initdb.d/20-init.sh
 
 ENV POSTGRES_DB gis
 ENV POSTGRES_HOST_AUTH_METHOD trust
+ENV PGDATA /var/lib/postgresql/postgres-data
 
 HEALTHCHECK CMD ["pg_isready", "--host", "localhost", "--user", "postgres", "--dbname", "gis", "--port", "5432"]
 
@@ -25,5 +26,6 @@ COPY postgres-data /var/lib/postgresql/postgres-data
 
 ENV POSTGRES_DB gis
 ENV POSTGRES_HOST_AUTH_METHOD trust
+ENV PGDATA /var/lib/postgresql/postgres-data
 
 CMD ["/app/start.sh"]

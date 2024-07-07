@@ -127,7 +127,6 @@ services:
       target: runtime
     environment:
       - PORT=5000
-      - PGDATA=/var/lib/postgresql/postgres-data
     ports:
       - '5000:5000'
 
@@ -136,5 +135,3 @@ services:
     build:
       context: api
       target: import
-    environment:
-      - PGDATA=/var/lib/postgresql/postgres-data
