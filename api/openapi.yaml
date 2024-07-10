@@ -101,10 +101,13 @@ paths:
                         OSM node ID
                     name:
                       type: string
+                      nullable: true
                     railway:
                       type: string
+                      nullable: true
                     railway_ref:
                       type: string
+                      nullable: true
                     rank:
                       type: integer
                       description: |
@@ -208,18 +211,22 @@ paths:
                       type: string
                       description: |
                         Reference number of the railway line the feature is located on.
+                      nullable: true
                     operator:
                       type: string
                       description: |
                         operator of the infrastructure
+                      nullable: true
                     railway:
                       type: string
                       description: |
                         type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
+                      nullable: true
                     position:
                       type: number
                       description: |
                         Mileage of the feature
+                      nullable: true
                 example:
                   - "osm_id": 3479484133
                     "railway": "milestone"
