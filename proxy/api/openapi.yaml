@@ -171,7 +171,7 @@ paths:
           in: query
           schema:
             type: string
-            example: '345'
+            example: '4201'
           description: |
             reference number of the railway route the mileage refers to (in this case, route means lines as infrastructure, not the services using the tracks)
         - name: position
@@ -179,7 +179,7 @@ paths:
           in: query
           schema:
             type: number
-            example: 123.45
+            example: 18.4
           description: |
             position (can be negative)
         - name: limit
