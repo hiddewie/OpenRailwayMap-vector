@@ -26,23 +26,6 @@ See the [OpenAPI specification](openapi.yaml).
 
 ### Facilities
 
-URL: `/facility?<PARAMETERS>`
-
-The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
-
-The request must contain exactly one of the following parameters because they are mutually exclusive:
-
-* `q=<string>`: search term (will be looked up in all `name=*` tags, `railway:ref=*` and `uic_ref=*`).
-* `name=<string>`: search term (name search only)
-* `ref=<string>`: serach by official facility reference number/code only
-* `uic_ref=<string>`: search by UIC reference number of a station (uses OSM tag `uic_ref=*`)
-
-Optional parameter:
-
-* `limit=<integer>`: maximum number of results, optional, defaults to 20, must not exceed 200
-
-It takes the first keyword of (name,uicref,ref) and the optional the operator to search for the data.
-
 The API returns JSON formatted data with following fields:
 
   * `latitude`: latitude

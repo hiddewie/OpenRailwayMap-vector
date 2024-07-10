@@ -26,6 +26,43 @@ paths:
       summary: Facility search
       description: |
         The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
+              
+        The parameters q, name, ref and uic_ref are mutually exclusive.
+        
+        It takes the first keyword of (name,uicref,ref) and the optional the operator to search for the data.
+
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+          description: |
+            search term (will be looked up in all `name=*` tags, `railway:ref=*` and `uic_ref=*`)
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: |
+            search term (name search only)
+        - name: ref
+          in: query
+          schema:
+            type: string
+          description: |
+            search by official facility reference number/code only
+        - name: uic_ref
+          in: query
+          schema:
+            type: string
+          description: |
+            search by UIC reference number of a station (uses OSM tag `uic_ref=*`)
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 200
+          description: maximum number of results
 
   /api/milestone:
     get:
