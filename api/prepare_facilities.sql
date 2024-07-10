@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
               railway,
               station,
               railway_ref,
+              name_tags,
               route_count,
               way AS geom
             FROM stations_with_route_counts
