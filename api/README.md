@@ -27,28 +27,6 @@ See the [OpenAPI specification](openapi.yaml).
 
 ### Milestones
 
-The milestone endpoint returns the position of milestones or other items such as signals or level crossings with a mapped position on a line.
-
-The API will return the features within a maximum distance of 10 km (hardcoded). The presence of an `operator=*` tag on the tracks is honoured, it will be used to
-distinguish reference numbers used by different infrastructure operators and/or in different countries.
-
-Mileage is read from the OSM tags `railway:position=*` and `railway:position:exact=*` with precedence of the exact mileage. The tracks must be tagged with a reference number (OSM tag `ref=*`).
-
-The tracks must not tagged with `service=*` (this condition does not apply to tracks with `usage=industrial/military/test`).
-
-Negative mileage is supported but gaps in mileage or duplicated positions (if railway lines are reroute) are not supported. For example, you cannot query for `16.8+200` or things like that.
-
-URL: `/milestone?<PARAMETERS>`
-
-Mandatory parameters:
-
-* `ref=<string>`: reference number of the railway route the mileage refers to (in this case, route meas lines as infrastructure, not the services using the tracks), mandatory
-* `position=<float>`: position (can be negative), mandatory
-
-Optional parameter:
-
-* `limit=<integer>`: maximum number of results, optional, defaults to 2, must not exceed 200
-
 The API returns JSON formatted data with following fields:
 
   * `osm_id`: OSM node ID

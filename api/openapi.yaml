@@ -162,3 +162,48 @@ paths:
         Negative mileage is supported but gaps in mileage or duplicated positions (if railway lines are reroute) are not supported. For example, you cannot query for `16.8+200` or things like that.
       tags:
         - search
+      parameters:
+        - name: ref
+          required: true
+          in: query
+          schema:
+            type: string
+            example: '345'
+          description: |
+            reference number of the railway route the mileage refers to (in this case, route means lines as infrastructure, not the services using the tracks)
+        - name: position
+          required: true
+          in: query
+          schema:
+            type: number
+            example: 123.45
+          description: |
+            position (can be negative)
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 200
+          description: maximum number of results
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                example:
+                  - "osm_id": 3479484133
+                    "railway": "milestone"
+                    "position": 18.405
+                    "latitude": 8.7064769
+                    "longitude": 49.031523899684544
+                    "ref": "4201"
+                    "operator": null
+                  - "osm_id": 3479484134
+                    "railway": "milestone"
+                    "position": 18.2
+                    "latitude": 8.7045853
+                    "longitude": 49.03277039968421
+                    "ref": "4201"
+                    "operator": null
