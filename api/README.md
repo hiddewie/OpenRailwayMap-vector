@@ -24,62 +24,6 @@ and aim to make as much use as possible of indexes in the database.
 
 See the [OpenAPI specification](openapi.yaml).
 
-### Facilities
-
-The API returns JSON formatted data with following fields:
-
-  * `latitude`: latitude
-  * `longitude`: longitude
-  * `osm_id`: OSM node ID
-  * `rank`: an importance rank calculated by taking the public transport route relations into account using this station/halt
-  * All OSM tags present on this object. The following tags are very often in use. See the OSM wiki and Taginfo for a more comprehensive list of possible tags.
-    * `name`: name
-    * `uic_name`: UIC station name
-    * `railway:ref`: reference assigned by the operator of the infrastructure
-    * `railway`: type of the facility following [Tagging rules](https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites)), e.g. `station`, `halt`, `junction`, `yard`.
-    * `operator`: operator of the infrastructure
-
-Example:
-
-Request: `GET https://api.openrailwaymap.org/v2/facility?name=Karlsruhe&limit=1`
-
-Response:
-
-```json
-[
-  {
-    "osm_id": 2574283615,
-    "name": "Karlsruhe Hauptbahnhof",
-    "railway": "station",
-    "ref": null,
-    "iata": "KJR",
-    "uic_ref": "8000191",
-    "website": "https://www.bahnhof.de/bahnhof-de/bahnhof/Karlsruhe-Hbf-1019530",
-    "operator": "DB Station&Service AG",
-    "wikidata": "Q688541",
-    "iata:note": "AIRail Flughafen",
-    "max_level": "1",
-    "min_level": "-1",
-    "platforms": "7",
-    "ref:IFOPT": "de:08212:90",
-    "wikipedia": "de:Karlsruhe Hauptbahnhof",
-    "short_name": "Karlsruhe Hbf",
-    "wheelchair": "yes",
-    "railway:ref": "RK",
-    "ref:station": "3107",
-    "internet_access": "wlan",
-    "public_transport": "station",
-    "internet_access:fee": "no",
-    "internet_access:ssid": "Telekom",
-    "internet_access:operator": "Deutsche Telekom AG",
-    "railway:station_category": "1",
-    "internet_access:fee:description": "30min kostenlos",
-    "latitude": 8.4020518,
-    "longitude": 48.9936163996939,
-    "rank": 176
-  }
-]
-```
 
 ### Milestones
 

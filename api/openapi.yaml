@@ -15,39 +15,57 @@ info:
 servers:
   - url: https://openrailwaymap.fly.dev
 
+tags:
+  - name: search
+    description: Search API
+  - name: status
+    description: Status API
+
+externalDocs:
+  description: GitHub
+  url: https://github.com/hiddewie/OpenRailwayMap-vector#readme
+
 paths:
   /api/status:
     get:
+      operationId: status
       description: Status endpoint
       summary: Status endpoint
+      tags:
+        - status
 
   /api/facility:
     get:
+      operationId: searchFacilities
       summary: Facility search
       description: |
         The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
-              
+        
         The parameters q, name, ref and uic_ref are mutually exclusive.
         
         It takes the first keyword of (name,uicref,ref) and the optional the operator to search for the data.
-
+      tags:
+        - search
       parameters:
         - name: q
           in: query
           schema:
             type: string
+            example: Karlsruhe
           description: |
             search term (will be looked up in all `name=*` tags, `railway:ref=*` and `uic_ref=*`)
         - name: name
           in: query
           schema:
             type: string
+            example: Karlsruhe
           description: |
             search term (name search only)
         - name: ref
           in: query
           schema:
             type: string
+            example: Gd
           description: |
             search by official facility reference number/code only
         - name: uic_ref
@@ -63,9 +81,73 @@ paths:
             default: 20
             maximum: 200
           description: maximum number of results
-
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    osm_id:
+                      type: integer
+                      description: |
+                        OSM node ID
+                    name:
+                      type: string
+                    railway:
+                      type: string
+                    railway_ref:
+                      type: string
+                    rank:
+                      type: integer
+                      description: |
+                        an importance rank calculated by taking the public transport route relations into account using this station/halt
+                example:
+                  - "osm_id": 4487545500
+                    "name": "Gouda"
+                    "railway": "station"
+                    "railway_ref": "Gd"
+                    "latitude": 4.7061636
+                    "longitude": 52.01742449911598
+                    "rank": 52
+                  - "osm_id": 7606567286
+                    "name": "Gouda Goverwelle"
+                    "railway": "station"
+                    "railway_ref": "Gdg"
+                    "latitude": 4.7420993
+                    "longitude": 52.01501279911619
+                    "rank": 8
+                  - "osm_id": 5370097609
+                    "name": "Dubbele Wierickebrug - tussen Woerden en Gouda"
+                    "railway": "site"
+                    "railway_ref": null
+                    "latitude": 4.809544
+                    "longitude": 52.074374099111374
+                    "rank": 0
+                  - "osm_id": 5370103610
+                    "name": "Hoge Gouwebrug - bij Gouda"
+                    "railway": "site"
+                    "railway_ref": null
+                    "latitude": 4.6826321
+                    "longitude": 52.017554399115966
+                    "rank": 0
+                  - "osm_id": 5370103611
+                    "name": "Gouwebrug - bij Gouda"
+                    "railway": "site"
+                    "railway_ref": null
+                    "latitude": 4.681521499999999
+                    "longitude": 52.01886699911586
+                    "rank": 0
   /api/milestone:
     get:
+      operationId: searchMilestones
       summary: Milestone search
       description: |
         The milestone endpoint returns the position of milestones or other items such as signals or level crossings with a mapped position on a line.
@@ -78,3 +160,5 @@ paths:
         The tracks must not tagged with `service=*` (this condition does not apply to tracks with `usage=industrial/military/test`).
         
         Negative mileage is supported but gaps in mileage or duplicated positions (if railway lines are reroute) are not supported. For example, you cannot query for `16.8+200` or things like that.
+      tags:
+        - search
