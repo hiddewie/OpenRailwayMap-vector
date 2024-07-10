@@ -23,8 +23,6 @@ docker-entrypoint.sh postgres \
   2>/dev/stderr \
   &
 
-sleep 1
-
 echo 'waiting until postgres ready'
 timeout 120 sh -c 'while ! pg_isready --host localhost --user postgres --dbname gis --port 5432; do sleep 1; done'
 
