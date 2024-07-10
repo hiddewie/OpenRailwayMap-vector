@@ -1,0 +1,43 @@
+openapi: 3.1.0
+
+info:
+  description: API to search for OpenRailwayMap-vector
+  contact:
+    name: Hidde Wieringa
+    email: openrailwaymap@hiddewieringa.nl
+    url: https://github.com/hiddewie/OpenRailwayMap-vector
+  license:
+    identifier: GPL-2.0-or-later
+    name: GNU General Public License v2.0 or later
+  title: OpenRailwayMap API
+  version: current
+
+servers:
+  - url: https://openrailwaymap.fly.dev
+
+paths:
+  /api/status:
+    get:
+      description: Status endpoint
+      summary: Status endpoint
+
+  /api/facility:
+    get:
+      summary: Facility search
+      description: |
+        The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
+
+  /api/milestone:
+    get:
+      summary: Milestone search
+      description: |
+        The milestone endpoint returns the position of milestones or other items such as signals or level crossings with a mapped position on a line.
+        
+        The API will return the features within a maximum distance of 10 km (hardcoded). The presence of an `operator=*` tag on the tracks is honoured, it will be used to
+        distinguish reference numbers used by different infrastructure operators and/or in different countries.
+        
+        Mileage is read from the OSM tags `railway:position=*` and `railway:position:exact=*` with precedence of the exact mileage. The tracks must be tagged with a reference number (OSM tag `ref=*`).
+        
+        The tracks must not tagged with `service=*` (this condition does not apply to tracks with `usage=industrial/military/test`).
+        
+        Negative mileage is supported but gaps in mileage or duplicated positions (if railway lines are reroute) are not supported. For example, you cannot query for `16.8+200` or things like that.

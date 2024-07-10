@@ -22,6 +22,8 @@ and aim to make as much use as possible of indexes in the database.
 
 ## API
 
+See the [OpenAPI specification](openapi.yaml).
+
 ### Facilities
 
 URL: `/facility?<PARAMETERS>`
