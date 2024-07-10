@@ -24,48 +24,6 @@ and aim to make as much use as possible of indexes in the database.
 
 See the [OpenAPI specification](openapi.yaml).
 
-
-### Milestones
-
-The API returns JSON formatted data with following fields:
-
-  * `osm_id`: OSM node ID
-  * `latitude`: latitude
-  * `longitude`: longitude
-  * `position`: Mileage of the feature
-  * `railway`: type of the facility following [Tagging rules](https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites)), e.g. `milestone`, `level_crossing`, `signal`.
-  * `ref`: Reference number of the railway line the feature is located on.
-  * `operator`: operator of the infrastructure
-
-Example:
-
-Request: `GET https://api.openrailwaymap.org/v2/milestone?ref=4201&position=18.4`
-
-Response:
-
-```json
-[
-  {
-    "osm_id": 3479484133,
-    "railway": "milestone",
-    "position": 18.405,
-    "latitude": 8.7064769,
-    "longitude": 49.0315238996845,
-    "ref": "4201",
-    "operator": "Albtal-Verkehrs-Gesellschaft mbH"
-  },
-  {
-    "osm_id": 3479484134,
-    "railway": "milestone",
-    "position": 18.2,
-    "latitude": 8.7045853,
-    "longitude": 49.0327703996842,
-    "ref": "4201",
-    "operator": "Albtal-Verkehrs-Gesellschaft mbH"
-  }
-]
-```
-
 ### Network length
 
 The previous (v1) version of the API provided a `/networklength` entpoint. It returned the length of the railway networks of the infrastructure operators.

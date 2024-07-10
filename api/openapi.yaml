@@ -192,6 +192,34 @@ paths:
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    osm_id:
+                      type: integer
+                      description: |
+                        OSM node ID
+                    ref:
+                      type: string
+                      description: |
+                        Reference number of the railway line the feature is located on.
+                    operator:
+                      type: string
+                      description: |
+                        operator of the infrastructure
+                    railway:
+                      type: string
+                      description: |
+                        type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
+                    position:
+                      type: number
+                      description: |
+                        Mileage of the feature
                 example:
                   - "osm_id": 3479484133
                     "railway": "milestone"
