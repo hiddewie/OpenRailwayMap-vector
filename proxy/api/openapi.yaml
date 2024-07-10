@@ -148,6 +148,10 @@ paths:
                     "latitude": 4.681521499999999
                     "longitude": 52.01886699911586
                     "rank": 0
+        '400':
+          description: |
+            Bad request: invalid parameter values
+
   /api/milestone:
     get:
       operationId: searchMilestones
@@ -242,3 +246,6 @@ paths:
                     "longitude": 49.03277039968421
                     "ref": "4201"
                     "operator": null
+        '400':
+          description: |
+            Bad request: invalid parameter values

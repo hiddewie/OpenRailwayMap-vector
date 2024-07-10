@@ -39,11 +39,11 @@ class FacilityAPI(AbstractAPI):
             try:
                 self.limit = int(args['limit'])
             except ValueError:
-                self.data = {'type': 'limit_not_integer', 'error': 'Invalid paramter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
+                self.data = {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
                 self.status_code = 400
                 return self.build_response()
             if self.limit > self.MAX_LIMIT:
-                self.data = {'type': 'limit_too_high', 'error': 'Invalid paramter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+                self.data = {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
                 self.status_code = 400
                 return self.build_response()
         if args.get('name'):
