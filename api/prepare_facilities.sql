@@ -37,18 +37,18 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
       value AS name_value,
       railway,
       station,
-      ref,
+      railway_ref,
       route_count,
       geom
     FROM (
-      SELECT DISTINCT ON (osm_id, key, value, name, railway, station, ref, route_count, geom)
+      SELECT DISTINCT ON (osm_id, key, value, name, railway, station, railway_ref, route_count, geom)
           osm_id,
           (each(name_tags)).key AS key,
           (each(name_tags)).value AS value,
           name,
           railway,
           station,
-          ref,
+          railway_ref,
           route_count,
           geom
         FROM (
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
               name,
               railway,
               station,
-              ref,
+              railway_ref,
               route_count,
               way AS geom
             FROM stations_with_route_counts
