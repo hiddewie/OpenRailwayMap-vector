@@ -13,21 +13,8 @@ from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
 
-# import sqlite3
-#
-# with sqlite3.connect(':memory:') as connection:
-#     connection.enable_load_extension(True)
-#     connection.execute("select load_extension('spatialite')")
-#     print(connection.execute('SELECT spatialite_version()').fetchone()[0])
-
-# import spatialite
-# TODO use file
-# with spatialite.connect(':memory:') as db:
-
-
 def connect_db():
     conn = psycopg2.connect(dbname='gis', user='postgres', host='127.0.0.1')
-#     psycopg2.extras.register_hstore(conn)
     return conn
 
 class OpenRailwayMapAPI:
