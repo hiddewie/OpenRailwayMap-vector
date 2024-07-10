@@ -24,11 +24,6 @@ and aim to make as much use as possible of indexes in the database.
 
 See the [OpenAPI specification](openapi.yaml).
 
-### Network length
-
-The previous (v1) version of the API provided a `/networklength` entpoint. It returned the length of the railway networks of the infrastructure operators.
-Calls to the endpoint cause long database queries. The endpoint was not used in the frontend. Therefore, this endpoint is not available in version 2.
-
 ## Setup
 
 ### Dependencies and Deployment
