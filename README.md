@@ -28,8 +28,15 @@ A number of changes have been made from the [upstream `OpenRailwayMap-CartoCSS` 
 - Visualization of additional signalling has been added.
 - Direction of railway signals has been added.
 - Fixes have been made for non-functional visualization rules.
+- The API runs from a Docker container from static PostgreSQL data optimized for searching.
 
 Upstream changes will be merged into this project.
+
+## API
+
+The API has been adapted from [the OpenRailwayMap API](https://github.com/OpenRailwayMap/OpenRailwayMap-api). The API powers the search in the OpenRailwayMap website UI, and provides facility (stations, halts, tram stops, yards, sidings, crossovers, including disused, abandoned, razed, proposed and under construction) searches by name and reference and milestone searches by combination of line number and mileage. The searches are full text, based on PostgreSQL's full text search functionalities.
+
+The API documentation can be found at https://openrailwaymap.fly.dev/api. You can also view [the raw OpenAPI specification](api/openapi.yaml).
 
 ## Contributing
 

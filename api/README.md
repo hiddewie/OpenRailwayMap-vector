@@ -4,15 +4,6 @@ This is a reimplementation of the OpenRailwayMap API in Python with performance 
 Its public REST API is not exactly the same as the old PHP implementation but it should do the job good enough
 it serves to the website www.openrailwaymap.org.
 
-## Features
-
-* Facility search
-  * Search facilities (stations, halts, tram stops, yards, sidings, crossovers) including disused, abandoned,
-    razed and proposed ones and those under construction by name or reference.
-  * Fulltext search using PostgreSQL's full text search.
-  * Fast (< 100 ms per request)
-* Mileage search: Search the combination of line number and mileage.
-
 ## Delevopment goals
 
 The code of this application should be easy to read and it should be fast. We avoid unnecessary overhead
