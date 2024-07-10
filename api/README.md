@@ -1,5 +1,3 @@
-**This is experimental code. It is not ready for production yet.**
-
 # OpenRailwayMap API
 
 This is a reimplementation of the OpenRailwayMap API in Python with performance as main development goal.
