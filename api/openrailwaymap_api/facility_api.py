@@ -67,6 +67,7 @@ class FacilityAPI(AbstractAPI):
             return {'type': 'wildcard_in_query', 'error': 'Wildcard in query.', 'detail': 'Query contains any of the wildcard characters: %_'}
         with self.db_conn.cursor() as cursor:
             data = []
+            # TODO support filtering on state of feature: abandoned, in construction, disused, preserved, etc.
             # We do not sort the result although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
             sql_query = """SELECT
                 {fields}, latitude, longitude, rank

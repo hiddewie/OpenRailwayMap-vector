@@ -88,9 +88,13 @@ local stations = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
+    { column = 'feature', type = 'text' },
     { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
     { column = 'station', type = 'text' },
-    { column = 'label', type = 'text' },
+    { column = 'railway_ref', type = 'text' },
+    { column = 'uic_ref', type = 'text' },
+    { column = 'name_tags', type = 'hstore' },
   },
 })
 
@@ -208,6 +212,7 @@ local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
+local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
 
@@ -220,24 +225,58 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if railway_station_values(tags.railway) then
+  if railway_station_values(tags['railway'])
+     or railway_station_values(tags['construction:railway'])
+     or railway_station_values(tags['proposed:railway'])
+     or railway_station_values(tags['disused:railway'])
+     or railway_station_values(tags['abandoned:railway'])
+     or railway_station_values(tags['razed:railway'])
+     or railway_station_values(tags['preserved:railway'])
+   then
+
+    feature = tags['railway']
+      or tags['construction:railway']
+      or tags['proposed:railway']
+      or tags['disused:railway']
+      or tags['abandoned:railway']
+      or tags['razed:railway']
+      or tags['preserved:railway']
+
+    -- Gather name tags for searching
+    name_tags = {}
+    for key, value in pairs(tags) do
+      for _, name_tag in ipairs(known_name_tags) do
+        if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
+          name_tags[key] = value
+        end
+      end
+    end
+
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
           way = object:as_point(),
-          railway = tags.railway,
+          railway = tags['railway'],
+          feature = feature,
           name = tags.short_name or tags.name,
+          ref = tags.ref,
           station = station,
-          label = tags['railway:ref'],
+          railway_ref = tags['railway:ref'],
+          uic_ref = tags['uic_ref'],
+          name_tags = name_tags,
         })
       end
     else
       stations:insert({
         way = object:as_point(),
-        railway = tags.railway,
+        railway = tags['railway'],
+        feature = feature,
         name = tags.short_name or tags.name,
+        ref = tags.ref,
         station = nil,
-        label = tags['railway:ref'],
+        railway_ref = tags['railway:ref'],
+        uic_ref = tags['uic_ref'],
+        name_tags = name_tags,
       })
     end
   end

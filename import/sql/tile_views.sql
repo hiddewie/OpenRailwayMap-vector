@@ -73,11 +73,11 @@ CREATE OR REPLACE VIEW railway_line_med AS
 CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   SELECT
     way,
-    label
+    railway_ref as label
   FROM stations_with_route_counts
   WHERE
     railway = 'station'
-    AND label IS NOT NULL
+    AND railway_ref IS NOT NULL
     AND route_count >= 8
   ORDER BY
     route_count DESC NULLS LAST;
@@ -85,11 +85,11 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
 CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT
     way,
-    label
+    railway_ref as label
   FROM stations_with_route_counts
   WHERE
     railway = 'station'
-    AND label IS NOT NULL
+    AND railway_ref IS NOT NULL
   ORDER BY
     route_count DESC NULLS LAST;
 
@@ -167,7 +167,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     way,
     railway,
     station,
-    label,
+    railway_ref as label,
     name,
     CASE
       WHEN railway = 'station' AND station = 'light_rail' THEN 450
@@ -190,7 +190,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
        railway,
        route_count,
        station,
-       label,
+       railway_ref,
        name
      FROM stations_with_route_counts
      WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
