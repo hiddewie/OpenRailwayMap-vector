@@ -15,6 +15,7 @@ HEALTHCHECK CMD ["pg_isready", "--host", "localhost", "--user", "postgres", "--d
 FROM postgis/postgis:16-3.4-alpine as runtime
 
 RUN apk add --no-cache \
+    curl \
     python3 \
     py3-pip \
     py3-werkzeug \
@@ -32,5 +33,7 @@ ENV POSTGRES_USER postgres
 ENV POSTGRES_HOST 127.0.0.1
 ENV POSTGRES_HOST_AUTH_METHOD trust
 ENV PGDATA /var/lib/postgresql/postgres-data
+
+HEALTHCHECK CMD ["curl", "--fail", "localhost:5000/api/status"]
 
 CMD ["/app/start.sh"]

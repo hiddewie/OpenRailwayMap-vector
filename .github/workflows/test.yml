@@ -48,7 +48,7 @@ jobs:
       - name: Prepare and start API
         run: |
           api/prepare-api.sh
-          docker compose up api
+          docker compose up --wait api
 
 #      - name: Start web server
 #        run: |
