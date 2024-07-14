@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  push: ~
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Get Date
+        id: get-date
+        shell: bash
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+      - name: Cache data
+        uses: actions/cache@v4
+        id: cache-data
+        with:
+          path: |
+            data/germany.osm.pbf
+            data/filtered/germany.osm.pbf
+          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-germany
+
+      - name: Download Germany
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          curl --location --fail --output data/germany.osm.pbf https://download.geofabrik.de/europe/germany-latest.osm.pbf
