@@ -17,6 +17,12 @@ Start the tile server:
 docker compose up --build martin
 ```
 
+Prepare and start the API:
+```shell
+api/prepare-api.sh
+docker compose up api
+```
+
 Start the web server:
 ```shell
 docker compose up --build martin-proxy
@@ -51,6 +57,7 @@ flyctl deploy --config martin-static.fly.toml --local-only
 
 Build and deploy the API:
 ```shell
+api/prepare-api.sh
 flyctl deploy --config api.fly.toml --local-only api
 ```
 

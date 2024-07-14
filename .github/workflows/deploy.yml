@@ -140,56 +140,9 @@ jobs:
           docker compose pull db
           docker compose up --no-build --pull never --wait db
 
-      - name: Prepare data
+      - name: Prepare and build API container
         run: |
-          docker compose exec -T db psql \
-            --host 127.0.0.1 \
-            --user postgres \
-            --port 5432 \
-            --dbname gis \
-            < api/facility_functions.sql
-          
-          docker compose exec -T db psql \
-            --host 127.0.0.1 \
-            --user postgres \
-            --port 5432 \
-            --dbname gis \
-            < api/prepare_facilities.sql
-          
-          docker compose exec -T db psql \
-            --host 127.0.0.1 \
-            --user postgres \
-            --port 5432 \
-            --dbname gis \
-            < api/prepare_milestones.sql
-
-      - name: Extract data from database
-        run: |
-          docker compose exec db pg_dump \
-            --host 127.0.0.1 \
-            --user postgres \
-            --port 5432 \
-            --dbname gis \
-            --table openrailwaymap_facilities_for_search \
-            --table openrailwaymap_ref \
-            --table openrailwaymap_milestones \
-            --table openrailwaymap_tracks_with_ref \
-            > api/api.sql
-
-      - name: Build container
-        run: |
-          docker compose up --build --wait api-import
-          
-          docker compose stop api-import
-          
-          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "api-import") | .ID')"
-          DB_IMAGE="$(docker compose ps --all --format json | jq -r 'select(.Service == "api-import") | .Image')"
-          
-          # Persist and squash data in new image
-          docker cp "$DB_CONTAINER_ID:/var/lib/postgresql/postgres-data" api/postgres-data
-          
-          docker compose build api
-          docker compose push api
+          api/prepare-api.sh
 
       - name: Print import logs
         if: ${{ always() }}
