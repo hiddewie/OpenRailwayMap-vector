@@ -64,4 +64,4 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
+          hurl --test --verbose --variable base_url=http://localhost:5000/api tests/api.hurl
