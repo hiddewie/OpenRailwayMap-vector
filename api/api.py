@@ -14,7 +14,7 @@ from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
 
 def connect_db():
-    conn = psycopg2.connect(dbname='gis', user='postgres', host='127.0.0.1')
+    conn = psycopg2.connect(dbname=os.environ['POSTGRES_DB'], user=os.environ['POSTGRES_USER'], host=os.environ['POSTGRES_HOST'])
     return conn
 
 class OpenRailwayMapAPI:

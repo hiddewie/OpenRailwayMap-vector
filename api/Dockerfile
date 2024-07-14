@@ -5,6 +5,8 @@ COPY facility_functions.sql /sql/facility_functions.sql
 COPY init.sh /docker-entrypoint-initdb.d/20-init.sh
 
 ENV POSTGRES_DB gis
+ENV POSTGRES_USER postgres
+ENV POSTGRES_HOST 127.0.0.1
 ENV POSTGRES_HOST_AUTH_METHOD trust
 ENV PGDATA /var/lib/postgresql/postgres-data
 
@@ -26,6 +28,8 @@ COPY start.sh start.sh
 COPY postgres-data /var/lib/postgresql/postgres-data
 
 ENV POSTGRES_DB gis
+ENV POSTGRES_USER postgres
+ENV POSTGRES_HOST 127.0.0.1
 ENV POSTGRES_HOST_AUTH_METHOD trust
 ENV PGDATA /var/lib/postgresql/postgres-data
 
