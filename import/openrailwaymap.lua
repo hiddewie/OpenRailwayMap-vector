@@ -212,7 +212,7 @@ local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
-local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name'}
+local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
 
@@ -248,6 +248,7 @@ function osm2pgsql.process_node(object)
       for _, name_tag in ipairs(known_name_tags) do
         if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
           name_tags[key] = value
+          break
         end
       end
     end
