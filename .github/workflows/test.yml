@@ -28,14 +28,16 @@ jobs:
           path: |
             data/germany.osm.pbf
             data/filtered/germany.osm.pbf
-          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-germany
+          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-berlin
 
       - name: Download Germany
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
         run: |
-          curl --location --fail --output data/germany.osm.pbf https://download.geofabrik.de/europe/germany-latest.osm.pbf
+          curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 
       - name: Import data
+        env:
+          OSM2PGSQL_DATAFILE: berlin.osm.pbf
         run: |
           docker compose run --build import import
 
