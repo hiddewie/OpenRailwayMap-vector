@@ -55,5 +55,6 @@ jobs:
 #          docker compose up --build martin-proxy
 
       - name: Run API tests
+        working-directory: api
         run: |
           python3 tests/tests.py --api http://localhost:5000/api --tests tests/testcases.yml
