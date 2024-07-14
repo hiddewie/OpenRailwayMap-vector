@@ -28,11 +28,11 @@ class FacilityAPI(AbstractAPI):
             if search_arg in args and args[search_arg]:
                 search_args_count += 1
         if search_args_count > 1:
-            self.data = {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': 'Provide only one of the following arguments: {}'.format(', '.join(self.search_args))}
+            self.data = {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following arguments: {', '.join(self.search_args)}'}
             self.status_code = 400
             return self.build_response()
         elif search_args_count == 0:
-            self.data = {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': 'Provide one of the following arguments: {}'.format(', '.join(self.search_args))}
+            self.data = {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following arguments: {', '.join(self.search_args)}'}
             self.status_code = 400
             return self.build_response()
         if 'limit' in args:
@@ -69,7 +69,8 @@ class FacilityAPI(AbstractAPI):
             data = []
             # TODO support filtering on state of feature: abandoned, in construction, disused, preserved, etc.
             # We do not sort the result although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
-            sql_query = """SELECT
+            fields = self.sql_select_fieldlist()
+            sql_query = f"""SELECT
                 {fields}, latitude, longitude, rank
                 FROM (
                   SELECT DISTINCT ON (osm_id)
@@ -82,7 +83,7 @@ class FacilityAPI(AbstractAPI):
                     ) AS a
                   ) AS b
                   ORDER BY rank DESC NULLS LAST
-              LIMIT %s;""".format(fields=self.sql_select_fieldlist())
+              LIMIT %s;"""
             cursor.execute(sql_query, (q, q, self.limit))
             results = cursor.fetchall()
             for r in results:
@@ -93,11 +94,12 @@ class FacilityAPI(AbstractAPI):
         with self.db_conn.cursor() as cursor:
             data = []
             # We do not sort the result although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
-            sql_query = """SELECT DISTINCT ON (osm_id)
-              {}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
+            fields = self.sql_select_fieldlist()
+            sql_query = f"""SELECT DISTINCT ON (osm_id)
+              {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
               FROM openrailwaymap_ref
-              WHERE {} = %s
-              LIMIT %s;""".format(self.sql_select_fieldlist(), search_key)
+              WHERE {search_key} = %s
+              LIMIT %s;"""
             cursor.execute(sql_query, (ref, self.limit))
             results = cursor.fetchall()
             for r in results:
