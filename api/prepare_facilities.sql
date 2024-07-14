@@ -1,6 +1,7 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-CREATE TABLE IF NOT EXISTS openrailwaymap_ref AS
+DROP TABLE IF EXISTS openrailwaymap_ref;
+CREATE TABLE openrailwaymap_ref AS
   -- TODO add all available fields / tags from object
   SELECT
       osm_id,
@@ -19,15 +20,16 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_ref AS
         -- TODO support other states as well
       );
 
-CREATE INDEX IF NOT EXISTS openrailwaymap_ref_railway_ref_idx
+CREATE INDEX openrailwaymap_ref_railway_ref_idx
   ON openrailwaymap_ref
   USING BTREE(railway_ref);
 
-CREATE INDEX IF NOT EXISTS openrailwaymap_ref_uic_ref_idx
+CREATE INDEX openrailwaymap_ref_uic_ref_idx
   ON openrailwaymap_ref
   USING BTREE(uic_ref);
 
-CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
+DROP TABLE IF EXISTS openrailwaymap_facilities_for_search;
+CREATE TABLE openrailwaymap_facilities_for_search AS
   -- TODO add all available fields / tags from object
   SELECT
       osm_id,
@@ -68,4 +70,4 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_facilities_for_search AS
           ) AS organised
       ) AS duplicated;
 
-CREATE INDEX IF NOT EXISTS openrailwaymap_facilities_name_index ON openrailwaymap_facilities_for_search USING gin(terms);
+CREATE INDEX openrailwaymap_facilities_name_index ON openrailwaymap_facilities_for_search USING gin(terms);

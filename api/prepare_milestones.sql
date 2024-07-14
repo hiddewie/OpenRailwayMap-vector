@@ -10,7 +10,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TABLE IF NOT EXISTS openrailwaymap_milestones AS
+DROP TABLE IF EXISTS openrailwaymap_milestones;
+CREATE TABLE openrailwaymap_milestones AS
   -- TODO add all available fields / tags from object
   SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, geom
     FROM (
@@ -42,15 +43,16 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_milestones AS
         ORDER BY osm_id ASC, precision DESC
       ) AS duplicates_merged;
 
-CREATE INDEX IF NOT EXISTS openrailwaymap_milestones_geom_idx
+CREATE INDEX openrailwaymap_milestones_geom_idx
   ON openrailwaymap_milestones
   USING gist(geom);
 
-CREATE INDEX IF NOT EXISTS openrailwaymap_milestones_position_idx
+CREATE INDEX openrailwaymap_milestones_position_idx
   ON openrailwaymap_milestones
   USING gist(geom);
 
-CREATE TABLE IF NOT EXISTS openrailwaymap_tracks_with_ref AS
+DROP TABLE IF EXISTS openrailwaymap_tracks_with_ref;
+CREATE TABLE openrailwaymap_tracks_with_ref AS
   SELECT
       osm_id,
       railway,
@@ -64,10 +66,10 @@ CREATE TABLE IF NOT EXISTS openrailwaymap_tracks_with_ref AS
       AND ref IS NOT NULL
       AND osm_id > 0;
 
-CREATE INDEX IF NOT EXISTS planet_osm_line_ref_geom_idx
+CREATE INDEX planet_osm_line_ref_geom_idx
   ON openrailwaymap_tracks_with_ref
   USING gist(geom);
 
-CREATE INDEX IF NOT EXISTS planet_osm_line_ref_idx
+CREATE INDEX planet_osm_line_ref_idx
   ON openrailwaymap_tracks_with_ref
   USING btree(ref);
