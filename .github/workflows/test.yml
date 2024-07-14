@@ -15,6 +15,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Install Hurl
+        env:
+          VERSION: '4.3.0'
+        run: |
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+
       - name: Get Date
         id: get-date
         shell: bash
@@ -57,4 +64,4 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          python3 tests/tests.py --api http://localhost:5000/api --tests tests/testcases.yml
+          hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
