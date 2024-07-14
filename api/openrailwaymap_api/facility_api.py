@@ -28,11 +28,13 @@ class FacilityAPI(AbstractAPI):
             if search_arg in args and args[search_arg]:
                 search_args_count += 1
         if search_args_count > 1:
-            self.data = {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following arguments: {', '.join(self.search_args)}'}
+            args = ', '.join(self.search_args)
+            self.data = {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following arguments: {args}'}
             self.status_code = 400
             return self.build_response()
         elif search_args_count == 0:
-            self.data = {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following arguments: {', '.join(self.search_args)}'}
+            args = ', '.join(self.search_args)
+            self.data = {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following arguments: {args}'}
             self.status_code = 400
             return self.build_response()
         if 'limit' in args:
