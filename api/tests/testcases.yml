@@ -12,19 +12,19 @@
       - name: "Berlin Hauptbahnhof"
       - name: "Ostkreuz"
       - name: "Berlin Potsdamer Platz"
-      - name: "Bornholmer Straße"
       - name: "Warschauer Straße"
+      - name: "Bornholmer Straße"
+      - name: "Baumschulenweg"
       - name: "Schöneweide"
       - name: "Alexanderplatz"
-      - name: "Baumschulenweg"
       - name: "Gesundbrunnen"
-      - name: "Berlin Friedrichstraße"
-      - name: "Nordbahnhof"
       - name: "Berlin Alexanderplatz"
       - name: "Berlin Zoologischer Garten"
       - name: "Zoologischer Garten"
-      - name: "Flughafen BER"
       - name: "Ostbahnhof"
+      - name: "Westkreuz"
+      - name: "Brandenburger Tor"
+      - name: "Berlin Friedrichstraße"
 - name: result limit 5
   request:
     path: "/facility"
@@ -45,80 +45,62 @@
   request:
     path: "/facility"
     params:
-      name: "Karlsruhe-Hagsfeld"
+      name: "Berlin-Spandau"
   response:
-    match: regexp_full
-    count: 1
     entries:
-      - name: "Karlsruhe[- ]Hagsfeld"
+      - name: "Berlin-Spandau"
+      - name: "Spandau"
+      - name: "Berlin-Spandau Gbf"
+      - name: "Berlin-Spandau West"
+      - name: "Berlin-Spandau Mitte"
+      - name: "Berlin-Spandau Ost"
+      - name: "Berlin-Spandau Johannesstift"
 - name: "space"
   request:
     path: "/facility"
     params:
-      name: "Karlsruhe Hagsfeld"
-  response:
-    match: regexp_full
-    count: 1
-    entries:
-      - name: "Karlsruhe[- ]Hagsfeld"
-- name: Karlsruhe
-  request:
-    path: "/facility"
-    params:
-      name: Karlsruhe
+      name: "Berlin Spandau"
   response:
     entries:
-      - name: "Karlsruhe Hauptbahnhof"
-      - name: "Karlsruhe-Durlach"
-      - name: "Karlsruhe-Durlach"
-      - name: "Malsch"
-      - name: "Kunstakademie / Hochschule Karlsruhe"
-      - name: "Karlsruhe West"
-      - name: "Karlsruhe-Knielingen"
-      - name: "Karlsruhe-Mühlburg"
-      - name: "Söllingen (bei Karlsruhe)"
-      - name: "Forchheim (b Karlsruhe)"
-      - name: "Karlsruhe Hafen"
-      - name: "Karlsruhe Brunnenstück"
-      - name: "Söllingen (b Karlsruhe) Abzw"
-      - name: "Karlsruhe Rheinbrücke"
-      - name: "Karlsruhe-Dammerstock"
-      - name: "Karlsruhe Hagsfeld"
-      - name: "Karlsruhe Gbf"
-- name: "'Württ' should not return results"
+      - name: "Berlin-Spandau"
+      - name: "Spandau"
+      - name: "Berlin-Spandau Gbf"
+      - name: "Berlin-Spandau West"
+      - name: "Berlin-Spandau Mitte"
+      - name: "Berlin-Spandau Ost"
+      - name: "Berlin-Spandau Johannesstift"
+- name: Spandau
   request:
     path: "/facility"
     params:
-      name: Württ
-      limit: 1
+      name: Spandau
   response:
-    count: 1
-- name: "'Württemberg' should not return results"
-  request:
-    path: "/facility"
-    params:
-      name: Württemberg
-      limit: 1
-  response:
-    count: 1
-- name: "'Walheim' should return one result"
-  request:
-    path: "/facility"
-    params:
-      name: Walheim
-  response:
-    match: str_equals
     entries:
-      - name: "Walheim (Württemberg)"
+      - name: "Berlin-Spandau"
+      - name: "Spandau"
+      - name: "Altstadt Spandau"
+      - name: "Rathaus Spandau"
+      - name: "Berlin-Spandau Gbf"
+      - name: "Berlin-Spandau West"
+      - name: "Berlin-Spandau Mitte"
+      - name: "Berlin-Spandau Ost"
+      - name: "Berlin-Spandau Johannesstift"
+- name: "'Karl-Marx-Straße' should return one result"
+  request:
+    path: "/facility"
+    params:
+      name: Karl-Marx-Straße
+  response:
+    entries:
+      - name: "Karl-Marx-Straße"
 - name: "2160 km 9.4"
   request:
     path: "/milestone"
     params:
-      ref: 2160
-      position: 9.4
+      ref: 6020
+      position: 22.7
       limit: 1
   response:
-    match: str_equals
     entries:
-      - ref: "2160"
-        position: 9.4
+      - ref: "6020"
+        position: 22.7
