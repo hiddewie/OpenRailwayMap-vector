@@ -15,7 +15,8 @@ class TestCase():
         self.response = kwargs["response"]
 
     def run(self, api):
-        url = f"{api}{self.request["path"]}"
+        path = self.request["path"]
+        url = f"{api}{path}"
         r = requests.get(url, params=self.request.get("params"))
         self.test_equals("status code", r.status_code, self.response.get("status", 200))
         response_data = r.json()
