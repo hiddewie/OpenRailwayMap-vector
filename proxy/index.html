@@ -16,24 +16,58 @@
 </head>
 
 <body>
-<div id="search-backdrop" class="modal backdrop">
-  <svg role="presentation" onclick="hideSearch()" id="cancel-search" class="search-icon" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-    <path d="M4 4 L28 28" />
-    <path d="M4 28 L28 4" />
-  </svg>
-  <div class="search-container">
-    <div class="input-group">
-      <input type="search" id="search" class="form-control" placeholder="Search..." autocomplete="no">
-      <svg role="presentation" onclick="searchFor(search.value)" id="search-icon" class='search-icon' viewBox="0 0 32 32" width="14" height="14" fill="none" stroke="#57ae00" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
-        <circle cx="14" cy="14" r="12" />
-        <path d="M23 23 L30 30" />
-      </svg>
-      <svg role="presentation" onclick="hideSearchResults()" id="cancel-icon" class="search-icon" viewBox="0 0 32 32" width="14" height="14" fill="none" stroke="#ae0000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
-        <path d="M4 4 L28 28" />
-        <path d="M4 28 L28 4" />
-      </svg>
+<div id="search-backdrop" class="modal backdrop" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideSearch()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills mb-2">
+          <li class="nav-item">
+            <a id="search-facilities-tab" class="nav-link active" href="javascript:searchFacilities()">Facilities</a>
+          </li>
+          <li class="nav-item">
+            <a id="search-milestones-tab" class="nav-link" href="javascript:searchMilestones()">Milestones</a>
+          </li>
+        </ul>
+        <form id="facility-search-form">
+          <div class="form-group">
+            <label class="mb-0">Search by</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="search-all" value="all" checked>
+                <label class="form-check-label" for="search-all">All</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="search-name" value="name">
+                <label class="form-check-label" for="search-name">Name</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="search-ref" value="ref">
+                <label class="form-check-label" for="search-ref">Reference</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="type" id="search-uic-ref" value="uic_ref">
+                <label class="form-check-label" for="search-uic-ref">UIC reference</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="search" id="search" name="term" class="form-control" placeholder="Bruxelles, EAHS, 8000294" autocomplete="no" minlength="2" required>
+                <div class="input-group-append">
+                  <button class="btn btn-success" type="submit">Search</button>
+                </div>
+            </div>
+          </div>
+        </form>
+        <div class="list-group" id="search-results"></div>
+      </div>
     </div>
-    <div id="search-results"></div>
   </div>
 </div>
 <div id="configuration-backdrop" class="modal backdrop" tabindex="-1" role="dialog">

@@ -1,8 +1,9 @@
 const searchBackdrop = document.getElementById('search-backdrop');
 const search = document.getElementById('search');
+const searchFacilitiesTab = document.getElementById('search-facilities-tab');
+const searchMilestonesTab = document.getElementById('search-milestones-tab');
+const facilitySearchForm = document.getElementById('facility-search-form');
 const searchResults = document.getElementById('search-results');
-const searchIcon = document.getElementById('search-icon');
-const cancelIcon = document.getElementById('cancel-icon');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
@@ -10,12 +11,28 @@ const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl'
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
-function searchFor(term) {
-  if (!term || term.length < 3) {
+function searchQuery(type, term) {
+  const encoded = encodeURIComponent(term)
+
+  switch (type) {
+    case 'name':
+      return `name=${encoded}`;
+    case 'ref':
+      return `ref=${encoded}`;
+    case 'uic_ref':
+      return `uic_ref=${encoded}`;
+    case 'all':
+    default:
+      return `q=${encoded}`;
+  }
+}
+
+function searchFor(type, term) {
+  if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    // or ref=...
-    fetch(`${location.origin}/api/facility?name=${term}`)
+    const queryString = searchQuery(type, term)
+    fetch(`${location.origin}/api/facility?${queryString}`)
       .then(result => result.json())
       .then(result => {
         console.info('result', result, result.body)
@@ -32,22 +49,18 @@ function searchFor(term) {
 function showSearchResults(results) {
   let content = '';
   if (results.length === 0) {
-    content += `<div class="result"><i>No results</i></div>`
+    content += `<div class="list-group-item no-results"><i>No results</i></div>`
   } else {
     results.forEach(result => {
-      content += `<div class="result" onclick="hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">${result.name}</div>`
+      content += `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">${result.name}</a>`
     })
   }
   searchResults.innerHTML = content;
   searchResults.style.display = 'block';
-  cancelIcon.style.display = 'block';
-  searchIcon.style.display = 'none';
 }
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
-  cancelIcon.style.display = 'none';
-  searchIcon.style.display = 'block';
 }
 
 function showSearch() {
@@ -58,6 +71,16 @@ function showSearch() {
 
 function hideSearch() {
   searchBackdrop.style.display = 'none';
+}
+
+function searchFacilities() {
+  searchFacilitiesTab.classList.add('active')
+  searchMilestonesTab.classList.remove('active')
+}
+
+function searchMilestones() {
+  searchFacilitiesTab.classList.remove('active')
+  searchMilestonesTab.classList.add('active')
 }
 
 function showConfiguration() {
@@ -79,11 +102,12 @@ function toggleLegend() {
   }
 }
 
-search.addEventListener('keydown', event => {
-  if (event.key === 'Enter') {
-    searchFor(event.target.value);
-  }
-});
+facilitySearchForm.addEventListener('submit', event => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData);
+  searchFor(data.type, data.term)
+})
 searchBackdrop.onclick = event => {
   if (event.target === event.currentTarget) {
     hideSearch();
