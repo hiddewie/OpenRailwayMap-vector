@@ -34,7 +34,7 @@
             <a id="search-milestones-tab" class="nav-link" href="javascript:searchMilestones()">Milestones</a>
           </li>
         </ul>
-        <form id="facility-search-form">
+        <form id="search-facilities-form">
           <div class="form-group">
             <label class="mb-0">Search by</label>
             <div>
@@ -58,12 +58,39 @@
           </div>
           <div class="form-group">
             <div class="input-group">
-              <input type="search" id="search" name="term" class="form-control" placeholder="Bruxelles, EAHS, 8000294" autocomplete="no" minlength="2" required>
+              <input type="search" id="facility-term" name="term" class="form-control" placeholder="Bruxelles, EAHS, 8000294" minlength="2" required>
                 <div class="input-group-append">
                   <button class="btn btn-success" type="submit">Search</button>
                 </div>
             </div>
           </div>
+        </form>
+        <form id="search-milestones-form">
+          <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="milestone-ref">Reference</label>
+                    </div>
+                    <input type="text" id="milestone-ref" name="ref" class="form-control" placeholder="6020" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="milestone-position">Position</label>
+                    </div>
+                    <input type="number" id="milestone-position" name="position" class="form-control" placeholder="22.7" min="0" step="0.1" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col flex-grow-0">
+                <button class="btn btn-success" type="submit">Search</button>
+              </div>
+            </div>
         </form>
         <div class="list-group" id="search-results"></div>
       </div>

@@ -1,8 +1,10 @@
 const searchBackdrop = document.getElementById('search-backdrop');
-const search = document.getElementById('search');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
 const searchMilestonesTab = document.getElementById('search-milestones-tab');
-const facilitySearchForm = document.getElementById('facility-search-form');
+const searchFacilitiesForm = document.getElementById('search-facilities-form');
+const searchMilestonesForm = document.getElementById('search-milestones-form');
+const searchFacilityTermField = document.getElementById('facility-term');
+const searchMilestoneRefField = document.getElementById('milestone-ref');
 const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
@@ -11,7 +13,7 @@ const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl'
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
-function searchQuery(type, term) {
+function facilitySearchQuery(type, term) {
   const encoded = encodeURIComponent(term)
 
   switch (type) {
@@ -27,15 +29,33 @@ function searchQuery(type, term) {
   }
 }
 
-function searchFor(type, term) {
+function searchForFacilities(type, term) {
   if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    const queryString = searchQuery(type, term)
+    const queryString = facilitySearchQuery(type, term)
     fetch(`${location.origin}/api/facility?${queryString}`)
       .then(result => result.json())
       .then(result => {
-        console.info('result', result, result.body)
+        console.info('facility search result', result)
+        showSearchResults(result)
+      })
+      .catch(error => {
+        hideSearchResults();
+        hideSearch();
+        console.error(error);
+      });
+  }
+}
+
+function searchForMilestones(ref, position) {
+  if (!ref || !position) {
+    hideSearchResults();
+  } else {
+    fetch(`${location.origin}/api/milestone?ref=${encodeURIComponent(ref)}&position=${encodeURIComponent(position)}`)
+      .then(result => result.json())
+      .then(result => {
+        console.info('milestone search result', result)
         showSearchResults(result)
       })
       .catch(error => {
@@ -65,8 +85,13 @@ function hideSearchResults() {
 
 function showSearch() {
   searchBackdrop.style.display = 'block';
-  search.focus();
-  search.select();
+  if (searchFacilitiesForm.style.display === 'block') {
+    searchFacilityTermField.focus();
+    searchFacilityTermField.select();
+  } else if (searchMilestonesForm.style.display === 'block') {
+    searchMilestoneRefField.focus();
+    searchMilestoneRefField.select();
+  }
 }
 
 function hideSearch() {
@@ -76,11 +101,21 @@ function hideSearch() {
 function searchFacilities() {
   searchFacilitiesTab.classList.add('active')
   searchMilestonesTab.classList.remove('active')
+  searchFacilitiesForm.style.display = 'block';
+  searchMilestonesForm.style.display = 'none';
+  searchFacilityTermField.focus();
+  searchFacilityTermField.select();
+  hideSearchResults();
 }
 
 function searchMilestones() {
   searchFacilitiesTab.classList.remove('active')
   searchMilestonesTab.classList.add('active')
+  searchFacilitiesForm.style.display = 'none';
+  searchMilestonesForm.style.display = 'block';
+  searchMilestoneRefField.focus();
+  searchMilestoneRefField.select();
+  hideSearchResults();
 }
 
 function showConfiguration() {
@@ -102,11 +137,17 @@ function toggleLegend() {
   }
 }
 
-facilitySearchForm.addEventListener('submit', event => {
+searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchFor(data.type, data.term)
+  searchForFacilities(data.type, data.term)
+})
+searchMilestonesForm.addEventListener('submit', event => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData);
+  searchForMilestones(data.ref, data.position)
 })
 searchBackdrop.onclick = event => {
   if (event.target === event.currentTarget) {

@@ -24,7 +24,7 @@ body {
   font-family: monospace;
   font-size: 0.8em;
 }
-#search-results {
+#search-results, #search-milestones-form {
   display: none;
 }
 #search-results .no-results {
