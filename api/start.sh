@@ -27,5 +27,4 @@ echo 'waiting until postgres ready'
 timeout 120 sh -c 'while ! pg_isready --host localhost --user postgres --dbname gis --port 5432; do sleep 1; done'
 
 echo 'starting API'
-# TODO fastapi run
-exec fastapi dev api.py --port "$PORT"
+exec fastapi run api.py --port "$PORT"
