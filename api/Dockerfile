@@ -15,11 +15,12 @@ HEALTHCHECK CMD ["pg_isready", "--host", "localhost", "--user", "postgres", "--d
 FROM postgis/postgis:16-3.4-alpine as runtime
 
 RUN apk add --no-cache \
-    curl \
-    python3 \
-    py3-pip \
-    py3-werkzeug \
-    py3-psycopg2
+        curl \
+        python3 \
+        py3-pip \
+    && python3 -m pip install --no-cache-dir --no-color --no-python-version-warning --disable-pip-version-check --break-system-packages \
+        fastapi
+
 
 WORKDIR /app
 COPY openrailwaymap_api openrailwaymap_api
