@@ -67,7 +67,7 @@ async def facility(
         name: Annotated[str | None, Query()] = None,
         ref: Annotated[str | None, Query()] = None,
         uic_ref: Annotated[str | None, Query()] = None,
-        limit: Annotated[int, Query(default=DEFAULT_LIMIT, ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
+        limit: Annotated[int, Query(ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
 ):
     api = FacilityAPI(app.state.database)
     return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit)
@@ -77,7 +77,7 @@ async def facility(
 async def milestone(
         ref: Annotated[str, Query()],
         position: Annotated[float, Query()],
-        limit: Annotated[int | None, Query(default=DEFAULT_LIMIT, ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
+        limit: Annotated[int | None, Query(ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
 ):
     api = MilestoneAPI(app.state.database)
     return await api(ref=ref, position=position, limit=limit)
