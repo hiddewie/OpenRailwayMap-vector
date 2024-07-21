@@ -45,7 +45,23 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 25
 
-# TODO request with too large limit
+# Facility request too large limit
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Berlin
+limit: 201
+HTTP 422
+[Asserts]
+jsonpath "$.detail[0].msg" == "Input should be less than or equal to 200"
+
+# Facility request too small limit
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Berlin
+limit: 0
+HTTP 422
+[Asserts]
+jsonpath "$.detail[0].msg" == "Input should be greater than or equal to 1"
 
 # Facility request with hyphen
 GET {{base_url}}/facility
@@ -117,3 +133,23 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].ref" == "6020"
 jsonpath "$[0].position" == 22.7
+
+# Milestone request too small limit
+GET {{base_url}}/milestone
+[QueryStringParams]
+ref: 6020
+position: 22.7
+limit: 0
+HTTP 422
+[Asserts]
+jsonpath "$.detail[0].msg" == "Input should be greater than or equal to 1"
+
+# Milestone request too large limit
+GET {{base_url}}/milestone
+[QueryStringParams]
+ref: 6020
+position: 22.7
+limit: 201
+HTTP 422
+[Asserts]
+jsonpath "$.detail[0].msg" == "Input should be less than or equal to 200"
