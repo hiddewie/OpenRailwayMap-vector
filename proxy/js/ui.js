@@ -18,6 +18,7 @@ function registerLastSearchResults(results) {
     type: 'FeatureCollection',
     features: results.map(result => ({
       type: 'Feature',
+      properties: result,
       geometry: {
         type: 'Point',
         coordinates: [result.latitude, result.longitude],
@@ -111,10 +112,10 @@ function showSearchResults(results, renderItem) {
       </div>
       <div class="list-group">
         ${results.map(result =>
-          `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${renderItem(result)}
           </a>`
-        ).join('')}
+    ).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
@@ -267,6 +268,7 @@ let selectedStyle = determineStyleFromHash(window.location.hash)
 // Configuration //
 
 const localStorageKey = 'openrailwaymap-configuration';
+
 function readConfiguration(localStorage) {
   const rawConfiguration = localStorage.getItem(localStorageKey);
   if (rawConfiguration) {
@@ -283,9 +285,11 @@ function readConfiguration(localStorage) {
     return {};
   }
 }
+
 function storeConfiguration(localStorage, configuration) {
   localStorage.setItem(localStorageKey, JSON.stringify(configuration));
 }
+
 function updateConfiguration(name, value) {
   configuration[name] = value;
   storeConfiguration(localStorage, configuration)
@@ -548,3 +552,38 @@ const onStylesheetChange = styleSheet => {
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
+
+// When a click event occurs on a feature in the places layer, open a popup at the
+// location of the feature, with description HTML from its properties.
+map.on('click', 'search', (e) => {
+  const feature = e.features[0];
+  const coordinates = feature.geometry.coordinates.slice();
+  const properties = feature.properties;
+  const content = `
+    <dl>
+      <dt>Name</dt>
+      <dd>${properties.name}</dd>
+    
+      <dt>Feature</dt>
+      <dd><span style="font-family: monospace">${properties.railway}</span></dd>
+    
+      <dt>OSM ID</dt>
+      <dd><a href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">${properties.osm_id}</a></dd>
+    </dl>
+  `;
+
+  new maplibregl.Popup()
+    .setLngLat(coordinates)
+    .setHTML(content)
+    .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'search', () => {
+  map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'search', () => {
+  map.getCanvas().style.cursor = '';
+});
