@@ -50,26 +50,37 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+DEFAULT_LIMIT = 20
+MIN_LIMIT = 1
+MAX_LIMIT = 200
+
 
 @app.get("/api/status")
 async def status():
     api = StatusAPI()
-    return await api({})
+    return await api()
 
 
 @app.get("/api/facility")
-async def facility():
+async def facility(
+        q: Annotated[str | None, Query()] = None,
+        name: Annotated[str | None, Query()] = None,
+        ref: Annotated[str | None, Query()] = None,
+        uic_ref: Annotated[str | None, Query()] = None,
+        limit: Annotated[int, Query(default=DEFAULT_LIMIT, ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
+):
     api = FacilityAPI(app.state.database)
-    return await api({})
+    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit)
 
 
 @app.get("/api/milestone")
 async def milestone(
-        ref: Annotated[str | None, Query()] = None,
-        position: Annotated[str | None, Query()] = None,
+        ref: Annotated[str, Query()],
+        position: Annotated[float, Query()],
+        limit: Annotated[int | None, Query(default=DEFAULT_LIMIT, ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_LIMIT,
 ):
     api = MilestoneAPI(app.state.database)
-    return await api({'ref': ref, 'position': position})
+    return await api(ref=ref, position=position, limit=limit)
 
 #
 # def connect_db():

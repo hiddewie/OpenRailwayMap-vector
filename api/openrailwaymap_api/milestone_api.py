@@ -1,10 +1,8 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
 from fastapi import HTTPException
-from openrailwaymap_api.abstract_api import AbstractAPI
 from starlette.status import HTTP_400_BAD_REQUEST
 
 
-class MilestoneAPI(AbstractAPI):
+class MilestoneAPI:
     def __init__(self, database):
         self.database = database
         self.route_ref = None
@@ -13,40 +11,38 @@ class MilestoneAPI(AbstractAPI):
         self.status_code = 200
         self.limit = 2
 
-    async def __call__(self, args):
+    async def __call__(self, *, ref, position, limit):
         # Validate search arguments
-        ref = args.get('ref')
-        position = args.get('position')
         if ref is None or position is None:
             raise HTTPException(
                 HTTP_400_BAD_REQUEST,
                 {'type': 'no_query_arg', 'error': 'One or multiple mandatory parameters are missing.', 'detail': 'You have to provide both "ref" and "position".'}
             )
-        self.route_ref = args.get('ref')
+
         try:
-            self.position = float(args.get('position'))
+            position = float(position)
         except ValueError:
             raise HTTPException(
                 HTTP_400_BAD_REQUEST,
                 {'type': 'position_not_float', 'error': 'Invalid value provided for parameter "position".', 'detail': 'The provided position cannot be parsed as a float.'}
             )
-        if 'limit' in args:
+        if limit is not None:
             try:
-                self.limit = int(args['limit'])
+                limit = int(limit)
             except ValueError:
                 raise HTTPException(
                     HTTP_400_BAD_REQUEST,
                     {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
                 )
-            if self.limit > self.MAX_LIMIT:
+            if limit > self.MAX_LIMIT:
                 raise HTTPException(
                     HTTP_400_BAD_REQUEST,
                     {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
                 )
-        self.data = await self.get_milestones()
+        self.data = await self.get_milestones(position, ref, limit)
         return self.data
 
-    async def get_milestones(self):
+    async def get_milestones(self, position, route_ref, limit):
         # We do not sort the result, although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
         sql_query = """SELECT
                          osm_id,
@@ -116,6 +112,6 @@ class MilestoneAPI(AbstractAPI):
             statement = await connection.prepare(sql_query)
             async with connection.transaction():
                 data = []
-                async for record in statement.cursor(self.position, self.route_ref, self.limit):
+                async for record in statement.cursor(position, route_ref, limit):
                     data.append(dict(record))
                 return data
