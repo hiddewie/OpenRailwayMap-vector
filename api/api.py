@@ -36,10 +36,6 @@ async def lifespan(app):
         print('Connected to database')
         app.state.database = pool
 
-        async with pool.acquire() as connection:
-            result = await connection.fetchval("SELECT COUNT(*) FROM openrailwaymap_milestones")
-            print(f'{result} milestones')
-
         yield
 
         app.state.database = None
@@ -68,7 +64,7 @@ async def facility():
 @app.get("/api/milestone")
 async def milestone():
     api = MilestoneAPI(app.state.database)
-    return await api({})
+    return await api({'ref': 'L36', 'position':'17'})
 
 #
 # def connect_db():
