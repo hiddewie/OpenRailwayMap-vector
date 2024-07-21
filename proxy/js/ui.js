@@ -13,6 +13,8 @@ const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl'
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
+let lastSearchResults = null;
+
 function facilitySearchQuery(type, term) {
   const encoded = encodeURIComponent(term)
 
@@ -67,6 +69,8 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results, renderItem) {
+  lastSearchResults = results;
+
   searchResults.innerHTML = results.length === 0
     ? `
       <div class="mb-1 d-flex align-items-center">
@@ -98,6 +102,7 @@ function showSearchResults(results, renderItem) {
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
+  lastSearchResults = null;
 }
 
 function showSearch() {
@@ -136,7 +141,52 @@ function searchMilestones() {
 }
 
 function showSearchResultsOnMap() {
-  console.info('show search results on map');
+  console.info(`show ${lastSearchResults.length} search results on map`);
+
+  hideSearch();
+
+  if (lastSearchResults !== null && lastSearchResults.length > 0) {
+    const data = {
+      type: 'FeatureCollection',
+      features: lastSearchResults.map(result => ({
+        type: 'Feature',
+        // properties: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [result.latitude, result.longitude],
+        },
+      })),
+    };
+    // TODO always have this source and layer, update the data only
+    // map.getSource('some id').setData({ ... })
+    map.addSource('search', {
+      type: 'geojson',
+      data: data,
+    });
+    map.addLayer({
+      id: 'search',
+      type: 'circle',
+      source: 'search',
+      paint: {
+        'circle-radius': 6,
+        'circle-color': '#1e7e34',
+        'circle-stroke-width': 2,
+        'circle-stroke-color': 'white',
+      }
+    });
+
+    const bounds = lastSearchResults.reduce(
+      (bounds, result) => {
+        console.info(bounds,result,[result.latitude, result.longitude])
+        return bounds.extend({ lat: result.longitude, lon:result.latitude  })
+      },
+      new maplibregl.LngLatBounds({lat: lastSearchResults[0].longitude, lon: lastSearchResults[0].latitude })
+    );
+
+    map.fitBounds(bounds, {
+      padding: 40,
+    });
+  }
 }
 
 function showConfiguration() {
