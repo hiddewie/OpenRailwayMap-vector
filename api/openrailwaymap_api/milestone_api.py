@@ -34,11 +34,11 @@ class MilestoneAPI:
                     HTTP_400_BAD_REQUEST,
                     {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
                 )
-            if limit > self.MAX_LIMIT:
-                raise HTTPException(
-                    HTTP_400_BAD_REQUEST,
-                    {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
-                )
+            # if limit > self.MAX_LIMIT:
+            #     raise HTTPException(
+            #         HTTP_400_BAD_REQUEST,
+            #         {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+            #     )
         self.data = await self.get_milestones(position, ref, limit)
         return self.data
 

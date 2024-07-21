@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 
-from api import MAX_LIMIT
+# from api import MAX_LIMIT
 
 QUERY_PARAMETERS =  ['q', 'name', 'ref', 'uic_ref']
 
@@ -46,11 +46,11 @@ class FacilityAPI:
                     HTTP_400_BAD_REQUEST,
                     {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
                 )
-            if self.limit > MAX_LIMIT:
-                raise HTTPException(
-                    HTTP_400_BAD_REQUEST,
-                    {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
-                )
+            # if self.limit > MAX_LIMIT:
+            #     raise HTTPException(
+            #         HTTP_400_BAD_REQUEST,
+            #         {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+            #     )
         if name:
             return await self.search_by_name(name)
         if ref:
@@ -88,7 +88,7 @@ class FacilityAPI:
                 ) AS a
               ) AS b
               ORDER BY rank DESC NULLS LAST
-          LIMIT %2;"""
+          LIMIT $2;"""
 
         async with self.database.acquire() as connection:
             statement = await connection.prepare(sql_query)
@@ -104,8 +104,8 @@ class FacilityAPI:
         sql_query = f"""SELECT DISTINCT ON (osm_id)
           {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
           FROM openrailwaymap_ref
-          WHERE {search_key} = %s
-          LIMIT %s;"""
+          WHERE {search_key} = $1
+          LIMIT $2;"""
 
         async with self.database.acquire() as connection:
             statement = await connection.prepare(sql_query)
