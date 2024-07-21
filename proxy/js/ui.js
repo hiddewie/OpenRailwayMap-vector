@@ -67,15 +67,32 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results, renderItem) {
-  let content = '';
-  if (results.length === 0) {
-    content += `<div class="list-group-item no-results"><i>No results</i></div>`
-  } else {
-    results.forEach(result => {
-      content += `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">${renderItem(result)}</a>`
-    })
-  }
-  searchResults.innerHTML = content;
+  searchResults.innerHTML = results.length === 0
+    ? `
+      <div class="mb-1 d-flex align-items-center">
+        <span class="flex-grow-1">
+          <span class="badge badge-light">0 results</span>
+        </span>
+      </div>
+    `
+    : `
+      <div class="mb-1 d-flex align-items-center">
+        <span class="flex-grow-1">
+          <span class="badge badge-light">${results.length} results</span>
+        </span>
+        <button class="btn btn-sm btn-primary" type="button" style="vertical-align: text-bottom" onclick="showSearchResultsOnMap()">
+          <svg width="auto" height="16" viewBox="-4 0 36 36" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M14 0c7.732 0 14 5.641 14 12.6C28 23.963 14 36 14 36S0 24.064 0 12.6C0 5.641 6.268 0 14 0Z" fill="white"/><circle fill="var(--primary)" fill-rule="nonzero" cx="14" cy="14" r="7"/></g></svg>
+          Show on map
+        </button>
+      </div>
+      <div class="list-group">
+        ${results.map(result =>
+          `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+            ${renderItem(result)}
+          </a>`
+        ).join('')}
+      </div>
+    `;
   searchResults.style.display = 'block';
 }
 
@@ -116,6 +133,10 @@ function searchMilestones() {
   searchMilestoneRefField.focus();
   searchMilestoneRefField.select();
   hideSearchResults();
+}
+
+function showSearchResultsOnMap() {
+  console.info('show search results on map');
 }
 
 function showConfiguration() {

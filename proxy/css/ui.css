@@ -27,9 +27,6 @@ body {
 #search-results, #search-milestones-form {
   display: none;
 }
-#search-results .no-results {
-  text-align: center;
-}
 
 #legend {
   position: absolute;
