@@ -1,15 +1,9 @@
 class MilestoneAPI:
     def __init__(self, database):
         self.database = database
-        self.route_ref = None
-        self.position = None
-        self.data = []
-        self.status_code = 200
-        self.limit = 2
 
     async def __call__(self, *, ref, position, limit):
-        self.data = await self.get_milestones(position, ref, limit)
-        return self.data
+        return await self.get_milestones(position, ref, limit)
 
     async def get_milestones(self, position, route_ref, limit):
         # We do not sort the result, although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.

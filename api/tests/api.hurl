@@ -179,6 +179,64 @@ jsonpath "$" count == 2
 jsonpath "$[0].name" == "Ostkreuz"
 jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
+# Facility request missing required parameter
+GET {{base_url}}/facility
+HTTP 422
+[Asserts]
+jsonpath "$.detail.error" == "No argument with a search term provided."
+jsonpath "$.detail.detail" == "Provide one of the following query parameters: q, name, ref, uic_ref"
+
+# Facility request duplicated search parameters (1)
+GET {{base_url}}/facility
+[QueryStringParams]
+q: 8089028
+ref: test
+HTTP 422
+[Asserts]
+jsonpath "$.detail.error" == "More than one argument with a search term provided."
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+
+# Facility request duplicated search parameters (2)
+GET {{base_url}}/facility
+[QueryStringParams]
+q: 8089028
+uic_ref: test
+HTTP 422
+[Asserts]
+jsonpath "$.detail.error" == "More than one argument with a search term provided."
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+
+# Facility request duplicated search parameters (3)
+GET {{base_url}}/facility
+[QueryStringParams]
+name: 8089028
+uic_ref: test
+HTTP 422
+[Asserts]
+jsonpath "$.detail.error" == "More than one argument with a search term provided."
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+
+# Facility request duplicated search parameters (4)
+GET {{base_url}}/facility
+[QueryStringParams]
+q: test
+name: test
+ref: test
+uic_ref: test
+HTTP 422
+[Asserts]
+jsonpath "$.detail.error" == "More than one argument with a search term provided."
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+
+# Facility request limit is not numeric
+GET {{base_url}}/facility
+[QueryStringParams]
+limit: blabla
+HTTP 422
+[Asserts]
+jsonpath "$.detail" count == 1
+jsonpath "$.detail[0].msg" == "Input should be a valid integer, unable to parse string as an integer"
+
 # Milestone request for line 6020 milestone 22.7
 GET {{base_url}}/milestone
 [QueryStringParams]
