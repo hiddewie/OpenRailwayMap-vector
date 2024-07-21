@@ -38,7 +38,7 @@ function searchForFacilities(type, term) {
       .then(result => result.json())
       .then(result => {
         console.info('facility search result', result)
-        showSearchResults(result)
+        showSearchResults(result, item => item.name)
       })
       .catch(error => {
         hideSearchResults();
@@ -56,7 +56,7 @@ function searchForMilestones(ref, position) {
       .then(result => result.json())
       .then(result => {
         console.info('milestone search result', result)
-        showSearchResults(result)
+        showSearchResults(result, item => `Ref: ${item.ref}, KM: ${item.position}`)
       })
       .catch(error => {
         hideSearchResults();
@@ -66,13 +66,13 @@ function searchForMilestones(ref, position) {
   }
 }
 
-function showSearchResults(results) {
+function showSearchResults(results, renderItem) {
   let content = '';
   if (results.length === 0) {
     content += `<div class="list-group-item no-results"><i>No results</i></div>`
   } else {
     results.forEach(result => {
-      content += `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">${result.name}</a>`
+      content += `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">${renderItem(result)}</a>`
     })
   }
   searchResults.innerHTML = content;

@@ -113,12 +113,16 @@ services:
       NGINX_CACHE_TTL: '0'
       CLIENT_CACHE_TTL_FRESH: '0'
       CLIENT_CACHE_TTL_STALE: '0'
-    develop:
-      watch:
-        - action: rebuild
-          path: proxy
-        - action: rebuild
-          path: features
+    volumes:
+      - ./proxy/index.html:/etc/nginx/public/index.html
+      - ./proxy/css/ui.css:/etc/nginx/public/css/ui.css
+      - ./proxy/js/ui.js:/etc/nginx/public/js/ui.js
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: proxy
+#        - action: rebuild
+#          path: features
 
   api:
     image: ghcr.io/hiddewie/openrailwaymap-api:latest
