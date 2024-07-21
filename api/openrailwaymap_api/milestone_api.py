@@ -101,7 +101,7 @@ class MilestoneAPI(AbstractAPI):
                                      FROM openrailwaymap_milestones AS m
                                      JOIN openrailwaymap_tracks_with_ref AS t
                                        ON t.geom && m.geom AND ST_Intersects(t.geom, m.geom) AND t.ref = $2
-                                     WHERE m.position BETWEEN ($3 - 10.0)::FLOAT AND ($4 + 10.0)::FLOAT
+                                     WHERE m.position BETWEEN ($1 - 10.0)::FLOAT AND ($1 + 10.0)::FLOAT
                                      -- sort by distance from searched location, then osm_id for stable sorting
                                      ORDER BY error ASC, m.osm_id
                                    ) AS milestones
@@ -109,13 +109,13 @@ class MilestoneAPI(AbstractAPI):
                                  ) AS unique_milestones
                              ) AS top_of_array
                          ) AS ranked
-                         WHERE grouped_rank <= $5
-                         LIMIT $6;"""
+                         WHERE grouped_rank <= $3
+                         LIMIT $3;"""
 
         async with self.database.acquire() as connection:
             statement = await connection.prepare(sql_query)
             async with connection.transaction():
                 data = []
-                async for record in statement.cursor(self.position, self.route_ref, self.position, self.position, self.limit, self.limit):
+                async for record in statement.cursor(self.position, self.route_ref, self.limit):
                     data.append(dict(record))
                 return data

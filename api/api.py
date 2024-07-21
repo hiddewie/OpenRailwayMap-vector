@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 import contextlib
 import os
+from typing import Annotated
 
 import asyncpg
 from fastapi import FastAPI
+from fastapi import Query
 
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
@@ -62,9 +64,12 @@ async def facility():
 
 
 @app.get("/api/milestone")
-async def milestone():
+async def milestone(
+        ref: Annotated[str | None, Query()] = None,
+        position: Annotated[str | None, Query()] = None,
+):
     api = MilestoneAPI(app.state.database)
-    return await api({'ref': 'L36', 'position':'17'})
+    return await api({'ref': ref, 'position': position})
 
 #
 # def connect_db():
