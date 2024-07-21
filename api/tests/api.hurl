@@ -119,8 +119,65 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Karl-Marx-Straße"
 
-# TODO facility request with q query
-# TODO facility request with UIC queries
+# Facility search for reference
+GET {{base_url}}/facility
+[QueryStringParams]
+ref: BOKN
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
+
+# Facility search for reference
+GET {{base_url}}/facility
+[QueryStringParams]
+ref: BOKN
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
+
+# Facility search for UIC reference
+GET {{base_url}}/facility
+[QueryStringParams]
+uic_ref: 8089028
+HTTP 200
+[Asserts]
+jsonpath "$" count == 2
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
+
+# Facility search for name, reference or UIC reference
+GET {{base_url}}/facility
+[QueryStringParams]
+q: BOK
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
+
+# Facility search for name, reference or UIC reference
+GET {{base_url}}/facility
+[QueryStringParams]
+q: Berlin Ostkreuz
+HTTP 200
+[Asserts]
+jsonpath "$" count == 5
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Berlin Ostkreuz (Stadtbahn-F)"
+jsonpath "$[2].name" == "Berlin Ostkreuz (Ringbahn-F)"
+jsonpath "$[3].name" == "Berlin Ostkreuz (Ostbahn)"
+jsonpath "$[4].name" == "Ostkreuz (Ringbahn)"
+
+# Facility search for name, reference or UIC reference
+GET {{base_url}}/facility
+[QueryStringParams]
+q: 8089028
+HTTP 200
+[Asserts]
+jsonpath "$" count == 2
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
 # Milestone request for line 6020 milestone 22.7
 GET {{base_url}}/milestone
