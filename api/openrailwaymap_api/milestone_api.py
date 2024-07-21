@@ -1,7 +1,3 @@
-from fastapi import HTTPException
-from starlette.status import HTTP_400_BAD_REQUEST
-
-
 class MilestoneAPI:
     def __init__(self, database):
         self.database = database
@@ -12,33 +8,6 @@ class MilestoneAPI:
         self.limit = 2
 
     async def __call__(self, *, ref, position, limit):
-        # Validate search arguments
-        if ref is None or position is None:
-            raise HTTPException(
-                HTTP_400_BAD_REQUEST,
-                {'type': 'no_query_arg', 'error': 'One or multiple mandatory parameters are missing.', 'detail': 'You have to provide both "ref" and "position".'}
-            )
-
-        try:
-            position = float(position)
-        except ValueError:
-            raise HTTPException(
-                HTTP_400_BAD_REQUEST,
-                {'type': 'position_not_float', 'error': 'Invalid value provided for parameter "position".', 'detail': 'The provided position cannot be parsed as a float.'}
-            )
-        if limit is not None:
-            try:
-                limit = int(limit)
-            except ValueError:
-                raise HTTPException(
-                    HTTP_400_BAD_REQUEST,
-                    {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
-                )
-            # if limit > self.MAX_LIMIT:
-            #     raise HTTPException(
-            #         HTTP_400_BAD_REQUEST,
-            #         {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
-            #     )
         self.data = await self.get_milestones(position, ref, limit)
         return self.data
 

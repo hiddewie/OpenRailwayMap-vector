@@ -199,6 +199,7 @@ position: 22.7
 limit: 0
 HTTP 422
 [Asserts]
+jsonpath "$.detail" count == 1
 jsonpath "$.detail[0].msg" == "Input should be greater than or equal to 1"
 
 # Milestone request too large limit
@@ -209,4 +210,34 @@ position: 22.7
 limit: 201
 HTTP 422
 [Asserts]
+jsonpath "$.detail" count == 1
 jsonpath "$.detail[0].msg" == "Input should be less than or equal to 200"
+
+# Milestone request missing required ref and position parameters
+GET {{base_url}}/milestone
+HTTP 422
+[Asserts]
+jsonpath "$.detail" count == 2
+jsonpath "$.detail[0].msg" == "Field required"
+jsonpath "$.detail[1].msg" == "Field required"
+
+# Milestone request with non-numeric arguments
+GET {{base_url}}/milestone
+[QueryStringParams]
+ref: 6020
+position: blabla
+HTTP 422
+[Asserts]
+jsonpath "$.detail" count == 1
+jsonpath "$.detail[0].msg" == "Input should be a valid number, unable to parse string as a number"
+
+# Milestone request with non-numeric arguments
+GET {{base_url}}/milestone
+[QueryStringParams]
+ref: 6020
+position: 22.7
+limit: blabla
+HTTP 422
+[Asserts]
+jsonpath "$.detail" count == 1
+jsonpath "$.detail[0].msg" == "Input should be a valid integer, unable to parse string as an integer"
