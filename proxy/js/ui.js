@@ -13,7 +13,19 @@ const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl'
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
-let lastSearchResults = null;
+function registerLastSearchResults(results) {
+  const data = {
+    type: 'FeatureCollection',
+    features: results.map(result => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [result.latitude, result.longitude],
+      },
+    })),
+  };
+  map.getSource('search').setData(data);
+}
 
 function facilitySearchQuery(type, term) {
   const encoded = encodeURIComponent(term)
@@ -69,7 +81,15 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results, renderItem) {
-  lastSearchResults = results;
+  registerLastSearchResults(results);
+
+  const bounds = results.length > 0
+    ? JSON.stringify(results.reduce(
+      (bounds, result) =>
+        bounds.extend({lat: result.longitude, lon: result.latitude}),
+      new maplibregl.LngLatBounds({lat: results[0].longitude, lon: results[0].latitude})
+    ).toArray())
+    : null;
 
   searchResults.innerHTML = results.length === 0
     ? `
@@ -84,7 +104,7 @@ function showSearchResults(results, renderItem) {
         <span class="flex-grow-1">
           <span class="badge badge-light">${results.length} results</span>
         </span>
-        <button class="btn btn-sm btn-primary" type="button" style="vertical-align: text-bottom" onclick="showSearchResultsOnMap()">
+        <button class="btn btn-sm btn-primary" type="button" style="vertical-align: text-bottom" onclick="viewSearchResultsOnMap(${bounds})">
           <svg width="auto" height="16" viewBox="-4 0 36 36" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M14 0c7.732 0 14 5.641 14 12.6C28 23.963 14 36 14 36S0 24.064 0 12.6C0 5.641 6.268 0 14 0Z" fill="white"/><circle fill="var(--primary)" fill-rule="nonzero" cx="14" cy="14" r="7"/></g></svg>
           Show on map
         </button>
@@ -102,7 +122,7 @@ function showSearchResults(results, renderItem) {
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
-  lastSearchResults = null;
+  registerLastSearchResults([]);
 }
 
 function showSearch() {
@@ -140,53 +160,11 @@ function searchMilestones() {
   hideSearchResults();
 }
 
-function showSearchResultsOnMap() {
-  console.info(`show ${lastSearchResults.length} search results on map`);
-
+function viewSearchResultsOnMap(bounds) {
   hideSearch();
-
-  if (lastSearchResults !== null && lastSearchResults.length > 0) {
-    const data = {
-      type: 'FeatureCollection',
-      features: lastSearchResults.map(result => ({
-        type: 'Feature',
-        // properties: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [result.latitude, result.longitude],
-        },
-      })),
-    };
-    // TODO always have this source and layer, update the data only
-    // map.getSource('some id').setData({ ... })
-    map.addSource('search', {
-      type: 'geojson',
-      data: data,
-    });
-    map.addLayer({
-      id: 'search',
-      type: 'circle',
-      source: 'search',
-      paint: {
-        'circle-radius': 6,
-        'circle-color': '#1e7e34',
-        'circle-stroke-width': 2,
-        'circle-stroke-color': 'white',
-      }
-    });
-
-    const bounds = lastSearchResults.reduce(
-      (bounds, result) => {
-        console.info(bounds,result,[result.latitude, result.longitude])
-        return bounds.extend({ lat: result.longitude, lon:result.latitude  })
-      },
-      new maplibregl.LngLatBounds({lat: lastSearchResults[0].longitude, lon: lastSearchResults[0].latitude })
-    );
-
-    map.fitBounds(bounds, {
-      padding: 40,
-    });
-  }
+  map.fitBounds(bounds, {
+    padding: 40,
+  });
 }
 
 function showConfiguration() {

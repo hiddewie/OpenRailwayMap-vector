@@ -889,6 +889,13 @@ const sources = {
     tileSize: 256,
     attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
   },
+  search: {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    },
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: `${origin}/railway_line_low`,
@@ -951,6 +958,18 @@ const backgroundMap = {
   paint: {
     'raster-saturation': -1.0, // or 0.0 for colorful
     'raster-opacity': 1.0, // or 0.0 for transparent
+  }
+};
+
+const searchResults = {
+  id: 'search',
+  type: 'circle',
+  source: 'search',
+  paint: {
+    'circle-radius': 6,
+    'circle-color': '#1e7e34',
+    'circle-stroke-width': 2,
+    'circle-stroke-color': 'white',
   }
 };
 
@@ -1838,6 +1857,7 @@ const layers = {
         'text-padding': 10,
       },
     },
+    searchResults,
   ],
 
   speed: [
@@ -2011,6 +2031,7 @@ const layers = {
         'symbol-spacing': 100,
       },
     },
+    searchResults,
   ],
 
   signals: [
@@ -2303,6 +2324,7 @@ const layers = {
         ],
       }
     },
+    searchResults,
   ],
 
   electrification: [
@@ -2562,6 +2584,7 @@ const layers = {
         'symbol-spacing': 100,
       },
     },
+    searchResults,
   ],
 
   gauge: [
@@ -2839,6 +2862,7 @@ const layers = {
         'symbol-spacing': 100,
       },
     },
+    searchResults,
   ],
 };
 
