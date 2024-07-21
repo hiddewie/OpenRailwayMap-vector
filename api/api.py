@@ -8,6 +8,7 @@ from fastapi import FastAPI
 
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
+from openrailwaymap_api.status_api import StatusAPI
 
 
 # import psycopg2
@@ -54,17 +55,20 @@ app = FastAPI(
 
 @app.get("/api/status")
 async def status():
-    return 'OK'
+    api = StatusAPI()
+    return await api({})
 
 
 @app.get("/api/facility")
 async def facility():
-    return await FacilityAPI(app.state.database)({})
+    api = FacilityAPI(app.state.database)
+    return await api({})
 
 
 @app.get("/api/milestone")
 async def milestone():
-    return await MilestoneAPI(app.state.database)({})
+    api = MilestoneAPI(app.state.database)
+    return await api({})
 
 #
 # def connect_db():

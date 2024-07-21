@@ -1,6 +1,5 @@
-
 class AbstractAPI:
-    '''Methods used by multiple parts of the OpenRailwayMap API'''
+    """Methods used by multiple parts of the OpenRailwayMap API"""
 
     MAX_LIMIT = 200
 

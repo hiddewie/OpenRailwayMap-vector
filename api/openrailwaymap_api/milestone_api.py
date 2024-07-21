@@ -14,7 +14,6 @@ class MilestoneAPI(AbstractAPI):
         self.limit = 2
 
     def __call__(self, args):
-        data = []
         # Validate search arguments
         ref = args.get('ref')
         position = args.get('position')

@@ -24,8 +24,7 @@ class FacilityAPI(AbstractAPI):
             return data[:self.limit]
         return data
 
-    def __call__(self, args):
-        data = []
+    async def __call__(self, args):
         # Validate search arguments
         search_args_count = 0
         for search_arg in self.search_args:
