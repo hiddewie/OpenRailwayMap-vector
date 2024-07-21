@@ -1,5 +1,11 @@
 #! /usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
+import contextlib
+import os
+
+import asyncpg
+from fastapi import FastAPI
+
 
 # import psycopg2
 # import psycopg2.extras
@@ -13,13 +19,36 @@
 # from openrailwaymap_api.milestone_api import MilestoneAPI
 # from openrailwaymap_api.status_api import StatusAPI
 
-from fastapi import FastAPI
 
-app = FastAPI()
+@contextlib.asynccontextmanager
+async def lifespan(app):
+    async with asyncpg.create_pool(
+            user=os.environ['POSTGRES_USER'],
+            host=os.environ['POSTGRES_HOST'],
+            database=os.environ['POSTGRES_DB'],
+            command_timeout=10,
+            min_size=1,
+            max_size=20,
+    ) as pool:
+        print('Connected to database')
+        app.state.database = pool
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+        async with pool.acquire() as connection:
+            result = await connection.fetchval("SELECT COUNT(*) FROM openrailwaymap_milestones")
+            print(f'{result} milestones')
+
+        yield
+
+        app.state.database = None
+
+    print('Disconnected from database')
+
+
+app = FastAPI(
+    title="OpenRailwayMap API",
+    lifespan=lifespan,
+)
+
 
 @app.get("/api/status")
 async def root():
