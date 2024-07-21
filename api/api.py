@@ -6,6 +6,9 @@ import os
 import asyncpg
 from fastapi import FastAPI
 
+from openrailwaymap_api.facility_api import FacilityAPI
+from openrailwaymap_api.milestone_api import MilestoneAPI
+
 
 # import psycopg2
 # import psycopg2.extras
@@ -18,7 +21,6 @@ from fastapi import FastAPI
 # from openrailwaymap_api.facility_api import FacilityAPI
 # from openrailwaymap_api.milestone_api import MilestoneAPI
 # from openrailwaymap_api.status_api import StatusAPI
-
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
@@ -51,8 +53,18 @@ app = FastAPI(
 
 
 @app.get("/api/status")
-async def root():
+async def status():
     return 'OK'
+
+
+@app.get("/api/facility")
+async def facility():
+    return await FacilityAPI(app.state.database)({})
+
+
+@app.get("/api/milestone")
+async def milestone():
+    return await MilestoneAPI(app.state.database)({})
 
 #
 # def connect_db():

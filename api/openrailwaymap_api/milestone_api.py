@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+from fastapi import HTTPException
 from openrailwaymap_api.abstract_api import AbstractAPI
+from starlette.status import HTTP_400_BAD_REQUEST
+
 
 class MilestoneAPI(AbstractAPI):
     def __init__(self, db_conn):
@@ -16,29 +19,33 @@ class MilestoneAPI(AbstractAPI):
         ref = args.get('ref')
         position = args.get('position')
         if ref is None or position is None:
-            self.data = {'type': 'no_query_arg', 'error': 'One or multiple mandatory parameters are missing.', 'detail': 'You have to provide both "ref" and "position".'}
-            self.status_code = 400
-            return self.build_response()
+            raise HTTPException(
+                HTTP_400_BAD_REQUEST,
+                {'type': 'no_query_arg', 'error': 'One or multiple mandatory parameters are missing.', 'detail': 'You have to provide both "ref" and "position".'}
+            )
         self.route_ref = args.get('ref')
         try:
             self.position = float(args.get('position'))
         except ValueError:
-            self.data = {'type': 'position_not_float', 'error': 'Invalid value provided for parameter "position".', 'detail': 'The provided position cannot be parsed as a float.'}
-            self.status_code = 400
-            return self.build_response()
+            raise HTTPException(
+                HTTP_400_BAD_REQUEST,
+                {'type': 'position_not_float', 'error': 'Invalid value provided for parameter "position".', 'detail': 'The provided position cannot be parsed as a float.'}
+            )
         if 'limit' in args:
             try:
                 self.limit = int(args['limit'])
             except ValueError:
-                self.data = {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
-                self.status_code = 400
-                return self.build_response()
+                raise HTTPException(
+                    HTTP_400_BAD_REQUEST,
+                    {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
+                )
             if self.limit > self.MAX_LIMIT:
-                self.data = {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
-                self.status_code = 400
-                return self.build_response()
+                raise HTTPException(
+                    HTTP_400_BAD_REQUEST,
+                    {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+                )
         self.data = self.get_milestones()
-        return self.build_response()
+        return self.data
 
     def get_milestones(self):
         with self.db_conn.cursor() as cursor:

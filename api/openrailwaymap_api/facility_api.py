@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 from openrailwaymap_api.abstract_api import AbstractAPI
 
+from fastapi import HTTPException
+from starlette.status import HTTP_400_BAD_REQUEST
+
+
 class FacilityAPI(AbstractAPI):
     def __init__(self, db_conn):
         self.db_conn = db_conn
@@ -29,34 +33,37 @@ class FacilityAPI(AbstractAPI):
                 search_args_count += 1
         if search_args_count > 1:
             args = ', '.join(self.search_args)
-            self.data = {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following arguments: {args}'}
-            self.status_code = 400
-            return self.build_response()
+            raise HTTPException(
+                HTTP_400_BAD_REQUEST,
+                {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following arguments: {args}'}
+            )
         elif search_args_count == 0:
             args = ', '.join(self.search_args)
-            self.data = {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following arguments: {args}'}
-            self.status_code = 400
-            return self.build_response()
+            raise HTTPException(
+                HTTP_400_BAD_REQUEST,
+                {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following arguments: {args}'}
+            )
         if 'limit' in args:
             try:
                 self.limit = int(args['limit'])
             except ValueError:
-                self.data = {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
-                self.status_code = 400
-                return self.build_response()
+                raise HTTPException(
+                    HTTP_400_BAD_REQUEST,
+                    {'type': 'limit_not_integer', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'The provided limit cannot be parsed as an integer value.'}
+                )
             if self.limit > self.MAX_LIMIT:
-                self.data = {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
-                self.status_code = 400
-                return self.build_response()
+                raise HTTPException(
+                    HTTP_400_BAD_REQUEST,
+                    {'type': 'limit_too_high', 'error': 'Invalid parameter value provided for parameter "limit".', 'detail': 'Limit is too high. Please set up your own instance to query everything.'}
+                )
         if args.get('name'):
-            self.data = self.search_by_name(args['name'])
+            return self.search_by_name(args['name'])
         if args.get('ref'):
-            self.data = self.search_by_ref(args['ref'])
+            return self.search_by_ref(args['ref'])
         if args.get('uic_ref'):
-            self.data = self.search_by_uic_ref(args['uic_ref'])
+            return self.search_by_uic_ref(args['uic_ref'])
         if args.get('q'):
-            self.data = self.eliminate_duplicates(self.search_by_name(args['q']) + self.search_by_ref(args['q']) + self.search_by_uic_ref(args['q']))
-        return self.build_response()
+            return self.eliminate_duplicates(self.search_by_name(args['q']) + self.search_by_ref(args['q']) + self.search_by_uic_ref(args['q']))
 
     def query_has_no_wildcards(self, q):
         if '%' in q or '_' in q:
