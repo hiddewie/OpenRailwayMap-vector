@@ -966,10 +966,10 @@ const searchResults = {
   type: 'circle',
   source: 'search',
   paint: {
-    'circle-radius': 6,
-    'circle-color': '#1e7e34',
+    'circle-radius': 8,
+    'circle-color': 'rgba(183, 255, 0, 0.7)',
     'circle-stroke-width': 2,
-    'circle-stroke-color': 'white',
+    'circle-stroke-color': 'black',
   }
 };
 
