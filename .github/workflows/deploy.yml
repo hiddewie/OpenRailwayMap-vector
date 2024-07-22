@@ -141,6 +141,8 @@ jobs:
           docker compose up --no-build --pull never --wait db
 
       - name: Prepare and build API container
+        env:
+          SKIP_CLEANUP: 'yes'
         run: |
           api/prepare-api.sh
 
