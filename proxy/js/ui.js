@@ -560,16 +560,14 @@ map.on('click', 'search', (e) => {
   const coordinates = feature.geometry.coordinates.slice();
   const properties = feature.properties;
   const content = `
-    <dl>
-      <dt>Name</dt>
-      <dd>${properties.name}</dd>
-    
-      <dt>Feature</dt>
-      <dd><span style="font-family: monospace">${properties.railway}</span></dd>
-    
-      <dt>OSM ID</dt>
-      <dd><a href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">${properties.osm_id}</a></dd>
-    </dl>
+    <h6><span title="${properties.railway}">(i)</span> <a href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">${properties.name}</a> <a href="https://www.openstreetmap.org/edit/node=${properties.osm_id}" target="_blank">${properties.name}</a>(e)</a></h6>
+    <h6>
+      ${properties.railway_ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
+      ${properties.ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
+      ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
+      ${properties.position ? `<span class="badge badge-pill badge-light">position: ${properties.position}</span>` : ''}
+      ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
+    </h6>
   `;
 
   new maplibregl.Popup()
