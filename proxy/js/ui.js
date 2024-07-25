@@ -112,10 +112,10 @@ function showSearchResults(results, renderItem) {
       </div>
       <div class="list-group">
         ${results.map(result =>
-      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+          `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${renderItem(result)}
           </a>`
-    ).join('')}
+        ).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
