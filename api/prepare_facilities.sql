@@ -16,7 +16,7 @@ CREATE TABLE openrailwaymap_ref AS
     WHERE
       (railway_ref IS NOT NULL OR uic_ref IS NOT NULL)
       AND (
-        railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+        railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
         -- TODO support other states as well
       );
 
@@ -65,7 +65,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
               way AS geom
             FROM stations_with_route_counts
             WHERE
-              railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+              railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
               -- TODO support other states as well
           ) AS organised
       ) AS duplicated;
