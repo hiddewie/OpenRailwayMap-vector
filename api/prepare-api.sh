@@ -53,5 +53,5 @@ echo 'Building API container'
 docker compose build api
 
 echo 'Cleaning up'
-[ -n "$SKIP_CLEANUP" ] || rm -rf api/postgres-data
-[ -n "$SKIP_CLEANUP" ] || rm -f api/api.sql
+[ -n "${SKIP_CLEANUP:-}" ] || rm -rf api/postgres-data
+[ -n "${SKIP_CLEANUP:-}" ] || rm -f api/api.sql
