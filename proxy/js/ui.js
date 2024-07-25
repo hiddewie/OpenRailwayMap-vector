@@ -128,10 +128,10 @@ function hideSearchResults() {
 
 function showSearch() {
   searchBackdrop.style.display = 'block';
-  if (searchFacilitiesForm.style.display === 'block') {
+  if (searchFacilitiesForm.style.display !== 'none') {
     searchFacilityTermField.focus();
     searchFacilityTermField.select();
-  } else if (searchMilestonesForm.style.display === 'block') {
+  } else if (searchMilestonesForm.style.display !== 'none') {
     searchMilestoneRefField.focus();
     searchMilestoneRefField.select();
   }
