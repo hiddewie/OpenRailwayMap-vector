@@ -579,20 +579,12 @@ const onStylesheetChange = styleSheet => {
   onMapZoom(map.getZoom());
 }
 
-map.on('load', () => onMapZoom(map.getZoom()));
-map.on('zoomend', () => onMapZoom(map.getZoom()));
-
-// When a click event occurs on a feature in the places layer, open a popup at the
-// location of the feature, with description HTML from its properties.
-map.on('click', 'search', event => {
-  const feature = event.features[0];
-  const coordinates = feature.geometry.coordinates.slice();
-  const properties = feature.properties;
-  const content = `
+function popupContent(properties) {
+  return `
     <h6>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-      <a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">${properties.label}</a> 
-      <a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>
+      ${properties.label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${properties.label}${properties.osm_id ? `</a>` : ''}` : ''}
+      ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
     </h6>
     <h6>
       ${properties.railway_ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
@@ -602,19 +594,10 @@ map.on('click', 'search', event => {
       ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
     </h6>
   `;
+}
 
-  new maplibregl.Popup()
-    .setLngLat(coordinates)
-    .setHTML(content)
-    .addTo(map);
-});
-
-map.on('mouseenter', 'search', () => {
-  map.getCanvas().style.cursor = 'pointer';
-});
-map.on('mouseleave', 'search', () => {
-  map.getCanvas().style.cursor = '';
-});
+map.on('load', () => onMapZoom(map.getZoom()));
+map.on('zoomend', () => onMapZoom(map.getZoom()));
 
 map.on('mousehover', event => {
   const features = map.queryRenderedFeatures(event.point);
@@ -667,26 +650,10 @@ map.on('click', event => {
       : feature.geometry.type === 'LineString'
         ? closestPointOnLine(event.lngLat, feature.geometry.coordinates)
         : event.lngLat;
-    const properties = feature.properties;
-
-    const content = `
-      <h6>
-        ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-        <a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">${properties.label}</a> 
-        <a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>
-      </h6>
-      <h6>
-        ${properties.railway_ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
-        ${properties.ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
-        ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
-        ${properties.position ? `<span class="badge badge-pill badge-light">position: ${properties.position}</span>` : ''}
-        ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
-      </h6>
-    `;
 
     new maplibregl.Popup()
       .setLngLat(coordinates)
-      .setHTML(content)
+      .setHTML(popupContent(feature.properties))
       .addTo(map);
   }
 });
