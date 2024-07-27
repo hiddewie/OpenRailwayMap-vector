@@ -140,11 +140,11 @@ function showSearchResults(results) {
       </div>
       <div class="list-group">
         ${results.map(result =>
-          `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${result.icon ? `${result.icon}` : ''}
             ${result.label}
           </a>`
-        ).join('')}
+    ).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
@@ -625,14 +625,48 @@ map.on('mousehover', event => {
   }
 });
 
+function closestPointOnLine(point, line) {
+  const lngLatPoint = maplibregl.LngLat.convert(point)
+  let {closest0, closest1} = line.map(maplibregl.LngLat.convert).reduce((acc, cur) => {
+    const d = lngLatPoint.distanceTo(cur)
+    if (acc.closest0 == null || d < lngLatPoint.distanceTo(acc.closest0)) {
+      return {closest0: cur, closest1: acc.closest0}
+    } else if (acc.closest1 == null || d < lngLatPoint.distanceTo(acc.closest1)) {
+      return {closest0: acc.closest0, closest1: cur}
+    } else {
+      return acc;
+    }
+  }, {closest0: null, closest1: null});
+
+  closest0 = closest0.toArray()
+  closest1 = closest1.toArray()
+  point = lngLatPoint.toArray()
+
+  if (closest0 == null && closest1 == null) {
+    return null;
+  } else if (closest1 == null) {
+    return closest0;
+  } else {
+    // project point onto line between closest0 and closest1
+    const abx = closest1[0] - closest0[0]
+    const aby = closest1[1] - closest0[1]
+    const acx = point[0] - closest0[0]
+    const acy = point[1] - closest0[1]
+    const coeff = (abx * acx + aby * acy) / (abx * abx + aby * aby)
+    return [closest0[0] + abx * coeff, closest0[1] + aby * coeff]
+  }
+}
+
 map.on('click', event => {
   const features = map.queryRenderedFeatures(event.point);
   if (features.length > 0) {
     const feature = features[0];
-    console.info(event, feature)
-    const coordinates = feature.geometry === 'Point'
-      ? feature.geometry.coordinates
-      : event.lngLat;
+
+    const coordinates = feature.geometry.type === 'Point'
+      ? feature.geometry.coordinates.slice()
+      : feature.geometry.type === 'LineString'
+        ? closestPointOnLine(event.lngLat, feature.geometry.coordinates)
+        : event.lngLat;
     const properties = feature.properties;
 
     const content = `
@@ -649,6 +683,7 @@ map.on('click', event => {
         ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
       </h6>
     `;
+
     new maplibregl.Popup()
       .setLngLat(coordinates)
       .setHTML(content)
