@@ -624,12 +624,30 @@ function popupContent(properties) {
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 
-map.on('mousehover', event => {
+let hoveredFeature = null
+map.on('mousemove', event => {
   const features = map.queryRenderedFeatures(event.point);
   if (features.length > 0) {
     map.getCanvas().style.cursor = 'pointer';
+
+    const feature = features[0];
+    if (hoveredFeature && hoveredFeature.id !== feature.id) {
+      map.setFeatureState(hoveredFeature, {hover: false});
+      hoveredFeature = null;
+    }
+
+    if (feature.id && !(hoveredFeature && hoveredFeature.id === feature.id)) {
+      hoveredFeature = {source: feature.source, sourceLayer: feature.sourceLayer, id: feature.id}
+      console.info('hover', hoveredFeature, feature, event)
+      map.setFeatureState(hoveredFeature, {hover: true});
+    }
   } else {
     map.getCanvas().style.cursor = '';
+
+    if (hoveredFeature) {
+      map.setFeatureState(hoveredFeature, {hover: false});
+      hoveredFeature = null;
+    }
   }
 });
 
