@@ -146,6 +146,7 @@ postgres:
       properties:
         railway: string
         ref: string
+        # TODO: rename local_operated
         railway_local_operated: boolean
 
     # --- Speed --- #

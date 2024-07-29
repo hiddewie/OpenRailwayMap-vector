@@ -580,10 +580,16 @@ const onStylesheetChange = styleSheet => {
 }
 
 function popupContent(properties) {
+  // TODO move icon SVGs to proxy
+  // TODO reuse icons from map features for these features
+  // TODO lookup train protection name
+  // TODO format voltage
+  // TODO format gauge(s)
+  const label = properties.label ?? properties.name ?? properties.ref;
   return `
     <h6>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-      ${properties.label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${properties.label}${properties.osm_id ? `</a>` : ''}` : ''}
+      ${label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${label}${properties.osm_id ? `</a>` : ''}` : ''}
       ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
     </h6>
     <h6>
@@ -591,8 +597,26 @@ function popupContent(properties) {
       ${properties.ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
       ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
       ${properties.position ? `<span class="badge badge-pill badge-light">position: ${properties.position}</span>` : ''}
+      ${properties.pos ? `<span class="badge badge-pill badge-light">position: ${properties.pos}</span>` : ''}
       ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
       ${properties.track_ref ? `<span class="badge badge-pill badge-light">track: ${properties.track_ref}</span>` : ''}
+      ${properties.highspeed === true ? `<span class="badge badge-pill badge-light">high speed</span>` : ''}
+      ${properties.usage ? `<span class="badge badge-pill badge-light">usage: <span class="text-monospace">${properties.usage}</span></span>` : ''}
+      ${properties.service ? `<span class="badge badge-pill badge-light">service: <span class="text-monospace">${properties.service}</span></span>` : ''}
+      ${properties.tunnel === true ? `<span class="badge badge-pill badge-light">tunnel</span>` : ''}
+      ${properties.bridge === true ? `<span class="badge badge-pill badge-light">bridge</span>` : ''}
+      ${properties.railway_local_operated === true ? `<span class="badge badge-pill badge-light">operated locally</span>` : ''}
+      ${properties.maxspeed ? `<span class="badge badge-pill badge-light">maximum speed: ${properties.maxspeed} km/h</span>` : ''}
+      ${properties.direction_both ? `<span class="badge badge-pill badge-light">both directions</span>` : ''}
+      ${properties.train_protection ? `<span class="badge badge-pill badge-light">train protection: <span class="text-monospace">${properties.train_protection}</span></span>` : ''}
+      ${properties.deactivated === true ? `<span class="badge badge-pill badge-light">deactivated</span>` : ''}
+      ${properties.type === 'line' ? `<span class="badge badge-pill badge-light">line signal</span>` : ''}
+      ${properties.electrification_state ? `<span class="badge badge-pill badge-light">line electrification: <span class="text-monospace">${properties.electrification_state}</span></span>` : ''}
+      ${properties.voltage ? `<span class="badge badge-pill badge-light">voltage: ${properties.voltage} V</span>` : ''}
+      ${properties.frequency ? `<span class="badge badge-pill badge-light">frequency: ${properties.frequency} Hz</span>` : ''}
+      ${properties.gauge0 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge0}</span>` : ''}
+      ${properties.gauge1 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge1}</span>` : ''}
+      ${properties.gauge2 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge2}</span>` : ''}
     </h6>
   `;
 }
