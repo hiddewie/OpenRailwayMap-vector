@@ -586,6 +586,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
 CREATE OR REPLACE VIEW gauge_railway_line AS
   SELECT
+    osm_id as id,
     way,
     railway,
     usage,
@@ -618,6 +619,7 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
     label
   FROM
     (SELECT
+       osm_id,
        way,
        railway,
        usage,

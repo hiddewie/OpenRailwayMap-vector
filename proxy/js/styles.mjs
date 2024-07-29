@@ -751,6 +751,8 @@ const gaugeCasingPaint = {
 
 const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false],
+    'red',
     // monorails or tracks with monorail gauge value
     ['any',
       ['==', ['get', 'railway'], 'monorail'],
@@ -940,6 +942,7 @@ const sources = {
     type: 'vector',
     url: `${origin}/gauge`,
     attribution,
+    promoteId: 'id',
   },
 };
 

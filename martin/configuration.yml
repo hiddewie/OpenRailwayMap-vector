@@ -272,6 +272,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         usage: string
