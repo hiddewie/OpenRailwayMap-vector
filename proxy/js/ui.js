@@ -592,6 +592,7 @@ function popupContent(properties) {
       ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
       ${properties.position ? `<span class="badge badge-pill badge-light">position: ${properties.position}</span>` : ''}
       ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
+      ${properties.track_ref ? `<span class="badge badge-pill badge-light">track: ${properties.track_ref}</span>` : ''}
     </h6>
   `;
 }
