@@ -19,6 +19,10 @@ const knownStyles = [
 const globalMinZoom = 1;
 const glodalMaxZoom= 18;
 
+const hoverColor = '#ff0000';
+// High speed lines are the hover color by default
+const hoverHighspeedColor = '#ffc107';
+
 const railwayLineWidth = ['step', ['zoom'],
   1.5,
   5,
@@ -411,9 +415,10 @@ const trainProtectionLayout = {
   'line-cap': 'round',
 };
 const trainProtectionFillPaint = dashArray => ({
-  'line-color': ['match', ['get', 'train_protection'],
+  'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], hoverColor,
     ...signals_railway_line.train_protections.flatMap(train_protection =>
-      [train_protection.train_protection, train_protection.color]),
+      [['==', ['get', 'train_protection'], train_protection.train_protection], train_protection.color]),
     'grey',
   ],
   'line-width': railwayLineWidth,
@@ -457,6 +462,10 @@ const proposed_dasharray = [1, 4];
 
 const standardLowFillPaint = {
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['get', 'highspeed'], hoverHighspeedColor,
+      hoverColor,
+    ],
     ['get', 'highspeed'], highspeed_color,
     main_color,
   ],
@@ -464,6 +473,10 @@ const standardLowFillPaint = {
 };
 const standardMediumFillPaint = {
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['get', 'highspeed'], hoverHighspeedColor,
+      hoverColor,
+    ],
     ['==', ['get', 'usage'], 'branch'], branch_color,
     ['get', 'highspeed'], highspeed_color,
     main_color,
@@ -472,6 +485,10 @@ const standardMediumFillPaint = {
 };
 const standardFillPaint = dashArray => ({
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], hoverHighspeedColor,
+      hoverColor,
+    ],
     ['==', ['get', 'railway'], 'disused'], disused_color,
     ['==', ['get', 'railway'], 'abandoned'], abandoned_color,
     ['==', ['get', 'railway'], 'razed'], razed_color,
@@ -548,6 +565,7 @@ const maxspeed_fill_color_380 = '#CB00BD';
 
 const speedFillPaint = {
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], hoverColor,
     ['==', ['get', 'maxspeed'], null], 'gray',
     ['<=', ['get', 'maxspeed'], 10], maxspeed_fill_color_10,
     ['<=', ['get', 'maxspeed'], 20], maxspeed_fill_color_20,
@@ -621,6 +639,7 @@ const electrificationCasingPaint = {
 };
 const electrificationFillPaint = dashArray => ({
   'line-color': ['case',
+    ['boolean', ['feature-state', 'hover'], false], hoverColor,
     ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 25000]], color_25kv_60hz,
     ['all', ['==', ['get', 'frequency'], 50], ['==', ['get', 'voltage'], 25000]], color_25kv_50hz,
     ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 20000]], color_20kv_60hz,
@@ -751,8 +770,7 @@ const gaugeCasingPaint = {
 
 const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false],
-    'red',
+    ['boolean', ['feature-state', 'hover'], false], hoverColor,
     // monorails or tracks with monorail gauge value
     ['any',
       ['==', ['get', 'railway'], 'monorail'],
