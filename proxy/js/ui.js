@@ -638,7 +638,6 @@ map.on('mousemove', event => {
 
     if (feature.id && !(hoveredFeature && hoveredFeature.id === feature.id)) {
       hoveredFeature = {source: feature.source, sourceLayer: feature.sourceLayer, id: feature.id}
-      console.info('hover', hoveredFeature, feature, event)
       map.setFeatureState(hoveredFeature, {hover: true});
     }
   } else {
