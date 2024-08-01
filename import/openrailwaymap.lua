@@ -23,6 +23,7 @@ local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'linestring' },
     { column = 'railway', type = 'text' },
     -- TODO build feature column
@@ -73,6 +74,7 @@ local pois = osm2pgsql.define_table({
   name = 'pois',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'man_made', type = 'text' },
@@ -86,6 +88,7 @@ local stations = osm2pgsql.define_table({
   name = 'stations',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'feature', type = 'text' },
@@ -102,6 +105,7 @@ local stop_positions = osm2pgsql.define_table({
   name = 'stop_positions',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
   },
@@ -111,6 +115,7 @@ local platforms = osm2pgsql.define_table({
   name = 'platforms',
   ids = { type = 'any', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
   },
@@ -120,6 +125,7 @@ local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'rank', type = 'smallint' },
@@ -145,6 +151,7 @@ local signal_boxes = osm2pgsql.define_table({
   name = 'signal_boxes',
   ids = { type = 'any', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'geometry' },
     { column = 'way_area', type = 'real' },
     { column = 'ref', type = 'text' },
@@ -156,6 +163,7 @@ local turntables = osm2pgsql.define_table({
   name = 'turntables',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'polygon' },
   },
 })
@@ -164,6 +172,7 @@ local railway_positions = osm2pgsql.define_table({
   name = 'railway_positions',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'railway_position', type = 'text' },
@@ -177,6 +186,7 @@ local railway_switches = osm2pgsql.define_table({
   name = 'railway_switches',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
