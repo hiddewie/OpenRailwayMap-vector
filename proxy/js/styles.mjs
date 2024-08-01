@@ -566,7 +566,10 @@ const maxspeed_fill_color_380 = '#CB00BD';
 
 const speedFillPaint = {
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false], hoverColor,
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], hoverAlternativeColor,
+      hoverColor,
+    ],
     ['==', ['get', 'maxspeed'], null], 'gray',
     ['<=', ['get', 'maxspeed'], 10], maxspeed_fill_color_10,
     ['<=', ['get', 'maxspeed'], 20], maxspeed_fill_color_20,
