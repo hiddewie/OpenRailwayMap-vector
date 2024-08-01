@@ -22,6 +22,7 @@ const glodalMaxZoom= 18;
 const hoverColor = '#ff0000';
 // High speed lines are the hover color by default
 const hoverHighspeedColor = '#ffc107';
+const hoverTextHaloColor = 'yellow';
 
 const railwayLineWidth = ['step', ['zoom'],
   1.5,
@@ -1471,6 +1472,7 @@ const layers = {
           '#616161',
         ],
         'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
           ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
           ['==', ['get', 'railway'], 'tram_stop'], 'white',
           ['==', ['get', 'railway'], 'station'], 'white',
@@ -1802,7 +1804,10 @@ const layers = {
       ],
       paint: {
         'text-color': '#585858',
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white',
+        ],
         'text-halo-width': 2,
       },
       layout: {
@@ -1833,7 +1838,10 @@ const layers = {
       ],
       paint: {
         'text-color': 'black',
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white',
+        ],
         'text-halo-width': 1,
       },
       layout: {
@@ -1851,6 +1859,11 @@ const layers = {
       'source-layer': 'standard_railway_switch_ref',
       paint: {
         'text-halo-color': ['case',
+          // Invert coloring on hover
+          ['boolean', ['feature-state', 'hover'], false], ['case',
+            ['get', 'railway_local_operated'], 'white',
+            hoverTextHaloColor,
+          ],
           ['get', 'railway_local_operated'], 'yellow',
           'white'
         ],
@@ -1872,7 +1885,10 @@ const layers = {
       'source-layer': 'standard_railway_line_fill',
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
-        'text-color': 'white',
+        'text-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-color': 'blue',
         'text-halo-width': 4,
         'text-halo-blur': 2,
@@ -2047,7 +2063,10 @@ const layers = {
         true,
       ],
       paint: {
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-width': 1.5,
       },
       layout: {
@@ -2261,7 +2280,10 @@ const layers = {
       'source-layer': 'signals_signal_boxes',
       paint: {
         'text-color': '#404040',
-        'text-halo-color': '#bfffb3',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          '#bfffb3',
+        ],
         'text-halo-width': 1.5,
       },
       layout: {
@@ -2278,7 +2300,10 @@ const layers = {
       'source-layer': 'signals_signal_boxes',
       paint: {
         'text-color': '#404040',
-        'text-halo-color': '#bfffb3',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          '#bfffb3',
+        ],
         'text-halo-width': 1.5,
       },
       layout: {
@@ -2298,7 +2323,10 @@ const layers = {
         ['==', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'],
       ],
       paint: {
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-width': 2,
       },
       layout: {
@@ -2328,7 +2356,10 @@ const layers = {
         ],
       ],
       paint: {
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-width': 1.5,
         'text-halo-blur': 1,
       },
@@ -2599,7 +2630,10 @@ const layers = {
         true,
       ],
       paint: {
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-width': 1.5,
       },
       layout: {
@@ -2877,7 +2911,10 @@ const layers = {
         true,
       ],
       paint: {
-        'text-halo-color': 'white',
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          'white'
+        ],
         'text-halo-width': 1.5,
       },
       layout: {

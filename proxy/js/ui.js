@@ -637,6 +637,7 @@ map.on('mousemove', event => {
     }
 
     if (feature.id && !(hoveredFeature && hoveredFeature.id === feature.id)) {
+      // TODO combine hovered feature with same ID in other layers (e.g. hover line numbering and also toggle hovered feature state of the underlying line)
       hoveredFeature = {source: feature.source, sourceLayer: feature.sourceLayer, id: feature.id}
       map.setFeatureState(hoveredFeature, {hover: true});
     }
