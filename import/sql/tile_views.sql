@@ -2,6 +2,7 @@
 
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
+    id,
     way,
     highspeed,
     -- speeds are converted to kph in this layer because it is used for colouring
@@ -14,6 +15,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     gauge as gauge0
   FROM (
     SELECT
+      id,
       way,
       railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
       highspeed,
@@ -31,6 +33,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
 
 CREATE OR REPLACE VIEW railway_line_med AS
   SELECT
+    id,
     way,
     usage,
     highspeed,
@@ -44,6 +47,7 @@ CREATE OR REPLACE VIEW railway_line_med AS
     gauge as gauge0
   FROM
     (SELECT
+       id,
        way,
        railway,
        usage,
@@ -72,6 +76,7 @@ CREATE OR REPLACE VIEW railway_line_med AS
 
 CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   SELECT
+    id,
     way,
     railway_ref as label
   FROM stations_with_route_counts
@@ -84,6 +89,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
 
 CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT
+    id,
     way,
     railway_ref as label
   FROM stations_with_route_counts
@@ -95,6 +101,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
 
 CREATE OR REPLACE VIEW standard_railway_line_fill AS
   SELECT
+    id,
     way,
     railway,
     CASE
@@ -138,6 +145,7 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
     END AS rank
   FROM
     (SELECT
+       id,
        way,
        railway,
        usage,
@@ -164,6 +172,7 @@ CREATE OR REPLACE VIEW standard_railway_line_fill AS
 
 CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
+    id,
     way,
     railway,
     station,
@@ -186,6 +195,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     END AS rank
   FROM
     (SELECT
+       id,
        way,
        railway,
        route_count,
@@ -200,6 +210,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
+    id,
     way,
     CASE
       WHEN railway = 'crossing' THEN 'general/crossing'
@@ -231,12 +242,14 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
 
 CREATE OR REPLACE VIEW standard_railway_text_km AS
   SELECT
+    id,
     way,
     railway,
     pos,
     (railway_pos_decimal(pos) = '0') as zero
   FROM
     (SELECT
+       id,
        way,
        railway,
        COALESCE(railway_position, railway_pos_round(railway_position_exact)::text) AS pos
@@ -247,6 +260,7 @@ CREATE OR REPLACE VIEW standard_railway_text_km AS
 
 CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   SELECT
+    id,
     way,
     railway,
     ref,
@@ -259,6 +273,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 
 CREATE OR REPLACE VIEW speed_railway_line_fill AS
   SELECT
+    id,
     way,
     railway,
     usage,
@@ -289,6 +304,7 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
     railway_speed_label(speed_arr) AS label
   FROM
     (SELECT
+       id,
        way,
        railway,
        usage,
@@ -313,6 +329,7 @@ CREATE OR REPLACE VIEW speed_railway_line_fill AS
 
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
+    id,
     way,
     CASE
         {% for feature in speed_railway_signals.features %}
@@ -347,6 +364,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     direction_both
   FROM (
     SELECT
+      id,
       way,
       {% for tag in speed_railway_signals.tags %}
       {% unless tag | matches("railway:signal:speed_limit:speed") %}
@@ -377,6 +395,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
 CREATE OR REPLACE VIEW signals_railway_line AS
   SELECT
+    id,
     way,
     railway,
     usage,
@@ -398,6 +417,7 @@ CREATE OR REPLACE VIEW signals_railway_line AS
 
 CREATE OR REPLACE VIEW signals_signal_boxes AS
   SELECT
+    id,
     way,
     ref,
     name
@@ -406,6 +426,7 @@ CREATE OR REPLACE VIEW signals_signal_boxes AS
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
   WITH pre_signals AS (SELECT
+    id,
     way,
     railway,
     ref,
@@ -438,6 +459,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     OR railway IN ('derail', 'vacancy_detection'))
   ORDER BY rank NULLS FIRST)
   SELECT
+    id,
     way,
     railway,
     ref,
@@ -454,6 +476,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 
 CREATE OR REPLACE VIEW electrification_railway_line AS
   SELECT
+    id,
     way,
     railway,
     usage,
@@ -483,6 +506,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
     label
   FROM
     (SELECT
+       id,
        way,
        railway,
        usage,
@@ -507,6 +531,7 @@ CREATE OR REPLACE VIEW electrification_railway_line AS
 
 CREATE OR REPLACE VIEW electrification_future AS
   SELECT
+    id,
     way,
     railway,
     usage,
@@ -535,6 +560,7 @@ CREATE OR REPLACE VIEW electrification_future AS
     railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
   FROM
     (SELECT
+       id,
        way,
        railway,
        usage,
@@ -558,6 +584,7 @@ CREATE OR REPLACE VIEW electrification_future AS
 
 CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
+    id,
     way,
     CASE
       {% for feature in electrification_signals.features %}
@@ -586,7 +613,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
 
 CREATE OR REPLACE VIEW gauge_railway_line AS
   SELECT
-    osm_id as id,
+    id,
     way,
     railway,
     usage,
@@ -619,7 +646,7 @@ CREATE OR REPLACE VIEW gauge_railway_line AS
     label
   FROM
     (SELECT
-       osm_id,
+       id,
        way,
        railway,
        usage,
