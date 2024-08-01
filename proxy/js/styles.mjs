@@ -20,8 +20,8 @@ const globalMinZoom = 1;
 const glodalMaxZoom= 18;
 
 const hoverColor = '#ff0000';
-// High speed lines are the hover color by default
-const hoverHighspeedColor = '#ffc107';
+// High speed lines and 25kV are the hover color by default
+const hoverAlternativeColor = '#ffc107';
 const hoverTextHaloColor = 'yellow';
 
 const railwayLineWidth = ['step', ['zoom'],
@@ -464,7 +464,7 @@ const proposed_dasharray = [1, 4];
 const standardLowFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverHighspeedColor,
+      ['get', 'highspeed'], hoverAlternativeColor,
       hoverColor,
     ],
     ['get', 'highspeed'], highspeed_color,
@@ -475,7 +475,7 @@ const standardLowFillPaint = {
 const standardMediumFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverHighspeedColor,
+      ['get', 'highspeed'], hoverAlternativeColor,
       hoverColor,
     ],
     ['==', ['get', 'usage'], 'branch'], branch_color,
@@ -487,7 +487,7 @@ const standardMediumFillPaint = {
 const standardFillPaint = dashArray => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], hoverHighspeedColor,
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], hoverAlternativeColor,
       hoverColor,
     ],
     ['==', ['get', 'railway'], 'disused'], disused_color,
@@ -640,7 +640,10 @@ const electrificationCasingPaint = {
 };
 const electrificationFillPaint = dashArray => ({
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false], hoverColor,
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['==', ['get', 'voltage'], 25000], hoverAlternativeColor,
+      hoverColor,
+    ],
     ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 25000]], color_25kv_60hz,
     ['all', ['==', ['get', 'frequency'], 50], ['==', ['get', 'voltage'], 25000]], color_25kv_50hz,
     ['all', ['==', ['get', 'frequency'], 60], ['==', ['get', 'voltage'], 20000]], color_20kv_60hz,
