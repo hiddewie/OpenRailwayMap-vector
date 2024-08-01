@@ -777,7 +777,10 @@ const gaugeCasingPaint = {
 
 const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false], hoverColor,
+    ['boolean', ['feature-state', 'hover'], false], ['case',
+      ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], hoverAlternativeColor,
+      hoverColor,
+    ],
     // monorails or tracks with monorail gauge value
     ['any',
       ['==', ['get', 'railway'], 'monorail'],
