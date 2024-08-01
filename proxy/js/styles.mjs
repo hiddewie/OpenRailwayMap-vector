@@ -1896,7 +1896,7 @@ const layers = {
       paint: {
         'text-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
-          'white'
+          'white',
         ],
         'text-halo-color': 'blue',
         'text-halo-width': 4,
