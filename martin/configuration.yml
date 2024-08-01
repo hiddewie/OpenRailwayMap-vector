@@ -33,6 +33,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         highspeed: boolean
         maxspeed: integer
         train_protection: string
@@ -49,6 +50,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         usage: string
         highspeed: boolean
         maxspeed: integer
@@ -69,6 +71,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         label: string
 
     standard_railway_text_stations_med:
@@ -78,6 +81,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         label: string
 
     standard_railway_turntables:
@@ -86,6 +90,8 @@ postgres:
       srid: 3857
       geometry_column: way
       geometry_type: POLYGON
+      properties:
+        id: integer
 
     standard_railway_line_fill:
       schema: public
@@ -94,6 +100,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         usage: string
@@ -112,6 +119,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         railway: string
         station: string
         label: string
@@ -124,6 +132,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         feature: string
 
     standard_railway_text_km:
@@ -133,6 +142,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         railway: string
         pos: string
         zero: boolean
@@ -144,6 +154,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         railway: string
         ref: string
         # TODO: rename local_operated
@@ -158,6 +169,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         usage: string
@@ -172,6 +184,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         feature: string
         type: string
         azimuth: number
@@ -186,6 +199,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         usage: string
@@ -201,6 +215,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         railway: string
         ref: string
         ref_multiline: string
@@ -216,6 +231,7 @@ postgres:
       geometry_column: way
       geometry_type: GEOMETRY
       properties:
+        id: integer
         ref: string
         name: string
 
@@ -228,6 +244,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         electrification_state: string
@@ -244,6 +261,7 @@ postgres:
       geometry_column: way
       geometry_type: LINESTRING
       properties:
+        id: integer
         railway: string
         feature: string
         electrification_state: string
@@ -259,6 +277,7 @@ postgres:
       geometry_column: way
       geometry_type: POINT
       properties:
+        id: integer
         feature: string
         azimuth: number
         direction_both: boolean
