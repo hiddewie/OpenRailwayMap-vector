@@ -950,6 +950,12 @@ const sources = {
     attribution,
     promoteId: 'id',
   },
+  railway_line_high: {
+    type: 'vector',
+    url: `${origin}/railway_line_high`,
+    attribution,
+    promoteId: 'id',
+  },
   openrailwaymap_standard: {
     type: 'vector',
     url: `${origin}/standard`,

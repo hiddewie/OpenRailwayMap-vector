@@ -33,6 +33,7 @@ jobs:
       matrix:
         tiles:
           - low-med
+          - high
           - standard
           - speed
           - signals
