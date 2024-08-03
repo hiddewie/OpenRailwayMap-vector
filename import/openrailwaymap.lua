@@ -46,9 +46,11 @@ local railway_line = osm2pgsql.define_table({
     { column = 'preferred_direction', type = 'text' },
     { column = 'electrified', type = 'text' },
     { column = 'deelectrified', type = 'text' },
-    { column = 'frequency', type = 'text' },
-    { column = 'voltage', type = 'text' },
+    { column = 'frequency', type = 'real' },
+    { column = 'voltage', type = 'integer' },
     { column = 'electrification_state', type = 'text' },
+    { column = 'future_frequency', type = 'real' },
+    { column = 'future_voltage', type = 'integer' },
     { column = 'future_electrification_state', type = 'text' },
     { column = 'gauge', type = 'text' },
     { column = 'construction_railway', type = 'text' },
@@ -219,25 +221,25 @@ end
 
 local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
 function electrification_state(tags, ignore_future_states)
-  electrified = tags['electrified']
+  local electrified = tags['electrified']
 
   if electrification_values(electrified) then
-    return 'present'
+    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency'])
   end
   if (not ignore_future_states) and electrification_values(tags['construction:electrified']) then
-    return 'construction'
+    return 'construction', tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
   end
   if (not ignore_future_states) and electrification_values(tags['proposed:electrified']) then
-    return 'proposed'
+    return 'proposed', tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
   end
   if electrified == 'no' and electrification_values(tags['deelectrified']) then
-    return 'deelectrified'
+    return 'deelectrified', nil, nil
   end
   if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
-    return 'abandoned'
+    return 'abandoned', nil, nil
   end
 
-  return nil
+  return nil, nil, nil
 end
 
 -- TODO clean up unneeded tags
@@ -444,6 +446,8 @@ function osm2pgsql.process_way(object)
   if railway_values(tags.railway) then
     local railway_train_protection, railway_train_protection_rank = train_protection(tags)
 
+    local current_electrification_state, voltage, frequency = electrification_state(tags, true)
+    local future_electrification_state, future_voltage, future_frequency = electrification_state(tags, false)
     railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
@@ -466,10 +470,12 @@ function osm2pgsql.process_way(object)
       preferred_direction = tags['railway:preferred_direction'],
       electrified = tags['electrified'],
       deelectrified = tags['deelectrified'],
-      frequency = tags['frequency'],
-      voltage = tags['voltage'],
-      electrification_state = electrification_state(tags, true),
-      future_electrification_state = electrification_state(tags, false),
+      electrification_state = current_electrification_state,
+      frequency = frequency,
+      voltage = voltage,
+      future_electrification_state = future_electrification_state,
+      future_frequency = future_frequency,
+      future_voltage = future_voltage,
       gauge = tags['gauge'],
       construction_railway = tags['construction:railway'],
       construction_electrified = tags['construction:electrified'],

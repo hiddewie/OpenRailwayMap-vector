@@ -292,83 +292,31 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Get voltage for given state
-CREATE OR REPLACE FUNCTION railway_voltage_for_state(state TEXT, voltage TEXT, construction_voltage TEXT, proposed_voltage TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF state = 'present' THEN
-    RETURN railway_to_int(voltage);
-  END IF;
-  IF state = 'construction' THEN
-    RETURN railway_to_int(construction_voltage);
-  END IF;
-  IF state = 'proposed' THEN
-    RETURN railway_to_int(proposed_voltage);
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
--- Get frequency for given state
-CREATE OR REPLACE FUNCTION railway_frequency_for_state(state TEXT, frequency TEXT, construction_frequency TEXT, proposed_frequency TEXT) RETURNS FLOAT AS $$
-BEGIN
-  IF state = 'present' THEN
-    RETURN railway_to_float(frequency);
-  END IF;
-  IF state = 'construction' THEN
-    RETURN railway_to_float(construction_frequency);
-  END IF;
-  IF state = 'proposed' THEN
-    RETURN railway_to_float(proposed_frequency);
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
 -- Get label for electrification
-CREATE OR REPLACE FUNCTION railway_electrification_label(electrified TEXT, deelectrified TEXT,
-    construction_electrified TEXT, proposed_electrified TEXT, voltage TEXT, frequency TEXT,
-    construction_voltage TEXT, construction_frequency TEXT, proposed_voltage TEXT,
-    proposed_frequency TEXT) RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION railway_electrification_label(voltage INT, frequency REAL) RETURNS TEXT AS $$
 DECLARE
-  volt TEXT;
-  freq TEXT;
   volt_int INTEGER;
-  kilovolt NUMERIC(3, 1);
   volt_text TEXT;
-  freq_text TEXT;
 BEGIN
-  -- Select right values for voltage and frequency part of the label
-  IF railway_no_to_null(electrified) IS NOT NULL OR railway_no_to_null(deelectrified) IS NOT NULL THEN
-    volt := voltage;
-    freq := frequency;
-  ELSIF railway_no_to_null(construction_electrified) IS NOT NULL THEN
-    volt := construction_voltage;
-    freq := construction_frequency;
-  ELSIF railway_no_to_null(proposed_electrified) IS NOT NULL THEN
-    volt := proposed_voltage;
-    freq := proposed_frequency;
-  ELSE
-    RETURN NULL;
-  END IF;
   -- Grounded sections
-  IF volt = '0' THEN
+  IF voltage = 0 THEN
     RETURN '0V';
   END IF;
   -- Round voltage nicely
-  volt_int := railway_to_int(volt);
+  volt_int := voltage::INT;
   IF volt_int < 1000 THEN
-    volt_text := volt || 'V';
+    volt_text := voltage || 'V';
   ELSIF volt_int % 1000 = 0 THEN
     volt_text := (volt_int/1000)::TEXT || 'kV';
   ELSE
     volt_text := round((volt_int::FLOAT / 1000::FLOAT)::numeric, 1) || 'kV';
   END IF;
   -- Output voltage and frequency
-  IF freq = '0' THEN
+  IF frequency = 0 THEN
     RETURN volt_text || ' =';
   END IF;
-  IF freq IS NOT NULL THEN
-    RETURN volt_text || ' ' || freq || 'Hz';
+  IF frequency IS NOT NULL THEN
+    RETURN volt_text || ' ' || frequency || 'Hz';
   END IF;
   RETURN volt_text;
 END;
