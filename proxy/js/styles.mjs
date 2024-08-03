@@ -1825,7 +1825,7 @@ const layers = {
         'text-field': ['step', ['zoom'],
           ['get', 'ref'],
           14,
-          ['get', 'label'],
+          ['get', 'standard_label'],
         ],
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
@@ -2932,7 +2932,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{label}',
+        'text-field': '{gauge_label}',
         // TODO not present: oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
@@ -3013,7 +3013,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         },
       },
@@ -3029,7 +3029,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         },
         variants: [
@@ -3037,7 +3037,7 @@ const legendData = {
             legend: 'bridge',
             properties: {
               bridge: true,
-              label: null,
+              standard_label: null,
               ref: null,
               track_ref: null,
             },
@@ -3046,7 +3046,7 @@ const legendData = {
             legend: 'tunnel',
             properties: {
               tunnel: true,
-              label: null,
+              standard_label: null,
               ref: null,
               track_ref: null,
             },
@@ -3065,7 +3065,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3081,7 +3081,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3097,7 +3097,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3113,7 +3113,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3129,7 +3129,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3145,7 +3145,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: null,
+          standard_label: null,
           track_ref: '8b',
         }
       },
@@ -3161,7 +3161,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: 'L1',
-          label: 'Name',
+          standard_label: 'Name',
           track_ref: '8b',
         }
       },
@@ -3177,7 +3177,7 @@ const legendData = {
           tunnel: false,
           bridge: false,
           ref: null,
-          label: null,
+          standard_label: null,
           track_ref: null,
         }
       },
@@ -4234,7 +4234,7 @@ const legendData = {
           service: null,
           gauge0: `${min}`,
           gaugeint0: min,
-          label: `${min}`,
+          gauge_label: `${min}`,
         },
       })),
       {
@@ -4307,7 +4307,7 @@ const legendData = {
           service: null,
           gauge0: '3500',
           gaugeint0: 3500,
-          label: '3500'
+          gauge_label: '3500'
         },
       },
       {
@@ -4322,7 +4322,7 @@ const legendData = {
           gaugeint0: 1435,
           gauge1: '1520',
           gaugeint1: 1520,
-          label: '',
+          gauge_label: '',
         },
       },
       {
@@ -4339,7 +4339,7 @@ const legendData = {
           gaugeint1: 1520,
           gauge2: '1600',
           gaugeint2: 1600,
-          label: '',
+          gauge_label: '',
         },
       },
       {
@@ -4352,7 +4352,7 @@ const legendData = {
           service: null,
           gauge0: '1435',
           gaugeint0: 1435,
-          label: '',
+          gauge_label: '',
         },
       },
       {
@@ -4367,7 +4367,7 @@ const legendData = {
           gaugeint0: 1435,
           gauge1: '1520',
           gaugeint1: 1520,
-          label: '',
+          gauge_label: '',
         },
       },
       {
@@ -4384,7 +4384,7 @@ const legendData = {
           gaugeint1: 1520,
           gauge2: '1600',
           gaugeint2: 1600,
-          label: '',
+          gauge_label: '',
         },
       },
     ],
