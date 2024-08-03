@@ -1,77 +1,5 @@
 --- Shared ---
 
-CREATE OR REPLACE VIEW railway_line_low AS
-  SELECT
-    id,
-    way,
-    highspeed,
-    -- speeds are converted to kph in this layer because it is used for colouring
-    maxspeed,
-    train_protection,
-    train_protection_rank,
-    railway_to_int(voltage) AS voltage,
-    railway_to_float(frequency) AS frequency,
-    railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0
-  FROM (
-    SELECT
-      id,
-      way,
-      railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-      highspeed,
-      train_protection,
-      train_protection_rank,
-      frequency,
-      voltage,
-      railway_desired_value_from_list(1, gauge) AS gauge
-    FROM railway_line
-    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
-  ) AS r
-  ORDER by
-    highspeed,
-    maxspeed NULLS FIRST;
-
-CREATE OR REPLACE VIEW railway_line_med AS
-  SELECT
-    id,
-    way,
-    usage,
-    highspeed,
-    maxspeed,
-    train_protection_rank,
-    train_protection,
-    electrification_state,
-    voltage,
-    frequency,
-    railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       highspeed,
-       -- speeds are converted to kph in this layer because it is used for colouring
-       railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-       train_protection_rank,
-       train_protection,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state,
-       railway_to_int(voltage) AS voltage,
-       railway_to_float(frequency) AS frequency,
-       railway_desired_value_from_list(1, gauge) AS gauge
-     FROM railway_line
-     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
-    ) AS r
-  ORDER by
-    CASE
-      WHEN railway = 'rail' AND usage = 'main' AND highspeed THEN 2000
-      WHEN railway = 'rail' AND usage = 'main' THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' THEN 1000
-      ELSE 50
-    END NULLS LAST,
-    maxspeed NULLS FIRST;
-
 CREATE OR REPLACE VIEW railway_line_high AS
     SELECT
         id,
@@ -186,6 +114,20 @@ CREATE OR REPLACE VIEW railway_line_high AS
         layer,
         rank NULLS LAST,
         maxspeed NULLS FIRST;
+
+CREATE OR REPLACE VIEW railway_line_med AS
+    SELECT
+        *
+    FROM
+        railway_line_high
+    WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
+
+CREATE OR REPLACE VIEW railway_line_low AS
+    SELECT
+        *
+    FROM
+        railway_line_high
+    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL;
 
 --- Standard ---
 
