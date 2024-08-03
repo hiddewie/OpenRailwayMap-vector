@@ -116,6 +116,9 @@ CREATE OR REPLACE VIEW railway_line_high AS
             WHEN railway = 'razed' THEN 200
             ELSE 50
         END AS rank,
+        -- speeds are converted to kph in this layer because it is used for colouring
+        railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
+        railway_speed_label(speed_arr) AS speed_label,
         electrification_state_without_future AS electrification_state,
         railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
         railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
@@ -153,6 +156,12 @@ CREATE OR REPLACE VIEW railway_line_high AS
                  WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
                  ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
              END AS label_name,
+             maxspeed,
+             maxspeed_forward,
+             maxspeed_backward,
+             preferred_direction,
+             -- does no unit conversion
+             railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
              railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
              railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS electrification_label,
              railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS future_electrification_state,
@@ -171,7 +180,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
         ) AS r
     ORDER by
         layer,
-        rank NULLS LAST;
+        rank NULLS LAST,
+        maxspeed NULLS FIRST;
 
 --- Standard ---
 
@@ -300,62 +310,6 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 
 
 --- Speed ---
-
-CREATE OR REPLACE VIEW speed_railway_line_fill AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    -- speeds are converted to kph in this layer because it is used for colouring
-    railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      WHEN railway = 'disused' THEN 300
-      ELSE 50
-    END AS rank,
-    railway_speed_label(speed_arr) AS label
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       maxspeed,
-       maxspeed_forward,
-       maxspeed_backward,
-       preferred_direction,
-       -- does no unit conversion
-       railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
-       disused_railway,
-       construction_railway,
-       preserved_railway,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST,
-    maxspeed NULLS FIRST;
 
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT

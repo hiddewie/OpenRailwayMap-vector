@@ -1958,18 +1958,18 @@ const layers = {
     {
       id: 'speed_railway_line_casing',
       type: 'line',
-      source: 'openrailwaymap_speed',
+      source: 'railway_line_high',
       minzoom: 8,
-      'source-layer': 'speed_railway_line_fill',
+      'source-layer': 'railway_line_high',
       paint: speedCasingPaint,
       layout: speedLayout,
     },
     {
       id: 'speed_railway_line_fill',
       type: 'line',
-      source: 'openrailwaymap_speed',
+      source: 'railway_line_high',
       minzoom: 8,
-      'source-layer': 'speed_railway_line_fill',
+      'source-layer': 'railway_line_high',
       paint: speedFillPaint,
       layout: speedLayout,
     },
@@ -2051,8 +2051,8 @@ const layers = {
       id: 'speed_railway_line_text',
       type: 'symbol',
       minzoom: 8,
-      source: 'openrailwaymap_speed',
-      'source-layer': 'speed_railway_line_fill',
+      source: 'railway_line_high',
+      'source-layer': 'railway_line_high',
       // TODO zoom filters do not match line zoom levels
       filter: ['step', ['zoom'],
         ['==', ['get', 'feature'], 'rail'],
@@ -2081,7 +2081,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{label}',
+        'text-field': '{speed_label}',
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
         'text-padding': 30,
@@ -3000,7 +3000,7 @@ const legendData = {
         }
       },
     ],
-    "openrailwaymap_standard-railway_line_high": [
+    "railway_line_high-railway_line_high": [
       {
         legend: 'Highspeed main line',
         type: 'line',
@@ -3410,7 +3410,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_speed-speed_railway_line_fill': [
+    'railway_line_high-railway_line_high': [
       ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
@@ -3419,7 +3419,7 @@ const legendData = {
           feature: 'rail',
           usage: 'main',
           maxspeed: speed,
-          label: `${speed}`,
+          speed_label: `${speed}`,
         },
       })),
       {
@@ -3429,7 +3429,7 @@ const legendData = {
           railway: 'rail',
           feature: 'rail',
           usage: 'main',
-          maxspeed: null,
+          speed_label: null,
         },
       },
     ],
@@ -3776,7 +3776,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_electrification-railway_line_high': [
+    'railway_line_high-railway_line_high': [
       {
         legend: 'Not electrified',
         type: 'line',
@@ -4176,7 +4176,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_gauge-railway_line_high': [
+    'railway_line_high-railway_line_high': [
       ...[
         {min: 63, legend: '63 - 88 mm'},
         {min: 88, legend: '88 - 127 mm'},

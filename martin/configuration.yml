@@ -83,6 +83,8 @@ postgres:
         ref: string
         standard_label: string
         track_ref: string
+        maxspeed: number
+        speed_label: string
         electrification_state: string
         frequency: number
         voltage: number
@@ -177,21 +179,6 @@ postgres:
         railway_local_operated: boolean
 
     # --- Speed --- #
-
-    speed_railway_line_fill:
-      schema: public
-      table: speed_railway_line_fill
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        id: integer
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        maxspeed: number
-        label: string
 
     speed_railway_signals:
       schema: public
