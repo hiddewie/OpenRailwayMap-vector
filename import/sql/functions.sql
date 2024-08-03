@@ -293,6 +293,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Get state of electrification
+-- TODO move to import
 CREATE OR REPLACE FUNCTION railway_electrification_state(railway TEXT, electrified TEXT,
   deelectrified TEXT, abandoned_electrified TEXT, construction_electrified TEXT,
   proposed_electrified TEXT, ignore_future_states BOOLEAN) RETURNS TEXT AS $$

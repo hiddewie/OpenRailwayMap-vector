@@ -60,7 +60,7 @@ services:
       [ "$$TILES" = "standard" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_symbols,standard_railway_text_km,standard_railway_switch_ref --output-file /tiles/standard.mbtiles && mbtiles summary /tiles/standard.mbtiles
       [ "$$TILES" = "speed" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source speed_railway_signals --output-file /tiles/speed.mbtiles && mbtiles summary /tiles/speed.mbtiles
       [ "$$TILES" = "signals" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file /tiles/signals.mbtiles && mbtiles summary /tiles/signals.mbtiles
-      [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source electrification_future,electrification_signals --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
+      [ "$$TILES" = "electrification" ] && $$MARTIN --min-zoom 8 --max-zoom "$$MAX_ZOOM" --source electrification_signals --output-file /tiles/electrification.mbtiles && mbtiles summary /tiles/electrification.mbtiles
       true
       '
 

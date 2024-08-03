@@ -83,6 +83,12 @@ postgres:
         ref: string
         standard_label: string
         track_ref: string
+        electrification_state: string
+        frequency: number
+        voltage: number
+        future_frequency: number
+        future_voltage: number
+        electrification_label: string
         gauge0: string
         gaugeint0: number
         gauge1: string
@@ -246,39 +252,6 @@ postgres:
         name: string
 
     # --- Electrification --- #
-
-    electrification_railway_line:
-      schema: public
-      table: electrification_railway_line
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        id: integer
-        railway: string
-        feature: string
-        electrification_state: string
-        usage: string
-        service: string
-        frequency: number
-        voltage: number
-        label: string
-
-    electrification_future:
-      schema: public
-      table: electrification_future
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        id: integer
-        railway: string
-        feature: string
-        electrification_state: string
-        usage: string
-        service: string
-        frequency: number
-        voltage: number
 
     electrification_signals:
       schema: public

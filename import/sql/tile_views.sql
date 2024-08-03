@@ -116,6 +116,12 @@ CREATE OR REPLACE VIEW railway_line_high AS
             WHEN railway = 'razed' THEN 200
             ELSE 50
         END AS rank,
+        electrification_state_without_future AS electrification_state,
+        railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
+        railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
+        electrification_label,
+        railway_voltage_for_state(future_electrification_state, voltage, construction_voltage, proposed_voltage) AS future_voltage,
+        railway_frequency_for_state(future_electrification_state, frequency, construction_frequency, proposed_frequency) AS future_frequency,
         railway_to_int(gauge0) AS gaugeint0,
         gauge0,
         railway_to_int(gauge1) AS gaugeint1,
@@ -147,6 +153,15 @@ CREATE OR REPLACE VIEW railway_line_high AS
                  WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
                  ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
              END AS label_name,
+             railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
+             railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS electrification_label,
+             railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS future_electrification_state,
+             frequency,
+             voltage,
+             construction_frequency,
+             construction_voltage,
+             proposed_frequency,
+             proposed_voltage,
              railway_desired_value_from_list(1, COALESCE(gauge, construction_gauge)) AS gauge0,
              railway_desired_value_from_list(2, COALESCE(gauge, construction_gauge)) AS gauge1,
              railway_desired_value_from_list(3, COALESCE(gauge, construction_gauge)) AS gauge2,
@@ -488,114 +503,6 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
   WHERE feature IS NOT NULL;
 
 --- Electrification ---
-
-CREATE OR REPLACE VIEW electrification_railway_line AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      ELSE 50
-    END AS rank,
-    electrification_state_without_future AS electrification_state,
-    railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
-    railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
-    label
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       construction_railway,
-       preserved_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
-       railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
-       frequency,
-       voltage,
-       construction_frequency,
-       construction_voltage,
-       proposed_frequency,
-       proposed_voltage,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST;
-
-CREATE OR REPLACE VIEW electrification_future AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      ELSE 50
-    END AS rank,
-    electrification_state,
-    railway_voltage_for_state(electrification_state, voltage, construction_voltage, proposed_voltage) AS voltage,
-    railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       construction_railway,
-       preserved_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
-       frequency,
-       voltage,
-       construction_frequency,
-       construction_voltage,
-       proposed_frequency,
-       proposed_voltage,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST;
 
 CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
