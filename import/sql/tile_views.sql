@@ -119,6 +119,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
         -- speeds are converted to kph in this layer because it is used for colouring
         railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
         railway_speed_label(speed_arr) AS speed_label,
+        train_protection_rank,
+        train_protection,
         electrification_state_without_future AS electrification_state,
         railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
         railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
@@ -162,6 +164,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
              preferred_direction,
              -- does no unit conversion
              railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
+             train_protection_rank,
+             train_protection,
              railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
              railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS electrification_label,
              railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS future_electrification_state,
@@ -376,28 +380,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
 
 --- Signals ---
-
-CREATE OR REPLACE VIEW signals_railway_line AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    layer,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    train_protection_rank,
-    train_protection
-  FROM railway_line
-  WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'preserved', 'construction')
-  ORDER BY
-    layer,
-    train_protection_rank NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_signal_boxes AS
   SELECT

@@ -85,6 +85,8 @@ postgres:
         track_ref: string
         maxspeed: number
         speed_label: string
+        train_protection: string
+        train_protection_rank: integer
         electrification_state: string
         frequency: number
         voltage: number
@@ -194,22 +196,6 @@ postgres:
         direction_both: boolean
 
     # --- Signals --- #
-
-    signals_railway_line:
-      schema: public
-      table: signals_railway_line
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        id: integer
-        railway: string
-        feature: string
-        usage: string
-        service: string
-        layer: number
-        train_protection: string
-        train_protection_rank: integer
 
     signals_railway_signals:
       schema: public
