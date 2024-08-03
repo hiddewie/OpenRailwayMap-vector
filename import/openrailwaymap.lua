@@ -48,6 +48,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'deelectrified', type = 'text' },
     { column = 'frequency', type = 'text' },
     { column = 'voltage', type = 'text' },
+    { column = 'electrification_state', type = 'text' },
+    { column = 'future_electrification_state', type = 'text' },
     { column = 'gauge', type = 'text' },
     { column = 'construction_railway', type = 'text' },
     { column = 'construction_electrified', type = 'text' },
@@ -213,6 +215,29 @@ function train_protection(tags)
 {% end %}
 
   return nil, 0
+end
+
+local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
+function electrification_state(tags, ignore_future_states)
+  electrified = tags['electrified']
+
+  if electrification_values(electrified) then
+    return 'present'
+  end
+  if (not ignore_future_states) and electrification_values(tags['construction:electrified']) then
+    return 'construction'
+  end
+  if (not ignore_future_states) and electrification_values(tags['proposed:electrified']) then
+    return 'proposed'
+  end
+  if electrified == 'no' and electrification_values(tags['deelectrified']) then
+    return 'deelectrified'
+  end
+  if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
+    return 'abandoned'
+  end
+
+  return nil
 end
 
 -- TODO clean up unneeded tags
@@ -443,6 +468,8 @@ function osm2pgsql.process_way(object)
       deelectrified = tags['deelectrified'],
       frequency = tags['frequency'],
       voltage = tags['voltage'],
+      electrification_state = electrification_state(tags, true),
+      future_electrification_state = electrification_state(tags, false),
       gauge = tags['gauge'],
       construction_railway = tags['construction:railway'],
       construction_electrified = tags['construction:electrified'],

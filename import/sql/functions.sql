@@ -292,38 +292,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Get state of electrification
--- TODO move to import
-CREATE OR REPLACE FUNCTION railway_electrification_state(railway TEXT, electrified TEXT,
-  deelectrified TEXT, abandoned_electrified TEXT, construction_electrified TEXT,
-  proposed_electrified TEXT, ignore_future_states BOOLEAN) RETURNS TEXT AS $$
-DECLARE
-  state TEXT;
-  valid_values TEXT[] := ARRAY['contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'];
-BEGIN
-  state := NULL;
-  IF electrified = ANY(valid_values) THEN
-    return 'present';
-  END IF;
-  IF electrified = 'no' THEN
-    state := 'no';
-  END IF;
-  IF NOT ignore_future_states AND construction_electrified = ANY(valid_values) THEN
-    RETURN 'construction';
-  END IF;
-  IF NOT ignore_future_states AND proposed_electrified = ANY(valid_values) THEN
-    RETURN 'proposed';
-  END IF;
-  IF state = 'no' AND deelectrified = ANY(valid_values) THEN
-    RETURN 'deelectrified';
-  END IF;
-  IF state = 'no' AND abandoned_electrified = ANY(valid_values) THEN
-    RETURN 'abandoned';
-  END IF;
-  RETURN state;
-END;
-$$ LANGUAGE plpgsql;
-
 -- Get voltage for given state
 CREATE OR REPLACE FUNCTION railway_voltage_for_state(state TEXT, voltage TEXT, construction_voltage TEXT, proposed_voltage TEXT) RETURNS INTEGER AS $$
 BEGIN
