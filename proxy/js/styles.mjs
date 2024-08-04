@@ -19,10 +19,44 @@ const knownStyles = [
 const globalMinZoom = 1;
 const glodalMaxZoom= 18;
 
-const hoverColor = '#ff0000';
-// High speed lines and 25kV are the hover color by default
-const hoverAlternativeColor = '#ffc107';
-const hoverTextHaloColor = 'yellow';
+const colors = {
+  hover: {
+    main: '#ff0000',
+    // High speed lines and 25kV are the hover color by default
+    alternative: '#ffc107',
+    textHalo: 'yellow',
+  },
+  styles: {
+    standard: {
+      main: '#ff8100',
+      highspeed: '#ff0c00',
+      branch: '#c4b600',
+      narrowGauge: '#c0da00',
+      no_usage: '#000000',
+      disused: '#70584d',
+      tourism: '#5b4d70',
+      abandoned: '#7f6a62',
+      razed: '#94847e',
+      tram: '#d877b8',
+      subway: '#0300c3',
+      light_rail: '#00bd14',
+      siding: '#000000',
+      yard: '#000000',
+      spur: '#87491d',
+      industrial: '#87491d',
+      casing: {
+        railway: '#ffffff',
+        bridge: '#000000',
+      },
+      turntable: {
+        fill: '#ababab',
+        casing: '#808080',
+      }
+    }
+  }
+};
+
+const turntable_casing_width = 2;
 
 const electrificationLegends = [
   { legend: '> 25 kV ~', voltage: 25000, frequency: 60, electrification_label: '26kV 60Hz' },
@@ -529,7 +563,7 @@ const trainProtectionLayout = {
 };
 const trainProtectionFillPaint = dashArray => ({
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false], hoverColor,
+    ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
     ...signals_railway_line.train_protections.flatMap(train_protection =>
       [['==', ['get', 'train_protection'], train_protection.train_protection], train_protection.color]),
     'grey',
@@ -537,30 +571,6 @@ const trainProtectionFillPaint = dashArray => ({
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
-
-const main_color = '#ff8100';
-const highspeed_color = '#ff0c00';
-const branch_color = '#c4b600';
-const narrow_gauge_color = '#c0da00';
-const no_usage_color = '#000000';
-const disused_color = '#70584d';
-const tourism_color = '#5b4d70';
-const abandoned_color = '#7f6a62';
-const razed_color = '#94847e';
-const tram_color = '#d877b8';
-const subway_color = '#0300c3';
-const light_rail_color = '#00bd14';
-const siding_color = '#000000';
-const yard_color = '#000000';
-const spur_color = '#87491d';
-const industrial_color = '#87491d';
-
-const railway_casing_color = '#ffffff';
-const bridge_casing_color = '#000000';
-
-const turntable_fill = '#ababab';
-const turntable_casing = '#808080';
-const turntable_casing_width = 2;
 
 const railway_casing_add = 1;
 
@@ -576,57 +586,57 @@ const proposed_dasharray = [1, 4];
 const standardLowFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverAlternativeColor,
-      hoverColor,
+      ['get', 'highspeed'], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['get', 'highspeed'], highspeed_color,
-    main_color,
+    ['get', 'highspeed'], colors.styles.standard.highspeed,
+    colors.styles.standard.main,
   ],
   'line-width': railwayLineWidth,
 };
 const standardMediumFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverAlternativeColor,
-      hoverColor,
+      ['get', 'highspeed'], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['==', ['get', 'usage'], 'branch'], branch_color,
-    ['get', 'highspeed'], highspeed_color,
-    main_color,
+    ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
+    ['get', 'highspeed'], colors.styles.standard.highspeed,
+    colors.styles.standard.main,
   ],
   'line-width': railwayLineWidth,
 };
 const standardFillPaint = dashArray => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['==', ['get', 'railway'], 'disused'], disused_color,
-    ['==', ['get', 'railway'], 'abandoned'], abandoned_color,
-    ['==', ['get', 'railway'], 'razed'], razed_color,
+    ['==', ['get', 'railway'], 'disused'], colors.styles.standard.disused,
+    ['==', ['get', 'railway'], 'abandoned'], colors.styles.standard.abandoned,
+    ['==', ['get', 'railway'], 'razed'], colors.styles.standard.razed,
     ['==', ['get', 'feature'], 'rail'],
     ['case',
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], spur_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], yard_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], siding_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], siding_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], no_usage_color,
-      ['==', ['get', 'usage'], 'industrial'], industrial_color,
-      ['==', ['get', 'usage'], 'tourism'], tourism_color,
-      ['==', ['get', 'usage'], 'branch'], branch_color,
-      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], highspeed_color,
-      ['==', ['get', 'usage'], 'main'], main_color,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], colors.styles.standard.spur,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], colors.styles.standard.yard,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], colors.styles.standard.siding,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], colors.styles.standard.siding,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], colors.styles.standard.no_usage,
+      ['==', ['get', 'usage'], 'industrial'], colors.styles.standard.industrial,
+      ['==', ['get', 'usage'], 'tourism'], colors.styles.standard.tourism,
+      ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.styles.standard.highspeed,
+      ['==', ['get', 'usage'], 'main'], colors.styles.standard.main,
       'rgba(255, 255, 255, 1.0)',
     ],
     ['==', ['get', 'feature'], 'narrow_gauge'],
     ['case',
-      ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], industrial_color,
-      narrow_gauge_color,
+      ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], colors.styles.standard.industrial,
+      colors.styles.standard.narrowGauge,
     ],
-    ['==', ['get', 'feature'], 'subway'], subway_color,
-    ['==', ['get', 'feature'], 'light_rail'], light_rail_color,
-    ['==', ['get', 'feature'], 'tram'], tram_color,
+    ['==', ['get', 'feature'], 'subway'], colors.styles.standard.subway,
+    ['==', ['get', 'feature'], 'light_rail'], colors.styles.standard.light_rail,
+    ['==', ['get', 'feature'], 'tram'], colors.styles.standard.tram,
     'rgba(255, 255, 255, 1.0)',
   ],
   'line-width': railwayLineWidth,
@@ -679,8 +689,8 @@ const maxspeed_fill_color_380 = '#CB00BD';
 const speedFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors.hover.alternative,
+      colors.hover.main,
     ],
     ['==', ['get', 'maxspeed'], null], 'gray',
     ['<=', ['get', 'maxspeed'], 10], maxspeed_fill_color_10,
@@ -756,8 +766,8 @@ const electrificationCasingPaint = {
 const electrificationFillPaint = (dashArray, voltageProperty, frequencyProperty) => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['==', ['get', voltageProperty], 25000], hoverAlternativeColor,
-      hoverColor,
+      ['==', ['get', voltageProperty], 25000], colors.hover.alternative,
+      colors.hover.main,
     ],
     ['all', ['==', ['get', frequencyProperty], 60], ['==', ['get', voltageProperty], 25000]], color_25kv_60hz,
     ['all', ['==', ['get', frequencyProperty], 50], ['==', ['get', voltageProperty], 25000]], color_25kv_50hz,
@@ -890,8 +900,8 @@ const gaugeCasingPaint = {
 const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors.hover.alternative,
+      colors.hover.main,
     ],
     // monorails or tracks with monorail gauge value
     ['any',
@@ -1140,7 +1150,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1190,7 +1200,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1243,7 +1253,7 @@ const layers = {
         ['!=', ['get', 'railway'], 'razed'],
       ],
       paint: {
-        'line-color': bridge_casing_color,
+        'line-color': colors.styles.standard.casing.bridge,
         'line-width': railwayLineWidth,
         'line-gap-width': bridge_casing_add,
       }
@@ -1266,7 +1276,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_tunnel_casing_add,
       }
@@ -1290,7 +1300,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1307,7 +1317,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': construction_dasharray,
@@ -1325,7 +1335,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': proposed_dasharray,
@@ -1343,7 +1353,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': abandoned_dasharray,
@@ -1361,7 +1371,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': razed_dasharray,
@@ -1385,7 +1395,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1529,7 +1539,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'fill-color': turntable_fill,
+        'fill-color': colors.styles.standard.turntable.fill,
       }
     },
     {
@@ -1539,7 +1549,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'line-color': turntable_casing,
+        'line-color': colors.styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       }
     },
@@ -1593,7 +1603,7 @@ const layers = {
           '#616161',
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
           ['==', ['get', 'railway'], 'tram_stop'], 'white',
           ['==', ['get', 'railway'], 'station'], 'white',
@@ -1926,7 +1936,7 @@ const layers = {
       paint: {
         'text-color': '#585858',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-width': 2,
@@ -1960,7 +1970,7 @@ const layers = {
       paint: {
         'text-color': 'black',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-width': 1,
@@ -1983,7 +1993,7 @@ const layers = {
           // Invert coloring on hover
           ['boolean', ['feature-state', 'hover'], false], ['case',
             ['get', 'railway_local_operated'], 'white',
-            hoverTextHaloColor,
+            colors.hover.textHalo,
           ],
           ['get', 'railway_local_operated'], 'yellow',
           'white'
@@ -2007,7 +2017,7 @@ const layers = {
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
         'text-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-color': 'blue',
@@ -2185,7 +2195,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -2293,7 +2303,7 @@ const layers = {
       filter: ['==', ["geometry-type"], 'Point'],
       paint: {
         'circle-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'circle-radius': 6,
@@ -2313,7 +2323,7 @@ const layers = {
       ],
       paint: {
         'fill-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'fill-outline-color': 'white',
@@ -2405,7 +2415,7 @@ const layers = {
       paint: {
         'text-color': '#404040',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           '#bfffb3',
         ],
         'text-halo-width': 1.5,
@@ -2425,7 +2435,7 @@ const layers = {
       paint: {
         'text-color': '#404040',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           '#bfffb3',
         ],
         'text-halo-width': 1.5,
@@ -2448,7 +2458,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 2,
@@ -2481,7 +2491,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -2755,7 +2765,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -3036,7 +3046,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
