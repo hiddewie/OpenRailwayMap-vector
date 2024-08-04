@@ -128,6 +128,7 @@ services:
       target: runtime
     environment:
       - PORT=5000
+      - HOST=0.0.0.0
     ports:
       - '5000:5000'
 
