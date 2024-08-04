@@ -87,11 +87,13 @@ esac
 $PSQL -c "update planet_osm_nodes set tags = null where tags is not null;"
 $PSQL -c "update planet_osm_ways set tags = null where tags is not null;"
 $PSQL -c "update planet_osm_rels set tags = null where tags is not null;"
+# Remove platforms which are not near any railway line, and also not part of any railway route
+$PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[-p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
 
 echo "Post processing imported data"
 $PSQL -f sql/functions.sql
-$PSQL -f sql/get_station_importance.sql
 $PSQL -f sql/signals_with_azimuth.sql
+$PSQL -f sql/get_station_importance.sql
 $PSQL -f sql/tile_views.sql
 
 echo "Updating materialized views"

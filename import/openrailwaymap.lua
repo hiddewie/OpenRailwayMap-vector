@@ -443,7 +443,8 @@ function osm2pgsql.process_way(object)
     if gauge_tag then
       for gauge in string.gmatch(gauge_tag, '[^;]+') do
         if gauge then
-          table.insert(gauges, gauge)
+          -- Raw SQL array syntax
+          table.insert(gauges, "\"" .. gauge:gsub("\"", "\\\"") .. "\"")
         end
       end
     end
