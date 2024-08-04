@@ -49,9 +49,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'electrification_state', type = 'text' },
     { column = 'future_frequency', type = 'real' },
     { column = 'future_voltage', type = 'integer' },
-    { column = 'gauge', type = 'text' },
+    { column = 'gauges', sql_type = 'text[]' },
     { column = 'construction_railway', type = 'text' },
-    { column = 'construction_gauge', type = 'text' },
     { column = 'proposed_railway', type = 'text' },
     { column = 'disused_railway', type = 'text' },
     { column = 'abandoned_railway', type = 'text' },
@@ -438,6 +437,17 @@ function osm2pgsql.process_way(object)
 
     local current_electrification_state, voltage, frequency = electrification_state(tags, true)
     local _, future_voltage, future_frequency = electrification_state(tags, false)
+
+    local gauges = {}
+    local gauge_tag = tags['gauge'] or tags['construction:gauge']
+    if gauge_tag then
+      for gauge in string.gmatch(gauge_tag, '[^;]+') do
+        if gauge then
+          table.insert(gauges, gauge)
+        end
+      end
+    end
+
     railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
@@ -463,9 +473,8 @@ function osm2pgsql.process_way(object)
       voltage = voltage,
       future_frequency = future_frequency,
       future_voltage = future_voltage,
-      gauge = tags['gauge'],
+      gauges = '{' .. table.concat(gauges, ',') .. '}',
       construction_railway = tags['construction:railway'],
-      construction_gauge = tags['construction:gauge'],
       proposed_railway = tags['proposed:railway'],
       disused_railway = tags['disused:railway'],
       abandoned_railway = tags['abandoned:railway'],

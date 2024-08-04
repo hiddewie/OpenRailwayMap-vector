@@ -321,29 +321,3 @@ BEGIN
   RETURN volt_text;
 END;
 $$ LANGUAGE plpgsql;
-
--- Get label for gauge
-CREATE OR REPLACE FUNCTION railway_gauge_label(gauge TEXT) RETURNS TEXT AS $$
-BEGIN
-  IF gauge IS NOT NULL AND gauge ~ '^[0-9;]+$' THEN
-    RETURN regexp_replace(gauge, ';', ' | ', 'g');
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
--- Get the desired value from listed values (e.g. gauge)
-CREATE OR REPLACE FUNCTION railway_desired_value_from_list(desired_nr INTEGER, listed_values TEXT) RETURNS TEXT AS $$
-DECLARE
-  value_array TEXT[];
-BEGIN
-  IF listed_values IS NULL OR listed_values = '' OR desired_nr <= 0 THEN
-    RETURN NULL;
-  END IF;
-  value_array := regexp_split_to_array(listed_values, ';');
-  IF desired_nr > array_length(value_array, 1) THEN
-    RETURN NULL;
-  END IF;
-  RETURN value_array[desired_nr];
-END;
-$$ LANGUAGE plpgsql;
