@@ -100,10 +100,10 @@ CREATE OR REPLACE VIEW railway_line_high AS
              railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
              future_voltage,
              future_frequency,
-             railway_desired_value_from_list(1, COALESCE(gauge, construction_gauge)) AS gauge0,
-             railway_desired_value_from_list(2, COALESCE(gauge, construction_gauge)) AS gauge1,
-             railway_desired_value_from_list(3, COALESCE(gauge, construction_gauge)) AS gauge2,
-             railway_gauge_label(gauge) AS gauge_label
+             gauges[1] AS gauge0,
+             gauges[2] AS gauge1,
+             gauges[3] AS gauge2,
+             (select gauge_label from (select string_agg(gauge, ' | ') as gauge_label, 1 as q from unnest(gauges) as gauge where gauge ~ '^[0-9]+$' group by q) as gauge_label)
          FROM railway_line
          WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
         ) AS r
