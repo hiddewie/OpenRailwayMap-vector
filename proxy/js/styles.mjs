@@ -1124,7 +1124,6 @@ const searchResults = {
   }
 };
 
-// TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
     backgroundColor,
