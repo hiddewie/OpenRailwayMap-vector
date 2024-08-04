@@ -45,7 +45,7 @@ docker compose run --build import import
 Build the tiles:
 ```shell
 export BBOX='-11.3818,35.8891,25.0488,70.0'
-for tile in low-med standard speed signals electrification gauge; do
+for tile in low-med high standard speed signals electrification; do
     env "TILES=$tile" docker compose up martin-cp
 done
 ```

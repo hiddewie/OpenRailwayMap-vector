@@ -1,76 +1,130 @@
 --- Shared ---
 
-CREATE OR REPLACE VIEW railway_line_low AS
-  SELECT
-    id,
-    way,
-    highspeed,
-    -- speeds are converted to kph in this layer because it is used for colouring
-    maxspeed,
-    train_protection,
-    train_protection_rank,
-    railway_to_int(voltage) AS voltage,
-    railway_to_float(frequency) AS frequency,
-    railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0
-  FROM (
+CREATE OR REPLACE VIEW railway_line_high AS
     SELECT
-      id,
-      way,
-      railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-      highspeed,
-      train_protection,
-      train_protection_rank,
-      frequency,
-      voltage,
-      railway_desired_value_from_list(1, gauge) AS gauge
-    FROM railway_line
-    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL
-  ) AS r
-  ORDER by
-    highspeed,
-    maxspeed NULLS FIRST;
+        id,
+        way,
+        railway,
+        CASE
+            WHEN railway = 'proposed' THEN COALESCE(proposed_railway, 'rail')
+            WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
+            WHEN railway = 'razed' THEN COALESCE(razed_railway, 'rail')
+            WHEN railway = 'abandoned' THEN COALESCE(abandoned_railway, 'rail')
+            WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
+            WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
+            ELSE railway
+        END as feature,
+        usage,
+        service,
+        highspeed,
+        (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
+        (bridge IS NOT NULL AND bridge != 'no') as bridge,
+        CASE
+            WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+            ELSE COALESCE(ref, label_name)
+        END AS standard_label,
+        ref,
+        track_ref,
+        CASE
+            WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
+            WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
+            WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
+            WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
+            WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
+            WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
+            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed THEN 2000
+            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
+            WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
+            WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
+            WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
+            WHEN railway IN ('preserved', 'construction') THEN 400
+            WHEN railway = 'proposed' THEN 350
+            WHEN railway = 'disused' THEN 300
+            WHEN railway = 'abandoned' THEN 250
+            WHEN railway = 'razed' THEN 200
+            ELSE 50
+        END AS rank,
+        -- speeds are converted to kph in this layer because it is used for colouring
+        railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
+        railway_speed_label(speed_arr) AS speed_label,
+        train_protection_rank,
+        train_protection,
+        electrification_state,
+        voltage,
+        frequency,
+        electrification_label,
+        future_voltage,
+        future_frequency,
+        railway_to_int(gauge0) AS gaugeint0,
+        gauge0,
+        railway_to_int(gauge1) AS gaugeint1,
+        gauge1,
+        railway_to_int(gauge2) AS gaugeint2,
+        gauge2,
+        gauge_label
+    FROM
+        (SELECT
+             id,
+             way,
+             railway,
+             usage,
+             service,
+             highspeed,
+             disused_railway,
+             abandoned_railway,
+             razed_railway,
+             construction_railway,
+             proposed_railway,
+             preserved_railway,
+             layer,
+             bridge,
+             tunnel,
+             track_ref,
+             ref,
+             CASE
+                 WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
+                 WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
+                 ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
+             END AS label_name,
+             maxspeed,
+             maxspeed_forward,
+             maxspeed_backward,
+             preferred_direction,
+             -- does no unit conversion
+             railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
+             train_protection_rank,
+             train_protection,
+             electrification_state,
+             voltage,
+             frequency,
+             railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+             future_voltage,
+             future_frequency,
+             gauges[1] AS gauge0,
+             gauges[2] AS gauge1,
+             gauges[3] AS gauge2,
+             (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label
+         FROM railway_line
+         WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
+        ) AS r
+    ORDER by
+        layer,
+        rank NULLS LAST,
+        maxspeed NULLS FIRST;
 
 CREATE OR REPLACE VIEW railway_line_med AS
-  SELECT
-    id,
-    way,
-    usage,
-    highspeed,
-    maxspeed,
-    train_protection_rank,
-    train_protection,
-    electrification_state,
-    voltage,
-    frequency,
-    railway_to_int(gauge) AS gaugeint0,
-    gauge as gauge0
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       highspeed,
-       -- speeds are converted to kph in this layer because it is used for colouring
-       railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-       train_protection_rank,
-       train_protection,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state,
-       railway_to_int(voltage) AS voltage,
-       railway_to_float(frequency) AS frequency,
-       railway_desired_value_from_list(1, gauge) AS gauge
-     FROM railway_line
-     WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
-    ) AS r
-  ORDER by
-    CASE
-      WHEN railway = 'rail' AND usage = 'main' AND highspeed THEN 2000
-      WHEN railway = 'rail' AND usage = 'main' THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' THEN 1000
-      ELSE 50
-    END NULLS LAST,
-    maxspeed NULLS FIRST;
+    SELECT
+        *
+    FROM
+        railway_line_high
+    WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
+
+CREATE OR REPLACE VIEW railway_line_low AS
+    SELECT
+        *
+    FROM
+        railway_line_high
+    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL;
 
 --- Standard ---
 
@@ -98,77 +152,6 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     AND railway_ref IS NOT NULL
   ORDER BY
     route_count DESC NULLS LAST;
-
-CREATE OR REPLACE VIEW standard_railway_line_fill AS
-  SELECT
-    id,
-    way,
-    railway,
-    CASE
-      WHEN railway = 'proposed' THEN COALESCE(proposed_railway, 'rail')
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'razed' THEN COALESCE(razed_railway, 'rail')
-      WHEN railway = 'abandoned' THEN COALESCE(abandoned_railway, 'rail')
-      WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    usage,
-    service,
-    highspeed,
-    (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
-    (bridge IS NOT NULL AND bridge != 'no') as bridge,
-    CASE
-      WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
-      ELSE COALESCE(ref, label_name)
-    END AS label,
-    ref,
-    track_ref,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed THEN 2000
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      WHEN railway = 'proposed' THEN 350
-      WHEN railway = 'disused' THEN 300
-      WHEN railway = 'abandoned' THEN 250
-      WHEN railway = 'razed' THEN 200
-      ELSE 50
-    END AS rank
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       highspeed,
-       disused_railway, abandoned_railway,
-       razed_railway, construction_railway,
-       proposed_railway,
-       preserved_railway,
-       layer,
-       bridge,
-       tunnel,
-       track_ref,
-       ref,
-       CASE
-         WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
-         WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
-         ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
-       END AS label_name
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
-    ) AS r
-  ORDER by layer, rank NULLS LAST;
 
 CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
@@ -271,62 +254,6 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 
 --- Speed ---
 
-CREATE OR REPLACE VIEW speed_railway_line_fill AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    -- speeds are converted to kph in this layer because it is used for colouring
-    railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      WHEN railway = 'disused' THEN 300
-      ELSE 50
-    END AS rank,
-    railway_speed_label(speed_arr) AS label
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       maxspeed,
-       maxspeed_forward,
-       maxspeed_backward,
-       preferred_direction,
-       -- does no unit conversion
-       railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
-       disused_railway,
-       construction_railway,
-       preserved_railway,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST,
-    maxspeed NULLS FIRST;
-
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     id,
@@ -393,28 +320,6 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
 --- Signals ---
 
-CREATE OR REPLACE VIEW signals_railway_line AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    layer,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    train_protection_rank,
-    train_protection
-  FROM railway_line
-  WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'preserved', 'construction')
-  ORDER BY
-    layer,
-    train_protection_rank NULLS LAST;
-
 CREATE OR REPLACE VIEW signals_signal_boxes AS
   SELECT
     id,
@@ -474,114 +379,6 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 
 --- Electrification ---
 
-CREATE OR REPLACE VIEW electrification_railway_line AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      ELSE 50
-    END AS rank,
-    electrification_state_without_future AS electrification_state,
-    railway_voltage_for_state(electrification_state_without_future, voltage, construction_voltage, proposed_voltage) AS voltage,
-    railway_frequency_for_state(electrification_state_without_future, frequency, construction_frequency, proposed_frequency) AS frequency,
-    label
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       construction_railway,
-       preserved_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, NULL, NULL, true) AS electrification_state_without_future,
-       railway_electrification_label(electrified, deelectrified, construction_electrified, proposed_electrified, voltage, frequency, construction_voltage, construction_frequency, proposed_voltage, proposed_frequency) AS label,
-       frequency,
-       voltage,
-       construction_frequency,
-       construction_voltage,
-       proposed_frequency,
-       proposed_voltage,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST;
-
-CREATE OR REPLACE VIEW electrification_future AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      ELSE 50
-    END AS rank,
-    electrification_state,
-    railway_voltage_for_state(electrification_state, voltage, construction_voltage, proposed_voltage) AS voltage,
-    railway_frequency_for_state(electrification_state, frequency, construction_frequency, proposed_frequency) AS frequency
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       construction_railway,
-       preserved_railway,
-       railway_electrification_state(railway, electrified, deelectrified, abandoned_electrified, construction_electrified, proposed_electrified, false) AS electrification_state,
-       frequency,
-       voltage,
-       construction_frequency,
-       construction_voltage,
-       proposed_frequency,
-       proposed_voltage,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST;
-
 CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
     id,
@@ -608,59 +405,3 @@ CREATE OR REPLACE VIEW electrification_signals AS
     railway = 'signal'
     AND signal_direction IS NOT NULL
     AND "railway:signal:electricity" IS NOT NULL;
-
---- Gauge ---
-
-CREATE OR REPLACE VIEW gauge_railway_line AS
-  SELECT
-    id,
-    way,
-    railway,
-    usage,
-    service,
-    CASE
-      WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-      WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-      ELSE railway
-    END as feature,
-    CASE
-      WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-      WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-      WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-      WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-      WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-      WHEN railway IN ('preserved', 'construction') THEN 400
-      ELSE 50
-    END AS rank,
-    railway_to_int(gauge0) AS gaugeint0,
-    gauge0,
-    railway_to_int(gauge1) AS gaugeint1,
-    gauge1,
-    railway_to_int(gauge2) AS gaugeint2,
-    gauge2,
-    label
-  FROM
-    (SELECT
-       id,
-       way,
-       railway,
-       usage,
-       service,
-       construction_railway,
-       preserved_railway,
-       railway_desired_value_from_list(1, COALESCE(gauge, construction_gauge)) AS gauge0,
-       railway_desired_value_from_list(2, COALESCE(gauge, construction_gauge)) AS gauge1,
-       railway_desired_value_from_list(3, COALESCE(gauge, construction_gauge)) AS gauge2,
-       railway_gauge_label(gauge) AS label,
-       layer
-     FROM railway_line
-     WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature')
-    ) AS r
-  ORDER BY
-    layer,
-    rank NULLS LAST;

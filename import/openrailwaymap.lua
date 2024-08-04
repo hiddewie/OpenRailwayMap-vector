@@ -44,24 +44,17 @@ local railway_line = osm2pgsql.define_table({
     { column = 'maxspeed_forward', type = 'text' },
     { column = 'maxspeed_backward', type = 'text' },
     { column = 'preferred_direction', type = 'text' },
-    { column = 'electrified', type = 'text' },
-    { column = 'deelectrified', type = 'text' },
-    { column = 'frequency', type = 'text' },
-    { column = 'voltage', type = 'text' },
-    { column = 'gauge', type = 'text' },
+    { column = 'frequency', type = 'real' },
+    { column = 'voltage', type = 'integer' },
+    { column = 'electrification_state', type = 'text' },
+    { column = 'future_frequency', type = 'real' },
+    { column = 'future_voltage', type = 'integer' },
+    { column = 'gauges', sql_type = 'text[]' },
     { column = 'construction_railway', type = 'text' },
-    { column = 'construction_electrified', type = 'text' },
-    { column = 'construction_frequency', type = 'text' },
-    { column = 'construction_voltage', type = 'text' },
-    { column = 'construction_gauge', type = 'text' },
     { column = 'proposed_railway', type = 'text' },
-    { column = 'proposed_electrified', type = 'text' },
-    { column = 'proposed_frequency', type = 'text' },
-    { column = 'proposed_voltage', type = 'text' },
     { column = 'disused_railway', type = 'text' },
     { column = 'abandoned_railway', type = 'text' },
     { column = 'abandoned_name', type = 'text' },
-    { column = 'abandoned_electrified', type = 'text' },
     { column = 'razed_railway', type = 'text' },
     { column = 'razed_name', type = 'text' },
     { column = 'preserved_railway', type = 'text' },
@@ -213,6 +206,29 @@ function train_protection(tags)
 {% end %}
 
   return nil, 0
+end
+
+local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
+function electrification_state(tags, ignore_future_states)
+  local electrified = tags['electrified']
+
+  if electrification_values(electrified) then
+    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency'])
+  end
+  if (not ignore_future_states) and electrification_values(tags['construction:electrified']) then
+    return 'construction', tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
+  end
+  if (not ignore_future_states) and electrification_values(tags['proposed:electrified']) then
+    return 'proposed', tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
+  end
+  if electrified == 'no' and electrification_values(tags['deelectrified']) then
+    return 'deelectrified', nil, nil
+  end
+  if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
+    return 'abandoned', nil, nil
+  end
+
+  return nil, nil, nil
 end
 
 -- TODO clean up unneeded tags
@@ -419,6 +435,19 @@ function osm2pgsql.process_way(object)
   if railway_values(tags.railway) then
     local railway_train_protection, railway_train_protection_rank = train_protection(tags)
 
+    local current_electrification_state, voltage, frequency = electrification_state(tags, true)
+    local _, future_voltage, future_frequency = electrification_state(tags, false)
+
+    local gauges = {}
+    local gauge_tag = tags['gauge'] or tags['construction:gauge']
+    if gauge_tag then
+      for gauge in string.gmatch(gauge_tag, '[^;]+') do
+        if gauge then
+          table.insert(gauges, gauge)
+        end
+      end
+    end
+
     railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
@@ -439,24 +468,17 @@ function osm2pgsql.process_way(object)
       maxspeed_forward = tags['maxspeed:forward'],
       maxspeed_backward = tags['maxspeed:backward'],
       preferred_direction = tags['railway:preferred_direction'],
-      electrified = tags['electrified'],
-      deelectrified = tags['deelectrified'],
-      frequency = tags['frequency'],
-      voltage = tags['voltage'],
-      gauge = tags['gauge'],
+      electrification_state = current_electrification_state,
+      frequency = frequency,
+      voltage = voltage,
+      future_frequency = future_frequency,
+      future_voltage = future_voltage,
+      gauges = '{' .. table.concat(gauges, ',') .. '}',
       construction_railway = tags['construction:railway'],
-      construction_electrified = tags['construction:electrified'],
-      construction_frequency = tags['construction:frequency'],
-      construction_voltage = tags['construction:voltage'],
-      construction_gauge = tags['construction:gauge'],
       proposed_railway = tags['proposed:railway'],
-      proposed_electrified = tags['proposed:electrified'],
-      proposed_frequency = tags['proposed:frequency'],
-      proposed_voltage = tags['proposed:voltage'],
       disused_railway = tags['disused:railway'],
       abandoned_railway = tags['abandoned:railway'],
       abandoned_name = tags['abandoned:name'],
-      abandoned_electrified = tags['abandoned:electrified'],
       razed_railway = tags['razed:railway'],
       razed_name = tags['razed:name'],
       preserved_railway = tags['preserved:railway'],
