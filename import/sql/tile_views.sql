@@ -103,7 +103,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
              gauges[1] AS gauge0,
              gauges[2] AS gauge1,
              gauges[3] AS gauge2,
-             (select gauge_label from (select string_agg(gauge, ' | ') as gauge_label, 1 as q from unnest(gauges) as gauge where gauge ~ '^[0-9]+$' group by q) as gauge_label)
+             (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label
          FROM railway_line
          WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
         ) AS r
