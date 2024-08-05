@@ -51,9 +51,9 @@ const colors = {
       turntable: {
         fill: '#ababab',
         casing: '#808080',
-      }
-    }
-  }
+      },
+    },
+  },
 };
 
 const turntable_casing_width = 2;
@@ -651,40 +651,11 @@ const speedLayout = {
   'line-join': 'round',
   'line-cap': 'round',
 };
-const maxspeed_fill_color_10 = '#0100CB';
-const maxspeed_fill_color_20 = '#001ECB';
-const maxspeed_fill_color_30 = '#003DCB';
-const maxspeed_fill_color_40 = '#005BCB';
-const maxspeed_fill_color_50 = '#007ACB';
-const maxspeed_fill_color_60 = '#0098CB';
-const maxspeed_fill_color_70 = '#00B7CB';
-const maxspeed_fill_color_80 = '#00CBC1';
-const maxspeed_fill_color_90 = '#00CBA2';
-const maxspeed_fill_color_100 = '#00CB84';
-const maxspeed_fill_color_110 = '#00CB66';
-const maxspeed_fill_color_120 = '#00CB47';
-const maxspeed_fill_color_130 = '#00CB29';
-const maxspeed_fill_color_140 = '#00CB0A';
-const maxspeed_fill_color_150 = '#14CB00';
-const maxspeed_fill_color_160 = '#33CB00';
-const maxspeed_fill_color_170 = '#51CB00';
-const maxspeed_fill_color_180 = '#70CB00';
-const maxspeed_fill_color_190 = '#8ECB00';
-const maxspeed_fill_color_200 = '#ADCB00';
-const maxspeed_fill_color_210 = '#CBCB00';
-const maxspeed_fill_color_220 = '#CBAD00';
-const maxspeed_fill_color_230 = '#CB8E00';
-const maxspeed_fill_color_240 = '#CB7000';
-const maxspeed_fill_color_250 = '#CB5100';
-const maxspeed_fill_color_260 = '#CB3300';
-const maxspeed_fill_color_270 = '#CB1400';
-const maxspeed_fill_color_280 = '#CB0007';
-const maxspeed_fill_color_290 = '#CB0025';
-const maxspeed_fill_color_300 = '#CB0044';
-const maxspeed_fill_color_320 = '#CB0062';
-const maxspeed_fill_color_340 = '#CB0081';
-const maxspeed_fill_color_360 = '#CB009F';
-const maxspeed_fill_color_380 = '#CB00BD';
+
+const minSpeed = 10
+const maxSpeed = 380
+const startHue = 248
+const endHue = 284;
 
 const speedFillPaint = {
   'line-color': ['case',
@@ -693,41 +664,8 @@ const speedFillPaint = {
       colors.hover.main,
     ],
     ['==', ['get', 'maxspeed'], null], 'gray',
-    ['<=', ['get', 'maxspeed'], 10], maxspeed_fill_color_10,
-    ['<=', ['get', 'maxspeed'], 20], maxspeed_fill_color_20,
-    ['<=', ['get', 'maxspeed'], 30], maxspeed_fill_color_30,
-    ['<=', ['get', 'maxspeed'], 40], maxspeed_fill_color_40,
-    ['<=', ['get', 'maxspeed'], 50], maxspeed_fill_color_50,
-    ['<=', ['get', 'maxspeed'], 60], maxspeed_fill_color_60,
-    ['<=', ['get', 'maxspeed'], 70], maxspeed_fill_color_70,
-    ['<=', ['get', 'maxspeed'], 80], maxspeed_fill_color_80,
-    ['<=', ['get', 'maxspeed'], 90], maxspeed_fill_color_90,
-    ['<=', ['get', 'maxspeed'], 100], maxspeed_fill_color_100,
-    ['<=', ['get', 'maxspeed'], 110], maxspeed_fill_color_110,
-    ['<=', ['get', 'maxspeed'], 120], maxspeed_fill_color_120,
-    ['<=', ['get', 'maxspeed'], 130], maxspeed_fill_color_130,
-    ['<=', ['get', 'maxspeed'], 140], maxspeed_fill_color_140,
-    ['<=', ['get', 'maxspeed'], 150], maxspeed_fill_color_150,
-    ['<=', ['get', 'maxspeed'], 160], maxspeed_fill_color_160,
-    ['<=', ['get', 'maxspeed'], 170], maxspeed_fill_color_170,
-    ['<=', ['get', 'maxspeed'], 180], maxspeed_fill_color_180,
-    ['<=', ['get', 'maxspeed'], 190], maxspeed_fill_color_190,
-    ['<=', ['get', 'maxspeed'], 200], maxspeed_fill_color_200,
-    ['<=', ['get', 'maxspeed'], 210], maxspeed_fill_color_210,
-    ['<=', ['get', 'maxspeed'], 220], maxspeed_fill_color_220,
-    ['<=', ['get', 'maxspeed'], 230], maxspeed_fill_color_230,
-    ['<=', ['get', 'maxspeed'], 240], maxspeed_fill_color_240,
-    ['<=', ['get', 'maxspeed'], 250], maxspeed_fill_color_250,
-    ['<=', ['get', 'maxspeed'], 260], maxspeed_fill_color_260,
-    ['<=', ['get', 'maxspeed'], 270], maxspeed_fill_color_270,
-    ['<=', ['get', 'maxspeed'], 280], maxspeed_fill_color_280,
-    ['<=', ['get', 'maxspeed'], 290], maxspeed_fill_color_290,
-    ['<=', ['get', 'maxspeed'], 300], maxspeed_fill_color_300,
-    ['<=', ['get', 'maxspeed'], 320], maxspeed_fill_color_320,
-    ['<=', ['get', 'maxspeed'], 340], maxspeed_fill_color_340,
-    ['<=', ['get', 'maxspeed'], 360], maxspeed_fill_color_360,
-    ['>', ['get', 'maxspeed'], 360], maxspeed_fill_color_380,
-    'gray',
+    // Reverse hue order
+    ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
   ],
   'line-width': railwayLineWidth,
 };
