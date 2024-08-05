@@ -19,10 +19,156 @@ const knownStyles = [
 const globalMinZoom = 1;
 const glodalMaxZoom= 18;
 
-const hoverColor = '#ff0000';
-// High speed lines and 25kV are the hover color by default
-const hoverAlternativeColor = '#ffc107';
-const hoverTextHaloColor = 'yellow';
+const colors = {
+  hover: {
+    main: '#ff0000',
+    // High speed lines and 25kV are the hover color by default
+    alternative: '#ffc107',
+    textHalo: 'yellow',
+  },
+  styles: {
+    standard: {
+      main: '#ff8100',
+      highspeed: '#ff0c00',
+      branch: '#c4b600',
+      narrowGauge: '#c0da00',
+      no_usage: '#000000',
+      disused: '#70584d',
+      tourism: '#5b4d70',
+      abandoned: '#7f6a62',
+      razed: '#94847e',
+      tram: '#d877b8',
+      subway: '#0300c3',
+      light_rail: '#00bd14',
+      siding: '#000000',
+      yard: '#000000',
+      spur: '#87491d',
+      industrial: '#87491d',
+      casing: {
+        railway: '#ffffff',
+        bridge: '#000000',
+      },
+      turntable: {
+        fill: '#ababab',
+        casing: '#808080',
+      },
+    },
+  },
+};
+
+const turntable_casing_width = 2;
+
+const electrificationLegends = [
+  { legend: '> 25 kV ~', voltage: 25000, frequency: 60, electrification_label: '26kV 60Hz' },
+  { legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60, electrification_label: '25kV 60Hz' },
+  { legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50, electrification_label: '25kV 50Hz' },
+  { legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60, electrification_label: '20kV 60Hz' },
+  { legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50, electrification_label: '20kV 50Hz' },
+  { legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60, electrification_label: '16kV 60Hz' },
+  { legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7, electrification_label: '15kV 16.7Hz' },
+  { legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67, electrification_label: '15kV 16.67Hz' },
+  { legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60, electrification_label: '13kV 60Hz' },
+  { legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60, electrification_label: '12.5kV 60Hz' },
+  { legend: '12.5 kV 25 Hz ~', voltage: 12500, frequency: 25, electrification_label: '12.5kV 25Hz' },
+  { legend: '< 12.5 kV ~', voltage: 12499, frequency: 60, electrification_label: '11kV 60Hz' },
+  { legend: '> 3 kV =', voltage: 3001, frequency: 0, electrification_label: '4kV =' },
+  { legend: '3 kV =', voltage: 3000, frequency: 0, electrification_label: '3kV =' },
+  { legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0, electrification_label: '2kV =' },
+  { legend: '1.5 kV =', voltage: 1500, frequency: 0, electrification_label: '1.5kV =' },
+  { legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0, electrification_label: '1.2kV =' },
+  { legend: '1 kV =', voltage: 1000, frequency: 0, electrification_label: '1kV =' },
+  { legend: '750 V - 1 kV =', voltage: 751, frequency: 0, electrification_label: '800V =' },
+  { legend: '750 V =', voltage: 750, frequency: 0, electrification_label: '750V =' },
+  { legend: '< 750 V =', voltage: 749, frequency: 0, electrification_label: '700V =' },
+];
+
+const speedLegends = [
+  10,
+  20,
+  30,
+  40,
+  50,
+  60,
+  70,
+  80,
+  90,
+  100,
+  110,
+  120,
+  130,
+  140,
+  150,
+  160,
+  170,
+  180,
+  190,
+  200,
+  210,
+  220,
+  230,
+  240,
+  250,
+  260,
+  270,
+  280,
+  290,
+  300,
+  320,
+  340,
+  360,
+  380
+];
+
+const gaugeLegends = [
+  {min: 63, legend: '63 - 88 mm'},
+  {min: 88, legend: '88 - 127 mm'},
+  {min: 127, legend: '127 - 184 mm'},
+  {min: 184, legend: '184 - 190 mm'},
+  {min: 190, legend: '190 - 260 mm'},
+  {min: 260, legend: '260 - 380 mm'},
+  {min: 380, legend: '380 - 500 mm'},
+  {min: 500, legend: '500 - 597 mm'},
+  {min: 597, legend: '597 - 600 mm'},
+  {min: 600, legend: '600 - 609 mm'},
+  {min: 609, legend: '609 - 700 mm'},
+  {min: 700, legend: '700 - 750 mm'},
+  {min: 750, legend: '750 - 760 mm'},
+  {min: 760, legend: '760 - 762 mm'},
+  {min: 762, legend: '762 - 785 mm'},
+  {min: 785, legend: '785 - 800 mm'},
+  {min: 800, legend: '800 - 891 mm'},
+  {min: 891, legend: '891 - 900 mm'},
+  {min: 900, legend: '900 - 914 mm'},
+  {min: 914, legend: '914 - 950 mm'},
+  {min: 950, legend: '950 - 1000 mm'},
+  {min: 1000, legend: '1000 - 1009 mm'},
+  {min: 1009, legend: '1009 - 1050 mm'},
+  {min: 1050, legend: '1050 - 1066 mm'},
+  {min: 1066, legend: '1066 - 1100 mm'},
+  {min: 1100, legend: '1100 - 1200 mm'},
+  {min: 1200, legend: '1200 - 1372 mm'},
+  {min: 1372, legend: '1372 - 1422 mm'},
+  {min: 1422, legend: '1422 - 1432 mm'},
+  {min: 1432, legend: '1432 - 1435 mm'},
+  {min: 1435, legend: '1435 - 1440 mm'},
+  {min: 1440, legend: '1440 - 1445 mm'},
+  {min: 1445, legend: '1445 - 1450 mm'},
+  {min: 1450, legend: '1450 - 1458 mm'},
+  {min: 1458, legend: '1458 - 1495 mm'},
+  {min: 1495, legend: '1495 - 1520 mm'},
+  {min: 1520, legend: '1520 - 1522 mm'},
+  {min: 1522, legend: '1522 - 1524 mm'},
+  {min: 1524, legend: '1524 - 1581 mm'},
+  {min: 1581, legend: '1581 - 1588 mm'},
+  {min: 1588, legend: '1588 - 1600 mm'},
+  {min: 1600, legend: '1600 - 1668 mm'},
+  {min: 1668, legend: '1668 - 1672 mm'},
+  {min: 1672, legend: '1672 - 1700 mm'},
+  {min: 1700, legend: '1700 - 1800 mm'},
+  {min: 1800, legend: '1800 - 1880 mm'},
+  {min: 1880, legend: '1880 - 2000 mm'},
+  {min: 2000, legend: '2000 - 3000 mm'},
+];
 
 const railwayLineWidth = ['step', ['zoom'],
   1.5,
@@ -417,7 +563,7 @@ const trainProtectionLayout = {
 };
 const trainProtectionFillPaint = dashArray => ({
   'line-color': ['case',
-    ['boolean', ['feature-state', 'hover'], false], hoverColor,
+    ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
     ...signals_railway_line.train_protections.flatMap(train_protection =>
       [['==', ['get', 'train_protection'], train_protection.train_protection], train_protection.color]),
     'grey',
@@ -425,30 +571,6 @@ const trainProtectionFillPaint = dashArray => ({
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
-
-const main_color = '#ff8100';
-const highspeed_color = '#ff0c00';
-const branch_color = '#c4b600';
-const narrow_gauge_color = '#c0da00';
-const no_usage_color = '#000000';
-const disused_color = '#70584d';
-const tourism_color = '#5b4d70';
-const abandoned_color = '#7f6a62';
-const razed_color = '#94847e';
-const tram_color = '#d877b8';
-const subway_color = '#0300c3';
-const light_rail_color = '#00bd14';
-const siding_color = '#000000';
-const yard_color = '#000000';
-const spur_color = '#87491d';
-const industrial_color = '#87491d';
-
-const railway_casing_color = '#ffffff';
-const bridge_casing_color = '#000000';
-
-const turntable_fill = '#ababab';
-const turntable_casing = '#808080';
-const turntable_casing_width = 2;
 
 const railway_casing_add = 1;
 
@@ -464,57 +586,57 @@ const proposed_dasharray = [1, 4];
 const standardLowFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverAlternativeColor,
-      hoverColor,
+      ['get', 'highspeed'], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['get', 'highspeed'], highspeed_color,
-    main_color,
+    ['get', 'highspeed'], colors.styles.standard.highspeed,
+    colors.styles.standard.main,
   ],
   'line-width': railwayLineWidth,
 };
 const standardMediumFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], hoverAlternativeColor,
-      hoverColor,
+      ['get', 'highspeed'], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['==', ['get', 'usage'], 'branch'], branch_color,
-    ['get', 'highspeed'], highspeed_color,
-    main_color,
+    ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
+    ['get', 'highspeed'], colors.styles.standard.highspeed,
+    colors.styles.standard.main,
   ],
   'line-width': railwayLineWidth,
 };
 const standardFillPaint = dashArray => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.hover.alternative,
+      colors.hover.main,
     ],
-    ['==', ['get', 'railway'], 'disused'], disused_color,
-    ['==', ['get', 'railway'], 'abandoned'], abandoned_color,
-    ['==', ['get', 'railway'], 'razed'], razed_color,
+    ['==', ['get', 'railway'], 'disused'], colors.styles.standard.disused,
+    ['==', ['get', 'railway'], 'abandoned'], colors.styles.standard.abandoned,
+    ['==', ['get', 'railway'], 'razed'], colors.styles.standard.razed,
     ['==', ['get', 'feature'], 'rail'],
     ['case',
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], spur_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], yard_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], siding_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], siding_color,
-      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], no_usage_color,
-      ['==', ['get', 'usage'], 'industrial'], industrial_color,
-      ['==', ['get', 'usage'], 'tourism'], tourism_color,
-      ['==', ['get', 'usage'], 'branch'], branch_color,
-      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], highspeed_color,
-      ['==', ['get', 'usage'], 'main'], main_color,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], colors.styles.standard.spur,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], colors.styles.standard.yard,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], colors.styles.standard.siding,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], colors.styles.standard.siding,
+      ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], colors.styles.standard.no_usage,
+      ['==', ['get', 'usage'], 'industrial'], colors.styles.standard.industrial,
+      ['==', ['get', 'usage'], 'tourism'], colors.styles.standard.tourism,
+      ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
+      ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.styles.standard.highspeed,
+      ['==', ['get', 'usage'], 'main'], colors.styles.standard.main,
       'rgba(255, 255, 255, 1.0)',
     ],
     ['==', ['get', 'feature'], 'narrow_gauge'],
     ['case',
-      ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], industrial_color,
-      narrow_gauge_color,
+      ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], colors.styles.standard.industrial,
+      colors.styles.standard.narrowGauge,
     ],
-    ['==', ['get', 'feature'], 'subway'], subway_color,
-    ['==', ['get', 'feature'], 'light_rail'], light_rail_color,
-    ['==', ['get', 'feature'], 'tram'], tram_color,
+    ['==', ['get', 'feature'], 'subway'], colors.styles.standard.subway,
+    ['==', ['get', 'feature'], 'light_rail'], colors.styles.standard.light_rail,
+    ['==', ['get', 'feature'], 'tram'], colors.styles.standard.tram,
     'rgba(255, 255, 255, 1.0)',
   ],
   'line-width': railwayLineWidth,
@@ -529,83 +651,21 @@ const speedLayout = {
   'line-join': 'round',
   'line-cap': 'round',
 };
-const maxspeed_fill_color_10 = '#0100CB';
-const maxspeed_fill_color_20 = '#001ECB';
-const maxspeed_fill_color_30 = '#003DCB';
-const maxspeed_fill_color_40 = '#005BCB';
-const maxspeed_fill_color_50 = '#007ACB';
-const maxspeed_fill_color_60 = '#0098CB';
-const maxspeed_fill_color_70 = '#00B7CB';
-const maxspeed_fill_color_80 = '#00CBC1';
-const maxspeed_fill_color_90 = '#00CBA2';
-const maxspeed_fill_color_100 = '#00CB84';
-const maxspeed_fill_color_110 = '#00CB66';
-const maxspeed_fill_color_120 = '#00CB47';
-const maxspeed_fill_color_130 = '#00CB29';
-const maxspeed_fill_color_140 = '#00CB0A';
-const maxspeed_fill_color_150 = '#14CB00';
-const maxspeed_fill_color_160 = '#33CB00';
-const maxspeed_fill_color_170 = '#51CB00';
-const maxspeed_fill_color_180 = '#70CB00';
-const maxspeed_fill_color_190 = '#8ECB00';
-const maxspeed_fill_color_200 = '#ADCB00';
-const maxspeed_fill_color_210 = '#CBCB00';
-const maxspeed_fill_color_220 = '#CBAD00';
-const maxspeed_fill_color_230 = '#CB8E00';
-const maxspeed_fill_color_240 = '#CB7000';
-const maxspeed_fill_color_250 = '#CB5100';
-const maxspeed_fill_color_260 = '#CB3300';
-const maxspeed_fill_color_270 = '#CB1400';
-const maxspeed_fill_color_280 = '#CB0007';
-const maxspeed_fill_color_290 = '#CB0025';
-const maxspeed_fill_color_300 = '#CB0044';
-const maxspeed_fill_color_320 = '#CB0062';
-const maxspeed_fill_color_340 = '#CB0081';
-const maxspeed_fill_color_360 = '#CB009F';
-const maxspeed_fill_color_380 = '#CB00BD';
+
+const minSpeed = 10
+const maxSpeed = 380
+const startHue = 248
+const endHue = 284;
 
 const speedFillPaint = {
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors.hover.alternative,
+      colors.hover.main,
     ],
     ['==', ['get', 'maxspeed'], null], 'gray',
-    ['<=', ['get', 'maxspeed'], 10], maxspeed_fill_color_10,
-    ['<=', ['get', 'maxspeed'], 20], maxspeed_fill_color_20,
-    ['<=', ['get', 'maxspeed'], 30], maxspeed_fill_color_30,
-    ['<=', ['get', 'maxspeed'], 40], maxspeed_fill_color_40,
-    ['<=', ['get', 'maxspeed'], 50], maxspeed_fill_color_50,
-    ['<=', ['get', 'maxspeed'], 60], maxspeed_fill_color_60,
-    ['<=', ['get', 'maxspeed'], 70], maxspeed_fill_color_70,
-    ['<=', ['get', 'maxspeed'], 80], maxspeed_fill_color_80,
-    ['<=', ['get', 'maxspeed'], 90], maxspeed_fill_color_90,
-    ['<=', ['get', 'maxspeed'], 100], maxspeed_fill_color_100,
-    ['<=', ['get', 'maxspeed'], 110], maxspeed_fill_color_110,
-    ['<=', ['get', 'maxspeed'], 120], maxspeed_fill_color_120,
-    ['<=', ['get', 'maxspeed'], 130], maxspeed_fill_color_130,
-    ['<=', ['get', 'maxspeed'], 140], maxspeed_fill_color_140,
-    ['<=', ['get', 'maxspeed'], 150], maxspeed_fill_color_150,
-    ['<=', ['get', 'maxspeed'], 160], maxspeed_fill_color_160,
-    ['<=', ['get', 'maxspeed'], 170], maxspeed_fill_color_170,
-    ['<=', ['get', 'maxspeed'], 180], maxspeed_fill_color_180,
-    ['<=', ['get', 'maxspeed'], 190], maxspeed_fill_color_190,
-    ['<=', ['get', 'maxspeed'], 200], maxspeed_fill_color_200,
-    ['<=', ['get', 'maxspeed'], 210], maxspeed_fill_color_210,
-    ['<=', ['get', 'maxspeed'], 220], maxspeed_fill_color_220,
-    ['<=', ['get', 'maxspeed'], 230], maxspeed_fill_color_230,
-    ['<=', ['get', 'maxspeed'], 240], maxspeed_fill_color_240,
-    ['<=', ['get', 'maxspeed'], 250], maxspeed_fill_color_250,
-    ['<=', ['get', 'maxspeed'], 260], maxspeed_fill_color_260,
-    ['<=', ['get', 'maxspeed'], 270], maxspeed_fill_color_270,
-    ['<=', ['get', 'maxspeed'], 280], maxspeed_fill_color_280,
-    ['<=', ['get', 'maxspeed'], 290], maxspeed_fill_color_290,
-    ['<=', ['get', 'maxspeed'], 300], maxspeed_fill_color_300,
-    ['<=', ['get', 'maxspeed'], 320], maxspeed_fill_color_320,
-    ['<=', ['get', 'maxspeed'], 340], maxspeed_fill_color_340,
-    ['<=', ['get', 'maxspeed'], 360], maxspeed_fill_color_360,
-    ['>', ['get', 'maxspeed'], 360], maxspeed_fill_color_380,
-    'gray',
+    // Reverse hue order
+    ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
   ],
   'line-width': railwayLineWidth,
 };
@@ -644,8 +704,8 @@ const electrificationCasingPaint = {
 const electrificationFillPaint = (dashArray, voltageProperty, frequencyProperty) => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['==', ['get', voltageProperty], 25000], hoverAlternativeColor,
-      hoverColor,
+      ['==', ['get', voltageProperty], 25000], colors.hover.alternative,
+      colors.hover.main,
     ],
     ['all', ['==', ['get', frequencyProperty], 60], ['==', ['get', voltageProperty], 25000]], color_25kv_60hz,
     ['all', ['==', ['get', frequencyProperty], 50], ['==', ['get', voltageProperty], 25000]], color_25kv_50hz,
@@ -778,8 +838,8 @@ const gaugeCasingPaint = {
 const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], hoverAlternativeColor,
-      hoverColor,
+      ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors.hover.alternative,
+      colors.hover.main,
     ],
     // monorails or tracks with monorail gauge value
     ['any',
@@ -1028,7 +1088,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1078,7 +1138,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1131,7 +1191,7 @@ const layers = {
         ['!=', ['get', 'railway'], 'razed'],
       ],
       paint: {
-        'line-color': bridge_casing_color,
+        'line-color': colors.styles.standard.casing.bridge,
         'line-width': railwayLineWidth,
         'line-gap-width': bridge_casing_add,
       }
@@ -1154,7 +1214,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_tunnel_casing_add,
       }
@@ -1178,7 +1238,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1195,7 +1255,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': construction_dasharray,
@@ -1213,7 +1273,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': proposed_dasharray,
@@ -1231,7 +1291,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': abandoned_dasharray,
@@ -1249,7 +1309,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': razed_dasharray,
@@ -1273,7 +1333,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': railway_casing_color,
+        'line-color': colors.styles.standard.casing.railway,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1417,7 +1477,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'fill-color': turntable_fill,
+        'fill-color': colors.styles.standard.turntable.fill,
       }
     },
     {
@@ -1427,7 +1487,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'line-color': turntable_casing,
+        'line-color': colors.styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       }
     },
@@ -1481,7 +1541,7 @@ const layers = {
           '#616161',
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
           ['==', ['get', 'railway'], 'tram_stop'], 'white',
           ['==', ['get', 'railway'], 'station'], 'white',
@@ -1814,7 +1874,7 @@ const layers = {
       paint: {
         'text-color': '#585858',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-width': 2,
@@ -1848,7 +1908,7 @@ const layers = {
       paint: {
         'text-color': 'black',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-width': 1,
@@ -1871,7 +1931,7 @@ const layers = {
           // Invert coloring on hover
           ['boolean', ['feature-state', 'hover'], false], ['case',
             ['get', 'railway_local_operated'], 'white',
-            hoverTextHaloColor,
+            colors.hover.textHalo,
           ],
           ['get', 'railway_local_operated'], 'yellow',
           'white'
@@ -1895,7 +1955,7 @@ const layers = {
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
         'text-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white',
         ],
         'text-halo-color': 'blue',
@@ -2073,7 +2133,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -2181,7 +2241,7 @@ const layers = {
       filter: ['==', ["geometry-type"], 'Point'],
       paint: {
         'circle-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'circle-radius': 6,
@@ -2201,7 +2261,7 @@ const layers = {
       ],
       paint: {
         'fill-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'fill-outline-color': 'white',
@@ -2293,7 +2353,7 @@ const layers = {
       paint: {
         'text-color': '#404040',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           '#bfffb3',
         ],
         'text-halo-width': 1.5,
@@ -2313,7 +2373,7 @@ const layers = {
       paint: {
         'text-color': '#404040',
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           '#bfffb3',
         ],
         'text-halo-width': 1.5,
@@ -2336,7 +2396,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 2,
@@ -2369,7 +2429,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -2643,7 +2703,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -2924,7 +2984,7 @@ const layers = {
       ],
       paint: {
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverTextHaloColor,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           'white'
         ],
         'text-halo-width': 1.5,
@@ -3367,7 +3427,7 @@ const legendData = {
   },
   speed: {
     'openrailwaymap_low-railway_line_low': [
-      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+      ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
@@ -3389,7 +3449,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+      ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
@@ -3411,7 +3471,7 @@ const legendData = {
       },
     ],
     'railway_line_high-railway_line_high': [
-      ...[10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 320, 340, 360, 380].map(speed => ({
+      ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
@@ -3429,7 +3489,8 @@ const legendData = {
           railway: 'rail',
           feature: 'rail',
           usage: 'main',
-          speed_label: null,
+          maxspeed: null,
+          speed_label: '',
         },
       },
     ],
@@ -3651,29 +3712,7 @@ const legendData = {
           frequency: null,
         },
       },
-      ...[
-        { legend: '> 25 kV ~', voltage: 25000, frequency: 60 },
-        { legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60 },
-        { legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50 },
-        { legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60 },
-        { legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50 },
-        { legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60 },
-        { legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7 },
-        { legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67 },
-        { legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60 },
-        { legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60 },
-        { legend: '12.5 kV 12 Hz ~', voltage: 12500, frequency: 12 },
-        { legend: '< 12.5 kV ~', voltage: 12499, frequency: 60 },
-        { legend: '> 3 kV =', voltage: 3001, frequency: 0 },
-        { legend: '3 kV =', voltage: 3000, frequency: 0 },
-        { legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0 },
-        { legend: '1.5 kV =', voltage: 1500, frequency: 0 },
-        { legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0 },
-        { legend: '1 kV =', voltage: 1000, frequency: 0 },
-        { legend: '750 V - 1 kV =', voltage: 751, frequency: 0 },
-        { legend: '750 V =', voltage: 750, frequency: 0 },
-        { legend: '< 750 V =', voltage: 749, frequency: 0 },
-      ].map(({legend, voltage, frequency}) => ({
+      ...electrificationLegends.map(({legend, voltage, frequency}) => ({
         legend,
         type: 'line',
         properties: {
@@ -3727,29 +3766,7 @@ const legendData = {
           frequency: null,
         },
       },
-      ...[
-        { legend: '> 25 kV ~', voltage: 25000, frequency: 60 },
-        { legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60 },
-        { legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50 },
-        { legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60 },
-        { legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50 },
-        { legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60 },
-        { legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7 },
-        { legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67 },
-        { legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60 },
-        { legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60 },
-        { legend: '12.5 kV 12 Hz ~', voltage: 12500, frequency: 12 },
-        { legend: '< 12.5 kV ~', voltage: 12499, frequency: 60 },
-        { legend: '> 3 kV =', voltage: 3001, frequency: 0 },
-        { legend: '3 kV =', voltage: 3000, frequency: 0 },
-        { legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0 },
-        { legend: '1.5 kV =', voltage: 1500, frequency: 0 },
-        { legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0 },
-        { legend: '1 kV =', voltage: 1000, frequency: 0 },
-        { legend: '750 V - 1 kV =', voltage: 751, frequency: 0 },
-        { legend: '750 V =', voltage: 750, frequency: 0 },
-        { legend: '< 750 V =', voltage: 749, frequency: 0 },
-      ].map(({legend, voltage, frequency}) => ({
+      ...electrificationLegends.map(({legend, voltage, frequency}) => ({
         legend,
         type: 'line',
         properties: {
@@ -3805,29 +3822,7 @@ const legendData = {
           electrification_label: '',
         },
       },
-      ...[
-        { legend: '> 25 kV ~', voltage: 25000, frequency: 60, electrification_label: '26kV 60Hz' },
-        { legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60, electrification_label: '25kV 60Hz' },
-        { legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50, electrification_label: '25kV 50Hz' },
-        { legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60, electrification_label: '20kV 60Hz' },
-        { legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50, electrification_label: '20kV 50Hz' },
-        { legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60, electrification_label: '16kV 60Hz' },
-        { legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7, electrification_label: '15kV 16.7Hz' },
-        { legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67, electrification_label: '15kV 16.67Hz' },
-        { legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60, electrification_label: '13kV 60Hz' },
-        { legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60, electrification_label: '12.5kV 60Hz' },
-        { legend: '12.5 kV 25 Hz ~', voltage: 12500, frequency: 25, electrification_label: '12.5kV 25Hz' },
-        { legend: '< 12.5 kV ~', voltage: 12499, frequency: 60, electrification_label: '11kV 60Hz' },
-        { legend: '> 3 kV =', voltage: 3001, frequency: 0, electrification_label: '4kV =' },
-        { legend: '3 kV =', voltage: 3000, frequency: 0, electrification_label: '3kV =' },
-        { legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0, electrification_label: '2kV =' },
-        { legend: '1.5 kV =', voltage: 1500, frequency: 0, electrification_label: '1.5kV =' },
-        { legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0, electrification_label: '1.2kV =' },
-        { legend: '1 kV =', voltage: 1000, frequency: 0, electrification_label: '1kV =' },
-        { legend: '750 V - 1 kV =', voltage: 751, frequency: 0, electrification_label: '800V =' },
-        { legend: '750 V =', voltage: 750, frequency: 0, electrification_label: '750V =' },
-        { legend: '< 750 V =', voltage: 749, frequency: 0, electrification_label: '700V =' },
-      ].map(({legend, voltage, frequency, electrification_label }) => ({
+      ...electrificationLegends.map(({legend, voltage, frequency, electrification_label }) => ({
         legend,
         type: 'line',
         properties: {
@@ -3927,56 +3922,7 @@ const legendData = {
   },
   gauge: {
     'openrailwaymap_low-railway_line_low': [
-      ...[
-        {min: 63, legend: '63 - 88 mm'},
-        {min: 88, legend: '88 - 127 mm'},
-        {min: 127, legend: '127 - 184 mm'},
-        {min: 184, legend: '184 - 190 mm'},
-        {min: 190, legend: '190 - 260 mm'},
-        {min: 260, legend: '260 - 380 mm'},
-        {min: 380, legend: '380 - 500 mm'},
-        {min: 500, legend: '500 - 597 mm'},
-        {min: 597, legend: '597 - 600 mm'},
-        {min: 600, legend: '600 - 609 mm'},
-        {min: 609, legend: '609 - 700 mm'},
-        {min: 700, legend: '700 - 750 mm'},
-        {min: 750, legend: '750 - 760 mm'},
-        {min: 760, legend: '760 - 762 mm'},
-        {min: 762, legend: '762 - 785 mm'},
-        {min: 785, legend: '785 - 800 mm'},
-        {min: 800, legend: '800 - 891 mm'},
-        {min: 891, legend: '891 - 900 mm'},
-        {min: 900, legend: '900 - 914 mm'},
-        {min: 914, legend: '914 - 950 mm'},
-        {min: 950, legend: '950 - 1000 mm'},
-        {min: 1000, legend: '1000 - 1009 mm'},
-        {min: 1009, legend: '1009 - 1050 mm'},
-        {min: 1050, legend: '1050 - 1066 mm'},
-        {min: 1066, legend: '1066 - 1100 mm'},
-        {min: 1100, legend: '1100 - 1200 mm'},
-        {min: 1200, legend: '1200 - 1372 mm'},
-        {min: 1372, legend: '1372 - 1422 mm'},
-        {min: 1422, legend: '1422 - 1432 mm'},
-        {min: 1432, legend: '1432 - 1435 mm'},
-        {min: 1435, legend: '1435 - 1440 mm'},
-        {min: 1440, legend: '1440 - 1445 mm'},
-        {min: 1445, legend: '1445 - 1450 mm'},
-        {min: 1450, legend: '1450 - 1458 mm'},
-        {min: 1458, legend: '1458 - 1495 mm'},
-        {min: 1495, legend: '1495 - 1520 mm'},
-        {min: 1520, legend: '1520 - 1522 mm'},
-        {min: 1522, legend: '1522 - 1524 mm'},
-        {min: 1524, legend: '1524 - 1581 mm'},
-        {min: 1581, legend: '1581 - 1588 mm'},
-        {min: 1588, legend: '1588 - 1600 mm'},
-        {min: 1600, legend: '1600 - 1668 mm'},
-        {min: 1668, legend: '1668 - 1672 mm'},
-        {min: 1672, legend: '1672 - 1700 mm'},
-        {min: 1700, legend: '1700 - 1800 mm'},
-        {min: 1800, legend: '1800 - 1880 mm'},
-        {min: 1880, legend: '1880 - 2000 mm'},
-        {min: 2000, legend: '2000 - 3000 mm'},
-      ].map(({min, legend}) => ({
+      ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
         properties: {
@@ -4052,56 +3998,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...[
-        {min: 63, legend: '63 - 88 mm'},
-        {min: 88, legend: '88 - 127 mm'},
-        {min: 127, legend: '127 - 184 mm'},
-        {min: 184, legend: '184 - 190 mm'},
-        {min: 190, legend: '190 - 260 mm'},
-        {min: 260, legend: '260 - 380 mm'},
-        {min: 380, legend: '380 - 500 mm'},
-        {min: 500, legend: '500 - 597 mm'},
-        {min: 597, legend: '597 - 600 mm'},
-        {min: 600, legend: '600 - 609 mm'},
-        {min: 609, legend: '609 - 700 mm'},
-        {min: 700, legend: '700 - 750 mm'},
-        {min: 750, legend: '750 - 760 mm'},
-        {min: 760, legend: '760 - 762 mm'},
-        {min: 762, legend: '762 - 785 mm'},
-        {min: 785, legend: '785 - 800 mm'},
-        {min: 800, legend: '800 - 891 mm'},
-        {min: 891, legend: '891 - 900 mm'},
-        {min: 900, legend: '900 - 914 mm'},
-        {min: 914, legend: '914 - 950 mm'},
-        {min: 950, legend: '950 - 1000 mm'},
-        {min: 1000, legend: '1000 - 1009 mm'},
-        {min: 1009, legend: '1009 - 1050 mm'},
-        {min: 1050, legend: '1050 - 1066 mm'},
-        {min: 1066, legend: '1066 - 1100 mm'},
-        {min: 1100, legend: '1100 - 1200 mm'},
-        {min: 1200, legend: '1200 - 1372 mm'},
-        {min: 1372, legend: '1372 - 1422 mm'},
-        {min: 1422, legend: '1422 - 1432 mm'},
-        {min: 1432, legend: '1432 - 1435 mm'},
-        {min: 1435, legend: '1435 - 1440 mm'},
-        {min: 1440, legend: '1440 - 1445 mm'},
-        {min: 1445, legend: '1445 - 1450 mm'},
-        {min: 1450, legend: '1450 - 1458 mm'},
-        {min: 1458, legend: '1458 - 1495 mm'},
-        {min: 1495, legend: '1495 - 1520 mm'},
-        {min: 1520, legend: '1520 - 1522 mm'},
-        {min: 1522, legend: '1522 - 1524 mm'},
-        {min: 1524, legend: '1524 - 1581 mm'},
-        {min: 1581, legend: '1581 - 1588 mm'},
-        {min: 1588, legend: '1588 - 1600 mm'},
-        {min: 1600, legend: '1600 - 1668 mm'},
-        {min: 1668, legend: '1668 - 1672 mm'},
-        {min: 1672, legend: '1672 - 1700 mm'},
-        {min: 1700, legend: '1700 - 1800 mm'},
-        {min: 1800, legend: '1800 - 1880 mm'},
-        {min: 1880, legend: '1880 - 2000 mm'},
-        {min: 2000, legend: '2000 - 3000 mm'},
-      ].map(({min, legend}) => ({
+      ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
         properties: {
@@ -4177,56 +4074,7 @@ const legendData = {
       },
     ],
     'railway_line_high-railway_line_high': [
-      ...[
-        {min: 63, legend: '63 - 88 mm'},
-        {min: 88, legend: '88 - 127 mm'},
-        {min: 127, legend: '127 - 184 mm'},
-        {min: 184, legend: '184 - 190 mm'},
-        {min: 190, legend: '190 - 260 mm'},
-        {min: 260, legend: '260 - 380 mm'},
-        {min: 380, legend: '380 - 500 mm'},
-        {min: 500, legend: '500 - 597 mm'},
-        {min: 597, legend: '597 - 600 mm'},
-        {min: 600, legend: '600 - 609 mm'},
-        {min: 609, legend: '609 - 700 mm'},
-        {min: 700, legend: '700 - 750 mm'},
-        {min: 750, legend: '750 - 760 mm'},
-        {min: 760, legend: '760 - 762 mm'},
-        {min: 762, legend: '762 - 785 mm'},
-        {min: 785, legend: '785 - 800 mm'},
-        {min: 800, legend: '800 - 891 mm'},
-        {min: 891, legend: '891 - 900 mm'},
-        {min: 900, legend: '900 - 914 mm'},
-        {min: 914, legend: '914 - 950 mm'},
-        {min: 950, legend: '950 - 1000 mm'},
-        {min: 1000, legend: '1000 - 1009 mm'},
-        {min: 1009, legend: '1009 - 1050 mm'},
-        {min: 1050, legend: '1050 - 1066 mm'},
-        {min: 1066, legend: '1066 - 1100 mm'},
-        {min: 1100, legend: '1100 - 1200 mm'},
-        {min: 1200, legend: '1200 - 1372 mm'},
-        {min: 1372, legend: '1372 - 1422 mm'},
-        {min: 1422, legend: '1422 - 1432 mm'},
-        {min: 1432, legend: '1432 - 1435 mm'},
-        {min: 1435, legend: '1435 - 1440 mm'},
-        {min: 1440, legend: '1440 - 1445 mm'},
-        {min: 1445, legend: '1445 - 1450 mm'},
-        {min: 1450, legend: '1450 - 1458 mm'},
-        {min: 1458, legend: '1458 - 1495 mm'},
-        {min: 1495, legend: '1495 - 1520 mm'},
-        {min: 1520, legend: '1520 - 1522 mm'},
-        {min: 1522, legend: '1522 - 1524 mm'},
-        {min: 1524, legend: '1524 - 1581 mm'},
-        {min: 1581, legend: '1581 - 1588 mm'},
-        {min: 1588, legend: '1588 - 1600 mm'},
-        {min: 1600, legend: '1600 - 1668 mm'},
-        {min: 1668, legend: '1668 - 1672 mm'},
-        {min: 1672, legend: '1672 - 1700 mm'},
-        {min: 1700, legend: '1700 - 1800 mm'},
-        {min: 1800, legend: '1800 - 1880 mm'},
-        {min: 1880, legend: '1880 - 2000 mm'},
-        {min: 2000, legend: '2000 - 3000 mm'},
-      ].map(({min, legend}) => ({
+      ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
         properties: {
