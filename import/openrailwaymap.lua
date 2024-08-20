@@ -58,6 +58,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'future_frequency', type = 'real' },
     { column = 'future_voltage', type = 'integer' },
     { column = 'gauges', sql_type = 'text[]' },
+    { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'construction_railway', type = 'text' },
     { column = 'proposed_railway', type = 'text' },
     { column = 'disused_railway', type = 'text' },
@@ -460,6 +461,17 @@ function osm2pgsql.process_way(object)
       end
     end
 
+    local reporting_marks = {}
+    local reporting_marks_tag = tags['reporting_marks']
+    if reporting_marks_tag then
+      for reporting_mark in string.gmatch(reporting_marks_tag, '[^;]+') do
+        if reporting_mark then
+          -- Raw SQL array syntax
+          table.insert(reporting_marks, "\"" .. reporting_mark:gsub("\"", "\\\"") .. "\"")
+        end
+      end
+    end
+
     railway_line:insert({
       way = object:as_linestring(),
       railway = tags['railway'],
@@ -486,6 +498,7 @@ function osm2pgsql.process_way(object)
       future_frequency = future_frequency,
       future_voltage = future_voltage,
       gauges = '{' .. table.concat(gauges, ',') .. '}',
+      reporting_marks = '{' .. table.concat(reporting_marks, ',') .. '}',
       construction_railway = tags['construction:railway'],
       proposed_railway = tags['proposed:railway'],
       disused_railway = tags['disused:railway'],
