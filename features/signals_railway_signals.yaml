@@ -192,6 +192,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
         - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+    - description: Bedarfshalt
+      country: AT
+      icon: { default: 'at/bedarfshalt' }
+      tags:
+        - { tag: 'railway:signal:stop_demand', value: 'AT:bedarfshalt-signal' }
+        - { tag: 'railway:signal:stop_demand:form', value: 'light' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
