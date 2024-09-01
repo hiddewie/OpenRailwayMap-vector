@@ -96,9 +96,34 @@ $PSQL -f sql/signals_with_azimuth.sql
 $PSQL -f sql/get_station_importance.sql
 $PSQL -f sql/tile_views.sql
 
-echo "Updating materialized views"
-$PSQL -f sql/update_signals_with_azimuth.sql
-$PSQL -f sql/update_station_importance.sql
+case "$1" in
+import)
+
+  echo "Skipping updating of materialized views"
+
+  ;;
+
+update)
+
+  # Fallthrough
+  ;&
+
+refresh)
+
+  echo "Updating materialized views"
+  $PSQL -f sql/update_signals_with_azimuth.sql
+  $PSQL -f sql/update_station_importance.sql
+
+  ;;
+
+*)
+
+  echo "Invalid argument '$1'. Supported: import, update, refresh"
+  exit 1
+
+  ;;
+
+esac
 
 echo "Vacuuming database"
 $PSQL -c "VACUUM FULL;"

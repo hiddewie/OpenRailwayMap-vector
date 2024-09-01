@@ -1,5 +1,6 @@
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
-CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
+-- and the functional signal feature
+CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   -- TODO investigate signals with null features
   SELECT
     fs.*,
@@ -111,6 +112,13 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   WHERE
     (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
     OR railway IN ('derail', 'vacancy_detection');
+
+-- Use the view directly such that the query in the view can be updated
+CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
+  SELECT
+    *
+  FROM
+    signals_with_azimuth_view;
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth
