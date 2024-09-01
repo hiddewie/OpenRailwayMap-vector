@@ -260,6 +260,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:stop', value: 'AT-V2:haltepunkt' }
         - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+    - description: Haltscheibe
+      country: AT
+      icon: { default: 'at/haltscheibe' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
+        - { tag: 'railway:signal:minor:form', value: 'sign' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
