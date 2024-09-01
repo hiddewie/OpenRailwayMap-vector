@@ -246,6 +246,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
         - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+    - description: Fahrwegende
+      country: AT
+      icon: { default: 'at/fahrwegende' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:fahrwegende' }
+        - { tag: 'railway:signal:minor:form', value: 'sign' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
