@@ -206,12 +206,19 @@ signals_railway_signals:
         - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
         - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
-    - description: Schutzsignale
+    - description: Schutzsignal
       country: AT
       icon: { default: 'at/schutzsignal' }
       tags:
         - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
         - { tag: 'railway:signal:minor:form', value: 'light' }
+
+    - description: Überwachungssignal
+      country: AT
+      icon: { default: 'at/ek_gesichert' }
+      tags:
+        - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
+        - { tag: 'railway:signal:crossing:form', value: 'light' }
 
     # --- BE --- #
 
