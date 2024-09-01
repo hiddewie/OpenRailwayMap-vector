@@ -220,6 +220,27 @@ signals_railway_signals:
         - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
         - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+    - description: Pfeifpflock
+      country: AT
+      icon: { default: 'at/pfeifpflock' }
+      tags:
+        - { tag: 'railway:signal:whistle', value: 'AT-V2:pfeifpflock' }
+        - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+    - description: Gruppenpfeifpflock
+      country: AT
+      icon: { default: 'at/gruppenpfeifpflock' }
+      tags:
+        - { tag: 'railway:signal:whistle', value: 'AT-V2:gruppenpfeifpflock' }
+        - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+    - description: Endpflock
+      country: AT
+      icon: { default: 'at/endpflock' }
+      tags:
+        - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
+        - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
