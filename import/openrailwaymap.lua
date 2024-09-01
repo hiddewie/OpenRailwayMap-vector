@@ -19,6 +19,14 @@ function map(tbl, f)
     return t
 end
 
+function strip_prefix(value, prefix)
+  if osm2pgsql.has_prefix(value, prefix) then
+    return value:sub(prefix:len() + 1)
+  else
+    return value
+  end
+end
+
 local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
@@ -413,8 +421,8 @@ function osm2pgsql.process_node(object)
     railway_positions:insert({
       way = object:as_point(),
       railway = tags.railway,
-      railway_position = tags['railway:position'],
-      railway_position_exact = tags['railway:position:exact'],
+      railway_position = strip_prefix(tags['railway:position'], 'mi:'),
+      railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
       name = tags['name'],
       ref = tags['ref'],
     })
