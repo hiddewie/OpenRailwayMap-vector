@@ -58,6 +58,7 @@ signals_railway_signals:
     - 'railway:signal:shunting'
     - 'railway:signal:shunting:form'
     - 'railway:signal:shunting:states'
+    - 'railway:signal:shunting:height'
     - 'railway:signal:snowplow'
     - 'railway:signal:snowplow:form'
     - 'railway:signal:snowplow:type'
@@ -99,9 +100,12 @@ signals_railway_signals:
     # --- AT --- #
 
     - description: Verschubverbot
-      # TODO support railway:signal:shunting:height=dwarf
       country: AT
-      icon: { default: 'at/verschubverbot-aufgehoben' }
+      icon:
+        match: 'railway:signal:shunting:height'
+        cases:
+          - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
+        default: 'at/verschubverbot-aufgehoben'
       tags:
         - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
         - { tag: 'railway:signal:shunting:form', value: 'light' }
