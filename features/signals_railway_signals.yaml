@@ -144,6 +144,15 @@ signals_railway_signals:
         - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
         - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
+    - description: Hauptsignal (abfahrt)
+      country: AT
+      icon: { default: 'at/hauptsignal-abfahrt' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
+
     - description: Hauptsignal (light)
       country: AT
       icon:
@@ -211,6 +220,15 @@ signals_railway_signals:
         - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
         - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+    - description: Schutzsignal (abfahrt)
+      country: AT
+      icon: { default: 'at/schutzsignal-abfahrt' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+        - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
+
     - description: Schutzsignal
       country: AT
       icon: { default: 'at/schutzsignal' }
@@ -266,6 +284,13 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
         - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+    - description: Abfahrt
+      country: AT
+      icon: { default: 'at/abfahrt' }
+      tags:
+        - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
 
     # --- BE --- #
 
