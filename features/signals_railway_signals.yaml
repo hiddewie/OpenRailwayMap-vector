@@ -206,6 +206,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
         - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+    - description: Schutzsignale
+      country: AT
+      icon: { default: 'at/schutzsignal' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
