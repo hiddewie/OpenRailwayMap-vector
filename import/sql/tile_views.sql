@@ -258,60 +258,13 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     id,
     way,
-    CASE
-        {% for feature in speed_railway_signals.features %}
-        -- ({% feature.country %}) {% feature.description %}
-        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
-
-          THEN {% if feature.icon.match %} CASE
-            {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN{% if case.value | contains("{}") %} CONCAT('{% case.value | regexReplace("\{\}.*$", "") %}', "{% feature.icon.match %}", '{% case.value | regexReplace("^.*\{\}", "") %}'){% else %} '{% case.value %}'{% end %}
-
-{% end %}
-            {% if feature.icon.default %}
-            ELSE '{% feature.icon.default %}'
-{% end %}
-          END{% else %} '{% feature.icon.default %}'{% end %}
-
-
-{% end %}
-
-      END as feature,
-    CASE
-      {% for feature in speed_railway_signals.features %}
-        {% if feature.type %}
-        -- ({% feature.country %}) {% feature.description %}
-        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %} THEN '{% feature.type %}'
-
-{% end %}
-{% end %}
-
-    END as type,
+    speed_feature as feature,
+    speed_feature_type as type,
     azimuth,
-    direction_both
-  FROM (
-    SELECT
-      id,
-      way,
-      {% for tag in speed_railway_signals.tags %}
-      {% unless tag | matches("railway:signal:speed_limit:speed") %}
-      {% unless tag | matches("railway:signal:speed_limit_distant:speed") %}
-      "{% tag %}",
-{% end %}
-{% end %}
-{% end %}
-      -- We cast the lowest speed to text to make it possible to only select those speeds in
-      -- CartoCSS we have an icon for. Otherwise we might render an icon for 40 kph if
-      -- 42 is tagged (but invalid tagging).
-      railway_largest_speed_noconvert("railway:signal:speed_limit:speed")::text AS "railway:signal:speed_limit:speed",
-      railway_largest_speed_noconvert("railway:signal:speed_limit_distant:speed")::text AS "railway:signal:speed_limit_distant:speed",
-      azimuth,
-      (signal_direction = 'both') as direction_both
-    FROM signals_with_azimuth s
-    WHERE railway = 'signal'
-      AND signal_direction IS NOT NULL
-      AND ("railway:signal:speed_limit" IS NOT NULL OR "railway:signal:speed_limit_distant" IS NOT NULL)
-  ) AS feature_signals
+    (signal_direction = 'both') as direction_both
+  FROM signals_with_azimuth s
+  WHERE railway = 'signal'
+    AND speed_feature IS NOT NULL
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
     ("railway:signal:speed_limit" IS NOT NULL) DESC NULLS FIRST,
@@ -330,39 +283,6 @@ CREATE OR REPLACE VIEW signals_signal_boxes AS
   ORDER BY way_area DESC NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
-  WITH pre_signals AS (SELECT
-    id,
-    way,
-    railway,
-    ref,
-    ref_multiline,
-    deactivated,
-    CASE
-
-        {% for feature in signals_railway_signals.features %}
-        -- ({% feature.country %}) {% feature.description %}
-        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
-
-          THEN {% if feature.icon.match %} CASE
-            {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
-
-{% end %}
-            {% if feature.icon.default %}
-            ELSE '{% feature.icon.default %}'
-{% end %}
-          END{% else %} '{% feature.icon.default %}'{% end %}
-
-
-{% end %}
-
-    END as feature,
-    azimuth,
-    (signal_direction = 'both') as direction_both
-  FROM signals_with_azimuth
-  WHERE ((railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-    OR railway IN ('derail', 'vacancy_detection'))
-  ORDER BY rank NULLS FIRST)
   SELECT
     id,
     way,
@@ -370,12 +290,12 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     ref,
     ref_multiline,
     deactivated,
-    feature,
+    signal_feature as feature,
     azimuth,
-    direction_both
-  FROM pre_signals
-  -- TODO investigate signals with null features
-  WHERE feature IS NOT NULL;
+    (signal_direction = 'both') as direction_both
+  FROM signals_with_azimuth
+  WHERE signal_feature IS NOT NULL
+  ORDER BY rank NULLS FIRST;
 
 --- Electrification ---
 
@@ -383,25 +303,10 @@ CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
     id,
     way,
-    CASE
-      {% for feature in electrification_signals.features %}
-        -- ({% feature.country %}) {% feature.description %}
-        WHEN{% for tag in feature.tags %} "{% tag.tag %}"{% if tag.value %}='{% tag.value %}'{% elif tag.values %} IN ({% for value in tag.values %}{% unless loop.first %}, {% end %}'{% value %}'{% end %}){% end %}{% unless loop.last %} AND{% end %}{% end %}
-
-          THEN {% if feature.icon.match %} CASE
-            {% for case in feature.icon.cases %}
-            WHEN "{% feature.icon.match %}" ~ '{% case.regex %}' THEN '{% case.value %}'
-{% end %}
-            ELSE '{% feature.icon.default %}'
-          END{% else %} '{% feature.icon.default %}'{% end %}
-
-
-{% end %}
-    END as feature,
+    electrification_feature as feature,
     azimuth,
     (signal_direction = 'both') as direction_both
   FROM signals_with_azimuth
   WHERE
     railway = 'signal'
-    AND signal_direction IS NOT NULL
-    AND "railway:signal:electricity" IS NOT NULL;
+    AND electrification_feature IS NOT NULL;

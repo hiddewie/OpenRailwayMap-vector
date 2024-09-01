@@ -11,17 +11,17 @@ RUN --mount=type=bind,source=import/openrailwaymap.lua,target=openrailwaymap.lua
     | template --configuration - --format yaml --template openrailwaymap.lua.tmpl \
     > /build/openrailwaymap.lua
 
-FROM ghcr.io/hiddewie/template:v0.4.1 as build-tile-views
+FROM ghcr.io/hiddewie/template:v0.4.1 as build-signals
 
 WORKDIR /build
 
-RUN --mount=type=bind,source=import/sql/tile_views.sql,target=tile_views.sql.tmpl \
+RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql,target=signals_with_azimuth.sql.tmpl \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
   cat electrification_signals.yaml signals_railway_signals.yaml speed_railway_signals.yaml \
-    | template --configuration - --format yaml --template tile_views.sql.tmpl \
-    > /build/tile_views.sql
+    | template --configuration - --format yaml --template signals_with_azimuth.sql.tmpl \
+    > /build/signals_with_azimuth.sql
 
 FROM debian:unstable-20240211-slim
 
@@ -53,8 +53,8 @@ COPY import/docker-startup.sh docker-startup.sh
 COPY --from=build-lua \
   /build/openrailwaymap.lua openrailwaymap.lua
 
-COPY --from=build-tile-views \
-  /build/tile_views.sql sql/tile_views.sql
+COPY --from=build-signals \
+  /build/signals_with_azimuth.sql sql/signals_with_azimuth.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 
