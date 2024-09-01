@@ -292,6 +292,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
         - { tag: 'railway:signal:departure:form', value: 'light' }
 
+    - description: LZB Bereichskennzeichen
+      country: AT
+      icon: { default: 'at/lzb-bereichskennzeichen' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
     # --- BE --- #
 
     - description: grand signal d'arrêt
