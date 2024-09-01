@@ -99,6 +99,7 @@ signals_railway_signals:
     # --- AT --- #
 
     - description: Verschubverbot
+      # TODO support railway:signal:shunting:height=dwarf
       country: AT
       icon: { default: 'at/verschubverbot-aufgehoben' }
       tags:
