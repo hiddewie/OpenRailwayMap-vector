@@ -238,6 +238,15 @@ signals_railway_signals:
         - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
         - { tag: 'railway:signal:departure:form', value: 'light' }
 
+    - description: Schutzsignal (Signalnachahmer)
+      country: AT
+      icon: { default: 'at/schutzsignal-signalnachahmer' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+        - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+        - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
     - description: Schutzsignal
       country: AT
       icon: { default: 'at/schutzsignal' }
@@ -307,6 +316,13 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
         - { tag: 'railway:signal:departure:form', value: 'light' }
+
+    - description: Signalnachahmer
+      country: AT
+      icon: { default: 'at/signalnachahmer' }
+      tags:
+        - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+        - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
     - description: LZB Bereichskennzeichen
       country: AT
