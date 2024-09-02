@@ -153,6 +153,15 @@ signals_railway_signals:
         - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
         - { tag: 'railway:signal:departure:form', value: 'light' }
 
+    - description: Hauptsignal (fahrerlaubnis)
+      country: AT
+      icon: { default: 'at/hauptsignal-fahrerlaubnis' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
+
     - description: Hauptsignal (light)
       country: AT
       icon:
@@ -290,6 +299,13 @@ signals_railway_signals:
       icon: { default: 'at/abfahrt' }
       tags:
         - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+        - { tag: 'railway:signal:departure:form', value: 'light' }
+
+    - description: Fahrerlaubnissignal
+      country: AT
+      icon: { default: 'at/fahrerlaubnis' }
+      tags:
+        - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
         - { tag: 'railway:signal:departure:form', value: 'light' }
 
     - description: LZB Bereichskennzeichen
