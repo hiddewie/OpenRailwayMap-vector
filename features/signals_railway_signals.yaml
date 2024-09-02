@@ -1039,6 +1039,32 @@ signals_railway_signals:
         - { tag: 'railway:signal:distant', value: 'FR:D' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
 
+    # --- GB --- #
+
+    - description: Main (shunting)
+      country: GB
+      icon: { default: 'gb/main-shunting' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'GB-NR:main' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:shunting', value: 'GB-NR:shunting' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: Main
+      country: GB
+      # TODO support railway:signal:main:design=individual/combined for 2 or 4 lenses
+      icon: { default: 'gb/main' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'GB-NR:main' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Shunting
+      country: GB
+      icon: { default: 'gb/shunting' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'GB-NR:shunting' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
+
     # --- NL --- #
 
     - description: departure signal
