@@ -254,7 +254,7 @@ function removeDomElement(node) {
 
 const globalMinZoom = 1;
 const globalMaxZoom = 18;
-const globalMaxBounds = [[-190.2,11.8], [-45.0, 83.9]];;
+const globalMaxBounds = [[-10.0, 35.7], [39.0, 70.0]];
 
 const knownStyles = {
   standard: 'Infrastructure',
