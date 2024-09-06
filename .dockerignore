@@ -4,6 +4,7 @@
 !import/sql
 !import/docker-startup.sh
 !import/openrailwaymap.lua
+!data/import
 !martin
 !proxy
 !symbols

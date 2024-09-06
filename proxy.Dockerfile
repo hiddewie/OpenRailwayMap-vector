@@ -22,6 +22,7 @@ COPY proxy/api /etc/nginx/public/api
 COPY proxy/js /etc/nginx/public/js
 COPY proxy/css /etc/nginx/public/css
 COPY proxy/image /etc/nginx/public/image
+COPY data/import /etc/nginx/public/import
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style

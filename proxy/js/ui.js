@@ -698,3 +698,14 @@ map.on('click', event => {
       .addTo(map);
   }
 });
+
+fetch(`${location.origin}/bounds.json`)
+  .then(result => {
+    if (result.status === 200) {
+      return result.json()
+    } else {
+      throw `Invalid status code ${result.status}`
+    }
+  })
+  .then(result => map.setMaxBounds(result))
+  .catch(error => console.error('Error during fetching of import map bounds', error))

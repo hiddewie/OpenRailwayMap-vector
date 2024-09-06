@@ -28,6 +28,10 @@ server {
     root /etc/nginx/public;
   }
 
+  location = /bounds.json {
+    root /etc/nginx/public/import;
+  }
+
   location = /favicon.ico {
     root /etc/nginx/public/image;
     expires $cache_assets;
