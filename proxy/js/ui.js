@@ -593,7 +593,7 @@ function popupContent(properties) {
       ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
     </h6>
     <h6>
-      ${properties.reporting_marks ? `<span class="badge badge-pill badge-light">reporting marks: <span class="text-monospace">${properties.reporting_marks.replace(/^{|}$/g, '')}</span></span>` : ''}
+      ${properties.reporting_marks ? `<span class="badge badge-pill badge-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
       ${properties.railway_ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
       ${properties.ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
       ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}

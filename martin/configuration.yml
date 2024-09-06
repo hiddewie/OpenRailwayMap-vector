@@ -62,7 +62,7 @@ postgres:
         gauge2: string
         gaugeint2: number
         gauge_label: string
-        reporting_marks: string[]
+        reporting_marks: string
 
     railway_line_med:
       schema: public
@@ -100,7 +100,7 @@ postgres:
         gauge2: string
         gaugeint2: number
         gauge_label: string
-        reporting_marks: string[]
+        reporting_marks: string
 
     railway_line_high:
       schema: public
@@ -138,7 +138,7 @@ postgres:
         gauge2: string
         gaugeint2: number
         gauge_label: string
-        reporting_marks: string[]
+        reporting_marks: string
 
     # --- Standard --- #
 

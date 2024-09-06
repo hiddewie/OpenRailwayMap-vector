@@ -25,7 +25,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
         END AS standard_label,
         ref,
         track_ref,
-        reporting_marks,
+        array_to_string(reporting_marks, ', ') as reporting_marks,
         CASE
             WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
             WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
