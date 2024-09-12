@@ -1518,6 +1518,8 @@ const layers = {
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/water_tower'],
         ['==', ['get', 'feature'], 'general/water_crane'],
+        ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
+        ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
       ],
       layout: {
         'symbol-z-order': 'source',
