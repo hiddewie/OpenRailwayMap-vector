@@ -260,6 +260,7 @@ postgres:
       geometry_type: GEOMETRY
       properties:
         id: integer
+        feature: string
         ref: string
         name: string
 

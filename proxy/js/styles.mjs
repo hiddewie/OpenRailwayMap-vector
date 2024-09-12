@@ -3634,8 +3634,27 @@ const legendData = {
         type: 'point',
         properties: {
           ref: 'Rtd',
-          name: 'Rotterdam'
+          name: 'Rotterdam',
+          feature: 'signal_box',
         },
+        variants: [
+          {
+            legend: 'crossing box',
+            properties: {
+              ref: 'Crs',
+              name: 'Cross',
+              feature: 'crossing_box',
+            },
+          },
+          {
+            legend: 'block post',
+            properties: {
+              ref: 'Blk',
+              name: 'KM 47',
+              feature: 'blockpost',
+            },
+          },
+        ],
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [

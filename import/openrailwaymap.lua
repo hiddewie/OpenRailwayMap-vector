@@ -149,13 +149,14 @@ local signals = osm2pgsql.define_table({
   },
 })
 
-local signal_boxes = osm2pgsql.define_table({
-  name = 'signal_boxes',
+local boxes = osm2pgsql.define_table({
+  name = 'boxes',
   ids = { type = 'any', id_column = 'osm_id' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'geometry' },
     { column = 'way_area', type = 'real' },
+    { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'name', type = 'text' },
   },
@@ -247,14 +248,16 @@ local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
+local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
 local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
 
-  if tags.railway == 'signal_box' then
-    signal_boxes:insert({
+  if railway_box_values(tags.railway) then
+    boxes:insert({
       way = object:as_point(),
       way_area = 0,
+      feature = tags.railway,
       ref = tags['railway:ref'],
       name = tags.name,
     })
@@ -525,11 +528,12 @@ function osm2pgsql.process_way(object)
     })
   end
 
-  if tags.railway == 'signal_box' then
+  if railway_box_values(tags.railway) then
     local polygon = object:as_polygon():transform(3857)
-    signal_boxes:insert({
+    boxes:insert({
       way = polygon,
       way_area = polygon:area(),
+      feature = tags.railway,
       ref = tags['railway:ref'],
       name = tags.name,
     })

@@ -281,9 +281,10 @@ CREATE OR REPLACE VIEW signals_signal_boxes AS
   SELECT
     id,
     way,
+    feature,
     ref,
     name
-  FROM signal_boxes
+  FROM boxes
   ORDER BY way_area DESC NULLS LAST;
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
