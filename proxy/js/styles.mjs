@@ -1516,6 +1516,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
         ['==', ['get', 'feature'], 'general/lubricator'],
         ['==', ['get', 'feature'], 'general/fuel'],
+        ['==', ['get', 'feature'], 'general/wash'],
         ['==', ['get', 'feature'], 'general/water_tower'],
         ['==', ['get', 'feature'], 'general/water_crane'],
         ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
@@ -3377,6 +3378,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/fuel',
+        },
+      },
+      {
+        legend: 'Wash',
+        type: 'point',
+        properties: {
+          feature: 'general/wash',
         },
       },
       {
