@@ -243,7 +243,7 @@ end
 -- TODO clean up unneeded tags
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
-local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'water_tower'})
+local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'water_tower', 'water_crane'})
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
@@ -535,13 +535,14 @@ function osm2pgsql.process_way(object)
     })
   end
 
-  if tags.railway == 'water_tower' then
+  if railway_poi_values(tags.railway) then
     pois:insert({
       way = object:as_polygon():centroid(),
       railway = tags.railway,
-      crossing_bell = false,
-      crossing_light = false,
-      crossing_barrier = false,
+      man_made = tags.man_made,
+      crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] ~= 'no'),
+      crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
+      crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
     })
   end
 end
