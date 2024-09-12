@@ -1515,6 +1515,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/level-crossing-light'],
         ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
         ['==', ['get', 'feature'], 'general/lubricator'],
+        ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/water_tower'],
         ['==', ['get', 'feature'], 'general/water_crane'],
       ],
@@ -3370,18 +3371,26 @@ const legendData = {
         },
       },
       {
+        legend: 'Fuel',
+        type: 'point',
+        properties: {
+          feature: 'general/fuel',
+        },
+      },
+      {
         legend: 'Water tower',
         type: 'point',
         properties: {
           feature: 'general/water_tower',
         },
-      },
-      {
-        legend: 'Water crane',
-        type: 'point',
-        properties: {
-          feature: 'general/water_crane',
-        },
+        variants: [
+          {
+            legend: 'crane',
+            properties: {
+              feature: 'general/water_crane',
+            },
+          },
+        ]
       },
       {
         legend: 'Axle counter',
