@@ -1515,6 +1515,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/level-crossing-light'],
         ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
         ['==', ['get', 'feature'], 'general/lubricator'],
+        ['==', ['get', 'feature'], 'general/water_tower'],
       ],
       layout: {
         'symbol-z-order': 'source',
@@ -3365,6 +3366,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/lubricator',
+        },
+      },
+      {
+        legend: 'Water tower',
+        type: 'point',
+        properties: {
+          feature: 'general/water_tower',
         },
       },
       {

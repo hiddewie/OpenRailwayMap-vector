@@ -74,7 +74,7 @@ local railway_line = osm2pgsql.define_table({
 
 local pois = osm2pgsql.define_table({
   name = 'pois',
-  ids = { type = 'node', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
@@ -243,7 +243,7 @@ end
 -- TODO clean up unneeded tags
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
-local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator'})
+local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'water_tower'})
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
@@ -532,6 +532,16 @@ function osm2pgsql.process_way(object)
       way_area = polygon:area(),
       ref = tags['railway:ref'],
       name = tags.name,
+    })
+  end
+
+  if tags.railway == 'water_tower' then
+    pois:insert({
+      way = object:as_polygon():centroid(),
+      railway = tags.railway,
+      crossing_bell = false,
+      crossing_light = false,
+      crossing_barrier = false,
     })
   end
 end
