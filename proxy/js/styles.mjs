@@ -1513,6 +1513,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/lubricator'],
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/sand_store'],
+        ['==', ['get', 'feature'], 'general/defect_detector'],
         ['==', ['get', 'feature'], 'general/hump_yard'],
         ['==', ['get', 'feature'], 'general/loading_gauge'],
         ['==', ['get', 'feature'], 'general/preheating'],
@@ -3388,6 +3389,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/sand_store',
+        },
+      },
+      {
+        legend: 'Defect detector',
+        type: 'point',
+        properties: {
+          feature: 'general/defect_detector',
         },
       },
       {
