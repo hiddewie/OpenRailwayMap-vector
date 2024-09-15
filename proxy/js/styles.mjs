@@ -1517,6 +1517,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/lubricator'],
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/sand_store'],
+        ['==', ['get', 'feature'], 'general/waste_disposal'],
         ['==', ['get', 'feature'], 'general/coaling_facility'],
         ['==', ['get', 'feature'], 'general/wash'],
         ['==', ['get', 'feature'], 'general/water_tower'],
@@ -3387,6 +3388,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/sand_store',
+        },
+      },
+      {
+        legend: 'Waste disposal',
+        type: 'point',
+        properties: {
+          feature: 'general/waste_disposal',
         },
       },
       {
