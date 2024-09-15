@@ -1514,6 +1514,8 @@ const layers = {
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/sand_store'],
         ['==', ['get', 'feature'], 'general/aei'],
+        ['==', ['get', 'feature'], 'general/buffer_stop'],
+        ['==', ['get', 'feature'], 'general/derail'],
         ['==', ['get', 'feature'], 'general/defect_detector'],
         ['==', ['get', 'feature'], 'general/hump_yard'],
         ['==', ['get', 'feature'], 'general/loading_gauge'],
@@ -3415,6 +3417,21 @@ const legendData = {
         properties: {
           feature: 'general/aei',
         },
+      },
+      {
+        legend: 'Buffer stop',
+        type: 'point',
+        properties: {
+          feature: 'general/buffer_stop',
+        },
+        variants: [
+          {
+            legend: 'Derailer',
+            properties: {
+              feature: 'general/derail',
+            }
+          }
+        ]
       },
       {
         legend: 'Hump yard',
