@@ -1513,6 +1513,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/lubricator'],
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/sand_store'],
+        ['==', ['get', 'feature'], 'general/aei'],
         ['==', ['get', 'feature'], 'general/defect_detector'],
         ['==', ['get', 'feature'], 'general/hump_yard'],
         ['==', ['get', 'feature'], 'general/loading_gauge'],
@@ -3396,6 +3397,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/defect_detector',
+        },
+      },
+      {
+        legend: 'Automatic equipment identification',
+        type: 'point',
+        properties: {
+          feature: 'general/aei',
         },
       },
       {
