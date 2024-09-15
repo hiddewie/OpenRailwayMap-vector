@@ -3296,7 +3296,17 @@ const legendData = {
       {
         legend: 'Turntable',
         type: 'polygon',
-        properties: {},
+        properties: {
+          feature: 'turntable'
+        },
+        variants: [
+          {
+            legend: 'Transfer table',
+            properties: {
+              feature: 'traverser',
+            }
+          }
+        ]
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols": [
