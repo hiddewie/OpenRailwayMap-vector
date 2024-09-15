@@ -1517,6 +1517,7 @@ const layers = {
         ['==', ['get', 'feature'], 'general/lubricator'],
         ['==', ['get', 'feature'], 'general/fuel'],
         ['==', ['get', 'feature'], 'general/sand_store'],
+        ['==', ['get', 'feature'], 'general/hump_yard'],
         ['==', ['get', 'feature'], 'general/loading_gauge'],
         ['==', ['get', 'feature'], 'general/preheating'],
         ['==', ['get', 'feature'], 'general/compressed_air_supply'],
@@ -3391,6 +3392,13 @@ const legendData = {
         type: 'point',
         properties: {
           feature: 'general/sand_store',
+        },
+      },
+      {
+        legend: 'Hump yard',
+        type: 'point',
+        properties: {
+          feature: 'general/hump_yard',
         },
       },
       {
