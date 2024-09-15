@@ -211,6 +211,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'owner_change' THEN 'general/owner-change'
       WHEN railway = 'lubricator' THEN 'general/lubricator'
       WHEN railway = 'fuel' THEN 'general/fuel'
+      WHEN railway = 'sand_store' THEN 'general/sand_store'
       WHEN railway = 'wash' THEN 'general/wash'
       WHEN railway = 'water_tower' THEN 'general/water_tower'
       WHEN railway = 'water_crane' THEN 'general/water_crane'
@@ -226,7 +227,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       ELSE 0
     END AS priority
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'wash', 'water_tower', 'water_crane')
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'wash', 'water_tower', 'water_crane')
   ORDER BY priority DESC;
 
 CREATE OR REPLACE VIEW standard_railway_text_km AS
