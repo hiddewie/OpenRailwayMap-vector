@@ -751,5 +751,8 @@ fetch(`${location.origin}/bounds.json`)
       throw `Invalid status code ${result.status}`
     }
   })
-  .then(result => map.setMaxBounds(result))
+  .then(result => {
+    map.setMaxBounds(result);
+    backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
+  })
   .catch(error => console.error('Error during fetching of import map bounds', error))
