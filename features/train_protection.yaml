@@ -77,6 +77,11 @@ signals_railway_line:
     - train_protection: asfa
       rank: 10
       tags:
+        - { tag: 'railway:asfa_fac', value: 'yes' }
+
+    - train_protection: asfa
+      rank: 10
+      tags:
         - { tag: 'railway:asfa_200', value: 'yes' }
 
     - train_protection: scmt
