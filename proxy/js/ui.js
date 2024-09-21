@@ -346,13 +346,37 @@ const legendStyles = Object.fromEntries(
     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
-const transformMapStyle = (style, configuration) => {
-  const backgroundMapLayer = style.layers.find(it => it.id === 'background-map');
-  backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
-  backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
+// let backgroundStyle = null;
 
-  const backgroundMapSource = style.sources.background_map;
-  backgroundMapSource.tiles = [configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl];
+// fetch('')
+//   .then(result => result.json())
+//   .then(result => backgroundStyle = result)
+//   .catch(error => {
+//     console.error('Error while fetching background style', error);
+//   });
+
+const transformMapStyle = (style, configuration) => {
+  // console.info('transform', backst)
+
+
+  // const backgroundMapLayer = style.layers.find(it => it.id === 'background-map');
+  // backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
+  // backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
+  //
+  // const backgroundMapSource = style.sources.background_map;
+  // backgroundMapSource.tiles = [configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl];
+
+  // if (backgroundStyle) {
+  //   const layers = backgroundStyle.layers.map(layer => ({...layer, id: `background-${layer.id}`, source: `background-${layer.source}`}))
+  //   const sources = Object.fromEntries(Object.entries(backgroundStyle.sources).map(([name, source]) => [`background-${name}`, source]))
+  //
+  //   // TODO support array form
+  //   const sprite = backgroundStyle.sprite
+  //
+  //   style.layers = [...layers, ...style.layers]
+  //   style.sources = {...sources, ...style.sources}
+  //   style.sprite = [...style.sprite, {id: 'background', url: sprite}]
+  // }
 
   return style;
 }
@@ -365,6 +389,11 @@ const legendMap = new maplibregl.Map({
   interactive: false,
   // See https://github.com/maplibre/maplibre-gl-js/issues/3503
   maxCanvasSize: [Infinity, Infinity],
+});
+
+const backgroundMap = new maplibregl.Map({
+  container: 'background-map',
+  style: 'https://americanamap.org/style.json',
 });
 
 const map = new maplibregl.Map({
@@ -382,9 +411,8 @@ const onStyleChange = changedStyle => {
   // Change styles
   map.setStyle(mapStyles[changedStyle], {
     validate: false,
-    transformStyle: (previous, next) => {
-      return transformMapStyle(next, configuration);
-    },
+    transformStyle: (previous, next) =>
+      transformMapStyle(next, configuration),
   });
   legendMap.setStyle(legendStyles[changedStyle], {
     validate: false,
@@ -622,6 +650,9 @@ function popupContent(properties) {
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
+map.on('move', () => backgroundMap.setCenter(map.getCenter()));
+map.on('zoom', () => backgroundMap.setZoom(map.getZoom()));
+document.getElementById('background-map').style.filter = 'filter: saturate(0) opacity(0.1)';
 
 let hoveredFeature = null
 map.on('mousemove', event => {

@@ -961,12 +961,16 @@ const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector"
 
 const sources = {
   background_map: {
-    type: 'raster',
-    tiles: [
-      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    ],
-    tileSize: 256,
-    attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
+    type: 'vector',
+    url: 'https://api.maptiler.com/tiles/contours/tiles.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+    // url: 'https://tile.ourmap.us/data/v3.json',
+    // url: 'https://www.openhistoricalmap.org/map-styles/main/main.json',
+    // tiles: [
+    //   'https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf',
+    //   'https://tile.openstreetmap.org/.png',
+    // ],
+    // tileSize: 256,
+    // attribution: '<a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>'
   },
   search: {
     type: 'geojson',
@@ -1041,12 +1045,21 @@ const backgroundColor = {
 
 const backgroundMap = {
   id: "background-map",
-  type: "raster",
+  'type': 'line',
+  'source-layer': 'contour',
+  'layout': {
+    'line-join': 'round',
+    'line-cap': 'round'
+  },
+  'paint': {
+    'line-color': '#ff69b4',
+    'line-width': 1
+  },
   source: "background_map",
-  paint: {
-    'raster-saturation': -1.0, // or 0.0 for colorful
-    'raster-opacity': 1.0, // or 0.0 for transparent
-  }
+  // paint: {
+  //   'raster-saturation': -1.0, // or 0.0 for colorful
+  //   'raster-opacity': 1.0, // or 0.0 for transparent
+  // }
 };
 
 const searchResults = {
@@ -1064,8 +1077,8 @@ const searchResults = {
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
-    backgroundColor,
-    backgroundMap,
+    // backgroundColor,
+    // backgroundMap,
     {
       id: 'railway_line_low_casing',
       type: 'line',
@@ -3013,7 +3026,12 @@ const makeStyle = selectedStyle => ({
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,
-  sprite: `${origin}/sprite/symbols`,
+  sprite: [
+    {
+      id: 'default',
+      url: `${origin}/sprite/symbols`,
+    }
+  ],
   version: 8,
   layers: layers[selectedStyle],
 });
