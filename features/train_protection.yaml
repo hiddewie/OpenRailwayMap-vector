@@ -16,6 +16,7 @@ signals_railway_line:
     - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#ffb900' }
     - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: '#ffb900' }
     - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#ffb900' }
+    - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -183,6 +184,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:ases', value: 'yes' }
+
+    - train_protection: atp
+      rank: 2
+      tags:
+        - { tag: 'railway:atp', value: 'yes' }
 
     - train_protection: other
       rank: 1
