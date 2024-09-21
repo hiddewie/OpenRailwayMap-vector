@@ -327,7 +327,9 @@ function updateConfiguration(name, value) {
 const defaultConfiguration = {
   backgroundSaturation: -1.0,
   backgroundOpacity: 1.0,
+  backgroundType: 'raster',
   backgroundRasterUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  backgroundVectorUrl: null,
 }
 let configuration = readConfiguration(localStorage);
 
@@ -346,40 +348,7 @@ const legendStyles = Object.fromEntries(
     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
-// let backgroundStyle = null;
-
-// fetch('')
-//   .then(result => result.json())
-//   .then(result => backgroundStyle = result)
-//   .catch(error => {
-//     console.error('Error while fetching background style', error);
-//   });
-
-const transformMapStyle = (style, configuration) => {
-  // console.info('transform', backst)
-
-
-  // const backgroundMapLayer = style.layers.find(it => it.id === 'background-map');
-  // backgroundMapLayer.paint['raster-saturation'] = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
-  // backgroundMapLayer.paint['raster-opacity'] = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
-  //
-  // const backgroundMapSource = style.sources.background_map;
-  // backgroundMapSource.tiles = [configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl];
-
-  // if (backgroundStyle) {
-  //   const layers = backgroundStyle.layers.map(layer => ({...layer, id: `background-${layer.id}`, source: `background-${layer.source}`}))
-  //   const sources = Object.fromEntries(Object.entries(backgroundStyle.sources).map(([name, source]) => [`background-${name}`, source]))
-  //
-  //   // TODO support array form
-  //   const sprite = backgroundStyle.sprite
-  //
-  //   style.layers = [...layers, ...style.layers]
-  //   style.sources = {...sources, ...style.sources}
-  //   style.sprite = [...style.sprite, {id: 'background', url: sprite}]
-  // }
-
-  return style;
-}
+// TODO https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Reuse#Vector_tiles_and_stylesheets
 
 const legendMap = new maplibregl.Map({
   container: 'legend-map',
@@ -394,8 +363,13 @@ const legendMap = new maplibregl.Map({
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
   style: 'https://americanamap.org/style.json',
+  attributionControl: false,
   interactive: false,
 });
+// Process the current state of the URL hash once onto the background map
+const backgroundHash = new maplibregl.Hash('view').addTo(backgroundMap);
+backgroundHash._onHashChange();
+backgroundHash.remove();
 
 const map = new maplibregl.Map({
   container: 'map',
@@ -412,8 +386,6 @@ const onStyleChange = changedStyle => {
   // Change styles
   map.setStyle(mapStyles[changedStyle], {
     validate: false,
-    transformStyle: (previous, next) =>
-      transformMapStyle(next, configuration),
   });
   legendMap.setStyle(legendStyles[changedStyle], {
     validate: false,
@@ -651,8 +623,8 @@ function popupContent(properties) {
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
-map.on('move', () => backgroundMap.setCenter(map.getCenter()));
-map.on('zoom', () => backgroundMap.setZoom(map.getZoom()));
+map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('zoom', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 document.getElementById('background-map').style.filter = 'saturate(0.1) opacity(0.3)';
 
 let hoveredFeature = null
