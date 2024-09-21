@@ -2977,12 +2977,7 @@ const makeStyle = selectedStyle => ({
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,
-  sprite: [
-    {
-      id: 'default',
-      url: `${origin}/sprite/symbols`,
-    }
-  ],
+  sprite: `${origin}/sprite/symbols`,
   version: 8,
   layers: layers[selectedStyle],
 });
