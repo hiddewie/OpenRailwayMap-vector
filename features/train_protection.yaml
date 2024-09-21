@@ -13,6 +13,7 @@ signals_railway_line:
     - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
+    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -130,6 +131,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:pzb', value: 'yes' }
+
+    - train_protection: acses
+      rank: 2
+      tags:
+        - { tag: 'railway:acses', value: 'yes' }
 
     - train_protection: other
       rank: 1
