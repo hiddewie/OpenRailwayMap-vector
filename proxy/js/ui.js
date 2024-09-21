@@ -394,6 +394,7 @@ const legendMap = new maplibregl.Map({
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
   style: 'https://americanamap.org/style.json',
+  interactive: false,
 });
 
 const map = new maplibregl.Map({
@@ -652,7 +653,7 @@ map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.setCenter(map.getCenter()));
 map.on('zoom', () => backgroundMap.setZoom(map.getZoom()));
-document.getElementById('background-map').style.filter = 'filter: saturate(0) opacity(0.1)';
+document.getElementById('background-map').style.filter = 'saturate(0.1) opacity(0.3)';
 
 let hoveredFeature = null
 map.on('mousemove', event => {
