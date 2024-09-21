@@ -59,27 +59,27 @@ const colors = {
 const turntable_casing_width = 2;
 
 const electrificationLegends = [
-  {legend: '> 25 kV ~', voltage: 25000, frequency: 60, electrification_label: '26kV 60Hz'},
-  {legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60, electrification_label: '25kV 60Hz'},
-  {legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50, electrification_label: '25kV 50Hz'},
-  {legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60, electrification_label: '20kV 60Hz'},
-  {legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50, electrification_label: '20kV 50Hz'},
-  {legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60, electrification_label: '16kV 60Hz'},
-  {legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7, electrification_label: '15kV 16.7Hz'},
-  {legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67, electrification_label: '15kV 16.67Hz'},
-  {legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60, electrification_label: '13kV 60Hz'},
-  {legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60, electrification_label: '12.5kV 60Hz'},
-  {legend: '12.5 kV 25 Hz ~', voltage: 12500, frequency: 25, electrification_label: '12.5kV 25Hz'},
-  {legend: '< 12.5 kV ~', voltage: 12499, frequency: 60, electrification_label: '11kV 60Hz'},
-  {legend: '> 3 kV =', voltage: 3001, frequency: 0, electrification_label: '4kV ='},
-  {legend: '3 kV =', voltage: 3000, frequency: 0, electrification_label: '3kV ='},
-  {legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0, electrification_label: '2kV ='},
-  {legend: '1.5 kV =', voltage: 1500, frequency: 0, electrification_label: '1.5kV ='},
-  {legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0, electrification_label: '1.2kV ='},
-  {legend: '1 kV =', voltage: 1000, frequency: 0, electrification_label: '1kV ='},
-  {legend: '750 V - 1 kV =', voltage: 751, frequency: 0, electrification_label: '800V ='},
-  {legend: '750 V =', voltage: 750, frequency: 0, electrification_label: '750V ='},
-  {legend: '< 750 V =', voltage: 749, frequency: 0, electrification_label: '700V ='},
+  { legend: '> 25 kV ~', voltage: 25000, frequency: 60, electrification_label: '26kV 60Hz' },
+  { legend: '25 kV 60 Hz ~', voltage: 25000, frequency: 60, electrification_label: '25kV 60Hz' },
+  { legend: '25 kV 50 Hz ~', voltage: 25000, frequency: 50, electrification_label: '25kV 50Hz' },
+  { legend: '20 kV 60 Hz ~', voltage: 20000, frequency: 60, electrification_label: '20kV 60Hz' },
+  { legend: '20 kV 50 Hz ~', voltage: 20000, frequency: 50, electrification_label: '20kV 50Hz' },
+  { legend: '15 kV - 25 kV ~', voltage: 15001, frequency: 60, electrification_label: '16kV 60Hz' },
+  { legend: '15 kV 16.7 Hz ~', voltage: 15000, frequency: 16.7, electrification_label: '15kV 16.7Hz' },
+  { legend: '15 kV 16.67 Hz ~', voltage: 15000, frequency: 16.67, electrification_label: '15kV 16.67Hz' },
+  { legend: '12.5 kV - 15 kV ~', voltage: 12501, frequency: 60, electrification_label: '13kV 60Hz' },
+  { legend: '12.5 kV 60 Hz ~', voltage: 12500, frequency: 60, electrification_label: '12.5kV 60Hz' },
+  { legend: '12.5 kV 25 Hz ~', voltage: 12500, frequency: 25, electrification_label: '12.5kV 25Hz' },
+  { legend: '< 12.5 kV ~', voltage: 12499, frequency: 60, electrification_label: '11kV 60Hz' },
+  { legend: '> 3 kV =', voltage: 3001, frequency: 0, electrification_label: '4kV =' },
+  { legend: '3 kV =', voltage: 3000, frequency: 0, electrification_label: '3kV =' },
+  { legend: '1.5 kV - 3 kV =', voltage: 1501, frequency: 0, electrification_label: '2kV =' },
+  { legend: '1.5 kV =', voltage: 1500, frequency: 0, electrification_label: '1.5kV =' },
+  { legend: '1 kV - 1.5 kV =', voltage: 1001, frequency: 0, electrification_label: '1.2kV =' },
+  { legend: '1 kV =', voltage: 1000, frequency: 0, electrification_label: '1kV =' },
+  { legend: '750 V - 1 kV =', voltage: 751, frequency: 0, electrification_label: '800V =' },
+  { legend: '750 V =', voltage: 750, frequency: 0, electrification_label: '750V =' },
+  { legend: '< 750 V =', voltage: 749, frequency: 0, electrification_label: '700V =' },
 ];
 
 const speedLegends = [
@@ -4436,16 +4436,16 @@ function makeLegendStyle(style) {
                 : 'Point',
               coordinates:
                 subItem.type === 'line' ? [
-                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                  ] :
-                  subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                  legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                  legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                ] :
+                subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                    legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                  : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
             },
             properties: subItem.properties,
           }));
-          entry++;
+          entry ++;
           return itemFeatures;
         });
         done.add(sourceName);
