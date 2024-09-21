@@ -388,8 +388,6 @@ const legendStyles = Object.fromEntries(
     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
-// TODO https://wiki.openstreetmap.org/wiki/OpenHistoricalMap/Reuse#Vector_tiles_and_stylesheets
-
 const legendMap = new maplibregl.Map({
   container: 'legend-map',
   zoom: 5,
