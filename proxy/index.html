@@ -110,21 +110,31 @@
         <form>
           <div class="form-group">
             <label for="backgroundSaturation">Background map saturation</label>
-            <input type="range" min="-1.0" max="0.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value))">
+            <input type="range" min="-1.0" max="0.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapStyle();">
             <small class="form-text text-muted">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
           </div>
           <div class="form-group">
             <label for="backgroundOpacity">Background map opacity</label>
-            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value))">
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapStyle();">
             <small class="form-text text-muted">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
           <div class="form-group">
-            <label for="backgroundRasterUrl">Background map tile URL</label>
-            <input type="url" required class="form-control" id="backgroundRasterUrl" onchange="updateConfiguration('backgroundRasterUrl', this.value)">
+            <label for="backgroundUrl">Background map tile URL</label>
+            <div>
+              <label>
+                <input type="radio" name="backgroundType" required class="form-control" id="backgroundTypeRaster" onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
+                Raster
+              </label>
+              <label>
+                <input type="radio" name="backgroundType" required class="form-control" id="backgroundTypeVector" onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
+                Vector
+              </label>
+            </div>
+            <input type="url" required class="form-control" id="backgroundUrl" onchange="updateConfiguration('backgroundUrl', this.value); updateBackgroundMapStyle();">
             <small class="form-text text-muted">
               The tile URL of the background map. Only supports raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers.
             </small>

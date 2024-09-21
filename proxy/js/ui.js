@@ -9,7 +9,10 @@ const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
-const backgroundRasterUrlControl = document.getElementById('backgroundRasterUrl');
+const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
+const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
+const backgroundUrlControl = document.getElementById('backgroundUrl');
+const backgroundMapContainer = document.getElementById('background-map')
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
@@ -200,7 +203,13 @@ function viewSearchResultsOnMap(bounds) {
 function showConfiguration() {
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
   backgroundOpacityControl.value = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
-  backgroundRasterUrlControl.value = configuration.backgroundRasterUrl ?? defaultConfiguration.backgroundRasterUrl;
+  if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
+    backgroundTypeRasterControl.checked = true;
+  } else {
+    backgroundTypeVectorControl.checked = true;
+  }
+  backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+
   configurationBackdrop.style.display = 'block';
 }
 
@@ -320,16 +329,41 @@ function storeConfiguration(localStorage, configuration) {
 
 function updateConfiguration(name, value) {
   configuration[name] = value;
-  storeConfiguration(localStorage, configuration)
-  onStyleChange(selectedStyle);
+  storeConfiguration(localStorage, configuration);
+}
+
+function updateBackgroundMapStyle() {
+  backgroundMapContainer.style.filter = `saturate(${configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation}) opacity(${configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity})`;
+
+  if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
+    backgroundMap.setStyle({
+      layers: [
+        {
+          id: "background-map",
+          type: "raster",
+          source: "background_map",
+        },
+      ],
+      sources: {
+        background_map: {
+          type: 'raster',
+          tiles: [
+            configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl,
+          ],
+          tileSize: 256,
+        },
+      },
+    });
+  } else {
+    backgroundMap.setStyle(configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl);
+  }
 }
 
 const defaultConfiguration = {
   backgroundSaturation: -1.0,
   backgroundOpacity: 1.0,
   backgroundType: 'raster',
-  backgroundRasterUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-  backgroundVectorUrl: null,
+  backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 }
 let configuration = readConfiguration(localStorage);
 
@@ -366,6 +400,9 @@ const backgroundMap = new maplibregl.Map({
   attributionControl: false,
   interactive: false,
 });
+
+updateBackgroundMapStyle();
+
 // Process the current state of the URL hash once onto the background map
 const backgroundHash = new maplibregl.Hash('view').addTo(backgroundMap);
 backgroundHash._onHashChange();
@@ -625,7 +662,6 @@ map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoom', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-document.getElementById('background-map').style.filter = 'saturate(0.1) opacity(0.3)';
 
 let hoveredFeature = null
 map.on('mousemove', event => {
