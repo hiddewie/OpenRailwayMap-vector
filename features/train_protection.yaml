@@ -21,6 +21,7 @@ signals_railway_line:
     - { train_protection: 'bm', legend: 'Block Manuel (BM)', color: '#ffb900' }
     - { train_protection: 'bal', legend: 'Block Automatique Lumineux (BAL)', color: '#ffb900' }
     - { train_protection: 'bapr', legend: 'Block Automatique à Permissivité Restreinte (BAPR)', color: '#ffb900' }
+    - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -213,6 +214,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:bapr', value: 'yes' }
+
+    - train_protection: caws
+      rank: 2
+      tags:
+        - { tag: 'railway:caws', value: 'yes' }
 
     - train_protection: other
       rank: 1
