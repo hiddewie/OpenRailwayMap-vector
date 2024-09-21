@@ -332,11 +332,17 @@ function updateConfiguration(name, value) {
   storeConfiguration(localStorage, configuration);
 }
 
+function clamp(value, min, max) {
+  return Math.max(Math.min(value, max), min);
+}
+
 function updateBackgroundMapStyle() {
-  backgroundMapContainer.style.filter = `saturate(${configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation}) opacity(${configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity})`;
+  backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 
   if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
     backgroundMap.setStyle({
+      name: 'Background map',
+      version: 8,
       layers: [
         {
           id: "background-map",
@@ -360,7 +366,7 @@ function updateBackgroundMapStyle() {
 }
 
 const defaultConfiguration = {
-  backgroundSaturation: -1.0,
+  backgroundSaturation: 0.0,
   backgroundOpacity: 1.0,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',

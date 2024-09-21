@@ -12,6 +12,12 @@
   <link rel="stylesheet" href="css/bootstrap-4.6/bootstrap.min.css">
   <link rel="stylesheet" href="css/maplibre-gl-4.3/maplibre-gl.css">
   <link rel="stylesheet" href="css/ui.css">
+
+  <script>
+    // See https://stackoverflow.com/a/64158043/711129
+    let FF_FOUC_FIX;
+  </script>
+
   <title>OpenRailwayMap</title>
 </head>
 
@@ -98,7 +104,7 @@
   </div>
 </div>
 <div id="configuration-backdrop" class="modal backdrop" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header bg-light">
         <h5 class="modal-title">Map configuration</h5>
@@ -110,7 +116,7 @@
         <form>
           <div class="form-group">
             <label for="backgroundSaturation">Background map saturation</label>
-            <input type="range" min="-1.0" max="0.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapStyle();">
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapStyle();">
             <small class="form-text text-muted">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
@@ -125,18 +131,20 @@
           <div class="form-group">
             <label for="backgroundUrl">Background map tile URL</label>
             <div>
-              <label>
-                <input type="radio" name="backgroundType" required class="form-control" id="backgroundTypeRaster" onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
-                Raster
-              </label>
-              <label>
-                <input type="radio" name="backgroundType" required class="form-control" id="backgroundTypeVector" onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
-                Vector
-              </label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeRaster" value="raster" checked onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
+                <label class="form-check-label" for="backgroundTypeRaster">Raster</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeVector" value="raster" checked onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
+                <label class="form-check-label" for="backgroundTypeVector">Vector</label>
+              </div>
             </div>
             <input type="url" required class="form-control" id="backgroundUrl" onchange="updateConfiguration('backgroundUrl', this.value); updateBackgroundMapStyle();">
             <small class="form-text text-muted">
-              The tile URL of the background map. Only supports raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers.
+              The tile URL for the background map.<br>
+              Raster tiles: A URL serving raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers, for example <code>https://tile.openstreetmap.org/{z}/{x}/{y}.png</code>.<br>
+              Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#https://wiki.openstreetmap.org/wiki/Vector_tiles" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://americanamap.org/style.json</code>.
             </small>
           </div>
         </form>
