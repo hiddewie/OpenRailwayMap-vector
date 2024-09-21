@@ -116,14 +116,14 @@
         <form>
           <div class="form-group">
             <label for="backgroundSaturation">Background map saturation</label>
-            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapStyle();">
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text text-muted">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
           </div>
           <div class="form-group">
             <label for="backgroundOpacity">Background map opacity</label>
-            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapStyle();">
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text text-muted">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>

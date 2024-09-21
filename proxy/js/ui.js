@@ -323,6 +323,24 @@ function readConfiguration(localStorage) {
   }
 }
 
+function migrateConfiguration(localStorage, configuration) {
+  if (configuration.backgroundSaturation && configuration.backgroundSaturation < 0.0) {
+    console.info('Migrating background saturation from', configuration.backgroundSaturation, 'to', configuration.backgroundSaturation + 1.0)
+    configuration.backgroundSaturation += 1.0;
+    storeConfiguration(localStorage, configuration);
+  }
+
+  if (configuration.backgroundRasterUrl) {
+    console.info('Migrating background raster URL:', configuration.backgroundRasterUrl)
+    configuration.backgroundType = 'raster';
+    configuration.backgroundUrl = configuration.backgroundRasterUrl;
+    delete configuration.backgroundRasterUrl;
+    storeConfiguration(localStorage, configuration);
+  }
+
+  return configuration;
+}
+
 function storeConfiguration(localStorage, configuration) {
   localStorage.setItem(localStorageKey, JSON.stringify(configuration));
 }
@@ -336,11 +354,9 @@ function clamp(value, min, max) {
   return Math.max(Math.min(value, max), min);
 }
 
-function updateBackgroundMapStyle() {
-  backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
-
+function buildBackgroundMapStyle() {
   if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
-    backgroundMap.setStyle({
+    return {
       name: 'Background map',
       version: 8,
       layers: [
@@ -359,10 +375,18 @@ function updateBackgroundMapStyle() {
           tileSize: 256,
         },
       },
-    });
+    };
   } else {
-    backgroundMap.setStyle(configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl);
+    return configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
   }
+}
+
+function updateBackgroundMapStyle() {
+  backgroundMap.setStyle(buildBackgroundMapStyle());
+}
+
+function updateBackgroundMapContainer() {
+  backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
 
 const defaultConfiguration = {
@@ -372,6 +396,7 @@ const defaultConfiguration = {
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 }
 let configuration = readConfiguration(localStorage);
+configuration = migrateConfiguration(localStorage, configuration);
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
@@ -400,12 +425,11 @@ const legendMap = new maplibregl.Map({
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
-  style: 'https://americanamap.org/style.json',
+  style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
 });
-
-updateBackgroundMapStyle();
+updateBackgroundMapContainer();
 
 // Process the current state of the URL hash once onto the background map
 const backgroundHash = new maplibregl.Hash('view').addTo(backgroundMap);
