@@ -46,7 +46,7 @@ signals_railway_line:
     - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: '#ffb900' }
     - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: '#ffb900' }
     - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: '#ffb900' }
-    - { train_protection: 'satp', legend: 'Полуавтоматическая блокировка (SATP)', color: '#ffb900' }
+    - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -394,6 +394,16 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:satp', value: 'yes' }
+
+    - train_protection: satp
+      rank: 2
+      tags:
+        - { tag: 'railway:atp3b', value: 'yes' }
+
+    - train_protection: satp
+      rank: 2
+      tags:
+        - { tag: 'railway:atp4b', value: 'yes' }
 
     - train_protection: other
       rank: 1
