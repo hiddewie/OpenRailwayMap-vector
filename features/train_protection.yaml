@@ -28,6 +28,7 @@ signals_railway_line:
     - { train_protection: 'ebicab', legend: 'EBICAB', color: '#ffb900' }
     - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: '#ffb900' }
     - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: '#ffb900' }
+    - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -255,6 +256,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:etms', value: 'yes' }
+
+    - train_protection: evm
+      rank: 2
+      tags:
+        - { tag: 'railway:evm', value: 'yes' }
 
     - train_protection: other
       rank: 1
