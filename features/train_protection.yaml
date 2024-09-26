@@ -45,6 +45,7 @@ signals_railway_line:
     - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: '#ffb900' }
     - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: '#ffb900' }
     - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: '#ffb900' }
+    - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -362,6 +363,31 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:zsl90', value: 'yes' }
+
+    - train_protection: zub
+      rank: 2
+      tags:
+        - { tag: 'railway:zub', value: 'yes' }
+
+    - train_protection: zub
+      rank: 2
+      tags:
+        - { tag: 'railway:zub121', value: 'yes' }
+
+    - train_protection: zub
+      rank: 2
+      tags:
+        - { tag: 'railway:zub122', value: 'yes' }
+
+    - train_protection: zub
+      rank: 2
+      tags:
+        - { tag: 'railway:zub123', value: 'yes' }
+
+    - train_protection: zub
+      rank: 2
+      tags:
+        - { tag: 'railway:zub222c', value: 'yes' }
 
     - train_protection: other
       rank: 1
