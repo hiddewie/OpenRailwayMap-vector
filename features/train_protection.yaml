@@ -25,6 +25,7 @@ signals_railway_line:
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: '#ffb900' }
     - { train_protection: 'crocodile', legend: 'Crocodile', color: '#ffb900' }
     - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: '#ffb900' }
+    - { train_protection: 'ebicab', legend: 'EBICAB', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -237,6 +238,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3D', '4'] }
+
+    - train_protection: ebicab
+      rank: 2
+      tags:
+        - { tag: 'railway:ebicab', values: ['yes', '700', '900'] }
 
     - train_protection: other
       rank: 1
