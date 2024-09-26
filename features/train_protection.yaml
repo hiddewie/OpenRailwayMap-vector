@@ -37,6 +37,7 @@ signals_railway_line:
     - { train_protection: 'ouragan', legend: 'Offre Urbaine Renouvelée et Améliorée, Gérée par un Automatisme Nouveau (OURAGAN)', color: '#ffb900' }
     - { train_protection: 'sacem', legend: 'Système d''Aide à la Conduite, à l''Exploitation et à la Maintenance (SACEM)', color: '#ffb900' }
     - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: '#ffb900' }
+    - { train_protection: 'selcab', legend: 'SELCAB', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -314,6 +315,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:saet', value: 'yes' }
+
+    - train_protection: selcab
+      rank: 2
+      tags:
+        - { tag: 'railway:selcab', value: 'yes' }
 
     - train_protection: other
       rank: 1
