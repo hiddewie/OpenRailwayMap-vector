@@ -226,7 +226,7 @@ signals_railway_line:
     - train_protection: cbtc
       rank: 2
       tags:
-        - { tag: 'railway:cbtc', value: 'yes' }
+        - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
 
     - train_protection: crocodile
       rank: 2
