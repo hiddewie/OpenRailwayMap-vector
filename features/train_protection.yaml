@@ -31,6 +31,7 @@ signals_railway_line:
     - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: '#ffb900' }
     - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: '#ffb900' }
     - { train_protection: 'integra_signum', legend: 'Integra Signum', color: '#ffb900' }
+    - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -278,6 +279,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:integra_signum', value: 'yes' }
+
+    - train_protection: itcs
+      rank: 2
+      tags:
+        - { tag: 'railway:itcs', value: 'yes' }
 
     - train_protection: other
       rank: 1
