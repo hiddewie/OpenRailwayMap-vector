@@ -22,6 +22,7 @@ signals_railway_line:
     - { train_protection: 'bal', legend: 'Block Automatique Lumineux (BAL)', color: '#ffb900' }
     - { train_protection: 'bapr', legend: 'Block Automatique à Permissivité Restreinte (BAPR)', color: '#ffb900' }
     - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: '#ffb900' }
+    - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -219,6 +220,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:caws', value: 'yes' }
+
+    - train_protection: cbtc
+      rank: 2
+      tags:
+        - { tag: 'railway:cbtc', value: 'yes' }
 
     - train_protection: other
       rank: 1
