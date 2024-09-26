@@ -39,6 +39,7 @@ signals_railway_line:
     - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: '#ffb900' }
     - { train_protection: 'selcab', legend: 'SELCAB', color: '#ffb900' }
     - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: '#ffb900' }
+    - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -326,6 +327,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:shp', value: 'yes' }
+
+    - train_protection: ssc
+      rank: 2
+      tags:
+        - { tag: 'railway:ssc', value: 'yes' }
 
     - train_protection: other
       rank: 1
