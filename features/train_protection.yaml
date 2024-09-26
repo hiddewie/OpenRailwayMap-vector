@@ -41,6 +41,7 @@ signals_railway_line:
     - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: '#ffb900' }
     - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: '#ffb900' }
     - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: '#ffb900' }
+    - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -338,6 +339,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:tasc', value: 'yes' }
+
+    - train_protection: tbl
+      rank: 2
+      tags:
+        - { tag: 'railway:tbl', values: ['yes', '1', '1+', '2'] }
 
     - train_protection: other
       rank: 1
