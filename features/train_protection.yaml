@@ -34,6 +34,7 @@ signals_railway_line:
     - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: '#ffb900' }
     - { train_protection: 'ls', legend: 'Liniový Systém (LS)', color: '#ffb900' }
     - { train_protection: 'octys', legend: 'Open Control of Trains, Interchangeable & Integrated System (OCTYS)', color: '#ffb900' }
+    - { train_protection: 'ouragan', legend: 'Offre Urbaine Renouvelée et Améliorée, Gérée par un Automatisme Nouveau (OURAGAN)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -296,6 +297,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:octys', value: 'yes' }
+
+    - train_protection: ouragan
+      rank: 2
+      tags:
+        - { tag: 'railway:ouragan', value: 'yes' }
 
     - train_protection: other
       rank: 1
