@@ -44,6 +44,7 @@ signals_railway_line:
     - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: '#ffb900' }
     - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: '#ffb900' }
     - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: '#ffb900' }
+    - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: '#ffb900' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -356,6 +357,11 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:zbs', value: 'yes' }
+
+    - train_protection: zsl90
+      rank: 2
+      tags:
+        - { tag: 'railway:zsl90', value: 'yes' }
 
     - train_protection: other
       rank: 1
