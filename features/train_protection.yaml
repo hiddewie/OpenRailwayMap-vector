@@ -13,40 +13,40 @@ signals_railway_line:
     - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#ffb900' }
-    - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: '#ffb900' }
-    - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#ffb900' }
-    - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: '#ffb900' }
-    - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: '#ffb900' }
-    - { train_protection: 'bm', legend: 'Block Manuel (BM)', color: '#ffb900' }
-    - { train_protection: 'bal', legend: 'Block Automatique Lumineux (BAL)', color: '#ffb900' }
-    - { train_protection: 'bapr', legend: 'Block Automatique à Permissivité Restreinte (BAPR)', color: '#ffb900' }
-    - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: '#ffb900' }
-    - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: '#ffb900' }
-    - { train_protection: 'crocodile', legend: 'Crocodile', color: '#ffb900' }
-    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: '#ffb900' }
-    - { train_protection: 'ebicab', legend: 'EBICAB', color: '#ffb900' }
-    - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: '#ffb900' }
-    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: '#ffb900' }
-    - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: '#ffb900' }
-    - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: '#ffb900' }
-    - { train_protection: 'integra_signum', legend: 'Integra Signum', color: '#ffb900' }
-    - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: '#ffb900' }
-    - { train_protection: 'ls', legend: 'Liniový Systém (LS)', color: '#ffb900' }
-    - { train_protection: 'octys', legend: 'Open Control of Trains, Interchangeable & Integrated System (OCTYS)', color: '#ffb900' }
-    - { train_protection: 'ouragan', legend: 'Offre Urbaine Renouvelée et Améliorée, Gérée par un Automatisme Nouveau (OURAGAN)', color: '#ffb900' }
-    - { train_protection: 'sacem', legend: 'Système d''Aide à la Conduite, à l''Exploitation et à la Maintenance (SACEM)', color: '#ffb900' }
-    - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: '#ffb900' }
-    - { train_protection: 'selcab', legend: 'SELCAB', color: '#ffb900' }
-    - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: '#ffb900' }
-    - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: '#ffb900' }
-    - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: '#ffb900' }
-    - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: '#ffb900' }
-    - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: '#ffb900' }
-    - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: '#ffb900' }
-    - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: '#ffb900' }
-    - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: '#ffb900' }
-    - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: '#ffb900' }
+    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' }
+    - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 29%)' }
+    - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
+    - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'pink' }
+    - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
+    - { train_protection: 'bm', legend: 'Block Manuel (BM)', color: 'pink' }
+    - { train_protection: 'bal', legend: 'Block Automatique Lumineux (BAL)', color: 'pink' }
+    - { train_protection: 'bapr', legend: 'Block Automatique à Permissivité Restreinte (BAPR)', color: 'pink' }
+    - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
+    - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'pink' }
+    - { train_protection: 'crocodile', legend: 'Crocodile', color: 'pink' }
+    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' }
+    - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' }
+    - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
+    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
+    - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
+    - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: 'pink' }
+    - { train_protection: 'integra_signum', legend: 'Integra Signum', color: 'pink' }
+    - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: 'pink' }
+    - { train_protection: 'ls', legend: 'Liniový Systém (LS)', color: 'hsl(319, 100%, 40%)' }
+    - { train_protection: 'octys', legend: 'Open Control of Trains, Interchangeable & Integrated System (OCTYS)', color: 'pink' }
+    - { train_protection: 'ouragan', legend: 'Offre Urbaine Renouvelée et Améliorée, Gérée par un Automatisme Nouveau (OURAGAN)', color: 'pink' }
+    - { train_protection: 'sacem', legend: 'Système d''Aide à la Conduite, à l''Exploitation et à la Maintenance (SACEM)', color: 'pink' }
+    - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'pink' }
+    - { train_protection: 'selcab', legend: 'SELCAB', color: 'pink' }
+    - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
+    - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'pink' }
+    - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'pink' }
+    - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'pink' }
+    - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
+    - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'pink' }
+    - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
+    - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
+    - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'pink' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
