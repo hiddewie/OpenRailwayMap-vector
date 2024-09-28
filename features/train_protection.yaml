@@ -13,14 +13,13 @@ signals_railway_line:
     - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' }
+    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' } # north america
     - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 29%)' }
-    - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
     - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
     - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
     - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
-    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' }
+    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' } # china
     - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' }
     - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
     - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
@@ -205,11 +204,6 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:als-ars', value: 'yes' }
-
-    - train_protection: ases
-      rank: 2
-      tags:
-        - { tag: 'railway:ases', value: 'yes' }
 
     - train_protection: atp
       rank: 2
