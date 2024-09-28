@@ -18,12 +18,8 @@ signals_railway_line:
     - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
     - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
     - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
-    - { train_protection: 'bm', legend: 'Block Manuel (BM)', color: 'pink' }
-    - { train_protection: 'bal', legend: 'Block Automatique Lumineux (BAL)', color: 'pink' }
-    - { train_protection: 'bapr', legend: 'Block Automatique à Permissivité Restreinte (BAPR)', color: 'pink' }
     - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
-    - { train_protection: 'crocodile', legend: 'Crocodile', color: 'pink' }
     - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' }
     - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' }
     - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
@@ -225,16 +221,6 @@ signals_railway_line:
       tags:
         - { tag: 'railway:aws', value: 'yes' }
 
-    - train_protection: bm
-      rank: 2
-      tags:
-        - { tag: 'railway:bm', values: ['yes', 'bmu', 'bmus', 'bmcv', 'bamu', 'bnmb', 'bmvu', 'bmvuse', 'blu', 'blus'] }
-
-    - train_protection: bal
-      rank: 2
-      tags:
-        - { tag: 'railway:bal', value: 'yes' }
-
     - train_protection: bapr
       rank: 2
       tags:
@@ -249,11 +235,6 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
-
-    - train_protection: crocodile
-      rank: 2
-      tags:
-        - { tag: 'railway:crocodile', value: 'yes' }
 
     - train_protection: ctcs
       rank: 2

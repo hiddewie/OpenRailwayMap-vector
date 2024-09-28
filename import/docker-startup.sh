@@ -124,8 +124,8 @@ refresh)
 
 esac
 
-echo "Vacuuming database"
-$PSQL -c "VACUUM FULL;"
+#echo "Vacuuming database"
+#$PSQL -c "VACUUM FULL;"
 
 $PSQL --tuples-only -c "with bounds as (SELECT st_transform(st_setsrid(ST_Extent(way), 3857), 4326) as table_extent FROM railway_line) select '[[' || ST_XMin(table_extent) || ', ' || ST_YMin(table_extent) || '], [' || ST_XMax(table_extent) || ', ' || ST_YMax(table_extent) || ']]' from bounds;" > /data/import/bounds.json
 echo "Import bounds: $(cat /data/import/bounds.json)"
