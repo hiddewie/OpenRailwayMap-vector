@@ -13,7 +13,7 @@ signals_railway_line:
     - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' }
+    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' } # north america
     - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 29%)' }
     - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
     - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
@@ -24,14 +24,14 @@ signals_railway_line:
     - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
     - { train_protection: 'crocodile', legend: 'Crocodile', color: 'pink' }
-    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' }
-    - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' }
+    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' } # china
+    - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
     - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
     - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
     - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
     - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: 'pink' }
     - { train_protection: 'integra_signum', legend: 'Integra Signum', color: 'pink' }
-    - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: 'pink' }
+    - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: 'pink' } # north america
     - { train_protection: 'ls', legend: 'Liniový Systém (LS)', color: 'hsl(319, 100%, 40%)' }
     - { train_protection: 'octys', legend: 'Open Control of Trains, Interchangeable & Integrated System (OCTYS)', color: 'hsl(360, 100%, 40%)' }
     - { train_protection: 'ouragan', legend: 'Offre Urbaine Renouvelée et Améliorée, Gérée par un Automatisme Nouveau (OURAGAN)', color: 'hsl(48, 100%, 40%)' }
@@ -441,6 +441,12 @@ signals_railway_line:
       tags:
         - { tag: 'railway:kvb', value: 'no' }
         - { tag: 'railway:tvm', value: 'no' }
+        - { tag: 'railway:etcs', value: 'no' }
+
+    - train_protection: other
+      rank: 1
+      tags:
+        - { tag: 'railway:ls', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
