@@ -14,7 +14,7 @@ signals_railway_line:
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
     - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' } # north america
-    - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 29%)' }
+    - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
     - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
     - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
     - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -46,7 +46,7 @@ signals_railway_line:
     - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'hsl(155, 100%, 40%)' }
     - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
     - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
-    - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'pink' }
+    - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'hsl(187, 100%, 40%)' }
     - { train_protection: 'other', legend: '(other)', color: 'black' }
 
   features:
@@ -209,6 +209,16 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:als-ars', value: 'yes' }
+
+    - train_protection: als
+      rank: 2
+      tags:
+        - { tag: 'railway:integra_signum:ALS', value: 'yes' }
+
+    - train_protection: als
+      rank: 2
+      tags:
+        - { tag: 'railway:integra_signum:ALSO', value: 'yes' }
 
     - train_protection: ases
       rank: 2
