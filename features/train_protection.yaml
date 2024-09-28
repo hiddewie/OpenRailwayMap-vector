@@ -39,7 +39,7 @@ signals_railway_line:
     - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'hsl(305, 100%, 40%)' }
     - { train_protection: 'selcab', legend: 'SELCAB', color: 'pink' }
     - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
-    - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'pink' }
+    - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
     - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'pink' }
     - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
     - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
