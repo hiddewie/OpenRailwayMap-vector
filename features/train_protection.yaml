@@ -21,8 +21,9 @@ signals_railway_line:
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
     - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' } # china
     - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
-    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' } # north america
+    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
     - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
+    - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: 'pink' }
     - { train_protection: 'integra_signum', legend: 'Integra Signum', color: 'pink' }
     - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: 'pink' }
     - { train_protection: 'ls', legend: 'Liniový Systém (LS)', color: 'hsl(319, 100%, 40%)' }
@@ -247,6 +248,16 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:evm', value: 'yes' }
+
+    - train_protection: hkt
+      rank: 2
+      tags:
+        - { tag: 'railway:hkt', value: 'yes' }
+
+    - train_protection: hkt
+      rank: 2
+      tags:
+        - { tag: 'railway:f-hkt', value: 'yes' }
 
     - train_protection: integra_signum
       rank: 2
