@@ -20,8 +20,7 @@ signals_railway_line:
     - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
     - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
     - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'pink' } # china
-    - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' }
-    - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
+    - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
     - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
     - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
     - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: 'pink' }
@@ -239,11 +238,6 @@ signals_railway_line:
       rank: 2
       tags:
         - { tag: 'railway:ebicab', values: ['yes', '700', '900'] }
-
-    - train_protection: eevb
-      rank: 2
-      tags:
-        - { tag: 'railway:eevb', value: 'yes' }
 
     - train_protection: etms
       rank: 2
