@@ -6,6 +6,7 @@ signals_railway_signals:
     - 'railway:signal:combined:states'
     - 'railway:signal:combined:shortened'
     - 'railway:signal:combined:substitute_signal'
+    - 'railway:signal:combined:height'
     - 'railway:signal:crossing'
     - 'railway:signal:crossing:form'
     - 'railway:signal:crossing:repeated'
@@ -409,7 +410,11 @@ signals_railway_signals:
 
     - description: Vorsignal System N
       country: CH
-      icon: { default: 'ch/fdv-vorsignal-n' }
+      icon:
+        match: 'railway:signal:distant:states'
+        cases:
+          - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'de/fdv-n-521' }
+        default: 'ch/fdv-n-533'
       tags:
         - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -417,12 +422,12 @@ signals_railway_signals:
     - description: Hauptsignal System N
       country: CH
       icon:
-        # TODO match states
-#        match: 'railway:signal:speed_limit:speed'
-        # Same form as distant signal
-#        cases:
-#          - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-100' }
-        default: 'ch/fdv-n'
+        match: 'railway:signal:combined:states'
+        cases:
+          - { regex: '^(.*;)?CH-FDV:523(;.*)?$', value: 'de/fdv-n-523' }
+          - { regex: '^(.*;)?CH-FDV:552(;.*)?$', value: 'de/fdv-n-552' }
+          - { regex: '^(.*;)?CH-FDV:(532|533)(;.*)?$', value: 'de/fdv-n-532' }
+        default: 'ch/fdv-n-526'
       tags:
         - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
