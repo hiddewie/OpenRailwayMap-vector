@@ -383,6 +383,13 @@ signals_railway_signals:
 
     # --- CH --- #
 
+    - description: Vorsignal System L
+      country: CH
+      icon: { default: 'ch/fdv-l' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
     - description: Mini-Hauptsignal System L
       country: CH
       icon: { default: 'ch/fdv-l-dwarf' }
