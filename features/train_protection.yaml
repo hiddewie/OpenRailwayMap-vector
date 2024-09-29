@@ -51,415 +51,334 @@ signals_railway_line:
 
   features:
     - train_protection: ptc
-      rank: 13
       tags:
         - { tag: 'railway:ptc', value: 'yes' }
 
     - train_protection: etcs
-      rank: 12
       tags:
         - { tag: 'railway:etcs', value: 'yes' }
 
     - train_protection: etcs
-      rank: 12
       tags:
         - { tag: 'railway:etcs', value: '1' }
 
     - train_protection: etcs
-      rank: 12
       tags:
         - { tag: 'railway:etcs', value: '2' }
 
     - train_protection: etcs
-      rank: 12
       tags:
         - { tag: 'railway:etcs', value: '1;2' }
 
     - train_protection: etcs
-      rank: 12
       tags:
         - { tag: 'railway:etcs', value: '3' }
 
     - train_protection: construction_etcs
-      rank: 11
       tags:
         - { tag: 'construction:railway:etcs', value: 'yes' }
 
     - train_protection: construction_etcs
-      rank: 11
       tags:
         - { tag: 'construction:railway:etcs', value: '1' }
 
     - train_protection: construction_etcs
-      rank: 11
       tags:
         - { tag: 'construction:railway:etcs', value: '2' }
 
     - train_protection: construction_etcs
-      rank: 11
       tags:
         - { tag: 'construction:railway:etcs', value: '3' }
 
     - train_protection: asfa
-      rank: 10
       tags:
         - { tag: 'railway:asfa', value: 'yes' }
 
     - train_protection: asfa
-      rank: 10
       tags:
         - { tag: 'railway:asfa_fac', value: 'yes' }
 
     - train_protection: asfa
-      rank: 10
       tags:
         - { tag: 'railway:asfa_200', value: 'yes' }
 
     - train_protection: scmt
-      rank: 9
       tags:
         - { tag: 'railway:scmt', value: 'yes' }
 
     - train_protection: tvm
-      rank: 8
       tags:
         - { tag: 'railway:tvm', values: ['300', '430'] }
 
     - train_protection: kvb
-      rank: 7
       tags:
         - { tag: 'railway:kvb', value: 'yes' }
 
     - train_protection: atc
-      rank: 6
       tags:
         - { tag: 'railway:atc', value: 'yes' }
 
     - train_protection: atb
-      rank: 5
       tags:
         - { tag: 'railway:atb', value: 'yes' }
 
     - train_protection: atb
-      rank: 5
       tags:
         - { tag: 'railway:atb-eg', value: 'yes' }
 
     - train_protection: atb
-      rank: 5
       tags:
         - { tag: 'railway:atb-ng', value: 'yes' }
 
     - train_protection: atb
-      rank: 5
       tags:
         - { tag: 'railway:atb-vv', value: 'yes' }
 
     - train_protection: zsi127
-      rank: 4
       tags:
         - { tag: 'railway:zsi127', value: 'yes' }
 
     - train_protection: lzb
-      rank: 3
       tags:
         - { tag: 'railway:lzb', value: 'yes' }
 
     - train_protection: pzb
-      rank: 2
       tags:
         - { tag: 'railway:pzb', value: 'yes' }
 
     - train_protection: acses
-      rank: 2
       tags:
         - { tag: 'railway:acses', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:als', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:alsn', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:alst', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:also', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:als-en', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:alsr', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:als-ars', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:integra_signum:ALS', value: 'yes' }
 
     - train_protection: als
-      rank: 2
       tags:
         - { tag: 'railway:integra_signum:ALSO', value: 'yes' }
 
     - train_protection: ases
-      rank: 2
       tags:
         - { tag: 'railway:ases', value: 'yes' }
 
     - train_protection: atp
-      rank: 2
       tags:
         - { tag: 'railway:atp', value: 'yes' }
 
     - train_protection: aws
-      rank: 2
       tags:
         - { tag: 'railway:aws', value: 'yes' }
 
     - train_protection: bm
-      rank: 2
       tags:
         - { tag: 'railway:bm', values: ['yes', 'bmu', 'bmus', 'bmcv', 'bamu', 'bnmb', 'bmvu', 'bmvuse', 'blu', 'blus'] }
 
     - train_protection: bal
-      rank: 2
       tags:
         - { tag: 'railway:bal', value: 'yes' }
 
     - train_protection: bapr
-      rank: 2
       tags:
         - { tag: 'railway:bapr', value: 'yes' }
 
     - train_protection: caws
-      rank: 2
       tags:
         - { tag: 'railway:caws', value: 'yes' }
 
     - train_protection: cbtc
-      rank: 2
       tags:
         - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
 
     - train_protection: crocodile
-      rank: 2
       tags:
         - { tag: 'railway:crocodile', value: 'yes' }
 
     - train_protection: ctcs
-      rank: 2
       tags:
         - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3D', '4'] }
 
     - train_protection: ebicab
-      rank: 2
       tags:
         - { tag: 'railway:ebicab', values: ['yes', '700', '900'] }
 
     - train_protection: eevb
-      rank: 2
       tags:
         - { tag: 'railway:eevb', value: 'yes' }
 
     - train_protection: etms
-      rank: 2
       tags:
         - { tag: 'railway:etms', value: 'yes' }
 
     - train_protection: evm
-      rank: 2
       tags:
         - { tag: 'railway:evm', value: 'yes' }
 
     - train_protection: hkt
-      rank: 2
       tags:
         - { tag: 'railway:hkt', value: 'yes' }
 
     - train_protection: hkt
-      rank: 2
       tags:
         - { tag: 'railway:f-hkt', value: 'yes' }
 
     - train_protection: integra_signum
-      rank: 2
       tags:
         - { tag: 'railway:integra_signum', value: 'yes' }
 
     - train_protection: itcs
-      rank: 2
       tags:
         - { tag: 'railway:itcs', value: 'yes' }
 
     - train_protection: ls
-      rank: 2
       tags:
         - { tag: 'railway:ls', value: 'yes' }
 
     - train_protection: octys
-      rank: 2
       tags:
         - { tag: 'railway:octys', value: 'yes' }
 
     - train_protection: ouragan
-      rank: 2
       tags:
         - { tag: 'railway:ouragan', value: 'yes' }
 
     - train_protection: sacem
-      rank: 2
       tags:
         - { tag: 'railway:sacem', value: 'yes' }
 
     - train_protection: saet
-      rank: 2
       tags:
         - { tag: 'railway:saet', value: 'yes' }
 
     - train_protection: selcab
-      rank: 2
       tags:
         - { tag: 'railway:selcab', value: 'yes' }
 
     - train_protection: shp
-      rank: 2
       tags:
         - { tag: 'railway:shp', value: 'yes' }
 
     - train_protection: ssc
-      rank: 2
       tags:
         - { tag: 'railway:ssc', value: 'yes' }
 
     - train_protection: tasc
-      rank: 2
       tags:
         - { tag: 'railway:tasc', value: 'yes' }
 
     - train_protection: tbl
-      rank: 2
       tags:
         - { tag: 'railway:tbl', values: ['yes', '1', '1+', '2'] }
 
     - train_protection: tpws
-      rank: 2
       tags:
         - { tag: 'railway:tpws', value: 'yes' }
 
     - train_protection: zbs
-      rank: 2
       tags:
         - { tag: 'railway:zbs', value: 'yes' }
 
     - train_protection: zsl90
-      rank: 2
       tags:
         - { tag: 'railway:zsl90', value: 'yes' }
 
     - train_protection: zub
-      rank: 2
       tags:
         - { tag: 'railway:zub', value: 'yes' }
 
     - train_protection: zub
-      rank: 2
       tags:
         - { tag: 'railway:zub121', value: 'yes' }
 
     - train_protection: zub
-      rank: 2
       tags:
         - { tag: 'railway:zub122', value: 'yes' }
 
     - train_protection: zub
-      rank: 2
       tags:
         - { tag: 'railway:zub123', value: 'yes' }
 
     - train_protection: zub
-      rank: 2
       tags:
         - { tag: 'railway:zub222c', value: 'yes' }
 
     - train_protection: satp
-      rank: 2
       tags:
         - { tag: 'railway:satp', value: 'yes' }
 
     - train_protection: satp
-      rank: 2
       tags:
         - { tag: 'railway:atp3b', value: 'yes' }
 
     - train_protection: satp
-      rank: 2
       tags:
         - { tag: 'railway:atp4b', value: 'yes' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:pzb', value: 'no' }
         - { tag: 'railway:lzb', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:atb', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:atc', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:scmt', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:asfa', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:kvb', value: 'no' }
         - { tag: 'railway:tvm', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:ls', value: 'no' }
         - { tag: 'railway:etcs', value: 'no' }
 
     - train_protection: other
-      rank: 1
       tags:
         - { tag: 'railway:zsi127', value: 'no' }

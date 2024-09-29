@@ -213,7 +213,7 @@ local routes = osm2pgsql.define_table({
 
 function train_protection(tags)
   {% for feature in signals_railway_line.features %}
-  if {% for tag in feature.tags %}{% unless loop.first %} and{% end %}{% if tag.value %} tags['{% tag.tag %}'] == '{% tag.value %}'{% else %} ({% for value in tag.values %}{% unless loop.first %} or{% end %} tags['{% tag.tag %}'] == '{% value %}'{% end %}){% end %}{% end %} then return '{% feature.train_protection %}', {% feature.rank %} end
+  if {% for tag in feature.tags %}{% unless loop.first %} and{% end %}{% if tag.value %} tags['{% tag.tag %}'] == '{% tag.value %}'{% else %} ({% for value in tag.values %}{% unless loop.first %} or{% end %} tags['{% tag.tag %}'] == '{% value %}'{% end %}){% end %}{% end %} then return '{% feature.train_protection %}', ({% loop.size %} - {% loop.index0 %}) end
 {% end %}
 
   return nil, 0

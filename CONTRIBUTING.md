@@ -28,7 +28,6 @@ signals_railway_line:
     # ...
 
     - train_protection: new
-      rank: 8
       tags:
         - { tag: 'railway:new', value: 'yes' }
 
