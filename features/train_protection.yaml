@@ -14,7 +14,7 @@ signals_railway_line:
     - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
     - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
     - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' } # north america
+    - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' }
     - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
     - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: 'pink' }
     - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
@@ -27,7 +27,7 @@ signals_railway_line:
     - { train_protection: 'crocodile', legend: 'Crocodile', color: 'pink' }
     - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
     - { train_protection: 'eevb', legend: 'Egyesített Éberségi és Vonatbefolyásoló Berendezés (EÉVB)', color: 'pink' }
-    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'pink' }
+    - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'hsl(48, 100%, 40%)' }
     - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
     - { train_protection: 'hkt', legend: 'HastighedsKontol og automatisk Togstop (HKT)', color: 'pink' }
     - { train_protection: 'integra_signum', legend: 'Integra Signum', color: 'pink' }
