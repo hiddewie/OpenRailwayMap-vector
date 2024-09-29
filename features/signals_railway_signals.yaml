@@ -409,8 +409,14 @@ signals_railway_signals:
     - description: Hauptsignal System L
       country: CH
       icon:
-        # TODO match states
-        { default: 'ch/fdv-l' }
+        match: 'railway:signal:main:states'
+        cases:
+          - { regex: '^(.*;)?CH-FDV:550(;.*)?$', value: 'ch/fdv-l-550' }
+          - { regex: '^(.*;)?CH-FDV:547(;.*)?$', value: 'ch/fdv-l-547' }
+          - { regex: '^(.*;)?CH-FDV:542(;.*)?$', value: 'ch/fdv-l-542' }
+          - { regex: '^(.*;)?CH-FDV:545(;.*)?$', value: 'ch/fdv-l-545' }
+          - { regex: '^(.*;)?CH-FDV:530(;.*)?$', value: 'ch/fdv-l-530' }
+        default: 'ch/fdv-l-524'
       tags:
         - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
         - { tag: 'railway:signal:main:form', value: 'light' }
