@@ -413,7 +413,7 @@ signals_railway_signals:
       icon:
         match: 'railway:signal:distant:states'
         cases:
-          - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'de/fdv-n-521' }
+          - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'ch/fdv-n-521' }
         default: 'ch/fdv-n-533'
       tags:
         - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
@@ -424,9 +424,9 @@ signals_railway_signals:
       icon:
         match: 'railway:signal:combined:states'
         cases:
-          - { regex: '^(.*;)?CH-FDV:523(;.*)?$', value: 'de/fdv-n-523' }
-          - { regex: '^(.*;)?CH-FDV:552(;.*)?$', value: 'de/fdv-n-552' }
-          - { regex: '^(.*;)?CH-FDV:(532|533)(;.*)?$', value: 'de/fdv-n-532' }
+          - { regex: '^(.*;)?CH-FDV:523(;.*)?$', value: 'ch/fdv-n-523' }
+          - { regex: '^(.*;)?CH-FDV:552(;.*)?$', value: 'ch/fdv-n-552' }
+          - { regex: '^(.*;)?CH-FDV:(532|533)(;.*)?$', value: 'ch/fdv-n-532' }
         default: 'ch/fdv-n-526'
       tags:
         - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
