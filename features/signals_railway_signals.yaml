@@ -383,6 +383,14 @@ signals_railway_signals:
 
     # --- CH --- #
 
+    - description: Mini-Hauptsignal System L
+      country: CH
+      icon: { default: 'ch/fdv-l-dwarf' }
+      tags:
+        - { tag: 'railway:signal:combined', value: 'CH-FDV:512' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+        - { tag: 'railway:signal:combined:height', value: 'dwarf' }
+
     - description: Hauptsignal System N
       country: CH
       icon:
