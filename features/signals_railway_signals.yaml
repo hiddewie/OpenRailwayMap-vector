@@ -421,6 +421,24 @@ signals_railway_signals:
         - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
         - { tag: 'railway:signal:main:form', value: 'light' }
 
+    - description: Hauptsignal System L (combined)
+      country: CH
+      icon:
+        match: 'railway:signal:combined:states'
+        cases:
+          - { regex: '^(.*;)?CH-FDV:548(;.*)?$', value: 'ch/fdv-l-548' }
+          - { regex: '^(.*;)?CH-FDV:551(;.*)?$', value: 'ch/fdv-l-551' }
+          - { regex: '^(.*;)?CH-FDV:546(;.*)?$', value: 'ch/fdv-l-546' }
+          - { regex: '^(.*;)?CH-FDV:543(;.*)?$', value: 'ch/fdv-l-543' }
+          - { regex: '^(.*;)?CH-FDV:539(;.*)?$', value: 'ch/fdv-l-539' }
+          - { regex: '^(.*;)?CH-FDV:537(;.*)?$', value: 'ch/fdv-l-537' }
+          - { regex: '^(.*;)?CH-FDV:535(;.*)?$', value: 'ch/fdv-l-535' }
+          - { regex: '^(.*;)?CH-FDV:531(;.*)?$', value: 'ch/fdv-l-531' }
+        default: 'ch/fdv-l-525'
+      tags:
+        - { tag: 'railway:signal:combined', value: 'CH-FDV:l' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+
     - description: Vorsignal System N
       country: CH
       icon:
