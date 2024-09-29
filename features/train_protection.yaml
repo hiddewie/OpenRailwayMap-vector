@@ -3,7 +3,7 @@ signals_railway_line:
   train_protections:
     - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'blue' }
     - { train_protection: 'construction_etcs', legend: 'European Train Control System (under construction)', color: '#87CEFA' }
-    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'blue' }
+    - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
     - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
     - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
     - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
