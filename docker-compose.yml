@@ -92,6 +92,11 @@ services:
       - ./martin:/config
     environment:
       - DATABASE_URL=postgresql://postgres@db:5432/gis
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 26677
+        hard: 46677
 
   martin-static:
     build:
