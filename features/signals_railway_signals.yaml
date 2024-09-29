@@ -381,6 +381,21 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
 
+    # --- CH --- #
+
+    - description: Hauptsignal System N
+      country: CH
+      icon:
+        # TODO match states
+#        match: 'railway:signal:speed_limit:speed'
+        # Same form as distant signal
+#        cases:
+#          - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-100' }
+        default: 'ch/fdv-n'
+      tags:
+        - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+
     # --- DE --- #
 
     - description: Bü 4 Whistle Sign
