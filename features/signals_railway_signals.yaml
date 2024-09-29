@@ -385,7 +385,7 @@ signals_railway_signals:
 
     - description: Vorsignal System L
       country: CH
-      icon: { default: 'ch/fdv-l' }
+      icon: { default: 'ch/fdv-vorsignal-l' }
       tags:
         - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -397,6 +397,22 @@ signals_railway_signals:
         - { tag: 'railway:signal:combined', value: 'CH-FDV:512' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
         - { tag: 'railway:signal:combined:height', value: 'dwarf' }
+
+    - description: Hauptsignal System L
+      country: CH
+      icon:
+        # TODO match states
+        { default: 'ch/fdv-l' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Vorsignal System N
+      country: CH
+      icon: { default: 'ch/fdv-vorsignal-n' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
 
     - description: Hauptsignal System N
       country: CH
