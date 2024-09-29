@@ -211,7 +211,7 @@ speed_railway_signals:
           - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-40' }
         default: 'ch/fdv-540-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:540' }
+        - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:540', 'CH-FDV:541'] }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
     - description: Geschwindigkeits-Ausführung
@@ -223,7 +223,7 @@ speed_railway_signals:
           - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-100' }
         default: 'ch/fdv-540-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:540' }
+        - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:549' }
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
     - description: Merktafel für Streckengeschwindigkeit beim Signalsystem N
