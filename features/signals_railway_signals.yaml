@@ -1792,7 +1792,7 @@ signals_railway_signals:
       country: SE
       icon: { default: 'se/main' }
       tags:
-        - { tag: 'railway:signal:main', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Infartsignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:main', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:main:form', value: 'light' }
 
     - description: Mellanblocksignal, Utfartsblocksignal (combined)
@@ -1807,7 +1807,7 @@ signals_railway_signals:
       icon: { default: 'se/combined' }
       tags:
         # TODO fix typo in data
-        - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Infartsignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
     - description: Main shunting
