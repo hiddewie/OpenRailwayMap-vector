@@ -470,6 +470,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:minor', value: 'CH-FDV:232' }
         - { tag: 'railway:signal:minor:form', value: 'light' }
 
+    - description: Fahrtstellungsmelder
+      country: CH
+      icon: { default: 'ch/fdv-559' }
+      tags:
+        - { tag: 'railway:signal:main_repeated', value: 'CH-FDV:559' }
+        - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
     # --- DE --- #
 
     - description: Bü 4 Whistle Sign
