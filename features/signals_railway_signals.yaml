@@ -463,6 +463,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
+    - description: Minor signal
+      country: CH
+      icon: { default: 'ch/fdv-232' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'CH-FDV:232' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+
     # --- DE --- #
 
     - description: Bü 4 Whistle Sign
