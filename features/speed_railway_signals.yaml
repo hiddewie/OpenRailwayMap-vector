@@ -154,8 +154,9 @@ speed_railway_signals:
           - { regex: '^([6-9][05]|1[0-1][05])$', value: 'ch/fdv-209-{}', example: 'ch/fdv-209-90' }
         default: 'ch/fdv-209-empty'
       tags:
-        - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:209' }
-        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+        # TODO support CH-FDV:210, with railway:signal:speed_limit_distant:speed:trainclass_low
+        - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:209', 'CH-FDV:210'] }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
     - description: Anfangssignal verminderte Geschwindigkeit
       country: CH
