@@ -1781,6 +1781,14 @@ signals_railway_signals:
 
     # --- SE --- #
 
+    - description: Main shunting
+      country: SE
+      icon: { default: 'se/shunting' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
     - description: Mellanblocksignal, Utfartsblocksignal (main)
       country: SE
       # TODO support icons for each variant
@@ -1812,14 +1820,6 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:combined:form', value: 'light' }
-
-    - description: Main shunting
-      country: SE
-      icon: { default: 'se/shunting-mellansignal' }
-      tags:
-        - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
-        - { tag: 'railway:signal:main:form', value: 'light' }
-        - { tag: 'railway:signal:main:height', value: 'dwarf' }
 
     - description: Försignal
       country: SE
