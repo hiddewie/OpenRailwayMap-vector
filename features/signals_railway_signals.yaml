@@ -1778,3 +1778,49 @@ signals_railway_signals:
       icon: { default: 'pl/ztm-mw/wm17' }
       tags:
         - { tag: 'railway:signal:fouling_point', value: 'ZTM-MW:wm17' }
+
+    # --- SE --- #
+
+    - description: Mellanblocksignal, Utfartsblocksignal (main)
+      country: SE
+      icon: { default: 'se/main-block' }
+      tags:
+        - { tag: 'railway:signal:main', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Infartssignal, Mellansignal, Utfartssignal (main)
+      country: SE
+      icon: { default: 'se/main' }
+      tags:
+        - { tag: 'railway:signal:main', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Infartsignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
+    - description: Mellanblocksignal, Utfartsblocksignal (combined)
+      country: SE
+      icon: { default: 'se/combined-block' }
+      tags:
+        - { tag: 'railway:signal:combined', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+
+    - description: Infartssignal, Mellansignal, Utfartssignal (combined)
+      country: SE
+      icon: { default: 'se/combined' }
+      tags:
+        # TODO fix typo in data
+        - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Infartsignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+
+    - description: Main shunting
+      country: SE
+      icon: { default: 'se/shunting-mellansignal' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+        - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+    - description: Försignal
+      country: SE
+      icon: { default: 'se/försignal' }
+      tags:
+        - { tag: 'railway:signal:distant', value: 'SE:Försignal' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
