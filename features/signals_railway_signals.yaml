@@ -1785,6 +1785,7 @@ signals_railway_signals:
       country: SE
       icon: { default: 'se/shunting' }
       tags:
+        # TODO main shunting signals vs shunting-only signals
         - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
         - { tag: 'railway:signal:main:form', value: 'light' }
         - { tag: 'railway:signal:main:height', value: 'dwarf' }
