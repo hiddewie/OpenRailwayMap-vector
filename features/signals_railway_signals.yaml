@@ -1783,6 +1783,7 @@ signals_railway_signals:
 
     - description: Mellanblocksignal, Utfartsblocksignal (main)
       country: SE
+      # TODO support icons for each variant
       icon: { default: 'se/main-block' }
       tags:
         - { tag: 'railway:signal:main', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
@@ -1790,6 +1791,7 @@ signals_railway_signals:
 
     - description: Infartssignal, Mellansignal, Utfartssignal (main)
       country: SE
+      # TODO support icons for each variant
       icon: { default: 'se/main' }
       tags:
         - { tag: 'railway:signal:main', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
@@ -1797,6 +1799,7 @@ signals_railway_signals:
 
     - description: Mellanblocksignal, Utfartsblocksignal (combined)
       country: SE
+      # TODO support icons for each variant
       icon: { default: 'se/combined-block' }
       tags:
         - { tag: 'railway:signal:combined', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
@@ -1804,9 +1807,9 @@ signals_railway_signals:
 
     - description: Infartssignal, Mellansignal, Utfartssignal (combined)
       country: SE
+      # TODO support icons for each variant
       icon: { default: 'se/combined' }
       tags:
-        # TODO fix typo in data
         - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
