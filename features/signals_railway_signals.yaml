@@ -1803,7 +1803,7 @@ signals_railway_signals:
       # TODO support icons for each variant
       icon: { default: 'se/main' }
       tags:
-        - { tag: 'railway:signal:main', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:main', values: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:main:form', value: 'light' }
 
     - description: Mellanblocksignal, Utfartsblocksignal (combined)
@@ -1819,7 +1819,7 @@ signals_railway_signals:
       # TODO support icons for each variant
       icon: { default: 'se/combined' }
       tags:
-        - { tag: 'railway:signal:combined', values: ['SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:combined', values: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
     - description: Försignal
