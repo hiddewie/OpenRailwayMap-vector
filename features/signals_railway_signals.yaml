@@ -23,6 +23,7 @@ signals_railway_signals:
     - 'railway:signal:distant:states'
     - 'railway:signal:distant:height'
     - 'railway:signal:distant:type'
+    - 'railway:signal:distant:distance'
     - 'railway:signal:fouling_point'
     - 'railway:signal:helper_engine'
     - 'railway:signal:helper_engine:form'
@@ -1831,14 +1832,25 @@ signals_railway_signals:
 
     - description: Repeterbalister
       country: SE
-      icon: { default: 'se/repeterbalister' }
+      icon: { default: 'se/repeterbaliser' }
       tags:
-        - { tag: 'railway:signal:train_protection', value: 'SE:repeterbalister' }
+        - { tag: 'railway:signal:train_protection', value: 'SE:Repeterbaliser' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
     - description: Repetersignal
-      country: SE
+      coun      try: SE
       icon: { default: 'se/repetersignal' }
       tags:
         - { tag: 'railway:signal:main_repeated', value: 'SE:Repetersignal' }
         - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+    - description: Orienteringstavla huvudsignal
+      country: SE
+      icon:
+        match: 'railway:signal:distant:distance'
+        cases:
+          - { regex: '^.+$', value: 'se/orienteringstavla-huvudsignal-avstånd' }
+        default: 'se/orienteringstavla-huvudsignal'
+      tags:
+        - { tag: 'railway:signal:distant', value: 'SE:orienteringstavla' }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
