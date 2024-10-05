@@ -1835,3 +1835,10 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:train_protection', value: 'SE:repeterbalister' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: Repetersignal
+      country: SE
+      icon: { default: 'se/repetersignal' }
+      tags:
+        - { tag: 'railway:signal:main_repeated', value: 'SE:Repetersignal' }
+        - { tag: 'railway:signal:main_repeated:form', value: 'light' }
