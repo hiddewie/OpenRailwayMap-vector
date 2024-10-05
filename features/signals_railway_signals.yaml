@@ -1782,7 +1782,7 @@ signals_railway_signals:
 
     # --- SE --- #
 
-    - description: Main shunting
+    - description: Mellansignal (dvärg)
       country: SE
       icon: { default: 'se/shunting-main' }
       tags:
@@ -1790,12 +1790,19 @@ signals_railway_signals:
         - { tag: 'railway:signal:main:form', value: 'light' }
         - { tag: 'railway:signal:main:height', value: 'dwarf' }
 
-    - description: Shunting
+    - description: Växlingsdvärgsignal
       country: SE
       icon: { default: 'se/shunting' }
       tags:
         - { tag: 'railway:signal:shunting', value: 'SE:Växlingsdvärgsignal' }
         - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+    - description: Skyddsstopplykta
+      country: SE
+      icon: { default: 'se/skyddsstopplykta' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'SE:Skyddsstopplykta' }
+        - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
     - description: Mellanblocksignal, Utfartsblocksignal (main)
       country: SE
