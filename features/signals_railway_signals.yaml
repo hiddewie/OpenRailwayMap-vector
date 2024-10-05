@@ -1828,3 +1828,10 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'SE:Försignal' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
+
+    - description: Repeterbalister
+      country: SE
+      icon: { default: 'se/repeterbalister' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'SE:repeterbalister' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
