@@ -1784,12 +1784,18 @@ signals_railway_signals:
 
     - description: Main shunting
       country: SE
-      icon: { default: 'se/shunting' }
+      icon: { default: 'se/shunting-main' }
       tags:
-        # TODO main shunting signals vs shunting-only signals
         - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
         - { tag: 'railway:signal:main:form', value: 'light' }
         - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+    - description: Shunting
+      country: SE
+      icon: { default: 'se/shunting' }
+      tags:
+        - { tag: 'railway:signal:shunting', value: 'SE:Växlingsdvärgsignal' }
+        - { tag: 'railway:signal:shunting:form', value: 'light' }
 
     - description: Mellanblocksignal, Utfartsblocksignal (main)
       country: SE
@@ -1838,7 +1844,7 @@ signals_railway_signals:
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
     - description: Repetersignal
-      coun      try: SE
+      country: SE
       icon: { default: 'se/repetersignal' }
       tags:
         - { tag: 'railway:signal:main_repeated', value: 'SE:Repetersignal' }
