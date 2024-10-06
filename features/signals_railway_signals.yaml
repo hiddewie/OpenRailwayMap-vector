@@ -1867,3 +1867,10 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'SE:orienteringstavla' }
         - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+    - description: Vägskyddssignal
+      country: SE
+      icon: { default: 'se/vägskyddssignal' }
+      tags:
+        - { tag: 'railway:signal:crossing', value: 'SE:Vägskyddssignal' }
+        - { tag: 'railway:signal:crossing:form', value: 'light' }
