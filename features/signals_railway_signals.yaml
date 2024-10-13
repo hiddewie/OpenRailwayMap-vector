@@ -1812,6 +1812,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:main', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
         - { tag: 'railway:signal:main:form', value: 'light' }
 
+    - description: Linjeplatssignal (main)
+      country: SE
+      icon: { default: 'se/main-section' }
+      tags:
+        - { tag: 'railway:signal:main', value: 'SE:Linjeplatssignal' }
+        - { tag: 'railway:signal:main:form', value: 'light' }
+
     - description: Infartssignal, Mellansignal, Utfartssignal (main)
       country: SE
       # TODO support icons for each variant
@@ -1834,6 +1841,13 @@ signals_railway_signals:
       icon: { default: 'se/combined' }
       tags:
         - { tag: 'railway:signal:combined', values: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
+        - { tag: 'railway:signal:combined:form', value: 'light' }
+
+    - description: Linjeplatssignal (combined)
+      country: SE
+      icon: { default: 'se/combined-section' }
+      tags:
+        - { tag: 'railway:signal:combined', value: 'SE:Linjeplatssignal' }
         - { tag: 'railway:signal:combined:form', value: 'light' }
 
     - description: Försignal
