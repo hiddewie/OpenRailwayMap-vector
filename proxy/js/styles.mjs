@@ -1035,6 +1035,33 @@ const searchResults = {
   }
 };
 
+const railwayKmText = {
+  id: 'railway_text_km',
+  type: 'symbol',
+  minzoom: 10,
+  source: 'high',
+  'source-layer': 'railway_text_km',
+  filter: ['step', ['zoom'],
+    ['get', 'zero'],
+    13,
+    true,
+  ],
+  paint: {
+    'text-color': 'black',
+    'text-halo-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+      'white',
+    ],
+    'text-halo-width': 1,
+  },
+  layout: {
+    'symbol-z-order': 'source',
+    'text-field': '{pos}',
+    'text-font': ['Noto Sans Bold'],
+    'text-size': 11,
+  },
+};
+
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
@@ -1535,32 +1562,7 @@ const layers = {
         'icon-image': ['image', ['get', 'feature']],
       }
     },
-    {
-      id: 'railway_text_km',
-      type: 'symbol',
-      minzoom: 10,
-      source: 'high',
-      'source-layer': 'railway_text_km',
-      filter: ['step', ['zoom'],
-        ['get', 'zero'],
-        13,
-        true,
-      ],
-      paint: {
-        'text-color': 'black',
-        'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
-        ],
-        'text-halo-width': 1,
-      },
-      layout: {
-        'symbol-z-order': 'source',
-        'text-field': '{pos}',
-        'text-font': ['Noto Sans Bold'],
-        'text-size': 11,
-      },
-    },
+    railwayKmText,
     {
       id: 'railway_text_track_numbers',
       type: 'symbol',
@@ -2079,6 +2081,7 @@ const layers = {
         'icon-image': ['image', ['get', 'feature']],
       }
     },
+    railwayKmText,
     {
       id: 'speed_railway_line_text',
       type: 'symbol',
@@ -2334,6 +2337,7 @@ const layers = {
         'text-size': 11,
       }
     },
+    railwayKmText,
     {
       id: 'signal_boxes_text_high',
       type: 'symbol',
@@ -2546,6 +2550,7 @@ const layers = {
         'icon-image': ['image', ['get', 'feature']],
       }
     },
+    railwayKmText,
     {
       id: 'electrification_railway_text_high',
       type: 'symbol',
@@ -2684,7 +2689,7 @@ const layers = {
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
         'text-padding': 30,
-        'symbol-spacing': 100,
+        'symbol-spacing': 250,
       },
     },
     searchResults,
@@ -2825,6 +2830,7 @@ const layers = {
       paint: gaugeFillPaint('gauge2', 'gaugeint2', multi_construction_dashes),
       layout: gaugeLayout,
     },
+    railwayKmText,
     {
       id: 'gauge_railway_text_high',
       type: 'symbol',
