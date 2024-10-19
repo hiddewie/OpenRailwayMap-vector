@@ -1,6 +1,7 @@
 {
   "short_name": "ORM",
   "name": "OpenRailwayMap",
+  "description": "OpenRailwayMap is a detailed online map of the world's railway infrastructure, built on OpenStreetMap data",
   "icons": [
     {
       "src": "/image/android-chrome-192x192.png",
@@ -28,5 +29,11 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#000000"
+  "background_color": "#000000",
+  "categories": [
+    "entertainment",
+    "navigation",
+    "travel",
+    "utilities"
+  ]
 }
