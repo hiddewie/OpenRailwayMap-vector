@@ -2969,7 +2969,7 @@ const layers = {
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
         'text-padding': 30,
-        'symbol-spacing': 100,
+        'symbol-spacing': 250,
       },
     },
     searchResults,
