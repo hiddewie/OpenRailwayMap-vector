@@ -40,6 +40,7 @@ postgres:
         usage: string
         service: string
         highspeed: boolean
+        preferred_direction: string
         tunnel: boolean
         bridge: boolean
         ref: string
@@ -78,6 +79,7 @@ postgres:
         usage: string
         service: string
         highspeed: boolean
+        preferred_direction: string
         tunnel: boolean
         bridge: boolean
         ref: string
@@ -116,6 +118,7 @@ postgres:
         usage: string
         service: string
         highspeed: boolean
+        preferred_direction: string
         tunnel: boolean
         bridge: boolean
         ref: string
