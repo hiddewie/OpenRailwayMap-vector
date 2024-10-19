@@ -28,6 +28,10 @@ server {
     root /etc/nginx/public;
   }
 
+  location = /manifest.json {
+    root /etc/nginx/public;
+  }
+
   location = /bounds.json {
     root /etc/nginx/public/import;
   }
