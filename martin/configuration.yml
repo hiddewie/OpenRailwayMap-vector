@@ -195,9 +195,9 @@ postgres:
         id: integer
         feature: string
 
-    standard_railway_text_km:
+    railway_text_km:
       schema: public
-      table: standard_railway_text_km
+      table: railway_text_km
       srid: 3857
       geometry_column: way
       geometry_type: POINT
