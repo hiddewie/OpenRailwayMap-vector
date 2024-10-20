@@ -67,6 +67,7 @@ local railway_line = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'linestring' },
+    { column = 'way_length', type = 'real' },
     { column = 'railway', type = 'text' },
     -- TODO build feature column
     { column = 'feature', type = 'text' },
@@ -519,8 +520,10 @@ function osm2pgsql.process_way(object)
       end
     end
 
+    local way = object:as_linestring()
     railway_line:insert({
-      way = object:as_linestring(),
+      way = way,
+      way_length = way:length()
       railway = tags['railway'],
       service = tags['service'],
       usage = tags['usage'],
