@@ -1447,6 +1447,8 @@ const layers = {
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['get', 'bridge'],
+        // TODO
+        ['>=', , 10000],
         ['!=', ['get', 'railway'], 'construction'],
         ['!=', ['get', 'railway'], 'proposed'],
         ['!=', ['get', 'railway'], 'abandoned'],
