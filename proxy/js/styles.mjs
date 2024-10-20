@@ -1416,15 +1416,16 @@ const layers = {
         'symbol-placement': 'line',
         'symbol-spacing': 750,
         'icon-overlap': 'always',
+        // TODO: replace with SDF image with line coloring
         'icon-image': ['match', ['get', 'preferred_direction'],
           'forward', 'general/line-direction',
           'backward', 'general/line-direction',
           'both', 'general/line-direction-both',
-          ''
+          '',
         ],
-        'icon-rotation': ['match', ['get', 'preferred_direction'],
+        'icon-rotate': ['match', ['get', 'preferred_direction'],
           'backward', 180,
-          0
+          0,
         ],
       },
     },
