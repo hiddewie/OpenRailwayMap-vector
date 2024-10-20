@@ -1414,7 +1414,7 @@ const layers = {
         'icon-overlap': 'always',
         // TODO flip for reversed direction
         // TODO icon for direction both
-        'icon-image': 'general/line-direction-forward',
+        'icon-image': 'general/line-direction',
       },
     },
     {
