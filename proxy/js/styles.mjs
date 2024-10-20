@@ -1062,21 +1062,13 @@ const railwayKmText = {
   },
 };
 
-const preferredDirection = {
-  id: 'railway_preferred_direction',
+const preferredDirectionLayer = (id, filter) => ({
+  id,
   type: 'symbol',
   minzoom: 15,
   source: 'high',
   'source-layer': 'railway_line_high',
-  filter: ['all',
-    ['!', ['get', 'bridge']],
-    ['!', ['get', 'tunnel']],
-    ['any',
-      ['==', ['get', 'preferred_direction'], 'forward'],
-      ['==', ['get', 'preferred_direction'], 'backward'],
-      ['==', ['get', 'preferred_direction'], 'both'],
-    ]
-  ],
+  filter,
   layout: {
     'symbol-placement': 'line',
     'symbol-spacing': 750,
@@ -1093,19 +1085,24 @@ const preferredDirection = {
       0,
     ],
   },
-};
-const preferredDirectionTunnel = {
-  ...preferredDirection,
-  id: 'railway_tunnel_preferred_direction',
-  filter: ['all',
-    ['get', 'tunnel'],
-    ['any',
-      ['==', ['get', 'preferred_direction'], 'forward'],
-      ['==', ['get', 'preferred_direction'], 'backward'],
-      ['==', ['get', 'preferred_direction'], 'both'],
-    ]
-  ],
-};
+});
+const preferredDirection = preferredDirectionLayer('railway_preferred_direction', ['all',
+  ['!', ['get', 'bridge']],
+  ['!', ['get', 'tunnel']],
+  ['any',
+    ['==', ['get', 'preferred_direction'], 'forward'],
+    ['==', ['get', 'preferred_direction'], 'backward'],
+    ['==', ['get', 'preferred_direction'], 'both'],
+  ]
+]);
+const preferredDirectionTunnel = preferredDirectionLayer('railway_tunnel_preferred_direction', ['all',
+  ['get', 'tunnel'],
+  ['any',
+    ['==', ['get', 'preferred_direction'], 'forward'],
+    ['==', ['get', 'preferred_direction'], 'backward'],
+    ['==', ['get', 'preferred_direction'], 'both'],
+  ]
+]);
 
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
