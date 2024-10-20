@@ -523,7 +523,7 @@ function osm2pgsql.process_way(object)
     local way = object:as_linestring()
     railway_line:insert({
       way = way,
-      way_length = way:length()
+      way_length = way:length(),
       railway = tags['railway'],
       service = tags['service'],
       usage = tags['usage'],
