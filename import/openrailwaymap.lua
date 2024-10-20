@@ -454,6 +454,9 @@ function osm2pgsql.process_node(object)
 {% end %}
 {% end %}
 {% end %}
+      -- We cast the highest speed to text to make it possible to only select those speeds
+      -- we have an icon for. Otherwise we might render an icon for 40 kph if
+      -- 42 is tagged (but invalid tagging).
       ["railway:signal:speed_limit:speed"] = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed'],
       ["railway:signal:speed_limit_distant:speed"] = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed'],
       {% for tag in electrification_signals.tags %}
