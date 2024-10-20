@@ -1062,6 +1062,31 @@ const railwayKmText = {
   },
 };
 
+const preferredDirectionLayer = (id, filter) => ({
+  id,
+  type: 'symbol',
+  minzoom: 15,
+  source: 'high',
+  'source-layer': 'railway_line_high',
+  filter,
+  layout: {
+    'symbol-placement': 'line',
+    'symbol-spacing': 750,
+    'icon-overlap': 'always',
+    // TODO: replace with SDF image with line coloring
+    'icon-image': ['match', ['get', 'preferred_direction'],
+      'forward', 'general/line-direction',
+      'backward', 'general/line-direction',
+      'both', 'general/line-direction-both',
+      '',
+    ],
+    'icon-rotate': ['match', ['get', 'preferred_direction'],
+      'backward', 180,
+      0,
+    ],
+  },
+});
+
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
@@ -1229,6 +1254,14 @@ const layers = {
         'line-color': 'rgba(255, 255, 255, 50%)',
       }
     },
+    preferredDirectionLayer('railway_tunnel_preferred_direction', ['all',
+      ['get', 'tunnel'],
+      ['any',
+        ['==', ['get', 'preferred_direction'], 'forward'],
+        ['==', ['get', 'preferred_direction'], 'backward'],
+        ['==', ['get', 'preferred_direction'], 'both'],
+      ]
+    ]),
     {
       id: 'railway_line_casing',
       type: 'line',
@@ -1397,6 +1430,15 @@ const layers = {
       },
       paint: standardFillPaint([1]),
     },
+    preferredDirectionLayer('railway_preferred_direction', ['all',
+      ['!', ['get', 'bridge']],
+      ['!', ['get', 'tunnel']],
+      ['any',
+        ['==', ['get', 'preferred_direction'], 'forward'],
+        ['==', ['get', 'preferred_direction'], 'backward'],
+        ['==', ['get', 'preferred_direction'], 'both'],
+      ]
+    ]),
     {
       id: 'railway_bridge_railing',
       type: 'line',
@@ -2007,6 +2049,11 @@ const layers = {
       paint: speedFillPaint,
       layout: speedLayout,
     },
+    preferredDirectionLayer('railway_preferred_direction', ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]),
     {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
@@ -2205,6 +2252,11 @@ const layers = {
       paint: trainProtectionFillPaint([1]),
       layout: trainProtectionLayout,
     },
+    preferredDirectionLayer('railway_preferred_direction', ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]),
     {
       id: 'signal_boxes_point',
       type: 'circle',
@@ -2510,6 +2562,11 @@ const layers = {
       paint: electrificationFillPaint(electrification_construction_dashes, 'future_voltage', 'future_frequency'),
       layout: electrificationLayout,
     },
+    preferredDirectionLayer('railway_preferred_direction', ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]),
     {
       id: 'electrification_signals_direction',
       type: 'symbol',
@@ -2830,6 +2887,11 @@ const layers = {
       paint: gaugeFillPaint('gauge2', 'gaugeint2', multi_construction_dashes),
       layout: gaugeLayout,
     },
+    preferredDirectionLayer('railway_preferred_direction', ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]),
     railwayKmText,
     {
       id: 'gauge_railway_text_high',
