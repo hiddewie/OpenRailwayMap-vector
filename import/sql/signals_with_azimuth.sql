@@ -73,6 +73,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
 {% end %}
     END as electrification_feature
   FROM (
+    -- TODO: inline
     SELECT
       id,
       way,
@@ -86,20 +87,11 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
       "{% tag %}",
 {% end %}
       {% for tag in speed_railway_signals.tags %}
-      {% unless tag | matches("railway:signal:speed_limit:speed") %}
-      {% unless tag | matches("railway:signal:speed_limit_distant:speed") %}
       "{% tag %}",
-{% end %}
-{% end %}
 {% end %}
       {% for tag in electrification_signals.tags %}
-      "{% tag %}",
+      "{% tag %}"{% unless loop.last %},{% end %}
 {% end %}
-      -- We cast the highest speed to text to make it possible to only select those speeds
-      -- we have an icon for. Otherwise we might render an icon for 40 kph if
-      -- 42 is tagged (but invalid tagging).
-      CASE WHEN "railway:signal:speed_limit" IS NOT NULL THEN railway_largest_speed_noconvert("railway:signal:speed_limit:speed")::text ELSE "railway:signal:speed_limit:speed" END AS "railway:signal:speed_limit:speed",
-      CASE WHEN "railway:signal:speed_limit_distant" IS NOT NULL THEN railway_largest_speed_noconvert("railway:signal:speed_limit_distant:speed")::text ELSE "railway:signal:speed_limit_distant:speed" END AS "railway:signal:speed_limit_distant:speed"
     FROM signals s
   ) AS fs
   LEFT JOIN LATERAL (

@@ -132,51 +132,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Convert a speed number from text to integer but not convert units
-CREATE OR REPLACE FUNCTION railway_speed_int_noconvert(value TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::DOUBLE PRECISION;
-  END IF;
-  IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN substring(value FROM '^([0-9]+(\.[0-9]+)?)')::DOUBLE PRECISION;
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
--- Get the largest speed from a list of speed values (common at light speed signals)
-CREATE OR REPLACE FUNCTION railway_largest_speed_noconvert(value TEXT) RETURNS INTEGER AS $$
-DECLARE
-  parts TEXT[];
-  elem TEXT;
-  largest_value INTEGER := NULL;
-  this_value INTEGER;
-BEGIN
-  IF value IS NULL OR value = '' THEN
-    RETURN NULL;
-  END IF;
-  parts := regexp_split_to_array(value, ';');
-  FOREACH elem IN ARRAY parts
-  LOOP
-    IF elem = '' THEN
-      CONTINUE;
-    END IF;
-    this_value := railway_speed_int_noconvert(elem);
-    IF largest_value IS NULL OR largest_value < this_value THEN
-      largest_value := this_value;
-    END IF;
-  END LOOP;
-  RETURN largest_value;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Get dominant speed for coloring
 CREATE OR REPLACE FUNCTION railway_dominant_speed(preferred_direction TEXT, speed TEXT, forward_speed TEXT, backward_speed TEXT) RETURNS INTEGER AS $$
 BEGIN

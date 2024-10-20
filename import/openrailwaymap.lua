@@ -27,6 +27,40 @@ function strip_prefix(value, prefix)
   end
 end
 
+-- Convert a speed number from text to integer but not convert units
+function speed_int_noconvert(value)
+  local _, _, match = value:find('^(%d+%.?%d*)$')
+  if match then
+    return tonumber(match)
+  end
+
+  local _, _, match = value:find('^(%d+%.?%d*) ?mph$')
+  if match then
+    return tonumber(match)
+  end
+
+  return nil
+end
+
+-- Get the largest speed from a list of speed values (common at light speed signals)
+function largest_speed_noconvert(value)
+  if not value then
+    return nil
+  end
+
+  local largest_speed = nil
+  for elem in string.gmatch(value, '[^;]+') do
+    if elem then
+      local speed = speed_int_noconvert(elem)
+      if speed ~= nil and (largest_speed == nil or largest_speed < speed) then
+        largest_speed = speed
+      end
+    end
+  end
+
+  return largest_speed
+end
+
 local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
@@ -414,11 +448,19 @@ function osm2pgsql.process_node(object)
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
       {% for tag in speed_railway_signals.tags %}
+      {% unless tag | matches("railway:signal:speed_limit:speed") %}
+      {% unless tag | matches("railway:signal:speed_limit_distant:speed") %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
+{% end %}
+{% end %}
+      ["railway:signal:speed_limit:speed"] = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed'],
+      ["railway:signal:speed_limit_distant:speed"] = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed'],
       {% for tag in electrification_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
+
+
     })
   end
 
