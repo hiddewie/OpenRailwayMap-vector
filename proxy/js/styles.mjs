@@ -5,6 +5,7 @@ const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml',
 const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8')).speed_railway_signals
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8')).signals_railway_signals
 const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8')).electrification_signals
+const loading_gauges = yaml.parse(fs.readFileSync('loading_gauge.yaml', 'utf8')).loading_gauges
 
 const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
@@ -954,6 +955,26 @@ const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
   'line-dasharray': dashArray,
 });
 const gaugeLayout = {
+  'line-join': 'round',
+  'line-cap': 'round',
+};
+
+const loadingGaugeCasingPaint = {
+  'line-color': 'white',
+  'line-width': railwayLineWidth,
+  'line-gap-width': 0.75,
+};
+const loadingGaugeFillPaint = (dashArray) => ({
+  'line-color': ['match', ['get', 'loading_gauge'],
+    ...loading_gauges.flatMap(loading_gauge =>
+      [loading_gauge.value, loading_gauge.color]
+    ),
+    'gray',
+  ],
+  'line-width': railwayLineWidth,
+  'line-dasharray': dashArray,
+});
+const loadingGaugeLayout = {
   'line-join': 'round',
   'line-cap': 'round',
 };
@@ -3057,8 +3078,8 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: gaugeCasingPaint,
-      layout: gaugeLayout,
+      paint: loadingGaugeCasingPaint,
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_low_fill',
@@ -3066,8 +3087,8 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
-      layout: gaugeLayout,
+      paint: loadingGaugeFillPaint([1]),
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_med_casing',
@@ -3076,8 +3097,8 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: gaugeCasingPaint,
-      layout: gaugeLayout,
+      paint: loadingGaugeCasingPaint,
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_med_fill',
@@ -3086,8 +3107,8 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
-      layout: gaugeLayout,
+      paint: loadingGaugeFillPaint([1]),
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_casing',
@@ -3096,8 +3117,8 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: gaugeCasingPaint,
-      layout: gaugeLayout,
+      paint: loadingGaugeCasingPaint,
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_casing_construction',
@@ -3120,8 +3141,8 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
-      layout: gaugeLayout,
+      paint: loadingGaugeFillPaint([1]),
+      layout: loadingGaugeLayout,
     },
     {
       id: 'loading_gauge_railway_line_fill_construction',
@@ -3130,60 +3151,8 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', gauge_construction_dashes),
-      layout: gaugeLayout,
-    },
-    {
-      id: 'loading_gauge_railway_dual_gauge_line',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['!=', ['get', 'gauge1'], null],
-        ['!=', ['get', 'railway'], 'construction'],
-      ],
-      paint: gaugeFillPaint('gauge1', 'gaugeint1', gauge_dual_gauge_dashes),
-      layout: gaugeLayout,
-    },
-    {
-      id: 'loading_gauge_railway_dual_gauge_line_construction',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['!=', ['get', 'gauge1'], null],
-        ['==', ['get', 'railway'], 'construction'],
-      ],
-      paint: gaugeFillPaint('gauge1', 'gaugeint1', dual_construction_dashes),
-      layout: gaugeLayout,
-    },
-    {
-      id: 'loading_gauge_railway_multi_gauge_line',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['!=', ['get', 'gauge2'], null],
-        ['!=', ['get', 'railway'], 'construction'],
-      ],
-      paint: gaugeFillPaint('gauge2', 'gaugeint2', gauge_multi_gauge_dashes),
-      layout: gaugeLayout,
-    },
-    {
-      id: 'loading_gauge_railway_multi_gauge_line_construction',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['!=', ['get', 'gauge2'], null],
-        ['==', ['get', 'railway'], 'construction'],
-      ],
-      paint: gaugeFillPaint('gauge2', 'gaugeint2', multi_construction_dashes),
-      layout: gaugeLayout,
+      paint: loadingGaugeFillPaint(gauge_construction_dashes),
+      layout: loadingGaugeLayout,
     },
     preferredDirectionLayer('railway_preferred_direction', ['any',
       ['==', ['get', 'preferred_direction'], 'forward'],
@@ -3324,7 +3293,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{gauge_label}',
+        'text-field': '{loading_gauge}',
         // TODO not present: oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
