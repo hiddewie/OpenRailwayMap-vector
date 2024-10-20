@@ -127,14 +127,14 @@ function showSearchResults(results) {
     ? `
       <div class="mb-1 d-flex align-items-center">
         <span class="flex-grow-1">
-          <span class="badge badge-light">0 results</span>
+          <span class="badge rounded-pill text-bg-light">0 results</span>
         </span>
       </div>
     `
     : `
       <div class="mb-1 d-flex align-items-center">
         <span class="flex-grow-1">
-          <span class="badge badge-light">${results.length} results</span>
+          <span class="badge rounded-pill text-bg-light">${results.length} results</span>
         </span>
         <button class="btn btn-sm btn-primary" type="button" style="vertical-align: text-bottom" onclick="viewSearchResultsOnMap(${bounds})">
           <svg width="auto" height="16" viewBox="-4 0 36 36" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M14 0c7.732 0 14 5.641 14 12.6C28 23.963 14 36 14 36S0 24.064 0 12.6C0 5.641 6.268 0 14 0Z" fill="white"/><circle fill="var(--primary)" fill-rule="nonzero" cx="14" cy="14" r="7"/></g></svg>
@@ -657,31 +657,31 @@ function popupContent(properties) {
       ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
     </h6>
     <h6>
-      ${properties.reporting_marks ? `<span class="badge badge-pill badge-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
-      ${properties.railway_ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
-      ${properties.ref ? `<span class="badge badge-pill badge-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
-      ${properties.uic_ref ? `<span class="badge badge-pill badge-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
-      ${properties.position ? `<span class="badge badge-pill badge-light">position: ${properties.position}</span>` : ''}
-      ${properties.pos ? `<span class="badge badge-pill badge-light">position: ${properties.pos}</span>` : ''}
-      ${properties.operator ? `<span class="badge badge-pill badge-light">operator: ${properties.operator}</span>` : ''}
-      ${properties.track_ref ? `<span class="badge badge-pill badge-light">track: ${properties.track_ref}</span>` : ''}
-      ${properties.highspeed === true ? `<span class="badge badge-pill badge-light">high speed</span>` : ''}
-      ${properties.usage ? `<span class="badge badge-pill badge-light">usage: <span class="text-monospace">${properties.usage}</span></span>` : ''}
-      ${properties.service ? `<span class="badge badge-pill badge-light">service: <span class="text-monospace">${properties.service}</span></span>` : ''}
-      ${properties.tunnel === true ? `<span class="badge badge-pill badge-light">tunnel</span>` : ''}
-      ${properties.bridge === true ? `<span class="badge badge-pill badge-light">bridge</span>` : ''}
-      ${properties.railway_local_operated === true ? `<span class="badge badge-pill badge-light">operated locally</span>` : ''}
-      ${properties.maxspeed ? `<span class="badge badge-pill badge-light">maximum speed: ${properties.maxspeed} km/h</span>` : ''}
-      ${properties.direction_both ? `<span class="badge badge-pill badge-light">both directions</span>` : ''}
-      ${properties.train_protection ? `<span class="badge badge-pill badge-light">train protection: <span class="text-monospace">${properties.train_protection}</span></span>` : ''}
-      ${properties.deactivated === true ? `<span class="badge badge-pill badge-light">deactivated</span>` : ''}
-      ${properties.type === 'line' ? `<span class="badge badge-pill badge-light">line signal</span>` : ''}
-      ${properties.electrification_state ? `<span class="badge badge-pill badge-light">line electrification: <span class="text-monospace">${properties.electrification_state}</span></span>` : ''}
-      ${properties.voltage ? `<span class="badge badge-pill badge-light">voltage: ${properties.voltage} V</span>` : ''}
-      ${properties.frequency ? `<span class="badge badge-pill badge-light">frequency: ${properties.frequency.toFixed(2)} Hz</span>` : ''}
-      ${properties.gauge0 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge0}</span>` : ''}
-      ${properties.gauge1 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge1}</span>` : ''}
-      ${properties.gauge2 ? `<span class="badge badge-pill badge-light">gauge: ${properties.gauge2}</span>` : ''}
+      ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
+      ${properties.railway_ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
+      ${properties.ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
+      ${properties.uic_ref ? `<span class="badge rounded-pill text-bg-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
+      ${properties.position ? `<span class="badge rounded-pill text-bg-light">position: ${properties.position}</span>` : ''}
+      ${properties.pos ? `<span class="badge rounded-pill text-bg-light">position: ${properties.pos}</span>` : ''}
+      ${properties.operator ? `<span class="badge rounded-pill text-bg-light">operator: ${properties.operator}</span>` : ''}
+      ${properties.track_ref ? `<span class="badge rounded-pill text-bg-light">track: ${properties.track_ref}</span>` : ''}
+      ${properties.highspeed === true ? `<span class="badge rounded-pill text-bg-light">high speed</span>` : ''}
+      ${properties.usage ? `<span class="badge rounded-pill text-bg-light">usage: <span class="text-monospace">${properties.usage}</span></span>` : ''}
+      ${properties.service ? `<span class="badge rounded-pill text-bg-light">service: <span class="text-monospace">${properties.service}</span></span>` : ''}
+      ${properties.tunnel === true ? `<span class="badge rounded-pill text-bg-light">tunnel</span>` : ''}
+      ${properties.bridge === true ? `<span class="badge rounded-pill text-bg-light">bridge</span>` : ''}
+      ${properties.railway_local_operated === true ? `<span class="badge rounded-pill text-bg-light">operated locally</span>` : ''}
+      ${properties.maxspeed ? `<span class="badge rounded-pill text-bg-light">maximum speed: ${properties.maxspeed} km/h</span>` : ''}
+      ${properties.direction_both ? `<span class="badge rounded-pill text-bg-light">both directions</span>` : ''}
+      ${properties.train_protection ? `<span class="badge rounded-pill text-bg-light">train protection: <span class="text-monospace">${properties.train_protection}</span></span>` : ''}
+      ${properties.deactivated === true ? `<span class="badge rounded-pill text-bg-light">deactivated</span>` : ''}
+      ${properties.type === 'line' ? `<span class="badge rounded-pill text-bg-light">line signal</span>` : ''}
+      ${properties.electrification_state ? `<span class="badge rounded-pill text-bg-light">line electrification: <span class="text-monospace">${properties.electrification_state}</span></span>` : ''}
+      ${properties.voltage ? `<span class="badge rounded-pill text-bg-light">voltage: ${properties.voltage} V</span>` : ''}
+      ${properties.frequency ? `<span class="badge rounded-pill text-bg-light">frequency: ${properties.frequency.toFixed(2)} Hz</span>` : ''}
+      ${properties.gauge0 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge0}</span>` : ''}
+      ${properties.gauge1 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge1}</span>` : ''}
+      ${properties.gauge2 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge2}</span>` : ''}
     </h6>
   `;
 }
