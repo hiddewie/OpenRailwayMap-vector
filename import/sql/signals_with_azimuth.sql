@@ -3,10 +3,10 @@
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   -- TODO investigate signals with null features
   SELECT
-    fs.*,
+    s.*,
     degrees(ST_Azimuth(
-      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, fs.way)) - 0.01)),
-      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, fs.way)) + 0.01))
+      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
+      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
     )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
     CASE
 
@@ -72,33 +72,12 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
 
 {% end %}
     END as electrification_feature
-  FROM (
-    -- TODO: inline
-    SELECT
-      id,
-      way,
-      railway,
-      rank,
-      ref,
-      ref_multiline,
-      signal_direction,
-      deactivated,
-      {% for tag in signals_railway_signals.tags %}
-      "{% tag %}",
-{% end %}
-      {% for tag in speed_railway_signals.tags %}
-      "{% tag %}",
-{% end %}
-      {% for tag in electrification_signals.tags %}
-      "{% tag %}"{% unless loop.last %},{% end %}
-{% end %}
-    FROM signals s
-  ) AS fs
+  FROM signals s
   LEFT JOIN LATERAL (
     SELECT line.way as way
     FROM railway_line line
-    WHERE st_dwithin(fs.way, line.way, 10) AND line.railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature') -- TODO use feature
-    ORDER BY fs.way <-> line.way
+    WHERE st_dwithin(s.way, line.way, 10) AND line.railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature') -- TODO use feature
+    ORDER BY s.way <-> line.way
     LIMIT 1
   ) as sl ON true
   WHERE
