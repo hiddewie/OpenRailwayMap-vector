@@ -4,6 +4,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
     SELECT
         id,
         way,
+        way_length,
         railway,
         CASE
             WHEN railway = 'proposed' THEN COALESCE(proposed_railway, 'rail')
@@ -68,6 +69,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
         (SELECT
              id,
              way,
+             way_length,
              railway,
              usage,
              service,

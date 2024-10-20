@@ -113,6 +113,7 @@ postgres:
       properties:
         # TODO calculate labels in frontend
         id: integer
+        way_length: number
         railway: string
         feature: string
         usage: string
