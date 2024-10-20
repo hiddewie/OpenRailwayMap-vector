@@ -4,7 +4,41 @@ loading_gauges:
   - { value: 'TSI_GB1', legend: 'GB1', color: 'red' }
   - { value: 'TSI_GC', legend: 'GC', color: 'yellow' }
   - { value: 'PPI', legend: 'PPI', color: 'pink' }
+  - { value: 'W5', legend: 'W5', color: 'fuchsia' }
+  - { value: 'W6', legend: 'W6', color: 'fuchsia' }
   - { value: 'W6A', legend: 'W6A', color: 'fuchsia' }
+  - { value: 'W6A*', legend: 'W6A*', color: 'fuchsia' }
+  - { value: 'W7', legend: 'W7', color: 'orange' }
   - { value: 'W6A, W7', legend: 'W6A, W7', color: 'orange' }
+  - { value: 'W6A, W7*', legend: 'W6A, W7*', color: 'orange' }
+  - { value: 'W6A*, W7*', legend: 'W6A*, W7*', color: 'orange' }
   - { value: 'W6A, W7, W8', legend: 'W6A, W7, W8', color: 'brown' }
+  - { value: 'W6A, W7*, W8*', legend: 'W6A, W7*, W8*', color: 'brown' }
+  - { value: 'W6A, W7, W8*', legend: 'W6A, W7, W8*', color: 'brown' }
+  - { value: 'W6A, W7, W8, W9', legend: 'W6A, W7, W8, W9', color: 'purple' }
   - { value: 'W6A, W7, W8, W9, W10', legend: 'W6A, W7, W8, W9, W10', color: 'purple' }
+  - { value: 'W9', legend: 'W9', color: 'purple' }
+  - { value: 'W10', legend: 'W10', color: 'purple' }
+  - { value: 'W12', legend: 'W12', color: 'purple' }
+  - { value: 'W6A, W7, W8, W9, W10, W12', legend: 'W6A, W7, W8, W9, W10, W12', color: 'purple' }
+  - { value: 'CPb+', legend: 'CPb+ (PTb+)', color: 'purple' }
+  - { value: 'CPb', legend: 'CPb (PTb)', color: 'purple' }
+  - { value: 'PT c', legend: 'PTc', color: 'purple' }
+  - { value: 'G1', legend: 'G1', color: 'purple' }
+  - { value: 'G2', legend: 'G2', color: 'purple' }
+  - { value: 'GOST_T', legend: 'GOST_T', color: 'purple' }
+  - { value: 'B1', legend: 'B1', color: 'purple' }
+  - { value: 'FS', legend: 'FS', color: 'purple' }
+  - { value: 'W8', legend: 'W8', color: 'purple' }
+  - { value: 'Großprofil', legend: 'Großprofil', color: 'purple' }
+  - { value: 'Kleinprofil', legend: 'Kleinprofil', color: 'purple' }
+  - { value: 'deep-tube', legend: 'deep-tube', color: 'purple' }
+  - { value: 'subsurface', legend: 'subsurface', color: 'purple' }
+  - { value: 'B', legend: 'B', color: 'purple' }
+  - { value: 'D4', legend: 'D4', color: 'purple' }
+  - { value: 'NM1520 ŽSR', legend: 'NM1520 ŽSR', color: 'purple' }
+  - { value: 'DMS 10002054476', legend: 'DMS 10002054476', color: 'purple' }
+  - { value: 'TSI_GB2', legend: 'TSI_GB2', color: 'purple' }
+  - { value: 'UR760', legend: 'UR760', color: 'purple' }
+  - { value: 'UIC_C', legend: 'UIC_C', color: 'purple' }
+  - { value: 'EBV3', legend: 'EBV3', color: 'purple' }
