@@ -462,8 +462,6 @@ function osm2pgsql.process_node(object)
       {% for tag in electrification_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
-
-
     })
   end
 
