@@ -1062,6 +1062,51 @@ const railwayKmText = {
   },
 };
 
+const preferredDirection = {
+  id: 'railway_preferred_direction',
+  type: 'symbol',
+  minzoom: 15,
+  source: 'high',
+  'source-layer': 'railway_line_high',
+  filter: ['all',
+    ['!', ['get', 'bridge']],
+    ['!', ['get', 'tunnel']],
+    ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]
+  ],
+  layout: {
+    'symbol-placement': 'line',
+    'symbol-spacing': 750,
+    'icon-overlap': 'always',
+    // TODO: replace with SDF image with line coloring
+    'icon-image': ['match', ['get', 'preferred_direction'],
+      'forward', 'general/line-direction',
+      'backward', 'general/line-direction',
+      'both', 'general/line-direction-both',
+      '',
+    ],
+    'icon-rotate': ['match', ['get', 'preferred_direction'],
+      'backward', 180,
+      0,
+    ],
+  },
+};
+const preferredDirectionTunnel = {
+  ...preferredDirection,
+  id: 'railway_tunnel_preferred_direction',
+  filter: ['all',
+    ['get', 'tunnel'],
+    ['any',
+      ['==', ['get', 'preferred_direction'], 'forward'],
+      ['==', ['get', 'preferred_direction'], 'backward'],
+      ['==', ['get', 'preferred_direction'], 'both'],
+    ]
+  ],
+};
+
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
@@ -1229,37 +1274,7 @@ const layers = {
         'line-color': 'rgba(255, 255, 255, 50%)',
       }
     },
-    {
-      id: 'railway_tunnel_preferred_direction',
-      type: 'symbol',
-      minzoom: 15,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'tunnel'],
-        ['any',
-          ['==', ['get', 'preferred_direction'], 'forward'],
-          ['==', ['get', 'preferred_direction'], 'backward'],
-          ['==', ['get', 'preferred_direction'], 'both'],
-        ]
-      ],
-      layout: {
-        'symbol-placement': 'line',
-        'symbol-spacing': 750,
-        'icon-overlap': 'always',
-        // TODO: replace with SDF image with line coloring
-        'icon-image': ['match', ['get', 'preferred_direction'],
-          'forward', 'general/line-direction',
-          'backward', 'general/line-direction',
-          'both', 'general/line-direction-both',
-          '',
-        ],
-        'icon-rotate': ['match', ['get', 'preferred_direction'],
-          'backward', 180,
-          0,
-        ],
-      },
-    },
+    preferredDirectionTunnel,
     {
       id: 'railway_line_casing',
       type: 'line',
@@ -1428,38 +1443,7 @@ const layers = {
       },
       paint: standardFillPaint([1]),
     },
-    {
-      id: 'railway_preferred_direction',
-      type: 'symbol',
-      minzoom: 15,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['!', ['get', 'bridge']],
-        ['!', ['get', 'tunnel']],
-        ['any',
-          ['==', ['get', 'preferred_direction'], 'forward'],
-          ['==', ['get', 'preferred_direction'], 'backward'],
-          ['==', ['get', 'preferred_direction'], 'both'],
-        ]
-      ],
-      layout: {
-        'symbol-placement': 'line',
-        'symbol-spacing': 750,
-        'icon-overlap': 'always',
-        // TODO: replace with SDF image with line coloring
-        'icon-image': ['match', ['get', 'preferred_direction'],
-          'forward', 'general/line-direction',
-          'backward', 'general/line-direction',
-          'both', 'general/line-direction-both',
-          '',
-        ],
-        'icon-rotate': ['match', ['get', 'preferred_direction'],
-          'backward', 180,
-          0,
-        ],
-      },
-    },
+    preferredDirection,
     {
       id: 'railway_bridge_railing',
       type: 'line',
