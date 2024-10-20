@@ -270,6 +270,7 @@ const knownStyles = {
   signals: 'Train protection',
   electrification: 'Electrification',
   gauge: 'Gauge',
+  loading_gauge: 'Loading gauge',
 };
 
 function hashToObject(hash) {
@@ -682,6 +683,7 @@ function popupContent(properties) {
       ${properties.gauge0 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge0}</span>` : ''}
       ${properties.gauge1 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge1}</span>` : ''}
       ${properties.gauge2 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge2}</span>` : ''}
+      ${properties.loading_gauge ? `<span class="badge rounded-pill text-bg-light">loading gauge: ${properties.loading_gauge}</span>` : ''}
     </h6>
   `;
 }
