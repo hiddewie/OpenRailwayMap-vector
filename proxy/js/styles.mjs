@@ -1406,15 +1406,26 @@ const layers = {
       filter: ['all',
         ['!', ['get', 'bridge']],
         ['!', ['get', 'tunnel']],
-        ['!=', ['get', 'preferred_direction'], null],
+        ['any',
+          ['==', ['get', 'preferred_direction'], 'forward'],
+          ['==', ['get', 'preferred_direction'], 'backward'],
+          ['==', ['get', 'preferred_direction'], 'both'],
+        ]
       ],
       layout: {
         'symbol-placement': 'line',
         'symbol-spacing': 750,
         'icon-overlap': 'always',
-        // TODO flip for reversed direction
-        // TODO icon for direction both
-        'icon-image': 'general/line-direction',
+        'icon-image': ['match', ['get', 'preferred_direction'],
+          'forward', 'general/line-direction',
+          'backward', 'general/line-direction',
+          'both', 'general/line-direction-both',
+          ''
+        ],
+        'icon-rotation': ['match', ['get', 'preferred_direction'],
+          'backward', 180,
+          0
+        ],
       },
     },
     {
