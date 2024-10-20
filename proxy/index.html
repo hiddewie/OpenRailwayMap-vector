@@ -41,8 +41,8 @@
           </li>
         </ul>
         <form id="search-facilities-form">
-          <div class="form-group">
-            <label class="mb-0">Search by</label>
+          <div class="mb-3">
+            <label class="form-label">Search by</label>
             <div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="type" id="search-all" value="all" checked>
@@ -62,35 +62,23 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <div class="input-group">
-              <input type="search" id="facility-term" name="term" class="form-control" placeholder="Bruxelles, EAHS, 8000294" minlength="2" required>
-                <div class="input-group-append">
-                  <button class="btn btn-success" type="submit">Search</button>
-                </div>
-            </div>
+          <div class="input-group mb-3">
+            <input type="search" id="facility-term" name="term" class="form-control" placeholder="Bruxelles, EAHS, 8000294" minlength="2" required>
+            <button class="btn btn-success" type="submit">Search</button>
           </div>
         </form>
         <form id="search-milestones-form">
           <div class="row">
               <div class="col">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="milestone-ref">Reference</label>
-                    </div>
-                    <input type="text" id="milestone-ref" name="ref" class="form-control" placeholder="6020" required>
-                  </div>
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="milestone-ref">Reference</label>
+                  <input type="text" id="milestone-ref" name="ref" class="form-control" placeholder="6020" required>
                 </div>
               </div>
               <div class="col">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="milestone-position">Position</label>
-                    </div>
-                    <input type="number" id="milestone-position" name="position" class="form-control" placeholder="22.7" min="0" step="0.1" required>
-                  </div>
+                <div class="input-group mb-3">
+                  <label class="input-group-text" for="milestone-position">Position</label>
+                  <input type="number" id="milestone-position" name="position" class="form-control" placeholder="22.7" min="0" step="0.1" required>
                 </div>
               </div>
               <div class="col flex-grow-0">
@@ -112,22 +100,22 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="backgroundSaturation">Background map saturation</label>
-            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
-            <small class="form-text text-muted">
+          <div class="mb-3">
+            <label for="backgroundSaturation" class="form-label">Background map saturation</label>
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
+            <small class="form-text">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
           </div>
-          <div class="form-group">
-            <label for="backgroundOpacity">Background map opacity</label>
-            <input type="range" min="0.0" max="1.0" step="0.05" class="form-control-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
-            <small class="form-text text-muted">
+          <div class="mb-3">
+            <label for="backgroundOpacity" class="form-label" >Background map opacity</label>
+            <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
+            <small class="form-text">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
-          <div class="form-group">
-            <label for="backgroundUrl">Background map tile URL</label>
+          <div class="mb-3">
+            <label for="backgroundUrl" class="form-label" >Background map tile URL</label>
             <div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeRaster" value="raster" checked onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
@@ -139,7 +127,7 @@
               </div>
             </div>
             <input type="url" required class="form-control" id="backgroundUrl" onchange="updateConfiguration('backgroundUrl', this.value); updateBackgroundMapStyle();">
-            <small class="form-text text-muted">
+            <small class="form-text">
               The tile URL for the background map.<br>
               Raster tiles: A URL serving raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers, for example <code>https://tile.openstreetmap.org/{z}/{x}/{y}.png</code>.<br>
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://americanamap.org/style.json</code>.
