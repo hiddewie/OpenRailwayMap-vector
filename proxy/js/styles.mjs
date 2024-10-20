@@ -1447,8 +1447,12 @@ const layers = {
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['get', 'bridge'],
-        // TODO
-        ['>=', , 10000],
+        ['>=', ['get', 'way_length'],
+          ['interpolate', ["exponential", .5], ['zoom'],
+            8, 0.008,
+            16, 0
+          ],
+        ],
         ['!=', ['get', 'railway'], 'construction'],
         ['!=', ['get', 'railway'], 'proposed'],
         ['!=', ['get', 'railway'], 'abandoned'],
@@ -1468,6 +1472,12 @@ const layers = {
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['get', 'bridge'],
+        ['>=', ['get', 'way_length'],
+          ['interpolate', ["exponential", .5], ['zoom'],
+            8, 0.008,
+            16, 0
+          ],
+        ],
         ['!=', ['get', 'railway'], 'construction'],
         ['!=', ['get', 'railway'], 'proposed'],
         ['!=', ['get', 'railway'], 'abandoned'],
