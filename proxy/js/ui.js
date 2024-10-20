@@ -476,20 +476,20 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
-    const buttonGroup = createDomElement('div', 'btn-group-vertical btn-group-toggle', this._container);
+    const buttonGroup = createDomElement('div', 'btn-group-vertical', this._container);
 
     Object.entries(knownStyles).forEach(([name, styleLabel]) => {
       const id = `style-${name}`
-      const label = createDomElement('label', 'btn btn-light', buttonGroup);
-      label.htmlFor = id
-      label.innerText = styleLabel
-      const radio = createDomElement('input', '', label);
+      const radio = createDomElement('input', 'btn-check', buttonGroup);
       radio.id = id
       radio.type = 'radio'
       radio.name = 'style'
       radio.value = name
       radio.onclick = () => this.options.onStyleChange(name)
       radio.checked = (this.options.initialSelection === name)
+      const label = createDomElement('label', 'btn btn-outline-success', buttonGroup);
+      label.htmlFor = id
+      label.innerText = styleLabel
     });
 
     return this._container;
