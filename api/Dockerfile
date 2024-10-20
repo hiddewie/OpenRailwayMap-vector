@@ -1,4 +1,4 @@
-FROM postgis/postgis:16-3.4-alpine as import
+FROM postgis/postgis:17-3.4-alpine as import
 
 COPY api.sql /sql/import.sql
 COPY facility_functions.sql /sql/facility_functions.sql
@@ -12,7 +12,7 @@ ENV PGDATA /var/lib/postgresql/postgres-data
 
 HEALTHCHECK CMD ["pg_isready", "--host", "localhost", "--user", "postgres", "--dbname", "gis", "--port", "5432"]
 
-FROM postgis/postgis:16-3.4-alpine as runtime
+FROM postgis/postgis:17-3.4-alpine as runtime
 
 RUN apk add --no-cache \
         curl \
