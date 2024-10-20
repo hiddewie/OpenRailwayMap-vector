@@ -1,0 +1,10 @@
+loading_gauges:
+  - { value: 'TSI_GA', legend: 'GA', color: 'blue' }
+  - { value: 'TSI_GB', legend: 'GB', color: 'green' }
+  - { value: 'TSI_GB1', legend: 'GB1', color: 'red' }
+  - { value: 'TSI_GC', legend: 'GC', color: 'yellow' }
+  - { value: 'PPI', legend: 'PPI', color: 'pink' }
+  - { value: 'W6A', legend: 'W6A', color: 'fuchsia' }
+  - { value: 'W6A, W7', legend: 'W6A, W7', color: 'orange' }
+  - { value: 'W6A, W7, W8', legend: 'W6A, W7, W8', color: 'brown' }
+  - { value: 'W6A, W7, W8, W9, W10', legend: 'W6A, W7, W8, W9, W10', color: 'purple' }
