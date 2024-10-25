@@ -1627,20 +1627,6 @@ const layers = {
       },
     ),
     ...imageLayerWithOutline(
-      'railway_symbols_low',
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 10,
-        source: 'openrailwaymap_standard',
-        'source-layer': 'standard_railway_symbols',
-        filter: ['==', ['get', 'feature'], 'general/border'],
-        layout: {
-          'icon-overlap': 'cooperative',
-        },
-      },
-    ),
-    ...imageLayerWithOutline(
       'railway_symbols_med',
       ['get', 'feature'],
       {
