@@ -1,4 +1,4 @@
-FROM ghcr.io/maplibre/martin
+FROM ghcr.io/maplibre/martin:main
 
 COPY martin /config
 COPY symbols /symbols
