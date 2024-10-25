@@ -1087,6 +1087,29 @@ const preferredDirectionLayer = (id, filter) => ({
   },
 });
 
+const imageLayerWithOutline = (id, spriteExpression, layer) => [
+  {
+    id: `${id}_outline`,
+    ...layer,
+    paint: {
+      'icon-halo-color': 'white',
+      'icon-halo-width': 2.0,
+    },
+    layout: {
+      ...(layer.layout || {}),
+      'icon-image': ['image', ['concat', 'sdf:', spriteExpression]],
+    },
+  },
+  {
+    id: `${id}_image`,
+    ...layer,
+    layout: {
+      ...(layer.layout || {}),
+      'icon-image': ['image', spriteExpression],
+    },
+  },
+]
+
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
 const layers = {
   standard: [
@@ -1541,81 +1564,106 @@ const layers = {
         'icon-image': 'general/tram-stop',
       }
     },
-    {
-      id: 'railway_symbols_low',
-      type: 'symbol',
-      minzoom: 10,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'feature'], 'general/border'],
-      layout: {
-        'icon-image': ['image', ['get', 'feature']],
-      }
-    },
-    {
-      id: 'railway_symbols_med_high',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'feature'], 'general/crossing'],
-        ['==', ['get', 'feature'], 'general/level-crossing'],
-        ['==', ['get', 'feature'], 'general/level-crossing-light'],
-        ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
-        ['==', ['get', 'feature'], 'general/lubricator'],
-        ['==', ['get', 'feature'], 'general/fuel'],
-        ['==', ['get', 'feature'], 'general/sand_store'],
-        ['==', ['get', 'feature'], 'general/aei'],
-        ['==', ['get', 'feature'], 'general/buffer_stop'],
-        ['==', ['get', 'feature'], 'general/derail'],
-        ['==', ['get', 'feature'], 'general/defect_detector'],
-        ['==', ['get', 'feature'], 'general/hump_yard'],
-        ['==', ['get', 'feature'], 'general/loading_gauge'],
-        ['==', ['get', 'feature'], 'general/preheating'],
-        ['==', ['get', 'feature'], 'general/compressed_air_supply'],
-        ['==', ['get', 'feature'], 'general/waste_disposal'],
-        ['==', ['get', 'feature'], 'general/coaling_facility'],
-        ['==', ['get', 'feature'], 'general/wash'],
-        ['==', ['get', 'feature'], 'general/water_tower'],
-        ['==', ['get', 'feature'], 'general/water_crane'],
-        ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
-        ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
-      ],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': ['image', ['get', 'feature']],
-      }
-    },
-    {
-      id: 'railway_symbols_med',
-      type: 'symbol',
-      minzoom: 12,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'feature'], 'general/owner-change'],
-        ['==', ['get', 'feature'], 'general/radio-mast'],
-        ['==', ['get', 'feature'], 'general/radio-antenna'],
-      ],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-image': ['image', ['get', 'feature']],
+    ...imageLayerWithOutline(
+      'railway_symbols_low',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 10,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['==', ['get', 'feature'], 'general/border'],
+        layout: {
+          'icon-overlap': 'cooperative',
+        },
       },
-    },
-    {
-      id: 'railway_symbols_high',
-      type: 'symbol',
-      minzoom: 16,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['==', ['get', 'feature'], 'general/phone'],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-image': ['image', ['get', 'feature']],
-      }
-    },
+    ),
+    ...imageLayerWithOutline(
+      'railway_symbols_med_high',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['any',
+          ['==', ['get', 'feature'], 'general/crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light'],
+          ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
+          ['==', ['get', 'feature'], 'general/lubricator'],
+          ['==', ['get', 'feature'], 'general/fuel'],
+          ['==', ['get', 'feature'], 'general/sand_store'],
+          ['==', ['get', 'feature'], 'general/aei'],
+          ['==', ['get', 'feature'], 'general/buffer_stop'],
+          ['==', ['get', 'feature'], 'general/derail'],
+          ['==', ['get', 'feature'], 'general/defect_detector'],
+          ['==', ['get', 'feature'], 'general/hump_yard'],
+          ['==', ['get', 'feature'], 'general/loading_gauge'],
+          ['==', ['get', 'feature'], 'general/preheating'],
+          ['==', ['get', 'feature'], 'general/compressed_air_supply'],
+          ['==', ['get', 'feature'], 'general/waste_disposal'],
+          ['==', ['get', 'feature'], 'general/coaling_facility'],
+          ['==', ['get', 'feature'], 'general/wash'],
+          ['==', ['get', 'feature'], 'general/water_tower'],
+          ['==', ['get', 'feature'], 'general/water_crane'],
+          ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
+          ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
+        ],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
+    ...imageLayerWithOutline(
+      'railway_symbols_low',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 10,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['==', ['get', 'feature'], 'general/border'],
+        layout: {
+          'icon-overlap': 'cooperative',
+        },
+      },
+    ),
+    ...imageLayerWithOutline(
+      'railway_symbols_med',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 12,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['any',
+          ['==', ['get', 'feature'], 'general/owner-change'],
+          ['==', ['get', 'feature'], 'general/radio-mast'],
+          ['==', ['get', 'feature'], 'general/radio-antenna'],
+        ],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
+    ...imageLayerWithOutline(
+      'railway_symbols_high',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['==', ['get', 'feature'], 'general/phone'],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
     railwayKmText,
     {
       id: 'railway_text_track_numbers',
@@ -2106,40 +2154,36 @@ const layers = {
         'icon-rotate': ['get', 'azimuth'],
       }
     },
-    {
-      id: 'speed_railway_signals',
-      type: 'symbol',
-      source: 'openrailwaymap_speed',
-      minzoom: 13,
-      'source-layer': 'speed_railway_signals',
-      filter: ['step', ['zoom'],
-        ['all',
-          ['!=', ['get', 'feature'], null],
-          ['==', ['get', 'type'], 'line'],
-        ],
-        14,
-        ['all',
-          ['!=', ['get', 'feature'], null],
-          ['any',
+    ...imageLayerWithOutline(
+      'speed_railway_signals',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        source: 'openrailwaymap_speed',
+        minzoom: 13,
+        'source-layer': 'speed_railway_signals',
+        filter: ['step', ['zoom'],
+          ['all',
+            ['!=', ['get', 'feature'], null],
             ['==', ['get', 'type'], 'line'],
-            ['==', ['get', 'type'], 'tram'],
-          ]
+          ],
+          14,
+          ['all',
+            ['!=', ['get', 'feature'], null],
+            ['any',
+              ['==', ['get', 'type'], 'line'],
+              ['==', ['get', 'type'], 'tram'],
+            ]
+          ],
+          16,
+          ['!=', ['get', 'feature'], null],
         ],
-        16,
-        ['!=', ['get', 'feature'], null],
-      ],
-      paint: {
-        // TODO https://github.com/maplibre/martin/issues/1075
-        // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
-        // 'icon-halo-blur': 0,
-        // 'icon-halo-width': 2.0,
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
       },
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': ['image', ['get', 'feature']],
-      }
-    },
+    ),
     railwayKmText,
     {
       id: 'speed_railway_line_text',
@@ -2342,31 +2386,21 @@ const layers = {
         'icon-rotate': ['get', 'azimuth'],
       }
     },
-    {
-      id: 'railway_signals',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'signals_railway_signals',
-      paint: {
-        // TODO https://github.com/maplibre/martin/issues/1075
-        // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
-        // 'icon-halo-blur': 0,
-        // 'icon-halo-width': 2.0,
+    ...imageLayerWithOutline(
+      'railway_signals',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        // TODO fix blockkennzeichen
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
       },
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': ['step', ['zoom'],
-          ['case',
-            ['==', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'], 'de/blockkennzeichen',
-            ['image', ['get', 'feature']],
-          ],
-          16,
-          ['image', ['get', 'feature']],
-        ],
-      }
-    },
+    ),
     {
       id: 'railway_signals_deactivated',
       type: 'symbol',
@@ -2602,23 +2636,20 @@ const layers = {
         'icon-rotate': ['get', 'azimuth'],
       }
     },
-    {
-      id: 'electrification_signals',
-      type: 'symbol',
-      minzoom: 16,
-      source: 'openrailwaymap_electrification',
-      'source-layer': 'electrification_signals',
-      paint: {
-        // TODO https://github.com/maplibre/martin/issues/1075
-        // 'icon-halo-color': 'rgba(255, 255, 255, 1)',
-        // 'icon-halo-blur': 0,
-        // 'icon-halo-width': 2.0,
+    ...imageLayerWithOutline(
+      'electrification_signals',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_electrification',
+        'source-layer': 'electrification_signals',
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
       },
-      layout: {
-        'icon-overlap': 'always',
-        'icon-image': ['image', ['get', 'feature']],
-      }
-    },
+    ),
     railwayKmText,
     {
       id: 'electrification_railway_text_high',
@@ -3057,7 +3088,16 @@ const makeStyle = selectedStyle => ({
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,
-  sprite: `${origin}/sprite/symbols`,
+  sprite: [
+    {
+      id: 'sdf',
+      url: `${origin}/sdf_sprite/symbols`
+    },
+    {
+      id: 'default',
+      url: `${origin}/sprite/symbols`
+    }
+  ],
   version: 8,
   layers: layers[selectedStyle],
 });
