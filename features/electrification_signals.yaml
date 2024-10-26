@@ -89,6 +89,14 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    - description: AT-V2:schaltzeiger
+      country: AT
+      icon: { default: 'at/schaltzeiger' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'AT-V2:schaltzeiger' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
     # --- DE --- #
 
     - description: pantograph down advance El 3
