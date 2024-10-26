@@ -170,8 +170,6 @@ local signals = osm2pgsql.define_table({
     { column = 'deactivated', type = 'boolean' },
     { column = 'ref', type = 'text' },
     { column = 'ref_multiline', type = 'text' },
-    { column = 'ref_width', type = 'smallint' },
-    { column = 'ref_height', type = 'smallint' },
     { column = 'signal_direction', type = 'text' },
     {% for tag in signals_railway_signals.tags %}
     { column = '{% tag %}', type = 'text' },
@@ -430,11 +428,6 @@ function osm2pgsql.process_node(object)
       tags['railway:signal:speed_limit:deactivated']
     ) == 'yes'
     local ref_multiline, newline_count = (tags.ref or ''):gsub(' ', '\n')
-    local ref_height = newline_count + 1
-    local ref_width = 0
-    for part in string.gmatch(tags.ref or '', '[^ ]+') do
-      ref_width = math.max(ref_width, part:len())
-    end
 
     signals:insert({
       way = object:as_point(),
@@ -443,8 +436,6 @@ function osm2pgsql.process_node(object)
       deactivated = deactivated,
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
-      ref_height = ref_multiline ~= '' and ref_height or nil,
-      ref_width = ref_multiline ~= '' and ref_width or nil,
       signal_direction = tags['railway:signal:direction'],
       {% for tag in signals_railway_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],

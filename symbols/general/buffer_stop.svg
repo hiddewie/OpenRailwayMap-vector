@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
-<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 2.000868 0.998264 L 2.000868 7.999132 " transform="matrix(0.9, 0, 0, 0.9, 0, 0)"/>
-<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.998264 17.000868 L 19.001736 17.000868 " transform="matrix(0.9, 0, 0, 0.9, 0, 0)"/>
-<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.998264 17.000868 L 2.000868 2.999132 " transform="matrix(0.9, 0, 0, 0.9, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.998264 7.000868 L 15.998264 17.000868 L 5.998264 17.000868 L 5.998264 7.000868 " transform="matrix(0.9, 0, 0, 0.9, 0, 0)"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="15.110512" viewBox="0 0 16 15.110512">
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.901932 0 L 0.901932 6.301655 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0 14.403217 L 16.203125 14.403217 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 13.501286 14.403217 L 0.901932 1.799908 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.501747 5.403679 L 13.501286 14.403217 L 4.501747 14.403217 L 4.501747 5.403679 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
 </svg>

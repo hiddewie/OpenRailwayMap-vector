@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9.999906" height="10" viewBox="0 0 9.999906 10">
-<rect x="-0.999991" y="-1" width="11.999887" height="12" fill="rgb(100%, 100%, 100%)" fill-opacity="1"/>
-<path fill-rule="evenodd" fill="rgb(37.254903%, 37.254903%, 37.254903%)" fill-opacity="1" d="M 1.390625 2.46875 L 1.390625 5.164062 C 2.386719 5.164062 6.261719 4.574219 6.261719 3.816406 C 6.261719 3.058594 2.386719 2.46875 1.390625 2.46875 Z M 1.390625 2.46875 "/>
-<path fill-rule="nonzero" fill="rgb(14.117648%, 14.117648%, 14.117648%)" fill-opacity="1" d="M 0 1.886719 L 1.488281 1.886719 L 1.488281 10 L 0 10 Z M 0 1.886719 "/>
-<path fill="none" stroke-width="0.553205" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.532796 290.638718 C 4.935876 291.405603 4.952413 291.926507 4.532796 292.466014 " transform="matrix(1.889746, 0, 0, 1.889746, -1.58927, -546.979386)"/>
-<path fill="none" stroke-width="0.553205" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.23767 289.72507 C 6.04383 291.256774 6.07897 292.300648 5.23767 293.379662 " transform="matrix(1.889746, 0, 0, 1.889746, -1.58927, -546.979386)"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="12.995312" viewBox="0 0 13 12.995312">
+<path fill-rule="evenodd" fill="rgb(37.254902%, 37.254902%, 37.254902%)" fill-opacity="1" d="M 1.808594 3.203125 L 1.808594 6.707031 C 3.101562 6.707031 8.140625 5.941406 8.140625 4.957031 C 8.140625 3.972656 3.101562 3.203125 1.808594 3.203125 Z M 1.808594 3.203125 "/>
+<path fill-rule="nonzero" fill="rgb(14.117647%, 14.117647%, 14.117647%)" fill-opacity="1" d="M 0 2.449219 L 1.933594 2.449219 L 1.933594 12.996094 L 0 12.996094 Z M 0 2.449219 "/>
+<path fill="none" stroke-width="1.04542" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 6.976403 2.250356 C 7.736537 3.698515 7.769586 4.683985 6.976403 5.702504 " transform="matrix(1.300142, 0, 0, 1.300142, 0, 0)"/>
+<path fill="none" stroke-width="1.04542" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 8.307388 0.52278 C 9.83066 3.419099 9.896758 5.390038 8.307388 7.43008 " transform="matrix(1.300142, 0, 0, 1.300142, 0, 0)"/>
 </svg>

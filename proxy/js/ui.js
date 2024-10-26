@@ -432,11 +432,6 @@ const backgroundMap = new maplibregl.Map({
 });
 updateBackgroundMapContainer();
 
-// Process the current state of the URL hash once onto the background map
-const backgroundHash = new maplibregl.Hash('view').addTo(backgroundMap);
-backgroundHash._onHashChange();
-backgroundHash.remove();
-
 const map = new maplibregl.Map({
   container: 'map',
   hash: 'view',

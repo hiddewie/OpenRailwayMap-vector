@@ -44,7 +44,7 @@ services:
       - OSM2PGSQL_DATAFILE
 
   martin-cp:
-    image: ghcr.io/maplibre/martin
+    image: ghcr.io/maplibre/martin:main
     depends_on:
       db:
         condition: service_healthy
