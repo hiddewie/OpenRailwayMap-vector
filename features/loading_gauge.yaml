@@ -4,6 +4,7 @@ loading_gauges:
   - { value: 'TSI_GB1', legend: 'GB1', color: 'hsl(56, 100%, 40%)' }
   - { value: 'TSI_GB2', legend: 'TSI_GB2', color: 'hsl(42, 100%, 40%)' }
   - { value: 'TSI_GC', legend: 'GC', color: 'hsl(27, 100%, 40%)' }
+  - { value: 'UIC_C', legend: 'UIC_C', color: 'hsl(215, 100%, 40%)' }
   - { value: 'PPI', legend: 'PPI', color: 'hsl(0, 100%, 40%)' }
   - { value: 'W5', legend: 'W5', color: 'hsl(324, 100%, 70%)' }
   - { value: 'W6', legend: 'W6', color: 'hsl(303, 100%, 63%)' }
@@ -26,19 +27,17 @@ loading_gauges:
   - { value: 'CPb', legend: 'CPb (PTb)', color: 'hsl(279, 100%, 44%)' }
   - { value: 'CPb+', legend: 'CPb+ (PTb+)', color: 'hsl(245, 100%, 44%)' }
   - { value: 'PT c', legend: 'PTc', color: 'hsl(170, 100%, 34%)' }
-  - { value: 'G1', legend: 'G1', color: 'purple' }
-  - { value: 'G2', legend: 'G2', color: 'purple' }
-  - { value: 'GOST_T', legend: 'GOST_T', color: 'purple' }
-  - { value: 'B1', legend: 'B1', color: 'hsl(138, 100%, 22%)' }
-  - { value: 'FS', legend: 'FS', color: 'hsl(195, 100%, 22%)' }
-  - { value: 'Großprofil', legend: 'Großprofil', color: 'purple' }
-  - { value: 'Kleinprofil', legend: 'Kleinprofil', color: 'purple' }
-  - { value: 'deep-tube', legend: 'deep-tube', color: 'purple' }
-  - { value: 'subsurface', legend: 'subsurface', color: 'purple' }
-  - { value: 'B', legend: 'B', color: 'purple' }
-  - { value: 'D4', legend: 'D4', color: 'purple' }
-  - { value: 'NM1520 ŽSR', legend: 'NM1520 ŽSR', color: 'purple' }
-  - { value: 'DMS 10002054476', legend: 'DMS 10002054476', color: 'purple' }
-  - { value: 'UR760', legend: 'UR760', color: 'purple' }
-  - { value: 'UIC_C', legend: 'UIC_C', color: 'purple' }
-  - { value: 'EBV3', legend: 'EBV3', color: 'purple' }
+  - { value: 'DMS 10002054476', legend: 'DMS 10002054476', color: 'hsl(18, 100%, 40%)' }
+  - { value: 'GOST_T', legend: 'GOST_T', color: 'hsl(132, 100%, 34%)' }
+  - { value: 'B', legend: 'B', color: 'hsl(75, 100%, 30%)' }
+  - { value: 'B1', legend: 'B1', color: 'hsl(138, 100%, 30%)' }
+  - { value: 'FS', legend: 'FS', color: 'hsl(195, 100%, 30%)' }
+  - { value: 'G1', legend: 'G1', color: 'hsl(282, 100%, 38%)' }
+  - { value: 'G2', legend: 'G2', color: 'hsl(306, 100%, 38%)' }
+  - { value: 'Kleinprofil', legend: 'Kleinprofil', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'Großprofil', legend: 'Großprofil', color: 'hsl(56, 100%, 40%)' }
+  - { value: 'deep-tube', legend: 'deep-tube', color: 'hsl(282, 100%, 40%)' }
+  - { value: 'subsurface', legend: 'subsurface', color: 'hsl(242, 100%, 40%)' }
+  - { value: 'NM1520 ŽSR', legend: 'NM1520 ŽSR', color: 'hsl(273, 100%, 40%)' }
+  - { value: 'UR760', legend: 'UR760', color: 'hsl(215, 100%, 40%)' }
+  - { value: 'EBV3', legend: 'EBV3', color: 'hsl(215, 100%, 40%)' }
