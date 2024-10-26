@@ -1,9 +1,10 @@
 
 electrification_signals:
   tags:
+    - 'railway:signal:electricity'
     - 'railway:signal:electricity:type'
     - 'railway:signal:electricity:form'
-    - 'railway:signal:electricity'
+    - 'railway:signal:electricity:for'
     - 'railway:signal:electricity:turn_direction'
 
   features:
@@ -143,3 +144,76 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
+
+    # --- PL --- #
+
+    - description: Wskaźnik uprzedzający o opuszczeniu pantografu (we1)
+      country: PL
+      icon: { default: 'pl/we1' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'PL-PKP:we1' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: Wskaźniki opuszczenia pantografu (we2)
+      country: PL
+      icon:
+        match: 'railway:signal:electricity:turn_direction'
+        cases:
+          - { regex: '^right$', value: 'pl/we2b' }
+          - { regex: '^left$', value: 'pl/we2c' }
+        default: 'pl/we2a'
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['PL-PKP:we2a', 'PL-PKP:we2b', 'PL-PKP:we2c'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: Wskaźniki podniesienia pantografu (we3)
+      country: PL
+      icon:
+        match: 'railway:signal:electricity:for'
+        cases:
+          - { regex: '^locomotive$', value: 'pl/we3b' }
+        default: 'pl/we3a'
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: Wskaźniki zakazu wjazdu elektrycznych pojazdów trakcyjnych (we4)
+      country: PL
+      icon:
+        match: 'railway:signal:electricity:turn_direction'
+        cases:
+          - { regex: '^right$', value: 'pl/we4b' }
+          - { regex: '^left$', value: 'pl/we4c' }
+        default: 'pl/we4a'
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['PL-PKP:we4a', 'PL-PKP:we4b', 'PL-PKP:we4c'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+    - description: Wskaźniki jazdy bezprądowej (we8)
+      country: PL
+      icon:
+        match: 'railway:signal:electricity:turn_direction'
+        cases:
+          - { regex: '^right$', value: 'pl/we8b' }
+          - { regex: '^left$', value: 'pl/we8c' }
+        default: 'pl/we8a'
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['PL-PKP:we8a', 'PL-PKP:we8b', 'PL-PKP:we8c'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Wskaźniki jazdy pod prądem (we9)
+      country: PL
+      icon:
+        match: 'railway:signal:electricity:for'
+        cases:
+          - { regex: '^locomotive$', value: 'pl/we9b' }
+        default: 'pl/we9a'
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
