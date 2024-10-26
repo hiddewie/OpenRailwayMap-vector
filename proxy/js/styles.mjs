@@ -54,6 +54,9 @@ const colors = {
       },
     },
   },
+  signals: {
+    direction: '#a8d8bcff'
+  }
 };
 
 const turntable_casing_width = 2;
@@ -2159,18 +2162,27 @@ const layers = {
           ['!=', ['get', 'azimuth'], null],
         ],
       ],
+      paint: {
+        'icon-color': colors.signals.direction,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          'white',
+        ],
+        'icon-halo-width': 2.0,
+        'icon-halo-blur': 2.0,
+      },
       layout: {
         'icon-overlap': 'always',
         'icon-image': ['case',
-          ['get', 'direction_both'], 'general/signal-direction-both',
-          'general/signal-direction',
+          ['get', 'direction_both'], 'sdf:general/signal-direction-both',
+          'sdf:general/signal-direction',
         ],
         'icon-anchor': ['case',
           ['get', 'direction_both'], 'center',
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
-      }
+      },
     },
     ...imageLayerWithOutline(
       'speed_railway_signals',
@@ -2395,18 +2407,27 @@ const layers = {
         ['!=', ['get', 'azimuth'], null],
         ['!=', ['get', 'feature'], ''],
       ],
+      paint: {
+        'icon-color': colors.signals.direction,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          'white',
+        ],
+        'icon-halo-width': 2.0,
+        'icon-halo-blur': 2.0,
+      },
       layout: {
         'icon-overlap': 'always',
         'icon-image': ['case',
-          ['get', 'direction_both'], 'general/signal-direction-both',
-          'general/signal-direction',
+          ['get', 'direction_both'], 'sdf:general/signal-direction-both',
+          'sdf:general/signal-direction',
         ],
         'icon-anchor': ['case',
           ['get', 'direction_both'], 'center',
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
-      }
+      },
     },
     ...imageLayerWithOutline(
       'railway_signals_medium',
@@ -2659,18 +2680,27 @@ const layers = {
         ['!=', ['get', 'azimuth'], null],
         ['!=', ['get', 'feature'], ''],
       ],
+      paint: {
+        'icon-color': colors.signals.direction,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          'white',
+        ],
+        'icon-halo-width': 2.0,
+        'icon-halo-blur': 2.0,
+      },
       layout: {
         'icon-overlap': 'always',
         'icon-image': ['case',
-          ['get', 'direction_both'], 'general/signal-direction-both',
-          'general/signal-direction',
+          ['get', 'direction_both'], 'sdf:general/signal-direction-both',
+          'sdf:general/signal-direction',
         ],
         'icon-anchor': ['case',
           ['get', 'direction_both'], 'center',
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
-      }
+      },
     },
     ...imageLayerWithOutline(
       'electrification_signals',
