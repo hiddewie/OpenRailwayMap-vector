@@ -2383,14 +2383,31 @@ const layers = {
       }
     },
     ...imageLayerWithOutline(
-      'railway_signals',
-      ['get', 'feature'],
+      'railway_signals_medium',
+      ['case',
+        ['==', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'], 'de/blockkennzeichen',
+        ['get', 'feature'],
+      ],
       {
         type: 'symbol',
         minzoom: 13,
+        maxzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        // TODO fix blockkennzeichen
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
+    ...imageLayerWithOutline(
+      'railway_signals_high',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -2483,17 +2500,10 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_signals',
-      filter: ['step', ['zoom'],
-        ['all',
-          ['!=', ['get', 'ref'], null],
-          ['!=', ['get', 'feature'], ''],
-        ],
-        16,
-        ['all',
-          ['!=', ['get', 'ref'], null],
-          ['!=', ['get', 'feature'], ''],
-          ['!=', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'],
-        ],
+      filter: ['all',
+        ['!=', ['get', 'ref'], null],
+        ['!=', ['get', 'feature'], ''],
+        ['!=', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'],
       ],
       paint: {
         'text-halo-color': ['case',
