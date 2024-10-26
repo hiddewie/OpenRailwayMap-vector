@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0.392157%, 25.098041%, 69.803923%)" fill-opacity="1"/>
-<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 15.199219 16 L 15.199219 0 L 0 8.097656 Z M 15.199219 16 "/>
-<path fill-rule="evenodd" fill="rgb(98.039216%, 98.039216%, 9.019608%)" fill-opacity="1" d="M 15.199219 14.902344 L 15.199219 1.09375 L 2.195312 8.101562 Z M 15.199219 14.902344 "/>
+<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0.392157%, 25.098039%, 69.803922%)" fill-opacity="1"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 14 14.667969 L 14 1.332031 L 1.332031 8.082031 Z M 14 14.667969 "/>
+<path fill-rule="evenodd" fill="rgb(98.039216%, 98.039216%, 9.019608%)" fill-opacity="1" d="M 14 13.75 L 14 2.246094 L 3.164062 8.085938 Z M 14 13.75 "/>
 </svg>
