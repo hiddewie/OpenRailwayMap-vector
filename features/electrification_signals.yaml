@@ -178,7 +178,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b'] }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
     - description: Wskaźniki zakazu wjazdu elektrycznych pojazdów trakcyjnych (we4)
       country: PL
