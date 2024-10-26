@@ -4801,7 +4801,7 @@ const legendData = {
   loading_gauge: {
     'openrailwaymap_low-railway_line_low': [
       ...loading_gauges.map(loading_gauge => ({
-        legend: loading_gauge.value,
+        legend: loading_gauge.legend,
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
@@ -4825,7 +4825,7 @@ const legendData = {
     ],
     'openrailwaymap_med-railway_line_med': [
       ...loading_gauges.map(loading_gauge => ({
-        legend: loading_gauge.value,
+        legend: loading_gauge.legend,
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
@@ -4849,7 +4849,7 @@ const legendData = {
     ],
     'high-railway_line_high': [
       ...loading_gauges.map(loading_gauge => ({
-        legend: loading_gauge.value,
+        legend: loading_gauge.legend,
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
