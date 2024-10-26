@@ -13,15 +13,15 @@ electrification_signals:
 
     - description: Ankündigung Stromabnehmer tief
       country: AT
-      icon: { default: 'de/el3' }
+      icon: { default: 'de/ankündigung_stromabnehmer_tief' }
       tags:
-        - { tag: 'railway:signal:electricity', value: 'AT-V2:andkündigung_stromabnehmer_tief' }
+        - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_stromabnehmer_tief' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
     - description: Ankündigung Hauptschalter aus
       country: AT
-      icon: { default: 'de/el1v' }
+      icon: { default: 'de/ankündigung_hauptschalter_aus' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_hauptschalter_aus' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
@@ -32,10 +32,10 @@ electrification_signals:
       icon:
         match: 'railway:signal:electricity:turn_direction'
         cases:
-          - { regex: '^left$', value: 'de/el6-left' }
-          - { regex: '^through$', value: 'de/el6-through' }
-          - { regex: '^right$', value: 'de/el6-right' }
-        default: 'de/el6'
+          - { regex: '^left$', value: 'de/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
+          - { regex: '^through$', value: 'de/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
+          - { regex: '^right$', value: 'de/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
+        default: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer'
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
         - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
@@ -43,7 +43,7 @@ electrification_signals:
 
     - description: Hauptschalter ein
       country: AT
-      icon: { default: 'de/el2' }
+      icon: { default: 'de/hauptschalter_ein' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_ein' }
         - { tag: 'railway:signal:electricity:type', value: 'power_on' }
@@ -51,7 +51,7 @@ electrification_signals:
 
     - description: Stromabnehmer hoch
       country: AT
-      icon: { default: 'de/el5' }
+      icon: { default: 'de/stromabnehmer_hoch' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_hoch' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
@@ -67,7 +67,7 @@ electrification_signals:
 
     - description: Stromabnehmer tief
       country: AT
-      icon: { default: 'de/el4' }
+      icon: { default: 'de/stromabnehmer_tief' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_tief' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
