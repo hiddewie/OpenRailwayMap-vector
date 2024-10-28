@@ -126,8 +126,8 @@ electrification_signals:
         default: 'de/el6'
       tags:
         - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity', value: 'DE-ESO:el6' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
 
     - description: power on sign El 2
       country: DE
