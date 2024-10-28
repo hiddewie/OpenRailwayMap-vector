@@ -95,7 +95,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:schaltzeiger' }
         - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
 
     # --- DE --- #
 
