@@ -169,6 +169,57 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
 
+    # --- FI --- #
+
+    - description: Erotusjakson etumerkki
+      country: FI
+      icon: { default: 'fi/t-120' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-120' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Erotusjakso alkaa
+      country: FI
+      icon: { default: 'fi/t-122' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-122' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Erotusjakso päättyy
+      country: FI
+      icon: { default: 'fi/t-123' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-123' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Ajojohdin päättyy
+      country: FI
+      icon: { default: 'fi/t-121' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-121' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Laske virroitin
+      country: FI
+      icon: { default: 'fi/t-124A' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-124A' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Laske virroitin -etumerkki
+      country: FI
+      icon: { default: 'fi/t-133' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-133' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Nosta virroitin
+      country: FI
+      icon: { default: 'fi/t-125' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Wskaźnik uprzedzający o opuszczeniu pantografu (we1)
