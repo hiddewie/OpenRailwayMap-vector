@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10.943275" height="12" viewBox="0 0 10.943275 12">
-<path fill-rule="nonzero" fill="rgb(5.098039%, 55.686277%, 96.862745%)" fill-opacity="1" d="M 0 12 L 0 0 L 10.945312 0 L 10.945312 12 Z M 0 12 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 2.597656 1.964844 L 2.597656 3.355469 L 4.742188 3.355469 L 4.742188 9.957031 L 6.289062 9.957031 L 6.289062 3.355469 L 8.347656 3.355469 L 8.347656 1.964844 Z M 2.597656 1.964844 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="17.545021" viewBox="0 0 16 17.545021">
+<path fill-rule="nonzero" fill="rgb(0%, 26.666667%, 66.666667%)" fill-opacity="1" d="M 0 17.546875 L 0 0 L 16.003906 0 L 16.003906 17.546875 Z M 0 17.546875 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 3.796875 2.871094 L 3.796875 4.90625 L 6.933594 4.90625 L 6.933594 14.558594 L 9.195312 14.558594 L 9.195312 4.90625 L 12.203125 4.90625 L 12.203125 2.871094 Z M 3.796875 2.871094 "/>
 </svg>
