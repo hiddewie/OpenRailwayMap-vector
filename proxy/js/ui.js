@@ -673,11 +673,10 @@ function popupContent(properties) {
       ${properties.deactivated === true ? `<span class="badge rounded-pill text-bg-light">deactivated</span>` : ''}
       ${properties.type === 'line' ? `<span class="badge rounded-pill text-bg-light">line signal</span>` : ''}
       ${properties.electrification_state ? `<span class="badge rounded-pill text-bg-light">line electrification: <span class="text-monospace">${properties.electrification_state}</span></span>` : ''}
+      ${properties.speed_label ? `<span class="badge rounded-pill text-bg-light">speed: ${properties.speed_label}</span>` : ''}
       ${properties.voltage ? `<span class="badge rounded-pill text-bg-light">voltage: ${properties.voltage} V</span>` : ''}
       ${properties.frequency ? `<span class="badge rounded-pill text-bg-light">frequency: ${properties.frequency.toFixed(2)} Hz</span>` : ''}
-      ${properties.gauge0 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge0}</span>` : ''}
-      ${properties.gauge1 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge1}</span>` : ''}
-      ${properties.gauge2 ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge2}</span>` : ''}
+      ${properties.gauge_label ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge_label}</span>` : ''}
       ${properties.loading_gauge ? `<span class="badge rounded-pill text-bg-light">loading gauge: ${properties.loading_gauge}</span>` : ''}
     </h6>
   `;
