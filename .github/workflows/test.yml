@@ -58,7 +58,7 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          hurl --test --verbose --variable base_url=http://localhost:5000/api tests/api.hurl
+          hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
 
   test-web:
     name: Test web
@@ -113,8 +113,9 @@ jobs:
           docker compose up --build --wait martin-proxy
 
       - name: Run proxy tests
+        working-directory: proxy
         run: |
-          hurl --test --verbose --variable base_url=http://localhost:8000 tests/proxy.hurl
+          hurl --test --verbose --variable base_url=http://localhost:8000 test/proxy.hurl
 
       - name: Run UI tests
         run: |
