@@ -29,6 +29,10 @@ end
 
 -- Convert a speed number from text to integer but not convert units
 function speed_int_noconvert(value)
+  if not value then
+    return nil
+  end
+
   local _, _, match = value:find('^(%d+%.?%d*)$')
   if match then
     return tonumber(match)
@@ -44,6 +48,10 @@ end
 
 -- Convert a speed number from text to integer with unit conversion
 function speed_int(value)
+  if not value then
+    return nil
+  end
+
   local _, _, match = value:find('^(%d+%.?%d*)$')
   if match then
     return tonumber(match)
@@ -494,7 +502,7 @@ function osm2pgsql.process_node(object)
 {% end %}
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
-      dominant_speed = speed_int(speed_limit_speed or speed_limit_distant_speed),
+      dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
       {% for tag in electrification_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
@@ -555,8 +563,13 @@ function osm2pgsql.process_way(object)
       end
     end
 
-    local way = object:as_linestring()
+    local preferred_direction = tags['railway:preferred_direction']
+    local maxspeed = tags['maxspeed']
+    local maxspeed_forward = tags['maxspeed:forward']
+    local maxspeed_backward = tags['maxspeed:backward']
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward)
+
+    local way = object:as_linestring()
     railway_line:insert({
       way = way,
       way_length = way:length(),
@@ -574,9 +587,6 @@ function osm2pgsql.process_way(object)
       tunnel_name = tags['tunnel:name'],
       bridge = tags['bridge'],
       bridge_name = tags['bridge:name'],
-      maxspeed = tags['maxspeed'],
-      maxspeed_forward = tags['maxspeed:forward'],
-      maxspeed_backward = tags['maxspeed:backward'],
       preferred_direction = tags['railway:preferred_direction'],
       dominant_speed = dominant_speed,
       speed_label = speed_label,

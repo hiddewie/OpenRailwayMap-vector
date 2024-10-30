@@ -91,9 +91,6 @@ CREATE OR REPLACE VIEW railway_line_high AS
                  WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
                  ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
              END AS label_name,
-             maxspeed,
-             maxspeed_forward,
-             maxspeed_backward,
              preferred_direction,
              dominant_speed,
              speed_label,
