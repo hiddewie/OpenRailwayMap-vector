@@ -42,11 +42,6 @@ function speed_int_noconvert(value)
   return nil
 end
 
--- Is this speed in imperial miles per hour?
-function is_speed_imperial(value)
-  return value and toboolean(value:find('^%d+%.?%d* ?mph$'))
-end
-
 -- Get the largest speed from a list of speed values (common at light speed signals)
 function largest_speed_noconvert(value)
   if not value then
@@ -66,31 +61,24 @@ function largest_speed_noconvert(value)
   return largest_speed
 end
 
--- Get the speed limit in the primary and secondary direction.
--- No unit conversion is preformed.
--- Returns an array with 3 integers:
---   * forward speed
---   * backward speed
---   * has primary direction is line direction (1), is opposite direction of line (2), has no primary direction (3), all direction same speed (4), primary direction invalid (5), contradicting speed values (6), no speed information (7)
---   * forward unit: kph (0), mph (1)
---   * backward unit: kph (0), mph (1)
-function direction_speed_limit(preferred_direction, speed, forward_speed, backward_speed)
+-- Speed label, taking the preferred direction and forward, backward an non-directional speed into account
+function speed_label(preferred_direction, speed, forward_speed, backward_speed)
   if (not speed) and (not forward_speed) and (not backward_speed) then
-    return {nil, nil, 7, false, false}
+    return nil
   elseif speed and (not forward_speed) and (not backward_speed) then
-    return {speed_int_noconvert(speed), speed_int_noconvert(speed), 4, is_speed_imperial(speed), is_speed_imperial(speed)}
+    return speed
   elseif speed then
-    return {speed_int_noconvert(speed), speed_int_noconvert(speed), 6, is_speed_imperial(speed), is_speed_imperial(speed)};
+    return nil
   end
 
   if preferred_direction == 'forward' then
-    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 1, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+    return forward_speed .. ' (' .. (backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return {speed_int_noconvert(backward_speed), speed_int_noconvert(forward_speed), 2, is_speed_imperial(backward_speed), is_speed_imperial(forward_speed)}
+    return backward_speed .. ' (' .. (forward_speed or '-') .. ')'
   elseif preferred_direction == 'both' or (not preferred_direction) then
-    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 3, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+    return (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
   else
-    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 4, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+    return (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
   end
 end
 
@@ -120,6 +108,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'maxspeed_forward', type = 'text' },
     { column = 'maxspeed_backward', type = 'text' },
     { column = 'preferred_direction', type = 'text' },
+    { column = 'speed_label', type = 'text' },
     { column = 'frequency', type = 'real' },
     { column = 'voltage', type = 'integer' },
     { column = 'electrification_state', type = 'text' },
@@ -567,6 +556,7 @@ function osm2pgsql.process_way(object)
       maxspeed_forward = tags['maxspeed:forward'],
       maxspeed_backward = tags['maxspeed:backward'],
       preferred_direction = tags['railway:preferred_direction'],
+      speed_label = speed_label(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward),
       electrification_state = current_electrification_state,
       frequency = frequency,
       voltage = voltage,

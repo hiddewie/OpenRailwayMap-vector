@@ -131,55 +131,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
-CREATE OR REPLACE FUNCTION null_to_dash(value TEXT) RETURNS TEXT AS $$
-BEGIN
-  IF value IS NULL OR VALUE = '' THEN
-    RETURN '–';
-  END IF;
-  RETURN value;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
-CREATE OR REPLACE FUNCTION railway_add_unit_to_label(speed INTEGER, is_imp_flag INTEGER) RETURNS TEXT AS $$
-BEGIN
-  -- note: NULL || TEXT returns NULL
-  IF is_imp_flag = 1 THEN
-    RETURN speed::TEXT || ' mph';
-  END IF;
-  RETURN speed::TEXT;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
-CREATE OR REPLACE FUNCTION railway_speed_label(speed_arr INTEGER[]) RETURNS TEXT AS $$
-BEGIN
-  IF speed_arr[3] = 7 THEN
-    RETURN NULL;
-  END IF;
-  IF speed_arr[3] = 4 THEN
-    RETURN railway_add_unit_to_label(speed_arr[1], speed_arr[4]);
-  END IF;
-  IF  speed_arr[3] = 3 THEN
-    RETURN null_to_dash(railway_add_unit_to_label(speed_arr[1], speed_arr[4])) || '/' || null_to_dash(railway_add_unit_to_label(speed_arr[2], speed_arr[5]));
-  END IF;
-  IF speed_arr[3] = 2 THEN
-    RETURN null_to_dash(railway_add_unit_to_label(speed_arr[2], speed_arr[5])) || ' (' || null_to_dash(railway_add_unit_to_label(speed_arr[1], speed_arr[4])) || ')';
-  END IF;
-  IF speed_arr[3] = 1 THEN
-    RETURN null_to_dash(railway_add_unit_to_label(speed_arr[1], speed_arr[4])) || ' (' || null_to_dash(railway_add_unit_to_label(speed_arr[2], speed_arr[5])) || ')';
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Add flags indicating imperial units to an array of speeds
 CREATE OR REPLACE FUNCTION railway_speed_array_add_unit(arr INTEGER[]) RETURNS INTEGER[] AS $$
 BEGIN
