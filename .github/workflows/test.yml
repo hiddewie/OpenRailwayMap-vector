@@ -4,8 +4,8 @@ on:
   push: ~
 
 jobs:
-  test:
-    name: Test
+  test-api:
+    name: Test API
     runs-on: ubuntu-latest
 
     steps:
@@ -48,20 +48,126 @@ jobs:
         run: |
           docker compose run --build import import
 
-#      - name: Start tile server
-#        run: |
-#          docker compose up --build --wait martin
-
       - name: Prepare and start API
         run: |
           api/prepare-api.sh
           docker compose up --wait api
 
-#      - name: Start web server
-#        run: |
-#          docker compose up --build martin-proxy
-
       - name: Run API tests
         working-directory: api
         run: |
           hurl --test --verbose --variable base_url=http://localhost:5000/api tests/api.hurl
+
+  test-web:
+    name: Test web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Hurl
+        env:
+          VERSION: '4.3.0'
+        run: |
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+
+      - name: Get Date
+        id: get-date
+        shell: bash
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+      - name: Cache data
+        uses: actions/cache@v4
+        id: cache-data
+        with:
+          path: |
+            data/germany.osm.pbf
+            data/filtered/germany.osm.pbf
+          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-berlin
+
+      - name: Download Berlin
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
+
+      - name: Import data
+        env:
+          OSM2PGSQL_DATAFILE: berlin.osm.pbf
+        run: |
+          docker compose run --build import import
+
+      - name: Start tile server
+        run: |
+          docker compose up --build --wait martin
+
+      - name: Start web server
+        run: |
+          docker compose up --build martin-proxy
+
+      - name: Run UI tests
+        # TODO
+        run: |
+          true
+
+  test-tiles:
+    name: Test tiles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Hurl
+        env:
+          VERSION: '4.3.0'
+        run: |
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+
+      - name: Get Date
+        id: get-date
+        shell: bash
+        run: |
+          echo "date=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+      - name: Cache data
+        uses: actions/cache@v4
+        id: cache-data
+        with:
+          path: |
+            data/germany.osm.pbf
+            data/filtered/germany.osm.pbf
+          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-berlin
+
+      - name: Download Berlin
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
+
+      - name: Import data
+        env:
+          OSM2PGSQL_DATAFILE: berlin.osm.pbf
+        run: |
+          docker compose run --build import import
+
+      - name: Generate tiles
+        env:
+          BBOX: '12.9611:52.2934:13.8126:52.7147'
+        run: |
+          for tile in low-med high standard speed signals electrification; do
+            env "TILES=$tile" docker compose up martin-cp
+          done
+
+      - name: Run tiles tests
+        # TODO
+        run: |
+          true
