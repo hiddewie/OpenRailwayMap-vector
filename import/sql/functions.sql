@@ -93,15 +93,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
-CREATE OR REPLACE FUNCTION railway_imperial_flags(value1 TEXT, value2 TEXT) RETURNS INTEGER[] AS $$
-BEGIN
-  RETURN ARRAY[railway_speed_imperial(value1), railway_speed_imperial(value2)];
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Convert a speed number from text to integer and miles to kilometre
 CREATE OR REPLACE FUNCTION railway_speed_int(value TEXT) RETURNS INTEGER AS $$
 BEGIN
