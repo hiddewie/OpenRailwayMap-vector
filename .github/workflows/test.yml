@@ -112,9 +112,13 @@ jobs:
         run: |
           docker compose up --build --wait martin-proxy
 
-      - name: Run UI tests
-        # TODO
+      - name: Run proxy tests
         run: |
+          hurl --test --verbose --variable base_url=http://localhost:8000 tests/proxy.hurl
+
+      - name: Run UI tests
+        run: |
+          # TODO
           true
 
   test-tiles:
