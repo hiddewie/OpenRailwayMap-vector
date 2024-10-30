@@ -289,7 +289,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
   ORDER BY
     -- distant signals are less important, signals for slower speeds are more important
     ("railway:signal:speed_limit" IS NOT NULL) DESC NULLS FIRST,
-    railway_speed_int(COALESCE("railway:signal:speed_limit:speed", "railway:signal:speed_limit_distant:speed")) DESC NULLS FIRST;
+    dominant_speed DESC NULLS FIRST;
 
 
 --- Signals ---

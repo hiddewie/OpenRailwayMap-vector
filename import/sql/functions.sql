@@ -93,22 +93,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Convert a speed number from text to integer and miles to kilometre
-CREATE OR REPLACE FUNCTION railway_speed_int(value TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF value ~ '^[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::DOUBLE PRECISION;
-  END IF;
-  IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN (substring(value FROM '^([0-9]+(\.[0-9]+)?)')::DOUBLE PRECISION) * 1.609344;
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Check whether a key is present in a hstore field and if its value is not 'no'
 CREATE OR REPLACE FUNCTION railway_has_key(tags HSTORE, key TEXT) RETURNS BOOLEAN AS $$
 DECLARE

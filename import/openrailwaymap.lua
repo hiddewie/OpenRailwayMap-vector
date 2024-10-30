@@ -212,6 +212,7 @@ local signals = osm2pgsql.define_table({
     {% for tag in signals_railway_signals.tags %}
     { column = '{% tag %}', type = 'text' },
 {% end %}
+    { column = 'dominant_speed', type = 'real' },
     {% for tag in speed_railway_signals.tags %}
     { column = '{% tag %}', type = 'text' },
 {% end %}
@@ -467,6 +468,12 @@ function osm2pgsql.process_node(object)
     ) == 'yes'
     local ref_multiline, newline_count = (tags.ref or ''):gsub(' ', '\n')
 
+    -- We cast the highest speed to text to make it possible to only select those speeds
+    -- we have an icon for. Otherwise we might render an icon for 40 kph if
+    -- 42 is tagged (but invalid tagging).
+    local speed_limit_speed = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed']
+    local speed_limit_distant_speed = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed']
+
     signals:insert({
       way = object:as_point(),
       railway = tags.railway,
@@ -485,11 +492,9 @@ function osm2pgsql.process_node(object)
 {% end %}
 {% end %}
 {% end %}
-      -- We cast the highest speed to text to make it possible to only select those speeds
-      -- we have an icon for. Otherwise we might render an icon for 40 kph if
-      -- 42 is tagged (but invalid tagging).
-      ["railway:signal:speed_limit:speed"] = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed'],
-      ["railway:signal:speed_limit_distant:speed"] = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed'],
+      ["railway:signal:speed_limit:speed"] = speed_limit_speed,
+      ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
+      dominant_speed = speed_int(speed_limit_speed or speed_limit_distant_speed),
       {% for tag in electrification_signals.tags %}
       ["{% tag %}"] = tags['{% tag %}'],
 {% end %}
