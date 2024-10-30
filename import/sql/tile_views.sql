@@ -47,9 +47,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
             WHEN railway = 'razed' THEN 200
             ELSE 50
         END AS rank,
-        -- speeds are converted to kph in this layer because it is used for colouring
-        railway_dominant_speed(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward) AS maxspeed,
-        railway_speed_label(speed_arr) AS speed_label,
+        dominant_speed as maxspeed,
+        speed_label,
         train_protection_rank,
         train_protection,
         electrification_state,
@@ -96,8 +95,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
              maxspeed_forward,
              maxspeed_backward,
              preferred_direction,
-             -- does no unit conversion
-             railway_direction_speed_limit(preferred_direction,maxspeed, maxspeed_forward, maxspeed_backward) AS speed_arr,
+             dominant_speed,
+             speed_label,
              train_protection_rank,
              train_protection,
              electrification_state,

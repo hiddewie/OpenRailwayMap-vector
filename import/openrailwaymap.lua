@@ -42,6 +42,21 @@ function speed_int_noconvert(value)
   return nil
 end
 
+-- Convert a speed number from text to integer with unit conversion
+function speed_int(value)
+  local _, _, match = value:find('^(%d+%.?%d*)$')
+  if match then
+    return tonumber(match)
+  end
+
+  local _, _, match = value:find('^(%d+%.?%d*) ?mph$')
+  if match then
+    return tonumber(match) * 1.609344
+  end
+
+  return nil
+end
+
 -- Get the largest speed from a list of speed values (common at light speed signals)
 function largest_speed_noconvert(value)
   if not value then
@@ -61,24 +76,24 @@ function largest_speed_noconvert(value)
   return largest_speed
 end
 
--- Speed label, taking the preferred direction and forward, backward an non-directional speed into account
-function speed_label(preferred_direction, speed, forward_speed, backward_speed)
+-- Speed label and dominant speed, taking the preferred direction and forward, backward an non-directional speed into account
+function dominant_speed_label(preferred_direction, speed, forward_speed, backward_speed)
   if (not speed) and (not forward_speed) and (not backward_speed) then
-    return nil
+    return nil, nil
   elseif speed and (not forward_speed) and (not backward_speed) then
-    return speed
+    return speed_int(speed), speed
   elseif speed then
-    return nil
+    return nil, nil
   end
 
   if preferred_direction == 'forward' then
-    return forward_speed .. ' (' .. (backward_speed or '-') .. ')'
+    return speed_int(forward_speed), forward_speed .. ' (' .. (backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return backward_speed .. ' (' .. (forward_speed or '-') .. ')'
+    return speed_int(backward_speed), backward_speed .. ' (' .. (forward_speed or '-') .. ')'
   elseif preferred_direction == 'both' or (not preferred_direction) then
-    return (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
   else
-    return (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
   end
 end
 
@@ -108,6 +123,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'maxspeed_forward', type = 'text' },
     { column = 'maxspeed_backward', type = 'text' },
     { column = 'preferred_direction', type = 'text' },
+    { column = 'dominant_speed', type = 'real' },
     { column = 'speed_label', type = 'text' },
     { column = 'frequency', type = 'real' },
     { column = 'voltage', type = 'integer' },
@@ -535,6 +551,7 @@ function osm2pgsql.process_way(object)
     end
 
     local way = object:as_linestring()
+    local dominant_speed, speed_label = dominant_speed_label(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward)
     railway_line:insert({
       way = way,
       way_length = way:length(),
@@ -556,7 +573,8 @@ function osm2pgsql.process_way(object)
       maxspeed_forward = tags['maxspeed:forward'],
       maxspeed_backward = tags['maxspeed:backward'],
       preferred_direction = tags['railway:preferred_direction'],
-      speed_label = speed_label(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward),
+      dominant_speed = dominant_speed,
+      speed_label = speed_label,
       electrification_state = current_electrification_state,
       frequency = frequency,
       voltage = voltage,

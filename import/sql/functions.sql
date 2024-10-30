@@ -109,38 +109,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Get dominant speed for coloring
-CREATE OR REPLACE FUNCTION railway_dominant_speed(preferred_direction TEXT, speed TEXT, forward_speed TEXT, backward_speed TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF speed IS NOT NULL AND (forward_speed IS NOT NULL OR backward_speed IS NOT NULL) THEN
-    RETURN NULL;
-  END IF;
-  IF speed IS NOT NULL THEN
-    RETURN railway_speed_int(speed);
-  END IF;
-  IF preferred_direction = 'forward' THEN
-    RETURN COALESCE(railway_speed_int(forward_speed), railway_speed_int(speed));
-  END IF;
-  IF preferred_direction = 'backward' THEN
-    RETURN COALESCE(railway_speed_int(backward_speed), railway_speed_int(speed));
-  END IF;
-  RETURN railway_speed_int(forward_speed);
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
--- Add flags indicating imperial units to an array of speeds
-CREATE OR REPLACE FUNCTION railway_speed_array_add_unit(arr INTEGER[]) RETURNS INTEGER[] AS $$
-BEGIN
-  RETURN arr || railway_speed_array_add_unit(arr[1]) || railway_speed_array_add_unit(2);
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Check whether a key is present in a hstore field and if its value is not 'no'
 CREATE OR REPLACE FUNCTION railway_has_key(tags HSTORE, key TEXT) RETURNS BOOLEAN AS $$
 DECLARE
