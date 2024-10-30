@@ -42,6 +42,11 @@ function speed_int_noconvert(value)
   return nil
 end
 
+-- Is this speed in imperial miles per hour?
+function railway_speed_imperial(value)
+  return value and toboolean(value:find('^%d+%.?%d* ?mph$'))
+end
+
 -- Get the largest speed from a list of speed values (common at light speed signals)
 function largest_speed_noconvert(value)
   if not value then

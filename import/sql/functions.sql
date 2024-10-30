@@ -93,20 +93,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Is this speed in imperial miles per hour?
--- Returns 1 for true, 0 for false
-CREATE OR REPLACE FUNCTION railway_speed_imperial(value TEXT) RETURNS INTEGER AS $$
-BEGIN
-  IF value ~ '^[0-9]+(\.[0-9]+)? ?mph$' THEN
-    RETURN 1;
-  END IF;
-  RETURN 0;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 CREATE OR REPLACE FUNCTION railway_imperial_flags(value1 TEXT, value2 TEXT) RETURNS INTEGER[] AS $$
 BEGIN
   RETURN ARRAY[railway_speed_imperial(value1), railway_speed_imperial(value2)];
