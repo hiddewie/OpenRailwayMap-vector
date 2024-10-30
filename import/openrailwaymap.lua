@@ -43,7 +43,7 @@ function speed_int_noconvert(value)
 end
 
 -- Is this speed in imperial miles per hour?
-function railway_speed_imperial(value)
+function is_speed_imperial(value)
   return value and toboolean(value:find('^%d+%.?%d* ?mph$'))
 end
 
@@ -64,6 +64,34 @@ function largest_speed_noconvert(value)
   end
 
   return largest_speed
+end
+
+-- Get the speed limit in the primary and secondary direction.
+-- No unit conversion is preformed.
+-- Returns an array with 3 integers:
+--   * forward speed
+--   * backward speed
+--   * has primary direction is line direction (1), is opposite direction of line (2), has no primary direction (3), all direction same speed (4), primary direction invalid (5), contradicting speed values (6), no speed information (7)
+--   * forward unit: kph (0), mph (1)
+--   * backward unit: kph (0), mph (1)
+function direction_speed_limit(preferred_direction, speed, forward_speed, backward_speed)
+  if (not speed) and (not forward_speed) and (not backward_speed) then
+    return {nil, nil, 7, false, false}
+  elseif speed and (not forward_speed) and (not backward_speed) then
+    return {speed_int_noconvert(speed), speed_int_noconvert(speed), 4, is_speed_imperial(speed), is_speed_imperial(speed)}
+  elseif speed then
+    return {speed_int_noconvert(speed), speed_int_noconvert(speed), 6, is_speed_imperial(speed), is_speed_imperial(speed)};
+  end
+
+  if preferred_direction == 'forward' then
+    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 1, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+  elseif preferred_direction == 'backward' then
+    return {speed_int_noconvert(backward_speed), speed_int_noconvert(forward_speed), 2, is_speed_imperial(backward_speed), is_speed_imperial(forward_speed)}
+  elseif preferred_direction == 'both' or (not preferred_direction) then
+    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 3, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+  else
+    return {speed_int_noconvert(forward_speed), speed_int_noconvert(backward_speed), 4, is_speed_imperial(forward_speed), is_speed_imperial(backward_speed)}
+  end
 end
 
 local railway_line = osm2pgsql.define_table({

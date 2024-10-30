@@ -190,41 +190,6 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Get the speed limit in the primary and secondary direction.
--- No unit conversion is preformed.
--- Returns an array with 3 integers:
---   * forward speed
---   * backward speed
---   * has primary direction is line direction (1), is opposite direction of line (2), has no primary direction (3), all direction same speed (4), primary direction invalid (5), contradicting speed values (6), no speed information (7)
---   * forward unit: kph (0), mph (1)
---   * backward unit: kph (0), mph (1)
-CREATE OR REPLACE FUNCTION railway_direction_speed_limit(preferred_direction TEXT, speed TEXT, forward_speed TEXT, backward_speed TEXT) RETURNS INTEGER[] AS $$
-BEGIN
-  IF speed IS NULL AND forward_speed IS NULL AND backward_speed IS NULL THEN
-    RETURN ARRAY[NULL, NULL, 7, 0, 0];
-  END IF;
-  IF speed IS NOT NULL AND forward_speed IS NULL AND backward_speed IS NULL THEN
-    RETURN ARRAY[railway_speed_int_noconvert(speed), railway_speed_int_noconvert(speed), 4] || railway_imperial_flags(speed, speed);
-  END IF;
-  IF speed IS NOT NULL THEN
-    RETURN ARRAY[railway_speed_int_noconvert(speed), railway_speed_int_noconvert(speed), 6] || railway_imperial_flags(speed, speed);
-  END IF;
-  IF preferred_direction = 'forward' THEN
-    RETURN ARRAY[railway_speed_int_noconvert(forward_speed), railway_speed_int_noconvert(backward_speed), 1] || railway_imperial_flags(forward_speed, backward_speed);
-  END IF;
-  IF preferred_direction = 'backward' THEN
-    RETURN ARRAY[railway_speed_int_noconvert(backward_speed), railway_speed_int_noconvert(forward_speed), 2] || railway_imperial_flags(backward_speed, forward_speed);
-  END IF;
-  IF preferred_direction = 'both' OR preferred_direction IS NULL THEN
-    RETURN ARRAY[railway_speed_int_noconvert(forward_speed), railway_speed_int_noconvert(backward_speed), 3] || railway_imperial_flags(forward_speed, backward_speed);
-  END IF;
-  RETURN ARRAY[railway_speed_int_noconvert(forward_speed), railway_speed_int_noconvert(backward_speed), 4] || railway_imperial_flags(forward_speed, backward_speed);
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Check whether a key is present in a hstore field and if its value is not 'no'
 CREATE OR REPLACE FUNCTION railway_has_key(tags HSTORE, key TEXT) RETURNS BOOLEAN AS $$
 DECLARE
