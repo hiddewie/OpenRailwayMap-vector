@@ -95,9 +95,9 @@ function dominant_speed_label(preferred_direction, speed, forward_speed, backwar
   end
 
   if preferred_direction == 'forward' then
-    return speed_int(forward_speed), forward_speed .. ' (' .. (backward_speed or '-') .. ')'
+    return speed_int(forward_speed), (forward_speed or '-') .. ' (' .. (backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return speed_int(backward_speed), backward_speed .. ' (' .. (forward_speed or '-') .. ')'
+    return speed_int(backward_speed), (backward_speed or '-') .. ' (' .. (forward_speed or '-') .. ')'
   elseif preferred_direction == 'both' or (not preferred_direction) then
     return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
   else
