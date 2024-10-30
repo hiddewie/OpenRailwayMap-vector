@@ -128,10 +128,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'bridge', type = 'text' },
     { column = 'bridge_name', type = 'text' },
     { column = 'maxspeed', type = 'text' },
-    { column = 'maxspeed_forward', type = 'text' },
-    { column = 'maxspeed_backward', type = 'text' },
     { column = 'preferred_direction', type = 'text' },
-    { column = 'dominant_speed', type = 'real' },
     { column = 'speed_label', type = 'text' },
     { column = 'frequency', type = 'real' },
     { column = 'voltage', type = 'integer' },
@@ -564,10 +561,7 @@ function osm2pgsql.process_way(object)
     end
 
     local preferred_direction = tags['railway:preferred_direction']
-    local maxspeed = tags['maxspeed']
-    local maxspeed_forward = tags['maxspeed:forward']
-    local maxspeed_backward = tags['maxspeed:backward']
-    local dominant_speed, speed_label = dominant_speed_label(preferred_direction, maxspeed, maxspeed_forward, maxspeed_backward)
+    local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     local way = object:as_linestring()
     railway_line:insert({

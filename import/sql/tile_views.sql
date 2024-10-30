@@ -47,7 +47,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
             WHEN railway = 'razed' THEN 200
             ELSE 50
         END AS rank,
-        dominant_speed as maxspeed,
+        maxspeed,
         speed_label,
         train_protection_rank,
         train_protection,
@@ -92,7 +92,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
                  ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
              END AS label_name,
              preferred_direction,
-             dominant_speed,
+             maxspeed,
              speed_label,
              train_protection_rank,
              train_protection,
