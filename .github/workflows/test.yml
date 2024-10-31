@@ -168,9 +168,9 @@ jobs:
           hurl --test --verbose --variable base_url=http://localhost:8000 test/proxy.hurl
 
       - name: Run UI tests
+        if: false
         run: |
           # TODO
-          true
 
       - name: Service logs
         if: always()
