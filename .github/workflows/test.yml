@@ -58,6 +58,9 @@ jobs:
     name: Test API
     runs-on: ubuntu-latest
 
+    needs:
+      - import
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -102,6 +105,9 @@ jobs:
   test-web:
     name: Test web
     runs-on: ubuntu-latest
+
+    needs:
+      - import
 
     steps:
       - name: Checkout
@@ -159,6 +165,9 @@ jobs:
   test-tiles:
     name: Test tiles
     runs-on: ubuntu-latest
+
+    needs:
+      - import
 
     steps:
       - name: Checkout
