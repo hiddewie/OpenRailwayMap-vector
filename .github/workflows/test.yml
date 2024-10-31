@@ -3,8 +3,6 @@ name: Test
 on:
   push: ~
 
-# TODO cache imported DB or filtered & downloaded data
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'master' }}
