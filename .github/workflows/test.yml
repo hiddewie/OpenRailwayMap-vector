@@ -155,7 +155,7 @@ jobs:
       - name: Start tile server
         run: |
           docker compose build martin
-          docker compose up --no-build --no-deps --wait martin
+          docker compose up --no-build --detach martin
 
       - name: Start web server
         run: |
