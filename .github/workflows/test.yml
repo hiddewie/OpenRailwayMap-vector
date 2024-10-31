@@ -60,6 +60,13 @@ jobs:
         run: |
           hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
 
+      - name: Service logs
+        if: always()
+        continue-on-error: true
+        run: |
+          echo "API logs"
+          docker compose logs api
+
   test-web:
     name: Test web
     runs-on: ubuntu-latest
@@ -126,9 +133,6 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          echo "Import logs"
-          docker compose logs import
-          
           echo "Martin logs"
           docker compose logs martin
           
