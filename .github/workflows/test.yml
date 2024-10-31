@@ -108,7 +108,6 @@ jobs:
       - name: Prepare and start API
         run: |
           api/prepare-api.sh
-          docker compose build api
           docker compose up --wait --no-build api
 
       - name: Run API tests
