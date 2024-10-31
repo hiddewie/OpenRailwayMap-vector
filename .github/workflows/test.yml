@@ -113,15 +113,8 @@ jobs:
         run: |
           hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
 
-      - name: Service logs
-        if: always()
-        continue-on-error: true
-        run: |
-          echo "API logs"
-          docker compose logs api
-
-  test-web:
-    name: Test web
+  test-proxy:
+    name: Test proxy
     runs-on: ubuntu-latest
 
     needs:
@@ -164,25 +157,6 @@ jobs:
         working-directory: proxy
         run: |
           hurl --test --verbose --variable base_url=http://localhost:8000 test/proxy.hurl
-
-      - name: Run UI tests
-        if: false
-        run: |
-          # TODO
-
-      - name: Service logs
-        if: always()
-        continue-on-error: true
-        run: |
-          echo "Martin logs"
-          docker compose logs martin
-          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "martin") | .ID')"
-          docker inspect openrailwaymap-cartocss-martin-1
-          
-          echo "Proxy logs"
-          docker compose logs martin-proxy
-          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "martin-proxy") | .ID')"
-          docker inspect openrailwaymap-cartocss-martin-proxy-1
 
   test-tiles:
     name: Test tiles
@@ -235,3 +209,57 @@ jobs:
         working-directory: tiles
         run: |
           hurl --test --verbose --variable base_url=http://localhost:3000 test/tiles.hurl
+
+  test-ui:
+    name: Test UI
+    runs-on: ubuntu-latest
+
+    needs:
+      - test-proxy
+      - test-api
+      - test-tiles
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Pull database
+        run: |
+          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+
+      - name: Start database
+        run: |
+          docker compose up --no-build --wait db
+
+      - name: Start tile server
+        run: |
+          docker compose build martin
+          docker compose up --no-build --detach martin
+
+      - name: Start web server
+        run: |
+          docker compose build martin-proxy
+          docker compose up --no-build --wait martin-proxy
+
+      - name: Prepare and start API
+        run: |
+          api/prepare-api.sh
+          docker compose up --wait --no-build api
+
+      - name: Run UI tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx cypress run
+          browser: chrome
+
+      - name: Store
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: proxy/test/ui/cypress/screenshots
+          if-no-files-found: warn
