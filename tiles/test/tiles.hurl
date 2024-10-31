@@ -1,61 +1,57 @@
-# Hmoe page
 GET {{base_url}}/
 HTTP 200
-Content-Type: text/html
-[Asserts]
-body contains "<title>OpenRailwayMap</title>"
+Content-Type: text/plain; charset=utf-8
 
-# Imported bounds
-GET {{base_url}}/manifest.json
+GET {{base_url}}/catalog
+HTTP 200
+
+# Tile sources
+GET {{base_url}}/railway_line_low
 HTTP 200
 Content-Type: application/json
 
-# Imported bounds
-GET {{base_url}}/bounds.json
+GET {{base_url}}/standard_railway_text_stations_low
 HTTP 200
 Content-Type: application/json
 
-# Proxy to tiles
-GET {{base_url}}/speed
-Referer: http://localhost:8000
+GET {{base_url}}/railway_line_med
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/standard_railway_text_stations_med
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/high
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/standard
-Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/speed
-Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/signals
-Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/electrification
-Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-# (local URLs)
-GET {{base_url}}/signals_railway_signals/14/8803/5371
+GET {{base_url}}/speed/14/8803/5371
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/x-protobuf
 
-GET {{base_url}}/signals_railway_signals/18/140807/85974
+GET {{base_url}}/speed/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
-# Proxy to API, cannot proxy
-GET {{base_url}}/api/test
-HTTP 502
-
-# Proxy to sprites
+# Sprites
 GET {{base_url}}/sprite/symbols.json
 HTTP 200
 Content-Type: application/json
@@ -63,7 +59,7 @@ Content-Type: application/json
 GET {{base_url}}/sprite/symbols.png
 HTTP 200
 
-# Proxy to SDF sprites
+# SDF sprites
 GET {{base_url}}/sdf_sprite/symbols.json
 HTTP 200
 Content-Type: application/json
