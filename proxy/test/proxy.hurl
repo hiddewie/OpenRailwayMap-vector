@@ -10,11 +10,6 @@ GET {{base_url}}/manifest.json
 HTTP 200
 Content-Type: application/json
 
-# Imported bounds
-GET {{base_url}}/bounds.json
-HTTP 200
-Content-Type: application/json
-
 # Proxy to tiles
 GET {{base_url}}/speed
 Referer: http://localhost:8000
