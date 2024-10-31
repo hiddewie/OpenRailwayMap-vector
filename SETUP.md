@@ -67,3 +67,25 @@ flyctl deploy --config proxy.fly.toml --local-only
 ```
 
 The OpenRailwayMap is now available on https://openrailwaymap.fly.dev.
+
+## Tests
+
+Tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the API:
+
+```shell
+hurl --test --verbose --variable base_url=http://localhost:5000/api api/test/api.hurl
+```
+
+Run tests against the proxy:
+
+```shell
+hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
+```
+
+Run tests against the tiles:
+
+```shell
+hurl --test --verbose --variable base_url=http://localhost:3000 tiles/test/tiles.hurl
+```
