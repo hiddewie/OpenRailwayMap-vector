@@ -179,12 +179,12 @@ jobs:
           echo "Martin logs"
           docker compose logs martin
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "martin") | .ID')"
-          docker inspect $DOCKER_CONTAINER_ID
+          docker inspect openrailwaymap-cartocss-martin-1
           
           echo "Proxy logs"
           docker compose logs martin-proxy
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "martin-proxy") | .ID')"
-          docker inspect $DOCKER_CONTAINER_ID
+          docker inspect openrailwaymap-cartocss-martin-proxy-1
 
   test-tiles:
     name: Test tiles
