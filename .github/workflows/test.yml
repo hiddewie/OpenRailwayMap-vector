@@ -191,7 +191,6 @@ jobs:
             env "TILES=$tile" docker compose up martin-cp
           done
 
-      - name: Run tiles tests
-        # TODO
+      - name: List generated tiles
         run: |
-          true
+          ls -la tiles/*.mbtiles
