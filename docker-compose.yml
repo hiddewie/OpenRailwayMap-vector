@@ -101,6 +101,8 @@ services:
   martin-static:
     build:
       dockerfile: martin-static.Dockerfile
+    ports:
+      - '3000:3000'
 
   martin-proxy:
     build:

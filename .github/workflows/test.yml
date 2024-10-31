@@ -200,6 +200,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Install Hurl
+        env:
+          VERSION: '5.0.1'
+        run: |
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+
       - name: Pull database
         run: |
           docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
@@ -220,3 +227,13 @@ jobs:
       - name: List generated tiles
         run: |
           ls -la tiles/*.mbtiles
+
+      - name: Start martin with tiles
+        run: |
+          docker compose build martin-static
+          docker compose up --no-build --wait martin-static
+
+      - name: Run static tile tests
+        working-directory: tiles
+        run: |
+          hurl --test --verbose --variable base_url=http://localhost:3000 test/tiles.hurl
