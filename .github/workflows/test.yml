@@ -103,7 +103,7 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build db
+          docker compose up --no-build --wait db
 
       - name: Prepare and start API
         run: |
@@ -151,7 +151,7 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build db
+          docker compose up --no-build --wait db
 
       - name: Start tile server
         run: |
@@ -204,7 +204,7 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build db
+          docker compose up --no-build --wait db
 
       - name: Generate tiles
         env:
