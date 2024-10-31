@@ -49,7 +49,7 @@ Content-Type: application/x-protobuf
 
 GET {{base_url}}/speed/18/140807/85974
 Referer: http://localhost:8000
-HTTP 204
+HTTP 404
 
 # Sprites
 GET {{base_url}}/sprite/symbols.json
