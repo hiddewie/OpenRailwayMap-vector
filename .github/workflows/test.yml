@@ -41,18 +41,32 @@ jobs:
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 
+      - name: Start database
+        env:
+          OSM2PGSQL_DATAFILE: berlin.osm.pbf
+        run: |
+          docker compose build db
+          docker compose up --no-build --wait db
+
+      - name: Build import image
+        run: |
+          docker compose build import
+          if [[ "${{ github.ref_name }}" = "master" ]]; then
+            docker compose push import
+          fi
+
       - name: Import data
         env:
           OSM2PGSQL_DATAFILE: berlin.osm.pbf
         run: |
-          docker compose run --build import import
+          docker compose run --no-build import import
 
       - name: Prepare and start API
         run: |
           docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker push ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}"
+          docker push ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
 
   test-api:
     name: Test API
