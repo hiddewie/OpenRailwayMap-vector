@@ -98,8 +98,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}"
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}" ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
@@ -146,8 +146,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}"
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}" ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
@@ -199,8 +199,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}"
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}" ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
