@@ -1087,7 +1087,11 @@ const railwayKmText = {
   },
   layout: {
     'symbol-z-order': 'source',
-    'text-field': '{pos}',
+    'text-field': ['step', ['zoom'],
+      ['get', 'pos_int'],
+      13,
+      ['get', 'pos'],
+    ],
     'text-font': ['Noto Sans Bold'],
     'text-size': 11,
   },

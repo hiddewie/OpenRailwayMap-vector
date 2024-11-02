@@ -212,6 +212,7 @@ postgres:
         id: integer
         railway: string
         pos: string
+        pos_int: string
         zero: boolean
 
     standard_railway_switch_ref:

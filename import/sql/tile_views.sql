@@ -247,7 +247,8 @@ CREATE OR REPLACE VIEW railway_text_km AS
     way,
     railway,
     pos,
-    (railway_pos_decimal(pos) = '0') as zero
+    (railway_pos_decimal(pos) = '0') as zero,
+    left(pos, -2) as pos_int
   FROM
     (SELECT
        id,
