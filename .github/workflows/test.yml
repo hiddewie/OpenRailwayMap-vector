@@ -73,8 +73,8 @@ jobs:
           docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
           docker push ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
 
-  test-api:
-    name: Test API
+  build-api:
+    name: Build API
     runs-on: ubuntu-latest
 
     needs:
@@ -103,9 +103,43 @@ jobs:
         run: |
           docker compose up --no-build --wait db
 
-      - name: Prepare and start API
+      - name: Prepare API
         run: |
           api/prepare-api.sh
+
+      - name: Push API image
+        run: |
+          docker tag ghcr.io/hiddewie/openrailwaymap-api:latest ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
+          docker push ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
+
+  test-api:
+    name: Test API
+    runs-on: ubuntu-latest
+
+    needs:
+      - build-api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Hurl
+        env:
+          VERSION: '5.0.1'
+        run: |
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
+          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+
+      - name: Pull API
+        run: |
+          docker pull ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-api:latest 
+
+      - name: Start API
+        run: |
           docker compose up --wait --no-build api
 
       - name: Run API tests
@@ -217,6 +251,7 @@ jobs:
     needs:
       - test-proxy
       - test-api
+      - build-api
       - test-tiles
 
     steps:
@@ -230,6 +265,11 @@ jobs:
         run: |
           docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
           docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+
+      - name: Pull API
+        run: |
+          docker pull ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
+          docker tag ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-api:latest 
 
       - name: Start database
         run: |
@@ -245,9 +285,8 @@ jobs:
           docker compose build martin-proxy
           docker compose up --no-build --wait martin-proxy
 
-      - name: Prepare and start API
+      - name: Start API
         run: |
-          api/prepare-api.sh
           docker compose up --wait --no-build api
 
       - name: Run UI tests
