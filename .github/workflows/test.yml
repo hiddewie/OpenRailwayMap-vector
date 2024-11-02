@@ -286,7 +286,6 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: proxy/test/ui
-          start: npx cypress run
           browser: chrome
 
       - name: Store
