@@ -291,15 +291,34 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
 
 --- Signals ---
 
-CREATE OR REPLACE VIEW signals_signal_boxes AS
-  SELECT
-    id,
-    way,
-    feature,
-    ref,
-    name
-  FROM boxes
-  ORDER BY way_area DESC NULLS LAST;
+CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+  RETURN (
+    SELECT
+      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
+    FROM (
+      SELECT
+        ST_AsMVTGeom(
+          CASE
+            WHEN z >= 14 THEN way
+            ELSE center
+          END,
+          ST_TileEnvelope(z, x, y),
+          4096, 64, true
+        ) AS way,
+        id,
+        feature,
+        ref,
+        name
+      FROM boxes
+      WHERE way && ST_TileEnvelope(z, x, y)
+    ) as tile
+    WHERE way IS NOT NULL
+  );
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
   SELECT

@@ -260,17 +260,7 @@ postgres:
         azimuth: number
         direction_both: boolean
 
-    signals_signal_boxes:
-      schema: public
-      table: signals_signal_boxes
-      srid: 3857
-      geometry_column: way
-      geometry_type: GEOMETRY
-      properties:
-        id: integer
-        feature: string
-        ref: string
-        name: string
+    # signals_signal_boxes, see function below
 
     # --- Electrification --- #
 
@@ -285,6 +275,17 @@ postgres:
         feature: string
         azimuth: number
         direction_both: boolean
+
+
+  functions:
+
+    # --- Signals --- #
+
+    signals_signal_boxes:
+      schema: public
+      function: signals_signal_boxes
+      minzoom: 8
+      maxzoom: 14
 
 fonts:
   - /config/fonts

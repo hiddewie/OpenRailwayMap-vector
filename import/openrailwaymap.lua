@@ -233,6 +233,7 @@ local boxes = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'geometry' },
+    { column = 'center', type = 'geometry' },
     { column = 'way_area', type = 'real' },
     { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
@@ -333,8 +334,10 @@ function osm2pgsql.process_node(object)
   local tags = object.tags
 
   if railway_box_values(tags.railway) then
+    local point = object:as_point()
     boxes:insert({
-      way = object:as_point(),
+      way = point,
+      center = point,
       way_area = 0,
       feature = tags.railway,
       ref = tags['railway:ref'],
@@ -623,6 +626,7 @@ function osm2pgsql.process_way(object)
     local polygon = object:as_polygon():transform(3857)
     boxes:insert({
       way = polygon,
+      center = polygon:centroid(),
       way_area = polygon:area(),
       feature = tags.railway,
       ref = tags['railway:ref'],
