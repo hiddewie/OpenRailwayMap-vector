@@ -12,7 +12,10 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
-const backgroundMapContainer = document.getElementById('background-map')
+const themeSystemControl = document.getElementById('themeSystem');
+const themeDarkControl = document.getElementById('themeDark');
+const themeLightControl = document.getElementById('themeLight');
+const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
@@ -209,6 +212,14 @@ function showConfiguration() {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+  const theme = configuration.theme ?? defaultConfiguration.theme;
+  if (theme === 'system') {
+    themeSystemControl.checked = true;
+  } else if (theme === 'dark') {
+    themeDarkControl.checked = true
+  } else if (theme === 'light') {
+    themeLightControl.checked = true;
+  }
 
   configurationBackdrop.style.display = 'block';
 }
@@ -386,6 +397,15 @@ function updateBackgroundMapStyle() {
   backgroundMap.setStyle(buildBackgroundMapStyle());
 }
 
+function updateTheme() {
+  const configuredTheme = configuration.theme ?? defaultConfiguration.theme
+  const resolvedTheme = configuredTheme === 'system'
+    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    : configuredTheme;
+
+  document.documentElement.setAttribute('data-bs-theme', resolvedTheme)
+}
+
 function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
@@ -395,9 +415,12 @@ const defaultConfiguration = {
   backgroundOpacity: 1.0,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-}
+  theme: 'system',
+};
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
+
+updateTheme();
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
@@ -684,8 +707,8 @@ function popupContent(properties) {
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
-map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoom', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 
 let hoveredFeature = null
 map.on('mousemove', event => {
@@ -773,6 +796,6 @@ fetch(`${location.origin}/bounds.json`)
   })
   .then(result => {
     map.setMaxBounds(result);
-    backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
+    backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
   })
   .catch(error => console.error('Error during fetching of import map bounds', error))

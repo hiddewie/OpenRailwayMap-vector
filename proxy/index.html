@@ -133,6 +133,26 @@
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://americanamap.org/style.json</code>.
             </small>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Theme</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeSystem" value="raster" checked onchange="updateConfiguration('theme', 'system'); updateTheme();">
+                <label class="form-check-label" for="themeSystem">System</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeLight" value="raster" onchange="updateConfiguration('theme', 'light'); updateTheme();">
+                <label class="form-check-label" for="themeLight">Light</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeDark" value="raster" onchange="updateConfiguration('theme', 'dark'); updateTheme();">
+                <label class="form-check-label" for="themeDark">Dark</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control the theme of OpenRailwayMap. The default is to follow the system and browser preferences. A light or dark theme can also be configured.
+            </small>
+          </div>
         </form>
       </div>
     </div>
