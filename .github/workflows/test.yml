@@ -5,7 +5,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'master' }}
+  cancel-in-progress: ${{ github.ref_name != 'master' }}
 
 jobs:
   import:
