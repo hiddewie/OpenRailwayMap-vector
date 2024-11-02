@@ -397,13 +397,14 @@ function updateBackgroundMapStyle() {
   backgroundMap.setStyle(buildBackgroundMapStyle());
 }
 
-function updateTheme() {
-  const configuredTheme = configuration.theme ?? defaultConfiguration.theme
-  const resolvedTheme = configuredTheme === 'system'
+function resolveTheme(configuredTheme) {
+  return configuredTheme === 'system'
     ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
     : configuredTheme;
+}
 
-  document.documentElement.setAttribute('data-bs-theme', resolvedTheme)
+function updateTheme() {
+  document.documentElement.setAttribute('data-bs-theme', resolveTheme(configuration.theme ?? defaultConfiguration.theme));
 }
 
 function updateBackgroundMapContainer() {

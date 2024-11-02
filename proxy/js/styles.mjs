@@ -4922,7 +4922,11 @@ function makeLegendStyle(style) {
       },
       minzoom: legendZoom,
       maxzoom: legendZoom + 1,
-      paint: {},
+      paint: {
+        'text-color': 'black',
+        'text-halo-color': 'white',
+        'text-halo-width': 1,
+      },
       layout: {
         'text-field': '{legend}',
         'text-font': ['Noto Sans Medium'],
