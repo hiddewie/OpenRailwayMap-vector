@@ -298,23 +298,23 @@ function train_protection(tags)
 end
 
 local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
-function electrification_state(tags, ignore_future_states)
+function electrification_state(tags)
   local electrified = tags['electrified']
 
   if electrification_values(electrified) then
-    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency'])
+    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency']), nil, nil
   end
-  if (not ignore_future_states) and electrification_values(tags['construction:electrified']) then
-    return 'construction', tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
+  if electrification_values(tags['construction:electrified']) then
+    return 'construction', nil, nil, tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
   end
-  if (not ignore_future_states) and electrification_values(tags['proposed:electrified']) then
-    return 'proposed', tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
+  if electrification_values(tags['proposed:electrified']) then
+    return 'proposed', nil, nil, tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
   end
   if electrified == 'no' and electrification_values(tags['deelectrified']) then
-    return 'deelectrified', nil, nil
+    return 'deelectrified', nil, nil, nil, nil
   end
   if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
-    return 'abandoned', nil, nil
+    return 'abandoned', nil, nil, nil, nil
   end
 
   return nil, nil, nil
@@ -535,8 +535,7 @@ function osm2pgsql.process_way(object)
   if railway_values(tags.railway) then
     local railway_train_protection, railway_train_protection_rank = train_protection(tags)
 
-    local current_electrification_state, voltage, frequency = electrification_state(tags, true)
-    local _, future_voltage, future_frequency = electrification_state(tags, false)
+    local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
 
     local gauges = {}
     local gauge_tag = tags['gauge'] or tags['construction:gauge']

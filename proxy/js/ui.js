@@ -676,6 +676,8 @@ function popupContent(properties) {
       ${properties.speed_label ? `<span class="badge rounded-pill text-bg-light">speed: ${properties.speed_label}</span>` : ''}
       ${properties.voltage ? `<span class="badge rounded-pill text-bg-light">voltage: ${properties.voltage} V</span>` : ''}
       ${properties.frequency ? `<span class="badge rounded-pill text-bg-light">frequency: ${properties.frequency.toFixed(2)} Hz</span>` : ''}
+      ${properties.future_voltage ? `<span class="badge rounded-pill text-bg-light">voltage (future): ${properties.future_voltage} V</span>` : ''}
+      ${properties.future_frequency ? `<span class="badge rounded-pill text-bg-light">frequency (future): ${properties.future_frequency.toFixed(2)} Hz</span>` : ''}
       ${properties.gauge_label ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge_label}</span>` : ''}
       ${properties.loading_gauge ? `<span class="badge rounded-pill text-bg-light">loading gauge: ${properties.loading_gauge}</span>` : ''}
     </h6>
