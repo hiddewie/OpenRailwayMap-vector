@@ -471,12 +471,53 @@ const onStyleChange = changedStyle => {
   // Change styles
   map.setStyle(mapStyles[changedStyle], {
     validate: false,
+    transformStyle: (previous, next) => {
+      let style = next;
+
+      // Apply theme to style
+      if (resolveTheme(configuration.theme ?? defaultConfiguration.theme) === 'dark') {
+        style = {
+          ...style,
+          layers: style.layers.map(layer => {
+            if (layer.paint) {
+              if (layer.paint['text-color'] === 'black') {
+                layer.paint['text-color'] = 'white'
+                layer.paint['text-halo-color'] = 'black'
+              }
+            }
+
+            return layer;
+          })
+        }
+      }
+
+      return style;
+    },
   });
   legendMap.setStyle(legendStyles[changedStyle], {
     validate: false,
     transformStyle: (previous, next) => {
-      onStylesheetChange(next);
-      return next;
+      let style = next;
+
+      // Apply theme to style
+      if (resolveTheme(configuration.theme ?? defaultConfiguration.theme) === 'dark') {
+        style = {
+          ...style,
+          layers: style.layers.map(layer => {
+            if (layer.paint) {
+              if (layer.paint['text-color'] === 'black') {
+                layer.paint['text-color'] = 'white'
+                layer.paint['text-halo-color'] = 'black'
+              }
+            }
+
+            return layer;
+          })
+        }
+      }
+
+      onStylesheetChange(style);
+      return style;
     },
   });
 
