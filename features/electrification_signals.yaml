@@ -268,7 +268,7 @@ electrification_signals:
       country: NL
       icon: { default: 'nl/309a' }
       tags:
-        - { tag: 'railway:signal:electricity', value: 'NL:308a' }
+        - { tag: 'railway:signal:electricity', value: 'NL:309a' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
