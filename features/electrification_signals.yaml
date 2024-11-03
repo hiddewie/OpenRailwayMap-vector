@@ -236,6 +236,69 @@ electrification_signals:
         - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    # --- NL --- #
+
+    - description: power off
+      country: NL
+      icon: { default: 'nl/306a' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:306a' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+      # TODO support carriages
+    - description: power on
+      country: NL
+      icon: { default: 'nl/307a' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:307a' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+    - description: announcement pantograph down
+      country: NL
+      icon: { default: 'nl/307a' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:308a' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    # TODO support wash
+    - description: pantograph down
+      country: NL
+      icon: { default: 'nl/309a' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:308a' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    # TODO support carriages
+    - description: pantograph up
+      country: NL
+      icon: { default: 'nl/310a' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:310a' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    # TODO support direction
+    - description: end of catenary
+      country: NL
+      icon: { default: 'nl/311' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:311' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+    # TODO support values
+    - description: voltage change
+      country: NL
+      icon: { default: 'nl/320' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'NL:320' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'voltage_change' }
+
     # --- PL --- #
 
     - description: Wskaźnik uprzedzający o opuszczeniu pantografu (we1)
