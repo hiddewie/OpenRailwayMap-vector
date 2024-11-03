@@ -25,7 +25,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_hauptschalter_aus' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
 
     - description: Halt für Fahrzeuge mit angehobenem Stromabnehmer
       country: AT
@@ -39,7 +39,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
         - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
 
     - description: Hauptschalter ein
       country: AT
@@ -63,7 +63,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_aus' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
 
     - description: Stromabnehmer tief
       country: AT
