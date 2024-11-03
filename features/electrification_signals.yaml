@@ -169,6 +169,14 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
 
+    - description: power off shortly
+      country: DE
+      icon: { default: 'de/el1-el2' }
+      tags:
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
+
     - description: Streckentrennung (anfang)
       country: DE
       icon: { default: 'de/streckentrennung-anfang' }
