@@ -185,6 +185,14 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'end_of_isolated_overlap' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    - description: ICE-Schaltmerkhilfe
+      country: DE
+      icon: { default: 'de/ice-Schaltmerkhilfe' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'DE-ESO:ice-schaltmerkhilfe' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on_for_long_trains' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
     # --- FI --- #
 
     - description: Erotusjakson etumerkki
