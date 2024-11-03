@@ -169,6 +169,22 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
 
+    - description: Streckentrennung (anfang)
+      country: DE
+      icon: { default: 'de/streckentrennung-anfang' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'DE-ESO:streckentrennung' }
+        - { tag: 'railway:signal:electricity:type', value: 'begin_of_isolated_overlap' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Streckentrennung (ende)
+      country: DE
+      icon: { default: 'de/streckentrennung-ende' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'DE-ESO:streckentrennung' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_isolated_overlap' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
     # --- FI --- #
 
     - description: Erotusjakson etumerkki
