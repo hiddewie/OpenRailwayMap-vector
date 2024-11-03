@@ -195,7 +195,7 @@ electrification_signals:
 
     - description: ICE-Schaltmerkhilfe
       country: DE
-      icon: { default: 'de/ice-Schaltmerkhilfe' }
+      icon: { default: 'de/ice-schaltmerkhilfe' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'DE-ESO:ice-schaltmerkhilfe' }
         - { tag: 'railway:signal:electricity:type', value: 'power_on_for_long_trains' }
