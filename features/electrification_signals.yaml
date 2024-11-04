@@ -6,6 +6,7 @@ electrification_signals:
     - 'railway:signal:electricity:form'
     - 'railway:signal:electricity:for'
     - 'railway:signal:electricity:turn_direction'
+    - 'railway:signal:electricity:voltage'
 
   features:
 
@@ -297,19 +298,27 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
-    # TODO support direction
     - description: end of catenary
       country: NL
-      icon: { default: 'nl/311' }
+      icon:
+        match: 'railway:signal:electricity:turn_direction'
+        cases:
+          - { regex: '^right$', value: 'nl/311-right' }
+          - { regex: '^left$', value: 'nl/311-left' }
+        default: 'nl/311'
       tags:
         - { tag: 'railway:signal:electricity', value: 'NL:311' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
-    # TODO support values
     - description: voltage change
       country: NL
-      icon: { default: 'nl/320' }
+      icon:
+        match: 'railway:signal:electricity:voltage'
+        cases:
+          - { regex: '^1500$', value: 'nl/320-1500' }
+          - { regex: '^25000$', value: 'nl/320-25000' }
+        default: 'nl/320-unknown'
       tags:
         - { tag: 'railway:signal:electricity', value: 'NL:320' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
