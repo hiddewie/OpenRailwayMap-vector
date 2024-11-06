@@ -269,14 +269,14 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
     - description: Start of Neutral Zone
       country: FR
       icon: { default: 'fr/CC_EXE' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:CC_EXE' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
     - description: End of Neutral Zone
@@ -284,7 +284,7 @@ electrification_signals:
       icon: { default: 'fr/CC_EXE' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
     - description: End of Neutral Zone (reversible trains)
@@ -346,7 +346,7 @@ electrification_signals:
       icon: { default: 'fr/GIVRE' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
 
     # --- NL --- #
 
