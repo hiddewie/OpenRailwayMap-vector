@@ -178,6 +178,14 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
 
+    - description: tram sign power off shortly El 1
+      country: DE
+      icon: { default: 'de/el1' }
+      tags:
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity', value: 'DE-AVG:el1' }
+
     - description: Streckentrennung (anfang)
       country: DE
       icon: { default: 'de/streckentrennung-anfang' }
