@@ -261,6 +261,93 @@ electrification_signals:
         - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    # --- FR --- #
+
+    - description: Neutral Zone Announcement
+      country: FR
+      icon: { default: 'fr/SECT' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Start of Neutral Zone
+      country: FR
+      icon: { default: 'fr/CC_EXE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:CC_EXE' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: End of Neutral Zone
+      country: FR
+      icon: { default: 'fr/CC_EXE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+    - description: End of Neutral Zone (reversible trains)
+      country: FR
+      icon: { default: 'fr/REV' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:REV' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+    - description: Pantograph Down Announcement
+      country: FR
+      icon: { default: 'fr/BP_DIS' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:BP_DIS' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: Start of Pantograph Down
+      country: FR
+      icon: { default: 'fr/BP_EXE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:BP_EXE' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: End of Pantograph Down
+      country: FR
+      icon: { default: 'fr/BP_FIN' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:BP_FIN' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: Dual-Mode Traffic
+      country: FR
+      icon: { default: 'fr/BIMODE' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['FR:BIMODE', 'FR:BIMODE_A'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: End of Catenaries
+      country: FR
+      icon: { default: 'fr/FIN_CAT' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:FIN_CAT' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', value: 'end_of_catenary' }
+
+    - description: Stop Markers
+      country: FR
+      icon: { default: 'fr/JALON_ARRET' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:JALON_ARRET' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+    - description: Frost Board
+      country: FR
+      icon: { default: 'fr/GIVRE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
     # --- NL --- #
 
     - description: power off
