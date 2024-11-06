@@ -281,7 +281,7 @@ electrification_signals:
 
     - description: End of Neutral Zone
       country: FR
-      icon: { default: 'fr/CC_EXE' }
+      icon: { default: 'fr/CC_FIN' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
         - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
