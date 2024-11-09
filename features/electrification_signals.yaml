@@ -268,7 +268,7 @@ electrification_signals:
       icon: { default: 'fr/SECT' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
     - description: Start of Neutral Zone
