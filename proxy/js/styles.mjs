@@ -1078,7 +1078,7 @@ const railwayKmText = {
     true,
   ],
   paint: {
-    'text-color': 'black',
+    'text-color': 'hsl(268, 100%, 40%)',
     'text-halo-color': ['case',
       ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
       'white',
@@ -1092,7 +1092,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['Noto Sans Bold'],
+    'text-font': ['Fira Code Bold'],
     'text-size': 11,
   },
 };
@@ -3945,6 +3945,7 @@ const legendData = {
         type: 'point',
         properties: {
           zero: true,
+          pos_int: '47',
           pos: '47.0',
         },
       },
@@ -4036,6 +4037,17 @@ const legendData = {
           usage: 'main',
           maxspeed: null,
           speed_label: '',
+        },
+      },
+    ],
+    "high-railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos_int: '47',
+          pos: '47.0',
         },
       },
     ],
@@ -4195,6 +4207,17 @@ const legendData = {
             },
           },
         ],
+      },
+    ],
+    "high-railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos_int: '47',
+          pos: '47.0',
+        },
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [
@@ -4444,6 +4467,17 @@ const legendData = {
           future_voltage: 25000,
           future_frequency: 60,
           electrification_label: '',
+        },
+      },
+    ],
+    "high-railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos_int: '47',
+          pos: '47.0',
         },
       },
     ],
@@ -4802,6 +4836,17 @@ const legendData = {
         },
       },
     ],
+    "high-railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos_int: '47',
+          pos: '47.0',
+        },
+      },
+    ],
   },
   loading_gauge: {
     'openrailwaymap_low-railway_line_low': [
@@ -4873,6 +4918,17 @@ const legendData = {
           feature: 'rail',
           usage: 'main',
           service: null,
+        },
+      },
+    ],
+    "high-railway_text_km": [
+      {
+        legend: 'Milestone',
+        type: 'point',
+        properties: {
+          zero: true,
+          pos_int: '47',
+          pos: '47.0',
         },
       },
     ],

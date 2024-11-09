@@ -248,13 +248,13 @@ CREATE OR REPLACE VIEW railway_text_km AS
     railway,
     pos,
     (railway_pos_decimal(pos) = '0') as zero,
-    left(pos, -2) as pos_int
+    railway_pos_round(pos, 0)::text as pos_int
   FROM
     (SELECT
        id,
        way,
        railway,
-       COALESCE(railway_position, railway_pos_round(railway_position_exact)::text) AS pos
+       COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
      FROM railway_positions
     ) AS r
   WHERE pos IS NOT NULL
