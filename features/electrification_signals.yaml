@@ -136,7 +136,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity:type', value: 'power_on' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity', value: 'DE-ESO:el2' }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el2', 'DE-BOStrab:st4'] }
 
     - description: pantograph up El 5
       country: DE
@@ -144,7 +144,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity', value: 'DE-ESO:el5' }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
 
     - description: power off sign El 1
       country: DE
@@ -152,7 +152,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1' }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1', 'DE-BOStrab:st3'] }
 
     - description: pantograph down El 4
       country: DE
@@ -160,7 +160,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity', value: 'DE-ESO:el4' }
+        - { tag: 'railway:signal:electricity', values: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
 
     - description: tram power off shortly signal (St 7)
       country: DE
