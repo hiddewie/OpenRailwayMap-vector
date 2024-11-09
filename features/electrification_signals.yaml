@@ -98,6 +98,160 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
         - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
 
+    # --- CH --- #
+
+    - description: Vorsignal zum Senksignal
+      country: CH
+      icon: { default: 'ch/fdv-703' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:703' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: Senksignal
+      country: CH
+      icon: { default: 'ch/fdv-704' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:704' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: Endsignal zum Senksignal (sign)
+      country: CH
+      icon: { default: 'ch/fdv-705' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:705' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: Endsignal zum Senksignal (light)
+      country: CH
+      icon: { default: 'ch/fdv-706' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:706' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: Aufhebungssignal zum Senksignal
+      country: CH
+      icon: { default: 'ch/fdv-707' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:707' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: Vorsignal zum Ausschaltsignal (sign)
+      country: CH
+      icon: { default: 'ch/fdv-708' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:708' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+    - description: Vorsignal zum Ausschaltsignal (light)
+      country: CH
+      icon: { default: 'ch/fdv-709' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:709' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+    - description: Ausschaltsignal (sign)
+      country: CH
+      icon: { default: 'ch/fdv-710' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:710' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Ausschaltsignal (light)
+      country: CH
+      icon: { default: 'ch/fdv-711' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:711' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Einschaltsignal (sign)
+      country: CH
+      icon: { default: 'ch/fdv-712' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:712' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Einschaltsignal (light)
+      country: CH
+      icon: { default: 'ch/fdv-713' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:713' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: Streckentrennung
+      country: CH
+      icon: { default: 'ch/fdv-714' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:714' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+        - { tag: 'railway:signal:electricity:type', value: 'joint' } # TODO why joint?
+
+    - description: Zonen-Schutzstreckensignal
+      country: CH
+      icon: { default: 'ch/fdv-715' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:715' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'main_switch_off' }
+
+    - description: Zonensignal
+      country: CH
+      icon: { default: 'ch/fdv-716' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: 'CH-FDV:716' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_changeable' }
+
+    - description: Vorsignal zum Umschaltsignal
+      country: CH
+      icon: { default: 'ch/fdv-719' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['CH-FDV:719', 'CH-SBB:719'] }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_change_advance' }
+
+    - description: Umschaltsignal anfang (sign)
+      country: CH
+      icon: { default: 'ch/fdv-717' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:717' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_change_start' }
+
+    - description: Umschaltsignal anfang (light)
+      country: CH
+      icon: { default: 'ch/fdv-717.1' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:717.1' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_change_start' }
+
+    - description: Umschaltsignal ende (sign)
+      country: CH
+      icon: { default: 'ch/fdv-718' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:718' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
+
+    - description: Umschaltsignal ende (light)
+      country: CH
+      icon: { default: 'ch/fdv-718.1' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:718.1' }
+        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
+
     # --- DE --- #
 
     - description: pantograph down advance El 3
