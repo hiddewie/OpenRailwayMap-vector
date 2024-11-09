@@ -120,7 +120,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-705' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:705' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:705' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -128,7 +128,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-706' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:706' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:706' }
         - { tag: 'railway:signal:electricity:form', value: 'light' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -136,7 +136,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-707' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:707' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:707' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -144,7 +144,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-708' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:708' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:708' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
@@ -152,7 +152,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-709' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:709' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:709' }
         - { tag: 'railway:signal:electricity:form', value: 'light' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
@@ -160,7 +160,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-710' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:710' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:710' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -168,7 +168,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-711' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:711' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:711' }
         - { tag: 'railway:signal:electricity:form', value: 'light' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -176,7 +176,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-712' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:712' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:712' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -184,7 +184,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-713' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:713' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:713' }
         - { tag: 'railway:signal:electricity:form', value: 'light' }
         - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -192,7 +192,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-714' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:714' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:714' }
         - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'joint' } # TODO why joint?
 
@@ -200,7 +200,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-715' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:715' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:715' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'main_switch_off' }
 
@@ -208,7 +208,7 @@ electrification_signals:
       country: CH
       icon: { default: 'ch/fdv-716' }
       tags:
-        - { tag: 'railway:signal:electricity', values: 'CH-FDV:716' }
+        - { tag: 'railway:signal:electricity', value: 'CH-FDV:716' }
         - { tag: 'railway:signal:electricity:form', value: 'light' }
         - { tag: 'railway:signal:electricity:type', value: 'system_changeable' }
 
