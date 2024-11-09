@@ -332,7 +332,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:FIN_CAT' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity:form', value: 'end_of_catenary' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
     - description: Stop Markers
       country: FR
