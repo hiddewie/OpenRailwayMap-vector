@@ -40,7 +40,7 @@ electrification_signals:
       tags:
         - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
         - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
 
     - description: Hauptschalter ein
       country: AT
