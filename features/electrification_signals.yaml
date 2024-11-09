@@ -300,7 +300,7 @@ electrification_signals:
       icon: { default: 'fr/BP_DIS' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'FR:BP_DIS' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
     - description: Start of Pantograph Down
