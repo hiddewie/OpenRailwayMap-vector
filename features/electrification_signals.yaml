@@ -98,6 +98,32 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
         - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
 
+    # --- BE --- #
+
+    - description: Panto distant
+      country: BE
+      icon: { default: 'be/PBA' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'BE:PBA' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: Panto down
+      country: BE
+      icon: { default: 'be/PBE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'BE:PBE' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: Panto up
+      country: BE
+      icon: { default: 'be/PRL' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'BE:PRL' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
     # --- CH --- #
 
     - description: Vorsignal zum Senksignal
