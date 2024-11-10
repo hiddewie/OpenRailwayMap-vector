@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16.016659" viewBox="0 0 16 16.016659">
+<path fill-rule="evenodd" fill="rgb(19.607843%, 29.019608%, 59.215686%)" fill-opacity="1" d="M 8 15.972656 L 0.046875 8.007812 L 8 0.046875 L 15.953125 8.007812 "/>
+<path fill="none" stroke-width="0.088" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(13.72549%, 12.156863%, 12.54902%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.000000000000007105 -0.00332163 L -18.669713 18.693901 L -0.000000000000007105 37.381953 L 18.669713 18.693901 Z M -0.000000000000007105 -0.00332163 " transform="matrix(0.425991, 0, 0, -0.425991, 8, 15.971241)"/>
+<path fill-rule="evenodd" fill="rgb(99.215686%, 99.215686%, 99.215686%)" fill-opacity="1" d="M 0.046875 8.007812 L 8 15.972656 L 8 8.007812 "/>
+<path fill="none" stroke-width="0.088" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(13.72549%, 12.156863%, 12.54902%)" stroke-opacity="1" stroke-miterlimit="10" d="M 0.00388734 0.00120412 L 18.6736 -18.696018 L 18.6736 0.00120412 Z M 0.00388734 0.00120412 " transform="matrix(0.425991, 0, 0, -0.425991, 0.045219, 8.008325)"/>
+<path fill-rule="evenodd" fill="rgb(99.215686%, 99.215686%, 99.215686%)" fill-opacity="1" d="M 15.953125 8.007812 L 8 0.046875 L 8 8.007812 "/>
+<path fill="none" stroke-width="0.088" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(13.72549%, 12.156863%, 12.54902%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.00388734 0.00120412 L -18.6736 18.689257 L -18.6736 0.00120412 Z M -0.00388734 0.00120412 " transform="matrix(0.425991, 0, 0, -0.425991, 15.954781, 8.008325)"/>
+</svg>

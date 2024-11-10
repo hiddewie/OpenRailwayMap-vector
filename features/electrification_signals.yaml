@@ -357,6 +357,81 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'power_on_for_long_trains' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    # --- ES --- #
+
+    - description: end of catenary
+      country: ES
+      # TODO add turn direction
+      icon: { default: 'es/FI14A' }
+      tags:
+        - { tag: 'railway:signal:electricity', values: ['ES:FI14A', 'ES:FI14B'] }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
+
+    - description: power off shortly
+      country: ES
+      icon: { default: 'es/FI14C' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14C' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+
+    - description: power off shortly (full)
+      country: ES
+      icon: { default: 'es/FI14D' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14D' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+
+    - description: pantograph down
+      country: ES
+      icon: { default: 'es/FI14E' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14E' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: pantograph up
+      country: ES
+      icon: { default: 'es/FI14F' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14F' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: pantograph down announcement
+      country: ES
+      icon: { default: 'es/FI14G' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14G' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: power off announcement
+      country: ES
+      icon: { default: 'es/FI14H' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14H' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+    - description: power off
+      country: ES
+      icon: { default: 'es/FI14I' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14I' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: power on
+      country: ES
+      icon: { default: 'es/FI14J' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'ES:FI14J' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
     # --- FI --- #
 
     - description: Erotusjakson etumerkki
