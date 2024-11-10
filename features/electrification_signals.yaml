@@ -495,6 +495,64 @@ electrification_signals:
         - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
         - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
 
+    # --- LU --- #
+
+    - description: ESFA
+      country: LU
+      icon: { default: 'lu/ESFA' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFA' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+    - description: ESFAp/TA
+      country: LU
+      icon: { default: 'lu/ESFAp_TA' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TA' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+    - description: ESFAp/TE
+      country: LU
+      icon: { default: 'lu/ESFAp_TE' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TE' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+    - description: ESFAp/TR
+      country: LU
+      icon: { default: 'lu/ESFAp_TR' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TR' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+    - description: ESFCC/A
+      country: LU
+      icon: { default: 'lu/ESFCC_A' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/A' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+    - description: ESFCC/E
+      country: LU
+      icon: { default: 'lu/ESFCC_E' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/E' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    - description: ESFCC/F
+      country: LU
+      icon: { default: 'lu/ESFCC_F' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/F' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
     # --- NL --- #
 
     - description: power off

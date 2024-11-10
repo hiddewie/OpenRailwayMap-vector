@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 4.929688 3.105469 C 4.929688 6.777344 1.75 6.054688 1.75 8 C 1.75 9.945312 4.929688 9.222656 4.929688 12.894531 L 11.070312 12.894531 C 11.070312 9.222656 14.25 9.945312 14.25 8 C 14.25 6.054688 11.070312 6.777344 11.070312 3.105469 Z M 4.929688 3.105469 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5.601562 9.601562 L 10.398438 9.601562 L 10.398438 11.199219 L 5.601562 11.199219 Z M 8.800781 4.800781 L 10.398438 4.800781 L 10.398438 8 L 8.800781 8 Z M 5.601562 4.800781 L 7.199219 4.800781 L 7.199219 8 L 5.601562 8 Z M 5.601562 4.800781 "/>
+<path fill="none" stroke-width="3.93508" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 2.96875 2.96875 L 61.03125 2.96875 L 61.03125 61.03125 L 2.96875 61.03125 Z M 2.96875 2.96875 " transform="matrix(0.25, 0, 0, 0.25, 0, 0)"/>
+</svg>
