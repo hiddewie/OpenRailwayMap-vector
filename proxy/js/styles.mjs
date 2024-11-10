@@ -2700,7 +2700,7 @@ const layers = {
     {
       id: 'electrification_signals_direction',
       type: 'symbol',
-      minzoom: 16,
+      minzoom: 15,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
       filter: ['all',
@@ -2734,7 +2734,7 @@ const layers = {
       ['get', 'feature'],
       {
         type: 'symbol',
-        minzoom: 16,
+        minzoom: 15,
         source: 'openrailwaymap_electrification',
         'source-layer': 'electrification_signals',
         layout: {
