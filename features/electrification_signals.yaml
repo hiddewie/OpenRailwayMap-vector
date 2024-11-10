@@ -771,3 +771,11 @@ electrification_signals:
         - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b'] }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+    - description: Tram isolation (ct-1)
+      country: PL
+      icon: { default: 'pl/ct-1' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-1' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'isolation' }
