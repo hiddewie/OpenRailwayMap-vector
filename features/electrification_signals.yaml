@@ -116,20 +116,12 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
-    - description: Endsignal zum Senksignal (sign)
+    - description: Endsignal zum Senksignal
       country: CH
       icon: { default: 'ch/fdv-705' }
       tags:
-        - { tag: 'railway:signal:electricity', value: 'CH-FDV:705' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
-        - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
-
-    - description: Endsignal zum Senksignal (light)
-      country: CH
-      icon: { default: 'ch/fdv-706' }
-      tags:
-        - { tag: 'railway:signal:electricity', value: 'CH-FDV:706' }
-        - { tag: 'railway:signal:electricity:form', value: 'light' }
+        - { tag: 'railway:signal:electricity', values: ['CH-FDV:705', 'CH-FDV:706'] }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
     - description: Aufhebungssignal zum Senksignal
@@ -206,6 +198,7 @@ electrification_signals:
 
     - description: Zonensignal
       country: CH
+      # TODO support voltage values
       icon: { default: 'ch/fdv-716' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'CH-FDV:716' }
