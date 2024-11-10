@@ -113,7 +113,7 @@ electrification_signals:
       icon: { default: 'ch/fdv-704' }
       tags:
         - { tag: 'railway:signal:electricity', value: 'CH-FDV:704' }
-        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:form', values: ['sign', 'semaphore'] }
         - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
     - description: Endsignal zum Senksignal
