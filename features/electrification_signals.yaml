@@ -805,3 +805,11 @@ electrification_signals:
         - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-1' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
         - { tag: 'railway:signal:electricity:type', value: 'isolation' }
+
+    - description: Tram power limit (ct-2)
+      country: PL
+      icon: { default: 'pl/ct-2' }
+      tags:
+        - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-2' }
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity:type', value: 'power_limit' }
