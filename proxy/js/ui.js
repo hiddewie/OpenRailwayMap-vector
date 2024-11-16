@@ -262,7 +262,7 @@ function removeDomElement(node) {
 }
 
 const globalMinZoom = 1;
-const globalMaxZoom = 19;
+const globalMaxZoom = 20;
 
 const knownStyles = {
   standard: 'Infrastructure',

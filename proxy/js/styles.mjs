@@ -19,7 +19,7 @@ const knownStyles = [
 ];
 
 const globalMinZoom = 1;
-const glodalMaxZoom = 18;
+const glodalMaxZoom = 20;
 
 const colors = {
   hover: {
