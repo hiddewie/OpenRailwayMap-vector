@@ -26,6 +26,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
         END AS standard_label,
         ref,
         track_ref,
+        track_class,
         array_to_string(reporting_marks, ', ') as reporting_marks,
         preferred_direction,
         CASE
