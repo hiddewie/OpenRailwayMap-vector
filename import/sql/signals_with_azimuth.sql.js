@@ -73,14 +73,18 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   ) as sl ON true
   WHERE
     (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-    OR railway IN ('derail', 'vacancy_detection');
+      OR railway IN ('derail', 'vacancy_detection');
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   SELECT
     *
   FROM
-    signals_with_azimuth_view;
+    signals_with_azimuth_view
+  WHERE
+    signal_feature IS NOT NULL 
+      OR speed_feature IS NOT NULL 
+      OR electrification_feature IS NOT NULL;
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth
