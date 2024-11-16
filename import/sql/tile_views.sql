@@ -281,7 +281,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     speed_feature_type as type,
     azimuth,
     (signal_direction = 'both') as direction_both
-  FROM signals_with_azimuth s
+  FROM signals_with_azimuth
   WHERE railway = 'signal'
     AND speed_feature IS NOT NULL
   ORDER BY
