@@ -39,6 +39,9 @@ describe('home page', () => {
     cy.contains('Loading gauge').click()
     cy.url().should('include', 'style=loading_gauge')
 
+    cy.contains('Track class').click()
+    cy.url().should('include', 'style=track_class')
+
     cy.wait(3000)
     cy.screenshot()
   })
