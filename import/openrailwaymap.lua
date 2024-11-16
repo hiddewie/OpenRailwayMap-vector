@@ -213,6 +213,7 @@ local signal_columns = {
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
+  { column = 'dominant_speed', type = 'real' },
 }
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
