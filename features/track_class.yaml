@@ -1,0 +1,20 @@
+track_classes:
+  - { value: 'A', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'B1', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'B2', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'C2', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'C3', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'C3L', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'C4', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'CE', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'CM2', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'CM3', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'CM', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'D2', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'D3', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'D4', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'DL', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'E4', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'E5', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'F', color: 'hsl(96, 100%, 40%)' }
+  - { value: 'G', color: 'hsl(96, 100%, 40%)' }

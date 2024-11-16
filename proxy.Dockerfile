@@ -13,6 +13,7 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
+  --mount=type=bind,source=features/track_class.yaml,target=track_class.yaml \
   node /build/styles.mjs
 
 FROM nginx:1-alpine

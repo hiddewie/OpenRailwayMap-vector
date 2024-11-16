@@ -271,6 +271,7 @@ const knownStyles = {
   electrification: 'Electrification',
   gauge: 'Gauge',
   loading_gauge: 'Loading gauge',
+  track_class: 'Track class',
 };
 
 function hashToObject(hash) {
