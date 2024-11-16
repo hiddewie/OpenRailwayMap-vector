@@ -3,7 +3,13 @@
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   -- TODO investigate signals with null features
   SELECT
-    s.*,
+    s.id,
+    s.way,
+    s.railway,
+    s.ref,
+    s.ref_multiline,
+    s.deactivated,
+    s.signal_direction,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
