@@ -143,6 +143,21 @@ loading_gauges:
 
 Open a pull request where you provide details about the new loading gauge. Ensure the pull request contains references to documentation and places on the map where the loading gauge exists.
 
+## I want to visualize a new track class on the map
+
+Edit the file [`features/track_class.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/track_class.yaml).
+
+The file contains a list of track classes, each with a value (the value of the `railway:track_class` tag) and a color.
+
+Add a new entry at a certain place in the list. The value is the `railway:track_class` tag value. For example:
+```yaml
+track_classes:
+  - { value: 'Z', color: 'blue' }
+    # ...
+```
+
+Open a pull request where you provide details about the new track class. Ensure the pull request contains references to documentation and places on the map where the track class exists.
+
 ## I want to improve the user interface
 
 The HTML, Javascript and CSS of the user interface are located in the [proxy](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/proxy) directory.
