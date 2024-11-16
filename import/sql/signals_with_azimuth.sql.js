@@ -21,6 +21,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     deactivated,
     signal_direction,
     "railway:signal:speed_limit",
+    dominant_speed,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
