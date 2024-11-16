@@ -1,7 +1,6 @@
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
 -- and the functional signal feature
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
-  -- TODO investigate signals with null features
   SELECT
     s.id,
     s.way,
