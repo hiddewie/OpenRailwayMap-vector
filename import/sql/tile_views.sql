@@ -86,6 +86,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
              bridge,
              tunnel,
              track_ref,
+             track_class,
              ref,
              CASE
                  WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
