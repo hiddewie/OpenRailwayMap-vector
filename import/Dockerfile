@@ -1,15 +1,16 @@
-FROM ghcr.io/hiddewie/template:v0.4.1 as build-lua
+FROM node:22-alpine as build-lua
 
 WORKDIR /build
 
-RUN --mount=type=bind,source=import/openrailwaymap.lua,target=openrailwaymap.lua.tmpl \
+RUN npm install yaml
+
+RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  cat electrification_signals.yaml speed_railway_signals.yaml train_protection.yaml signals_railway_signals.yaml \
-    | template --configuration - --format yaml --template openrailwaymap.lua.tmpl \
-    > /build/openrailwaymap.lua
+  node tags.lua.js \
+    > /build/tags.lua
 
 FROM node:22-alpine as build-signals
 
@@ -50,9 +51,10 @@ WORKDIR /openrailwaymap
 
 COPY import/sql sql
 COPY import/docker-startup.sh docker-startup.sh
+COPY import/openrailwaymap.lua openrailwaymap.lua
 
 COPY --from=build-lua \
-  /build/openrailwaymap.lua openrailwaymap.lua
+  /build/tags.lua tags.lua
 
 COPY --from=build-signals \
   /build/signals_with_azimuth.sql sql/signals_with_azimuth.sql

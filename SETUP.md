@@ -102,7 +102,7 @@ docker build --target build-signals --tag build-signals --file import/Dockerfile
   && docker run --rm --entrypoint cat build-signals /build/signals_with_azimuth.sql | less
 
 docker build --target build-lua --tag build-lua --file import/Dockerfile . \
-  && docker run --rm --entrypoint cat build-lua /build/openrailwaymap.lua | less
+  && docker run --rm --entrypoint cat build-lua /build/tags.lua | less
 
 docker build --target build-styles --tag build-styles --file proxy.Dockerfile . \
   && docker run --rm --entrypoint ls build-styles
