@@ -22,13 +22,14 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     signal_direction,
     "railway:signal:speed_limit",
     dominant_speed,
+    rank,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
     )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
     CASE ${signals_railway_signals.features.map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}"${tag.value ? ` = '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
           WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
@@ -38,7 +39,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     
     CASE ${speed_railway_signals.features.map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}"${tag.value ? ` = '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
           WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '')}')` : `'${iconCase.value}'`}`).join('')}
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
@@ -48,13 +49,13 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     
     CASE ${speed_railway_signals.features.map(feature => feature.type ? `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}"${tag.value ? ` = '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')} THEN '${feature.type}'
+      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')} THEN '${feature.type}'
     ` : '').join('')}
     END as speed_feature_type,
     
     CASE ${electrification_signals.features.map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}"${tag.value ? ` = '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
           WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
