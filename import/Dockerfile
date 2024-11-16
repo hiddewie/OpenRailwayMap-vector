@@ -11,16 +11,17 @@ RUN --mount=type=bind,source=import/openrailwaymap.lua,target=openrailwaymap.lua
     | template --configuration - --format yaml --template openrailwaymap.lua.tmpl \
     > /build/openrailwaymap.lua
 
-FROM ghcr.io/hiddewie/template:v0.4.1 as build-signals
+FROM node:22-alpine as build-signals
 
 WORKDIR /build
 
-RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql,target=signals_with_azimuth.sql.tmpl \
+RUN npm install yaml
+
+RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql.js,target=signals_with_azimuth.sql.js \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
-  cat electrification_signals.yaml signals_railway_signals.yaml speed_railway_signals.yaml \
-    | template --configuration - --format yaml --template signals_with_azimuth.sql.tmpl \
+  node signals_with_azimuth.sql.js \
     > /build/signals_with_azimuth.sql
 
 FROM debian:unstable-20240211-slim
