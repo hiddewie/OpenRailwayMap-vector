@@ -61,6 +61,11 @@ server {
     expires $cache_style;
   }
 
+  location /features {
+    root /etc/nginx/public;
+    expires $cache_style;
+  }
+
   location /api {
     root /etc/nginx/public;
     index api.html;

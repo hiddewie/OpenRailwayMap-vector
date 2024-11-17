@@ -16,6 +16,20 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features/track_class.yaml,target=track_class.yaml \
   node /build/styles.mjs
 
+FROM node:22-alpine as build-features
+
+WORKDIR /build
+
+RUN npm install yaml
+
+RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
+  --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
+  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
+  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
+  --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
+  --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
+  node /build/features.mjs
+
 FROM nginx:1-alpine
 
 COPY proxy/proxy.conf.template /etc/nginx/templates/proxy.conf.template
@@ -29,3 +43,6 @@ COPY data/import /etc/nginx/public/import
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style
+
+COPY --from=build-features \
+  /build /etc/nginx/public/features
