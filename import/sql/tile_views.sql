@@ -282,7 +282,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     speed_feature as feature,
     speed_feature_type as type,
     azimuth,
-    (signal_direction = 'both') as direction_both
+    (signal_direction = 'both') as direction_both,
+    ref
   FROM signals_with_azimuth
   WHERE railway = 'signal'
     AND speed_feature IS NOT NULL
@@ -346,7 +347,8 @@ CREATE OR REPLACE VIEW electrification_signals AS
     way,
     electrification_feature as feature,
     azimuth,
-    (signal_direction = 'both') as direction_both
+    (signal_direction = 'both') as direction_both,
+    ref
   FROM signals_with_azimuth
   WHERE
     railway = 'signal'

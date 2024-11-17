@@ -243,6 +243,7 @@ postgres:
         id: integer
         feature: string
         type: string
+        ref: string
         azimuth: number
         direction_both: boolean
 
@@ -279,6 +280,7 @@ postgres:
         feature: string
         azimuth: number
         direction_both: boolean
+        ref: string
 
 
   functions:
