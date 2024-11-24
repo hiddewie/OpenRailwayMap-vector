@@ -383,6 +383,27 @@ electrification_signals:
         - { tag: 'railway:signal:electricity:type', value: 'power_on_for_long_trains' }
         - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+    - description: VGF st9
+      country: DE
+      icon: { default: 'de/vgf/st9' }
+      tags:
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9' }
+
+    - description: VGF st10
+      country: DE
+      icon: { default: 'de/vgf/st10' }
+      tags:
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity', value: 'DE-VGF:st10' }
+
+    - description: VGF st9 & st10
+      country: DE
+      icon: { default: 'de/vgf/st9-st10' }
+      tags:
+        - { tag: 'railway:signal:electricity:form', value: 'sign' }
+        - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
+
     # --- ES --- #
 
     - description: end of catenary

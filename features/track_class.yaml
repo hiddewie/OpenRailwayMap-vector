@@ -13,7 +13,7 @@ track_classes:
   - { value: 'D2', color: 'hsl(30, 100%, 40%)' }
   - { value: 'D3', color: 'hsl(20, 100%, 40%)' }
   - { value: 'D4', color: 'hsl(10, 100%, 40%)' }
-  - { value: 'DL', color: 'hsl(0, 100%, 40%)' }
+  - { value: 'D4L', color: 'hsl(0, 100%, 40%)' }
   - { value: 'E4', color: 'hsl(340, 100%, 40%)' }
   - { value: 'E5', color: 'hsl(320, 100%, 40%)' }
   - { value: 'F', color: 'hsl(300, 100%, 40%)' }
