@@ -666,7 +666,7 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[01][1-9]0$', value: 'nl/speed_limit_distant_sign-{}', example: 'nl/speed_limit_distant_sign-70' }
+          - { regex: '^1?[1-9]0$', value: 'nl/speed_limit_distant_sign-{}', example: 'nl/speed_limit_distant_sign-70' }
         default: 'nl/speed_limit_distant_sign-empty'
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
@@ -678,7 +678,7 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[01][1-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-70' }
+          - { regex: '^1?[1-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-70' }
         default: 'nl/speed_limit_distant_light-empty'
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
@@ -690,7 +690,7 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[01][1-9]0$', value: 'nl/speed_limit_sign-{}', example: 'nl/speed_limit_sign-70' }
+          - { regex: '^1?[1-9]0$', value: 'nl/speed_limit_sign-{}', example: 'nl/speed_limit_sign-70' }
         default: 'nl/speed_limit_sign-empty'
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL' }
@@ -702,7 +702,7 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[01][1-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-70' }
+          - { regex: '^1?[1-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-70' }
         default: 'nl/speed_limit_light-empty'
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL' }
