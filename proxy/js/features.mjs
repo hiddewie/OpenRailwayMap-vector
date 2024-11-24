@@ -44,8 +44,25 @@ const loadingGauges = loading_gauges.map(feature => ({
   description: feature.legend,
 }));
 
-fs.writeFileSync('speed-signals.json', JSON.stringify(speedSignals));
-fs.writeFileSync('train-protection.json', JSON.stringify(trainProtection));
-fs.writeFileSync('train-protection-signals.json', JSON.stringify(trainProtectionSignals));
-fs.writeFileSync('electrification-signals.json', JSON.stringify(electrificationSignals));
-fs.writeFileSync('loading-gauges.json', JSON.stringify(loadingGauges));
+const features = {
+  standard: {
+    'openrailwaymap_low-railway_line_low': [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
+        },
+      },
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+        }
+      },
+    ],
+  }
+};
+
+console.log(features)

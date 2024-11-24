@@ -647,12 +647,15 @@ function popupContent(properties) {
   // TODO format voltage
   // TODO format gauge(s)
   const label = properties.label ?? properties.standard_label ?? properties.name ?? properties.ref;
+  const featureDescription = properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
+  console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
   return `
     <h6>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
       ${label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${label}${properties.osm_id ? `</a>` : ''}` : ''}
       ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
     </h6>
+    ${featureDescription ? `<p>${featureDescription}</p>` : ''}
     <h6>
       ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
       ${properties.railway_ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
@@ -779,3 +782,17 @@ fetch(`${location.origin}/bounds.json`)
     backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
   })
   .catch(error => console.error('Error during fetching of import map bounds', error))
+
+let features = null;
+fetch(`${location.origin}/features.json`)
+  .then(result => {
+    if (result.status === 200) {
+      return result.json()
+    } else {
+      throw `Invalid status code ${result.status}`
+    }
+  })
+  .then(result => {
+    features = result;
+  })
+  .catch(error => console.error('Error during fetching of features', error))

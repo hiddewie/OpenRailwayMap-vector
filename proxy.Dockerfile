@@ -28,7 +28,8 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
   --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
-  node /build/features.mjs
+  node /build/features.mjs \
+    > /build/features.json
 
 FROM nginx:1-alpine
 
@@ -45,4 +46,4 @@ COPY --from=build-styles \
   /build /etc/nginx/public/style
 
 COPY --from=build-features \
-  /build /etc/nginx/public/features
+  /build/features.json /etc/nginx/public/features.json

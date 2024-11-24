@@ -61,7 +61,7 @@ server {
     expires $cache_style;
   }
 
-  location /features {
+  location = /features.json {
     root /etc/nginx/public;
     expires $cache_style;
   }
