@@ -1247,20 +1247,6 @@ signals_railway_signals:
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
         - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
 
-    - description: main signal with speed limit
-      country: NL
-      icon: { default: 'nl/main_light_speed_limit' }
-      tags:
-        - { tag: 'railway:signal:main', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-    - description: distant signal with speed limit
-      country: NL
-      icon: { default: 'nl/distant_light_speed_limit' }
-      tags:
-        - { tag: 'railway:signal:distant', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
     - description: main light
       country: NL
       icon: { default: 'nl/main_light' }
@@ -1274,13 +1260,6 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:distant', value: 'NL' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
-
-    - description: speed limit only
-      country: NL
-      icon: { default: 'nl/speed_limit_light' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
     - description: Humping ("heuvelen")
       country: NL
