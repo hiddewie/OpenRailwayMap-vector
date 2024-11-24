@@ -1269,7 +1269,7 @@ signals_railway_signals:
 
     - description: ATB codewissel
       country: NL
-      icon: { default: 'nl/atb-codewissel' }
+      icon: { default: 'nl/330' }
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:330' }
 
