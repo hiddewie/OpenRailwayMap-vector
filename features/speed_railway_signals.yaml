@@ -684,6 +684,15 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
+    - description: tunnel distant speed limit (sign)
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/286-80' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
     - description: speed limit (sign)
       country: NL
       type: line
