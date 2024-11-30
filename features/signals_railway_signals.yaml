@@ -1259,13 +1259,6 @@ signals_railway_signals:
         - { tag: 'railway:signal:humping', value: 'NL:270' }
         - { tag: 'railway:signal:humping:form', value: 'light' }
 
-    - description: ATB codewissel
-      country: NL
-      icon: { default: 'nl/330' }
-      tags:
-        - { tag: 'railway:signal:train_protection', value: 'NL:330' }
-        - { tag: 'railway:signal:train_protection:form', value: 'light' }
-
     - description: train protection block markers (arrow)
       country: NL
       icon: { default: 'general/etcs-stop-marker-arrow-left' }
@@ -1333,6 +1326,41 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:337' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB distant
+      country: NL
+      icon: { default: 'nl/328a' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328a' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB start
+      country: NL
+      icon: { default: 'nl/328' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB code
+      country: NL
+      icon: { default: 'nl/328b' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328b' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB end
+      country: NL
+      icon: { default: 'nl/329' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:329' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB codewissel
+      country: NL
+      icon: { default: 'nl/330' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:330' }
+        - { tag: 'railway:signal:train_protection:form', value: 'light' }
 
     # --- PL --- #
 
