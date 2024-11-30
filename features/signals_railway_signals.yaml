@@ -1245,6 +1245,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:distant', value: 'NL' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
 
+    - description: middenvoetbrugsein
+      country: NL
+      icon: { default: 'nl/215b' }
+      tags:
+        - { tag: 'railway:signal:minor', value: 'NL:middenvoetbrugsein' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
+
     - description: Humping ("heuvelen")
       country: NL
       icon: { default: 'nl/270a' }
