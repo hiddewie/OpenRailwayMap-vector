@@ -750,6 +750,24 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+    - description: advisory speed (sign)
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/282-40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: advisory speed (light)
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/282a-40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
     # --- PL --- #
 
     - description: D6 Tarcza zwolnić bieg
