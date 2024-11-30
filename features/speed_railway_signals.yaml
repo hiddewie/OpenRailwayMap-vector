@@ -660,6 +660,30 @@ speed_railway_signals:
 
     # --- NL --- #
 
+    - description: L signal
+      country: NL
+      icon: { default: 'nl/276' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+
+    - description: H signal
+      country: NL
+      icon: { default: 'nl/277' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+
+    - description: X/G signal
+      country: NL
+      icon: { default: 'nl/279' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'X;G;off' }
+
     - description: distant speed limit distant (sign)
       country: NL
       type: line
@@ -725,22 +749,6 @@ speed_railway_signals:
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-    - description: H signal
-      country: NL
-      icon: { default: 'nl/H' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
-
-    - description: L signal
-      country: NL
-      icon: { default: 'nl/L' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
 
     # --- PL --- #
 
