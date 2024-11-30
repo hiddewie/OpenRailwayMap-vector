@@ -84,6 +84,7 @@ signals_railway_signals:
     - 'railway:signal:wrong_road'
     - 'railway:signal:wrong_road:form'
     - 'railway:vacancy_detection'
+    - 'railway:signal:position'
 
   features:
 
@@ -1261,7 +1262,12 @@ signals_railway_signals:
 
     - description: train protection block markers (arrow)
       country: NL
-      icon: { default: 'general/etcs-stop-marker-arrow-left' }
+      icon:
+        match: 'railway:signal:position'
+        cases:
+          - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
+          - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
+        default: 'general/etcs-stop-marker-arrow-left'
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -1270,7 +1276,12 @@ signals_railway_signals:
 
     - description: train protection block markers (triangle)
       country: NL
-      icon: { default: 'general/etcs-stop-marker-triangle-left' }
+      icon:
+        match: 'railway:signal:position'
+        cases:
+          - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
+          - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
+        default: 'general/etcs-stop-marker-triangle-left'
       tags:
         - { tag: 'railway:signal:train_protection', values: ['NL:227b', 'DE-ESO:ne14'] }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
