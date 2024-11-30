@@ -1313,6 +1313,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
         - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
+    - description: drive on sight
+      country: DE
+      icon: { default: 'nl/317' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:317' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Semafor kształtowy
