@@ -726,6 +726,22 @@ speed_railway_signals:
         - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
         - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+    - description: H signal
+      country: NL
+      icon: { default: 'nl/H' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+
+    - description: L signal
+      country: NL
+      icon: { default: 'nl/L' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+
     # --- PL --- #
 
     - description: D6 Tarcza zwolnić bieg

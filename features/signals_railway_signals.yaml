@@ -1231,22 +1231,6 @@ signals_railway_signals:
         - { tag: 'railway:signal:main_repeated', value: 'NL' }
         - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-    - description: H signal
-      country: NL
-      icon: { default: 'nl/H' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
-
-    - description: L signal
-      country: NL
-      icon: { default: 'nl/L' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
-
     - description: main light
       country: NL
       icon: { default: 'nl/main_light' }
