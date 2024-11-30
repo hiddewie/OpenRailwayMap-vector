@@ -1263,6 +1263,7 @@ signals_railway_signals:
     - description: train protection block markers (arrow)
       country: NL
       icon:
+        # TODO, support lights (227a / 227c)
         match: 'railway:signal:position'
         cases:
           - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
@@ -1277,6 +1278,7 @@ signals_railway_signals:
     - description: train protection block markers (triangle)
       country: NL
       icon:
+        # TODO, support lights (227a / 227c)
         match: 'railway:signal:position'
         cases:
           - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
