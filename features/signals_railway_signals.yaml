@@ -1313,6 +1313,20 @@ signals_railway_signals:
         - { tag: 'railway:signal:station_distant', value: 'NL:305' }
         - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+    - description: ETCS cab signalling (start)
+      country: NL
+      icon: { default: 'nl/336' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:336' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS cab signalling (end)
+      country: NL
+      icon: { default: 'nl/337' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:337' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Semafor kształtowy
