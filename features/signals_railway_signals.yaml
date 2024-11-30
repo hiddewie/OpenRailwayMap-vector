@@ -1297,6 +1297,14 @@ signals_railway_signals:
         - { tag: 'railway:signal:stop', values: ['NL:303', 'NL:stopplaatssein'] }
         - { tag: 'railway:signal:stop:form', value: 'light' }
 
+    - description: treinlengtebord
+      country: NL
+      # TODO implement train length values
+      icon: { default: 'nl/304-empty' }
+      tags:
+        - { tag: 'railway:signal:stop', value: 'NL:304' }
+        - { tag: 'railway:signal:stop:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Semafor kształtowy
