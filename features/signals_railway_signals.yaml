@@ -1266,12 +1266,14 @@ signals_railway_signals:
       icon: { default: 'nl/270a' }
       tags:
         - { tag: 'railway:signal:humping', value: 'NL:270' }
+        - { tag: 'railway:signal:humping:form', value: 'light' }
 
     - description: ATB codewissel
       country: NL
       icon: { default: 'nl/330' }
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:330' }
+        - { tag: 'railway:signal:train_protection:form', value: 'light' }
 
     - description: train protection block markers (arrow)
       country: NL
