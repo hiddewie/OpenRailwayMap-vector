@@ -726,8 +726,8 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-60' }
-        default: 'nl/speed_limit_light-empty'
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-60' }
+        default: 'nl/speed_limit_distant_light-empty'
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
