@@ -1306,7 +1306,7 @@ signals_railway_signals:
         - { tag: 'railway:signal:stop:form', value: 'sign' }
 
     - description: distant crossing
-      country: DE
+      country: NL
       # TODO process caption / distant crossing position
       icon: { default: 'nl/318a' }
       tags:
@@ -1314,11 +1314,18 @@ signals_railway_signals:
         - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
     - description: drive on sight
-      country: DE
+      country: NL
       icon: { default: 'nl/317' }
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:317' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: station
+      country: NL
+      icon: { default: 'nl/305' }
+      tags:
+        - { tag: 'railway:signal:station_distant', value: 'NL:305' }
+        - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
     # --- PL --- #
 
