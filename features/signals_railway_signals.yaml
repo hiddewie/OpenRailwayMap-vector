@@ -1375,6 +1375,13 @@ signals_railway_signals:
         - { tag: 'railway:signal:train_protection', value: 'NL:330' }
         - { tag: 'railway:signal:train_protection:form', value: 'light' }
 
+    - description: Einde beveiligd gebied
+      country: NL
+      icon: { default: 'nl/333' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:333' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Semafor kształtowy
