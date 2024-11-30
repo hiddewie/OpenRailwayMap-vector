@@ -1305,6 +1305,14 @@ signals_railway_signals:
         - { tag: 'railway:signal:stop', value: 'NL:304' }
         - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+    - description: distant crossing
+      country: DE
+      # TODO process caption / distant crossing position
+      icon: { default: 'nl/318a' }
+      tags:
+        - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
+        - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
     # --- PL --- #
 
     - description: Semafor kształtowy
