@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 18 18">
-<path fill-rule="nonzero" fill="rgb(90.196078%, 90.196078%, 90.196078%)" fill-opacity="1" d="M 0 9 L 9 0 L 18 9 L 9 18 Z M 0 9 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -42.072829 48.436787 L 42.072829 48.436787 L 42.072829 132.582446 L -42.072829 132.582446 Z M -42.072829 48.436787 " transform="matrix(0.0994369, -0.0994369, 0.0994369, 0.0994369, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(0%, 26.666667%, 66.666667%)" fill-opacity="1" d="M 1.96875 9 L 9 1.96875 L 16.03125 9 L 9 16.03125 Z M 1.96875 9 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 5.0625 8.296875 L 5.0625 9.703125 L 12.9375 9.703125 L 12.9375 8.296875 Z M 5.0625 8.296875 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.264583" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 2565.628383 1282.814192 L 1282.814192 2565.628383 L 0 1282.814192 L 1282.814192 0 Z M 2565.628383 1282.814192 " transform="matrix(0.00623629, 0, 0, 0.00623629, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 26.666667%, 66.666667%)" fill-opacity="1" stroke-width="10" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 20.039063 -459.960937 L 459.960937 -459.960937 L 459.960937 -20.039062 L 20.039063 -20.039062 Z M 20.039063 -459.960937 " transform="matrix(-0.0166667, 0.0166667, -0.0166667, -0.0166667, 8, 0.000000000423378)"/>
+<path fill="none" stroke-width="70" stroke-linecap="butt" stroke-linejoin="bevel" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="5" d="M 70.434465 339.411255 L 608.388045 339.411255 " transform="matrix(0.0235702, 0, 0, 0.0235702, 0, 0)"/>
 </svg>
