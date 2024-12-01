@@ -3,6 +3,7 @@
 CREATE OR REPLACE VIEW railway_line_high AS
     SELECT
         id,
+        osm_id,
         way,
         way_length,
         railway,
@@ -69,6 +70,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
     FROM
         (SELECT
              id,
+             osm_id,
              way,
              way_length,
              railway,
@@ -136,6 +138,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
 CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   SELECT
     id,
+    osm_id,
     way,
     railway_ref as label
   FROM stations_with_route_counts
@@ -149,6 +152,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
 CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT
     id,
+    osm_id,
     way,
     railway_ref as label
   FROM stations_with_route_counts
@@ -161,6 +165,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
 CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
     id,
+    osm_id,
     way,
     railway,
     station,
@@ -184,6 +189,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
   FROM
     (SELECT
        id,
+       osm_id,
        way,
        railway,
        route_count,
@@ -199,6 +205,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
     id,
+    osm_id,
     way,
     CASE
       WHEN railway = 'crossing' THEN 'general/crossing'
@@ -246,6 +253,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT
     id,
+    osm_id,
     way,
     railway,
     pos,
@@ -254,6 +262,7 @@ CREATE OR REPLACE VIEW railway_text_km AS
   FROM
     (SELECT
        id,
+       osm_id,
        way,
        railway,
        COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
@@ -265,6 +274,7 @@ CREATE OR REPLACE VIEW railway_text_km AS
 CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   SELECT
     id,
+    osm_id,
     way,
     railway,
     ref,
@@ -278,6 +288,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
     id,
+    osm_id,
     way,
     speed_feature as feature,
     speed_feature_type as type,
@@ -315,6 +326,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           4096, 64, true
         ) AS way,
         id,
+        osm_id,
         feature,
         ref,
         name
@@ -327,6 +339,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
 CREATE OR REPLACE VIEW signals_railway_signals AS
   SELECT
     id,
+    osm_id,
     way,
     railway,
     ref,
@@ -344,6 +357,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
 CREATE OR REPLACE VIEW electrification_signals AS
   SELECT
     id,
+    osm_id,
     way,
     electrification_feature as feature,
     azimuth,

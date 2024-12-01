@@ -14,6 +14,7 @@ const sql = `
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   SELECT
     id,
+    osm_id,
     s.way as way,
     railway,
     ref,

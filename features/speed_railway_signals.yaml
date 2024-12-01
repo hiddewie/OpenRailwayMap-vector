@@ -660,12 +660,124 @@ speed_railway_signals:
 
     # --- NL --- #
 
-    - description: speed limit light (part of main signal)
+    - description: L signal
       country: NL
-      type: line
-      icon: { default: 'nl/speed_limit_light' }
+      icon: { default: 'nl/276' }
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+
+    - description: H signal
+      country: NL
+      icon: { default: 'nl/277' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+
+    - description: X/G signal
+      country: NL
+      icon: { default: 'nl/279' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:speed_limit:states', value: 'X;G;off' }
+
+    - description: distant speed limit distant (sign)
+      country: NL
+      type: line
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/313-{}', example: 'nl/313-80' }
+        default: 'nl/313-empty'
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: speed limit (sign)
+      country: NL
+      type: line
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/314-{}', example: 'nl/314-70' }
+        default: 'nl/314-empty'
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: speed limit increase (sign)
+      country: NL
+      type: line
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/316-{}', example: 'nl/316-130' }
+        default: 'nl/316-empty'
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: distant speed limit (light)
+      country: NL
+      type: line
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-60' }
+        default: 'nl/speed_limit_distant_light-empty'
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+    - description: speed limit (light)
+      country: NL
+      type: line
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-60' }
+        default: 'nl/speed_limit_light-empty'
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+    - description: tunnel distant speed limit
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/286-80' }
+      tags:
+        - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
+        - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+    - description: tunnel entry speed limit
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/281-40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: advisory speed (sign)
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/282-40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+        - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+    - description: advisory speed (light)
+      country: NL
+      type: line
+      # TODO match speed
+      icon: { default: 'nl/282a-40' }
+      tags:
+        - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
     # --- PL --- #
