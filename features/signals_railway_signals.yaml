@@ -1298,7 +1298,8 @@ signals_railway_signals:
 
     - description: treinlengtebord
       country: NL
-      # TODO implement train length values
+      # TODO implement train length values (railway:signal:stop:carriages=*)
+      # TODO implement partial platform train length values (railway:signal:stop:carriages_partial_platform=*)
       icon: { default: 'nl/304-empty' }
       tags:
         - { tag: 'railway:signal:stop', value: 'NL:304' }
