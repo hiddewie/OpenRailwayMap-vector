@@ -714,7 +714,7 @@ speed_railway_signals:
       icon:
         match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/316-{}', example: 'nl/316-130' }
+          - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-130' }
         default: 'nl/316-empty'
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
