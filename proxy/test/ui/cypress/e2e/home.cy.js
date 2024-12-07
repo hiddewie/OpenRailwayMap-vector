@@ -55,7 +55,7 @@ describe('home page', () => {
 
     cy.screenshot()
 
-    cy.get('button.btn-close').click()
+    cy.get('.btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
 
     cy.screenshot()
