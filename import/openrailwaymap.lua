@@ -1,3 +1,5 @@
+local tag_functions = require('tags')
+
 function dump(o)
    if type(o) == 'table' then
       local s = '{ '
@@ -137,6 +139,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'future_voltage', type = 'integer' },
     { column = 'gauges', sql_type = 'text[]' },
     { column = 'loading_gauge', sql_type = 'text' },
+    { column = 'track_class', sql_type = 'text' },
     { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'construction_railway', type = 'text' },
     { column = 'proposed_railway', type = 'text' },
@@ -202,29 +205,32 @@ local platforms = osm2pgsql.define_table({
   },
 })
 
+local signal_columns = {
+  { column = 'id', sql_type = 'serial', create_only = true },
+  { column = 'way', type = 'point' },
+  { column = 'railway', type = 'text' },
+  { column = 'rank', type = 'smallint' },
+  { column = 'deactivated', type = 'boolean' },
+  { column = 'ref', type = 'text' },
+  { column = 'ref_multiline', type = 'text' },
+  { column = 'signal_direction', type = 'text' },
+  { column = 'dominant_speed', type = 'real' },
+}
+for _, tag in ipairs(tag_functions.signal_tags) do
+  table.insert(signal_columns, { column = tag, type = 'text' })
+end
+for _, tag in ipairs(tag_functions.speed_tags) do
+  table.insert(signal_columns, { column = tag, type = 'text' })
+end
+for _, tag in ipairs(tag_functions.electrification_tags) do
+  table.insert(signal_columns, { column = tag, type = 'text' })
+end
 local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
-  columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'point' },
-    { column = 'railway', type = 'text' },
-    { column = 'rank', type = 'smallint' },
-    { column = 'deactivated', type = 'boolean' },
-    { column = 'ref', type = 'text' },
-    { column = 'ref_multiline', type = 'text' },
-    { column = 'signal_direction', type = 'text' },
-    {% for tag in signals_railway_signals.tags %}
-    { column = '{% tag %}', type = 'text' },
-{% end %}
-    { column = 'dominant_speed', type = 'real' },
-    {% for tag in speed_railway_signals.tags %}
-    { column = '{% tag %}', type = 'text' },
-{% end %}
-    {% for tag in electrification_signals.tags %}
-    { column = '{% tag %}', type = 'text' },
-{% end %}
-  },
+  columns = signal_columns,
+  -- The queried table is signals_with_azimuth
+  cluster = 'no',
 })
 
 local boxes = osm2pgsql.define_table({
@@ -233,6 +239,7 @@ local boxes = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'geometry' },
+    { column = 'center', type = 'geometry' },
     { column = 'way_area', type = 'real' },
     { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
@@ -289,32 +296,24 @@ local routes = osm2pgsql.define_table({
   },
 })
 
-function train_protection(tags)
-  {% for feature in signals_railway_line.features %}
-  if {% for tag in feature.tags %}{% unless loop.first %} and{% end %}{% if tag.value %} tags['{% tag.tag %}'] == '{% tag.value %}'{% else %} ({% for value in tag.values %}{% unless loop.first %} or{% end %} tags['{% tag.tag %}'] == '{% value %}'{% end %}){% end %}{% end %} then return '{% feature.train_protection %}', ({% loop.size %} - {% loop.index0 %}) end
-{% end %}
-
-  return nil, 0
-end
-
 local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
-function electrification_state(tags, ignore_future_states)
+function electrification_state(tags)
   local electrified = tags['electrified']
 
   if electrification_values(electrified) then
-    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency'])
+    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency']), nil, nil
   end
-  if (not ignore_future_states) and electrification_values(tags['construction:electrified']) then
-    return 'construction', tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
+  if electrification_values(tags['construction:electrified']) then
+    return 'construction', nil, nil, tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
   end
-  if (not ignore_future_states) and electrification_values(tags['proposed:electrified']) then
-    return 'proposed', tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
+  if electrification_values(tags['proposed:electrified']) then
+    return 'proposed', nil, nil, tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
   end
   if electrified == 'no' and electrification_values(tags['deelectrified']) then
-    return 'deelectrified', nil, nil
+    return 'deelectrified', nil, nil, nil, nil
   end
   if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
-    return 'abandoned', nil, nil
+    return 'abandoned', nil, nil, nil, nil
   end
 
   return nil, nil, nil
@@ -333,8 +332,10 @@ function osm2pgsql.process_node(object)
   local tags = object.tags
 
   if railway_box_values(tags.railway) then
+    local point = object:as_point()
     boxes:insert({
-      way = object:as_point(),
+      way = point,
+      center = point,
       way_area = 0,
       feature = tags.railway,
       ref = tags['railway:ref'],
@@ -479,7 +480,7 @@ function osm2pgsql.process_node(object)
     local speed_limit_speed = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed']
     local speed_limit_distant_speed = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed']
 
-    signals:insert({
+    local signal = {
       way = object:as_point(),
       railway = tags.railway,
       rank = rank,
@@ -487,23 +488,24 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
-      {% for tag in signals_railway_signals.tags %}
-      ["{% tag %}"] = tags['{% tag %}'],
-{% end %}
-      {% for tag in speed_railway_signals.tags %}
-      {% unless tag | matches("railway:signal:speed_limit:speed") %}
-      {% unless tag | matches("railway:signal:speed_limit_distant:speed") %}
-      ["{% tag %}"] = tags['{% tag %}'],
-{% end %}
-{% end %}
-{% end %}
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
-      {% for tag in electrification_signals.tags %}
-      ["{% tag %}"] = tags['{% tag %}'],
-{% end %}
-    })
+    }
+
+    for _, tag in ipairs(tag_functions.signal_tags) do
+      signal[tag] = tags[tag]
+    end
+    for _, tag in ipairs(tag_functions.speed_tags) do
+      if tag ~= 'railway:signal:speed_limit:speed' and tag ~= 'railway:signal:speed_limit_distant:speed' then
+        signal[tag] = tags[tag]
+      end
+    end
+    for _, tag in ipairs(tag_functions.electrification_tags) do
+      signal[tag] = tags[tag]
+    end
+
+    signals:insert(signal)
   end
 
   if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:exact']) then
@@ -533,10 +535,9 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
-    local railway_train_protection, railway_train_protection_rank = train_protection(tags)
+    local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
 
-    local current_electrification_state, voltage, frequency = electrification_state(tags, true)
-    local _, future_voltage, future_frequency = electrification_state(tags, false)
+    local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
 
     local gauges = {}
     local gauge_tag = tags['gauge'] or tags['construction:gauge']
@@ -591,6 +592,7 @@ function osm2pgsql.process_way(object)
       future_voltage = future_voltage,
       gauges = '{' .. table.concat(gauges, ',') .. '}',
       loading_gauge = tags['loading_gauge'],
+      track_class = tags['railway:track_class'],
       reporting_marks = '{' .. table.concat(reporting_marks, ',') .. '}',
       construction_railway = tags['construction:railway'],
       proposed_railway = tags['proposed:railway'],
@@ -623,6 +625,7 @@ function osm2pgsql.process_way(object)
     local polygon = object:as_polygon():transform(3857)
     boxes:insert({
       way = polygon,
+      center = polygon:centroid(),
       way_area = polygon:area(),
       feature = tags.railway,
       ref = tags['railway:ref'],

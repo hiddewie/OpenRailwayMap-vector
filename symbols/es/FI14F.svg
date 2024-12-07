@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16.01755" viewBox="0 0 16 16.01755">
+<path fill-rule="evenodd" fill="rgb(19.607843%, 29.019608%, 59.215686%)" fill-opacity="1" d="M 8 16.003906 L 0.0117188 8.007812 L 8 0.0117188 L 15.988281 8.007812 "/>
+<path fill="none" stroke-width="0.049" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(13.72549%, 12.156863%, 12.54902%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.00200046 0.000377499 L -20.519532 20.537975 L -0.00200046 41.075572 L 20.515531 20.537975 Z M -0.00200046 0.000377499 " transform="matrix(0.389339, 0, 0, -0.389339, 8.000779, 16.004053)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.097" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="10" d="M 0.000777288 0.00195487 L 7.254653 0.00195487 L 7.254653 33.532316 L 0.000777288 33.532316 Z M 0.000777288 0.00195487 " transform="matrix(0.389339, 0, 0, -0.389339, 6.589541, 14.539824)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 9.414062 14.539062 L 8 15.964844 L 6.578125 14.539062 "/>
+<path fill="none" stroke-width="0.097" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="10" d="M 0.00335166 0.00195487 L -3.628603 -3.660098 L -7.280623 0.00195487 Z M 0.00335166 0.00195487 " transform="matrix(0.389339, 0, 0, -0.389339, 9.412758, 14.539824)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.582031 1.484375 L 7.996094 0.0625 L 9.417969 1.484375 "/>
+<path fill="none" stroke-width="0.097" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="10" d="M -0.00398792 0.00400016 L 3.627966 3.65602 L 7.279986 0.00400016 Z M -0.00398792 0.00400016 " transform="matrix(0.389339, 0, 0, -0.389339, 6.583584, 1.485932)"/>
+</svg>

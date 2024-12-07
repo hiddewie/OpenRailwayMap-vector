@@ -49,7 +49,7 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
-CREATE OR REPLACE FUNCTION railway_pos_round(km_pos TEXT) RETURNS NUMERIC AS $$
+CREATE OR REPLACE FUNCTION railway_pos_round(km_pos TEXT, decimals int) RETURNS NUMERIC AS $$
 DECLARE
   pos_part1 TEXT;
   km_float NUMERIC(8, 3);
@@ -59,8 +59,8 @@ BEGIN
     RETURN NULL;
   END IF;
   km_float := pos_part1::NUMERIC(8, 3);
-  km_float := round(km_float, 1);
-  RETURN trunc(km_float, 1);
+  km_float := round(km_float, decimals);
+  RETURN trunc(km_float, decimals);
 END;
 $$ LANGUAGE plpgsql
     IMMUTABLE

@@ -131,5 +131,5 @@ $PSQL --tuples-only -c "with bounds as (SELECT st_transform(st_setsrid(ST_Extent
 echo "Import bounds: $(cat /data/import/bounds.json)"
 
 echo "Database summary"
-$PSQL -c "select table_name as table, pg_size_pretty(pg_total_relation_size(quote_ident(table_name))) as size from information_schema.tables where table_schema = 'public' order by table_name;"
-$PSQL -c "select pg_size_pretty(sum(pg_total_relation_size(quote_ident(table_name)))) as total_size from information_schema.tables where table_schema = 'public';"
+$PSQL -c "select concat(relname, ' (', relkind ,')') as name, pg_size_pretty(pg_table_size(oid)) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%' order by pg_table_size(oid) desc;"
+$PSQL -c "select pg_size_pretty(SUM(pg_table_size(oid))) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%';"

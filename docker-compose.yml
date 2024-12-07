@@ -88,8 +88,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./martin:/config
     environment:
       - DATABASE_URL=postgresql://postgres@db:5432/gis
     ulimits:
@@ -97,6 +95,12 @@ services:
       nofile:
         soft: 26677
         hard: 46677
+    develop:
+      watch:
+        - action: rebuild
+          path: martin
+        - action: rebuild
+          path: symbols
 
   martin-static:
     build:

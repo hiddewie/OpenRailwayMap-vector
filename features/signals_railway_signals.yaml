@@ -72,6 +72,7 @@ signals_railway_signals:
     - 'railway:signal:steam_locomotive'
     - 'railway:signal:steam_locomotive:form'
     - 'railway:signal:stop:form'
+    - 'railway:signal:stop:carriages'
     - 'railway:signal:stop_demand'
     - 'railway:signal:stop_demand:form'
     - 'railway:signal:train_protection'
@@ -84,6 +85,7 @@ signals_railway_signals:
     - 'railway:signal:wrong_road'
     - 'railway:signal:wrong_road:form'
     - 'railway:vacancy_detection'
+    - 'railway:signal:position'
 
   features:
 
@@ -1231,36 +1233,6 @@ signals_railway_signals:
         - { tag: 'railway:signal:main_repeated', value: 'NL' }
         - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-    - description: H signal
-      country: NL
-      icon: { default: 'nl/H' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
-
-    - description: L signal
-      country: NL
-      icon: { default: 'nl/L' }
-      tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-        - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
-
-    - description: main signal with speed limit
-      country: NL
-      icon: { default: 'nl/main_light_speed_limit' }
-      tags:
-        - { tag: 'railway:signal:main', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-    - description: distant signal with speed limit
-      country: NL
-      icon: { default: 'nl/distant_light_speed_limit' }
-      tags:
-        - { tag: 'railway:signal:distant', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
     - description: main light
       country: NL
       icon: { default: 'nl/main_light' }
@@ -1275,28 +1247,29 @@ signals_railway_signals:
         - { tag: 'railway:signal:distant', value: 'NL' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
 
-    - description: speed limit only
+    - description: middenvoetbrugsein
       country: NL
-      icon: { default: 'nl/speed_limit_light' }
+      icon: { default: 'nl/215b' }
       tags:
-        - { tag: 'railway:signal:speed_limit', value: 'NL' }
-        - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+        - { tag: 'railway:signal:minor', value: 'NL:middenvoetbrugsein' }
+        - { tag: 'railway:signal:minor:form', value: 'light' }
 
     - description: Humping ("heuvelen")
       country: NL
       icon: { default: 'nl/270a' }
       tags:
         - { tag: 'railway:signal:humping', value: 'NL:270' }
-
-    - description: ATB codewissel
-      country: NL
-      icon: { default: 'nl/atb-codewissel' }
-      tags:
-        - { tag: 'railway:signal:train_protection', value: 'NL:330' }
+        - { tag: 'railway:signal:humping:form', value: 'light' }
 
     - description: train protection block markers (arrow)
       country: NL
-      icon: { default: 'general/etcs-stop-marker-arrow-left' }
+      icon:
+        # TODO, support lights (227a / 227c)
+        match: 'railway:signal:position'
+        cases:
+          - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
+          - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
+        default: 'general/etcs-stop-marker-arrow-left'
       tags:
         - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -1305,11 +1278,130 @@ signals_railway_signals:
 
     - description: train protection block markers (triangle)
       country: NL
-      icon: { default: 'general/etcs-stop-marker-triangle-left' }
+      icon:
+        # TODO, support lights (227a / 227c)
+        match: 'railway:signal:position'
+        cases:
+          - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
+          - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
+        default: 'general/etcs-stop-marker-triangle-left'
       tags:
         - { tag: 'railway:signal:train_protection', values: ['NL:227b', 'DE-ESO:ne14'] }
         - { tag: 'railway:signal:train_protection:form', value: 'sign' }
         - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
+    - description: stopplaatssein
+      country: NL
+      icon: { default: 'nl/303' }
+      tags:
+        - { tag: 'railway:signal:stop', values: ['NL:303', 'NL:stopplaatssein'] }
+        - { tag: 'railway:signal:stop:form', value: 'light' }
+
+    - description: treinlengtebord
+      country: NL
+      # TODO implement partial platform train length values (railway:signal:stop:carriages_partial_platform=*)
+      icon:
+        match: 'railway:signal:stop:carriages'
+        cases:
+          # Free match to allow matching multiple values on a single sign, separated by ;
+          - { regex: '18', value: 'nl/304-18' }
+          - { regex: '16', value: 'nl/304-16' }
+          - { regex: '15', value: 'nl/304-15' }
+          - { regex: '14', value: 'nl/304-14' }
+          - { regex: '13', value: 'nl/304-13' }
+          - { regex: '12', value: 'nl/304-12' }
+          - { regex: '11', value: 'nl/304-11' }
+          - { regex: '10', value: 'nl/304-10' }
+          - { regex: '9', value: 'nl/304-9' }
+          - { regex: '8', value: 'nl/304-8' }
+          - { regex: '7', value: 'nl/304-7' }
+          - { regex: '6', value: 'nl/304-6' }
+          - { regex: '5', value: 'nl/304-5' }
+          - { regex: '4', value: 'nl/304-4' }
+          - { regex: '3', value: 'nl/304-3' }
+          - { regex: '2', value: 'nl/304-2' }
+        default: 'nl/304-empty'
+      tags:
+        - { tag: 'railway:signal:stop', value: 'NL:304' }
+        - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+    - description: distant crossing
+      country: NL
+      # TODO process caption / distant crossing position
+      icon: { default: 'nl/318a' }
+      tags:
+        - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
+        - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
+    - description: drive on sight
+      country: NL
+      icon: { default: 'nl/317' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:317' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: station
+      country: NL
+      icon: { default: 'nl/305' }
+      tags:
+        - { tag: 'railway:signal:station_distant', value: 'NL:305' }
+        - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+    - description: ETCS cab signalling (start)
+      country: NL
+      icon: { default: 'nl/336' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:336' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ETCS cab signalling (end)
+      country: NL
+      icon: { default: 'nl/337' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:337' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB distant
+      country: NL
+      icon: { default: 'nl/328a' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328a' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB start
+      country: NL
+      icon: { default: 'nl/328' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB code
+      country: NL
+      icon: { default: 'nl/328b' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:328b' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB end
+      country: NL
+      icon: { default: 'nl/329' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:329' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+    - description: ATB codewissel
+      country: NL
+      icon: { default: 'nl/330' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:330' }
+        - { tag: 'railway:signal:train_protection:form', value: 'light' }
+
+    - description: Einde beveiligd gebied
+      country: NL
+      icon: { default: 'nl/333' }
+      tags:
+        - { tag: 'railway:signal:train_protection', value: 'NL:333' }
+        - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
     # --- PL --- #
 
