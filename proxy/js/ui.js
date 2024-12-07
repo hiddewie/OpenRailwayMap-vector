@@ -285,6 +285,11 @@ const knownStyles = {
   track_class: 'Track class',
 };
 
+const knownThemes = [
+  'light',
+  'dark',
+]
+
 function hashToObject(hash) {
   if (!hash) {
     return {};
@@ -404,8 +409,16 @@ function resolveTheme(configuredTheme) {
     : configuredTheme;
 }
 
+function onThemeChange(theme) {
+  updateConfiguration('theme', theme);
+  updateTheme();
+  onStyleChange();
+}
+
 function updateTheme() {
-  document.documentElement.setAttribute('data-bs-theme', resolveTheme(configuration.theme ?? defaultConfiguration.theme));
+  const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
+  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+  selectedTheme = resolvedTheme;
 }
 
 function updateBackgroundMapContainer() {
@@ -422,6 +435,7 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
+let selectedTheme;
 updateTheme();
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
@@ -430,13 +444,20 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/${style}.json`])
+  knownThemes.map(theme =>
+    [theme, Object.fromEntries(
+      Object.keys(knownStyles)
+        .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
+    )
+    ])
 );
 
 const legendStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
+  knownThemes.map(theme => [theme, Object.fromEntries(
+    Object.keys(knownStyles)
+      .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
+  )
+  ])
 );
 
 const legendMap = new maplibregl.Map({
@@ -466,69 +487,26 @@ const map = new maplibregl.Map({
   maxPitch: 0,
 });
 
-const onStyleChange = changedStyle => {
-  selectedStyle = changedStyle;
-
+const onStyleChange = () => {
   // Change styles
-  map.setStyle(mapStyles[changedStyle], {
+  map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: false,
-    transformStyle: (previous, next) => {
-      let style = next;
-
-      // Apply theme to style
-      if (resolveTheme(configuration.theme ?? defaultConfiguration.theme) === 'dark') {
-        style = {
-          ...style,
-          layers: style.layers.map(layer => {
-            if (layer.paint) {
-              if (layer.paint['text-color'] === 'black') {
-                layer.paint['text-color'] = 'white'
-                layer.paint['text-halo-color'] = 'black'
-              }
-            }
-
-            return layer;
-          })
-        }
-      }
-
-      return style;
-    },
   });
-  legendMap.setStyle(legendStyles[changedStyle], {
+  legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
     validate: false,
     transformStyle: (previous, next) => {
-      let style = next;
-
-      // Apply theme to style
-      if (resolveTheme(configuration.theme ?? defaultConfiguration.theme) === 'dark') {
-        style = {
-          ...style,
-          layers: style.layers.map(layer => {
-            if (layer.paint) {
-              if (layer.paint['text-color'] === 'black') {
-                layer.paint['text-color'] = 'white'
-                layer.paint['text-halo-color'] = 'black'
-              }
-            }
-
-            return layer;
-          })
-        }
-      }
-
-      onStylesheetChange(style);
-      return style;
+      onStylesheetChange(next);
+     return next;
     },
   });
 
   // Update URL
-  const updatedHash = putStyleInHash(window.location.hash, changedStyle);
+  const updatedHash = putStyleInHash(window.location.hash, selectedStyle);
   const location = window.location.href.replace(/(#.+)?$/, updatedHash);
   window.history.replaceState(window.history.state, null, location);
 }
 
-onStyleChange(selectedStyle);
+onStyleChange();
 
 class StyleControl {
   constructor(options) {
@@ -653,7 +631,10 @@ const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key =
 
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
-  onStyleChange,
+  onStyleChange: style => {
+    selectedStyle = style;
+    onStyleChange();
+  },
 }));
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,

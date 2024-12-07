@@ -19,6 +19,10 @@ const knownStyles = [
   'loading_gauge',
   'track_class',
 ];
+const knownThemes = [
+  'light',
+  'dark',
+];
 
 const globalMinZoom = 1;
 const glodalMaxZoom = 20;
@@ -3655,7 +3659,7 @@ const layers = {
   ],
 };
 
-const makeStyle = selectedStyle => ({
+const makeStyle = (selectedStyle, theme) => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
   glyphs: `${origin}/font/{fontstack}/{range}`,
@@ -5273,8 +5277,8 @@ const layerVisibleAtZoom = (zoom) =>
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
-function makeLegendStyle(style) {
-  const sourceStyle = makeStyle(style);
+function makeLegendStyle(style, theme) {
+  const sourceStyle = makeStyle(style, theme);
   const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
   const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
@@ -5451,6 +5455,8 @@ function makeLegendStyle(style) {
 }
 
 knownStyles.forEach(style => {
-  fs.writeFileSync(`${style}.json`, JSON.stringify(makeStyle(style)));
-  fs.writeFileSync(`legend-${style}.json`, JSON.stringify(makeLegendStyle(style)));
+  knownThemes.forEach(theme => {
+    fs.writeFileSync(`${style}-${theme}.json`, JSON.stringify(makeStyle(style, theme)));
+    fs.writeFileSync(`legend-${style}-${theme}.json`, JSON.stringify(makeLegendStyle(style, theme)));
+  });
 });
