@@ -68,6 +68,7 @@ const colors = {
           casing: '#808080',
         },
         trackHalo: 'blue',
+        stationsText: 'blue',
       },
     },
     km: {
@@ -82,8 +83,8 @@ const colors = {
       main: 'white',
       halo: 'black',
     },
-    halo: 'black',
-    casing: '#333',
+    halo: '#333',
+    casing: '#666',
     hover: {
       main: '#ff0000',
       // High speed lines and 25kV are the hover color by default
@@ -116,7 +117,8 @@ const colors = {
           fill: '#ababab',
           casing: '#808080',
         },
-        trackHalo: 'blue',
+        trackHalo: '#afc6ff',
+        stationsText: '#afc6ff',
       },
     },
     km: {
@@ -1260,7 +1262,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1285,7 +1287,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
       paint: {
-        'text-color': 'blue',
+        'text-color': colors[theme].styles.standard.stationsText,
         'text-halo-color': colors[theme].halo,
         'text-halo-width': 1.5,
       },
@@ -1310,7 +1312,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1336,7 +1338,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'standard_railway_text_stations_med',
       'source-layer': 'standard_railway_text_stations_med',
       paint: {
-        'text-color': 'blue',
+        'text-color': colors[theme].styles.standard.stationsText,
         'text-halo-color': colors[theme].halo,
         'text-halo-width': 1.5,
       },
@@ -1367,7 +1369,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_tunnel_casing_add,
       }
@@ -1391,7 +1393,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1408,7 +1410,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': construction_dasharray,
@@ -1426,7 +1428,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': proposed_dasharray,
@@ -1444,7 +1446,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': abandoned_dasharray,
@@ -1462,7 +1464,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': razed_dasharray,
@@ -1649,7 +1651,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'railway'], 'razed'],
       ],
       paint: {
-        'line-color': colors[theme].styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -2149,8 +2151,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-color': ['case',
           ['==', ['get', 'railway'], 'yard'], '#87491D',
           ['==', ['get', 'railway'], 'tram_stop'], '#D877B8',
-          ['==', ['get', 'railway'], 'station'], 'blue',
-          ['==', ['get', 'railway'], 'halt'], 'blue',
+          ['==', ['get', 'railway'], 'station'], colors[theme].styles.standard.stationsText,
+          ['==', ['get', 'railway'], 'halt'], colors[theme].styles.standard.stationsText,
           '#616161',
         ],
         'text-halo-color': ['case',

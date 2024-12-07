@@ -549,8 +549,8 @@ class SearchControl {
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
-    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', icon);
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
     text.innerText = 'Search'
 
     return this._container;
@@ -611,8 +611,8 @@ class LegendControl {
     const button = createDomElement('button', 'maplibregl-ctrl-legend', this._container);
     button.type = 'button';
     button.title = 'Show/hide map legend';
-    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', icon);
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
     text.innerText = 'Legend'
 
     button.onclick = () => this.options.onLegendToggle()
