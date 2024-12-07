@@ -55,7 +55,7 @@ describe('home page', () => {
 
     cy.screenshot()
 
-    cy.contains('Map configuration').get('.btn-close').click()
+    cy.get('#configuration-backdrop .btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
 
     cy.screenshot()
