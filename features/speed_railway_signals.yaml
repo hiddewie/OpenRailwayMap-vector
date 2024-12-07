@@ -747,8 +747,11 @@ speed_railway_signals:
     - description: tunnel distant speed limit
       country: NL
       type: line
-      # TODO match speed
-      icon: { default: 'nl/286-80' }
+      icon:
+        match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-80' }
+        default: 'nl/286-empty'
       tags:
         - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
         - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
