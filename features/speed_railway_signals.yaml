@@ -774,8 +774,11 @@ speed_railway_signals:
     - description: advisory speed (light)
       country: NL
       type: line
-      # TODO match speed
-      icon: { default: 'nl/282a-40' }
+      icon:
+        match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-40' }
+        default: 'nl/282a-empty'
       tags:
         - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
         - { tag: 'railway:signal:speed_limit:form', value: 'light' }
