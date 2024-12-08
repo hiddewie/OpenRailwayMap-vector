@@ -686,24 +686,35 @@ const onStylesheetChange = styleSheet => {
   onMapZoom(map.getZoom());
 }
 
-function popupContent(properties) {
+function popupContent(feature) {
+  console.info(feature)
+  const properties = feature.properties;
+
+  const layerSource = `${feature.source}-${feature.sourceLayer}`;
+  const featureContent = features && features[layerSource] && features[layerSource] && features[layerSource][properties.feature];
+  console.info(featureContent);
   // TODO move icon SVGs to proxy
   // TODO reuse icons from map features for these features
   // TODO lookup train protection name
   // TODO format voltage
   // TODO format gauge(s)
   const label = properties.label ?? properties.standard_label ?? properties.name ?? properties.ref;
-  const featureDescription = properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
+  const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;// properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
 
-  console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
+  // console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
 
+  // TODO handle node/way in link generation
   return `
-    <h6>
+    <h6>${featureDescription ? featureDescription : ''}</h6>
+    <p>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-      ${label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${label}${properties.osm_id ? `</a>` : ''}` : ''}
-      ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
-    </h6>
-    ${featureDescription ? `<p>${featureDescription}</p>` : ''}
+      ${label ? label : ''}
+    </p>
+    ${properties.osm_id ? `<p>
+     <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">view</a> 
+     &#183;
+     <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">edit</a> 
+    </p>` : ''}
     <h6>
       ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
       ${properties.railway_ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
@@ -812,7 +823,7 @@ map.on('click', event => {
 
     new maplibregl.Popup()
       .setLngLat(coordinates)
-      .setHTML(popupContent(feature.properties))
+      .setHTML(popupContent(feature))
       .addTo(map);
   }
 });
@@ -841,6 +852,7 @@ fetch(`${location.origin}/features.json`)
     }
   })
   .then(result => {
+    console.info('found features', result);
     features = result;
   })
   .catch(error => console.error('Error during fetching of features', error))
