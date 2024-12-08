@@ -8,12 +8,7 @@ WORKDIR /build
 RUN npm install yaml
 
 RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
-  --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
-  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
-  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
-  --mount=type=bind,source=features/track_class.yaml,target=track_class.yaml \
+  --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
 
 FROM node:22-alpine as build-features
@@ -23,11 +18,7 @@ WORKDIR /build
 RUN npm install yaml
 
 RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
-  --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
-  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
-  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
+  --mount=type=bind,source=features,target=features \
   node /build/features.mjs \
     > /build/features.json
 
