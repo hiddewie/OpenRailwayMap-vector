@@ -491,6 +491,7 @@ signals_railway_signals:
         default: 'de/bue4-ds'
       tags:
         - { tag: 'railway:signal:whistle', value: 'DE-ESO:db:bü4' }
+        - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
     - description: crossing distant sign Bü 2
       country: DE
@@ -500,7 +501,8 @@ signals_railway_signals:
           - { regex: '^yes$', value: 'de/bue2-ds-reduced-distance', description: 'reduced distance' }
         default: 'de/bue2-ds'
       tags:
-        - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:db:bü4' }
+        - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü2' }
+        - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
     - description: whistle sign Bü 3
       country: DE
@@ -517,6 +519,7 @@ signals_railway_signals:
         default: 'de/pf1-dv'
       tags:
         - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf1' }
+        - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
     - description: ring sign Bü 5
       country: DE
@@ -676,7 +679,7 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:passing', value: 'DE-BOStrab:so5' }
         - { tag: 'railway:signal:passing:form', value: 'sign' }
-        - { tag: 'railway:signal:passing:type', value: 'no_type' }
+        - { tag: 'railway:signal:passing:type', value: 'no_passing' }
 
     - description: tram passing prohibited end sign So 6
       country: DE
@@ -752,6 +755,12 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:minor', values: ['DE-ESO:sh2', 'DE-BOStrab:sh2'] }
         - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+    - description: tram läuten Sh 4
+      country: DE
+      icon: { default: 'de/bostrab/sh4' }
+      tags:
+        - { tag: 'railway:signal:ring', value: 'DE-BOStrab:sh4' }
 
     - description: Signalhaltmelder Zugleitbetrieb
       country: DE
