@@ -41,6 +41,9 @@ const colors = {
       alternative: '#ffc107',
       textHalo: 'yellow',
     },
+    railwayLine: {
+      text: '#585858',
+    },
     styles: {
       standard: {
         main: '#ff8100',
@@ -63,15 +66,23 @@ const colors = {
           railway: '#ffffff',
           bridge: '#000000',
         },
+        tunnelCover: 'rgba(255, 255, 255, 50%)',
         turntable: {
           fill: '#ababab',
           casing: '#808080',
         },
-        trackHalo: 'blue',
         stationsText: 'blue',
+        yardText: '#87491D',
+        tramStopText: '#D877B8',
+        defaultText: '#616161',
         signalBox: {
           text: '#404040',
           halo: '#bfffb3',
+        },
+        track: {
+          text: 'white',
+          halo: 'blue',
+          hover: 'yellow',
         },
       },
     },
@@ -95,6 +106,9 @@ const colors = {
       alternative: '#ffc107',
       textHalo: '#362800',
     },
+    railwayLine: {
+      text: '#ccc',
+    },
     styles: {
       standard: {
         main: '#ff8100',
@@ -115,17 +129,26 @@ const colors = {
         industrial: '#87491d',
         casing: {
           railway: '#ffffff',
-          bridge: '#000000',
+          bridge: '#ddd',
         },
+        tunnelCover: 'rgba(0, 0, 0, 25%)',
         turntable: {
           fill: '#ababab',
           casing: '#808080',
         },
-        trackHalo: '#afc6ff',
-        stationsText: '#afc6ff',
+        trackHalo: '#00298d',
+        stationsText: '#bdcfff',
+        yardText: '#ffa35f',
+        tramStopText: '#D877B8',
+        defaultText: '#d2d2d2',
         signalBox: {
           text: '#bfffb3',
           halo: '#404040',
+        },
+        track: {
+          text: 'white',
+          halo: '#00298d',
+          hover: 'yellow',
         },
       },
     },
@@ -1498,7 +1521,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: standardFillPaint(theme, [1]),
     },
     {
-      id: 'railway_tunnel_bright',
+      id: 'railway_tunnel_cover',
       type: 'line',
       minzoom: 8,
       source: 'high',
@@ -1516,7 +1539,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
       paint: {
         ...standardFillPaint(theme, [1]),
-        'line-color': 'rgba(255, 255, 255, 50%)',
+        'line-color': colors[theme].styles.standard.tunnelCover,
       }
     },
     preferredDirectionLayer(theme, 'railway_tunnel_preferred_direction',
@@ -1816,10 +1839,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
         'text-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].text.main,
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.track.hover,
+          colors[theme].styles.standard.track.text,
         ],
-        'text-halo-color': colors[theme].styles.standard.trackHalo,
+        'text-halo-color': colors[theme].styles.standard.track.halo,
         'text-halo-width': 4,
         'text-halo-blur': 2,
       },
@@ -2077,7 +2100,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'standard_label'], null],
       ],
       paint: {
-        'text-color': '#585858',
+        'text-color': colors[theme].railwayLine.text,
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
           colors[theme].halo,
@@ -2157,19 +2180,19 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'text-color': ['case',
-          ['==', ['get', 'railway'], 'yard'], '#87491D',
-          ['==', ['get', 'railway'], 'tram_stop'], '#D877B8',
+          ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
+          ['==', ['get', 'railway'], 'tram_stop'], colors[theme].styles.standard.tramStopText,
           ['==', ['get', 'railway'], 'station'], colors[theme].styles.standard.stationsText,
           ['==', ['get', 'railway'], 'halt'], colors[theme].styles.standard.stationsText,
-          '#616161',
+          colors[theme].styles.standard.defaultText,
         ],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
-          ['==', ['get', 'railway'], 'tram_stop'], colors[theme].halo,
-          ['==', ['get', 'railway'], 'station'], colors[theme].halo,
-          ['==', ['get', 'railway'], 'halt'], colors[theme].halo,
-          '#F1F1F1',
+          // ['==', ['get', 'railway'], 'yard'], colors[theme].halo,
+          // ['==', ['get', 'railway'], 'tram_stop'], colors[theme].halo,
+          // ['==', ['get', 'railway'], 'station'], colors[theme].halo,
+          // ['==', ['get', 'railway'], 'halt'], colors[theme].halo,
+          colors[theme].halo,
         ],
         'text-halo-width': 1.5,
       },
