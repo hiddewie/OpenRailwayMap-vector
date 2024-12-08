@@ -12,7 +12,10 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
-const backgroundMapContainer = document.getElementById('background-map')
+const themeSystemControl = document.getElementById('themeSystem');
+const themeDarkControl = document.getElementById('themeDark');
+const themeLightControl = document.getElementById('themeLight');
+const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend')
 const legendMapContainer = document.getElementById('legend-map')
 
@@ -209,6 +212,14 @@ function showConfiguration() {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+  const theme = configuration.theme ?? defaultConfiguration.theme;
+  if (theme === 'system') {
+    themeSystemControl.checked = true;
+  } else if (theme === 'dark') {
+    themeDarkControl.checked = true
+  } else if (theme === 'light') {
+    themeLightControl.checked = true;
+  }
 
   configurationBackdrop.style.display = 'block';
 }
@@ -273,6 +284,11 @@ const knownStyles = {
   loading_gauge: 'Loading gauge',
   track_class: 'Track class',
 };
+
+const knownThemes = [
+  'light',
+  'dark',
+]
 
 function hashToObject(hash) {
   if (!hash) {
@@ -387,6 +403,24 @@ function updateBackgroundMapStyle() {
   backgroundMap.setStyle(buildBackgroundMapStyle());
 }
 
+function resolveTheme(configuredTheme) {
+  return configuredTheme === 'system'
+    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    : configuredTheme;
+}
+
+function onThemeChange(theme) {
+  updateConfiguration('theme', theme);
+  updateTheme();
+  onStyleChange();
+}
+
+function updateTheme() {
+  const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
+  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+  selectedTheme = resolvedTheme;
+}
+
 function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
@@ -396,9 +430,13 @@ const defaultConfiguration = {
   backgroundOpacity: 1.0,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-}
+  theme: 'system',
+};
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
+
+let selectedTheme;
+updateTheme();
 
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
@@ -406,13 +444,20 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/${style}.json`])
+  knownThemes.map(theme =>
+    [theme, Object.fromEntries(
+      Object.keys(knownStyles)
+        .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
+    )
+    ])
 );
 
 const legendStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
+  knownThemes.map(theme => [theme, Object.fromEntries(
+    Object.keys(knownStyles)
+      .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
+  )
+  ])
 );
 
 const legendMap = new maplibregl.Map({
@@ -442,28 +487,26 @@ const map = new maplibregl.Map({
   maxPitch: 0,
 });
 
-const onStyleChange = changedStyle => {
-  selectedStyle = changedStyle;
-
+const onStyleChange = () => {
   // Change styles
-  map.setStyle(mapStyles[changedStyle], {
+  map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: false,
   });
-  legendMap.setStyle(legendStyles[changedStyle], {
+  legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
     validate: false,
     transformStyle: (previous, next) => {
       onStylesheetChange(next);
-      return next;
+     return next;
     },
   });
 
   // Update URL
-  const updatedHash = putStyleInHash(window.location.hash, changedStyle);
+  const updatedHash = putStyleInHash(window.location.hash, selectedStyle);
   const location = window.location.href.replace(/(#.+)?$/, updatedHash);
   window.history.replaceState(window.history.state, null, location);
 }
 
-onStyleChange(selectedStyle);
+onStyleChange();
 
 class StyleControl {
   constructor(options) {
@@ -506,8 +549,8 @@ class SearchControl {
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
-    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', icon);
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
     text.innerText = 'Search'
 
     return this._container;
@@ -568,8 +611,8 @@ class LegendControl {
     const button = createDomElement('button', 'maplibregl-ctrl-legend', this._container);
     button.type = 'button';
     button.title = 'Show/hide map legend';
-    const icon = createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', icon);
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
     text.innerText = 'Legend'
 
     button.onclick = () => this.options.onLegendToggle()
@@ -588,7 +631,10 @@ const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key =
 
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
-  onStyleChange,
+  onStyleChange: style => {
+    selectedStyle = style;
+    onStyleChange();
+  },
 }));
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,
@@ -690,8 +736,8 @@ function popupContent(properties) {
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
-map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoom', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 
 let hoveredFeature = null
 map.on('mousemove', event => {
@@ -779,7 +825,7 @@ fetch(`${location.origin}/bounds.json`)
   })
   .then(result => {
     map.setMaxBounds(result);
-    backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
+    backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
   })
   .catch(error => console.error('Error during fetching of import map bounds', error))
 
