@@ -676,7 +676,7 @@ signals_railway_signals:
       tags:
         - { tag: 'railway:signal:passing', value: 'DE-BOStrab:so5' }
         - { tag: 'railway:signal:passing:form', value: 'sign' }
-        - { tag: 'railway:signal:passing:type', value: 'no_type' }
+        - { tag: 'railway:signal:passing:type', value: 'no_passing' }
 
     - description: tram passing prohibited end sign So 6
       country: DE
