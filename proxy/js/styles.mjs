@@ -69,6 +69,10 @@ const colors = {
         },
         trackHalo: 'blue',
         stationsText: 'blue',
+        signalBox: {
+          text: '#404040',
+          halo: '#bfffb3',
+        },
       },
     },
     km: {
@@ -89,7 +93,7 @@ const colors = {
       main: '#ff0000',
       // High speed lines and 25kV are the hover color by default
       alternative: '#ffc107',
-      textHalo: '#3f3f06',
+      textHalo: '#362800',
     },
     styles: {
       standard: {
@@ -119,6 +123,10 @@ const colors = {
         },
         trackHalo: '#afc6ff',
         stationsText: '#afc6ff',
+        signalBox: {
+          text: '#bfffb3',
+          halo: '#404040',
+        },
       },
     },
     km: {
@@ -2644,10 +2652,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       paint: {
-        'text-color': '#404040',
+        'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          '#bfffb3',
+          colors[theme].styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2666,10 +2674,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       paint: {
-        'text-color': '#404040',
+        'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          '#bfffb3',
+          colors[theme].styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
