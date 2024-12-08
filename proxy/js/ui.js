@@ -496,7 +496,7 @@ const onStyleChange = () => {
     validate: false,
     transformStyle: (previous, next) => {
       onStylesheetChange(next);
-     return next;
+      return next;
     },
   });
 
@@ -691,7 +691,7 @@ function popupContent(feature) {
   const properties = feature.properties;
 
   const layerSource = `${feature.source}-${feature.sourceLayer}`;
-  const featureContent = features && features[layerSource] && features[layerSource] && features[layerSource][properties.feature];
+  const featureContent = features && features[layerSource] && features[layerSource] && features[layerSource].features && features[layerSource].features[properties[features[layerSource].featureProperty || 'feature']];
   console.info(featureContent);
   // TODO move icon SVGs to proxy
   // TODO reuse icons from map features for these features
@@ -703,17 +703,19 @@ function popupContent(feature) {
 
   // console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
 
-  // TODO handle node/way in link generation
+  const featureType = featureContent && featureContent.type || 'point';
+  const osmType = featureType === 'point' ? 'node' : 'way';
+
   return `
     <h6>${featureDescription ? featureDescription : ''}</h6>
-    <p>
+    ${properties.icon || label ? `<p>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
       ${label ? label : ''}
-    </p>
+    </p>` : ''}
     ${properties.osm_id ? `<p>
-     <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">view</a> 
+     <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${properties.osm_id}" target="_blank">view</a> 
      &#183;
-     <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">edit</a> 
+     <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${properties.osm_id}" target="_blank">edit</a> 
     </p>` : ''}
     <h6>
       ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
