@@ -54,6 +54,7 @@ signals_railway_signals:
     - 'railway:signal:preheating'
     - 'railway:signal:preheating:form'
     - 'railway:signal:ring'
+    - 'railway:signal:ring:form'
     - 'railway:signal:ring:only_transit'
     - 'railway:signal:radio'
     - 'railway:signal:radio:form'
@@ -530,6 +531,7 @@ signals_railway_signals:
         default: 'de/bue5'
       tags:
         - { tag: 'railway:signal:ring', value: 'DE-ESO:bü5' }
+        - { tag: 'railway:signal:ring:form', value: 'sign' }
 
     # TODO support variants of same feature
     - description: Bü 0/1 (sign, repeated)
@@ -761,6 +763,7 @@ signals_railway_signals:
       icon: { default: 'de/bostrab/sh4' }
       tags:
         - { tag: 'railway:signal:ring', value: 'DE-BOStrab:sh4' }
+        - { tag: 'railway:signal:ring:form', value: 'sign' }
 
     - description: Signalhaltmelder Zugleitbetrieb
       country: DE
