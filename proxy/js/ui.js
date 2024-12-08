@@ -671,9 +671,9 @@ const onMapZoom = zoom => {
 
   legendMap.jumpTo({
     zoom: legendZoom,
-    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 2) / 2) * 0.6]),
+    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
   });
-  legendMapContainer.style.height = `${numberOfLegendEntries * 30}px`;
+  legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 }
 
 const onStylesheetChange = styleSheet => {
@@ -694,7 +694,9 @@ function popupContent(properties) {
   // TODO format gauge(s)
   const label = properties.label ?? properties.standard_label ?? properties.name ?? properties.ref;
   const featureDescription = properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
+
   console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
+
   return `
     <h6>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
