@@ -496,7 +496,7 @@ const onStyleChange = () => {
     validate: false,
     transformStyle: (previous, next) => {
       onStylesheetChange(next);
-     return next;
+      return next;
     },
   });
 
@@ -671,9 +671,9 @@ const onMapZoom = zoom => {
 
   legendMap.jumpTo({
     zoom: legendZoom,
-    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 2) / 2) * 0.6]),
+    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
   });
-  legendMapContainer.style.height = `${numberOfLegendEntries * 30}px`;
+  legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 }
 
 const onStylesheetChange = styleSheet => {
@@ -686,19 +686,37 @@ const onStylesheetChange = styleSheet => {
   onMapZoom(map.getZoom());
 }
 
-function popupContent(properties) {
+function popupContent(feature) {
+  console.info(feature)
+  const properties = feature.properties;
+
+  const layerSource = `${feature.source}-${feature.sourceLayer}`;
+  const featureContent = features && features[layerSource] && features[layerSource] && features[layerSource].features && features[layerSource].features[properties[features[layerSource].featureProperty || 'feature']];
+  console.info(featureContent);
   // TODO move icon SVGs to proxy
   // TODO reuse icons from map features for these features
   // TODO lookup train protection name
   // TODO format voltage
   // TODO format gauge(s)
   const label = properties.label ?? properties.standard_label ?? properties.name ?? properties.ref;
+  const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;// properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
+
+  // console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
+
+  const featureType = featureContent && featureContent.type || 'point';
+  const osmType = featureType === 'point' ? 'node' : 'way';
+
   return `
-    <h6>
+    <h6>${featureDescription ? featureDescription : ''}</h6>
+    ${properties.icon || label ? `<p>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-      ${label ? `${properties.osm_id ? `<a title="View" href="https://www.openstreetmap.org/node/${properties.osm_id}" target="_blank">` : ''}${label}${properties.osm_id ? `</a>` : ''}` : ''}
-      ${properties.osm_id ? `<a title="Edit" href="https://www.openstreetmap.org/edit?node=${properties.osm_id}" target="_blank">${icons.edit}</a>` : ''}
-    </h6>
+      ${label ? label : ''}
+    </p>` : ''}
+    ${properties.osm_id ? `<p>
+     <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${properties.osm_id}" target="_blank">view</a> 
+     &#183;
+     <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${properties.osm_id}" target="_blank">edit</a> 
+    </p>` : ''}
     <h6>
       ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
       ${properties.railway_ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
@@ -807,7 +825,7 @@ map.on('click', event => {
 
     new maplibregl.Popup()
       .setLngLat(coordinates)
-      .setHTML(popupContent(feature.properties))
+      .setHTML(popupContent(feature))
       .addTo(map);
   }
 });
@@ -825,3 +843,18 @@ fetch(`${location.origin}/bounds.json`)
     backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
   })
   .catch(error => console.error('Error during fetching of import map bounds', error))
+
+let features = null;
+fetch(`${location.origin}/features.json`)
+  .then(result => {
+    if (result.status === 200) {
+      return result.json()
+    } else {
+      throw `Invalid status code ${result.status}`
+    }
+  })
+  .then(result => {
+    console.info('Loaded features');
+    features = result;
+  })
+  .catch(error => console.error('Error during fetching of features', error))

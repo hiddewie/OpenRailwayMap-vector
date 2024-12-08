@@ -1,12 +1,14 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml', 'utf8')).signals_railway_line
-const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8')).speed_railway_signals
-const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8')).signals_railway_signals
-const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8')).electrification_signals
-const loading_gauges = yaml.parse(fs.readFileSync('loading_gauge.yaml', 'utf8')).loading_gauges
-const track_classes = yaml.parse(fs.readFileSync('track_class.yaml', 'utf8')).track_classes
+const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
+const speed_railway_signals = yaml.parse(fs.readFileSync('features/speed_railway_signals.yaml', 'utf8'))
+const signals_railway_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8'))
+const electrification_signals = yaml.parse(fs.readFileSync('features/electrification_signals.yaml', 'utf8'))
+const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
+const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
+const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
 const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
@@ -1075,7 +1077,7 @@ const loadingGaugeCasingPaint = theme => ({
 });
 const loadingGaugeFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'loading_gauge'],
-    ...loading_gauges.flatMap(loading_gauge =>
+    ...loading_gauges.loading_gauges.flatMap(loading_gauge =>
       [loading_gauge.value, loading_gauge.color]
     ),
     'gray',
@@ -1095,7 +1097,7 @@ const trackClassCasingPaint = theme => ({
 });
 const trackClassFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'track_class'],
-    ...track_classes.flatMap(track_class =>
+    ...track_classes.track_classes.flatMap(track_class =>
       [track_class.value, track_class.color]
     ),
     'gray',
@@ -4041,38 +4043,15 @@ const legendData = {
         },
       },
     ],
-    "openrailwaymap_standard-standard_railway_text_stations": [
-      {
-        legend: 'Railway station / halt',
+    "openrailwaymap_standard-standard_railway_text_stations":
+      stations.features.map(feature => ({
+        legend: feature.description,
         type: 'point',
         properties: {
-          railway: 'station',
-          station: null,
-          label: 'Gd',
-          name: 'Gouda',
+          ...feature.example,
+          railway: feature.feature,
         },
-      },
-      {
-        legend: 'Tram station',
-        type: 'point',
-        properties: {
-          railway: 'tram_stop',
-          station: null,
-          label: null,
-          name: 'Llacuna',
-        },
-      },
-      {
-        legend: 'Railway yard',
-        type: 'point',
-        properties: {
-          railway: 'yard',
-          station: null,
-          label: null,
-          name: 'Kijfhoek',
-        },
-      },
-    ],
+      })),
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',
@@ -4091,206 +4070,19 @@ const legendData = {
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols": [
-      {
-        legend: 'Tram stop',
+      ...poi.features.map(feature => ({
+        legend: feature.description,
         type: 'point',
         properties: {
-          feature: 'general/tram-stop',
+          feature: feature.feature,
         },
-      },
-      {
-        legend: 'Border crossing',
-        type: 'point',
-        properties: {
-          feature: 'general/border',
-        },
-        variants: [
-          {
-            legend: 'owner change',
-            properties: {
-              feature: 'general/owner-change',
-            },
+        variants: feature.variants ? feature.variants.map(variant => ({
+          legend: variant.description,
+          properties: {
+            feature: variant.feature,
           },
-        ],
-      },
-      {
-        legend: 'Radio mast',
-        type: 'point',
-        properties: {
-          feature: 'general/radio-mast',
-        },
-        variants: [
-          {
-            legend: 'antenna',
-            properties: {
-              feature: 'general/radio-antenna',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Crossing',
-        type: 'point',
-        properties: {
-          feature: 'general/crossing',
-        },
-        variants: [
-          {
-            legend: 'level crossing',
-            properties: {
-              feature: 'general/level-crossing',
-            }
-          },
-          {
-            legend: 'lights',
-            properties: {
-              feature: 'general/level-crossing-light',
-            }
-          },
-          {
-            legend: 'barrier',
-            properties: {
-              feature: 'general/level-crossing-barrier',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Phone',
-        type: 'point',
-        properties: {
-          feature: 'general/phone',
-        },
-      },
-      {
-        legend: 'Lubricator',
-        type: 'point',
-        properties: {
-          feature: 'general/lubricator',
-        },
-      },
-      {
-        legend: 'Fuel',
-        type: 'point',
-        properties: {
-          feature: 'general/fuel',
-        },
-      },
-      {
-        legend: 'Sand store',
-        type: 'point',
-        properties: {
-          feature: 'general/sand_store',
-        },
-      },
-      {
-        legend: 'Defect detector',
-        type: 'point',
-        properties: {
-          feature: 'general/defect_detector',
-        },
-      },
-      {
-        legend: 'Automatic equipment identification',
-        type: 'point',
-        properties: {
-          feature: 'general/aei',
-        },
-      },
-      {
-        legend: 'Buffer stop',
-        type: 'point',
-        properties: {
-          feature: 'general/buffer_stop',
-        },
-        variants: [
-          {
-            legend: 'Derailer',
-            properties: {
-              feature: 'general/derail',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Hump yard',
-        type: 'point',
-        properties: {
-          feature: 'general/hump_yard',
-        },
-      },
-      {
-        legend: 'Loading gauge',
-        type: 'point',
-        properties: {
-          feature: 'general/loading_gauge',
-        },
-      },
-      {
-        legend: 'Preheating',
-        type: 'point',
-        properties: {
-          feature: 'general/preheating',
-        },
-      },
-      {
-        legend: 'Compressed air supply',
-        type: 'point',
-        properties: {
-          feature: 'general/compressed_air_supply',
-        },
-      },
-      {
-        legend: 'Waste disposal',
-        type: 'point',
-        properties: {
-          feature: 'general/waste_disposal',
-        },
-      },
-      {
-        legend: 'Coaling facility',
-        type: 'point',
-        properties: {
-          feature: 'general/coaling_facility',
-        },
-      },
-      {
-        legend: 'Wash',
-        type: 'point',
-        properties: {
-          feature: 'general/wash',
-        },
-      },
-      {
-        legend: 'Water tower',
-        type: 'point',
-        properties: {
-          feature: 'general/water_tower',
-        },
-        variants: [
-          {
-            legend: 'crane',
-            properties: {
-              feature: 'general/water_crane',
-            },
-          },
-        ]
-      },
-      {
-        legend: 'Axle counter',
-        type: 'point',
-        properties: {
-          feature: 'general/vacancy-detection-axle-counter',
-        },
-        variants: [
-          {
-            legend: 'insulated rail joint',
-            properties: {
-              feature: 'general/vacancy-detection-insulated-rail-joint',
-            }
-          },
-        ]
-      },
+        })) : undefined,
+      }))
     ],
     "high-railway_text_km": [
       {
@@ -5203,7 +4995,7 @@ const legendData = {
   },
   loading_gauge: {
     'openrailwaymap_low-railway_line_low': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5227,7 +5019,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5251,7 +5043,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5288,7 +5080,7 @@ const legendData = {
   },
   track_class: {
     'openrailwaymap_low-railway_line_low': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5312,7 +5104,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5336,7 +5128,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
