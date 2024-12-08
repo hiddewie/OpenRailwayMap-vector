@@ -58,8 +58,6 @@ describe('home page', () => {
     cy.get('#configuration-backdrop .btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
 
-    cy.screenshot()
-
     cy.contains('Infrastructure').click()
     cy.url().should('include', 'style=standard')
 
