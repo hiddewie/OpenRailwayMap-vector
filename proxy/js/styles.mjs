@@ -1,13 +1,14 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8')).signals_railway_line
-const speed_railway_signals = yaml.parse(fs.readFileSync('features/speed_railway_signals.yaml', 'utf8')).speed_railway_signals
-const signals_railway_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8')).signals_railway_signals
-const electrification_signals = yaml.parse(fs.readFileSync('features/electrification_signals.yaml', 'utf8')).electrification_signals
-const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8')).loading_gauges
-const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8')).track_classes
-const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8')).poi
+const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
+const speed_railway_signals = yaml.parse(fs.readFileSync('features/speed_railway_signals.yaml', 'utf8'))
+const signals_railway_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8'))
+const electrification_signals = yaml.parse(fs.readFileSync('features/electrification_signals.yaml', 'utf8'))
+const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
+const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
+const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
 const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
@@ -1076,7 +1077,7 @@ const loadingGaugeCasingPaint = theme => ({
 });
 const loadingGaugeFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'loading_gauge'],
-    ...loading_gauges.flatMap(loading_gauge =>
+    ...loading_gauges.loading_gauges.flatMap(loading_gauge =>
       [loading_gauge.value, loading_gauge.color]
     ),
     'gray',
@@ -1096,7 +1097,7 @@ const trackClassCasingPaint = theme => ({
 });
 const trackClassFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'track_class'],
-    ...track_classes.flatMap(track_class =>
+    ...track_classes.track_classes.flatMap(track_class =>
       [track_class.value, track_class.color]
     ),
     'gray',
@@ -4042,38 +4043,15 @@ const legendData = {
         },
       },
     ],
-    "openrailwaymap_standard-standard_railway_text_stations": [
-      {
-        legend: 'Railway station / halt',
+    "openrailwaymap_standard-standard_railway_text_stations":
+      stations.features.map(feature => ({
+        legend: feature.description,
         type: 'point',
         properties: {
-          railway: 'station',
-          station: null,
-          label: 'Gd',
-          name: 'Gouda',
+          ...feature.example,
+          railway: feature.feature,
         },
-      },
-      {
-        legend: 'Tram station',
-        type: 'point',
-        properties: {
-          railway: 'tram_stop',
-          station: null,
-          label: null,
-          name: 'Llacuna',
-        },
-      },
-      {
-        legend: 'Railway yard',
-        type: 'point',
-        properties: {
-          railway: 'yard',
-          station: null,
-          label: null,
-          name: 'Kijfhoek',
-        },
-      },
-    ],
+      })),
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',
@@ -5017,7 +4995,7 @@ const legendData = {
   },
   loading_gauge: {
     'openrailwaymap_low-railway_line_low': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5041,7 +5019,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5065,7 +5043,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5102,7 +5080,7 @@ const legendData = {
   },
   track_class: {
     'openrailwaymap_low-railway_line_low': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5126,7 +5104,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5150,7 +5128,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {

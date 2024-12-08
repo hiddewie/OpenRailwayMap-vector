@@ -854,7 +854,7 @@ fetch(`${location.origin}/features.json`)
     }
   })
   .then(result => {
-    console.info('found features', result);
+    console.info('Loaded features');
     features = result;
   })
   .catch(error => console.error('Error during fetching of features', error))
