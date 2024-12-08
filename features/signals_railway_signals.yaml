@@ -753,6 +753,12 @@ signals_railway_signals:
         - { tag: 'railway:signal:minor', values: ['DE-ESO:sh2', 'DE-BOStrab:sh2'] }
         - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+    - description: tram läuten Sh 4
+      country: DE
+      icon: { default: 'de/bostrab/sh4' }
+      tags:
+        - { tag: 'railway:signal:ring', value: 'DE-BOStrab:sh4' }
+
     - description: Signalhaltmelder Zugleitbetrieb
       country: DE
       icon: { default: 'de/zlb-haltmelder-light' }
