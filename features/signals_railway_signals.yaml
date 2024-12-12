@@ -965,9 +965,17 @@ features:
       - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: tram Hauptsignal
+  - description: BOStrab Hauptsignal
     country: DE
-    icon: { default: 'de/ks-main' }
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+      - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
+      - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
+      - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
+      - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
+      - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
+      default: 'de/ks-main'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
