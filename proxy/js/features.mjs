@@ -85,6 +85,7 @@ const stationFeatures = {
 
 // TODO add properties for use in labels
 // TODO add name / label property of feature
+// TODO move examples here
 const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_low': railwayLineFeatures,
@@ -144,6 +145,19 @@ const features = {
   },
   'openrailwaymap_signals-signals_railway_signals': {
     features: generateSignalFeatures(signals_railway_signals.features),
+  },
+  'openrailwaymap_signals-signals_signal_boxes': {
+    features: {
+      'signal_box': {
+        name: 'Signal box',
+      },
+      'crossing_box': {
+        name: 'Crossing box',
+      },
+      'blockpost': {
+        name: 'Block post',
+      }
+    },
   },
   'openrailwaymap_electrification-electrification_signals': {
     features: generateSignalFeatures(electrification_signals.features),
