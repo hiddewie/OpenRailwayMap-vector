@@ -197,7 +197,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
        railway_ref,
        name
      FROM stations_with_route_counts
-     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
        AND name IS NOT NULL
     ) AS r
   ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
