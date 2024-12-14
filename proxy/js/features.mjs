@@ -115,17 +115,28 @@ const features = {
     ),
   },
   "high-railway_text_km": {
+    featureProperty: 'railway',
     features: {
       milestone: {
         name: 'Milestone',
       },
+      level_crossing: {
+        name: 'Level crossing',
+      },
+      crossing: {
+        name: 'Crossing',
+      },
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
+    featureProperty: 'railway',
     features: {
       switch: {
         name: 'Switch',
       },
+      railway_crossing: {
+        name: 'Railway crossing',
+      }
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
