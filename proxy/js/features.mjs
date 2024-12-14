@@ -48,10 +48,25 @@ const loadingGauges = loading_gauges.loading_gauges.map(feature => ({
 // TODO lookup loading gauge
 const railwayLineFeatures = {
   labelProperty: 'standard_label',
-  // TODO this is state, not feature
   features: {
     rail: {
       name: 'Railway',
+      type: 'line',
+    },
+    tram: {
+      name: 'Tram',
+      type: 'line',
+    },
+    light_rail: {
+      name: 'Light rail',
+      type: 'line',
+    },
+    subway: {
+      name: 'Subway',
+      type: 'line',
+    },
+    monorail: {
+      name: 'Monorail',
       type: 'line',
     },
     construction: {
@@ -78,9 +93,18 @@ const railwayLineFeatures = {
       name: 'Preserved railway',
       type: 'line',
     },
+    narrow_gauge: {
+      name: 'Narrow gauge railway',
+      type: 'line',
+    },
+    miniature: {
+      name: 'Miniature railway',
+      type: 'line',
+    },
   },
   // TODO formatting / lookup table of values
   properties: {
+    // TODO replace railway with `state`
     railway: 'Railway',
     usage: 'Usage',
     service: 'Service',
