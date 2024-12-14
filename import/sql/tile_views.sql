@@ -139,7 +139,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   SELECT
     id,
     osm_id,
-    way,
+    ST_Centroid(way) as way,
     railway_ref as label
   FROM stations_with_route_counts
   WHERE
@@ -153,7 +153,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT
     id,
     osm_id,
-    way,
+    ST_Centroid(way) as way,
     railway_ref as label
   FROM stations_with_route_counts
   WHERE
@@ -186,21 +186,44 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       WHEN railway = 'crossover' THEN 700
       ELSE 50
     END AS rank
-  FROM
-    (SELECT
-       id,
-       osm_id,
-       way,
-       railway,
-       route_count,
-       station,
-       railway_ref,
-       name
-     FROM stations_with_route_counts
-     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-       AND name IS NOT NULL
-    ) AS r
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_Centroid(way) as way,
+      railway,
+      route_count,
+      station,
+      railway_ref,
+      name
+    FROM stations_with_route_counts
+    WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+      AND name IS NOT NULL
+  ) AS r
   ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
+
+CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    railway,
+    station,
+    railway_ref as label,
+    name
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_Buffer(ST_ConvexHull(way), 50) as way,
+      railway,
+      station,
+      railway_ref,
+      name
+    FROM stations_with_route_counts
+    WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+      AND ST_NumGeometries(way) > 1
+  ) AS r;
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT

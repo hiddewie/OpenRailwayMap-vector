@@ -156,6 +156,7 @@ const features = {
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
+  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_turntables': {
     features: {
       turntable: {

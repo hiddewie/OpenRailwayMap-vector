@@ -94,7 +94,7 @@ server {
   location / {
     if ($http_referer ~ ^http://localhost) {
       rewrite ^/high$ /railway_line_high,railway_text_km last;
-      rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_symbols,standard_railway_switch_ref last;
+      rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref last;
       rewrite ^/speed$ /speed_railway_signals last;
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
       rewrite ^/electrification$ /electrification_signals last;
