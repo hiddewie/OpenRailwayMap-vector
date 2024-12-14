@@ -43,36 +43,64 @@ const loadingGauges = loading_gauges.loading_gauges.map(feature => ({
   description: feature.legend,
 }));
 
+const railwayLineFeatures = {
+  features: {
+    rail: {
+      name: 'Railway',
+      type: 'line',
+    },
+    construction: {
+      name: 'Railway under construction',
+      type: 'line',
+    },
+    proposed: {
+      name: 'Proposed railway',
+      type: 'line',
+    },
+    abandoned: {
+      name: 'Abandoned railway',
+      type: 'line',
+    },
+    razed: {
+      name: 'Razed railway',
+      type: 'line',
+    },
+    disused: {
+      name: 'Disused railway',
+      type: 'line',
+    },
+    preserved: {
+      name: 'Preserved railway',
+      type: 'line',
+    },
+  },
+};
+
+const stationFeatures = {
+  featureProperty: 'railway',
+  features: Object.fromEntries(
+    stations.features.map(feature => [feature.feature, {name: feature.description}])
+  ),
+}
+
+// TODO add properties for use in labels
+// TODO add name / label property of feature
 const features = {
-  'high-railway_line_high': {
+  'high-railway_line_high': railwayLineFeatures,
+  'openrailwaymap_low-railway_line_low': railwayLineFeatures,
+  'openrailwaymap_med-railway_line_med': railwayLineFeatures,
+  'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
+  'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
+  'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
+  'openrailwaymap_standard-standard_railway_turntables': {
     features: {
-      rail: {
-        name: 'Railway',
-        type: 'line',
+      turntable: {
+        name: 'Turntable',
+        type: 'polygon',
       },
-      construction: {
-        name: 'Railway under construction',
-        type: 'line',
-      },
-      proposed: {
-        name: 'Proposed railway',
-        type: 'line',
-      },
-      abandoned: {
-        name: 'Abandoned railway',
-        type: 'line',
-      },
-      razed: {
-        name: 'Razed railway',
-        type: 'line',
-      },
-      disused: {
-        name: 'Disused railway',
-        type: 'line',
-      },
-      preserved: {
-        name: 'Preserved railway',
-        type: 'line',
+      traverser: {
+        name: 'Transfer table',
+        type: 'polygon',
       },
     },
   },
@@ -86,11 +114,19 @@ const features = {
         ))
     ),
   },
-  'openrailwaymap_standard-standard_railway_text_stations': {
-    featureProperty: 'railway',
-    features: Object.fromEntries(
-      stations.features.map(feature => [feature.feature, {name: feature.description}])
-    ),
+  "high-railway_text_km": {
+    features: {
+      milestone: {
+        name: 'Milestone',
+      },
+    },
+  },
+  'openrailwaymap_standard-standard_railway_switch_ref': {
+    features: {
+      switch: {
+        name: 'Switch',
+      },
+    },
   },
   'openrailwaymap_speed-speed_railway_signals': {
     features: generateSignalFeatures(speed_railway_signals.features),

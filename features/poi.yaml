@@ -17,13 +17,13 @@ features:
   - description: Crossing
     feature: 'general/crossing'
     variants:
-      - description: level crossing
+      - description: Level crossing
         feature: 'general/level-crossing'
 
-      - description: lights
+      - description: Level crossing with lights
         feature: 'general/level-crossing-light'
 
-      - description: barrier
+      - description: Level crossing with barrier
         feature: 'general/level-crossing-barrier'
 
   - description: Phone
@@ -47,7 +47,7 @@ features:
   - description: Buffer stop
     feature: 'general/phone'
     variants:
-      - description: derailer
+      - description: Derailer
         feature: 'general/derail'
 
   - description: Hump
@@ -74,11 +74,11 @@ features:
   - description: Water tower
     feature: 'general/water_tower'
     variants:
-    - description: crane
+    - description: Crane
       feature: 'general/water_crane'
 
   - description: Axle counter
     feature: 'general/vacancy-detection-axle-counter'
     variants:
-    - description: insulated rail joint
+    - description: Insulated rail joint
       feature: 'general/vacancy-detection-insulated-rail-joint'
