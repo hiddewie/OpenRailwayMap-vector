@@ -687,65 +687,40 @@ const onStylesheetChange = styleSheet => {
 }
 
 function popupContent(feature) {
-  console.info(feature)
   const properties = feature.properties;
-
   const layerSource = `${feature.source}-${feature.sourceLayer}`;
-  const featureContent = features && features[layerSource] && features[layerSource] && features[layerSource].features && features[layerSource].features[properties[features[layerSource].featureProperty || 'feature']];
-  console.info(featureContent);
-  // TODO move icon SVGs to proxy
-  // TODO reuse icons from map features for these features
-  // TODO lookup train protection name
-  // TODO format voltage
-  // TODO format gauge(s)
-  const label = properties.label ?? properties.standard_label ?? properties.name ?? properties.ref;
-  const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;// properties.feature && features.electrificationSignals ? features.electrificationSignals.find(it => it.feature === properties.feature)?.description : null;
 
-  // console.info(properties.feature, features.electrificationSignals, features.electrificationSignals[properties.feature])
+  const featureCatalog = features && features[layerSource];
+  if (!featureCatalog) {
+    console.warn('Feature catalog not found for feature', feature);
+    return;
+  }
+
+  const featureContent = featureCatalog.features && featureCatalog.features[properties[featureCatalog.featureProperty || 'feature']];
+  const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
+  const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
   const featureType = featureContent && featureContent.type || 'point';
   const osmType = featureType === 'point' ? 'node' : 'way';
 
+  const propertyValues = Object.entries(featureCatalog.properties || {})
+    .map(([property, description]) => properties[property] ? `<span class="badge rounded-pill text-bg-light">${description}${properties[property] === true ? '' : `: <span class="text-monospace">${properties[property]}`}</span></span>` : '')
+    .filter(it => it)
+    .join('')
+
   return `
-    <h6>${featureDescription ? featureDescription : ''}</h6>
-    ${properties.icon || label ? `<p>
+    <h5>${featureDescription ? featureDescription : ''}</h5>
+    ${properties.icon || label ? `<h6>
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
       ${label ? label : ''}
-    </p>` : ''}
-    ${properties.osm_id ? `<p>
-     <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${properties.osm_id}" target="_blank">view</a> 
-     &#183;
-     <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${properties.osm_id}" target="_blank">edit</a> 
-    </p>` : ''}
-    <h6>
-      ${properties.reporting_marks ? `<span class="badge rounded-pill text-bg-light">reporting marks: <span class="text-monospace">${properties.reporting_marks}</span></span>` : ''}
-      ${properties.railway_ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.railway_ref}</span></span>` : ''} 
-      ${properties.ref ? `<span class="badge rounded-pill text-bg-light">reference: <span class="text-monospace">${properties.ref}</span></span>` : ''} 
-      ${properties.uic_ref ? `<span class="badge rounded-pill text-bg-light">UIC reference: <span class="text-monospace">${properties.uic_ref}</span></span>` : ''}
-      ${properties.position ? `<span class="badge rounded-pill text-bg-light">position: ${properties.position}</span>` : ''}
-      ${properties.pos ? `<span class="badge rounded-pill text-bg-light">position: ${properties.pos}</span>` : ''}
-      ${properties.operator ? `<span class="badge rounded-pill text-bg-light">operator: ${properties.operator}</span>` : ''}
-      ${properties.track_ref ? `<span class="badge rounded-pill text-bg-light">track: ${properties.track_ref}</span>` : ''}
-      ${properties.highspeed === true ? `<span class="badge rounded-pill text-bg-light">high speed</span>` : ''}
-      ${properties.usage ? `<span class="badge rounded-pill text-bg-light">usage: <span class="text-monospace">${properties.usage}</span></span>` : ''}
-      ${properties.service ? `<span class="badge rounded-pill text-bg-light">service: <span class="text-monospace">${properties.service}</span></span>` : ''}
-      ${properties.tunnel === true ? `<span class="badge rounded-pill text-bg-light">tunnel</span>` : ''}
-      ${properties.bridge === true ? `<span class="badge rounded-pill text-bg-light">bridge</span>` : ''}
-      ${properties.railway_local_operated === true ? `<span class="badge rounded-pill text-bg-light">operated locally</span>` : ''}
-      ${properties.track_class ? `<span class="badge rounded-pill text-bg-light">track class: ${properties.track_class}</span>` : ''}
-      ${properties.direction_both ? `<span class="badge rounded-pill text-bg-light">both directions</span>` : ''}
-      ${properties.train_protection ? `<span class="badge rounded-pill text-bg-light">train protection: <span class="text-monospace">${properties.train_protection}</span></span>` : ''}
-      ${properties.deactivated === true ? `<span class="badge rounded-pill text-bg-light">deactivated</span>` : ''}
-      ${properties.type === 'line' ? `<span class="badge rounded-pill text-bg-light">line signal</span>` : ''}
-      ${properties.electrification_state ? `<span class="badge rounded-pill text-bg-light">line electrification: <span class="text-monospace">${properties.electrification_state}</span></span>` : ''}
-      ${properties.speed_label ? `<span class="badge rounded-pill text-bg-light">speed: ${properties.speed_label}</span>` : ''}
-      ${properties.voltage ? `<span class="badge rounded-pill text-bg-light">voltage: ${properties.voltage} V</span>` : ''}
-      ${properties.frequency ? `<span class="badge rounded-pill text-bg-light">frequency: ${properties.frequency.toFixed(2)} Hz</span>` : ''}
-      ${properties.future_voltage ? `<span class="badge rounded-pill text-bg-light">voltage (future): ${properties.future_voltage} V</span>` : ''}
-      ${properties.future_frequency ? `<span class="badge rounded-pill text-bg-light">frequency (future): ${properties.future_frequency.toFixed(2)} Hz</span>` : ''}
-      ${properties.gauge_label ? `<span class="badge rounded-pill text-bg-light">gauge: ${properties.gauge_label}</span>` : ''}
-      ${properties.loading_gauge ? `<span class="badge rounded-pill text-bg-light">loading gauge: ${properties.loading_gauge}</span>` : ''}
-    </h6>
+    </h6>` : ''}
+    ${properties.osm_id ? `<h6>
+      <div class="btn-group btn-group-sm">
+        <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${properties.osm_id}" target="_blank" class="btn btn-outline-primary">View</a>
+        <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${properties.osm_id}" target="_blank" class="btn btn-outline-primary">Edit</a>
+      </div>
+    </h6>` : ''}
+    ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
   `;
 }
 

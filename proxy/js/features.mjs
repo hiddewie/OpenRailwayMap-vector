@@ -43,7 +43,12 @@ const loadingGauges = loading_gauges.loading_gauges.map(feature => ({
   description: feature.legend,
 }));
 
+// TODO move icon SVGs to proxy
+// TODO lookup train protection name
+// TODO lookup loading gauge
 const railwayLineFeatures = {
+  labelProperty: 'standard_label',
+  // TODO this is state, not feature
   features: {
     rail: {
       name: 'Railway',
@@ -74,18 +79,52 @@ const railwayLineFeatures = {
       type: 'line',
     },
   },
+  // TODO formatting / lookup table of values
+  properties: {
+    railway: 'Railway',
+    usage: 'Usage',
+    service: 'Service',
+    highspeed: 'Highspeed',
+    preferred_direction: 'Preferred direction',
+    tunnel: 'Tunnel',
+    bridge: 'Bridge',
+    ref: 'Reference',
+    track_ref: 'Track',
+    speed_label: 'Speed',
+    train_protection: 'Train protection',
+    electrification_state: 'Electrification',
+    // TODO format with 2 digits and Hz
+    frequency: 'Frequency',
+    // TODO format with V
+    voltage: 'Voltage',
+    future_frequency: 'Future frequency',
+    future_voltage: 'Future voltage',
+    gauge_label: 'Gauge',
+    loading_gauge: 'Loading gauge',
+    track_class: 'Track class',
+    reporting_marks: 'Reporting marks',
+    // TODO import operator
+  },
 };
 
+// TODO move tram / metro stops to stations
 const stationFeatures = {
   featureProperty: 'railway',
+  labelProperty: 'name',
   features: Object.fromEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])
   ),
+  properties: {
+    station: 'Type',
+    label: 'Reference',
+    // TODO Add UIC ref
+  },
 }
 
 // TODO add properties for use in labels
 // TODO add name / label property of feature
 // TODO move examples here
+// TODO add icon
 const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_low': railwayLineFeatures,
@@ -128,6 +167,9 @@ const features = {
         name: 'Crossing',
       },
     },
+    properties: {
+      pos: 'Position',
+    },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
     featureProperty: 'railway',
@@ -139,14 +181,31 @@ const features = {
         name: 'Railway crossing',
       }
     },
+    properties: {
+      railway_local_operated: 'Operated locally',
+    },
   },
   'openrailwaymap_speed-speed_railway_signals': {
     features: generateSignalFeatures(speed_railway_signals.features),
+    properties: {
+      direction_both: 'both directions',
+      ref: 'Reference',
+      type: 'Type',
+      // TODO add deactivated
+      // TODO add speed
+    },
   },
   'openrailwaymap_signals-signals_railway_signals': {
     features: generateSignalFeatures(signals_railway_signals.features),
+    properties: {
+      direction_both: 'both directions',
+      ref: 'Reference',
+      type: 'Type',
+      deactivated: 'Deactivated',
+    },
   },
   'openrailwaymap_signals-signals_signal_boxes': {
+    labelProperty: 'name',
     features: {
       'signal_box': {
         name: 'Signal box',
@@ -158,9 +217,20 @@ const features = {
         name: 'Block post',
       }
     },
+    properties: {
+      ref: 'Reference',
+    },
   },
   'openrailwaymap_electrification-electrification_signals': {
     features: generateSignalFeatures(electrification_signals.features),
+    properties: {
+      direction_both: 'both directions',
+      ref: 'Reference',
+      type: 'Type',
+      // TODO add deactivated
+      // TODO add voltage
+      // TODO add frequency
+    },
   },
 };
 
