@@ -703,8 +703,18 @@ function popupContent(feature) {
   const featureType = featureContent && featureContent.type || 'point';
   const osmType = featureType === 'point' ? 'node' : 'way';
 
+  const formatPropertyValue = (value, format) => {
+    if (!format) {
+      return String(value);
+    } else if (format.template) {
+      return format.template.replace('%s', () => String(value)).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
+    } else {
+      return String(value);
+    }
+  }
+
   const propertyValues = Object.entries(featureCatalog.properties || {})
-    .map(([property, {name}]) => properties[property] ? `<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${properties[property]}`}</span></span>` : '')
+    .map(([property, {name, format}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false) ? `<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format)}`}</span></span>` : '')
     .filter(it => it)
     .join('')
 

@@ -141,19 +141,29 @@ const railwayLineFeatures = {
     electrification_state: {
       name: 'Electrification',
     },
-    // TODO format with 2 digits and Hz
     frequency: {
       name: 'Frequency',
+      format: {
+        template: '%.2d Hz',
+      },
     },
-    // TODO format with V
     voltage: {
       name: 'Voltage',
+      format: {
+        template: '%d V',
+      },
     },
     future_frequency: {
       name: 'Future frequency',
+      format: {
+        template: '%.2d Hz',
+      },
     },
     future_voltage: {
       name: 'Future voltage',
+      format: {
+        template: '%d V',
+      },
     },
     gauge_label: {
       name: 'Gauge',
