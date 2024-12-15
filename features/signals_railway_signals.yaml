@@ -54,7 +54,7 @@ tags:
   - 'railway:signal:preheating:form'
   - 'railway:signal:ring'
   - 'railway:signal:ring:form'
-    - 'railway:signal:ring:only_transit'
+  - 'railway:signal:ring:only_transit'
   - 'railway:signal:radio'
   - 'railway:signal:radio:form'
   - 'railway:signal:shunting'
