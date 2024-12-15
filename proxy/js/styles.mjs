@@ -2240,10 +2240,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['get', 'label'],
           10,
           ['get', 'name'],
+          15,
+          ['case',
+            ['>', ['get', 'count'], 1], ['concat', ['get', 'name'], ' (', ['get', 'count'], ')'],
+            ['get', 'name'],
+          ],
         ],
         // TODO light rail / subway oblique font
         'text-font': ['Noto Sans Bold'],
-        // TODO text-variable-anchor-offset
+        'text-variable-anchor': ['center', 'top', 'bottom', 'left', 'right'],
         'text-size': 11,
         'text-padding': 10,
         'text-max-width': 5,
@@ -2266,7 +2271,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
       layout: {
         'symbol-z-order': 'source',
-        'text-field': '{name}',
+        'text-field': ['step', ['zoom'],
+          ['get', 'name'],
+          15,
+          ['case',
+            ['>', ['get', 'count'], 1], ['concat', ['get', 'name'], ' (', ['get', 'count'], ')'],
+            ['get', 'name'],
+          ],
+        ],
         // TODO light rail / subway oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,

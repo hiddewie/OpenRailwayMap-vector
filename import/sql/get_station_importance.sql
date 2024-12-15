@@ -69,7 +69,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
     railway,
     MAX(route_count) as route_count,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
-    ST_Collect(way) as way
+    ST_RemoveRepeatedPoints(ST_Collect(way)) as way
   FROM (
     SELECT
       *,

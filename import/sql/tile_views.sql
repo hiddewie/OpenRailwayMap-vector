@@ -185,7 +185,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       WHEN railway = 'site' THEN 600
       WHEN railway = 'crossover' THEN 700
       ELSE 50
-    END AS rank
+    END AS rank,
+    count
   FROM (
     SELECT
       id,
@@ -195,7 +196,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       route_count,
       station,
       railway_ref,
-      name
+      name,
+      ST_NumGeometries(way) as count
     FROM stations_with_route_counts
     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
       AND name IS NOT NULL
@@ -222,7 +224,6 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
       name
     FROM stations_with_route_counts
     WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-      AND ST_NumGeometries(way) > 1
   ) AS r;
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
