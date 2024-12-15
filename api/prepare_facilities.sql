@@ -41,6 +41,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
       station,
       railway_ref,
       route_count,
+      station_count,
       geom
     FROM (
       SELECT DISTINCT ON (osm_id, key, value, name, railway, station, railway_ref, route_count, geom)
@@ -52,6 +53,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
           station,
           railway_ref,
           route_count,
+          station_count,
           geom
         FROM (
           SELECT
@@ -62,7 +64,8 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
               railway_ref,
               name_tags,
               route_count,
-              way AS geom
+              ST_NumGeometries(way) as station_count,
+              ST_Centroid(way) AS geom
             FROM stations_with_route_counts
             WHERE
               railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
