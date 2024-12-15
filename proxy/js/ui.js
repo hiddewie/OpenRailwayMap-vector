@@ -704,7 +704,7 @@ function popupContent(feature) {
   const osmType = featureType === 'point' ? 'node' : 'way';
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
-    .map(([property, description]) => properties[property] ? `<span class="badge rounded-pill text-bg-light">${description}${properties[property] === true ? '' : `: <span class="text-monospace">${properties[property]}`}</span></span>` : '')
+    .map(([property, {name}]) => properties[property] ? `<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${properties[property]}`}</span></span>` : '')
     .filter(it => it)
     .join('')
 
