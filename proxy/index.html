@@ -27,7 +27,7 @@
 <div id="search-backdrop" class="modal backdrop" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-light">
+      <div class="modal-header">
         <h5 class="modal-title">Search</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hideSearch()"></button>
       </div>
@@ -94,7 +94,7 @@
 <div id="configuration-backdrop" class="modal backdrop" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-light">
+      <div class="modal-header">
         <h5 class="modal-title">Map configuration</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hideConfiguration()"></button>
       </div>
@@ -116,13 +116,13 @@
           </div>
           <div class="mb-3">
             <label for="backgroundUrl" class="form-label" >Background map tile URL</label>
-            <div>
+            <div class="mb-1">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeRaster" value="raster" checked onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
                 <label class="form-check-label" for="backgroundTypeRaster">Raster</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeVector" value="raster" checked onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
+                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeVector" value="raster" onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
                 <label class="form-check-label" for="backgroundTypeVector">Vector</label>
               </div>
             </div>
@@ -131,6 +131,26 @@
               The tile URL for the background map.<br>
               Raster tiles: A URL serving raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers, for example <code>https://tile.openstreetmap.org/{z}/{x}/{y}.png</code>.<br>
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://americanamap.org/style.json</code>.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Theme</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeSystem" value="system" checked onchange="onThemeChange('system');">
+                <label class="form-check-label" for="themeSystem">System</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeLight" value="light" onchange="onThemeChange('light');">
+                <label class="form-check-label" for="themeLight">Light</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="theme" id="themeDark" value="dark" onchange="onThemeChange('dark');">
+                <label class="form-check-label" for="themeDark">Dark</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control the theme of OpenRailwayMap. The default is to follow the system and browser preferences. A light or dark theme can also be configured.
             </small>
           </div>
         </form>

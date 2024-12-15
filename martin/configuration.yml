@@ -201,6 +201,21 @@ postgres:
         station: string
         label: string
         name: string
+        count: integer
+
+    standard_railway_grouped_stations:
+      schema: public
+      table: standard_railway_grouped_stations
+      srid: 3857
+      geometry_column: way
+      geometry_type: POLYGON
+      properties:
+        id: integer
+        osm_id: integer
+        railway: string
+        station: string
+        label: string
+        name: string
 
     standard_railway_symbols:
       schema: public

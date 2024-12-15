@@ -1,10 +1,10 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml', 'utf8')).signals_railway_line
-const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8')).speed_railway_signals
-const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8')).signals_railway_signals
-const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8')).electrification_signals
+const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml', 'utf8'))
+const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8'))
+const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
+const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8'))
 
 /**
  * Template that builds Lua functions used in the Osm2Psql Lua import, and taking the YAML configuration into account

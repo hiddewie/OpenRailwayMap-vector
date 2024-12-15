@@ -62,7 +62,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
               railway_ref,
               name_tags,
               route_count,
-              way AS geom
+              ST_Centroid(way) AS geom
             FROM stations_with_route_counts
             WHERE
               railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')

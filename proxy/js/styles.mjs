@@ -1,12 +1,14 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml', 'utf8')).signals_railway_line
-const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8')).speed_railway_signals
-const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8')).signals_railway_signals
-const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8')).electrification_signals
-const loading_gauges = yaml.parse(fs.readFileSync('loading_gauge.yaml', 'utf8')).loading_gauges
-const track_classes = yaml.parse(fs.readFileSync('track_class.yaml', 'utf8')).track_classes
+const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
+const speed_railway_signals = yaml.parse(fs.readFileSync('features/speed_railway_signals.yaml', 'utf8'))
+const signals_railway_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8'))
+const electrification_signals = yaml.parse(fs.readFileSync('features/electrification_signals.yaml', 'utf8'))
+const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
+const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
+const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
 const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
@@ -19,48 +21,146 @@ const knownStyles = [
   'loading_gauge',
   'track_class',
 ];
+const knownThemes = [
+  'light',
+  'dark',
+];
 
 const globalMinZoom = 1;
 const glodalMaxZoom = 20;
 
 const colors = {
-  hover: {
-    main: '#ff0000',
-    // High speed lines and 25kV are the hover color by default
-    alternative: '#ffc107',
-    textHalo: 'yellow',
-  },
-  styles: {
-    standard: {
-      main: '#ff8100',
-      highspeed: '#ff0c00',
-      branch: '#c4b600',
-      narrowGauge: '#c0da00',
-      no_usage: '#000000',
-      disused: '#70584d',
-      tourism: '#5b4d70',
-      abandoned: '#7f6a62',
-      razed: '#94847e',
-      tram: '#d877b8',
-      subway: '#0300c3',
-      light_rail: '#00bd14',
-      siding: '#000000',
-      yard: '#000000',
-      spur: '#87491d',
-      industrial: '#87491d',
-      casing: {
-        railway: '#ffffff',
-        bridge: '#000000',
-      },
-      turntable: {
-        fill: '#ababab',
-        casing: '#808080',
+  light: {
+    text: {
+      main: 'black',
+      halo: 'white',
+    },
+    halo: 'white',
+    casing: 'white',
+    hover: {
+      main: '#ff0000',
+      // High speed lines and 25kV are the hover color by default
+      alternative: '#ffc107',
+      textHalo: 'yellow',
+    },
+    railwayLine: {
+      text: '#585858',
+    },
+    styles: {
+      standard: {
+        main: '#ff8100',
+        highspeed: '#ff0c00',
+        branch: '#c4b600',
+        narrowGauge: '#c0da00',
+        no_usage: '#000000',
+        disused: '#70584d',
+        tourism: '#5b4d70',
+        abandoned: '#7f6a62',
+        razed: '#94847e',
+        tram: '#d877b8',
+        subway: '#0300c3',
+        light_rail: '#00bd14',
+        siding: '#000000',
+        yard: '#000000',
+        spur: '#87491d',
+        industrial: '#87491d',
+        casing: {
+          railway: '#ffffff',
+          bridge: '#000000',
+        },
+        tunnelCover: 'rgba(255, 255, 255, 50%)',
+        turntable: {
+          fill: '#ababab',
+          casing: '#808080',
+        },
+        stationsText: 'blue',
+        yardText: '#87491D',
+        tramStopText: '#D877B8',
+        defaultText: '#616161',
+        signalBox: {
+          text: '#404040',
+          halo: '#bfffb3',
+        },
+        track: {
+          text: 'white',
+          halo: 'blue',
+          hover: 'yellow',
+        },
       },
     },
+    km: {
+      text: 'hsl(268, 100%, 40%)'
+    },
+    signals: {
+      direction: '#a8d8bcff'
+    },
   },
-  signals: {
-    direction: '#a8d8bcff'
-  }
+  dark: {
+    text: {
+      main: 'white',
+      halo: 'black',
+    },
+    halo: '#333',
+    casing: '#666',
+    hover: {
+      main: '#ff0000',
+      // High speed lines and 25kV are the hover color by default
+      alternative: '#ffc107',
+      textHalo: '#362800',
+    },
+    railwayLine: {
+      text: '#ccc',
+    },
+    styles: {
+      standard: {
+        main: '#ff8100',
+        highspeed: '#ff0c00',
+        branch: '#c4b600',
+        narrowGauge: '#c0da00',
+        no_usage: '#000000',
+        disused: '#70584d',
+        tourism: '#5b4d70',
+        abandoned: '#7f6a62',
+        razed: '#94847e',
+        tram: '#d877b8',
+        subway: '#0300c3',
+        light_rail: '#00bd14',
+        siding: '#000000',
+        yard: '#000000',
+        spur: '#87491d',
+        industrial: '#87491d',
+        casing: {
+          railway: '#ffffff',
+          bridge: '#ddd',
+        },
+        tunnelCover: 'rgba(0, 0, 0, 25%)',
+        turntable: {
+          fill: '#ababab',
+          casing: '#808080',
+        },
+        trackHalo: '#00298d',
+        stationsText: '#bdcfff',
+        yardText: '#ffa35f',
+        tramStopText: '#D877B8',
+        defaultText: '#d2d2d2',
+        signalBox: {
+          text: '#bfffb3',
+          halo: '#404040',
+        },
+        track: {
+          text: 'white',
+          halo: '#00298d',
+          hover: 'yellow',
+        },
+      },
+    },
+    km: {
+      text: 'hsl(268, 5%, 86%)',
+    },
+    signals: {
+      direction: '#a8d8bcff'
+    },
+  },
 };
 
 const turntable_casing_width = 2;
@@ -557,8 +657,8 @@ const railwayLineWidth = ['step', ['zoom'],
     0,
   ],
 ];
-const trainProtectionCasingPaint = dashArray => ({
-  'line-color': 'white',
+const trainProtectionCasingPaint = (theme, dashArray) => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 1,
   'line-dasharray': dashArray,
@@ -568,14 +668,14 @@ const trainProtectionLayout = {
   'line-join': 'round',
   'line-cap': 'round',
 };
-const trainProtectionColor = ['case',
-  ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+const trainProtectionColor = theme => ['case',
+  ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
   ...signals_railway_line.train_protections.flatMap(train_protection =>
     [['==', ['get', 'train_protection'], train_protection.train_protection], train_protection.color]),
   'grey',
 ];
-const trainProtectionFillPaint = dashArray => ({
-  'line-color': trainProtectionColor,
+const trainProtectionFillPaint = (theme, dashArray) => ({
+  'line-color': trainProtectionColor(theme),
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
@@ -591,71 +691,71 @@ const razed_dasharray = [1.5, 3.5];
 const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
 
-const standardLowFillPaint = {
+const standardLowFillPaint = theme => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], colors.hover.alternative,
-      colors.hover.main,
+      ['get', 'highspeed'], colors[theme].hover.alternative,
+      colors[theme].hover.main,
     ],
-    ['get', 'highspeed'], colors.styles.standard.highspeed,
-    colors.styles.standard.main,
+    ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
+    colors[theme].styles.standard.main,
   ],
   'line-width': railwayLineWidth,
-};
-const standardMediumFillPaint = {
+});
+const standardMediumFillPaint = theme => ({
   'line-color': ['case',
     ['boolean', ['feature-state', 'hover'], false], ['case',
-      ['get', 'highspeed'], colors.hover.alternative,
-      colors.hover.main,
+      ['get', 'highspeed'], colors[theme].hover.alternative,
+      colors[theme].hover.main,
     ],
-    ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
-    ['get', 'highspeed'], colors.styles.standard.highspeed,
-    colors.styles.standard.main,
+    ['==', ['get', 'usage'], 'branch'], colors[theme].styles.standard.branch,
+    ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
+    colors[theme].styles.standard.main,
   ],
   'line-width': railwayLineWidth,
-};
-const standardColor = ['case',
+});
+const standardColor = theme => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.hover.alternative,
-    colors.hover.main,
+    ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors[theme].hover.alternative,
+    colors[theme].hover.main,
   ],
-  ['==', ['get', 'railway'], 'disused'], colors.styles.standard.disused,
-  ['==', ['get', 'railway'], 'abandoned'], colors.styles.standard.abandoned,
-  ['==', ['get', 'railway'], 'razed'], colors.styles.standard.razed,
+  ['==', ['get', 'railway'], 'disused'], colors[theme].styles.standard.disused,
+  ['==', ['get', 'railway'], 'abandoned'], colors[theme].styles.standard.abandoned,
+  ['==', ['get', 'railway'], 'razed'], colors[theme].styles.standard.razed,
   ['==', ['get', 'feature'], 'rail'],
   ['case',
-    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], colors.styles.standard.spur,
-    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], colors.styles.standard.yard,
-    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], colors.styles.standard.siding,
-    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], colors.styles.standard.siding,
-    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], colors.styles.standard.no_usage,
-    ['==', ['get', 'usage'], 'industrial'], colors.styles.standard.industrial,
-    ['==', ['get', 'usage'], 'tourism'], colors.styles.standard.tourism,
-    ['==', ['get', 'usage'], 'branch'], colors.styles.standard.branch,
-    ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors.styles.standard.highspeed,
-    ['==', ['get', 'usage'], 'main'], colors.styles.standard.main,
+    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'spur']], colors[theme].styles.standard.spur,
+    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'yard']], colors[theme].styles.standard.yard,
+    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'crossover']], colors[theme].styles.standard.siding,
+    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], 'siding']], colors[theme].styles.standard.siding,
+    ['all', ['==', ['get', 'usage'], null], ['==', ['get', 'service'], null]], colors[theme].styles.standard.no_usage,
+    ['==', ['get', 'usage'], 'industrial'], colors[theme].styles.standard.industrial,
+    ['==', ['get', 'usage'], 'tourism'], colors[theme].styles.standard.tourism,
+    ['==', ['get', 'usage'], 'branch'], colors[theme].styles.standard.branch,
+    ['all', ['==', ['get', 'usage'], 'main'], ['get', 'highspeed']], colors[theme].styles.standard.highspeed,
+    ['==', ['get', 'usage'], 'main'], colors[theme].styles.standard.main,
     'rgba(255, 255, 255, 1.0)',
   ],
   ['==', ['get', 'feature'], 'narrow_gauge'],
   ['case',
-    ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], colors.styles.standard.industrial,
-    colors.styles.standard.narrowGauge,
+    ['all', ['==', ['get', 'usage'], 'industrial'], ['==', ['get', 'service'], 'spur']], colors[theme].styles.standard.industrial,
+    colors[theme].styles.standard.narrowGauge,
   ],
-  ['==', ['get', 'feature'], 'subway'], colors.styles.standard.subway,
-  ['==', ['get', 'feature'], 'light_rail'], colors.styles.standard.light_rail,
-  ['==', ['get', 'feature'], 'tram'], colors.styles.standard.tram,
+  ['==', ['get', 'feature'], 'subway'], colors[theme].styles.standard.subway,
+  ['==', ['get', 'feature'], 'light_rail'], colors[theme].styles.standard.light_rail,
+  ['==', ['get', 'feature'], 'tram'], colors[theme].styles.standard.tram,
   'rgba(255, 255, 255, 1.0)',
 ]
-const standardFillPaint = dashArray => ({
-  'line-color': standardColor,
+const standardFillPaint = (theme, dashArray) => ({
+  'line-color': standardColor(theme),
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
-const speedCasingPaint = {
-  'line-color': 'white',
+const speedCasingPaint = theme => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 1,
-};
+});
 const speedLayout = {
   'line-join': 'round',
   'line-cap': 'round',
@@ -666,20 +766,20 @@ const maxSpeed = 380
 const startHue = 248
 const endHue = 284;
 
-const speedColor = ['case',
+const speedColor = theme => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors.hover.alternative,
-    colors.hover.main,
+    ['all', ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors[theme].hover.alternative,
+    colors[theme].hover.main,
   ],
   ['==', ['get', 'maxspeed'], null], 'gray',
   // Reverse hue order
   ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
 ]
 
-const speedFillPaint = {
-  'line-color': speedColor,
+const speedFillPaint = theme => ({
+  'line-color': speedColor(theme),
   'line-width': railwayLineWidth,
-};
+});
 
 const electrification_construction_dashes = [2.5, 2.5];
 const electrification_proposed_dashes = [2, 4];
@@ -707,15 +807,15 @@ const color_12_5kv_60hz = '#999900';
 const color_20kv_50hz = '#FFCC66';
 const color_20kv_60hz = '#FF9966';
 
-const electrificationCasingPaint = {
-  'line-color': 'white',
+const electrificationCasingPaint = theme => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
-};
-const electrificationColor = (voltageProperty, frequencyProperty) => ['case',
+});
+const electrificationColor = (theme, voltageProperty, frequencyProperty) => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['==', ['get', voltageProperty], 25000], colors.hover.alternative,
-    colors.hover.main,
+    ['==', ['get', voltageProperty], 25000], colors[theme].hover.alternative,
+    colors[theme].hover.main,
   ],
   ['all', ['==', ['get', frequencyProperty], 60], ['==', ['get', voltageProperty], 25000]], color_25kv_60hz,
   ['all', ['==', ['get', frequencyProperty], 50], ['==', ['get', voltageProperty], 25000]], color_25kv_50hz,
@@ -759,8 +859,8 @@ const electrificationColor = (voltageProperty, frequencyProperty) => ['case',
   ['==', ['get', 'electrification_state'], 'no'], color_no,
   'gray',
 ];
-const electrificationFillPaint = (dashArray, voltageProperty, frequencyProperty) => ({
-  'line-color': electrificationColor(voltageProperty, frequencyProperty),
+const electrificationFillPaint = (theme, dashArray, voltageProperty, frequencyProperty) => ({
+  'line-color': electrificationColor(theme, voltageProperty, frequencyProperty),
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
@@ -830,16 +930,16 @@ const color_gauge_narrow = '#C0C0FF';
 const color_gauge_standard = '#808080';
 const color_gauge_unknown = '#C0C0C0';
 
-const gaugeCasingPaint = {
-  'line-color': 'white',
+const gaugeCasingPaint = theme => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
-};
+});
 
-const gaugeColor = (gaugeProperty, gaugeIntProperty) => ['case',
+const gaugeColor = (theme, gaugeProperty, gaugeIntProperty) => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors.hover.alternative,
-    colors.hover.main,
+    ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors[theme].hover.alternative,
+    colors[theme].hover.main,
   ],
   // monorails or tracks with monorail gauge value
   ['any',
@@ -960,8 +1060,8 @@ const gaugeColor = (gaugeProperty, gaugeIntProperty) => ['case',
   ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 63, ['get', gaugeIntProperty]], ['>', ['get', gaugeIntProperty], 0]], color_gauge_unknown,
   'gray',
 ];
-const gaugeFillPaint = (gaugeProperty, gaugeIntProperty, dashArray) => ({
-  'line-color': gaugeColor(gaugeProperty, gaugeIntProperty),
+const gaugeFillPaint = (theme, gaugeProperty, gaugeIntProperty, dashArray) => ({
+  'line-color': gaugeColor(theme, gaugeProperty, gaugeIntProperty),
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
@@ -970,14 +1070,14 @@ const gaugeLayout = {
   'line-cap': 'round',
 };
 
-const loadingGaugeCasingPaint = {
-  'line-color': 'white',
+const loadingGaugeCasingPaint = theme => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
-};
-const loadingGaugeFillPaint = (dashArray) => ({
+});
+const loadingGaugeFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'loading_gauge'],
-    ...loading_gauges.flatMap(loading_gauge =>
+    ...loading_gauges.loading_gauges.flatMap(loading_gauge =>
       [loading_gauge.value, loading_gauge.color]
     ),
     'gray',
@@ -990,14 +1090,14 @@ const loadingGaugeLayout = {
   'line-cap': 'round',
 };
 
-const trackClassCasingPaint = {
-  'line-color': 'white',
+const trackClassCasingPaint = theme => ({
+  'line-color': colors[theme].casing,
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
-};
-const trackClassFillPaint = (dashArray) => ({
+});
+const trackClassFillPaint = (theme, dashArray) => ({
   'line-color': ['match', ['get', 'track_class'],
-    ...track_classes.flatMap(track_class =>
+    ...track_classes.track_classes.flatMap(track_class =>
       [track_class.value, track_class.color]
     ),
     'gray',
@@ -1088,7 +1188,7 @@ const searchResults = {
   }
 };
 
-const railwayKmText = {
+const railwayKmText = theme => ({
   id: 'railway_text_km',
   type: 'symbol',
   minzoom: 10,
@@ -1100,10 +1200,10 @@ const railwayKmText = {
     true,
   ],
   paint: {
-    'text-color': 'hsl(268, 100%, 40%)',
+    'text-color': colors[theme].km.text,
     'text-halo-color': ['case',
-      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-      'white',
+      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+      colors[theme].halo,
     ],
     'text-halo-width': 1,
   },
@@ -1117,9 +1217,9 @@ const railwayKmText = {
     'text-font': ['Fira Code Bold'],
     'text-size': 11,
   },
-};
+});
 
-const preferredDirectionLayer = (id, filter, color) => ({
+const preferredDirectionLayer = (theme, id, filter, color) => ({
   id,
   type: 'symbol',
   minzoom: 15,
@@ -1128,7 +1228,7 @@ const preferredDirectionLayer = (id, filter, color) => ({
   filter,
   paint: {
     'icon-color': color,
-    'icon-halo-color': 'white',
+    'icon-halo-color': colors[theme].halo,
     'icon-halo-width': 2.0,
   },
   layout: {
@@ -1148,14 +1248,14 @@ const preferredDirectionLayer = (id, filter, color) => ({
   },
 });
 
-const imageLayerWithOutline = (id, spriteExpression, layer) => [
+const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
   {
     id: `${id}_outline`,
     ...layer,
     paint: {
       'icon-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-        'white',
+        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+        colors[theme].halo,
       ],
       'icon-halo-blur': ['case',
         ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -1182,7 +1282,7 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
 ]
 
 // TODO remove all [switch, [zoom]] to ensure legend displays only visible features
-const layers = {
+const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   standard: [
     {
       id: 'railway_line_low_casing',
@@ -1195,7 +1295,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1210,7 +1310,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardLowFillPaint,
+      paint: standardLowFillPaint(theme),
     },
     {
       id: 'railway_text_stations_low',
@@ -1220,8 +1320,8 @@ const layers = {
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
       paint: {
-        'text-color': 'blue',
-        'text-halo-color': 'white',
+        'text-color': colors[theme].styles.standard.stationsText,
+        'text-halo-color': colors[theme].halo,
         'text-halo-width': 1.5,
       },
       layout: {
@@ -1245,7 +1345,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1261,7 +1361,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardMediumFillPaint,
+      paint: standardMediumFillPaint(theme),
     },
     {
       id: 'railway_text_stations_med',
@@ -1271,8 +1371,8 @@ const layers = {
       source: 'standard_railway_text_stations_med',
       'source-layer': 'standard_railway_text_stations_med',
       paint: {
-        'text-color': 'blue',
-        'text-halo-color': 'white',
+        'text-color': colors[theme].styles.standard.stationsText,
+        'text-halo-color': colors[theme].halo,
         'text-halo-width': 1.5,
       },
       layout: {
@@ -1282,6 +1382,48 @@ const layers = {
         'text-size': 11,
         'text-padding': 10,
         'text-max-width': 5,
+      },
+    },
+    {
+      id: 'railway_grouped_stations',
+      type: 'fill',
+      minzoom: 8,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_grouped_stations',
+      filter: ['step', ['zoom'],
+        ['all',
+          ['==', ['get', 'railway'], 'station'],
+          ['!=', ['get', 'station'], 'light_rail'],
+          ['!=', ['get', 'station'], 'subway'],
+          ['!=', ['get', 'station'], 'funicular'],
+        ],
+        9,
+        ['all',
+          ['any',
+            ['==', ['get', 'railway'], 'station'],
+            ['==', ['get', 'railway'], 'halt'],
+          ],
+          ['!=', ['get', 'station'], 'funicular'],
+        ],
+        10,
+        ['all',
+          ['!=', ['get', 'railway'], 'tram_stop'],
+          ['!=', ['get', 'station'], 'funicular'],
+        ],
+        13,
+        ['!=', ['get', 'station'], 'funicular'],
+      ],
+      paint: {
+        'fill-color': ['case',
+          ['==', ['get', 'railway'], 'tram_stop'], colors[theme].styles.standard.tram,
+          ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors[theme].styles.standard.subway,
+          colors[theme].styles.standard.main,
+        ],
+        'fill-opacity': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 0.3,
+          0.2,
+        ],
       },
     },
     {
@@ -1302,7 +1444,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_tunnel_casing_add,
       }
@@ -1326,7 +1468,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1343,7 +1485,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': construction_dasharray,
@@ -1361,7 +1503,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': proposed_dasharray,
@@ -1379,7 +1521,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': abandoned_dasharray,
@@ -1397,7 +1539,7 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
         'line-dasharray': razed_dasharray,
@@ -1420,10 +1562,10 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint([1]),
+      paint: standardFillPaint(theme, [1]),
     },
     {
-      id: 'railway_tunnel_bright',
+      id: 'railway_tunnel_cover',
       type: 'line',
       minzoom: 8,
       source: 'high',
@@ -1440,12 +1582,11 @@ const layers = {
         'line-cap': 'round',
       },
       paint: {
-        ...standardFillPaint([1]),
-        'line-color': 'rgba(255, 255, 255, 50%)',
+        ...standardFillPaint(theme, [1]),
+        'line-color': colors[theme].styles.standard.tunnelCover,
       }
     },
-    preferredDirectionLayer(
-      'railway_tunnel_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_tunnel_preferred_direction',
       ['all',
         ['get', 'tunnel'],
         ['any',
@@ -1454,7 +1595,7 @@ const layers = {
           ['==', ['get', 'preferred_direction'], 'both'],
         ],
       ],
-      standardColor,
+      standardColor(theme),
     ),
     {
       id: 'railway_construction_fill',
@@ -1467,7 +1608,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint(construction_dasharray),
+      paint: standardFillPaint(theme, construction_dasharray),
     },
     {
       id: 'railway_proposed_fill',
@@ -1480,7 +1621,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint(proposed_dasharray),
+      paint: standardFillPaint(theme, proposed_dasharray),
     },
     {
       id: 'railway_abandoned_fill',
@@ -1493,7 +1634,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint(abandoned_dasharray),
+      paint: standardFillPaint(theme, abandoned_dasharray),
     },
     {
       id: 'railway_razed_fill',
@@ -1506,7 +1647,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint(razed_dasharray),
+      paint: standardFillPaint(theme, razed_dasharray),
     },
     {
       id: 'railway_line_fill',
@@ -1526,10 +1667,9 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint([1]),
+      paint: standardFillPaint(theme, [1]),
     },
-    preferredDirectionLayer(
-      'railway_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
       ['all',
         ['!', ['get', 'bridge']],
         ['!', ['get', 'tunnel']],
@@ -1539,7 +1679,7 @@ const layers = {
           ['==', ['get', 'preferred_direction'], 'both'],
         ]
       ],
-      standardColor,
+      standardColor(theme),
     ),
     {
       id: 'railway_bridge_railing',
@@ -1561,7 +1701,7 @@ const layers = {
         ['!=', ['get', 'railway'], 'razed'],
       ],
       paint: {
-        'line-color': colors.styles.standard.casing.bridge,
+        'line-color': colors[theme].styles.standard.casing.bridge,
         'line-width': railwayLineWidth,
         'line-gap-width': bridge_casing_add,
       }
@@ -1586,7 +1726,7 @@ const layers = {
         ['!=', ['get', 'railway'], 'razed'],
       ],
       paint: {
-        'line-color': colors.styles.standard.casing.railway,
+        'line-color': colors[theme].casing,
         'line-width': railwayLineWidth,
         'line-gap-width': railway_casing_add,
       }
@@ -1608,7 +1748,7 @@ const layers = {
         'line-join': 'round',
         'line-cap': 'round',
       },
-      paint: standardFillPaint([1]),
+      paint: standardFillPaint(theme, [1]),
     },
     {
       id: 'railway_turntables_fill',
@@ -1617,7 +1757,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'fill-color': colors.styles.standard.turntable.fill,
+        'fill-color': colors[theme].styles.standard.turntable.fill,
       }
     },
     {
@@ -1627,7 +1767,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'line-color': colors.styles.standard.turntable.casing,
+        'line-color': colors[theme].styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       }
     },
@@ -1644,6 +1784,7 @@ const layers = {
       }
     },
     ...imageLayerWithOutline(
+      theme,
       'railway_symbols_low',
       ['get', 'feature'],
       {
@@ -1658,6 +1799,7 @@ const layers = {
       },
     ),
     ...imageLayerWithOutline(
+      theme,
       'railway_symbols_med_high',
       ['get', 'feature'],
       {
@@ -1696,6 +1838,7 @@ const layers = {
       },
     ),
     ...imageLayerWithOutline(
+      theme,
       'railway_symbols_med',
       ['get', 'feature'],
       {
@@ -1715,6 +1858,7 @@ const layers = {
       },
     ),
     ...imageLayerWithOutline(
+      theme,
       'railway_symbols_high',
       ['get', 'feature'],
       {
@@ -1729,7 +1873,7 @@ const layers = {
         },
       },
     ),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'railway_text_track_numbers',
       type: 'symbol',
@@ -1739,10 +1883,10 @@ const layers = {
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
         'text-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.track.hover,
+          colors[theme].styles.standard.track.text,
         ],
-        'text-halo-color': 'blue',
+        'text-halo-color': colors[theme].styles.standard.track.halo,
         'text-halo-width': 4,
         'text-halo-blur': 2,
       },
@@ -2000,10 +2144,10 @@ const layers = {
         ['!=', ['get', 'standard_label'], null],
       ],
       paint: {
-        'text-color': '#585858',
+        'text-color': colors[theme].railwayLine.text,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'text-halo-width': 2,
       },
@@ -2029,14 +2173,15 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_switch_ref',
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
           // Invert coloring on hover
           ['boolean', ['feature-state', 'hover'], false], ['case',
             ['get', 'railway_local_operated'], 'white',
-            colors.hover.textHalo,
+            colors[theme].hover.textHalo,
           ],
           ['get', 'railway_local_operated'], 'yellow',
-          'white'
+          colors[theme].halo
         ],
         'text-halo-width': 2,
       },
@@ -2067,6 +2212,7 @@ const layers = {
             ['==', ['get', 'railway'], 'station'],
             ['==', ['get', 'railway'], 'halt'],
           ],
+          ['!=', ['get', 'railway'], 'tram_stop'],
           ['!=', ['get', 'station'], 'funicular'],
         ],
         10,
@@ -2074,24 +2220,17 @@ const layers = {
           ['!=', ['get', 'railway'], 'tram_stop'],
           ['!=', ['get', 'station'], 'funicular'],
         ],
-        13,
-        ['!=', ['get', 'station'], 'funicular'],
       ],
       paint: {
         'text-color': ['case',
-          ['==', ['get', 'railway'], 'yard'], '#87491D',
-          ['==', ['get', 'railway'], 'tram_stop'], '#D877B8',
-          ['==', ['get', 'railway'], 'station'], 'blue',
-          ['==', ['get', 'railway'], 'halt'], 'blue',
-          '#616161',
+          ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
+          ['==', ['get', 'railway'], 'station'], colors[theme].styles.standard.stationsText,
+          ['==', ['get', 'railway'], 'halt'], colors[theme].styles.standard.stationsText,
+          colors[theme].styles.standard.defaultText,
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          ['==', ['get', 'railway'], 'yard'], '#F1F1F1',
-          ['==', ['get', 'railway'], 'tram_stop'], 'white',
-          ['==', ['get', 'railway'], 'station'], 'white',
-          ['==', ['get', 'railway'], 'halt'], 'white',
-          '#F1F1F1',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2101,17 +2240,51 @@ const layers = {
           ['get', 'label'],
           10,
           ['get', 'name'],
+          15,
+          ['case',
+            ['>', ['get', 'count'], 1], ['concat', ['get', 'name'], ' (', ['get', 'count'], ')'],
+            ['get', 'name'],
+          ],
         ],
         // TODO light rail / subway oblique font
         'text-font': ['Noto Sans Bold'],
-        // TODO text-variable-anchor-offset
+        'text-variable-anchor': ['center', 'top', 'bottom', 'left', 'right'],
         'text-size': 11,
         'text-padding': 10,
         'text-max-width': 5,
-        'text-offset': ['case',
-          ['==', ['get', 'railway'], 'tram_stop'], ['literal', [0, 1]],
-          ['literal', [0, 0]]
+      },
+    },
+    {
+      id: 'railway_tram_stations',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_text_stations',
+      filter: ['==', ['get', 'railway'], 'tram_stop'],
+      paint: {
+        'text-color': colors[theme].styles.standard.tramStopText,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
+        'text-halo-width': 1.5,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'text-field': ['step', ['zoom'],
+          ['get', 'name'],
+          15,
+          ['case',
+            ['>', ['get', 'count'], 1], ['concat', ['get', 'name'], ' (', ['get', 'count'], ')'],
+            ['get', 'name'],
+          ],
+        ],
+        // TODO light rail / subway oblique font
+        'text-font': ['Noto Sans Bold'],
+        'text-size': 11,
+        'text-padding': 10,
+        'text-max-width': 5,
+        'text-variable-anchor': ['top', 'bottom'],
       },
     },
     searchResults,
@@ -2124,7 +2297,7 @@ const layers = {
       source: 'openrailwaymap_low',
       maxzoom: 7,
       'source-layer': 'railway_line_low',
-      paint: speedCasingPaint,
+      paint: speedCasingPaint(theme),
       layout: speedLayout,
     },
     {
@@ -2133,7 +2306,7 @@ const layers = {
       source: 'openrailwaymap_low',
       maxzoom: 7,
       'source-layer': 'railway_line_low',
-      paint: speedFillPaint,
+      paint: speedFillPaint(theme),
       layout: speedLayout,
     },
     {
@@ -2143,7 +2316,7 @@ const layers = {
       minzoom: 7,
       maxzoom: 8,
       'source-layer': 'railway_line_med',
-      paint: speedCasingPaint,
+      paint: speedCasingPaint(theme),
       layout: speedLayout,
     },
     {
@@ -2153,7 +2326,7 @@ const layers = {
       minzoom: 7,
       maxzoom: 8,
       'source-layer': 'railway_line_med',
-      paint: speedFillPaint,
+      paint: speedFillPaint(theme),
       layout: speedLayout,
     },
     {
@@ -2162,7 +2335,7 @@ const layers = {
       source: 'high',
       minzoom: 8,
       'source-layer': 'railway_line_high',
-      paint: speedCasingPaint,
+      paint: speedCasingPaint(theme),
       layout: speedLayout,
     },
     {
@@ -2171,17 +2344,16 @@ const layers = {
       source: 'high',
       minzoom: 8,
       'source-layer': 'railway_line_high',
-      paint: speedFillPaint,
+      paint: speedFillPaint(theme),
       layout: speedLayout,
     },
-    preferredDirectionLayer(
-      'railway_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
       ['any',
         ['==', ['get', 'preferred_direction'], 'forward'],
         ['==', ['get', 'preferred_direction'], 'backward'],
         ['==', ['get', 'preferred_direction'], 'both'],
       ],
-      speedColor,
+      speedColor(theme),
     ),
     {
       id: 'speed_railway_signal_direction',
@@ -2211,10 +2383,10 @@ const layers = {
         ],
       ],
       paint: {
-        'icon-color': colors.signals.direction,
+        'icon-color': colors[theme].signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 2.0,
@@ -2233,6 +2405,7 @@ const layers = {
       },
     },
     ...imageLayerWithOutline(
+      theme,
       'speed_railway_signals',
       ['get', 'feature'],
       {
@@ -2257,9 +2430,10 @@ const layers = {
           ['!=', ['get', 'feature'], null],
         ],
         paint: {
+          'text-color': colors[theme].text.main,
           'text-halo-color': ['case',
-            ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-            'white'
+            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+            colors[theme].halo
           ],
           'text-halo-width': 1.5,
           'text-halo-blur': 1,
@@ -2276,7 +2450,7 @@ const layers = {
         },
       },
     ),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'speed_railway_line_text',
       type: 'symbol',
@@ -2302,9 +2476,10 @@ const layers = {
         true,
       ],
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white'
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2328,7 +2503,7 @@ const layers = {
       source: 'openrailwaymap_low',
       maxzoom: 7,
       'source-layer': 'railway_line_low',
-      paint: trainProtectionCasingPaint([1]),
+      paint: trainProtectionCasingPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
     {
@@ -2337,7 +2512,7 @@ const layers = {
       source: 'openrailwaymap_low',
       maxzoom: 7,
       'source-layer': 'railway_line_low',
-      paint: trainProtectionFillPaint([1]),
+      paint: trainProtectionFillPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
     {
@@ -2347,7 +2522,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: trainProtectionCasingPaint([1]),
+      paint: trainProtectionCasingPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
     {
@@ -2357,7 +2532,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: trainProtectionFillPaint([1]),
+      paint: trainProtectionFillPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
     {
@@ -2367,7 +2542,7 @@ const layers = {
       minzoom: 8,
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: trainProtectionCasingPaint([2, 2]),
+      paint: trainProtectionCasingPaint(theme, [2, 2]),
       layout: trainProtectionLayout,
     },
     {
@@ -2377,7 +2552,7 @@ const layers = {
       minzoom: 8,
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: trainProtectionCasingPaint([1]),
+      paint: trainProtectionCasingPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
     {
@@ -2387,7 +2562,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: trainProtectionFillPaint([2, 2]),
+      paint: trainProtectionFillPaint(theme, [2, 2]),
       layout: trainProtectionLayout,
     },
     {
@@ -2397,11 +2572,10 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: trainProtectionFillPaint([1]),
+      paint: trainProtectionFillPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
-    preferredDirectionLayer(
-      'railway_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
       ['any',
         ['==', ['get', 'preferred_direction'], 'forward'],
         ['==', ['get', 'preferred_direction'], 'backward'],
@@ -2418,7 +2592,7 @@ const layers = {
       filter: ['==', ["geometry-type"], 'Point'],
       paint: {
         'circle-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
           '#008206',
         ],
         'circle-radius': 4,
@@ -2438,7 +2612,7 @@ const layers = {
       ],
       paint: {
         'fill-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
           '#008206',
         ],
         'fill-outline-color': 'white',
@@ -2470,10 +2644,10 @@ const layers = {
         ['!=', ['get', 'feature'], ''],
       ],
       paint: {
-        'icon-color': colors.signals.direction,
+        'icon-color': colors[theme].signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 2.0,
@@ -2492,6 +2666,7 @@ const layers = {
       },
     },
     ...imageLayerWithOutline(
+      theme,
       'railway_signals_medium',
       ['case',
         ['==', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'], 'de/blockkennzeichen',
@@ -2510,6 +2685,7 @@ const layers = {
       },
     ),
     ...imageLayerWithOutline(
+      theme,
       'railway_signals_high',
       ['get', 'feature'],
       {
@@ -2518,9 +2694,10 @@ const layers = {
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
         paint: {
+          'text-color': colors[theme].text.main,
           'text-halo-color': ['case',
-            ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-            'white'
+            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+            colors[theme].halo
           ],
           'text-halo-width': ['case',
             ['==', ['slice', ['get', 'feature'], 0, 20], 'de/blockkennzeichen-'], 2.0,
@@ -2570,10 +2747,10 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       paint: {
-        'text-color': '#404040',
+        'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          '#bfffb3',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2584,7 +2761,7 @@ const layers = {
         'text-offset': ['literal', [0, 1]],
       }
     },
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'signal_boxes_text_high',
       type: 'symbol',
@@ -2592,10 +2769,10 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       paint: {
-        'text-color': '#404040',
+        'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          '#bfffb3',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2615,7 +2792,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: electrificationCasingPaint,
+      paint: electrificationCasingPaint(theme),
       layout: electrificationLayout,
     },
     {
@@ -2624,7 +2801,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: electrificationFillPaint([1], 'voltage', 'frequency'),
+      paint: electrificationFillPaint(theme, [1], 'voltage', 'frequency'),
       layout: electrificationLayout,
     },
     {
@@ -2634,7 +2811,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: electrificationCasingPaint,
+      paint: electrificationCasingPaint(theme),
       layout: electrificationLayout,
     },
     {
@@ -2644,7 +2821,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: electrificationFillPaint([1], 'voltage', 'frequency'),
+      paint: electrificationFillPaint(theme, [1], 'voltage', 'frequency'),
       layout: electrificationLayout,
     },
     {
@@ -2653,7 +2830,7 @@ const layers = {
       minzoom: 8,
       source: 'high',
       'source-layer': 'railway_line_high',
-      paint: electrificationCasingPaint,
+      paint: electrificationCasingPaint(theme),
       layout: electrificationLayout,
     },
     {
@@ -2662,7 +2839,7 @@ const layers = {
       minzoom: 8,
       source: 'high',
       'source-layer': 'railway_line_high',
-      paint: electrificationFillPaint([1], 'voltage', 'frequency'),
+      paint: electrificationFillPaint(theme, [1], 'voltage', 'frequency'),
       layout: electrificationLayout,
     },
     {
@@ -2672,7 +2849,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'electrification_state'], 'proposed'],
-      paint: electrificationFillPaint(electrification_proposed_dashes, 'future_voltage', 'future_frequency'),
+      paint: electrificationFillPaint(theme, electrification_proposed_dashes, 'future_voltage', 'future_frequency'),
       layout: electrificationLayout,
     },
     {
@@ -2682,17 +2859,16 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'electrification_state'], 'construction'],
-      paint: electrificationFillPaint(electrification_construction_dashes, 'future_voltage', 'future_frequency'),
+      paint: electrificationFillPaint(theme, electrification_construction_dashes, 'future_voltage', 'future_frequency'),
       layout: electrificationLayout,
     },
-    preferredDirectionLayer(
-      'railway_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
       ['any',
         ['==', ['get', 'preferred_direction'], 'forward'],
         ['==', ['get', 'preferred_direction'], 'backward'],
         ['==', ['get', 'preferred_direction'], 'both'],
       ],
-      electrificationColor('voltage', 'frequency'),
+      electrificationColor(theme, 'voltage', 'frequency'),
     ),
     {
       id: 'electrification_signals_direction',
@@ -2705,10 +2881,10 @@ const layers = {
         ['!=', ['get', 'feature'], ''],
       ],
       paint: {
-        'icon-color': colors.signals.direction,
+        'icon-color': colors[theme].signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 2.0,
@@ -2727,6 +2903,7 @@ const layers = {
       },
     },
     ...imageLayerWithOutline(
+      theme,
       'electrification_signals',
       ['get', 'feature'],
       {
@@ -2735,9 +2912,10 @@ const layers = {
         source: 'openrailwaymap_electrification',
         'source-layer': 'electrification_signals',
         paint: {
+          'text-color': colors[theme].text.main,
           'text-halo-color': ['case',
-            ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-            'white'
+            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+            colors[theme].halo
           ],
           'text-halo-width': 1.5,
           'text-halo-blur': 1,
@@ -2754,7 +2932,7 @@ const layers = {
         },
       },
     ),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'electrification_railway_text_high',
       type: 'symbol',
@@ -2879,9 +3057,10 @@ const layers = {
         true,
       ],
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white'
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo
         ],
         'text-halo-width': 1.5,
       },
@@ -2906,7 +3085,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: gaugeCasingPaint,
+      paint: gaugeCasingPaint(theme),
       layout: gaugeLayout,
     },
     {
@@ -2915,7 +3094,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
+      paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', [1]),
       layout: gaugeLayout,
     },
     {
@@ -2925,7 +3104,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: gaugeCasingPaint,
+      paint: gaugeCasingPaint(theme),
       layout: gaugeLayout,
     },
     {
@@ -2935,7 +3114,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
+      paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', [1]),
       layout: gaugeLayout,
     },
     {
@@ -2945,7 +3124,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: gaugeCasingPaint,
+      paint: gaugeCasingPaint(theme),
       layout: gaugeLayout,
     },
     {
@@ -2969,7 +3148,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', [1]),
+      paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', [1]),
       layout: gaugeLayout,
     },
     {
@@ -2979,7 +3158,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: gaugeFillPaint('gauge0', 'gaugeint0', gauge_construction_dashes),
+      paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', gauge_construction_dashes),
       layout: gaugeLayout,
     },
     {
@@ -2992,7 +3171,7 @@ const layers = {
         ['!=', ['get', 'gauge1'], null],
         ['!=', ['get', 'railway'], 'construction'],
       ],
-      paint: gaugeFillPaint('gauge1', 'gaugeint1', gauge_dual_gauge_dashes),
+      paint: gaugeFillPaint(theme, 'gauge1', 'gaugeint1', gauge_dual_gauge_dashes),
       layout: gaugeLayout,
     },
     {
@@ -3005,7 +3184,7 @@ const layers = {
         ['!=', ['get', 'gauge1'], null],
         ['==', ['get', 'railway'], 'construction'],
       ],
-      paint: gaugeFillPaint('gauge1', 'gaugeint1', dual_construction_dashes),
+      paint: gaugeFillPaint(theme, 'gauge1', 'gaugeint1', dual_construction_dashes),
       layout: gaugeLayout,
     },
     {
@@ -3018,7 +3197,7 @@ const layers = {
         ['!=', ['get', 'gauge2'], null],
         ['!=', ['get', 'railway'], 'construction'],
       ],
-      paint: gaugeFillPaint('gauge2', 'gaugeint2', gauge_multi_gauge_dashes),
+      paint: gaugeFillPaint(theme, 'gauge2', 'gaugeint2', gauge_multi_gauge_dashes),
       layout: gaugeLayout,
     },
     {
@@ -3031,19 +3210,18 @@ const layers = {
         ['!=', ['get', 'gauge2'], null],
         ['==', ['get', 'railway'], 'construction'],
       ],
-      paint: gaugeFillPaint('gauge2', 'gaugeint2', multi_construction_dashes),
+      paint: gaugeFillPaint(theme, 'gauge2', 'gaugeint2', multi_construction_dashes),
       layout: gaugeLayout,
     },
-    preferredDirectionLayer(
-      'railway_preferred_direction',
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
       ['any',
         ['==', ['get', 'preferred_direction'], 'forward'],
         ['==', ['get', 'preferred_direction'], 'backward'],
         ['==', ['get', 'preferred_direction'], 'both'],
       ],
-      gaugeColor('gauge0', 'gaugeint0'),
+      gaugeColor(theme, 'gauge0', 'gaugeint0'),
     ),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'gauge_railway_text_high',
       type: 'symbol',
@@ -3168,9 +3346,10 @@ const layers = {
         true,
       ],
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white'
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo
         ],
         'text-halo-width': 1.5,
       },
@@ -3195,7 +3374,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: loadingGaugeCasingPaint,
+      paint: loadingGaugeCasingPaint(theme),
       layout: loadingGaugeLayout,
     },
     {
@@ -3204,7 +3383,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: loadingGaugeFillPaint([1]),
+      paint: loadingGaugeFillPaint(theme, [1]),
       layout: loadingGaugeLayout,
     },
     {
@@ -3214,7 +3393,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: loadingGaugeCasingPaint,
+      paint: loadingGaugeCasingPaint(theme),
       layout: loadingGaugeLayout,
     },
     {
@@ -3224,7 +3403,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: loadingGaugeFillPaint([1]),
+      paint: loadingGaugeFillPaint(theme, [1]),
       layout: loadingGaugeLayout,
     },
     {
@@ -3234,7 +3413,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: loadingGaugeCasingPaint,
+      paint: loadingGaugeCasingPaint(theme),
       layout: loadingGaugeLayout,
     },
     {
@@ -3258,7 +3437,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: loadingGaugeFillPaint([1]),
+      paint: loadingGaugeFillPaint(theme, [1]),
       layout: loadingGaugeLayout,
     },
     {
@@ -3268,15 +3447,15 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: loadingGaugeFillPaint(gauge_construction_dashes),
+      paint: loadingGaugeFillPaint(theme, gauge_construction_dashes),
       layout: loadingGaugeLayout,
     },
-    preferredDirectionLayer('railway_preferred_direction', ['any',
+    preferredDirectionLayer(theme, 'railway_preferred_direction', ['any',
       ['==', ['get', 'preferred_direction'], 'forward'],
       ['==', ['get', 'preferred_direction'], 'backward'],
       ['==', ['get', 'preferred_direction'], 'both'],
     ]),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'loading_gauge_railway_text_high',
       type: 'symbol',
@@ -3401,9 +3580,10 @@ const layers = {
         true,
       ],
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white'
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo
         ],
         'text-halo-width': 1.5,
       },
@@ -3437,7 +3617,7 @@ const layers = {
       maxzoom: 7,
       source: 'openrailwaymap_low',
       'source-layer': 'railway_line_low',
-      paint: trackClassFillPaint([1]),
+      paint: trackClassFillPaint(theme, [1]),
       layout: trackClassLayout,
     },
     {
@@ -3457,7 +3637,7 @@ const layers = {
       maxzoom: 8,
       source: 'openrailwaymap_med',
       'source-layer': 'railway_line_med',
-      paint: trackClassFillPaint([1]),
+      paint: trackClassFillPaint(theme, [1]),
       layout: trackClassLayout,
     },
     {
@@ -3491,7 +3671,7 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['!=', ['get', 'railway'], 'construction'],
-      paint: trackClassFillPaint([1]),
+      paint: trackClassFillPaint(theme, [1]),
       layout: trackClassLayout,
     },
     {
@@ -3501,15 +3681,15 @@ const layers = {
       source: 'high',
       'source-layer': 'railway_line_high',
       filter: ['==', ['get', 'railway'], 'construction'],
-      paint: trackClassFillPaint(gauge_construction_dashes),
+      paint: trackClassFillPaint(theme, gauge_construction_dashes),
       layout: loadingGaugeLayout,
     },
-    preferredDirectionLayer('railway_preferred_direction', ['any',
+    preferredDirectionLayer(theme, 'railway_preferred_direction', ['any',
       ['==', ['get', 'preferred_direction'], 'forward'],
       ['==', ['get', 'preferred_direction'], 'backward'],
       ['==', ['get', 'preferred_direction'], 'both'],
     ]),
-    railwayKmText,
+    railwayKmText(theme),
     {
       id: 'track_class_railway_text_high',
       type: 'symbol',
@@ -3634,9 +3814,10 @@ const layers = {
         true,
       ],
       paint: {
+        'text-color': colors[theme].text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-          'white'
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo
         ],
         'text-halo-width': 1.5,
       },
@@ -3653,9 +3834,9 @@ const layers = {
     },
     searchResults,
   ],
-};
+}]));
 
-const makeStyle = selectedStyle => ({
+const makeStyle = (selectedStyle, theme) => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
   glyphs: `${origin}/font/{fontstack}/{range}`,
@@ -3673,7 +3854,7 @@ const makeStyle = selectedStyle => ({
     }
   ],
   version: 8,
-  layers: layers[selectedStyle],
+  layers: layers[theme][selectedStyle],
 });
 
 const legendData = {
@@ -3932,38 +4113,16 @@ const legendData = {
         },
       },
     ],
-    "openrailwaymap_standard-standard_railway_text_stations": [
-      {
-        legend: 'Railway station / halt',
+    "openrailwaymap_standard-standard_railway_text_stations":
+      stations.features.map(feature => ({
+        legend: feature.description,
         type: 'point',
         properties: {
-          railway: 'station',
-          station: null,
-          label: 'Gd',
-          name: 'Gouda',
+          ...feature.example,
+          railway: feature.feature,
         },
-      },
-      {
-        legend: 'Tram station',
-        type: 'point',
-        properties: {
-          railway: 'tram_stop',
-          station: null,
-          label: null,
-          name: 'Llacuna',
-        },
-      },
-      {
-        legend: 'Railway yard',
-        type: 'point',
-        properties: {
-          railway: 'yard',
-          station: null,
-          label: null,
-          name: 'Kijfhoek',
-        },
-      },
-    ],
+      })),
+    "openrailwaymap_standard-standard_railway_grouped_stations": [],
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',
@@ -3982,206 +4141,19 @@ const legendData = {
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols": [
-      {
-        legend: 'Tram stop',
+      ...poi.features.map(feature => ({
+        legend: feature.description,
         type: 'point',
         properties: {
-          feature: 'general/tram-stop',
+          feature: feature.feature,
         },
-      },
-      {
-        legend: 'Border crossing',
-        type: 'point',
-        properties: {
-          feature: 'general/border',
-        },
-        variants: [
-          {
-            legend: 'owner change',
-            properties: {
-              feature: 'general/owner-change',
-            },
+        variants: feature.variants ? feature.variants.map(variant => ({
+          legend: variant.description,
+          properties: {
+            feature: variant.feature,
           },
-        ],
-      },
-      {
-        legend: 'Radio mast',
-        type: 'point',
-        properties: {
-          feature: 'general/radio-mast',
-        },
-        variants: [
-          {
-            legend: 'antenna',
-            properties: {
-              feature: 'general/radio-antenna',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Crossing',
-        type: 'point',
-        properties: {
-          feature: 'general/crossing',
-        },
-        variants: [
-          {
-            legend: 'level crossing',
-            properties: {
-              feature: 'general/level-crossing',
-            }
-          },
-          {
-            legend: 'lights',
-            properties: {
-              feature: 'general/level-crossing-light',
-            }
-          },
-          {
-            legend: 'barrier',
-            properties: {
-              feature: 'general/level-crossing-barrier',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Phone',
-        type: 'point',
-        properties: {
-          feature: 'general/phone',
-        },
-      },
-      {
-        legend: 'Lubricator',
-        type: 'point',
-        properties: {
-          feature: 'general/lubricator',
-        },
-      },
-      {
-        legend: 'Fuel',
-        type: 'point',
-        properties: {
-          feature: 'general/fuel',
-        },
-      },
-      {
-        legend: 'Sand store',
-        type: 'point',
-        properties: {
-          feature: 'general/sand_store',
-        },
-      },
-      {
-        legend: 'Defect detector',
-        type: 'point',
-        properties: {
-          feature: 'general/defect_detector',
-        },
-      },
-      {
-        legend: 'Automatic equipment identification',
-        type: 'point',
-        properties: {
-          feature: 'general/aei',
-        },
-      },
-      {
-        legend: 'Buffer stop',
-        type: 'point',
-        properties: {
-          feature: 'general/buffer_stop',
-        },
-        variants: [
-          {
-            legend: 'Derailer',
-            properties: {
-              feature: 'general/derail',
-            }
-          }
-        ]
-      },
-      {
-        legend: 'Hump yard',
-        type: 'point',
-        properties: {
-          feature: 'general/hump_yard',
-        },
-      },
-      {
-        legend: 'Loading gauge',
-        type: 'point',
-        properties: {
-          feature: 'general/loading_gauge',
-        },
-      },
-      {
-        legend: 'Preheating',
-        type: 'point',
-        properties: {
-          feature: 'general/preheating',
-        },
-      },
-      {
-        legend: 'Compressed air supply',
-        type: 'point',
-        properties: {
-          feature: 'general/compressed_air_supply',
-        },
-      },
-      {
-        legend: 'Waste disposal',
-        type: 'point',
-        properties: {
-          feature: 'general/waste_disposal',
-        },
-      },
-      {
-        legend: 'Coaling facility',
-        type: 'point',
-        properties: {
-          feature: 'general/coaling_facility',
-        },
-      },
-      {
-        legend: 'Wash',
-        type: 'point',
-        properties: {
-          feature: 'general/wash',
-        },
-      },
-      {
-        legend: 'Water tower',
-        type: 'point',
-        properties: {
-          feature: 'general/water_tower',
-        },
-        variants: [
-          {
-            legend: 'crane',
-            properties: {
-              feature: 'general/water_crane',
-            },
-          },
-        ]
-      },
-      {
-        legend: 'Axle counter',
-        type: 'point',
-        properties: {
-          feature: 'general/vacancy-detection-axle-counter',
-        },
-        variants: [
-          {
-            legend: 'insulated rail joint',
-            properties: {
-              feature: 'general/vacancy-detection-insulated-rail-joint',
-            }
-          },
-        ]
-      },
+        })) : undefined,
+      }))
     ],
     "high-railway_text_km": [
       {
@@ -5094,7 +5066,7 @@ const legendData = {
   },
   loading_gauge: {
     'openrailwaymap_low-railway_line_low': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5118,7 +5090,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5142,7 +5114,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...loading_gauges.map(loading_gauge => ({
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
         properties: {
@@ -5179,7 +5151,7 @@ const legendData = {
   },
   track_class: {
     'openrailwaymap_low-railway_line_low': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5203,7 +5175,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_med-railway_line_med': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5227,7 +5199,7 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      ...track_classes.map(track_class => ({
+      ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
         properties: {
@@ -5273,8 +5245,8 @@ const layerVisibleAtZoom = (zoom) =>
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
-function makeLegendStyle(style) {
-  const sourceStyle = makeStyle(style);
+function makeLegendStyle(style, theme) {
+  const sourceStyle = makeStyle(style, theme);
   const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
   const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
@@ -5312,7 +5284,11 @@ function makeLegendStyle(style) {
       },
       minzoom: legendZoom,
       maxzoom: legendZoom + 1,
-      paint: {},
+      paint: {
+        'text-color': colors[theme].text.main,
+        'text-halo-color': colors[theme].halo,
+        'text-halo-width': 1,
+      },
       layout: {
         'text-field': '{legend}',
         'text-font': ['Noto Sans Medium'],
@@ -5447,6 +5423,8 @@ function makeLegendStyle(style) {
 }
 
 knownStyles.forEach(style => {
-  fs.writeFileSync(`${style}.json`, JSON.stringify(makeStyle(style)));
-  fs.writeFileSync(`legend-${style}.json`, JSON.stringify(makeLegendStyle(style)));
+  knownThemes.forEach(theme => {
+    fs.writeFileSync(`${style}-${theme}.json`, JSON.stringify(makeStyle(style, theme)));
+    fs.writeFileSync(`legend-${style}-${theme}.json`, JSON.stringify(makeLegendStyle(style, theme)));
+  });
 });

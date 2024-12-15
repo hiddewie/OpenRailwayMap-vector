@@ -1,0 +1,84 @@
+features:
+  - description: Tram stop
+    feature: 'general/tram-stop'
+
+  - description: Border crossing
+    feature: 'general/border'
+    variants:
+      - description: owner change
+        feature: 'general/owner-change'
+
+  - description: Radio mast
+    feature: 'general/radio-mast'
+    variants:
+      - description: antenna
+        feature: 'general/radio-antenna'
+
+  - description: Crossing
+    feature: 'general/crossing'
+    variants:
+      - description: Level crossing
+        feature: 'general/level-crossing'
+
+      - description: Level crossing with lights
+        feature: 'general/level-crossing-light'
+
+      - description: Level crossing with barrier
+        feature: 'general/level-crossing-barrier'
+
+  - description: Phone
+    feature: 'general/phone'
+
+  - description: Lubricator
+    feature: 'general/lubricator'
+
+  - description: Fuel
+    feature: 'general/fuel'
+
+  - description: Sand store
+    feature: 'general/sand_store'
+
+  - description: Defect detector
+    feature: 'general/defect_detector'
+
+  - description: Automatic equipment identification
+    feature: 'general/aei'
+
+  - description: Buffer stop
+    feature: 'general/phone'
+    variants:
+      - description: Derailer
+        feature: 'general/derail'
+
+  - description: Hump
+    feature: 'general/hump_yard'
+
+  - description: Loading gauge
+    feature: 'general/loading_gauge'
+
+  - description: Preheating
+    feature: 'general/preheating'
+
+  - description: Compressed air supply
+    feature: 'general/compressed_air_supply'
+
+  - description: Waste disposal
+    feature: 'general/waste_disposal'
+
+  - description: Coaling facility
+    feature: 'general/coaling_facility'
+
+  - description: Wash
+    feature: 'general/wash'
+
+  - description: Water tower
+    feature: 'general/water_tower'
+    variants:
+    - description: Crane
+      feature: 'general/water_crane'
+
+  - description: Axle counter
+    feature: 'general/vacancy-detection-axle-counter'
+    variants:
+    - description: Insulated rail joint
+      feature: 'general/vacancy-detection-insulated-rail-joint'

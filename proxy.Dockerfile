@@ -1,20 +1,24 @@
-FROM node:22-alpine as build-styles
-
-ARG PUBLIC_PROTOCOL
-ARG PUBLIC_HOST
+FROM node:22-alpine as build-yaml
 
 WORKDIR /build
 
 RUN npm install yaml
 
+FROM build-yaml as build-styles
+
+ARG PUBLIC_PROTOCOL
+ARG PUBLIC_HOST
+
 RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
-  --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
-  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
-  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  --mount=type=bind,source=features/loading_gauge.yaml,target=loading_gauge.yaml \
-  --mount=type=bind,source=features/track_class.yaml,target=track_class.yaml \
+  --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
+
+FROM build-yaml as build-features
+
+RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
+  --mount=type=bind,source=features,target=features \
+  node /build/features.mjs \
+    > /build/features.json
 
 FROM nginx:1-alpine
 
@@ -29,3 +33,6 @@ COPY data/import /etc/nginx/public/import
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style
+
+COPY --from=build-features \
+  /build/features.json /etc/nginx/public/features.json

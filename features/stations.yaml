@@ -1,0 +1,34 @@
+features:
+  - description: Station
+    feature: station
+    example:
+      label: Gd
+      name: Gouda
+
+  - description: Halt
+    feature: halt
+
+  - description: Tram stop
+    feature: tram_stop
+    example:
+      name: Llacuna
+
+  - description: Service station
+    feature: service_station
+
+  - description: Railway yard
+    feature: yard
+    example:
+      name: Kijfhoek
+
+  - description: Junction
+    feature: junction
+
+  - description: Spur junction
+    feature: spur_junction
+
+  - description: Railway site
+    feature: site
+
+  - description: Crossover
+    feature: crossover

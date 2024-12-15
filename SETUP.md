@@ -14,7 +14,7 @@ The import process will filter the file before importing it. The filtered file w
 
 Start the tile server:
 ```shell
-docker compose up --build martin
+docker compose up --build --watch martin
 ```
 
 Prepare and start the API:
@@ -25,14 +25,18 @@ docker compose up api
 
 Start the web server:
 ```shell
-docker compose up --build martin-proxy
+docker compose up --build --watch martin-proxy
 ```
 
 The OpenRailwayMap is now available on http://localhost:8000.
 
-To ease development, Docker Compose can automatically rebuild containers when dependent files change. Enable *watch mode* with:
+Docker Compose will automatically rebuild and restart the `martin` and `martin-proxy` containers if relevant files are modified.
+
+### Making changes
+
+If changes are made to features, the materialized views in the database have to be refreshed:
 ```shell
-docker compose watch
+docker compose run --build import refresh
 ```
 
 ## Deployment
