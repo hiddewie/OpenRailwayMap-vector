@@ -52,22 +52,11 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
           station,
           railway_ref,
           route_count,
-          geom
-        FROM (
-          SELECT
-              osm_id,
-              name,
-              railway,
-              station,
-              railway_ref,
-              name_tags,
-              route_count,
-              ST_Centroid(way) AS geom
-            FROM stations_with_route_counts
-            WHERE
-              railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
-              -- TODO support other states as well
-          ) AS organised
-      ) AS duplicated;
+          center as geom
+      FROM stations_with_route_counts
+      WHERE
+        railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+        -- TODO support other states as well
+    ) AS duplicated;
 
 CREATE INDEX openrailwaymap_facilities_name_index ON openrailwaymap_facilities_for_search USING gin(terms);
