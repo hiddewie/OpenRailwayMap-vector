@@ -196,23 +196,13 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
     id,
     osm_id,
-    way,
+    buffered as way,
     railway,
     station,
     railway_ref as label,
     name
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      buffered as way,
-      railway,
-      station,
-      railway_ref,
-      name
-    FROM stations_with_route_counts
-    WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-  ) AS r;
+  FROM stations_with_route_counts
+  WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop');
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
