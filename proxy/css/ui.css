@@ -161,3 +161,7 @@ body {
 input[type=url] {
   font-family: monospace;
 }
+
+.badge {
+  white-space: normal;
+}
