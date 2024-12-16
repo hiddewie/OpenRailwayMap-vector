@@ -61,7 +61,14 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 -- or about 20 to 30 minutes for the whole planet
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
   SELECT
-    *,
+    id,
+    osm_id,
+    name,
+    station,
+    railway_ref,
+    railway,
+    route_count,
+    name_tags,
     ST_Centroid(way) as center,
     ST_Buffer(ST_ConvexHull(way), 50) as buffered,
     ST_NumGeometries(way) as count
@@ -101,6 +108,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
     ORDER BY name, station, railway_ref, railway, route_count DESC
   ) as source_facilities;
 
-CREATE INDEX IF NOT EXISTS stations_with_route_counts_geom_index
+CREATE INDEX IF NOT EXISTS stations_with_route_counts_center_index
   ON stations_with_route_counts
-  USING GIST(way);
+  USING GIST(center);
+
+CREATE INDEX IF NOT EXISTS stations_with_route_counts_buffered_index
+  ON stations_with_route_counts
+  USING GIST(buffered);
