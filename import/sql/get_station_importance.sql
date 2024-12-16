@@ -61,38 +61,45 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 -- or about 20 to 30 minutes for the whole planet
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
   SELECT
-    MIN(id) as id,
-    MIN(osm_id) as osm_id,
-    name,
-    station,
-    railway_ref,
-    railway,
-    MAX(route_count) as route_count,
-    hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
-    ST_RemoveRepeatedPoints(ST_Collect(way)) as way
+    *,
+    ST_Centroid(way) as center,
+    ST_Buffer(ST_ConvexHull(way), 50) as buffered,
+    ST_NumGeometries(way) as count
   FROM (
     SELECT
-      *,
-      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, railway) AS cluster_id
+      MIN(id) as id,
+      MIN(osm_id) as osm_id,
+      name,
+      station,
+      railway_ref,
+      railway,
+      MAX(route_count) as route_count,
+      hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
+      ST_RemoveRepeatedPoints(ST_Collect(way)) as way
     FROM (
-      SELECT MIN(id) as id, MIN(osm_id) as osm_id, name, station, railway_ref, railway, ARRAY_LENGTH(ARRAY_AGG(DISTINCT route_id), 1) AS route_count, name_tags, way
+      SELECT
+        *,
+        ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, railway) AS cluster_id
       FROM (
-        SELECT id, osm_id, name, station, railway_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
-        FROM station_nodes_stop_positions_rel_count
+        SELECT MIN(id) as id, MIN(osm_id) as osm_id, name, station, railway_ref, railway, ARRAY_LENGTH(ARRAY_AGG(DISTINCT route_id), 1) AS route_count, name_tags, way
+        FROM (
+          SELECT id, osm_id, name, station, railway_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
+          FROM station_nodes_stop_positions_rel_count
+          UNION ALL
+          SELECT id, osm_id, name, station, railway_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
+          FROM station_nodes_platforms_rel_count
+        ) AS a
+        GROUP BY name, station, railway_ref, railway, way, name_tags
         UNION ALL
-        SELECT id, osm_id, name, station, railway_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
-        FROM station_nodes_platforms_rel_count
-      ) AS a
-      GROUP BY name, station, railway_ref, railway, way, name_tags
-      UNION ALL
-      SELECT id, osm_id, name, station, railway_ref, railway, 0 AS route_count, name_tags, way
-      FROM stations
-      WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
-   ) AS grouped_facilities
-  ) AS facilities
-  GROUP BY name, station, railway_ref, railway, cluster_id
-  -- ORDER BY is required to ensure that the larger route_count is used.
-  ORDER BY name, station, railway_ref, railway, route_count DESC;
+        SELECT id, osm_id, name, station, railway_ref, railway, 0 AS route_count, name_tags, way
+        FROM stations
+        WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+     ) AS grouped_facilities
+    ) AS facilities
+    GROUP BY name, station, railway_ref, railway, cluster_id
+    -- ORDER BY is required to ensure that the larger route_count is used.
+    ORDER BY name, station, railway_ref, railway, route_count DESC
+  ) as source_facilities;
 
 CREATE INDEX IF NOT EXISTS stations_with_route_counts_geom_index
   ON stations_with_route_counts
