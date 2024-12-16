@@ -187,21 +187,9 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       ELSE 50
     END AS rank,
     count
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      center,
-      railway,
-      route_count,
-      station,
-      railway_ref,
-      name,
-      count
-    FROM stations_with_route_counts
-    WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-      AND name IS NOT NULL
-  ) AS r
+  FROM stations_with_route_counts
+  WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
+    AND name IS NOT NULL
   ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
 
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
