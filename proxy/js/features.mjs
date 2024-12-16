@@ -33,19 +33,7 @@ const generateSignalFeatures = features =>
     ),
   ));
 
-const trainProtection = signals_railway_line.train_protections.map(feature => ({
-  feature: feature.train_protection,
-  description: feature.legend,
-}));
-
-const loadingGauges = loading_gauges.loading_gauges.map(feature => ({
-  feature: feature.value,
-  description: feature.legend,
-}));
-
 // TODO move icon SVGs to proxy
-// TODO lookup train protection name
-// TODO lookup loading gauge
 const railwayLineFeatures = {
   labelProperty: 'standard_label',
   features: {
@@ -102,7 +90,6 @@ const railwayLineFeatures = {
       type: 'line',
     },
   },
-  // TODO formatting / lookup table of values
   properties: {
     // TODO replace railway with `state`
     railway: {
@@ -137,6 +124,9 @@ const railwayLineFeatures = {
     },
     train_protection: {
       name: 'Train protection',
+      format: {
+        lookup: 'train_protection',
+      }
     },
     electrification_state: {
       name: 'Electrification',
@@ -170,6 +160,9 @@ const railwayLineFeatures = {
     },
     loading_gauge: {
       name: 'Loading gauge',
+      format: {
+        lookup: 'loading_gauge',
+      },
     },
     track_class: {
       name: 'Track class',
@@ -328,6 +321,25 @@ const features = {
       // TODO add voltage
       // TODO add frequency
     },
+  },
+
+  // Features not part of a data source but for lookups
+
+  train_protection: {
+    features: Object.fromEntries(signals_railway_line.train_protections.map(feature => [
+      feature.train_protection,
+      {
+        name: feature.legend,
+      },
+    ])),
+  },
+  loading_gauge: {
+    features: Object.fromEntries(loading_gauges.loading_gauges.map(feature => [
+      feature.value,
+      {
+        name: feature.legend,
+      },
+    ])),
   },
 };
 

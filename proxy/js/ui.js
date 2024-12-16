@@ -708,6 +708,20 @@ function popupContent(feature) {
       return String(value);
     } else if (format.template) {
       return format.template.replace('%s', () => String(value)).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
+    } else if (format.lookup) {
+      const lookupCatalog = features && features[format.lookup];
+      if (!lookupCatalog) {
+        console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
+        return String(value);
+      } else {
+        const lookedUpValue = lookupCatalog.features[value];
+        if (!lookedUpValue) {
+          console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
+          return String(value);
+        } else {
+          return lookedUpValue.name;
+        }
+      }
     } else {
       return String(value);
     }
