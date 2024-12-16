@@ -1387,7 +1387,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'railway_grouped_stations',
       type: 'fill',
-      minzoom: 15,
+      minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       paint: {
