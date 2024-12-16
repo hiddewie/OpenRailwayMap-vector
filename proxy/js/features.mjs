@@ -273,7 +273,7 @@ const features = {
     features: generateSignalFeatures(signals_railway_signals.features),
     properties: {
       direction_both: {
-        name: 'both directions,'
+        name: 'both directions',
       },
       ref: {
         name: 'Reference',
