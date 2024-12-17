@@ -998,6 +998,19 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: BOStrab distant signal
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2' }
+        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1' }
+        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0' }
+      default: 'de/vr0-light'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
   - description: distant signals type Ks (repeated)
     country: DE
     icon: { default: 'de/ks-distant-repeated' }
