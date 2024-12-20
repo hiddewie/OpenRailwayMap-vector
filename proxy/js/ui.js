@@ -520,8 +520,11 @@ const map = new maplibregl.Map({
 });
 
 function selectStyle(style) {
-  selectedStyle = style;
-  onStyleChange();
+  if (selectedStyle !== style) {
+    selectedStyle = style;
+    styleControl.onExternalStyleChange(style);
+    onStyleChange();
+  }
 }
 
 const onStyleChange = () => {
@@ -548,6 +551,7 @@ onStyleChange();
 class StyleControl {
   constructor(options) {
     this.options = options
+    this.radioButtons = {};
   }
 
   onAdd(map) {
@@ -567,6 +571,8 @@ class StyleControl {
       const label = createDomElement('label', 'btn btn-outline-success', buttonGroup);
       label.htmlFor = id
       label.innerText = styleLabel
+
+      this.radioButtons[name] = radio;
     });
 
     return this._container;
@@ -575,6 +581,13 @@ class StyleControl {
   onRemove() {
     removeDomElement(this._container);
     this._map = undefined;
+  }
+
+  onExternalStyleChange(style) {
+    const radio = this.radioButtons[style];
+    if (radio && !radio.checked) {
+      radio.checked = true;
+    }
   }
 }
 
@@ -692,10 +705,11 @@ class NewsControl {
   }
 }
 
-map.addControl(new StyleControl({
+const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
-}));
+});
+map.addControl(styleControl);
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: false,
