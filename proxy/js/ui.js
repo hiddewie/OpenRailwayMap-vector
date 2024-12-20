@@ -248,6 +248,10 @@ function toggleNews() {
 function hideNews() {
   newsBackdrop.style.display = 'none';
 }
+function newsLink(zoom, lat, lon) {
+  hideNews();
+  map.jumpTo({zoom, center: {lat, lon}});
+}
 
 searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();

@@ -47,6 +47,12 @@ body {
   height: 1400px;
 }
 
+.news-content img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 /** Patch Maplibre GL to respect the page theme */
 #map-container .maplibregl-ctrl-group,
 .maplibregl-ctrl-attrib.maplibregl-compact,
