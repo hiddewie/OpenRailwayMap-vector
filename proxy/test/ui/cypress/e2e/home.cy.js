@@ -146,4 +146,13 @@ describe('home page', () => {
     cy.contains('Map configuration').should('be.visible')
     cy.screenshot()
   })
+
+  it('news', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024&')
+
+    cy.get('.maplibregl-ctrl-news').click()
+
+    cy.contains('News').should('be.visible')
+    cy.screenshot()
+  })
 })
