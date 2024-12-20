@@ -248,8 +248,9 @@ function toggleNews() {
 function hideNews() {
   newsBackdrop.style.display = 'none';
 }
-function newsLink(zoom, lat, lon) {
+function newsLink(style, zoom, lat, lon) {
   hideNews();
+  selectStyle(style);
   map.jumpTo({zoom, center: {lat, lon}});
 }
 
@@ -518,6 +519,11 @@ const map = new maplibregl.Map({
   maxPitch: 0,
 });
 
+function selectStyle(style) {
+  selectedStyle = style;
+  onStyleChange();
+}
+
 const onStyleChange = () => {
   // Change styles
   map.setStyle(mapStyles[selectedTheme][selectedStyle], {
@@ -688,10 +694,7 @@ class NewsControl {
 
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
-  onStyleChange: style => {
-    selectedStyle = style;
-    onStyleChange();
-  },
+  onStyleChange: selectStyle,
 }));
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,
