@@ -16,8 +16,9 @@ const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
 const backgroundMapContainer = document.getElementById('background-map');
-const legend = document.getElementById('legend')
-const legendMapContainer = document.getElementById('legend-map')
+const legend = document.getElementById('legend');
+const legendMapContainer = document.getElementById('legend-map');
+const newsBackdrop = document.getElementById('news-backdrop');
 
 const icons = {
   railway: {
@@ -236,6 +237,18 @@ function toggleLegend() {
   }
 }
 
+function toggleNews() {
+  if (newsBackdrop.style.display === 'block') {
+    newsBackdrop.style.display = 'none';
+  } else {
+    newsBackdrop.style.display = 'block';
+  }
+}
+
+function hideNews() {
+  newsBackdrop.style.display = 'none';
+}
+
 searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
@@ -258,6 +271,20 @@ configurationBackdrop.onclick = event => {
     hideConfiguration();
   }
 };
+newsBackdrop.onclick = event => {
+  if (event.target === event.currentTarget) {
+    hideNews();
+  }
+};
+
+// Bind Escape keypress (without modifiers) to close all modal windows
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !(event.ctrlKey || event.altKey || event.shiftKey)) {
+    hideSearch();
+    hideConfiguration();
+    hideNews();
+  }
+});
 
 function createDomElement(tagName, className, container) {
   const el = window.document.createElement(tagName);
@@ -629,6 +656,32 @@ class LegendControl {
 // Cache for the number of items in the legend, per style and zoom level
 const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key => [key, {}]));
 
+class NewsControl {
+  constructor(options) {
+    this.options = options;
+  }
+
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    const button = createDomElement('button', 'maplibregl-ctrl-news', this._container);
+    button.type = 'button';
+    button.title = 'Show/hide news';
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
+    text.innerText = 'News'
+
+    button.onclick = () => this.options.onNewsToggle()
+
+    return this._container;
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+}
+
 map.addControl(new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: style => {
@@ -659,6 +712,9 @@ map.addControl(new SearchControl(), 'top-left');
 map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
+}), 'bottom-right');
+map.addControl(new NewsControl({
+  onNewsToggle: toggleNews,
 }), 'bottom-right');
 
 map.addControl(new LegendControl({
