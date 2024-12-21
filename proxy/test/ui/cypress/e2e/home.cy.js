@@ -6,40 +6,40 @@ describe('home page', () => {
   it('switching layers (light mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
-    cy.contains('Infrastructure').click()
+    cy.contains('.btn.btn-outline-success', 'Infrastructure').click()
     cy.url().should('include', 'style=standard')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Speed').click()
+    cy.contains('.btn.btn-outline-success', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Train protection').click()
+    cy.contains('.btn.btn-outline-success', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Electrification').click()
+    cy.contains('.btn.btn-outline-success', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Gauge').click()
+    cy.contains('.btn.btn-outline-success', 'Gauge').click()
     cy.url().should('include', 'style=gauge')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Loading gauge').click()
+    cy.contains('.btn.btn-outline-success', 'Loading gauge').click()
     cy.url().should('include', 'style=loading_gauge')
 
-    cy.contains('Track class').click()
+    cy.contains('.btn.btn-outline-success', 'Track class').click()
     cy.url().should('include', 'style=track_class')
 
     cy.wait(3000)
@@ -58,40 +58,40 @@ describe('home page', () => {
     cy.get('#configuration-backdrop .btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
 
-    cy.contains('Infrastructure').click()
+    cy.contains('.btn.btn-outline-success', 'Infrastructure').click()
     cy.url().should('include', 'style=standard')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Speed').click()
+    cy.contains('.btn.btn-outline-success', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Train protection').click()
+    cy.contains('.btn.btn-outline-success', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Electrification').click()
+    cy.contains('.btn.btn-outline-success', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Gauge').click()
+    cy.contains('.btn.btn-outline-success', 'Gauge').click()
     cy.url().should('include', 'style=gauge')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('Loading gauge').click()
+    cy.contains('.btn.btn-outline-success', 'Loading gauge').click()
     cy.url().should('include', 'style=loading_gauge')
 
-    cy.contains('Track class').click()
+    cy.contains('.btn.btn-outline-success', 'Track class').click()
     cy.url().should('include', 'style=track_class')
 
     cy.wait(3000)
