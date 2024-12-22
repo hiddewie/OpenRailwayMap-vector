@@ -778,58 +778,6 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ne1' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
-  - description: distant light signals type Vr (repeated)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated', description: 'shortened' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
-      default: 'de/vr0-light-repeated'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
-
-  - description: distant light signals type Vr (shortened)
-    country: DE
-    # TODO make distinct icon
-    # Shown with the same icon as shortened
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
-      default: 'de/vr0-light-repeated'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
-
-  - description: distant light signals type Vr
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
-      default: 'de/vr0-light'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant semaphore signals type Vr
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
-      default: 'de/vr0-semaphore'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
   - description: Hamburger Hochbahn distant signal
     country: DE
     icon: { default: 'de/hha/v1' }
@@ -902,6 +850,58 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: distant light signals type Vr (repeated)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated', description: 'shortened' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
+      default: 'de/vr0-light-repeated'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
+
+  - description: distant light signals type Vr (shortened)
+    country: DE
+    # TODO make distinct icon
+    # Shown with the same icon as shortened
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
+      default: 'de/vr0-light-repeated'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+
+  - description: distant light signals type Vr
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
+      default: 'de/vr0-light'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant semaphore signals type Vr
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
+      default: 'de/vr0-semaphore'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
   - description: distant light signals type Hl
     country: DE
