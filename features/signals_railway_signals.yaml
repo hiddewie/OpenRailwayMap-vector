@@ -816,17 +816,6 @@ features:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so14' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: distant signal replacement by sign Ne 2
-    country: DE
-    icon:
-      match: 'railway:signal:distant:shortened'
-      cases:
-        - { regex: '^yes$', value: 'de/ne2-reduced-distance' }
-      default: 'de/ne2'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
   - description: main semaphore signals type Hp
     country: DE
     icon:
@@ -902,6 +891,17 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+  - description: distant signal replacement by sign Ne 2
+    country: DE
+    icon:
+      match: 'railway:signal:distant:shortened'
+      cases:
+        - { regex: '^yes$', value: 'de/ne2-reduced-distance' }
+      default: 'de/ne2'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: distant light signals type Hl
     country: DE
