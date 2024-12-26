@@ -19,6 +19,7 @@ const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
 const newsBackdrop = document.getElementById('news-backdrop');
+const newsContent = document.getElementById('news-content');
 
 const icons = {
   railway: {
@@ -239,15 +240,26 @@ function toggleLegend() {
 
 function toggleNews() {
   if (newsBackdrop.style.display === 'block') {
-    newsBackdrop.style.display = 'none';
+    hideNews();
   } else {
-    newsBackdrop.style.display = 'block';
+    showNews();
+  }
+}
+
+function showNews() {
+  newsBackdrop.style.display = 'block';
+
+  const newsHash = newsControl.newsHash()
+  if (newsHash) {
+    configuration.newsHash = newsHash;
+    storeConfiguration(localStorage, configuration);
   }
 }
 
 function hideNews() {
   newsBackdrop.style.display = 'none';
 }
+
 function newsLink(style, zoom, lat, lon) {
   hideNews();
   selectStyle(style);
@@ -351,6 +363,14 @@ function putStyleInHash(hash, style) {
 }
 
 let selectedStyle = determineStyleFromHash(window.location.hash)
+
+async function generateHash(input) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(input);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
 
 // Configuration //
 
@@ -682,6 +702,7 @@ const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key =
 class NewsControl {
   constructor(options) {
     this.options = options;
+    this._newsHash = null;
   }
 
   onAdd(map) {
@@ -691,10 +712,22 @@ class NewsControl {
     button.type = 'button';
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
+    const text = createDomElement('span', undefined, button);
     text.innerText = 'News'
+    createDomElement('span', 'news-marker', button);
 
     button.onclick = () => this.options.onNewsToggle()
+
+    // Attach news hash to the button
+    generateHash(newsContent.innerText)
+      .then(hash => {
+        this._newsHash = hash;
+        if (!configuration.newsHash || hash !== configuration.newsHash) {
+          button.classList.add('news-updated');
+          console.info('News has been updated');
+        }
+      })
+      .catch(error => console.error('Error during calculation of news content hash', error))
 
     return this._container;
   }
@@ -702,6 +735,10 @@ class NewsControl {
   onRemove() {
     removeDomElement(this._container);
     this._map = undefined;
+  }
+
+  newsHash() {
+    return this._newsHash;
   }
 }
 
@@ -734,9 +771,10 @@ map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
 }), 'bottom-right');
-map.addControl(new NewsControl({
+const newsControl = new NewsControl({
   onNewsToggle: toggleNews,
-}), 'bottom-right');
+});
+map.addControl(newsControl, 'bottom-right');
 
 map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
