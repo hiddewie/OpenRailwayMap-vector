@@ -88,7 +88,7 @@ features:
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
-  - description: Schaltzeiger
+  - description: AT-V2:schaltzeiger
     country: AT
     icon: { default: 'at/schaltzeiger' }
     tags:
