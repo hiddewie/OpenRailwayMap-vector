@@ -716,7 +716,10 @@ class NewsControl {
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
-    button.onclick = () => this.options.onNewsToggle()
+    button.onclick = () => {
+      button.classList.remove('news-updated');
+      this.options.onNewsToggle();
+    }
 
     // Attach news hash to the button
     generateHash(newsContent.innerText)
