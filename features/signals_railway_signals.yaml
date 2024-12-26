@@ -622,7 +622,7 @@ features:
     country: DE
     icon: { default: 'de/ne5-sign' }
     tags:
-      - { tag: 'railway:signal:stop_demand', value: 'DE-ESO:ne5' }
+      - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Ne13 resetting switch signal
