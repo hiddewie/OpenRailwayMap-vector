@@ -806,11 +806,11 @@ const onStylesheetChange = styleSheet => {
 
 function popupContent(feature) {
   const properties = feature.properties;
-  const layerSource = `${feature.source}-${feature.sourceLayer}`;
+  const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
   const featureCatalog = features && features[layerSource];
   if (!featureCatalog) {
-    console.warn('Feature catalog not found for feature', feature);
+    console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
     return;
   }
 

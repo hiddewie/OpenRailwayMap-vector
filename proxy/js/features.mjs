@@ -262,9 +262,15 @@ const features = {
   'openrailwaymap_speed-speed_railway_signals': {
     features: generateSignalFeatures(speed_railway_signals.features),
     properties: {
-      direction_both: 'both directions',
-      ref: 'Reference',
-      type: 'Type',
+      direction_both: {
+        name: 'both directions',
+      },
+      ref: {
+        name: 'Reference',
+      },
+      type: {
+        name: 'Type',
+      },
       // TODO add deactivated
       // TODO add speed
     },
@@ -320,6 +326,21 @@ const features = {
       // TODO add deactivated
       // TODO add voltage
       // TODO add frequency
+    },
+  },
+
+  // Search results
+
+  search: {
+    labelProperty: 'label',
+    features: [],
+    properties: {
+      name: {
+        name: 'Name',
+      },
+      railway: {
+        name: 'Railway',
+      },
     },
   },
 
