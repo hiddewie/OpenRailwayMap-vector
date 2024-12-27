@@ -1075,13 +1075,14 @@ const loadingGaugeCasingPaint = theme => ({
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
 });
+const loadingGaugeFillColor = ['match', ['get', 'loading_gauge'],
+  ...loading_gauges.loading_gauges.flatMap(loading_gauge =>
+    [loading_gauge.value, loading_gauge.color]
+  ),
+  'gray',
+];
 const loadingGaugeFillPaint = (theme, dashArray) => ({
-  'line-color': ['match', ['get', 'loading_gauge'],
-    ...loading_gauges.loading_gauges.flatMap(loading_gauge =>
-      [loading_gauge.value, loading_gauge.color]
-    ),
-    'gray',
-  ],
+  'line-color': loadingGaugeFillColor,
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
@@ -1095,13 +1096,14 @@ const trackClassCasingPaint = theme => ({
   'line-width': railwayLineWidth,
   'line-gap-width': 0.75,
 });
+const trackClassFillColor = ['match', ['get', 'track_class'],
+  ...track_classes.track_classes.flatMap(track_class =>
+    [track_class.value, track_class.color]
+  ),
+  'gray',
+];
 const trackClassFillPaint = (theme, dashArray) => ({
-  'line-color': ['match', ['get', 'track_class'],
-    ...track_classes.track_classes.flatMap(track_class =>
-      [track_class.value, track_class.color]
-    ),
-    'gray',
-  ],
+  'line-color': trackClassFillColor,
   'line-width': railwayLineWidth,
   'line-dasharray': dashArray,
 });
@@ -2558,7 +2560,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['==', ['get', 'preferred_direction'], 'backward'],
         ['==', ['get', 'preferred_direction'], 'both'],
       ],
-      trainProtectionColor,
+      trainProtectionColor(theme),
     ),
     {
       id: 'signal_boxes_point',
@@ -3427,11 +3429,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: loadingGaugeFillPaint(theme, gauge_construction_dashes),
       layout: loadingGaugeLayout,
     },
-    preferredDirectionLayer(theme, 'railway_preferred_direction', ['any',
-      ['==', ['get', 'preferred_direction'], 'forward'],
-      ['==', ['get', 'preferred_direction'], 'backward'],
-      ['==', ['get', 'preferred_direction'], 'both'],
-    ]),
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
+      ['any',
+        ['==', ['get', 'preferred_direction'], 'forward'],
+        ['==', ['get', 'preferred_direction'], 'backward'],
+        ['==', ['get', 'preferred_direction'], 'both'],
+      ],
+      loadingGaugeFillColor,
+    ),
     railwayKmText(theme),
     {
       id: 'loading_gauge_railway_text_high',
@@ -3661,11 +3666,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: trackClassFillPaint(theme, gauge_construction_dashes),
       layout: loadingGaugeLayout,
     },
-    preferredDirectionLayer(theme, 'railway_preferred_direction', ['any',
-      ['==', ['get', 'preferred_direction'], 'forward'],
-      ['==', ['get', 'preferred_direction'], 'backward'],
-      ['==', ['get', 'preferred_direction'], 'both'],
-    ]),
+    preferredDirectionLayer(theme, 'railway_preferred_direction',
+      ['any',
+        ['==', ['get', 'preferred_direction'], 'forward'],
+        ['==', ['get', 'preferred_direction'], 'backward'],
+        ['==', ['get', 'preferred_direction'], 'both'],
+      ],
+      trackClassFillColor,
+    ),
     railwayKmText(theme),
     {
       id: 'track_class_railway_text_high',
@@ -3801,7 +3809,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{loading_gauge}',
+        'text-field': '{track_class}',
         // TODO not present: oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
