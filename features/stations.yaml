@@ -12,6 +12,7 @@ features:
     feature: tram_stop
     example:
       name: Llacuna
+      count: 2
 
   - description: Service station
     feature: service_station
