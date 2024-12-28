@@ -23,7 +23,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     signal_direction,
     "railway:signal:speed_limit",
     dominant_speed,
-    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int as voltage,
+    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int ELSE NULL END as voltage,
     CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+(\\.[0-9]+)?$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
     rank,
     degrees(ST_Azimuth(
