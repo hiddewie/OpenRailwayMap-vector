@@ -24,7 +24,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     "railway:signal:speed_limit",
     dominant_speed,
     "railway:signal:electricity:voltage"::int as voltage,
-    "railway:signal:electricity:frequency"::real as frequency,
+    CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
     rank,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
