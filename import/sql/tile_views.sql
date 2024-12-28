@@ -338,6 +338,26 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
     WHERE way IS NOT NULL
   );
 
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_signal_boxes IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_signal_boxes",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string",
+          "ref": "string",
+          "name": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE VIEW signals_railway_signals AS
   SELECT
     id,
