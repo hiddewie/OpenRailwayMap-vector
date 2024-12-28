@@ -153,6 +153,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'train_protection_rank', type = 'smallint' },
     { column = 'operator', sql_type = 'text[]' },
     { column = 'traffic_mode', type = 'text' },
+    { column = 'radio', type = 'text' },
   },
 })
 
@@ -610,6 +611,7 @@ function osm2pgsql.process_way(object)
       train_protection_rank = railway_train_protection_rank,
       operator = split_semicolon_to_sql_array(tags['operator']),
       traffic_mode = tags['railway:traffic_mode'],
+      radio = tags['railway:radio'],
     })
   end
 

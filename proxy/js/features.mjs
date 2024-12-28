@@ -175,7 +175,10 @@ const railwayLineFeatures = {
     },
     traffic_mode: {
       name: 'Traffic mode',
-    }
+    },
+    radio: {
+      name: 'Radio',
+    },
   },
 };
 

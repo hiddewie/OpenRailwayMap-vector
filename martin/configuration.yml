@@ -69,6 +69,7 @@ postgres:
         reporting_marks: string
         operator: string
         traffic_mode: string
+        radio: string
 
     railway_line_med:
       schema: public
@@ -113,6 +114,7 @@ postgres:
         reporting_marks: string
         operator: string
         traffic_mode: string
+        radio: string
 
     railway_line_high:
       schema: public
@@ -158,6 +160,7 @@ postgres:
         reporting_marks: string
         operator: string
         traffic_mode: string
+        radio: string
 
     # --- Standard --- #
 
