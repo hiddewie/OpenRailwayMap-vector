@@ -23,8 +23,8 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     signal_direction,
     "railway:signal:speed_limit",
     dominant_speed,
-    "railway:signal:electricity:voltage" as voltage,
-    "railway:signal:electricity:frequency" as frequency,
+    "railway:signal:electricity:voltage"::int as voltage,
+    "railway:signal:electricity:frequency"::real as frequency,
     rank,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),

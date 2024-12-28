@@ -53,9 +53,9 @@ postgres:
         train_protection_rank: integer
         electrification_state: string
         frequency: number
-        voltage: number
+        voltage: integer
         future_frequency: number
-        future_voltage: number
+        future_voltage: integer
         electrification_label: string
         gauge0: string
         gaugeint0: number
@@ -96,9 +96,9 @@ postgres:
         train_protection_rank: integer
         electrification_state: string
         frequency: number
-        voltage: number
+        voltage: integer
         future_frequency: number
-        future_voltage: number
+        future_voltage: integer
         electrification_label: string
         gauge0: string
         gaugeint0: number
@@ -140,9 +140,9 @@ postgres:
         train_protection_rank: integer
         electrification_state: string
         frequency: number
-        voltage: number
+        voltage: integer
         future_frequency: number
-        future_voltage: number
+        future_voltage: integer
         electrification_label: string
         gauge0: string
         gaugeint0: number
@@ -279,7 +279,7 @@ postgres:
         ref: string
         azimuth: number
         direction_both: boolean
-        disabled: boolean
+        deactivated: boolean
         speed: integer
 
     # --- Signals --- #
@@ -318,8 +318,9 @@ postgres:
         azimuth: number
         direction_both: boolean
         ref: string
+        deactivated: boolean
         frequency: number
-        voltage: number
+        voltage: integer
 
   functions:
 
