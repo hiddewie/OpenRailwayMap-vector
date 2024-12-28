@@ -68,6 +68,7 @@ postgres:
         track_class: string
         reporting_marks: string
         operator: string
+        traffic_mode: string
 
     railway_line_med:
       schema: public
@@ -111,6 +112,7 @@ postgres:
         track_class: string
         reporting_marks: string
         operator: string
+        traffic_mode: string
 
     railway_line_high:
       schema: public
@@ -155,6 +157,7 @@ postgres:
         track_class: string
         reporting_marks: string
         operator: string
+        traffic_mode: string
 
     # --- Standard --- #
 
