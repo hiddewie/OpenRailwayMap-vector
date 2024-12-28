@@ -138,8 +138,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'future_frequency', type = 'real' },
     { column = 'future_voltage', type = 'integer' },
     { column = 'gauges', sql_type = 'text[]' },
-    { column = 'loading_gauge', sql_type = 'text' },
-    { column = 'track_class', sql_type = 'text' },
+    { column = 'loading_gauge', type = 'text' },
+    { column = 'track_class', type = 'text' },
     { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'construction_railway', type = 'text' },
     { column = 'proposed_railway', type = 'text' },
@@ -151,7 +151,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'preserved_railway', type = 'text' },
     { column = 'train_protection', type = 'text' },
     { column = 'train_protection_rank', type = 'smallint' },
-    { column = 'operator', type = 'text' },
+    { column = 'operator', sql_type = 'text[]' },
   },
 })
 
@@ -318,6 +318,30 @@ function electrification_state(tags)
   end
 
   return nil, nil, nil
+end
+
+-- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
+function split_semicolon_to_sql_array(value)
+  local result = '{'
+
+  local first = true
+  if value then
+    for part in string.gmatch(value, '[^;]+') do
+      if part then
+
+        if first then
+          first = false
+        else
+          result = result .. ','
+        end
+
+        -- Raw SQL array syntax
+        result = result .. "\"" .. part:gsub("\"", "\\\"") .. "\""
+      end
+    end
+  end
+
+  return result .. '}'
 end
 
 -- TODO clean up unneeded tags
@@ -540,28 +564,6 @@ function osm2pgsql.process_way(object)
 
     local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
 
-    local gauges = {}
-    local gauge_tag = tags['gauge'] or tags['construction:gauge']
-    if gauge_tag then
-      for gauge in string.gmatch(gauge_tag, '[^;]+') do
-        if gauge then
-          -- Raw SQL array syntax
-          table.insert(gauges, "\"" .. gauge:gsub("\"", "\\\"") .. "\"")
-        end
-      end
-    end
-
-    local reporting_marks = {}
-    local reporting_marks_tag = tags['reporting_marks']
-    if reporting_marks_tag then
-      for reporting_mark in string.gmatch(reporting_marks_tag, '[^;]+') do
-        if reporting_mark then
-          -- Raw SQL array syntax
-          table.insert(reporting_marks, "\"" .. reporting_mark:gsub("\"", "\\\"") .. "\"")
-        end
-      end
-    end
-
     local preferred_direction = tags['railway:preferred_direction']
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
@@ -591,10 +593,10 @@ function osm2pgsql.process_way(object)
       voltage = voltage,
       future_frequency = future_frequency,
       future_voltage = future_voltage,
-      gauges = '{' .. table.concat(gauges, ',') .. '}',
+      gauges = split_semicolon_to_sql_array(tags['gauge'] or tags['construction:gauge']),
       loading_gauge = tags['loading_gauge'],
       track_class = tags['railway:track_class'],
-      reporting_marks = '{' .. table.concat(reporting_marks, ',') .. '}',
+      reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
       construction_railway = tags['construction:railway'],
       proposed_railway = tags['proposed:railway'],
       disused_railway = tags['disused:railway'],
@@ -605,7 +607,7 @@ function osm2pgsql.process_way(object)
       preserved_railway = tags['preserved:railway'],
       train_protection = railway_train_protection,
       train_protection_rank = railway_train_protection_rank,
-      operator = tags['operator'],
+      operator = split_semicolon_to_sql_array(tags['operator']),
     })
   end
 

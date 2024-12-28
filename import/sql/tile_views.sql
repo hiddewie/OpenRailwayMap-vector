@@ -67,7 +67,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
         gauge2,
         gauge_label,
         loading_gauge,
-        operator
+        array_to_string(operator, ', ') as operator
     FROM
         (SELECT
              id,
