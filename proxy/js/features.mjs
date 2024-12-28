@@ -170,7 +170,9 @@ const railwayLineFeatures = {
     reporting_marks: {
       name: 'Reporting marks',
     },
-    // TODO import operator
+    operator: {
+      name: 'Operator',
+    },
   },
 };
 
@@ -188,7 +190,9 @@ const stationFeatures = {
     label: {
       name: 'Reference',
     },
-    // TODO Add UIC ref
+    uic_ref: {
+      name: 'UIC reference',
+    },
   },
 }
 
@@ -271,8 +275,12 @@ const features = {
       type: {
         name: 'Type',
       },
-      // TODO add deactivated
-      // TODO add speed
+      deactivated: {
+        name: 'Deactivated',
+      },
+      speed: {
+        name: 'Speed limit',
+      },
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
@@ -323,9 +331,21 @@ const features = {
       type: {
         name: 'Type',
       },
-      // TODO add deactivated
-      // TODO add voltage
-      // TODO add frequency
+      deactivated: {
+        name: 'Deactivated',
+      },
+      frequency: {
+        name: 'Frequency',
+        format: {
+          template: '%.2d Hz',
+        },
+      },
+      voltage: {
+        name: 'Voltage',
+        format: {
+          template: '%d V',
+        },
+      },
     },
   },
 

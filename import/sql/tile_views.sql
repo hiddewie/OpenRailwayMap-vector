@@ -66,7 +66,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
         railway_to_int(gauge2) AS gaugeint2,
         gauge2,
         gauge_label,
-        loading_gauge
+        loading_gauge,
+        operator
     FROM
         (SELECT
              id,
@@ -110,7 +111,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
              gauges[2] AS gauge1,
              gauges[3] AS gauge2,
              (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
-             loading_gauge
+             loading_gauge,
+             operator
          FROM railway_line
          WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
         ) AS r
@@ -140,7 +142,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     id,
     osm_id,
     center as way,
-    railway_ref as label
+    railway_ref as label,
+    uic_ref
   FROM stations_with_route_counts
   WHERE
     railway = 'station'
@@ -154,7 +157,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     id,
     osm_id,
     center as way,
-    railway_ref as label
+    railway_ref as label,
+    uic_ref
   FROM stations_with_route_counts
   WHERE
     railway = 'station'
@@ -186,7 +190,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       WHEN railway = 'crossover' THEN 700
       ELSE 50
     END AS rank,
-    count
+    count,
+    uic_ref
   FROM stations_with_route_counts
   WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
     AND name IS NOT NULL
@@ -200,7 +205,8 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     railway,
     station,
     railway_ref as label,
-    name
+    name,
+    uic_ref
   FROM stations_with_route_counts
   WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop');
 
@@ -296,7 +302,9 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     speed_feature_type as type,
     azimuth,
     (signal_direction = 'both') as direction_both,
-    ref
+    ref,
+    deactivated,
+    dominant_speed as speed
   FROM signals_with_azimuth
   WHERE railway = 'signal'
     AND speed_feature IS NOT NULL
@@ -384,7 +392,10 @@ CREATE OR REPLACE VIEW electrification_signals AS
     electrification_feature as feature,
     azimuth,
     (signal_direction = 'both') as direction_both,
-    ref
+    ref,
+    deactivated,
+    voltage,
+    frequency
   FROM signals_with_azimuth
   WHERE
     railway = 'signal'

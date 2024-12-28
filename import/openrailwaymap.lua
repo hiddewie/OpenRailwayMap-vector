@@ -151,6 +151,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'preserved_railway', type = 'text' },
     { column = 'train_protection', type = 'text' },
     { column = 'train_protection_rank', type = 'smallint' },
+    { column = 'operator', type = 'text' },
   },
 })
 
@@ -604,6 +605,7 @@ function osm2pgsql.process_way(object)
       preserved_railway = tags['preserved:railway'],
       train_protection = railway_train_protection,
       train_protection_rank = railway_train_protection_rank,
+      operator = tags['operator'],
     })
   end
 

@@ -5,6 +5,7 @@ tags:
   - 'railway:signal:electricity:for'
   - 'railway:signal:electricity:turn_direction'
   - 'railway:signal:electricity:voltage'
+  - 'railway:signal:electricity:frequency'
 
 features:
 

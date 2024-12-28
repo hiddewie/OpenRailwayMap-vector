@@ -67,6 +67,7 @@ postgres:
         loading_gauge: string
         track_class: string
         reporting_marks: string
+        operator: string
 
     railway_line_med:
       schema: public
@@ -109,6 +110,7 @@ postgres:
         loading_gauge: string
         track_class: string
         reporting_marks: string
+        operator: string
 
     railway_line_high:
       schema: public
@@ -152,6 +154,7 @@ postgres:
         loading_gauge: string
         track_class: string
         reporting_marks: string
+        operator: string
 
     # --- Standard --- #
 
@@ -165,6 +168,7 @@ postgres:
         id: integer
         osm_id: integer
         label: string
+        uic_ref: string
 
     standard_railway_text_stations_med:
       schema: public
@@ -176,6 +180,7 @@ postgres:
         id: integer
         osm_id: integer
         label: string
+        uic_ref: string
 
     standard_railway_turntables:
       schema: public
@@ -202,6 +207,7 @@ postgres:
         label: string
         name: string
         count: integer
+        uic_ref: string
 
     standard_railway_grouped_stations:
       schema: public
@@ -216,6 +222,7 @@ postgres:
         station: string
         label: string
         name: string
+        uic_ref: string
 
     standard_railway_symbols:
       schema: public
@@ -272,6 +279,8 @@ postgres:
         ref: string
         azimuth: number
         direction_both: boolean
+        disabled: boolean
+        speed: integer
 
     # --- Signals --- #
 
@@ -309,7 +318,8 @@ postgres:
         azimuth: number
         direction_both: boolean
         ref: string
-
+        frequency: number
+        voltage: number
 
   functions:
 
