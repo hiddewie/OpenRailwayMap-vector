@@ -368,6 +368,8 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     ref_multiline,
     deactivated,
     signal_feature as feature,
+    feature_main,
+    feature_distant,
     azimuth,
     (signal_direction = 'both') as direction_both
   FROM signals_with_azimuth

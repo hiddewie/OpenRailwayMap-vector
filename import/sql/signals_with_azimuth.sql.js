@@ -5,6 +5,8 @@ const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8'))
 
+const knownSignalTypes = ['main', 'distant']
+
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -28,6 +30,19 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
     )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
+      
+    ${knownSignalTypes.map(type => `
+    CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type}`)).map(feature => `
+      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+        THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
+          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
+          ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
+        END` : `'${feature.icon.default}'`}
+    `).join('')}
+    END as feature_${type},
+    `).join('')}
+    
     CASE ${signals_railway_signals.features.map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
