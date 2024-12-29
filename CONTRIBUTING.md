@@ -81,7 +81,7 @@ features:
   # ...
 ```
 
-A final example for speed signals which display an icon depending on the matched speed value. The `value` property contains `{}` as part of the icon, which is replaced automatically with the matched tag value. In particular an `example` must be given, which is used in the legend:
+A final example for speed signals which display an icon depending on the matched speed value. The `value` property contains `{}` as part of the icon, which is replaced automatically with the matched tag value, for example `{80}`. In particular an `example` must be given, which is used in the legend:
 
 ```yaml
 features:
@@ -94,7 +94,7 @@ features:
       cases:
         - regex: '^(1[02]|[1-9])0$'
           value: 'at/geschwindigkeitsvoranzeiger-{}-sign'
-          example: 'at/geschwindigkeitsvoranzeiger-80-sign'
+          example: 'at/geschwindigkeitsvoranzeiger-{80}-sign'
       default: 'at/geschwindigkeitsvoranzeiger-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
@@ -102,6 +102,7 @@ features:
   
   # ...
 ```
+Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-{80}-sign.svg`.
 
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
