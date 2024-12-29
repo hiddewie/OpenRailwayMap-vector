@@ -1,9 +1,7 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-// const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8'))
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
-// const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8'))
 
 const findSignalTypes = feature =>
   feature.tags

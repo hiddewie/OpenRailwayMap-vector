@@ -5,8 +5,6 @@ WORKDIR /build
 RUN npm install yaml
 
 RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
-  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
-  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   node tags.lua.js \
@@ -19,9 +17,7 @@ WORKDIR /build
 RUN npm install yaml
 
 RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql.js,target=signals_with_azimuth.sql.js \
-  --mount=type=bind,source=features/electrification_signals.yaml,target=electrification_signals.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  --mount=type=bind,source=features/speed_railway_signals.yaml,target=speed_railway_signals.yaml \
   node signals_with_azimuth.sql.js \
     > /build/signals_with_azimuth.sql
 

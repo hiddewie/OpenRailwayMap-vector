@@ -219,12 +219,6 @@ local signal_columns = {
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
 end
-for _, tag in ipairs(tag_functions.speed_tags) do
-  table.insert(signal_columns, { column = tag, type = 'text' })
-end
-for _, tag in ipairs(tag_functions.electrification_tags) do
-  table.insert(signal_columns, { column = tag, type = 'text' })
-end
 local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
@@ -494,15 +488,9 @@ function osm2pgsql.process_node(object)
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do
-      signal[tag] = tags[tag]
-    end
-    for _, tag in ipairs(tag_functions.speed_tags) do
       if tag ~= 'railway:signal:speed_limit:speed' and tag ~= 'railway:signal:speed_limit_distant:speed' then
         signal[tag] = tags[tag]
       end
-    end
-    for _, tag in ipairs(tag_functions.electrification_tags) do
-      signal[tag] = tags[tag]
     end
 
     signals:insert(signal)
