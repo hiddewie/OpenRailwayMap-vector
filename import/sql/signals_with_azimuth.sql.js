@@ -30,7 +30,6 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     ref_multiline,
     deactivated,
     signal_direction,
-    "railway:signal:speed_limit",
     dominant_speed,
     rank,
     degrees(ST_Azimuth(
@@ -49,7 +48,8 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     `).join('')}
     END as feature_${type},
     `).join('')}
-    
+      
+    -- TODO support type per feature
     CASE ${signals_railway_signals.features.map(feature => feature.type ? `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')} THEN '${feature.type}'
@@ -75,9 +75,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   FROM
     signals_with_azimuth_view
   WHERE
-    signal_feature IS NOT NULL 
-      OR speed_feature IS NOT NULL 
-      OR electrification_feature IS NOT NULL;
+    ${knownSignalTypes.map(type => `feature_${type} IS NOT NULL`).join(' OR ')};
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth
