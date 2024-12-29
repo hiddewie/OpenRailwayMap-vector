@@ -2420,6 +2420,19 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       )
     ),
     {
+      id: 'speed_railway_signals_deactivated',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_speed',
+      'source-layer': 'speed_railway_signals',
+      filter: ['get', 'deactivated'],
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': 'general/signal-deactivated',
+      }
+    },
+    {
       id: `speed_railway_signals_text`,
       type: 'symbol',
       minzoom: 16,
@@ -2954,6 +2967,19 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
       },
     ),
+    {
+      id: 'electrification_signals_deactivated',
+      type: 'symbol',
+      minzoom: 15,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_signals',
+      filter: ['get', 'deactivated'],
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': 'general/signal-deactivated',
+      }
+    },
     railwayKmText(theme),
     {
       id: 'electrification_railway_text_high',
@@ -4304,6 +4330,7 @@ const legendData = {
           feature0: feature.icon.default,
           type: 'line',
           azimuth: null,
+          deactivated: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -4320,6 +4347,7 @@ const legendData = {
           feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
+          deactivated: false,
           direction_both: false,
         },
         variants: [
@@ -4330,6 +4358,17 @@ const legendData = {
             },
           },
         ],
+      },
+      {
+        legend: '(deactivated)',
+        type: 'point',
+        properties: {
+          feature0: 'pl/w21-40',
+          type: 'line',
+          azimuth: null,
+          deactivated: true,
+          direction_both: false,
+        },
       },
     ],
   },
@@ -4733,6 +4772,7 @@ const legendData = {
           feature: feature.icon.default,
           type: 'line',
           azimuth: null,
+          deactivated: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -4749,6 +4789,7 @@ const legendData = {
           feature: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
+          deactivated: false,
           direction_both: false,
         },
         variants: [
@@ -4759,6 +4800,17 @@ const legendData = {
             },
           },
         ],
+      },
+      {
+        legend: '(deactivated)',
+        type: 'point',
+        properties: {
+          feature: 'de/el6',
+          type: 'line',
+          azimuth: null,
+          deactivated: true,
+          direction_both: false,
+        },
       },
     ],
   },
