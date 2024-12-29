@@ -21,7 +21,7 @@ RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql.js,target=signa
   node signals_with_azimuth.sql.js \
     > /build/signals_with_azimuth.sql
 
-FROM debian:unstable-20240211-slim
+FROM debian:trixie-slim
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
