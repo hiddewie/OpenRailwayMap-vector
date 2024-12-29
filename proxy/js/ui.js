@@ -815,9 +815,10 @@ function popupContent(feature) {
   }
 
   const featureProperty = featureCatalog.featureProperty || 'feature';
-  const featureContent = featureCatalog.features && featureCatalog.features[properties[featureProperty]];
+  const catalogKey = properties[featureProperty] && properties[featureProperty].replace(/\{[^}]+}/, '{}');
+  const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
   if (!featureContent) {
-    console.warn(`Could not feature description for feature property "${featureProperty}" with value "${properties[featureProperty]}" in catalog "${layerSource}", feature:`, feature);
+    console.warn(`Could not feature description for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;

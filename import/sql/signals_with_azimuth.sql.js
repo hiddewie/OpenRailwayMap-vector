@@ -37,7 +37,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '')}')` : `'${iconCase.value}'`}`).join('')}
+          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
         END` : `'${feature.icon.default}'`}
     `).join('')}
