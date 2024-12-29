@@ -101,6 +101,30 @@ tags:
   - 'railway:vacancy_detection'
   - 'railway:signal:position'
 
+# Define an ordering for determining importance of signal types
+types:
+  - main
+  - combined
+  - distant
+  - train_protection
+  - main_repeated
+  - speed_limit
+  - speed_limit_distant
+  - minor
+  - passing
+  - shunting
+  - stop
+  - stop_demand
+  - station_distant
+  - crossing
+  - crossing_distant
+  - ring
+  - whistle
+  - electricity
+  - departure
+  - resetting_switch
+  - resetting_switch_distant
+
 features:
 
   # --- General --- #

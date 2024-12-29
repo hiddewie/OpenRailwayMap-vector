@@ -3,15 +3,6 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
-const findSignalTypes = feature =>
-  feature.tags
-    .filter(tag => tag.tag.match(/^railway:signal:[^:]+$/))
-    .map(tag => tag.tag.replace('railway:signal:', ''));
-
-const knownSignalTypes = [...new Set([
-  ...new Set(signals_railway_signals.features.flatMap(findSignalTypes)),
-])].sort();
-
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -37,7 +28,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
     )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
       
-    ${knownSignalTypes.map(type => `
+    ${signals_railway_signals.types.map(type => `
     CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type}`)).map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
@@ -75,11 +66,59 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   FROM
     signals_with_azimuth_view
   WHERE
-    ${knownSignalTypes.map(type => `feature_${type} IS NOT NULL`).join(' OR ')};
+    ${signals_railway_signals.types.map(type => `feature_${type} IS NOT NULL`).join(' OR ')};
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth
   USING GIST(way);
+
+CREATE OR REPLACE VIEW signals_railway_signal_features AS
+  SELECT *
+  FROM (
+    SELECT
+      signals_with_azimuth.*,
+      -- Build up array of available features
+      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
+      -- Does not include: speed_limit, speed_limit_distant, electricity
+      array_remove(
+        ARRAY[${signals_railway_signals.types.filter(type => !['speed_limit', 'speed_limit_distant', 'electricity'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        NULL
+      ) AS features
+    FROM signals_with_azimuth
+  ) AS s
+  WHERE array_length(features, 1) > 0;
+
+CREATE OR REPLACE VIEW speed_railway_signal_features AS
+  SELECT *
+  FROM (
+    SELECT
+      signals_with_azimuth.*,
+      -- Build up array of available features
+      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
+      -- Does not include: speed_limit, speed_limit_distant, electricity
+      array_remove(
+        ARRAY[${signals_railway_signals.types.filter(type => ['speed_limit', 'speed_limit_distant'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        NULL
+        ) AS features
+      FROM signals_with_azimuth
+  ) AS s
+  WHERE array_length(features, 1) > 0;
+
+CREATE OR REPLACE VIEW electricity_railway_signal_features AS
+  SELECT *
+  FROM (
+    SELECT
+      signals_with_azimuth.*,
+      -- Build up array of available features
+      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
+      -- Does not include: speed_limit, speed_limit_distant, electricity
+      array_remove(
+        ARRAY[${signals_railway_signals.types.filter(type => ['electricity'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        NULL
+        ) AS features
+      FROM signals_with_azimuth
+  ) AS s
+  WHERE array_length(features, 1) > 0;
 `
 
 console.log(sql);

@@ -271,15 +271,15 @@ CREATE OR REPLACE VIEW railway_text_km AS
     pos,
     (railway_pos_decimal(pos) = '0') as zero,
     railway_pos_round(pos, 0)::text as pos_int
-  FROM
-    (SELECT
-       id,
-       osm_id,
-       way,
-       railway,
-       COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
-     FROM railway_positions
-    ) AS r
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      way,
+      railway,
+      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
+      FROM railway_positions
+  ) AS r
   WHERE pos IS NOT NULL
   ORDER by zero;
 
@@ -305,36 +305,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     features[1] as feature0,
     features[2] as feature1,
     type,
-    azimuth,
-    direction_both,
+    azimuth,(signal_direction = 'both') as direction_both,
     ref,
     deactivated,
     dominant_speed as speed
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      way,
-      -- Build up array of available features
-      array_remove(
-        ARRAY[feature_speed_limit, feature_speed_limit_distant],
-        NULL
-      ) as features,
-      type,
-      azimuth,
-      (signal_direction = 'both') as direction_both,
-      ref,
-      deactivated,
-      dominant_speed
-    FROM signals_with_azimuth
-    ORDER BY
-      -- TODO check if needed
-      -- distant signals are less important, signals for slower speeds are more important
-      (feature_speed_limit IS NOT NULL) DESC NULLS FIRST,
-      dominant_speed DESC NULLS FIRST
-   ) as s
-  WHERE
-    array_length(features, 1) > 0;
+  FROM speed_railway_signal_features
+  ORDER BY
+    rank NULLS FIRST,
+    dominant_speed DESC NULLS FIRST;
 
 
 --- Signals ---
@@ -401,62 +379,12 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     features[5] as feature4,
     railway,
     azimuth,
-    direction_both,
+    (signal_direction = 'both') as direction_both,
     ref,
     ref_multiline,
     deactivated
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      way,
-      railway,
-      ref,
-      ref_multiline,
-      deactivated,
-      -- Build up array of available features
-      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      -- Does not include: speed_limit, speed_limit_distant, electricity
-      array_remove(
-        ARRAY[
-          feature_combined,
-          feature_main,
-          feature_minor,
-          feature_main_repeated,
-          feature_distant,
-          feature_minor_distant,
-          feature_crossing,
-          feature_crossing_distant,
-          feature_departure,
-          feature_fouling_point,
-          feature_helper_engine,
-          feature_humping,
-          feature_passing,
-          feature_preheating,
-          feature_radio,
-          feature_resetting_switch,
-          feature_resetting_switch_distant,
-          feature_ring,
-          feature_shunting,
-          feature_snowplow,
-          feature_station_distant,
-          feature_steam_locomotive,
-          feature_stop,
-          feature_stop_demand,
-          feature_train_protection,
-          feature_whistle,
-          feature_wrong_road
-        ],
-        NULL
-      ) as features,
-      feature_main,
-      feature_distant,
-      azimuth,
-      (signal_direction = 'both') as direction_both
-    FROM signals_with_azimuth
-    ORDER BY rank NULLS FIRST
-  ) as s
-  WHERE array_length(features, 1) > 0;
+  FROM signals_railway_signal_features
+  ORDER BY rank NULLS FIRST;
 
 --- Electrification ---
 
@@ -472,5 +400,5 @@ CREATE OR REPLACE VIEW electrification_signals AS
     deactivated,
     voltage,
     frequency
-  FROM signals_with_azimuth
-  WHERE feature_electricity IS NOT NULL;
+  FROM electricity_railway_signal_features
+  ORDER BY rank NULLS FIRST;
