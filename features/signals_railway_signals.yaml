@@ -103,27 +103,27 @@ tags:
 
 # Define an ordering for determining importance of signal types
 types:
-  - main
-  - combined
-  - distant
-  - train_protection
-  - main_repeated
-  - speed_limit
-  - speed_limit_distant
-  - minor
-  - passing
-  - shunting
-  - stop
-  - stop_demand
-  - station_distant
-  - crossing
-  - crossing_distant
-  - ring
-  - whistle
-  - electricity
-  - departure
-  - resetting_switch
-  - resetting_switch_distant
+  - { type: main }
+  - { type: combined }
+  - { type: distant }
+  - { type: train_protection }
+  - { type: main_repeated }
+  - { type: speed_limit, layer: speed }
+  - { type: speed_limit_distant, layer: speed }
+  - { type: minor }
+  - { type: passing }
+  - { type: shunting }
+  - { type: stop }
+  - { type: stop_demand }
+  - { type: station_distant }
+  - { type: crossing }
+  - { type: crossing_distant }
+  - { type: ring }
+  - { type: whistle }
+  - { type: electricity, layer: electrification }
+  - { type: departure }
+  - { type: resetting_switch }
+  - { type: resetting_switch_distant }
 
 features:
 

@@ -19,14 +19,14 @@ local signal_tags = {${signals_railway_signals.tags.map(tag => `
 }
 
 function signal_rank(tags)${signals_railway_signals.types.map((type, typeIndex) => `
-  if tags['railway:signal:${type}'] then return ${signals_railway_signals.types.length - typeIndex} end`).join('')}
+  if tags['railway:signal:${type.type}'] then return ${signals_railway_signals.types.length - typeIndex} end`).join('')}
   
   return 0
 end
 
 function signal_deactivated(tags)
   return (${signals_railway_signals.types.map((type, typeIndex) => `
-    tags['railway:signal:${type}:deactivated']${(typeIndex < signals_railway_signals.types.length - 1) ? ' or' : ''}`).join('')}
+    tags['railway:signal:${type.type}:deactivated']${(typeIndex < signals_railway_signals.types.length - 1) ? ' or' : ''}`).join('')}
   ) == 'yes'
 end
 

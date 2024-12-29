@@ -3,6 +3,10 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
+const speedFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'speed').map(type => type.type);
+const electrificationFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'electrification').map(type => type.type);
+const otherFeatureTypes = signals_railway_signals.types.filter(type => !(type.layer === 'speed' || type.layer === 'electrification')).map(type => type.type);
+
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -29,7 +33,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
       
     ${signals_railway_signals.types.map(type => `
-    CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type}`)).map(feature => `
+    CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
@@ -37,7 +41,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
         END` : `'${feature.icon.default}'`}
     `).join('')}
-    END as feature_${type},
+    END as feature_${type.type},
     `).join('')}
       
     -- TODO support type per feature
@@ -66,7 +70,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   FROM
     signals_with_azimuth_view
   WHERE
-    ${signals_railway_signals.types.map(type => `feature_${type} IS NOT NULL`).join(' OR ')};
+    ${signals_railway_signals.types.map(type => `feature_${type.type} IS NOT NULL`).join(' OR ')};
 
 CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
   ON signals_with_azimuth
@@ -81,7 +85,7 @@ CREATE OR REPLACE VIEW signals_railway_signal_features AS
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
       -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
-        ARRAY[${signals_railway_signals.types.filter(type => !['speed_limit', 'speed_limit_distant', 'electricity'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        ARRAY[${otherFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
       ) AS features
     FROM signals_with_azimuth
@@ -97,7 +101,7 @@ CREATE OR REPLACE VIEW speed_railway_signal_features AS
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
       -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
-        ARRAY[${signals_railway_signals.types.filter(type => ['speed_limit', 'speed_limit_distant'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        ARRAY[${speedFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
         ) AS features
       FROM signals_with_azimuth
@@ -113,7 +117,7 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
       -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
-        ARRAY[${signals_railway_signals.types.filter(type => ['electricity'].includes(type)).map(type => `feature_${type}`).join(', ')}],
+        ARRAY[${electrificationFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
         ) AS features
       FROM signals_with_azimuth
