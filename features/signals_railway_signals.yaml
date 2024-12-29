@@ -29,6 +29,7 @@ tags:
   - 'railway:signal:electricity:for'
   - 'railway:signal:electricity:turn_direction'
   - 'railway:signal:electricity:voltage'
+  - 'railway:signal:electricity:frequency'
   - 'railway:signal:fouling_point'
   - 'railway:signal:helper_engine'
   - 'railway:signal:helper_engine:form'
