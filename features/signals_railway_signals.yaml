@@ -23,6 +23,12 @@ tags:
   - 'railway:signal:distant:height'
   - 'railway:signal:distant:type'
   - 'railway:signal:distant:distance'
+  - 'railway:signal:electricity'
+  - 'railway:signal:electricity:type'
+  - 'railway:signal:electricity:form'
+  - 'railway:signal:electricity:for'
+  - 'railway:signal:electricity:turn_direction'
+  - 'railway:signal:electricity:voltage'
   - 'railway:signal:fouling_point'
   - 'railway:signal:helper_engine'
   - 'railway:signal:helper_engine:form'
@@ -64,8 +70,15 @@ tags:
   - 'railway:signal:snowplow'
   - 'railway:signal:snowplow:form'
   - 'railway:signal:snowplow:type'
-  # Excludes most railway:signal:speed_limit and related tags because those are included as part of the speed signal tags
+  - 'railway:signal:speed_limit'
+  - 'railway:signal:speed_limit:form'
+  - 'railway:signal:speed_limit:speed'
   - 'railway:signal:speed_limit:states'
+  - 'railway:signal:speed_limit_distant'
+  - 'railway:signal:speed_limit_distant:form'
+  - 'railway:signal:speed_limit_distant:speed'
+  - 'railway:signal:speed_limit_distant:mobile'
+  - 'railway:signal:speed_limit:pointing'
   - 'railway:signal:station_distant'
   - 'railway:signal:station_distant:form'
   - 'railway:signal:stop'
@@ -335,6 +348,210 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Geschwindigkeitsvoranzeiger (sign)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[02]|[1-9])0$', value: 'at/geschwindigkeitsvoranzeiger-{}-sign', example: 'at/geschwindigkeitsvoranzeiger-80-sign' }
+      default: 'at/geschwindigkeitsvoranzeiger-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Geschwindigkeitsvoranzeiger (light)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-{}-light', example: 'at/geschwindigkeitsvoranzeiger-140-light' }
+      default: 'at/geschwindigkeitsvoranzeiger-empty-light'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Geschwindigkeitsanzeiger (sign)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-{}-sign', example: 'at/geschwindigkeitsanzeiger-160-sign' }
+      default: 'at/geschwindigkeitsanzeiger-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Geschwindigkeitsanzeiger (light)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-{}-light', example: 'at/geschwindigkeitsanzeiger-120-light' }
+      default: 'at/geschwindigkeitsanzeiger-empty-light'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Ankündigungstafel
+    country: AT
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-4]0|10|[2-9][05])$', value: 'at/ankuendigungstafel-{}-sign', example: 'at/ankuendigungstafel-70-sign' }
+      default: 'at/ankuendigungstafel-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungstafel' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Geschwindigkeitstafel
+    country: AT
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-{}-sign', example: 'at/geschwindigkeitstafel-60-sign' }
+      default: 'at/geschwindigkeitstafel-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
+    country: AT
+    icon: { default: 'at/x40' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-SLB:x40' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Anfangssignal
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}', example: 'at/anfangssignal-60' }
+      default: 'at/anfangssignal-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ankündigungssignal
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-6]0$', value: 'at/ankündigungssignal-{}', example: 'at/ankündigungssignal-60' }
+      default: 'at/ankündigungssignal-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungssignal' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Endsignal
+    country: AT
+    icon: { default: 'at/endsignal' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:endsignal' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ankündigung EK sicht
+    country: AT
+    icon: { default: 'at/ankündigung-ek-sicht' }
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigung_ek-sicht' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: EK sicht Pfeiftafel
+    country: AT
+    icon: { default: 'at/ek-sicht-pfeiftafel' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:ek-sicht_pfeiftafel' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ankündigung Stromabnehmer tief
+    country: AT
+    icon: { default: 'at/ankündigung_stromabnehmer_tief' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_stromabnehmer_tief' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Ankündigung Hauptschalter aus
+    country: AT
+    icon: { default: 'at/ankündigung_hauptschalter_aus' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_hauptschalter_aus' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+
+  - description: Halt für Fahrzeuge mit angehobenem Stromabnehmer
+    country: AT
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^left$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
+        - { regex: '^through$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
+        - { regex: '^right$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
+      default: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer'
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
+
+  - description: Hauptschalter ein
+    country: AT
+    icon: { default: 'at/hauptschalter_ein' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_ein' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Stromabnehmer hoch
+    country: AT
+    icon: { default: 'at/stromabnehmer_hoch' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_hoch' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Hauptschalter aus
+    country: AT
+    icon: { default: 'at/hauptschalter_aus' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_aus' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+
+  - description: Stromabnehmer tief
+    country: AT
+    icon: { default: 'at/stromabnehmer_tief' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:stromabnehmer_tief' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Bahnhof Streckentrennung anfang
+    country: AT
+    icon: { default: 'at/bahnhof-streckentrennung_anfang' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:bahnhof-streckentrennung_anfang' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Bahnhof Streckentrennung ende
+    country: AT
+    icon: { default: 'at/bahnhof-streckentrennung_ende' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:bahnhof-streckentrennung_ende' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Schaltzeiger
+    country: AT
+    icon: { default: 'at/schaltzeiger' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AT-V2:schaltzeiger' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
+      - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
+
   # --- BE --- #
 
   - description: grand signal d'arrêt
@@ -384,6 +601,41 @@ features:
       default: 'be/bme/simplified_unknown'
     tags:
       - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
+
+  - description: Speed limit light (part of main signal)
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/chiffre-vitesse-{}', example: 'be/chiffre-vitesse-60' }
+      default: 'be/chiffre-vitesse-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:VIS' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Panto distant
+    country: BE
+    icon: { default: 'be/PBA' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'BE:PBA' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Panto down
+    country: BE
+    icon: { default: 'be/PBE' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'BE:PBE' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Panto up
+    country: BE
+    icon: { default: 'be/PRL' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'BE:PRL' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
   # --- CH --- #
 
@@ -479,6 +731,239 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'CH-FDV:559' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Vorsignal verminderte Geschwindigkeit
+    country: CH
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([6-9][05]|1[0-1][05])$', value: 'ch/fdv-209-{}', example: 'ch/fdv-209-90' }
+      default: 'ch/fdv-209-empty'
+    tags:
+      # TODO support CH-FDV:210, with railway:signal:speed_limit_distant:speed:trainclass_low
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:209', 'CH-FDV:210'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Anfangssignal verminderte Geschwindigkeit
+    country: CH
+    icon: { default: 'ch/fdv-211' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:211' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Endesignal verminderte Geschwindigkeit
+    country: CH
+    icon: { default: 'ch/fdv-212' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:212' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Vorsignal verminderte Geschwindigkeit für Neigetechnikzüge
+    country: CH
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^1[1-4]0$', value: 'ch/fdv-213-{}', example: 'ch/fdv-213-120' }
+      default: 'ch/fdv-213-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:213' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Anfangssignal verminderte Geschwindigkeit
+    country: CH
+    icon: { default: 'ch/fdv-214' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:214' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Endesignal verminderte Geschwindigkeit
+    country: CH
+    icon: { default: 'ch/fdv-215' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:215' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Merktafel für Änderung der Höchstgeschwindigkeit
+    country: CH
+    icon: { default: 'ch/fdv-217' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:217' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Geschwindigkeits-Ankündigung
+    country: CH
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-40' }
+      default: 'ch/fdv-540-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:540', 'CH-FDV:541'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Geschwindigkeits-Ausführung
+    country: CH
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      # Same form as distant signal
+      cases:
+        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-100' }
+      default: 'ch/fdv-540-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:549' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Merktafel für Streckengeschwindigkeit beim Signalsystem N
+    country: CH
+    icon: { default: 'ch/fdv-569' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:569' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Vorsignal zum Senksignal
+    country: CH
+    icon: { default: 'ch/fdv-703' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:703' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Senksignal
+    country: CH
+    icon: { default: 'ch/fdv-704' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:704' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'semaphore'] }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Endsignal zum Senksignal
+    country: CH
+    icon: { default: 'ch/fdv-705' }
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['CH-FDV:705', 'CH-FDV:706'] }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Aufhebungssignal zum Senksignal
+    country: CH
+    icon: { default: 'ch/fdv-707' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:707' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Vorsignal zum Ausschaltsignal (sign)
+    country: CH
+    icon: { default: 'ch/fdv-708' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:708' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Vorsignal zum Ausschaltsignal (light)
+    country: CH
+    icon: { default: 'ch/fdv-709' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:709' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Ausschaltsignal (sign)
+    country: CH
+    icon: { default: 'ch/fdv-710' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:710' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: Ausschaltsignal (light)
+    country: CH
+    icon: { default: 'ch/fdv-711' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:711' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: Einschaltsignal (sign)
+    country: CH
+    icon: { default: 'ch/fdv-712' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:712' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: Einschaltsignal (light)
+    country: CH
+    icon: { default: 'ch/fdv-713' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:713' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: Streckentrennung
+    country: CH
+    icon: { default: 'ch/fdv-714' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:714' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'joint' } # TODO why joint?
+
+  - description: Zonen-Schutzstreckensignal
+    country: CH
+    icon: { default: 'ch/fdv-715' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:715' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'main_switch_off' }
+
+  - description: Zonensignal
+    country: CH
+    # TODO support voltage values
+    icon: { default: 'ch/fdv-716' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:716' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_changeable' }
+
+  - description: Vorsignal zum Umschaltsignal
+    country: CH
+    icon: { default: 'ch/fdv-719' }
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['CH-FDV:719', 'CH-SBB:719'] }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_change_advance' }
+
+  - description: Umschaltsignal anfang (sign)
+    country: CH
+    icon: { default: 'ch/fdv-717' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:717' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_change_start' }
+
+  - description: Umschaltsignal anfang (light)
+    country: CH
+    icon: { default: 'ch/fdv-717.1' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:717.1' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_change_start' }
+
+  - description: Umschaltsignal ende (sign)
+    country: CH
+    icon: { default: 'ch/fdv-718' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:718' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
+
+  - description: Umschaltsignal ende (light)
+    country: CH
+    icon: { default: 'ch/fdv-718.1' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'CH-FDV:718.1' }
+      - { tag: 'railway:signal:electricity:form', value: 'light' }
+      - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
 
   # --- DE --- #
 
@@ -1052,6 +1537,474 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
+  - description: Speed signals (Zs 3v) (sign)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9])0$', value: 'de/zs3v-{}-sign-down', example: 'de/zs3v-60-sign-down' }
+      default: 'de/zs3v-empty-sign-down'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Speed signals (Zs 3v) (light)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        # for light signals: empty Zs3v "looks" exactly like empty Zs2v
+        - { regex: '^off;\?$', value: 'de/zs2v-unknown' }
+        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3v-{}-light', example: 'de/zs3v-20-light' }
+      default: 'de/zs2v-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Speed signals (Zs 3) (light)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-6])0$', value: 'de/zs3-{}-sign-up', example: 'de/zs3-50-sign-up' }
+      default: 'de/zs3-empty-sign-up'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed signals (Zs 3) (light)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        # for light signals: empty Zs3 "looks" exactly like empty Zs2
+        - { regex: '^off;\?$', value: 'de/zs2-unknown' }
+        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-{}-light', example: 'de/zs3-70-light' }
+      default: 'de/zs2-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: West German branch line speed signals (Lf 4 DS 301)
+    country: DE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([2-8]0|1?[05])$', value: 'de/lf4-ds301-{}-sign-down', example: 'de/lf4-ds301-80-sign-down' }
+      default: 'de/lf4-ds301-empty-sign-down'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:db:lf4' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: East German branch line speed signals (Lf 4)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        # DB and DR variant have the same empty sign
+        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-{}-sign-down', example: 'de/lf4-dr-70-sign-down' }
+      default: 'de/lf4-ds301-empty-sign-down'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:dr:lf4' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: German line speed signals (Lf 6)
+    country: DE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^((1[0-9]|[1-9])0|5|15)$', value: 'de/lf6-{}-sign-down', example: 'de/lf6-30-sign-down' }
+      default: 'de/lf6-empty-sign-down'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf6' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Langsamfahrscheibe
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf1-{}-sign-down', example: 'de/lf1-200-sign-down' }
+      default: 'de/lf1-empty-sign-down'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf1' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Hamburger Hochbahn L1
+    country: DE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([3-7]0)$', value: 'de/hha/l1-{}-sign', example: 'de/hha/l1-70-sign' }
+      default: 'de/hha/l1-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'DE-HHA:l1' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Tram distance speed limit (G 1a) (sign)
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(5|[1-6][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-40' }
+      default: 'de/bostrab/g1a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Tram distance speed limit (G 1b) (light)
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-7]0$', value: 'de/bostrab/g1b-{}', example: 'de/bostrab/g1b-40' }
+      default: 'de/bostrab/g1b-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Tram speed limit (G 2a) (sign)
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(5|[1-7][05])$', value: 'de/bostrab/g2a-{}', example: 'de/bostrab/g2a-40' }
+      default: 'de/bostrab/g2a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Tram speed limit (G 2b) (light)
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-7]0$', value: 'de/bostrab/g2b-{}', example: 'de/bostrab/g2b-40' }
+      default: 'de/bostrab/g2b-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Tram signal G3
+    country: DE
+    type: tram
+    icon: { default: 'de/bostrab/g3' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: German tram speed limit signals as signs (G 4)
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(100|[2-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-40' }
+      default: 'de/bostrab/g4-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Hannover tram speed limit G5
+    country: DE
+    type: tram
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-40' }
+      default: 'de/bostrab/g5-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-UESTRA:g5' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: East German line speed signal "Eckentafel" (Lf 5)
+    country: DE
+    type: line
+    icon: { default: 'de/lf5-dv301-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf5' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: West German line speed signal "Anfangstafel" (Lf 5)
+    country: DE
+    type: line
+    icon: { default: 'de/lf5-ds301-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:lf5' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: German line speed signals (Lf 7)
+    country: DE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf7-{}-sign', example: 'de/lf7-180-sign' }
+      default: 'de/lf7-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf7' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Hamburger Hochbahn L4
+    country: DE
+    type: line
+    icon: { default: 'de/hha/l4' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-HHA:l4' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Anfangsscheibe
+    country: DE
+    icon: { default: 'de/lf2-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['DE-ESO:lf2', 'DE-ESO:db:lf2'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Langsamfahrbeginnscheibe
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(5|[1-9]0|1[0-2]0)$', value: 'de/lf1-2-{}-sign', example: 'de/lf1-2-80-sign' }
+      default: 'de/lf1-2-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf1/2' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Endscheibe
+    country: DE
+    icon: { default: 'de/lf3-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ende der Geschwindigkeitsbeschränkung (sign)
+    country: DE
+    icon: { default: 'de/zs10-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ende der Geschwindigkeitsbeschränkung (light)
+    country: DE
+    icon: { default: 'de/zs10-light' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: pantograph down advance El 3
+    country: DE
+    icon: { default: 'de/el3' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el3' }
+
+  - description: power off advance sign El 1v
+    country: DE
+    icon: { default: 'de/el1v' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1v' }
+
+  - description: end of catenary sign El 6
+    country: DE
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^left$', value: 'de/el6-left' }
+        - { regex: '^through$', value: 'de/el6-through' }
+        - { regex: '^right$', value: 'de/el6-right' }
+      default: 'de/el6'
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
+
+  - description: power on sign El 2
+    country: DE
+    icon: { default: 'de/el2' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
+
+  - description: pantograph up El 5
+    country: DE
+    icon: { default: 'de/el5' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
+
+  - description: power off sign El 1
+    country: DE
+    icon: { default: 'de/el1' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
+
+  - description: pantograph down El 4
+    country: DE
+    icon: { default: 'de/el4' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
+
+  - description: tram power off shortly signal (St 7)
+    country: DE
+    icon: { default: 'de/bostrab/st7' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
+
+  - description: power off shortly
+    country: DE
+    icon: { default: 'de/el1-el2' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
+
+  - description: tram sign power off shortly El 1
+    country: DE
+    icon: { default: 'de/el1' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-AVG:el1' }
+
+  - description: Streckentrennung (anfang)
+    country: DE
+    icon: { default: 'de/streckentrennung-anfang' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:streckentrennung' }
+      - { tag: 'railway:signal:electricity:type', value: 'begin_of_isolated_overlap' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Streckentrennung (ende)
+    country: DE
+    icon: { default: 'de/streckentrennung-ende' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:streckentrennung' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_isolated_overlap' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: ICE-Schaltmerkhilfe
+    country: DE
+    icon: { default: 'de/ice-schaltmerkhilfe' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:ice-schaltmerkhilfe' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on_for_long_trains' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: VGF st9
+    country: DE
+    icon: { default: 'de/vgf/st9' }
+    tags:
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9' }
+
+  - description: VGF st10
+    country: DE
+    icon: { default: 'de/vgf/st10' }
+    tags:
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-VGF:st10' }
+
+  - description: VGF st9 & st10
+    country: DE
+    icon: { default: 'de/vgf/st9-st10' }
+    tags:
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
+
+  # --- ES --- #
+
+  - description: end of catenary
+    country: ES
+    # TODO add turn direction
+    icon: { default: 'es/FI14A' }
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['ES:FI14A', 'ES:FI14B'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
+
+  - description: power off shortly
+    country: ES
+    icon: { default: 'es/FI14C' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14C' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+
+  - description: power off shortly (full)
+    country: ES
+    icon: { default: 'es/FI14D' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14D' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
+
+  - description: pantograph down
+    country: ES
+    icon: { default: 'es/FI14E' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14E' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: pantograph up
+    country: ES
+    icon: { default: 'es/FI14F' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14F' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: pantograph down announcement
+    country: ES
+    icon: { default: 'es/FI14G' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14G' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: power off announcement
+    country: ES
+    icon: { default: 'es/FI14H' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14H' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: power off
+    country: ES
+    icon: { default: 'es/FI14I' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14I' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: power on
+    country: ES
+    icon: { default: 'es/FI14J' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ES:FI14J' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
   # --- FI --- #
 
   - description: crossing signal To
@@ -1134,6 +2087,91 @@ features:
       - { tag: 'railway:signal:combined', value: 'FI:So' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
+  - description: Nopeusmerkki, speed signal
+    country: FI
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([2-6]0)$', value: 'fi/t-101-{}', example: 'fi/t-101-40' }
+      default: 'fi/t-101-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FI:T-101' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Nopeusmerkin etumerkki, distant signal
+    country: FI
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([2-6]0)$', value: 'fi/t-102-{}', example: 'fi/t-102-40' }
+      default: 'fi/t-102-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FI:T-102' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Merkitty nopeus päättyy -merkki, end of speed limit
+    country: FI
+    icon: { default: 'fi/t-110' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FI:T-110' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: JKV-nopeus, JKV speed limit
+    country: FI
+    icon: { default: 'fi/t-115' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FI:T-115' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Erotusjakson etumerkki
+    country: FI
+    icon: { default: 'fi/t-120' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-120' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Erotusjakso alkaa
+    country: FI
+    icon: { default: 'fi/t-122' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-122' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Erotusjakso päättyy
+    country: FI
+    icon: { default: 'fi/t-123' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-123' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Ajojohdin päättyy
+    country: FI
+    icon: { default: 'fi/t-121' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-121' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Laske virroitin
+    country: FI
+    icon: { default: 'fi/t-124A' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-124A' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Laske virroitin -etumerkki
+    country: FI
+    icon: { default: 'fi/t-133' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-133' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Nosta virroitin
+    country: FI
+    icon: { default: 'fi/t-125' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
   # --- FR --- #
 
   - description: Carré
@@ -1193,6 +2231,211 @@ features:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  - description: Pancarte Z & TIV-D
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/Z-TIV-distance-{}-sign', example: 'fr/Z-TIV-distance-120-sign' }
+      default: 'fr/Z-TIV-distance-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Pancarte Z & TIV-D (B)
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[5-9]0|200)$', value: 'fr/Z-TIV-type-B-{}', example: 'fr/Z-TIV-type-B-160' }
+      default: 'fr/Z-TIV-type-B-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Pancarte Z
+    country: FR
+    icon: { default: 'fr/Tableau_Z' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Tableau R
+    country: FR
+    icon: { default: 'fr/Tableau_R' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:R' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Tableau P
+    country: FR
+    icon: { default: 'fr/Tableau_P' }
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:P' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Chevron pointe en bas
+    country: FR
+    icon: { default: 'fr/chevron pointe en bas' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
+      - { tag: 'railway:signal:speed_limit:pointing', value: 'downwards' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Chevron pointe en haut
+    country: FR
+    icon: { default: 'fr/chevron pointe en haut' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
+      - { tag: 'railway:signal:speed_limit:pointing', value: 'upwards' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: TIV-D (mobile)
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-{}-light', example: 'fr/TIV-distance-80-light' }
+      default: 'fr/TIV-distance-empty-light'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant:mobile', value: 'yes' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: TIV-D (fixed)
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-{}-sign', example: 'fr/TIV-distance-70-sign' }
+      default: 'fr/TIV-distance-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  # TODO support TIV-R
+  # - description: TIV-R
+  #   country: FR
+  #   icon:
+  #     match: 'railway:signal:speed_limit_reminder:speed'
+  #     cases:
+  #       - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-{}-sign', example: 'fr/TIV-reminder-110-sign' }
+  #     default: 'fr/TIV-reminder-empty-sign'
+  #   tags:
+  #     - { tag: 'railway:signal:speed_limit_reminder', value: 'FR:TIV-R' }
+  #     - { tag: 'railway:signal:speed_limit_reminder:form', value: 'sign' }
+
+  - description: TIV-D (B)
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[5-9]0|200)$', value: 'fr/TIV-type-B-{}', example: 'fr/TIV-type-B-160' }
+      default: 'fr/TIV-type-B-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: TIV-D (C)
+    country: FR
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[5-9]0)$', value: 'fr/TIV-type-C-{}', example: 'fr/TIV-type-C-160' }
+      default: 'fr/TIV-type-C-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_C' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Neutral Zone Announcement
+    country: FR
+    icon: { default: 'fr/SECT' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Start of Neutral Zone
+    country: FR
+    icon: { default: 'fr/CC_EXE' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:CC_EXE' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: End of Neutral Zone
+    country: FR
+    icon: { default: 'fr/CC_FIN' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: End of Neutral Zone (reversible trains)
+    country: FR
+    icon: { default: 'fr/REV' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:REV' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Pantograph Down Announcement
+    country: FR
+    icon: { default: 'fr/BP_DIS' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_DIS' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Start of Pantograph Down
+    country: FR
+    icon: { default: 'fr/BP_EXE' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_EXE' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: End of Pantograph Down
+    country: FR
+    icon: { default: 'fr/BP_FIN' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_FIN' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Dual-Mode Traffic
+    country: FR
+    icon: { default: 'fr/BIMODE' }
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['FR:BIMODE', 'FR:BIMODE_A'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: End of Catenaries
+    country: FR
+    icon: { default: 'fr/FIN_CAT' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:FIN_CAT' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+  - description: Stop Markers
+    country: FR
+    icon: { default: 'fr/JALON_ARRET' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:JALON_ARRET' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Frost Board
+    country: FR
+    icon: { default: 'fr/GIVRE' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
+      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+
   # --- GB --- #
 
   - description: Main (shunting)
@@ -1218,6 +2461,64 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'GB-NR:shunting' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  # --- LU --- #
+
+  - description: ESFA
+    country: LU
+    icon: { default: 'lu/ESFA' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFA' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+  - description: ESFAp/TA
+    country: LU
+    icon: { default: 'lu/ESFAp_TA' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TA' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: ESFAp/TE
+    country: LU
+    icon: { default: 'lu/ESFAp_TE' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TE' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: ESFAp/TR
+    country: LU
+    icon: { default: 'lu/ESFAp_TR' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TR' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: ESFCC/A
+    country: LU
+    icon: { default: 'lu/ESFCC_A' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/A' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: ESFCC/E
+    country: LU
+    icon: { default: 'lu/ESFCC_E' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/E' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: ESFCC/F
+    country: LU
+    icon: { default: 'lu/ESFCC_F' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/F' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   # --- NL --- #
 
@@ -1434,6 +2735,207 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:333' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: L signal
+    country: NL
+    icon: { default: 'nl/276' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+
+  - description: H signal
+    country: NL
+    icon: { default: 'nl/277' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+
+  - description: X/G signal
+    country: NL
+    icon: { default: 'nl/279' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', value: 'X;G;off' }
+
+  - description: distant speed limit distant (sign)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-80' }
+      default: 'nl/313-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: speed limit (sign)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-70' }
+      default: 'nl/314-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: speed limit increase (sign)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-130' }
+      default: 'nl/316-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: distant speed limit (light)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-60' }
+      default: 'nl/speed_limit_distant_light-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: speed limit (light)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-60' }
+      default: 'nl/speed_limit_light-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: tunnel distant speed limit
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-80' }
+      default: 'nl/286-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: tunnel entry speed limit
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-40' }
+      default: 'nl/281-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (sign)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-40' }
+      default: 'nl/282-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (light)
+    country: NL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-40' }
+      default: 'nl/282a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: power off
+    country: NL
+    icon: { default: 'nl/306a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:306a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+    # TODO support carriages
+  - description: power on
+    country: NL
+    icon: { default: 'nl/307a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:307a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: announcement pantograph down
+    country: NL
+    icon: { default: 'nl/307a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:308a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  # TODO support wash
+  - description: pantograph down
+    country: NL
+    icon: { default: 'nl/309a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:309a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  # TODO support carriages
+  - description: pantograph up
+    country: NL
+    icon: { default: 'nl/310a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:310a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: end of catenary
+    country: NL
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^right$', value: 'nl/311-right' }
+        - { regex: '^left$', value: 'nl/311-left' }
+      default: 'nl/311'
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:311' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+  - description: voltage change
+    country: NL
+    icon:
+      match: 'railway:signal:electricity:voltage'
+      cases:
+        - { regex: '^1500$', value: 'nl/320-1500' }
+        - { regex: '^25000$', value: 'nl/320-25000' }
+      default: 'nl/320-unknown'
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NL:320' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'voltage_change' }
 
   # --- PL --- #
 
@@ -1927,6 +3429,216 @@ features:
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'ZTM-MW:wm17' }
 
+  - description: D6 Tarcza zwolnić bieg
+    country: PL
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      # TODO update signs from https://wiki.openstreetmap.org/wiki/Pl:OpenRailwayMap/Tagging_in_Poland#Tarcza_zwolnić_bieg_D_6
+      # TODO handle dwarf signals
+      cases:
+        - { regex: '^[1-9]0$', value: 'pl/d6-{}', example: 'pl/d6-70' }
+      default: 'pl/d6-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:d6' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: W8 Wskaźnik ograniczenia prędkości
+    country: PL
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w8-{}', example: 'pl/w8-60' }
+      default: 'pl/w8-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: W9 Wskaźnik odcinka ograniczonej prędkości
+    country: PL
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([2-9]|1[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-60' }
+      default: 'pl/w9-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: W21 Wskaźniki podwyższenia prędkości
+    country: PL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w21-{}', example: 'pl/w21-80' }
+      default: 'pl/w21-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: W27a Wskaźnik zmiany prędkości
+    country: PL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w27a-{}', example: 'pl/w27a-80' }
+      default: 'pl/w27a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w27a' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: W30 Wskaźnik ważenia składu
+    country: PL
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^5$', value: 'pl/w30-{}', example: 'pl/w30-5' }
+      default: 'pl/w30-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w30' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Wskaźnik uprzedzający o opuszczeniu pantografu (we1)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^right$', value: 'pl/we1b' }
+        - { regex: '^left$', value: 'pl/we1c' }
+      default: 'pl/we1a'
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we1' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Wskaźniki opuszczenia pantografu (we2)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^right$', value: 'pl/we2b' }
+        - { regex: '^left$', value: 'pl/we2c' }
+      default: 'pl/we2a'
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we2a', 'PL-PKP:we2b', 'PL-PKP:we2c'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Wskaźniki podniesienia pantografu (we3)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:for'
+      cases:
+        - { regex: '^locomotive$', value: 'pl/we3b' }
+      default: 'pl/we3a'
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b', 'PL-PKP:we3c'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Wskaźniki zakazu wjazdu elektrycznych pojazdów trakcyjnych (we4)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^right$', value: 'pl/we4b' }
+        - { regex: '^left$', value: 'pl/we4c' }
+      default: 'pl/we4a'
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we4a', 'PL-PKP:we4b', 'PL-PKP:we4c'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
+  - description: Wskaźniki jazdy bezprądowej (we8)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:turn_direction'
+      cases:
+        - { regex: '^right$', value: 'pl/we8b' }
+        - { regex: '^left$', value: 'pl/we8c' }
+      default: 'pl/we8a'
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we8a', 'PL-PKP:we8b', 'PL-PKP:we8c'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: Wskaźniki jazdy pod prądem (we9)
+    country: PL
+    icon:
+      match: 'railway:signal:electricity:for'
+      cases:
+        - { regex: '^locomotive$', value: 'pl/we9b' }
+      default: 'pl/we9a'
+    tags:
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b', 'PL-PKP:we9c'] }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Wskaźniki zmiany systemu zasilania 25 kV
+    country: PL
+    icon: { default: 'pl/we10a' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Wskaźniki zmiany systemu zasilania 25 kV
+    country: PL
+    icon: { default: 'pl/we10b' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10b' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Wskaźniki zmiany systemu zasilania 15 kV
+    country: PL
+    icon: { default: 'pl/we10c' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10c' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Wskaźniki zmiany systemu zasilania 15 kV
+    country: PL
+    icon: { default: 'pl/we10d' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10d' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Wskaźniki zmiany systemu zasilania 3 kV
+    country: PL
+    icon: { default: 'pl/we10e' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10e' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Wskaźniki zmiany systemu zasilania 3 kV
+    country: PL
+    icon: { default: 'pl/we10f' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10f' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
+
+  - description: Tram isolation (ct-1)
+    country: PL
+    icon: { default: 'pl/ct-1' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-1' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'isolation' }
+
+  - description: Tram power limit (ct-2)
+    country: PL
+    icon: { default: 'pl/ct-2' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-2' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_limit' }
+
   # --- SE --- #
 
   - description: Mellansignal (dvärg)
@@ -2035,3 +3747,51 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'SE:Vägskyddssignal' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Hastighetstavla
+    country: SE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([3-9]0|1[0-5]0|1[01]5)$', value: 'se/hastighetstavla-{}', example: 'se/hastighetstavla-90' }
+      default: 'se/hastighetstavla-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'SE:hastighetstavla' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Hastighetstavla med pilspets uppåt
+    country: SE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^140$', value: 'se/hastighetstavla-pilspets-uppåt-{}', example: 'se/hastighetstavla-pilspets-uppåt-140' }
+      default: 'se/hastighetstavla-pilspets-uppåt-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'SE:hastighetstavla med pilspets uppåt' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Orienteringstavla för lägre hastighet
+    country: SE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-4]0|[7-9]0)|105$', value: 'se/orienteringstavla-hastighet-{}', example: 'se/orienteringstavla-hastighet-80' }
+      default: 'se/orienteringstavla-hastighet-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'SE:lägre_hastighet' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Orienteringstavla med tilläggsskylt ”ATC-överskridande”
+    country: SE
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^150$', value: 'se/orienteringstavla-hastighet-atc-överskridande-{}', example: 'se/orienteringstavla-hastighet-atc-överskridande-150' }
+      default: 'se/orienteringstavla-hastighet-atc-överskridande-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'SE:atc_överskridande' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }

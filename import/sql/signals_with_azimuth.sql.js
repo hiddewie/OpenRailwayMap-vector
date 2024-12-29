@@ -1,11 +1,18 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8'))
+// const speed_railway_signals = yaml.parse(fs.readFileSync('speed_railway_signals.yaml', 'utf8'))
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
-const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8'))
+// const electrification_signals = yaml.parse(fs.readFileSync('electrification_signals.yaml', 'utf8'))
 
-const knownSignalTypes = ['main', 'distant']
+const findSignalTypes = feature =>
+  feature.tags
+    .filter(tag => tag.tag.match(/^railway:signal:[^:]+$/))
+    .map(tag => tag.tag.replace('railway:signal:', ''));
+
+const knownSignalTypes = [...new Set([
+  ...new Set(signals_railway_signals.features.flatMap(findSignalTypes)),
+])].sort();
 
 /**
  * Template that builds the SQL view taking the YAML configuration into account
@@ -36,48 +43,18 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
         THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
+          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '')}')` : `'${iconCase.value}'`}`).join('')}
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
         END` : `'${feature.icon.default}'`}
     `).join('')}
     END as feature_${type},
     `).join('')}
     
-    CASE ${signals_railway_signals.features.map(feature => `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-        THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
-          ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-        END` : `'${feature.icon.default}'`}
-    `).join('')}
-    END as signal_feature,
-    
-    CASE ${speed_railway_signals.features.map(feature => `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-        THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '')}')` : `'${iconCase.value}'`}`).join('')}
-          ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-        END` : `'${feature.icon.default}'`}
-    `).join('')}
-    END as speed_feature,
-    
-    CASE ${speed_railway_signals.features.map(feature => feature.type ? `
+    CASE ${signals_railway_signals.features.map(feature => feature.type ? `
       -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
       WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')} THEN '${feature.type}'
     ` : '').join('')}
-    END as speed_feature_type,
-    
-    CASE ${electrification_signals.features.map(feature => `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-        THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN '${iconCase.value}'`).join('')}
-          ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-        END` : `'${feature.icon.default}'`}
-    `).join('')}
-    END as electrification_feature
+    END as type
     
   FROM signals s
   LEFT JOIN LATERAL (

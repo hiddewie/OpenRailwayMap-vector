@@ -293,7 +293,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     osm_id,
     way,
     speed_feature as feature,
-    speed_feature_type as type,
+    type,
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref
