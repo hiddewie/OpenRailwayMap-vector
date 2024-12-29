@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="22.5" viewBox="0 0 15 22.5">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 15 0 L 15 22.5 L 0 22.5 Z M 0 0 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.5 1.5 L 13.5 1.5 L 13.5 21 L 1.5 21 Z M 1.5 1.5 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 1.5 0.75 L 1.5 1.5 L 7.554688 21 L 13.5 1.5 L 13.5 0.75 L 12 0.75 L 7.5 16.5 L 3 0.75 Z M 1.5 0.75 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5.976562 8.105469 L 5.976562 3.023438 L 5.121094 3.648438 L 5.121094 2.734375 L 5.976562 2.117188 L 6.839844 2.117188 L 6.839844 8.105469 Z M 5.976562 8.105469 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8.664062 8.105469 L 8.664062 3.023438 L 7.8125 3.648438 L 7.8125 2.734375 L 8.664062 2.117188 L 9.527344 2.117188 L 9.527344 8.105469 Z M 8.664062 8.105469 "/>
-</svg>
