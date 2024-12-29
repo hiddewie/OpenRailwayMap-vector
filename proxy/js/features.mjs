@@ -276,8 +276,12 @@ const features = {
     featureProperty: 'feature0',
     features: generateSignalFeatures(speed_railway_signals),
     properties: {
-      direction_both: {
-        name: 'both directions',
+      feature1: {
+        name: 'Secondary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_speed-speed_railway_signals',
+        },
       },
       ref: {
         name: 'Reference',
@@ -291,14 +295,42 @@ const features = {
       speed: {
         name: 'Speed limit',
       },
+      direction_both: {
+        name: 'both directions',
+      },
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
     features: generateSignalFeatures(signals_railway_signals),
     properties: {
-      direction_both: {
-        name: 'both directions',
+      feature1: {
+        name: 'Secondary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_signals-signals_railway_signals',
+        },
+      },
+      feature2: {
+        name: 'Tertiary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_signals-signals_railway_signals',
+        },
+      },
+      feature3: {
+        name: 'Quaternary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_signals-signals_railway_signals',
+        },
+      },
+      feature4: {
+        name: 'Quinary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_signals-signals_railway_signals',
+        },
       },
       ref: {
         name: 'Reference',
@@ -308,6 +340,9 @@ const features = {
       },
       deactivated: {
         name: 'Deactivated',
+      },
+      direction_both: {
+        name: 'both directions',
       },
     },
   },
