@@ -305,7 +305,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     features[1] as feature0,
     features[2] as feature1,
     type,
-    azimuth,(signal_direction = 'both') as direction_both,
+    azimuth,
+    (signal_direction = 'both') as direction_both,
     ref,
     deactivated,
     dominant_speed as speed
@@ -378,11 +379,11 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     features[4] as feature3,
     features[5] as feature4,
     railway,
-    azimuth,
-    (signal_direction = 'both') as direction_both,
     ref,
     ref_multiline,
-    deactivated
+    deactivated,
+    azimuth,
+    (signal_direction = 'both') as direction_both
   FROM signals_railway_signal_features
   ORDER BY rank NULLS FIRST;
 

@@ -2449,7 +2449,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-halo-blur': 1,
       },
       layout: {
-        'text-field': ['get', 'ref'],
+        'text-field': '{ref}',
         'text-font': ['Noto Sans Medium'],
         'text-size': 9,
         'text-anchor': 'top',
