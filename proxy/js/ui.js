@@ -814,7 +814,11 @@ function popupContent(feature) {
     return;
   }
 
-  const featureContent = featureCatalog.features && featureCatalog.features[properties[featureCatalog.featureProperty || 'feature']];
+  const featureProperty = featureCatalog.featureProperty || 'feature';
+  const featureContent = featureCatalog.features && featureCatalog.features[properties[featureProperty]];
+  if (!featureContent) {
+    console.warn(`Could not feature description for feature property "${featureProperty}" with value "${properties[featureProperty]}" in catalog "${layerSource}", feature:`, feature);
+  }
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 

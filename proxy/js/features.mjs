@@ -227,6 +227,7 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_symbols': {
+    labelProperty: 'feature',
     features: Object.fromEntries(
       poi.features.flatMap(feature =>
         [
@@ -272,6 +273,7 @@ const features = {
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
+    featureProperty: 'feature0',
     features: generateSignalFeatures(speed_railway_signals),
     properties: {
       direction_both: {
@@ -292,6 +294,7 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
+    featureProperty: 'feature0',
     features: generateSignalFeatures(signals_railway_signals),
     properties: {
       direction_both: {
@@ -328,6 +331,7 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_signals': {
+    featureProperty: 'feature',
     features: generateSignalFeatures(electrification_signals),
     properties: {
       direction_both: {
