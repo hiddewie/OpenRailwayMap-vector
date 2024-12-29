@@ -378,7 +378,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[02]|[1-9])0$', value: 'at/geschwindigkeitsvoranzeiger-sign-{}', example: 'at/geschwindigkeitsvoranzeiger-sign-80' }
+        - { regex: '^(1[02]|[1-9])0$', value: 'at/geschwindigkeitsvoranzeiger-sign-{}', example: 'at/geschwindigkeitsvoranzeiger-sign-{80}' }
       default: 'at/geschwindigkeitsvoranzeiger-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
@@ -389,7 +389,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-140' }
+        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
       default: 'at/geschwindigkeitsvoranzeiger-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
@@ -400,7 +400,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-sign-{}', example: 'at/geschwindigkeitsanzeiger-sign-160' }
+        - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-sign-{}', example: 'at/geschwindigkeitsanzeiger-sign-{160}' }
       default: 'at/geschwindigkeitsanzeiger-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
@@ -411,7 +411,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-light-{}', example: 'at/geschwindigkeitsanzeiger-light-120' }
+        - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-light-{}', example: 'at/geschwindigkeitsanzeiger-light-{120}' }
       default: 'at/geschwindigkeitsanzeiger-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
@@ -423,7 +423,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[0-4]0|10|[2-9][05])$', value: 'at/ankuendigungstafel-sign-{}', example: 'at/ankuendigungstafel-sign-70' }
+        - { regex: '^(1[0-4]0|10|[2-9][05])$', value: 'at/ankuendigungstafel-sign-{}', example: 'at/ankuendigungstafel-sign-{70}' }
       default: 'at/ankuendigungstafel-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungstafel' }
@@ -435,7 +435,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-sign-{}', example: 'at/geschwindigkeitstafel-sign-60' }
+        - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-sign-{}', example: 'at/geschwindigkeitstafel-sign-{60}' }
       default: 'at/geschwindigkeitstafel-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
@@ -453,7 +453,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}', example: 'at/anfangssignal-60' }
+        - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}', example: 'at/anfangssignal-{60}' }
       default: 'at/anfangssignal-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
@@ -464,7 +464,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^[1-6]0$', value: 'at/ankündigungssignal-{}', example: 'at/ankündigungssignal-60' }
+        - { regex: '^[1-6]0$', value: 'at/ankündigungssignal-{}', example: 'at/ankündigungssignal-{60}' }
       default: 'at/ankündigungssignal-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungssignal' }
@@ -632,7 +632,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/chiffre-vitesse-{}', example: 'be/chiffre-vitesse-60' }
+        - { regex: '^([4-9]0)$', value: 'be/chiffre-vitesse-{}', example: 'be/chiffre-vitesse-{60}' }
       default: 'be/chiffre-vitesse-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:VIS' }
@@ -762,7 +762,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([6-9][05]|1[0-1][05])$', value: 'ch/fdv-209-{}', example: 'ch/fdv-209-90' }
+        - { regex: '^([6-9][05]|1[0-1][05])$', value: 'ch/fdv-209-{}', example: 'ch/fdv-209-{90}' }
       default: 'ch/fdv-209-empty'
     tags:
       # TODO support CH-FDV:210, with railway:signal:speed_limit_distant:speed:trainclass_low
@@ -788,7 +788,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^1[1-4]0$', value: 'ch/fdv-213-{}', example: 'ch/fdv-213-120' }
+        - { regex: '^1[1-4]0$', value: 'ch/fdv-213-{}', example: 'ch/fdv-213-{120}' }
       default: 'ch/fdv-213-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'CH-FDV:213' }
@@ -820,7 +820,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-40' }
+        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-{40}' }
       default: 'ch/fdv-540-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:540', 'CH-FDV:541'] }
@@ -832,7 +832,7 @@ features:
       match: 'railway:signal:speed_limit:speed'
       # Same form as distant signal
       cases:
-        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-100' }
+        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-{100}' }
       default: 'ch/fdv-540-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:549' }
@@ -1567,7 +1567,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[0-6]|[1-9])0$', value: 'de/zs3v-sign-down-{}', example: 'de/zs3v-sign-down-60' }
+        - { regex: '^(1[0-6]|[1-9])0$', value: 'de/zs3v-sign-down-{}', example: 'de/zs3v-sign-down-{60}' }
       default: 'de/zs3v-empty-sign-down'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
@@ -1580,7 +1580,7 @@ features:
       cases:
         # for light signals: empty Zs3v "looks" exactly like empty Zs2v
         - { regex: '^off;\?$', value: 'de/zs2v-unknown' }
-        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3v-light-{}', example: 'de/zs3v-light-20' }
+        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3v-light-{}', example: 'de/zs3v-light-{20}' }
       default: 'de/zs2v-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
@@ -1591,7 +1591,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-6])0$', value: 'de/zs3-sign-up-{}', example: 'de/zs3-sign-up-50' }
+        - { regex: '^([1-9]|1[0-6])0$', value: 'de/zs3-sign-up-{}', example: 'de/zs3-sign-up-{50}' }
       default: 'de/zs3-empty-sign-up'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
@@ -1604,7 +1604,7 @@ features:
       cases:
         # for light signals: empty Zs3 "looks" exactly like empty Zs2
         - { regex: '^off;\?$', value: 'de/zs2-unknown' }
-        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-70' }
+        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-{70}' }
       default: 'de/zs2-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
@@ -1616,7 +1616,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([2-8]0|1?[05])$', value: 'de/lf4-ds301-sign-down-{}', example: 'de/lf4-ds301-sign-down-80' }
+        - { regex: '^([2-8]0|1?[05])$', value: 'de/lf4-ds301-sign-down-{}', example: 'de/lf4-ds301-sign-down-{80}' }
       default: 'de/lf4-ds301-empty-sign-down'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:db:lf4' }
@@ -1628,7 +1628,7 @@ features:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
         # DB and DR variant have the same empty sign
-        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-{}', example: 'de/lf4-dr-sign-down-70' }
+        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-{}', example: 'de/lf4-dr-sign-down-{70}' }
       default: 'de/lf4-ds301-empty-sign-down'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:dr:lf4' }
@@ -1640,7 +1640,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^((1[0-9]|[1-9])0|5|15)$', value: 'de/lf6-sign-down-{}', example: 'de/lf6-sign-down-30' }
+        - { regex: '^((1[0-9]|[1-9])0|5|15)$', value: 'de/lf6-sign-down-{}', example: 'de/lf6-sign-down-{30}' }
       default: 'de/lf6-empty-sign-down'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf6' }
@@ -1651,7 +1651,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf1-sign-down-{}', example: 'de/lf1-sign-down-200' }
+        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf1-sign-down-{}', example: 'de/lf1-sign-down-{200}' }
       default: 'de/lf1-empty-sign-down'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf1' }
@@ -1663,7 +1663,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([3-7]0)$', value: 'de/hha/l1-sign-{}', example: 'de/hha/l1-sign-70' }
+        - { regex: '^([3-7]0)$', value: 'de/hha/l1-sign-{}', example: 'de/hha/l1-sign-{70}' }
       default: 'de/hha/l1-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-HHA:l1' }
@@ -1675,7 +1675,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(5|[1-6][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-40' }
+        - { regex: '^(5|[1-6][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
       default: 'de/bostrab/g1a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
@@ -1687,7 +1687,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^[1-7]0$', value: 'de/bostrab/g1b-{}', example: 'de/bostrab/g1b-40' }
+        - { regex: '^[1-7]0$', value: 'de/bostrab/g1b-{}', example: 'de/bostrab/g1b-{40}' }
       default: 'de/bostrab/g1b-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
@@ -1699,7 +1699,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(5|[1-7][05])$', value: 'de/bostrab/g2a-{}', example: 'de/bostrab/g2a-40' }
+        - { regex: '^(5|[1-7][05])$', value: 'de/bostrab/g2a-{}', example: 'de/bostrab/g2a-{40}' }
       default: 'de/bostrab/g2a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
@@ -1711,7 +1711,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[1-7]0$', value: 'de/bostrab/g2b-{}', example: 'de/bostrab/g2b-40' }
+        - { regex: '^[1-7]0$', value: 'de/bostrab/g2b-{}', example: 'de/bostrab/g2b-{40}' }
       default: 'de/bostrab/g2b-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
@@ -1731,7 +1731,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(100|[2-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-40' }
+        - { regex: '^(100|[2-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-{40}' }
       default: 'de/bostrab/g4-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
@@ -1743,7 +1743,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-40' }
+        - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-{40}' }
       default: 'de/bostrab/g5-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-UESTRA:g5' }
@@ -1771,7 +1771,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf7-sign-{}', example: 'de/lf7-sign-180' }
+        - { regex: '^(5|15|[1-9]0|1[0-9]0|200)$', value: 'de/lf7-sign-{}', example: 'de/lf7-sign-{180}' }
       default: 'de/lf7-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf7' }
@@ -1797,7 +1797,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(5|[1-9]0|1[0-2]0)$', value: 'de/lf1-2-sign-{}', example: 'de/lf1-2-sign-80' }
+        - { regex: '^(5|[1-9]0|1[0-2]0)$', value: 'de/lf1-2-sign-{}', example: 'de/lf1-2-sign-{80}' }
       default: 'de/lf1-2-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf1/2' }
@@ -2117,7 +2117,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([2-6]0)$', value: 'fi/t-101-{}', example: 'fi/t-101-40' }
+        - { regex: '^([2-6]0)$', value: 'fi/t-101-{}', example: 'fi/t-101-{40}' }
       default: 'fi/t-101-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FI:T-101' }
@@ -2128,7 +2128,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([2-6]0)$', value: 'fi/t-102-{}', example: 'fi/t-102-40' }
+        - { regex: '^([2-6]0)$', value: 'fi/t-102-{}', example: 'fi/t-102-{40}' }
       default: 'fi/t-102-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FI:T-102' }
@@ -2261,7 +2261,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/Z-TIV-distance-sign-{}', example: 'fr/Z-TIV-distance-sign-120' }
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/Z-TIV-distance-sign-{}', example: 'fr/Z-TIV-distance-sign-{120}' }
       default: 'fr/Z-TIV-distance-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
@@ -2274,7 +2274,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[5-9]0|200)$', value: 'fr/Z-TIV-type-B-{}', example: 'fr/Z-TIV-type-B-160' }
+        - { regex: '^(1[5-9]0|200)$', value: 'fr/Z-TIV-type-B-{}', example: 'fr/Z-TIV-type-B-{160}' }
       default: 'fr/Z-TIV-type-B-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
@@ -2324,7 +2324,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-light-{}', example: 'fr/TIV-distance-light-80' }
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-light-{}', example: 'fr/TIV-distance-light-{80}' }
       default: 'fr/TIV-distance-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
@@ -2336,7 +2336,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-sign-{}', example: 'fr/TIV-distance-sign-70' }
+        - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-distance-sign-{}', example: 'fr/TIV-distance-sign-{70}' }
       default: 'fr/TIV-distance-empty-sign'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
@@ -2348,7 +2348,7 @@ features:
   #   icon:
   #     match: 'railway:signal:speed_limit_reminder:speed'
   #     cases:
-  #       - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-sign-{}', example: 'fr/TIV-reminder-sign-110' }
+  #       - { regex: '^([3-9]0|1[0-3]0)$', value: 'fr/TIV-reminder-sign-{}', example: 'fr/TIV-reminder-sign-{110}' }
   #     default: 'fr/TIV-reminder-empty-sign'
   #   tags:
   #     - { tag: 'railway:signal:speed_limit_reminder', value: 'FR:TIV-R' }
@@ -2359,7 +2359,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[5-9]0|200)$', value: 'fr/TIV-type-B-{}', example: 'fr/TIV-type-B-160' }
+        - { regex: '^(1[5-9]0|200)$', value: 'fr/TIV-type-B-{}', example: 'fr/TIV-type-B-{160}' }
       default: 'fr/TIV-type-B-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
@@ -2370,7 +2370,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[5-9]0)$', value: 'fr/TIV-type-C-{}', example: 'fr/TIV-type-C-160' }
+        - { regex: '^(1[5-9]0)$', value: 'fr/TIV-type-C-{}', example: 'fr/TIV-type-C-{160}' }
       default: 'fr/TIV-type-C-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_C' }
@@ -2791,7 +2791,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-80' }
+        - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-{80}' }
       default: 'nl/313-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
@@ -2803,7 +2803,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-70' }
+        - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-{70}' }
       default: 'nl/314-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
@@ -2815,7 +2815,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-130' }
+        - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-{130}' }
       default: 'nl/316-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
@@ -2827,7 +2827,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-60' }
+        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
       default: 'nl/speed_limit_distant_light-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
@@ -2839,7 +2839,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-60' }
+        - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
       default: 'nl/speed_limit_light-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL' }
@@ -2851,7 +2851,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-80' }
+        - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-{80}' }
       default: 'nl/286-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
@@ -2863,7 +2863,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-40' }
+        - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-{40}' }
       default: 'nl/281-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
@@ -2875,7 +2875,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-40' }
+        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-{40}' }
       default: 'nl/282-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
@@ -2887,7 +2887,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-40' }
+        - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-{40}' }
       default: 'nl/282a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
@@ -3461,7 +3461,7 @@ features:
       # TODO update signs from https://wiki.openstreetmap.org/wiki/Pl:OpenRailwayMap/Tagging_in_Poland#Tarcza_zwolnić_bieg_D_6
       # TODO handle dwarf signals
       cases:
-        - { regex: '^[1-9]0$', value: 'pl/d6-{}', example: 'pl/d6-70' }
+        - { regex: '^[1-9]0$', value: 'pl/d6-{}', example: 'pl/d6-{70}' }
       default: 'pl/d6-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:d6' }
@@ -3472,7 +3472,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w8-{}', example: 'pl/w8-60' }
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w8-{}', example: 'pl/w8-{60}' }
       default: 'pl/w8-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
@@ -3483,7 +3483,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([2-9]|1[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-60' }
+        - { regex: '^([2-9]|1[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-{60}' }
       default: 'pl/w9-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
@@ -3495,7 +3495,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w21-{}', example: 'pl/w21-80' }
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w21-{}', example: 'pl/w21-{80}' }
       default: 'pl/w21-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
@@ -3507,7 +3507,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w27a-{}', example: 'pl/w27a-80' }
+        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w27a-{}', example: 'pl/w27a-{80}' }
       default: 'pl/w27a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w27a' }
@@ -3518,7 +3518,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^5$', value: 'pl/w30-{}', example: 'pl/w30-5' }
+        - { regex: '^5$', value: 'pl/w30-{}', example: 'pl/w30-{5}' }
       default: 'pl/w30-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w30' }
@@ -3779,7 +3779,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([3-9]0|1[0-5]0|1[01]5)$', value: 'se/hastighetstavla-{}', example: 'se/hastighetstavla-90' }
+        - { regex: '^([3-9]0|1[0-5]0|1[01]5)$', value: 'se/hastighetstavla-{}', example: 'se/hastighetstavla-{90}' }
       default: 'se/hastighetstavla-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'SE:hastighetstavla' }
@@ -3791,7 +3791,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^140$', value: 'se/hastighetstavla-pilspets-uppåt-{}', example: 'se/hastighetstavla-pilspets-uppåt-140' }
+        - { regex: '^140$', value: 'se/hastighetstavla-pilspets-uppåt-{}', example: 'se/hastighetstavla-pilspets-uppåt-{140}' }
       default: 'se/hastighetstavla-pilspets-uppåt-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'SE:hastighetstavla med pilspets uppåt' }
@@ -3803,7 +3803,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(1[0-4]0|[7-9]0)|105$', value: 'se/orienteringstavla-hastighet-{}', example: 'se/orienteringstavla-hastighet-80' }
+        - { regex: '^(1[0-4]0|[7-9]0)|105$', value: 'se/orienteringstavla-hastighet-{}', example: 'se/orienteringstavla-hastighet-{80}' }
       default: 'se/orienteringstavla-hastighet-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'SE:lägre_hastighet' }
@@ -3815,7 +3815,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^150$', value: 'se/orienteringstavla-hastighet-atc-överskridande-{}', example: 'se/orienteringstavla-hastighet-atc-överskridande-150' }
+        - { regex: '^150$', value: 'se/orienteringstavla-hastighet-atc-överskridande-{}', example: 'se/orienteringstavla-hastighet-atc-överskridande-{150}' }
       default: 'se/orienteringstavla-hastighet-atc-överskridande-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'SE:atc_överskridande' }
