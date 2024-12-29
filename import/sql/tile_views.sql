@@ -404,21 +404,21 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
       deactivated,
       -- Build up array of available features
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
+      -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
         ARRAY[
           feature_combined,
+          feature_main,
+          feature_minor,
+          feature_main_repeated,
+          feature_distant,
+          feature_minor_distant,
           feature_crossing,
           feature_crossing_distant,
           feature_departure,
-          feature_distant,
-          feature_electricity,
           feature_fouling_point,
           feature_helper_engine,
           feature_humping,
-          feature_main,
-          feature_main_repeated,
-          feature_minor,
-          feature_minor_distant,
           feature_passing,
           feature_preheating,
           feature_radio,
@@ -427,8 +427,6 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
           feature_ring,
           feature_shunting,
           feature_snowplow,
-          feature_speed_limit,
-          feature_speed_limit_distant,
           feature_station_distant,
           feature_steam_locomotive,
           feature_stop,
