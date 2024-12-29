@@ -824,7 +824,7 @@ function popupContent(feature) {
 
   const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
   if (!featureContent) {
-    console.warn(`Could not feature description for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
+    console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
