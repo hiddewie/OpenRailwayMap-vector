@@ -815,13 +815,19 @@ function popupContent(feature) {
   }
 
   const featureProperty = featureCatalog.featureProperty || 'feature';
+  // Remove the variable part of the property to get the key
   const catalogKey = properties[featureProperty] && properties[featureProperty].replace(/\{[^}]+}/, '{}');
+  // Capture the variable part as well for display
+  const keyVariable = properties[featureProperty]
+    ? properties[featureProperty].match(/\{([^}]+)}/)?.[1]
+    : null;
+
   const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
   if (!featureContent) {
     console.warn(`Could not feature description for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
-  const featureDescription = featureContent ? `${featureContent.name}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
+  const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
   const featureType = featureContent && featureContent.type || 'point';
   const osmType = featureType === 'point' ? 'node' : 'way';
