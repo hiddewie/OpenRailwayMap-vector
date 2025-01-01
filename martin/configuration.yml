@@ -36,8 +36,8 @@ postgres:
         # TODO calculate labels in frontend
         id: integer
         osm_id: integer
-        railway: string
         feature: string
+        state: string
         usage: string
         service: string
         highspeed: boolean
@@ -81,8 +81,8 @@ postgres:
         # TODO calculate labels in frontend
         id: integer
         osm_id: integer
-        railway: string
         feature: string
+        state: string
         usage: string
         service: string
         highspeed: boolean
@@ -127,8 +127,8 @@ postgres:
         id: integer
         osm_id: integer
         way_length: number
-        railway: string
         feature: string
+        state: string
         usage: string
         service: string
         highspeed: boolean

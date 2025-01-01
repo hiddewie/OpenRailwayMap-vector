@@ -6,16 +6,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
         osm_id,
         way,
         way_length,
-        railway,
-        CASE
-            WHEN railway = 'proposed' THEN COALESCE(proposed_railway, 'rail')
-            WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-            WHEN railway = 'razed' THEN COALESCE(razed_railway, 'rail')
-            WHEN railway = 'abandoned' THEN COALESCE(abandoned_railway, 'rail')
-            WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-            WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-            ELSE railway
-        END as feature,
+        feature,
+        state,
         usage,
         service,
         highspeed,
@@ -30,25 +22,7 @@ CREATE OR REPLACE VIEW railway_line_high AS
         track_class,
         array_to_string(reporting_marks, ', ') as reporting_marks,
         preferred_direction,
-        CASE
-            WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-            WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed THEN 2000
-            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-            WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-            WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-            WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-            WHEN railway IN ('preserved', 'construction') THEN 400
-            WHEN railway = 'proposed' THEN 350
-            WHEN railway = 'disused' THEN 300
-            WHEN railway = 'abandoned' THEN 250
-            WHEN railway = 'razed' THEN 200
-            ELSE 50
-        END AS rank,
+        rank,
         maxspeed,
         speed_label,
         train_protection_rank,
@@ -76,28 +50,20 @@ CREATE OR REPLACE VIEW railway_line_high AS
              osm_id,
              way,
              way_length,
-             railway,
+             feature,
+             state,
              usage,
              service,
+             rank,
              highspeed,
              reporting_marks,
-             disused_railway,
-             abandoned_railway,
-             razed_railway,
-             construction_railway,
-             proposed_railway,
-             preserved_railway,
              layer,
              bridge,
              tunnel,
              track_ref,
              track_class,
              ref,
-             CASE
-                 WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
-                 WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
-                 ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
-             END AS label_name,
+             railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name) AS label_name,
              preferred_direction,
              maxspeed,
              speed_label,
@@ -118,8 +84,8 @@ CREATE OR REPLACE VIEW railway_line_high AS
              traffic_mode,
              radio
          FROM railway_line
-         WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
-        ) AS r
+         WHERE feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge')
+    ) AS r
     ORDER by
         layer,
         rank NULLS LAST,
@@ -130,14 +96,14 @@ CREATE OR REPLACE VIEW railway_line_med AS
         *
     FROM
         railway_line_high
-    WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
+    WHERE feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
 
 CREATE OR REPLACE VIEW railway_line_low AS
     SELECT
         *
     FROM
         railway_line_high
-    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL;
+    WHERE feature = 'rail' AND usage = 'main' AND service IS NULL;
 
 --- Standard ---
 
