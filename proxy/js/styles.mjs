@@ -3954,8 +3954,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: true,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           tunnel: false,
@@ -3971,8 +3971,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           tunnel: false,
@@ -4010,8 +4010,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'branch',
           service: null,
           tunnel: false,
@@ -4027,8 +4027,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'industrial',
           service: null,
           tunnel: false,
@@ -4044,8 +4044,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'narrow_gauge',
           feature: 'narrow_gauge',
+          state: 'present',
           usage: null,
           service: null,
           tunnel: false,
@@ -4061,8 +4061,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'preserved',
           feature: 'rail',
+          state: 'preserved',
           usage: 'tourism',
           service: null,
           tunnel: false,
@@ -4078,8 +4078,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'subway',
           feature: 'subway',
+          state: 'present',
           usage: null,
           service: null,
           tunnel: false,
@@ -4095,8 +4095,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'light_rail',
           feature: 'light_rail',
+          state: 'present',
           usage: null,
           service: null,
           tunnel: false,
@@ -4112,8 +4112,8 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'tram',
           feature: 'tram',
+          state: 'present',
           usage: null,
           service: null,
           tunnel: false,
@@ -4129,7 +4129,7 @@ const legendData = {
         type: 'line',
         properties: {
           highspeed: false,
-          railway: 'construction',
+          state: 'construction',
           feature: 'rail',
           usage: 'main',
           service: null,
@@ -4240,8 +4240,8 @@ const legendData = {
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: speed,
         },
@@ -4250,8 +4250,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: null,
         },
@@ -4262,8 +4262,8 @@ const legendData = {
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: speed,
         },
@@ -4272,8 +4272,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: null,
         },
@@ -4284,8 +4284,8 @@ const legendData = {
         legend: `${speed} km/h`,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: speed,
           speed_label: `${speed}`,
@@ -4295,8 +4295,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           maxspeed: null,
           speed_label: '',
@@ -4371,8 +4371,8 @@ const legendData = {
         legend: train_protection.legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: train_protection.train_protection,
@@ -4383,8 +4383,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: null,
@@ -4397,8 +4397,8 @@ const legendData = {
         legend: train_protection.legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: train_protection.train_protection,
@@ -4409,8 +4409,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: null,
@@ -4423,8 +4423,8 @@ const legendData = {
         legend: train_protection.legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: train_protection.train_protection,
@@ -4435,8 +4435,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           train_protection: null,
@@ -4447,8 +4447,8 @@ const legendData = {
         legend: 'Under construction',
         type: 'line',
         properties: {
-          railway: 'construction',
           feature: 'rail',
+          state: 'construction',
           usage: 'main',
           service: null,
           train_protection: 'etcs',
@@ -4553,8 +4553,8 @@ const legendData = {
         legend: 'Not electrified',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'no',
@@ -4566,8 +4566,8 @@ const legendData = {
         legend: 'De-electrified / abandoned railway',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'abandoned',
@@ -4579,8 +4579,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'present',
@@ -4592,8 +4592,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: null,
@@ -4607,8 +4607,8 @@ const legendData = {
         legend: 'Not electrified',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'no',
@@ -4620,8 +4620,8 @@ const legendData = {
         legend: 'De-electrified / abandoned railway',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'abandoned',
@@ -4633,8 +4633,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'present',
@@ -4646,8 +4646,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: null,
@@ -4661,8 +4661,8 @@ const legendData = {
         legend: 'Not electrified',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'no',
@@ -4675,8 +4675,8 @@ const legendData = {
         legend: 'De-electrified / abandoned railway',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'abandoned',
@@ -4689,8 +4689,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'present',
@@ -4703,8 +4703,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: null,
@@ -4717,8 +4717,8 @@ const legendData = {
         legend: 'Proposed electrification',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'proposed',
@@ -4733,8 +4733,8 @@ const legendData = {
         legend: 'Electrification under construction',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           electrification_state: 'construction',
@@ -4813,8 +4813,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: `${min}`,
@@ -4826,8 +4826,8 @@ const legendData = {
         legend: 'Monorail',
         type: 'line',
         properties: {
-          railway: 'monorail',
           feature: 'monorail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'monorail',
@@ -4838,20 +4838,29 @@ const legendData = {
         legend: 'Narrow',
         type: 'line',
         properties: {
-          railway: 'na',
-          feature: 'monorail',
+          feature: 'narrow_gauge',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
           gaugeint0: null,
         },
+        variants: [
+          {
+            type: 'line',
+            properties: {
+              feature: 'rail',
+              gauge0: 'narrow',
+            },
+          },
+        ],
       },
       {
         legend: 'Broad',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'broad',
@@ -4862,8 +4871,8 @@ const legendData = {
         legend: 'Standard',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
@@ -4874,8 +4883,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: '3500',
@@ -4889,8 +4898,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: `${min}`,
@@ -4902,8 +4911,8 @@ const legendData = {
         legend: 'Monorail',
         type: 'line',
         properties: {
-          railway: 'monorail',
           feature: 'monorail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'monorail',
@@ -4914,20 +4923,29 @@ const legendData = {
         legend: 'Narrow',
         type: 'line',
         properties: {
-          railway: 'na',
-          feature: 'monorail',
+          feature: 'narrow_gauge',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
           gaugeint0: null,
         },
+        variants: [
+          {
+            type: 'line',
+            properties: {
+              feature: 'rail',
+              gauge0: 'narrow',
+            },
+          },
+        ],
       },
       {
         legend: 'Broad',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'broad',
@@ -4938,8 +4956,8 @@ const legendData = {
         legend: 'Standard',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
@@ -4950,8 +4968,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: '3500',
@@ -4965,8 +4983,8 @@ const legendData = {
         legend,
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: `${min}`,
@@ -4978,8 +4996,8 @@ const legendData = {
         legend: 'Monorail',
         type: 'line',
         properties: {
-          railway: 'monorail',
           feature: 'monorail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'monorail',
@@ -4990,20 +5008,29 @@ const legendData = {
         legend: 'Narrow',
         type: 'line',
         properties: {
-          railway: 'na',
-          feature: 'monorail',
+          feature: 'narrow_gauge',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
           gaugeint0: null,
         },
+        variants: [
+          {
+            type: 'line',
+            properties: {
+              feature: 'rail',
+              gauge0: 'narrow',
+            },
+          },
+        ],
       },
       {
         legend: 'Broad',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'broad',
@@ -5014,8 +5041,8 @@ const legendData = {
         legend: 'Miniature',
         type: 'line',
         properties: {
-          railway: 'miniature',
           feature: 'miniature',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
@@ -5026,8 +5053,8 @@ const legendData = {
         legend: 'Standard',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: 'standard',
@@ -5038,8 +5065,8 @@ const legendData = {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: '3500',
@@ -5051,8 +5078,8 @@ const legendData = {
         legend: 'Dual gauge',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: '1435',
@@ -5066,8 +5093,8 @@ const legendData = {
         legend: 'Multi gauge',
         type: 'line',
         properties: {
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
           gauge0: '1435',
@@ -5083,8 +5110,8 @@ const legendData = {
         legend: 'Under construction',
         type: 'line',
         properties: {
-          railway: 'construction',
           feature: 'rail',
+          state: 'construction',
           usage: 'main',
           service: null,
           gauge0: '1435',
@@ -5096,8 +5123,8 @@ const legendData = {
         legend: 'Dual gauge under construction',
         type: 'line',
         properties: {
-          railway: 'construction',
           feature: 'rail',
+          state: 'construction',
           usage: 'main',
           service: null,
           gauge0: '1435',
@@ -5111,8 +5138,8 @@ const legendData = {
         legend: 'Multi gauge under construction',
         type: 'line',
         properties: {
-          railway: 'construction',
           feature: 'rail',
+          state: 'construction',
           usage: 'main',
           service: null,
           gauge0: '1435',
@@ -5144,8 +5171,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5155,8 +5182,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5168,8 +5195,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5179,8 +5206,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5192,8 +5219,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: loading_gauge.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5203,8 +5230,8 @@ const legendData = {
         type: 'line',
         properties: {
           loading_gauge: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5229,8 +5256,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: track_class.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5240,8 +5267,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5253,8 +5280,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: track_class.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5264,8 +5291,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5277,8 +5304,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: track_class.value,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
@@ -5288,8 +5315,8 @@ const legendData = {
         type: 'line',
         properties: {
           track_class: null,
-          railway: 'rail',
           feature: 'rail',
+          state: 'present',
           usage: 'main',
           service: null,
         },
