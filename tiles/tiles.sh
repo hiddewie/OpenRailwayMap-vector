@@ -11,17 +11,17 @@ set -e
 export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate abort --skip-agg-tiles-hash --bbox=$BBOX"
 
 if [ "$TILES" = "low-med" ]; then
-  rm -f /tiles/railway_line_low.mbtiles
-  $MARTIN --min-zoom 0 --max-zoom 6 --source railway_line_low --output-file /tiles/railway_line_low.mbtiles
-  mbtiles summary /tiles/railway_line_low.mbtiles
+  rm -f /tiles/railway_line_high.mbtiles
+  $MARTIN --min-zoom 0 --max-zoom 6 --source railway_line_high --output-file /tiles/railway_line_high.mbtiles
+  mbtiles summary /tiles/railway_line_high.mbtiles
 
   rm -f /tiles/standard_railway_text_stations_low.mbtiles
   $MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file /tiles/standard_railway_text_stations_low.mbtiles
   mbtiles summary /tiles/standard_railway_text_stations_low.mbtiles
 
-  rm -f /tiles/railway_line_med.mbtiles
-  $MARTIN --min-zoom 7 --max-zoom 7 --source railway_line_med --output-file /tiles/railway_line_med.mbtiles
-  mbtiles summary /tiles/railway_line_med.mbtiles
+  rm -f /tiles/railway_line_high.mbtiles
+  $MARTIN --min-zoom 7 --max-zoom 7 --source railway_line_high --output-file /tiles/railway_line_high.mbtiles
+  mbtiles summary /tiles/railway_line_high.mbtiles
 
   rm -f /tiles/standard_railway_text_stations_med.mbtiles
   $MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file /tiles/standard_railway_text_stations_med.mbtiles

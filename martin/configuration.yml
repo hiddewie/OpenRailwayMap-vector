@@ -26,8 +26,6 @@ postgres:
 
     # --- Shared --- #
 
-    # railway_line_low, see function below
-    # railway_line_med, see function below
     # railway_line_high, see function below
 
     # --- Standard --- #
@@ -205,22 +203,9 @@ postgres:
 
     # --- Shared --- #
 
-    railway_line_low:
-      schema: public
-      function: railway_line_low
-      minzoom: 0
-      maxzoom: 7
-
-    railway_line_med:
-      schema: public
-      function: railway_line_med
-      minzoom: 7
-      maxzoom: 8
-
     railway_line_high:
       schema: public
       function: railway_line_high
-      minzoom: 8
       maxzoom: 14
 
     # --- Signals --- #

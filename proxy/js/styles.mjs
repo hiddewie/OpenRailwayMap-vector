@@ -1126,7 +1126,7 @@ const sources = {
   },
   openrailwaymap_low: {
     type: 'vector',
-    url: `${origin}/railway_line_low`,
+    url: `${origin}/railway_line_high`,
     attribution,
     promoteId: 'id',
   },
@@ -1138,7 +1138,7 @@ const sources = {
   },
   openrailwaymap_med: {
     type: 'vector',
-    url: `${origin}/railway_line_med`,
+    url: `${origin}/railway_line_high`,
     attribution,
     promoteId: 'id',
   },
@@ -1293,7 +1293,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
@@ -1309,7 +1309,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
@@ -1343,7 +1343,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
@@ -1360,7 +1360,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
@@ -2277,7 +2277,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       source: 'openrailwaymap_low',
       maxzoom: 7,
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: speedCasingPaint(theme),
       layout: speedLayout,
     },
@@ -2286,7 +2286,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       source: 'openrailwaymap_low',
       maxzoom: 7,
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: speedFillPaint(theme),
       layout: speedLayout,
     },
@@ -2296,7 +2296,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_med',
       minzoom: 7,
       maxzoom: 8,
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: speedCasingPaint(theme),
       layout: speedLayout,
     },
@@ -2306,7 +2306,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_med',
       minzoom: 7,
       maxzoom: 8,
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: speedFillPaint(theme),
       layout: speedLayout,
     },
@@ -2508,7 +2508,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       source: 'openrailwaymap_low',
       maxzoom: 7,
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: trainProtectionCasingPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
@@ -2517,7 +2517,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       source: 'openrailwaymap_low',
       maxzoom: 7,
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: trainProtectionFillPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
@@ -2527,7 +2527,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: trainProtectionCasingPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
@@ -2537,7 +2537,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: trainProtectionFillPaint(theme, [1]),
       layout: trainProtectionLayout,
     },
@@ -2821,7 +2821,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: electrificationCasingPaint(theme),
       layout: electrificationLayout,
     },
@@ -2830,7 +2830,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: electrificationFillPaint(theme, [1], 'voltage', 'frequency'),
       layout: electrificationLayout,
     },
@@ -2840,7 +2840,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: electrificationCasingPaint(theme),
       layout: electrificationLayout,
     },
@@ -2850,7 +2850,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: electrificationFillPaint(theme, [1], 'voltage', 'frequency'),
       layout: electrificationLayout,
     },
@@ -3127,7 +3127,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: gaugeCasingPaint(theme),
       layout: gaugeLayout,
     },
@@ -3136,7 +3136,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', [1]),
       layout: gaugeLayout,
     },
@@ -3146,7 +3146,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: gaugeCasingPaint(theme),
       layout: gaugeLayout,
     },
@@ -3156,7 +3156,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: gaugeFillPaint(theme, 'gauge0', 'gaugeint0', [1]),
       layout: gaugeLayout,
     },
@@ -3416,7 +3416,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: loadingGaugeCasingPaint(theme),
       layout: loadingGaugeLayout,
     },
@@ -3425,7 +3425,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: loadingGaugeFillPaint(theme, [1]),
       layout: loadingGaugeLayout,
     },
@@ -3435,7 +3435,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: loadingGaugeCasingPaint(theme),
       layout: loadingGaugeLayout,
     },
@@ -3445,7 +3445,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: loadingGaugeFillPaint(theme, [1]),
       layout: loadingGaugeLayout,
     },
@@ -3653,7 +3653,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: trackClassCasingPaint,
       layout: trackClassLayout,
     },
@@ -3662,7 +3662,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'line',
       maxzoom: 7,
       source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_low',
+      'source-layer': 'railway_line_high',
       paint: trackClassFillPaint(theme, [1]),
       layout: trackClassLayout,
     },
@@ -3672,7 +3672,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: trackClassCasingPaint,
       layout: trackClassLayout,
     },
@@ -3682,7 +3682,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 7,
       maxzoom: 8,
       source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_med',
+      'source-layer': 'railway_line_high',
       paint: trackClassFillPaint(theme, [1]),
       layout: trackClassLayout,
     },
@@ -3908,7 +3908,7 @@ const makeStyle = (selectedStyle, theme) => ({
 
 const legendData = {
   standard: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       {
         legend: 'Highspeed main line',
         type: 'line',
@@ -3924,7 +3924,7 @@ const legendData = {
         }
       },
     ],
-    "openrailwaymap_med-railway_line_med": [
+    "openrailwaymap_med-railway_line_high": [
       {
         legend: 'Highspeed main line',
         type: 'line',
@@ -4237,7 +4237,7 @@ const legendData = {
     ],
   },
   speed: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
@@ -4259,7 +4259,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
         type: 'line',
@@ -4368,7 +4368,7 @@ const legendData = {
     ],
   },
   signals: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
         type: 'line',
@@ -4394,7 +4394,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
         type: 'line',
@@ -4550,7 +4550,7 @@ const legendData = {
     ],
   },
   electrification: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       {
         legend: 'Not electrified',
         type: 'line',
@@ -4604,7 +4604,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       {
         legend: 'Not electrified',
         type: 'line',
@@ -4810,7 +4810,7 @@ const legendData = {
     ],
   },
   gauge: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
@@ -4895,7 +4895,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
@@ -5167,7 +5167,7 @@ const legendData = {
     ],
   },
   loading_gauge: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
@@ -5191,7 +5191,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
         type: 'line',
@@ -5252,7 +5252,7 @@ const legendData = {
     ],
   },
   track_class: {
-    'openrailwaymap_low-railway_line_low': [
+    'openrailwaymap_low-railway_line_high': [
       ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
@@ -5276,7 +5276,7 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_med': [
+    'openrailwaymap_med-railway_line_high': [
       ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
