@@ -92,9 +92,8 @@ const railwayLineFeatures = {
     },
   },
   properties: {
-    // TODO replace railway with `state`
-    railway: {
-      name: 'Railway',
+    state: {
+      name: 'State',
     },
     usage: {
       name: 'Usage',
