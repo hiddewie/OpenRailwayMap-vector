@@ -2774,6 +2774,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       maxzoom: 15,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
+      filter: ['!=', ['get', 'ref'], null],
       paint: {
         'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
@@ -2796,6 +2797,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 15,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
+      filter: ['!=', ['get', 'name'], null],
       paint: {
         'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
@@ -3634,7 +3636,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{loading_gauge}',
+        'text-field': ['coalesce', ['get', 'loading_gauge'], ''],
         // TODO not present: oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
@@ -3871,7 +3873,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       layout: {
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
-        'text-field': '{track_class}',
+        'text-field': ['coalesce', ['get', 'track_class'], ''],
         // TODO not present: oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
