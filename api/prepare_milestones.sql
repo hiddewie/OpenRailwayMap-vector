@@ -61,8 +61,8 @@ CREATE TABLE openrailwaymap_tracks_with_ref AS
       way AS geom
     FROM railway_line
     WHERE
-      railway IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram', 'construction', 'proposed', 'disused', 'abandoned', 'razed')
-      AND ("service" IS NULL OR usage IN ('industrial', 'military', 'test'))
+      feature IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram')
+      AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
       AND ref IS NOT NULL
       AND osm_id > 0;
 

@@ -1,54 +1,83 @@
 --- Shared ---
 
-CREATE OR REPLACE VIEW railway_line_high AS
+CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
+  FROM (
     SELECT
+      id,
+      osm_id,
+      way,
+      way_length,
+      feature,
+      state,
+      usage,
+      service,
+      highspeed,
+      (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
+      (bridge IS NOT NULL AND bridge != 'no') as bridge,
+      CASE
+        WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+        ELSE COALESCE(ref, label_name)
+      END AS standard_label,
+      ref,
+      track_ref,
+      track_class,
+      array_to_string(reporting_marks, ', ') as reporting_marks,
+      preferred_direction,
+      rank,
+      maxspeed,
+      speed_label,
+      train_protection_rank,
+      train_protection,
+      electrification_state,
+      voltage,
+      frequency,
+      electrification_label,
+      future_voltage,
+      future_frequency,
+      railway_to_int(gauge0) AS gaugeint0,
+      gauge0,
+      railway_to_int(gauge1) AS gaugeint1,
+      gauge1,
+      railway_to_int(gauge2) AS gaugeint2,
+      gauge2,
+      gauge_label,
+      loading_gauge,
+      array_to_string(operator, ', ') as operator,
+      traffic_mode,
+      radio
+    FROM (
+      SELECT
         id,
         osm_id,
-        way,
+        ST_AsMVTGeom(
+          way,
+          ST_TileEnvelope(z, x, y),
+          4096, 64, true
+        ) as way,
         way_length,
-        railway,
-        CASE
-            WHEN railway = 'proposed' THEN COALESCE(proposed_railway, 'rail')
-            WHEN railway = 'construction' THEN COALESCE(construction_railway, 'rail')
-            WHEN railway = 'razed' THEN COALESCE(razed_railway, 'rail')
-            WHEN railway = 'abandoned' THEN COALESCE(abandoned_railway, 'rail')
-            WHEN railway = 'disused' THEN COALESCE(disused_railway, 'rail')
-            WHEN railway = 'preserved' THEN COALESCE(preserved_railway, 'rail')
-            ELSE railway
-        END as feature,
+        feature,
+        state,
         usage,
         service,
+        rank,
         highspeed,
-        (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
-        (bridge IS NOT NULL AND bridge != 'no') as bridge,
-        CASE
-            WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
-            ELSE COALESCE(ref, label_name)
-        END AS standard_label,
-        ref,
+        reporting_marks,
+        layer,
+        bridge,
+        tunnel,
         track_ref,
         track_class,
-        array_to_string(reporting_marks, ', ') as reporting_marks,
+        ref,
+        railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name) AS label_name,
         preferred_direction,
-        CASE
-            WHEN railway = 'rail' AND usage IN ('tourism', 'military', 'test') AND service IS NULL THEN 400
-            WHEN railway = 'rail' AND usage IS NULL AND service IS NULL THEN 400
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'siding' THEN 870
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'yard' THEN 860
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'spur' THEN 880
-            WHEN railway = 'rail' AND usage IS NULL AND service = 'crossover' THEN 300
-            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL AND highspeed THEN 2000
-            WHEN railway = 'rail' AND usage = 'main' AND service IS NULL THEN 1100
-            WHEN railway = 'rail' AND usage = 'branch' AND service IS NULL THEN 1000
-            WHEN railway = 'rail' AND usage = 'industrial' AND service IS NULL THEN 850
-            WHEN railway = 'rail' AND usage = 'industrial' AND service IN ('siding', 'spur', 'yard', 'crossover') THEN 850
-            WHEN railway IN ('preserved', 'construction') THEN 400
-            WHEN railway = 'proposed' THEN 350
-            WHEN railway = 'disused' THEN 300
-            WHEN railway = 'abandoned' THEN 250
-            WHEN railway = 'razed' THEN 200
-            ELSE 50
-        END AS rank,
         maxspeed,
         speed_label,
         train_protection_rank,
@@ -56,88 +85,214 @@ CREATE OR REPLACE VIEW railway_line_high AS
         electrification_state,
         voltage,
         frequency,
-        electrification_label,
+        railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
         future_voltage,
         future_frequency,
-        railway_to_int(gauge0) AS gaugeint0,
-        gauge0,
-        railway_to_int(gauge1) AS gaugeint1,
-        gauge1,
-        railway_to_int(gauge2) AS gaugeint2,
-        gauge2,
-        gauge_label,
+        gauges[1] AS gauge0,
+        gauges[2] AS gauge1,
+        gauges[3] AS gauge2,
+        (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
         loading_gauge,
-        array_to_string(operator, ', ') as operator,
+        operator,
         traffic_mode,
         radio
-    FROM
-        (SELECT
-             id,
-             osm_id,
-             way,
-             way_length,
-             railway,
-             usage,
-             service,
-             highspeed,
-             reporting_marks,
-             disused_railway,
-             abandoned_railway,
-             razed_railway,
-             construction_railway,
-             proposed_railway,
-             preserved_railway,
-             layer,
-             bridge,
-             tunnel,
-             track_ref,
-             track_class,
-             ref,
-             CASE
-                 WHEN railway = 'abandoned' THEN railway_label_name(COALESCE(abandoned_name, name), tunnel, tunnel_name, bridge, bridge_name)
-                 WHEN railway = 'razed' THEN railway_label_name(COALESCE(razed_name, name), tunnel, tunnel_name, bridge, bridge_name)
-                 ELSE railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name)
-             END AS label_name,
-             preferred_direction,
-             maxspeed,
-             speed_label,
-             train_protection_rank,
-             train_protection,
-             electrification_state,
-             voltage,
-             frequency,
-             railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
-             future_voltage,
-             future_frequency,
-             gauges[1] AS gauge0,
-             gauges[2] AS gauge1,
-             gauges[3] AS gauge2,
-             (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
-             loading_gauge,
-             operator,
-             traffic_mode,
-             radio
-         FROM railway_line
-         WHERE railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved')
-        ) AS r
+      FROM railway_line
+      WHERE
+        way && ST_TileEnvelope(z, x, y)
+        AND feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge')
+        -- conditionally include features based on zoom level
+        -- TODO include state
+        AND CASE
+          WHEN z < 7 THEN
+            feature = 'rail' AND usage = 'main' AND service IS NULL
+          WHEN z < 8 THEN
+            feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+          WHEN z < 9 THEN
+            feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+          WHEN z < 10 THEN
+            feature = 'rail' AND usage IN ('main', 'branch', 'industrial') AND service IS NULL
+          WHEN z < 11 THEN
+            (feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL)
+            OR (feature = 'rail' AND usage = 'industrial')
+            OR (feature = 'rail' AND usage IS NULL AND service IN ('siding', 'crossover', 'spur'))
+            OR (feature = 'narrow_gauge' AND service IN (NULL, 'siding', 'crossover', 'spur'))
+            OR (feature = 'rail' AND state = 'construction' AND usage IN ('main', 'branch') AND service IS NULL)
+          WHEN z < 12 THEN
+            (feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL)
+              OR (feature = 'rail' AND usage = 'industrial')
+              OR (feature = 'rail' AND usage IS NULL AND service IN ('siding', 'crossover', 'spur', 'yard'))
+              OR (feature = 'narrow_gauge' AND service IN (NULL, 'siding', 'crossover', 'spur', 'yard'))
+              OR (feature IN ('rail', 'subway', 'light_rail') AND state = 'construction' AND usage IN ('main', 'branch') AND service IS NULL)
+              OR (feature IN ('subway', 'light_rail') AND service IS NULL)
+          ELSE
+            true
+        END
+    ) AS r
     ORDER by
-        layer,
-        rank NULLS LAST,
-        maxspeed NULLS FIRST;
+      layer,
+      rank NULLS LAST,
+      maxspeed NULLS FIRST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+-- TODO calculate labels in frontend
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_line_high IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_line_high",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "way_length": "number",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "service": "string",
+          "highspeed": "boolean",
+          "preferred_direction": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "track_ref": "string",
+          "maxspeed": "number",
+          "speed_label": "string",
+          "train_protection": "string",
+          "train_protection_rank": "integer",
+          "electrification_state": "string",
+          "frequency": "number",
+          "voltage": "integer",
+          "future_frequency": "number",
+          "future_voltage": "integer",
+          "electrification_label": "string",
+          "gauge0": "string",
+          "gaugeint0": "number",
+          "gauge1": "string",
+          "gaugeint1": "number",
+          "gauge2": "string",
+          "gaugeint2": "number",
+          "gauge_label": "string",
+          "loading_gauge": "string",
+          "track_class": "string",
+          "reporting_marks": "string",
+          "operator": "string",
+          "traffic_mode": "string",
+          "radio": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW railway_line_high_old AS
+SELECT
+  id,
+  osm_id,
+  way,
+  way_length,
+  feature,
+  state,
+  usage,
+  service,
+  highspeed,
+  (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
+  (bridge IS NOT NULL AND bridge != 'no') as bridge,
+  CASE
+    WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+    ELSE COALESCE(ref, label_name)
+    END AS standard_label,
+  ref,
+  track_ref,
+  track_class,
+  array_to_string(reporting_marks, ', ') as reporting_marks,
+  preferred_direction,
+  rank,
+  maxspeed,
+  speed_label,
+  train_protection_rank,
+  train_protection,
+  electrification_state,
+  voltage,
+  frequency,
+  electrification_label,
+  future_voltage,
+  future_frequency,
+  railway_to_int(gauge0) AS gaugeint0,
+  gauge0,
+  railway_to_int(gauge1) AS gaugeint1,
+  gauge1,
+  railway_to_int(gauge2) AS gaugeint2,
+  gauge2,
+  gauge_label,
+  loading_gauge,
+  array_to_string(operator, ', ') as operator,
+  traffic_mode,
+  radio
+FROM
+  (SELECT
+     id,
+     osm_id,
+     way,
+     way_length,
+     feature,
+     state,
+     usage,
+     service,
+     rank,
+     highspeed,
+     reporting_marks,
+     layer,
+     bridge,
+     tunnel,
+     track_ref,
+     track_class,
+     ref,
+     railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name) AS label_name,
+     preferred_direction,
+     maxspeed,
+     speed_label,
+     train_protection_rank,
+     train_protection,
+     electrification_state,
+     voltage,
+     frequency,
+     railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+     future_voltage,
+     future_frequency,
+     gauges[1] AS gauge0,
+     gauges[2] AS gauge1,
+     gauges[3] AS gauge2,
+     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+     loading_gauge,
+     operator,
+     traffic_mode,
+     radio
+   FROM railway_line
+   WHERE feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge')
+  ) AS r
+ORDER by
+  layer,
+  rank NULLS LAST,
+  maxspeed NULLS FIRST;
 
 CREATE OR REPLACE VIEW railway_line_med AS
     SELECT
         *
     FROM
-        railway_line_high
-    WHERE railway = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
+        railway_line_high_old
+    WHERE feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL;
 
 CREATE OR REPLACE VIEW railway_line_low AS
     SELECT
         *
     FROM
-        railway_line_high
-    WHERE railway = 'rail' AND usage = 'main' AND service IS NULL;
+        railway_line_high_old
+    WHERE feature = 'rail' AND usage = 'main' AND service IS NULL;
 
 --- Standard ---
 

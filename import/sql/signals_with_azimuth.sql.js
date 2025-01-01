@@ -55,7 +55,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   LEFT JOIN LATERAL (
     SELECT line.way as way
     FROM railway_line line
-    WHERE st_dwithin(s.way, line.way, 10) AND line.railway IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'construction', 'preserved', 'monorail', 'miniature') -- TODO use feature
+    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature')
     ORDER BY s.way <-> line.way
     LIMIT 1
   ) as sl ON true

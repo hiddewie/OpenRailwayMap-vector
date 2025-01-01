@@ -253,7 +253,7 @@ jobs:
 
       - name: List generated tiles
         run: |
-          ls -la tiles/*.mbtiles
+          ls -lah tiles/*.mbtiles
 
       - name: Start martin with tiles
         run: |
