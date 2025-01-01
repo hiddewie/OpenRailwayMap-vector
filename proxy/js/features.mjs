@@ -58,30 +58,6 @@ const railwayLineFeatures = {
       name: 'Monorail',
       type: 'line',
     },
-    construction: {
-      name: 'Railway under construction',
-      type: 'line',
-    },
-    proposed: {
-      name: 'Proposed railway',
-      type: 'line',
-    },
-    abandoned: {
-      name: 'Abandoned railway',
-      type: 'line',
-    },
-    razed: {
-      name: 'Razed railway',
-      type: 'line',
-    },
-    disused: {
-      name: 'Disused railway',
-      type: 'line',
-    },
-    preserved: {
-      name: 'Preserved railway',
-      type: 'line',
-    },
     narrow_gauge: {
       name: 'Narrow gauge railway',
       type: 'line',
