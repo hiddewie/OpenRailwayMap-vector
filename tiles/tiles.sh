@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+# This script renders tiles from Martin sources to MBTiles files
+# The zoom levels of the sources are taken into account to avoid outputting unused data into tiles
+# Documentation:
+#  - https://maplibre.org/martin/martin-cp.html
+#  - httpshttps://maplibre.org/martin/mbtiles-copy.html
+
 set -e
 
 export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate abort --skip-agg-tiles-hash --bbox=$BBOX"
