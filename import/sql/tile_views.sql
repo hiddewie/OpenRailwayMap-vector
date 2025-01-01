@@ -102,7 +102,6 @@ RETURN (
         way && ST_TileEnvelope(z, x, y)
         AND feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge')
         -- conditionally include features based on zoom level
-        -- TODO include state
         AND CASE
           WHEN z < 7 THEN
             feature = 'rail' AND usage = 'main' AND service IS NULL
@@ -117,6 +116,7 @@ RETURN (
             OR (feature = 'rail' AND usage = 'industrial')
             OR (feature = 'rail' AND usage IS NULL AND service IN ('siding', 'crossover', 'spur'))
             OR (feature = 'narrow_gauge' AND service IN (NULL, 'siding', 'crossover', 'spur'))
+            OR (feature = 'light_rail' AND service IS NULL)
             OR (feature = 'rail' AND state = 'construction' AND usage IN ('main', 'branch') AND service IS NULL)
           WHEN z < 12 THEN
             (feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL)
