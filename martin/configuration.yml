@@ -39,7 +39,10 @@ postgres:
       properties:
         id: integer
         osm_id: integer
+        railway: string
+        station: string
         label: string
+        name: string
         uic_ref: string
 
     standard_railway_text_stations_med:
@@ -51,7 +54,10 @@ postgres:
       properties:
         id: integer
         osm_id: integer
+        railway: string
+        station: string
         label: string
+        name: string
         uic_ref: string
 
     standard_railway_turntables:

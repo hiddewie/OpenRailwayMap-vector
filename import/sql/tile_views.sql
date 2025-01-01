@@ -197,6 +197,9 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     osm_id,
     center as way,
     railway_ref as label,
+    railway,
+    station,
+    name,
     uic_ref
   FROM stations_with_route_counts
   WHERE
@@ -211,7 +214,10 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     id,
     osm_id,
     center as way,
+    railway,
+    station,
     railway_ref as label,
+    name,
     uic_ref
   FROM stations_with_route_counts
   WHERE
