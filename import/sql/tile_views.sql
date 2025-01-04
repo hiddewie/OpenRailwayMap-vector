@@ -104,9 +104,9 @@ RETURN (
         -- conditionally include features based on zoom level
         AND CASE
           WHEN z < 7 THEN
-            feature = 'rail' AND usage = 'main' AND service IS NULL
+            state = 'present' AND feature = 'rail' AND usage = 'main' AND service IS NULL
           WHEN z < 8 THEN
-            feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+            state = 'present' AND feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
           WHEN z < 9 THEN
             feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
           WHEN z < 10 THEN
