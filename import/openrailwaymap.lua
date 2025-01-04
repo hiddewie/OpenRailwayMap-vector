@@ -355,7 +355,7 @@ function railway_line_state(tags)
 --     end
 --     if not service
 --
---     -- main highpeed lines
+--     -- main highspeed lines
 --     -- main lines
 --     -- branch lines
 --     -- main / branch services
