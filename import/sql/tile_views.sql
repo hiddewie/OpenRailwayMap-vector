@@ -24,8 +24,12 @@ RETURN (
       (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
       (bridge IS NOT NULL AND bridge != 'no') as bridge,
       CASE
-        WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
-        ELSE COALESCE(ref, label_name)
+        WHEN z >= 14 THEN
+          CASE
+            WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
+            ELSE COALESCE(ref, label_name)
+          END
+        ELSE ref
       END AS standard_label,
       ref,
       track_ref,

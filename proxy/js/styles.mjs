@@ -76,7 +76,7 @@ const colors = {
           railway: '#ffffff',
           bridge: '#000000',
         },
-        tunnelCover: 'rgba(255, 255, 255, 40%)',
+        tunnelCover: 'rgba(255, 255, 255, 50%)',
         turntable: {
           fill: '#ababab',
           casing: '#808080',
@@ -1249,7 +1249,7 @@ const searchResults = {
   },
 };
 
-const railwayLine = (theme, layers) => [
+const railwayLine = (theme, text, layers) => [
 
   // Tunnels
 
@@ -1508,6 +1508,38 @@ const railwayLine = (theme, layers) => [
       color,
     ),
   ),
+
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, states}) => ({
+    id: `${id}_text`,
+    type: 'symbol',
+    minzoom,
+    maxzoom,
+    source,
+    'source-layer': 'railway_line_high',
+    filter: ['all',
+      ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
+      ['!=', text, null],
+      filter ?? true,
+    ],
+    paint: {
+      'text-color': colors[theme].railwayLine.text,
+      'text-halo-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+        colors[theme].halo,
+      ],
+      'text-halo-width': 2,
+    },
+    layout: {
+      'symbol-z-order': 'source',
+      'symbol-placement': 'line',
+      'text-field': text,
+      'text-font': ['Noto Sans Bold'],
+      'text-size': 11,
+      'text-padding': 10,
+      'text-max-width': 5,
+      'symbol-spacing': 200,
+    },
+  })),
 ];
 
 const railwayKmText = theme => ({
@@ -1620,7 +1652,8 @@ const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
  */
 const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   standard: [
-    ...railwayLine(theme, [
+    railwayKmText(theme),
+    ...railwayLine(theme, ['get', 'standard_label'], [
       {
         id: 'railway_line_main_low',
         minzoom: 0,
@@ -2158,7 +2191,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
       },
     ),
-    railwayKmText(theme),
     {
       id: 'railway_text_track_numbers',
       type: 'symbol',
@@ -2182,36 +2214,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-font': ['Noto Sans Bold'],
         'text-size': 10,
         'text-padding': 10,
-      },
-    },
-    {
-      id: 'railway_text',
-      type: 'symbol',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['!=', ['get', 'standard_label'], null],
-      paint: {
-        'text-color': colors[theme].railwayLine.text,
-        'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
-        ],
-        'text-halo-width': 2,
-      },
-      layout: {
-        'symbol-z-order': 'source',
-        'symbol-placement': 'line',
-        'text-field': ['step', ['zoom'],
-          ['get', 'ref'],
-          14,
-          ['get', 'standard_label'],
-        ],
-        'text-font': ['Noto Sans Bold'],
-        'text-size': 11,
-        'text-padding': 10,
-        'text-max-width': 5,
-        'symbol-spacing': 200,
       },
     },
     {
