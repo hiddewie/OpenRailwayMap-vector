@@ -1509,6 +1509,10 @@ const railwayLine = (theme, text, layers) => [
     ),
   ),
 
+  // Text layers
+
+  railwayKmText(theme),
+
   ...layers.flatMap(({id, minzoom, maxzoom, source, filter, states}) => ({
     id: `${id}_text`,
     type: 'symbol',
@@ -1651,7 +1655,6 @@ const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
  */
 const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   standard: [
-    railwayKmText(theme),
     ...railwayLine(theme,
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
@@ -2501,7 +2504,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-offset': [0, 1.5],
       },
     },
-    railwayKmText(theme),
     {
       id: 'speed_railway_line_text',
       type: 'symbol',
