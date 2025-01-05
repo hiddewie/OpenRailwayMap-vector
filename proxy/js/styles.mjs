@@ -1037,31 +1037,12 @@ const loadingGaugeFillColor = ['match', ['get', 'loading_gauge'],
   ),
   'gray',
 ];
-const loadingGaugeLayout = {
-  'line-join': 'round',
-  'line-cap': 'round',
-};
-
-const trackClassCasingPaint = theme => ({
-  'line-color': colors[theme].casing,
-  'line-width': railwayLineWidth,
-  'line-gap-width': 0.75,
-});
 const trackClassFillColor = ['match', ['get', 'track_class'],
   ...track_classes.track_classes.flatMap(track_class =>
     [track_class.value, track_class.color]
   ),
   'gray',
 ];
-const trackClassFillPaint = (theme, dashArray) => ({
-  'line-color': trackClassFillColor,
-  'line-width': railwayLineWidth,
-  'line-dasharray': dashArray,
-});
-const trackClassLayout = {
-  'line-join': 'round',
-  'line-cap': 'round',
-};
 
 const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>';
 
@@ -2950,7 +2931,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           source: 'high',
           states: {
             present: present_dasharray,
-            construction: gauge_construction_dashes,
+            construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -2965,123 +2946,51 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   track_class: [
-    {
-      id: 'track_class_railway_line_low_casing',
-      type: 'line',
-      maxzoom: 7,
-      source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_high',
-      paint: trackClassCasingPaint,
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_low_fill',
-      type: 'line',
-      maxzoom: 7,
-      source: 'openrailwaymap_low',
-      'source-layer': 'railway_line_high',
-      paint: trackClassFillPaint(theme, [1]),
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_med_casing',
-      type: 'line',
-      minzoom: 7,
-      maxzoom: 8,
-      source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_high',
-      paint: trackClassCasingPaint,
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_med_fill',
-      type: 'line',
-      minzoom: 7,
-      maxzoom: 8,
-      source: 'openrailwaymap_med',
-      'source-layer': 'railway_line_high',
-      paint: trackClassFillPaint(theme, [1]),
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_casing',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['!=', ['get', 'state'], 'construction'],
-      paint: trackClassCasingPaint,
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_casing_construction',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['==', ['get', 'state'], 'construction'],
-      paint: {
-        'line-color': 'white',
-        'line-width': railwayLineWidth,
-        'line-gap-width': 0.75,
-        'line-dasharray': gauge_construction_dashes,
-      },
-    },
-    {
-      id: 'track_class_railway_line_fill',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['!=', ['get', 'state'], 'construction'],
-      paint: trackClassFillPaint(theme, [1]),
-      layout: trackClassLayout,
-    },
-    {
-      id: 'track_class_railway_line_fill_construction',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['==', ['get', 'state'], 'construction'],
-      paint: trackClassFillPaint(theme, gauge_construction_dashes),
-      layout: loadingGaugeLayout,
-    },
-    preferredDirectionLayer(theme, 'railway_preferred_direction',
-      ['any',
-        ['==', ['get', 'preferred_direction'], 'forward'],
-        ['==', ['get', 'preferred_direction'], 'backward'],
-        ['==', ['get', 'preferred_direction'], 'both'],
+    ...railwayLine(theme,
+      ['coalesce', ['get', 'track_class'], ''],
+      [
+        {
+          id: 'railway_line_low',
+          minzoom: 0,
+          maxzoom: 7,
+          source: 'openrailwaymap_low',
+          states: {
+            present: present_dasharray,
+          },
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            0, 0.5,
+            7, 2,
+          ],
+          color: trackClassFillColor,
+        },
+        {
+          id: 'railway_line_med',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_med',
+          states: {
+            present: present_dasharray,
+          },
+          width: 2,
+          color: trackClassFillColor,
+        },
+        {
+          id: 'railway_line_high',
+          minzoom: 8,
+          source: 'high',
+          states: {
+            present: present_dasharray,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
+          },
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            14, 2,
+            16, 3,
+          ],
+          color: trackClassFillColor,
+        },
       ],
-      trackClassFillColor,
     ),
-    railwayKmText(theme),
-    {
-      id: 'track_class_railway_text_high',
-      type: 'symbol',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['!=', ['get', 'track_class'], null],
-      paint: {
-        'text-color': colors[theme].text.main,
-        'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo
-        ],
-        'text-halo-width': 1.5,
-      },
-      layout: {
-        'symbol-z-order': 'source',
-        'symbol-placement': 'line',
-        'text-field': '{track_class}',
-        // TODO not present: oblique font
-        'text-font': ['Noto Sans Bold'],
-        'text-size': 11,
-        'text-padding': 30,
-        'symbol-spacing': 250,
-      },
-    },
     searchResults,
   ],
 }]));
