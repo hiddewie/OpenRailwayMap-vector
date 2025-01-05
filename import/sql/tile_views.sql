@@ -135,11 +135,10 @@ RETURN (
             state IN ('present', 'construction', 'proposed')
               AND service IS NULL
               AND (
-                feature IN ('rail', 'narrow_gauge')
-                OR (feature IN ('light_rail', 'monorail', 'subway', 'tram') AND usage IN ('main', 'branch'))
+                feature IN ('rail', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
               )
           WHEN z < 12 THEN
-            (service IS NULL OR service IN (NULL, 'spur', 'yard'))
+            (service IS NULL OR service IN ('spur', 'yard'))
               AND (
                 feature IN ('rail', 'narrow_gauge', 'light_rail')
                   OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
