@@ -746,6 +746,7 @@ const bridge_casing_add = 4;
 // TODO move to variable
 const present_dasharray = [1];
 const abandoned_dasharray = [2.5, 2.5];
+const disused_dasharray = [2.5, 2.5];
 const razed_dasharray = [1.5, 3.5];
 const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
@@ -1422,8 +1423,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         states: {
           present: present_dasharray,
         },
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 3,
         ],
@@ -1451,8 +1451,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           proposed: proposed_dasharray,
         },
         filter:  ['==', ['get', 'usage'], 'main'],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           7, 3,
           8, 3,
         ],
@@ -1476,8 +1475,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           proposed: proposed_dasharray,
         },
         filter:  ['==', ['get', 'usage'], 'branch'],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           7, 3,
           8, 3,
         ],
@@ -1500,8 +1498,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'rail'],
           ['==', ['get', 'usage'], 'main'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: ['case',
@@ -1526,15 +1523,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'rail'],
           ['==', ['get', 'usage'], 'branch'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.branch,
       },
+      // TODO split service null/non-null
       {
         id: 'railway_line_industrial',
-        minzoom: 8,
+        minzoom: 9,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1553,15 +1550,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ],
           ],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.industrial,
       },
       {
         id: 'railway_line_tourism',
-        minzoom: 8,
+        minzoom: 9,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1576,15 +1572,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           ['==', ['get', 'state'], 'preserved'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.tourism,
       },
       {
         id: 'railway_line_military',
-        minzoom: 8,
+        minzoom: 10,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1593,36 +1588,23 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
         filter: ['all',
           ['==', ['get', 'feature'], 'rail'],
-          ['==', ['get', 'usage'], 'military'],
+          ['any',
+            ['==', ['get', 'usage'], 'test'],
+            ['==', ['get', 'usage'], 'military'],
+          ],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
-        color: colors[theme].styles.standard.military,
-      },
-      {
-        id: 'railway_line_test',
-        minzoom: 8,
-        source: 'high',
-        states: {
-          present: present_dasharray,
-          construction: construction_dasharray,
-          proposed: proposed_dasharray,
-        },
-        filter: ['all',
-          ['==', ['get', 'feature'], 'rail'],
-          ['==', ['get', 'usage'], 'test'],
+        color: ['match', ['get', 'usage'],
+          'test', colors[theme].styles.standard.test,
+          'military', colors[theme].styles.standard.military,
+          colors[theme].styles.standard.unknown,
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
-          8, 3,
-        ],
-        color: colors[theme].styles.standard.test,
       },
       {
         id: 'railway_line_service',
-        minzoom: 8,
+        minzoom: 10,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1633,8 +1615,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'rail'],
           ['==', ['get', 'usage'], null],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: ['match', ['get', 'service'],
@@ -1647,7 +1628,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
       {
         id: 'railway_line_narrow_gauge',
-        minzoom: 8,
+        minzoom: 10,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1664,15 +1645,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ],
           ],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.narrowGauge,
       },
       {
         id: 'railway_line_subway',
-        minzoom: 8,
+        minzoom: 9,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1682,15 +1662,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         filter: ['all',
           ['==', ['get', 'feature'], 'subway'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.subway,
       },
+      // TODO monorail
       {
         id: 'railway_line_light_rail',
-        minzoom: 8,
+        minzoom: 9,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1700,15 +1680,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         filter: ['all',
           ['==', ['get', 'feature'], 'light_rail'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.light_rail,
       },
       {
         id: 'railway_line_tram',
-        minzoom: 8,
+        minzoom: 10,
         source: 'high',
         states: {
           present: present_dasharray,
@@ -1718,50 +1697,46 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         filter: ['all',
           ['==', ['get', 'feature'], 'tram'],
         ],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.tram,
       },
       {
         id: 'railway_line_disused',
-        minzoom: 8,
+        minzoom: 11,
         source: 'high',
         states: {
-          disused: abandoned_dasharray,
+          disused: disused_dasharray,
         },
         filter: ['==', ['get', 'state'], 'disused'],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.disused,
       },
       {
         id: 'railway_line_abandoned',
-        minzoom: 8,
+        minzoom: 11,
         source: 'high',
         states: {
           abandoned: abandoned_dasharray,
         },
         filter: ['==', ['get', 'state'], 'abandoned'],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.abandoned,
       },
       {
         id: 'railway_line_razed',
-        minzoom: 8,
+        minzoom: 11,
         source: 'high',
         states: {
           razed: razed_dasharray,
         },
         filter: ['==', ['get', 'state'], 'razed'],
-        width: [
-          "interpolate", ["exponential", 1.2], ["zoom"],
+        width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 3,
         ],
         color: colors[theme].styles.standard.razed,
