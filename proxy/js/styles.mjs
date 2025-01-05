@@ -1304,13 +1304,16 @@ const railwayLine = (theme, layers) => [
         'line-cap': 'round',
       },
       paint: {
-        'line-color': color,
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+          color,
+        ],
         'line-width': width,
         'line-dasharray': dash,
       },
     })),
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom,
@@ -1331,7 +1334,7 @@ const railwayLine = (theme, layers) => [
       'line-width': width,
     },
   })),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+  ...layers.flatMap(({id, filter, color, states}) => [
     preferredDirectionLayer(theme, `${id}_tunnel_preferred_direction`,
       ['all',
         ['get', 'tunnel'],
@@ -1385,6 +1388,7 @@ const railwayLine = (theme, layers) => [
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
+        ['!', ['get', 'bridge']],
         ['!', ['get', 'tunnel']],
         filter ?? true,
       ],
@@ -1401,10 +1405,106 @@ const railwayLine = (theme, layers) => [
         'line-dasharray': dash,
       },
     })),
-    preferredDirectionLayer(theme, `${id}_preferred_direction`,
+  ]),
+
+  // Bridges
+
+  ...layers
+    .filter(({states}) => 'present' in states)
+    .flatMap(({id, minzoom, maxzoom, source, filter, width}) => [
+      {
+        id: `${id}_bridge_railing`,
+        type: 'line',
+        minzoom: Math.max(minzoom, 8),
+        maxzoom,
+        source,
+        'source-layer': 'railway_line_high',
+        filter: ['all',
+          ['==', ['get', 'state'], 'present'],
+          ['get', 'bridge'],
+          ['>=',
+            ['get', 'way_length'],
+            ['interpolate', ["exponential", .5], ['zoom'],
+              8, 0.008,
+              16, 0
+            ],
+          ],
+          filter ?? true,
+        ],
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'butt',
+        },
+        paint: {
+          'line-color': colors[theme].styles.standard.casing.bridge,
+          'line-width': width,
+          'line-gap-width': bridge_casing_add,
+        }
+      },
+      {
+        id: `${id}_bridge_casing`,
+        type: 'line',
+        minzoom: Math.max(minzoom, 8),
+        maxzoom,
+        source,
+        'source-layer': 'railway_line_high',
+        filter: ['all',
+          ['==', ['get', 'state'], 'present'],
+          ['get', 'bridge'],
+          ['>=', ['get', 'way_length'],
+            ['interpolate', ["exponential", .5], ['zoom'],
+              8, 0.008,
+              16, 0
+            ],
+          ],
+        ],
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'butt',
+        },
+        paint: {
+          'line-color': colors[theme].casing,
+          'line-width': width,
+          'line-gap-width': railway_casing_add,
+        }
+      },
+    ]),
+
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+    ...Object.entries(states).map(([state, dash]) => ({
+      id: `${id}_bridge_fill_${state}`,
+      type: 'line',
+      minzoom: Math.max(minzoom, 8),
+      maxzoom,
+      source,
+      'source-layer': 'railway_line_high',
+      filter: ['all',
+        ['==', ['get', 'state'], state],
+        ['get', 'bridge'],
+        filter ?? true,
+      ],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+          color,
+        ],
+        'line-width': width,
+        'line-dasharray': dash,
+      },
+    })),
+  ]),
+
+  // Preferred direction
+
+  ...layers.flatMap(({id, filter, color, states}) =>
+    preferredDirectionLayer(
+      theme,
+      `${id}_preferred_direction`,
       ['all',
-        ['!', ['get', 'bridge']],
-        ['!', ['get', 'tunnel']],
         ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
         ['any',
           ['==', ['get', 'preferred_direction'], 'forward'],
@@ -1415,10 +1515,7 @@ const railwayLine = (theme, layers) => [
       ],
       color,
     ),
-  ]),
-
-  // Bridges
-
+  ),
 ];
 
 const railwayKmText = theme => ({
@@ -1663,9 +1760,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         filter: ['all',
           ['==', ['get', 'usage'], 'industrial'],
           ['any',
-            ['all',
-              ['==', ['get', 'feature'], 'rail'],
-            ],
+            ['==', ['get', 'feature'], 'rail'],
             ['all',
               ['==', ['get', 'feature'], 'narrow_gauge'],
               ['==', ['get', 'service'], 'spur'],
@@ -2199,87 +2294,87 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     //   },
     //   paint: standardFillPaint(theme, [1]),
     // },
-    preferredDirectionLayer(theme, 'railway_preferred_direction',
-      ['all',
-        ['!', ['get', 'bridge']],
-        ['!', ['get', 'tunnel']],
-        ['any',
-          ['==', ['get', 'preferred_direction'], 'forward'],
-          ['==', ['get', 'preferred_direction'], 'backward'],
-          ['==', ['get', 'preferred_direction'], 'both'],
-        ]
-      ],
-      standardColor(theme),
-    ),
-    {
-      id: 'railway_bridge_railing',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'bridge'],
-        ['>=', ['get', 'way_length'],
-          ['interpolate', ["exponential", .5], ['zoom'],
-            8, 0.008,
-            16, 0
-          ],
-        ],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      paint: {
-        'line-color': colors[theme].styles.standard.casing.bridge,
-        'line-width': railwayLineWidth,
-        'line-gap-width': bridge_casing_add,
-      }
-    },
-    {
-      id: 'railway_bridge_casing',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'bridge'],
-        ['>=', ['get', 'way_length'],
-          ['interpolate', ["exponential", .5], ['zoom'],
-            8, 0.008,
-            16, 0
-          ],
-        ],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      paint: {
-        'line-color': colors[theme].casing,
-        'line-width': railwayLineWidth,
-        'line-gap-width': railway_casing_add,
-      }
-    },
-    {
-      id: 'railway_bridge_fill',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'bridge'],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: standardFillPaint(theme, [1]),
-    },
+    // preferredDirectionLayer(theme, 'railway_preferred_direction',
+    //   ['all',
+    //     ['!', ['get', 'bridge']],
+    //     ['!', ['get', 'tunnel']],
+    //     ['any',
+    //       ['==', ['get', 'preferred_direction'], 'forward'],
+    //       ['==', ['get', 'preferred_direction'], 'backward'],
+    //       ['==', ['get', 'preferred_direction'], 'both'],
+    //     ]
+    //   ],
+    //   standardColor(theme),
+    // ),
+    // {
+    //   id: 'railway_bridge_railing',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'bridge'],
+    //     ['>=', ['get', 'way_length'],
+    //       ['interpolate', ["exponential", .5], ['zoom'],
+    //         8, 0.008,
+    //         16, 0
+    //       ],
+    //     ],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   paint: {
+    //     'line-color': colors[theme].styles.standard.casing.bridge,
+    //     'line-width': railwayLineWidth,
+    //     'line-gap-width': bridge_casing_add,
+    //   }
+    // },
+    // {
+    //   id: 'railway_bridge_casing',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'bridge'],
+    //     ['>=', ['get', 'way_length'],
+    //       ['interpolate', ["exponential", .5], ['zoom'],
+    //         8, 0.008,
+    //         16, 0
+    //       ],
+    //     ],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   paint: {
+    //     'line-color': colors[theme].casing,
+    //     'line-width': railwayLineWidth,
+    //     'line-gap-width': railway_casing_add,
+    //   }
+    // },
+    // {
+    //   id: 'railway_bridge_fill',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'bridge'],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   layout: {
+    //     'line-join': 'round',
+    //     'line-cap': 'round',
+    //   },
+    //   paint: standardFillPaint(theme, [1]),
+    // },
     {
       id: 'railway_turntables_fill',
       type: 'fill',
