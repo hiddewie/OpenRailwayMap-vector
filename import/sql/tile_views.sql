@@ -100,31 +100,46 @@ RETURN (
       FROM railway_line
       WHERE
         way && ST_TileEnvelope(z, x, y)
-        AND feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge')
         -- conditionally include features based on zoom level
         AND CASE
           WHEN z < 7 THEN
-            state = 'present' AND feature = 'rail' AND usage = 'main' AND service IS NULL
+            state = 'present'
+              AND service IS NULL
+              AND (
+                feature = 'rail' AND usage = 'main'
+              )
           WHEN z < 8 THEN
-            state = 'present' AND feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+            state = 'present'
+              AND service IS NULL
+              AND (
+                feature = 'rail' AND usage IN ('main', 'branch')
+              )
           WHEN z < 9 THEN
-            feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature = 'rail' AND usage IN ('main', 'branch')
+              )
           WHEN z < 10 THEN
-            feature = 'rail' AND usage IN ('main', 'branch', 'industrial') AND service IS NULL
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature = 'rail' AND usage IN ('main', 'branch', 'industrial')
+                  OR (feature = 'light_rail' AND usage IN ('main', 'branch'))
+              )
           WHEN z < 11 THEN
-            (feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL)
-            OR (feature = 'rail' AND usage = 'industrial')
-            OR (feature = 'rail' AND usage IS NULL AND service IN ('siding', 'crossover', 'spur'))
-            OR (feature = 'narrow_gauge' AND service IN (NULL, 'siding', 'crossover', 'spur'))
-            OR (feature = 'light_rail' AND service IS NULL)
-            OR (feature = 'rail' AND state = 'construction' AND usage IN ('main', 'branch') AND service IS NULL)
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature IN ('rail', 'narrow_gauge')
+                OR (feature IN ('light_rail', 'monorail', 'subway', 'tram') AND usage IN ('main', 'branch'))
+              )
           WHEN z < 12 THEN
-            (feature = 'rail' AND usage IN ('main', 'branch') AND service IS NULL)
-              OR (feature = 'rail' AND usage = 'industrial')
-              OR (feature = 'rail' AND usage IS NULL AND service IN ('siding', 'crossover', 'spur', 'yard'))
-              OR (feature = 'narrow_gauge' AND service IN (NULL, 'siding', 'crossover', 'spur', 'yard'))
-              OR (feature IN ('rail', 'subway', 'light_rail') AND state = 'construction' AND usage IN ('main', 'branch') AND service IS NULL)
-              OR (feature IN ('subway', 'light_rail') AND service IS NULL)
+            (service IS NULL OR service IN (NULL, 'spur', 'yard'))
+              AND (
+                feature IN ('rail', 'narrow_gauge', 'light_rail')
+                  OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
+              )
           ELSE
             true
         END
