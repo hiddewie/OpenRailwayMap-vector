@@ -1254,13 +1254,16 @@ const searchResults = {
     'circle-color': 'rgba(183, 255, 0, 0.7)',
     'circle-stroke-width': 2,
     'circle-stroke-color': 'black',
-  }
+  },
 };
 
 const railwayLine = (theme, layers) => [
+
+  // Tunnels
+
   ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) =>
     Object.entries(states).map(([state, dash]) => ({
-      id: `${id}_casing_${state}`,
+      id: `${id}_tunnel_casing_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -1268,6 +1271,7 @@ const railwayLine = (theme, layers) => [
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
+        ['get', 'tunnel'],
         filter ?? true,
       ],
       layout: {
@@ -1279,10 +1283,99 @@ const railwayLine = (theme, layers) => [
         'line-width': width,
         'line-gap-width': railway_casing_add,
         'line-dasharray': dash,
-      }
+      },
     }))
   ),
-  ...layers.flatMap(( {id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+    ...Object.entries(states).map(([state, dash]) => ({
+      id: `${id}_tunnel_fill_${state}`,
+      type: 'line',
+      minzoom,
+      maxzoom,
+      source,
+      'source-layer': 'railway_line_high',
+      filter: ['all',
+        ['==', ['get', 'state'], state],
+        ['get', 'tunnel'],
+        filter ?? true,
+      ],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': color,
+        'line-width': width,
+        'line-dasharray': dash,
+      },
+    })),
+  ]),
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => ({
+    id: `${id}_tunnel_cover`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source,
+    'source-layer': 'railway_line_high',
+    filter: ['all',
+      ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
+      ['get', 'tunnel'],
+      filter ?? true,
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    paint: {
+      'line-color': colors[theme].styles.standard.tunnelCover,
+      'line-width': width,
+    },
+  })),
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+    preferredDirectionLayer(theme, `${id}_tunnel_preferred_direction`,
+      ['all',
+        ['get', 'tunnel'],
+        ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
+        ['any',
+          ['==', ['get', 'preferred_direction'], 'forward'],
+          ['==', ['get', 'preferred_direction'], 'backward'],
+          ['==', ['get', 'preferred_direction'], 'both'],
+        ],
+        filter ?? true,
+      ],
+      color,
+    ),
+  ]),
+
+  // Ground
+
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) =>
+    Object.entries(states).map(([state, dash]) => ({
+      id: `${id}_casing_${state}`,
+      type: 'line',
+      minzoom,
+      maxzoom,
+      source,
+      'source-layer': 'railway_line_high',
+      filter: ['all',
+        ['==', ['get', 'state'], state],
+        ['!', ['get', 'bridge']],
+        ['!', ['get', 'tunnel']],
+        filter ?? true,
+      ],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'butt',
+      },
+      paint: {
+        'line-color': colors[theme].casing,
+        'line-width': width,
+        'line-gap-width': railway_casing_add,
+        'line-dasharray': dash,
+      },
+    }))
+  ),
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_fill_${state}`,
       type: 'line',
@@ -1292,11 +1385,12 @@ const railwayLine = (theme, layers) => [
       'source-layer': 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
+        ['!', ['get', 'tunnel']],
         filter ?? true,
       ],
       layout: {
         'line-join': 'round',
-        'line-cap': 'round',
+        'line-cap': 'butt',
       },
       paint: {
         'line-color': ['case',
@@ -1305,7 +1399,7 @@ const railwayLine = (theme, layers) => [
         ],
         'line-width': width,
         'line-dasharray': dash,
-      }
+      },
     })),
     preferredDirectionLayer(theme, `${id}_preferred_direction`,
       ['all',
@@ -1322,6 +1416,9 @@ const railwayLine = (theme, layers) => [
       color,
     ),
   ]),
+
+  // Bridges
+
 ];
 
 const railwayKmText = theme => ({
@@ -1521,11 +1618,9 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'usage'], 'main'],
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
-          8, ['case',
-            ['==', ['get', 'service'], null], 2,
-            0,
-          ],
-          10, 2,
+          8, 2,
+          14, 2,
+          16, 3,
         ],
         color: ['case',
           ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
@@ -1551,6 +1646,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 2,
+          14, 2,
+          16, 3,
         ],
         color: colors[theme].styles.standard.branch,
       },
@@ -1577,6 +1674,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 1.5,
+          14, 1.5,
+          16, 2,
         ],
         color: colors[theme].styles.standard.industrial,
       },
@@ -1620,6 +1719,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           8, 1.5,
+          14, 1.5,
+          16, 2,
         ],
         color: ['match', ['get', 'usage'],
           'test', colors[theme].styles.standard.test,
@@ -1699,7 +1800,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'usage'], null],
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
-          8, 2,
+          8, ['match', ['get', 'service'],
+            'yard', 1,
+            1.5,
+          ],
+          15, ['match', ['get', 'service'],
+            'yard', 1,
+            1.5,
+          ],
+          16, 2,
         ],
         color: ['match', ['get', 'service'],
           'spur', colors[theme].styles.standard.spur,
@@ -1847,29 +1956,29 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     // TODO tunnels
-    {
-      id: 'railway_tunnel_casing',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'tunnel'],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': colors[theme].casing,
-        'line-width': railwayLineWidth,
-        'line-gap-width': railway_tunnel_casing_add,
-      }
-    },
+    // {
+    //   id: 'railway_tunnel_casing',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'tunnel'],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   layout: {
+    //     'line-join': 'round',
+    //     'line-cap': 'round',
+    //   },
+    //   paint: {
+    //     'line-color': colors[theme].casing,
+    //     'line-width': railwayLineWidth,
+    //     'line-gap-width': railway_tunnel_casing_add,
+    //   }
+    // },
     // {
     //   id: 'railway_line_casing',
     //   type: 'line',
@@ -1966,58 +2075,58 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     //     'line-dasharray': razed_dasharray,
     //   }
     // },
-    {
-      id: 'railway_tunnel_fill',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'tunnel'],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: standardFillPaint(theme, [1]),
-    },
-    {
-      id: 'railway_tunnel_cover',
-      type: 'line',
-      minzoom: 8,
-      source: 'high',
-      'source-layer': 'railway_line_high',
-      filter: ['all',
-        ['get', 'tunnel'],
-        ['!=', ['get', 'state'], 'construction'],
-        ['!=', ['get', 'state'], 'proposed'],
-        ['!=', ['get', 'state'], 'abandoned'],
-        ['!=', ['get', 'state'], 'razed'],
-      ],
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        ...standardFillPaint(theme, [1]),
-        'line-color': colors[theme].styles.standard.tunnelCover,
-      }
-    },
-    preferredDirectionLayer(theme, 'railway_tunnel_preferred_direction',
-      ['all',
-        ['get', 'tunnel'],
-        ['any',
-          ['==', ['get', 'preferred_direction'], 'forward'],
-          ['==', ['get', 'preferred_direction'], 'backward'],
-          ['==', ['get', 'preferred_direction'], 'both'],
-        ],
-      ],
-      standardColor(theme),
-    ),
+    // {
+    //   id: 'railway_tunnel_fill',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'tunnel'],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   layout: {
+    //     'line-join': 'round',
+    //     'line-cap': 'round',
+    //   },
+    //   paint: standardFillPaint(theme, [1]),
+    // },
+    // {
+    //   id: 'railway_tunnel_cover',
+    //   type: 'line',
+    //   minzoom: 8,
+    //   source: 'high',
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['get', 'tunnel'],
+    //     ['!=', ['get', 'state'], 'construction'],
+    //     ['!=', ['get', 'state'], 'proposed'],
+    //     ['!=', ['get', 'state'], 'abandoned'],
+    //     ['!=', ['get', 'state'], 'razed'],
+    //   ],
+    //   layout: {
+    //     'line-join': 'round',
+    //     'line-cap': 'round',
+    //   },
+    //   paint: {
+    //     ...standardFillPaint(theme, [1]),
+    //     'line-color': colors[theme].styles.standard.tunnelCover,
+    //   }
+    // },
+    // preferredDirectionLayer(theme, 'railway_tunnel_preferred_direction',
+    //   ['all',
+    //     ['get', 'tunnel'],
+    //     ['any',
+    //       ['==', ['get', 'preferred_direction'], 'forward'],
+    //       ['==', ['get', 'preferred_direction'], 'backward'],
+    //       ['==', ['get', 'preferred_direction'], 'both'],
+    //     ],
+    //   ],
+    //   standardColor(theme),
+    // ),
     // {
     //   id: 'railway_construction_fill',
     //   type: 'line',
