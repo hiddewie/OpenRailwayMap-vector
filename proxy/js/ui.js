@@ -549,13 +549,12 @@ function selectStyle(style) {
 
 const onStyleChange = () => {
   // Change styles
-  // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
   map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: false,
-    diff: false,
   });
   legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
     validate: false,
+    // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
     diff: false,
     transformStyle: (previous, next) => {
       onStylesheetChange(next);
