@@ -680,7 +680,7 @@ const railwayLine = (theme, text, layers) => [
 
   // Tunnels
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_casing_${state}`,
       type: 'line',
@@ -696,6 +696,7 @@ const railwayLine = (theme, text, layers) => [
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
+        'line-sort-key': sort,
       },
       paint: {
         'line-color': colors[theme].casing,
@@ -705,7 +706,7 @@ const railwayLine = (theme, text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_fill_${state}`,
       type: 'line',
@@ -721,6 +722,7 @@ const railwayLine = (theme, text, layers) => [
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
+        'line-sort-key': sort,
       },
       paint: {
         'line-color': ['case',
@@ -732,7 +734,7 @@ const railwayLine = (theme, text, layers) => [
       },
     })),
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
@@ -747,13 +749,14 @@ const railwayLine = (theme, text, layers) => [
     layout: {
       'line-join': 'round',
       'line-cap': 'butt',
+      'line-sort-key': sort,
     },
     paint: {
       'line-color': colors[theme].styles.standard.tunnelCover,
       'line-width': width,
     },
   })),
-  ...layers.flatMap(({id, filter, color, states}) => [
+  ...layers.flatMap(({id, filter, color, states}) =>
     preferredDirectionLayer(theme, `${id}_tunnel_preferred_direction`,
       ['all',
         ['get', 'tunnel'],
@@ -767,11 +770,11 @@ const railwayLine = (theme, text, layers) => [
       ],
       color,
     ),
-  ]),
+  ),
 
   // Ground
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_casing_${state}`,
       type: 'line',
@@ -788,6 +791,7 @@ const railwayLine = (theme, text, layers) => [
       layout: {
         'line-join': 'round',
         'line-cap': 'butt',
+        'line-sort-key': sort,
       },
       paint: {
         'line-color': colors[theme].casing,
@@ -797,7 +801,7 @@ const railwayLine = (theme, text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_fill_${state}`,
       type: 'line',
@@ -814,6 +818,7 @@ const railwayLine = (theme, text, layers) => [
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
+        'line-sort-key': sort,
       },
       paint: {
         'line-color': ['case',
@@ -830,7 +835,7 @@ const railwayLine = (theme, text, layers) => [
 
   ...layers
     .filter(({states}) => 'present' in states)
-    .flatMap(({id, minzoom, maxzoom, source, filter, width}) => [
+    .flatMap(({id, minzoom, maxzoom, source, filter, width, sort}) => [
       {
         id: `${id}_bridge_railing`,
         type: 'line',
@@ -853,6 +858,7 @@ const railwayLine = (theme, text, layers) => [
         layout: {
           'line-join': 'round',
           'line-cap': 'butt',
+          'line-sort-key': sort,
         },
         paint: {
           'line-color': colors[theme].styles.standard.casing.bridge,
@@ -880,6 +886,7 @@ const railwayLine = (theme, text, layers) => [
         layout: {
           'line-join': 'round',
           'line-cap': 'butt',
+          'line-sort-key': sort,
         },
         paint: {
           'line-color': colors[theme].casing,
@@ -889,7 +896,7 @@ const railwayLine = (theme, text, layers) => [
       },
     ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_bridge_fill_${state}`,
       type: 'line',
@@ -905,6 +912,7 @@ const railwayLine = (theme, text, layers) => [
       layout: {
         'line-join': 'round',
         'line-cap': 'round',
+        'line-sort-key': sort,
       },
       paint: {
         'line-color': ['case',
@@ -1901,7 +1909,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   signals: [
-    // TODO `line-sort-key`
     ...railwayLine(theme,
       '',
       [
@@ -1913,6 +1920,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           states: {
             present: present_dasharray,
           },
+          sort: ['get', 'train_protection_rank'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
@@ -1929,6 +1937,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
+          sort: ['get', 'train_protection_rank'],
           width: 2,
           color: trainProtectionColor(theme),
         },
@@ -1941,6 +1950,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
+          sort: ['get', 'train_protection_rank'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
             16, 3,
