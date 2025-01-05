@@ -21,11 +21,11 @@ RETURN (
       usage,
       service,
       highspeed,
-      (tunnel IS NOT NULL AND tunnel != 'no') as tunnel,
-      (bridge IS NOT NULL AND bridge != 'no') as bridge,
+      tunnel,
+      bridge,
       CASE
-        WHEN ref IS NOT NULL AND label_name IS NOT NULL THEN ref || ' ' || label_name
-        ELSE COALESCE(ref, label_name)
+        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+        ELSE COALESCE(ref, name)
       END AS standard_label,
       ref,
       track_ref,
@@ -77,7 +77,7 @@ RETURN (
         track_ref,
         track_class,
         ref,
-        railway_label_name(name, tunnel, tunnel_name, bridge, bridge_name) AS label_name,
+        name,
         preferred_direction,
         maxspeed,
         speed_label,

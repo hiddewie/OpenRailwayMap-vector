@@ -112,25 +112,10 @@ $$ LANGUAGE plpgsql
     LEAKPROOF
     PARALLEL SAFE;
 
--- Get name for labelling in standard style depending whether it is a bridge, a tunnel or none of these two.
-CREATE OR REPLACE FUNCTION railway_label_name(name TEXT, tunnel TEXT, tunnel_name TEXT, bridge TEXT, bridge_name TEXT) RETURNS TEXT AS $$
-BEGIN
-  IF tunnel IS NOT NULL AND tunnel != 'no' THEN
-    RETURN COALESCE(tunnel_name, name);
-  END IF;
-  IF bridge IS NOT NULL AND bridge != 'no' THEN
-    RETURN COALESCE(bridge_name, name);
-  END IF;
-  RETURN name;
-END;
-$$ LANGUAGE plpgsql
-    IMMUTABLE
-    LEAKPROOF
-    PARALLEL SAFE;
-
 -- Get label for electrification
 CREATE OR REPLACE FUNCTION railway_electrification_label(voltage INT, frequency REAL) RETURNS TEXT AS $$
 DECLARE
+
   volt_int INTEGER;
   volt_text TEXT;
 BEGIN

@@ -125,10 +125,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'track_ref', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'construction', type = 'text' },
-    { column = 'tunnel', type = 'text' },
-    { column = 'tunnel_name', type = 'text' },
-    { column = 'bridge', type = 'text' },
-    { column = 'bridge_name', type = 'text' },
+    { column = 'tunnel', type = 'boolean' },
+    { column = 'bridge', type = 'boolean' },
     { column = 'maxspeed', type = 'real' },
     { column = 'preferred_direction', type = 'text' },
     { column = 'speed_label', type = 'text' },
@@ -348,6 +346,16 @@ function railway_line_state(tags)
   end
 end
 
+function railway_line_name(name, tunnel, tunnel_name, bridge, bridge_name)
+  if tunnel then
+    return tunnel_name or name
+  elseif bridge then
+    return bridge_name or name
+  else
+    return name
+  end
+end
+
 local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
 function electrification_state(tags)
   local electrified = tags['electrified']
@@ -560,10 +568,14 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
-    local state, feature, usage, service, name, gauge, highspeed, rank = railway_line_state(tags)
+    local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
 
     local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
+
+    local tunnel = tags['tunnel'] and tags['tunnel'] ~= 'no' or false
+    local bridge = tags['bridge'] and tags['bridge'] ~= 'no' or false
+    local name = railway_line_name(state_name, tunnel, tags['tunnel:name'], bridge, tags['bridge:name'])
 
     local preferred_direction = tags['railway:preferred_direction']
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
@@ -584,12 +596,8 @@ function osm2pgsql.process_way(object)
       name = name,
       public_transport = tags['public_transport'],
       construction = tags['construction'],
-      tunnel = tags['tunnel'],
-      -- TODO pre-process into name label
-      tunnel_name = tags['tunnel:name'],
-      bridge = tags['bridge'],
-      -- TODO pre-process into name label
-      bridge_name = tags['bridge:name'],
+      tunnel = tunnel,
+      bridge = bridge,
       preferred_direction = preferred_direction,
       maxspeed = dominant_speed,
       speed_label = speed_label,
