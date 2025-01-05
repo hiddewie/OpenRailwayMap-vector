@@ -117,7 +117,6 @@ local railway_line = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'state', type = 'text' },
     { column = 'rank', type = 'integer' },
---     { column = 'rank2', type = 'integer' },
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
     { column = 'highspeed', type = 'boolean' },
@@ -301,20 +300,6 @@ for index, state in ipairs(states) do
   }
 end
 
--- local usage_rank = {
---   ['main'] = 9,
---   ['branch'] = 8,
---   ['industrial'] = 7,
---   ['tourism'] = 6,
---   ['military'] = 5,
---   ['test'] = 4,
--- }
--- local service_rank = {
---   ['spur'] = 9,
---   ['siding'] = 8,
---   ['yard'] = 7,
---   ['crossover'] = 6,
--- }
 function railway_line_state(tags)
   local railway = tags['railway']
   local usage = tags['usage']
@@ -322,13 +307,6 @@ function railway_line_state(tags)
   local name = tags['name']
   local gauge = tags['gauge']
   local highspeed = tags['highspeed'] == 'yes'
-
---   local rank2 =
---     10000 * (highspeed and 1 or 0) +
---     1000 * ((usage == 'main' or usage == 'branch') and 1 or 0) +
---     100 * (not service and 1 or 0) +
---     10 * (usage and usage_rank[usage] or 0) +
---     1 * (service and service_rank[service] or 0)
 
   -- map known railway state values to their state values
   mapped_railway = railway_line_states[railway]
@@ -341,25 +319,7 @@ function railway_line_state(tags)
       tags[mapped_railway.gauge] or gauge,
       highspeed,
       mapped_railway.rank
---       ,
---       rank2
   else
---
---     if highspeed
---       rank = rank + 1000
---     end
---     if usage == 'main'
---       rank = rank +
---     elseif usage == 'branch'
---       rank = rank +
---     end
---     if not service
---
---     -- main highspeed lines
---     -- main lines
---     -- branch lines
---     -- main / branch services
---     -- other services
 
     if usage == 'main' and (not service) and highspeed then rank = 200
     elseif usage == 'main' and (not service) then rank = 110
@@ -384,7 +344,7 @@ function railway_line_state(tags)
     else rank = 10
     end
 
-    return 'present', railway, usage, service, name, gauge, highspeed, rank -- , 10 * rank2
+    return 'present', railway, usage, service, name, gauge, highspeed, rank
   end
 end
 
@@ -600,7 +560,6 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
-    -- rank2
     local state, feature, usage, service, name, gauge, highspeed, rank = railway_line_state(tags)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
 
@@ -618,7 +577,6 @@ function osm2pgsql.process_way(object)
       service = service,
       usage = usage,
       rank = rank,
---       rank2 = rank2,
       highspeed = highspeed,
       layer = tags['layer'],
       ref = tags['ref'],
