@@ -3631,7 +3631,7 @@ const legendData = {
           bridge: false,
           ref: 'B1',
           standard_label: 'B1 Name',
-          track_ref: '8b',
+          track_ref: '9b',
           way_length: 1.0,
         }
       },
@@ -3648,7 +3648,7 @@ const legendData = {
           bridge: false,
           ref: 'I1',
           standard_label: 'I1 Name',
-          track_ref: '8b',
+          track_ref: null,
           way_length: 1.0,
         }
       },
@@ -3665,7 +3665,7 @@ const legendData = {
           bridge: false,
           ref: 'N1',
           standard_label: 'N1 Name',
-          track_ref: '8b',
+          track_ref: null,
           way_length: 1.0,
         }
       },
@@ -3682,7 +3682,7 @@ const legendData = {
           bridge: false,
           ref: 'S1',
           standard_label: 'S1 Name',
-          track_ref: '8b',
+          track_ref: null,
           way_length: 1.0,
         }
       },
@@ -3699,7 +3699,7 @@ const legendData = {
           bridge: false,
           ref: 'L1',
           standard_label: 'L1 Name',
-          track_ref: '8b',
+          track_ref: null,
           way_length: 1.0,
         }
       },
@@ -3716,7 +3716,109 @@ const legendData = {
           bridge: false,
           ref: 'T1',
           standard_label: 'T1 Name',
-          track_ref: '8b',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Monorail',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'monorail',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'M1',
+          standard_label: 'M1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Miniature railway',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'miniature',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'M2',
+          standard_label: 'M2 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Yard',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'yard',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Spur',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'spur',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Siding',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'siding',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Crossover',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'crossover',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
           way_length: 1.0,
         }
       },
@@ -5028,7 +5130,7 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
 
 function makeLegendStyle(style, theme) {
   const sourceStyle = makeStyle(style, theme);
-  const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'raster' && layer.type !== 'background');
+  const sourceLayers = sourceStyle.layers;
   const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
   const legendLayers = legendZoomLevels.flatMap(legendZoom => {
@@ -5099,11 +5201,11 @@ function makeLegendStyle(style, theme) {
       const featureSourceLayers = sourceLayers.flatMap(layer => {
         const legendLayerName = `${layer.source}-${layer['source-layer']}`;
         const sourceName = `${legendLayerName}-z${legendZoom}`
-        if (done.has(sourceName) || !usedLegendSources[legendZoom] || !usedLegendSources[legendZoom].has(sourceName)) {
+        const applicable = layerVisibleAtZoom(legendZoom)(layer);
+        if (done.has(sourceName) || !usedLegendSources[legendZoom] || !usedLegendSources[legendZoom].has(sourceName) || !applicable) {
           return [];
         }
 
-        const applicable = layerVisibleAtZoom(legendZoom)(layer);
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
         const features = data.flatMap(item => {
           const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
@@ -5143,11 +5245,11 @@ function makeLegendStyle(style, theme) {
       const legendFeatures = sourceLayers.flatMap(layer => {
         const legendLayerName = `${layer.source}-${layer['source-layer']}`;
         const sourceName = `${legendLayerName}-z${legendZoom}`
-        if (done.has(sourceName)) {
+        const applicable = layerVisibleAtZoom(legendZoom)(layer);
+        if (done.has(sourceName) || !applicable) {
           return [];
         }
 
-        const applicable = layerVisibleAtZoom(legendZoom)(layer);
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
         const features = data.map(item => {
           const legend = [item.legend, ...(item.variants ?? [])
