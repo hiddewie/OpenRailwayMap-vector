@@ -619,13 +619,6 @@ const sources = {
     attribution,
     promoteId: 'id',
   },
-  // TODO merge with low
-  openrailwaymap_med: {
-    type: 'vector',
-    url: `${origin}/railway_line_high`,
-    attribution,
-    promoteId: 'id',
-  },
   standard_railway_text_stations_med: {
     type: 'vector',
     url: `${origin}/standard_railway_text_stations_med`,
@@ -1127,7 +1120,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_main_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
             construction: construction_dasharray,
@@ -1148,7 +1141,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_branch_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
             construction: construction_dasharray,
@@ -1757,7 +1750,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'speed_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
             construction: construction_dasharray,
@@ -1931,7 +1924,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
             construction: construction_dasharray,
@@ -2206,7 +2199,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
           },
@@ -2383,7 +2376,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
           },
@@ -2461,7 +2454,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
           },
@@ -2510,7 +2503,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_med',
           minzoom: 7,
           maxzoom: 8,
-          source: 'openrailwaymap_med',
+          source: 'openrailwaymap_low',
           states: {
             present: present_dasharray,
           },
@@ -2561,43 +2554,7 @@ const makeStyle = (selectedStyle, theme) => ({
 
 const legendData = {
   standard: {
-    'openrailwaymap_low-railway_line_high': [
-      {
-        legend: 'Highspeed main line',
-        type: 'line',
-        properties: {
-          highspeed: true,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: false,
-          ref: 'H1',
-          standard_label: 'H1 Name',
-          track_ref: '8b',
-          way_length: 1.0,
-        },
-      },
-      {
-        legend: 'Main line',
-        type: 'line',
-        properties: {
-          highspeed: false,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: false,
-          ref: 'L1',
-          standard_label: 'L1 Name',
-          track_ref: '8b',
-          way_length: 1.0,
-        },
-      },
-    ],
-    "openrailwaymap_med-railway_line_high": [
+    "openrailwaymap_low-railway_line_high": [
       {
         legend: 'Highspeed main line',
         type: 'line',
@@ -3150,32 +3107,6 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_high': [
-      ...speedLegends.map(speed => ({
-        legend: `${speed} km/h`,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          tunnel: false,
-          bridge: false,
-          maxspeed: speed,
-        },
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          tunnel: false,
-          bridge: false,
-          maxspeed: null,
-        },
-      },
-    ],
     'high-railway_line_high': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
@@ -3268,36 +3199,6 @@ const legendData = {
   },
   signals: {
     'openrailwaymap_low-railway_line_high': [
-      ...signals_railway_line.train_protections.map(train_protection => ({
-        legend: train_protection.legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: train_protection.train_protection,
-          train_protection_rank: 1,
-        },
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: null,
-          train_protection_rank: 0,
-        },
-      },
-    ],
-    'openrailwaymap_med-railway_line_high': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
         type: 'line',
@@ -3525,68 +3426,6 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_high': [
-      {
-        legend: 'Not electrified',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          electrification_state: 'no',
-          voltage: null,
-          frequency: null,
-        },
-      },
-      {
-        legend: 'De-electrified / abandoned railway',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          electrification_state: 'abandoned',
-          voltage: null,
-          frequency: null,
-        },
-      },
-      ...electrificationLegends.map(({legend, voltage, frequency}) => ({
-        legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          electrification_state: 'present',
-          voltage,
-          frequency,
-        },
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          electrification_state: null,
-          voltage: null,
-          frequency: null,
-        },
-      },
-    ],
     'high-railway_line_high': [
       {
         legend: 'Not electrified',
@@ -3752,103 +3591,6 @@ const legendData = {
   },
   gauge: {
     'openrailwaymap_low-railway_line_high': [
-      ...gaugeLegends.map(({min, legend}) => ({
-        legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: `${min}`,
-          gaugeint0: min,
-          label: `${min}`,
-        },
-      })),
-      {
-        legend: 'Monorail',
-        type: 'line',
-        properties: {
-          feature: 'monorail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: 'monorail',
-          gaugeint0: null,
-        },
-      },
-      {
-        legend: 'Narrow',
-        type: 'line',
-        properties: {
-          feature: 'narrow_gauge',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: 'standard',
-          gaugeint0: null,
-        },
-        variants: [
-          {
-            type: 'line',
-            properties: {
-              feature: 'rail',
-              gauge0: 'narrow',
-            },
-          },
-        ],
-      },
-      {
-        legend: 'Broad',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: 'broad',
-          gaugeint0: null,
-        },
-      },
-      {
-        legend: 'Standard',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: 'standard',
-          gaugeint0: null,
-        },
-      },
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          gauge0: '3500',
-          gaugeint0: 3500,
-          label: '3500'
-        },
-      },
-    ],
-    'openrailwaymap_med-railway_line_high': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
@@ -4184,34 +3926,6 @@ const legendData = {
         },
       },
     ],
-    'openrailwaymap_med-railway_line_high': [
-      ...loading_gauges.loading_gauges.map(loading_gauge => ({
-        legend: loading_gauge.legend,
-        type: 'line',
-        properties: {
-          loading_gauge: loading_gauge.value,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-        },
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          loading_gauge: null,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-        },
-      },
-    ],
     'high-railway_line_high': [
       ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
@@ -4254,34 +3968,6 @@ const legendData = {
   },
   track_class: {
     'openrailwaymap_low-railway_line_high': [
-      ...track_classes.track_classes.map(track_class => ({
-        legend: track_class.value,
-        type: 'line',
-        properties: {
-          track_class: track_class.value,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-        },
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          track_class: null,
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-        },
-      },
-    ],
-    'openrailwaymap_med-railway_line_high': [
       ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
         type: 'line',
