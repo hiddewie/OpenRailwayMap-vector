@@ -2727,6 +2727,7 @@ const legendData = {
       {
         legend: 'Industrial line',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2744,6 +2745,7 @@ const legendData = {
       {
         legend: 'Narrow gauge line',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           feature: 'narrow_gauge',
@@ -2761,6 +2763,7 @@ const legendData = {
       {
         legend: 'Subway',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'subway',
@@ -2778,6 +2781,7 @@ const legendData = {
       {
         legend: 'Light rail',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'light_rail',
@@ -2795,6 +2799,7 @@ const legendData = {
       {
         legend: 'Tram',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'tram',
@@ -2812,6 +2817,7 @@ const legendData = {
       {
         legend: 'Monorail',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'monorail',
@@ -2829,6 +2835,7 @@ const legendData = {
       {
         legend: 'Miniature railway',
         type: 'line',
+        minzoom: 12,
         properties: {
           highspeed: false,
           feature: 'miniature',
@@ -2846,6 +2853,7 @@ const legendData = {
       {
         legend: 'Yard',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2863,6 +2871,7 @@ const legendData = {
       {
         legend: 'Spur',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2880,6 +2889,7 @@ const legendData = {
       {
         legend: 'Siding',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2897,6 +2907,7 @@ const legendData = {
       {
         legend: 'Crossover',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2914,6 +2925,7 @@ const legendData = {
       {
         legend: 'Tourism (preserved)',
         type: 'line',
+        minzoom: 9,
         properties: {
           highspeed: false,
           feature: 'rail',
@@ -2965,6 +2977,7 @@ const legendData = {
       {
         legend: 'Disused railway',
         type: 'line',
+        minzoom: 11,
         properties: {
           highspeed: false,
           state: 'disused',
@@ -2982,6 +2995,7 @@ const legendData = {
       {
         legend: 'Abandoned railway',
         type: 'line',
+        minzoom: 11,
         properties: {
           highspeed: false,
           state: 'abandoned',
@@ -2999,6 +3013,7 @@ const legendData = {
       {
         legend: 'Razed railway',
         type: 'line',
+        minzoom: 11,
         properties: {
           highspeed: false,
           state: 'razed',
@@ -3036,6 +3051,7 @@ const legendData = {
       stations.features.map(feature => ({
         legend: feature.description,
         type: 'point',
+        minzoom: feature.minzoom,
         properties: {
           ...feature.example,
           railway: feature.feature,
@@ -3063,6 +3079,7 @@ const legendData = {
       ...poi.features.map(feature => ({
         legend: feature.description,
         type: 'point',
+        minzoom: feature.minzoom,
         properties: {
           feature: feature.feature,
         },
@@ -4410,39 +4427,43 @@ function makeLegendStyle(style, theme) {
 
   const legendSources = Object.fromEntries(
     legendZoomLevels.flatMap(legendZoom => {
+      const zoomFilter = layerVisibleAtZoom(legendZoom);
+
       let entry = 0;
       let done = new Set();
 
       const featureSourceLayers = sourceLayers.flatMap(layer => {
         const legendLayerName = `${layer.source}-${layer['source-layer']}`;
         const sourceName = `${legendLayerName}-z${legendZoom}`
-        const applicable = layerVisibleAtZoom(legendZoom)(layer);
+        const applicable = zoomFilter(layer);
         if (done.has(sourceName) || !usedLegendSources[legendZoom] || !usedLegendSources[legendZoom].has(sourceName) || !applicable) {
           return [];
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
-        const features = data.flatMap(item => {
-          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
-            type: 'Feature',
-            geometry: {
-              type: subItem.type === 'line' || subItem.type === 'polygon'
-                ? 'LineString'
-                : 'Point',
-              coordinates:
-                subItem.type === 'line' ? [
-                  legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                  legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                ] :
-                subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                    legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                  : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-            },
-            properties: subItem.properties,
-          }));
-          entry ++;
-          return itemFeatures;
-        });
+        const features = data
+          .filter(zoomFilter)
+          .flatMap(item => {
+            const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
+              type: 'Feature',
+              geometry: {
+                type: subItem.type === 'line' || subItem.type === 'polygon'
+                  ? 'LineString'
+                  : 'Point',
+                coordinates:
+                  subItem.type === 'line' ? [
+                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                  ] :
+                  subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+              },
+              properties: subItem.properties,
+            }));
+            entry ++;
+            return itemFeatures;
+          });
         done.add(sourceName);
 
         return [[sourceName, {
@@ -4466,25 +4487,27 @@ function makeLegendStyle(style, theme) {
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
-        const features = data.map(item => {
-          const legend = [item.legend, ...(item.variants ?? [])
-            .filter(variant => variant.legend)
-            .map(variant => variant.legend)]
-            .join(', ');
+        const features = data
+          .filter(zoomFilter)
+          .map(item => {
+            const legend = [item.legend, ...(item.variants ?? [])
+              .filter(variant => variant.legend)
+              .map(variant => variant.legend)]
+              .join(', ');
 
-          const feature = {
-            type: 'Feature',
-            geometry: {
-              type: "Point",
-              coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
-            },
-            properties: {
-              legend,
-            },
-          };
-          entry++;
-          return feature;
-        });
+            const feature = {
+              type: 'Feature',
+              geometry: {
+                type: "Point",
+                coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
+              },
+              properties: {
+                legend,
+              },
+            };
+            entry++;
+            return feature;
+          });
         done.add(sourceName);
 
         return features;

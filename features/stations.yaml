@@ -7,29 +7,49 @@ features:
 
   - description: Halt
     feature: halt
+    minzoom: 10
+    example:
+      name: Deventer
 
   - description: Tram stop
     feature: tram_stop
+    minzoom: 13
     example:
       name: Llacuna
       count: 2
 
   - description: Service station
     feature: service_station
+    minzoom: 10
+    example:
+      name: Wiederitzsch
 
   - description: Railway yard
     feature: yard
+    minzoom: 10
     example:
-      name: Kijfhoek
+      name: Schaerbeek
 
   - description: Junction
     feature: junction
+    minzoom: 10
+    example:
+      name: Kijfhoek Zuid
 
   - description: Spur junction
     feature: spur_junction
+    minzoom: 10
+    example:
+      name: Neusüdende
 
   - description: Railway site
     feature: site
+    minzoom: 10
+    example:
+      name: Pápateszér
 
   - description: Crossover
     feature: crossover
+    minzoom: 10
+    example:
+      name: Przemiarki
