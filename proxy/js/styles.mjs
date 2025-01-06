@@ -4356,7 +4356,7 @@ const legendData = {
         legend: '(deactivated)',
         type: 'point',
         properties: {
-          feature0: 'pl/w21-40',
+          feature0: 'pl/w21-{40}',
           type: 'line',
           azimuth: null,
           deactivated: true,
