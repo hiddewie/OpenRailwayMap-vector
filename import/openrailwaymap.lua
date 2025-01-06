@@ -114,9 +114,9 @@ local railway_line = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'linestring' },
     { column = 'way_length', type = 'real' },
-    { column = 'railway', type = 'text' },
-    -- TODO build feature column
     { column = 'feature', type = 'text' },
+    { column = 'state', type = 'text' },
+    { column = 'rank', type = 'integer' },
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
     { column = 'highspeed', type = 'boolean' },
@@ -125,10 +125,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'track_ref', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'construction', type = 'text' },
-    { column = 'tunnel', type = 'text' },
-    { column = 'tunnel_name', type = 'text' },
-    { column = 'bridge', type = 'text' },
-    { column = 'bridge_name', type = 'text' },
+    { column = 'tunnel', type = 'boolean' },
+    { column = 'bridge', type = 'boolean' },
     { column = 'maxspeed', type = 'real' },
     { column = 'preferred_direction', type = 'text' },
     { column = 'speed_label', type = 'text' },
@@ -141,14 +139,6 @@ local railway_line = osm2pgsql.define_table({
     { column = 'loading_gauge', type = 'text' },
     { column = 'track_class', type = 'text' },
     { column = 'reporting_marks', sql_type = 'text[]' },
-    { column = 'construction_railway', type = 'text' },
-    { column = 'proposed_railway', type = 'text' },
-    { column = 'disused_railway', type = 'text' },
-    { column = 'abandoned_railway', type = 'text' },
-    { column = 'abandoned_name', type = 'text' },
-    { column = 'razed_railway', type = 'text' },
-    { column = 'razed_name', type = 'text' },
-    { column = 'preserved_railway', type = 'text' },
     { column = 'train_protection', type = 'text' },
     { column = 'train_protection_rank', type = 'smallint' },
     { column = 'operator', sql_type = 'text[]' },
@@ -292,6 +282,79 @@ local routes = osm2pgsql.define_table({
     { column = 'stop_ref_ids', method = 'gin' },
   },
 })
+
+local railway_line_states = {}
+-- ordered from lower to higher importance
+local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
+for index, state in ipairs(states) do
+  railway_line_states[state] = {
+    state = state,
+    railway = state .. ':railway',
+    usage = state .. ':usage',
+    service = state .. ':service',
+    name = state .. ':name',
+    gauge = state .. ':gauge',
+    rank = index + 1,
+  }
+end
+
+function railway_line_state(tags)
+  local railway = tags['railway']
+  local usage = tags['usage']
+  local service = tags['service']
+  local name = tags['name']
+  local gauge = tags['gauge']
+  local highspeed = tags['highspeed'] == 'yes'
+
+  -- map known railway state values to their state values
+  mapped_railway = railway_line_states[railway]
+  if mapped_railway then
+    return mapped_railway.state,
+      tags[mapped_railway.railway] or tags[railway] or 'rail',
+      tags[mapped_railway.usage] or usage,
+      tags[mapped_railway.service] or service,
+      tags[mapped_railway.name] or name,
+      tags[mapped_railway.gauge] or gauge,
+      highspeed,
+      mapped_railway.rank
+  else
+
+    if usage == 'main' and (not service) and highspeed then rank = 200
+    elseif usage == 'main' and (not service) then rank = 110
+    elseif usage == 'branch' and (not service) then rank = 100
+    elseif (usage == 'main' or usage == 'branch') and service == 'spur' then rank = 98
+    elseif (usage == 'main' or usage == 'branch') and service == 'siding' then rank = 97
+    elseif (usage == 'main' or usage == 'branch') and service == 'yard' then rank = 96
+    elseif (usage == 'main' or usage == 'branch') and service == 'crossover' then rank = 95
+    elseif (not usage) and service == 'spur' then rank = 88
+    elseif (not usage) and service == 'siding' then rank = 87
+    elseif (not usage) and service == 'yard' then rank = 86
+    elseif (not usage) and service == 'crossover' then rank = 85
+    elseif usage == 'industrial' and (not service) then rank = 75
+    elseif usage == 'industrial' and (service == 'siding' or service == 'spur' or service == 'yard' or service == 'crossover') then rank = 74
+    elseif (usage == 'tourism' or usage == 'military' or usage == 'test') and (not service) then rank = 55
+    elseif (usage == 'tourism' or usage == 'military' or usage == 'test') and (service == 'siding' or service == 'spur' or service == 'yard' or service == 'crossover') then rank = 54
+    elseif (not service) then rank = 40
+    elseif service == 'spur' then rank = 38
+    elseif service == 'siding' then rank = 37
+    elseif service == 'yard' then rank = 36
+    elseif service == 'crossover' then rank = 35
+    else rank = 10
+    end
+
+    return 'present', railway, usage, service, name, gauge, highspeed, rank
+  end
+end
+
+function railway_line_name(name, tunnel, tunnel_name, bridge, bridge_name)
+  if tunnel then
+    return tunnel_name or name
+  elseif bridge then
+    return bridge_name or name
+  else
+    return name
+  end
+end
 
 local electrification_values = osm2pgsql.make_check_values_func({'contact_line', 'yes', 'rail', 'ground-level_power_supply', '4th_rail', 'contact_line;rail', 'rail;contact_line'})
 function electrification_state(tags)
@@ -506,9 +569,14 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
 
   if railway_values(tags.railway) then
+    local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
 
     local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
+
+    local tunnel = tags['tunnel'] and tags['tunnel'] ~= 'no' or false
+    local bridge = tags['bridge'] and tags['bridge'] ~= 'no' or false
+    local name = railway_line_name(state_name, tunnel, tags['tunnel:name'], bridge, tags['bridge:name'])
 
     local preferred_direction = tags['railway:preferred_direction']
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
@@ -518,20 +586,20 @@ function osm2pgsql.process_way(object)
       railway_line:insert({
         way = way,
         way_length = way:length(),
-        railway = tags['railway'],
-        service = tags['service'],
-        usage = tags['usage'],
-        highspeed = tags['highspeed'] == 'yes',
+        feature = feature,
+      state = state,
+        service = service,
+        usage = usage,
+      rank = rank,
+        highspeed = highspeed,
         layer = tags['layer'],
         ref = tags['ref'],
         track_ref = tags['railway:track_ref'],
-        name = tags['name'],
+        name = name,
         public_transport = tags['public_transport'],
         construction = tags['construction'],
-        tunnel = tags['tunnel'],
-        tunnel_name = tags['tunnel:name'],
-        bridge = tags['bridge'],
-        bridge_name = tags['bridge:name'],
+        tunnel = tunnel,
+        bridge = bridge,
         preferred_direction = preferred_direction,
         maxspeed = dominant_speed,
         speed_label = speed_label,
@@ -540,18 +608,11 @@ function osm2pgsql.process_way(object)
         voltage = voltage,
         future_frequency = future_frequency,
         future_voltage = future_voltage,
-        gauges = split_semicolon_to_sql_array(tags['gauge'] or tags['construction:gauge']),
+        gauges = split_semicolon_to_sql_array(gauge),
         loading_gauge = tags['loading_gauge'],
         track_class = tags['railway:track_class'],
         reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
-        construction_railway = tags['construction:railway'],
-        proposed_railway = tags['proposed:railway'],
-        disused_railway = tags['disused:railway'],
-        abandoned_railway = tags['abandoned:railway'],
-        abandoned_name = tags['abandoned:name'],
-        razed_railway = tags['razed:railway'],
-        razed_name = tags['razed:name'],
-        preserved_railway = tags['preserved:railway'],
+
         train_protection = railway_train_protection,
         train_protection_rank = railway_train_protection_rank,
         operator = split_semicolon_to_sql_array(tags['operator']),

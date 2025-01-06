@@ -1,21 +1,26 @@
 features:
   - description: Tram stop
+    minzoom: 12
     feature: 'general/tram-stop'
 
   - description: Border crossing
     feature: 'general/border'
-    variants:
-      - description: owner change
-        feature: 'general/owner-change'
+    minzoom: 12
+
+  - description: Owner change
+    feature: 'general/owner-change'
+    minzoom: 12
 
   - description: Radio mast
     feature: 'general/radio-mast'
+    minzoom: 12
     variants:
       - description: antenna
         feature: 'general/radio-antenna'
 
   - description: Crossing
     feature: 'general/crossing'
+    minzoom: 13
     variants:
       - description: Level crossing
         feature: 'general/level-crossing'
@@ -27,58 +32,74 @@ features:
         feature: 'general/level-crossing-barrier'
 
   - description: Phone
+    minzoom: 13
     feature: 'general/phone'
 
   - description: Lubricator
+    minzoom: 13
     feature: 'general/lubricator'
 
   - description: Fuel
+    minzoom: 13
     feature: 'general/fuel'
 
   - description: Sand store
+    minzoom: 13
     feature: 'general/sand_store'
 
   - description: Defect detector
+    minzoom: 13
     feature: 'general/defect_detector'
 
   - description: Automatic equipment identification
+    minzoom: 13
     feature: 'general/aei'
 
   - description: Buffer stop
-    feature: 'general/phone'
+    feature: 'general/buffer_stop'
+    minzoom: 13
     variants:
       - description: Derailer
         feature: 'general/derail'
 
   - description: Hump
+    minzoom: 13
     feature: 'general/hump_yard'
 
   - description: Loading gauge
+    minzoom: 13
     feature: 'general/loading_gauge'
 
   - description: Preheating
+    minzoom: 13
     feature: 'general/preheating'
 
   - description: Compressed air supply
+    minzoom: 13
     feature: 'general/compressed_air_supply'
 
   - description: Waste disposal
+    minzoom: 13
     feature: 'general/waste_disposal'
 
   - description: Coaling facility
+    minzoom: 13
     feature: 'general/coaling_facility'
 
   - description: Wash
+    minzoom: 13
     feature: 'general/wash'
 
   - description: Water tower
     feature: 'general/water_tower'
+    minzoom: 13
     variants:
     - description: Crane
       feature: 'general/water_crane'
 
   - description: Axle counter
     feature: 'general/vacancy-detection-axle-counter'
+    minzoom: 13
     variants:
     - description: Insulated rail joint
       feature: 'general/vacancy-detection-insulated-rail-joint'

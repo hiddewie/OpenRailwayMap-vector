@@ -6,15 +6,11 @@ GET {{base_url}}/catalog
 HTTP 200
 
 # Tile sources
-GET {{base_url}}/railway_line_low
+GET {{base_url}}/railway_line_high
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/standard_railway_text_stations_low
-HTTP 200
-Content-Type: application/json
-
-GET {{base_url}}/railway_line_med
 HTTP 200
 Content-Type: application/json
 

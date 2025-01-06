@@ -58,30 +58,6 @@ const railwayLineFeatures = {
       name: 'Monorail',
       type: 'line',
     },
-    construction: {
-      name: 'Railway under construction',
-      type: 'line',
-    },
-    proposed: {
-      name: 'Proposed railway',
-      type: 'line',
-    },
-    abandoned: {
-      name: 'Abandoned railway',
-      type: 'line',
-    },
-    razed: {
-      name: 'Razed railway',
-      type: 'line',
-    },
-    disused: {
-      name: 'Disused railway',
-      type: 'line',
-    },
-    preserved: {
-      name: 'Preserved railway',
-      type: 'line',
-    },
     narrow_gauge: {
       name: 'Narrow gauge railway',
       type: 'line',
@@ -92,9 +68,8 @@ const railwayLineFeatures = {
     },
   },
   properties: {
-    // TODO replace railway with `state`
-    railway: {
-      name: 'Railway',
+    state: {
+      name: 'State',
     },
     usage: {
       name: 'Usage',
@@ -207,8 +182,7 @@ const stationFeatures = {
 // TODO add icon
 const features = {
   'high-railway_line_high': railwayLineFeatures,
-  'openrailwaymap_low-railway_line_low': railwayLineFeatures,
-  'openrailwaymap_med-railway_line_med': railwayLineFeatures,
+  'openrailwaymap_low-railway_line_high': railwayLineFeatures,
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
