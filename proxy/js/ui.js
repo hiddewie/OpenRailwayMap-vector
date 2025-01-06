@@ -969,7 +969,7 @@ fetch(`${location.origin}/bounds.json`)
     }
   })
   .then(result => {
-    // map.setMaxBounds(result);
+    map.setMaxBounds(result);
     backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
   })
   .catch(error => console.error('Error during fetching of import map bounds', error))
