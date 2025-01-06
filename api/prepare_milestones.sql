@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS openrailwaymap_tracks_with_ref;
 CREATE TABLE openrailwaymap_tracks_with_ref AS
   SELECT
       osm_id,
-      railway,
+      feature,
       name,
       ref,
       way AS geom
