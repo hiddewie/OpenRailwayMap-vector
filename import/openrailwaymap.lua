@@ -582,7 +582,7 @@ function osm2pgsql.process_way(object)
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     -- Segmentize linestring to optimize tile queries
-    for way in object:as_linestring():segmentize(max_segment_length):geometries() do
+    for way in object:as_linestring():transform(3857):segmentize(max_segment_length):geometries() do
       railway_line:insert({
         way = way,
         way_length = way:length(),
