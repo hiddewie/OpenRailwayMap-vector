@@ -30,13 +30,16 @@ if [ "$TILES" = "high" ]; then
   mbtiles summary /tiles/high8.mbtiles
 
   rm -f /tiles/high10.mbtiles
-  $MARTIN --min-zoom 10 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file /tiles/high10.mbtiles
+  $MARTIN --min-zoom 10 --max-zoom 13 --source railway_line_high,railway_text_km --output-file /tiles/high10.mbtiles
   mbtiles summary /tiles/high10.mbtiles
 
   rm -f /tiles/high.mbtiles
   mbtiles copy --on-duplicate abort /tiles/high8.mbtiles /tiles/high.mbtiles
   mbtiles copy --on-duplicate override /tiles/high10.mbtiles /tiles/high.mbtiles
   mbtiles summary /tiles/high.mbtiles
+
+  rm -f /tiles/high8.mbtiles
+  rm -f /tiles/high10.mbtiles
 fi
 
 if [ "$TILES" = "standard" ]; then
