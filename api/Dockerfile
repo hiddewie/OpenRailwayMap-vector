@@ -19,7 +19,7 @@ RUN apt update && \
         curl \
         python3 \
         python3-pip \
-    && python3 -m pip install --no-cache-dir --no-color --no-python-version-warning --disable-pip-version-check --break-system-packages \
+    && python3 -m pip install --no-cache-dir --no-color --no-python-version-warning --disable-pip-version-check \
         fastapi[standard] \
         asyncpg
 
