@@ -562,6 +562,7 @@ function osm2pgsql.process_node(object)
   end
 end
 
+local max_segment_length = 10000
 local railway_values = osm2pgsql.make_check_values_func({'rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved', 'monorail', 'miniature'})
 local railway_turntable_values = osm2pgsql.make_check_values_func({'turntable', 'traverser'})
 function osm2pgsql.process_way(object)
@@ -580,42 +581,44 @@ function osm2pgsql.process_way(object)
     local preferred_direction = tags['railway:preferred_direction']
     local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
-    local way = object:as_linestring()
-    railway_line:insert({
-      way = way,
-      way_length = way:length(),
-      feature = feature,
-      state = state,
-      service = service,
-      usage = usage,
-      rank = rank,
-      highspeed = highspeed,
-      layer = tags['layer'],
-      ref = tags['ref'],
-      track_ref = tags['railway:track_ref'],
-      name = name,
-      public_transport = tags['public_transport'],
-      construction = tags['construction'],
-      tunnel = tunnel,
-      bridge = bridge,
-      preferred_direction = preferred_direction,
-      maxspeed = dominant_speed,
-      speed_label = speed_label,
-      electrification_state = current_electrification_state,
-      frequency = frequency,
-      voltage = voltage,
-      future_frequency = future_frequency,
-      future_voltage = future_voltage,
-      gauges = split_semicolon_to_sql_array(gauge),
-      loading_gauge = tags['loading_gauge'],
-      track_class = tags['railway:track_class'],
-      reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
-      train_protection = railway_train_protection,
-      train_protection_rank = railway_train_protection_rank,
-      operator = split_semicolon_to_sql_array(tags['operator']),
-      traffic_mode = tags['railway:traffic_mode'],
-      radio = tags['railway:radio'],
-    })
+    -- Segmentize linestring to optimize tile queries
+    for way in object:as_linestring():transform(3857):segmentize(max_segment_length):geometries() do
+      railway_line:insert({
+        way = way,
+        way_length = way:length(),
+        feature = feature,
+        state = state,
+        service = service,
+        usage = usage,
+        rank = rank,
+        highspeed = highspeed,
+        layer = tags['layer'],
+        ref = tags['ref'],
+        track_ref = tags['railway:track_ref'],
+        name = name,
+        public_transport = tags['public_transport'],
+        construction = tags['construction'],
+        tunnel = tunnel,
+        bridge = bridge,
+        preferred_direction = preferred_direction,
+        maxspeed = dominant_speed,
+        speed_label = speed_label,
+        electrification_state = current_electrification_state,
+        frequency = frequency,
+        voltage = voltage,
+        future_frequency = future_frequency,
+        future_voltage = future_voltage,
+        gauges = split_semicolon_to_sql_array(gauge),
+        loading_gauge = tags['loading_gauge'],
+        track_class = tags['railway:track_class'],
+        reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
+        train_protection = railway_train_protection,
+        train_protection_rank = railway_train_protection_rank,
+        operator = split_semicolon_to_sql_array(tags['operator']),
+        traffic_mode = tags['railway:traffic_mode'],
+        radio = tags['railway:radio'],
+      })
+    end
   end
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
