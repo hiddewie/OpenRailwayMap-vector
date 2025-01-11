@@ -15,7 +15,7 @@ HEALTHCHECK CMD ["pg_isready", "--host", "localhost", "--user", "postgres", "--d
 FROM postgis/postgis:17-master@sha256:397ef22320c95bf75587dce52bebe5794252b01ca59671df0878650735293b30 as runtime
 
 RUN apt update && \
-    apt install \
+    apt install -y \
         curl \
         python3 \
         python3-pip \
