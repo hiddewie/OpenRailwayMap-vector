@@ -34,17 +34,8 @@ fi
 if [ "$TILES" = "high" ]; then
   echo "Tiles: high"
 
-  rm -f "$OUTPUT_DIR/high8.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom 9 --source railway_line_high --output-file "$OUTPUT_DIR/high8.mbtiles"
-  mbtiles summary "$OUTPUT_DIR/high8.mbtiles"
-
-  rm -f "$OUTPUT_DIR/high10.mbtiles"
-  $MARTIN --min-zoom 10 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file "$OUTPUT_DIR/high10.mbtiles"
-  mbtiles summary "$OUTPUT_DIR/high10.mbtiles"
-
   rm -f "$OUTPUT_DIR/high.mbtiles"
-  mbtiles copy --on-duplicate abort "$OUTPUT_DIR/high8.mbtiles" "$OUTPUT_DIR/high.mbtiles"
-  mbtiles copy --on-duplicate override "$OUTPUT_DIR/high10.mbtiles" "$OUTPUT_DIR/high.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom $MAX_ZOOM --source railway_line_high,railway_text_km --output-file "$OUTPUT_DIR/high.mbtiles"
   mbtiles summary "$OUTPUT_DIR/high.mbtiles"
 fi
 
