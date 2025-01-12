@@ -6,7 +6,6 @@ set -o pipefail
 INPUT_FILE="/data/${DATAFILE:-data.osm.pbf}"
 echo "Using input file $INPUT_FILE"
 
-
 FILTERED_INPUT_FILE="/data/filtered/${DATAFILE:-data.osm.pbf}"
 echo "Filtering input file $INPUT_FILE into $FILTERED_INPUT_FILE"
 [[ -f "$FILTERED_INPUT_FILE" ]] || \

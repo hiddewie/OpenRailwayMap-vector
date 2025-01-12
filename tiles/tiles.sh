@@ -4,7 +4,7 @@
 # The zoom levels of the sources are taken into account to avoid outputting unused data into tiles
 # Documentation:
 #  - https://maplibre.org/martin/martin-cp.html
-#  - httpshttps://maplibre.org/martin/mbtiles-copy.html
+#  - https://maplibre.org/martin/mbtiles-copy.html
 
 set -e
 
