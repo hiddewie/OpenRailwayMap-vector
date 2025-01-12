@@ -41,6 +41,9 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
           ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
         END` : `'${feature.icon.default}'`}
     `).join('')}
+      -- Unknown signal
+      WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+        'general/signal-unknown-${type.type}'
     END as feature_${type.type},
     `).join('')}
       
