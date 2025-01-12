@@ -163,7 +163,7 @@ jobs:
           done
 
           mkdir -p "tiles/${{ matrix.bbox }}"
-          mv "tiles/*.mbtiles" "tiles/${{ matrix.bbox }}"
+          mv tiles/*.mbtiles "tiles/${{ matrix.bbox }}"
 
       - name: List generated tiles
         run: |
