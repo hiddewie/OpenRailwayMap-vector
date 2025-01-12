@@ -148,7 +148,7 @@ jobs:
           BBOX: ${{ matrix.bbox }}
         run: |
           for tile in low-med high standard speed signals electrification; do
-            docker compose run -e "TILES=$tile" -e BBOX --no-deps martin-cp
+            docker compose run -e "TILES=$tile" -e BBOX -e "TILES_DIR=$bbox" --no-deps martin-cp
           done
 
       - name: List generated tiles
