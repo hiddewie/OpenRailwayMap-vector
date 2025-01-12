@@ -12,6 +12,9 @@ import)
   psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || createdb gis
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
+  $PSQL -c 'DROP EXTENSION IF NOT EXISTS postgis_topology;'
+  $PSQL -c 'DROP EXTENSION IF NOT EXISTS fuzzystrmatch;'
+  $PSQL -c 'DROP EXTENSION IF NOT EXISTS postgis_tiger_geocoder;'
 
   # Filter the data for more efficient import
   # Store the filtered data for future use in the data directory
