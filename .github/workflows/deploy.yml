@@ -30,8 +30,27 @@ jobs:
         run: |
           flyctl deploy --config proxy.fly.toml --local-only
 
+  build-import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ghcr.io/hiddewie/openrailwaymap-import:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   generate-tiles:
     name: Generate tiles
+    needs: build-import
     runs-on: ubuntu-latest
 
     strategy:
@@ -116,9 +135,13 @@ jobs:
           docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
           docker container rm "$CONTAINER_ID"
 
+      - name: Build and start database
+        run: |
+          docker compose up --build db
+
       - name: Import data
         run: |
-          docker compose run --build import import
+          docker compose run import import
 
       - name: Generate tiles
         env:
