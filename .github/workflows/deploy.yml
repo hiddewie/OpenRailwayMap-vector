@@ -33,6 +33,7 @@ jobs:
           flyctl deploy --config proxy.fly.toml --local-only
 
   build-import:
+    name: Build import
     runs-on: ubuntu-latest
 
     steps:
