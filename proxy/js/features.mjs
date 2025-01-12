@@ -7,15 +7,17 @@ const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml',
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
+const signal_types = all_signals.types;
+
 const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
 const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
 const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
 
 // TODO add links to documentation
 
-const generateSignalFeatures = features =>
-  Object.fromEntries(features.flatMap(feature =>
-    [
+const generateSignalFeatures = (features, types) =>
+  Object.fromEntries([
+    ...features.flatMap(feature => [
       [
         feature.icon.default,
         {
@@ -23,16 +25,23 @@ const generateSignalFeatures = features =>
           name: feature.description,
           type: feature.type,
         }
-      ]
-    ].concat(
-      feature.icon.match
-        ? feature.icon.cases.map(iconCase => [iconCase.value, {
-          country: feature.country,
-          name: `${feature.description}${iconCase.description ? ` (${iconCase.description})` : ''}`,
-        }])
-        : []
-    ),
-  ));
+      ],
+      ...(
+        feature.icon.match
+          ? feature.icon.cases.map(iconCase => [iconCase.value, {
+            country: feature.country,
+            name: `${feature.description}${iconCase.description ? ` (${iconCase.description})` : ''}`,
+          }])
+          : []
+      )
+    ]),
+    ...types.map(type => [
+      `general/signal-unknown-${type.type}`,
+      {
+        name: `Unknown signal (${type.type})`,
+      }
+    ]),
+  ]);
 
 // TODO move icon SVGs to proxy
 const railwayLineFeatures = {
@@ -247,7 +256,7 @@ const features = {
   },
   'openrailwaymap_speed-speed_railway_signals': {
     featureProperty: 'feature0',
-    features: generateSignalFeatures(speed_railway_signals),
+    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
     properties: {
       feature1: {
         name: 'Secondary signal',
@@ -275,7 +284,7 @@ const features = {
   },
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
-    features: generateSignalFeatures(signals_railway_signals),
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => !['speed', 'electrification'].includes(type.layer))),
     properties: {
       feature1: {
         name: 'Secondary signal',
@@ -340,7 +349,7 @@ const features = {
   },
   'openrailwaymap_electrification-electrification_signals': {
     featureProperty: 'feature',
-    features: generateSignalFeatures(electrification_signals),
+    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
     properties: {
       direction_both: {
         name: 'both directions',
