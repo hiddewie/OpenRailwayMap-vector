@@ -145,7 +145,7 @@ jobs:
 
       - name: Build and start database
         run: |
-          docker compose up --build db
+          docker compose up --build --wait db
 
       - name: Import data
         run: |
