@@ -55,6 +55,19 @@ Filter and split the data:
 docker compose run --build --entrypoint ./extract.sh -e BBOXES import
 ```
 
+Optionally, build and push the data Docker images:
+```shell
+mv .dockerignore .dockerignore.bak
+echo '**' > .dockerignore
+echo '!data/data.osm.pbf' >> .dockerignore
+for bbox in $BBOXES; do
+  cp "data/split/$bbox/data.osm.pbf" data/data.osm.pbf
+  docker build --push -f data/data.Dockerfile -t "ghcr.io/hiddewie/openrailwaymap-data:$(echo "$bbox" | sed 's/,/_/g')" data
+done
+rm -f data/data.osm.pbf
+mv .dockerignore.bak .dockerignore
+```
+
 Optionally, update the data:
 ```shell
 for bbox in $BBOXES; do
