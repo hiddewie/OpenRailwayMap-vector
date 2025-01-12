@@ -91,7 +91,7 @@ done
 
 Merge generated tiles:
 ```shell
-docker compose run --entrypoint /tiles/merge.sh -e BBOXES martin-cp
+docker compose run --entrypoint /tiles/merge.sh -e BBOXES --no-deps martin-cp
 ```
 
 Build and deploy the tile server:

@@ -162,18 +162,18 @@ jobs:
             docker compose run -e "TILES=$tile" -e BBOX --no-deps martin-cp
           done
 
-          mkdir -p "tiles/${{ matrix.bbox }}"
-          mv tiles/*.mbtiles "tiles/${{ matrix.bbox }}"
+          mkdir -p "tiles/split/${{ matrix.bbox }}"
+          mv tiles/*.mbtiles "tiles/split/${{ matrix.bbox }}"
 
       - name: List generated tiles
         run: |
-          ls -lah tiles/${{ matrix.bbox }}/*.mbtiles
+          ls -lah tiles/split/${{ matrix.bbox }}/*.mbtiles
 
       - uses: actions/upload-artifact@v4
         with:
           name: tiles-${{ matrix.bbox }}
           path: |
-            tiles/${{ matrix.bbox }}/*.mbtiles
+            tiles/split
           if-no-files-found: error
           retention-days: 3
 
@@ -209,16 +209,16 @@ jobs:
         with:
           pattern: tiles-*
           merge-multiple: true
-          path: tiles
+          path: tiles/split
 
       - name: Merge tiles
         run: |
-          docker compose run --entrypoint /tiles/merge.sh -e BBOXES martin-cp
+          docker compose run --entrypoint /tiles/merge.sh -e BBOXES --no-deps martin-cp
 
       - name: Delete split tiles
         run: |
           for bbox in $BBOXES; do
-            rm -rf "tiles/$bbox"
+            rm -rf "tiles/split/$bbox"
           done
 
       - name: List generated tiles

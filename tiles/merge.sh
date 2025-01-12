@@ -19,7 +19,7 @@ for name in railway_line_high standard_railway_text_stations_low standard_railwa
   rm -f "$output_file"
 
   for bbox in $BBOXES; do
-    file="$OUTPUT_DIR/$bbox/$name.mbtiles"
+    file="$OUTPUT_DIR/split/$bbox/$name.mbtiles"
 
     if [[ -f "$file" ]]; then
       echo "Copying $file into $output_file"
