@@ -29,7 +29,7 @@ const knownThemes = [
 ];
 
 const globalMinZoom = 1;
-const glodalMaxZoom = 20;
+const globalMaxZoom = 20;
 
 const colors = {
   light: {
@@ -4041,7 +4041,7 @@ const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
 const layerVisibleAtZoom = (zoom) =>
   layer =>
-    ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (glodalMaxZoom + 1)));
+    ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
 
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
@@ -4049,7 +4049,7 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
 function makeLegendStyle(style, theme) {
   const sourceStyle = makeStyle(style, theme);
   const sourceLayers = sourceStyle.layers;
-  const legendZoomLevels = [...Array(glodalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
+  const legendZoomLevels = [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
   const legendLayers = legendZoomLevels.flatMap(legendZoom => {
     const styleZoomLayers = sourceLayers
