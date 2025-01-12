@@ -8,7 +8,7 @@
 
 set -e
 
-OUTPUT_DIR="/tiles/${TILES_DIR:-}"
+OUTPUT_DIR="/tiles"
 echo "Exporting tiles for bounding box $BBOX into output directory $OUTPUT_DIR"
 
 export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate abort --skip-agg-tiles-hash --bbox=$BBOX"

@@ -79,9 +79,13 @@ Generate tiles for each of the bounding box slices:
 ```shell
 for bbox in $BBOXES; do
   docker compose run --build -e "OSM2PGSQL_DATAFILE=split/$bbox/data.osm.pbf" import import
+  
   for tile in low-med high standard speed signals electrification; do
     docker compose run -e "BBOX=$bbox" -e "TILES=$tile" -e "TILES_DIR=$bbox" martin-cp
   done
+  
+  mkdir -p "tiles/$bbox"
+  mv tiles/*.mbtiles "tiles/$bbox"
 done
 ```
 

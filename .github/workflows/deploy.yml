@@ -158,18 +158,21 @@ jobs:
           BBOX: ${{ matrix.bbox }}
         run: |
           for tile in low-med high standard speed signals electrification; do
-            docker compose run -e "TILES=$tile" -e BBOX -e "TILES_DIR=$bbox" --no-deps martin-cp
+            docker compose run -e "TILES=$tile" -e BBOX --no-deps martin-cp
           done
+
+          mkdir -p "tiles/${{ matrix.bbox }}"
+          mv "tiles/*.mbtiles" "tiles/${{ matrix.bbox }}"
 
       - name: List generated tiles
         run: |
-          ls -lah tiles/split/${{ matrix.bbox }}/*.mbtiles
+          ls -lah tiles/${{ matrix.bbox }}/*.mbtiles
 
       - uses: actions/upload-artifact@v4
         with:
           name: tiles-${{ matrix.bbox }}
           path: |
-            tiles/*.mbtiles
+            tiles/${{ matrix.bbox }}/*.mbtiles
           if-no-files-found: error
           retention-days: 3
 
