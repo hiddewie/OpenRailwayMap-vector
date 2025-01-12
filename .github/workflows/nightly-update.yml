@@ -82,7 +82,7 @@ jobs:
 
       - name: Pull data
         run: |
-          IMAGE='ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')'
+          IMAGE="ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
           docker pull "$IMAGE"
           CONTAINER_ID="$(docker container create "$IMAGE")"
           docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
@@ -100,11 +100,11 @@ jobs:
         run: |
           echo '**' > .dockerignore
           echo '!data/data.osm.pbf' >> .dockerignore
-          docker build import -f data.Dockerfile -t 'ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')'
+          docker build import -f data.Dockerfile -t "ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
 
       - name: Push updated data
         run: |
-          docker push 'ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')'
+          docker push "ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
 
   trigger-deployment:
     needs:

@@ -110,7 +110,7 @@ jobs:
 
       - name: Pull data
         run: |
-          IMAGE='ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')'
+          IMAGE="ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
           docker pull "$IMAGE"
           CONTAINER_ID="$(docker container create "$IMAGE")"
           docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
