@@ -28,6 +28,8 @@ for name in railway_line_high standard_railway_text_stations_low standard_railwa
       echo "File $file does not exist, skipping."
     fi
   done
+
+  mbtiles summary "$OUTPUT_DIR/$name.mbtiles"
 done
 
 echo "Done"
