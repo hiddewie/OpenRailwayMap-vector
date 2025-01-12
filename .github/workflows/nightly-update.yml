@@ -85,10 +85,21 @@ jobs:
           docker pull ghcr.io/hiddewie/openrailwaymap-data:${{ matrix.bbox }}
           CONTAINER_ID="$(docker container create ghcr.io/hiddewie/openrailwaymap-data:${{ matrix.bbox }})"
           docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
+          docker container rm "$CONTAINER_ID"
 
       - name: Update data
         run: |
           docker compose run --build --entrypoint ./update.sh -e "BBOX=${{ matrix.bbox }}" import
+
+      - name: List data
+        run: |
+          ls -lah data/*.osm.pbf
+
+      - name: Build updated data image
+        run: |
+          echo '**' > .dockerignore
+          echo '!data/data.osm.pbf' >> .dockerignore
+          docker build import -f data.Dockerfile -t ghcr.io/hiddewie/openrailwaymap-data:${{ matrix.bbox }}
 
       - name: Push updated data
         run: |
