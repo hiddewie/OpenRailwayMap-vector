@@ -3615,7 +3615,7 @@ const legendData = {
         legend: `unknown signal (${type.type})`,
         type: 'point',
         properties: {
-          feature0: `general/signal-unknown-${type.type}`,
+          feature: `general/signal-unknown-${type.type}`,
           type: 'line',
           azimuth: null,
           deactivated: false,
