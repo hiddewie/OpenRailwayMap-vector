@@ -151,7 +151,7 @@ jobs:
 
       - name: Import data
         run: |
-          docker compose run import import
+          docker compose run --no-deps import import
 
       - name: Generate tiles
         env:
