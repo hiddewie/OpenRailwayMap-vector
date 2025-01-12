@@ -12,7 +12,7 @@ for bbox in $BBOXES; do
 
   mkdir -p "$(dirname "$SPLIT_FILE")"
   rm -f "$SPLIT_FILE"
-  osmium extract "--bbox=$bbox" "$INPUT_FILE" -o "$SPLIT_FILE"
+  osmium extract --strategy=smart "--bbox=$bbox" "$INPUT_FILE" --output="$SPLIT_FILE"
 done
 
 echo "Done"
