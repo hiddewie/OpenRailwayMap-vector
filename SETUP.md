@@ -41,6 +41,36 @@ docker compose run --build import refresh
 
 ## Deployment
 
+The process below imports a large OSM dataset by splitting and filtering it into smaller files for efficient and parallel tile rendering.
+
+Define the bounding boxes of the deployment:
+```shell
+export 'BBOXES=3,50,4,54 4,50,5,54 5,50,6,54 6,50,7,54'
+```
+
+Filter and split the data:
+```shell
+docker compose run --build --entrypoint ./extract.sh -e 'DATAFILE=netherlands.osm.pbf' -e BBOXES import
+```
+
+Generate tiles for each of the bounding box slices:
+```shell
+for bbox in $BBOXES; do
+  docker compose run --build -e "OSM2PGSQL_DATAFILE=split/$bbox/netherlands.osm.pbf" import import
+  # for tile in low-med high standard speed signals electrification; do
+  for tile in standard; do
+    docker compose run -e "BBOX=$bbox" -e "TILES=$tile" -e "TILES_DIR=$bbox" martin-cp
+  done
+done
+```
+
+Merge generated tiles
+
+TODO
+
+
+
+
 Import the data:
 ```shell
 docker compose run --build import import
