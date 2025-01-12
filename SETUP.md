@@ -55,6 +55,13 @@ Filter and split the data:
 docker compose run --build --entrypoint ./extract.sh -e BBOXES import
 ```
 
+Optionally, update the data:
+```shell
+for bbox in $BBOXES; do
+  docker compose run --build --entrypoint ./update.sh -e "DATAFILE=split/$bbox/data.osm.pbf" -e "BBOX=$bbox" import
+done
+```
+
 Generate tiles for each of the bounding box slices:
 ```shell
 for bbox in $BBOXES; do
