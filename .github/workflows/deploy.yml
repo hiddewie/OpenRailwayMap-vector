@@ -22,7 +22,7 @@ jobs:
       # Manually write import bounds, to decouple proxy from tile generation/import
       - name: Output import bounds
         run: |
-          echo '[[-10.0, 35.7], [39.0, 70.0]]' > data/import/bounds.json
+          echo '[[-10.0, 35.0], [39.0, 70.0]]' > data/import/bounds.json
 
       - name: Deploy
         env:
@@ -37,7 +37,7 @@ jobs:
     strategy:
       matrix:
         # Generate with (Fish shell):
-        #   for i in (seq -10 39); echo "- '$i,35,"(math $i + 1)",70'"; end
+        #   for i in (seq -10 38); echo "- '$i,35,"(math $i + 1)",70'"; end
         bbox:
           - '-10,35,-9,70'
           - '-9,35,-8,70'
@@ -88,7 +88,6 @@ jobs:
           - '36,35,37,70'
           - '37,35,38,70'
           - '38,35,39,70'
-          - '39,35,40,70'
         tiles:
           - low-med
           - high
