@@ -184,6 +184,12 @@ const stationFeatures = {
     uic_ref: {
       name: 'UIC reference',
     },
+    operator: {
+      name: 'Operator',
+    },
+    network: {
+      name: 'Network',
+    }
   },
 }
 
@@ -236,6 +242,9 @@ const features = {
       pos: {
         name: 'Position',
       },
+      operator: {
+        name: 'Operator',
+      }
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
