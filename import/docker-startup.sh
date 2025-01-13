@@ -33,6 +33,7 @@ import)
       nwr/proposed:railway \
       n/public_transport=stop_position \
       nwr/public_transport=platform \
+      r/public_transport=stop_area \
       r/route=train \
       r/route=tram \
       r/route=light_rail \

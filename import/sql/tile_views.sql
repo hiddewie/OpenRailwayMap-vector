@@ -330,6 +330,17 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     END AS priority
   FROM pois
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail')
+
+  UNION ALL
+
+  SELECT
+    id,
+    osm_id,
+    way,
+    'general/subway-entrance' as feature,
+    0 as priority
+    FROM subway_entrances
+
   ORDER BY priority DESC;
 
 CREATE OR REPLACE VIEW railway_text_km AS

@@ -86,6 +86,7 @@ const colors = {
         stationsText: 'blue',
         yardText: '#87491D',
         tramStopText: '#D877B8',
+        lightRailText: '#0e5414',
         defaultText: '#616161',
         signalBox: {
           text: '#404040',
@@ -157,7 +158,8 @@ const colors = {
         trackHalo: '#00298d',
         stationsText: '#bdcfff',
         yardText: '#ffa35f',
-        tramStopText: '#D877B8',
+        tramStopText: '#f3b4de',
+        lightRailText: '#83ea8f',
         defaultText: '#d2d2d2',
         signalBox: {
           text: '#bfffb3',
@@ -1574,7 +1576,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 16,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        filter: ['==', ['get', 'feature'], 'general/phone'],
+        filter: ['any',
+          ['==', ['get', 'feature'], 'general/phone'],
+          ['==', ['get', 'feature'], 'general/subway-entrance'],
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -1664,7 +1669,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['case',
           ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
-          ['==', ['get', 'railway'], 'station'], colors[theme].styles.standard.stationsText,
+          ['==', ['get', 'railway'], 'station'], ['case',
+            ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
+            colors[theme].styles.standard.stationsText,
+          ],
           ['==', ['get', 'railway'], 'halt'], colors[theme].styles.standard.stationsText,
           colors[theme].styles.standard.defaultText,
         ],
