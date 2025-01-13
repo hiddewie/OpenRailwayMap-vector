@@ -68,8 +68,7 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
   WHERE s.railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site');
 
 -- Join clustered platforms with station nodes
-CREATE OR REPLACE VIEW
-  station_nodes_platforms_rel_count AS
+CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   SELECT
     s.id as id,
     s.osm_id AS osm_id,
@@ -124,15 +123,26 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
         FROM (
           SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
           FROM station_nodes_stop_positions_rel_count
+
           UNION ALL
+
           SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
           FROM station_nodes_platforms_rel_count
         ) AS a
         GROUP BY name, station, railway_ref, uic_ref, railway, way, name_tags
+
         UNION ALL
+
         SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, 0 AS route_count, name_tags, way
         FROM stations
         WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+
+        UNION ALL
+
+        (SELECT s.id, s.osm_id, s.name, s.station, s.railway_ref, s.uic_ref, s.railway, 0 as route_count, s.name_tags, se.way
+         from subway_entrances se
+                join stop_areas sa on sa.node_ref_ids @> Array [se.osm_id]
+                join stations s on sa.node_ref_ids @> Array [s.osm_id])
      ) AS grouped_facilities
     ) AS facilities
     GROUP BY name, station, railway_ref, uic_ref, railway, cluster_id
