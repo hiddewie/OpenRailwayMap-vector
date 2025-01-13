@@ -233,6 +233,9 @@ const features = {
       pos: {
         name: 'Position',
       },
+      operator: {
+        name: 'Operator',
+      }
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
