@@ -198,6 +198,16 @@ local platforms = osm2pgsql.define_table({
   },
 })
 
+local subway_entrances = osm2pgsql.define_table({
+  name = 'subway_entrances',
+  ids = { type = 'node', id_column = 'osm_id' },
+  columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'way', type = 'point' },
+    { column = 'name', type = 'text' },
+  },
+})
+
 local signal_columns = {
   { column = 'id', sql_type = 'serial', create_only = true },
   { column = 'way', type = 'point' },
@@ -280,6 +290,17 @@ local routes = osm2pgsql.define_table({
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
+  },
+})
+
+local stop_areas = osm2pgsql.define_table({
+  name = 'stop_areas',
+  ids = { type = 'relation', id_column = 'osm_id' },
+  columns = {
+    { column = 'node_ref_ids', sql_type = 'int8[]' },
+  },
+  indexes = {
+    { column = 'node_ref_ids', method = 'gin' },
   },
 })
 
@@ -403,8 +424,6 @@ function split_semicolon_to_sql_array(value)
   return result .. '}'
 end
 
--- TODO clean up unneeded tags
-
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'wash', 'water_tower', 'water_crane', 'sand_store', 'coaling_facility', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail'})
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -455,6 +474,7 @@ function osm2pgsql.process_node(object)
       end
     end
 
+    -- TODO import operator, network
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
@@ -505,6 +525,13 @@ function osm2pgsql.process_node(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
+      way = object:as_point(),
+      name = tags.name,
+    })
+  end
+
+  if tags.railway == 'subway_entrance' then
+    subway_entrances:insert({
       way = object:as_point(),
       name = tags.name,
     })
@@ -666,22 +693,42 @@ function osm2pgsql.process_relation(object)
   local tags = object.tags
 
   if tags.type == 'route' and route_values(tags.route) then
+    local has_members = false
     local stop_members = {}
     local platform_members = {}
     for _, member in ipairs(object.members) do
       if route_stop_relation_roles(member.role) then
         table.insert(stop_members, member.ref)
+        has_members = true
       end
 
       if route_platform_relation_roles(member.role) then
         table.insert(platform_members, member.ref)
+        has_members = true
       end
     end
 
-    if (#stop_members > 0) or (#platform_members > 0) then
+    if has_members then
       routes:insert({
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
+      })
+    end
+  end
+
+  if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
+    local has_members = false
+    local node_members = {}
+    for _, member in ipairs(object.members) do
+      if member.type == 'n' and member.role ~= 'stop' and member.role ~= 'platform' then
+        table.insert(node_members, member.ref)
+        has_members = true
+      end
+    end
+
+    if has_members then
+      stop_areas:insert({
+        node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
       })
     end
   end
