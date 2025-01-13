@@ -103,3 +103,7 @@ features:
     variants:
     - description: Insulated rail joint
       feature: 'general/vacancy-detection-insulated-rail-joint'
+
+  - description: Subway entrance
+    feature: 'general/subway-entrance'
+    minzoom: 16

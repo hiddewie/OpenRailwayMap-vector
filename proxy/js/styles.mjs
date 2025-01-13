@@ -1571,7 +1571,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 16,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        filter: ['==', ['get', 'feature'], 'general/phone'],
+        filter: ['any',
+          ['==', ['get', 'feature'], 'general/phone'],
+          ['==', ['get', 'feature'], 'general/subway-entrance'],
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
