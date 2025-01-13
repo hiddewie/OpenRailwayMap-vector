@@ -474,7 +474,6 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    -- TODO import operator, network
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
