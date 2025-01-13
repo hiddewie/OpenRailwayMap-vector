@@ -175,6 +175,12 @@ const stationFeatures = {
     uic_ref: {
       name: 'UIC reference',
     },
+    operator: {
+      name: 'Operator',
+    },
+    network: {
+      name: 'Network',
+    }
   },
 }
 

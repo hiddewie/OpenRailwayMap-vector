@@ -175,6 +175,8 @@ local stations = osm2pgsql.define_table({
     { column = 'railway_ref', type = 'text' },
     { column = 'uic_ref', type = 'text' },
     { column = 'name_tags', type = 'hstore' },
+    { column = 'operator', type = 'text' },
+    { column = 'network', type = 'text' },
   },
 })
 
@@ -467,6 +469,8 @@ function osm2pgsql.process_node(object)
           railway_ref = tags['railway:ref'],
           uic_ref = tags['uic_ref'],
           name_tags = name_tags,
+          operator = tags.operator,
+          network = tags.network,
         })
       end
     else
@@ -480,6 +484,8 @@ function osm2pgsql.process_node(object)
         railway_ref = tags['railway:ref'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags,
+        operator = tags.operator,
+        network = tags.network,
       })
     end
   end
