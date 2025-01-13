@@ -842,7 +842,7 @@ const railwayLine = (theme, text, layers) => [
           ['>=',
             ['get', 'way_length'],
             ['interpolate', ["exponential", .5], ['zoom'],
-              8, 0.015,
+              8, 1500,
               16, 0
             ],
           ],
@@ -869,9 +869,10 @@ const railwayLine = (theme, text, layers) => [
         filter: ['all',
           ['==', ['get', 'state'], 'present'],
           ['get', 'bridge'],
-          ['>=', ['get', 'way_length'],
+          ['>=',
+            ['get', 'way_length'],
             ['interpolate', ["exponential", .5], ['zoom'],
-              8, 0.015,
+              8, 1500,
               16, 0
             ],
           ],
