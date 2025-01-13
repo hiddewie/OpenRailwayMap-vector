@@ -257,6 +257,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'railway_position_exact', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
+    { column = 'operator', type = 'text' },
   },
 })
 
@@ -555,6 +556,7 @@ function osm2pgsql.process_node(object)
       railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
       name = tags['name'],
       ref = tags['ref'],
+      operator = tags['operator'],
     })
   end
 
