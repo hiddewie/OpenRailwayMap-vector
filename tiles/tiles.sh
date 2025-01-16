@@ -24,10 +24,39 @@ if [ "$TILES" = "low-med" ]; then
   mbtiles summary /tiles/standard_railway_text_stations_med.mbtiles
 fi
 
-if [ "$TILES" = "high" ]; then
-  rm -f /tiles/high.mbtiles
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file /tiles/high.mbtiles
+if [ "$TILES" = "high" ] || [ "$TILES" = "high8" ]; then
+  rm -f /tiles/high8.mbtiles
+  $MARTIN --min-zoom 8 --max-zoom 12 --source railway_line_high,railway_text_km --output-file /tiles/high8.mbtiles
+  mbtiles summary /tiles/high8.mbtiles
+fi
+
+if [ "$TILES" = "high" ] || [ "$TILES" = "high13" ]; then
+  rm -f /tiles/high13.mbtiles
+  $MARTIN --min-zoom 13 --max-zoom 13 --source railway_line_high,railway_text_km --output-file /tiles/high13.mbtiles
+  mbtiles summary /tiles/high13.mbtiles
+fi
+
+
+if [ "$TILES" = "high" ] || [ "$TILES" = "high14" ]; then
+  rm -f /tiles/high14.mbtiles
+  $MARTIN --min-zoom 14 --max-zoom 14 --source railway_line_high,railway_text_km --output-file /tiles/high14.mbtiles
+  mbtiles summary /tiles/high14.mbtiles
+fi
+
+if [ "$TILES" = "high" ] || [ "$TILES" = "high-merge" ]; then
+  [[ -f /tiles/high8.mbtiles ]] || (echo 'Tiles file /tiles/high8.mbtiles is missing'; exit 1)
+  [[ -f /tiles/high13.mbtiles ]] || (echo 'Tiles file /tiles/high13.mbtiles is missing'; exit 1)
+  [[ -f /tiles/high14.mbtiles ]] || (echo 'Tiles file /tiles/high14.mbtiles is missing'; exit 1)
+
+  mbtiles copy --on-duplicate abort /tiles/high8.mbtiles "/tiles/high.mbtiles"
+  mbtiles copy --on-duplicate abort /tiles/high13.mbtiles "/tiles/high.mbtiles"
+  mbtiles copy --on-duplicate abort /tiles/high14.mbtiles "/tiles/high.mbtiles"
+
   mbtiles summary /tiles/high.mbtiles
+
+  rm -f /tiles/high8.mbtiles
+  rm -f /tiles/high13.mbtiles
+  rm -f /tiles/high14.mbtiles
 fi
 
 if [ "$TILES" = "standard" ]; then
