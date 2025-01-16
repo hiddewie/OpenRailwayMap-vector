@@ -54,8 +54,7 @@ class MilestoneAPI:
                                        m.position,
                                        ST_Transform(m.geom, 4326) AS geom,
                                        t.ref AS route_ref,
-                                       -- TODO import operator
-                                       NULL AS operator,
+                                       operator,
                                        ABS($1 - m.position) AS error
                                      FROM openrailwaymap_milestones AS m
                                      JOIN openrailwaymap_tracks_with_ref AS t
