@@ -38,7 +38,9 @@ jobs:
       matrix:
         tiles:
           - low-med
-          - high
+          - high8
+          - high13
+          - high14
           - standard
           - speed
           - signals
@@ -107,6 +109,17 @@ jobs:
           # No name: download everything
           path: tiles
           merge-multiple: true
+
+      - name: List downloaded tiles
+        run: |
+          ls -lah tiles/*.mbtiles
+
+      - name: Merge high tiles
+        env:
+          TILES: high-merge
+          BBOX: '-10.0,35.7,39.0,70.0'
+        run: |
+          docker compose run martin-cp
 
       - name: List generated tiles
         run: |
