@@ -48,9 +48,14 @@ if [ "$TILES" = "high" ] || [ "$TILES" = "high-merge" ]; then
   [[ -f /tiles/high13.mbtiles ]] || (echo 'Tiles file /tiles/high13.mbtiles is missing'; exit 1)
   [[ -f /tiles/high14.mbtiles ]] || (echo 'Tiles file /tiles/high14.mbtiles is missing'; exit 1)
 
-  mbtiles copy --on-duplicate abort /tiles/high8.mbtiles "/tiles/high.mbtiles"
-  mbtiles copy --on-duplicate abort /tiles/high13.mbtiles "/tiles/high.mbtiles"
-  mbtiles copy --on-duplicate abort /tiles/high14.mbtiles "/tiles/high.mbtiles"
+  rm -f /tiles/high.mbtiles
+
+  mbtiles copy --copy all --on-duplicate abort /tiles/high8.mbtiles "/tiles/high.mbtiles"
+  mbtiles copy --copy tiles --on-duplicate abort /tiles/high13.mbtiles "/tiles/high.mbtiles"
+  mbtiles copy --copy tiles --on-duplicate abort /tiles/high14.mbtiles "/tiles/high.mbtiles"
+
+  mbtiles meta-set /tiles/high.mbtiles minzoom 8
+  mbtiles meta-set /tiles/high.mbtiles maxzoom 14
 
   mbtiles summary /tiles/high.mbtiles
 
