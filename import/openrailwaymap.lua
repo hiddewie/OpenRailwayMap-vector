@@ -449,6 +449,7 @@ function osm2pgsql.process_node(object)
     })
   end
 
+  -- TODO properly read feature
   if railway_station_values(tags['railway'])
      or railway_station_values(tags['construction:railway'])
      or railway_station_values(tags['proposed:railway'])
