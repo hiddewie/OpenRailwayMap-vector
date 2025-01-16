@@ -136,13 +136,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
         SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, 0 AS route_count, name_tags, way
         FROM stations
         WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
-
-        UNION ALL
-
-        SELECT s.id, s.osm_id, s.name, s.station, s.railway_ref, s.uic_ref, s.railway, 0 as route_count, s.name_tags, se.way
-        FROM subway_entrances se
-          JOIN stop_areas sa ON sa.node_ref_ids @> Array[se.osm_id]
-          JOIN stations s ON sa.node_ref_ids @> Array[s.osm_id]
      ) AS grouped_facilities
     ) AS facilities
     GROUP BY name, station, railway_ref, uic_ref, railway, cluster_id
