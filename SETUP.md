@@ -41,57 +41,15 @@ docker compose run --build import refresh
 
 ## Deployment
 
-The process below imports a large OSM dataset by splitting and filtering it into smaller files for efficient and parallel tile rendering.
-
-Ensure the OSM data is available in `data/data.osm.pbf`.
-
-Define the bounding boxes of the deployment:
+Import the data:
 ```shell
-export 'BBOXES=3,50,4,54 4,50,5,54 5,50,6,54 6,50,7,54'
+docker compose run --build import import
 ```
 
-Filter and split the data:
+Build the tiles:
 ```shell
-docker compose run --build --entrypoint ./extract.sh -e BBOXES import
-```
-
-Optionally, build and push the data Docker images:
-```shell
-mv .dockerignore .dockerignore.bak
-echo '**' > .dockerignore
-echo '!data/data.osm.pbf' >> .dockerignore
-for bbox in $BBOXES; do
-  cp "data/split/$bbox/data.osm.pbf" data/data.osm.pbf
-  docker build --push -f data/data.Dockerfile -t "ghcr.io/hiddewie/openrailwaymap-data:$(echo "$bbox" | sed 's/,/_/g')" data
-done
-rm -f data/data.osm.pbf
-mv .dockerignore.bak .dockerignore
-```
-
-Optionally, update the data:
-```shell
-for bbox in $BBOXES; do
-  docker compose run --build --entrypoint ./update.sh -e "DATAFILE=split/$bbox/data.osm.pbf" -e "BBOX=$bbox" import
-done
-```
-
-Generate tiles for each of the bounding box slices:
-```shell
-for bbox in $BBOXES; do
-  docker compose run --build -e "OSM2PGSQL_DATAFILE=split/$bbox/data.osm.pbf" import import
-  
-  for tile in low-med high standard speed signals electrification; do
-    docker compose run -e "BBOX=$bbox" -e "TILES=$tile" -e "TILES_DIR=$bbox" martin-cp
-  done
-  
-  mkdir -p "tiles/$bbox"
-  mv tiles/*.mbtiles "tiles/$bbox"
-done
-```
-
-Merge generated tiles:
-```shell
-docker compose run --entrypoint /tiles/merge.sh -e BBOXES --no-deps martin-cp
+export BBOX='-11.3818,35.8891,25.0488,70.0'
+docker compose up martin-cp
 ```
 
 Build and deploy the tile server:

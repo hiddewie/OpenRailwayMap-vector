@@ -112,9 +112,7 @@ jobs:
         env:
           BBOX: ${{ matrix.bbox }}
         run: |
-          for tile in low-med high standard speed signals electrification; do
-            docker compose run -e "TILES=$tile" -e BBOX --no-deps martin-cp
-          done
+          docker compose run --no-deps martin-cp
 
           mkdir -p "tiles/split/${{ matrix.bbox }}"
           mv tiles/*.mbtiles "tiles/split/${{ matrix.bbox }}"
