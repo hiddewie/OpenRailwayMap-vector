@@ -2045,11 +2045,17 @@ features:
       match: 'railway:signal:shunting:states'
       cases:
         - { regex: '^(.*;)?FI:Ro0(;.*)?$', value: 'fi/ro0-new' }
-      # TODO add old as well
       default: ''
     tags:
       - { tag: 'railway:signal:shunting', value: 'FI:Ro' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Stop
+    country: FI
+    icon: { default: 'fi/t-259' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-259' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: minor light signals type Lo at moveable bridges
     country: FI
