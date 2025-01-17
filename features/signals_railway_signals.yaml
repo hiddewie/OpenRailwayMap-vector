@@ -2083,6 +2083,13 @@ features:
       - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  - description: Balise
+    country: FI
+    icon: { default: 'fi/t-262' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'FI:Po' }
+      - { tag: 'railway:signal:main:form', value: 'balise' }
+
   - description: main light signals (new)
     country: FI
     icon:
