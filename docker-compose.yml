@@ -1,5 +1,6 @@
 services:
   db:
+    image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
       context: db
     command: |
