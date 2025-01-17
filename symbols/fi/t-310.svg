@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   width="142.64285"
+   height="142.7701"
+   id="svg13083"
+   sodipodi:docname="t-310.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview1955"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="6.1299958"
+     inkscape:cx="44.127273"
+     inkscape:cy="71.451925"
+     inkscape:window-width="1920"
+     inkscape:window-height="1129"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg13083" />
+  <defs
+     id="defs13085" />
+  <metadata
+     id="metadata13088">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-491.53575,-543.83428)"
+     id="layer1">
+    <path
+       d="m 3470.7142,493.79077 a 46.42857,46.42857 0 1 1 -92.8571,0 46.42857,46.42857 0 1 1 92.8571,0 z"
+       transform="matrix(1.4769231,0,0,1.4769231,-4494.5494,-114.07167)"
+       id="path9029"
+       style="fill:#ffffff;fill-opacity:1;stroke:#fe1610;stroke-width:3.72396;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       d="m 498.56243,591.29464 c -2.7721,7.44718 -4.2813,15.52468 -4.2813,23.9375 0,8.41282 1.5092,16.45907 4.2813,23.90625 h 128.5937 c 2.7721,-7.44718 4.2813,-15.49343 4.2813,-23.90625 0,-8.41282 -1.5092,-16.49032 -4.2813,-23.9375 z"
+       id="rect9031"
+       style="fill:#fe1610;fill-opacity:1;stroke:none" />
+  </g>
+</svg>

@@ -2053,6 +2053,48 @@ features:
       - { tag: 'railway:signal:stop', value: 'FI:T-259' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Seismerkki (old)
+    country: FI
+    icon: { default: 'fi/t-150' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-150' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Seismerkki (new)
+    country: FI
+    icon: { default: 'fi/t-150B' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-150B' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Seislevy (old)
+    country: FI
+    icon: { default: 'fi/t-151' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-151' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Seislevy (new)
+    country: FI
+    icon: { default: 'fi/t-151B' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-151A' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Liikennöinnin raja
+    country: FI
+    icon: { default: 'fi/t-152' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-152' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Veturin ajokieltomerkki
+    country: FI
+    icon: { default: 'fi/t-310' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FI:T-310' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: minor light signals type Lo at moveable bridges
     country: FI
     icon: { default: 'fi/lo0' }
@@ -2234,6 +2276,13 @@ features:
       - { tag: 'railway:signal:shunting', value: 'FI:Yo' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
+  - description: Main repeated light
+    country: FI
+    icon: { default: 'fi/ko1' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'FI:Ko' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
   - description: Liikennepaikan raja -merkki
     country: FI
     icon: { default: 'fi/t-164' }
@@ -2289,13 +2338,6 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Main repeated light
-    country: FI
-    icon: { default: 'fi/ko1' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'FI:Ko' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   # --- FR --- #
 
