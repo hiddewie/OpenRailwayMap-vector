@@ -87,11 +87,11 @@ refresh)
 esac
 
 # Clear all tags from the Osm2Psql tables
-$PSQL -c "update planet_osm_nodes set tags = null where tags is not null;"
-$PSQL -c "update planet_osm_ways set tags = null where tags is not null;"
-$PSQL -c "update planet_osm_rels set tags = null where tags is not null;"
-# Remove platforms which are not near any railway line, and also not part of any railway route
-$PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[-p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
+#$PSQL -c "update planet_osm_nodes set tags = null where tags is not null;"
+#$PSQL -c "update planet_osm_ways set tags = null where tags is not null;"
+#$PSQL -c "update planet_osm_rels set tags = null where tags is not null;"
+## Remove platforms which are not near any railway line, and also not part of any railway route
+#$PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[-p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
 
 echo "Post processing imported data"
 $PSQL -f sql/functions.sql
@@ -128,8 +128,8 @@ refresh)
 
 esac
 
-echo "Vacuuming database"
-$PSQL -c "VACUUM FULL;"
+#echo "Vacuuming database"
+#$PSQL -c "VACUUM FULL;"
 
 $PSQL --tuples-only -c "with bounds as (SELECT st_transform(st_setsrid(ST_Extent(way), 3857), 4326) as table_extent FROM railway_line) select '[[' || ST_XMin(table_extent) || ', ' || ST_YMin(table_extent) || '], [' || ST_XMax(table_extent) || ', ' || ST_YMax(table_extent) || ']]' from bounds;" > /data/import/bounds.json
 echo "Import bounds: $(cat /data/import/bounds.json)"
