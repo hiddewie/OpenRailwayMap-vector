@@ -2246,14 +2246,14 @@ features:
     icon: { default: 'fi/t-165' }
     tags:
       - { tag: 'railway:signal:station_distant', value: 'FI:T-165' }
-      - { tag: 'railway:signal:station_distant:form', value: 'light' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Matkustajalaiturin ennakkomerkki
     country: FI
     icon: { default: 'fi/t-166' }
     tags:
       - { tag: 'railway:signal:station_distant', value: 'FI:T-166' }
-      - { tag: 'railway:signal:station_distant:form', value: 'light' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   # --- FR --- #
 
