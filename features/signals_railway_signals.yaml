@@ -2041,11 +2041,7 @@ features:
 
   - description: shunting light signals type Ro (new)
     country: FI
-    icon:
-      match: 'railway:signal:shunting:states'
-      cases:
-        - { regex: '^(.*;)?FI:Ro0(;.*)?$', value: 'fi/ro0-new' }
-      default: ''
+    icon: { default: 'fi/ro0-new' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'FI:Ro' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
