@@ -30,36 +30,36 @@ jobs:
         run: |
           flyctl deploy --config proxy.fly.toml --local-only
 
-  build-import:
-    name: Build import
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          file: import/Dockerfile
-          tags: ghcr.io/hiddewie/openrailwaymap-import:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#  build-import:
+#    name: Build import
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#
+#      - name: Login to GitHub Container Registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Build and push
+#        uses: docker/build-push-action@v6
+#        with:
+#          push: true
+#          file: import/Dockerfile
+#          tags: ghcr.io/hiddewie/openrailwaymap-import:latest
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
 
   generate-tiles:
     name: Generate tiles
-    needs: build-import
+#    needs: build-import
     runs-on: ubuntu-latest
 
     strategy:
@@ -136,21 +136,27 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull data
-        run: |
-          IMAGE="ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
-          docker pull "$IMAGE"
-          CONTAINER_ID="$(docker container create "$IMAGE" true)"
-          docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
-          docker container rm "$CONTAINER_ID"
+#      - name: Pull data
+#        run: |
+#          IMAGE="ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
+#          docker pull "$IMAGE"
+#          CONTAINER_ID="$(docker container create "$IMAGE" true)"
+#          docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
+#          docker container rm "$CONTAINER_ID"
+#
+#      - name: Build and start database
+#        run: |
+#          docker compose up --build --wait db
+#
+#      - name: Import data
+#        run: |
+#          docker compose run --no-deps import import
+#
 
-      - name: Build and start database
+      - name: Pull database
         run: |
-          docker compose up --build --wait db
-
-      - name: Import data
-        run: |
-          docker compose run --no-deps import import
+          docker compose pull db
+          docker compose up --no-build --pull never --wait db
 
       - name: Generate tiles
         env:
@@ -176,7 +182,7 @@ jobs:
           retention-days: 3
 
   deploy-tiles:
-    name: Merge tiles
+    name: Merge and deploy tiles
     runs-on: ubuntu-latest
     needs: generate-tiles
     environment: tiles-production
