@@ -2339,6 +2339,13 @@ features:
       - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Järjestelyopastin
+    country: FI
+    icon: { default: 'fi/jo4' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'FI:Jo' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
+
   # --- FR --- #
 
   - description: Carré
