@@ -124,6 +124,8 @@ types:
   - { type: departure }
   - { type: resetting_switch }
   - { type: resetting_switch_distant }
+  - { type: humping }
+  - { type: snowplow }
 
 features:
 
