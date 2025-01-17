@@ -2199,6 +2199,34 @@ features:
       - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
+  - description: Combined signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-combined' }
+    tags:
+      - { tag: 'railway:signal:combined', value: 'FI:Yo' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Main signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-main' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'FI:Yo' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Distant signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-distant' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'FI:Yo' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Shunting signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FI:Yo' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
   # --- FR --- #
 
   - description: Carré
