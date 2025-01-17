@@ -2255,6 +2255,13 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'FI:T-166' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: Baliisiryhmämerkki
+    country: FI
+    icon: { default: 'fi/t-144' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   # --- FR --- #
 
   - description: Carré
