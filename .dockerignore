@@ -3,7 +3,6 @@
 !features
 !import/sql
 !import/docker-startup.sh
-!import/update.sh
 !import/tags.lua.js
 !import/openrailwaymap.lua
 !data/import
