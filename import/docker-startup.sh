@@ -80,7 +80,7 @@ refresh)
 
 *)
 
-  echo "Invalid argument '$1'. Supported: import, refresh" # update,
+  echo "Invalid argument '$1'. Supported: import, update, refresh"
   exit 1
 
   ;;
