@@ -13,9 +13,9 @@ $$ LANGUAGE plpgsql;
 DROP TABLE IF EXISTS openrailwaymap_milestones;
 CREATE TABLE openrailwaymap_milestones AS
   -- TODO add all available fields / tags from object
-  SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, geom
+  SELECT DISTINCT ON (osm_id) osm_id, position, precision, railway, name, ref, operator, geom
     FROM (
-      SELECT osm_id, position, precision, railway, name, ref, geom
+      SELECT osm_id, position, precision, railway, name, ref, operator, geom
         FROM (
           SELECT
               osm_id,
@@ -24,6 +24,7 @@ CREATE TABLE openrailwaymap_milestones AS
               railway,
               name,
               ref,
+              operator,
               way AS geom
             FROM railway_positions
             WHERE railway_position IS NOT NULL
@@ -35,6 +36,7 @@ CREATE TABLE openrailwaymap_milestones AS
               railway,
               name,
               ref,
+              operator,
               way AS geom
             FROM railway_positions
             WHERE railway_position_exact IS NOT NULL

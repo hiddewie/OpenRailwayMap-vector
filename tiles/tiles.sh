@@ -34,9 +34,9 @@ fi
 if [ "$TILES" = "high" ]; then
   echo "Tiles: high"
 
-  rm -f "$OUTPUT_DIR/high.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom $MAX_ZOOM --source railway_line_high,railway_text_km --output-file "$OUTPUT_DIR/high.mbtiles"
-  mbtiles summary "$OUTPUT_DIR/high.mbtiles"
+  rm -f /tiles/high.mbtiles
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file /tiles/high.mbtiles
+  mbtiles summary /tiles/high.mbtiles
 fi
 
 if [ "$TILES" = "standard" ]; then

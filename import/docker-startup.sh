@@ -12,6 +12,9 @@ import)
   psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || createdb gis
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
+  $PSQL -c 'DROP EXTENSION IF EXISTS postgis_topology;'
+  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
+  $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
 
   # Filter the data for more efficient import
   # Store the filtered data for future use in the data directory
@@ -31,6 +34,7 @@ import)
       nwr/proposed:railway \
       n/public_transport=stop_position \
       nwr/public_transport=platform \
+      r/public_transport=stop_area \
       r/route=train \
       r/route=tram \
       r/route=light_rail \
