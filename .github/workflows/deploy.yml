@@ -240,8 +240,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: api-production
 
-    if: false
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
