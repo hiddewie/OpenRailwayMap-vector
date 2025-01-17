@@ -48,8 +48,7 @@ docker compose run --build import import
 
 Build the tiles:
 ```shell
-export BBOX='-11.3818,35.8891,25.0488,70.0'
-docker compose up martin-cp
+docker compose run -e BBOX='-11.3818,35.8891,25.0488,70.0' martin-cp
 ```
 
 Build and deploy the tile server:
