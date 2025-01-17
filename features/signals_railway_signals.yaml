@@ -2255,6 +2255,34 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'FI:T-166' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: JKV alkaa
+    country: FI
+    icon: { default: 'fi/t-140' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-140', 'FI:T-140A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV päättyy
+    country: FI
+    icon: { default: 'fi/t-141' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-141', 'FI:T-141A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV rakennusalue alkaa
+    country: FI
+    icon: { default: 'fi/t-142' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-142', 'FI:T-142A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV rakennusalue päättyy
+    country: FI
+    icon: { default: 'fi/t-143' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-143', 'FI:T-143A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: Baliisiryhmämerkki
     country: FI
     icon: { default: 'fi/t-144' }
