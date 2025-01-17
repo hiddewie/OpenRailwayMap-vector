@@ -7,118 +7,15 @@ on:
     - cron: '47 17 * * *'
 
 jobs:
-  update-data:
-    name: Update data
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        # Generate with (Fish shell):
-        #   for i in (seq -10 38); echo "- '$i,35,"(math $i + 1)",70'"; end
-        bbox:
-          - '-10,35,-9,70'
-          - '-9,35,-8,70'
-          - '-8,35,-7,70'
-          - '-7,35,-6,70'
-          - '-6,35,-5,70'
-          - '-5,35,-4,70'
-          - '-4,35,-3,70'
-          - '-3,35,-2,70'
-          - '-2,35,-1,70'
-          - '-1,35,0,70'
-          - '0,35,1,70'
-          - '1,35,2,70'
-          - '2,35,3,70'
-          - '3,35,4,70'
-          - '4,35,5,70'
-          - '5,35,6,70'
-          - '6,35,7,70'
-          - '7,35,8,70'
-          - '8,35,9,70'
-          - '9,35,10,70'
-          - '10,35,11,70'
-          - '11,35,12,70'
-          - '12,35,13,70'
-          - '13,35,14,70'
-          - '14,35,15,70'
-          - '15,35,16,70'
-          - '16,35,17,70'
-          - '17,35,18,70'
-          - '18,35,19,70'
-          - '19,35,20,70'
-          - '20,35,21,70'
-          - '21,35,22,70'
-          - '22,35,23,70'
-          - '23,35,24,70'
-          - '24,35,25,70'
-          - '25,35,26,70'
-          - '26,35,27,70'
-          - '27,35,28,70'
-          - '28,35,29,70'
-          - '29,35,30,70'
-          - '30,35,31,70'
-          - '31,35,32,70'
-          - '32,35,33,70'
-          - '33,35,34,70'
-          - '34,35,35,70'
-          - '35,35,36,70'
-          - '36,35,37,70'
-          - '37,35,38,70'
-          - '38,35,39,70'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull data
-        run: |
-          IMAGE="ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
-          docker pull "$IMAGE"
-          CONTAINER_ID="$(docker container create "$IMAGE" true)"
-          docker cp "$CONTAINER_ID:/data/data.osm.pbf" data/data.osm.pbf
-          docker container rm "$CONTAINER_ID"
-
-      - name: Update data
-        run: |
-          docker compose run --build --entrypoint ./update.sh -e "BBOX=${{ matrix.bbox }}" import
-
-      - name: List data
-        run: |
-          ls -lah data/*.osm.pbf
-
-      - name: Build updated data image
-        run: |
-          echo '**' > .dockerignore
-          echo '!data/data.osm.pbf' >> .dockerignore
-          docker build import -f data.Dockerfile -t "ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
-
-      - name: Push updated data
-        run: |
-          docker push "ghcr.io/hiddewie/openrailwaymap-data:$(echo '${{ matrix.bbox }}' | sed 's/,/_/g')"
-
-  trigger-deployment:
-    needs:
-      - update-data
-
-    name: Trigger deployment
+  trigger-circle-ci:
+    name: Trigger CircleCI
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Trigger Github deploy workflow
+      - run: |
+          curl \
+            -X POST \
+            -H "content-type: application/json" \
+            "https://internal.circleci.com/private/soc/e/4137caec-ceea-4722-9803-8ab90a8d2355?secret=$CIRCLECI_WEBHOOK_SECRET"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh workflow run deploy.yml
+          CIRCLECI_WEBHOOK_SECRET: ${{ secrets.CIRCLECI_WEBHOOK_SECRET }}

@@ -52,25 +52,25 @@ import)
     --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
     "$OSM2PGSQL_FILTERED_FILE"
 
-#  echo "Initializing replication configuration"
-#  osm2pgsql-replication init --database gis
+  echo "Initializing replication configuration"
+  osm2pgsql-replication init --database gis
 
   ;;
-#
-#update)
-#
-#  echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
-#  osm2pgsql-replication update \
-#    --once \
-#    --database gis \
-#    -- \
-#    --slim \
-#    --output flex \
-#    --style openrailwaymap.lua \
-#    --cache "${OSM2PGSQL_CACHE:-256}" \
-#    --number-processes "${OSM2PGSQL_NUMPROC:-4}"
-#
-#  ;;
+
+update)
+
+  echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
+  osm2pgsql-replication update \
+    --once \
+    --database gis \
+    -- \
+    --slim \
+    --output flex \
+    --style openrailwaymap.lua \
+    --cache "${OSM2PGSQL_CACHE:-256}" \
+    --number-processes "${OSM2PGSQL_NUMPROC:-4}"
+
+  ;;
 
 refresh)
 
