@@ -22,7 +22,7 @@ jobs:
       # Manually write import bounds, to decouple proxy from tile generation/import
       - name: Output import bounds
         run: |
-          echo '[[-10.0, 35.7], [39.0, 70.0]]' > data/import/bounds.json
+          echo '[[-10.0, 35.0], [39.0, 70.0]]' > data/import/bounds.json
 
       - name: Deploy
         env:
@@ -36,13 +36,58 @@ jobs:
 
     strategy:
       matrix:
-        tiles:
-          - low-med
-          - high
-          - standard
-          - speed
-          - signals
-          - electrification
+        # Generate with (Fish shell):
+        #   for i in (seq -10 38); echo "- '$i,35,"(math $i + 1)",70'"; end
+        bbox:
+          - '-10,35,-9,70'
+          - '-9,35,-8,70'
+          - '-8,35,-7,70'
+          - '-7,35,-6,70'
+          - '-6,35,-5,70'
+          - '-5,35,-4,70'
+          - '-4,35,-3,70'
+          - '-3,35,-2,70'
+          - '-2,35,-1,70'
+          - '-1,35,0,70'
+          - '0,35,1,70'
+          - '1,35,2,70'
+          - '2,35,3,70'
+          - '3,35,4,70'
+          - '4,35,5,70'
+          - '5,35,6,70'
+          - '6,35,7,70'
+          - '7,35,8,70'
+          - '8,35,9,70'
+          - '9,35,10,70'
+          - '10,35,11,70'
+          - '11,35,12,70'
+          - '12,35,13,70'
+          - '13,35,14,70'
+          - '14,35,15,70'
+          - '15,35,16,70'
+          - '16,35,17,70'
+          - '17,35,18,70'
+          - '18,35,19,70'
+          - '19,35,20,70'
+          - '20,35,21,70'
+          - '21,35,22,70'
+          - '22,35,23,70'
+          - '23,35,24,70'
+          - '24,35,25,70'
+          - '25,35,26,70'
+          - '26,35,27,70'
+          - '27,35,28,70'
+          - '28,35,29,70'
+          - '29,35,30,70'
+          - '30,35,31,70'
+          - '31,35,32,70'
+          - '32,35,33,70'
+          - '33,35,34,70'
+          - '34,35,35,70'
+          - '35,35,36,70'
+          - '36,35,37,70'
+          - '37,35,38,70'
+          - '38,35,39,70'
 
     steps:
       - name: Checkout
@@ -65,25 +110,35 @@ jobs:
 
       - name: Generate tiles
         env:
-          TILES: ${{ matrix.tiles }}
-          BBOX: '-10.0,35.7,39.0,70.0'
+          BBOX: ${{ matrix.bbox }}
         run: |
-          docker compose run martin-cp
-          ls -lah tiles/*.mbtiles
+          docker compose run --no-deps martin-cp
+
+          mkdir -p "tiles/split/${{ matrix.bbox }}"
+          mv tiles/*.mbtiles "tiles/split/${{ matrix.bbox }}"
+
+      - name: List generated tiles
+        run: |
+          ls -lah tiles/split/${{ matrix.bbox }}/*.mbtiles
 
       - uses: actions/upload-artifact@v4
         with:
-          name: tiles-${{ matrix.tiles }}
+          name: tiles-${{ matrix.bbox }}
           path: |
-            tiles/*.mbtiles
+            tiles/split
           if-no-files-found: error
           retention-days: 3
 
   deploy-tiles:
-    name: Deploy tiles
+    name: Merge and deploy tiles
     runs-on: ubuntu-latest
     needs: generate-tiles
     environment: tiles-production
+
+    env:
+      # Generate with (Fish shell):
+      #   for i in (seq -10 38); echo -n "$i,35,"(math $i + 1)",70 "; end
+      BBOXES: '-10,35,-9,70 -9,35,-8,70 -8,35,-7,70 -7,35,-6,70 -6,35,-5,70 -5,35,-4,70 -4,35,-3,70 -3,35,-2,70 -2,35,-1,70 -1,35,0,70 0,35,1,70 1,35,2,70 2,35,3,70 3,35,4,70 4,35,5,70 5,35,6,70 6,35,7,70 7,35,8,70 8,35,9,70 9,35,10,70 10,35,11,70 11,35,12,70 12,35,13,70 13,35,14,70 14,35,15,70 15,35,16,70 16,35,17,70 17,35,18,70 18,35,19,70 19,35,20,70 20,35,21,70 21,35,22,70 22,35,23,70 23,35,24,70 24,35,25,70 25,35,26,70 26,35,27,70 27,35,28,70 28,35,29,70 29,35,30,70 30,35,31,70 31,35,32,70 32,35,33,70 33,35,34,70 34,35,35,70 35,35,36,70 36,35,37,70 37,35,38,70 38,35,39,70'
 
     steps:
       - name: Checkout
@@ -104,9 +159,19 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          # No name: download everything
-          path: tiles
+          pattern: tiles-*
           merge-multiple: true
+          path: tiles/split
+
+      - name: Merge tiles
+        run: |
+          docker compose run --entrypoint /tiles/merge.sh -e BBOXES --no-deps martin-cp
+
+      - name: Delete split tiles
+        run: |
+          for bbox in $BBOXES; do
+            rm -rf "tiles/split/$bbox"
+          done
 
       - name: List generated tiles
         run: |

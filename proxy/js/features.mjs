@@ -215,7 +215,6 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_symbols': {
-    labelProperty: 'feature',
     features: Object.fromEntries(
       poi.features.flatMap(feature =>
         [

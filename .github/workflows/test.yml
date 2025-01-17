@@ -247,9 +247,7 @@ jobs:
         env:
           BBOX: '12.9611,52.2934,13.8126,52.7147'
         run: |
-          for tile in low-med high standard speed signals electrification; do
-            env "TILES=$tile" docker compose up --no-build martin-cp
-          done
+          docker compose up --no-build martin-cp
 
       - name: List generated tiles
         run: |
