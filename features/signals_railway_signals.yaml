@@ -2348,6 +2348,41 @@ features:
       - { tag: 'railway:signal:humping', value: 'FI:Jo' }
       - { tag: 'railway:signal:humping:form', value: 'light' }
 
+  - description: Raise snowplow blades (point)
+    country: FI
+    icon: { default: 'fi/t-171' }
+    tags:
+      - { tag: 'railway:signal:snowplow', values: ['FI:T-170A', 'FI:T-171'] }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Raise snowplow blades (area)
+    country: FI
+    icon: { default: 'fi/t-171A' }
+    tags:
+      - { tag: 'railway:signal:snowplow', values: ['FI:T-170B', 'FI:T-171A'] }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Raise snowplow blades (old)
+    country: FI
+    icon: { default: 'fi/t-170-v' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'FI:T-170-v' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Lower snowplow blades
+    country: FI
+    icon: { default: 'fi/t-171B' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'FI:T-171B' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Lower snowplow blades (old)
+    country: FI
+    icon: { default: 'fi/t-171-v' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'FI:T-171-v' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
   # --- FR --- #
 
   - description: Carré
