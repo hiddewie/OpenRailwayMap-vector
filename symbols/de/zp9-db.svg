@@ -1,121 +1,143 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.657144" height="15" viewBox="0 0 11.657144 15">
-<defs>
-<filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-</filter>
-<mask id="mask-0">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-0">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-5" clip-path="url(#clip-0)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 10.632812 5.398438 C 10.632812 5.769531 10.332031 6.070312 9.960938 6.070312 C 9.589844 6.070312 9.292969 5.769531 9.292969 5.398438 C 9.292969 5.027344 9.589844 4.726562 9.960938 4.726562 C 10.332031 4.726562 10.632812 5.027344 10.632812 5.398438 Z M 10.632812 5.398438 "/>
-</g>
-<mask id="mask-1">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-1">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-8" clip-path="url(#clip-1)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 8.609375 11.511719 C 8.609375 11.882812 8.308594 12.183594 7.9375 12.183594 C 7.566406 12.183594 7.265625 11.882812 7.265625 11.511719 C 7.265625 11.140625 7.566406 10.839844 7.9375 10.839844 C 8.308594 10.839844 8.609375 11.140625 8.609375 11.511719 Z M 8.609375 11.511719 "/>
-</g>
-<mask id="mask-2">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-2">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-11" clip-path="url(#clip-2)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 10.632812 9.53125 C 10.632812 9.902344 10.332031 10.199219 9.960938 10.199219 C 9.589844 10.199219 9.292969 9.902344 9.292969 9.53125 C 9.292969 9.160156 9.589844 8.859375 9.960938 8.859375 C 10.332031 8.859375 10.632812 9.160156 10.632812 9.53125 Z M 10.632812 9.53125 "/>
-</g>
-<mask id="mask-3">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-3">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-14" clip-path="url(#clip-3)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 8.609375 3.488281 C 8.609375 3.859375 8.308594 4.160156 7.9375 4.160156 C 7.566406 4.160156 7.265625 3.859375 7.265625 3.488281 C 7.265625 3.117188 7.566406 2.816406 7.9375 2.816406 C 8.308594 2.816406 8.609375 3.117188 8.609375 3.488281 Z M 8.609375 3.488281 "/>
-</g>
-<mask id="mask-4">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-4">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-17" clip-path="url(#clip-4)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 1.023438 5.398438 C 1.023438 5.769531 1.324219 6.070312 1.695312 6.070312 C 2.066406 6.070312 2.367188 5.769531 2.367188 5.398438 C 2.367188 5.027344 2.066406 4.726562 1.695312 4.726562 C 1.324219 4.726562 1.023438 5.027344 1.023438 5.398438 Z M 1.023438 5.398438 "/>
-</g>
-<mask id="mask-5">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-5">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-20" clip-path="url(#clip-5)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 3.050781 11.511719 C 3.050781 11.882812 3.351562 12.183594 3.722656 12.183594 C 4.089844 12.183594 4.390625 11.882812 4.390625 11.511719 C 4.390625 11.140625 4.089844 10.839844 3.722656 10.839844 C 3.351562 10.839844 3.050781 11.140625 3.050781 11.511719 Z M 3.050781 11.511719 "/>
-</g>
-<mask id="mask-6">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-6">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-23" clip-path="url(#clip-6)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 1.023438 9.53125 C 1.023438 9.902344 1.324219 10.199219 1.695312 10.199219 C 2.066406 10.199219 2.367188 9.902344 2.367188 9.53125 C 2.367188 9.160156 2.066406 8.859375 1.695312 8.859375 C 1.324219 8.859375 1.023438 9.160156 1.023438 9.53125 Z M 1.023438 9.53125 "/>
-</g>
-<mask id="mask-7">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.165714" y="-1.5" width="13.988573" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-7">
-<rect x="0" y="0" width="12" height="16"/>
-</clipPath>
-<g id="source-26" clip-path="url(#clip-7)">
-<path fill-rule="nonzero" fill="rgb(23.529412%, 89.019608%, 76.078433%)" fill-opacity="1" d="M 3.050781 3.488281 C 3.050781 3.859375 3.351562 4.160156 3.722656 4.160156 C 4.089844 4.160156 4.390625 3.859375 4.390625 3.488281 C 4.390625 3.117188 4.089844 2.816406 3.722656 2.816406 C 3.351562 2.816406 3.050781 3.117188 3.050781 3.488281 Z M 3.050781 3.488281 "/>
-</g>
-</defs>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 11.65625 0 L 11.65625 15 L 0 15 Z M 0 0 "/>
-<g mask="url(#mask-0)">
-<use xlink:href="#source-5"/>
-</g>
-<g mask="url(#mask-1)">
-<use xlink:href="#source-8"/>
-</g>
-<g mask="url(#mask-2)">
-<use xlink:href="#source-11"/>
-</g>
-<g mask="url(#mask-3)">
-<use xlink:href="#source-14"/>
-</g>
-<g mask="url(#mask-4)">
-<use xlink:href="#source-17"/>
-</g>
-<g mask="url(#mask-5)">
-<use xlink:href="#source-20"/>
-</g>
-<g mask="url(#mask-6)">
-<use xlink:href="#source-23"/>
-</g>
-<g mask="url(#mask-7)">
-<use xlink:href="#source-26"/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="11.657144"
+   height="15"
+   viewBox="0 0 11.657144 15"
+   version="1.1"
+   id="svg24"
+   sodipodi:docname="zp9-db.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview24"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="55.133333"
+     inkscape:cx="5.8222491"
+     inkscape:cy="6.9286578"
+     inkscape:window-width="1920"
+     inkscape:window-height="1013"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg24">
+    <inkscape:grid
+       id="grid38"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs16">
+    <inkscape:path-effect
+       effect="copy_rotate"
+       starting_point="6.8285718,7.5"
+       origin="5.8285718,7.5"
+       id="path-effect43"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       method="normal"
+       num_copies="8"
+       starting_angle="0"
+       rotation_angle="51.428571"
+       gap="0"
+       copies_to_360="true"
+       mirror_copies="false"
+       split_items="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="copy_rotate"
+       starting_point="6.4996722,9.4068924"
+       origin="5.8285718,7.5"
+       id="path-effect38"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       method="normal"
+       num_copies="7"
+       starting_angle="-69.169719"
+       rotation_angle="51.428571"
+       gap="0"
+       copies_to_360="true"
+       mirror_copies="false"
+       split_items="false"
+       link_styles="false" />
+    <filter
+       id="filter-remove-color"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1" />
+    </filter>
+    <mask
+       id="mask-7">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g15">
+        <rect
+           x="-1.165714"
+           y="-1.5"
+           width="13.988573"
+           height="18"
+           fill="rgb(0%, 0%, 0%)"
+           fill-opacity="0.99"
+           id="rect15" />
+      </g>
+    </mask>
+  </defs>
+  <path
+     fill-rule="nonzero"
+     fill="#000000"
+     fill-opacity="1"
+     d="M 0,0 H 11.65625 V 15 H 0 Z"
+     id="path17"
+     sodipodi:nodetypes="ccccc" />
+  <g
+     transform="matrix(1.4927111,0,0,1.4883721,0.27463713,-2.9881116)"
+     mask="url(#mask-7)"
+     id="g35"
+     style="display:none">
+    <path
+       id="path35"
+       d="" />
+  </g>
+  <circle
+     style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.087;stroke-dasharray:none;stroke-opacity:1"
+     id="path37"
+     cx="5.8285718"
+     cy="7.5"
+     r="1" />
+  <path
+     style="fill:#00f1a5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:6.087;stroke-dasharray:none;stroke-opacity:1"
+     id="path37-6"
+     inkscape:path-effect="#path-effect43"
+     sodipodi:type="arc"
+     sodipodi:cx="5.8285718"
+     sodipodi:cy="3"
+     sodipodi:rx="1"
+     sodipodi:ry="1"
+     d="m 6.8285718,3 c 0,0.5522847 -0.4477153,1 -1,1 -0.5522848,0 -1,-0.4477153 -1,-1 0,-0.5522847 0.4477152,-1 1,-1 0.5522847,0 1,0.4477153 1,1 z M 3.3536981,3.6109127 c 0.3905243,0.3905243 0.3905243,1.0236893 0,1.4142136 -0.3905243,0.3905243 -1.0236893,0.3905243 -1.4142136,0 -0.3905243,-0.3905243 -0.3905243,-1.0236893 0,-1.4142136 0.3905243,-0.3905243 1.0236893,-0.3905243 1.4142136,0 z M 1.3285718,6.5 c 0.5522847,0 1,0.4477153 1,1 0,0.5522848 -0.4477153,1 -1,1 -0.55228475,0 -1,-0.4477152 -1,-1 0,-0.5522847 0.44771525,-1 1,-1 z m 0.6109127,3.4748737 c 0.3905243,-0.3905243 1.0236893,-0.3905243 1.4142136,0 0.3905243,0.3905243 0.3905243,1.0236893 0,1.4142133 -0.3905243,0.390525 -1.0236893,0.390525 -1.4142136,0 -0.3905243,-0.390524 -0.3905243,-1.023689 0,-1.4142133 z M 4.8285718,12 c 0,-0.552285 0.4477153,-1 1,-1 0.5522848,0 1,0.447715 1,1 0,0.552285 -0.4477152,1 -1,1 -0.5522847,0 -1,-0.447715 -1,-1 z m 3.4748737,-0.610913 c -0.3905243,-0.390524 -0.3905243,-1.023689 0,-1.4142133 0.3905243,-0.3905243 1.0236893,-0.3905243 1.4142136,0 0.3905239,0.3905243 0.3905239,1.0236893 0,1.4142133 -0.3905243,0.390525 -1.0236893,0.390525 -1.4142136,0 z M 10.328572,8.5 c -0.5522849,0 -1.0000002,-0.4477153 -1.0000002,-1 0,-0.5522848 0.4477153,-1 1.0000002,-1 0.552285,0 1,0.4477152 1,1 0,0.5522847 -0.447715,1 -1,1 z M 9.7176591,5.0251263 c -0.3905243,0.3905243 -1.0236893,0.3905243 -1.4142136,0 -0.3905243,-0.3905243 -0.3905243,-1.0236893 0,-1.4142136 0.3905243,-0.3905243 1.0236893,-0.3905243 1.4142136,0 0.3905239,0.3905243 0.3905239,1.0236893 0,1.4142136 z" />
 </svg>

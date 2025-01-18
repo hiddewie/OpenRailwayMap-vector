@@ -1016,11 +1016,12 @@ features:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü2' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: whistle sign Bü 3
+  - description: crossing distant sign Bü 3
     country: DE
     icon: { default: 'de/bue3' }
     tags:
-      - { tag: 'railway:signal:whistle', value: 'DE-ESO:bü3' }
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü3' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
   - description: whistle sign Pf 1 (DV 301)
     country: DE
@@ -1235,6 +1236,14 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
+  - description: minor light signals type Sh attached to main signals
+    country: DE
+    icon:
+      default: 'de/sh1-light-normal'
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-ESO:sh1' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
   - description: minor semaphore signals type Sh with wn7
     country: DE
     icon: { default: 'de/wn7-semaphore-normal' }
@@ -1283,6 +1292,27 @@ features:
       - { tag: 'railway:signal:main_repeated', value: 'DE-DB:signalhaltmelder' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
+  - description: Fahrtanzeiger
+    country: DE
+    icon: { default: 'de/fahrtanzeiger' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: departure signal Zp 9
+    country: DE
+    icon: { default: 'de/zp9-db' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: tram departure signal A1
+    country: DE
+    icon: { default: 'de/bostrab/a1' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'DE-BOStrab:a1' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
   - description: main entry sign Ne 1
     country: DE
     icon: { default: 'de/ne1' }
@@ -1296,6 +1326,13 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-HHA:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: LZB section start
+    country: DE
+    icon: { default: 'de/lzb-section-start' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:lzb-bereichskennzeichen' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Blockkennzeichen
     country: DE
