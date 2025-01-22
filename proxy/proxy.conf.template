@@ -116,6 +116,6 @@ server {
     proxy_redirect off;
 
     add_header X-Cache-Status $upstream_cache_status;
-    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_FRESH}, stale-while-revalidate=${CLIENT_CACHE_TTL_STALE}, stale-if-error=${CLIENT_CACHE_TTL_STALE}";
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_STALE}";
   }
 }
