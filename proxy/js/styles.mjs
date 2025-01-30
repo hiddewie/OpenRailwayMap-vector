@@ -1836,6 +1836,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'map',
       },
     },
     ...[0, 1].flatMap(featureIndex =>
@@ -2043,6 +2045,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'map',
       },
     },
     // Show at most 2 combined features
@@ -2317,6 +2321,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           'top',
         ],
         'icon-rotate': ['get', 'azimuth'],
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'map',
       },
     },
     ...imageLayerWithOutline(
