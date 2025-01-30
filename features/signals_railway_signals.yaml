@@ -581,23 +581,23 @@ features:
 
   # --- BE --- #
 
-  - description: grand signal d'arrêt
+  - description: Grand Signal d'Arrêt
     country: BE
     icon: { default: 'be/GSA-V' }
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
 
-  - description: signal d'arrêt simplifié
+  - description: Signal d'Arrêt Simplifié
     country: BE
     icon: { default: 'be/SAS' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'BE:SAS' }
+      - { tag: 'railway:signal:minor', value: 'BE:SAS' }
 
-  - description: petit signal d'arrêt
+  - description: Petit Signal d'Arrêt
     country: BE
     icon: { default: 'be/PSA' }
     tags:
-      - { tag: 'railway:signal:minor', value: 'BE:PSA' }
+      - { tag: 'railway:signal:shunting', value: 'BE:PSA' }
 
   - description: (BME) Shunting signal, triangle
     country: BE
