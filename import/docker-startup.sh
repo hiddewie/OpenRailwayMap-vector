@@ -64,6 +64,7 @@ update)
     --once \
     --database gis \
     -- \
+    --verbose \
     --slim \
     --output flex \
     --style openrailwaymap.lua \
@@ -87,12 +88,57 @@ refresh)
 
 esac
 
-# Clear all tags from the Osm2Psql tables
-$PSQL -c "update planet_osm_nodes set tags = null where tags is not null;"
-$PSQL -c "update planet_osm_ways set tags = null where tags is not null;"
-$PSQL -c "update planet_osm_rels set tags = null where tags is not null;"
+# Re-filter all non-railway objects from the Osm2Psql database.
+# Do not delete nodes, because deleted notes will create update failures (missing data0
+#   when ways / relations are updated.
+# The filtering for ways/relations must match the filtering of the raw OSM data
+
+$PSQL -c "delete from planet_osm_nodes where
+  tags is null or not (
+    tags->>'public_transport' IN ('platform', 'stop_position')
+    OR tags ? 'railway'
+    OR tags ? 'disused:railway'
+    OR tags ? 'abandoned:railway'
+    OR tags ? 'razed:railway'
+    OR tags ? 'construction:railway'
+    OR tags ? 'proposed:railway'
+  )
+;"
+$PSQL -c "
+  delete from planet_osm_ways
+  where
+    tags is null or not (
+      tags->>'public_transport' = 'platform'
+      OR tags ? 'railway'
+      OR tags ? 'disused:railway'
+      OR tags ? 'abandoned:railway'
+      OR tags ? 'razed:railway'
+      OR tags ? 'construction:railway'
+      OR tags ? 'proposed:railway'
+    )
+"
+$PSQL -c "
+  delete from planet_osm_rels
+  where
+    tags is null or not (
+      tags->>'route' IN ('train', 'tram', 'light_rail', 'subway')
+      OR tags->>'public_transport' IN ('platform', 'stop_area')
+      OR tags ? 'railway'
+      OR tags ? 'disused:railway'
+      OR tags ? 'abandoned:railway'
+      OR tags ? 'razed:railway'
+      OR tags ? 'construction:railway'
+      OR tags ? 'proposed:railway'
+    )
+"
+
 # Remove platforms which are not near any railway line, and also not part of any railway route
-$PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[-p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
+$PSQL -c "
+  delete from platforms p
+  where
+    not exists(select * from routes r where r.platform_ref_ids @> Array[-p.osm_id])
+    and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20))
+"
 
 echo "Post processing imported data"
 $PSQL -f sql/functions.sql
