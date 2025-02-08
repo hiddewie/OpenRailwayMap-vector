@@ -28,7 +28,7 @@ jobs:
       - name: Pull OSM data
         run: |
           docker pull ghcr.io/hiddewie/openrailwaymap-data:latest
-          DB_CONTAINER_ID="$(docker container create ghcr.io/hiddewie/openrailwaymap-data:latest)"
+          DB_CONTAINER_ID="$(docker container create ghcr.io/hiddewie/openrailwaymap-data:latest sleep inf)"
           docker cp "$DB_CONTAINER_ID:/data/data.osm.pbf" data/filtered/data.osm.pbf
 
       - name: Build import image
