@@ -7,15 +7,48 @@ on:
     - cron: '47 17 * * *'
 
 jobs:
-  trigger-circle-ci:
-    name: Trigger CircleCI
+  update-data:
+    name: Update data
     runs-on: ubuntu-latest
 
     steps:
-      - run: |
-          curl \
-            -X POST \
-            -H "content-type: application/json" \
-            "https://internal.circleci.com/private/soc/e/4137caec-ceea-4722-9803-8ab90a8d2355?secret=$CIRCLECI_WEBHOOK_SECRET"
-        env:
-          CIRCLECI_WEBHOOK_SECRET: ${{ secrets.CIRCLECI_WEBHOOK_SECRET }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull OSM data
+        run: |
+          docker pull ghcr.io/hiddewie/openrailwaymap-data:latest
+          DB_CONTAINER_ID="$(docker container create ghcr.io/hiddewie/openrailwaymap-data:latest)"
+          docker cp "$DB_CONTAINER_ID:/data/data.osm.pbf" data/filtered/data.osm.pbf
+
+      - name: Update OSM data
+        run: |
+          docker compose run --build import update
+
+      - name: Build new OSM data image
+        run: |
+          cat > .dockerignore << EOF
+          **
+          !data/filtered/data.osm.pbf
+          EOF
+          
+          cat > Dockerfile << EOF
+          FROM scratch
+          COPY data/filtered/data.osm.pbf /data/data.osm.pbf
+          EOF
+          
+          docker build --tag ghcr.io/hiddewie/openrailwaymap-data:latest
+
+      - name: Push OSM data
+        run: |
+          docker push ghcr.io/hiddewie/openrailwaymap-data:latest
