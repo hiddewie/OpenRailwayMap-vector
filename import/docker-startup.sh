@@ -8,6 +8,8 @@ set -o pipefail
 OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
+PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
+
 if [[ ! -f "$OSM2PGSQL_FILTERED_FILE" ]]; then
   echo "Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE"
 
@@ -18,8 +20,6 @@ if [[ ! -f "$OSM2PGSQL_FILTERED_FILE" ]]; then
     --output "$OSM2PGSQL_FILTERED_FILE" \
     --expressions osmium-tags-filter
 fi
-
-PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
 
 case "$1" in
 import)
@@ -43,9 +43,6 @@ import)
     --cache "${OSM2PGSQL_CACHE:-256}" \
     --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
     "$OSM2PGSQL_FILTERED_FILE"
-
-#  echo "Initializing replication configuration"
-#  osm2pgsql-replication init --database gis
 
   ;;
 
@@ -72,22 +69,6 @@ update)
     --output "/tmp/data.osm.pbf" \
     --expressions osmium-tags-filter \
       && mv "/tmp/data.osm.pbf" "$OSM2PGSQL_FILTERED_FILE"
-
-#  osmium extract --bbox 2.1547,49.48749,6.45945,51.53259 -o "/tmp/data.osm.pbf" "/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
-#    && mv "/tmp/data.osm.pbf" "/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
-
-  exit 0
-
-  echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
-  osm2pgsql-replication update \
-    --once \
-    --database gis \
-    -- \
-    --slim \
-    --output flex \
-    --style openrailwaymap.lua \
-    --cache "${OSM2PGSQL_CACHE:-256}" \
-    --number-processes "${OSM2PGSQL_NUMPROC:-4}"
 
   ;;
 
