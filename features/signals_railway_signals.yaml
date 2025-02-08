@@ -127,6 +127,7 @@ types:
   - { type: resetting_switch_distant }
   - { type: humping }
   - { type: snowplow }
+  - { type: wrong_road }
 
 features:
 
@@ -1172,14 +1173,14 @@ features:
     icon: { default: 'de/zs6-db-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: wrong road signal Zs 7 (DR) (light)
     country: DE
     icon: { default: 'de/zs7-dr-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs7' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: tram minor stop sign Sh 1
     country: DE
