@@ -67,14 +67,16 @@ jobs:
         run: |
           docker compose up --wait db
           docker inspect "$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+          # No idea why this is needed, DB should be healthy by now
+          sleep 10
+          docker inspect "$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
 
       - name: Import data
         env:
           OSM2PGSQL_CACHE: '8000'
           OSM2PGSQL_NUMPROC: '8'
         run: |
-          sleep 10
-          docker compose run --no-deps import import
+          docker compose run import import
 
       - name: Push data
         run: |
