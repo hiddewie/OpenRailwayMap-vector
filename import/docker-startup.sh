@@ -93,16 +93,19 @@ esac
 #   when ways / relations are updated.
 # The filtering for ways/relations must match the filtering of the raw OSM data
 
-$PSQL -c "delete from planet_osm_nodes where
-  tags is null or not (
-    tags->>'public_transport' IN ('platform', 'stop_position')
-    OR tags ? 'railway'
-    OR tags ? 'disused:railway'
-    OR tags ? 'abandoned:railway'
-    OR tags ? 'razed:railway'
-    OR tags ? 'construction:railway'
-    OR tags ? 'proposed:railway'
-  )
+$PSQL -c "
+  update planet_osm_nodes
+  set tags = null
+  where
+    tags is not null and not (
+      tags->>'public_transport' IN ('platform', 'stop_position')
+      OR tags ? 'railway'
+      OR tags ? 'disused:railway'
+      OR tags ? 'abandoned:railway'
+      OR tags ? 'razed:railway'
+      OR tags ? 'construction:railway'
+      OR tags ? 'proposed:railway'
+    )
 ;"
 $PSQL -c "
   delete from planet_osm_ways
