@@ -39,6 +39,19 @@ If changes are made to features, the materialized views in the database have to 
 docker compose run --build import refresh
 ```
 
+### Updating the OSM data
+
+The OSM data file can be updated with:
+```shell
+docker compose run --build import refresh
+```
+This command will request all updates in the region and process them into the OSM data file.
+
+After updating the data, run a new import:
+```shell
+docker compose run --build import import
+```
+
 ## Deployment
 
 Import the data:
