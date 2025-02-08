@@ -3,6 +3,22 @@
 set -e
 set -o pipefail
 
+# Filter the data for more efficient import
+# Store the filtered data for future use in the data directory
+OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+
+if [[ ! -f "$OSM2PGSQL_FILTERED_FILE" ]]; then
+  echo "Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE"
+
+  mkdir -p "$(dirname "$OSM2PGSQL_FILTERED_FILE")"
+
+  osmium tags-filter \
+    "$OSM2PGSQL_INPUT_FILE" \
+    --output "$OSM2PGSQL_FILTERED_FILE" \
+    --expressions osmium-tags-filter
+fi
+
 PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
 
 case "$1" in
@@ -16,30 +32,6 @@ import)
   $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
 
-  # Filter the data for more efficient import
-  # Store the filtered data for future use in the data directory
-  OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
-  OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
-  echo "Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE"
-  mkdir -p "$(dirname "$OSM2PGSQL_FILTERED_FILE")"
-  [[ -f "$OSM2PGSQL_FILTERED_FILE" ]] || \
-    osmium tags-filter \
-      -o "$OSM2PGSQL_FILTERED_FILE" \
-      "$OSM2PGSQL_INPUT_FILE" \
-      nwr/railway \
-      nwr/disused:railway \
-      nwr/abandoned:railway \
-      nwr/razed:railway \
-      nwr/construction:railway \
-      nwr/proposed:railway \
-      n/public_transport=stop_position \
-      nwr/public_transport=platform \
-      r/public_transport=stop_area \
-      r/route=train \
-      r/route=tram \
-      r/route=light_rail \
-      r/route=subway
-
   echo "Importing data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database
   osm2pgsql \
@@ -52,36 +44,37 @@ import)
     --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
     "$OSM2PGSQL_FILTERED_FILE"
 
-  echo "Initializing replication configuration"
-  osm2pgsql-replication init --database gis
+#  echo "Initializing replication configuration"
+#  osm2pgsql-replication init --database gis
 
   ;;
 
 update)
 
-  pyosmium-up-to-date -v --tmpdir /tmp --force-update-of-old-planet --ignore-osmosis-headers -s 10000 -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" || true
-  mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+  # This command may exit with non-zero exit codes
+  #   in case there are more updates, or if no updates were performed
+  # This uses the replication server as defined in the input file
+  pyosmium-up-to-date \
+    -v \
+    --tmpdir /tmp \
+    --force-update-of-old-planet \
+    --size 10000 \
+    -o "/tmp/data.osm.pbf" \
+    "$OSM2PGSQL_FILTERED_FILE"  \
+      || true
 
+  [[ ! -f "/tmp/data.osm.pbf" ]] \
+    || mv "/tmp/data.osm.pbf" "$OSM2PGSQL_FILTERED_FILE"
+
+  # Ensure the data file is filtered to contain only interesting data
   osmium tags-filter \
-        -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
-        "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
-        nwr/railway \
-        nwr/disused:railway \
-        nwr/abandoned:railway \
-        nwr/razed:railway \
-        nwr/construction:railway \
-        nwr/proposed:railway \
-        n/public_transport=stop_position \
-        nwr/public_transport=platform \
-        r/public_transport=stop_area \
-        r/route=train \
-        r/route=tram \
-        r/route=light_rail \
-        r/route=subway \
-        && mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+    "$OSM2PGSQL_FILTERED_FILE" \
+    --output "/tmp/data.osm.pbf" \
+    --expressions osmium-tags-filter \
+      && mv "/tmp/data.osm.pbf" "$OSM2PGSQL_FILTERED_FILE"
 
-  osmium extract --bbox 2.1547,49.48749,6.45945,51.53259 -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
-    && mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+#  osmium extract --bbox 2.1547,49.48749,6.45945,51.53259 -o "/tmp/data.osm.pbf" "/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
+#    && mv "/tmp/data.osm.pbf" "/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
   exit 0
 
