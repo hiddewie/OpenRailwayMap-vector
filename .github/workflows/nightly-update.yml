@@ -73,6 +73,7 @@ jobs:
           OSM2PGSQL_CACHE: '8000'
           OSM2PGSQL_NUMPROC: '8'
         run: |
+          sleep 10
           docker compose run --no-deps import import
 
       - name: Push data
