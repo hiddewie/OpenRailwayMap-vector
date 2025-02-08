@@ -45,6 +45,7 @@ import)
   osm2pgsql \
     --create \
     --database gis \
+    --verbose \
     --slim \
     --output flex \
     --style openrailwaymap.lua \
@@ -89,7 +90,7 @@ refresh)
 esac
 
 # Re-filter all non-railway objects from the Osm2Psql database.
-# Do not delete nodes, because deleted notes will create update failures (missing data0
+# Do not delete nodes, because deleted notes will create update failures (missing data
 #   when ways / relations are updated.
 # The filtering for ways/relations must match the filtering of the raw OSM data
 
