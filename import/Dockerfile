@@ -33,6 +33,7 @@ RUN apt-get update \
     gnupg \
     osm2pgsql \
     osmium-tool \
+    pyosmium \
     gdal-bin \
     python3-psycopg2 \
     python3-yaml \

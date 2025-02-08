@@ -59,6 +59,32 @@ import)
 
 update)
 
+  pyosmium-up-to-date -v --tmpdir /tmp --force-update-of-old-planet --ignore-osmosis-headers -s 10000 -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" || true
+  mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+
+  osmium tags-filter \
+        -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
+        "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
+        nwr/railway \
+        nwr/disused:railway \
+        nwr/abandoned:railway \
+        nwr/razed:railway \
+        nwr/construction:railway \
+        nwr/proposed:railway \
+        n/public_transport=stop_position \
+        nwr/public_transport=platform \
+        r/public_transport=stop_area \
+        r/route=train \
+        r/route=tram \
+        r/route=light_rail \
+        r/route=subway \
+        && mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+
+  osmium extract --bbox 2.1547,49.48749,6.45945,51.53259 -o "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" \
+    && mv "/data/filtered/2-up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}" "/data/filtered/up-${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+
+  exit 0
+
   echo "Updating data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
   osm2pgsql-replication update \
     --once \
