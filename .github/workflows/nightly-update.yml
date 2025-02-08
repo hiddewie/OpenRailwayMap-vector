@@ -66,6 +66,7 @@ jobs:
       - name: Start database
         run: |
           docker compose up --wait db
+          docker inspect "$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
 
       - name: Import data
         env:
