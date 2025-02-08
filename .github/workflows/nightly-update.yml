@@ -37,7 +37,7 @@ jobs:
 
       - name: Update OSM data
         run: |
-          docker compose run import --no-deps update
+          docker compose run --no-deps import update
 
       - name: Build new OSM data image
         run: |
