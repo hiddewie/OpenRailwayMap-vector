@@ -31,9 +31,13 @@ jobs:
           DB_CONTAINER_ID="$(docker container create ghcr.io/hiddewie/openrailwaymap-data:latest)"
           docker cp "$DB_CONTAINER_ID:/data/data.osm.pbf" data/filtered/data.osm.pbf
 
+      - name: Build import image
+        run: |
+          docker compose build import
+
       - name: Update OSM data
         run: |
-          docker compose run --build import update
+          docker compose run import update
 
       - name: Build new OSM data image
         run: |
@@ -47,8 +51,32 @@ jobs:
           COPY data/filtered/data.osm.pbf /data/data.osm.pbf
           EOF
           
-          docker build --tag ghcr.io/hiddewie/openrailwaymap-data:latest
+          docker build --tag ghcr.io/hiddewie/openrailwaymap-data:latest .
+          
+          git checkout -- .
 
       - name: Push OSM data
         run: |
           docker push ghcr.io/hiddewie/openrailwaymap-data:latest
+
+      - name: Build database
+        run: |
+          docker compose build db
+
+      - name: Start database
+        run: |
+          docker compose up --wait db
+
+      - name: Import data
+        env:
+          OSM2PGSQL_CACHE: '8000'
+          OSM2PGSQL_NUMPROC: '8'
+        run: |
+          docker compose run import import
+
+      - name: Push data
+        run: |
+          docker compose stop db
+          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
+          docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker compose push db
