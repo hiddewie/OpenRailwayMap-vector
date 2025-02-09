@@ -65,6 +65,8 @@ tags:
   - 'railway:signal:ring:only_transit'
   - 'railway:signal:radio'
   - 'railway:signal:radio:form'
+  - 'railway:signal:short_route'
+  - 'railway:signal:short_route:form'
   - 'railway:signal:shunting'
   - 'railway:signal:shunting:form'
   - 'railway:signal:shunting:states'
@@ -128,6 +130,7 @@ types:
   - { type: humping }
   - { type: snowplow }
   - { type: wrong_road }
+  - { type: short_route }
 
 features:
 
@@ -1200,6 +1203,20 @@ features:
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs7' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (sign)
+    country: DE
+    icon: { default: 'de/zs13-sign' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'sign' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (light)
+    country: DE
+    icon: { default: 'de/zs13-light' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
 
   - description: tram minor stop sign Sh 1
     country: DE
