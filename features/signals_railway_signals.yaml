@@ -1535,7 +1535,7 @@ features:
         - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
       default: ''
     tags:
-      - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: tram Fahrsignal mit Anmeldung LSA
