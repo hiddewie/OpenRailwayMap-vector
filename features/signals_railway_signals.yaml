@@ -1140,6 +1140,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: stop demand post BOStrab Sh 7 (sign)
+    country: DE
+    icon: { default: 'de/ne5-sign' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'DE-BOStrab:sh7' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Ne13 resetting switch signal
     country: DE
     icon: { default: 'de/ne13a' }
