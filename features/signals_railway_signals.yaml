@@ -40,6 +40,7 @@ tags:
   - 'railway:signal:main:height'
   - 'railway:signal:main:states'
   - 'railway:signal:main:substitute_signal'
+  - 'railway:signal:main:PT_priority'
   - 'railway:signal:main_repeated'
   - 'railway:signal:main_repeated:form'
   - 'railway:signal:main_repeated:states'
@@ -1499,6 +1500,21 @@ features:
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: tram Fahrsignal mit Anmeldung LSA
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1-st9' }
+      default: 'de/bostrab/f0-st9'
+    tags:
+      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
 
   - description: tram Fahrsignal
     country: DE
