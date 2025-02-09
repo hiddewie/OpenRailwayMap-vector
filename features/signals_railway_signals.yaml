@@ -1,5 +1,7 @@
 tags:
   # railway tag is included by default
+  - 'railway:signal:brake_test'
+  - 'railway:signal:brake_test:form'
   - 'railway:signal:combined'
   - 'railway:signal:combined:form'
   - 'railway:signal:combined:states'
@@ -131,6 +133,7 @@ types:
   - { type: snowplow }
   - { type: wrong_road }
   - { type: short_route }
+  - { type: brake_test }
 
 features:
 
@@ -1336,6 +1339,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: brake test signal Zp 6-8
+    country: DE
+    icon: { default: 'de/zp8' }
+    tags:
+      - { tag: 'railway:signal:brake_test', value: 'DE-ESO:zp' }
+      - { tag: 'railway:signal:brake_test:form', value: 'light' }
 
   - description: departure signal Zp 9
     country: DE
