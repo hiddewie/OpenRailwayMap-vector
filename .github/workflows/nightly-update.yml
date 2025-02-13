@@ -72,3 +72,7 @@ jobs:
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:latest
           docker compose push db
+
+      - name: Trigger deployment
+        run: |
+          gh workflow run --ref '${{ github.ref_name }}' deploy.yml
