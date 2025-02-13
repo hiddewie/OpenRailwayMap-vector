@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="200"
+   height="173.21"
+   id="svg9007"
+   sodipodi:docname="PVJ-{40}.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9011" />
+  <sodipodi:namedview
+     id="namedview9009"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="5.9061253"
+     inkscape:cx="2.7090519"
+     inkscape:cy="87.028292"
+     inkscape:window-width="1920"
+     inkscape:window-height="1129"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9007" />
+  <path
+     id="Bord"
+     d="M200,0 L0,0 L100,173.21 z"
+     fill="#0b9b7b" />
+  <path
+     id="Fond"
+     d="M 183,9.21 L 17,9.21 L 100,152.21 z"
+     fill="#edd827" />
+  <g
+     aria-label="4"
+     id="text6048"
+     style="font-weight:200;font-size:96.9804px;line-height:1.25;font-family:'Cascadia Code';-inkscape-font-specification:'Cascadia Code Ultra-Light';font-variant-ligatures:none;text-align:center;letter-spacing:-10px;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:7.27354">
+    <path
+       d="m 125.89377,78.90898 h -10.08596 v 15.710824 h -8.24334 V 78.90898 H 74.397177 V 71.63545 L 106.98259,24.987877 h 8.82522 v 46.259651 h 10.08596 z m -18.3293,-29.482042 q 0,-5.042981 0.19396,-8.534275 0.19397,-3.588275 0.29095,-6.788628 h -0.38793 q -0.77584,1.842627 -1.9396,3.976196 -1.16377,2.133569 -2.23055,3.588275 L 82.737492,71.247528 h 24.826978 z"
+       style="font-weight:normal;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#000000"
+       id="path12610" />
+  </g>
+</svg>

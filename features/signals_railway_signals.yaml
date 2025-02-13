@@ -686,7 +686,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(4|6|10)0$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
+        - { regex: '^(4|6|9|10)0$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
       default: 'be/PVJ-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVJ' }

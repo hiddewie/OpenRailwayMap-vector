@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="200"
+   height="173.21"
+   id="svg1902"
+   sodipodi:docname="PVV-empty.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1906" />
+  <sodipodi:namedview
+     id="namedview1904"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="5.9061253"
+     inkscape:cx="20.487205"
+     inkscape:cy="87.028292"
+     inkscape:window-width="1920"
+     inkscape:window-height="1129"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1902" />
+  <path
+     id="Bord"
+     d="M200,0 L0,0 L100,173.21 z"
+     fill="#edd827" />
+  <path
+     id="Fond"
+     d="M 183,9.21 L 17,9.21 L 100,152.21 z"
+     fill="#0b9b7b" />
+  <g
+     aria-label="?"
+     id="text6048"
+     style="font-weight:200;font-size:96.9804px;line-height:1.25;font-family:'Cascadia Code';-inkscape-font-specification:'Cascadia Code Ultra-Light';font-variant-ligatures:none;text-align:center;letter-spacing:-10px;word-spacing:0px;text-anchor:middle;fill:#edd827;stroke-width:7.27354">
+    <path
+       d="m 92.144615,73.442813 q 0,-3.685255 0.678863,-6.303726 0.775843,-2.715451 2.52149,-5.139961 1.842628,-2.42451 4.946002,-5.042981 3.78223,-3.200353 5.81882,-5.333922 2.13357,-2.133569 3.00639,-4.170157 0.87283,-2.036589 0.87283,-4.946001 0,-4.655059 -3.00639,-7.176549 -3.0064,-2.521491 -8.72824,-2.521491 -4.75204,0 -8.437295,1.260746 -3.685255,1.163764 -7.079569,2.812431 l -3.006392,-6.788628 q 3.879216,-2.036588 8.534275,-3.394314 4.752039,-1.357725 10.570863,-1.357725 9.213138,0 14.256118,4.558078 5.04298,4.558079 5.04298,12.413492 0,4.364118 -1.4547,7.46749 -1.35773,3.006393 -3.9762,5.624864 -2.52149,2.52149 -6.01279,5.430902 -3.20035,2.715451 -4.946,4.75204 -1.64866,2.036588 -2.230545,4.073176 -0.581882,1.939608 -0.581882,4.75204 v 1.648667 h -6.788628 z m -2.230549,16.87459 q 0,-3.588275 1.648666,-5.042981 1.745648,-1.454706 4.364118,-1.454706 2.42451,0 4.17016,1.454706 1.74564,1.454706 1.74564,5.042981 0,3.491294 -1.74564,5.04298 -1.74565,1.551687 -4.17016,1.551687 -2.61847,0 -4.364118,-1.551687 -1.648666,-1.551686 -1.648666,-5.04298 z"
+       style="font-weight:normal;font-family:System-ui;-inkscape-font-specification:System-ui"
+       id="path14106" />
+  </g>
+</svg>

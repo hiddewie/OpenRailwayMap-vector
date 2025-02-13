@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="104"
+   height="104"
+   id="svg21326"
+   sodipodi:docname="PVO-{140}.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs21330" />
+  <sodipodi:namedview
+     id="namedview21328"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="4.5207874"
+     inkscape:cx="-19.023235"
+     inkscape:cy="48.885289"
+     inkscape:window-width="1920"
+     inkscape:window-height="1129"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg21326" />
+  <circle
+     cx="52"
+     cy="52"
+     r="49.5"
+     style="fill:#ffffff;stroke:#000000;stroke-width:5;fill-opacity:1"
+     id="circle21324" />
+  <g
+     aria-label="14"
+     id="text6048"
+     style="font-weight:200;font-size:73.1637px;line-height:1.25;font-family:'Cascadia Code';-inkscape-font-specification:'Cascadia Code Ultra-Light';font-variant-ligatures:none;text-align:center;letter-spacing:-7.54417px;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:5.48728">
+    <path
+       d="M 37.371398,78.089157 H 31.07932 V 41.580473 q 0,-3.146039 0.07316,-5.048295 0.07316,-1.902256 0.219491,-3.95084 -1.170619,1.170619 -2.121747,1.97542 -0.951128,0.8048 -2.414402,2.048583 l -5.560441,4.536149 -3.36553,-4.316658 14.120593,-10.974554 h 5.34095 z"
+       style="font-weight:normal;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#000000"
+       id="path11114" />
+    <path
+       d="M 86.090146,66.236638 H 78.481122 V 78.089157 H 72.262208 V 66.236638 H 47.240224 V 60.749361 L 71.823225,25.557623 h 6.657897 v 34.899083 h 7.609024 z M 72.262208,43.994875 q 0,-3.804513 0.146327,-6.438406 0.146327,-2.707056 0.219491,-5.121458 h -0.292655 q -0.585309,1.39011 -1.463274,2.999711 -0.877964,1.609601 -1.682765,2.707057 L 53.532301,60.456706 h 18.729907 z"
+       style="font-weight:normal;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#000000"
+       id="path11116" />
+  </g>
+</svg>
