@@ -41,19 +41,7 @@ jobs:
 
       - name: Build new OSM data image
         run: |
-          cat > .dockerignore << EOF
-          **
-          !data/filtered/data.osm.pbf
-          EOF
-          
-          cat > Dockerfile << EOF
-          FROM scratch
-          COPY data/filtered/data.osm.pbf /data/data.osm.pbf
-          EOF
-          
-          docker build --tag ghcr.io/hiddewie/openrailwaymap-data:latest .
-          
-          git checkout -- .
+          docker build --tag ghcr.io/hiddewie/openrailwaymap-data:latest data
 
       - name: Push OSM data
         run: |

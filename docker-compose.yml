@@ -43,6 +43,12 @@ services:
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
 
+  data:
+    image: ghcr.io/hiddewie/openrailwaymap-data:latest
+    build:
+      context: data
+      dockerfile: Dockerfile
+
   martin-cp:
     image: ghcr.io/maplibre/martin:main
     depends_on:
