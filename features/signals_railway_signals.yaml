@@ -1,5 +1,7 @@
 tags:
   # railway tag is included by default
+  - 'railway:signal:brake_test'
+  - 'railway:signal:brake_test:form'
   - 'railway:signal:combined'
   - 'railway:signal:combined:form'
   - 'railway:signal:combined:states'
@@ -65,6 +67,8 @@ tags:
   - 'railway:signal:ring:only_transit'
   - 'railway:signal:radio'
   - 'railway:signal:radio:form'
+  - 'railway:signal:short_route'
+  - 'railway:signal:short_route:form'
   - 'railway:signal:shunting'
   - 'railway:signal:shunting:form'
   - 'railway:signal:shunting:states'
@@ -127,6 +131,9 @@ types:
   - { type: resetting_switch_distant }
   - { type: humping }
   - { type: snowplow }
+  - { type: wrong_road }
+  - { type: short_route }
+  - { type: brake_test }
 
 features:
 
@@ -1139,6 +1146,25 @@ features:
       - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: stop demand post BOStrab Sh 7 (sign)
+    country: DE
+    icon: { default: 'de/ne5-sign' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'DE-BOStrab:sh7' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Lift / Fold snowplow Ne 7 (sign)
+    country: DE
+    icon:
+      match: 'railway:signal:snowplow:type'
+      cases:
+        - { regex: '^up$', value: 'de/ne7-yellow-up' }
+        - { regex: '^down$', value: 'de/ne7-yellow-down' }
+      default: 'de/ne7-yellow-down'
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
   - description: Ne13 resetting switch signal
     country: DE
     icon: { default: 'de/ne13a' }
@@ -1172,14 +1198,28 @@ features:
     icon: { default: 'de/zs6-db-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: wrong road signal Zs 7 (DR) (light)
     country: DE
     icon: { default: 'de/zs7-dr-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs7' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (sign)
+    country: DE
+    icon: { default: 'de/zs13-sign' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'sign' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (light)
+    country: DE
+    icon: { default: 'de/zs13-light' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
 
   - description: tram minor stop sign Sh 1
     country: DE
@@ -1299,6 +1339,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: brake test signal Zp 6-8
+    country: DE
+    icon: { default: 'de/zp8' }
+    tags:
+      - { tag: 'railway:signal:brake_test', value: 'DE-ESO:zp' }
+      - { tag: 'railway:signal:brake_test:form', value: 'light' }
 
   - description: departure signal Zp 9
     country: DE
@@ -1498,7 +1545,7 @@ features:
         - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
       default: ''
     tags:
-      - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: tram Fahrsignal mit Anmeldung LSA
