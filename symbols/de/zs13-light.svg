@@ -1,107 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="11.657144"
-   height="15"
-   viewBox="0 0 11.657144 15"
-   version="1.1"
-   id="svg2"
-   sodipodi:docname="zs13-light.svg"
-   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs2" />
-  <sodipodi:namedview
-     id="namedview2"
-     pagecolor="#ffffff"
-     bordercolor="#999999"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="45.254834"
-     inkscape:cx="5.2591067"
-     inkscape:cy="7.0600193"
-     inkscape:window-width="1920"
-     inkscape:window-height="1008"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="M 8.9359283e-4,0 H 11.657144 V 15 H 8.9359283e-4 Z m 0,0"
-     id="path1" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3"
-     cx="2"
-     cy="2"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1"
-     cx="2"
-     cy="7.5"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-6"
-     cx="9.3649998"
-     cy="7.5"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-6-0"
-     cx="7.5237498"
-     cy="7.5"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-6-6"
-     cx="5.6824999"
-     cy="7.5"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-6-2"
-     cx="3.8412499"
-     cy="7.5"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-2"
-     cx="2"
-     cy="5.6666665"
-     r="0.80000001" />
-  <circle
-     style="fill:#fffc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none"
-     id="path3-1-7"
-     cx="2"
-     cy="3.8333333"
-     r="0.80000001" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#path3-1"
-     id="use2"
-     transform="translate(0,5.5)" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#path3-1-2"
-     id="use3"
-     transform="translate(0,5.5)" />
-  <use
-     x="0"
-     y="0"
-     xlink:href="#path3-1-7"
-     id="use4"
-     transform="translate(0,5.5)" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.657144" height="15" viewBox="0 0 11.657144 15">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 11.65625 0 L 11.65625 15 L 0 15 Z M 0 0 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 2 C 2.800781 2.441406 2.441406 2.800781 2 2.800781 C 1.558594 2.800781 1.199219 2.441406 1.199219 2 C 1.199219 1.558594 1.558594 1.199219 2 1.199219 C 2.441406 1.199219 2.800781 1.558594 2.800781 2 Z M 2.800781 2 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 7.5 C 2.800781 7.941406 2.441406 8.300781 2 8.300781 C 1.558594 8.300781 1.199219 7.941406 1.199219 7.5 C 1.199219 7.058594 1.558594 6.699219 2 6.699219 C 2.441406 6.699219 2.800781 7.058594 2.800781 7.5 Z M 2.800781 7.5 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 10.164062 7.5 C 10.164062 7.941406 9.808594 8.300781 9.363281 8.300781 C 8.921875 8.300781 8.566406 7.941406 8.566406 7.5 C 8.566406 7.058594 8.921875 6.699219 9.363281 6.699219 C 9.808594 6.699219 10.164062 7.058594 10.164062 7.5 Z M 10.164062 7.5 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 8.324219 7.5 C 8.324219 7.941406 7.964844 8.300781 7.523438 8.300781 C 7.082031 8.300781 6.722656 7.941406 6.722656 7.5 C 6.722656 7.058594 7.082031 6.699219 7.523438 6.699219 C 7.964844 6.699219 8.324219 7.058594 8.324219 7.5 Z M 8.324219 7.5 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 6.484375 7.5 C 6.484375 7.941406 6.125 8.300781 5.683594 8.300781 C 5.242188 8.300781 4.882812 7.941406 4.882812 7.5 C 4.882812 7.058594 5.242188 6.699219 5.683594 6.699219 C 6.125 6.699219 6.484375 7.058594 6.484375 7.5 Z M 6.484375 7.5 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 4.640625 7.5 C 4.640625 7.941406 4.28125 8.300781 3.839844 8.300781 C 3.398438 8.300781 3.042969 7.941406 3.042969 7.5 C 3.042969 7.058594 3.398438 6.699219 3.839844 6.699219 C 4.28125 6.699219 4.640625 7.058594 4.640625 7.5 Z M 4.640625 7.5 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 5.667969 C 2.800781 6.109375 2.441406 6.464844 2 6.464844 C 1.558594 6.464844 1.199219 6.109375 1.199219 5.667969 C 1.199219 5.226562 1.558594 4.867188 2 4.867188 C 2.441406 4.867188 2.800781 5.226562 2.800781 5.667969 Z M 2.800781 5.667969 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 3.832031 C 2.800781 4.273438 2.441406 4.632812 2 4.632812 C 1.558594 4.632812 1.199219 4.273438 1.199219 3.832031 C 1.199219 3.390625 1.558594 3.035156 2 3.035156 C 2.441406 3.035156 2.800781 3.390625 2.800781 3.832031 Z M 2.800781 3.832031 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 13 C 2.800781 13.441406 2.441406 13.800781 2 13.800781 C 1.558594 13.800781 1.199219 13.441406 1.199219 13 C 1.199219 12.558594 1.558594 12.199219 2 12.199219 C 2.441406 12.199219 2.800781 12.558594 2.800781 13 Z M 2.800781 13 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 11.167969 C 2.800781 11.609375 2.441406 11.964844 2 11.964844 C 1.558594 11.964844 1.199219 11.609375 1.199219 11.167969 C 1.199219 10.726562 1.558594 10.367188 2 10.367188 C 2.441406 10.367188 2.800781 10.726562 2.800781 11.167969 Z M 2.800781 11.167969 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 98.823529%, 0%)" fill-opacity="1" d="M 2.800781 9.332031 C 2.800781 9.773438 2.441406 10.132812 2 10.132812 C 1.558594 10.132812 1.199219 9.773438 1.199219 9.332031 C 1.199219 8.890625 1.558594 8.535156 2 8.535156 C 2.441406 8.535156 2.800781 8.890625 2.800781 9.332031 Z M 2.800781 9.332031 "/>
 </svg>
