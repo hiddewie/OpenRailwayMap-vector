@@ -648,6 +648,61 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'BE:VIS' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
+  - description: Reference speed
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/PVR-{}', example: 'be/PVR-{60}' }
+      default: 'be/PVR-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:PVR' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Announcement of a speed limit
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/PVA-{}', example: 'be/PVA-{60}' }
+      default: 'be/PVA-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVA' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Beginning of a speed limit
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/PVO-{}', example: 'be/PVO-{60}' }
+      default: 'be/PVO-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:PVO' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Higher speed limit below reference speed
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
+      default: 'be/PVJ-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:PVJ' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Higher speed limit for some traffic
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/PVV-{}', example: 'be/PVV-{60}' }
+      default: 'be/PVV-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:PVV' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: Panto distant
     country: BE
     icon: { default: 'be/PBA' }
