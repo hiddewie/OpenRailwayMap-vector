@@ -1,53 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Initially created with Inkscape, optimized by hand -->
-
-<svg
-   version="1.1"
-   width="200"
-   height="173.21"
-   id="svg9007"
-   sodipodi:docname="PVJ-{40}.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs9011" />
-  <sodipodi:namedview
-     id="namedview9009"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="5.9061253"
-     inkscape:cx="2.7090519"
-     inkscape:cy="87.028292"
-     inkscape:window-width="1920"
-     inkscape:window-height="1129"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg9007" />
-  <path
-     id="Bord"
-     d="M200,0 L0,0 L100,173.21 z"
-     fill="#0b9b7b" />
-  <path
-     id="Fond"
-     d="M 183,9.21 L 17,9.21 L 100,152.21 z"
-     fill="#edd827" />
-  <g
-     aria-label="4"
-     id="text6048"
-     style="font-weight:200;font-size:96.9804px;line-height:1.25;font-family:'Cascadia Code';-inkscape-font-specification:'Cascadia Code Ultra-Light';font-variant-ligatures:none;text-align:center;letter-spacing:-10px;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke-width:7.27354">
-    <path
-       d="m 125.89377,78.90898 h -10.08596 v 15.710824 h -8.24334 V 78.90898 H 74.397177 V 71.63545 L 106.98259,24.987877 h 8.82522 v 46.259651 h 10.08596 z m -18.3293,-29.482042 q 0,-5.042981 0.19396,-8.534275 0.19397,-3.588275 0.29095,-6.788628 h -0.38793 q -0.77584,1.842627 -1.9396,3.976196 -1.16377,2.133569 -2.23055,3.588275 L 82.737492,71.247528 h 24.826978 z"
-       style="font-weight:normal;font-family:System-ui;-inkscape-font-specification:System-ui;fill:#000000"
-       id="path12610" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="15.588901" viewBox="0 0 18 15.588901">
+<path fill-rule="nonzero" fill="rgb(4.313725%, 60.784314%, 48.235294%)" fill-opacity="1" d="M 18 0 L 0 0 L 9 15.589844 Z M 18 0 "/>
+<path fill-rule="nonzero" fill="rgb(92.941176%, 84.705882%, 15.294118%)" fill-opacity="1" d="M 16.46875 0.828125 L 1.53125 0.828125 L 9 13.699219 Z M 16.46875 0.828125 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.332031 7.101562 L 10.421875 7.101562 L 10.421875 8.515625 L 9.679688 8.515625 L 9.679688 7.101562 L 6.695312 7.101562 L 6.695312 6.445312 L 9.628906 2.25 L 10.421875 2.25 L 10.421875 6.414062 L 11.332031 6.414062 Z M 9.679688 4.449219 C 9.679688 4.144531 9.6875 3.890625 9.699219 3.679688 C 9.710938 3.464844 9.71875 3.261719 9.722656 3.070312 L 9.691406 3.070312 C 9.644531 3.179688 9.585938 3.300781 9.515625 3.425781 C 9.445312 3.554688 9.378906 3.664062 9.3125 3.75 L 7.445312 6.414062 L 9.679688 6.414062 Z M 9.679688 4.449219 "/>
 </svg>
