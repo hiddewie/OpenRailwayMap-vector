@@ -653,7 +653,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/PVR-{}', example: 'be/PVR-{60}' }
+        - { regex: '^(12|16)0$', value: 'be/PVR-{}', example: 'be/PVR-{120}' }
       default: 'be/PVR-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVR' }
@@ -664,7 +664,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/PVA-{}', example: 'be/PVA-{60}' }
+        - { regex: '^90$', value: 'be/PVA-{}', example: 'be/PVA-{90}' }
       default: 'be/PVA-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVA' }
@@ -675,7 +675,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/PVO-{}', example: 'be/PVO-{60}' }
+        - { regex: '^(9|10|14)0$', value: 'be/PVO-{}', example: 'be/PVO-{100}' }
       default: 'be/PVO-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVO' }
@@ -686,7 +686,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
+        - { regex: '^(4|6|10)0$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
       default: 'be/PVJ-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVJ' }
@@ -697,7 +697,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/PVV-{}', example: 'be/PVV-{60}' }
+        - { regex: '^60$', value: 'be/PVV-{}', example: 'be/PVV-{60}' }
       default: 'be/PVV-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVV' }
