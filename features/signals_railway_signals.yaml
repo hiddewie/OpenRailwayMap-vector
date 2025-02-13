@@ -672,6 +672,33 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
+  - description: train protection block markers (arrow)
+    country: BE
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
+        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
+      default: 'general/etcs-stop-marker-arrow-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+      - { tag: 'railway:signal:train_protection:shape', value: 'triangle' }
+
+  - description: train protection block markers (triangle)
+    country: BE
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
+        - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
+      default: 'general/etcs-stop-marker-triangle-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
   # --- CH --- #
 
   - description: Vorsignal System L
