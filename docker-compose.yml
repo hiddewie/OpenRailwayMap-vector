@@ -48,6 +48,9 @@ services:
     build:
       context: data
       dockerfile: Dockerfile
+    command:
+      - sleep
+      - inf
 
   martin-cp:
     image: ghcr.io/maplibre/martin:main
