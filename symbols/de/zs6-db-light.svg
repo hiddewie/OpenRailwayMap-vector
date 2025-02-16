@@ -1,107 +1,1113 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.434287" height="16" viewBox="0 0 12.434287 16">
-<defs>
-<filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-</filter>
-<mask id="mask-0">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-0">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-5" clip-path="url(#clip-0)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.933594 8.027344 C 6.933594 8.425781 6.613281 8.746094 6.214844 8.746094 C 5.820312 8.746094 5.5 8.425781 5.5 8.027344 C 5.5 7.632812 5.820312 7.3125 6.214844 7.3125 C 6.613281 7.3125 6.933594 7.632812 6.933594 8.027344 Z M 6.933594 8.027344 "/>
-</g>
-<mask id="mask-1">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-1">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-8" clip-path="url(#clip-1)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 8.511719 9.929688 C 8.511719 10.324219 8.191406 10.644531 7.796875 10.644531 C 7.402344 10.644531 7.082031 10.324219 7.082031 9.929688 C 7.082031 9.535156 7.402344 9.214844 7.796875 9.214844 C 8.191406 9.214844 8.511719 9.535156 8.511719 9.929688 Z M 8.511719 9.929688 "/>
-</g>
-<mask id="mask-2">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-2">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-11" clip-path="url(#clip-2)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 5.351562 6.128906 C 5.351562 6.523438 5.03125 6.84375 4.636719 6.84375 C 4.242188 6.84375 3.921875 6.523438 3.921875 6.128906 C 3.921875 5.734375 4.242188 5.414062 4.636719 5.414062 C 5.03125 5.414062 5.351562 5.734375 5.351562 6.128906 Z M 5.351562 6.128906 "/>
-</g>
-<mask id="mask-3">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-3">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-14" clip-path="url(#clip-3)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 10.09375 11.832031 C 10.09375 12.226562 9.769531 12.546875 9.375 12.546875 C 8.980469 12.546875 8.660156 12.226562 8.660156 11.832031 C 8.660156 11.4375 8.980469 11.117188 9.375 11.117188 C 9.769531 11.117188 10.09375 11.4375 10.09375 11.832031 Z M 10.09375 11.832031 "/>
-</g>
-<mask id="mask-4">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-4">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-17" clip-path="url(#clip-4)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 10.09375 14.222656 C 10.09375 14.621094 9.769531 14.941406 9.375 14.941406 C 8.980469 14.941406 8.660156 14.621094 8.660156 14.222656 C 8.660156 13.828125 8.980469 13.507812 9.375 13.507812 C 9.769531 13.507812 10.09375 13.828125 10.09375 14.222656 Z M 10.09375 14.222656 "/>
-</g>
-<mask id="mask-5">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-5">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-20" clip-path="url(#clip-5)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 3.773438 1.832031 C 3.773438 2.226562 3.453125 2.546875 3.054688 2.546875 C 2.660156 2.546875 2.339844 2.226562 2.339844 1.832031 C 2.339844 1.4375 2.660156 1.117188 3.054688 1.117188 C 3.453125 1.117188 3.773438 1.4375 3.773438 1.832031 Z M 3.773438 1.832031 "/>
-</g>
-<mask id="mask-6">
-<g filter="url(#filter-remove-color)">
-<rect x="-1.243429" y="-1.6" width="14.921144" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="0.99"/>
-</g>
-</mask>
-<clipPath id="clip-6">
-<rect x="0" y="0" width="13" height="16"/>
-</clipPath>
-<g id="source-23" clip-path="url(#clip-6)">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 3.773438 4.226562 C 3.773438 4.621094 3.453125 4.941406 3.058594 4.941406 C 2.660156 4.941406 2.339844 4.621094 2.339844 4.226562 C 2.339844 3.832031 2.660156 3.511719 3.058594 3.511719 C 3.453125 3.511719 3.773438 3.832031 3.773438 4.226562 Z M 3.773438 4.226562 "/>
-</g>
-</defs>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 12.433594 0 L 12.433594 16 L 0 16 Z M 0 0 "/>
-<g mask="url(#mask-0)">
-<use xlink:href="#source-5"/>
-</g>
-<g mask="url(#mask-1)">
-<use xlink:href="#source-8"/>
-</g>
-<g mask="url(#mask-2)">
-<use xlink:href="#source-11"/>
-</g>
-<g mask="url(#mask-3)">
-<use xlink:href="#source-14"/>
-</g>
-<g mask="url(#mask-4)">
-<use xlink:href="#source-17"/>
-</g>
-<g mask="url(#mask-5)">
-<use xlink:href="#source-20"/>
-</g>
-<g mask="url(#mask-6)">
-<use xlink:href="#source-23"/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="12.434"
+   height="16"
+   viewBox="0 0 12.434 16"
+   version="1.1"
+   id="svg21"
+   sodipodi:docname="zs6-db-light.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview21"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="24.96875"
+     inkscape:cx="3.2440551"
+     inkscape:cy="7.3091364"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg21" />
+  <defs
+     id="defs14">
+    <filter
+       id="filter-remove-color"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1" />
+    </filter>
+    <mask
+       id="mask-0">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g1">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect1" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-0">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect2" />
+    </clipPath>
+    <g
+       id="source-5"
+       clip-path="url(#clip-0)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 6.933594,8.027344 c 0,0.398437 -0.320313,0.71875 -0.71875,0.71875 C 5.820312,8.746094 5.5,8.425781 5.5,8.027344 5.5,7.632812 5.820312,7.3125 6.214844,7.3125 c 0.398437,0 0.71875,0.320312 0.71875,0.714844 z m 0,0"
+         id="path2" />
+    </g>
+    <mask
+       id="mask-1">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g3">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect3" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-1">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect4" />
+    </clipPath>
+    <g
+       id="source-8"
+       clip-path="url(#clip-1)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 8.511719,9.929688 c 0,0.394531 -0.320313,0.714843 -0.714844,0.714843 -0.394531,0 -0.714844,-0.320312 -0.714844,-0.714843 0,-0.394532 0.320313,-0.714844 0.714844,-0.714844 0.394531,0 0.714844,0.320312 0.714844,0.714844 z m 0,0"
+         id="path4" />
+    </g>
+    <mask
+       id="mask-2">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g5">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect5" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-2">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect6" />
+    </clipPath>
+    <g
+       id="source-11"
+       clip-path="url(#clip-2)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 5.351562,6.128906 c 0,0.394532 -0.320312,0.714844 -0.714843,0.714844 -0.394531,0 -0.714844,-0.320312 -0.714844,-0.714844 0,-0.394531 0.320313,-0.714844 0.714844,-0.714844 0.394531,0 0.714843,0.320313 0.714843,0.714844 z m 0,0"
+         id="path6" />
+    </g>
+    <mask
+       id="mask-3">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g7">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect7" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-3">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect8" />
+    </clipPath>
+    <g
+       id="source-14"
+       clip-path="url(#clip-3)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 10.09375,11.832031 c 0,0.394531 -0.324219,0.714844 -0.71875,0.714844 -0.394531,0 -0.714844,-0.320313 -0.714844,-0.714844 0,-0.394531 0.320313,-0.714843 0.714844,-0.714843 0.394531,0 0.71875,0.320312 0.71875,0.714843 z m 0,0"
+         id="path8" />
+    </g>
+    <mask
+       id="mask-4">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g9">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect9" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-4">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect10" />
+    </clipPath>
+    <g
+       id="source-17"
+       clip-path="url(#clip-4)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 10.09375,14.222656 c 0,0.398438 -0.324219,0.71875 -0.71875,0.71875 -0.394531,0 -0.714844,-0.320312 -0.714844,-0.71875 0,-0.394531 0.320313,-0.714844 0.714844,-0.714844 0.394531,0 0.71875,0.320313 0.71875,0.714844 z m 0,0"
+         id="path10" />
+    </g>
+    <mask
+       id="mask-5">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g11">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect11" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-5">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect12" />
+    </clipPath>
+    <g
+       id="source-20"
+       clip-path="url(#clip-5)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 3.773438,1.832031 c 0,0.394531 -0.320313,0.714844 -0.71875,0.714844 -0.394532,0 -0.714844,-0.320313 -0.714844,-0.714844 0,-0.394531 0.320312,-0.714843 0.714844,-0.714843 0.398437,0 0.71875,0.320312 0.71875,0.714843 z m 0,0"
+         id="path12" />
+    </g>
+    <mask
+       id="mask-6">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13" />
+      </g>
+    </mask>
+    <clipPath
+       id="clip-6">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14" />
+    </clipPath>
+    <g
+       id="source-23"
+       clip-path="url(#clip-6)">
+      <path
+         fill-rule="nonzero"
+         fill="#ffffff"
+         fill-opacity="1"
+         d="m 3.773438,4.226562 c 0,0.394532 -0.320313,0.714844 -0.714844,0.714844 -0.398438,0 -0.71875,-0.320312 -0.71875,-0.714844 0,-0.394531 0.320312,-0.714843 0.71875,-0.714843 0.394531,0 0.714844,0.320312 0.714844,0.714843 z m 0,0"
+         id="path14" />
+    </g>
+    <mask
+       id="mask-6-6">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1"
+         style="filter:url(#filter-remove-color-6)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3" />
+    </filter>
+    <clipPath
+       id="clip-6-2">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-0" />
+    </clipPath>
+    <clipPath
+       id="clipPath1">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-6" />
+    </clipPath>
+    <mask
+       id="mask-6-6-4">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-7"
+         style="filter:url(#filter-remove-color-6-5)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-6" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-5"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-6" />
+    </filter>
+    <clipPath
+       id="clip-6-9">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-3" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-7">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-4" />
+    </clipPath>
+    <mask
+       id="mask-6-6-47">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-4"
+         style="filter:url(#filter-remove-color-6-3)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-4" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-3"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-0" />
+    </filter>
+    <clipPath
+       id="clip-6-7">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-8" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-6">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-8" />
+    </clipPath>
+    <mask
+       id="mask-6-6-1">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-49"
+         style="filter:url(#filter-remove-color-6-0)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-2" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-0"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-68" />
+    </filter>
+    <clipPath
+       id="clip-6-92">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-6" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-64">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-9" />
+    </clipPath>
+    <mask
+       id="mask-5-8">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g11-7"
+         style="filter:url(#filter-remove-color-7)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect11-1" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-7"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-2" />
+    </filter>
+    <clipPath
+       id="clip-5-7">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect12-2" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-2">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-61" />
+    </clipPath>
+    <mask
+       id="mask-6-6-5">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-9"
+         style="filter:url(#filter-remove-color-6-09)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-49" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-09"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-1" />
+    </filter>
+    <clipPath
+       id="clip-6-77">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-1" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-1">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-5" />
+    </clipPath>
+    <mask
+       id="mask-6-6-6">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-73"
+         style="filter:url(#filter-remove-color-6-6)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-65" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-6"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-3" />
+    </filter>
+    <clipPath
+       id="clip-6-94">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-81" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-29">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-3" />
+    </clipPath>
+    <mask
+       id="mask-6-6-8">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-5"
+         style="filter:url(#filter-remove-color-6-9)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-0" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-9"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-63" />
+    </filter>
+    <clipPath
+       id="clip-6-8">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-5" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-61">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-1" />
+    </clipPath>
+    <mask
+       id="mask-6-6-81">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-0"
+         style="filter:url(#filter-remove-color-6-04)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-3" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-04"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-4" />
+    </filter>
+    <clipPath
+       id="clip-6-4">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-4" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-76">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-31" />
+    </clipPath>
+    <mask
+       id="mask-6-6-62">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-1"
+         style="filter:url(#filter-remove-color-6-8)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-7" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-8"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-5" />
+    </filter>
+    <clipPath
+       id="clip-6-74">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-18" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-5">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-97" />
+    </clipPath>
+    <mask
+       id="mask-6-6-3">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-18"
+         style="filter:url(#filter-remove-color-6-64)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-9" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-64"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-33" />
+    </filter>
+    <clipPath
+       id="clip-6-3">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-86" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-0">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-48" />
+    </clipPath>
+    <mask
+       id="mask-6-6-7">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-6"
+         style="filter:url(#filter-remove-color-6-03)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-43" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-03"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-09" />
+    </filter>
+    <clipPath
+       id="clip-6-25">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-40" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-59">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-46" />
+    </clipPath>
+    <mask
+       id="mask-6-6-477">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-54"
+         style="filter:url(#filter-remove-color-6-1)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-8" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-1"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-2" />
+    </filter>
+    <clipPath
+       id="clip-6-89">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-36" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-8">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-0" />
+    </clipPath>
+    <mask
+       id="mask-6-6-51">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-10"
+         style="filter:url(#filter-remove-color-6-06)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-85" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-06"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-46" />
+    </filter>
+    <clipPath
+       id="clip-6-258">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-62" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-84">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-7" />
+    </clipPath>
+    <mask
+       id="mask-6-6-2">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-99"
+         style="filter:url(#filter-remove-color-6-13)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-08" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-13"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-11" />
+    </filter>
+    <clipPath
+       id="clip-6-0">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-34" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-03">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-91" />
+    </clipPath>
+    <mask
+       id="mask-6-6-33">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-8"
+         style="filter:url(#filter-remove-color-6-66)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-05" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-66"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-40" />
+    </filter>
+    <clipPath
+       id="clip-6-04">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-626" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-75">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-69" />
+    </clipPath>
+    <mask
+       id="mask-6-6-29">
+      <g
+         filter="url(#filter-remove-color)"
+         id="g13-1-96"
+         style="filter:url(#filter-remove-color-6-7)">
+        <rect
+           x="-1.2434289"
+           y="-1.6"
+           width="14.921144"
+           height="19.200001"
+           fill="#000000"
+           fill-opacity="0.99"
+           id="rect13-0-02" />
+      </g>
+    </mask>
+    <filter
+       id="filter-remove-color-6-7"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         color-interpolation-filters="sRGB"
+         values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+         id="feColorMatrix1-3-61" />
+    </filter>
+    <clipPath
+       id="clip-6-32">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect14-15" />
+    </clipPath>
+    <clipPath
+       id="clipPath1-9">
+      <rect
+         x="0"
+         y="0"
+         width="13"
+         height="16"
+         id="rect1-914" />
+    </clipPath>
+  </defs>
+  <path
+     fill-rule="nonzero"
+     fill="#000000"
+     fill-opacity="1"
+     d="M 4.053492e-4,0 H 12.434 V 16 H 4.053492e-4 Z m 0,0"
+     id="path15"
+     style="stroke-width:1" />
+  <g
+     mask="url(#mask-6-6-51)"
+     id="g21-5-4"
+     transform="matrix(1.3950951,0,0,1.3989076,4.0028975,3.8374296)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-06" />
+  </g>
+  <g
+     mask="url(#mask-6-6-2)"
+     id="g21-5-6"
+     transform="matrix(1.3950951,0,0,1.3989076,6.0028975,5.8374296)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-9" />
+  </g>
+  <g
+     mask="url(#mask-6-6-7)"
+     id="g21-5-2"
+     transform="matrix(1.3950951,0,0,1.3989076,0.0028976,0.4374296)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-2" />
+  </g>
+  <g
+     mask="url(#mask-6-6-477)"
+     id="g21-5-1"
+     transform="matrix(1.3950951,0,0,1.3989076,-1.9971024,-1.5625704)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-0" />
+  </g>
+  <g
+     mask="url(#mask-6-6)"
+     id="g21-5"
+     transform="matrix(1.3950951,0,0,1.3989076,2.0028975,2.1374296)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5" />
+  </g>
+  <g
+     mask="url(#mask-6-6-33)"
+     id="g21-5-7"
+     transform="matrix(1.3950951,0,0,1.3989076,6.0028975,8.3374296)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-28" />
+  </g>
+  <g
+     mask="url(#mask-6-6-29)"
+     id="g21-5-10"
+     transform="matrix(1.3950951,0,0,1.3989076,-1.9971024,-4.0625704)">
+    <use
+       xlink:href="#source-23"
+       id="use21-5-7" />
+  </g>
 </svg>
