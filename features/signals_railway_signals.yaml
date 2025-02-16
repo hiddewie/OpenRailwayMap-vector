@@ -1355,6 +1355,13 @@ features:
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'passing_allowed' }
 
+  - description: humping signal Ra 6-9
+    country: DE
+    icon: { default: 'de/ra7' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'DE-ESO:ra' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
+
   - description: shunting signal Ra 11 without Sh 1
     country: DE
     icon: { default: 'de/ra11-sign' }
