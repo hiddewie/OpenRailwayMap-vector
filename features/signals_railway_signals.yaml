@@ -134,6 +134,7 @@ types:
   - { type: wrong_road }
   - { type: short_route }
   - { type: brake_test }
+  - { type: helper_engine }
 
 features:
 
@@ -1428,6 +1429,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: helper engine signal Ts
+    country: DE
+    icon: { default: 'de/ts1' }
+    tags:
+      - { tag: 'railway:signal:helper_engine', value: 'DE-ESO:ts' }
+      - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
 
   - description: brake test signal Zp 6-8
     country: DE
