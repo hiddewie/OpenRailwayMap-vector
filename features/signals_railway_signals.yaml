@@ -1915,7 +1915,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(5|[1-6][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
+        - { regex: '^(5|[1-7][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
       default: 'de/bostrab/g1a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
