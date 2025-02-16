@@ -1125,6 +1125,14 @@ features:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf1' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: whistle twice sign Pf 2 (DV 301)
+    country: DE
+    icon:
+      default: 'de/pf2-dv'
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf2' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
   - description: ring sign Bü 5
     country: DE
     icon:
