@@ -17,6 +17,7 @@ tags:
   - 'railway:signal:crossing_distant:form'
   - 'railway:signal:departure'
   - 'railway:signal:departure:form'
+  - 'railway:signal:departure:states'
   - 'railway:signal:distant'
   - 'railway:signal:distant:form'
   - 'railway:signal:distant:repeated'
@@ -1471,9 +1472,13 @@ features:
       - { tag: 'railway:signal:brake_test', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:brake_test:form', value: 'light' }
 
-  - description: departure signal Zp 9
+  - description: Zp 9 (departure order) or Zp 10 (close doors)
     country: DE
-    icon: { default: 'de/zp9-db' }
+    icon:
+      match: 'railway:signal:departure:states'
+      cases:
+        - { regex: '^DE-ESO:zp10$', value: 'de/zp10-db' }
+      default: 'de/zp9-db'
     tags:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
