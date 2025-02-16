@@ -1201,6 +1201,13 @@ features:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:so16' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+  - description: crossing distant sign (warning board) So 15 (DV 301)
+    country: DE
+    icon: { default: 'de/bue3' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so15' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
   - description: tram signal "start of train protection" So 1
     country: DE
     icon: { default: 'de/bostrab/so1' }
