@@ -1249,9 +1249,8 @@ features:
     icon:
       match: 'railway:signal:snowplow:type'
       cases:
-        - { regex: '^up$', value: 'de/ne7-yellow-up' }
         - { regex: '^down$', value: 'de/ne7-yellow-down' }
-      default: 'de/ne7-yellow-down'
+      default: 'de/ne7-yellow-up'
     tags:
       - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
