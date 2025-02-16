@@ -1303,6 +1303,13 @@ features:
       - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
       - { tag: 'railway:signal:short_route:form', value: 'light' }
 
+  - description: main signal invalid for shunting trains Zs 103 (sign)
+    country: DE
+    icon: { default: 'de/zs103' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:zs103' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
   - description: tram minor stop sign Sh 1
     country: DE
     icon: { default: 'de/bostrab/sh1' }
