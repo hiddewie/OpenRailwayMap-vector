@@ -1387,8 +1387,8 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^dwarf', value: 'de/sh0-light-dwarf' }
-        - { regex: '^normal$', value: 'de/sh1-light-normal' }
+        - { regex: '^dwarf', value: 'de/sh0-light-dwarf', description: 'dwarf' }
+        - { regex: '^normal$', value: 'de/sh1-light-normal', description: 'normal height' }
       default: 'de/sh0-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
