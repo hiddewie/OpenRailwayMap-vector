@@ -1262,6 +1262,19 @@ features:
       - { tag: 'railway:signal:resetting_switch_distant', value: 'DE-ESO:ne12' }
       - { tag: 'railway:signal:resetting_switch_distant:form', value: 'sign' }
 
+  - description: ETCS block marker Ne 14
+    country: DE
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
+        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
+      default: 'general/etcs-stop-marker-arrow-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
   - description: shunting stop sign Ra 10
     country: DE
     icon: { default: 'de/ra10' }
@@ -3034,7 +3047,7 @@ features:
         - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
       default: 'general/etcs-stop-marker-triangle-left'
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['NL:227b', 'DE-ESO:ne14'] }
+      - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
