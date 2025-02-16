@@ -1204,7 +1204,7 @@ features:
     country: DE
     icon: { default: 'de/bostrab/so1' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-ESO:so16', 'DE-AVG:so1'] }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
@@ -1212,7 +1212,7 @@ features:
     country: DE
     icon: { default: 'de/bostrab/so2' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-ESO:so2', 'DE-AVG:so2'] }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
