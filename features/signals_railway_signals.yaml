@@ -1398,7 +1398,7 @@ features:
   - description: minor light signals type Sh attached to main signals
     country: DE
     icon:
-      default: 'de/sh1-light-normal'
+      default: 'de/sh1-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh1' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
