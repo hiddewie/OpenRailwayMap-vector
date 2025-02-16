@@ -1286,7 +1286,7 @@ features:
     country: DE
     icon: { default: 'de/zs7-dr-light' }
     tags:
-      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs7' }
+      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: entry into dead-end / early stop marker Zs 13 (sign)
