@@ -1636,6 +1636,13 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  - description: distant signal replacement at reduced distance by sign So 3 (DV 301)
+    country: DE
+    icon: { default: 'de/ne2-dv301-reduced-distance' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
   - description: distant light signals type Hl
     country: DE
     icon: { default: 'de/hl1-distant' }
