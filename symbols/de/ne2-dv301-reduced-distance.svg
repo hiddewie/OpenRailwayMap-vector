@@ -1,7 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9.541175" height="15" viewBox="0 0 9.541175 15">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 7.520345 -112.978638 L 176.201685 -112.978638 L 176.201685 159.709074 L 7.520345 159.709074 Z M 7.520345 -112.978638 " transform="matrix(0.0519424, 0, 0, 0.0519424, 0, 6.278541)"/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.461948" stroke-linecap="square" stroke-linejoin="round" stroke="rgb(0%, 0%, 0%)" stroke-opacity="0.537255" stroke-miterlimit="3.8636" d="M 91.823413 849.382638 C 63.246102 849.382638 40.083439 872.620504 40.083439 901.197815 C 40.083439 929.775126 63.246102 953.012992 91.823413 953.012992 C 120.475928 953.012992 143.63859 929.775126 143.63859 901.197815 C 143.63859 872.620504 120.475928 849.382638 91.823413 849.382638 Z M 91.823413 862.317631 C 113.3316 862.317631 130.703597 879.764832 130.703597 901.197815 C 130.703597 922.630798 113.3316 940.077999 91.823413 940.077999 C 70.39043 940.077999 53.018433 922.630798 53.018433 901.197815 C 53.018433 879.764832 70.39043 862.317631 91.823413 862.317631 Z M 91.823413 862.317631 " transform="matrix(0.0519424, 0, 0, 0.0519424, 0, -39.310405)"/>
-<path fill="none" stroke-width="30" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 24.741935 -113.053841 L 79.33964 -20.6288 M 103.103931 -19.726359 L 160.108146 -112.076196 " transform="matrix(0.0519424, 0, 0, 0.0519424, 0, 6.278541)"/>
-<path fill="none" stroke-width="30" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 24.741935 160.310701 L 79.33964 67.810457 M 103.103931 66.983219 L 160.108146 159.257853 " transform="matrix(0.0519424, 0, 0, 0.0519424, 0, 6.278541)"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="10.177"
+   height="16"
+   viewBox="0 0 10.177 16"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="ne2-dv301-reduced-distance.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="27.366667"
+     inkscape:cx="-1.9366626"
+     inkscape:cy="7.2898904"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     fill-rule="nonzero"
+     fill="#ffffff"
+     fill-opacity="1"
+     stroke-width="0.831"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke="#000000"
+     stroke-opacity="1"
+     stroke-miterlimit="4"
+     d="M 0.41655666,0.43679777 H 9.7615002 V 15.543693 H 0.41655666 Z m 0,0"
+     id="path1" />
+  <path
+     fill-rule="nonzero"
+     fill="#000000"
+     fill-opacity="1"
+     stroke-width="0.0255919"
+     stroke-linecap="square"
+     stroke-linejoin="round"
+     stroke="#000000"
+     stroke-opacity="0.537255"
+     stroke-miterlimit="3.8636"
+     d="m 5.0864169,5.1294398 c -1.5831826,0 -2.8663938,1.2873772 -2.8663938,2.8705597 0,1.5831832 1.2832112,2.8705605 2.8663938,2.8705605 1.587349,0 2.8705601,-1.2873773 2.8705601,-2.8705605 0,-1.5831825 -1.2832111,-2.8705597 -2.8705601,-2.8705597 z m 0,0.7165984 c 1.1915533,0 2.1539618,0.9665745 2.1539618,2.1539613 0,1.1873875 -0.9624085,2.1539615 -2.1539618,2.1539615 -1.1873869,0 -2.1497953,-0.966574 -2.1497953,-2.1539615 0,-1.1873868 0.9624084,-2.1539613 2.1497953,-2.1539613 z m 0,0"
+     id="path2" />
+  <path
+     fill="none"
+     stroke-width="1.662"
+     stroke-linecap="butt"
+     stroke-linejoin="miter"
+     stroke="#000000"
+     stroke-opacity="1"
+     stroke-miterlimit="4"
+     d="M 1.3430336,0.43263169 4.3677457,5.5529776 M 5.684287,5.6029726 8.84232,0.48679274"
+     id="path3" />
+  <path
+     fill="none"
+     stroke-width="1.662"
+     stroke-linecap="butt"
+     stroke-linejoin="miter"
+     stroke="#000000"
+     stroke-opacity="1"
+     stroke-miterlimit="4"
+     d="m 1.3431884,15.577024 3.0247121,-5.124513 m 1.3165413,-0.04583 3.158033,5.112013"
+     id="path4" />
 </svg>
