@@ -1718,12 +1718,14 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
+      - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
+      - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
       - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
       - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
       - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
       - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
       - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
-      default: 'de/ks-main'
+      default: 'de/bostrab/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
