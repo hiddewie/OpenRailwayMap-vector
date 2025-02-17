@@ -1522,6 +1522,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'general/level-crossing'],
           ['==', ['get', 'feature'], 'general/level-crossing-light'],
           ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light-barrier'],
           ['==', ['get', 'feature'], 'general/lubricator'],
           ['==', ['get', 'feature'], 'general/fuel'],
           ['==', ['get', 'feature'], 'general/sand_store'],
