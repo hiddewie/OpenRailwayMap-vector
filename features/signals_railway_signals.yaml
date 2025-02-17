@@ -1753,12 +1753,12 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/vr2-light'}
-        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/vr1-light'}
+        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
+        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
         - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
         - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
         - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
-      default: 'de/vr0-light'
+      default: 'de/bostrab/v0'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
