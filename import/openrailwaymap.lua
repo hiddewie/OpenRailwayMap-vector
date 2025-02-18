@@ -155,7 +155,6 @@ local pois = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'man_made', type = 'text' },
-    { column = 'crossing_bell', type = 'boolean' },
     { column = 'crossing_light', type = 'boolean' },
     { column = 'crossing_barrier', type = 'boolean' },
   },
@@ -515,7 +514,6 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       man_made = tags.man_made,
-      crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] ~= 'no'),
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
     })
@@ -686,7 +684,6 @@ function osm2pgsql.process_way(object)
       way = object:as_polygon():centroid(),
       railway = tags.railway,
       man_made = tags.man_made,
-      crossing_bell = tags['crossing:bell'] and (tags['crossing:bell'] ~= 'no'),
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
     })
