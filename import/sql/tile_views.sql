@@ -293,8 +293,9 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'crossing' THEN 'general/crossing'
       WHEN railway = 'level_crossing' THEN
         CASE
-          WHEN crossing_barrier AND crossing_light AND crossing_bell THEN 'general/level-crossing-barrier'
-          WHEN crossing_light AND crossing_bell THEN 'general/level-crossing-light'
+          WHEN crossing_barrier AND crossing_light THEN 'general/level-crossing-light-barrier'
+          WHEN crossing_barrier THEN 'general/level-crossing-barrier'
+          WHEN crossing_light THEN 'general/level-crossing-light'
           ELSE 'general/level-crossing'
         END
       WHEN railway = 'phone' THEN 'general/phone'
