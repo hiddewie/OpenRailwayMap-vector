@@ -57,12 +57,12 @@ jobs:
           {
             echo -n 'matrix='
             jq -c '{ bbox: [.[].bboxes] | flatten }' tiles/deploy-bboxes.json
-          } >> $GITHUB_STATE
+          } >> $GITHUB_OUTPUT
 
           {
             echo -n 'bboxes='
             jq -r '[.[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
-          } >> $GITHUB_STATE
+          } >> $GITHUB_OUTPUT
 
   generate-tiles:
     name: Generate tiles
