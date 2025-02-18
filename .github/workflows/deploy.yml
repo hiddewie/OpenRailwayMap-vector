@@ -55,13 +55,13 @@ jobs:
       - id: bboxes
         run: |
           {
-            echo 'matrix='
-            jq '{ bbox: [.[].bboxes] | flatten }' tiles/deploy-bboxes.json
+            echo -n 'matrix='
+            jq -c '{ bbox: [.[].bboxes] | flatten }' tiles/deploy-bboxes.json
           } >> $GITHUB_STATE
 
           {
-            echo 'bboxes='
-            jq -r '[.[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json
+            echo -n 'bboxes='
+            jq -r '[.[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
           } >> $GITHUB_STATE
 
   generate-tiles:
