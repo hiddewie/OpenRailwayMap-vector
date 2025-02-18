@@ -756,6 +756,38 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
+  - description: Start ETCS Level 1 Limited Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS1LS' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-1LS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: Start ETCS Level 1 Full Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS1' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-1FS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: Start ETCS Level 2 Full Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS2' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-2' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: End ETCS zone
+    country: BE
+    icon: { default: 'be/ETCS-end' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+
   # --- CH --- #
 
   - description: Vorsignal System L
