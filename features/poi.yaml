@@ -31,6 +31,9 @@ features:
       - description: Level crossing with barrier
         feature: 'general/level-crossing-barrier'
 
+      - description: Level crossing with lights and barrier
+        feature: 'general/level-crossing-light-barrier'
+
   - description: Phone
     minzoom: 13
     feature: 'general/phone'

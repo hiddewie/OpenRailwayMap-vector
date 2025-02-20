@@ -17,6 +17,7 @@ tags:
   - 'railway:signal:crossing_distant:form'
   - 'railway:signal:departure'
   - 'railway:signal:departure:form'
+  - 'railway:signal:departure:states'
   - 'railway:signal:distant'
   - 'railway:signal:distant:form'
   - 'railway:signal:distant:repeated'
@@ -134,6 +135,7 @@ types:
   - { type: wrong_road }
   - { type: short_route }
   - { type: brake_test }
+  - { type: helper_engine }
 
 features:
 
@@ -754,6 +756,38 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
+  - description: Start ETCS Level 1 Limited Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS1LS' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-1LS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: Start ETCS Level 1 Full Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS1' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-1FS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: Start ETCS Level 2 Full Supervision zone
+    country: BE
+    icon: { default: 'be/ETCS2' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-2' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: End ETCS zone
+    country: BE
+    icon: { default: 'be/ETCS-end' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'BE:ETCS-end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+
   # --- CH --- #
 
   - description: Vorsignal System L
@@ -1124,6 +1158,14 @@ features:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf1' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: whistle twice sign Pf 2 (DV 301)
+    country: DE
+    icon:
+      default: 'de/pf2-dv'
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf2' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
   - description: ring sign Bü 5
     country: DE
     icon:
@@ -1191,11 +1233,18 @@ features:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:so16' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+  - description: crossing distant sign (warning board) So 15 (DV 301)
+    country: DE
+    icon: { default: 'de/bue3' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so15' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
   - description: tram signal "start of train protection" So 1
     country: DE
     icon: { default: 'de/bostrab/so1' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-ESO:so16', 'DE-AVG:so1'] }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
@@ -1203,7 +1252,7 @@ features:
     country: DE
     icon: { default: 'de/bostrab/so2' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-ESO:so2', 'DE-AVG:so2'] }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
@@ -1240,9 +1289,8 @@ features:
     icon:
       match: 'railway:signal:snowplow:type'
       cases:
-        - { regex: '^up$', value: 'de/ne7-yellow-up' }
         - { regex: '^down$', value: 'de/ne7-yellow-down' }
-      default: 'de/ne7-yellow-down'
+      default: 'de/ne7-yellow-up'
     tags:
       - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
@@ -1260,6 +1308,19 @@ features:
     tags:
       - { tag: 'railway:signal:resetting_switch_distant', value: 'DE-ESO:ne12' }
       - { tag: 'railway:signal:resetting_switch_distant:form', value: 'sign' }
+
+  - description: ETCS block marker Ne 14
+    country: DE
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
+        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
+      default: 'general/etcs-stop-marker-arrow-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
   - description: shunting stop sign Ra 10
     country: DE
@@ -1286,7 +1347,7 @@ features:
     country: DE
     icon: { default: 'de/zs7-dr-light' }
     tags:
-      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs7' }
+      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: entry into dead-end / early stop marker Zs 13 (sign)
@@ -1302,6 +1363,13 @@ features:
     tags:
       - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
       - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: main signal invalid for shunting trains Zs 103 (sign)
+    country: DE
+    icon: { default: 'de/zs103' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:zs103' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: tram minor stop sign Sh 1
     country: DE
@@ -1325,6 +1393,13 @@ features:
       - { tag: 'railway:signal:passing', value: 'DE-BOStrab:so6' }
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'passing_allowed' }
+
+  - description: humping signal Ra 6-9
+    country: DE
+    icon: { default: 'de/ra7' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'DE-ESO:ra' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
 
   - description: shunting signal Ra 11 without Sh 1
     country: DE
@@ -1352,8 +1427,8 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^dwarf', value: 'de/sh0-light-dwarf' }
-        - { regex: '^normal$', value: 'de/sh1-light-normal' }
+        - { regex: '^dwarf', value: 'de/sh0-light-dwarf', description: 'dwarf' }
+        - { regex: '^normal$', value: 'de/sh1-light-normal', description: 'normal height' }
       default: 'de/sh0-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
@@ -1362,7 +1437,7 @@ features:
   - description: minor light signals type Sh attached to main signals
     country: DE
     icon:
-      default: 'de/sh1-light-normal'
+      default: 'de/sh1-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh1' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
@@ -1422,6 +1497,13 @@ features:
       - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
+  - description: helper engine signal Ts
+    country: DE
+    icon: { default: 'de/ts1' }
+    tags:
+      - { tag: 'railway:signal:helper_engine', value: 'DE-ESO:ts' }
+      - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
+
   - description: brake test signal Zp 6-8
     country: DE
     icon: { default: 'de/zp8' }
@@ -1429,9 +1511,13 @@ features:
       - { tag: 'railway:signal:brake_test', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:brake_test:form', value: 'light' }
 
-  - description: departure signal Zp 9
+  - description: Zp 9 (departure order) or Zp 10 (close doors)
     country: DE
-    icon: { default: 'de/zp9-db' }
+    icon:
+      match: 'railway:signal:departure:states'
+      cases:
+        - { regex: '^DE-ESO:zp10$', value: 'de/zp10-db' }
+      default: 'de/zp9-db'
     tags:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
@@ -1582,6 +1668,13 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  - description: distant signal replacement at reduced distance by sign So 3 (DV 301)
+    country: DE
+    icon: { default: 'de/ne2-dv301-reduced-distance' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
   - description: distant light signals type Hl
     country: DE
     icon: { default: 'de/hl1-distant' }
@@ -1664,12 +1757,14 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
+      - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
+      - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
       - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
       - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
       - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
       - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
       - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
-      default: 'de/ks-main'
+      default: 'de/bostrab/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -1697,10 +1792,12 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2' }
-        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1' }
-        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0' }
-      default: 'de/vr0-light'
+        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
+        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
+        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
+        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
+        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
+      default: 'de/bostrab/v0'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -1859,7 +1956,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^(5|[1-6][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
+        - { regex: '^(5|[1-7][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
       default: 'de/bostrab/g1a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
@@ -3019,7 +3116,7 @@ features:
         - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
       default: 'general/etcs-stop-marker-triangle-left'
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['NL:227b', 'DE-ESO:ne14'] }
+      - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
