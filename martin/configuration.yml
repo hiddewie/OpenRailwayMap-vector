@@ -112,6 +112,7 @@ postgres:
         id: integer
         osm_id: integer
         feature: string
+        osm_type: string
 
     railway_text_km:
       schema: public
