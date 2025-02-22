@@ -1613,14 +1613,12 @@ features:
 
   - description: distant light signals type Vr (shortened)
     country: DE
-    # TODO make distinct icon
-    # Shown with the same icon as shortened
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
-      default: 'de/vr0-light-repeated'
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-shortened' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-shortened' }
+      default: 'de/vr0-light-shortened'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
