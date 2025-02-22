@@ -956,10 +956,9 @@ features:
     country: CH
     icon:
       match: 'railway:signal:speed_limit:speed'
-      # Same form as distant signal
       cases:
-        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-{100}' }
-      default: 'ch/fdv-540-empty'
+        - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-549-{}', example: 'ch/fdv-549-{100}' }
+      default: 'ch/fdv-549-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'CH-FDV:549' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
