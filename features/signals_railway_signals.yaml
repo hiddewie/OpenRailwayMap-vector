@@ -2697,7 +2697,6 @@ features:
       cases:
         - { regex: '^(.*;)?FR:R(;.*)?$', value: 'fr/A-R' }
         - { regex: '^(.*;)?FR:A(;.*)?$', value: 'fr/A-A' }
-        - { regex: '^(.*;)?FR:VL(;.*)?$', value: 'fr/A-VL' }
       default: 'fr/A-VL'
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
@@ -3563,14 +3562,14 @@ features:
 
   - description: Tarcza ostrzegawcza kształtowa nieruchoma
     country: PL
-    icon: { default: 'pl/do' }
+    icon: { default: 'pl/on' }
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:on' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Tarcza ostrzegawcza kształtowa dwustawna
     country: PL
-    icon: { default: 'pl/do' }
+    icon: { default: 'pl/od' }
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:od' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
@@ -3790,13 +3789,6 @@ features:
     icon: { default: 'pl/w33' }
     tags:
       - { tag: 'railway:signal:radio', value: 'PL-PKP:w33' }
-      - { tag: 'railway:signal:radio:form', value: 'sign' }
-
-  - description: wskaźnik początku obowiązywania systemu ERTMS/GSM-R W34
-    country: PL
-    icon: { default: 'pl/w34' }
-    tags:
-      - { tag: 'railway:signal:radio', value: 'PL-PKP:w34' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   - description: wskaźnik początku obowiązywania systemu ERTMS/GSM-R W34
