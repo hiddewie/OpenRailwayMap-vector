@@ -2169,7 +2169,7 @@ features:
 
   - description: tram sign power off shortly El 1
     country: DE
-    icon: { default: 'de/el1' }
+    icon: { default: 'de/avg/el1' }
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
