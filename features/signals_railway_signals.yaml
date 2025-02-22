@@ -1228,7 +1228,7 @@ features:
 
   - description: crossing distant sign (warning board) So 15 (DV 301)
     country: DE
-    icon: { default: 'de/bue3' }
+    icon: { default: 'de/so15' }
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so15' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
@@ -1420,7 +1420,6 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^dwarf', value: 'de/sh0-light-dwarf', description: 'dwarf' }
         - { regex: '^normal$', value: 'de/sh1-light-normal', description: 'normal height' }
       default: 'de/sh0-light-dwarf'
     tags:
@@ -1448,7 +1447,6 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^dwarf', value: 'de/sh0-semaphore-dwarf' }
         - { regex: '^normal$', value: 'de/sh1-semaphore-normal' }
       default: 'de/sh0-semaphore-dwarf'
     tags:
@@ -1457,7 +1455,7 @@ features:
 
   - description: minor sign signal type Sh
     country: DE
-    icon: { default: 'de/sh0-semaphore-dwarf' }
+    icon: { default: 'de/sh0-sign' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh0' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
@@ -1603,7 +1601,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated', description: 'shortened' }
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
         - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
       default: 'de/vr0-light-repeated'
     tags:
@@ -1682,7 +1680,7 @@ features:
         - { regex: '^(.*;)?DE-ESO:hl3b(;.*)?$', value: 'de/hl3b' }
         - { regex: '^(.*;)?DE-ESO:hl3a(;.*)?$', value: 'de/hl3a' }
         - { regex: '^(.*;)?DE-ESO:hl1(;.*)?$', value: 'de/hl1' }
-      default: 'de/hl0'
+      default: 'de/hl0-main'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -1696,7 +1694,7 @@ features:
         - { regex: '^(.*;)?DE-ESO:hl12b(;.*)?$', value: 'de/hl12b' }
         - { regex: '^(.*;)?DE-ESO:hl12a(;.*)?$', value: 'de/hl12a' }
         - { regex: '^(.*;)?DE-ESO:hl10(;.*)?$', value: 'de/hl10' }
-      default: 'de/hl0'
+      default: 'de/hl0-combined'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -1762,7 +1760,7 @@ features:
 
   - description: tram Hauptsignal mit Vorsignal
     country: DE
-    icon: { default: 'de/ks-combined' }
+    icon: { default: 'de/bostrab/h' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
