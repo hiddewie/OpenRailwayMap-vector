@@ -390,6 +390,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref,
+    caption,
     deactivated,
     dominant_speed as speed
   FROM speed_railway_signal_features
@@ -463,6 +464,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     railway,
     ref,
     ref_multiline,
+    caption,
     deactivated,
     azimuth,
     (signal_direction = 'both') as direction_both
@@ -480,6 +482,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref,
+    caption,
     deactivated,
     voltage,
     frequency
