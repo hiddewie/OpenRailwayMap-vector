@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.436641" height="14" viewBox="0 0 13.436641 14">
-<defs>
-<filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-</filter>
-<image id="source-17" x="0" y="0" width="14" height="14" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABmJLR0QA/wD/AP+gvaeTAAAAGklEQVQokWNkYGD4ykAGYCJH06jGUY1DSSMAJtEBETyudYYAAAAASUVORK5CYII="/>
-<mask id="mask-0">
-<g filter="url(#filter-remove-color)">
-<use xlink:href="#source-17"/>
-</g>
-</mask>
-<clipPath id="clip-0">
-<rect x="0" y="0" width="14" height="14"/>
-</clipPath>
-<g id="source-16" clip-path="url(#clip-0)">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 2.525445 22.731414 L -2.522352 27.882227 L -2.522352 109.677151 L 2.525445 114.827964 L 81.461667 114.827964 L 85.891367 110.037708 L 85.891367 27.52167 L 81.461667 22.731414 Z M 2.525445 22.731414 " transform="matrix(0.151675, 0, 0, 0.151675, 0.398203, -3.432164)"/>
-</g>
-<clipPath id="clip-1">
-<rect x="0" y="0" width="14" height="14"/>
-</clipPath>
-<g id="source-19" clip-path="url(#clip-1)">
-<g mask="url(#mask-0)">
-<use xlink:href="#source-16"/>
-</g>
-</g>
-</defs>
-<use xlink:href="#source-19"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.4375" height="14" viewBox="0 0 13.4375 14">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="0.960784" d="M 1.148438 0 L 0 1.148438 L 0 12.851562 L 1.148438 14 L 12.285156 14 L 13.4375 12.851562 L 13.4375 1.148438 L 12.285156 0 Z M 1.148438 0 "/>
 <path fill-rule="nonzero" fill="rgb(34.509804%, 86.27451%, 69.019608%)" fill-opacity="1" d="M 4.320312 11.234375 C 4.320312 12.070312 3.636719 12.753906 2.800781 12.753906 C 1.957031 12.753906 1.28125 12.070312 1.28125 11.234375 C 1.28125 10.390625 1.957031 9.707031 2.800781 9.707031 C 3.636719 9.707031 4.320312 10.390625 4.320312 11.234375 Z M 4.320312 11.234375 "/>
 <path fill-rule="nonzero" fill="rgb(34.509804%, 86.27451%, 69.019608%)" fill-opacity="1" d="M 11.796875 7.929688 C 11.796875 8.773438 11.117188 9.449219 10.277344 9.449219 C 9.433594 9.449219 8.75 8.773438 8.75 7.929688 C 8.75 7.082031 9.433594 6.402344 10.277344 6.402344 C 11.117188 6.402344 11.796875 7.082031 11.796875 7.929688 Z M 11.796875 7.929688 "/>
 </svg>
