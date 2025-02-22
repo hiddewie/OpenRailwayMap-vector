@@ -1460,11 +1460,18 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh0' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: signal Sh 2 as signal and at buffer stops
+  - description: Sh 2 buffer stop
     country: DE
     icon: { default: 'de/sh2' }
     tags:
-      - { tag: 'railway:signal:minor', values: ['DE-ESO:sh2', 'DE-BOStrab:sh2'] }
+      - { tag: 'railway:signal:minor', value: 'DE-ESO:sh2' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: tram signal Sh 2
+    country: DE
+    icon: { default: 'de/bostrab/sh2' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: tram läuten Sh 4
