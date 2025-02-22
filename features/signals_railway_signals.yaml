@@ -1883,10 +1883,9 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        # for light signals: empty Zs3 "looks" exactly like empty Zs2
-        - { regex: '^off;\?$', value: 'de/zs2-unknown' }
+        - { regex: '^off;\?$', value: 'de/zs3-light-unknown' }
         - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-{70}' }
-      default: 'de/zs2-unknown'
+      default: 'de/zs3-light-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
