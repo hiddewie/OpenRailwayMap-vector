@@ -231,28 +231,28 @@ features:
 
   - description: Verschubhalttafel
     country: AT
-    icon: { default: 'de/ra10' }
+    icon: { default: 'at/verschubhalttafel' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: Wartesignal ohne "Verschubverbot aufgehoben"
     country: AT
-    icon: { default: 'de/ra11-sign' }
+    icon: { default: 'at/wartesignal' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:wartesignal' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: Main entry sign Ne 1
     country: AT
-    icon: { default: 'de/ne1' }
+    icon: { default: 'at/trapeztafel' }
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:trapeztafel' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
   - description: Kreuztafel
     country: AT
-    icon: { default: 'de/so106' }
+    icon: { default: 'at/kreuztafel' }
     tags:
       - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
@@ -262,9 +262,9 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'de/hp2-semaphore', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'de/hp1-semaphore', description: 'clear' }
-      default: 'de/hp0-semaphore'
+        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
+      default: 'at/hauptsignal-semaphore'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
@@ -278,7 +278,7 @@ features:
 
   - description: Haltestellentafel
     country: AT
-    icon: { default: 'de/ne6' }
+    icon: { default: 'at/haltestellentafel' }
     tags:
       - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
