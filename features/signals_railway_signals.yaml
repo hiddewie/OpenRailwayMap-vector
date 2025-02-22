@@ -2357,7 +2357,7 @@ features:
 
   - description: Seislevy (new)
     country: FI
-    icon: { default: 'fi/t-151B' }
+    icon: { default: 'fi/t-151A' }
     tags:
       - { tag: 'railway:signal:stop', value: 'FI:T-151A' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
