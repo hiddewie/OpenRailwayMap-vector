@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9.999836" height="10" viewBox="0 0 9.999836 10">
-<defs>
-<filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-</filter>
-<mask id="mask-0">
-<g filter="url(#filter-remove-color)">
-<rect x="-0.999984" y="-1" width="11.999803" height="12" fill="rgb(0%, 0%, 0%)" fill-opacity="0.211268"/>
-</g>
-</mask>
-<clipPath id="clip-0">
-<rect x="0" y="0" width="10" height="10"/>
-</clipPath>
-<g id="source-5" clip-path="url(#clip-0)">
-<path fill-rule="evenodd" fill="rgb(14.117648%, 63.921571%, 41.176471%)" fill-opacity="1" d="M 4.976562 7.488281 L 4.683594 6.195312 C 4.492188 6.265625 4.300781 6.316406 4.074219 6.539062 Z M 4.976562 7.488281 "/>
-</g>
-</defs>
 <path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 10 5 C 10 7.761719 7.761719 10 5 10 C 2.238281 10 0 7.761719 0 5 C 0 2.238281 2.238281 0 5 0 C 7.761719 0 10 2.238281 10 5 Z M 10 5 "/>
-<path fill-rule="evenodd" fill="rgb(5.098039%, 59.215689%, 38.431373%)" fill-opacity="1" d="M 6.347656 7.5 C 6.347656 8.242188 5.746094 8.84375 5 8.84375 C 4.257812 8.84375 3.65625 8.242188 3.65625 7.5 C 3.65625 6.753906 4.257812 6.152344 5 6.152344 C 5.746094 6.152344 6.347656 6.753906 6.347656 7.5 Z M 6.347656 7.5 "/>
-<g mask="url(#mask-0)">
-<use xlink:href="#source-5"/>
-</g>
+<path fill-rule="evenodd" fill="rgb(5.098039%, 59.215686%, 38.431373%)" fill-opacity="1" d="M 6.347656 7.5 C 6.347656 8.242188 5.746094 8.84375 5 8.84375 C 4.257812 8.84375 3.65625 8.242188 3.65625 7.5 C 3.65625 6.753906 4.257812 6.152344 5 6.152344 C 5.746094 6.152344 6.347656 6.753906 6.347656 7.5 Z M 6.347656 7.5 "/>
 </svg>
