@@ -219,6 +219,7 @@ local signal_columns = {
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
+  { column = 'caption', type = 'text' },
 }
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
@@ -561,6 +562,7 @@ function osm2pgsql.process_node(object)
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
+      caption = caption,
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do
