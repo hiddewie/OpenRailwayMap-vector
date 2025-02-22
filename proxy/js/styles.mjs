@@ -1695,7 +1695,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['get', 'name'],
           ],
         ],
-        // TODO light rail / subway oblique font
         'text-font': ['Noto Sans Bold'],
         'text-variable-anchor': ['center', 'top', 'bottom', 'left', 'right'],
         'text-size': 11,
@@ -1728,7 +1727,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['get', 'name'],
           ],
         ],
-        // TODO light rail / subway oblique font
         'text-font': ['Noto Sans Bold'],
         'text-size': 11,
         'text-padding': 10,
