@@ -1908,9 +1908,8 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        # DB and DR variant have the same empty sign
         - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-{}', example: 'de/lf4-dr-sign-down-{70}' }
-      default: 'de/lf4-ds301-empty-sign-down'
+      default: 'de/lf4-dr-sign-down-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:dr:lf4' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
