@@ -21,6 +21,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     railway,
     ref,
     ref_multiline,
+    caption,
     deactivated,
     signal_direction,
     dominant_speed,
