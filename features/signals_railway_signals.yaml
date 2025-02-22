@@ -2669,7 +2669,6 @@ features:
         - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/C-A' }
         - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
         - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/C-S' }
-        - { regex: '^(.*;)?FR:C(;.*)?$', value: 'fr/C-C' }
       # TODO split on shape
       default: 'fr/C-C'
     tags:
@@ -2685,7 +2684,6 @@ features:
         - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/S-R' }
         - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/S-A' }
         - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/S-VL' }
-        - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/S-S' }
       # TODO split on shape
       default: 'fr/S-S'
     tags:
