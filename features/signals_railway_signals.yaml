@@ -1859,8 +1859,6 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        # for light signals: empty Zs3v "looks" exactly like empty Zs2v
-        - { regex: '^off;\?$', value: 'de/zs2v-unknown' }
         - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3v-light-{}', example: 'de/zs3v-light-{20}' }
       default: 'de/zs2v-unknown'
     tags:
