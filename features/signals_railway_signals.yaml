@@ -1860,7 +1860,7 @@ features:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
         - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3v-light-{}', example: 'de/zs3v-light-{20}' }
-      default: 'de/zs2v-unknown'
+      default: 'de/zs3v-light-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
