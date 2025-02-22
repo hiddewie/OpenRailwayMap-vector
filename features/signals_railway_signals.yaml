@@ -728,23 +728,23 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
-        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
-      default: 'general/etcs-stop-marker-arrow-left'
+        - { regex: '^left$', value: 'be/PRA-arrow-right' }
+        - { regex: '^overhead$', value: 'be/PRA-arrow-down' }
+      default: 'be/PRA-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-      - { tag: 'railway:signal:train_protection:shape', value: 'triangle' }
+      - { tag: 'railway:signal:train_protection:shape', value: 'arrow' }
 
   - description: train protection block markers (triangle)
     country: BE
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
-        - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
-      default: 'general/etcs-stop-marker-triangle-left'
+        - { regex: '^left$', value: 'be/PRA-triangle-right' }
+        - { regex: '^overhead$', value: 'be/PRA-triangle-down' }
+      default: 'be/PRA-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -1307,9 +1307,9 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
-        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
-      default: 'general/etcs-stop-marker-arrow-left'
+        - { regex: '^left$', value: 'de/ne14-right' }
+        - { regex: '^overhead$', value: 'de/ne14-down' }
+      default: 'de/ne14-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -3078,9 +3078,9 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'general/etcs-stop-marker-arrow-right' }
-        - { regex: '^overhead$', value: 'general/etcs-stop-marker-arrow-down' }
-      default: 'general/etcs-stop-marker-arrow-left'
+        - { regex: '^left$', value: 'nl/227b-arrow-right' }
+        - { regex: '^overhead$', value: 'nl/227b-arrow-down' }
+      default: 'nl/227b-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -3093,9 +3093,9 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'general/etcs-stop-marker-triangle-right' }
-        - { regex: '^overhead$', value: 'general/etcs-stop-marker-triangle-down' }
-      default: 'general/etcs-stop-marker-triangle-left'
+        - { regex: '^left$', value: 'nl/227b-triangle-right' }
+        - { regex: '^overhead$', value: 'nl/227b-triangle-down' }
+      default: 'nl/227b-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
