@@ -1883,7 +1883,6 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^off;\?$', value: 'de/zs3-light-unknown' }
         - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-{70}' }
       default: 'de/zs3-light-unknown'
     tags:
