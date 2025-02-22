@@ -107,6 +107,31 @@ function dominant_speed_label(preferred_direction, speed, forward_speed, backwar
   end
 end
 
+function signal_caption(tags)
+  return tags['railway:signal:crossing_info:caption']
+    or tags['railway:signal:stop:caption']
+    or tags['railway:signal:crossing_hint:caption']
+    or tags['railway:signal:station_distant:caption']
+    or tags['railway:signal:crossing_distant:caption']
+    or tags['railway:signal:speed_limit:caption']
+    or tags['railway:signal:crossing:caption']
+    or tags['railway:signal:passing:caption']
+    or tags['railway:signal:automatic_marker:caption']
+    or tags['railway:signal:whistle:caption']
+    or tags['railway:signal:caption']
+    or tags['railway:signal:minor:caption']
+    or tags['railway:signal:main:caption']
+    or tags['railway:signal:distant:caption']
+    or tags['railway:signal:electricity:caption']
+    or tags['railway:signal:shunting:caption']
+    or tags['railway:signal:workrules:caption']
+    or tags['railway:signal:resetting_switch:caption']
+    or tags['railway:signal:switch:caption']
+    or tags['railway:signal:route:caption']
+    or tags['railway:signal:dual_mode:caption']
+    or tags['railway:signal:train_protection:caption']
+end
+
 local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
@@ -562,7 +587,7 @@ function osm2pgsql.process_node(object)
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
-      caption = caption,
+      caption = signal_caption(tags),
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do
