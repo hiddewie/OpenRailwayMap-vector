@@ -1541,6 +1541,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'general/water_crane'],
           ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
           ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
+          ['==', ['get', 'feature'], 'general/workshop'],
         ],
         layout: {
           'symbol-z-order': 'source',

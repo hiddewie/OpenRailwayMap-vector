@@ -110,3 +110,7 @@ features:
   - description: Subway entrance
     feature: 'general/subway-entrance'
     minzoom: 16
+
+  - description: Workshop
+    minzoom: 13
+    feature: 'general/workshop'
