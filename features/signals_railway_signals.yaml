@@ -607,13 +607,7 @@ features:
     country: BE
     icon: { default: 'be/PSA' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'BE:PSA' }
-
-  - description: (BME) Shunting signal, triangle
-    country: BE
-    icon: { default: 'be/PSA' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'BE-SME:small_signal_triangle' }
+      - { tag: 'railway:signal:shunting', values: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
 
   - description: (BME) Shunting signal, 2 color
     country: BE
