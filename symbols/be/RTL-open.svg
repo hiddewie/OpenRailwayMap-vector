@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="matrix(0.09971037,0,0,0.10030978,-6.089545,-0.13049)">
+    <rect
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#141414;stroke-width:4.9677;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1"
+       width="195.61325"
+       height="194.41466"
+       x="63.55619"
+       y="3.7847171"
+       ry="0" />
+    <g
+       id="g3"
+       transform="matrix(0.69253586,0.69253067,-0.62363342,0.62362874,112.67034,-72.622234)">
+      <path
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffaf00;stroke-width:1.88295;stroke-linecap:butt;stroke-linejoin:bevel;stroke-dasharray:1.88295, 3.76591;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 37.800173,97.243054 247.554677,0.0078"
+         id="path3" />
+      <path
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffaf00;stroke-width:1.88295;stroke-linecap:butt;stroke-linejoin:bevel;stroke-dasharray:1.88295, 3.7659;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 37.800168,102.9933 285.35485,102.97"
+         id="path3-6" />
+      <rect
+         style="fill:#ffaf00;fill-opacity:0.496314;fill-rule:evenodd;stroke:none;stroke-width:4.21929;stroke-linejoin:bevel;stroke-dasharray:4.21929, 8.43863;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect3"
+         width="249.70387"
+         height="11.338593"
+         x="35.650982"
+         y="94.48819" />
+    </g>
+  </g>
+</svg>
