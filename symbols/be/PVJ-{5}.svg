@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="17.320999"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1" /><g
+     id="g1"
+     transform="scale(0.1)"><path
+       id="Bord"
+       d="M 200,0 H 0 l 100,173.21 z"
+       fill="#0b9b7b" /><path
+       id="Fond"
+       d="M 183,9.21 H 17 l 83,143 z"
+       fill="#edd827" /></g><g
+     id="g6"
+     transform="translate(-0.41799)"><text
+       xml:space="preserve"
+       style="font-size:9.33333px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-rule:evenodd;stroke-width:0.08"
+       x="7.1359892"
+       y="9.6146889"
+       id="text1"><tspan
+         id="tspan1"
+         x="7.1359892"
+         y="9.6146889"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.08">0</tspan></text><text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.2px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-rule:evenodd;stroke-width:0.08"
+       x="11.302401"
+       y="7.3024001"
+       id="text2"><tspan
+         id="tspan2"
+         x="11.302401"
+         y="7.3024001"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.2px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.08">5</tspan></text></g></svg>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="14.096813"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <rect
+     x="0"
+     y="0"
+     width="20"
+     height="14.096812"
+     style="fill:#ffffff;stroke:none;stroke-width:0.0590319"
+     id="Fond" />
+  <circle
+     cx="10"
+     cy="7.0484047"
+     r="5.8441563"
+     style="fill:none;stroke:#000000;stroke-width:0.590319"
+     id="circle1" />
+  <path
+     d="M 11.064736,10.239254 V 3.8498996 c 0,-0.106667 -0.032,-0.192 -0.106667,-0.266667 -0.064,-0.07467 -0.362668,-0.149334 -0.501335,-0.01067 l -1.4293376,1.429338 c -0.149333,0.149334 -0.096,0.426668 0.01067,0.533335 0.096,0.106667 0.352001,0.128 0.490668,-0.01067 L 10.35007,4.6925636 v 5.5573504 c 0,0.192001 0.170667,0.352002 0.362668,0.352002 0.192001,0 0.352001,-0.160001 0.352001,-0.362668 z"
+     id="text1"
+     style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill-rule:evenodd;stroke-width:0.0944511"
+     aria-label="1" />
+</svg>

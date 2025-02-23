@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="14.096813"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <rect
+     x="0"
+     y="0"
+     width="20"
+     height="14.096812"
+     style="fill:#ffffff;stroke:none;stroke-width:0.0590319"
+     id="Fond" />
+  <circle
+     cx="10"
+     cy="7.0484047"
+     r="5.8441563"
+     style="fill:none;stroke:#000000;stroke-width:0.590319"
+     id="circle1" />
+  <path
+     d="m 12.137598,8.8248586 c 0,-0.192001 -0.160001,-0.352001 -0.352001,-0.352001 h -0.714669 v -1.077337 c 0,-0.192001 -0.160001,-0.341334 -0.352001,-0.341334 -0.192001,0 -0.362668,0.16 -0.362668,0.352001 v 1.06667 H 8.6922544 l 1.301337,-4.554681 c 0.05333,-0.202668 -0.08533,-0.426668 -0.341334,-0.426668 -0.128001,-0.01067 -0.298668,0.07467 -0.341335,0.234667 l -1.440004,5.013349 c -0.032,0.138667 0.032,0.298668 0.096,0.341335 0.08533,0.07467 0.149334,0.106667 0.256001,0.106667 h 2.1333396 v 1.0666704 c 0,0.192 0.170667,0.352001 0.362668,0.352001 0.192,0 0.352001,-0.160001 0.352001,-0.352001 V 9.1875266 h 0.714669 c 0.192,0 0.352001,-0.170668 0.352001,-0.362668 z"
+     id="text1"
+     style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill-rule:evenodd;stroke-width:0.0944511"
+     aria-label="4" />
+</svg>

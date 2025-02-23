@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="17.320999"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <path
+     id="Fond"
+     d="M 20,17.320999 H 0 L 10,-1.2114258e-6 Z"
+     fill="#0b9b7b"
+     style="stroke-width:0.1" />
+  <path
+     style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill:#ffffff;fill-rule:evenodd;stroke-width:0.377953;stroke-linejoin:bevel"
+     d="m 12.1376,13.711818 c 0,-0.192001 -0.16,-0.352001 -0.352,-0.352001 H 11.07093 V 12.28248 c 0,-0.192001 -0.16,-0.341335 -0.352,-0.341335 -0.192,0 -0.36267,0.160001 -0.36267,0.352002 v 1.06667 H 8.69225 L 9.99359,8.8051358 c 0.0533,-0.202668 -0.0853,-0.426668 -0.34133,-0.426668 -0.128,-0.01067 -0.29867,0.07467 -0.34134,0.234667 l -1.44,5.0133492 c -0.032,0.138667 0.032,0.298668 0.096,0.341334 0.0853,0.07467 0.14933,0.106667 0.256,0.106667 h 2.13334 v 1.066671 c 0,0.192 0.17067,0.352001 0.36267,0.352001 0.192,0 0.352,-0.160001 0.352,-0.352001 v -1.066671 h 0.71467 c 0.192,0 0.352,-0.170667 0.352,-0.362667 z"
+     id="text1"
+     aria-label="4" />
+</svg>

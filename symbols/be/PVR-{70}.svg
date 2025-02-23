@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="17.320999"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <path
+     id="Fond"
+     d="M 20,17.320999 H 0 L 10,-1.2114258e-6 Z"
+     fill="#0b9b7b"
+     style="stroke-width:0.1" />
+  <path
+     style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill:#ffffff;fill-rule:evenodd;stroke-width:0.377953;stroke-linejoin:bevel"
+     d="m 11.76467,8.7944688 c 0.032,-0.138667 0,-0.234668 -0.096,-0.330668 -0.0747,-0.064 -0.14933,-0.08533 -0.24533,-0.08533 H 8.575329 c -0.08533,0 -0.160001,0.02133 -0.234668,0.08533 -0.08533,0.064 -0.117333,0.160001 -0.117333,0.277334 v 0.704003 c 0,0.192 0.16,0.362667 0.352001,0.362667 0.192,0 0.362668,-0.170667 0.362668,-0.362667 V 9.0931358 H 10.97534 L 9.663332,15.034489 c -0.05333,0.213334 0.04267,0.469334 0.341338,0.458668 0.16,-0.01067 0.29866,-0.106667 0.33066,-0.266668 z"
+     id="text1"
+     aria-label="7" />
+</svg>

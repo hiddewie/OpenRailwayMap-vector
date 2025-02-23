@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Initially created with Inkscape, optimized by hand -->
+
+<svg
+   version="1.1"
+   width="20"
+   height="17.320999"
+   id="svg1"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1" /><g
+     id="g2"
+     transform="matrix(0.1,0,0,0.1,1.0791016e-6,-3.4990234e-6)"><path
+       id="Bord"
+       d="M 200,0 H 0 l 100,173.21 z"
+       fill="#edd827" /><path
+       id="Fond"
+       d="M 183,9.21 H 17 l 83,143 z"
+       fill="#0b9b7b" /></g><g
+     id="g6-1"
+     transform="translate(-0.40295892)"
+     style="fill:#edd827;fill-opacity:1"><path
+       style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill-rule:evenodd;stroke-width:0.08"
+       d="m 12.540556,7.8333499 c 0,-0.1920006 -0.16,-0.3520011 -0.352001,-0.3520011 H 11.473886 V 6.4040121 c 0,-0.1920006 -0.16,-0.3413344 -0.352001,-0.3413344 -0.192,0 -0.362668,0.1600005 -0.362668,0.3520011 v 1.06667 H 9.0952121 L 10.39655,2.9266677 C 10.449883,2.7240004 10.311216,2.4999997 10.055215,2.4999997 9.9272147,2.489333 9.7565475,2.5746666 9.7138807,2.7346671 L 8.2738762,7.7480163 c -0.032,0.1386671 0.032,0.2986676 0.096,0.3413344 0.085334,0.074667 0.1493338,0.106667 0.2560008,0.106667 h 2.13334 v 1.0666701 c 0,0.1920006 0.170668,0.3520011 0.362668,0.3520011 0.192001,0 0.352001,-0.1600005 0.352001,-0.3520011 V 8.1960177 h 0.714669 c 0.192001,0 0.352001,-0.1706672 0.352001,-0.3626678 z"
+       id="text1-2"
+       aria-label="4" /></g></svg>
