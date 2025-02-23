@@ -608,6 +608,12 @@ features:
     icon: { default: 'be/PSA' }
     tags:
       - { tag: 'railway:signal:shunting', values: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
+      
+  - description: Répétiteur à Traits Lumineux
+    country: BE
+    icon: { default: 'be/RTL-open' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'BE:RTL' }
 
   - description: (BME) Shunting signal, 2 color
     country: BE
@@ -649,7 +655,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(12|16)0$', value: 'be/PVR-{}', example: 'be/PVR-{120}' }
+        - { regex: '^[4-9]0$|^1[0-6]0$', value: 'be/PVR-{}', example: 'be/PVR-{120}' }
       default: 'be/PVR-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVR' }
@@ -660,7 +666,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^90$', value: 'be/PVA-{}', example: 'be/PVA-{90}' }
+        - { regex: '^5$|^[0-9]0$|^1[0-5]0$', value: 'be/PVA-{}', example: 'be/PVA-{90}' }
       default: 'be/PVA-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVA' }
@@ -671,7 +677,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(9|10|14)0$', value: 'be/PVO-{}', example: 'be/PVO-{100}' }
+        - { regex: '^5$|^[0-9]0$|^1[0-5]0$', value: 'be/PVO-{}', example: 'be/PVO-{100}' }
       default: 'be/PVO-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVO' }
@@ -682,7 +688,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(4|6|9|10)0$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
+        - { regex: '^5$|^[0-9]0$|^1[0-5]0$', value: 'be/PVJ-{}', example: 'be/PVJ-{60}' }
       default: 'be/PVJ-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVJ' }
@@ -693,7 +699,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^60$', value: 'be/PVV-{}', example: 'be/PVV-{60}' }
+        - { regex: '^5$|^[0-9]0$|^1[0-5]0$', value: 'be/PVV-{}', example: 'be/PVV-{60}' }
       default: 'be/PVV-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVV' }
@@ -722,7 +728,15 @@ features:
       - { tag: 'railway:signal:electricity', value: 'BE:PRL' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
-
+      
+  - description: End of contact line
+    country: BE
+    icon: { default: 'be/FLC' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'BE:FLC' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+      
   - description: train protection block markers (arrow)
     country: BE
     icon:
