@@ -1,40 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Initially created with Inkscape, optimized by hand -->
-
-<svg
-   version="1.1"
-   width="20"
-   height="17.320999"
-   id="svg1"
-   xml:space="preserve"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><defs
-     id="defs1" /><g
-     id="g1"
-     transform="scale(0.1)"><path
-       id="Bord"
-       d="M 200,0 H 0 l 100,173.21 z"
-       fill="#0b9b7b" /><path
-       id="Fond"
-       d="M 183,9.21 H 17 l 83,143 z"
-       fill="#edd827" /></g><g
-     id="g6"
-     transform="translate(-0.41799)"><text
-       xml:space="preserve"
-       style="font-size:9.33333px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-rule:evenodd;stroke-width:0.08"
-       x="7.1359892"
-       y="9.6146889"
-       id="text1"><tspan
-         id="tspan1"
-         x="7.1359892"
-         y="9.6146889"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.08">0</tspan></text><text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.2px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-rule:evenodd;stroke-width:0.08"
-       x="11.302401"
-       y="7.3024001"
-       id="text2"><tspan
-         id="tspan2"
-         x="11.302401"
-         y="7.3024001"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.2px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.08">5</tspan></text></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17.320999" viewBox="0 0 20 17.320999">
+<path fill-rule="nonzero" fill="rgb(4.313725%, 60.784314%, 48.235294%)" fill-opacity="1" d="M 20 0 L 0 0 L 10 17.320312 Z M 20 0 "/>
+<path fill-rule="nonzero" fill="rgb(92.941176%, 84.705882%, 15.294118%)" fill-opacity="1" d="M 18.300781 0.921875 L 1.699219 0.921875 L 10 15.222656 Z M 18.300781 0.921875 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 9.09375 2.488281 C 9.632812 2.488281 10.070312 2.824219 10.40625 3.488281 C 10.738281 4.144531 10.90625 5.003906 10.90625 6.066406 C 10.90625 7.078125 10.734375 7.921875 10.390625 8.597656 C 10.046875 9.277344 9.613281 9.613281 9.09375 9.613281 C 8.570312 9.613281 8.140625 9.277344 7.796875 8.597656 C 7.460938 7.921875 7.296875 7.058594 7.296875 6.003906 C 7.296875 4.984375 7.460938 4.144531 7.796875 3.488281 C 8.140625 2.824219 8.570312 2.488281 9.09375 2.488281 Z M 9.109375 3.238281 C 8.816406 3.238281 8.578125 3.453125 8.390625 3.878906 C 8.148438 4.441406 8.03125 5.167969 8.03125 6.050781 C 8.03125 7.011719 8.164062 7.765625 8.4375 8.316406 C 8.613281 8.683594 8.832031 8.863281 9.09375 8.863281 C 9.394531 8.863281 9.632812 8.652344 9.8125 8.222656 C 10.050781 7.652344 10.171875 6.9375 10.171875 6.082031 C 10.171875 5.238281 10.070312 4.558594 9.875 4.035156 C 9.675781 3.503906 9.421875 3.238281 9.109375 3.238281 Z M 6.71875 0.140625 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.992188 2.992188 L 11.992188 4.382812 L 12.273438 4.382812 C 12.742188 4.382812 13.078125 4.503906 13.289062 4.742188 C 13.507812 4.972656 13.617188 5.347656 13.617188 5.867188 C 13.617188 6.410156 13.464844 6.804688 13.164062 7.054688 C 12.964844 7.222656 12.703125 7.304688 12.382812 7.304688 L 11.742188 7.304688 C 11.5625 7.304688 11.476562 7.222656 11.476562 7.054688 C 11.476562 6.890625 11.5625 6.804688 11.742188 6.804688 L 12.304688 6.804688 C 12.84375 6.804688 13.117188 6.5 13.117188 5.882812 C 13.117188 5.46875 13.03125 5.191406 12.867188 5.054688 C 12.730469 4.941406 12.554688 4.882812 12.335938 4.882812 L 11.804688 4.882812 C 11.59375 4.882812 11.492188 4.78125 11.492188 4.570312 L 11.492188 2.804688 C 11.492188 2.609375 11.59375 2.507812 11.804688 2.507812 L 13.398438 2.507812 C 13.574219 2.507812 13.664062 2.59375 13.664062 2.757812 C 13.664062 2.914062 13.574219 2.992188 13.398438 2.992188 Z M 10.882812 0.910156 "/>
+</svg>

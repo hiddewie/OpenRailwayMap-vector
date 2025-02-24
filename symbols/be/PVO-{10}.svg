@@ -1,31 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Initially created with Inkscape, optimized by hand -->
-
-<svg
-   version="1.1"
-   width="20"
-   height="14.096813"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <rect
-     x="0"
-     y="0"
-     width="20"
-     height="14.096812"
-     style="fill:#ffffff;stroke:none;stroke-width:0.0590319"
-     id="Fond" />
-  <circle
-     cx="10"
-     cy="7.0484047"
-     r="5.8441563"
-     style="fill:none;stroke:#000000;stroke-width:0.590319"
-     id="circle1" />
-  <path
-     d="M 11.064736,10.239254 V 3.8498996 c 0,-0.106667 -0.032,-0.192 -0.106667,-0.266667 -0.064,-0.07467 -0.362668,-0.149334 -0.501335,-0.01067 l -1.4293376,1.429338 c -0.149333,0.149334 -0.096,0.426668 0.01067,0.533335 0.096,0.106667 0.352001,0.128 0.490668,-0.01067 L 10.35007,4.6925636 v 5.5573504 c 0,0.192001 0.170667,0.352002 0.362668,0.352002 0.192001,0 0.352001,-0.160001 0.352001,-0.362668 z"
-     id="text1"
-     style="font-size:10.6667px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill-rule:evenodd;stroke-width:0.0944511"
-     aria-label="1" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14.096813" viewBox="0 0 20 14.096813">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 0 L 20 0 L 20 14.097656 L 0 14.097656 Z M 0 0 "/>
+<path fill="none" stroke-width="0.590319" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.84375 7.046875 C 15.84375 10.277344 13.226562 12.890625 10 12.890625 C 6.773438 12.890625 4.15625 10.277344 4.15625 7.046875 C 4.15625 3.820312 6.773438 1.203125 10 1.203125 C 13.226562 1.203125 15.84375 3.820312 15.84375 7.046875 Z M 15.84375 7.046875 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.066406 10.238281 L 11.066406 3.851562 C 11.066406 3.742188 11.03125 3.65625 10.957031 3.582031 C 10.894531 3.507812 10.59375 3.433594 10.457031 3.574219 L 9.027344 5 C 8.878906 5.152344 8.929688 5.429688 9.039062 5.535156 C 9.132812 5.640625 9.390625 5.664062 9.527344 5.523438 L 10.351562 4.691406 L 10.351562 10.25 C 10.351562 10.441406 10.519531 10.601562 10.710938 10.601562 C 10.90625 10.601562 11.066406 10.441406 11.066406 10.238281 Z M 11.066406 10.238281 "/>
 </svg>
