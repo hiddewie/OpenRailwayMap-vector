@@ -114,3 +114,11 @@ features:
   - description: Workshop
     minzoom: 13
     feature: 'general/workshop'
+
+  - description: Engine Shed
+    minzoom: 13
+    feature: 'general/engine_shed'
+
+  - description: Railway Museum
+    minzoom: 13
+    feature: 'general/museum'

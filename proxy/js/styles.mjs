@@ -1542,6 +1542,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
           ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
           ['==', ['get', 'feature'], 'general/workshop'],
+          ['==', ['get', 'feature'], 'general/engine_shed'],
+          ['==', ['get', 'feature'], 'general/museum'],
         ],
         layout: {
           'symbol-z-order': 'source',
