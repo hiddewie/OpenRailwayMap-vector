@@ -22,6 +22,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     ref,
     ref_multiline,
     caption,
+    caption_multiline,
     deactivated,
     signal_direction,
     dominant_speed,
