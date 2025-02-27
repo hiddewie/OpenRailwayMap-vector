@@ -130,6 +130,8 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:crossing_info:caption']
+    or tags['railway:signal:crossing_hint:caption']
 end
 
 local railway_line = osm2pgsql.define_table({
@@ -245,6 +247,7 @@ local signal_columns = {
   { column = 'signal_direction', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
   { column = 'caption', type = 'text' },
+  { column = 'caption_multiline', type = 'text' },
 }
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
@@ -569,6 +572,8 @@ function osm2pgsql.process_node(object)
 
   if railway_signal_values(tags.railway) then
     local ref_multiline, newline_count = (tags.ref or ''):gsub(' ', '\n')
+    local caption = signal_caption(tags)
+    local caption_multiline, newline_count = (caption or ''):gsub('[ ;]', {[" "] = '\n', [";"] = '\n'})
 
     -- We cast the highest speed to text to make it possible to only select those speeds
     -- we have an icon for. Otherwise we might render an icon for 40 kph if
@@ -587,7 +592,8 @@ function osm2pgsql.process_node(object)
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
-      caption = signal_caption(tags),
+      caption = caption,
+      caption_multiline = caption_multiline ~= '' and caption_multiline or nil
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do

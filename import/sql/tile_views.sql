@@ -466,6 +466,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     ref,
     ref_multiline,
     caption,
+    caption_multiline,
     deactivated,
     azimuth,
     (signal_direction = 'both') as direction_both

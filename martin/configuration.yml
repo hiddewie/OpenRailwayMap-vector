@@ -177,6 +177,7 @@ postgres:
         ref: string
         ref_multiline: string
         caption: string
+        caption_multiline: string
         feature0: string
         feature1: string
         feature2: string
