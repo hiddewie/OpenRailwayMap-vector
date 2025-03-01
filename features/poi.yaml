@@ -20,7 +20,7 @@ features:
 
   - description: Crossing
     feature: 'general/crossing'
-    minzoom: 13
+    minzoom: 14
     variants:
       - description: Level crossing
         feature: 'general/level-crossing'
@@ -35,7 +35,7 @@ features:
         feature: 'general/level-crossing-light-barrier'
 
   - description: Phone
-    minzoom: 13
+    minzoom: 16
     feature: 'general/phone'
 
   - description: Lubricator
@@ -60,7 +60,7 @@ features:
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
-    minzoom: 13
+    minzoom: 14
     variants:
       - description: Derailer
         feature: 'general/derail'

@@ -1495,7 +1495,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     },
     ...imageLayerWithOutline(
       theme,
-      'railway_symbols_low',
+      'railway_symbols_minzoom_10',
       ['get', 'feature'],
       {
         type: 'symbol',
@@ -1510,7 +1510,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     ),
     ...imageLayerWithOutline(
       theme,
-      'railway_symbols_med_high',
+      'railway_symbols_minzoom_13',
       ['get', 'feature'],
       {
         type: 'symbol',
@@ -1518,17 +1518,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
         filter: ['any',
-          ['==', ['get', 'feature'], 'general/crossing'],
-          ['==', ['get', 'feature'], 'general/level-crossing'],
-          ['==', ['get', 'feature'], 'general/level-crossing-light'],
-          ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
-          ['==', ['get', 'feature'], 'general/level-crossing-light-barrier'],
           ['==', ['get', 'feature'], 'general/lubricator'],
           ['==', ['get', 'feature'], 'general/fuel'],
           ['==', ['get', 'feature'], 'general/sand_store'],
           ['==', ['get', 'feature'], 'general/aei'],
-          ['==', ['get', 'feature'], 'general/buffer_stop'],
-          ['==', ['get', 'feature'], 'general/derail'],
           ['==', ['get', 'feature'], 'general/defect_detector'],
           ['==', ['get', 'feature'], 'general/hump_yard'],
           ['==', ['get', 'feature'], 'general/loading_gauge'],
@@ -1555,7 +1548,31 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     ),
     ...imageLayerWithOutline(
       theme,
-      'railway_symbols_med',
+      'railway_symbols_minzoom_14',
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 14,
+        source: 'openrailwaymap_standard',
+        'source-layer': 'standard_railway_symbols',
+        filter: ['any',
+          ['==', ['get', 'feature'], 'general/crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light'],
+          ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light-barrier'],
+          ['==', ['get', 'feature'], 'general/buffer_stop'],
+          ['==', ['get', 'feature'], 'general/derail'],
+        ],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
+    ...imageLayerWithOutline(
+      theme,
+      'railway_symbols_minzoom_12',
       ['get', 'feature'],
       {
         type: 'symbol',
@@ -1575,7 +1592,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     ),
     ...imageLayerWithOutline(
       theme,
-      'railway_symbols_high',
+      'railway_symbols_minzoom_16',
       ['get', 'feature'],
       {
         type: 'symbol',
@@ -1583,8 +1600,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
         filter: ['any',
+          ['==', ['get', 'feature'], 'general/crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light'],
+          ['==', ['get', 'feature'], 'general/level-crossing-barrier'],
+          ['==', ['get', 'feature'], 'general/level-crossing-light-barrier'],
           ['==', ['get', 'feature'], 'general/phone'],
           ['==', ['get', 'feature'], 'general/subway-entrance'],
+          ['==', ['get', 'feature'], 'general/buffer_stop'],
         ],
         layout: {
           'symbol-z-order': 'source',
