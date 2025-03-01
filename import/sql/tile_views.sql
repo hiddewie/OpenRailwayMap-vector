@@ -319,6 +319,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'wash' THEN 'general/wash'
       WHEN railway = 'water_tower' THEN 'general/water_tower'
       WHEN railway = 'water_crane' THEN 'general/water_crane'
+      WHEN railway = 'workshop' THEN 'general/workshop'
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
@@ -331,7 +332,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       ELSE 0
     END AS priority
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail')
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop')
 
   UNION ALL
 
@@ -392,6 +393,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref,
+    caption,
     deactivated,
     dominant_speed as speed
   FROM speed_railway_signal_features
@@ -467,6 +469,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     railway,
     ref,
     ref_multiline,
+    caption,
     deactivated,
     azimuth,
     (signal_direction = 'both') as direction_both
@@ -484,6 +487,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref,
+    caption,
     deactivated,
     voltage,
     frequency

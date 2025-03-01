@@ -1,5 +1,6 @@
 import fs from 'fs'
 import yaml from 'yaml'
+import * as assert from "node:assert";
 
 const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
 const all_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8'))
@@ -15,8 +16,17 @@ const electrification_signals = all_signals.features.filter(feature => feature.t
 
 // TODO add links to documentation
 
+const requireUniqueEntries = array => {
+  const count = Object.groupBy(array, it => it[0]);
+  if (Object.values(count).some(it => it.length > 1)) {
+    const offendingEntries = Object.entries(count).filter(it => it[1].length > 1).map(it => it[0]).join(', ');
+    throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
+  }
+  return Object.fromEntries(array);
+}
+
 const generateSignalFeatures = (features, types) =>
-  Object.fromEntries([
+  requireUniqueEntries([
     ...features.flatMap(feature => [
       [
         feature.icon.default,
@@ -276,6 +286,9 @@ const features = {
       ref: {
         name: 'Reference',
       },
+      caption: {
+        name: 'Caption',
+      },
       type: {
         name: 'Type',
       },
@@ -325,6 +338,9 @@ const features = {
       ref: {
         name: 'Reference',
       },
+      caption: {
+        name: 'Caption',
+      },
       type: {
         name: 'Type',
       },
@@ -364,6 +380,9 @@ const features = {
       },
       ref: {
         name: 'Reference',
+      },
+      caption: {
+        name: 'Caption',
       },
       type: {
         name: 'Type',

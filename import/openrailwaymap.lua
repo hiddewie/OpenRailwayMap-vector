@@ -107,6 +107,31 @@ function dominant_speed_label(preferred_direction, speed, forward_speed, backwar
   end
 end
 
+function signal_caption(tags)
+  return tags['railway:signal:crossing_info:caption']
+    or tags['railway:signal:stop:caption']
+    or tags['railway:signal:crossing_hint:caption']
+    or tags['railway:signal:station_distant:caption']
+    or tags['railway:signal:crossing_distant:caption']
+    or tags['railway:signal:speed_limit:caption']
+    or tags['railway:signal:crossing:caption']
+    or tags['railway:signal:passing:caption']
+    or tags['railway:signal:automatic_marker:caption']
+    or tags['railway:signal:whistle:caption']
+    or tags['railway:signal:caption']
+    or tags['railway:signal:minor:caption']
+    or tags['railway:signal:main:caption']
+    or tags['railway:signal:distant:caption']
+    or tags['railway:signal:electricity:caption']
+    or tags['railway:signal:shunting:caption']
+    or tags['railway:signal:workrules:caption']
+    or tags['railway:signal:resetting_switch:caption']
+    or tags['railway:signal:switch:caption']
+    or tags['railway:signal:route:caption']
+    or tags['railway:signal:dual_mode:caption']
+    or tags['railway:signal:train_protection:caption']
+end
+
 local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
@@ -219,6 +244,7 @@ local signal_columns = {
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
+  { column = 'caption', type = 'text' },
 }
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
@@ -427,7 +453,7 @@ function split_semicolon_to_sql_array(value)
 end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
-local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'wash', 'water_tower', 'water_crane', 'sand_store', 'coaling_facility', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail'})
+local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'wash', 'water_tower', 'water_crane', 'sand_store', 'coaling_facility', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop'})
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
@@ -561,6 +587,7 @@ function osm2pgsql.process_node(object)
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
+      caption = signal_caption(tags),
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do

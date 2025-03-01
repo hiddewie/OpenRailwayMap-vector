@@ -157,6 +157,7 @@ postgres:
         feature1: string
         type: string
         ref: string
+        caption: string
         azimuth: number
         direction_both: boolean
         deactivated: boolean
@@ -176,6 +177,7 @@ postgres:
         railway: string
         ref: string
         ref_multiline: string
+        caption: string
         feature0: string
         feature1: string
         feature2: string
@@ -202,6 +204,7 @@ postgres:
         azimuth: number
         direction_both: boolean
         ref: string
+        caption: string
         deactivated: boolean
         frequency: number
         voltage: integer

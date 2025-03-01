@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10.961739" height="22" viewBox="0 0 10.961739 22">
-<defs>
-<filter id="filter-remove-color" x="0%" y="0%" width="100%" height="100%">
-<feColorMatrix color-interpolation-filters="sRGB" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-</filter>
-<image id="source-15" x="0" y="0" width="11" height="22" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAWCAYAAAAW5GZjAAAABmJLR0QA/wD/AP+gvaeTAAAAHElEQVQokWNkYGD4ykAkYCJW4ajiUcWjigdeMQAI0AEhx1K43gAAAABJRU5ErkJggg=="/>
-<mask id="mask-0">
-<g filter="url(#filter-remove-color)">
-<use xlink:href="#source-15"/>
-</g>
-</mask>
-<clipPath id="clip-0">
-<rect x="0" y="0" width="11" height="22"/>
-</clipPath>
-<g id="source-14" clip-path="url(#clip-0)">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.052381 22.720499 L -0.00799321 27.903548 L -0.00799321 190.080862 L 5.052381 195.263911 L 81.448691 195.263911 L 85.895686 190.41822 L 85.895686 27.56619 L 81.448691 22.720499 Z M 5.052381 22.720499 " transform="matrix(0.127368, 0, 0, 0.127368, 0.0127368, -2.882153)"/>
-</g>
-<clipPath id="clip-1">
-<rect x="0" y="0" width="11" height="22"/>
-</clipPath>
-<g id="source-17" clip-path="url(#clip-1)">
-<g mask="url(#mask-0)">
-<use xlink:href="#source-14"/>
-</g>
-</g>
-</defs>
-<use xlink:href="#source-17"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="0.960784" d="M 0.820312 0 L 0 0.820312 L 0 21.175781 L 0.820312 22 L 10.140625 22 L 10.960938 21.175781 L 10.960938 0.820312 L 10.140625 0 Z M 0.820312 0 "/>
 <path fill-rule="nonzero" fill="rgb(34.509804%, 86.27451%, 69.019608%)" fill-opacity="1" d="M 9.824219 3.191406 C 9.824219 4.242188 8.976562 5.09375 7.929688 5.09375 C 6.878906 5.09375 6.027344 4.242188 6.027344 3.191406 C 6.027344 2.144531 6.878906 1.292969 7.929688 1.292969 C 8.976562 1.292969 9.824219 2.144531 9.824219 3.191406 Z M 9.824219 3.191406 "/>
 <path fill-rule="nonzero" fill="rgb(34.509804%, 86.27451%, 69.019608%)" fill-opacity="1" d="M 9.824219 18.609375 C 9.824219 19.65625 8.976562 20.507812 7.929688 20.507812 C 6.878906 20.507812 6.027344 19.65625 6.027344 18.609375 C 6.027344 17.5625 6.878906 16.714844 7.929688 16.714844 C 8.976562 16.714844 9.824219 17.5625 9.824219 18.609375 Z M 9.824219 18.609375 "/>
 </svg>
