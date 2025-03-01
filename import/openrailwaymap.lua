@@ -216,7 +216,7 @@ local stop_positions = osm2pgsql.define_table({
 
 local platforms = osm2pgsql.define_table({
   name = 'platforms',
-  ids = { type = 'any', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },

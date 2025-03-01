@@ -23,7 +23,7 @@ CREATE OR REPLACE VIEW platforms_route_relations AS
     sp.way AS geom
   FROM platforms AS sp
   JOIN routes AS r
-    ON r.platform_ref_ids @> Array[-sp.osm_id];
+    ON r.platform_ref_ids @> Array[sp.osm_id];
 
 -- Cluster stop positions with equal name
 CREATE OR REPLACE VIEW stop_positions_and_their_routes_clustered AS
