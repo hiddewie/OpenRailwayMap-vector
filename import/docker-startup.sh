@@ -32,7 +32,7 @@ function import_db() {
   $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
 
-  echo "Importing data (osm2psql cache ${OSM2PGSQL_CACHE:-256}MB, ${OSM2PGSQL_NUMPROC:-4} processes)"
+  echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database
   osm2pgsql \
     --create \
@@ -40,7 +40,6 @@ function import_db() {
     --drop \
     --output flex \
     --style openrailwaymap.lua \
-    --cache "${OSM2PGSQL_CACHE:-256}" \
     --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
     "$OSM2PGSQL_FILTERED_FILE"
 }
