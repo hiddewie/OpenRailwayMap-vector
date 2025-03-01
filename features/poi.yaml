@@ -126,3 +126,7 @@ features:
   - description: Power Supply
     minzoom: 13
     feature: 'general/power_supply'
+
+  - description: Rolling Highway
+    minzoom: 13
+    feature: 'general/rolling_highway'
