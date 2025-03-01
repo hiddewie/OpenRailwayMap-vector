@@ -766,7 +766,6 @@ map.addControl(
     showUserLocation: true,
   })
 );
-map.addControl(new maplibregl.FullscreenControl());
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
