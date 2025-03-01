@@ -322,6 +322,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'workshop' THEN 'general/workshop'
       WHEN railway = 'engine_shed' THEN 'general/engine_shed'
       WHEN railway = 'museum' THEN 'general/museum'
+      WHEN railway = 'power_supply' THEN 'general/power_supply'
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
@@ -334,7 +335,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       ELSE 0
     END AS priority
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum')
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply')
 
   UNION ALL
 

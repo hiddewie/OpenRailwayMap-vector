@@ -122,3 +122,7 @@ features:
   - description: Railway Museum
     minzoom: 13
     feature: 'general/museum'
+
+  - description: Power Supply
+    minzoom: 13
+    feature: 'general/power_supply'

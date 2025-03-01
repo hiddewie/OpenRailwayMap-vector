@@ -1544,6 +1544,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'feature'], 'general/workshop'],
           ['==', ['get', 'feature'], 'general/engine_shed'],
           ['==', ['get', 'feature'], 'general/museum'],
+          ['==', ['get', 'feature'], 'general/power_supply'],
         ],
         layout: {
           'symbol-z-order': 'source',
