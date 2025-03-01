@@ -831,8 +831,15 @@ function popupContent(feature) {
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
-  const featureType = properties.osm_type || featureContent && featureContent.type || 'point';
-  const osmType = featureType === 'point' || featureType === 'N' ? 'node' : 'way';
+  const determineOsmType = (properties, featureContent) => {
+    if (properties.osm_type) {
+      return properties.osm_type === 'N' ? 'node' : 'way';
+    } else {
+      const featureType = featureContent && featureContent.type || 'point';
+      return featureType === 'point' ? 'node' : 'way';
+    }
+  }
+  const osmType = determineOsmType(properties, featureContent);
 
   const formatPropertyValue = (value, format) => {
     if (!format) {
