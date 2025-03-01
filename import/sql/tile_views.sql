@@ -287,8 +287,8 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
     id,
-    osm_type,
     osm_id,
+    osm_type,
     way,
     CASE
       WHEN railway = 'crossing' THEN 'general/crossing'
@@ -338,8 +338,8 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
 
   SELECT
     id,
-    osm_type,
     osm_id,
+    osm_type,
     way,
     'general/subway-entrance' as feature,
     0 as priority
@@ -424,8 +424,8 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           4096, 64, true
         ) AS way,
         id,
-        osm_type,
         osm_id,
+        osm_type,
         feature,
         ref,
         name
@@ -444,8 +444,8 @@ DO $do$ BEGIN
         "id": "signals_signal_boxes",
         "fields": {
           "id": "integer",
-          "osm_type": "string",
           "osm_id": "integer",
+          "osm_type": "string",
           "feature": "string",
           "ref": "string",
           "name": "string"
