@@ -3132,24 +3132,38 @@ const legendData = {
         }
       },
     ],
-    'standard_railway_text_stations_low-standard_railway_text_stations_low': [
-      {
-        legend: 'Station',
-        type: 'point',
-        properties: {
-          label: 'Gd',
-        },
-      },
-    ],
-    "standard_railway_text_stations_med-standard_railway_text_stations_med": [
-      {
-        legend: 'Station',
-        type: 'point',
-        properties: {
-          label: 'Gd',
-        },
-      },
-    ],
+    'standard_railway_text_stations_low-standard_railway_text_stations_low':
+      stations.features
+        .filter(feature => feature.feature === 'station')
+        .map(feature => ({
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
+          properties: {
+            ...feature.example,
+            railway: feature.feature,
+          },
+          variants: (feature.variants || []).map(variant => ({
+            legend: variant.legend,
+            properties: variant.example,
+          })),
+        })),
+    "standard_railway_text_stations_med-standard_railway_text_stations_med":
+      stations.features
+        .filter(feature => feature.feature === 'station')
+        .map(feature => ({
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
+          properties: {
+            ...feature.example,
+            railway: feature.feature,
+          },
+          variants: (feature.variants || []).map(variant => ({
+            legend: variant.legend,
+            properties: variant.example,
+          })),
+        })),
     "openrailwaymap_standard-standard_railway_text_stations":
       stations.features.map(feature => ({
         legend: feature.description,
@@ -3159,6 +3173,10 @@ const legendData = {
           ...feature.example,
           railway: feature.feature,
         },
+        variants: (feature.variants || []).map(variant => ({
+          legend: variant.legend,
+          properties: variant.example,
+        })),
       })),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
     "openrailwaymap_standard-standard_railway_turntables": [

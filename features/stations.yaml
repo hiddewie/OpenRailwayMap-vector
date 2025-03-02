@@ -1,24 +1,21 @@
 features:
-  - description: Large station
-    feature: station
-    example:
-      label: MH
-      name: München
-      station_size: large
-
-  - description: Normal station
+  - description: Station
     feature: station
     example:
       label: Gd
       name: Gouda
       station_size: normal
-
-  - description: Small station
-    feature: station
-    example:
-      label: HMEL
-      name: Melle
-      station_size: small
+    variants:
+      - description: (large)
+        example:
+          label: MH
+          name: München
+          station_size: large
+      - description: (small)
+        example:
+          label: HMEL
+          name: Melle
+          station_size: small
 
   - description: Halt
     feature: halt

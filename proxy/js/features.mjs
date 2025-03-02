@@ -180,12 +180,15 @@ const railwayLineFeatures = {
 const stationFeatures = {
   featureProperty: 'railway',
   labelProperty: 'name',
-  features: Object.fromEntries(
+  features: requireUniqueEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])
   ),
   properties: {
     station: {
       name: 'Type',
+    },
+    station_size: {
+      name: 'Size',
     },
     label: {
       name: 'Reference',
