@@ -2135,6 +2135,30 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
+  - description: power off advance sign El 1v
+    country: DE
+    icon: { default: 'de/el1v' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1v' }
+
+  - description: power off sign El 1
+    country: DE
+    icon: { default: 'de/el1' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
+
+  - description: power on sign El 2
+    country: DE
+    icon: { default: 'de/el2' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
+
   - description: pantograph down advance El 3
     country: DE
     icon: { default: 'de/el3' }
@@ -2143,13 +2167,21 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-ESO:el3' }
 
-  - description: power off advance sign El 1v
+  - description: pantograph down El 4
     country: DE
-    icon: { default: 'de/el1v' }
+    icon: { default: 'de/el4' }
     tags:
-      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1v' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
+
+  - description: pantograph up El 5
+    country: DE
+    icon: { default: 'de/el5' }
+    tags:
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
 
   - description: end of catenary sign El 6
     country: DE
@@ -2164,30 +2196,6 @@ features:
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
       - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
       - { tag: 'railway:signal:electricity', values: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
-
-  - description: power on sign El 2
-    country: DE
-    icon: { default: 'de/el2' }
-    tags:
-      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
-
-  - description: pantograph up El 5
-    country: DE
-    icon: { default: 'de/el5' }
-    tags:
-      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
-
-  - description: power off sign El 1
-    country: DE
-    icon: { default: 'de/el1' }
-    tags:
-      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
 
   - description: pantograph down El 4
     country: DE
