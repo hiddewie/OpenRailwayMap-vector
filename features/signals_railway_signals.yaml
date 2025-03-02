@@ -1269,6 +1269,33 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
+  - description: distant signal announcement signs Ne 3 (normal)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+      - { regex: '^II$', value: 'de/ne3-normal-II' }
+      - { regex: '^III$', value: 'de/ne3-normal-III' }
+      - { regex: '^IV$', value: 'de/ne3-normal-IV' }
+      default: 'de/ne3-normal-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: distant signal announcement signs Ne 3 (dwarf)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+      - { regex: '^II$', value: 'de/ne3-dwarf-II' }
+      - { regex: '^III$', value: 'de/ne3-dwarf-III' }
+      - { regex: '^IV$', value: 'de/ne3-dwarf-IV' }
+      default: 'de/ne3-dwarf-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
   - description: station distant sign Ne 6
     country: DE
     icon: { default: 'de/ne6' }
