@@ -1684,6 +1684,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
 
   - description: distant light signals type Hl
     country: DE
