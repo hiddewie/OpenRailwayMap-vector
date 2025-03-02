@@ -418,14 +418,18 @@ function electrification_state(tags)
   if electrification_values(tags['proposed:electrified']) then
     return 'proposed', nil, nil, tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
   end
-  if electrified == 'no' and electrification_values(tags['deelectrified']) then
-    return 'deelectrified', nil, nil, nil, nil
-  end
-  if electrified == 'no' and electrification_values(tags['abandoned:electrified']) then
-    return 'abandoned', nil, nil, nil, nil
-  end
+    if electrified == 'no' then
+        if electrification_values(tags['deelectrified']) then
+            return 'deelectrified', nil, nil, nil, nil
+        end
+        if electrification_values(tags['abandoned:electrified']) then
+            return 'abandoned', nil, nil, nil, nil
+        end
 
-  return nil, nil, nil
+        return 'no', nil, nil, nil, nil
+    end
+
+    return nil, nil, nil
 end
 
 -- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
