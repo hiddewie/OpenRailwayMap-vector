@@ -1687,7 +1687,11 @@ features:
 
   - description: distant light signals type Hl
     country: DE
-    icon: { default: 'de/hl1-distant' }
+    icon:
+      match: 'railway:signal:distant:repeated'
+      cases:
+        - { regex: '^yes$', value: 'de/hl1-distant-repeated' }
+      default: 'de/hl1-distant'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
