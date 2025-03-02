@@ -2197,13 +2197,13 @@ features:
       - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
       - { tag: 'railway:signal:electricity', values: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
 
-  - description: pantograph down El 4
+  - description: power off shortly sign El 7 (S-Bahn Berlin)
     country: DE
-    icon: { default: 'de/el4' }
+    icon: { default: 'de/el7' }
     tags:
-      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
+      - { tag: 'railway:signal:electricity', value: 'DE-ESO:el7' }
 
   - description: tram power off shortly signal (St 7)
     country: DE
