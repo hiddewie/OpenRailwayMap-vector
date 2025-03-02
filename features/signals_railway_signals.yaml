@@ -15,6 +15,10 @@ tags:
   - 'railway:signal:crossing_distant'
   - 'railway:signal:crossing_distant:shortened'
   - 'railway:signal:crossing_distant:form'
+  - 'railway:signal:crossing_hint'
+  - 'railway:signal:crossing_hint:form'
+  - 'railway:signal:crossing_info'
+  - 'railway:signal:crossing_info:form'
   - 'railway:signal:departure'
   - 'railway:signal:departure:form'
   - 'railway:signal:departure:states'
@@ -124,6 +128,8 @@ types:
   - { type: station_distant }
   - { type: crossing }
   - { type: crossing_distant }
+  - { type: crossing_info }
+  - { type: crossing_hint }
   - { type: ring }
   - { type: whistle }
   - { type: electricity, layer: electrification }
@@ -1578,6 +1584,20 @@ features:
       default: 'de/blockkennzeichen'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:blockkennzeichen' }
+
+  - description: crossing info sign
+    country: DE
+    icon: { default: 'de/bue-crossing-info' }
+    tags:
+      - { tag: 'railway:signal:crossing_info', value: 'DE-ESO:bü-kennzeichentafel' }
+      - { tag: 'railway:signal:crossing_info:form', value: 'sign' }
+
+  - description: crossing anouncement sign
+    country: DE
+    icon: { default: 'de/bue-crossing-hint' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'DE-ESO:bü-ankündetafel' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
 
   - description: distant signal replacement by sign So 106
     country: DE
