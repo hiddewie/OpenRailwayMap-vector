@@ -1,6 +1,5 @@
 import fs from 'fs'
 import yaml from 'yaml'
-import * as assert from "node:assert";
 
 const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
 const all_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals.yaml', 'utf8'))

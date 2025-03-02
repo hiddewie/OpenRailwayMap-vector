@@ -213,13 +213,18 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     railway_ref as label,
     railway,
     station,
+    CASE
+      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
+      WHEN route_count >= 8 THEN 'normal'
+      ELSE 'small'
+    END AS station_size,
     name,
     uic_ref
   FROM stations_with_route_counts
   WHERE
     railway = 'station'
     AND railway_ref IS NOT NULL
-    AND route_count >= 8
+    AND route_count >= 20
   ORDER BY
     route_count DESC NULLS LAST;
 
@@ -230,6 +235,11 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     center as way,
     railway,
     station,
+    CASE
+      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
+      WHEN route_count >= 8 THEN 'normal'
+      ELSE 'small'
+    END AS station_size,
     railway_ref as label,
     name,
     uic_ref
@@ -237,6 +247,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   WHERE
     railway = 'station'
     AND railway_ref IS NOT NULL
+    AND route_count >= 8
   ORDER BY
     route_count DESC NULLS LAST;
 
@@ -247,6 +258,11 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     center as way,
     railway,
     station,
+    CASE
+      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
+      WHEN route_count >= 8 THEN 'normal'
+      ELSE 'small'
+    END AS station_size,
     railway_ref as label,
     name,
     CASE
