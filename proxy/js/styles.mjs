@@ -1431,7 +1431,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-max-width': 5,
         'text-optional': true,
         'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-        // 'text-variable-anchor-offset': ['top', [0, -1.8], 'left', [-1.8, 0], 'bottom', [0, 1.8], 'right', [1.8, 0]],
       },
     },
     {
@@ -1466,7 +1465,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-max-width': 5,
         'text-optional': true,
         'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-        // 'text-variable-anchor-offset': ['top', [0, -1.8], 'left', [-1.8, 0], 'bottom', [0, 1.8], 'right', [1.8, 0]],
       },
     },
     {
@@ -1680,6 +1678,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'railway'], 'station'],
           ['!=', ['get', 'station'], 'light_rail'],
           ['!=', ['get', 'station'], 'subway'],
+          ['!=', ['get', 'station'], 'monorail'],
           ['!=', ['get', 'station'], 'funicular'],
         ],
         9,
@@ -1690,6 +1689,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           ['!=', ['get', 'railway'], 'tram_stop'],
           ['!=', ['get', 'station'], 'funicular'],
+          ['!=', ['get', 'station'], 'subway'],
+          ['!=', ['get', 'station'], 'monorail'],
         ],
         10,
         ['all',
