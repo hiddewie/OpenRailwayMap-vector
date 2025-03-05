@@ -88,6 +88,7 @@ const colors = {
         tramStopText: '#D877B8',
         lightRailText: '#0e5414',
         monorailText: '#00674d',
+        miniatureText: '#503285',
         defaultText: '#616161',
         signalBox: {
           text: '#404040',
@@ -162,6 +163,7 @@ const colors = {
         tramStopText: '#f3b4de',
         lightRailText: '#83ea8f',
         monorailText: '#5fffd7',
+        miniatureText: '#503285',
         defaultText: '#d2d2d2',
         signalBox: {
           text: '#bfffb3',
@@ -1481,6 +1483,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.light_rail,
           ['==', ['get', 'station'], 'subway'], colors[theme].styles.standard.subway,
           ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniature,
           colors[theme].styles.standard.main,
         ],
         'fill-opacity': ['case',
@@ -1795,6 +1798,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           ['==', ['get', 'railway'], 'halt'], ['case',
             ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
+            ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniatureText,
             colors[theme].styles.standard.stationsText,
           ],
           colors[theme].styles.standard.defaultText,
