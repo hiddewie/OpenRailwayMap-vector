@@ -235,7 +235,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       ELSE 50
     END AS rank,
     uic_ref,
-    route_count
+    route_count,
+    count
   FROM
     stations_with_route_counts
   ORDER BY
@@ -292,6 +293,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     station_size,
     railway_ref as label,
     name,
+    count,
     uic_ref
   FROM
     railway_text_stations
