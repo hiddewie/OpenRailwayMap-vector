@@ -1697,6 +1697,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['all',
           ['!=', ['get', 'railway'], 'tram_stop'],
           ['!=', ['get', 'station'], 'funicular'],
+          ['!=', ['get', 'station'], 'miniature'],
         ],
       ],
       paint: {
