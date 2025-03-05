@@ -16,7 +16,7 @@ features:
 
   - description: Crossing
     feature: 'general/crossing'
-    minzoom: 13
+    minzoom: 14
     variants:
       - description: Level crossing
         feature: 'general/level-crossing'
@@ -31,7 +31,7 @@ features:
         feature: 'general/level-crossing-light-barrier'
 
   - description: Phone
-    minzoom: 13
+    minzoom: 16
     feature: 'general/phone'
 
   - description: Lubricator
@@ -56,7 +56,7 @@ features:
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
-    minzoom: 13
+    minzoom: 14
     variants:
       - description: Derailer
         feature: 'general/derail'
@@ -110,3 +110,19 @@ features:
   - description: Workshop
     minzoom: 13
     feature: 'general/workshop'
+
+  - description: Engine Shed
+    minzoom: 13
+    feature: 'general/engine_shed'
+
+  - description: Railway Museum
+    minzoom: 13
+    feature: 'general/museum'
+
+  - description: Power Supply
+    minzoom: 13
+    feature: 'general/power_supply'
+
+  - description: Rolling Highway
+    minzoom: 13
+    feature: 'general/rolling_highway'
