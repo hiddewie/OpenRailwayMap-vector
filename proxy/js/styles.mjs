@@ -1513,29 +1513,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-width': turntable_casing_width,
       }
     },
-    // TODO delete from table
-    // {
-    //   id: 'railway_symbols_tram_stop',
-    //   type: 'symbol',
-    //   minzoom: 12,
-    //   maxzoom: 15,
-    //   source: 'openrailwaymap_standard',
-    //   'source-layer': 'standard_railway_symbols',
-    //   filter: ['==', ['get', 'feature'], 'general/tram-stop'],
-    //   paint: {
-    //     'icon-color': colors[theme].styles.standard.tramStopText,
-    //     'icon-halo-width': 1,
-    //     'icon-halo-color': ['case',
-    //       ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-    //       colors[theme].halo,
-    //     ],
-    //   },
-    //   layout: {
-    //     'symbol-z-order': 'source',
-    //     'icon-image': 'sdf:general/station-small',
-    //     'icon-overlap': 'always',
-    //   }
-    // },
     ...imageLayerWithOutline(
       theme,
       'railway_symbols_low',
@@ -1784,7 +1761,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_text_stations',
       filter: ['all',
-        // ['!=', ['get', 'railway'], 'tram_stop'],
         ['!=', ['get', 'station'], 'funicular'],
       ],
       paint: {
@@ -1826,38 +1802,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-max-width': 5,
       },
     },
-    // {
-    //   id: 'railway_tram_stations',
-    //   type: 'symbol',
-    //   minzoom: 13,
-    //   source: 'openrailwaymap_standard',
-    //   'source-layer': 'standard_railway_text_stations',
-    //   filter: ['==', ['get', 'railway'], 'tram_stop'],
-    //   paint: {
-    //     'text-color': colors[theme].styles.standard.tramStopText,
-    //     'text-halo-color': ['case',
-    //       ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-    //       colors[theme].halo,
-    //     ],
-    //     'text-halo-width': 1.5,
-    //   },
-    //   layout: {
-    //     'symbol-z-order': 'source',
-    //     'text-field': ['step', ['zoom'],
-    //       ['get', 'name'],
-    //       15,
-    //       ['case',
-    //         ['>', ['coalesce', ['get', 'count'], 0], 1], ['concat', ['get', 'name'], ' (', ['get', 'count'], ')'],
-    //         ['get', 'name'],
-    //       ],
-    //     ],
-    //     'text-font': ['Noto Sans Bold'],
-    //     'text-size': 11,
-    //     'text-padding': 10,
-    //     'text-max-width': 5,
-    //     'text-variable-anchor': ['top', 'bottom'],
-    //   },
-    // },
     searchResults,
   ],
 

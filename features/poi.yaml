@@ -1,8 +1,4 @@
 features:
-  - description: Tram stop
-    minzoom: 12
-    feature: 'general/tram-stop'
-
   - description: Border crossing
     feature: 'general/border'
     minzoom: 12

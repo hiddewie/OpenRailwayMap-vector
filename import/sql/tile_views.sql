@@ -316,7 +316,6 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
           ELSE 'general/level-crossing'
         END
       WHEN railway = 'phone' THEN 'general/phone'
-      WHEN railway = 'tram_stop' THEN 'general/tram-stop'
       WHEN railway = 'border' THEN 'general/border'
       WHEN railway = 'owner_change' THEN 'general/owner-change'
       WHEN railway = 'lubricator' THEN 'general/lubricator'
@@ -348,7 +347,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       ELSE 0
     END AS priority
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop')
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop')
 
   UNION ALL
 
