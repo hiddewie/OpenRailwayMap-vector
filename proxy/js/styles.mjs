@@ -1693,7 +1693,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['!=', ['get', 'station'], 'funicular'],
           ['!=', ['get', 'station'], 'miniature'],
         ],
-        12,
+        11,
         ['all',
           ['!=', ['get', 'station'], 'funicular'],
           ['!=', ['get', 'station'], 'miniature'],
