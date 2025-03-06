@@ -205,49 +205,19 @@ END $do$;
 
 --- Standard ---
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
+CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     id,
     osm_id,
     center as way,
-    railway_ref as label,
+    railway_ref,
     railway,
     station,
-    name,
-    uic_ref
-  FROM stations_with_route_counts
-  WHERE
-    railway = 'station'
-    AND railway_ref IS NOT NULL
-    AND route_count >= 8
-  ORDER BY
-    route_count DESC NULLS LAST;
-
-CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
-  SELECT
-    id,
-    osm_id,
-    center as way,
-    railway,
-    station,
-    railway_ref as label,
-    name,
-    uic_ref
-  FROM stations_with_route_counts
-  WHERE
-    railway = 'station'
-    AND railway_ref IS NOT NULL
-  ORDER BY
-    route_count DESC NULLS LAST;
-
-CREATE OR REPLACE VIEW standard_railway_text_stations AS
-  SELECT
-    id,
-    osm_id,
-    center as way,
-    railway,
-    station,
-    railway_ref as label,
+    CASE
+      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
+      WHEN route_count >= 8 THEN 'normal'
+      ELSE 'small'
+    END AS station_size,
     name,
     CASE
       WHEN railway = 'station' AND station = 'light_rail' THEN 450
@@ -264,12 +234,71 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
       WHEN railway = 'crossover' THEN 700
       ELSE 50
     END AS rank,
+    uic_ref,
+    route_count,
+    count
+  FROM
+    stations_with_route_counts
+  ORDER BY
+    rank DESC NULLS LAST,
+    route_count DESC NULLS LAST;
+
+CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
+  SELECT
+    way,
+    id,
+    osm_id,
+    railway,
+    station,
+    station_size,
+    railway_ref as label,
+    name,
+    uic_ref
+  FROM
+    railway_text_stations
+  WHERE
+    railway = 'station'
+    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+    AND railway_ref IS NOT NULL
+    AND route_count >= 20;
+
+CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
+  SELECT
+    way,
+    id,
+    osm_id,
+    railway,
+    station,
+    station_size,
+    railway_ref as label,
+    name,
+    uic_ref
+  FROM
+    railway_text_stations
+  WHERE
+    railway = 'station'
+    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+    AND railway_ref IS NOT NULL
+    AND route_count >= 8
+  ORDER BY
+    route_count DESC NULLS LAST;
+
+CREATE OR REPLACE VIEW standard_railway_text_stations AS
+  SELECT
+    way,
+    id,
+    osm_id,
+    railway,
+    station,
+    station_size,
+    railway_ref as label,
+    name,
     count,
     uic_ref
-  FROM stations_with_route_counts
-  WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop')
-    AND name IS NOT NULL
-  ORDER by rank DESC NULLS LAST, route_count DESC NULLS LAST;
+  FROM
+    railway_text_stations
+  WHERE
+    name IS NOT NULL;
 
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
@@ -281,8 +310,8 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     railway_ref as label,
     name,
     uic_ref
-  FROM stations_with_route_counts
-  WHERE railway IN ('station', 'halt', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site', 'tram_stop');
+  FROM
+    stations_with_route_counts;
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
@@ -300,7 +329,6 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
           ELSE 'general/level-crossing'
         END
       WHEN railway = 'phone' THEN 'general/phone'
-      WHEN railway = 'tram_stop' THEN 'general/tram-stop'
       WHEN railway = 'border' THEN 'general/border'
       WHEN railway = 'owner_change' THEN 'general/owner-change'
       WHEN railway = 'lubricator' THEN 'general/lubricator'
@@ -320,6 +348,10 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'water_tower' THEN 'general/water_tower'
       WHEN railway = 'water_crane' THEN 'general/water_crane'
       WHEN railway = 'workshop' THEN 'general/workshop'
+      WHEN railway = 'engine_shed' THEN 'general/engine_shed'
+      WHEN railway = 'museum' THEN 'general/museum'
+      WHEN railway = 'power_supply' THEN 'general/power_supply'
+      WHEN railway = 'rolling_highway' THEN 'general/rolling_highway'
       WHEN railway = 'radio' THEN
         CASE
           WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
@@ -332,7 +364,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       ELSE 0
     END AS priority
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'tram_stop', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop')
+  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway')
 
   UNION ALL
 

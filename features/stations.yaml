@@ -4,12 +4,25 @@ features:
     example:
       label: Gd
       name: Gouda
+      station_size: normal
+    variants:
+      - description: (large)
+        example:
+          label: MH
+          name: München
+          station_size: large
+      - description: (small)
+        example:
+          label: HMEL
+          name: Melle
+          station_size: small
 
   - description: Halt
     feature: halt
     minzoom: 10
     example:
       name: Deventer
+      station_size: small
 
   - description: Tram stop
     feature: tram_stop
@@ -17,39 +30,46 @@ features:
     example:
       name: Llacuna
       count: 2
+      station_size: small
 
   - description: Service station
     feature: service_station
     minzoom: 10
     example:
       name: Wiederitzsch
+      station_size: small
 
   - description: Railway yard
     feature: yard
     minzoom: 10
     example:
       name: Schaerbeek
+      station_size: small
 
   - description: Junction
     feature: junction
     minzoom: 10
     example:
       name: Kijfhoek Zuid
+      station_size: small
 
   - description: Spur junction
     feature: spur_junction
     minzoom: 10
     example:
       name: Neusüdende
+      station_size: small
 
   - description: Railway site
     feature: site
     minzoom: 10
     example:
       name: Pápateszér
+      station_size: small
 
   - description: Crossover
     feature: crossover
     minzoom: 10
     example:
       name: Przemiarki
+      station_size: small
