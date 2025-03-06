@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
 <rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(100%, 100%, 100%)" fill-opacity="1"/>
-<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 580.262676 0 L 0 580.262676 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
-<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 750.001868 509.217577 L 509.217577 750.001868 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
-<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 240.784291 0 L 0 240.784291 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
-<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 750.001868 169.739192 L 169.739192 750.001868 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
+<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 580.262149 0 L 0 580.262149 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
+<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 750.001187 509.217114 L 509.217114 750.001187 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
+<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 240.784072 0 L 0 240.784072 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
+<path fill="none" stroke-width="120" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 750.001187 169.739038 L 169.739038 750.001187 " transform="matrix(0.0213333, 0, 0, 0.0213333, 0, 0)"/>
 </svg>
