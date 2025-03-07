@@ -1567,11 +1567,15 @@ features:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: tram departure signal A1
+  - description: tram departure signals
     country: DE
-    icon: { default: 'de/bostrab/a1' }
+    icon:
+      match: 'railway:signal:departure:states'
+      cases:
+        - { regex: '^(.*;)?DE-BOStrab:a1(;.*)?$', value: 'de/bostrab/a1' }
+        - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
     tags:
-      - { tag: 'railway:signal:departure', value: 'DE-BOStrab:a1' }
+      - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2', ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: main entry sign Ne 1
@@ -1837,6 +1841,44 @@ features:
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-VBK:fv1(;.*)?$', value: 'de/vbk/fv1' }
+        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
+        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+    tags:
+        - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale
+    country: DE
+    icon: { default: 'de/vbk/fv0' }
+    tags:
+        - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Karlsruhe AVG Vorsignale
+    country: DE
+    icon:
+      match: 'railway:signal:distant_crossing:states'
+      cases:
+        - { regex: '^(.*;)?DE-AVG:bü201(;.*)?$', value: 'de/avg/bue201' }
+        - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
+    tags:
+      - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
+      - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
+      - { tag: 'railway:signal:distant_crossing:form', value: 'light' }
+
+  - description: Karlsruhe AVG Stop Demand
+    country: DE
+    icon: { default: 'de/avg/hw1' }
+    tags:
+      - { tag: 'railway:signal:stop_demand', value: 'DE-AVG:hw1' }
+      - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
   - description: Hamburger Hochbahn main signal
     country: DE
