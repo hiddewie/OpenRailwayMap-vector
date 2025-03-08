@@ -110,6 +110,7 @@ services:
       - '8000:8000'
     environment:
       TILES_UPSTREAM: martin:3000
+      TILES_UPSTREAM_NORTH_AMERICA: martin:3000
       API_UPSTREAM: api:5000
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
