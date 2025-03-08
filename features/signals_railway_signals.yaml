@@ -1870,7 +1870,6 @@ features:
         - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
     tags:
       - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
-      - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
       - { tag: 'railway:signal:distant_crossing:form', value: 'light' }
 
   - description: Karlsruhe AVG Stop Demand
