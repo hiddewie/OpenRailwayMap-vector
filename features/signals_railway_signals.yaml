@@ -1842,7 +1842,7 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Karlsruhe VBK Vorsignale
+  - description: Karlsruhe VBK Vorsignale (light)
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -1854,7 +1854,7 @@ features:
         - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: Karlsruhe VBK Vorsignale
+  - description: Karlsruhe VBK Vorsignale (sign)
     country: DE
     icon: { default: 'de/vbk/fv0' }
     tags:
