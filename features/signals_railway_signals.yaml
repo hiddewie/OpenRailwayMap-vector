@@ -614,7 +614,7 @@ features:
     icon: { default: 'be/PSA' }
     tags:
       - { tag: 'railway:signal:shunting', values: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
-      
+
   - description: Répétiteur à Traits Lumineux
     country: BE
     icon: { default: 'be/RTL-open' }
@@ -734,7 +734,7 @@ features:
       - { tag: 'railway:signal:electricity', value: 'BE:PRL' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
-      
+
   - description: End of contact line
     country: BE
     icon: { default: 'be/FLC' }
@@ -742,7 +742,7 @@ features:
       - { tag: 'railway:signal:electricity', value: 'BE:FLC' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-      
+
   - description: train protection block markers (arrow)
     country: BE
     icon:
@@ -4299,6 +4299,13 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'SE:Vägskyddssignal' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Vägskyddsförsignal
+    country: SE
+    icon: { default: 'se/vägskyddsförsignal' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'SE:Vägskyddsförsignal' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'light' }
 
   - description: Hastighetstavla
     country: SE
