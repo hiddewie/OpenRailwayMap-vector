@@ -96,6 +96,7 @@ tags:
   - 'railway:signal:steam_locomotive'
   - 'railway:signal:steam_locomotive:form'
   - 'railway:signal:stop:form'
+  - 'railway:signal:stop:caption'
   - 'railway:signal:stop:carriages'
   - 'railway:signal:stop_demand'
   - 'railway:signal:stop_demand:form'
