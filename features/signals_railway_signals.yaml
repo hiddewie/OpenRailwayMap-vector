@@ -1572,8 +1572,8 @@ features:
     icon:
       match: 'railway:signal:departure:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:a1(;.*)?$', value: 'de/bostrab/a1' }
         - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
+      default: 'de/bostrab/a1'
     tags:
       - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
@@ -1847,9 +1847,9 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-VBK:fv1(;.*)?$', value: 'de/vbk/fv1' }
         - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
         - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+      default: 'de/vbk/fv1'
     tags:
         - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
         - { tag: 'railway:signal:distant:form', value: 'light' }
