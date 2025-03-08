@@ -1575,7 +1575,7 @@ features:
         - { regex: '^(.*;)?DE-BOStrab:a1(;.*)?$', value: 'de/bostrab/a1' }
         - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
     tags:
-      - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2', ] }
+      - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: main entry sign Ne 1
