@@ -17,9 +17,9 @@ map $http_referer $cache_assets {
 }
 
 map $request_uri $tiles_upstream {
-  # Match tiles on the form scheme://domain/name/z/x/y
-  ~^[^:]+://[^/]+/[^/]+/3/[0-2]/[0-3]$ http://${TILES_UPSTREAM_NORTH_AMERICA};
-  ~^[^:]+://[^/]+/[^/]+/4/[0-5]/[0-6]$ http://${TILES_UPSTREAM_NORTH_AMERICA};
+  # Match tiles on the form /name/z/x/y
+  ~^/[^/]+/3/[0-2]/[0-3]$ http://${TILES_UPSTREAM_NORTH_AMERICA};
+  ~^/[^/]+/4/[0-5]/[0-6]$ http://${TILES_UPSTREAM_NORTH_AMERICA};
   default http://${TILES_UPSTREAM};
 }
 
