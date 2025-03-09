@@ -402,7 +402,11 @@ const electrificationColor = (theme, voltageProperty, frequencyProperty) => ['ca
     ['==', ['get', 'electrification_state'], 'deelectrified'],
     ['==', ['get', 'electrification_state'], 'abandoned'],
   ], color_delectrified,
-  ['==', ['get', 'electrification_state'], 'no'], color_no,
+  ['any',
+    ['==', ['get', 'electrification_state'], 'no'],
+    ['==', ['get', 'electrification_state'], 'construction'],
+    ['==', ['get', 'electrification_state'], 'proposed'],
+  ], color_no,
   'gray',
 ];
 
