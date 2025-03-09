@@ -1,10 +1,10 @@
-FROM node:22-alpine as build-yaml
+FROM node:22-alpine AS build-yaml
 
 WORKDIR /build
 
 RUN npm install yaml
 
-FROM build-yaml as build-styles
+FROM build-yaml AS build-styles
 
 ARG PUBLIC_PROTOCOL
 ARG PUBLIC_HOST
@@ -13,7 +13,7 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
 
-FROM build-yaml as build-features
+FROM build-yaml AS build-features
 
 RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
   --mount=type=bind,source=features,target=features \
