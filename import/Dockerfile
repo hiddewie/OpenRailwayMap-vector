@@ -1,4 +1,4 @@
-FROM node:22-alpine as build-lua
+FROM node:22-alpine AS build-lua
 
 WORKDIR /build
 
@@ -10,7 +10,7 @@ RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
   node tags.lua.js \
     > /build/tags.lua
 
-FROM node:22-alpine as build-signals
+FROM node:22-alpine AS build-signals
 
 WORKDIR /build
 
