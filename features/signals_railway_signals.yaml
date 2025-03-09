@@ -1861,7 +1861,7 @@ features:
         - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
         - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: Karlsruhe AVG Vorsignale
+  - description: Karlsruhe AVG crossing signals
     country: DE
     icon:
       match: 'railway:signal:distant_crossing:states'
