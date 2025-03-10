@@ -19,19 +19,21 @@ export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat 
 
 mkdir -p "$OUTPUT_DIR"
 
-echo "Tiles: low-med"
+if [[ "${TILES}" != 'high' ]]; then
+  echo "Tiles: low-med"
 
-rm -f "$OUTPUT_DIR/railway_line_high.mbtiles"
-$MARTIN --min-zoom 0 --max-zoom 7 --source railway_line_high --output-file "$OUTPUT_DIR/railway_line_high.mbtiles"
-mbtiles summary "$OUTPUT_DIR/railway_line_high.mbtiles"
+  rm -f "$OUTPUT_DIR/railway_line_high.mbtiles"
+  $MARTIN --min-zoom 0 --max-zoom 7 --source railway_line_high --output-file "$OUTPUT_DIR/railway_line_high.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/railway_line_high.mbtiles"
 
-rm -f "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
-$MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
-mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
+  rm -f "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
+  $MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
 
-rm -f "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
-$MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
-mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
+  rm -f "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
+  $MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
+fi
 
 if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: high"

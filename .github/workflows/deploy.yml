@@ -132,6 +132,7 @@ jobs:
 
       - name: Generate tiles
         env:
+          TILES: high
           BBOX: ${{ matrix.bbox }}
         run: |
           docker compose run --no-deps martin-cp
