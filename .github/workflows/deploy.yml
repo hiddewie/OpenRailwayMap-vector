@@ -46,7 +46,6 @@ jobs:
 
     outputs:
       matrix: ${{ steps.bboxes.outputs.matrix }}
-      bboxes: ${{ steps.bboxes.outputs.bboxes }}
 
     steps:
       - name: Checkout
@@ -56,13 +55,13 @@ jobs:
         run: |
           {
             echo -n 'matrix='
-            jq -c '{ bbox: [.[].bboxes] | flatten }' tiles/deploy-bboxes.json
+            jq -c '{ include: [
+              (.["north-america"][].bboxes | map({bbox: ., region: "north-america"}) | .[]),
+              (.["europe"][].bboxes | map({bbox: ., region: "europe"}) | .[])
+            ]}' tiles/deploy-bboxes.json
           } >> $GITHUB_OUTPUT
 
-          {
-            echo -n 'bboxes='
-            jq -r '[.[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
-          } >> $GITHUB_OUTPUT
+  # TODO generate tiles for worldwide zooms 0-5
 
   generate-tiles:
     name: Generate tiles
@@ -108,7 +107,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: tiles-${{ matrix.bbox }}
+          name: tiles-${{ matrix.region }}-${{ matrix.bbox }}
           path: |
             tiles/split
           if-no-files-found: error
@@ -122,7 +121,13 @@ jobs:
       - tiles-bboxes
       - generate-tiles
 
-    environment: tiles-production
+    strategy:
+      matrix:
+        region:
+          - europe
+          - north-america
+
+    environment: tiles-production-${{ matrix.region }}
 
     env:
       BBOXES: ${{ needs.tiles-bboxes.outputs.bboxes }}
@@ -146,15 +151,27 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          pattern: tiles-*
+          pattern: tiles-${{ matrix.region }}-*
           merge-multiple: true
           path: tiles/split
 
+      - name: Generate bboxes
+        id: bboxes
+        run: |
+          {
+            echo -n 'bboxes='
+            jq -r '[.["${{ matrix.region }}].[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
+          } >> $GITHUB_OUTPUT
+
       - name: Merge tiles
+        env:
+          BBOXES: ${{ steps.bboxes.outputs.bboxes }}
         run: |
           docker compose run --entrypoint /tiles/merge.sh -e BBOXES --no-deps martin-cp
 
       - name: Delete split tiles
+        env:
+          BBOXES: ${{ steps.bboxes.outputs.bboxes }}
         run: |
           for bbox in $BBOXES; do
             rm -rf "tiles/split/$bbox"
@@ -168,7 +185,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          flyctl deploy --config martin-static.fly.toml --local-only
+          flyctl deploy --app openrailwaymap-tiles-${{ matrix.region }} --config martin-static.fly.toml --local-only --app
 
   deploy-api:
     name: Deploy API
