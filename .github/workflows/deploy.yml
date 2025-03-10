@@ -198,7 +198,7 @@ jobs:
         run: |
           {
             echo -n 'bboxes='
-            jq -r '[.["${{ matrix.region }}].[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
+            jq -r '[.["${{ matrix.region }}"].[].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
           } >> $GITHUB_OUTPUT
 
       - name: Merge tiles
