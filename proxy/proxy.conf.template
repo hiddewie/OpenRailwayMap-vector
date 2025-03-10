@@ -19,7 +19,7 @@ map $http_referer $cache_assets {
 map $request_uri $tiles_upstream {
   # See https://chrishewett.com/blog/slippy-tile-explorer/
   # Match tiles on the form /name/z/x/y
-  # Tile coordinate recurrence relation: (x_min_{z+1}, y_min_{z+1}, x_max_{z+1}, y_max_{z+1}) = (2 * x_min_{z}, 2 * y_min_{z}, 2 * x_max_{z}, 2 * y_max_{z} + 1)
+  # Tile coordinate recurrence relation: (x_min_{z+1}, y_min_{z+1}, x_max_{z+1}, y_max_{z+1}) = (2 * x_min_{z}, 2 * y_min_{z}, 2 * x_max_{z} + 1, 2 * y_max_{z} + 1)
   # See https://www.regular-expressions.info/numericranges.html
   # See https://www.regex-range.com/
 
