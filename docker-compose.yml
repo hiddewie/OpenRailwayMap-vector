@@ -70,6 +70,7 @@ services:
       # NL: 2.99,50.74753,7.230455,54.01786
       # PL-west: 15.0590,51.4957,19.5150,53.4155
       - BBOX
+      - TILES
       - MIN_ZOOM=0
       - MAX_ZOOM=14
       - DATABASE_URL=postgresql://postgres@db:5432/gis
