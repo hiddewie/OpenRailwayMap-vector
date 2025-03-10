@@ -59,6 +59,9 @@ map $request_uri $tiles_upstream {
   # Zoom 14: x=7168..9216 y=4095..7167
   "~^/[^/]+/14/(716[89]|71[7-9][0-9]|7[2-9][0-9]{2}|8[0-9]{3}|9[01][0-9]{2}|920[0-9]|921[0-6])/(409[5-9]|4[1-9][0-9]{2}|[56][0-9]{3}|70[0-9]{2}|71[0-5][0-9]|716[0-7])$" http://${TILES_UPSTREAM_EUROPE};
 
+  # Tile specifications
+  "~^/(high|standard|speed|signals|electrification)$" http://${TILES_UPSTREAM_EUROPE};
+
   # Fallback: default tile server
   default http://${TILES_UPSTREAM};
 }
