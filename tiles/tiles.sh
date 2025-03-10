@@ -6,6 +6,10 @@
 #  - https://maplibre.org/martin/martin-cp.html
 #  - https://maplibre.org/martin/mbtiles-copy.html
 
+# Input variables:
+#  - BBOX: the bounding box of the region to generate
+#  - TILES: generate only the low/medium zoom tiles if the value is "low-med"
+
 set -e
 
 OUTPUT_DIR="/tiles"
@@ -29,34 +33,36 @@ rm -f "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
 $MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
 mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
 
-echo "Tiles: high"
+if [[ "${TILES}" != 'low-med' ]]; then
+  echo "Tiles: high"
 
-rm -f /tiles/high.mbtiles
-$MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file /tiles/high.mbtiles
-mbtiles summary /tiles/high.mbtiles
+  rm -f /tiles/high.mbtiles
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file /tiles/high.mbtiles
+  mbtiles summary /tiles/high.mbtiles
 
-echo "Tiles: standard"
+  echo "Tiles: standard"
 
-rm -f "$OUTPUT_DIR/standard.mbtiles"
-$MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref --output-file "$OUTPUT_DIR/standard.mbtiles"
-mbtiles summary "$OUTPUT_DIR/standard.mbtiles"
+  rm -f "$OUTPUT_DIR/standard.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref --output-file "$OUTPUT_DIR/standard.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/standard.mbtiles"
 
-echo "Tiles: speed"
+  echo "Tiles: speed"
 
-rm -f "$OUTPUT_DIR/speed.mbtiles"
-$MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source speed_railway_signals --output-file "$OUTPUT_DIR/speed.mbtiles"
-mbtiles summary "$OUTPUT_DIR/speed.mbtiles"
+  rm -f "$OUTPUT_DIR/speed.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source speed_railway_signals --output-file "$OUTPUT_DIR/speed.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/speed.mbtiles"
 
-echo "Tiles: signals"
+  echo "Tiles: signals"
 
-rm -f "$OUTPUT_DIR/signals.mbtiles"
-$MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
-mbtiles summary "$OUTPUT_DIR/signals.mbtiles"
+  rm -f "$OUTPUT_DIR/signals.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/signals.mbtiles"
 
-echo "Tiles: electrification"
+  echo "Tiles: electrification"
 
-rm -f "$OUTPUT_DIR/electrification.mbtiles"
-$MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source electrification_signals --output-file "$OUTPUT_DIR/electrification.mbtiles"
-mbtiles summary "$OUTPUT_DIR/electrification.mbtiles"
+  rm -f "$OUTPUT_DIR/electrification.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source electrification_signals --output-file "$OUTPUT_DIR/electrification.mbtiles"
+  mbtiles summary "$OUTPUT_DIR/electrification.mbtiles"
+fi
 
 echo "Done"
