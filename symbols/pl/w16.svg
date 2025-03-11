@@ -1,7 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="5.065744" viewBox="0 0 24 5.065744">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.25" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.00435384 0.00435384 L 71.995646 0.00435384 L 71.995646 14.99764 L 0.00435384 14.99764 Z M 0.00435384 0.00435384 " transform="matrix(0.33218, 0, 0, 0.33218, 0.0415225, 0.0415225)"/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 4.359375 0.0429688 L 1.371094 5.023438 L 5.023438 5.023438 L 8.015625 0.0429688 Z M 4.359375 0.0429688 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.667969 0.0429688 L 8.679688 5.023438 L 12.332031 5.023438 L 15.320312 0.0429688 Z M 11.667969 0.0429688 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 18.976562 0.0429688 L 15.984375 5.023438 L 19.640625 5.023438 L 22.628906 0.0429688 Z M 18.976562 0.0429688 "/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="23.99999"
+   height="4.948452"
+   viewBox="0 0 6.3499973 1.3092779"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="scale(0.01237113)">
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       id="rect12"
+       width="513.29163"
+       height="105.83333"
+       x="0"
+       y="0" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 27.781249,105.83333 88.88415,0 h 79.375 l -61.1029,105.83333 z"
+       id="path12" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 186.53125,105.83333 247.63415,2.9484536e-6 h 79.375 L 265.90625,105.83333 Z"
+       id="path12-8" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 345.28125,105.83333 406.38415,3.2470703e-6 h 79.375 L 424.65625,105.83333 Z"
+       id="path12-1" />
+  </g>
 </svg>
