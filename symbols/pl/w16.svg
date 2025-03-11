@@ -1,37 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="23.99999"
-   height="4.948452"
-   viewBox="0 0 6.3499973 1.3092779"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="scale(0.01237113)">
-    <rect
-       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       id="rect12"
-       width="513.29163"
-       height="105.83333"
-       x="0"
-       y="0" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 27.781249,105.83333 88.88415,0 h 79.375 l -61.1029,105.83333 z"
-       id="path12" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 186.53125,105.83333 247.63415,2.9484536e-6 h 79.375 L 265.90625,105.83333 Z"
-       id="path12-8" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 345.28125,105.83333 406.38415,3.2470703e-6 h 79.375 L 424.65625,105.83333 Z"
-       id="path12-1" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="4.948454" viewBox="0 0 24 4.948454">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 0 L 24 0 L 24 4.949219 L 0 4.949219 Z M 0 0 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 1.300781 4.949219 L 4.15625 0 L 7.867188 0 L 5.011719 4.949219 Z M 1.300781 4.949219 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8.722656 4.949219 L 11.578125 0 L 15.289062 0 L 12.433594 4.949219 Z M 8.722656 4.949219 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 16.144531 4.949219 L 19 0 L 22.710938 0 L 19.855469 4.949219 Z M 16.144531 4.949219 "/>
 </svg>
