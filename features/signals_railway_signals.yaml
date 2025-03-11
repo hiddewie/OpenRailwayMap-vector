@@ -3657,11 +3657,10 @@ features:
     icon:
       match: 'railway:signal:humping:form'
       cases:
-        - { regex: 'light', value: 'pl/rt3-light'}
+        - { regex: '^light$', value: 'pl/rt3-light' }
       default: 'pl/rt3-semaphore'
     tags:
       - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
-      - { tag: 'railway:signal:humping:form', value: 'semaphore' }
 
   - description: Tarcza zatrzymania (D1)
     country: PL
@@ -3850,7 +3849,7 @@ features:
       - { regex: '^R[1-8]$', value: 'pl/w28-{}'}
       default: 'pl/w28-{R1}'
     tags:
-      - { tag: 'railway:signal:radio', value: 'PL-PKP:w28'}
+      - { tag: 'railway:signal:radio', value: 'PL-PKP:w28' }
       - { tag: 'railway:signal:radio:form', value: 'sign'}
 
   - description: Wskaźnik nawiązania łączności (W29)
@@ -3887,9 +3886,9 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-      - { regex: '^PL-PKP:wetcs2$', value: 'pl/wetcs2' }
-      - { regex: '^PL-PKP:wetcs3$', value: 'pl/wetcs3' }
-    default: 'pl/wetcs1'
+        - { regex: '^PL-PKP:wetcs2$', value: 'pl/wetcs2' }
+        - { regex: '^PL-PKP:wetcs3$', value: 'pl/wetcs3' }
+      default: 'pl/wetcs1'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs1', 'PL-PKP:wetcs2', 'PL-PKP:wetcs3'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -3899,9 +3898,9 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-      - { regex: '^PL-PKP:wetcs5$', value: 'pl/wetcs5' }
-      - { regex: '^PL-PKP:wetcs6$', value: 'pl/wetcs6' }
-    default: 'pl/wetcs4'
+        - { regex: '^PL-PKP:wetcs5$', value: 'pl/wetcs5' }
+        - { regex: '^PL-PKP:wetcs6$', value: 'pl/wetcs6' }
+      default: 'pl/wetcs4'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs4', 'PL-PKP:wetcs5', 'PL-PKP:wetcs6'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -3911,9 +3910,9 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-      - { regex: '^PL-PKP:wetcs8$', value: 'pl/wetcs8' }
-      - { regex: '^PL-PKP:wetcs9$', value: 'pl/wetcs9' }
-    default: 'pl/wetcs7'
+        - { regex: '^PL-PKP:wetcs8$', value: 'pl/wetcs8' }
+        - { regex: '^PL-PKP:wetcs9$', value: 'pl/wetcs9' }
+      default: 'pl/wetcs7'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs7', 'PL-PKP:wetcs8', 'PL-PKP:wetcs9'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
