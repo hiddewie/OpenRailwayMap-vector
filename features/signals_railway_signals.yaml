@@ -3530,8 +3530,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: pl/s1a-4}
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3'}
+        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
         - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
       default: 'pl/s2-2'
     tags:
