@@ -1,36 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="16.000004"
-   height="16.000004"
-   viewBox="0 0 4.2333343 4.2333343"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-     transform="matrix(-0.00846667,0,0,-0.00846667,4.6566685,4.6566685)">
-    <path
-       d="m 540.00009,550 c 5.54,0 9.99991,-4.45991 9.99991,-9.99991 V 59.999935 c 0,-5.54 -4.45991,-9.999907 -9.99991,-9.999907 H 59.999935 c -5.54,0 -9.999907,4.459907 -9.999907,9.999907 V 540.00009 c 0,5.54 4.459907,9.99991 9.999907,9.99991 z m -7.50031,-9.99991 H 67.500252 c -4.154998,0 -7.500317,-3.34532 -7.500317,-7.50031 V 67.500252 c 0,-4.154998 3.345319,-7.500317 7.500317,-7.500317 H 532.49978 c 4.15499,0 7.50031,3.345319 7.50031,7.500317 V 532.49978 c 0,4.15499 -3.34532,7.50031 -7.50031,7.50031 z"
-       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.220486"
-       id="path18" />
-    <rect
-       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.211666;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       id="rect26-7-2"
-       width="480"
-       height="480"
-       x="-540"
-       y="-540"
-       transform="scale(-1)"
-       ry="7.4999962" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.220486;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 74.999996,382 H 300 V 525 L 540,300 300,75 V 218 H 74.999996 Z"
-       id="path27" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0.320312 0 C 0.144531 0 0 0.144531 0 0.320312 L 0 15.679688 C 0 15.855469 0.144531 16 0.320312 16 L 15.679688 16 C 15.855469 16 16 15.855469 16 15.679688 L 16 0.320312 C 16 0.144531 15.855469 0 15.679688 0 Z M 0.558594 0.320312 L 15.441406 0.320312 C 15.574219 0.320312 15.679688 0.425781 15.679688 0.558594 L 15.679688 15.441406 C 15.679688 15.574219 15.574219 15.679688 15.441406 15.679688 L 0.558594 15.679688 C 0.425781 15.679688 0.320312 15.574219 0.320312 15.441406 L 0.320312 0.558594 C 0.320312 0.425781 0.425781 0.320312 0.558594 0.320312 Z M 0.558594 0.320312 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.211666" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.558594 0.320313 L 15.44141 0.320313 C 15.574222 0.320313 15.679691 0.425781 15.679691 0.558594 L 15.679691 15.44141 C 15.679691 15.574222 15.574222 15.679691 15.44141 15.679691 L 0.558594 15.679691 C 0.425781 15.679691 0.320313 15.574222 0.320313 15.44141 L 0.320313 0.558594 C 0.320313 0.425781 0.425781 0.320313 0.558594 0.320313 Z M 0.558594 0.320313 " transform="matrix(1, 0, 0, 1, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.220486" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.199222 5.375001 L 8.000002 5.375001 L 8.000002 0.800781 L 0.320313 8.000002 L 8.000002 15.199222 L 8.000002 10.625003 L 15.199222 10.625003 Z M 15.199222 5.375001 " transform="matrix(1, 0, 0, 1, 0, 0)"/>
 </svg>
