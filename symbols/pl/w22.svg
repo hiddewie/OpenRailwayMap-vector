@@ -1,34 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="10"
-   height="10"
-   viewBox="0 0 2.6458332 2.6458332"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="scale(0.02020305)">
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.64583;stroke-miterlimit:5"
-       id="rect1"
-       width="92.604164"
-       height="92.604164"
-       x="46.302082"
-       y="-46.302082"
-       transform="rotate(45)" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:15.875;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
-       d="M 65.48103,117.7329 V 38.357901"
-       id="path3" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:15.875;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
-       d="M 33.731032,46.2954 H 97.231028"
-       id="path6" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5 0 L 10 5 L 5 10 L 0 5 Z M 5 0 "/>
+<path fill="none" stroke-width="15.875" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="5" d="M 65.481034 117.712391 L 65.481034 38.367794 " transform="matrix(0.076358, 0, 0, 0.076358, 0, 0)"/>
+<path fill="none" stroke-width="15.875" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="5" d="M 33.712501 46.297138 L 97.249568 46.297138 " transform="matrix(0.076358, 0, 0, 0.076358, 0, 0)"/>
 </svg>
