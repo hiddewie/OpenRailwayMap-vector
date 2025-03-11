@@ -3846,7 +3846,7 @@ features:
     icon:
       match: 'railway:signal:radio:frequency'
       cases:
-      - { regex: '^R[1-8]$', value: 'pl/w28-{}'}
+      - { regex: '^R[1-8]$', value: 'pl/w28-{}', example: 'pl/w28-{R3}' }
       default: 'pl/w28-{R1}'
     tags:
       - { tag: 'railway:signal:radio', value: 'PL-PKP:w28' }
