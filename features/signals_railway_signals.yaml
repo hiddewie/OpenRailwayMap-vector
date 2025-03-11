@@ -3517,8 +3517,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4'}
-        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3'}
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
+        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
       default: 'pl/s2-3'
     tags:
     - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -3646,8 +3646,8 @@ features:
     icon:
       match: 'railway:signal:distant'
       cases:
-        - { regex: 'PL-PKP:od', value: 'pl/od'}
-        - { regex: 'PL-PKP:ot', value: 'pl/ot'}
+        - { regex: 'PL-PKP:od', value: 'pl/od' }
+        - { regex: 'PL-PKP:ot', value: 'pl/ot' }
       default: 'pl/on'
     tags:
       - { tag: 'railway:signal:distant', values: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
@@ -3823,11 +3823,11 @@ features:
     icon:
       match: 'railway:signal:short_route'
       cases:
-        - { regex: 'PL-PKP:w20', value: 'pl/w20'}
-        - { regex: 'PL-PKP:w19;PL-PKP:w20', value: 'pl/w19-20'}
+        - { regex: '^PL-PKP:w20$', value: 'pl/w20' }
+        - { regex: '^PL-PKP:w19;PL-PKP:w20$', value: 'pl/w19-20' }
       default: 'pl/w19'
     tags:
-      - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20']}
+      - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
