@@ -1,41 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="24.000002"
-   height="6.0000005"
-   viewBox="0 0 6.3500005 1.5875001"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="scale(0.015)">
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke-width:23.812;stroke-miterlimit:5"
-       id="rect12"
-       width="423.33334"
-       height="105.83334"
-       x="0"
-       y="0" />
-    <path
-       style="fill:#ff9900;fill-opacity:1;stroke:none;stroke-width:23.812;stroke-miterlimit:5"
-       d="M 2.6458333,2.6458313 211.66667,52.916666 420.68749,2.6458313 Z"
-       id="path12" />
-    <path
-       style="fill:#ff9900;fill-opacity:1;stroke:none;stroke-width:23.812;stroke-miterlimit:5"
-       d="M 2.6458333,13.530949 V 92.302384 L 166.40749,52.916666 Z"
-       id="path13" />
-    <path
-       style="fill:#ff9900;fill-opacity:1;stroke:none;stroke-width:23.812;stroke-miterlimit:5"
-       d="M 2.6458333,103.1875 H 420.68749 L 211.66666,52.916663 Z"
-       id="path14" />
-    <path
-       style="fill:#ff9900;fill-opacity:1;stroke:none;stroke-width:23.812;stroke-miterlimit:5"
-       d="M 256.92585,52.916666 420.68749,13.530951 v 78.771425 z"
-       id="path15" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="6" viewBox="0 0 24 6">
+<rect x="-2.4" y="-0.6" width="28.8" height="7.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(100%, 60%, 0%)" fill-opacity="1" d="M 0.148438 0.148438 L 12 3 L 23.851562 0.148438 Z M 0.148438 0.148438 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 60%, 0%)" fill-opacity="1" d="M 0.148438 0.765625 L 0.148438 5.234375 L 9.433594 3 Z M 0.148438 0.765625 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 60%, 0%)" fill-opacity="1" d="M 0.148438 5.851562 L 23.851562 5.851562 L 12 3 Z M 0.148438 5.851562 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 60%, 0%)" fill-opacity="1" d="M 14.566406 3 L 23.851562 0.765625 L 23.851562 5.234375 Z M 14.566406 3 "/>
 </svg>
