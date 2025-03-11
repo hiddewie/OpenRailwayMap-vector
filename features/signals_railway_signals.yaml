@@ -3532,7 +3532,7 @@ features:
       cases:
         - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: pl/s1a-4}
         - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3'}
-        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/os1-2'}
+        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
       default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -3643,7 +3643,7 @@ features:
 
   - description: Tarcza ostrzegawcze kształtowe (To, nieruchoma, dwustawna i trzystawna)
     country: PL
-    icon: 
+    icon:
       match: 'railway:signal:distant'
       cases:
         - { regex: 'PL-PKP:od', value: 'pl/od'}
@@ -3697,7 +3697,7 @@ features:
 
   - description: Wskaźniki ostrzegania (W6, W6a, W6b i W7)
     country: PL
-    icon: 
+    icon:
       match: 'railway:signal:whistle'
       cases:
       - { regex: '^PL-PKP:w6a$', value: 'pl/w6a' }
@@ -3873,16 +3873,16 @@ features:
 
   - description: Wskaźniki obowiązywania systemu ERTMS/GSM-R (W33 i W34)
     country: PL
-    icon: 
+    icon:
       match: 'railway:signal:radio'
       cases:
         - { regex: '^PL-PKP:w34$', value: 'pl/w34' }
-    default: 'pl/w33'
+      default: 'pl/w33'
     tags:
       - { tag: 'railway:signal:radio', values: ['PL-PKP:w33', 'PL-PKP:w34'] }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
- - description: Wskaźniki ETCS L1 Limited Supervision
+  - description: Wskaźniki ETCS L1 Limited Supervision
     country: PL
     icon:
       match: 'railway:signal:train_protection'
