@@ -1,29 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="2.015872mm"
-   height="2.6458321mm"
-   viewBox="0 0 2.015872 2.6458321"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="scale(0.0062996)">
-    <rect
-       style="opacity:1;vector-effect:non-scaling-stroke;fill:#000000;stroke:#000000;stroke-width:0.646652;stroke-linecap:square;stroke-miterlimit:5;-inkscape-stroke:hairline"
-       id="rect2"
-       width="320"
-       height="420"
-       x="0"
-       y="0" />
-    <path
-       style="opacity:1;fill:none;stroke:#ffffff;stroke-width:55;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
-       d="M 73.379421,123.37943 C 246.62059,296.62058 246.62059,296.62058 246.62059,296.62058"
-       id="path2" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8.380952" height="11" viewBox="0 0 8.380952 11">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.646652" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="5" d="M 0 0 L 7.620735 0 L 7.620735 9.999995 L 0 9.999995 Z M 0 0 " transform="matrix(1.100001, 0, 0, 1.100001, 0, 0)"/>
+<path fill="none" stroke-width="55" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="5" d="M 73.380683 123.345173 C 246.690346 296.654836 246.690346 296.654836 246.690346 296.654836 " transform="matrix(0.0261905, 0, 0, 0.0261905, 0, 0)"/>
 </svg>
