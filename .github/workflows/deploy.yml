@@ -157,6 +157,7 @@ jobs:
 
     needs:
       - tiles-bboxes
+      # TODO deploy per region
       - generate-tiles
 
     strategy:
