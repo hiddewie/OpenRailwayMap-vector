@@ -1,36 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="16.000006"
-   height="16.000006"
-   viewBox="0 0 4.2333348 4.2333348"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     style="vector-effect:non-scaling-stroke;stroke:#ffffff;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-     transform="matrix(0,-0.00846667,0.00846667,0,-0.4233335,4.6566685)">
-    <rect
-       style="vector-effect:non-scaling-stroke;fill:#005dd1;fill-opacity:1;stroke:#ffffff;stroke-width:0.220486;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       id="rect26"
-       width="500"
-       height="500"
-       x="-550"
-       y="-550"
-       transform="scale(-1)"
-       ry="10" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.220486;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="m 525,218 -225,0.33333 V 75 L 49.999998,300 300,525 299.99999,382.5 525,382 Z"
-       id="path27" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#f3de38;fill-opacity:1;stroke:none;stroke-width:0.220486;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 275,357 V 468.91245 L 87.319503,300 275,131.08757 V 243 h 250 v 114 z"
-       id="path28" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path fill-rule="nonzero" fill="rgb(0%, 36.470588%, 81.960784%)" fill-opacity="1" stroke-width="0.220486" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 16.000006 0.320313 L 16.000006 15.679693 C 16.000006 15.855474 15.855474 16.000006 15.679693 16.000006 L 0.320313 16.000006 C 0.144531 16.000006 0 15.855474 0 15.679693 L 0 0.320313 C 0 0.144531 0.144531 0 0.320313 0 L 15.679693 0 C 15.855474 0 16.000006 0.144531 16.000006 0.320313 Z M 16.000006 0.320313 " transform="matrix(1, 0, 0, 1, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 5.375 0.800781 L 5.386719 8 L 0.800781 8 L 8 16 L 15.199219 8 L 10.640625 8 L 10.625 0.800781 Z M 5.375 0.800781 "/>
+<path fill-rule="nonzero" fill="rgb(95.294118%, 87.058824%, 21.960784%)" fill-opacity="1" d="M 9.824219 8.800781 L 13.40625 8.800781 L 8 14.804688 L 2.59375 8.800781 L 6.175781 8.800781 L 6.175781 0.800781 L 9.824219 0.800781 Z M 9.824219 8.800781 "/>
 </svg>
