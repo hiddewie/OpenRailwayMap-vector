@@ -3646,8 +3646,8 @@ features:
     icon:
       match: 'railway:signal:distant'
       cases:
-        - { regex: 'PL-PKP:od', value: 'pl/od' }
-        - { regex: 'PL-PKP:ot', value: 'pl/ot' }
+        - { regex: '^PL-PKP:od$', value: 'pl/od' }
+        - { regex: '^PL-PKP:ot$', value: 'pl/ot' }
       default: 'pl/on'
     tags:
       - { tag: 'railway:signal:distant', values: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
