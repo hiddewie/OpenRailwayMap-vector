@@ -3,8 +3,8 @@ name: Nightly update
 on:
   workflow_dispatch: ~
   schedule:
-    # Run daily at 17:47 UTC
-    - cron: '47 17 * * *'
+    # Run daily at 23:47 or 00:47 Europe/Amsterdam
+    - cron: '47 22 * * *'
 
 jobs:
   update-data:
