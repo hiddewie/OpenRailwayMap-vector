@@ -34,11 +34,11 @@
          id="layer2-73"
          transform="matrix(0.99992559,0,0,0.99992559,0.02232287,0.00446468)">
         <g
-           id="layer2-3"
-           transform="matrix(1.0715081,0,0,1.0715081,-32.167534,13.210736)">
+           id="layer2-9"
+           transform="matrix(1.0715081,0,0,1.0715081,-32.185717,13.210713)">
           <g
              id="layer2-4"
-             transform="matrix(0.83990286,0,0,0.83990286,-32.946568,9.6373949)"
+             transform="matrix(0.83990286,0,0,0.83990286,-32.94656,9.6373896)"
              style="stroke-width:50.0058;stroke-dasharray:none">
             <path
                id="path6"
@@ -47,11 +47,14 @@
           </g>
           <g
              id="layer2-0"
-             transform="translate(200,46.999998)">
+             transform="translate(200,46.999998)" />
+          <g
+             id="layer2-47"
+             transform="matrix(0.83999984,0,0,0.83999984,177.01705,9.6000858)">
             <path
-               id="path18-5"
-               style="fill:none;stroke:#000000;stroke-width:42;stroke-linecap:butt;stroke-dasharray:none"
-               d="m 417.99997,223 c 0,34.79394 -28.20607,62.99999 -63.00001,62.99999 -34.79393,0 -62.99999,-28.20605 -62.99999,-62.99999 V 96.999996 c -1e-5,-34.793931 28.20607,-62.999995 63,-62.999996 34.79394,10e-7 63,28.206065 63,62.999996 z" />
+               style="fill:none;stroke:#000000;stroke-width:50;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+               d="M 549.99998,84.999998 H 374.99999 V 185 l 74.99999,1e-5 c 41.42134,0 74.99998,33.57864 74.99998,74.99999 l 3e-5,50 v 0 c 0,41.42135 -33.57864,74.99999 -75.00002,74.99999 -41.42138,0 -75.00002,-33.57864 -75.00002,-74.99999"
+               id="path15" />
           </g>
         </g>
       </g>

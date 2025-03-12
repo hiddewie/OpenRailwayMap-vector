@@ -24,11 +24,32 @@
        id="path10" />
     <g
        id="layer2"
-       transform="matrix(0.00471495,0,0,0.00471495,64.024099,52.80232)">
-      <path
-         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
-         id="path3" />
+       transform="matrix(0.0047454,0,0,0.0047454,64.010356,52.800493)">
+      <g
+         id="layer2-4"
+         transform="matrix(0.83990286,0,0,0.83990286,9.0534305,9.595473)"
+         style="stroke-width:50.0058;stroke-dasharray:none">
+        <path
+           id="path6"
+           style="fill:none;stroke:#000000;stroke-width:50.0058;stroke-dasharray:none"
+           d="m 375,159.97398 c 0.0115,-33.10428 21.72567,-62.285615 53.4315,-71.805734 31.70583,-9.520117 65.90331,2.87297 84.1488,30.495334 18.2455,27.62237 16.22304,63.93994 -4.97661,89.36568 L 374.99999,368.98525 V 385 h 174.99999" />
+      </g>
+      <g
+         id="layer2-0"
+         transform="translate(200,46.999998)" />
+      <g
+         id="layer2-45"
+         transform="translate(234.99999,1.9999971)">
+        <g
+           id="layer2-7"
+           transform="matrix(0.84000004,0,0,0.84000004,-58.000004,7.6000009)"
+           style="stroke-width:50;stroke-dasharray:none">
+          <path
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:50;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+             d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
+             id="path3" />
+        </g>
+      </g>
     </g>
   </g>
 </svg>
