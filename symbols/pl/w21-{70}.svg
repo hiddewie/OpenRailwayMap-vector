@@ -1,5 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.498917 0.498917 L 15.719833 0.498917 L 15.719833 15.719833 L 0.498917 15.719833 Z M 0.498917 0.498917 " transform="matrix(0.986513, 0, 0, 0.986513, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 4.804688 5.613281 L 4.804688 2.386719 L 11.195312 2.386719 L 11.195312 3.996094 L 7.394531 13.613281 L 5.589844 13.613281 L 9.398438 3.996094 L 6.417969 3.996094 L 6.417969 5.613281 Z M 4.804688 5.613281 "/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="12.190475"
+   height="15.999999"
+   viewBox="0 0 3.2253966 4.2333331"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath20">
+      <g
+         id="use20"
+         style="fill:none;stroke:none">
+        <path
+           style="fill:none;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
+           d="m 91.533231,63.966171 h 1.612699 v 1.209524 h -1.612699 z"
+           id="path20" />
+      </g>
+    </clipPath>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-90.726883,-61.647919)">
+    <rect
+       style="fill:#000000;stroke-width:0.403173;stroke-miterlimit:5"
+       id="rect1"
+       width="3.2253966"
+       height="4.2333331"
+       x="90.726883"
+       y="61.647919" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
+       d="m 91.533231,61.950298 -0.201587,0.201587 0.201587,0.201587 h 1.612699 v 1.209524 l 0.403174,0.403175 v 1.411111 l -0.201587,0.201587 -0.201587,-0.201587 v -1.411111 l 0.403174,-0.403175 V 62.353472 L 93.14593,61.950298 Z"
+       id="path21" />
+  </g>
 </svg>

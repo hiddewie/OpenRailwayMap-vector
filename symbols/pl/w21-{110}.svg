@@ -1,6 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.498917 0.498917 L 15.719833 0.498917 L 15.719833 15.719833 L 0.498917 15.719833 Z M 0.498917 0.498917 " transform="matrix(0.986513, 0, 0, 0.986513, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 5.464844 13.625 L 5.464844 4.078125 L 3.863281 5.25 L 3.863281 3.539062 L 5.464844 2.375 L 7.085938 2.375 L 7.085938 13.625 Z M 5.464844 13.625 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 10.519531 13.625 L 10.519531 4.078125 L 8.914062 5.25 L 8.914062 3.539062 L 10.519531 2.375 L 12.136719 2.375 L 12.136719 13.625 Z M 10.519531 13.625 "/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="17.142857"
+   height="15.999999"
+   viewBox="0 0 4.5357141 4.2333331"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-57.263393,-53.445835)">
+    <rect
+       style="fill:#000000;stroke-width:0.403173;stroke-miterlimit:5"
+       id="rect1"
+       width="4.5357141"
+       height="4.2333331"
+       x="57.263393"
+       y="53.445835" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.403173;stroke-miterlimit:5"
+       d="m 57.46498,53.949802 v 3.426984 h 0.403175 v -3.426984 l -0.201588,-0.201588 z"
+       id="path18" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.403173;stroke-miterlimit:5"
+       d="m 59.178472,53.949802 v 3.426984 h 0.403175 v -3.426984 l -0.201588,-0.201588 z"
+       id="path18-1" />
+  </g>
 </svg>
