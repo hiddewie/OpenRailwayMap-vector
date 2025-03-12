@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="900mm"
-   height="760mm"
-   viewBox="0 0 900 760"
+   width="18.344522"
+   height="16.000013"
+   viewBox="0 0 4.8536549 4.2333368"
    version="1.1"
    id="svg1"
    xmlns="http://www.w3.org/2000/svg"
@@ -12,10 +12,11 @@
   <defs
      id="defs1" />
   <g
-     id="layer1">
+     id="layer1"
+     transform="matrix(0.00557018,0,0,0.00557018,-0.08155676,0)">
     <path
        id="path2-9"
-       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.264583;-inkscape-stroke:hairline"
+       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-stroke:hairline"
        d="m 866.02546,0 c 7.14158,0.0075 13.73727,3.822396 17.30481,10.009065 3.56756,6.186651 3.56556,13.806155 0.005,19.99094 L 467.65374,750.01817 c -3.57771,6.18079 -10.17893,9.98563 -17.3205,9.98188 -7.14159,-0.004 -13.73927,-3.81522 -17.31533,-9.99989 L 17.315285,29.990942 C 13.745744,23.793365 13.75172,16.173863 17.325741,9.990945 20.899762,3.8080268 27.405971,0 34.547547,0 Z" />
     <path
        style="vector-effect:non-scaling-stroke;fill:#ed6b21;fill-opacity:1;stroke:none;stroke-width:0.264584;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
@@ -23,7 +24,8 @@
        id="path2" />
   </g>
   <g
-     id="layer2">
+     id="layer2"
+     transform="matrix(0.00557018,0,0,0.00557018,-0.08155676,0)">
     <g
        id="layer2-4"
        transform="matrix(0.83990286,0,0,0.83990286,-32.946568,9.6373949)"
