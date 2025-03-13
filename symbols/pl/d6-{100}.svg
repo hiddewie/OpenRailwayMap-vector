@@ -1,42 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="18.344522"
-   height="16.000013"
-   viewBox="0 0 4.8536549 4.2333368"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="matrix(0.00557018,0,0,0.00557018,-0.08155676,0)">
-    <path
-       id="path2-9"
-       style="vector-effect:non-scaling-stroke;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;-inkscape-stroke:hairline"
-       d="m 866.02546,0 c 7.14158,0.0075 13.73727,3.822396 17.30481,10.009065 3.56756,6.186651 3.56556,13.806155 0.005,19.99094 L 467.65374,750.01817 c -3.57771,6.18079 -10.17893,9.98563 -17.3205,9.98188 -7.14159,-0.004 -13.73927,-3.81522 -17.31533,-9.99989 L 17.315285,29.990942 C 13.745744,23.793365 13.75172,16.173863 17.325741,9.990945 20.899762,3.8080268 27.405971,0 34.547547,0 Z" />
-    <path
-       style="vector-effect:non-scaling-stroke;fill:#ed6b21;fill-opacity:1;stroke:none;stroke-width:0.264584;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       d="M 86.602532,50 H 813.39744 L 449.99999,679.42286 Z"
-       id="path2" />
-  </g>
-  <g
-     id="layer2"
-     transform="matrix(0.00557018,0,0,0.00557018,-0.08155676,0)">
-    <g
-       id="layer2-7"
-       transform="translate(-150)">
-      <path
-         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
-         id="path3" />
-    </g>
-    <path
-       id="path18-5"
-       style="fill:none;stroke:#000000;stroke-width:50;stroke-linecap:butt;stroke-dasharray:none"
-       d="m 574.99998,310 c 0,41.42135 -33.57865,74.99999 -75,74.99999 -41.42135,0 -74.99999,-33.57864 -74.99999,-74.99999 V 160 c -1e-5,-41.42135 33.57865,-74.999996 75,-74.999997 41.42135,10e-7 74.99999,33.578647 74.99999,74.999997 z" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18.344507" height="16" viewBox="0 0 18.344507 16">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 17.925781 0 C 18.074219 0 18.214844 0.0820312 18.289062 0.210938 C 18.363281 0.339844 18.363281 0.5 18.289062 0.632812 L 9.535156 15.789062 C 9.460938 15.921875 9.324219 16 9.171875 16 C 9.023438 16 8.882812 15.917969 8.808594 15.789062 L 0.0546875 0.632812 C -0.0195312 0.5 -0.0195312 0.339844 0.0546875 0.210938 C 0.132812 0.0820312 0.269531 0 0.417969 0 Z M 17.925781 0 "/>
+<path fill-rule="nonzero" fill="rgb(92.941176%, 41.960784%, 12.941176%)" fill-opacity="1" d="M 1.515625 1.050781 L 16.816406 1.050781 L 9.164062 14.304688 Z M 1.515625 1.050781 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.007812 1.261719 L 4.953125 3.367188 L 6.007812 3.367188 L 6.007812 8.632812 L 7.058594 8.632812 L 7.058594 1.261719 Z M 6.007812 1.261719 "/>
+<path fill="none" stroke-width="50" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 574.993265 310.048849 C 574.993265 351.425805 541.409279 385.009792 500.032323 385.009792 C 458.655367 385.009792 425.07138 351.425805 425.07138 310.048849 L 425.07138 159.941417 C 425.07138 118.564461 458.655367 84.980475 500.032323 84.980475 C 541.409279 84.980475 574.993265 118.564461 574.993265 159.941417 Z M 574.993265 310.048849 " transform="matrix(0.0210526, 0, 0, 0.0210526, -0.308246, 0)"/>
 </svg>
