@@ -35,7 +35,7 @@
          transform="matrix(0.99992559,0,0,0.99992559,0.02232287,0.00446468)">
         <g
            id="layer2-7"
-           transform="translate(-150)">
+           transform="translate(-125.00002)">
           <path
              style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
@@ -43,7 +43,7 @@
         </g>
         <g
            id="layer2-8"
-           transform="matrix(1.000074,0,0,1.000074,99.985208,-0.00444243)">
+           transform="matrix(1.000074,0,0,1.000074,74.985223,-0.0044486)">
           <path
              style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
              d="M 349.99998,59.999998 V 110 H 494.44325 L 349.99998,410 h 55.49131 L 549.99998,110 V 59.999998 Z"

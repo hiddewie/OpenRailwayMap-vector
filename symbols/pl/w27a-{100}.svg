@@ -31,17 +31,20 @@
        id="layer2"
        transform="matrix(0.00846667,0,0,0.00846667,-1.6933343,0.12699991)">
       <g
-         id="layer2-7"
-         transform="translate(-150)">
+         id="g6">
+        <g
+           id="layer2-7"
+           transform="translate(-124.99999,-8.6810989e-5)">
+          <path
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
+             id="path3" />
+        </g>
         <path
-           style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
-           id="path3" />
+           id="path18-5"
+           style="fill:none;stroke:#000000;stroke-width:50;stroke-linecap:butt;stroke-dasharray:none"
+           d="m 599.99992,309.99991 c 0,41.42135 -33.57865,74.99999 -75,74.99999 -41.42135,0 -74.99999,-33.57864 -74.99999,-74.99999 v -150 c -1e-5,-41.42135 33.57865,-74.999997 75,-74.999998 41.42135,1e-6 74.99999,33.578648 74.99999,74.999998 z" />
       </g>
-      <path
-         id="path18-5"
-         style="fill:none;stroke:#000000;stroke-width:50;stroke-linecap:butt;stroke-dasharray:none"
-         d="m 624.99988,310 c 0,41.42135 -33.57865,74.99999 -75,74.99999 -41.42135,0 -74.99999,-33.57864 -74.99999,-74.99999 V 160 c -10e-6,-41.42135 33.57865,-75 75,-75.000001 C 591.42124,85 624.99988,118.57865 624.99988,160 Z" />
     </g>
   </g>
 </svg>

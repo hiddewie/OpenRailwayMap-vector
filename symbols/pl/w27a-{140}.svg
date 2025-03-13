@@ -35,7 +35,7 @@
          transform="matrix(0.99992559,0,0,0.99992559,0.02232287,0.00446468)">
         <g
            id="layer2-7"
-           transform="translate(-150)">
+           transform="translate(-125.00002)">
           <path
              style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
@@ -43,7 +43,7 @@
         </g>
         <path
            style="fill:none;stroke:#000000;stroke-width:50.0037;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-           d="M 625.02404,410.02591 V 85.001849 H 612.5231 L 475.01294,268.34874 v 16.66792 l 150.0111,-3e-5"
+           d="M 600.02404,410.02579 V 85.001808 H 587.52233 L 450.01294,268.34869 v 16.66788 h 150.0111"
            id="path7" />
       </g>
     </g>
