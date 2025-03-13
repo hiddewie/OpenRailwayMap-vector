@@ -2,6 +2,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
 <rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
 <path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0.800781 0.800781 L 15.199219 0.800781 L 15.199219 15.199219 L 0.800781 15.199219 Z M 0.800781 0.800781 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 3.199219 2.398438 L 1.601562 5.601562 L 3.199219 5.601562 L 3.199219 13.597656 L 4.800781 13.597656 L 4.800781 2.398438 Z M 3.199219 2.398438 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8 2.398438 L 8 4 L 12.621094 4 L 8 13.601562 L 9.777344 13.601562 L 14.398438 4 L 14.398438 2.398438 Z M 8 2.398438 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 4 2.398438 L 2.398438 5.601562 L 4 5.601562 L 4 13.597656 L 5.601562 13.597656 L 5.601562 2.398438 Z M 4 2.398438 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 7.199219 2.398438 L 7.199219 4 L 11.820312 4 L 7.199219 13.601562 L 8.976562 13.601562 L 13.601562 4 L 13.601562 2.398438 Z M 7.199219 2.398438 "/>
 </svg>
