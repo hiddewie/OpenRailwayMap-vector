@@ -72,6 +72,7 @@ tags:
   - 'railway:signal:ring:only_transit'
   - 'railway:signal:radio'
   - 'railway:signal:radio:form'
+  - 'railway:signal:radio:frequency'
   - 'railway:signal:short_route'
   - 'railway:signal:short_route:form'
   - 'railway:signal:shunting'
@@ -96,6 +97,7 @@ tags:
   - 'railway:signal:steam_locomotive'
   - 'railway:signal:steam_locomotive:form'
   - 'railway:signal:stop:form'
+  - 'railway:signal:stop:caption'
   - 'railway:signal:stop:carriages'
   - 'railway:signal:stop_demand'
   - 'railway:signal:stop_demand:form'
@@ -1567,11 +1569,15 @@ features:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: tram departure signal A1
+  - description: tram departure signals
     country: DE
-    icon: { default: 'de/bostrab/a1' }
+    icon:
+      match: 'railway:signal:departure:states'
+      cases:
+        - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
+      default: 'de/bostrab/a1'
     tags:
-      - { tag: 'railway:signal:departure', value: 'DE-BOStrab:a1' }
+      - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: main entry sign Ne 1
@@ -1837,6 +1843,43 @@ features:
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale (light)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
+        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+      default: 'de/vbk/fv1'
+    tags:
+        - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
+        - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale (sign)
+    country: DE
+    icon: { default: 'de/vbk/fv0' }
+    tags:
+        - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
+        - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Karlsruhe AVG crossing signals
+    country: DE
+    icon:
+      match: 'railway:signal:distant_crossing:states'
+      cases:
+        - { regex: '^(.*;)?DE-AVG:bü201(;.*)?$', value: 'de/avg/bue201' }
+        - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
+    tags:
+      - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
+      - { tag: 'railway:signal:distant_crossing:form', value: 'light' }
+
+  - description: Karlsruhe AVG Stop Demand
+    country: DE
+    icon: { default: 'de/avg/hw1' }
+    tags:
+      - { tag: 'railway:signal:stop_demand', value: 'DE-AVG:hw1' }
+      - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
   - description: Hamburger Hochbahn main signal
     country: DE
@@ -3510,56 +3553,54 @@ features:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
-  - description: Semafor świetlny trzykomorowy
+  - description: Semafory półsamoczynne
     country: PL
-    icon: { default: 'pl/s2-3' }
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
+        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
+      default: 'pl/s2-3'
+    tags:
+    - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+    - { tag: 'railway:signal:main:form', value: 'light' }
+    - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
+
+  - description: Semafory SBL i półsamoczynne
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
+        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
+      default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:states', values: ['PL-PKP:s1;PL-PKP:s2', 'off;PL-PKP:s1;PL-PKP:s2'] }
-      - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
 
-  - description: Semafor świetlny dwukomorowy
-    country: PL
-    icon: { default: 'pl/s2-2' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:states', values: ['PL-PKP:s1;PL-PKP:s2', 'off;PL-PKP:s1;PL-PKP:s2'] }
-
-  - description: Semafor świetlny czterokomorowy & pięciokomorowe
+  - description: Semafory półsamoczynne (4- i 5-komorowe)
     country: PL
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s6;(.*;)?PL-PKP:s9(;.*)?$', value: 'pl/s6-5' }
-        - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s10a(;.*)?$', value: 'pl/s10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s1;(.*;)?PL-PKP:s2;(.*;)?PL-PKP:s5;(.*;)?PL-PKP:s10(;.*)?$', value: 'pl/s10-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
         - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
         - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
         - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
         - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
-        - { regex: '^(.*;)?PL-PKP:s13(;.*)?$', value: 'pl/s13-4' }
-        - { regex: '^(.*;)?PL-PKP:s10(;.*)?$', value: 'pl/s10-4' }
-      default: 'pl/s1-4'
+        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
+      default: 'pl/s13-4'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
       - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
 
-  - description: Semafor świetlny trzykomorowy & czterokomorowy
-    country: PL
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^PL-PKP:s1;PL-PKP:s1a;PL-PKP:s2;PL-PKP:s3;PL-PKP:s4;PL-PKP:s5$', value: 'pl/s1a-4' }
-        - { regex: '^(.*;)?PL-PKP:s13(;.*)?$', value: 'pl/s13-3' }
-      default: 'pl/s1-3'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Sygnalizator powtarzający
+  - description: Sygnalizator powtarzający (Sp)
     country: PL
     icon:
       match: 'railway:signal:main_repeated:states'
@@ -3571,7 +3612,7 @@ features:
       - { tag: 'railway:signal:main_repeated', value: 'PL-PKP:sp' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-  - description: Tarcza ostrzegawcza świetlna
+  - description: Tarcza ostrzegawcza świetlna (To)
     country: PL
     icon:
       match: 'railway:signal:distant:states'
@@ -3582,21 +3623,21 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
       - { tag: 'railway:signal:distant:form', values: ['light', 'semaphore'] }
 
-  - description: Tarcze ostrzegawcze przejazdowe
+  - description: Tarcze ostrzegawcze przejazdowe (ToP)
     country: PL
     icon: { default: 'pl/osp' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'PL-PKP:osp' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
-  - description: Tarcza manewrowa kształtowa
+  - description: Tarcza manewrowa kształtowa (Tm)
     country: PL
     icon: { default: 'pl/m-semaphore' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'PL-PKP:m' }
       - { tag: 'railway:signal:shunting:form', value: 'semaphore' }
 
-  - description: Tarcza manewrowa świetlna
+  - description: Tarcza manewrowa świetlna (Tm)
     country: PL
     icon:
       match: 'railway:signal:shunting:states'
@@ -3609,21 +3650,21 @@ features:
 
   # TODO Tarcze rozrządowe https://www.transportszynowy.pl/Kolej/tarczerozrzadowe
 
-  - description: Tarcza zaporowa kształtowa (Nieruchoma)
+  - description: Tarcza zaporowa kształtowa (Tz, nieruchoma)
     country: PL
     icon: { default: 'pl/z-sign' }
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Tarcza zaporowa kształtowa (Ruchoma)
+  - description: Tarcza zaporowa kształtowa (Tz, ruchoma)
     country: PL
     icon: { default: 'pl/z-semaphore' }
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
 
-  - description: Tarcza zaporowa kształtowa (Ruchoma)
+  - description: Tarcza zaporowa świetlna
     country: PL
     icon:
       match: 'railway:signal:minor:states'
@@ -3634,56 +3675,42 @@ features:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
-  - description: Tarcza ostrzegawcza nieruchoma DO
+  - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
     icon: { default: 'pl/do' }
     tags:
       - { tag: 'railway:signal:minor_distant', value: 'PL-PKP:do' }
       - { tag: 'railway:signal:minor_distant:form', value: 'sign' }
 
-  - description: Tarcza ostrzegawcza kształtowa nieruchoma
+  - description: Tarcza ostrzegawcze kształtowe (To, nieruchoma, dwustawna i trzystawna)
     country: PL
-    icon: { default: 'pl/on' }
+    icon:
+      match: 'railway:signal:distant'
+      cases:
+        - { regex: '^PL-PKP:od$', value: 'pl/od' }
+        - { regex: '^PL-PKP:ot$', value: 'pl/ot' }
+      default: 'pl/on'
     tags:
-      - { tag: 'railway:signal:distant', value: 'PL-PKP:on' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant', values: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
 
-  - description: Tarcza ostrzegawcza kształtowa dwustawna
+  - description: Tarcze rozrządowe (Tr, kształtowa i świetlna)
     country: PL
-    icon: { default: 'pl/od' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'PL-PKP:od' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
-  - description: Tarcza ostrzegawcza kształtowa trzystawna
-    country: PL
-    icon: { default: 'pl/ot3' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'PL-PKP:ot' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
-  - description: Tarcze rozrządowe (semaphore)
-    country: PL
-    icon: { default: 'pl/rt3-semaphore' }
+    icon:
+      match: 'railway:signal:humping:form'
+      cases:
+        - { regex: '^light$', value: 'pl/rt3-light' }
+      default: 'pl/rt3-semaphore'
     tags:
       - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
-      - { tag: 'railway:signal:humping:form', value: 'semaphore' }
 
-  - description: Tarcze rozrządowe (light)
-    country: PL
-    icon: { default: 'pl/rt3-light' }
-    tags:
-      - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
-      - { tag: 'railway:signal:humping:form', value: 'light' }
-
-  - description: Tarcza zatrzymania D 1
+  - description: Tarcza zatrzymania (D1)
     country: PL
     icon: { default: 'pl/d1' }
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:d1' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: W 1 — wskaźnik usytuowania
+  - description: Wskaźnik usytuowania (W1)
     country: PL
     icon: { default: 'pl/w1' }
     tags:
@@ -3694,63 +3721,45 @@ features:
   # TODO PL-PKP:w26b
   # TODO PL-PKP:w26a
 
-  - description: W 4 — wskaźnik zatrzymania
+  - description: Wskaźnik zatrzymania (W4)
     country: PL
     icon: { default: 'pl/w4' }
     tags:
       - { tag: 'railway:signal:stop', value: 'PL-PKP:w4' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: W 5 — wskaźnik przetaczania
+  - description: Wskaźnik przetaczania (W5)
     country: PL
     icon: { default: 'pl/w5' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'PL-PKP:w5' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: wskaźniki ostrzegania W6
+  - description: Wskaźniki ostrzegania (W6, W6a, W6b i W7)
     country: PL
-    icon: { default: 'pl/w6' }
+    icon:
+      match: 'railway:signal:whistle'
+      cases:
+      - { regex: '^PL-PKP:w6a$', value: 'pl/w6a' }
+      - { regex: '^PL-PKP:w6b$', value: 'pl/w6b' }
+      - { regex: '^PL-PKP:w7$', value: 'pl/w7' }
+      default: 'pl/w6'
     tags:
-      - { tag: 'railway:signal:whistle', value: 'PL-PKP:w6' }
+      - { tag: 'railway:signal:whistle', values: ['PL-PKP:w6', 'PL-PKP:w6a', 'PL-PKP:w6b', 'PL-PKP:w7'] }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
-  - description: wskaźniki ostrzegania W6a
+  - description: Wskaźniki odcinka z popychaniem (W10a i W10b)
     country: PL
-    icon: { default: 'pl/w6a' }
+    icon:
+      match: 'railway:signal:helper_engine'
+      cases:
+      - { regex: '^PL-PKP:w10b$', value: 'pl/w10b' }
+      default: 'pl/w10a'
     tags:
-      - { tag: 'railway:signal:whistle', value: 'PL-PKP:w6a' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: wskaźniki ostrzegania W6b
-    country: PL
-    icon: { default: 'pl/w6b' }
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'PL-PKP:w6b' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: wskaźniki ostrzegania W7
-    country: PL
-    icon: { default: 'pl/w7' }
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'PL-PKP:w7' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: wskaźniki odcinka z popychaniem W10a
-    country: PL
-    icon: { default: 'pl/w10a' }
-    tags:
-      - { tag: 'railway:signal:helper_engine', value: 'PL-PKP:w10a' }
+      - { tag: 'railway:signal:helper_engine', values: ['PL-PKP:w10a', 'PL-PKP:w10b'] }
       - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
 
-  - description: wskaźniki odcinka z popychaniem W10b
-    country: PL
-    icon: { default: 'pl/w10b' }
-    tags:
-      - { tag: 'railway:signal:helper_engine', value: 'PL-PKP:w10b' }
-      - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
-
-  - description: wskaźniki uprzedzające W11a (dwarf)
+  - description: Wskaźniki uprzedzające (W11a, niskie)
     country: PL
     icon:
       match: 'railway:signal:distant:type'
@@ -3764,7 +3773,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'sign' }
       - { tag: 'railway:signal:distant:height', value: 'dwarf' }
 
-  - description: wskaźniki uprzedzające W11a (normal)
+  - description: Wskaźniki uprzedzające (W11a, wysokie)
     country: PL
     icon:
       match: 'railway:signal:distant:type'
@@ -3777,7 +3786,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: wskaźniki uprzedzające W11b (dwarf)
+  - description: Wskaźniki uprzedzające (W11b, niskie)
     country: PL
     icon:
       match: 'railway:signal:distant:type'
@@ -3791,7 +3800,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'sign' }
       - { tag: 'railway:signal:distant:height', value: 'dwarf' }
 
-  - description: wskaźniki uprzedzające W11b (normal)
+  - description: Wskaźniki uprzedzające (W11b, wysokie)
     country: PL
     icon:
       match: 'railway:signal:distant:type'
@@ -3804,7 +3813,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: wskaźnik przejazdowy W11p
+  - description: Wskaźnik przejazdowy (W11p)
     country: PL
     icon:
       match: 'railway:signal:crossing:repeated'
@@ -3815,14 +3824,14 @@ features:
       - { tag: 'railway:signal:crossing_distant', value: 'PL-PKP:w11p' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: wskaźnik parowozowy W12
+  - description: Wskaźnik parowozowy (W12)
     country: PL
     icon: { default: 'pl/w12' }
     tags:
       - { tag: 'railway:signal:steam_locomotive', value: 'PL-PKP:w12' }
       - { tag: 'railway:signal:steam_locomotive:form', value: 'sign' }
 
-  - description: wskaźnik torowy W13
+  - description: Wskaźnik torowy (W13)
     country: PL
     icon: { default: 'pl/w13' }
     tags:
@@ -3830,217 +3839,238 @@ features:
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
       - { tag: 'railway:signal:snowplow:type', value: 'up' }
 
-  - description: wskaźnik przystanku osobowego W16
+  - description: Wskaźnik przystanku osobowego (W16)
     country: PL
     icon: { default: 'pl/w16' }
     tags:
       - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w16' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
-  - description: wskaźnik ukresu W17
+  - description: Wskaźnik ukresu (W17)
     country: PL
     icon: { default: 'pl/w17' }
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'PL-PKP:w17' }
 
-  - description: wskaźnik ogrzewania W25
+  - description: Wskaźnik SBL (W18)
+    country: PL
+    icon: { default: 'pl/w18' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
+
+  - description: Wskaźniki braku drogi hamowania (W19 i W20)
+    country: PL
+    icon:
+      match: 'railway:signal:short_route'
+      cases:
+        - { regex: '^PL-PKP:w20$', value: 'pl/w20' }
+        - { regex: '^PL-PKP:w19;PL-PKP:w20$', value: 'pl/w19-20' }
+      default: 'pl/w19'
+    tags:
+      - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
+
+  - description: Wskaźnik kierunku przeciwnego (W24)
+    country: PL
+    icon: { default: 'pl/w24' }
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'PL-PKP:w24' }
+
+  - description: Wskaźnik ogrzewania (W25)
     country: PL
     icon: { default: 'pl/w25' }
     tags:
       - { tag: 'railway:signal:preheating', value: 'PL-PKP:w25' }
       - { tag: 'railway:signal:preheating:form', value: 'light' }
 
-  - description: wskaźnik ogrzewania W29
+  - description: Wskaźnik kanału radiowego (W28)
+    country: PL
+    icon:
+      match: 'railway:signal:radio:frequency'
+      cases:
+      - { regex: '^R[1-8]$', value: 'pl/w28-{}', example: 'pl/w28-{R3}' }
+      default: 'pl/w28-{R1}'
+    tags:
+      - { tag: 'railway:signal:radio', value: 'PL-PKP:w28' }
+      - { tag: 'railway:signal:radio:form', value: 'sign'}
+
+  - description: Wskaźnik nawiązania łączności (W29)
     country: PL
     icon: { default: 'pl/w29' }
     tags:
       - { tag: 'railway:signal:radio', value: 'PL-PKP:w29' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
-  - description: wskaźnik czoła pociągu W32
+  - description: Wskaźnik czoła pociągu (W32)
     country: PL
-    # TODO: use caption
-    icon: { default: 'pl/w32' }
+    icon:
+      match: 'railway:signal:stop:caption'
+      cases:
+        - { regex: '^[1-3]?[05]0$', value: 'pl/w32-{}', example: 'pl/w32-{150}' }
+      default: 'pl/w32-empty'
     tags:
       - { tag: 'railway:signal:stop', value: 'PL-PKP:w32' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: wskaźnik początku obowiązywania systemu ERTMS/GSM-R W33
+  - description: Wskaźniki obowiązywania systemu ERTMS/GSM-R (W33 i W34)
     country: PL
-    icon: { default: 'pl/w33' }
+    icon:
+      match: 'railway:signal:radio'
+      cases:
+        - { regex: '^PL-PKP:w34$', value: 'pl/w34' }
+      default: 'pl/w33'
     tags:
-      - { tag: 'railway:signal:radio', value: 'PL-PKP:w33' }
+      - { tag: 'railway:signal:radio', values: ['PL-PKP:w33', 'PL-PKP:w34'] }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
-  - description: wskaźnik początku obowiązywania systemu ERTMS/GSM-R W34
-    country: PL
-    icon: { default: 'pl/w34' }
-    tags:
-      - { tag: 'railway:signal:radio', value: 'PL-PKP:w34' }
-      - { tag: 'railway:signal:radio:form', value: 'sign' }
-
-  - description: ETCS L1 LS
-    country: PL
-    icon: { default: 'pl/wetcs1' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs1' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L1 LS
-    country: PL
-    icon: { default: 'pl/wetcs2' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs2' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L1 LS
-    country: PL
-    icon: { default: 'pl/wetcs3' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs3' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L1
-    country: PL
-    icon: { default: 'pl/wetcs4' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs4' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L1
-    country: PL
-    icon: { default: 'pl/wetcs5' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs5' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L1
-    country: PL
-    icon: { default: 'pl/wetcs6' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs6' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L2
-    country: PL
-    icon: { default: 'pl/wetcs7' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs7' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L2
-    country: PL
-    icon: { default: 'pl/wetcs8' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs8' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS L2
-    country: PL
-    icon: { default: 'pl/wetcs9' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs9' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: ETCS 10
+  - description: Wskaźniki ETCS L1 Limited Supervision
     country: PL
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^left$', value: 'pl/wetcs10-left' }
-      default: 'pl/wetcs10-right'
+        - { regex: '^PL-PKP:wetcs2$', value: 'pl/wetcs2' }
+        - { regex: '^PL-PKP:wetcs3$', value: 'pl/wetcs3' }
+      default: 'pl/wetcs1'
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs1', 'PL-PKP:wetcs2', 'PL-PKP:wetcs3'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Wskaźniki ETCS L1
+    country: PL
+    icon:
+      match: 'railway:signal:train_protection'
+      cases:
+        - { regex: '^PL-PKP:wetcs5$', value: 'pl/wetcs5' }
+        - { regex: '^PL-PKP:wetcs6$', value: 'pl/wetcs6' }
+      default: 'pl/wetcs4'
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs4', 'PL-PKP:wetcs5', 'PL-PKP:wetcs6'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Wskaźniki ETCS L2
+    country: PL
+    icon:
+      match: 'railway:signal:train_protection'
+      cases:
+        - { regex: '^PL-PKP:wetcs8$', value: 'pl/wetcs8' }
+        - { regex: '^PL-PKP:wetcs9$', value: 'pl/wetcs9' }
+      default: 'pl/wetcs7'
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs7', 'PL-PKP:wetcs8', 'PL-PKP:wetcs9'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Wskaźnik zatrzymania ETCS (WETCS10)
+    country: PL
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'pl/wetcs10-right' }
+        - { regex: '^overhead$', value: 'pl/wetcs10-down' }
+      default: 'pl/wetcs10-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs10' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
-  - description: WKD W2
+  - description: Wskaźnik lokalizacji ETCS (WETCS11)
+    country: PL
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'pl/wetcs11-right' }
+        - { regex: '^overhead$', value: 'pl/wetcs11-down' }
+      default: 'pl/wetcs11-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs11' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'location_marker' }
+
+  - description: Wskaźnik WKD W2
     country: PL
     icon: { default: 'pl/wkd/w2' }
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-WKD:w2' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: miejsce zatrzymania czoła pociągu Wm 4
+  - description: Miejsce zatrzymania czoła pociągu (Wm4)
     country: PL
-    icon: { default: 'pl/ztm-mw/wm4' }
+    icon: { default: 'pl/metro/wm4' }
     tags:
-      - { tag: 'railway:signal:stop', value: 'ZTM-MW:wm4' }
+      - { tag: 'railway:signal:stop', value: 'PL-metro:wm4' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: rozpocząć hamowanie przed peronem Wm 16
+  - description: Rozpocząć hamowanie przed peronem (Wm16)
     country: PL
-    icon: { default: 'pl/ztm-mw/wm16' }
+    icon: { default: 'pl/metro/wm16' }
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'ZTM-MW:wm16' }
+      - { tag: 'railway:signal:station_distant', value: 'PL-metro:wm16' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
-  - description: Wm 17
+  - description: Wskaźnik ukresu (Wm17)
     country: PL
-    icon: { default: 'pl/ztm-mw/wm17' }
+    icon: { default: 'pl/metro/wm17' }
     tags:
-      - { tag: 'railway:signal:fouling_point', value: 'ZTM-MW:wm17' }
+      - { tag: 'railway:signal:fouling_point', value: 'PL-metro:wm17' }
 
-  - description: D6 Tarcza zwolnić bieg
+  - description: Tarcza zwolnić bieg (D6)
     country: PL
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       # TODO update signs from https://wiki.openstreetmap.org/wiki/Pl:OpenRailwayMap/Tagging_in_Poland#Tarcza_zwolnić_bieg_D_6
       # TODO handle dwarf signals
       cases:
-        - { regex: '^[1-9]0$', value: 'pl/d6-{}', example: 'pl/d6-{70}' }
+        - { regex: '^([1-9]|1[0-9]|2[0-4])0$', value: 'pl/d6-{}', example: 'pl/d6-{70}' }
       default: 'pl/d6-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:d6' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: W8 Wskaźnik ograniczenia prędkości
+  - description: Wskaźnik ograniczenia prędkości (W8)
     country: PL
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w8-{}', example: 'pl/w8-{60}' }
+        - { regex: '^([1-9]|1[0-9]|2[0-4])0$', value: 'pl/w8-{}', example: 'pl/w8-{60}' }
       default: 'pl/w8-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: W9 Wskaźnik odcinka ograniczonej prędkości
+  - description: Wskaźnik odcinka ograniczonej prędkości (W9)
     country: PL
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([2-9]|1[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-{60}' }
+        - { regex: '^([1-9]|1[0-9]|2[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-{60}' }
       default: 'pl/w9-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: W21 Wskaźniki podwyższenia prędkości
+  - description: Wskaźniki podwyższenia prędkości (W21)
     country: PL
     type: line
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w21-{}', example: 'pl/w21-{80}' }
+        - { regex: '^([5-9]|1[0-5])0$', value: 'pl/w21-{}', example: 'pl/w21-{80}' }
       default: 'pl/w21-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: W27a Wskaźnik zmiany prędkości
+  - description: Wskaźnik zmiany prędkości (W27a)
     country: PL
     type: line
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|20)0$', value: 'pl/w27a-{}', example: 'pl/w27a-{80}' }
+        - { regex: '^([1-9]|1[0-9]|2[0-5])0$', value: 'pl/w27a-{}', example: 'pl/w27a-{80}' }
       default: 'pl/w27a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w27a' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: W30 Wskaźnik ważenia składu
+  - description: Wskaźnik ważenia składu (W30)
     country: PL
     icon:
       match: 'railway:signal:speed_limit:speed'
@@ -4051,7 +4081,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w30' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Wskaźnik uprzedzający o opuszczeniu pantografu (we1)
+  - description: Wskaźniki uprzedzające o opuszczeniu pantografu (We1)
     country: PL
     icon:
       match: 'railway:signal:electricity:turn_direction'
@@ -4064,7 +4094,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
-  - description: Wskaźniki opuszczenia pantografu (we2)
+  - description: Wskaźniki opuszczenia pantografu (We2)
     country: PL
     icon:
       match: 'railway:signal:electricity:turn_direction'
@@ -4077,19 +4107,20 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
-  - description: Wskaźniki podniesienia pantografu (we3)
+  - description: Wskaźniki podniesienia pantografu (We3)
     country: PL
     icon:
-      match: 'railway:signal:electricity:for'
+      match: 'railway:signal:electricity'
       cases:
-        - { regex: '^locomotive$', value: 'pl/we3b' }
+        - { regex: '^PL-PKP:we3b$', value: 'pl/we3b' }
+        - { regex: '^PL-PKP:we3c$', value: 'pl/we3c' }
       default: 'pl/we3a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b', 'PL-PKP:we3c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
-  - description: Wskaźniki zakazu wjazdu elektrycznych pojazdów trakcyjnych (we4)
+  - description: Wskaźniki zakazu wjazdu elektrycznych pojazdów trakcyjnych (We4)
     country: PL
     icon:
       match: 'railway:signal:electricity:turn_direction'
@@ -4102,7 +4133,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
-  - description: Wskaźniki jazdy bezprądowej (we8)
+  - description: Wskaźniki jazdy bezprądowej (We8)
     country: PL
     icon:
       match: 'railway:signal:electricity:turn_direction'
@@ -4115,63 +4146,32 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
-  - description: Wskaźniki jazdy pod prądem (we9)
+  - description: Wskaźniki jazdy pod prądem (We9)
     country: PL
     icon:
-      match: 'railway:signal:electricity:for'
+      match: 'railway:signal:electricity'
       cases:
-        - { regex: '^locomotive$', value: 'pl/we9b' }
+        - { regex: '^PL-PKP:we9b$', value: 'pl/we9b' }
+        - { regex: '^PL-PKP:we9c$', value: 'pl/we9c' }
       default: 'pl/we9a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b', 'PL-PKP:we9c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
-  - description: Wskaźniki zmiany systemu zasilania 25 kV
+  - description: Wskaźniki zmiany systemu zasilania (We10a, We10b, We10c, We10d, We10e, We10f)
     country: PL
-    icon: { default: 'pl/we10a' }
+    icon:
+      match: 'railway:signal:electricity'
+      cases:
+        - { regex: '^PL-PKP:we10b$', value: 'pl/we10b' }
+        - { regex: '^PL-PKP:we10c$', value: 'pl/we10c' }
+        - { regex: '^PL-PKP:we10d$', value: 'pl/we10d' }
+        - { regex: '^PL-PKP:we10e$', value: 'pl/we10e' }
+        - { regex: '^PL-PKP:we10f$', value: 'pl/we10f' }
+      default: 'pl/we10a'
     tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10a' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Wskaźniki zmiany systemu zasilania 25 kV
-    country: PL
-    icon: { default: 'pl/we10b' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10b' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Wskaźniki zmiany systemu zasilania 15 kV
-    country: PL
-    icon: { default: 'pl/we10c' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10c' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Wskaźniki zmiany systemu zasilania 15 kV
-    country: PL
-    icon: { default: 'pl/we10d' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10d' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Wskaźniki zmiany systemu zasilania 3 kV
-    country: PL
-    icon: { default: 'pl/we10e' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10e' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Wskaźniki zmiany systemu zasilania 3 kV
-    country: PL
-    icon: { default: 'pl/we10f' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we10f' }
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_change' }
 
