@@ -1,68 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="16"
-   height="16"
-   viewBox="0 0 4.2333332 4.2333333"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1">
-    <rect
-       style="fill:#000000;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
-       id="rect2"
-       width="4.2333331"
-       height="4.2333331"
-       x="0"
-       y="0" />
-    <rect
-       style="fill:#ffffff;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
-       id="rect6"
-       width="3.8099999"
-       height="3.8099999"
-       x="0.21166667"
-       y="0.21166679" />
-    <g
-       id="layer2"
-       transform="matrix(0.00846667,0,0,0.00846667,-1.6933343,0.12699991)">
-      <g
-         id="layer2-73"
-         transform="matrix(0.99992559,0,0,0.99992559,0.02232287,0.00446468)">
-        <g
-           id="layer2-9"
-           transform="matrix(1.0715081,0,0,1.0715081,-32.185717,13.210713)">
-          <g
-             id="layer2-4"
-             transform="matrix(0.83990286,0,0,0.83990286,9.0534305,9.595473)"
-             style="stroke-width:50.0058;stroke-dasharray:none">
-            <path
-               id="path6"
-               style="fill:none;stroke:#000000;stroke-width:50.0058;stroke-dasharray:none"
-               d="m 375,159.97398 c 0.0115,-33.10428 21.72567,-62.285615 53.4315,-71.805734 31.70583,-9.520117 65.90331,2.87297 84.1488,30.495334 18.2455,27.62237 16.22304,63.93994 -4.97661,89.36568 L 374.99999,368.98525 V 385 h 174.99999" />
-          </g>
-          <g
-             id="layer2-0"
-             transform="translate(200,46.999998)" />
-          <g
-             id="layer2-45"
-             transform="translate(234.99999,1.9999971)">
-            <g
-               id="layer2-7"
-               transform="matrix(0.84000004,0,0,0.84000004,-58.000004,7.6000009)"
-               style="stroke-width:50;stroke-dasharray:none">
-              <path
-                 style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:50;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-                 d="M 449.99999,59.999999 399.99999,160 h 50 v 249.99998 h 49.99998 V 59.999999 Z"
-                 id="path3" />
-            </g>
-          </g>
-        </g>
-      </g>
-    </g>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0.800781 0.800781 L 15.199219 0.800781 L 15.199219 15.199219 L 0.800781 15.199219 Z M 0.800781 0.800781 "/>
+<path fill="none" stroke-width="50.005798" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 374.989116 160.018523 C 374.989116 126.920087 396.693009 97.755481 428.434952 88.124379 C 460.176894 78.628926 494.360525 91.108664 512.537535 118.645478 C 530.850194 146.317941 528.815454 182.536311 507.654159 208.038385 L 374.989116 368.918488 L 374.989116 385.060758 L 549.97675 385.060758 " transform="matrix(0.0287967, 0, 0, 0.0287967, -7.118753, 1.231842)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.597656 2.960938 L 10.160156 5.839844 L 11.597656 5.839844 L 11.597656 13.039062 L 13.039062 13.039062 L 13.039062 2.960938 Z M 11.597656 2.960938 "/>
 </svg>

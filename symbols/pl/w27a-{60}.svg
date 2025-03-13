@@ -1,39 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="16"
-   height="16"
-   viewBox="0 0 4.2333332 4.2333333"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1">
-    <rect
-       style="fill:#000000;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
-       id="rect2"
-       width="4.2333331"
-       height="4.2333331"
-       x="0"
-       y="0" />
-    <rect
-       style="fill:#ffffff;stroke:none;stroke-width:10.5833;stroke-miterlimit:5"
-       id="rect6"
-       width="3.8099999"
-       height="3.8099999"
-       x="0.21166667"
-       y="0.21166679" />
-    <g
-       id="layer2"
-       transform="matrix(0.00846667,0,0,0.00846667,-1.6933348,0.12699934)">
-      <path
-         id="path16"
-         style="fill:none;stroke:#000000;stroke-width:49.9999"
-         d="m 524.99996,160 c 0,-41.42135 -33.57864,-74.999991 -74.99999,-74.999992 -41.42135,1e-6 -74.99999,33.578642 -74.99999,74.999992 l 1e-5,150 v 0 c 0,41.42135 33.57864,74.99999 74.99999,74.99999 41.42135,0 74.99999,-33.57864 74.99999,-74.99999 l 2e-5,-25 v 0 c -10e-6,-41.42136 -33.57865,-75 -75,-75 C 408.57864,210 375,243.57864 375,284.99999" />
-    </g>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0.800781 0.800781 L 15.199219 0.800781 L 15.199219 15.199219 L 0.800781 15.199219 Z M 0.800781 0.800781 "/>
+<path fill="none" stroke-width="49.999901" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 524.951106 160.048829 C 524.951106 118.544943 491.381786 84.975623 449.99997 84.975623 C 408.618154 84.975623 375.048834 118.544943 375.048834 160.048829 L 375.048834 309.951101 C 375.048834 351.454987 408.618154 385.024307 449.99997 385.024307 C 491.381786 385.024307 524.951106 351.454987 524.951106 309.951101 L 524.951106 285.048769 C 524.951106 243.544883 491.381786 209.975563 449.99997 209.975563 C 408.618154 209.975563 375.048834 243.544883 375.048834 285.048769 " transform="matrix(0.032, 0, 0, 0.032, -6.400006, 0.479998)"/>
 </svg>
