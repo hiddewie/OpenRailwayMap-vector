@@ -61,19 +61,19 @@ map $request_uri $tiles_upstream {
 
   # Africa (Zoom 4: x=7..10 y=7..9 or lon=-22.5..67.5 lat=21.94..-40.979)
   # Zoom 8: x=112..144 y=63..111
-  "~^/[^/]+/8/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/8/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 9: x=224..288 y=127..223
-  "~^/[^/]+/9/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/9/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 10: x=448..576 y=255..447
-  "~^/[^/]+/10/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/10/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 11: x=896..1152 y=511..895
-  "~^/[^/]+/11/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/11/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 12: x=1792..2304 y=1023..1791
-  "~^/[^/]+/12/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/12/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 13: x=3584..4608 y=2047..3583
-  "~^/[^/]+/13/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/13/$" http://${TILES_UPSTREAM_AFRICA};
   # Zoom 14: x=7168..9216 y=4095..7167
-  "~^/[^/]+/14/$" http://${TILES_UPSTREAM_EUROPE};
+  "~^/[^/]+/14/$" http://${TILES_UPSTREAM_AFRICA};
 
   # Tile specifications
   "~^/(high|standard|speed|signals|electrification)$" http://${TILES_UPSTREAM_EUROPE};
