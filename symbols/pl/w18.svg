@@ -1,6 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="7" height="7" viewBox="0 0 7 7">
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="5" d="M 20.089286 20.089286 L 459.910725 20.089286 L 459.910725 459.910725 L 20.089286 459.910725 Z M 20.089286 20.089286 " transform="matrix(0.0145833, 0, 0, 0.0145833, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="5" d="M 384.910723 240.000005 C 384.910723 320.089293 320.089293 384.910723 240.000005 384.910723 C 159.910718 384.910723 95.089288 320.089293 95.089288 240.000005 C 95.089288 159.910718 159.910718 95.089288 240.000005 95.089288 C 320.089293 95.089288 384.910723 159.910718 384.910723 240.000005 Z M 384.910723 240.000005 " transform="matrix(0.0145833, 0, 0, 0.0145833, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 4.8125 3.5 C 4.8125 4.226562 4.226562 4.8125 3.5 4.8125 C 2.773438 4.8125 2.1875 4.226562 2.1875 3.5 C 2.1875 2.773438 2.773438 2.1875 3.5 2.1875 C 4.226562 2.1875 4.8125 2.773438 4.8125 3.5 Z M 4.8125 3.5 "/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="15.999991"
+   height="15.999991"
+   viewBox="0 0 4.2333311 4.2333311"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="scale(0.00881944)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2"
+       width="440"
+       height="440"
+       x="20"
+       y="20.000002" />
+    <circle
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
+       id="path5"
+       cx="240"
+       cy="240"
+       r="145" />
+    <circle
+       style="opacity:1;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       id="path6"
+       cx="240"
+       cy="240"
+       r="90" />
+  </g>
 </svg>
