@@ -3600,6 +3600,14 @@ features:
       - { tag: 'railway:signal:combined:form', value: 'light' }
       - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
 
+  - description: Sygnalizator sygnału zastępczego (Sz)
+    country: PL
+    icon: { default: 'pl/sz-1' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'PL-PKP:sz' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:minor:substitute_signal', value: 'PL-PKP:sz' }
+
   - description: Sygnalizator powtarzający (Sp)
     country: PL
     icon:
@@ -3720,6 +3728,13 @@ features:
   # TODO PL-PKP:w2
   # TODO PL-PKP:w26b
   # TODO PL-PKP:w26a
+
+  - description: Wskaźnik unieważnienia (W3)
+    country: PL
+    icon: { default: 'pl/w3' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'PL-PKP:w3' }
+      - { tag: 'railway:signal:minor:form', values: ['light', 'semaphore'] }
 
   - description: Wskaźnik zatrzymania (W4)
     country: PL
@@ -3991,6 +4006,13 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-WKD:w2' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  - description: Wskaźnik WKD Wk
+    country: PL
+    icon: { default: 'pl/wkd/wk' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'PL-WKD:wk' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
   - description: Miejsce zatrzymania czoła pociągu (Wm4)
     country: PL
     icon: { default: 'pl/metro/wm4' }
@@ -4079,6 +4101,30 @@ features:
       default: 'pl/w30-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w30' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Ograniczenie prędkości (BT-1)
+    country: PL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-9][05]$', value: 'pl/bt-1-{}', example: 'pl/bt-1-{60}' }
+      default: 'pl/bt-1-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-1' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Koniec ograniczenia prędkości (BT-2)
+    country: PL
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-9][05]$', value: 'pl/bt-2-{}', example: 'pl/bt-2-{30}' }
+      default: 'pl/bt-2-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Wskaźniki uprzedzające o opuszczeniu pantografu (We1)
@@ -4174,8 +4220,8 @@ features:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-
-  - description: Tram isolation (ct-1)
+      
+  - description: Izolator sekcyjny (CT-1)
     country: PL
     icon: { default: 'pl/ct-1' }
     tags:
@@ -4183,7 +4229,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'isolation' }
 
-  - description: Tram power limit (ct-2)
+  - description: Granica zasilania (CT-2)
     country: PL
     icon: { default: 'pl/ct-2' }
     tags:
