@@ -125,6 +125,7 @@ types:
   - { type: minor }
   - { type: passing }
   - { type: shunting }
+  - { type: radio }
   - { type: stop }
   - { type: stop_demand }
   - { type: station_distant }
