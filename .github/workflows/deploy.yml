@@ -89,6 +89,7 @@ jobs:
     uses: ./.github/workflows/deploy-tiles.yml
     with:
       region: ${{ matrix.region }}
+    secrets: inherit
 
   deploy-api:
     name: Deploy API
