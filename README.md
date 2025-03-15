@@ -51,11 +51,15 @@ There are multiple ways to contribute to this project:
 
 View the [contribution documentation](CONTRIBUTING.md) for details.
 
-## Local development and deployment
+## Development
 
 To run the OpenRailwayMap locally, you can import OpenStreetMap data and run the tile and web server locally.
 
 View the [setup documentation](SETUP.md) for details.
+
+## Deployment
+
+The [deployment documentation](DEPLOYMENT.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.fly.dev using [Github Actions](https://docs.github.com/en/actions) and [`fly.io`](https://fly.io/).
 
 ## License
 
