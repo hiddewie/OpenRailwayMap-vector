@@ -112,6 +112,7 @@ services:
     environment:
       TILES_UPSTREAM: martin:3000
       TILES_UPSTREAM_NORTH_AMERICA: martin:3000
+      TILES_UPSTREAM_SOUTH_AMERICA: martin:3000
       TILES_UPSTREAM_EUROPE: martin:3000
       TILES_UPSTREAM_AFRICA: martin:3000
       TILES_UPSTREAM_ASIA: martin:3000
