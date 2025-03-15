@@ -3601,7 +3601,7 @@ features:
       - { tag: 'railway:signal:combined:form', value: 'light' }
       - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
 
-- description: Semafory półsamoczynne (3-komorowe)
+  - description: Semafory półsamoczynne (3-komorowe)
     country: PL
     icon:
       match: 'railway:signal:combined:states'
