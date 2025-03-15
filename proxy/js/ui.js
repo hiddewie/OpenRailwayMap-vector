@@ -527,7 +527,11 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  hash: 'view',
 });
+// Ensure the background map loads using the hash, but does not update it whenever the map is updated.
+backgroundMap.on('load', () => backgroundMap._hash.remove());
+
 updateBackgroundMapContainer();
 
 const map = new maplibregl.Map({
