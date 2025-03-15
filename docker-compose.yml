@@ -110,7 +110,7 @@ services:
     ports:
       - '8000:8000'
     environment:
-      TILES_UPSTREAM: martin:3000
+      TILES_UPSTREAM_LOW: martin:3000
       TILES_UPSTREAM_AFRICA: martin:3000
       TILES_UPSTREAM_ASIA: martin:3000
       TILES_UPSTREAM_EUROPE: martin:3000
