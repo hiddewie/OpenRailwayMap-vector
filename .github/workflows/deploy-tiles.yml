@@ -137,4 +137,4 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          flyctl deploy --app openrailwaymap-tiles-${{ input.region }} --config martin-static.fly.toml --local-only
+          flyctl deploy --app openrailwaymap-tiles-${{ inputs.region }} --config martin-static.fly.toml --local-only
