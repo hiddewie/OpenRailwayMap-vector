@@ -127,8 +127,6 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: data/import/bounds.json
-        - action: rebuild
           path: proxy
         - action: rebuild
           path: features

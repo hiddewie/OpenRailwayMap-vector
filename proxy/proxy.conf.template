@@ -124,7 +124,7 @@ map $request_uri $tiles_upstream {
   "~^/[^/]+/14/(307[2-9]|30[89][0-9]|3[1-9][0-9]{2}|[4-6][0-9]{3}|70[0-9]{2}|71[0-5][0-9]|716[0-7])/(716[89]|71[7-9][0-9]|7[2-9][0-9]{2}|[89][0-9]{3}|10[0-9]{3}|11[01][0-9]{2}|112[0-5][0-9]|1126[0-3])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
 
   # Tile specifications
-  "~^/(high|standard|speed|signals|electrification)$" http://${TILES_UPSTREAM_LOW};
+  "~^/(high|standard|speed|signals|electrification)$" http://${TILES_UPSTREAM_EUROPE};
 
   # Fallback: default tile server
   default http://${TILES_UPSTREAM_LOW};
@@ -144,10 +144,6 @@ server {
 
   location = /manifest.json {
     root /etc/nginx/public;
-  }
-
-  location = /bounds.json {
-    root /etc/nginx/public/import;
   }
 
   location = /favicon.ico {

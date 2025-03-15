@@ -19,11 +19,6 @@ jobs:
       - name: Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@master
 
-      # Manually write import bounds, to decouple proxy from tile generation/import
-      - name: Output import bounds
-        run: |
-          echo '[[-180, -80], [180, 80]]' > data/import/bounds.json
-
       - name: Deploy
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
