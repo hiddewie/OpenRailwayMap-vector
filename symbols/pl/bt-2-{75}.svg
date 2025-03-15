@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="15.999999"
+   height="15.999999"
+   viewBox="0 0 4.233333 4.2333331"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="132"
+       id="rect1" />
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="132"
+       id="rect1-2" />
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="132"
+       id="rect1-1" />
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="132"
+       id="rect1-6" />
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="132"
+       id="rect1-3" />
+    <rect
+       x="30.000002"
+       y="84"
+       width="119.99999"
+       height="66.000008"
+       id="rect2" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-151.87083,-144.19792)">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:0.564443;stroke-miterlimit:5"
+       id="rect8"
+       width="4.2333331"
+       height="4.2333331"
+       x="151.87083"
+       y="144.19792" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.658519;stroke-miterlimit:5"
+       id="rect9"
+       width="3.9511237"
+       height="3.9511237"
+       x="152.01195"
+       y="144.33904" />
+    <path
+       d="m 30.35625,79.5 h 3.4875 l -2.7375,7.5 h 1.6125 L 35.625,79.03125 35.60625,78 h -5.25 z m 8.75625,0 h 3.13125 V 78 h -4.5 l -0.375,4.5 h 2.25 c 0.825,0 1.5,0.65625 1.5,1.5 0,0.84375 -0.675,1.5 -1.5,1.5 -0.09375,0 -0.16875,0 -0.24375,-0.01875 l -2.23125,-0.3375 -0.13125,1.5 2.1375,0.3375 C 39.3,87 39.45,87 39.61875,87 c 1.65,0 3,-1.35 3,-3 0,-1.65 -1.35,-3 -3,-3 -0.225,0 -0.43125,0.0375 -0.6375,0.075 z"
+       id="text2"
+       style="-inkscape-font-specification:drogowskaz;stroke-width:1.6;stroke-miterlimit:5;fill:#aaaaa9;fill-opacity:1"
+       transform="matrix(0.20696295,0,0,0.20696295,146.43594,129.24015)"
+       aria-label="75" />
+    <g
+       id="path4"
+       transform="translate(-8.2020925,33.866674)">
+      <path
+         style="stroke-miterlimit:5"
+         d="m 164.16515,110.47237 c -3.95111,3.95111 -3.95111,3.95111 -3.95111,3.95111"
+         id="path5" />
+      <path
+         style="stroke-miterlimit:5"
+         d="m 163.86581,110.47265 -3.65177,3.65282 -1.7e-4,0.29739 0.29819,6.3e-4 3.65337,-3.65121 -2.8e-4,-0.29992 z"
+         id="path6" />
+    </g>
+  </g>
+</svg>
