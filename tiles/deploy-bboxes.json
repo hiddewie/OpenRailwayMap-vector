@@ -1,6 +1,20 @@
 {
-  "africa": [],
-  "asia": [],
+  "africa": [
+    {
+      "name": "South Africa",
+      "bboxes": [
+        "27.8284:-26.3796:28.4491:-25.5102"
+      ]
+    }
+  ],
+  "asia": [
+    {
+      "name": "Guangzhou",
+      "bboxes": [
+        "112.9312:22.8262:113.6707:23.2767"
+      ]
+    }
+  ],
   "europe": [
     {
       "name": "Europe",
@@ -136,6 +150,20 @@
       ]
     }
   ],
-  "oceania": [],
-  "south-america": []
+  "oceania": [
+    {
+      "name": "Jakarta",
+      "bboxes": [
+        "105.9274:-6.7001:107.9489:-5.8319"
+      ]
+    }
+  ],
+  "south-america": [
+    {
+      "name": "Buenos Aires",
+      "bboxes": [
+        "-60.9851:-34.9783:-57.7634:-32.7180"
+      ]
+    }
+  ]
 }
