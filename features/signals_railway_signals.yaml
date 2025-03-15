@@ -4354,3 +4354,10 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'SE:atc_överskridande' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Slutpunktstopplykta
+    country: SE
+    icon: { default: 'se/slutpunktstopplykta' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'SE:Slutpunktstopplykta' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
