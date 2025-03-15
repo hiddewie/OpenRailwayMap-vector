@@ -18,12 +18,12 @@ primary_region = 'ams'
 
 [env]
   TILES_UPSTREAM = "ams.openrailwaymap-tiles.internal:3000"
-  TILES_UPSTREAM_NORTH_AMERICA = "ams.openrailwaymap-tiles-north-america.internal:3000"
-TILES_UPSTREAM_SOUTH_AMERICA = "ams.openrailwaymap-tiles-south-america.internal:3000"
-  TILES_UPSTREAM_EUROPE = "ams.openrailwaymap-tiles-europe.internal:3000"
   TILES_UPSTREAM_AFRICA = "ams.openrailwaymap-tiles-africa.internal:3000"
   TILES_UPSTREAM_ASIA = "ams.openrailwaymap-tiles-asia.internal:3000"
+  TILES_UPSTREAM_EUROPE = "ams.openrailwaymap-tiles-europe.internal:3000"
+  TILES_UPSTREAM_NORTH_AMERICA = "ams.openrailwaymap-tiles-north-america.internal:3000"
   TILES_UPSTREAM_OCEANIA = "ams.openrailwaymap-tiles-oceania.internal:3000"
+  TILES_UPSTREAM_SOUTH_AMERICA = "ams.openrailwaymap-tiles-south-america.internal:3000"
   API_UPSTREAM = "ams.openrailwaymap-api.internal:5000"
   PUBLIC_PROTOCOL = "https"
   PUBLIC_HOST = "openrailwaymap.fly.dev"
