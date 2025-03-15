@@ -75,7 +75,6 @@ jobs:
 
   deploy-tiles:
     name: Deploy tiles per region
-    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -87,13 +86,9 @@ jobs:
           - oceania
           - south-america
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: ./.github/workflows/deploy-tiles.yml
-        with:
-          region: ${{ matrix.region }}
+    uses: ./.github/workflows/deploy-tiles.yml
+    with:
+      region: ${{ matrix.region }}
 
   deploy-api:
     name: Deploy API
