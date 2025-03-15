@@ -22,7 +22,7 @@ jobs:
       # Manually write import bounds, to decouple proxy from tile generation/import
       - name: Output import bounds
         run: |
-          echo '[[-180, 180], [-80, 80]]' > data/import/bounds.json
+          echo '[[-180, -80], [180, 80]]' > data/import/bounds.json
 
       - name: Deploy
         env:
