@@ -527,7 +527,11 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  hash: 'view',
 });
+// Ensure the background map loads using the hash, but does not update it whenever the map is updated.
+backgroundMap.on('load', () => backgroundMap._hash.remove());
+
 updateBackgroundMapContainer();
 
 const map = new maplibregl.Map({
@@ -965,20 +969,6 @@ map.on('click', event => {
       .addTo(map);
   }
 });
-
-fetch(`${location.origin}/bounds.json`)
-  .then(result => {
-    if (result.status === 200) {
-      return result.json()
-    } else {
-      throw `Invalid status code ${result.status}`
-    }
-  })
-  .then(result => {
-    map.setMaxBounds(result);
-    backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
-  })
-  .catch(error => console.error('Error during fetching of import map bounds', error))
 
 let features = null;
 fetch(`${location.origin}/features.json`)

@@ -8,7 +8,7 @@
 
 # Input variables:
 #  - BBOX: the bounding box of the region to generate
-#  - TILES: generate only the low/medium zoom tiles if the value is "low-med"
+#  - TILES: generate only the low/medium zoom tiles if the value is "low-med", and only the high zoom tiles if the value is "high". Otherwise, generate everything
 
 set -e
 
