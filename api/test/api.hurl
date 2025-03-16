@@ -8,9 +8,9 @@ Content-Type: application/json
 jsonpath "$" count == 20
 jsonpath "$[0].name" == "Berlin Südkreuz"
 jsonpath "$[1].name" == "Berlin-Spandau"
-jsonpath "$[2].name" == "Berlin Gesundbrunnen"
-jsonpath "$[3].name" == "Berlin Ostbahnhof"
-jsonpath "$[4].name" == "Berlin Hauptbahnhof"
+jsonpath "$[2].name" == "Berlin Ostbahnhof"
+jsonpath "$[3].name" == "Berlin Hauptbahnhof"
+jsonpath "$[4].name" == "Berlin Gesundbrunnen"
 jsonpath "$[5].name" == "Ostkreuz"
 jsonpath "$[6].name" == "Berlin Potsdamer Platz"
 jsonpath "$[7].name" == "Bornholmer Straße"
