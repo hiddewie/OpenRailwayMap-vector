@@ -356,6 +356,24 @@ function determineStyleFromHash(hash) {
   }
 }
 
+function determineZoomCenterFromHash(hash) {
+  const hashObject = hashToObject(hash);
+  if ('view' in hashObject && typeof hashObject.view === 'string') {
+    const matches = hashObject.view.match(/^([\d.]+)\/(-?[\d.]+)\/(-?[\d.]+)$/)
+    console.info(hashObject.view, matches)
+    if (matches) {
+      return {
+        center: [parseFloat(matches[3]), parseFloat(matches[2])],
+        zoom: parseFloat(matches[1])
+      }
+    } else {
+      return {};
+    }
+  } else {
+    return {};
+  }
+}
+
 function putStyleInHash(hash, style) {
   const hashObject = hashToObject(hash);
   hashObject.style = style;
@@ -527,10 +545,9 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
-  hash: 'view',
+  // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
+  ...determineZoomCenterFromHash(window.location.hash),
 });
-// Ensure the background map loads using the hash, but does not update it whenever the map is updated.
-backgroundMap.on('load', () => backgroundMap._hash.remove());
 
 updateBackgroundMapContainer();
 
