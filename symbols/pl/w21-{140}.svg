@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.498917 0.498917 L 15.719833 0.498917 L 15.719833 15.719833 L 0.498917 15.719833 Z M 0.498917 0.498917 " transform="matrix(0.986513, 0, 0, 0.986513, 0, 0)"/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 3.933594 13.625 L 3.933594 4.078125 L 2.332031 5.25 L 2.332031 3.539062 L 3.933594 2.375 L 5.554688 2.375 L 5.554688 13.625 Z M 3.933594 13.625 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.46875 11.949219 L 6.46875 10.429688 L 10.230469 2.386719 L 12.027344 2.386719 L 8.226562 10.429688 L 11.15625 10.429688 L 11.15625 7.195312 L 12.765625 7.195312 L 12.765625 10.429688 L 13.667969 10.429688 L 13.667969 11.949219 L 12.765625 11.949219 L 12.765625 13.613281 L 11.15625 13.613281 L 11.15625 11.949219 Z M 6.46875 11.949219 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.142858" height="16" viewBox="0 0 17.142858 16">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 17.144531 0 L 17.144531 16 L 0 16 Z M 0 0 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.523438 1.90625 L 1.523438 14.855469 L 3.046875 14.855469 L 3.046875 1.90625 L 2.285156 1.144531 Z M 1.523438 1.90625 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.476562 2.667969 L 6.476562 7.238281 L 8 8.761719 L 14.09375 8.761719 L 14.09375 13.332031 L 14.855469 14.09375 L 15.617188 13.332031 L 15.617188 8.761719 L 14.855469 8 L 15.617188 7.238281 L 15.617188 2.667969 L 14.855469 1.90625 L 14.09375 2.667969 L 14.09375 7.238281 L 8 7.238281 L 8 2.667969 L 7.238281 1.90625 Z M 6.476562 2.667969 "/>
 </svg>
