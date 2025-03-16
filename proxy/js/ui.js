@@ -806,7 +806,9 @@ map.addControl(new LegendControl({
 }), 'bottom-left');
 
 const onMapZoom = zoom => {
-  const legendZoom = Math.floor(zoom);
+  // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
+  //   stay within the bounds of the earth.
+  const legendZoom = Math.max(Math.floor(zoom), 6);
   const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
