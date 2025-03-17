@@ -28,99 +28,99 @@ map $request_uri $tiles_upstream {
   # Zoom 0-7 is handled by the default tile server
 
   # Africa (Zoom 4: x=7..10 y=7..15 or lon=-22.5..67.5 lat=21.94..-85.05)
-  # Zoom 8: x=112..175 y=112..159
+  # Zoom 8: x=112..160 y=127..255
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 9: x=224..351 y=224..319
+  # Zoom 9: x=224..320 y=255..511
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 10: x=448..703 y=448..639
+  # Zoom 10: x=448..640 y=511..1023
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 11: x=896..1407 y=896..1279
+  # Zoom 11: x=896..1280 y=1023..2047
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 12: x=1792..2815 y=1792..2559
+  # Zoom 12: x=1792..2560 y=2047..4095
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 13: x=3584..5631 y=3584..5119
+  # Zoom 13: x=3584..5120 y=4095..8191
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 14: x=7168..11263 y=7168..10239
+  # Zoom 14: x=7168..10240 y=8191..16383
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_AFRICA};
 
   # Asia (Zoom 4: x=10..15 y=0..7 or lon=45..180 lat=85.05..0)
-  # Zoom 8: x=160..239 y=48..127
+  # Zoom 8: x=160..240 y=15..127
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 9: x=320..479 y=96..255
+  # Zoom 9: x=320..480 y=31..255
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 10: x=640..959 y=192..511
+  # Zoom 10: x=640..960 y=63..511
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 11: x=1280..1919 y=384..1023
+  # Zoom 11: x=1280..1920 y=127..1023
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 12: x=2560..3839 y=768..2047
+  # Zoom 12: x=2560..3840 y=255..2047
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 13: x=5120..7679 y=1536..4095
+  # Zoom 13: x=5120..7680 y=511..4095
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 14: x=10240..15359 y=3072..8191
+  # Zoom 14: x=10240..15360 y=1023..8191
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_ASIA};
 
   # Europe (Zoom 4: x=6..9 y=0..6 or lon=-45..45 lat=85.05..21.94)
-  # Zoom 8: x=112..144 y=63..111
+  # Zoom 8: x=96..144 y=15..111
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 9: x=224..288 y=127..223
+  # Zoom 9: x=192..288 y=31..223
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 10: x=448..576 y=255..447
+  # Zoom 10: x=384..576 y=63..447
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 11: x=896..1152 y=511..895
+  # Zoom 11: x=768..1152 y=127..895
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 12: x=1792..2304 y=1023..1791
+  # Zoom 12: x=1536..2304 y=255..1791
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 13: x=3584..4608 y=2047..3583
+  # Zoom 13: x=3072..4608 y=511..3583
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 14: x=7168..9216 y=4095..7167
+  # Zoom 14: x=6144..9216 y=1023..7167
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_EUROPE};
 
   # North America (Zoom 4: x=0..5 y=0..6 or lon=-180..-45 lat=85.05..21.94)
-  # Zoom 8: x=0..95 y=0..111
+  # Zoom 8: x=0..80 y=15..111
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 9: x=0..191 y=0..223
+  # Zoom 9: x=0..160 y=31..223
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 10: x=0..383 y=0..447
+  # Zoom 10: x=0..320 y=63..447
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 11: x=0..767 y=0..895
+  # Zoom 11: x=0..640 y=127..895
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 12: x=0..1535 y=0..1791
+  # Zoom 12: x=0..1280 y=255..1791
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 13: x=0..3071 y=0..3583
+  # Zoom 13: x=0..2560 y=511..3583
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 14: x=0..6143 y=0..7167
+  # Zoom 14: x=0..5120 y=1023..7167
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_NORTH_AMERICA};
 
   # Oceania (Zoom 4: x=11..15 y=8..15 or lon=67.5..180 lat=0..-85.05)
-  # Zoom 8: x=192..255 y=128..175
+  # Zoom 8: x=176..240 y=143..255
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 9: x=384..511 y=256..351
+  # Zoom 9: x=352..480 y=287..511
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 10: x=768..1023 y=512..703
+  # Zoom 10: x=704..960 y=575..1023
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 11: x=1536..2047 y=1024..1407
+  # Zoom 11: x=1408..1920 y=1151..2047
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 12: x=3072..4095 y=2048..2815
+  # Zoom 12: x=2816..3840 y=2303..4095
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 13: x=6144..8191 y=4096..5631
+  # Zoom 13: x=5632..7680 y=4607..8191
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 14: x=12288..16383 y=8192..11263
+  # Zoom 14: x=11264..15360 y=9215..16383
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_OCEANIA};
 
   # South America (Zoom 4: x=0..6 y=7..15 or lon=-180..-22.5 lat=21.94..-85.05)
-  # Zoom 8: x=48..111 y=112..175
+  # Zoom 8: x=0..96 y=127..255
   "~^/[^/]+/8/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 9: x=96..223 y=224..351
+  # Zoom 9: x=0..192 y=255..511
   "~^/[^/]+/9/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 10: x=192..447 y=448..703
+  # Zoom 10: x=0..384 y=511..1023
   "~^/[^/]+/10/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 11: x=384..895 y=896..1407
+  # Zoom 11: x=0..768 y=1023..2047
   "~^/[^/]+/11/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 12: x=768..1791 y=1792..2815
+  # Zoom 12: x=0..1536 y=2047..4095
   "~^/[^/]+/12/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 13: x=1536..3583 y=3584..5631
+  # Zoom 13: x=0..3072 y=4095..8191
   "~^/[^/]+/13/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 14: x=3072..7167 y=7168..11263
+  # Zoom 14: x=0..6144 y=8191..16383
   "~^/[^/]+/14/$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
 
   # Tile specifications
