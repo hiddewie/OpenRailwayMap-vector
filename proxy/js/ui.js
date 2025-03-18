@@ -356,6 +356,24 @@ function determineStyleFromHash(hash) {
   }
 }
 
+function determineZoomCenterFromHash(hash) {
+  const hashObject = hashToObject(hash);
+  if ('view' in hashObject && typeof hashObject.view === 'string') {
+    const matches = hashObject.view.match(/^([\d.]+)\/(-?[\d.]+)\/(-?[\d.]+)$/)
+    console.info(hashObject.view, matches)
+    if (matches) {
+      return {
+        center: [parseFloat(matches[3]), parseFloat(matches[2])],
+        zoom: parseFloat(matches[1])
+      }
+    } else {
+      return {};
+    }
+  } else {
+    return {};
+  }
+}
+
 function putStyleInHash(hash, style) {
   const hashObject = hashToObject(hash);
   hashObject.style = style;
@@ -527,7 +545,10 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
+  ...determineZoomCenterFromHash(window.location.hash),
 });
+
 updateBackgroundMapContainer();
 
 const map = new maplibregl.Map({
@@ -785,7 +806,9 @@ map.addControl(new LegendControl({
 }), 'bottom-left');
 
 const onMapZoom = zoom => {
-  const legendZoom = Math.floor(zoom);
+  // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
+  //   stay within the bounds of the earth.
+  const legendZoom = Math.max(Math.floor(zoom), 6);
   const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
@@ -965,20 +988,6 @@ map.on('click', event => {
       .addTo(map);
   }
 });
-
-fetch(`${location.origin}/bounds.json`)
-  .then(result => {
-    if (result.status === 200) {
-      return result.json()
-    } else {
-      throw `Invalid status code ${result.status}`
-    }
-  })
-  .then(result => {
-    map.setMaxBounds(result);
-    backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
-  })
-  .catch(error => console.error('Error during fetching of import map bounds', error))
 
 let features = null;
 fetch(`${location.origin}/features.json`)

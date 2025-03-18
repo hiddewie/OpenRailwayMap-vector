@@ -52,36 +52,6 @@ After updating the data, run a new import:
 docker compose run --build import import
 ```
 
-## Deployment
-
-Import the data:
-```shell
-docker compose run --build import import
-```
-
-Build the tiles:
-```shell
-docker compose run -e BBOX='-11.3818,35.8891,25.0488,70.0' martin-cp
-```
-
-Build and deploy the tile server:
-```shell
-flyctl deploy --config martin-static.fly.toml --local-only
-```
-
-Build and deploy the API:
-```shell
-api/prepare-api.sh
-flyctl deploy --config api.fly.toml --local-only api
-```
-
-Build and deploy the caching proxy:
-```shell
-flyctl deploy --config proxy.fly.toml --local-only
-```
-
-The OpenRailwayMap is now available on https://openrailwaymap.fly.dev.
-
 ## Tests
 
 Tests use [*hurl*](https://hurl.dev/docs/installation.html).

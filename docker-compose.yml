@@ -70,6 +70,7 @@ services:
       # NL: 2.99,50.74753,7.230455,54.01786
       # PL-west: 15.0590,51.4957,19.5150,53.4155
       - BBOX
+      - TILES
       - MIN_ZOOM=0
       - MAX_ZOOM=14
       - DATABASE_URL=postgresql://postgres@db:5432/gis
@@ -109,7 +110,13 @@ services:
     ports:
       - '8000:8000'
     environment:
-      TILES_UPSTREAM: martin:3000
+      TILES_UPSTREAM_LOW: martin:3000
+      TILES_UPSTREAM_AFRICA: martin:3000
+      TILES_UPSTREAM_ASIA: martin:3000
+      TILES_UPSTREAM_EUROPE: martin:3000
+      TILES_UPSTREAM_NORTH_AMERICA: martin:3000
+      TILES_UPSTREAM_OCEANIA: martin:3000
+      TILES_UPSTREAM_SOUTH_AMERICA: martin:3000
       API_UPSTREAM: api:5000
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
@@ -119,8 +126,6 @@ services:
       CLIENT_CACHE_TTL_STALE: '0'
     develop:
       watch:
-        - action: rebuild
-          path: data/import/bounds.json
         - action: rebuild
           path: proxy
         - action: rebuild
