@@ -1,37 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="11.999994"
-   height="11.999994"
-   viewBox="0 0 3.1749985 3.1749985"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="scale(0.00661458)">
-    <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
-       id="rect2"
-       width="440"
-       height="440"
-       x="20"
-       y="20.000002" />
-    <circle
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1"
-       id="path5"
-       cx="240"
-       cy="240"
-       r="145" />
-    <circle
-       style="opacity:1;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:square;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
-       id="path6"
-       cx="240"
-       cy="240"
-       r="90" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="5" d="M 20.000001 20.000001 L 460.00003 20.000001 L 460.00003 460.00003 L 20.000001 460.00003 Z M 20.000001 20.000001 " transform="matrix(0.025, 0, 0, 0.025, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="square" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="5" d="M 385.000025 240.000016 C 385.000025 320.156271 320.156271 385.000025 240.000016 385.000025 C 159.843761 385.000025 95.000006 320.156271 95.000006 240.000016 C 95.000006 159.843761 159.843761 95.000006 240.000016 95.000006 C 320.156271 95.000006 385.000025 159.843761 385.000025 240.000016 Z M 385.000025 240.000016 " transform="matrix(0.025, 0, 0, 0.025, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8.25 6 C 8.25 7.242188 7.242188 8.25 6 8.25 C 4.757812 8.25 3.75 7.242188 3.75 6 C 3.75 4.757812 4.757812 3.75 6 3.75 C 7.242188 3.75 8.25 4.757812 8.25 6 Z M 8.25 6 "/>
 </svg>
