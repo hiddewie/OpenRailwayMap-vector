@@ -58,6 +58,7 @@ tags:
   - 'railway:signal:minor_distant'
   - 'railway:signal:minor_distant:form'
   - 'railway:signal:minor_distant:states'
+  - 'railway:signal:minor:substitute_signal'
   - 'railway:signal:passing'
   - 'railway:signal:passing:form'
   - 'railway:signal:passing:type'
