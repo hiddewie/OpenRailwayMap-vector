@@ -187,9 +187,6 @@ const stationFeatures = {
     station: {
       name: 'Type',
     },
-    station_size: {
-      name: 'Size',
-    },
     label: {
       name: 'Reference',
     },
