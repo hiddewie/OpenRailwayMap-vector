@@ -19,7 +19,7 @@ const upstream = process.argv[6]
 for (let zoom = 4; zoom <= 14; zoom++) {
   if (zoom >= 8) {
     const xregex = toRegexRange(xmin, xmax, {capture: true})
-    const yregex = toRegexRange(xmin, xmax, {capture: true})
+    const yregex = toRegexRange(ymin, ymax, {capture: true})
 
     console.log(`# Zoom ${zoom}: x=${xmin}..${xmax} y=${ymin}..${ymax}`)
     console.log(`"~^/[^/]+/${zoom}/${xregex}/${yregex}\$" http://\${${upstream}};`)
