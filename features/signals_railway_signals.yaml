@@ -3739,10 +3739,6 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  # TODO PL-PKP:w2
-  # TODO PL-PKP:w26b
-  # TODO PL-PKP:w26a
-
   - description: Wskaźnik unieważnienia (W3)
     country: PL
     icon: { default: 'pl/w3' }
@@ -4234,7 +4230,7 @@ features:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_change' }
-      
+
   - description: Izolator sekcyjny (CT-1)
     country: PL
     icon: { default: 'pl/ct-1' }
