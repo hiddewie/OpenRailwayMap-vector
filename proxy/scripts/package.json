@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "to-regex-range": "^5.0.1"
+  }
+}
