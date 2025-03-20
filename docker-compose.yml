@@ -72,7 +72,7 @@ services:
       - BBOX
       - TILES
       - MIN_ZOOM=0
-      - MAX_ZOOM=14
+      - MAX_ZOOM=13
       - DATABASE_URL=postgresql://postgres@db:5432/gis
 
   martin:
