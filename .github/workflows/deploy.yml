@@ -4,26 +4,26 @@ on:
   workflow_dispatch: ~
 
 jobs:
-  deploy-proxy:
-    name: Deploy proxy
-    runs-on: ubuntu-latest
-    environment: proxy-production
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Setup Fly
-        uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          flyctl deploy --config proxy.fly.toml --local-only
+#  deploy-proxy:
+#    name: Deploy proxy
+#    runs-on: ubuntu-latest
+#    environment: proxy-production
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#
+#      - name: Setup Fly
+#        uses: superfly/flyctl-actions/setup-flyctl@master
+#
+#      - name: Deploy
+#        env:
+#          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+#        run: |
+#          flyctl deploy --config proxy.fly.toml --local-only
 #
 #  generate-tiles-low-med:
 #    name: Generate low zoom tiles
@@ -75,9 +75,9 @@ jobs:
       matrix:
         region:
 #          - africa
-#          - asia
+          - asia
           - europe
-#          - north-america
+          - north-america
 #          - oceania
 #          - south-america
 
