@@ -1,0 +1,15 @@
+cache_size_mb: 1
+#listen_addresses: '[::]:3000'
+#worker_processes: 1
+#pmtiles: /tiles
+mbtiles:
+#  paths: /tiles
+  sources:
+    electrification: /tiles/electrification.mbtiles
+    high: /tiles/high.mbtiles
+    signals: /tiles/signals.mbtiles
+    speed: /tiles/speed.mbtiles
+#    standard: /tiles/standard.mbtiles
+#cog: /tiles
+sprites: /symbols
+fonts: /config/fonts

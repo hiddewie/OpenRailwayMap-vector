@@ -96,6 +96,10 @@ services:
           path: symbols
 
   martin-static:
+#    image: registry.fly.io/openrailwaymap-tiles-europe:deployment-01JPTMDF1ZSDZ00ZD5Z7A5Z1VY
+    mem_limit: 250M
+#    volumes:
+#      - ./heaptrack.martin.1.gz:/heaptrack.martin.1.gz
     build:
       dockerfile: martin-static.Dockerfile
     ports:
