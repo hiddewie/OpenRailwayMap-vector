@@ -88,6 +88,9 @@ function refresh_materialized_views() {
 }
 
 function print_summary() {
+  $PSQL --tuples-only -c "with bounds as (SELECT st_transform(st_setsrid(ST_Extent(way), 3857), 4326) as table_extent FROM railway_line) select '[[' || ST_XMin(table_extent) || ', ' || ST_YMin(table_extent) || '], [' || ST_XMax(table_extent) || ', ' || ST_YMax(table_extent) || ']]' from bounds;" > /data/import/bounds.json
+  echo "Import bounds: $(cat /data/import/bounds.json)"
+
   echo "Database summary"
   $PSQL -c "select concat(relname, ' (', relkind ,')') as name, pg_size_pretty(pg_table_size(oid)) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%' order by pg_table_size(oid) desc;"
   $PSQL -c "select pg_size_pretty(SUM(pg_table_size(oid))) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%';"

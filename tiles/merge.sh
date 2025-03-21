@@ -29,7 +29,7 @@ for name in railway_line_high standard_railway_text_stations_low standard_railwa
     fi
   done
 
-  mbtiles summary "$output_file" || true
+  mbtiles summary "$OUTPUT_DIR/$name.mbtiles"
 done
 
 echo "Done"
