@@ -10,7 +10,7 @@ on:
     secrets:
       FLY_API_TOKEN:
         required: true
-
+        
 jobs:
   tiles-bboxes:
     name: Generate bounding boxes
@@ -28,12 +28,12 @@ jobs:
         run: |
           {
             echo -n 'matrix='
-            jq --arg region '${{ inputs.region }}' -c '{ bbox: .[$region].bboxes }' tiles/deploy-bboxes.json
+            jq --arg region '${{ inputs.region }}' -c '{ bbox: [.[$region][].bboxes] | flatten }' tiles/deploy-bboxes.json
           } >> $GITHUB_OUTPUT
           
           {
             echo -n 'bboxes='
-            jq --arg region '${{ inputs.region }}' -r '.[$region].bboxes[]' tiles/deploy-bboxes.json | tr '\n' ' '
+            jq --arg region '${{ inputs.region }}' -r '[.[$region][].bboxes] | flatten | .[]' tiles/deploy-bboxes.json | tr '\n' ' '
           } >> $GITHUB_OUTPUT
 
   generate-tiles:
