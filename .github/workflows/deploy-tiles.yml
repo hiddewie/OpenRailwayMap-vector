@@ -147,7 +147,8 @@ jobs:
         run: |
           for file in tiles/*.mbtiles
           do 
-            ./pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')";
+            ./pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')" || true
+            rm -f "$file"
           done
 
       - name: List generated PMTiles
