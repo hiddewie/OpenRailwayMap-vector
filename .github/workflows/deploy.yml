@@ -48,11 +48,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install PMTiles
-        run: |
-          wget https://github.com/protomaps/go-pmtiles/releases/download/v1.26.1/go-pmtiles_1.26.1_Linux_x86_64.tar.gz
-          tar xzf go-pmtiles_1.26.1_Linux_x86_64.tar.gz
-          rm go-pmtiles_1.26.1_Linux_x86_64.tar.gz
+      - name: Setup PMTiles
+        uses: ./.github/actions/setup-pmtiles.yml
 
       - name: Pull database
         run: |
@@ -74,7 +71,7 @@ jobs:
         run: |
           for file in tiles/*.mbtiles
           do 
-            ./pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')" || true
+            pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')" || true
             rm -f "$file"
           done
 
