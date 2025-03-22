@@ -1,6 +1,8 @@
-# TODO handle proposed:*
 train_protections:
-  - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'blue' }
+  - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'hsl(214, 100%, 70%)' }
+  - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
+  - { train_protection: 'etcs_2', legend: 'European Train Control System (ETCS) level 2', color: 'hsl(214, 100%, 40%)' }
+  - { train_protection: 'etcs_3', legend: 'European Train Control System (ETCS) level 3', color: 'hsl(214, 100%, 30%)' }
   - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
   - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
@@ -47,19 +49,19 @@ features:
     tags:
       - { tag: 'railway:etcs', value: 'yes' }
 
-  - train_protection: etcs
+  - train_protection: etcs_1
     tags:
       - { tag: 'railway:etcs', value: '1' }
 
-  - train_protection: etcs
+  - train_protection: etcs_2
     tags:
       - { tag: 'railway:etcs', value: '2' }
 
-  - train_protection: etcs
+  - train_protection: etcs_2
     tags:
       - { tag: 'railway:etcs', value: '1;2' }
 
-  - train_protection: etcs
+  - train_protection: etcs_3
     tags:
       - { tag: 'railway:etcs', value: '3' }
 
