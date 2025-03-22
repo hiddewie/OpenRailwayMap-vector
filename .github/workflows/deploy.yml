@@ -90,6 +90,7 @@ jobs:
     name: Deploy tiles per region
 
     strategy:
+      fail-fast: false
       matrix:
         region:
           - africa
