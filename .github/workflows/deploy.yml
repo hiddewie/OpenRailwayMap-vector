@@ -91,12 +91,12 @@ jobs:
     strategy:
       matrix:
         region:
-#          - africa
-#          - asia
+          - africa
+          - asia
           - europe
-#          - north-america
-#          - oceania
-#          - south-america
+          - north-america
+          - oceania
+          - south-america
 
     uses: ./.github/workflows/deploy-tiles.yml
     with:
