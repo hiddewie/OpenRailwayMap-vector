@@ -29,7 +29,9 @@ for name in railway_line_high standard_railway_text_stations_low standard_railwa
     fi
   done
 
-  mbtiles summary "$output_file" || true
+  if [[ -f "$output_file" ]]; then
+    mbtiles summary "$output_file"
+  fi
 done
 
 echo "Done"
