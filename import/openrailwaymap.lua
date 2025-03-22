@@ -87,8 +87,10 @@ function largest_speed_noconvert(value)
 end
 
 -- Speed label and dominant speed, taking the preferred direction and forward, backward an non-directional speed into account
-function dominant_speed_label(preferred_direction, speed, forward_speed, backward_speed)
-  if (not speed) and (not forward_speed) and (not backward_speed) then
+function dominant_speed_label(state, preferred_direction, speed, forward_speed, backward_speed)
+  if state == 'abandoned' or state == 'razed' then
+    return nil, nil
+  elseif (not speed) and (not forward_speed) and (not backward_speed) then
     return nil, nil
   elseif speed and (not forward_speed) and (not backward_speed) then
     return speed_int(speed), speed
@@ -642,7 +644,7 @@ function osm2pgsql.process_way(object)
     local name = railway_line_name(state_name, tunnel, tags['tunnel:name'], bridge, tags['bridge:name'])
 
     local preferred_direction = tags['railway:preferred_direction']
-    local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
+    local dominant_speed, speed_label = dominant_speed_label(state, preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     -- Segmentize linestring to optimize tile queries
     for way in object:as_linestring():transform(3857):segmentize(max_segment_length):geometries() do
