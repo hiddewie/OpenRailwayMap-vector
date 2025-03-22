@@ -306,7 +306,10 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
+    { column = 'type', type = 'text' },
+    { column = 'turnout_side', type = 'text' },
     { column = 'local_operated', type = 'boolean' },
+    { column = 'resetting', type = 'boolean' },
   },
 })
 
@@ -622,7 +625,10 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
+      type = tags['railway:switch'],
+      turnout_side = tags['railway:turnout_side'],
       local_operated = tags['railway:local_operated'] == 'yes',
+      resetting = tags['railway:resetting'] == 'yes',
     })
   end
 end
