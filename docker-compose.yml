@@ -96,7 +96,8 @@ services:
           path: symbols
 
   martin-static:
-#    image: registry.fly.io/openrailwaymap-tiles-europe:deployment-01JPTMDF1ZSDZ00ZD5Z7A5Z1VY
+    # planet: image: registry.fly.io/openrailwaymap-tiles-europe:deployment-01JPTMDF1ZSDZ00ZD5Z7A5Z1VY
+    # europe + north america: image: registry.fly.io/openrailwaymap-tiles:deployment-01JPXF3G0SHNNTR1R6BXZ1QTGT
     mem_limit: 250M
 #    volumes:
 #      - ./heaptrack.martin.1.gz:/heaptrack.martin.1.gz
