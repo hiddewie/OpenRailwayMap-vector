@@ -142,8 +142,7 @@ postgres:
         osm_id: integer
         railway: string
         ref: string
-        # TODO: rename local_operated
-        railway_local_operated: boolean
+        local_operated: boolean
 
     # --- Speed --- #
 

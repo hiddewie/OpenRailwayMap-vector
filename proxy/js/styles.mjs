@@ -1707,7 +1707,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-color': colors[theme].styles.standard.switch.text,
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.switch.hover,
-          ['get', 'railway_local_operated'], colors[theme].styles.standard.switch.localOperated,
+          ['get', 'local_operated'], colors[theme].styles.standard.switch.localOperated,
           colors[theme].styles.standard.switch.halo
         ],
         'text-halo-width': 2,
@@ -3275,14 +3275,14 @@ const legendData = {
         properties: {
           railway: 'switch',
           ref: '123a',
-          railway_local_operated: false,
+          local_operated: false,
         },
         variants: [
           {
             legend: '(locally operated)',
             type: 'point',
             properties: {
-              railway_local_operated: true,
+              local_operated: true,
             },
           },
         ]

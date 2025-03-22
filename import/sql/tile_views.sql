@@ -407,7 +407,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     way,
     railway,
     ref,
-    railway_local_operated
+    local_operated
   FROM railway_switches
   ORDER by char_length(ref);
 

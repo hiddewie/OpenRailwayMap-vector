@@ -266,7 +266,7 @@ const features = {
       }
     },
     properties: {
-      railway_local_operated: {
+      local_operated: {
         name: 'Operated locally',
       },
     },
