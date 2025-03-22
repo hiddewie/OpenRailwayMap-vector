@@ -311,10 +311,10 @@ const gaugeLegends = [
   {min: 2000, legend: '2000 - 3000 mm'},
 ];
 
-const trainProtectionColor = theme => ['case',
+const trainProtectionColor = (theme, field) => ['case',
   ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
   ...signals_railway_line.train_protections.flatMap(train_protection =>
-    [['==', ['get', 'train_protection'], train_protection.train_protection], train_protection.color]),
+    [['==', ['get', field], train_protection.train_protection], train_protection.color]),
   'grey',
 ];
 
@@ -322,12 +322,13 @@ const railway_casing_add = 1;
 const bridge_casing_add = 3;
 
 // TODO move to variable
-const present_dasharray = [1];
 const abandoned_dasharray = [2.5, 2.5];
 const disused_dasharray = [2.5, 2.5];
 const razed_dasharray = [1.5, 3.5];
 const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
+
+const train_protection_construction_dasharray = [2, 8];
 
 const minSpeed = 10
 const maxSpeed = 380
@@ -712,14 +713,14 @@ const railwayLine = (theme, text, layers) => [
       ],
       layout: {
         'line-join': 'round',
-        'line-cap': 'round',
+        'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
       },
       paint: {
         'line-color': colors[theme].casing,
         'line-width': width,
         'line-gap-width': railway_casing_add,
-        'line-dasharray': dash,
+        'line-dasharray': dash ?? undefined,
       },
     }))
   ),
@@ -738,7 +739,7 @@ const railwayLine = (theme, text, layers) => [
       ],
       layout: {
         'line-join': 'round',
-        'line-cap': 'round',
+        'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
       },
       paint: {
@@ -747,7 +748,7 @@ const railwayLine = (theme, text, layers) => [
           color,
         ],
         'line-width': width,
-        'line-dasharray': dash,
+        'line-dasharray': dash ?? undefined,
       },
     })),
   ]),
@@ -814,7 +815,7 @@ const railwayLine = (theme, text, layers) => [
         'line-color': colors[theme].casing,
         'line-width': width,
         'line-gap-width': railway_casing_add,
-        'line-dasharray': dash,
+        'line-dasharray': dash ?? undefined,
       },
     }))
   ),
@@ -834,7 +835,7 @@ const railwayLine = (theme, text, layers) => [
       ],
       layout: {
         'line-join': 'round',
-        'line-cap': 'round',
+        'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
       },
       paint: {
@@ -843,7 +844,7 @@ const railwayLine = (theme, text, layers) => [
           color,
         ],
         'line-width': width,
-        'line-dasharray': dash,
+        'line-dasharray': dash ?? undefined,
       },
     })),
   ]),
@@ -929,7 +930,7 @@ const railwayLine = (theme, text, layers) => [
       ],
       layout: {
         'line-join': 'round',
-        'line-cap': 'round',
+        'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
       },
       paint: {
@@ -938,7 +939,7 @@ const railwayLine = (theme, text, layers) => [
           color,
         ],
         'line-width': width,
-        'line-dasharray': dash,
+        'line-dasharray': dash ?? undefined,
       },
     })),
   ]),
@@ -1122,7 +1123,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -1147,7 +1148,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1168,7 +1169,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1185,7 +1186,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 12,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1228,7 +1229,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 10,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1247,7 +1248,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 10,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1279,7 +1280,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 9,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1305,7 +1306,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 10,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1332,8 +1333,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 9,
           source: 'high',
           states: {
-            present: present_dasharray,
-            preserved: present_dasharray,
+            present: undefined,
+            preserved: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1352,7 +1353,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 9,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1375,7 +1376,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1395,7 +1396,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1877,7 +1878,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -1892,7 +1893,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -1905,7 +1906,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -2060,14 +2061,30 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           sort: ['get', 'train_protection_rank'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
           ],
-          color: trainProtectionColor(theme),
+          color: trainProtectionColor(theme, 'train_protection'),
+        },
+        {
+          id: 'railway_line_low_construction',
+          minzoom: 0,
+          maxzoom: 7,
+          source: 'openrailwaymap_low',
+          states: {
+            present: train_protection_construction_dasharray,
+          },
+          filter: ['!=', null, ['get', 'train_protection_construction']],
+          sort: ['get', 'train_protection_construction_rank'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            0, 0.5,
+            7, 2,
+          ],
+          color: trainProtectionColor(theme, 'train_protection_construction'),
         },
         {
           id: 'railway_line_med',
@@ -2075,20 +2092,35 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
           sort: ['get', 'train_protection_rank'],
           width: 2,
-          color: trainProtectionColor(theme),
+          color: trainProtectionColor(theme, 'train_protection'),
+        },
+        {
+          id: 'railway_line_med_construction',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_low',
+          states: {
+            present: train_protection_construction_dasharray,
+            construction: train_protection_construction_dasharray,
+            proposed: train_protection_construction_dasharray,
+          },
+          filter: ['!=', null, ['get', 'train_protection_construction']],
+          sort: ['get', 'train_protection_construction_rank'],
+          width: 2,
+          color: trainProtectionColor(theme, 'train_protection_construction'),
         },
         {
           id: 'railway_line_high',
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -2097,7 +2129,24 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor(theme),
+          color: trainProtectionColor(theme, 'train_protection'),
+        },
+        {
+          id: 'railway_line_high_construction',
+          minzoom: 8,
+          source: 'high',
+          states: {
+            present: train_protection_construction_dasharray,
+            construction: train_protection_construction_dasharray,
+            proposed: train_protection_construction_dasharray,
+          },
+          filter: ['!=', null, ['get', 'train_protection_construction']],
+          sort: ['get', 'train_protection_construction_rank'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            14, 2,
+            16, 3,
+          ],
+          color: trainProtectionColor(theme, 'train_protection_construction'),
         },
       ],
     ),
@@ -2345,7 +2394,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -2359,7 +2408,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: 2,
           color: electrificationColor(theme, 'voltage', 'frequency'),
@@ -2369,12 +2418,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
-            construction: present_dasharray,
-            proposed: present_dasharray,
-            disused: present_dasharray,
-            abandoned: present_dasharray,
-            preserved: present_dasharray,
+            present: undefined,
+            construction: undefined,
+            proposed: undefined,
+            disused: undefined,
+            abandoned: undefined,
+            preserved: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, ['match', ['get', 'state'],
@@ -2555,7 +2604,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -2569,7 +2618,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: 2,
           color: gaugeColor(theme, 'gauge0', 'gaugeint0'),
@@ -2579,7 +2628,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: gauge_construction_dashes,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -2633,7 +2682,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -2647,7 +2696,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: 2,
           color: loadingGaugeFillColor,
@@ -2657,7 +2706,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -2682,7 +2731,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 7,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
@@ -2696,7 +2745,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: present_dasharray,
+            present: undefined,
           },
           width: 2,
           color: trackClassFillColor,
@@ -2706,7 +2755,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           minzoom: 8,
           source: 'high',
           states: {
-            present: present_dasharray,
+            present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
@@ -3431,7 +3480,19 @@ const legendData = {
           tunnel: false,
           train_protection: train_protection.train_protection,
           train_protection_rank: 1,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
         },
+        variants: [
+          {
+            properties: {
+              train_protection: null,
+              train_protection_rank: 0,
+              train_protection_construction: train_protection.train_protection,
+              train_protection_rank_construction: 1,
+            }
+          }
+        ],
       })),
       {
         legend: '(unknown)',
@@ -3445,6 +3506,8 @@ const legendData = {
           tunnel: false,
           train_protection: null,
           train_protection_rank: 0,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
         },
       },
     ],
@@ -3461,7 +3524,19 @@ const legendData = {
           tunnel: false,
           train_protection: train_protection.train_protection,
           train_protection_rank: 1,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
         },
+        variants: [
+          {
+            properties: {
+              train_protection: null,
+              train_protection_rank: 0,
+              train_protection_construction: train_protection.train_protection,
+              train_protection_rank_construction: 1,
+            }
+          }
+        ],
       })),
       {
         legend: '(unknown)',
@@ -3475,6 +3550,8 @@ const legendData = {
           tunnel: false,
           train_protection: null,
           train_protection_rank: 0,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
         },
       },
       {
@@ -3489,6 +3566,24 @@ const legendData = {
           tunnel: false,
           train_protection: 'etcs',
           train_protection_rank: 1,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
+        },
+      },
+      {
+        legend: 'Proposed',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'proposed',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          train_protection: 'etcs',
+          train_protection_rank: 1,
+          train_protection_construction: null,
+          train_protection_rank_construction: 0,
         },
       },
     ],
