@@ -20,16 +20,17 @@ FROM ghcr.io/maplibre/martin:main
 
 COPY martin /config
 COPY symbols /symbols
-COPY --from=source /tiles /tiles
+COPY /tiles /tiles
+#COPY --from=source /tiles /tiles
 
 
-RUN apk add --no-cache gdb libunwind
-
-# Add heaptrack
-COPY --from=heaptrack-build /heaptrack/build/ /heaptrack/build/
-
-ENV LD_LIBRARY_PATH=/heaptrack/build/lib/heaptrack/
-RUN ln -s /heaptrack/build/bin/heaptrack /usr/local/bin/heaptrack
+#RUN apk add --no-cache gdb libunwind
+#
+## Add heaptrack
+#COPY --from=heaptrack-build /heaptrack/build/ /heaptrack/build/
+#
+#ENV LD_LIBRARY_PATH=/heaptrack/build/lib/heaptrack/
+#RUN ln -s /heaptrack/build/bin/heaptrack /usr/local/bin/heaptrack
 
 
 RUN #apk add heaptrack
@@ -44,5 +45,5 @@ RUN #chmod +x /martin
 #ENTRYPOINT ["/martin"]
 #CMD ["/tiles", "--workers","1", "--save-config", "-", "--listen-addresses", "[::]:3000", "--cache-size", "0", "--sprite", "/symbols", "--font", "/config/fonts"]
 # "/martin",
-CMD ["/tiles", "--auto-bounds", "skip", "--workers","1", "--cache-size", "0","--pool-size","1", "--listen-addresses", "0.0.0.0:3000"]
+CMD ["--config", "/config/static-config.yml", "--auto-bounds", "skip", "--workers","1", "--cache-size", "0","--pool-size","1", "--listen-addresses", "0.0.0.0:3000"]
 #CMD ["/tiles", "--listen-addresses", "[::]:3000", "--sprite", "/symbols", "--font", "/config/fonts", "--cache-size", "1",  "--auto-bounds", "skip", "--workers","1", "--pool-size","1"]

@@ -1,14 +1,21 @@
-cache_size_mb: 1
+#cache_size_mb: 1
 #listen_addresses: '[::]:3000'
 #worker_processes: 1
 #pmtiles: /tiles
-mbtiles:
+#mbtiles:
+##  paths: /tiles
+#  sources:
+#    electrification: /tiles/electrification.mbtiles
+#    high: /tiles/high.mbtiles
+#    signals: /tiles/signals.mbtiles
+#    speed: /tiles/speed.mbtiles
+pmtiles:
 #  paths: /tiles
   sources:
-    electrification: /tiles/electrification.mbtiles
-    high: /tiles/high.mbtiles
-    signals: /tiles/signals.mbtiles
-    speed: /tiles/speed.mbtiles
+    electrification: /tiles/electrification.pmtiles
+    high: /tiles/high.pmtiles
+    signals: /tiles/signals.pmtiles
+    speed: /tiles/speed.pmtiles
 #    standard: /tiles/standard.mbtiles
 #cog: /tiles
 sprites: /symbols
