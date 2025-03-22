@@ -99,6 +99,12 @@ const colors = {
           halo: 'blue',
           hover: 'yellow',
         },
+        switch: {
+          text: 'black',
+          halo: 'white',
+          localOperated: 'yellow',
+          hover: '#ff9361',
+        },
       },
     },
     km: {
@@ -173,6 +179,12 @@ const colors = {
           text: 'white',
           halo: '#00298d',
           hover: 'yellow',
+        },
+        switch: {
+          text: 'black',
+          halo: 'white',
+          localOperated: 'yellow',
+          hover: '#ff9361',
         },
       },
     },
@@ -1692,15 +1704,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_switch_ref',
       paint: {
-        'text-color': colors[theme].text.main,
+        'text-color': colors[theme].styles.standard.switch.text,
         'text-halo-color': ['case',
-          // Invert coloring on hover
-          ['boolean', ['feature-state', 'hover'], false], ['case',
-            ['get', 'railway_local_operated'], 'white',
-            colors[theme].hover.textHalo,
-          ],
-          ['get', 'railway_local_operated'], 'yellow',
-          colors[theme].halo
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.switch.hover,
+          ['get', 'railway_local_operated'], colors[theme].styles.standard.switch.localOperated,
+          colors[theme].styles.standard.switch.halo
         ],
         'text-halo-width': 2,
       },
