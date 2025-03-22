@@ -266,8 +266,20 @@ const features = {
       }
     },
     properties: {
+      ref: {
+        name: 'Reference',
+      },
+      type: {
+        name: 'Type',
+      },
+      turnout_side: {
+        name: 'Turnout side',
+      },
       local_operated: {
         name: 'Operated locally',
+      },
+      resetting: {
+        name: 'Resetting',
       },
     },
   },

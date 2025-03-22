@@ -142,7 +142,10 @@ postgres:
         osm_id: integer
         railway: string
         ref: string
+        type: string
+        turnout_side: string
         local_operated: boolean
+        resetting: boolean
 
     # --- Speed --- #
 

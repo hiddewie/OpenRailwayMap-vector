@@ -407,7 +407,10 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     way,
     railway,
     ref,
-    local_operated
+    type,
+    turnout_side,
+    local_operated,
+    resetting
   FROM railway_switches
   ORDER by char_length(ref);
 
