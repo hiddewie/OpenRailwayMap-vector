@@ -1,7 +1,6 @@
-# TODO handle construction:*, proposed:*
+# TODO handle proposed:*
 train_protections:
   - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'blue' }
-  - { train_protection: 'construction_etcs', legend: 'European Train Control System (under construction)', color: '#87CEFA' }
   - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
   - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
@@ -63,22 +62,6 @@ features:
   - train_protection: etcs
     tags:
       - { tag: 'railway:etcs', value: '3' }
-
-  - train_protection: construction_etcs
-    tags:
-      - { tag: 'construction:railway:etcs', value: 'yes' }
-
-  - train_protection: construction_etcs
-    tags:
-      - { tag: 'construction:railway:etcs', value: '1' }
-
-  - train_protection: construction_etcs
-    tags:
-      - { tag: 'construction:railway:etcs', value: '2' }
-
-  - train_protection: construction_etcs
-    tags:
-      - { tag: 'construction:railway:etcs', value: '3' }
 
   - train_protection: asfa
     tags:
