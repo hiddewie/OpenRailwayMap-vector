@@ -1702,10 +1702,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'railway_switch',
       ['match', ['get', 'type'],
         'double_slip', 'general/switch-double-slip',
-        'single_slip', ['match', ['get', 'turnout_side'],
-          'left', 'general/switch-single-slip-left',
-          'general/switch-single-slip',
-        ],
+        'single_slip', 'general/switch-single-slip',
         'wye', 'general/switch-wye',
         'three_way', 'general/switch-three-way',
         'four_way', 'general/switch-four-way',
@@ -3397,22 +3394,6 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
-        variants: [
-          {
-            legend: '(left sided)',
-            type: 'point',
-            properties: {
-              turnout_side: 'left',
-            },
-          },
-          {
-            legend: '(right sided)',
-            type: 'point',
-            properties: {
-              turnout_side: 'right',
-            },
-          },
-        ]
       },
       {
         legend: 'Double slip switch',
