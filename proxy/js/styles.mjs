@@ -102,9 +102,6 @@ const colors = {
         switch: {
           default: '#003687',
           localOperated: '#005129',
-          text: 'black',
-          halo: 'white',
-          hover: '#ff9361',
         },
       },
     },
@@ -182,11 +179,8 @@ const colors = {
           hover: 'yellow',
         },
         switch: {
-          default: '#003687',
-          localOperated: '#005129',
-          text: 'black',
-          halo: 'white',
-          hover: '#ff9361',
+          default: '#a7c6fc',
+          localOperated: '#85f5bd',
         },
       },
     },
