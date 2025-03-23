@@ -49,7 +49,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup PMTiles
-        uses: ./.github/actions/setup-pmtiles.yml
+        uses: ./.github/actions/setup-pmtiles
 
       - name: Pull database
         run: |

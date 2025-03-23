@@ -6,6 +6,7 @@ runs:
 
   steps:
     - name: Install PMTiles
+      shell: bash
       run: |
         mkdir -p /tmp/pmtiles
         cd /tmp/pmtiles
@@ -14,5 +15,6 @@ runs:
         rm go-pmtiles_1.26.1_Linux_x86_64.tar.gz
 
     - name: Add PMTiles CLI to path
+      shell: bash
       run: |
         echo "/tmp/pmtiles" >> $GITHUB_PATH

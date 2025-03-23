@@ -122,6 +122,12 @@ const railwayLineFeatures = {
         lookup: 'train_protection',
       }
     },
+    train_protection_construction: {
+      name: 'Train protection under construction',
+      format: {
+        lookup: 'train_protection',
+      }
+    },
     electrification_state: {
       name: 'Electrification',
     },

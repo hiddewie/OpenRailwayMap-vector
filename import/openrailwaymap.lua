@@ -168,6 +168,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'train_protection', type = 'text' },
     { column = 'train_protection_rank', type = 'smallint' },
+    { column = 'train_protection_construction', type = 'text' },
+    { column = 'train_protection_construction_rank', type = 'smallint' },
     { column = 'operator', sql_type = 'text[]' },
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
@@ -641,7 +643,8 @@ function osm2pgsql.process_way(object)
 
   if railway_values(tags.railway) then
     local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
-    local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
+    local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags, '')
+    local train_protection_construction, train_protection_construction_rank = tag_functions.train_protection(tags, 'construction:')
 
     local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
 
@@ -685,6 +688,8 @@ function osm2pgsql.process_way(object)
         reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
         train_protection = railway_train_protection,
         train_protection_rank = railway_train_protection_rank,
+        train_protection_construction = train_protection_construction,
+        train_protection_construction_rank = train_protection_construction_rank,
         operator = split_semicolon_to_sql_array(tags['operator']),
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
