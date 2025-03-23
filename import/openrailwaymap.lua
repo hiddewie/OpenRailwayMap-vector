@@ -205,6 +205,11 @@ local stations = osm2pgsql.define_table({
     { column = 'name_tags', type = 'hstore' },
     { column = 'operator', type = 'text' },
     { column = 'network', type = 'text' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
   },
 })
 
@@ -524,6 +529,11 @@ function osm2pgsql.process_node(object)
           name_tags = name_tags,
           operator = tags.operator,
           network = tags.network,
+          wikidata = tags.wikidata,
+          wikimedia_commons = tags.wikimedia_commons,
+          image = tags.image,
+          mapillary = tags.mapillary,
+          wikipedia = tags.wikipedia,
         })
       end
     else
