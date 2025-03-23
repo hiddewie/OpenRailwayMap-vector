@@ -3314,6 +3314,14 @@ const legendData = {
         },
         variants: [
           {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              ref: null,
+              local_operated: true,
+            },
+          },
+          {
             legend: '(left sided)',
             type: 'point',
             properties: {
@@ -3329,14 +3337,6 @@ const legendData = {
               turnout_side: 'right',
             },
           },
-          {
-            legend: '(locally operated)',
-            type: 'point',
-            properties: {
-              ref: '7L',
-              local_operated: true,
-            },
-          },
         ],
       },
       {
@@ -3350,6 +3350,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
       {
         legend: 'Three-way switch',
@@ -3362,6 +3371,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
       {
         legend: 'Four-way switch',
@@ -3374,6 +3392,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
       {
         legend: 'Abt switch',
@@ -3386,6 +3413,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
       {
         legend: 'Single slip switch',
@@ -3398,6 +3434,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
       {
         legend: 'Double slip switch',
@@ -3410,6 +3455,15 @@ const legendData = {
           local_operated: false,
           resetting: false,
         },
+        variants: [
+          {
+            legend: '(locally operated)',
+            type: 'point',
+            properties: {
+              local_operated: true,
+            },
+          },
+        ],
       },
     ],
   },
