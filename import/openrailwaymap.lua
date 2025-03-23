@@ -211,6 +211,12 @@ local stations = osm2pgsql.define_table({
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
   },
+  indexes = {
+    -- For joining stations_with_route_counts with metadata from this table
+    { column = 'id', method = 'btree', unique = true },
+    -- For building stations_with_route_counts
+    { column = 'way', method = 'gist' },
+  },
 })
 
 local stop_positions = osm2pgsql.define_table({
