@@ -11,8 +11,7 @@ CREATE OR REPLACE VIEW stops_and_route_relations AS
     sp.way AS geom
   FROM stop_positions AS sp
   JOIN routes AS r
-    ON r.stop_ref_ids @> Array[sp.osm_id]
-  WHERE sp.name IS NOT NULL;
+    ON r.stop_ref_ids @> Array[sp.osm_id];
 
 -- Get OSM IDs of route relations referencing a platform (all except nodes)
 CREATE OR REPLACE VIEW platforms_route_relations AS
