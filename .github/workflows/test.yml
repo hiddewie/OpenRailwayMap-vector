@@ -2,7 +2,9 @@ name: Test
 
 on:
   workflow_dispatch: ~
-  push: ~
+  push:
+    branches:
+      - master
   pull_request: ~
 
 concurrency:
