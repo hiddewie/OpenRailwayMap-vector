@@ -630,7 +630,7 @@ function osm2pgsql.process_node(object)
       type = tags['railway:switch'],
       turnout_side = tags['railway:turnout_side'],
       local_operated = tags['railway:local_operated'] == 'yes',
-      resetting = tags['railway:resetting'] == 'yes',
+      resetting = tags['railway:switch:resetting'] == 'yes',
     })
   end
 end
