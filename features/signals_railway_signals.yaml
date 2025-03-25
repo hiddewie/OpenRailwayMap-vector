@@ -3749,7 +3749,7 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-      - { regex: '^[A-Z]$', value: 'pl/w2-{}', example: 'pl/w2-{K}' }
+      - { regex: '^[A-ZŁ]$', value: 'pl/w2-{}', example: 'pl/w2-{K}' }
       default: 'pl/w2-{W}'
     tags:
       - { tag: 'railway:signal:route', values: ['PL-PKP:w2', 'PL-PKP:w26a', 'PL-PKP:w26b'] }
