@@ -242,7 +242,12 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS rank,
     uic_ref,
     route_count,
-    count
+    count,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia
   FROM
     stations_with_route_counts
   ORDER BY
@@ -259,7 +264,12 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     station_size,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia
   FROM
     railway_text_stations
   WHERE
@@ -278,7 +288,12 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     station_size,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia
   FROM
     railway_text_stations
   WHERE
@@ -300,7 +315,12 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     railway_ref as label,
     name,
     count,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia
   FROM
     railway_text_stations
   WHERE
@@ -315,7 +335,12 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     station,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia
   FROM
     stations_with_route_counts;
 

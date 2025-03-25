@@ -60,6 +60,11 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
     s.railway AS railway,
     sprc.route_ids AS route_ids,
     s.name_tags as name_tags,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
     s.way AS way
   FROM stations AS s
   LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
@@ -78,6 +83,11 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
     s.railway AS railway,
     sprc.route_ids AS route_ids,
     s.name_tags as name_tags,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
     s.way AS way
   FROM stations AS s
   JOIN platforms_and_their_routes_clustered AS sprc
@@ -98,6 +108,11 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
     railway,
     route_count,
     name_tags,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
     ST_Centroid(way) as center,
     ST_Buffer(ST_ConvexHull(way), 50) as buffered,
     ST_NumGeometries(way) as count
@@ -112,27 +127,32 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
       railway,
       MAX(route_count) as route_count,
       hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
+      array_agg(wikidata) as wikidata,
+      array_agg(wikimedia_commons) as wikimedia_commons,
+      array_agg(image) as image,
+      array_agg(mapillary) as mapillary,
+      array_agg(wikipedia) as wikipedia,
       ST_RemoveRepeatedPoints(ST_Collect(way)) as way
     FROM (
       SELECT
         *,
         ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
       FROM (
-        SELECT MIN(id) as id, MIN(osm_id) as osm_id, name, station, railway_ref, uic_ref, railway, ARRAY_LENGTH(ARRAY_AGG(DISTINCT route_id), 1) AS route_count, name_tags, way
+        SELECT MIN(id) as id, MIN(osm_id) as osm_id, name, station, railway_ref, uic_ref, railway, COUNT(DISTINCT route_id) AS route_count, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
         FROM (
-          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
+          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
           FROM station_nodes_stop_positions_rel_count
 
           UNION ALL
 
-          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, way
+          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
           FROM station_nodes_platforms_rel_count
         ) AS a
-        GROUP BY name, station, railway_ref, uic_ref, railway, way, name_tags
+        GROUP BY name, station, railway_ref, uic_ref, railway, way, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia
 
         UNION ALL
 
-        SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, 0 AS route_count, name_tags, way
+        SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, 0 AS route_count, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
         FROM stations
         WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
      ) AS grouped_facilities

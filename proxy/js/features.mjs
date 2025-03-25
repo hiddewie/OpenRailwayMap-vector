@@ -204,7 +204,22 @@ const stationFeatures = {
     },
     network: {
       name: 'Network',
-    }
+    },
+    wikidata: {
+      name: 'Wikidata',
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia commons',
+    },
+    image: {
+      name: 'Image',
+    },
+    mapillary: {
+      name: 'Mapillary',
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+    },
   },
 }
 

@@ -45,6 +45,11 @@ postgres:
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
 
     standard_railway_text_stations_med:
       schema: public
@@ -61,6 +66,11 @@ postgres:
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
 
     standard_railway_turntables:
       schema: public
@@ -89,6 +99,11 @@ postgres:
         name: string
         count: integer
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
 
     standard_railway_grouped_stations:
       schema: public
@@ -104,6 +119,11 @@ postgres:
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
 
     standard_railway_symbols:
       schema: public
