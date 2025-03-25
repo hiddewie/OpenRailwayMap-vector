@@ -200,7 +200,7 @@
     { "key": "railway:signal:radio:frequency" },
     { "key": "railway:signal:route" },
     { "key": "railway:signal:route:form" },
-    { "key": "railway:signal:route:states" }
+    { "key": "railway:signal:route:states" },
     { "key": "railway:signal:short_route" },
     { "key": "railway:signal:short_route:form" },
     { "key": "railway:signal:shunting" },
