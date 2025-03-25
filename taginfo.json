@@ -1,7 +1,7 @@
 {
   "data_format": 1,
   "data_url": "https://raw.githubusercontent.com/hiddewie/OpenRailwayMap-vector/master/taginfo.json",
-  "data_updated": "20250317T120000Z",
+  "data_updated": "20250323T153000Z",
   "project": {
     "name": "OpenRailwayMap-vector",
     "description": "Vector tile-based railway map rendering based on OpenStreetMap data.",
@@ -198,6 +198,9 @@
     { "key": "railway:signal:radio" },
     { "key": "railway:signal:radio:form" },
     { "key": "railway:signal:radio:frequency" },
+    { "key": "railway:signal:route" },
+    { "key": "railway:signal:route:form" },
+    { "key": "railway:signal:route:states" },
     { "key": "railway:signal:short_route" },
     { "key": "railway:signal:short_route:form" },
     { "key": "railway:signal:shunting" },

@@ -40,4 +40,8 @@ loading_gauges:
   - { value: 'subsurface', legend: 'subsurface', color: 'hsl(242, 100%, 40%)' }
   - { value: 'NM1520 ŽSR', legend: 'NM1520 ŽSR', color: 'hsl(273, 100%, 40%)' }
   - { value: 'UR760', legend: 'UR760', color: 'hsl(215, 100%, 40%)' }
-  - { value: 'EBV3', legend: 'EBV3', color: 'hsl(215, 100%, 40%)' }
+  - { value: 'EBV 1', legend: 'EBV1', color: 'hsl(30, 100%, 60%)' }
+  - { value: 'EBV 2', legend: 'EBV2', color: 'hsl(130, 80%, 50%)' }
+  - { value: 'EBV 3', legend: 'EBV3', color: 'hsl(215, 100%, 40%)' }
+  - { value: 'EBV 4', legend: 'EBV4', color: 'hsl(270, 80%, 50%)' }
+  

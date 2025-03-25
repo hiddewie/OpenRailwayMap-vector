@@ -74,6 +74,9 @@ tags:
   - 'railway:signal:radio'
   - 'railway:signal:radio:form'
   - 'railway:signal:radio:frequency'
+  - 'railway:signal:route'
+  - 'railway:signal:route:form'
+  - 'railway:signal:route:states'
   - 'railway:signal:short_route'
   - 'railway:signal:short_route:form'
   - 'railway:signal:shunting'
@@ -144,6 +147,7 @@ types:
   - { type: snowplow }
   - { type: wrong_road }
   - { type: short_route }
+  - { type: route }
   - { type: brake_test }
   - { type: helper_engine }
 
@@ -3740,6 +3744,17 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  - description: Wskaźniki kierunku jazdy (W2, W26a,  W26b)
+    country: PL
+    icon:
+      match: 'railway:signal:route:states'
+      cases:
+      - { regex: '^[A-ZŁ]$', value: 'pl/w2-{}', example: 'pl/w2-{K}' }
+      default: 'pl/w2-{W}'
+    tags:
+      - { tag: 'railway:signal:route', values: ['PL-PKP:w2', 'PL-PKP:w26a', 'PL-PKP:w26b'] }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: Wskaźnik unieważnienia (W3)
     country: PL
     icon: { default: 'pl/w3' }
@@ -3895,6 +3910,12 @@ features:
     tags:
       - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
 
+  - description: Wskaźnik jazdy pociągu towarowego (W22)
+    country: PL
+    icon: { default: 'pl/w22' }
+    tags:
+      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
+
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
     icon: { default: 'pl/w24' }
@@ -3913,7 +3934,7 @@ features:
     icon:
       match: 'railway:signal:radio:frequency'
       cases:
-      - { regex: '^R[1-8]$', value: 'pl/w28-{}', example: 'pl/w28-{R3}' }
+      - { regex: '^(R[1-8]|S5)$', value: 'pl/w28-{}', example: 'pl/w28-{R3}' }
       default: 'pl/w28-{R1}'
     tags:
       - { tag: 'railway:signal:radio', value: 'PL-PKP:w28' }
@@ -3937,15 +3958,22 @@ features:
       - { tag: 'railway:signal:stop', value: 'PL-PKP:w32' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Wskaźniki obowiązywania systemu ERTMS/GSM-R (W33 i W34)
+  - description: Wskaźnik początku obowiązywania systemu ERTMS/GSM-R (W33)
+    country: PL
+    icon: { default: 'pl/w33' }
+    tags:
+      - { tag: 'railway:signal:radio', value: 'PL-PKP:w33' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
+
+  - description: Wskaźnik końca obowiązywania systemu ERTMS/GSM-R (W34)
     country: PL
     icon:
-      match: 'railway:signal:radio'
+      match: 'railway:signal:radio:frequency'
       cases:
-        - { regex: '^PL-PKP:w34$', value: 'pl/w34' }
-      default: 'pl/w33'
+        - { regex: '^R[1-8]$', value: 'pl/w34-{}', example: 'pl/w34-{R4}' }
+      default: 'pl/w34'
     tags:
-      - { tag: 'railway:signal:radio', values: ['PL-PKP:w33', 'PL-PKP:w34'] }
+      - { tag: 'railway:signal:radio', value: 'PL-PKP:w34' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   - description: Wskaźniki ETCS L1 Limited Supervision
