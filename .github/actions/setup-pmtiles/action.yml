@@ -1,0 +1,20 @@
+name: 'Setup PMTiles'
+description: 'Install PMTiles'
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install PMTiles
+      shell: bash
+      run: |
+        mkdir -p /tmp/pmtiles
+        cd /tmp/pmtiles
+        wget https://github.com/protomaps/go-pmtiles/releases/download/v1.26.1/go-pmtiles_1.26.1_Linux_x86_64.tar.gz
+        tar xzf go-pmtiles_1.26.1_Linux_x86_64.tar.gz
+        rm go-pmtiles_1.26.1_Linux_x86_64.tar.gz
+
+    - name: Add PMTiles CLI to path
+      shell: bash
+      run: |
+        echo "/tmp/pmtiles" >> $GITHUB_PATH

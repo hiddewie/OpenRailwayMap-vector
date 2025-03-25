@@ -11,7 +11,7 @@ This repository aims to contain all code, configuration and tooling for the Open
 - Data is provided by [OpenStreetMap](https://www.openstreetmap.org/about).
 - Data is stored in a [PostgreSQL](https://www.postgresql.org/) database, augmented by [PostGIS](https://postgis.net/) for spatial features.
 - Data is imported from the OpenStreetMap data files to PostgreSQL using [Osm2pgsql](https://osm2pgsql.org/).
-- Vector tiles are rendered from the database with [Martin](https://martin.maplibre.org/) (part of the [MapLibre initiative](https://maplibre.org/)) in the MBtiles format.
+- Vector tiles are rendered from the database with [Martin](https://martin.maplibre.org/) (part of the [MapLibre initiative](https://maplibre.org/)) in the MBtiles format and converted to PMTiles using [ProtoMaps PMTiles](https://docs.protomaps.com/pmtiles/).
 - The user interface uses [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) to visualize the map content.
 - The style is specified using the [MapLibre Style Specification](https://maplibre.org/maplibre-style-spec/).
 - [Docker](https://www.docker.com/) is used to package the software and data for local development and deployment.

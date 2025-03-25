@@ -29,6 +29,8 @@ jobs:
     name: Generate low zoom tiles
     runs-on: ubuntu-latest
 
+    environment: tiles-production-low
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +48,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup PMTiles
+        uses: ./.github/actions/setup-pmtiles
+
       - name: Pull database
         run: |
           docker compose pull db
@@ -58,9 +63,21 @@ jobs:
         run: |
           docker compose run --no-deps martin-cp
 
-      - name: List generated tiles
+      - name: List generated MBTiles
         run: |
           ls -lah tiles/*.mbtiles
+
+      - name: Convert mbtiles to PMTiles
+        run: |
+          for file in tiles/*.mbtiles
+          do 
+            pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')" || true
+            rm -f "$file"
+          done
+
+      - name: List generated PMTiles
+        run: |
+          ls -lah tiles/*.pmtiles
 
       - name: Deploy
         env:
@@ -72,6 +89,7 @@ jobs:
     name: Deploy tiles per region
 
     strategy:
+      fail-fast: false
       matrix:
         region:
           - africa

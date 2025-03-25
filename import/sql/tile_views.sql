@@ -37,6 +37,8 @@ RETURN (
       speed_label,
       train_protection_rank,
       train_protection,
+      train_protection_construction_rank,
+      train_protection_construction,
       electrification_state,
       voltage,
       frequency,
@@ -83,6 +85,8 @@ RETURN (
         speed_label,
         train_protection_rank,
         train_protection,
+        train_protection_construction_rank,
+        train_protection_construction,
         electrification_state,
         voltage,
         frequency,
@@ -177,6 +181,8 @@ DO $do$ BEGIN
           "speed_label": "string",
           "train_protection": "string",
           "train_protection_rank": "integer",
+          "train_protection_construction": "string",
+          "train_protection_construction_rank": "integer",
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
@@ -407,7 +413,10 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     way,
     railway,
     ref,
-    railway_local_operated
+    type,
+    turnout_side,
+    local_operated,
+    resetting
   FROM railway_switches
   ORDER by char_length(ref);
 

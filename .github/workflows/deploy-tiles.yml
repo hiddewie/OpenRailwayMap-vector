@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Tiles
 
 on:
   workflow_call:
@@ -117,6 +117,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup PMTiles
+        uses: ./.github/actions/setup-pmtiles
+
       - uses: actions/download-artifact@v4
         with:
           pattern: tiles-${{ inputs.region }}-*
@@ -133,9 +136,21 @@ jobs:
             rm -rf "tiles/split/$bbox"
           done
 
-      - name: List generated tiles
+      - name: List generated MBTiles
         run: |
           ls -lah tiles/*.mbtiles
+
+      - name: Convert MBTiles to PMTiles
+        run: |
+          for file in tiles/*.mbtiles
+          do 
+            pmtiles convert "$file" "$(echo "$file" | sed 's/mbtiles$/pmtiles/')" || true
+            rm -f "$file"
+          done
+
+      - name: List generated PMTiles
+        run: |
+          ls -lah tiles/*.pmtiles
 
       - name: Deploy
         env:

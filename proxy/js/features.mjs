@@ -122,6 +122,12 @@ const railwayLineFeatures = {
         lookup: 'train_protection',
       }
     },
+    train_protection_construction: {
+      name: 'Train protection under construction',
+      format: {
+        lookup: 'train_protection',
+      }
+    },
     electrification_state: {
       name: 'Electrification',
     },
@@ -266,8 +272,20 @@ const features = {
       }
     },
     properties: {
-      railway_local_operated: {
+      ref: {
+        name: 'Reference',
+      },
+      type: {
+        name: 'Type',
+      },
+      turnout_side: {
+        name: 'Turnout side',
+      },
+      local_operated: {
         name: 'Operated locally',
+      },
+      resetting: {
+        name: 'Resetting',
       },
     },
   },

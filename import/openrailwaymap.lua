@@ -87,8 +87,10 @@ function largest_speed_noconvert(value)
 end
 
 -- Speed label and dominant speed, taking the preferred direction and forward, backward an non-directional speed into account
-function dominant_speed_label(preferred_direction, speed, forward_speed, backward_speed)
-  if (not speed) and (not forward_speed) and (not backward_speed) then
+function dominant_speed_label(state, preferred_direction, speed, forward_speed, backward_speed)
+  if state == 'abandoned' or state == 'razed' then
+    return nil, nil
+  elseif (not speed) and (not forward_speed) and (not backward_speed) then
     return nil, nil
   elseif speed and (not forward_speed) and (not backward_speed) then
     return speed_int(speed), speed
@@ -166,6 +168,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'train_protection', type = 'text' },
     { column = 'train_protection_rank', type = 'smallint' },
+    { column = 'train_protection_construction', type = 'text' },
+    { column = 'train_protection_construction_rank', type = 'smallint' },
     { column = 'operator', sql_type = 'text[]' },
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
@@ -304,7 +308,10 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
-    { column = 'railway_local_operated', type = 'boolean' },
+    { column = 'type', type = 'text' },
+    { column = 'turnout_side', type = 'text' },
+    { column = 'local_operated', type = 'boolean' },
+    { column = 'resetting', type = 'boolean' },
   },
 })
 
@@ -620,7 +627,10 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
-      railway_local_operated = tags['railway:local_operated'] == 'yes',
+      type = tags['railway:switch'],
+      turnout_side = tags['railway:turnout_side'],
+      local_operated = tags['railway:local_operated'] == 'yes',
+      resetting = tags['railway:switch:resetting'] == 'yes',
     })
   end
 end
@@ -633,7 +643,8 @@ function osm2pgsql.process_way(object)
 
   if railway_values(tags.railway) then
     local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
-    local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags)
+    local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags, '')
+    local train_protection_construction, train_protection_construction_rank = tag_functions.train_protection(tags, 'construction:')
 
     local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
 
@@ -642,7 +653,7 @@ function osm2pgsql.process_way(object)
     local name = railway_line_name(state_name, tunnel, tags['tunnel:name'], bridge, tags['bridge:name'])
 
     local preferred_direction = tags['railway:preferred_direction']
-    local dominant_speed, speed_label = dominant_speed_label(preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
+    local dominant_speed, speed_label = dominant_speed_label(state, preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     -- Segmentize linestring to optimize tile queries
     for way in object:as_linestring():transform(3857):segmentize(max_segment_length):geometries() do
@@ -677,6 +688,8 @@ function osm2pgsql.process_way(object)
         reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
         train_protection = railway_train_protection,
         train_protection_rank = railway_train_protection_rank,
+        train_protection_construction = train_protection_construction,
+        train_protection_construction_rank = train_protection_construction_rank,
         operator = split_semicolon_to_sql_array(tags['operator']),
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
