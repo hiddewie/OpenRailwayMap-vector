@@ -863,7 +863,7 @@ function popupContent(feature) {
   }
   const osmType = determineOsmType(properties, featureContent);
 
-  const formatPropertyValue = (value, format) =>
+  const formatPropertyValue = (value, format, link) =>
     String(value)
       .split('\u001e')
       .map(stringValue => {
@@ -889,13 +889,18 @@ function popupContent(feature) {
           return stringValue;
         }
       })
+      .map(formatted =>
+        link
+          ? `<a href="${link.replace('%s', () => formatted)}">${formatted}</a>`
+          : formatted
+      )
       .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .flatMap(
-      ([property, {name, format}]) =>
+      ([property, {name, format, link}]) =>
         (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
-          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format)}`}</span></span>`]
+          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format, link)}`}</span></span>`]
           : []
     )
     .join('')
@@ -912,7 +917,7 @@ function popupContent(feature) {
     </h6>` : ''}
     <h6>${osm_ids.map(osm_id => `
       <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>
+        ${osm_ids.length > 1 ? `<button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>` : ''}
         <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${osm_id}" target="_blank" class="btn btn-outline-primary">View</a>
         <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${osm_id}" target="_blank" class="btn btn-outline-primary">Edit</a>
       </div>

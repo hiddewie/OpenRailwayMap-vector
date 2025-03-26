@@ -24,6 +24,14 @@ const requireUniqueEntries = array => {
   return Object.fromEntries(array);
 }
 
+const links = {
+  wikimedia_commons: 'https://commons.wikimedia.org/wiki/%s',
+  wikipedia: 'https://wikipedia.org/wiki/%s',
+  wikidata: 'https://www.wikidata.org/wiki/%s',
+  image: '%s',
+  mapillary: 'https://www.mapillary.com/app/?pKey=%s',
+};
+
 const generateSignalFeatures = (features, types) =>
   requireUniqueEntries([
     ...features.flatMap(feature => [
@@ -207,18 +215,23 @@ const stationFeatures = {
     },
     wikidata: {
       name: 'Wikidata',
+      link: links.wikidata,
     },
     wikimedia_commons: {
       name: 'Wikimedia commons',
+      link: links.wikimedia_commons,
     },
     image: {
       name: 'Image',
+      link: links.image,
     },
     mapillary: {
       name: 'Mapillary',
+      link: links.mapillary,
     },
     wikipedia: {
       name: 'Wikipedia',
+      link: links.wikipedia,
     },
   },
 }
