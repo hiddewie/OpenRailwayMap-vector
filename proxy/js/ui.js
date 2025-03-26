@@ -891,7 +891,7 @@ function popupContent(feature) {
       })
       .map(formatted =>
         link
-          ? `<a href="${link.replace('%s', () => formatted)}">${formatted}</a>`
+          ? `<a href="${link.replace('%s', () => formatted)}" target="_blank">${formatted}</a>`
           : formatted
       )
       .join(', ');
