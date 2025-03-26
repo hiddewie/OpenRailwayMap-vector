@@ -210,6 +210,8 @@ local stations = osm2pgsql.define_table({
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
   indexes = {
     -- For joining grouped_stations_with_route_count with metadata from this table
@@ -528,7 +530,7 @@ function osm2pgsql.process_node(object)
     image = nil
     if tags.image and tags.image:find('^File:') and not wikimedia_commons then
       wikimedia_commons = tags.image
-    elseif tags.image and tags.image:find('^https://')
+    elseif tags.image and tags.image:find('^https://') then
       image = tags.image
     end
 
@@ -551,6 +553,8 @@ function osm2pgsql.process_node(object)
           image = image,
           mapillary = tags.mapillary,
           wikipedia = tags.wikipedia,
+          note = tags.note,
+          description = tags.description,
         })
       end
     else
@@ -571,6 +575,8 @@ function osm2pgsql.process_node(object)
         image = image,
         mapillary = tags.mapillary,
         wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
       })
     end
   end

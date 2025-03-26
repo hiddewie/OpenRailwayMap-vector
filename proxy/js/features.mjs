@@ -233,6 +233,14 @@ const stationFeatures = {
       name: 'Wikipedia',
       link: links.wikipedia,
     },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
   },
 }
 

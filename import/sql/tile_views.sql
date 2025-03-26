@@ -247,7 +247,9 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
     nullif(array_to_string(image, U&'\001E'), '') as image,
     nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(note, U&'\001E'), '') as note,
+    nullif(array_to_string(description, U&'\001E'), '') as description
   FROM
     grouped_stations_with_route_count
   ORDER BY
@@ -269,7 +271,9 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     wikimedia_commons,
     image,
     mapillary,
-    wikipedia
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -293,7 +297,9 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     wikimedia_commons,
     image,
     mapillary,
-    wikipedia
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -320,7 +326,9 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     wikimedia_commons,
     image,
     mapillary,
-    wikipedia
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -340,7 +348,9 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
     nullif(array_to_string(image, U&'\001E'), '') as image,
     nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(note, U&'\001E'), '') as note,
+    nullif(array_to_string(description, U&'\001E'), '') as description
   FROM
     grouped_stations_with_route_count;
 

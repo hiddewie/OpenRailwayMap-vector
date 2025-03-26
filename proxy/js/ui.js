@@ -897,13 +897,25 @@ function popupContent(feature) {
       .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
+    .filter(([_, {paragraph}]) => !paragraph)
     .flatMap(
       ([property, {name, format, link}]) =>
         (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
-          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format, link)}`}</span></span>`]
+          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: ${formatPropertyValue(properties[property], format, link)}`}</span>`]
           : []
     )
-    .join('')
+    .join('');
+
+  console.info(featureCatalog.properties || {})
+  const paragraphValues = Object.entries(featureCatalog.properties || {})
+    .filter(([_, {paragraph}]) => paragraph)
+    .flatMap(
+      ([property, {name, format, link}]) =>
+        (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
+          ? [`<p><span class="fw-bold">${name}</span>${properties[property] === true ? '' : `: ${formatPropertyValue(properties[property], format, link)}`}</p>`]
+          : []
+    )
+    .join('');
 
   const osm_ids = properties.osm_id
     ? String(properties.osm_id).split('\u001e')
@@ -923,6 +935,7 @@ function popupContent(feature) {
       </div>
     `).join('')}</h6>
     ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
+    ${paragraphValues}
   `;
 }
 

@@ -50,6 +50,8 @@ postgres:
         image: string
         mapillary: string
         wikipedia: string
+        note: string
+        description: string
 
     standard_railway_text_stations_med:
       schema: public
@@ -71,6 +73,8 @@ postgres:
         image: string
         mapillary: string
         wikipedia: string
+        note: string
+        description: string
 
     standard_railway_turntables:
       schema: public
@@ -104,6 +108,8 @@ postgres:
         image: string
         mapillary: string
         wikipedia: string
+        note: string
+        description: string
 
     standard_railway_grouped_stations:
       schema: public
@@ -124,6 +130,8 @@ postgres:
         image: string
         mapillary: string
         wikipedia: string
+        note: string
+        description: string
 
     standard_railway_symbols:
       schema: public

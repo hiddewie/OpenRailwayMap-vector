@@ -142,6 +142,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(s.wikipedia) as wikipedia,
     array_agg(s.image) as image,
     array_agg(s.mapillary) as mapillary,
+    array_agg(s.note) as note,
+    array_agg(s.description) as description,
     -- Aggregated route count columns
     max(sr.route_count) as route_count,
     -- Re-grouped clustered stations columns
