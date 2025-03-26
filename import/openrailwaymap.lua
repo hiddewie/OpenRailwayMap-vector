@@ -523,6 +523,15 @@ function osm2pgsql.process_node(object)
       end
     end
 
+    -- Protect against unwanted links in the UI
+    wikimedia_commons = tags.wikimedia_commons
+    image = nil
+    if tags.image and tags.image:find('^File:') and not wikimedia_commons then
+      wikimedia_commons = tags.image
+    elseif tags.image and tags.image:find('^https://')
+      image = tags.image
+    end
+
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
@@ -538,8 +547,8 @@ function osm2pgsql.process_node(object)
           operator = tags.operator,
           network = tags.network,
           wikidata = tags.wikidata,
-          wikimedia_commons = tags.wikimedia_commons,
-          image = tags.image,
+          wikimedia_commons = wikimedia_commons,
+          image = image,
           mapillary = tags.mapillary,
           wikipedia = tags.wikipedia,
         })
@@ -558,8 +567,8 @@ function osm2pgsql.process_node(object)
         operator = tags.operator,
         network = tags.network,
         wikidata = tags.wikidata,
-        wikimedia_commons = tags.wikimedia_commons,
-        image = tags.image,
+        wikimedia_commons = wikimedia_commons,
+        image = image,
         mapillary = tags.mapillary,
         wikipedia = tags.wikipedia,
       })
