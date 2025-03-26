@@ -863,34 +863,46 @@ function popupContent(feature) {
   }
   const osmType = determineOsmType(properties, featureContent);
 
-  const formatPropertyValue = (value, format) => {
-    if (!format) {
-      return String(value);
-    } else if (format.template) {
-      return format.template.replace('%s', () => String(value)).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
-    } else if (format.lookup) {
-      const lookupCatalog = features && features[format.lookup];
-      if (!lookupCatalog) {
-        console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
-        return String(value);
-      } else {
-        const lookedUpValue = lookupCatalog.features[value];
-        if (!lookedUpValue) {
-          console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
-          return String(value);
+  const formatPropertyValue = (value, format) =>
+    String(value)
+      .split('\u001e')
+      .map(stringValue => {
+        if (!format) {
+          return stringValue;
+        } else if (format.template) {
+          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
+        } else if (format.lookup) {
+          const lookupCatalog = features && features[format.lookup];
+          if (!lookupCatalog) {
+            console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
+            return stringValue;
+          } else {
+            const lookedUpValue = lookupCatalog.features[value];
+            if (!lookedUpValue) {
+              console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
+              return stringValue;
+            } else {
+              return lookedUpValue.name;
+            }
+          }
         } else {
-          return lookedUpValue.name;
+          return stringValue;
         }
-      }
-    } else {
-      return String(value);
-    }
-  }
+      })
+      .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
-    .map(([property, {name, format}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false) ? `<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format)}`}</span></span>` : '')
-    .filter(it => it)
+    .flatMap(
+      ([property, {name, format}]) =>
+        (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
+          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: <span class="text-monospace">${formatPropertyValue(properties[property], format)}`}</span></span>`]
+          : []
+    )
     .join('')
+
+  const osm_ids = properties.osm_id
+    ? String(properties.osm_id).split('\u001e')
+    : [];
 
   return `
     <h5>${featureDescription ? featureDescription : ''}</h5>
@@ -898,12 +910,13 @@ function popupContent(feature) {
       ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
       ${label ? label : ''}
     </h6>` : ''}
-    ${properties.osm_id ? `<h6>
+    <h6>${osm_ids.map(osm_id => `
       <div class="btn-group btn-group-sm">
-        <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${properties.osm_id}" target="_blank" class="btn btn-outline-primary">View</a>
-        <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${properties.osm_id}" target="_blank" class="btn btn-outline-primary">Edit</a>
+        <button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>
+        <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${osm_id}" target="_blank" class="btn btn-outline-primary">View</a>
+        <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${osm_id}" target="_blank" class="btn btn-outline-primary">Edit</a>
       </div>
-    </h6>` : ''}
+    `).join('')}</h6>
     ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
   `;
 }

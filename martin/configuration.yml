@@ -38,7 +38,7 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
@@ -59,7 +59,7 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
@@ -91,7 +91,7 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
@@ -113,7 +113,7 @@ postgres:
       geometry_type: POLYGON
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         label: string

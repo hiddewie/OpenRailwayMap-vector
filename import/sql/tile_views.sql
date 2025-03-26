@@ -214,7 +214,7 @@ END $do$;
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     id,
-    nullif(array_to_string(osm_ids, '\u001e'), '') as osm_id,
+    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     center as way,
     railway_ref,
     railway,
@@ -243,11 +243,11 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     uic_ref,
     route_count,
     count,
-    nullif(array_to_string(wikidata, '\u001e'), '') as wikidata,
-    nullif(array_to_string(wikimedia_commons, '\u001e'), '') as wikimedia_commons,
-    nullif(array_to_string(image, '\u001e'), '') as image,
-    nullif(array_to_string(mapillary, '\u001e'), '') as mapillary,
-    nullif(array_to_string(wikipedia, '\u001e'), '') as wikipedia
+    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(image, U&'\001E'), '') as image,
+    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia
   FROM
     grouped_stations_with_route_count
   ORDER BY
@@ -329,18 +329,18 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
     id,
-    nullif(array_to_string(osm_ids, '\u001e'), '') as osm_id,
+    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     buffered as way,
     railway,
     station,
     railway_ref as label,
     name,
     uic_ref,
-    nullif(array_to_string(wikidata, '\u001e'), '') as wikidata,
-    nullif(array_to_string(wikimedia_commons, '\u001e'), '') as wikimedia_commons,
-    nullif(array_to_string(image, '\u001e'), '') as image,
-    nullif(array_to_string(mapillary, '\u001e'), '') as mapillary,
-    nullif(array_to_string(wikipedia, '\u001e'), '') as wikipedia
+    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(image, U&'\001E'), '') as image,
+    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia
   FROM
     grouped_stations_with_route_count;
 
