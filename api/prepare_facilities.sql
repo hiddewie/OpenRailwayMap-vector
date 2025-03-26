@@ -44,7 +44,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
       geom
     FROM (
       SELECT DISTINCT ON (osm_id, key, value, name, railway, station, railway_ref, route_count, geom)
-        osm_id,
+        UNNEST(osm_ids) as osm_id,
         (each(name_tags)).key AS key,
         (each(name_tags)).value AS value,
         name,
@@ -53,7 +53,7 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
         railway_ref,
         route_count,
         center as geom
-      FROM stations_with_route_counts
+      FROM grouped_stations_with_route_count
       WHERE
         railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
         -- TODO support other states as well

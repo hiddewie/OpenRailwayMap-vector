@@ -212,9 +212,9 @@ local stations = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
   },
   indexes = {
-    -- For joining stations_with_route_counts with metadata from this table
+    -- For joining grouped_stations_with_route_count with metadata from this table
     { column = 'id', method = 'btree', unique = true },
-    -- For building stations_with_route_counts
+    -- For building grouped_stations_with_route_count
     { column = 'way', method = 'gist' },
   },
 })
@@ -558,6 +558,11 @@ function osm2pgsql.process_node(object)
         name_tags = name_tags,
         operator = tags.operator,
         network = tags.network,
+        wikidata = tags.wikidata,
+        wikimedia_commons = tags.wikimedia_commons,
+        image = tags.image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
       })
     end
   end

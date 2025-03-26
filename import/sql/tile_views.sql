@@ -214,7 +214,7 @@ END $do$;
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     id,
-    osm_id,
+    nullif(array_to_string(osm_ids, '\u001e'), '') as osm_id,
     center as way,
     railway_ref,
     railway,
@@ -243,13 +243,13 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     uic_ref,
     route_count,
     count,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia
+    nullif(array_to_string(wikidata, '\u001e'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, '\u001e'), '') as wikimedia_commons,
+    nullif(array_to_string(image, '\u001e'), '') as image,
+    nullif(array_to_string(mapillary, '\u001e'), '') as mapillary,
+    nullif(array_to_string(wikipedia, '\u001e'), '') as wikipedia
   FROM
-    stations_with_route_counts
+    grouped_stations_with_route_count
   ORDER BY
     rank DESC NULLS LAST,
     route_count DESC NULLS LAST;
@@ -329,20 +329,20 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
     id,
-    osm_id,
+    nullif(array_to_string(osm_ids, '\u001e'), '') as osm_id,
     buffered as way,
     railway,
     station,
     railway_ref as label,
     name,
     uic_ref,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia
+    nullif(array_to_string(wikidata, '\u001e'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, '\u001e'), '') as wikimedia_commons,
+    nullif(array_to_string(image, '\u001e'), '') as image,
+    nullif(array_to_string(mapillary, '\u001e'), '') as mapillary,
+    nullif(array_to_string(wikipedia, '\u001e'), '') as wikipedia
   FROM
-    stations_with_route_counts;
+    grouped_stations_with_route_count;
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT

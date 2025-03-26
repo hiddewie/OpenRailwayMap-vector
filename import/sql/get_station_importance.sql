@@ -52,20 +52,7 @@ CREATE OR REPLACE VIEW platforms_and_their_routes_clustered AS
 CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
   SELECT
     s.id as id,
-    s.osm_id,
-    s.name AS name,
-    s.station as station,
-    s.railway_ref as railway_ref,
-    s.uic_ref as uic_ref,
-    s.railway AS railway,
-    sprc.route_ids AS route_ids,
-    s.name_tags as name_tags,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.way AS way
+    sprc.route_ids AS route_ids
   FROM stations AS s
   LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
     ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400))
@@ -75,97 +62,115 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
 CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   SELECT
     s.id as id,
-    s.osm_id AS osm_id,
-    s.name AS name,
-    s.station as station,
-    s.railway_ref as railway_ref,
-    s.uic_ref as uic_ref,
-    s.railway AS railway,
-    sprc.route_ids AS route_ids,
-    s.name_tags as name_tags,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.way AS way
+    sprc.route_ids AS route_ids
   FROM stations AS s
   JOIN platforms_and_their_routes_clustered AS sprc
     ON (ST_DWithin(s.way, sprc.geom, 60))
   WHERE s.railway IN ('station', 'halt', 'tram_stop');
 
--- Final table with station nodes and the number of route relations
--- needs about 3 to 4 minutes for whole Germany
--- or about 20 to 30 minutes for the whole planet
-CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_counts AS
+-- Clustered stations without route counts
+CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
-    id,
-    osm_id,
+    row_number() over (order by name, station, railway_ref, uic_ref, railway) as id,
     name,
     station,
     railway_ref,
     uic_ref,
     railway,
-    route_count,
-    name_tags,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    ST_Centroid(way) as center,
-    ST_Buffer(ST_ConvexHull(way), 50) as buffered,
-    ST_NumGeometries(way) as count
+    array_agg(facilities.id) as station_ids,
+    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way)) ) as center,
+    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
+    ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
     SELECT
-      MIN(id) as id,
-      MIN(osm_id) as osm_id,
-      name,
-      station,
-      railway_ref,
-      uic_ref,
-      railway,
-      MAX(route_count) as route_count,
-      hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
-      array_agg(wikidata) as wikidata,
-      array_agg(wikimedia_commons) as wikimedia_commons,
-      array_agg(image) as image,
-      array_agg(mapillary) as mapillary,
-      array_agg(wikipedia) as wikipedia,
-      ST_RemoveRepeatedPoints(ST_Collect(way)) as way
+      *,
+      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
+    FROM stations
+    WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+  ) AS facilities
+  GROUP BY cluster_id, name, station, railway_ref, uic_ref, railway;
+
+CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
+  ON stations_clustered
+    USING gin(station_ids);
+
+CREATE OR REPLACE VIEW stations_with_route_count AS
+  SELECT
+    id,
+    max(route_count) as route_count
+  FROM (
+    SELECT
+      id,
+      COUNT(DISTINCT route_id) AS route_count
     FROM (
       SELECT
-        *,
-        ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
-      FROM (
-        SELECT MIN(id) as id, MIN(osm_id) as osm_id, name, station, railway_ref, uic_ref, railway, COUNT(DISTINCT route_id) AS route_count, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
-        FROM (
-          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
-          FROM station_nodes_stop_positions_rel_count
+        id,
+        UNNEST(route_ids) AS route_id
+      FROM station_nodes_stop_positions_rel_count
 
-          UNION ALL
+      UNION ALL
 
-          SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, UNNEST(route_ids) AS route_id, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
-          FROM station_nodes_platforms_rel_count
-        ) AS a
-        GROUP BY name, station, railway_ref, uic_ref, railway, way, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia
+      SELECT
+        id,
+        UNNEST(route_ids) AS route_id
+      FROM station_nodes_platforms_rel_count
+    ) stations_that_have_routes
+    GROUP BY id
 
-        UNION ALL
+    UNION ALL
 
-        SELECT id, osm_id, name, station, railway_ref, uic_ref, railway, 0 AS route_count, name_tags, wikidata, wikimedia_commons, image, mapillary, wikipedia, way
-        FROM stations
-        WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
-     ) AS grouped_facilities
-    ) AS facilities
-    GROUP BY name, station, railway_ref, uic_ref, railway, cluster_id
-    -- ORDER BY is required to ensure that the larger route_count is used.
-    ORDER BY name, station, railway_ref, uic_ref, railway, route_count DESC
-  ) as source_facilities;
+    SELECT
+      id,
+      0 AS route_count
+    FROM stations
+    WHERE
+      railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
+  ) all_stations_with_route_count
+  GROUP BY id;
 
-CREATE INDEX IF NOT EXISTS stations_with_route_counts_center_index
-  ON stations_with_route_counts
-  USING GIST(center);
+-- Final table with station nodes and the number of route relations
+-- needs about 3 to 4 minutes for whole Germany
+-- or about 20 to 30 minutes for the whole planet
+CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
+  SELECT
+    -- Aggregated station columns
+    array_agg(station_id) as station_ids,
+    hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
+    array_agg(osm_id) as osm_ids,
+    array_agg(s.wikidata) as wikidata,
+    array_agg(s.wikimedia_commons) as wikimedia_commons,
+    array_agg(s.wikipedia) as wikipedia,
+    array_agg(s.image) as image,
+    array_agg(s.mapillary) as mapillary,
+    -- Aggregated route count columns
+    max(sr.route_count) as route_count,
+    -- Re-grouped clustered stations columns
+    clustered.id as id,
+    any_value(clustered.center) as center,
+    any_value(clustered.buffered) as buffered,
+    any_value(clustered.name) as name,
+    any_value(clustered.station) as station,
+    any_value(clustered.railway_ref) as railway_ref,
+    any_value(clustered.uic_ref) as uic_ref,
+    any_value(clustered.railway) as railway,
+    any_value(clustered.count) as count
+  FROM (
+    SELECT
+      id,
+      UNNEST(sc.station_ids) as station_id,
+      name, station, railway_ref, uic_ref, railway, station_ids, center, buffered, count
+    FROM stations_clustered sc
+  ) clustered
+  JOIN stations s
+    ON clustered.station_id = s.id
+  JOIN stations_with_route_count sr
+    ON clustered.station_id = sr.id
+  GROUP BY clustered.id;
 
-CREATE INDEX IF NOT EXISTS stations_with_route_counts_buffered_index
-  ON stations_with_route_counts
-  USING GIST(buffered);
+CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_center_index
+  ON grouped_stations_with_route_count
+    USING GIST(center);
+
+CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_buffered_index
+  ON grouped_stations_with_route_count
+    USING GIST(buffered);
