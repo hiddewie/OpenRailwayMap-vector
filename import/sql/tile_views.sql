@@ -486,7 +486,14 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     type,
     turnout_side,
     local_operated,
-    resetting
+    resetting,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM railway_switches
   ORDER by char_length(ref);
 

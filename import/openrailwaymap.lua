@@ -363,6 +363,13 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'turnout_side', type = 'text' },
     { column = 'local_operated', type = 'boolean' },
     { column = 'resetting', type = 'boolean' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -717,6 +724,13 @@ function osm2pgsql.process_node(object)
       turnout_side = tags['railway:turnout_side'],
       local_operated = tags['railway:local_operated'] == 'yes',
       resetting = tags['railway:switch:resetting'] == 'yes',
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 end

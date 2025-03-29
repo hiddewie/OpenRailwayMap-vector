@@ -181,6 +181,13 @@ postgres:
         turnout_side: string
         local_operated: boolean
         resetting: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # --- Speed --- #
 
