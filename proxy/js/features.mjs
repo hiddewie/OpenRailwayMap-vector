@@ -192,7 +192,7 @@ const railwayLineFeatures = {
       link: links.wikidata,
     },
     wikimedia_commons: {
-      name: 'Wikimedia commons',
+      name: 'Wikimedia',
       link: links.wikimedia_commons,
     },
     image: {
@@ -246,7 +246,7 @@ const stationFeatures = {
       link: links.wikidata,
     },
     wikimedia_commons: {
-      name: 'Wikimedia commons',
+      name: 'Wikimedia',
       link: links.wikimedia_commons,
     },
     image: {
@@ -308,7 +308,7 @@ const features = {
         link: links.wikidata,
       },
       wikimedia_commons: {
-        name: 'Wikimedia commons',
+        name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
       image: {
@@ -358,7 +358,7 @@ const features = {
         link: links.wikidata,
       },
       wikimedia_commons: {
-        name: 'Wikimedia commons',
+        name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
       image: {
@@ -414,7 +414,7 @@ const features = {
         link: links.wikidata,
       },
       wikimedia_commons: {
-        name: 'Wikimedia commons',
+        name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
       image: {
@@ -541,7 +541,7 @@ const features = {
         link: links.wikidata,
       },
       wikimedia_commons: {
-        name: 'Wikimedia commons',
+        name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
       image: {
