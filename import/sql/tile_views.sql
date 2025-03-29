@@ -55,7 +55,14 @@ RETURN (
       loading_gauge,
       array_to_string(operator, ', ') as operator,
       traffic_mode,
-      radio
+      radio,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
     FROM (
       SELECT
         id,
@@ -100,7 +107,14 @@ RETURN (
         loading_gauge,
         operator,
         traffic_mode,
-        radio
+        radio,
+        wikidata,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
       FROM railway_line
       WHERE
         way && ST_TileEnvelope(z, x, y)
@@ -201,7 +215,14 @@ DO $do$ BEGIN
           "reporting_marks": "string",
           "operator": "string",
           "traffic_mode": "string",
-          "radio": "string"
+          "radio": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
         }
       }
     ]

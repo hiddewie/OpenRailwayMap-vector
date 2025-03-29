@@ -184,6 +184,13 @@ local railway_line = osm2pgsql.define_table({
     { column = 'operator', sql_type = 'text[]' },
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -759,6 +766,13 @@ function osm2pgsql.process_way(object)
         operator = split_semicolon_to_sql_array(tags['operator']),
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
       })
     end
   end
