@@ -109,6 +109,17 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
   end
 end
 
+-- Protect against unwanted links in the UI
+function wikimedia_commons_or_image(wikimedia_commons, image)
+    if image and image:find('^File:') and not wikimedia_commons then
+      return image, nil
+    elseif image and image:find('^https://') then
+      return wikimedia_commons, image
+    else
+      return wikimedia_commons, nil
+    end
+end
+
 function signal_caption(tags)
   return tags['railway:signal:crossing_info:caption']
     or tags['railway:signal:stop:caption']
@@ -284,6 +295,13 @@ local boxes = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'name', type = 'text' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -484,9 +502,9 @@ local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'cros
 local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
-
   if railway_box_values(tags.railway) then
     local point = object:as_point()
+    wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
     boxes:insert({
       way = point,
       center = point,
@@ -494,6 +512,12 @@ function osm2pgsql.process_node(object)
       feature = tags.railway,
       ref = tags['railway:ref'],
       name = tags.name,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 
@@ -525,15 +549,7 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    -- Protect against unwanted links in the UI
-    wikimedia_commons = tags.wikimedia_commons
-    image = nil
-    if tags.image and tags.image:find('^File:') and not wikimedia_commons then
-      wikimedia_commons = tags.image
-    elseif tags.image and tags.image:find('^https://') then
-      image = tags.image
-    end
-
+    wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({

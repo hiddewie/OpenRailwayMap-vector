@@ -504,7 +504,13 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         osm_type,
         feature,
         ref,
-        name
+        name,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
       FROM boxes
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -524,7 +530,14 @@ DO $do$ BEGIN
           "osm_type": "string",
           "feature": "string",
           "ref": "string",
-          "name": "string"
+          "name": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
         }
       }
     ]

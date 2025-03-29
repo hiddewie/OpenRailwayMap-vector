@@ -422,6 +422,34 @@ const features = {
       ref: {
         name: 'Reference',
       },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia commons',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
     },
   },
   'openrailwaymap_electrification-electrification_signals': {
