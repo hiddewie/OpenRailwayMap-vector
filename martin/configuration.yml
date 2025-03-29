@@ -165,6 +165,13 @@ postgres:
         pos: string
         pos_int: string
         zero: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_switch_ref:
       schema: public

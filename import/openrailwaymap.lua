@@ -348,6 +348,13 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'operator', type = 'text' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -712,6 +719,13 @@ function osm2pgsql.process_node(object)
       name = tags['name'],
       ref = tags['ref'],
       operator = tags['operator'],
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 

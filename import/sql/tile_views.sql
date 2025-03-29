@@ -463,15 +463,29 @@ CREATE OR REPLACE VIEW railway_text_km AS
     railway,
     pos,
     (railway_pos_decimal(pos) = '0') as zero,
-    railway_pos_round(pos, 0)::text as pos_int
+    railway_pos_round(pos, 0)::text as pos_int,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM (
     SELECT
       id,
       osm_id,
       way,
       railway,
-      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
-      FROM railway_positions
+      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_positions
   ) AS r
   WHERE pos IS NOT NULL
   ORDER by zero;
