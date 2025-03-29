@@ -144,6 +144,13 @@ postgres:
         osm_id: integer
         osm_type: string
         feature: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     railway_text_km:
       schema: public

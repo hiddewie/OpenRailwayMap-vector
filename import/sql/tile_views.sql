@@ -403,7 +403,14 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'crossing' THEN -1::int
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
-    END AS priority
+    END AS priority,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM pois
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway')
 
@@ -415,7 +422,14 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     osm_type,
     way,
     'general/subway-entrance' as feature,
-    0 as priority
+    0 as priority,
+    null as wikidata,
+    null as wikimedia_commons,
+    null as image,
+    null as mapillary,
+    null as wikipedia,
+    null as note,
+    null as description
     FROM subway_entrances
 
   ORDER BY priority DESC;

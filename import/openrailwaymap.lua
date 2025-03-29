@@ -197,6 +197,13 @@ local pois = osm2pgsql.define_table({
     { column = 'man_made', type = 'text' },
     { column = 'crossing_light', type = 'boolean' },
     { column = 'crossing_barrier', type = 'boolean' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -502,9 +509,10 @@ local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'cros
 local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
+  local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
+
   if railway_box_values(tags.railway) then
     local point = object:as_point()
-    wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
     boxes:insert({
       way = point,
       center = point,
@@ -530,7 +538,7 @@ function osm2pgsql.process_node(object)
      or railway_station_values(tags['preserved:railway'])
    then
 
-    feature = tags['railway']
+    local feature = tags['railway']
       or tags['construction:railway']
       or tags['proposed:railway']
       or tags['disused:railway']
@@ -539,7 +547,7 @@ function osm2pgsql.process_node(object)
       or tags['preserved:railway']
 
     -- Gather name tags for searching
-    name_tags = {}
+    local name_tags = {}
     for key, value in pairs(tags) do
       for _, name_tag in ipairs(known_name_tags) do
         if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
@@ -549,7 +557,6 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
@@ -604,6 +611,13 @@ function osm2pgsql.process_node(object)
       man_made = tags.man_made,
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 
@@ -691,6 +705,7 @@ local railway_values = osm2pgsql.make_check_values_func({'rail', 'tram', 'light_
 local railway_turntable_values = osm2pgsql.make_check_values_func({'turntable', 'traverser'})
 function osm2pgsql.process_way(object)
   local tags = object.tags
+  local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
 
   if railway_values(tags.railway) then
     local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
@@ -781,6 +796,13 @@ function osm2pgsql.process_way(object)
       man_made = tags.man_made,
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 end
