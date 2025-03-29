@@ -83,13 +83,12 @@ function searchForFacilities(type, term) {
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
-        console.info('facility search result', result)
         showSearchResults(result)
       })
       .catch(error => {
         hideSearchResults();
         hideSearch();
-        console.error(error);
+        console.error('Error during facility search', error);
       });
   }
 }
@@ -106,13 +105,12 @@ function searchForMilestones(ref, position) {
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
-        console.info('milestone search result', result)
         showSearchResults(result)
       })
       .catch(error => {
         hideSearchResults();
         hideSearch();
-        console.error(error);
+        console.error('Error during milestone search', error);
       });
   }
 }
@@ -360,7 +358,6 @@ function determineZoomCenterFromHash(hash) {
   const hashObject = hashToObject(hash);
   if ('view' in hashObject && typeof hashObject.view === 'string') {
     const matches = hashObject.view.match(/^([\d.]+)\/(-?[\d.]+)\/(-?[\d.]+)$/)
-    console.info(hashObject.view, matches)
     if (matches) {
       return {
         center: [parseFloat(matches[3]), parseFloat(matches[2])],
@@ -906,7 +903,6 @@ function popupContent(feature) {
     )
     .join('');
 
-  console.info(featureCatalog.properties || {})
   const paragraphValues = Object.entries(featureCatalog.properties || {})
     .filter(([_, {paragraph}]) => paragraph)
     .flatMap(
