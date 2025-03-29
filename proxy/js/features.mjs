@@ -24,6 +24,14 @@ const requireUniqueEntries = array => {
   return Object.fromEntries(array);
 }
 
+const links = {
+  wikimedia_commons: 'https://commons.wikimedia.org/wiki/%s',
+  wikipedia: 'https://wikipedia.org/wiki/%s',
+  wikidata: 'https://www.wikidata.org/wiki/%s',
+  image: '%s',
+  mapillary: 'https://www.mapillary.com/app/?pKey=%s',
+};
+
 const generateSignalFeatures = (features, types) =>
   requireUniqueEntries([
     ...features.flatMap(feature => [
@@ -179,6 +187,34 @@ const railwayLineFeatures = {
     radio: {
       name: 'Radio',
     },
+    wikidata: {
+      name: 'Wikidata',
+      link: links.wikidata,
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia commons',
+      link: links.wikimedia_commons,
+    },
+    image: {
+      name: 'Image',
+      link: links.image,
+    },
+    mapillary: {
+      name: 'Mapillary',
+      link: links.mapillary,
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+      link: links.wikipedia,
+    },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
   },
 };
 
@@ -204,7 +240,35 @@ const stationFeatures = {
     },
     network: {
       name: 'Network',
-    }
+    },
+    wikidata: {
+      name: 'Wikidata',
+      link: links.wikidata,
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia commons',
+      link: links.wikimedia_commons,
+    },
+    image: {
+      name: 'Image',
+      link: links.image,
+    },
+    mapillary: {
+      name: 'Mapillary',
+      link: links.mapillary,
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+      link: links.wikipedia,
+    },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
   },
 }
 
@@ -238,6 +302,36 @@ const features = {
           (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
         ))
     ),
+    properties: {
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia commons',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
   },
   "high-railway_text_km": {
     featureProperty: 'railway',
@@ -258,7 +352,35 @@ const features = {
       },
       operator: {
         name: 'Operator',
-      }
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia commons',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
@@ -286,6 +408,34 @@ const features = {
       },
       resetting: {
         name: 'Resetting',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia commons',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
       },
     },
   },
@@ -385,6 +535,34 @@ const features = {
     properties: {
       ref: {
         name: 'Reference',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia commons',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
       },
     },
   },

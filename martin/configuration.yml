@@ -38,13 +38,20 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_text_stations_med:
       schema: public
@@ -54,13 +61,20 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_turntables:
       schema: public
@@ -81,7 +95,7 @@ postgres:
       geometry_type: POINT
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         station_size: string
@@ -89,6 +103,13 @@ postgres:
         name: string
         count: integer
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_grouped_stations:
       schema: public
@@ -98,12 +119,19 @@ postgres:
       geometry_type: POLYGON
       properties:
         id: integer
-        osm_id: integer
+        osm_id: string
         railway: string
         station: string
         label: string
         name: string
         uic_ref: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_symbols:
       schema: public
@@ -116,6 +144,13 @@ postgres:
         osm_id: integer
         osm_type: string
         feature: string
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     railway_text_km:
       schema: public
@@ -130,6 +165,13 @@ postgres:
         pos: string
         pos_int: string
         zero: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     standard_railway_switch_ref:
       schema: public
@@ -146,6 +188,13 @@ postgres:
         turnout_side: string
         local_operated: boolean
         resetting: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # --- Speed --- #
 
@@ -167,6 +216,13 @@ postgres:
         direction_both: boolean
         deactivated: boolean
         speed: integer
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # --- Signals --- #
 
@@ -191,6 +247,13 @@ postgres:
         deactivated: boolean
         azimuth: number
         direction_both: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # signals_signal_boxes, see function below
 
@@ -213,6 +276,13 @@ postgres:
         deactivated: boolean
         frequency: number
         voltage: integer
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
   functions:
 

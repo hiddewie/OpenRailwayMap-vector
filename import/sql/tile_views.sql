@@ -55,7 +55,14 @@ RETURN (
       loading_gauge,
       array_to_string(operator, ', ') as operator,
       traffic_mode,
-      radio
+      radio,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
     FROM (
       SELECT
         id,
@@ -100,7 +107,14 @@ RETURN (
         loading_gauge,
         operator,
         traffic_mode,
-        radio
+        radio,
+        wikidata,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
       FROM railway_line
       WHERE
         way && ST_TileEnvelope(z, x, y)
@@ -201,7 +215,14 @@ DO $do$ BEGIN
           "reporting_marks": "string",
           "operator": "string",
           "traffic_mode": "string",
-          "radio": "string"
+          "radio": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
         }
       }
     ]
@@ -214,7 +235,7 @@ END $do$;
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     id,
-    osm_id,
+    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     center as way,
     railway_ref,
     railway,
@@ -242,9 +263,16 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS rank,
     uic_ref,
     route_count,
-    count
+    count,
+    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(image, U&'\001E'), '') as image,
+    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(note, U&'\001E'), '') as note,
+    nullif(array_to_string(description, U&'\001E'), '') as description
   FROM
-    stations_with_route_counts
+    grouped_stations_with_route_count
   ORDER BY
     rank DESC NULLS LAST,
     route_count DESC NULLS LAST;
@@ -259,7 +287,14 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     station_size,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -278,7 +313,14 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     station_size,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -300,7 +342,14 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     railway_ref as label,
     name,
     count,
-    uic_ref
+    uic_ref,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM
     railway_text_stations
   WHERE
@@ -309,15 +358,22 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
     id,
-    osm_id,
+    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     buffered as way,
     railway,
     station,
     railway_ref as label,
     name,
-    uic_ref
+    uic_ref,
+    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(image, U&'\001E'), '') as image,
+    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(note, U&'\001E'), '') as note,
+    nullif(array_to_string(description, U&'\001E'), '') as description
   FROM
-    stations_with_route_counts;
+    grouped_stations_with_route_count;
 
 CREATE OR REPLACE VIEW standard_railway_symbols AS
   SELECT
@@ -368,7 +424,14 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'crossing' THEN -1::int
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
-    END AS priority
+    END AS priority,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM pois
   WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway')
 
@@ -380,7 +443,14 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     osm_type,
     way,
     'general/subway-entrance' as feature,
-    0 as priority
+    0 as priority,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
     FROM subway_entrances
 
   ORDER BY priority DESC;
@@ -393,15 +463,29 @@ CREATE OR REPLACE VIEW railway_text_km AS
     railway,
     pos,
     (railway_pos_decimal(pos) = '0') as zero,
-    railway_pos_round(pos, 0)::text as pos_int
+    railway_pos_round(pos, 0)::text as pos_int,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM (
     SELECT
       id,
       osm_id,
       way,
       railway,
-      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos
-      FROM railway_positions
+      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_positions
   ) AS r
   WHERE pos IS NOT NULL
   ORDER by zero;
@@ -416,7 +500,14 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     type,
     turnout_side,
     local_operated,
-    resetting
+    resetting,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM railway_switches
   ORDER by char_length(ref);
 
@@ -436,7 +527,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     ref,
     caption,
     deactivated,
-    dominant_speed as speed
+    dominant_speed as speed,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM speed_railway_signal_features
   ORDER BY
     rank NULLS FIRST,
@@ -469,7 +567,13 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         osm_type,
         feature,
         ref,
-        name
+        name,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
       FROM boxes
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -489,7 +593,14 @@ DO $do$ BEGIN
           "osm_type": "string",
           "feature": "string",
           "ref": "string",
-          "name": "string"
+          "name": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
         }
       }
     ]
@@ -513,7 +624,14 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     caption,
     deactivated,
     azimuth,
-    (signal_direction = 'both') as direction_both
+    (signal_direction = 'both') as direction_both,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM signals_railway_signal_features
   ORDER BY rank NULLS FIRST;
 
@@ -531,6 +649,13 @@ CREATE OR REPLACE VIEW electrification_signals AS
     caption,
     deactivated,
     voltage,
-    frequency
+    frequency,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM electricity_railway_signal_features
   ORDER BY rank NULLS FIRST;
