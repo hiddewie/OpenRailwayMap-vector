@@ -527,7 +527,14 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     ref,
     caption,
     deactivated,
-    dominant_speed as speed
+    dominant_speed as speed,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM speed_railway_signal_features
   ORDER BY
     rank NULLS FIRST,
@@ -617,7 +624,14 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     caption,
     deactivated,
     azimuth,
-    (signal_direction = 'both') as direction_both
+    (signal_direction = 'both') as direction_both,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM signals_railway_signal_features
   ORDER BY rank NULLS FIRST;
 
@@ -635,6 +649,13 @@ CREATE OR REPLACE VIEW electrification_signals AS
     caption,
     deactivated,
     voltage,
-    frequency
+    frequency,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM electricity_railway_signal_features
   ORDER BY rank NULLS FIRST;

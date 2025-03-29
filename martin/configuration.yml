@@ -216,6 +216,13 @@ postgres:
         direction_both: boolean
         deactivated: boolean
         speed: integer
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # --- Signals --- #
 
@@ -240,6 +247,13 @@ postgres:
         deactivated: boolean
         azimuth: number
         direction_both: boolean
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
     # signals_signal_boxes, see function below
 
@@ -262,6 +276,13 @@ postgres:
         deactivated: boolean
         frequency: number
         voltage: integer
+        wikidata: string
+        wikimedia_commons: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
 
   functions:
 

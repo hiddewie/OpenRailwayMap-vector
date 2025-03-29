@@ -293,6 +293,13 @@ local signal_columns = {
   { column = 'signal_direction', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
   { column = 'caption', type = 'text' },
+  { column = 'wikidata', type = 'text' },
+  { column = 'wikimedia_commons', type = 'text' },
+  { column = 'image', type = 'text' },
+  { column = 'mapillary', type = 'text' },
+  { column = 'wikipedia', type = 'text' },
+  { column = 'note', type = 'text' },
+  { column = 'description', type = 'text' },
 }
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
@@ -699,6 +706,13 @@ function osm2pgsql.process_node(object)
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
       caption = signal_caption(tags),
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do
@@ -842,6 +856,13 @@ function osm2pgsql.process_way(object)
       feature = tags.railway,
       ref = tags['railway:ref'],
       name = tags.name,
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 
