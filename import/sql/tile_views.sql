@@ -444,13 +444,13 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     way,
     'general/subway-entrance' as feature,
     0 as priority,
-    null as wikidata,
-    null as wikimedia_commons,
-    null as image,
-    null as mapillary,
-    null as wikipedia,
-    null as note,
-    null as description
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
     FROM subway_entrances
 
   ORDER BY priority DESC;
