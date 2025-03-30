@@ -144,6 +144,7 @@ postgres:
         osm_id: integer
         osm_type: string
         feature: string
+        ref: string
         wikidata: string
         wikimedia_commons: string
         image: string

@@ -56,10 +56,11 @@ features:
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
-    minzoom: 14
-    variants:
-      - description: Derailer
-        feature: 'general/derail'
+    minzoom: 15
+
+  - description: Derailer
+    feature: 'general/derail'
+    minzoom: 15
 
   - description: Hump
     minzoom: 13
