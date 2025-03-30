@@ -1011,7 +1011,19 @@ map.on('click', event => {
         ? closestPointOnLine(event.lngLat, feature.geometry.coordinates)
         : event.lngLat;
 
-    new maplibregl.Popup()
+    const iconHeight = 20;
+    const iconWidth = 10;
+    const popupOffsets = {
+      'top': [0, iconHeight],
+      'top-left': [iconWidth, iconHeight],
+      'top-right': [-iconWidth, iconHeight],
+      'bottom': [0, -iconHeight],
+      'bottom-left': [iconWidth, -iconHeight],
+      'bottom-right': [-iconWidth, -iconHeight],
+      'left': [iconWidth, 0],
+      'right': [-iconWidth, 0]
+    }
+    new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
       .setHTML(popupContent(feature))
       .addTo(map);
