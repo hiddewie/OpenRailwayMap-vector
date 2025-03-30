@@ -5,6 +5,7 @@ set -o pipefail
 
 echo 'starting postgres'
 # Optimized for low memory usage (150MB), see https://pgtune.leopard.in.ua/#/
+# Disables all write-related Postgres functionality
 docker-entrypoint.sh postgres \
   -c max_connections=200 \
   -c shared_buffers=38400kB \
@@ -19,6 +20,8 @@ docker-entrypoint.sh postgres \
   -c huge_pages=off \
   -c min_wal_size=1GB \
   -c max_wal_size=4GB \
+  -c autovacuum=off \
+  -c default_transaction_read_only=on \
   1>/dev/stdout \
   2>/dev/stderr \
   &
