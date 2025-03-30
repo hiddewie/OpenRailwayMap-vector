@@ -5,7 +5,10 @@ CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_to_space(str TEXT) RETURNS TEXT
 BEGIN
   RETURN regexp_replace(str, '(\w)-(\w)', '\1 \2', 'g');
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql
+  IMMUTABLE
+  LEAKPROOF
+  PARALLEL SAFE;
 
 CREATE OR REPLACE FUNCTION openrailwaymap_name_rank(tsquery_str tsquery, tsvec_col tsvector, route_count INTEGER, railway TEXT, station TEXT) RETURNS INTEGER AS $$
 DECLARE
@@ -21,4 +24,7 @@ BEGIN
   END IF;
   RETURN (factor * COALESCE(route_count, 0))::INTEGER;
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql
+  IMMUTABLE
+  LEAKPROOF
+  PARALLEL SAFE;
