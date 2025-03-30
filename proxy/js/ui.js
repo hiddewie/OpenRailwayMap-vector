@@ -101,7 +101,7 @@ function searchForMilestones(ref, position) {
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
-        label: `Line ${item.ref} @ ${item.position}`,
+        label: `Line ${item.line_ref} @ ${item.position}`,
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
