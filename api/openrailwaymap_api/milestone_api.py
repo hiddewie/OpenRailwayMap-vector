@@ -7,7 +7,7 @@ class MilestoneAPI:
 
     async def get_milestones(self, position, line_ref, limit):
         sql_query = """
-          SELECT * from query_milestones($1::double precision, $2::text, $3::integer)
+          SELECT * FROM query_milestones($1::double precision, $2::text, $3::integer)
         """
 
         async with self.database.acquire() as connection:

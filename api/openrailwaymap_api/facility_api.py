@@ -73,23 +73,9 @@ class FacilityAPI:
                 {'type': 'wildcard_in_query', 'error': 'Wildcard in query.', 'detail': 'Query contains any of the wildcard characters: %_'}
             )
 
-        # TODO support filtering on state of feature: abandoned, in construction, disused, preserved, etc.
-        # We do not sort the result although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
-        fields = SELECT_FIELD_LIST
-        sql_query = f"""SELECT
-            {fields}, latitude, longitude, rank
-            FROM (
-              SELECT DISTINCT ON (osm_ids)
-                {fields}, latitude, longitude, rank
-              FROM (
-                SELECT
-                    {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude, openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space($1))), terms, route_count::INTEGER, railway, station) AS rank
-                  FROM openrailwaymap_facilities_for_search
-                  WHERE terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space($1)))
-                ) AS a
-              ) AS b
-              ORDER BY rank DESC NULLS LAST
-          LIMIT $2;"""
+        sql_query = """
+          SELECT * FROM query_facilities_by_name($1, $2)
+        """
 
         async with self.database.acquire() as connection:
             statement = await connection.prepare(sql_query)
