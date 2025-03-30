@@ -3,22 +3,22 @@
 DROP TABLE IF EXISTS openrailwaymap_ref;
 CREATE TABLE openrailwaymap_ref AS
   SELECT
-    ARRAY[osm_id] as osm_ids,
+    ARRAY[osm_id] AS osm_ids,
     name,
     railway,
     station,
     ref,
     railway_ref,
     uic_ref,
-    operator,
-    network,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
+    ARRAY[operator] AS operator,
+    ARRAY[network] AS network,
+    ARRAY[wikidata] AS wikidata,
+    ARRAY[wikimedia_commons] AS wikimedia_commons,
+    ARRAY[image] AS image,
+    ARRAY[mapillary] AS mapillary,
+    ARRAY[wikipedia] AS wikipedia,
+    ARRAY[note] AS note,
+    ARRAY[description] AS description,
     way AS geom
   FROM stations
   WHERE

@@ -125,3 +125,109 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
 $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
+
+DROP FUNCTION query_facilities_by_ref(text, integer);
+CREATE OR REPLACE FUNCTION query_facilities_by_ref(
+  input_ref text,
+  input_limit integer
+) RETURNS TABLE(
+  "osm_ids" bigint[],
+  "name" text,
+  "railway" text,
+  "railway_ref" text,
+  "station" text,
+  "uic_ref" text,
+  "operator" text[],
+  "network" text[],
+  "wikidata" text[],
+  "wikimedia_commons" text[],
+  "image" text[],
+  "mapillary" text[],
+  "wikipedia" text[],
+  "note" text[],
+  "description" text[],
+  "latitude" double precision,
+  "longitude" double precision
+) AS $$
+  BEGIN
+    RETURN QUERY
+      -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
+      SELECT
+        DISTINCT ON (osm_ids)
+        r.osm_ids,
+        r.name,
+        r.railway,
+        r.railway_ref,
+        r.station,
+        r.uic_ref,
+        r.operator,
+        r.network,
+        r.wikidata,
+        r.wikimedia_commons,
+        r.image,
+        r.mapillary,
+        r.wikipedia,
+        r.note,
+        r.description,
+        ST_X(ST_Transform(r.geom, 4326)) AS latitude,
+        ST_Y(ST_Transform(r.geom, 4326)) AS longitude
+      FROM openrailwaymap_ref r
+      WHERE r.railway_ref = input_ref
+      LIMIT input_limit;
+  END
+$$ LANGUAGE plpgsql
+  LEAKPROOF
+  PARALLEL SAFE;
+
+DROP FUNCTION query_facilities_by_uic_ref(text, integer);
+CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
+  input_uic_ref text,
+  input_limit integer
+) RETURNS TABLE(
+  "osm_ids" bigint[],
+  "name" text,
+  "railway" text,
+  "railway_ref" text,
+  "station" text,
+  "uic_ref" text,
+  "operator" text[],
+  "network" text[],
+  "wikidata" text[],
+  "wikimedia_commons" text[],
+  "image" text[],
+  "mapillary" text[],
+  "wikipedia" text[],
+  "note" text[],
+  "description" text[],
+  "latitude" double precision,
+  "longitude" double precision
+) AS $$
+  BEGIN
+    RETURN QUERY
+      -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
+      SELECT
+        DISTINCT ON (osm_ids)
+        r.osm_ids,
+        r.name,
+        r.railway,
+        r.railway_ref,
+        r.station,
+        r.uic_ref,
+        r.operator,
+        r.network,
+        r.wikidata,
+        r.wikimedia_commons,
+        r.image,
+        r.mapillary,
+        r.wikipedia,
+        r.note,
+        r.description,
+        ST_X(ST_Transform(r.geom, 4326)) AS latitude,
+        ST_Y(ST_Transform(r.geom, 4326)) AS longitude
+      FROM openrailwaymap_ref r
+      WHERE r.uic_ref = input_uic_ref
+      LIMIT input_limit;
+  END
+$$ LANGUAGE plpgsql
+  LEAKPROOF
+  PARALLEL SAFE;

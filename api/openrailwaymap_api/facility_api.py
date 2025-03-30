@@ -2,23 +2,6 @@ from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_ENTITY
 
 QUERY_PARAMETERS = ['q', 'name', 'ref', 'uic_ref']
-SELECT_FIELD_LIST = ', '.join([
-  'osm_ids',
-  'name',
-  'railway',
-  'railway_ref',
-  'station',
-  'uic_ref',
-  'operator',
-  'network',
-  'wikidata',
-  'wikimedia_commons',
-  'image',
-  'mapillary',
-  'wikipedia',
-  'note',
-  'description',
-])
 
 class FacilityAPI:
     def __init__(self, database):
@@ -76,34 +59,25 @@ class FacilityAPI:
         sql_query = """
           SELECT * FROM query_facilities_by_name($1, $2)
         """
+        return await self.query_result(sql_query, (q, limit))
 
-        async with self.database.acquire() as connection:
-            statement = await connection.prepare(sql_query)
-            async with connection.transaction():
-                data = []
-                async for record in statement.cursor(q, limit):
-                    data.append(dict(record))
-                return data
-
-    async def _search_by_ref(self, search_key, ref, limit):
-        # We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
-        fields = SELECT_FIELD_LIST
-        sql_query = f"""SELECT DISTINCT ON (osm_ids)
-          {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
-          FROM openrailwaymap_ref
-          WHERE {search_key} = $1
-          LIMIT $2;"""
-
-        async with self.database.acquire() as connection:
-            statement = await connection.prepare(sql_query)
-            async with connection.transaction():
-                data = []
-                async for record in statement.cursor(ref, limit):
-                    data.append(dict(record))
-                return data
+    async def _search_by_ref(self, search_function, ref, limit):
+        sql_query = f"""
+          SELECT * FROM {search_function}($1, $2)
+        """
+        return await self.query_result(sql_query, (ref, limit))
 
     async def search_by_ref(self, ref, limit):
-        return await self._search_by_ref("railway_ref", ref, limit)
+        return await self._search_by_ref("query_facilities_by_ref", ref, limit)
 
     async def search_by_uic_ref(self, ref, limit):
-        return await self._search_by_ref("uic_ref", ref, limit)
+        return await self._search_by_ref("query_facilities_by_uic_ref", ref, limit)
+
+    async def query_result(self, sql_query, parameters):
+        async with self.database.acquire() as connection:
+            statement = await connection.prepare(sql_query)
+            async with connection.transaction():
+                data = []
+                async for record in statement.cursor(*parameters):
+                    data.append(dict(record))
+                return data
