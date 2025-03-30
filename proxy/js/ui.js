@@ -838,12 +838,16 @@ function popupContent(feature) {
   }
 
   const featureProperty = featureCatalog.featureProperty || 'feature';
-  // Remove the variable part of the property to get the key
-  const catalogKey = properties[featureProperty] && properties[featureProperty].replace(/\{[^}]+}/, '{}');
-  // Capture the variable part as well for display
-  const keyVariable = properties[featureProperty]
-    ? properties[featureProperty].match(/\{([^}]+)}/)?.[1]
-    : null;
+
+  const constructCatalogKey = propertyValue => ({
+    // Remove the variable part of the property to get the key
+    catalogKey: propertyValue && propertyValue.replace(/\{[^}]+}/, '{}'),
+    // Capture the variable part as well for display
+    keyVariable: propertyValue
+      ? propertyValue.match(/\{([^}]+)}/)?.[1]
+      : null
+  });
+  const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
   const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
   if (!featureContent) {
@@ -876,12 +880,13 @@ function popupContent(feature) {
             console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
             return stringValue;
           } else {
-            const lookedUpValue = lookupCatalog.features[value];
+            const {lookUpCatalogKey, lookUpKeyVariable} = constructCatalogKey(value);
+            const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
             if (!lookedUpValue) {
               console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
               return stringValue;
             } else {
-              return lookedUpValue.name;
+              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}`;
             }
           }
         } else {
