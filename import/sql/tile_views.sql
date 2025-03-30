@@ -524,6 +524,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     type,
     azimuth,
     (signal_direction = 'both') as direction_both,
+    signal_position,
     ref,
     caption,
     deactivated,

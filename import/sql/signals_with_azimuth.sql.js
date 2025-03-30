@@ -24,6 +24,7 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     caption,
     deactivated,
     signal_direction,
+    signal_position,
     dominant_speed,
     wikidata,
     wikimedia_commons,

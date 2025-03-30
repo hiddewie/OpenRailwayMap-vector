@@ -214,6 +214,7 @@ postgres:
         caption: string
         azimuth: number
         direction_both: boolean
+        signal_position: string
         deactivated: boolean
         speed: integer
         wikidata: string
