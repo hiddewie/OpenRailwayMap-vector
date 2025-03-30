@@ -357,11 +357,13 @@ function determineStyleFromHash(hash) {
 function determineZoomCenterFromHash(hash) {
   const hashObject = hashToObject(hash);
   if ('view' in hashObject && typeof hashObject.view === 'string') {
-    const matches = hashObject.view.match(/^([\d.]+)\/(-?[\d.]+)\/(-?[\d.]+)$/)
+    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?$/);
     if (matches) {
+      const groups = matches.groups
       return {
-        center: [parseFloat(matches[3]), parseFloat(matches[2])],
-        zoom: parseFloat(matches[1])
+        center: [parseFloat(groups.longitude), parseFloat(groups.latitude)],
+        zoom: parseFloat(groups.zoom),
+        bearing: groups.bearing ?? 0.0,
       }
     } else {
       return {};
