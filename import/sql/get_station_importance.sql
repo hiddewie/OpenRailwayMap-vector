@@ -55,8 +55,7 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
     sprc.route_ids AS route_ids
   FROM stations AS s
   LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
-    ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400))
-  WHERE s.railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site');
+    ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400));
 
 -- Join clustered platforms with station nodes
 CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
@@ -86,7 +85,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       *,
       ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
     FROM stations
-    WHERE railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
   ) AS facilities
   GROUP BY cluster_id, name, station, railway_ref, uic_ref, railway;
 
@@ -123,8 +121,6 @@ CREATE OR REPLACE VIEW stations_with_route_count AS
       id,
       0 AS route_count
     FROM stations
-    WHERE
-      railway IN ('station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site')
   ) all_stations_with_route_count
   GROUP BY id;
 
@@ -137,6 +133,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
     array_agg(osm_id) as osm_ids,
+    array_remove(array_agg(s.operator), null) as operator,
+    array_remove(array_agg(s.network), null) as network,
     array_remove(array_agg(s.wikidata), null) as wikidata,
     array_remove(array_agg(s.wikimedia_commons), null) as wikimedia_commons,
     array_remove(array_agg(s.wikipedia), null) as wikipedia,

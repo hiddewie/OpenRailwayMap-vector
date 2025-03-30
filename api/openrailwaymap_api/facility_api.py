@@ -1,7 +1,24 @@
 from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_ENTITY
 
-QUERY_PARAMETERS =  ['q', 'name', 'ref', 'uic_ref']
+QUERY_PARAMETERS = ['q', 'name', 'ref', 'uic_ref']
+SELECT_FIELD_LIST = ', '.join([
+  'osm_ids',
+  'name',
+  'railway',
+  'railway_ref',
+  'station',
+  'uic_ref',
+  'operator',
+  'network',
+  'wikidata',
+  'wikimedia_commons',
+  'image',
+  'mapillary',
+  'wikipedia',
+  'note',
+  'description',
+])
 
 class FacilityAPI:
     def __init__(self, database):
@@ -58,7 +75,7 @@ class FacilityAPI:
 
         # TODO support filtering on state of feature: abandoned, in construction, disused, preserved, etc.
         # We do not sort the result although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
-        fields = self.sql_select_fieldlist()
+        fields = SELECT_FIELD_LIST
         sql_query = f"""SELECT
             {fields}, latitude, longitude, rank
             FROM (
@@ -84,7 +101,7 @@ class FacilityAPI:
 
     async def _search_by_ref(self, search_key, ref, limit):
         # We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
-        fields = self.sql_select_fieldlist()
+        fields = SELECT_FIELD_LIST
         sql_query = f"""SELECT DISTINCT ON (osm_ids)
           {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
           FROM openrailwaymap_ref
@@ -104,6 +121,3 @@ class FacilityAPI:
 
     async def search_by_uic_ref(self, ref, limit):
         return await self._search_by_ref("uic_ref", ref, limit)
-
-    def sql_select_fieldlist(self):
-        return "osm_ids, name, railway, railway_ref"
