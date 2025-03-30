@@ -215,7 +215,8 @@ postgres:
         azimuth: number
         direction_both: boolean
         deactivated: boolean
-        speed: integer
+        speed_limit_speed: string
+        speed_limit_distant_speed: string
         wikidata: string
         wikimedia_commons: string
         image: string

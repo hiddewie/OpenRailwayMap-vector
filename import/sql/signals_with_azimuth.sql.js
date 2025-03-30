@@ -25,6 +25,8 @@ CREATE OR REPLACE VIEW signals_with_azimuth_view AS
     deactivated,
     signal_direction,
     dominant_speed,
+    speed_limit_speed,
+    speed_limit_distant_speed,
     wikidata,
     wikimedia_commons,
     image,
@@ -94,7 +96,6 @@ CREATE OR REPLACE VIEW signals_railway_signal_features AS
       signals_with_azimuth.*,
       -- Build up array of available features
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
         ARRAY[${otherFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
@@ -110,7 +111,6 @@ CREATE OR REPLACE VIEW speed_railway_signal_features AS
       signals_with_azimuth.*,
       -- Build up array of available features
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
         ARRAY[${speedFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
@@ -126,7 +126,6 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
       signals_with_azimuth.*,
       -- Build up array of available features
       -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      -- Does not include: speed_limit, speed_limit_distant, electricity
       array_remove(
         ARRAY[${electrificationFeatureTypes.map(type => `feature_${type}`).join(', ')}],
         NULL
