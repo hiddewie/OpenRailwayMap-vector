@@ -1079,7 +1079,6 @@ const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
     layout: {
       ...(layer.layout || {}),
       'icon-image': ['image', ['concat', 'sdf:', spriteExpression]],
-      'text-field': '',
     },
   },
   {
