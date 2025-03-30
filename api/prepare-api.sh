@@ -14,6 +14,14 @@ docker compose exec -T db psql \
   --dbname gis \
   < api/facility_functions.sql
 
+echo 'Preparing milestones functions'
+docker compose exec -T db psql \
+  --host 127.0.0.1 \
+  --user postgres \
+  --port 5432 \
+  --dbname gis \
+  < api/milestone_functions.sql
+
 echo 'Preparing facilities'
 docker compose exec -T db psql \
   --host 127.0.0.1 \

@@ -271,7 +271,7 @@ limit: 1
 HTTP 200
 [Asserts]
 jsonpath "$" count == 1
-jsonpath "$[0].ref" == "6020"
+jsonpath "$[0].line_ref" == "6020"
 jsonpath "$[0].position" == 22.7
 
 # Milestone request too small limit

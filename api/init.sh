@@ -13,4 +13,5 @@ psql -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
 psql -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
 
 psql -d gis -f /sql/facility_functions.sql
+psql -d gis -f /sql/milestone_functions.sql
 psql -d gis -f /sql/import.sql

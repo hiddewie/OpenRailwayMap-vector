@@ -285,11 +285,16 @@ paths:
                       type: integer
                       description: |
                         OSM node ID
-                    ref:
+                    line_ref:
                       type: string
                       description: |
                         Reference number of the railway line the feature is located on.
                       nullable: true
+                    milestone_ref:
+                      type: string
+                      nullable: true
+                      description: |
+                        Reference number of the feature.
                     operator:
                       type: string
                       description: |
@@ -304,6 +309,27 @@ paths:
                       type: number
                       description: |
                         Mileage of the feature
+                      nullable: true
+                    wikidata:
+                      type: string
+                      nullable: true
+                    wikimedia_commons:
+                      type: string
+                      nullable: true
+                    image:
+                      type: string
+                      nullable: true
+                    mapillary:
+                      type: string
+                      nullable: true
+                    wikipedia:
+                      type: string
+                      nullable: true
+                    note:
+                      type: string
+                      nullable: true
+                    description:
+                      type: string
                       nullable: true
                 example:
                   - description:

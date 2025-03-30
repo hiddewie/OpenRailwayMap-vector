@@ -2,6 +2,7 @@ FROM postgis/postgis:17-3.5-alpine AS import
 
 COPY api.sql /sql/import.sql
 COPY facility_functions.sql /sql/facility_functions.sql
+COPY milestone_functions.sql /sql/milestone_functions.sql
 COPY init.sh /docker-entrypoint-initdb.d/20-init.sh
 
 ENV POSTGRES_DB=gis
