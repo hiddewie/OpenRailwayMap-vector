@@ -127,6 +127,8 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
+jsonpath "$[0].osm_ids" count == 1
+jsonpath "$[0].osm_ids[0]" == 4746086763
 
 # Facility search for reference
 GET {{base_url}}/facility
@@ -178,6 +180,22 @@ HTTP 200
 jsonpath "$" count == 2
 jsonpath "$[0].name" == "Ostkreuz"
 jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
+
+# Facility search for name, reference or UIC reference for grouped station
+GET {{base_url}}/facility
+[QueryStringParams]
+q: Landsberger Allee
+HTTP 200
+[Asserts]
+jsonpath "$" count == 3
+jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
+jsonpath "$[0].railway" == "tram_stop"
+jsonpath "$[0].rank" == 32
+jsonpath "$[0].osm_ids" count == 4
+jsonpath "$[0].osm_ids[0]" == 271777826
+jsonpath "$[0].osm_ids[1]" == 244129991
+jsonpath "$[0].osm_ids[2]" == 1787945074
+jsonpath "$[0].osm_ids[3]" == 1679221136
 
 # Facility request missing required parameter
 GET {{base_url}}/facility

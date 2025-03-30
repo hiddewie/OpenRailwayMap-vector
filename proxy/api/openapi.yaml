@@ -96,9 +96,11 @@ paths:
                     longitude:
                       type: number
                     osm_id:
-                      type: integer
-                      description: |
-                        OSM node ID
+                      type: array
+                      items:
+                        type: integer
+                        description: |
+                          OSM node ID
                     name:
                       type: string
                       nullable: true
@@ -113,35 +115,35 @@ paths:
                       description: |
                         an importance rank calculated by taking the public transport route relations into account using this station/halt
                 example:
-                  - "osm_id": 4487545500
+                  - "osm_ids": [4487545500]
                     "name": "Gouda"
                     "railway": "station"
                     "railway_ref": "Gd"
                     "latitude": 4.7061636
                     "longitude": 52.01742449911598
                     "rank": 52
-                  - "osm_id": 7606567286
+                  - "osm_ids": [7606567286]
                     "name": "Gouda Goverwelle"
                     "railway": "station"
                     "railway_ref": "Gdg"
                     "latitude": 4.7420993
                     "longitude": 52.01501279911619
                     "rank": 8
-                  - "osm_id": 5370097609
+                  - "osm_ids": [5370097609]
                     "name": "Dubbele Wierickebrug - tussen Woerden en Gouda"
                     "railway": "site"
                     "railway_ref": null
                     "latitude": 4.809544
                     "longitude": 52.074374099111374
                     "rank": 0
-                  - "osm_id": 5370103610
+                  - "osm_ids": [5370103610]
                     "name": "Hoge Gouwebrug - bij Gouda"
                     "railway": "site"
                     "railway_ref": null
                     "latitude": 4.6826321
                     "longitude": 52.017554399115966
                     "rank": 0
-                  - "osm_id": 5370103611
+                  - "osm_ids": [5370103611]
                     "name": "Gouwebrug - bij Gouda"
                     "railway": "site"
                     "railway_ref": null

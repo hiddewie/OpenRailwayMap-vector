@@ -8,10 +8,10 @@ class FacilityAPI:
         self.database = database
 
     def eliminate_duplicates(self, data, limit):
-        data.sort(key=lambda k: k['osm_id'])
+        data.sort(key=lambda k: k['osm_ids'])
         i = 1
         while i < len(data):
-            if data[i]['osm_id'] == data[i - 1]['osm_id']:
+            if data[i]['osm_ids'] == data[i - 1]['osm_ids']:
                 data.pop(i)
             i += 1
         if len(data) > limit:
@@ -57,12 +57,12 @@ class FacilityAPI:
             )
 
         # TODO support filtering on state of feature: abandoned, in construction, disused, preserved, etc.
-        # We do not sort the result although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
+        # We do not sort the result although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
         fields = self.sql_select_fieldlist()
         sql_query = f"""SELECT
             {fields}, latitude, longitude, rank
             FROM (
-              SELECT DISTINCT ON (osm_id)
+              SELECT DISTINCT ON (osm_ids)
                 {fields}, latitude, longitude, rank
               FROM (
                 SELECT
@@ -83,9 +83,9 @@ class FacilityAPI:
                 return data
 
     async def _search_by_ref(self, search_key, ref, limit):
-        # We do not sort the result, although we use DISTINCT ON because osm_id is sufficient to sort out duplicates.
+        # We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
         fields = self.sql_select_fieldlist()
-        sql_query = f"""SELECT DISTINCT ON (osm_id)
+        sql_query = f"""SELECT DISTINCT ON (osm_ids)
           {fields}, ST_X(ST_Transform(geom, 4326)) AS latitude, ST_Y(ST_Transform(geom, 4326)) AS longitude
           FROM openrailwaymap_ref
           WHERE {search_key} = $1
@@ -106,4 +106,4 @@ class FacilityAPI:
         return await self._search_by_ref("uic_ref", ref, limit)
 
     def sql_select_fieldlist(self):
-        return "osm_id, name, railway, railway_ref"
+        return "osm_ids, name, railway, railway_ref"

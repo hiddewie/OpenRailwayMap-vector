@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS openrailwaymap_ref;
 CREATE TABLE openrailwaymap_ref AS
   -- TODO add all available fields / tags from object
   SELECT
-      osm_id,
+      ARRAY[osm_id] as osm_ids,
       name,
       railway,
       station,
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS openrailwaymap_facilities_for_search;
 CREATE TABLE openrailwaymap_facilities_for_search AS
   -- TODO add all available fields / tags from object
   SELECT
-      osm_id,
+      osm_ids,
       to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space(value))) AS terms,
       name,
       key AS name_key,
@@ -43,8 +43,8 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
       route_count,
       geom
     FROM (
-      SELECT DISTINCT ON (osm_id, key, value, name, railway, station, railway_ref, route_count, geom)
-        UNNEST(osm_ids) as osm_id,
+      SELECT DISTINCT ON (osm_ids, key, value, name, railway, station, railway_ref, route_count, geom)
+        osm_ids,
         (each(name_tags)).key AS key,
         (each(name_tags)).value AS value,
         name,
