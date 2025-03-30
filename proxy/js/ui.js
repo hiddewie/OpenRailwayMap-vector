@@ -880,7 +880,7 @@ function popupContent(feature) {
             console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
             return stringValue;
           } else {
-            const {lookUpCatalogKey, lookUpKeyVariable} = constructCatalogKey(value);
+            const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
             const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
             if (!lookedUpValue) {
               console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
