@@ -306,20 +306,36 @@ paths:
                         Mileage of the feature
                       nullable: true
                 example:
-                  - "osm_id": 3479484133
-                    "railway": "milestone"
-                    "position": 18.405
-                    "latitude": 8.7064769
-                    "longitude": 49.031523899684544
-                    "ref": "4201"
-                    "operator": null
-                  - "osm_id": 3479484134
-                    "railway": "milestone"
-                    "position": 18.2
-                    "latitude": 8.7045853
-                    "longitude": 49.03277039968421
-                    "ref": "4201"
-                    "operator": null
+                  - description:
+                    image:
+                    latitude: 13.372542999999999
+                    line_ref: '6020'
+                    longitude: 52.471930899089024
+                    mapillary:
+                    milestone_ref:
+                    note:
+                    operator: DB InfraGO AG
+                    osm_id: 11562536788
+                    position: 22.7
+                    railway: milestone
+                    wikidata:
+                    wikimedia_commons:
+                    wikipedia:
+                  - description:
+                    image:
+                    latitude: 13.3739671
+                    line_ref: '6020'
+                    longitude: 52.47137729908903
+                    mapillary:
+                    milestone_ref:
+                    note:
+                    operator: DB InfraGO AG
+                    osm_id: 11558214672
+                    position: 22.6
+                    railway: milestone
+                    wikidata:
+                    wikimedia_commons:
+                    wikipedia:
         '400':
           description: |
             Bad request: invalid parameter values
