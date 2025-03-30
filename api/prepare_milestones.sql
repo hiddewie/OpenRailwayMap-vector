@@ -54,7 +54,7 @@ CREATE TABLE openrailwaymap_milestones AS
         note,
         description
       FROM railway_positions
-        WHERE railway_position IS NOT NULL
+      WHERE railway_position IS NOT NULL
 
       UNION ALL
 
