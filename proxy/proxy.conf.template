@@ -11,6 +11,11 @@ proxy_cache_path /var/cache/nginx/
                  use_temp_path=off
                  keys_zone=cache:50m;
 
+map $http_referer $cache_index {
+  ~^http://localhost 0s;
+  default 1h;
+}
+
 map $http_referer $cache_style {
   ~^http://localhost 0s;
   default 1h;
@@ -151,14 +156,17 @@ server {
 
   location = / {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /index.html {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /manifest.json {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /favicon.ico {
