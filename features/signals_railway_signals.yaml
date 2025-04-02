@@ -4276,7 +4276,7 @@ features:
       - { regex: '^PL-tram:ct-1;PL-tram:ct-2$', value: 'pl/ct-1-2' }
     default: 'pl/ct-2'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-tram:ct-2', 'PL-tram:ct-1;PL-tram:ct-2] }
+      - { tag: 'railway:signal:electricity', values: ['PL-tram:ct-2', 'PL-tram:ct-1;PL-tram:ct-2'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', values: ['power_limit', 'isolation;power_limit'] }
 
