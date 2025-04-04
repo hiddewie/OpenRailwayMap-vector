@@ -1,9 +1,8 @@
 resolver ${NGINX_RESOLVER};
 
-limit_req_zone
-  $binary_remote_addr
-  zone=ip_limit:10m
-  rate=10r/s;
+limit_req_zone $binary_remote_addr zone=assets:10m rate=1r/s;
+limit_req_zone $binary_remote_addr zone=api:10m rate=1r/s;
+limit_req_zone $binary_remote_addr zone=tiles:10m rate=10r/s;
 
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
@@ -150,7 +149,7 @@ server {
   listen 8000 default_server;
   server_name localhost;
 
-  limit_req zone=ip_limit burst=50;
+  limit_req zone=assets burst=100 nodelay;
   limit_req_status 429;
   limit_req_log_level warn;
 
@@ -205,6 +204,7 @@ server {
     port_in_redirect off;
     expires $cache_assets;
     error_page 404 = @api;
+    limit_req zone=api burst=3;
   }
 
   location @api {
@@ -232,6 +232,8 @@ server {
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
       rewrite ^/electrification$ /electrification_signals last;
     }
+
+    limit_req zone=tiles burst=200 nodelay;
 
     set $upstream $tiles_upstream;
     proxy_pass $upstream;
