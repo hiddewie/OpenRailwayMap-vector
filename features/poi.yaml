@@ -14,26 +14,6 @@ features:
       - description: antenna
         feature: 'general/radio-antenna'
 
-  - description: Crossing
-    feature: 'general/crossing'
-    minzoom: 14
-    variants:
-      - description: Level crossing
-        feature: 'general/level-crossing'
-
-      - description: Level crossing with lights
-        feature: 'general/level-crossing-light'
-
-      - description: Level crossing with barrier
-        feature: 'general/level-crossing-barrier'
-
-      - description: Level crossing with lights and barrier
-        feature: 'general/level-crossing-light-barrier'
-
-  - description: Phone
-    minzoom: 16
-    feature: 'general/phone'
-
   - description: Lubricator
     minzoom: 13
     feature: 'general/lubricator'
@@ -53,13 +33,6 @@ features:
   - description: Automatic equipment identification
     minzoom: 13
     feature: 'general/aei'
-
-  - description: Buffer stop
-    feature: 'general/buffer_stop'
-    minzoom: 14
-    variants:
-      - description: Derailer
-        feature: 'general/derail'
 
   - description: Hump
     minzoom: 13
@@ -103,10 +76,6 @@ features:
     - description: Insulated rail joint
       feature: 'general/vacancy-detection-insulated-rail-joint'
 
-  - description: Subway entrance
-    feature: 'general/subway-entrance'
-    minzoom: 16
-
   - description: Workshop
     minzoom: 13
     feature: 'general/workshop'
@@ -126,3 +95,35 @@ features:
   - description: Rolling Highway
     minzoom: 13
     feature: 'general/rolling_highway'
+
+  - description: Crossing
+    feature: 'general/crossing'
+    minzoom: 16
+    variants:
+      - description: Level crossing
+        feature: 'general/level-crossing'
+
+      - description: Level crossing with lights
+        feature: 'general/level-crossing-light'
+
+      - description: Level crossing with barrier
+        feature: 'general/level-crossing-barrier'
+
+      - description: Level crossing with lights and barrier
+        feature: 'general/level-crossing-light-barrier'
+
+  - description: Phone
+    minzoom: 16
+    feature: 'general/phone'
+
+  - description: Subway entrance
+    feature: 'general/subway-entrance'
+    minzoom: 16
+
+  - description: Buffer stop
+    feature: 'general/buffer_stop'
+    minzoom: 16
+
+  - description: Derailer
+    feature: 'general/derail'
+    minzoom: 16

@@ -1,10 +1,20 @@
 resolver ${NGINX_RESOLVER};
 
+limit_req_zone
+  $binary_remote_addr
+  zone=ip_limit:10m
+  rate=10r/s;
+
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
                  max_size=10g
                  use_temp_path=off
                  keys_zone=cache:50m;
+
+map $http_referer $cache_index {
+  ~^http://localhost 0s;
+  default 1h;
+}
 
 map $http_referer $cache_style {
   ~^http://localhost 0s;
@@ -140,16 +150,23 @@ server {
   listen 8000 default_server;
   server_name localhost;
 
+  limit_req zone=ip_limit burst=50;
+  limit_req_status 429;
+  limit_req_log_level warn;
+
   location = / {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /index.html {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /manifest.json {
     root /etc/nginx/public;
+    expires $cache_index;
   }
 
   location = /favicon.ico {

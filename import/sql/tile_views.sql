@@ -425,6 +425,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
       WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
     END AS priority,
+    ref,
     wikidata,
     wikimedia_commons,
     image,
@@ -444,6 +445,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     way,
     'general/subway-entrance' as feature,
     0 as priority,
+    ref,
     wikidata,
     wikimedia_commons,
     image,

@@ -303,6 +303,9 @@ const features = {
         ))
     ),
     properties: {
+      ref: {
+        name: 'Reference',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
