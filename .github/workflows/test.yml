@@ -74,8 +74,8 @@ jobs:
         run: |
           docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker push ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
+          docker commit "$DB_CONTAINER_ID" ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
 
   build-api:
     name: Build API
@@ -100,8 +100,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
@@ -113,8 +113,8 @@ jobs:
 
       - name: Push API image
         run: |
-          docker tag ghcr.io/hiddewie/openrailwaymap-api:latest ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
-          docker push ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
+          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
 
   test-api:
     name: Test API
@@ -146,8 +146,8 @@ jobs:
 
       - name: Pull API
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-api:latest 
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest 
 
       - name: Start API
         run: |
@@ -188,8 +188,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
@@ -240,8 +240,8 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
 
       - name: Start database
         run: |
@@ -293,13 +293,13 @@ jobs:
 
       - name: Pull database
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-import-db:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
 
       - name: Pull API
         run: |
-          docker pull ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }}
-          docker tag ghcr.io/hiddewie/openrailwaymap-api:${{ github.sha }} ghcr.io/hiddewie/openrailwaymap-api:latest 
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest 
 
       - name: Start database
         run: |
