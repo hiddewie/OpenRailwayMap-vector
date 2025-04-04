@@ -4260,6 +4260,14 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_change' }
 
+  - description: Granica zasilania wraz z izolatorem sekcyjnym (CT-1 i CT-2)
+    country: PL
+    icon: { default: 'pl/ct-1-2' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-1;PL-tram:ct-2' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'isolation;power_limit' }
+
   - description: Izolator sekcyjny (CT-1)
     country: PL
     icon: { default: 'pl/ct-1' }
@@ -4274,15 +4282,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-2' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', values: 'power_limit' }
-
-  - description: Granica zasilania wraz z izolatorem sekcyjnym (CT-1 i CT-2)
-    country: PL
-    icon: { default: 'pl/ct-1-2' }
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-tram:ct-1;PL-tram:ct-2' }
-      - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'isolation;power_limit' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_limit' }
 
   # --- SE --- #
 
