@@ -92,7 +92,7 @@ CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
   ON stations_clustered
     USING gin(station_ids);
 
-CREATE OR REPLACE VIEW stations_with_route_count AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_count AS
   SELECT
     id,
     max(route_count) as route_count
@@ -124,6 +124,10 @@ CREATE OR REPLACE VIEW stations_with_route_count AS
   ) all_stations_with_route_count
   GROUP BY id;
 
+CREATE INDEX IF NOT EXISTS stations_with_route_count_idx
+  ON stations_with_route_count
+    USING btree(id);
+
 -- Final table with station nodes and the number of route relations
 -- needs about 3 to 4 minutes for whole Germany
 -- or about 20 to 30 minutes for the whole planet
@@ -133,15 +137,15 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
     array_agg(osm_id) as osm_ids,
-    array_remove(array_agg(s.operator), null) as operator,
-    array_remove(array_agg(s.network), null) as network,
-    array_remove(array_agg(s.wikidata), null) as wikidata,
-    array_remove(array_agg(s.wikimedia_commons), null) as wikimedia_commons,
-    array_remove(array_agg(s.wikipedia), null) as wikipedia,
-    array_remove(array_agg(s.image), null) as image,
-    array_remove(array_agg(s.mapillary), null) as mapillary,
-    array_remove(array_agg(s.note), null) as note,
-    array_remove(array_agg(s.description), null) as description,
+    array_remove(array_agg(DISTINCT s.operator), null) as operator,
+    array_remove(array_agg(DISTINCT s.network), null) as network,
+    array_remove(array_agg(DISTINCT s.wikidata), null) as wikidata,
+    array_remove(array_agg(DISTINCT s.wikimedia_commons), null) as wikimedia_commons,
+    array_remove(array_agg(DISTINCT s.wikipedia), null) as wikipedia,
+    array_remove(array_agg(DISTINCT s.image), null) as image,
+    array_remove(array_agg(DISTINCT s.mapillary), null) as mapillary,
+    array_remove(array_agg(DISTINCT s.note), null) as note,
+    array_remove(array_agg(DISTINCT s.description), null) as description,
     -- Aggregated route count columns
     max(sr.route_count) as route_count,
     -- Re-grouped clustered stations columns
