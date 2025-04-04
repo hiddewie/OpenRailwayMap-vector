@@ -1,8 +1,8 @@
 resolver ${NGINX_RESOLVER};
 
-limit_req_zone $binary_remote_addr zone=assets:10m rate=1r/s;
-limit_req_zone $binary_remote_addr zone=api:10m rate=1r/s;
-limit_req_zone $binary_remote_addr zone=tiles:10m rate=10r/s;
+limit_req_zone $ratelimit_key zone=assets:10m rate=1r/s;
+limit_req_zone $ratelimit_key zone=api:10m rate=1r/s;
+limit_req_zone $ratelimit_key zone=tiles:10m rate=10r/s;
 
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
@@ -23,6 +23,11 @@ map $http_referer $cache_style {
 map $http_referer $cache_assets {
   ~^http://localhost 0s;
   default 1d;
+}
+
+map $http_referer $ratelimit_key {
+  ~^http://localhost '';
+  default $binary_remote_addr;
 }
 
 map $request_uri $tiles_upstream {
@@ -149,9 +154,9 @@ server {
   listen 8000 default_server;
   server_name localhost;
 
-  limit_req zone=assets burst=100 nodelay;
   limit_req_status 429;
   limit_req_log_level warn;
+  limit_req zone=assets burst=100 nodelay;
 
   location = / {
     root /etc/nginx/public;
