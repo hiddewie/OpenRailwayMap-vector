@@ -195,6 +195,12 @@ const colors = {
   },
 };
 
+const font = {
+  regular: ['Noto Sans Medium'],
+  italic: ['Noto Sans Italic'],
+  bold: ['Noto Sans Bold'],
+}
+
 const turntable_casing_width = 2;
 
 const electrificationLegends = [
