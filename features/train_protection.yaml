@@ -18,7 +18,7 @@ train_protections:
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
   - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
-  - { train_protection: 'tcb', legend: 'Track Circuit Block (TCB)', color: 'hsl(147 100% 40%)' }
+  - { train_protection: 'tcb', legend: 'Track Circuit Block (TCB)', color: 'hsl(147, 100%, 40%)' }
   - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
   - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
   - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'hsl(48, 100%, 40%)' }
