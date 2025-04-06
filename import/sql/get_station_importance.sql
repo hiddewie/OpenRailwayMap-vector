@@ -134,18 +134,18 @@ CREATE INDEX IF NOT EXISTS stations_with_route_count_idx
 CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
   SELECT
     -- Aggregated station columns
-    array_agg(station_id) as station_ids,
+    array_agg(station_id ORDER BY station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
-    array_agg(osm_id ORDER by osm_id) as osm_ids,
-    array_remove(array_agg(DISTINCT s.operator), null) as operator,
-    array_remove(array_agg(DISTINCT s.network), null) as network,
-    array_remove(array_agg(DISTINCT s.wikidata), null) as wikidata,
-    array_remove(array_agg(DISTINCT s.wikimedia_commons), null) as wikimedia_commons,
-    array_remove(array_agg(DISTINCT s.wikipedia), null) as wikipedia,
-    array_remove(array_agg(DISTINCT s.image), null) as image,
-    array_remove(array_agg(DISTINCT s.mapillary), null) as mapillary,
-    array_remove(array_agg(DISTINCT s.note), null) as note,
-    array_remove(array_agg(DISTINCT s.description), null) as description,
+    array_agg(osm_id ORDER BY osm_id) as osm_ids,
+    array_remove(array_agg(DISTINCT s.operator ORDER BY s.operator), null) as operator,
+    array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
+    array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
+    array_remove(array_agg(DISTINCT s.wikimedia_commons ORDER BY s.wikimedia_commons), null) as wikimedia_commons,
+    array_remove(array_agg(DISTINCT s.wikipedia ORDER BY s.wikipedia), null) as wikipedia,
+    array_remove(array_agg(DISTINCT s.image ORDER BY s.image), null) as image,
+    array_remove(array_agg(DISTINCT s.mapillary ORDER BY s.mapillary), null) as mapillary,
+    array_remove(array_agg(DISTINCT s.note ORDER BY s.note), null) as note,
+    array_remove(array_agg(DISTINCT s.description ORDER BY s.description), null) as description,
     -- Aggregated route count columns
     max(sr.route_count) as route_count,
     -- Re-grouped clustered stations columns
