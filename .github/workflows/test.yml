@@ -112,7 +112,7 @@ jobs:
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
 
       - name: Start database
         run: |
@@ -168,7 +168,7 @@ jobs:
 
       - name: Load API image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
 
       - name: Start API
         run: |
@@ -215,7 +215,7 @@ jobs:
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
 
       - name: Start database
         run: |
@@ -272,7 +272,7 @@ jobs:
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
 
       - name: Start database
         run: |
@@ -330,7 +330,7 @@ jobs:
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
@@ -340,7 +340,7 @@ jobs:
 
       - name: Load API image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar > docker load
+          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
 
       - name: Start database
         run: |
