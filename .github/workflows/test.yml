@@ -70,12 +70,18 @@ jobs:
         run: |
           docker compose run import import
 
-      - name: Prepare and start API
+      - name: Prepare and save database image
         run: |
           docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          docker commit "$DB_CONTAINER_ID" ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
+          docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:latest
+          docker save ghcr.io/hiddewie/openrailwaymap-import-db:latest > ${{ runner.temp }}/openrailwaymap-import-db.tar
+
+      - name: Upload database artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openrailwaymap-import-db
+          path: ${{ runner.temp }}/openrailwaymap-import-db.tar
 
   build-api:
     name: Build API
@@ -98,10 +104,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull database
+      - name: Download database artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-import-db
+          path: ${{ runner.temp }}
+
+      - name: Load database image
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
 
       - name: Start database
         run: |
@@ -111,10 +122,15 @@ jobs:
         run: |
           api/prepare-api.sh
 
-      - name: Push API image
+      - name: Save API image
         run: |
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
+          docker save ghcr.io/hiddewie/openrailwaymap-api:latest > ${{ runner.temp }}/openrailwaymap-api.tar
+
+      - name: Upload API artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openrailwaymap-api
+          path: ${{ runner.temp }}/openrailwaymap-api.tar
 
   test-api:
     name: Test API
@@ -144,10 +160,15 @@ jobs:
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
 
-      - name: Pull API
+      - name: Download API artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-api
+          path: ${{ runner.temp }}
+
+      - name: Load API image
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest 
+          cat ${{ runner.temp }}/openrailwaymap-api.tar > docker load
 
       - name: Start API
         run: |
@@ -186,10 +207,15 @@ jobs:
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
 
-      - name: Pull database
+      - name: Download database artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-import-db
+          path: ${{ runner.temp }}
+
+      - name: Load database image
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
 
       - name: Start database
         run: |
@@ -238,10 +264,15 @@ jobs:
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
 
-      - name: Pull database
+      - name: Download database artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-import-db
+          path: ${{ runner.temp }}
+
+      - name: Load database image
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
 
       - name: Start database
         run: |
@@ -291,15 +322,25 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull database
-        run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
+      - name: Download database artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-import-db
+          path: ${{ runner.temp }}
 
-      - name: Pull API
+      - name: Load database image
         run: |
-          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest 
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar > docker load
+
+      - name: Download API artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: openrailwaymap-api
+          path: ${{ runner.temp }}
+
+      - name: Load API image
+        run: |
+          cat ${{ runner.temp }}/openrailwaymap-api.tar > docker load
 
       - name: Start database
         run: |
