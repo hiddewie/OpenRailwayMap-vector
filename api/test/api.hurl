@@ -192,10 +192,10 @@ jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
 jsonpath "$[0].railway" == "tram_stop"
 jsonpath "$[0].rank" == 32
 jsonpath "$[0].osm_ids" count == 4
-jsonpath "$[0].osm_ids[0]" == 271777826
-jsonpath "$[0].osm_ids[1]" == 244129991
-jsonpath "$[0].osm_ids[2]" == 1787945074
-jsonpath "$[0].osm_ids[3]" == 1679221136
+jsonpath "$[0].osm_ids[0]" == 244129991
+jsonpath "$[0].osm_ids[1]" == 271777826
+jsonpath "$[0].osm_ids[2]" == 1679221136
+jsonpath "$[0].osm_ids[3]" == 1787945074
 jsonpath "$[2].railway_ref" == "BLST"
 jsonpath "$[2].station" == "light_rail"
 jsonpath "$[2].uic_ref" == "8089020"
