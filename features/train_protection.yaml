@@ -173,6 +173,10 @@ features:
     tags:
       - { tag: 'railway:caws', value: 'yes' }
 
+  - train_protection: tcb
+    tags:
+      - { tag: 'railway:tcb', value: 'yes' }
+
   - train_protection: cbtc
     tags:
       - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
@@ -276,10 +280,6 @@ features:
   - train_protection: satp
     tags:
       - { tag: 'railway:atp4b', value: 'yes' }
-
-  - train_protection: tcb
-    tags:
-      - { tag: 'railway:tcb', value: 'yes' }
 
   - train_protection: other
     tags:
