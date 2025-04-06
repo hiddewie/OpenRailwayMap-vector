@@ -102,6 +102,7 @@ const colors = {
         switch: {
           default: '#003687',
           localOperated: '#005129',
+          resetting: '#414925',
         },
         symbols: 'black',
       },
@@ -182,6 +183,7 @@ const colors = {
         switch: {
           default: '#a7c6fc',
           localOperated: '#85f5bd',
+          resetting: '#bdc2ab',
         },
         symbols: 'white',
       },
@@ -1807,6 +1809,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'icon-color': ['case',
           ['get', 'local_operated'], colors[theme].styles.standard.switch.localOperated,
+          ['get', 'resetting'], colors[theme].styles.standard.switch.resetting,
           colors[theme].styles.standard.switch.default,
         ],
         'icon-halo-color': ['case',
@@ -1823,6 +1826,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
         'text-color': ['case',
           ['get', 'local_operated'], colors[theme].styles.standard.switch.localOperated,
+          ['get', 'local_operated'], colors[theme].styles.standard.switch.resetting,
           colors[theme].styles.standard.switch.default,
         ],
         'text-halo-color': ['case',
