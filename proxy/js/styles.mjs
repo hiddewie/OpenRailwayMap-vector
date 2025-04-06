@@ -763,7 +763,13 @@ const sources = {
     url: `${origin}/electrification`,
     attribution,
     promoteId: 'id',
-  }
+  },
+  openhistoricalmap: {
+    type: 'vector',
+    tiles: [`https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf`],
+    attribution: 'OpenHistoricalMap', // TODO
+    promoteId: 'id',
+  },
 };
 
 const searchResults = {
@@ -1281,7 +1287,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         {
           id: 'railway_line_razed',
           minzoom: 11,
-          source: 'high',
+          source: 'openhistoricalmap',
           states: {
             razed: razed_dasharray,
           },
@@ -1301,7 +1307,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         {
           id: 'railway_line_abandoned',
           minzoom: 11,
-          source: 'high',
+          source: 'openhistoricalmap',
           states: {
             abandoned: abandoned_dasharray,
           },
@@ -1504,6 +1510,64 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
       ],
     ),
+    // {
+    //   id: `${id}_fill_${state}`,
+    //   type: 'line',
+    //   minzoom,
+    //   maxzoom,
+    //   source,
+    //   'source-layer': 'railway_line_high',
+    //   filter: ['all',
+    //     ['==', ['get', 'state'], state],
+    //     ['!', ['get', 'bridge']],
+    //     ['!', ['get', 'tunnel']],
+    //     filter ?? true,
+    //   ],
+    //   layout: {
+    //     'line-join': 'round',
+    //     'line-cap': dash ? 'butt' : 'round',
+    //     'line-sort-key': sort,
+    //   },
+    //   paint: {
+    //     'line-color': ['case',
+    //       ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+    //       color,
+    //     ],
+    //     'line-width': width,
+    //     'line-dasharray': dash ?? undefined,
+    //   },
+    // }
+    {
+      id: 'railway_line_razed',
+      type: 'line',
+      minzoom: 11,
+      source: 'openhistoricalmap',
+      'source-layer': 'transport_lines',
+      layout: {
+        'line-join': 'round',
+        'line-cap': razed_dasharray ? 'butt' : 'round',
+        // 'line-sort-key': sort,
+      },
+      filter: ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], 1800.0],
+        ['<=', 1800.0, ['coalesce', ['get', 'end_decdate'], 9999.0]],
+      ],
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 'yellow',
+          'red',
+        ],
+        'line-width': 3, // 1.5,
+        'line-dasharray': razed_dasharray,
+      },
+    },
+    // {
+    //   id: 'railway_line_abandoned',
+    //   minzoom: 11,
+    //   source: 'openhistoricalmap',
+    //   width: 1.5,
+    //   color: colors[theme].styles.standard.abandoned,
+    // },
     {
       id: 'railway_text_stations_low1',
       type: 'symbol',
