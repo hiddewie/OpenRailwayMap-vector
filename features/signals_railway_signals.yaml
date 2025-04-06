@@ -3952,7 +3952,7 @@ features:
     icon:
       match: 'railway:signal:stop:caption'
       cases:
-        - { regex: '^[1-3]?[058]0$', value: 'pl/w32-{}', example: 'pl/w32-{150}' }
+        - { regex: '^[1-3]?[0568]0$', value: 'pl/w32-{}', example: 'pl/w32-{150}' }
       default: 'pl/w32-empty'
     tags:
       - { tag: 'railway:signal:stop', value: 'PL-PKP:w32' }
