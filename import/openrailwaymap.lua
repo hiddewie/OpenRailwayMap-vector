@@ -440,10 +440,10 @@ function railway_line_state(tags)
   local highspeed = tags['highspeed'] == 'yes'
 
   -- map known railway state values to their state values
-  local mapped_railway = railway_line_states[preserved and 'preserved' or tags['railway']]
+  local mapped_railway = railway_line_states[railway]
   if mapped_railway then
     return mapped_railway.state,
-      tags[mapped_railway.railway] or tags[railway] or 'rail',
+      tags[mapped_railway.railway] or (tags['railway:preserved'] == 'yes' and tags['railway']) or tags[railway] or 'rail',
       tags[mapped_railway.usage] or usage,
       tags[mapped_railway.service] or service,
       tags[mapped_railway.name] or name,
