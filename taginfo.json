@@ -239,6 +239,7 @@
     { "key": "railway:signal:wrong_road" },
     { "key": "railway:signal:wrong_road:form" },
     { "key": "railway:vacancy_detection" },
-    { "key": "railway:signal:position" }
+    { "key": "railway:signal:position" },
+    { "key": "ref:crs" }
   ]
 }
