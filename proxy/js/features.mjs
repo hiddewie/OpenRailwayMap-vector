@@ -277,6 +277,74 @@ const stationFeatures = {
 const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_high': railwayLineFeatures,
+  'openhistoricalmap-transport_lines': {
+    labelProperty: 'name',
+    featureProperty: 'type',
+    features: {
+      rail: {
+        name: 'Railway',
+        type: 'line',
+      },
+      tram: {
+        name: 'Tram',
+        type: 'line',
+      },
+      light_rail: {
+        name: 'Light rail',
+        type: 'line',
+      },
+      subway: {
+        name: 'Subway',
+        type: 'line',
+      },
+      monorail: {
+        name: 'Monorail',
+        type: 'line',
+      },
+      narrow_gauge: {
+        name: 'Narrow gauge railway',
+        type: 'line',
+      },
+      miniature: {
+        name: 'Miniature railway',
+        type: 'line',
+      },
+    },
+    properties: {
+      usage: {
+        name: 'Usage',
+      },
+      service: {
+        name: 'Service',
+      },
+      highspeed: {
+        name: 'Highspeed',
+      },
+      preferred_direction: {
+        name: 'Preferred direction',
+      },
+      tunnel: {
+        // TODO: broken because of 0 / 1 usage
+        name: 'Tunnel',
+      },
+      bridge: {
+        // TODO: broken because of 0 / 1 usage
+        name: 'Bridge',
+      },
+      ref: {
+        name: 'Reference',
+      },
+      electrified: {
+        name: 'Electrified',
+      },
+      start_date: {
+        name: 'Since',
+      },
+      end_date: {
+        name: 'Until',
+      },
+    },
+  },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
