@@ -4117,7 +4117,7 @@ features:
       default: 'pl/w21-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:form', values: ['light', 'sign'] }
 
   - description: Wskaźnik zmiany prędkości (W27a)
     country: PL
