@@ -212,9 +212,14 @@ body {
   /*visibility: hidden;*/
 }
 .maplibregl-ctrl.maplibregl-ctrl-date .date-input {
+  width: 200px;
   padding: 0;
   margin: .5rem .5rem .5rem .2rem;
   vertical-align: middle;
+}
+.maplibregl-ctrl.maplibregl-ctrl-date .date-display {
+  font-family: "Fira Code", "Cascadia Code", monospace;
+  padding-right: .5rem;
 }
 
 input[type=url] {

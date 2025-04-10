@@ -390,7 +390,7 @@ function putParametersInHash(hash, style, date) {
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
-let { style: selectedStyle, date: selectedDate } = determineParametersFromHash(window.location.hash)
+let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 async function generateHash(input) {
   const encoder = new TextEncoder();
@@ -577,6 +577,7 @@ function selectStyle(style) {
     onStyleChange();
   }
 }
+
 function selectDate(date) {
   if (selectedDate !== date) {
     selectedDate = date;
@@ -696,8 +697,18 @@ class DateContol {
     this.slider.type = 'range'
     this.slider.min = 1758
     this.slider.max = 2025
+    this.slider.step = 1
     this.slider.valueAsNumber = this.options.initialSelection;
-    this.slider.onchange = () => this.options.onChange(this.slider.valueAsNumber)
+    this.slider.onchange = () => {
+      this.updateDisplay();
+      this.options.onChange(this.slider.valueAsNumber);
+    }
+    this.slider.oninput = () => {
+      this.updateDisplay();
+    }
+    this.dateDisplay = createDomElement('span', 'date-display', this._container);
+
+    this.updateDisplay();
 
     return this._container;
   }
@@ -709,8 +720,13 @@ class DateContol {
 
   onExternalDateChange(date) {
     if (date && this.slider.valueAsNumber !== date) {
-      this.slider.valueAsNumber = date
+      this.slider.valueAsNumber = date;
+      this.updateDisplay();
     }
+  }
+
+  updateDisplay() {
+    this.dateDisplay.innerText = this.slider.value
   }
 }
 
