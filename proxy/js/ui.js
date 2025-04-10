@@ -327,6 +327,9 @@ const knownStyles = {
   track_class: 'Track class',
 };
 
+const defaultStyle = Object.keys(knownStyles)[0];
+const defaultDate = (new Date()).getFullYear();
+
 const knownThemes = [
   'light',
   'dark',
@@ -344,13 +347,20 @@ function hashToObject(hash) {
   }
 }
 
-function determineStyleFromHash(hash) {
-  const defaultStyle = Object.keys(knownStyles)[0];
+function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
-  if (hashObject.style && hashObject.style in knownStyles) {
-    return hashObject.style
-  } else {
-    return defaultStyle;
+
+  const style = (hashObject.style && hashObject.style in knownStyles)
+    ? hashObject.style
+    : defaultStyle;
+
+  const date = (hashObject.date && !isNaN(parseFloat(hashObject.date)))
+    ? parseFloat(hashObject.date)
+    : defaultDate;
+
+  return {
+    style,
+    date,
   }
 }
 
@@ -373,13 +383,14 @@ function determineZoomCenterFromHash(hash) {
   }
 }
 
-function putStyleInHash(hash, style) {
+function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
-  hashObject.style = style;
-  return `#${Object.entries(hashObject).map(([key, value]) => `${key}=${value}`).join('&')}`;
+  hashObject.style = style !== defaultStyle ? style : undefined;
+  hashObject.date = date !== defaultDate ? date : undefined;
+  return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
-let selectedStyle = determineStyleFromHash(window.location.hash)
+let { style: selectedStyle, date: selectedDate } = determineParametersFromHash(window.location.hash)
 
 async function generateHash(input) {
   const encoder = new TextEncoder();
@@ -566,11 +577,38 @@ function selectStyle(style) {
     onStyleChange();
   }
 }
+function selectDate(date) {
+  if (selectedDate !== date) {
+    selectedDate = date;
+    dateControl.onExternalDateChange(date);
+    onDateChange();
+  }
+}
+
+function onPageParametersChange() {
+  // Update URL
+  const updatedHash = putParametersInHash(window.location.hash, selectedStyle, selectedDate);
+  const location = window.location.href.replace(/(#.+)?$/, updatedHash);
+  window.history.replaceState(window.history.state, null, location);
+}
 
 const onStyleChange = () => {
   // Change styles
   map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: true,
+    // transformStyle: (previous, { layers, ...nextRest }) => ({
+    //   ...nextRest,
+    //   layers: layers.map(({ filter, ...rest }) => {
+    //     if (filter && filter[0] === 'let' && filter[1] === 'date') {
+    //       return {
+    //         ...rest,
+    //         filter: ['let', 'date', selectedDate, ...filter.slice(3) ],
+    //       }
+    //     } else {
+    //       return { filter, ...rest };
+    //     }
+    //   })
+    // }),
   });
   legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
     validate: true,
@@ -582,13 +620,25 @@ const onStyleChange = () => {
     },
   });
 
-  // Update URL
-  const updatedHash = putStyleInHash(window.location.hash, selectedStyle);
-  const location = window.location.href.replace(/(#.+)?$/, updatedHash);
-  window.history.replaceState(window.history.state, null, location);
+  onPageParametersChange();
+}
+
+const onDateChange = () => {
+  const style = map.getStyle();
+
+  if (style) {
+    style.layers
+      .filter(layer => layer.filter && layer.filter[0] === 'let' && layer.filter[1] === 'date')
+      .forEach(layer => {
+        map.setFilter(layer.id, ['let', 'date', selectedDate, ...layer.filter.slice(3)])
+      });
+  }
+
+  onPageParametersChange();
 }
 
 onStyleChange();
+onDateChange();
 
 class StyleControl {
   constructor(options) {
@@ -629,6 +679,37 @@ class StyleControl {
     const radio = this.radioButtons[style];
     if (radio && !radio.checked) {
       radio.checked = true;
+    }
+  }
+}
+
+class DateContol {
+  constructor(options) {
+    this.options = options;
+  }
+
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
+    createDomElement('span', 'maplibregl-ctrl-icon', this._container);
+    this.slider = createDomElement('input', 'date-input', this._container);
+    this.slider.type = 'range'
+    this.slider.min = 1758
+    this.slider.max = 2025
+    this.slider.valueAsNumber = this.options.initialSelection;
+    this.slider.onchange = () => this.options.onChange(this.slider.valueAsNumber)
+
+    return this._container;
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+
+  onExternalDateChange(date) {
+    if (date && this.slider.valueAsNumber !== date) {
+      this.slider.valueAsNumber = date
     }
   }
 }
@@ -771,7 +852,12 @@ const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
 });
+const dateControl = new DateContol({
+  initialSelection: selectedDate,
+  onChange: selectDate,
+});
 map.addControl(styleControl);
+map.addControl(dateControl);
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: false,
@@ -853,6 +939,7 @@ function popupContent(feature) {
   if (!featureContent) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
+  console.info(properties, featureContent)
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
