@@ -218,8 +218,13 @@ body {
   vertical-align: middle;
 }
 .maplibregl-ctrl.maplibregl-ctrl-date .date-display {
-  font-family: "Fira Code", "Cascadia Code", monospace;
   padding-right: .5rem;
+  display: inline-block;
+  width: 4rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  vertical-align: middle;
 }
 
 input[type=url] {

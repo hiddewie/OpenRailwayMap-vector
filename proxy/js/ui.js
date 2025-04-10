@@ -726,7 +726,9 @@ class DateContol {
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.slider.value
+    this.dateDisplay.innerText = this.slider.valueAsNumber === defaultDate
+      ? 'present'
+      : this.slider.value
   }
 }
 
@@ -864,16 +866,16 @@ class NewsControl {
   }
 }
 
-const styleControl = new StyleControl({
-  initialSelection: selectedStyle,
-  onStyleChange: selectStyle,
-});
 const dateControl = new DateContol({
   initialSelection: selectedDate,
   onChange: selectDate,
 });
-map.addControl(styleControl);
+const styleControl = new StyleControl({
+  initialSelection: selectedStyle,
+  onStyleChange: selectStyle,
+});
 map.addControl(dateControl);
+map.addControl(styleControl);
 map.addControl(new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: false,

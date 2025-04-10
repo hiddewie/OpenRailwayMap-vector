@@ -1356,7 +1356,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'text-size': 11,
       'text-padding': 10,
       'text-max-width': 5,
-      'symbol-spacing': 200,
+      'symbol-spacing': 400,
     },
   })),
 ];
@@ -1810,7 +1810,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       theme,
         ['step', ['zoom'],
           ['coalesce', ['get', 'ref'], ''],
-          14,
+          11,
           ['coalesce', ['get', 'name'], ''],
         ],
       [
