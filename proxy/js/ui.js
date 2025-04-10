@@ -407,7 +407,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = date !== defaultDate ? date : undefined;
+  hashObject.date = date !== defaultDate && knownStyles[style].supportsDate ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -594,11 +594,6 @@ function selectStyle(style) {
   if (selectedStyle !== style) {
     selectedStyle = style;
     styleControl.onExternalStyleChange(style);
-    if (knownStyles[style].supportsDate) {
-      dateControl.show();
-    } else {
-      dateControl.hide();
-    }
     onStyleChange();
   }
 }
@@ -646,6 +641,12 @@ const onStyleChange = () => {
     },
   });
 
+  if (knownStyles[selectedStyle].supportsDate) {
+    dateControl.show();
+  } else {
+    dateControl.hide();
+  }
+
   onPageParametersChange();
 }
 
@@ -662,9 +663,6 @@ const onDateChange = () => {
 
   onPageParametersChange();
 }
-
-onStyleChange();
-onDateChange();
 
 class StyleControl {
   constructor(options) {
@@ -1187,3 +1185,6 @@ fetch(`${location.origin}/features.json`)
     features = result;
   })
   .catch(error => console.error('Error during fetching of features', error))
+
+onStyleChange();
+onDateChange();

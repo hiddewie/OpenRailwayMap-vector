@@ -209,7 +209,7 @@ body {
 }
 
 .maplibregl-ctrl-group.maplibregl-ctrl-date {
-  /*visibility: hidden;*/
+  visibility: hidden;
 }
 .maplibregl-ctrl.maplibregl-ctrl-date .date-input {
   width: 200px;
