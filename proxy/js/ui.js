@@ -318,13 +318,34 @@ const globalMinZoom = 1;
 const globalMaxZoom = 20;
 
 const knownStyles = {
-  standard: 'Infrastructure',
-  speed: 'Speed',
-  signals: 'Train protection',
-  electrification: 'Electrification',
-  gauge: 'Gauge',
-  loading_gauge: 'Loading gauge',
-  track_class: 'Track class',
+  standard: {
+    name: 'Infrastructure',
+    supportsDate: true,
+  },
+  speed: {
+    name: 'Speed',
+    supportsDate: false,
+  },
+  signals: {
+    name: 'Train protection',
+    supportsDate: false,
+  },
+  electrification: {
+    name: 'Electrification',
+    supportsDate: false,
+  },
+  gauge: {
+    name: 'Gauge',
+    supportsDate: false,
+  },
+  loading_gauge: {
+    name: 'Loading gauge',
+    supportsDate: false,
+  },
+  track_class: {
+    name: 'Track class',
+    supportsDate: false,
+  },
 };
 
 const defaultStyle = Object.keys(knownStyles)[0];
@@ -528,16 +549,15 @@ const mapStyles = Object.fromEntries(
     [theme, Object.fromEntries(
       Object.keys(knownStyles)
         .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
-    )
-    ])
+    )])
 );
 
 const legendStyles = Object.fromEntries(
-  knownThemes.map(theme => [theme, Object.fromEntries(
-    Object.keys(knownStyles)
-      .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
-  )
-  ])
+  knownThemes.map(theme =>
+    [theme, Object.fromEntries(
+      Object.keys(knownStyles)
+        .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
+    )])
 );
 
 const legendMap = new maplibregl.Map({
@@ -574,6 +594,11 @@ function selectStyle(style) {
   if (selectedStyle !== style) {
     selectedStyle = style;
     styleControl.onExternalStyleChange(style);
+    if (knownStyles[style].supportsDate) {
+      dateControl.show();
+    } else {
+      dateControl.hide();
+    }
     onStyleChange();
   }
 }
@@ -652,20 +677,20 @@ class StyleControl {
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
     const buttonGroup = createDomElement('div', 'btn-group-vertical', this._container);
 
-    Object.entries(knownStyles).forEach(([name, styleLabel]) => {
-      const id = `style-${name}`
+    Object.entries(knownStyles).forEach(([style, {name}]) => {
+      const id = `style-${style}`
       const radio = createDomElement('input', 'btn-check', buttonGroup);
       radio.id = id
       radio.type = 'radio'
       radio.name = 'style'
-      radio.value = name
-      radio.onclick = () => this.options.onStyleChange(name)
-      radio.checked = (this.options.initialSelection === name)
+      radio.value = style
+      radio.onclick = () => this.options.onStyleChange(style)
+      radio.checked = (this.options.initialSelection === style)
       const label = createDomElement('label', 'btn btn-outline-success', buttonGroup);
       label.htmlFor = id
-      label.innerText = styleLabel
+      label.innerText = name
 
-      this.radioButtons[name] = radio;
+      this.radioButtons[style] = radio;
     });
 
     return this._container;
@@ -723,6 +748,14 @@ class DateContol {
       this.slider.valueAsNumber = date;
       this.updateDisplay();
     }
+  }
+
+  show() {
+    this._container.style.visibility = 'visible'
+  }
+
+  hide() {
+    this._container.style.visibility = 'hidden'
   }
 
   updateDisplay() {
