@@ -325,49 +325,42 @@ const knownStyles = {
       default: 'standard',
       date: 'historical',
     },
-    supportsDate: true,
   },
   speed: {
     name: 'Speed',
     styles: {
       default: 'speed',
     },
-    supportsDate: false,
   },
   signals: {
     name: 'Train protection',
     styles: {
       default: 'signals',
     },
-    supportsDate: false,
   },
   electrification: {
     name: 'Electrification',
     styles: {
       default: 'electrification',
     },
-    supportsDate: false,
   },
   gauge: {
     name: 'Gauge',
     styles: {
       default: 'gauge',
     },
-    supportsDate: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
     styles: {
       default: 'loading_gauge',
     },
-    supportsDate: false,
   },
   track_class: {
     name: 'Track class',
     styles: {
       default: 'track_class',
     },
-    supportsDate: false,
   },
 };
 
