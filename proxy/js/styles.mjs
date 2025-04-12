@@ -4019,6 +4019,11 @@ const legendData = {
       },
     ],
   },
+  historical: {
+    'openhistoricalmap-transport_lines': [
+
+    ],
+  },
   speed: {
     'openrailwaymap_low-railway_line_high': [
       ...speedLegends.map(speed => ({

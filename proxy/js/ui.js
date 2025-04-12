@@ -723,14 +723,18 @@ class DateContol {
     this.slider.step = 1
     this.slider.valueAsNumber = this.options.initialSelection;
     this.slider.onchange = () => {
+      this.detectChanges();
       this.updateDisplay();
       this.options.onChange(this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
+      this.detectChanges();
       this.updateDisplay();
     }
     this.dateDisplay = createDomElement('span', 'date-display', this._container);
+    this.active = null;
 
+    this.detectChanges();
     this.updateDisplay();
 
     return this._container;
@@ -744,6 +748,7 @@ class DateContol {
   onExternalDateChange(date) {
     if (date && this.slider.valueAsNumber !== date) {
       this.slider.valueAsNumber = date;
+      this.detectChanges();
       this.updateDisplay();
     }
   }
@@ -756,14 +761,23 @@ class DateContol {
     this._container.style.visibility = 'hidden'
   }
 
-  updateDisplay() {
-    if (this.slider.valueAsNumber === defaultDate) {
-      this.icon.classList.remove('active')
-      this.dateDisplay.innerText = 'present'
-    } else {
+  detectChanges() {
+    const previouslyActive = this.active;
+    this.active = this.slider.valueAsNumber !== defaultDate;
+
+    if (this.active === true && previouslyActive !== true) {
       this.icon.classList.add('active')
-      this.dateDisplay.innerText = this.slider.value
+      this.options.onActivation()
+    } else if (this.active === false && previouslyActive !== false) {
+      this.icon.classList.remove('active')
+      this.options.onDeactivation();
     }
+  }
+
+  updateDisplay() {
+    this.dateDisplay.innerText = this.active
+      ? this.slider.value
+      : 'present'
   }
 }
 
@@ -904,6 +918,17 @@ class NewsControl {
 const dateControl = new DateContol({
   initialSelection: selectedDate,
   onChange: selectDate,
+  onActivation: () => {
+    const style = map.getStyle();
+    if (style) {
+      style.layers.forEach(layer => {
+        console.info(layer)
+      })
+    }
+  },
+  onDeactivation: () => {
+    // selectStyle('standard')
+  },
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
