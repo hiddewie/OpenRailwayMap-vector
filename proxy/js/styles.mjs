@@ -30,6 +30,13 @@ const knownThemes = [
   'dark',
 ];
 
+// TODO put in metadata
+function layerHasDateFilter(layer) {
+  return layer.filter
+    && layer.filter[0] === 'let'
+    && layer.filter[1] === 'date'
+}
+
 const defaultDate = (new Date()).getFullYear();
 
 const globalMinZoom = 1;
@@ -3445,6 +3452,347 @@ const legendData = {
           way_length: 1.0,
         },
       },
+      // TODO
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          standard_label: 'L1 Name',
+          track_ref: '8b',
+          way_length: 1.0,
+        },
+        variants: [
+          {
+            legend: 'bridge',
+            properties: {
+              bridge: true,
+              standard_label: null,
+              ref: null,
+              track_ref: null,
+              way_length: 1.0,
+            },
+          },
+          {
+            legend: 'tunnel',
+            properties: {
+              tunnel: true,
+              standard_label: null,
+              ref: null,
+              track_ref: null,
+              way_length: 1.0,
+            },
+          },
+        ],
+      },
+      {
+        legend: 'Branch line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'branch',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'B1',
+          standard_label: 'B1 Name',
+          track_ref: '9b',
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Industrial line',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'industrial',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'I1',
+          standard_label: 'I1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Narrow gauge line',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          highspeed: false,
+          feature: 'narrow_gauge',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'N1',
+          standard_label: 'N1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Subway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'subway',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'S1',
+          standard_label: 'S1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Light rail',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'light_rail',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          standard_label: 'L1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Tram',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'tram',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'T1',
+          standard_label: 'T1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Monorail',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'monorail',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'M1',
+          standard_label: 'M1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Miniature railway',
+        type: 'line',
+        minzoom: 12,
+        properties: {
+          highspeed: false,
+          feature: 'miniature',
+          state: 'present',
+          usage: null,
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'M2',
+          standard_label: 'M2 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Yard',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'yard',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Spur',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'spur',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Siding',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'siding',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Crossover',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: null,
+          service: 'crossover',
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Tourism (preserved)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'preserved',
+          usage: 'tourism',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'T1',
+          standard_label: 'T1 Name',
+          track_ref: '8b',
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Under construction',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          state: 'construction',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Proposed railway',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          state: 'proposed',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Disused railway',
+        type: 'line',
+        minzoom: 11,
+        properties: {
+          highspeed: false,
+          state: 'disused',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+    ],
+    'openhistoricalmap-transport_lines': [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          type: 'rail',
+          highspeed: 'yes',
+          usage: 'main',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'H1',
+          name: 'H1 Name',
+        },
+      },
       {
         legend: 'Main line',
         type: 'line',
@@ -4026,11 +4374,6 @@ const legendData = {
           },
         ],
       },
-    ],
-  },
-  historical: {
-    'openhistoricalmap-transport_lines': [
-
     ],
   },
   speed: {
@@ -5147,7 +5490,7 @@ function makeLegendStyle(style, theme) {
     legendZoomLevels.flatMap(legendZoom => {
       const zoomFilter = layerVisibleAtZoom(legendZoom);
 
-      let entry = 0;
+      let entry = { withDate: 0, withoutDate: 0 };
       let done = new Set();
 
       const featureSourceLayers = sourceLayers.flatMap(layer => {
@@ -5159,9 +5502,11 @@ function makeLegendStyle(style, theme) {
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
+        const hasDateFilter = layerHasDateFilter(layer);
         const features = data
           .filter(zoomFilter)
           .flatMap(item => {
+            const currentEntry = entry[hasDateFilter ? 'withDate' : 'withoutDate'];
             const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
               type: 'Feature',
               geometry: {
@@ -5170,16 +5515,16 @@ function makeLegendStyle(style, theme) {
                   : 'Point',
                 coordinates:
                   subItem.type === 'line' ? [
-                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
                   ] :
                   subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - currentEntry * 0.6]))
+                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
               },
               properties: subItem.properties,
             }));
-            entry++;
+            entry[hasDateFilter ? 'withDate' : 'withoutDate']++;
             return itemFeatures;
           });
         done.add(sourceName);
@@ -5205,9 +5550,11 @@ function makeLegendStyle(style, theme) {
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
+        const hasDateFilter = layerHasDateFilter(layer);
         const features = data
           .filter(zoomFilter)
           .map(item => {
+            const currentEntry = entry[hasDateFilter ? 'withDate' : 'withoutDate'];
             const legend = [item.legend, ...(item.variants ?? [])
               .filter(variant => variant.legend)
               .map(variant => variant.legend)]
@@ -5217,13 +5564,13 @@ function makeLegendStyle(style, theme) {
               type: 'Feature',
               geometry: {
                 type: "Point",
-                coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
+                coordinates: legendPointToMapPoint(legendZoom, [0.5, -currentEntry * 0.6]),
               },
               properties: {
                 legend,
               },
             };
-            entry++;
+            entry[hasDateFilter ? 'withDate' : 'withoutDate']++;
             return feature;
           });
         done.add(sourceName);

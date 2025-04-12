@@ -665,10 +665,47 @@ const onStyleChange = () => {
     validate: true,
     // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
     diff: false,
-    transformStyle: (previous, next) => {
-      onStylesheetChange(next);
-      return next;
-    },
+    transformStyle: supportsDate
+      ? (previous, next) => {
+          onStylesheetChange(next);
+          return {
+            ...next,
+            layers: next.layers.map(layer => {
+              const { filter, layout, ...rest } = layer
+              if (layerHasDateFilter(layer)) {
+                return {
+                  ...rest,
+                  filter: ['let', 'date', selectedDate, ...filter.slice(3)],
+                  layout: {
+                    ...layout,
+                    'visibility': dateControl.active ? 'visible' : 'none',
+                  },
+                }
+              } else if (filter) {
+                return {
+                  ...rest,
+                  filter,
+                  layout: {
+                    ...layout,
+                    'visibility': dateControl.active ? 'none' : 'visible',
+                  },
+                };
+              } else {
+                return {
+                  ...rest,
+                  layout: {
+                    ...layout,
+                    'visibility': dateControl.active ? 'none' : 'visible',
+                  },
+                };
+              }
+            })
+          };
+        }
+      : (previous, next) => {
+          onStylesheetChange(next);
+          return next;
+        },
   });
 
   if (supportsDate) {
