@@ -45,6 +45,7 @@
     { "key": "railway:position:exact" },
     { "key": "railway:preferred_direction" },
     { "key": "railway:radio" },
+    { "key": "railway:preserved" },
     { "key": "railway:ref" },
     { "key": "railway:signal:automatic_marker:caption" },
     { "key": "railway:signal:caption" },
