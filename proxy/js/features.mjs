@@ -309,6 +309,22 @@ const features = {
         name: 'Miniature railway',
         type: 'line',
       },
+      construction: {
+        name: 'Railway under construction',
+        type: 'line',
+      },
+      proposed: {
+        name: 'Proposed railway',
+        type: 'line',
+      },
+      disused: {
+        name: 'Disused railway',
+        type: 'line',
+      },
+      abandoned: {
+        name: 'Abandoned railway',
+        type: 'line',
+      },
     },
     properties: {
       usage: {
