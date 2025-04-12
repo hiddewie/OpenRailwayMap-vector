@@ -258,6 +258,7 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
+// TODO add date
 function newsLink(style, zoom, lat, lon) {
   hideNews();
   selectStyle(style);
@@ -320,30 +321,52 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
+    styles: {
+      default: 'standard',
+      date: 'historical',
+    },
     supportsDate: true,
   },
   speed: {
     name: 'Speed',
+    styles: {
+      default: 'speed',
+    },
     supportsDate: false,
   },
   signals: {
     name: 'Train protection',
+    styles: {
+      default: 'signals',
+    },
     supportsDate: false,
   },
   electrification: {
     name: 'Electrification',
+    styles: {
+      default: 'electrification',
+    },
     supportsDate: false,
   },
   gauge: {
     name: 'Gauge',
+    styles: {
+      default: 'gauge',
+    },
     supportsDate: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
+    styles: {
+      default: 'loading_gauge',
+    },
     supportsDate: false,
   },
   track_class: {
     name: 'Track class',
+    styles: {
+      default: 'track_class',
+    },
     supportsDate: false,
   },
 };
@@ -413,7 +436,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = dateControl.active && knownStyles[style].supportsDate ? date : undefined;
+  hashObject.date = knownStyles[style].styles.date && dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -553,7 +576,8 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
 const mapStyles = Object.fromEntries(
   knownThemes.map(theme =>
     [theme, Object.fromEntries(
-      Object.keys(knownStyles)
+      Object.values(knownStyles)
+        .flatMap(style => Object.values(style.styles))
         .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
     )])
 );
@@ -561,7 +585,8 @@ const mapStyles = Object.fromEntries(
 const legendStyles = Object.fromEntries(
   knownThemes.map(theme =>
     [theme, Object.fromEntries(
-      Object.keys(knownStyles)
+      Object.values(knownStyles)
+        .flatMap(style => Object.values(style.styles))
         .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
     )])
 );
@@ -620,92 +645,24 @@ function onPageParametersChange() {
 }
 
 const onStyleChange = () => {
-  const supportsDate = knownStyles[selectedStyle].supportsDate;
+  const supportsDate = knownStyles[selectedStyle].styles.date;
+  const mapStyle = supportsDate && dateControl.active
+    ? knownStyles[selectedStyle].styles.date
+    : knownStyles[selectedStyle].styles.default
 
   // Change styles
-  map.setStyle(mapStyles[selectedTheme][selectedStyle], {
+  map.setStyle(mapStyles[selectedTheme][mapStyle], {
     validate: true,
-    transformStyle: supportsDate
-      ? (previous, next) => ({
-        ...next,
-        layers: next.layers.map(layer => {
-          const { filter, layout, ...rest } = layer
-          if (layerHasDateFilter(layer)) {
-            return {
-              ...rest,
-              filter: ['let', 'date', selectedDate, ...filter.slice(3)],
-              layout: {
-                ...layout,
-                'visibility': dateControl.active ? 'visible' : 'none',
-              },
-            }
-          } else if (filter) {
-            return {
-              ...rest,
-              filter,
-              layout: {
-                ...layout,
-                'visibility': dateControl.active ? 'none' : 'visible',
-              },
-            };
-          } else {
-            return {
-              ...rest,
-              layout: {
-                ...layout,
-                'visibility': dateControl.active ? 'none' : 'visible',
-              },
-            };
-          }
-        })
-      })
-    : (previous, next) => next,
   });
-  legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
+
+  legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
     validate: true,
     // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
     diff: false,
-    transformStyle: supportsDate
-      ? (previous, next) => {
-          onStylesheetChange(next);
-          return {
-            ...next,
-            layers: next.layers.map(layer => {
-              const { filter, layout, ...rest } = layer
-              if (layerHasDateFilter(layer)) {
-                return {
-                  ...rest,
-                  filter: ['let', 'date', selectedDate, ...filter.slice(3)],
-                  layout: {
-                    ...layout,
-                    'visibility': dateControl.active ? 'visible' : 'none',
-                  },
-                }
-              } else if (filter) {
-                return {
-                  ...rest,
-                  filter,
-                  layout: {
-                    ...layout,
-                    'visibility': dateControl.active ? 'none' : 'visible',
-                  },
-                };
-              } else {
-                return {
-                  ...rest,
-                  layout: {
-                    ...layout,
-                    'visibility': dateControl.active ? 'none' : 'visible',
-                  },
-                };
-              }
-            })
-          };
-        }
-      : (previous, next) => {
-          onStylesheetChange(next);
-          return next;
-        },
+    transformStyle: (previous, next) => {
+      onStylesheetChange(next);
+      return next;
+    },
   });
 
   if (supportsDate) {
@@ -774,7 +731,7 @@ class StyleControl {
   }
 }
 
-class DateContol {
+class DateControl {
   constructor(options) {
     this.options = options;
   }
@@ -934,7 +891,11 @@ class LegendControl {
 }
 
 // Cache for the number of items in the legend, per style and zoom level
-const legendEntriesCount = Object.fromEntries(Object.keys(knownStyles).map(key => [key, {}]));
+const legendEntriesCount = Object.fromEntries(
+  Object.values(knownStyles)
+    .flatMap(style => Object.values(style.styles))
+    .map(key => [key, {}])
+);
 
 class NewsControl {
   constructor(options) {
@@ -982,33 +943,11 @@ class NewsControl {
   }
 }
 
-const dateControl = new DateContol({
+const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
-  onActivation: () => {
-    const style = map.getStyle();
-    if (style) {
-      style.layers.forEach(layer =>
-        map.setLayoutProperty(
-          layer.id,
-          'visibility',
-          layerHasDateFilter(layer) ? 'visible' : 'none',
-        )
-      )
-    }
-  },
-  onDeactivation: () => {
-    const style = map.getStyle();
-    if (style) {
-      style.layers.forEach(layer =>
-        map.setLayoutProperty(
-          layer.id,
-          'visibility',
-          layerHasDateFilter(layer) ? 'none' : 'visible',
-        )
-      )
-    }
-  },
+  onActivation: () => onStyleChange(),
+  onDeactivation: () => onStyleChange(),
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
@@ -1052,7 +991,10 @@ const onMapZoom = zoom => {
   // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
   //   stay within the bounds of the earth.
   const legendZoom = Math.max(Math.floor(zoom), 6);
-  const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
+  const shownStyle = knownStyles[selectedStyle].styles.date && dateControl.active
+    ? knownStyles[selectedStyle].styles.date
+    : knownStyles[selectedStyle].styles.default
+  const numberOfLegendEntries = legendEntriesCount[shownStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
     zoom: legendZoom,
@@ -1097,6 +1039,7 @@ function popupContent(feature) {
   if (!featureContent) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
+  // TODO remove
   console.info(properties, featureContent)
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
