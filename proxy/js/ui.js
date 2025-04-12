@@ -736,7 +736,7 @@ class DateControl {
     this.slider = createDomElement('input', 'date-input', this._container);
     this.slider.type = 'range'
     this.slider.min = 1758
-    this.slider.max = 2025
+    this.slider.max = (new Date()).getFullYear()
     this.slider.step = 1
     this.slider.valueAsNumber = this.options.initialSelection;
     this.slider.onchange = () => {
