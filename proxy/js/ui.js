@@ -413,7 +413,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = date !== defaultDate && knownStyles[style].supportsDate ? date : undefined;
+  hashObject.date = dateControl.active && knownStyles[style].supportsDate ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -620,23 +620,46 @@ function onPageParametersChange() {
 }
 
 const onStyleChange = () => {
+  const supportsDate = knownStyles[selectedStyle].supportsDate;
+
   // Change styles
   map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: true,
-    // TODO
-    // transformStyle: (previous, { layers, ...nextRest }) => ({
-    //   ...nextRest,
-    //   layers: layers.map(({ filter, ...rest }) => {
-    //     if (filter && filter[0] === 'let' && filter[1] === 'date') {
-    //       return {
-    //         ...rest,
-    //         filter: ['let', 'date', selectedDate, ...filter.slice(3) ],
-    //       }
-    //     } else {
-    //       return { filter, ...rest };
-    //     }
-    //   })
-    // }),
+    transformStyle: supportsDate
+      ? (previous, next) => ({
+        ...next,
+        layers: next.layers.map(layer => {
+          const { filter, layout, ...rest } = layer
+          if (layerHasDateFilter(layer)) {
+            return {
+              ...rest,
+              filter: ['let', 'date', selectedDate, ...filter.slice(3)],
+              layout: {
+                ...layout,
+                'visibility': dateControl.active ? 'visible' : 'none',
+              },
+            }
+          } else if (filter) {
+            return {
+              ...rest,
+              filter,
+              layout: {
+                ...layout,
+                'visibility': dateControl.active ? 'none' : 'visible',
+              },
+            };
+          } else {
+            return {
+              ...rest,
+              layout: {
+                ...layout,
+                'visibility': dateControl.active ? 'none' : 'visible',
+              },
+            };
+          }
+        })
+      })
+    : (previous, next) => next,
   });
   legendMap.setStyle(legendStyles[selectedTheme][selectedStyle], {
     validate: true,
@@ -648,7 +671,7 @@ const onStyleChange = () => {
     },
   });
 
-  if (knownStyles[selectedStyle].supportsDate) {
+  if (supportsDate) {
     dateControl.show();
   } else {
     dateControl.hide();
@@ -926,6 +949,7 @@ const dateControl = new DateContol({
   initialSelection: selectedDate,
   onChange: selectDate,
   onActivation: () => {
+    console.info('activated')
     const style = map.getStyle();
     if (style) {
       style.layers.forEach(layer =>
@@ -938,6 +962,7 @@ const dateControl = new DateContol({
     }
   },
   onDeactivation: () => {
+    console.info('deactivated')
     const style = map.getStyle();
     if (style) {
       style.layers.forEach(layer =>
