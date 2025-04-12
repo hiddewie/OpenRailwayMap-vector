@@ -31,7 +31,6 @@ const knownThemes = [
   'dark',
 ];
 
-// TODO put in metadata
 function layerHasDateFilter(layer) {
   return layer.filter
     && layer.filter[0] === 'let'
