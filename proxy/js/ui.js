@@ -949,7 +949,6 @@ const dateControl = new DateContol({
   initialSelection: selectedDate,
   onChange: selectDate,
   onActivation: () => {
-    console.info('activated')
     const style = map.getStyle();
     if (style) {
       style.layers.forEach(layer =>
@@ -962,7 +961,6 @@ const dateControl = new DateContol({
     }
   },
   onDeactivation: () => {
-    console.info('deactivated')
     const style = map.getStyle();
     if (style) {
       style.layers.forEach(layer =>

@@ -992,7 +992,7 @@ const railwayLine = (theme, text, layers) => [
               16, 0
             ],
           ],
-          filter ?? true
+          filter ?? true,
         ],
         layout: {
           'line-join': 'round',
@@ -1594,7 +1594,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ],
           ],
           width: 2,
-          color: colors[theme].styles.standard.industrial,
+          color: colors[theme].styles.standard.narrowGauge,
         },
         {
           id: 'railway_line_service',
@@ -5170,12 +5170,12 @@ function makeLegendStyle(style, theme) {
                   : 'Point',
                 coordinates:
                   subItem.type === 'line' ? [
-                      legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                      legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                    ] :
-                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                        legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                      : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                  ] :
+                  subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
               },
               properties: subItem.properties,
             }));
