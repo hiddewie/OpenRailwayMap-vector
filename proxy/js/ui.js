@@ -652,11 +652,11 @@ const onStyleChange = () => {
 
   // Change styles
   map.setStyle(mapStyles[selectedTheme][mapStyle], {
-    validate: true,
+    validate: false,
   });
 
   legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
-    validate: true,
+    validate: false,
     // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
     diff: false,
     transformStyle: (previous, next) => {
