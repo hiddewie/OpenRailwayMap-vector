@@ -258,10 +258,10 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-// TODO add date
-function newsLink(style, zoom, lat, lon) {
+function newsLink(style, zoom, lat, lon, date) {
   hideNews();
   selectStyle(style);
+  selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}});
 }
 
