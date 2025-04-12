@@ -715,7 +715,7 @@ class DateContol {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
-    createDomElement('span', 'maplibregl-ctrl-icon', this._container);
+    this.icon = createDomElement('span', 'maplibregl-ctrl-icon', this._container);
     this.slider = createDomElement('input', 'date-input', this._container);
     this.slider.type = 'range'
     this.slider.min = 1758
@@ -757,9 +757,13 @@ class DateContol {
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.slider.valueAsNumber === defaultDate
-      ? 'present'
-      : this.slider.value
+    if (this.slider.valueAsNumber === defaultDate) {
+      this.icon.classList.remove('active')
+      this.dateDisplay.innerText = 'present'
+    } else {
+      this.icon.classList.add('active')
+      this.dateDisplay.innerText = this.slider.value
+    }
   }
 }
 

@@ -202,6 +202,10 @@ body {
   width: 1.6rem;
   height: 1.6rem;
   vertical-align: middle;
+  background-color: var(--bs-body-color);
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon.active {
+  background-color: var(--bs-success);
 }
 
 .maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact {
