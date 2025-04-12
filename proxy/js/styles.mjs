@@ -1116,6 +1116,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': dash ? 'butt' : 'round',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': colors[theme].casing,
@@ -1143,6 +1144,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': dash ? 'butt' : 'round',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': ['case',
@@ -1172,6 +1174,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': 'butt',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': colors[theme].styles.standard.tunnelCover,
@@ -1201,6 +1204,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': 'butt',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': colors[theme].casing,
@@ -1229,6 +1233,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': dash ? 'butt' : 'round',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': ['case',
@@ -1262,6 +1267,7 @@ const historicalRailwayLine = (theme, text, layers) => [
         'line-join': 'round',
         'line-cap': 'butt',
         'line-sort-key': sort,
+        'visibility': 'none',
       },
       paint: {
         'line-color': colors[theme].styles.standard.casing.bridge,
@@ -1288,6 +1294,7 @@ const historicalRailwayLine = (theme, text, layers) => [
         'line-join': 'round',
         'line-cap': 'butt',
         'line-sort-key': sort,
+        'visibility': 'none',
       },
       paint: {
         'line-color': colors[theme].casing,
@@ -1316,6 +1323,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-join': 'round',
       'line-cap': dash ? 'butt' : 'round',
       'line-sort-key': sort,
+      'visibility': 'none',
     },
     paint: {
       'line-color': ['case',
@@ -1360,6 +1368,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'text-padding': 10,
       'text-max-width': 5,
       'symbol-spacing': 400,
+      'visibility': 'none',
     },
   })),
 ];

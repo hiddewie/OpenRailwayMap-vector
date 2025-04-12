@@ -356,6 +356,12 @@ const knownThemes = [
   'dark',
 ]
 
+function layerHasDateFilter(layer) {
+  return layer.filter
+    && layer.filter[0] === 'let'
+    && layer.filter[1] === 'date'
+}
+
 function hashToObject(hash) {
   if (!hash) {
     return {};
@@ -617,6 +623,7 @@ const onStyleChange = () => {
   // Change styles
   map.setStyle(mapStyles[selectedTheme][selectedStyle], {
     validate: true,
+    // TODO
     // transformStyle: (previous, { layers, ...nextRest }) => ({
     //   ...nextRest,
     //   layers: layers.map(({ filter, ...rest }) => {
@@ -655,7 +662,7 @@ const onDateChange = () => {
 
   if (style) {
     style.layers
-      .filter(layer => layer.filter && layer.filter[0] === 'let' && layer.filter[1] === 'date')
+      .filter(layerHasDateFilter)
       .forEach(layer => {
         map.setFilter(layer.id, ['let', 'date', selectedDate, ...layer.filter.slice(3)])
       });
@@ -921,13 +928,26 @@ const dateControl = new DateContol({
   onActivation: () => {
     const style = map.getStyle();
     if (style) {
-      style.layers.forEach(layer => {
-        console.info(layer)
-      })
+      style.layers.forEach(layer =>
+        map.setLayoutProperty(
+          layer.id,
+          'visibility',
+          layerHasDateFilter(layer) ? 'visible' : 'none',
+        )
+      )
     }
   },
   onDeactivation: () => {
-    // selectStyle('standard')
+    const style = map.getStyle();
+    if (style) {
+      style.layers.forEach(layer =>
+        map.setLayoutProperty(
+          layer.id,
+          'visibility',
+          layerHasDateFilter(layer) ? 'none' : 'visible',
+        )
+      )
+    }
   },
 });
 const styleControl = new StyleControl({
