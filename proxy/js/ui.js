@@ -1020,9 +1020,9 @@ function popupContent(feature) {
 
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property to get the key
-    catalogKey: propertyValue && propertyValue.replace(/\{[^}]+}/, '{}'),
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}') : propertyValue,
     // Capture the variable part as well for display
-    keyVariable: propertyValue
+    keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
       : null
   });

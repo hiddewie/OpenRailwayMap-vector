@@ -340,12 +340,16 @@ const features = {
         name: 'Preferred direction',
       },
       tunnel: {
-        // TODO: broken because of 0 / 1 usage
         name: 'Tunnel',
+        format: {
+          lookup: 'boolean',
+        },
       },
       bridge: {
-        // TODO: broken because of 0 / 1 usage
         name: 'Bridge',
+        format: {
+          lookup: 'boolean',
+        },
       },
       ref: {
         name: 'Reference',
@@ -722,6 +726,17 @@ const features = {
         name: feature.legend,
       },
     ])),
+  },
+
+  boolean: {
+    features: {
+      0: {
+        name: 'no',
+      },
+      1: {
+        name: 'yes',
+      },
+    },
   },
 };
 
