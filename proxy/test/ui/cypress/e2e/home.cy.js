@@ -12,7 +12,7 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.get('input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
+    cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
     cy.get('.date-display').should('include.text', '1947')
     cy.url().should('include', 'date=1947')
 
@@ -64,9 +64,14 @@ describe('home page', () => {
 
     cy.get('#configuration-backdrop .btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
+    cy.url().should('not.include', 'style=standard')
 
-    cy.contains('.btn.btn-outline-success', 'Infrastructure').click()
-    cy.url().should('include', 'style=standard')
+    cy.wait(3000)
+    cy.screenshot()
+
+    cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
+    cy.get('.date-display').should('include.text', '1947')
+    cy.url().should('include', 'date=1947')
 
     cy.wait(3000)
     cy.screenshot()
