@@ -92,6 +92,10 @@ const railwayLineFeatures = {
       name: 'Miniature railway',
       type: 'line',
     },
+    funicular: {
+      name: 'Funicular',
+      type: 'line',
+    },
   },
   properties: {
     state: {
@@ -307,6 +311,10 @@ const features = {
       },
       miniature: {
         name: 'Miniature railway',
+        type: 'line',
+      },
+      funicular: {
+        name: 'Funicular',
         type: 'line',
       },
       construction: {
