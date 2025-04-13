@@ -18,6 +18,7 @@ const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
 
 const knownStyles = [
   'standard',
+  'historical',
   'speed',
   'signals',
   'electrification',
@@ -29,6 +30,14 @@ const knownThemes = [
   'light',
   'dark',
 ];
+
+function layerHasDateFilter(layer) {
+  return layer.filter
+    && layer.filter[0] === 'let'
+    && layer.filter[1] === 'date'
+}
+
+const defaultDate = (new Date()).getFullYear();
 
 const globalMinZoom = 1;
 const globalMaxZoom = 20;
@@ -68,6 +77,7 @@ const colors = {
         light_rail: '#00bd14',
         monorail: '#00bd8b',
         miniature: '#7d7094',
+        funicular: '#d87777',
         siding: '#000000',
         crossover: '#000000',
         yard: '#000000',
@@ -89,6 +99,7 @@ const colors = {
         lightRailText: '#0e5414',
         monorailText: '#00674d',
         miniatureText: '#503285',
+        funicularText: '#d75656',
         defaultText: '#616161',
         signalBox: {
           text: '#404040',
@@ -148,6 +159,7 @@ const colors = {
         light_rail: '#00bd14',
         monorail: '#00bd8b',
         miniature: '#7d7094',
+        funicular: '#d87777',
         siding: '#000000',
         crossover: '#000000',
         yard: '#000000',
@@ -170,6 +182,7 @@ const colors = {
         lightRailText: '#83ea8f',
         monorailText: '#5fffd7',
         miniatureText: '#503285',
+        funicularText: '#daa3a3',
         defaultText: '#d2d2d2',
         signalBox: {
           text: '#bfffb3',
@@ -425,7 +438,7 @@ const speedColor = ['case',
   ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
 ]
 const speedHoverColor = theme => ['case',
-  ['all', ['!=', ['get', 'maxspeed'], null],  ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors[theme].hover.alternative,
+  ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors[theme].hover.alternative,
   colors[theme].hover.main,
 ]
 
@@ -763,7 +776,12 @@ const sources = {
     url: `${origin}/electrification`,
     attribution,
     promoteId: 'id',
-  }
+  },
+  openhistoricalmap: {
+    type: 'vector',
+    tiles: [`https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf`],
+    attribution: '<a href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
+  },
 };
 
 const searchResults = {
@@ -985,6 +1003,7 @@ const railwayLine = (theme, text, layers) => [
               16, 0
             ],
           ],
+          filter ?? true,
         ],
         layout: {
           'line-join': 'round',
@@ -1080,6 +1099,278 @@ const railwayLine = (theme, text, layers) => [
       'text-padding': 10,
       'text-max-width': 5,
       'symbol-spacing': 200,
+    },
+  })),
+];
+
+
+const historicalRailwayLine = (theme, text, layers) => [
+
+  // Tunnels
+
+  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort, dash}) => ({
+    id: `${id}_tunnel_casing`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['==', ['get', 'tunnel'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': colors[theme].casing,
+      'line-width': width,
+      'line-gap-width': railway_casing_add,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+  ...layers.map(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => ({
+    id: `${id}_tunnel_fill`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['==', ['get', 'tunnel'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        color,
+      ],
+      'line-width': width,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+  ...layers.map(({id, minzoom, maxzoom, filter, width, sort}) => ({
+    id: `${id}_tunnel_cover`,
+    type: 'line',
+    minzoom: Math.max(minzoom, 8),
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['==', ['get', 'tunnel'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'butt',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': colors[theme].styles.standard.tunnelCover,
+      'line-width': width,
+    },
+  })),
+
+  // Ground
+
+  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort, dash}) => ({
+    id: `${id}_casing`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['!=', ['get', 'bridge'], 1],
+        ['!=', ['get', 'tunnel'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'butt',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': colors[theme].casing,
+      'line-width': width,
+      'line-gap-width': railway_casing_add,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+  ...layers.map(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => ({
+    id: `${id}_fill`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['!=', ['get', 'bridge'], 1],
+        ['!=', ['get', 'tunnel'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        color,
+      ],
+      'line-width': width,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+
+  // Bridges
+
+  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort}) => [
+    {
+      id: `${id}_bridge_railing`,
+      type: 'line',
+      minzoom: Math.max(minzoom, 8),
+      maxzoom,
+      source: 'openhistoricalmap',
+      'source-layer': 'transport_lines',
+      filter: ['let', 'date', defaultDate,
+        ['all',
+          ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+          ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+          ['==', ['get', 'bridge'], 1],
+          filter ?? true,
+        ],
+      ],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'butt',
+        'line-sort-key': sort,
+      },
+      paint: {
+        'line-color': colors[theme].styles.standard.casing.bridge,
+        'line-width': width,
+        'line-gap-width': bridge_casing_add,
+      }
+    },
+    {
+      id: `${id}_bridge_casing`,
+      type: 'line',
+      minzoom: Math.max(minzoom, 8),
+      maxzoom,
+      source: 'openhistoricalmap',
+      'source-layer': 'transport_lines',
+      filter: ['let', 'date', defaultDate,
+        ['all',
+          ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+          ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+          ['==', ['get', 'bridge'], 1],
+          filter ?? true,
+        ],
+      ],
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'butt',
+        'line-sort-key': sort,
+      },
+      paint: {
+        'line-color': colors[theme].casing,
+        'line-width': width,
+        'line-gap-width': railway_casing_add,
+      }
+    },
+  ]),
+
+  ...layers.map(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => ({
+    id: `${id}_bridge_fill`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['==', ['get', 'bridge'], 1],
+        filter ?? true,
+      ],
+    ],
+    layout: {
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        color,
+      ],
+      'line-width': width,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+
+  // Text layers
+
+  ...layers.flatMap(({id, minzoom, maxzoom, filter}) => ({
+    id: `${id}_text`,
+    type: 'symbol',
+    minzoom,
+    maxzoom,
+    source: 'openhistoricalmap',
+    'source-layer': 'transport_lines',
+    filter: ['let', 'date', defaultDate,
+      ['all',
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
+        ['<=', ['var', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        filter ?? true,
+      ],
+    ],
+    paint: {
+      'text-color': colors[theme].railwayLine.text,
+      'text-halo-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+        colors[theme].halo,
+      ],
+      'text-halo-width': 2,
+    },
+    layout: {
+      'symbol-z-order': 'source',
+      'symbol-placement': 'line',
+      'text-field': text,
+      'text-font': font.bold,
+      'text-size': 11,
+      'text-padding': 10,
+      'text-max-width': 5,
+      'symbol-spacing': 400,
     },
   })),
 ];
@@ -1279,14 +1570,17 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           color: colors[theme].styles.standard.miniature,
         },
         {
-          id: 'railway_line_razed',
-          minzoom: 11,
+          id: 'railway_line_funicular',
+          minzoom: 12,
           source: 'high',
           states: {
-            razed: razed_dasharray,
+            present: undefined,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
           },
-          width: 1.5,
-          color: colors[theme].styles.standard.razed,
+          filter: ['==', ['get', 'feature'], 'funicular'],
+          width: 2,
+          color: colors[theme].styles.standard.funicular,
         },
         {
           id: 'railway_line_disused',
@@ -1297,16 +1591,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           width: 1.5,
           color: colors[theme].styles.standard.disused,
-        },
-        {
-          id: 'railway_line_abandoned',
-          minzoom: 11,
-          source: 'high',
-          states: {
-            abandoned: abandoned_dasharray,
-          },
-          width: 1.5,
-          color: colors[theme].styles.standard.abandoned,
         },
         {
           id: 'railway_line_narrow_gauge',
@@ -1368,13 +1652,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
-          filter: ['all',
-            ['any',
-              ['==', ['get', 'feature'], 'subway'],
-              ['==', ['get', 'feature'], 'tram'],
-              ['==', ['get', 'feature'], 'light_rail'],
-              ['==', ['get', 'feature'], 'monorail'],
-            ],
+          filter: ['any',
+            ['==', ['get', 'feature'], 'subway'],
+            ['==', ['get', 'feature'], 'tram'],
+            ['==', ['get', 'feature'], 'light_rail'],
+            ['==', ['get', 'feature'], 'monorail'],
           ],
           width: 2,
           color: ['match', ['get', 'feature'],
@@ -1387,7 +1669,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
         {
           id: 'railway_line_test_military',
-          minzoom: 10,
+          minzoom: 9,
           source: 'high',
           states: {
             present: undefined,
@@ -1603,6 +1885,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['==', ['get', 'station'], 'subway'], colors[theme].styles.standard.subway,
           ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorail,
           ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors[theme].styles.standard.funicular,
           colors[theme].styles.standard.main,
         ],
         'fill-opacity': ['case',
@@ -1901,12 +2184,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-color': ['case',
           ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
           ['==', ['get', 'railway'], 'tram_stop'], colors[theme].styles.standard.tramStopText,
-          ['==', ['get', 'railway'], 'station'], ['case',
+          ['any',
+            ['==', ['get', 'railway'], 'station'],
+            ['==', ['get', 'railway'], 'halt'],
+          ], ['case',
             ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            colors[theme].styles.standard.stationsText,
-          ],
-          ['==', ['get', 'railway'], 'halt'], ['case',
             ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
             colors[theme].styles.standard.stationsText,
           ],
@@ -1920,12 +2202,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'icon-color': ['case',
           ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
           ['==', ['get', 'railway'], 'tram_stop'], colors[theme].styles.standard.tramStopText,
-          ['==', ['get', 'railway'], 'station'], ['case',
+          ['any',
+            ['==', ['get', 'railway'], 'station'],
+            ['==', ['get', 'railway'], 'halt'],
+          ], ['case',
             ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            colors[theme].styles.standard.stationsText,
-          ],
-          ['==', ['get', 'railway'], 'halt'], ['case',
             ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
             colors[theme].styles.standard.stationsText,
           ],
@@ -1960,21 +2241,18 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_text_stations',
-      filter: ['all',
-        ['!=', ['get', 'station'], 'funicular'],
-      ],
       paint: {
         'text-color': ['case',
           ['==', ['get', 'railway'], 'yard'], colors[theme].styles.standard.yardText,
           ['==', ['get', 'railway'], 'tram_stop'], colors[theme].styles.standard.tramStopText,
-          ['==', ['get', 'railway'], 'station'], ['case',
+          ['any',
+            ['==', ['get', 'railway'], 'station'],
+            ['==', ['get', 'railway'], 'halt'],
+          ], ['case',
             ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
             ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            colors[theme].styles.standard.stationsText,
-          ],
-          ['==', ['get', 'railway'], 'halt'], ['case',
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
             ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniatureText,
+            ['==', ['get', 'station'], 'funicular'], colors[theme].styles.standard.funicularText,
             colors[theme].styles.standard.stationsText,
           ],
           colors[theme].styles.standard.defaultText,
@@ -2003,6 +2281,207 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     searchResults,
+  ],
+  historical: [
+    ...historicalRailwayLine(
+      theme,
+      ['step', ['zoom'],
+        ['coalesce', ['get', 'ref'], ''],
+        11,
+        ['coalesce', ['get', 'name'], ''],
+      ],
+      [
+        {
+          id: 'railway_line_historical_miniature',
+          minzoom: 12,
+          filter: ['==', ['get', 'type'], 'miniature'],
+          color: colors[theme].styles.standard.miniature,
+          width: 2,
+        },
+        {
+          id: 'railway_line_historical_funicular',
+          minzoom: 12,
+          filter: ['==', ['get', 'type'], 'funicular'],
+          color: colors[theme].styles.standard.funicular,
+          width: 2,
+        },
+        {
+          id: 'railway_line_historical_disused',
+          minzoom: 11,
+          filter: ['==', ['get', 'type'], 'disused'],
+          color: colors[theme].styles.standard.disused,
+          dash: disused_dasharray,
+          width: 1.5,
+        },
+        {
+          id: 'railway_line_historical_abandoned',
+          minzoom: 11,
+          filter: ['==', ['get', 'type'], 'abandoned'],
+          color: colors[theme].styles.standard.abandoned,
+          dash: abandoned_dasharray,
+          width: 1.5,
+        },
+        {
+          id: 'railway_line_historical_construction',
+          minzoom: 10,
+          filter: ['==', ['get', 'type'], 'construction'],
+          color: colors[theme].styles.standard.main,
+          dash: construction_dasharray,
+          width: 1.5,
+        },
+        {
+          id: 'railway_line_historical_proposed',
+          minzoom: 10,
+          filter: ['==', ['get', 'type'], 'proposed'],
+          color: colors[theme].styles.standard.main,
+          dash: proposed_dasharray,
+          width: 1.5,
+        },
+        {
+          id: 'railway_line_historical_narrow_gauge',
+          minzoom: 10,
+          filter: ['all',
+            ['==', ['get', 'type'], 'narrow_gauge'],
+            ['!',
+              // Covered by industrial case
+              ['==', ['get', 'usage'], 'industrial'],
+            ],
+          ],
+          color: colors[theme].styles.standard.narrowGauge,
+          width: 2,
+        },
+        {
+          id: 'railway_line_historical_service',
+          minzoom: 10,
+          filter: ['all',
+            ['==', ['get', 'type'], 'rail'],
+            ['==', ['get', 'usage'], null],
+          ],
+          color: ['match', ['get', 'service'],
+            'spur', colors[theme].styles.standard.spur,
+            'siding', colors[theme].styles.standard.siding,
+            'yard', colors[theme].styles.standard.yard,
+            'crossover', colors[theme].styles.standard.crossover,
+            colors[theme].styles.standard.unknown,
+          ],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, ['match', ['get', 'service'],
+              'yard', 1,
+              1.5,
+            ],
+            15, ['match', ['get', 'service'],
+              'yard', 1,
+              1.5,
+            ],
+            16, 2,
+          ],
+        },
+        {
+          id: 'railway_line_historical_light_rail',
+          minzoom: 9,
+          filter: ['any',
+            ['==', ['get', 'type'], 'subway'],
+            ['==', ['get', 'type'], 'tram'],
+            ['==', ['get', 'type'], 'light_rail'],
+            ['==', ['get', 'type'], 'monorail'],
+          ],
+          width: 2,
+          color: ['match', ['get', 'type'],
+            'light_rail', colors[theme].styles.standard.light_rail,
+            'monorail', colors[theme].styles.standard.monorail,
+            'subway', colors[theme].styles.standard.subway,
+            'tram', colors[theme].styles.standard.tram,
+            colors[theme].styles.standard.unknown,
+          ],
+        },
+        {
+          id: 'railway_line_historical_test_military',
+          minzoom: 9,
+          filter: ['all',
+            ['==', ['get', 'type'], 'rail'],
+            ['any',
+              ['==', ['get', 'usage'], 'test'],
+              ['==', ['get', 'usage'], 'military'],
+            ],
+          ],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, 1.5,
+            14, 1.5,
+            16, 2,
+          ],
+          color: ['match', ['get', 'usage'],
+            'test', colors[theme].styles.standard.test,
+            'military', colors[theme].styles.standard.military,
+            colors[theme].styles.standard.unknown,
+          ],
+        },
+        {
+          id: 'railway_line_historical_tourism',
+          minzoom: 9,
+          filter: ['any',
+            ['all',
+              ['==', ['get', 'type'], 'rail'],
+              ['==', ['get', 'usage'], 'tourism'],
+            ],
+            ['==', ['get', 'type'], 'preserved'],
+          ],
+          width: 2,
+          color: colors[theme].styles.standard.tourism,
+        },
+        {
+          id: 'railway_line_historical_industrial',
+          minzoom: 9,
+          filter: ['all',
+            ['==', ['get', 'usage'], 'industrial'],
+            ['any',
+              ['==', ['get', 'type'], 'rail'],
+              ['==', ['get', 'type'], 'narrow_gauge'],
+            ],
+          ],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, 1.5,
+            14, 1.5,
+            16, 2,
+          ],
+          color: colors[theme].styles.standard.industrial,
+        },
+        {
+          id: 'railway_line_historical_branch',
+          minzoom: 8,
+          filter: ['all',
+            ['==', ['get', 'type'], 'rail'],
+            ['==', ['get', 'usage'], 'branch'],
+          ],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, 2,
+            14, 2,
+            16, 3,
+          ],
+          color: colors[theme].styles.standard.branch,
+        },
+        {
+          id: 'railway_line_historical_main',
+          minzoom: 8,
+          filter: ['all',
+            ['==', ['get', 'type'], 'rail'],
+            ['==', ['get', 'usage'], 'main'],
+          ],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, 2,
+            14, 2,
+            16, 3,
+          ],
+          color: ['case',
+            ['==', ['get', 'highspeed'], 'yes'], colors[theme].styles.standard.highspeed,
+            colors[theme].styles.standard.main,
+          ],
+          hoverColor: ['case',
+            ['==', ['get', 'highspeed'], 'yes'], colors[theme].hover.alternative,
+            colors[theme].hover.main,
+          ],
+        },
+      ],
+    ),
   ],
 
   speed: [
@@ -2415,7 +2894,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       )
     ),
     {
-      id:`railway_signals_high_text`,
+      id: `railway_signals_high_text`,
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_signals',
@@ -2559,7 +3038,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: undefined,
             proposed: undefined,
             disused: undefined,
-            abandoned: undefined,
             preserved: undefined,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -2583,7 +3061,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: electrification_proposed_dashes,
             proposed: electrification_proposed_dashes,
             disused: electrification_proposed_dashes,
-            abandoned: electrification_proposed_dashes,
             preserved: electrification_proposed_dashes,
           },
           filter: ['==', ['get', 'electrification_state'], 'proposed'],
@@ -2608,7 +3085,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: electrification_construction_dashes,
             proposed: electrification_construction_dashes,
             disused: electrification_construction_dashes,
-            abandoned: electrification_construction_dashes,
             preserved: electrification_construction_dashes,
           },
           filter: ['==', ['get', 'electrification_state'], 'construction'],
@@ -3167,6 +3643,42 @@ const legendData = {
         }
       },
       {
+        legend: 'Test railway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'test',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'T1',
+          standard_label: 'T1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Military railway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'military',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'M1',
+          standard_label: 'M1 Name',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+      {
         legend: 'Miniature railway',
         type: 'line',
         minzoom: 12,
@@ -3178,8 +3690,8 @@ const legendData = {
           service: null,
           tunnel: false,
           bridge: false,
-          ref: 'M2',
-          standard_label: 'M2 Name',
+          ref: 'M3',
+          standard_label: 'M3 Name',
           track_ref: null,
           way_length: 1.0,
         }
@@ -3277,6 +3789,7 @@ const legendData = {
       {
         legend: 'Under construction',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           state: 'construction',
@@ -3294,6 +3807,7 @@ const legendData = {
       {
         legend: 'Proposed railway',
         type: 'line',
+        minzoom: 10,
         properties: {
           highspeed: false,
           state: 'proposed',
@@ -3315,42 +3829,6 @@ const legendData = {
         properties: {
           highspeed: false,
           state: 'disused',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: false,
-          ref: null,
-          standard_label: null,
-          track_ref: null,
-          way_length: 1.0,
-        }
-      },
-      {
-        legend: 'Abandoned railway',
-        type: 'line',
-        minzoom: 11,
-        properties: {
-          highspeed: false,
-          state: 'abandoned',
-          feature: 'rail',
-          usage: 'main',
-          service: null,
-          tunnel: false,
-          bridge: false,
-          ref: null,
-          standard_label: null,
-          track_ref: null,
-          way_length: 1.0,
-        }
-      },
-      {
-        legend: 'Razed railway',
-        type: 'line',
-        minzoom: 11,
-        properties: {
-          highspeed: false,
-          state: 'razed',
           feature: 'rail',
           usage: 'main',
           service: null,
@@ -3618,6 +4096,339 @@ const legendData = {
             },
           },
         ],
+      },
+    ],
+  },
+
+  historical: {
+    'openhistoricalmap-transport_lines': [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          type: 'rail',
+          highspeed: 'yes',
+          usage: 'main',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'H1',
+          name: 'H1 Name',
+        },
+      },
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'main',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M1',
+          name: 'M1 Name',
+        },
+        variants: [
+          {
+            legend: 'bridge',
+            properties: {
+              bridge: 1,
+              ref: null,
+              name: null,
+            },
+          },
+          {
+            legend: 'tunnel',
+            properties: {
+              tunnel: 1,
+              ref: null,
+              name: null,
+            },
+          },
+        ],
+      },
+      {
+        legend: 'Branch line',
+        type: 'line',
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'branch',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'B1',
+          name: 'B1 Name',
+        }
+      },
+      {
+        legend: 'Industrial line',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'industrial',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'I1',
+          name: 'I1 Name',
+        }
+      },
+      {
+        legend: 'Narrow gauge line',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'narrow_gauge',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'N1',
+          name: 'N1 Name',
+        }
+      },
+      {
+        legend: 'Subway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'subway',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'S1',
+          name: 'S1 Name',
+        }
+      },
+      {
+        legend: 'Light rail',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'narrow_gauge',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'L1',
+          name: 'L1 Name',
+        }
+      },
+      {
+        legend: 'Tram',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'tram',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'T1',
+          name: 'T1 Name',
+        }
+      },
+      {
+        legend: 'Monorail',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'monorail',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M1',
+          name: 'M1 Name',
+        }
+      },
+      {
+        legend: 'Miniature railway',
+        type: 'line',
+        minzoom: 12,
+        properties: {
+          type: 'miniature',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M3',
+          name: 'N3 Name',
+        }
+      },
+      {
+        legend: 'Yard',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'yard',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Spur',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'spur',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Siding',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'siding',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Crossover',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'crossover',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Tourism (preserved)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'preserved',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'P1',
+          name: 'P1 Name',
+        }
+      },
+      {
+        legend: 'Test railway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'test',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'T1',
+          name: 'T1 Name',
+        }
+      },
+      {
+        legend: 'Military railway',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'military',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M2',
+          name: 'M2 Name',
+        }
+      },
+      {
+        legend: 'Under construction',
+        type: 'line',
+        properties: {
+          type: 'construction',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'C1',
+          name: 'C1 Name',
+        }
+      },
+      {
+        legend: 'Proposed railway',
+        type: 'line',
+        properties: {
+          type: 'proposed',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'P1',
+          name: 'P1 Name',
+        }
+      },
+      {
+        legend: 'Disused railway',
+        type: 'line',
+        minzoom: 11,
+        properties: {
+          type: 'disused',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'D1',
+          name: 'D1 Name',
+        }
+      },
+      {
+        legend: 'Abandoned railway',
+        type: 'line',
+        minzoom: 11,
+        properties: {
+          type: 'abandoned',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'A1',
+          name: 'A1 Name',
+        }
       },
     ],
   },
@@ -4735,7 +5546,7 @@ function makeLegendStyle(style, theme) {
     legendZoomLevels.flatMap(legendZoom => {
       const zoomFilter = layerVisibleAtZoom(legendZoom);
 
-      let entry = 0;
+      let entry = { withDate: 0, withoutDate: 0 };
       let done = new Set();
 
       const featureSourceLayers = sourceLayers.flatMap(layer => {
@@ -4747,9 +5558,11 @@ function makeLegendStyle(style, theme) {
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
+        const hasDateFilter = layerHasDateFilter(layer);
         const features = data
           .filter(zoomFilter)
           .flatMap(item => {
+            const currentEntry = entry[hasDateFilter ? 'withDate' : 'withoutDate'];
             const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
               type: 'Feature',
               geometry: {
@@ -4758,16 +5571,16 @@ function makeLegendStyle(style, theme) {
                   : 'Point',
                 coordinates:
                   subItem.type === 'line' ? [
-                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
+                    legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
                   ] :
                   subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - currentEntry * 0.6]))
+                    : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -currentEntry * 0.6]),
               },
               properties: subItem.properties,
             }));
-            entry ++;
+            entry[hasDateFilter ? 'withDate' : 'withoutDate']++;
             return itemFeatures;
           });
         done.add(sourceName);
@@ -4781,7 +5594,7 @@ function makeLegendStyle(style, theme) {
         }]];
       });
 
-      entry = 0;
+      entry = { withDate: 0, withoutDate: 0 };
       done = new Set();
 
       const legendFeatures = sourceLayers.flatMap(layer => {
@@ -4793,9 +5606,11 @@ function makeLegendStyle(style, theme) {
         }
 
         const data = applicable ? (legendData[style][legendLayerName] ?? []) : [];
+        const hasDateFilter = layerHasDateFilter(layer);
         const features = data
           .filter(zoomFilter)
           .map(item => {
+            const currentEntry = entry[hasDateFilter ? 'withDate' : 'withoutDate'];
             const legend = [item.legend, ...(item.variants ?? [])
               .filter(variant => variant.legend)
               .map(variant => variant.legend)]
@@ -4805,13 +5620,13 @@ function makeLegendStyle(style, theme) {
               type: 'Feature',
               geometry: {
                 type: "Point",
-                coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
+                coordinates: legendPointToMapPoint(legendZoom, [0.5, -currentEntry * 0.6]),
               },
               properties: {
                 legend,
               },
             };
-            entry++;
+            entry[hasDateFilter ? 'withDate' : 'withoutDate']++;
             return feature;
           });
         done.add(sourceName);
