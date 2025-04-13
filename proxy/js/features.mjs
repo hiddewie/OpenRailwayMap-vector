@@ -373,6 +373,18 @@ const features = {
       },
     },
   },
+  'openhistoricalmap-transport_points': {
+    featureProperty: 'type',
+    labelProperty: 'name',
+    features: {
+      station: {
+        name: 'Station',
+      },
+      halt: {
+        name: 'Halt',
+      },
+    },
+  },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
