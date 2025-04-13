@@ -633,34 +633,41 @@ function selectDate(date) {
 function onPageParametersChange() {
   // Update URL
   const updatedHash = putParametersInHash(window.location.hash, selectedStyle, selectedDate);
-  const location = window.location.href.replace(/(#.+)?$/, updatedHash);
-  window.history.replaceState(window.history.state, null, location);
+  if (window.location.hash !== updatedHash) {
+    const location = window.location.href.replace(/(#.+)?$/, updatedHash);
+    window.history.replaceState(window.history.state, null, location);
+  }
 }
 
+let lastSetMapStyle = null;
 const onStyleChange = () => {
   const supportsDate = knownStyles[selectedStyle].styles.date;
   const mapStyle = supportsDate && dateControl.active
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
 
-  // Change styles
-  map.setStyle(mapStyles[selectedTheme][mapStyle], {
-    validate: false,
-  });
+  if (mapStyle !== lastSetMapStyle) {
+    lastSetMapStyle = mapStyle;
 
-  legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
-    validate: false,
-    // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
-    diff: false,
-    transformStyle: (previous, next) => {
-      onStylesheetChange(next);
-      return next;
-    },
-  });
+    // Change styles
+    map.setStyle(mapStyles[selectedTheme][mapStyle], {
+      validate: false,
+    });
 
-  if (supportsDate) {
+    legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
+      validate: false,
+      // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
+      diff: false,
+      transformStyle: (previous, next) => {
+        onStylesheetChange(next);
+        return next;
+      },
+    });
+  }
+
+  if (supportsDate && !dateControl.isShown()) {
     dateControl.show();
-  } else {
+  } else if (!supportsDate && dateControl.isShown()) {
     dateControl.hide();
   }
 
@@ -768,6 +775,10 @@ class DateControl {
       this.detectChanges();
       this.updateDisplay();
     }
+  }
+
+  isShown() {
+    return this._container.style.visibility === 'visible';
   }
 
   show() {
