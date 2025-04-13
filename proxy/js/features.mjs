@@ -32,6 +32,17 @@ const links = {
   mapillary: 'https://www.mapillary.com/app/?pKey=%s',
 };
 
+const featureLinks = {
+  openstreetmap: {
+    view: 'https://www.openstreetmap.org/{osm_type}/{osm_id}',
+    edit: 'https://www.openstreetmap.org/edit?{osm_type}={osm_id}',
+  },
+  openhistoricalmap: {
+    view: 'https://www.openhistoricalmap.org/{osm_type}/{osm_id}#date={date}-01-01&layers=R',
+    edit: 'https://www.openhistoricalmap.org/edit?{osm_type}={osm_id}',
+  },
+};
+
 const generateSignalFeatures = (features, types) =>
   requireUniqueEntries([
     ...features.flatMap(feature => [
@@ -63,6 +74,7 @@ const generateSignalFeatures = (features, types) =>
 // TODO move icon SVGs to proxy
 const railwayLineFeatures = {
   labelProperty: 'standard_label',
+  featureLinks: featureLinks.openstreetmap,
   features: {
     rail: {
       name: 'Railway',
@@ -226,6 +238,7 @@ const railwayLineFeatures = {
 const stationFeatures = {
   featureProperty: 'railway',
   labelProperty: 'name',
+  featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])
   ),
@@ -284,6 +297,7 @@ const features = {
   'openhistoricalmap-transport_lines': {
     labelProperty: 'name',
     featureProperty: 'type',
+    featureLinks: featureLinks.openhistoricalmap,
     features: {
       rail: {
         name: 'Railway',
@@ -376,6 +390,7 @@ const features = {
   'openhistoricalmap-transport_points': {
     featureProperty: 'type',
     labelProperty: 'name',
+    featureLinks: featureLinks.openhistoricalmap,
     features: {
       station: {
         name: 'Station',
@@ -390,6 +405,7 @@ const features = {
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_turntables': {
+    featureLinks: featureLinks.openstreetmap,
     features: {
       turntable: {
         name: 'Turntable',
@@ -402,6 +418,7 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_symbols': {
+    featureLinks: featureLinks.openstreetmap,
     features: Object.fromEntries(
       poi.features.flatMap(feature =>
         [
@@ -446,6 +463,7 @@ const features = {
   },
   "high-railway_text_km": {
     featureProperty: 'railway',
+    featureLinks: featureLinks.openstreetmap,
     features: {
       milestone: {
         name: 'Milestone',
@@ -496,6 +514,7 @@ const features = {
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
     featureProperty: 'railway',
+    featureLinks: featureLinks.openstreetmap,
     features: {
       switch: {
         name: 'Switch',
@@ -552,6 +571,7 @@ const features = {
   },
   'openrailwaymap_speed-speed_railway_signals': {
     featureProperty: 'feature0',
+    featureLinks: featureLinks.openstreetmap,
     features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
     properties: {
       feature1: {
@@ -586,6 +606,7 @@ const features = {
   },
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
+    featureLinks: featureLinks.openstreetmap,
     features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => !['speed', 'electrification'].includes(type.layer))),
     properties: {
       feature1: {
@@ -635,6 +656,7 @@ const features = {
   },
   'openrailwaymap_signals-signals_signal_boxes': {
     labelProperty: 'name',
+    featureLinks: featureLinks.openstreetmap,
     features: {
       'signal_box': {
         name: 'Signal box',
@@ -682,6 +704,7 @@ const features = {
   },
   'openrailwaymap_electrification-electrification_signals': {
     featureProperty: 'feature',
+    featureLinks: featureLinks.openstreetmap,
     features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
     properties: {
       direction_both: {
@@ -718,6 +741,7 @@ const features = {
 
   search: {
     labelProperty: 'label',
+    featureLinks: featureLinks.openstreetmap,
     features: [],
     properties: {
       name: {

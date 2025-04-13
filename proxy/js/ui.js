@@ -837,7 +837,13 @@ class EditControl {
     const button = createDomElement('button', 'maplibregl-ctrl-edit', this._container);
     button.type = 'button';
     button.title = 'Edit map data'
-    button.onclick = _ => window.open(`https://www.openstreetmap.org/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
+    button.onclick = _ => {
+      const domain = dateControl.active
+        ? 'https://www.openhistoricalmap.org'
+        : 'https://www.openstreetmap.org';
+
+      window.open(`${domain}/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
+    }
     createDomElement('span', 'maplibregl-ctrl-icon', button);
 
     return this._container;
@@ -1123,8 +1129,8 @@ function popupContent(feature) {
     <h6>${osm_ids.map(osm_id => `
       <div class="btn-group btn-group-sm">
         ${osm_ids.length > 1 ? `<button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>` : ''}
-        <a title="View on openstreetmap.org" href="https://www.openstreetmap.org/${osmType}/${osm_id}" target="_blank" class="btn btn-outline-primary">View</a>
-        <a title="Edit on openstreetmap.org" href="https://www.openstreetmap.org/edit?${osmType}=${osm_id}" target="_blank" class="btn btn-outline-primary">Edit</a>
+        <a title="View source" href="${featureCatalog.featureLinks.view.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">View</a>
+        <a title="Edit source" href="${featureCatalog.featureLinks.edit.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">Edit</a>
       </div>
     `).join('')}</h6>
     ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
