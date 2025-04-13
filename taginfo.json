@@ -45,6 +45,7 @@
     { "key": "railway:position:exact" },
     { "key": "railway:preferred_direction" },
     { "key": "railway:radio" },
+    { "key": "railway:preserved" },
     { "key": "railway:ref" },
     { "key": "railway:signal:automatic_marker:caption" },
     { "key": "railway:signal:caption" },
@@ -239,6 +240,7 @@
     { "key": "railway:signal:wrong_road" },
     { "key": "railway:signal:wrong_road:form" },
     { "key": "railway:vacancy_detection" },
-    { "key": "railway:signal:position" }
+    { "key": "railway:signal:position" },
+    { "key": "ref:crs" }
   ]
 }

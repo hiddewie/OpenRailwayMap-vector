@@ -8,15 +8,18 @@ class FacilityAPI:
         self.database = database
 
     def eliminate_duplicates(self, data, limit):
-        data.sort(key=lambda k: k['osm_ids'])
-        i = 1
-        while i < len(data):
-            if data[i]['osm_ids'] == data[i - 1]['osm_ids']:
-                data.pop(i)
-            i += 1
-        if len(data) > limit:
-            return data[:limit]
-        return data
+        seen_osm_ids = set()
+        results = []
+        for item in data:
+            osm_ids = tuple(item['osm_ids'])
+            if osm_ids not in seen_osm_ids:
+                seen_osm_ids.add(osm_ids)
+                results.append(item)
+
+                if len(results) == limit:
+                    break
+
+        return results
 
     async def __call__(self, *, q, name, ref, uic_ref, limit):
         # Validate search arguments

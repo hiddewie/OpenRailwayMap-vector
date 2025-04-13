@@ -201,6 +201,7 @@ local pois = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
+    { column = 'ref', type = 'text' },
     { column = 'man_made', type = 'text' },
     { column = 'crossing_light', type = 'boolean' },
     { column = 'crossing_barrier', type = 'boolean' },
@@ -272,6 +273,7 @@ local subway_entrances = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'image', type = 'text' },
@@ -429,7 +431,8 @@ for index, state in ipairs(states) do
 end
 
 function railway_line_state(tags)
-  local railway = tags['railway']
+  local preserved = tags['railway:preserved'] == 'yes' or tags['railway'] == 'preserved'
+  local railway = tags['railway'] == 'preserved' and 'rail' or tags['railway']
   local usage = tags['usage']
   local service = tags['service']
   local name = tags['name']
@@ -437,10 +440,10 @@ function railway_line_state(tags)
   local highspeed = tags['highspeed'] == 'yes'
 
   -- map known railway state values to their state values
-  mapped_railway = railway_line_states[railway]
+  local mapped_railway = railway_line_states[railway]
   if mapped_railway then
     return mapped_railway.state,
-      tags[mapped_railway.railway] or tags[railway] or 'rail',
+      tags[mapped_railway.railway] or (tags['railway:preserved'] == 'yes' and tags['railway']) or tags[railway] or 'rail',
       tags[mapped_railway.usage] or usage,
       tags[mapped_railway.service] or service,
       tags[mapped_railway.name] or name,
@@ -603,7 +606,7 @@ function osm2pgsql.process_node(object)
           name = tags.name or tags.short_name,
           ref = tags.ref,
           station = station,
-          railway_ref = tags['railway:ref'],
+          railway_ref = tags['railway:ref'] or tags['ref:crs'],
           uic_ref = tags['uic_ref'],
           name_tags = name_tags,
           operator = tags.operator,
@@ -625,7 +628,7 @@ function osm2pgsql.process_node(object)
         name = tags.name or tags.short_name,
         ref = tags.ref,
         station = nil,
-        railway_ref = tags['railway:ref'],
+        railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags,
         operator = tags.operator,
@@ -648,6 +651,7 @@ function osm2pgsql.process_node(object)
       man_made = tags.man_made,
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       image = image,
@@ -877,6 +881,7 @@ function osm2pgsql.process_way(object)
       man_made = tags.man_made,
       crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
       crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       image = image,
