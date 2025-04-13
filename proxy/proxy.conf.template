@@ -1,34 +1,14 @@
 resolver ${NGINX_RESOLVER};
 
-limit_req_zone $ratelimit_key zone=assets:10m rate=1r/s;
-limit_req_zone $ratelimit_key zone=api:10m rate=1r/s;
-limit_req_zone $ratelimit_key zone=tiles:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=assets:10m rate=${RATELIMIT_ASSETS_PER_SECOND}r/s;
+limit_req_zone $binary_remote_addr zone=api:10m rate=${RATELIMIT_API_PER_SECOND}r/s;
+limit_req_zone $binary_remote_addr zone=tiles:10m rate=${RATELIMIT_TILES_PER_SECOND}r/s;
 
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
                  max_size=10g
                  use_temp_path=off
                  keys_zone=cache:50m;
-
-map $http_referer $cache_index {
-  ~^http://localhost 0s;
-  default 1h;
-}
-
-map $http_referer $cache_style {
-  ~^http://localhost 0s;
-  default 1h;
-}
-
-map $http_referer $cache_assets {
-  ~^http://localhost 0s;
-  default 1d;
-}
-
-map $http_referer $ratelimit_key {
-  ~^http://localhost '';
-  default $binary_remote_addr;
-}
 
 map $request_uri $tiles_upstream {
   # See https://chrishewett.com/blog/slippy-tile-explorer/
@@ -156,60 +136,62 @@ server {
 
   limit_req_status 429;
   limit_req_log_level warn;
-  limit_req zone=assets burst=100 nodelay;
+  limit_req zone=assets burst=${RATELIMIT_ASSETS_BURST} nodelay;
+
+  set $rewrite_tile_urls ${REWRITE_TILE_URLS};
 
   location = / {
     root /etc/nginx/public;
-    expires $cache_index;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /index.html {
     root /etc/nginx/public;
-    expires $cache_index;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /manifest.json {
     root /etc/nginx/public;
-    expires $cache_index;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /favicon.ico {
     root /etc/nginx/public/image;
-    expires $cache_assets;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /js {
     root /etc/nginx/public;
-    expires $cache_assets;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /css {
     root /etc/nginx/public;
-    expires $cache_assets;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /image {
     root /etc/nginx/public;
-    expires $cache_assets;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /style {
     root /etc/nginx/public;
-    expires $cache_style;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /features.json {
     root /etc/nginx/public;
-    expires $cache_style;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /api {
     root /etc/nginx/public;
     index api.html;
     port_in_redirect off;
-    expires $cache_assets;
     error_page 404 = @api;
-    limit_req zone=api burst=3;
+    limit_req zone=api burst=${RATELIMIT_API_BURST};
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_API_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_API_ASSETS_STALE}";
   }
 
   location @api {
@@ -230,7 +212,7 @@ server {
   }
 
   location / {
-    if ($http_referer ~ ^http://localhost) {
+    if ($rewrite_tile_urls = true) {
       rewrite ^/high$ /railway_line_high,railway_text_km last;
       rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref last;
       rewrite ^/speed$ /speed_railway_signals last;
@@ -238,7 +220,7 @@ server {
       rewrite ^/electrification$ /electrification_signals last;
     }
 
-    limit_req zone=tiles burst=200 nodelay;
+    limit_req zone=tiles burst=${RATELIMIT_TILES_BURST} nodelay;
 
     set $upstream $tiles_upstream;
     proxy_pass $upstream;
@@ -256,6 +238,6 @@ server {
     proxy_redirect off;
 
     add_header X-Cache-Status $upstream_cache_status;
-    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_STALE}";
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_TILES_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_TILES_STALE}";
   }
 }
