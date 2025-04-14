@@ -438,14 +438,6 @@ function putParametersInHash(hash, style, date) {
 
 let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
-async function generateHash(input) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(input);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-}
-
 // Configuration //
 
 const localStorageKey = 'openrailwaymap-configuration';
@@ -932,16 +924,21 @@ class NewsControl {
       this.options.onNewsToggle();
     }
 
-    // Attach news hash to the button
-    generateHash(newsContent.innerText)
-      .then(hash => {
-        this._newsHash = hash;
-        if (!configuration.newsHash || hash !== configuration.newsHash) {
+    fetch(`${location.origin}/news.html`)
+      .then(news => {
+        // Attach news hash to the button
+        this._newsHash = news.headers.get('etag');
+        if (this._newsHash && !configuration.newsHash || this._newsHash !== configuration.newsHash) {
           button.classList.add('news-updated');
           console.info('News has been updated');
         }
+
+        return news.text()
       })
-      .catch(error => console.error('Error during calculation of news content hash', error))
+      .then(news => newsContent.innerHTML = news)
+      .catch(error => {
+        console.error('Error loading news', error);
+      })
 
     return this._container;
   }
