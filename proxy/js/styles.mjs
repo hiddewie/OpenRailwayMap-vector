@@ -2441,7 +2441,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
         {
           id: 'railway_line_historical_branch',
-          minzoom: 8,
+          minzoom: 7,
           filter: ['all',
             ['==', ['get', 'type'], 'rail'],
             ['==', ['get', 'usage'], 'branch'],
@@ -2455,7 +2455,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
         {
           id: 'railway_line_historical_main',
-          minzoom: 8,
+          minzoom: 5,
           filter: ['all',
             ['==', ['get', 'type'], 'rail'],
             ['==', ['get', 'usage'], 'main'],
@@ -4149,6 +4149,7 @@ const legendData = {
       {
         legend: 'Highspeed main line',
         type: 'line',
+        minzoom: 5,
         properties: {
           type: 'rail',
           highspeed: 'yes',
@@ -4163,6 +4164,7 @@ const legendData = {
       {
         legend: 'Main line',
         type: 'line',
+        minzoom: 5,
         properties: {
           type: 'rail',
           highspeed: 'no',
@@ -4195,6 +4197,7 @@ const legendData = {
       {
         legend: 'Branch line',
         type: 'line',
+        minzoom: 7,
         properties: {
           type: 'rail',
           highspeed: 'no',
@@ -4256,7 +4259,7 @@ const legendData = {
         type: 'line',
         minzoom: 9,
         properties: {
-          type: 'narrow_gauge',
+          type: 'light_rail',
           highspeed: 'no',
           usage: null,
           service: null,
@@ -4419,6 +4422,7 @@ const legendData = {
       {
         legend: 'Under construction',
         type: 'line',
+        minzoom: 10,
         properties: {
           type: 'construction',
           highspeed: 'no',
@@ -4433,6 +4437,7 @@ const legendData = {
       {
         legend: 'Proposed railway',
         type: 'line',
+        minzoom: 10,
         properties: {
           type: 'proposed',
           highspeed: 'no',
