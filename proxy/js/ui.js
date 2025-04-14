@@ -925,7 +925,6 @@ class NewsControl {
       .then(news => {
         // Attach news hash to the button
         this._newsHash = news.headers.get('etag');
-        console.info(this._newsHash, configuration.newsHash)
         if (this._newsHash && !configuration.newsHash || this._newsHash !== configuration.newsHash) {
           button.classList.add('news-updated');
           console.info('News has been updated');
