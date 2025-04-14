@@ -191,7 +191,7 @@ server {
     port_in_redirect off;
     error_page 404 = @api;
     limit_req zone=api burst=${RATELIMIT_API_BURST};
-    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_API_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_API_ASSETS_STALE}";
   }
 
   location @api {
