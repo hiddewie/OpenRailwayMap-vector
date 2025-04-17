@@ -3070,6 +3070,13 @@ features:
       - { tag: 'railway:signal:shunting', value: 'GB-NR:shunting' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
+  - description: Shunting limit
+    country: GB
+    icon: { default: 'gb/shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'GB-NR:limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
