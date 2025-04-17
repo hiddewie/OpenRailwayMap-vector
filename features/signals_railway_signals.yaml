@@ -75,6 +75,7 @@ tags:
   - 'railway:signal:radio:form'
   - 'railway:signal:radio:frequency'
   - 'railway:signal:route'
+  - 'railway:signal:route:design'
   - 'railway:signal:route:form'
   - 'railway:signal:route:states'
   - 'railway:signal:short_route'
@@ -3076,6 +3077,27 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'GB-NR:limit' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Junction signals
+    country: GB
+    icon:
+      match: 'railway:signal:route:states'
+      cases:
+        - { regex: '^position_1;position_2;position_3;position_4$', value: 'gb/route-feather-1234' }
+        - { regex: '^position_1;position_4;position_5;position_6$', value: 'gb/route-feather-1456' }
+        - { regex: '^position_1;position_4;position_5$', value: 'gb/route-feather-145' }
+        - { regex: '^position_4;position_5;position_6$', value: 'gb/route-feather-456' }
+        - { regex: '^position_1;position_2;position_3$', value: 'gb/route-feather-123' }
+        - { regex: '^position_4;position_5$', value: 'gb/route-feather-45' }
+        - { regex: '^position_1;position_4$', value: 'gb/route-feather-14' }
+        - { regex: '^position_1;position_2$', value: 'gb/route-feather-12' }
+        - { regex: '^position_4$', value: 'gb/route-feather-4' }
+        - { regex: '^position_1$', value: 'gb/route-feather-1' }
+      default: 'gb/route-feather-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
+      - { tag: 'railway:signal:route:design', value: 'light' }
+      - { tag: 'railway:signal:route:form', value: 'feather' }
 
   # --- LU --- #
 
