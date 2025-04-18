@@ -3097,27 +3097,27 @@ features:
       default: 'gb/route-feather-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
-      - { tag: 'railway:signal:route:design', value: 'light' }
-      - { tag: 'railway:signal:route:form', value: 'feather' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:design', value: 'feather' }
 
   - description: Junction signals (theatre)
     country: GB
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^[CSFU]$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{S}' }
+        - { regex: '^(.*;)?[CSFU](;.*)?$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{S}' }
       default: 'gb/route-theatre-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
-      - { tag: 'railway:signal:route:design', value: 'light' }
-      - { tag: 'railway:signal:route:form', value: 'theatre' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:design', value: 'theatre' }
 
-  - description: Repeated banner
+  - description: Banner
     country: GB
-    icon: { default: 'gb/repeated-banner' }
+    icon: { default: 'gb/distant-banner' }
     tags:
-      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Repeated off
     country: GB
