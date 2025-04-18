@@ -3064,6 +3064,13 @@ features:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: SPAD
+    country: GB
+    icon: { default: 'gb/SPAD' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'GB-NR:SPAD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   - description: Shunting
     country: GB
     icon: { default: 'gb/shunting' }
