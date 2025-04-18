@@ -3088,6 +3088,7 @@ features:
         - { regex: '^position_1;position_4;position_5$', value: 'gb/route-feather-145' }
         - { regex: '^position_4;position_5;position_6$', value: 'gb/route-feather-456' }
         - { regex: '^position_1;position_2;position_3$', value: 'gb/route-feather-123' }
+        - { regex: '^position_1;position_2;position_4$', value: 'gb/route-feather-124' }
         - { regex: '^position_4;position_5$', value: 'gb/route-feather-45' }
         - { regex: '^position_1;position_4$', value: 'gb/route-feather-14' }
         - { regex: '^position_1;position_2$', value: 'gb/route-feather-12' }
