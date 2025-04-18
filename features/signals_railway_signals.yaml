@@ -3112,6 +3112,20 @@ features:
       - { tag: 'railway:signal:route:design', value: 'light' }
       - { tag: 'railway:signal:route:form', value: 'theatre' }
 
+  - description: Repeated banner
+    country: GB
+    icon: { default: 'gb/repeated-banner' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Repeated off
+    country: GB
+    icon: { default: 'gb/repeated-off' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
