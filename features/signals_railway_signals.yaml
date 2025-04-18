@@ -3126,6 +3126,13 @@ features:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
+  - description: Departure
+    country: GB
+    icon: { default: 'gb/departure-RA' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
