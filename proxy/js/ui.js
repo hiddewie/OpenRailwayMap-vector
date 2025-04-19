@@ -23,6 +23,7 @@ const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
+const aboutBackdrop = document.getElementById('about-backdrop');
 
 const icons = {
   railway: {
@@ -266,6 +267,22 @@ function newsLink(style, zoom, lat, lon, date) {
   selectStyle(style);
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}});
+}
+
+function showAbout() {
+  aboutBackdrop.style.display = 'block';
+}
+
+function hideAbout() {
+  aboutBackdrop.style.display = 'none';
+}
+
+function toggleAbout() {
+  if (aboutBackdrop.style.display === 'block') {
+    showAbout();
+  } else {
+    showAbout();
+  }
 }
 
 searchFacilitiesForm.addEventListener('submit', event => {
@@ -972,6 +989,34 @@ class NewsControl {
   }
 }
 
+class AboutControl {
+  constructor(options) {
+    this.options = options;
+  }
+
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    const button = createDomElement('button', 'maplibregl-ctrl-news', this._container);
+    button.type = 'button';
+    button.title = 'Show/hide about';
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', undefined, button);
+    text.innerText = 'About'
+
+    button.onclick = () => {
+      this.options.onAboutToggle();
+    }
+
+    return this._container;
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+}
+
 const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
@@ -1011,6 +1056,9 @@ const newsControl = new NewsControl({
   onNewsToggle: toggleNews,
 });
 map.addControl(newsControl, 'bottom-right');
+map.addControl(new AboutControl({
+  onAboutToggle: toggleAbout,
+}), 'bottom-right');
 
 map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
