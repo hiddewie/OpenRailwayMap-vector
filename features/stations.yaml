@@ -41,9 +41,10 @@ features:
 
   - description: Railway yard
     feature: yard
-    minzoom: 10
+    minzoom: 8
     example:
-      name: Schaerbeek
+      label: Św
+      name: Świerże Górne
       station_size: small
 
   - description: Junction
