@@ -3047,22 +3047,20 @@ features:
 
   # --- GB --- #
 
-  - description: Main (shunting)
-    country: GB
-    icon: { default: 'gb/main-shunting' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'GB-NR:main' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:shunting', value: 'GB-NR:shunting' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Main
+  - description: Main (light)
     country: GB
     # TODO support railway:signal:main:design=individual/combined for 2 or 4 lenses
-    icon: { default: 'gb/main' }
+    icon: { default: 'gb/main-light' }
     tags:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Main (semaphore)
+    country: GB
+    icon: { default: 'gb/main-semaphore' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'GB-NR:main' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
   - description: SPAD
     country: GB
