@@ -43,6 +43,7 @@ tags:
   - 'railway:signal:humping'
   - 'railway:signal:humping:form'
   - 'railway:signal:main'
+  - 'railway:signal:main:design'
   - 'railway:signal:main:form'
   - 'railway:signal:main:height'
   - 'railway:signal:main:states'
@@ -3049,8 +3050,11 @@ features:
 
   - description: Main (light)
     country: GB
-    # TODO support railway:signal:main:design=individual/combined for 2 or 4 lenses
-    icon: { default: 'gb/main-light' }
+    icon:
+      match: 'railway:signal:main:design'
+      cases:
+        - { regex: '^combined$', value: 'gb/main-combined-light' }
+      default: 'gb/main-individual-light'
     tags:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3088,7 +3092,7 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^(off;)?position_1;position_2;position_3;position_4(;off)?', value: 'gb/route-feather-1234' }
+        - { regex: '^(off;)?position_1;position_2;position_3;position_4(;off)?$', value: 'gb/route-feather-1234' }
         - { regex: '^(off;)?position_1;position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-1456' }
         - { regex: '^(off;)?position_1;position_4;position_5(;off)?$', value: 'gb/route-feather-145' }
         - { regex: '^(off;)?position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-456' }
