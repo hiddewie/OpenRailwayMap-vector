@@ -36,31 +36,29 @@ const preset = {
 
     group: [
       {
-        '@name': 'Austrian signals',
-        // '@icon': '', // TODO
+        '@name': 'Railway signals',
 
-        // TODO specify region
-
-        item: [
-          {
-            '@type': 'node',
-            '@name': 'Verschubverbot',
-            '@icon': 'symbols/at/verschubverbot-aufgehoben.svg',
-            label: [
-              { '@text': 'Verschubverbot' },
-            ],
-            key: [
-              {
-                '@key': 'railway:signal:shunting',
-                '@value': 'AT-V2:verschubsignal',
-              },
-              {
-                '@key': 'railway:signal:shunting:form',
-                '@value': 'light',
-              }
-            ]
-          }
-        ],
+        item: all_signals.features.map(feature => ({
+          '@type': 'node',
+          '@name': feature.description,
+          '@icon': `symbols/${feature.icon.default}.svg`,
+          '@regions': feature.country,
+          label: [
+            { '@text': feature.description },
+          ],
+          key: feature.tags
+            .filter(tag => tag.value)
+            .map(tag => ({
+              '@key': tag.tag,
+              '@value': tag.value,
+            })),
+          combo: feature.tags
+            .filter(tag => tag.values)
+            .map(tag => ({
+              '@key': tag.tag,
+              '@value': tag.values.join(','),
+            })),
+        })),
       }
     ],
   }
