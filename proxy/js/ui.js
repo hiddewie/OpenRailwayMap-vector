@@ -999,27 +999,6 @@ class NewsControl {
   }
 }
 
-class AboutControl {
-  constructor(options) {
-    this.options = options;
-  }
-
-  onAdd(map) {
-    this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
-
-    button.onclick = () => {
-    }
-
-    return this._container;
-  }
-
-  onRemove() {
-    removeDomElement(this._container);
-    this._map = undefined;
-  }
-}
-
 const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
@@ -1060,8 +1039,6 @@ const newsControl = new NewsControl({
   onNewsToggle: toggleNews,
 });
 map.addControl(newsControl, 'bottom-right');
-// map.addControl(new AboutControl({
-// }), 'bottom-right');
 
 map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
