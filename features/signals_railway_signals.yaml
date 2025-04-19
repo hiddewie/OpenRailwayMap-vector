@@ -3066,6 +3066,13 @@ features:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+  - description: Distant
+    country: GB
+    icon: { default: 'gb/distant-light' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
   - description: SPAD
     country: GB
     icon: { default: 'gb/SPAD' }
@@ -3121,12 +3128,12 @@ features:
       - { tag: 'railway:signal:route:form', value: 'light' }
       - { tag: 'railway:signal:route:design', value: 'theatre' }
 
-  - description: Banner
+  - description: Repeated (banner)
     country: GB
-    icon: { default: 'gb/distant-banner' }
+    icon: { default: 'gb/repeated-banner' }
     tags:
-      - { tag: 'railway:signal:distant', value: 'GB-NR:banner' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: Repeated off
     country: GB
