@@ -251,7 +251,7 @@ function toggleNews() {
 function showNews() {
   newsBackdrop.style.display = 'block';
 
-  const newsHash = newsControl.newsHash()
+  const newsHash = aboutControl.newsHash()
   if (newsHash) {
     configuration.newsHash = newsHash;
     storeConfiguration(localStorage, configuration);
@@ -938,7 +938,7 @@ const legendEntriesCount = Object.fromEntries(
     .map(key => [key, {}])
 );
 
-class NewsControl {
+class AboutControl {
   constructor(options) {
     this.options = options;
     this._newsHash = null;
@@ -1034,11 +1034,11 @@ map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
 }), 'bottom-right');
-const newsControl = new NewsControl({
+const aboutControl = new AboutControl({
   onAboutToggle: toggleAbout,
   onNewsToggle: toggleNews,
 });
-map.addControl(newsControl, 'bottom-right');
+map.addControl(aboutControl, 'bottom-right');
 
 map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
