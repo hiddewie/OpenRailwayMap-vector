@@ -22,7 +22,7 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
 
 FROM build-yaml AS build-preset
 
-RUN npm install fast-xml-parser
+RUN npm install xmlbuilder2
 
 RUN apk add --no-cache zip
 
