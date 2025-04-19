@@ -3156,6 +3156,13 @@ features:
       - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
+  - description: Crossing
+    country: GB
+    icon: { default: 'gb/crossing' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'GB-NR:crossing' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
