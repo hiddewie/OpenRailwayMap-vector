@@ -100,7 +100,8 @@ body {
 
 .maplibregl-ctrl-group button.maplibregl-ctrl-search,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend,
-.maplibregl-ctrl-group button.maplibregl-ctrl-news {
+.maplibregl-ctrl-group button.maplibregl-ctrl-news,
+.maplibregl-ctrl-group button.maplibregl-ctrl-about {
   padding: 4px;
   width: auto;
   font-size: 1rem;
@@ -129,6 +130,7 @@ body {
 .maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group button.maplibregl-ctrl-about .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-compass .maplibregl-ctrl-icon,
@@ -162,6 +164,12 @@ body {
   width: 1.5rem;
   height: 1.4rem;
   margin-right: 4px;
+}
+.maplibregl-ctrl-group button.maplibregl-ctrl-about .maplibregl-ctrl-icon {
+  mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E");
+  width: 1.5rem;
+  height: 1.4rem;
+  margin-right: 2px;
 }
 .maplibregl-ctrl-group button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E");

@@ -997,7 +997,7 @@ class AboutControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
-    const button = createDomElement('button', 'maplibregl-ctrl-news', this._container);
+    const button = createDomElement('button', 'maplibregl-ctrl-about', this._container);
     button.type = 'button';
     button.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
