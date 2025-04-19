@@ -713,8 +713,6 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   'gray',
 ];
 
-const attribution = '<a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>';
-
 const sources = {
   search: {
     type: 'geojson',
@@ -726,49 +724,41 @@ const sources = {
   openrailwaymap_low: {
     type: 'vector',
     url: `${origin}/railway_line_high`,
-    attribution,
     promoteId: 'id',
   },
   standard_railway_text_stations_low: {
     type: 'vector',
     url: `${origin}/standard_railway_text_stations_low`,
-    attribution,
     promoteId: 'id',
   },
   standard_railway_text_stations_med: {
     type: 'vector',
     url: `${origin}/standard_railway_text_stations_med`,
-    attribution,
     promoteId: 'id',
   },
   high: {
     type: 'vector',
     url: `${origin}/high`,
-    attribution,
     promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
     url: `${origin}/standard`,
-    attribution,
     promoteId: 'id',
   },
   openrailwaymap_speed: {
     type: 'vector',
     url: `${origin}/speed`,
-    attribution,
     promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: `${origin}/signals`,
-    attribution,
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
     url: `${origin}/electrification`,
-    attribution,
     promoteId: 'id',
   },
   openhistoricalmap: {

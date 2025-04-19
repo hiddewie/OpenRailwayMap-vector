@@ -607,6 +607,10 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   minPitch: 0,
   maxPitch: 0,
+  attributionControl: {
+    compact: true,
+    customAttribution: '<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>',
+  },
 });
 
 function selectStyle(style) {
