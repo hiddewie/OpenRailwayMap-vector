@@ -395,7 +395,6 @@ function hashToObject(hash) {
 
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
-  console.info(hashObject);
 
   const style = (hashObject.style && hashObject.style in knownStyles)
     ? hashObject.style
@@ -404,11 +403,6 @@ function determineParametersFromHash(hash) {
   const date = (hashObject.date && !isNaN(parseFloat(hashObject.date)))
     ? parseFloat(hashObject.date)
     : defaultDate;
-
-  console.info({
-    style,
-    date,
-  });
 
   return {
     style,
@@ -647,10 +641,8 @@ const onStyleChange = () => {
   const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
-  console.info(selectedStyle,supportsDate, mapStyle,lastSetMapStyle)
 
   if (mapStyle !== lastSetMapStyle) {
-    console.info('setting map style to', mapStyle)
     lastSetMapStyle = mapStyle;
 
     // Change styles
