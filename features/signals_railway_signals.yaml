@@ -3073,6 +3073,13 @@ features:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  - description: Distant (semaphore)
+    country: GB
+    icon: { default: 'gb/distant-semaphore' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
   - description: SPAD
     country: GB
     icon: { default: 'gb/SPAD' }
