@@ -641,7 +641,8 @@ function onPageParametersChange() {
 let lastSetMapStyle = null;
 const onStyleChange = () => {
   const supportsDate = knownStyles[selectedStyle].styles.date;
-  const mapStyle = supportsDate && dateControl.active
+  const dateActive = supportsDate && dateControl.active;
+  const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
 
@@ -651,6 +652,20 @@ const onStyleChange = () => {
     // Change styles
     map.setStyle(mapStyles[selectedTheme][mapStyle], {
       validate: false,
+      transformStyle:
+        dateActive
+          ? (previous, next) => ({
+            ...next,
+            layers: next.layers.map(layer =>
+              layerHasDateFilter(layer)
+                ? {
+                    ...layer,
+                    filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
+                  }
+                : layer,
+            )
+          })
+        : undefined,
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
