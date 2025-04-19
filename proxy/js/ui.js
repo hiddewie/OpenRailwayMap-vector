@@ -946,7 +946,8 @@ class NewsControl {
 
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-about');
+
     const button = createDomElement('button', 'maplibregl-ctrl-news', this._container);
     button.type = 'button';
     button.title = 'Show/hide news';
@@ -959,6 +960,15 @@ class NewsControl {
       button.classList.remove('news-updated');
       this.options.onNewsToggle();
     }
+
+    const aboutButton = createDomElement('button', 'maplibregl-ctrl-about', this._container);
+    aboutButton.type = 'button';
+    aboutButton.title = 'Show/hide about';
+    createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
+    const aboutText = createDomElement('span', undefined, aboutButton);
+    aboutText.innerText = 'About'
+
+    aboutButton.onclick = () => this.options.onAboutToggle();
 
     fetch(`${location.origin}/news.html`)
       .then(news => {
@@ -997,15 +1007,8 @@ class AboutControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
-    const button = createDomElement('button', 'maplibregl-ctrl-about', this._container);
-    button.type = 'button';
-    button.title = 'Show/hide about';
-    createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', undefined, button);
-    text.innerText = 'About'
 
     button.onclick = () => {
-      this.options.onAboutToggle();
     }
 
     return this._container;
@@ -1053,12 +1056,12 @@ map.addControl(new maplibregl.ScaleControl({
   unit: 'metric',
 }), 'bottom-right');
 const newsControl = new NewsControl({
+  onAboutToggle: toggleAbout,
   onNewsToggle: toggleNews,
 });
 map.addControl(newsControl, 'bottom-right');
-map.addControl(new AboutControl({
-  onAboutToggle: toggleAbout,
-}), 'bottom-right');
+// map.addControl(new AboutControl({
+// }), 'bottom-right');
 
 map.addControl(new LegendControl({
   onLegendToggle: toggleLegend,
