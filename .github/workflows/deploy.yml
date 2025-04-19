@@ -56,10 +56,26 @@ jobs:
           docker compose pull db
           docker compose up --no-build --pull never --wait db
 
+      - name: Determine replication timestamp
+        id: replication-timestamp
+        continue-on-error: true
+        run: |
+          {
+            echo -n 'timestamp='
+            docker compose exec db \
+              psql \
+                --dbname gis \
+                --user postgres \
+                --pset format=csv \
+                --pset tuples_only=on \
+                --command "select \"value\" from osm2pgsql_properties where property='replication_timestamp'"
+          } >> $GITHUB_OUTPUT
+
       - name: Generate tiles
         env:
           TILES: low-med
           BBOX: -180,-80,180,80
+          REPLICATION_TIMESTAMP: ${{ steps.replication-timestamp.outputs.timestamp }}
         run: |
           docker compose run --no-deps martin-cp
 

@@ -74,6 +74,7 @@ services:
       - MIN_ZOOM=0
       - MAX_ZOOM=14
       - DATABASE_URL=postgresql://postgres@db:5432/gis
+      - REPLICATION_TIMESTAMP
 
   martin:
     build:
