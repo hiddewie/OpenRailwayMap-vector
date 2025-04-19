@@ -20,6 +20,22 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
   node /build/features.mjs \
     > /build/features.json
 
+FROM build-yaml AS build-preset
+
+RUN npm install fast-xml-parser
+
+RUN apk add --no-cache zip
+
+RUN --mount=type=bind,source=proxy/js/preset.mjs,target=preset.mjs \
+  --mount=type=bind,source=features,target=features \
+  node /build/preset.mjs \
+    > preset.xml
+
+RUN --mount=type=bind,source=symbols,target=symbols \
+  zip -o /build/preset.zip -r \
+    symbols \
+    preset.xml
+
 FROM nginx:1-alpine
 
 COPY proxy/proxy.conf.template /etc/nginx/templates/proxy.conf.template
@@ -34,6 +50,9 @@ COPY data/import /etc/nginx/public/import
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style
+
+COPY --from=build-preset \
+  /build/preset.zip /etc/nginx/public/preset.zip
 
 COPY --from=build-features \
   /build/features.json /etc/nginx/public/features.json

@@ -190,6 +190,11 @@ server {
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
+  location = /preset.zip {
+    root /etc/nginx/public;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
   location /api {
     root /etc/nginx/public;
     index api.html;
