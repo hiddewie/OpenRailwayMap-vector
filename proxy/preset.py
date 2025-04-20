@@ -18,10 +18,30 @@ doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
 signal_type_pattern = re.compile('^railway:signal:(?P<type>[^:]+)$')
 
 
-def chunk_common_tags():
+def chunk_common_references():
   with tag('chunk',
-           id='common_tags',
+           id='common_references',
            ):
+    with tag('preset_link',
+             preset_name='Description',
+             ):
+      pass
+    with tag('preset_link',
+             preset_name='Note',
+             ):
+      pass
+    with tag('preset_link',
+             preset_name='Media',
+             ):
+      pass
+
+
+def preset_items_media():
+  with(tag('item',
+           type='node,way,relation',
+           name='Media',
+           preset_name_label='true',
+           )):
     with tag('text',
              text='Wikipedia',
              key='wikipedia',
@@ -47,20 +67,10 @@ def chunk_common_tags():
              key='mapillary',
              ): pass
 
-    with tag('text',
-             text='Note',
-             key='note',
-             ): pass
-
-    with tag('text',
-             text='Description',
-             key='description',
-             ): pass
-
 
 def preset_items_railway_lines():
   with(tag('group',
-           name='Railway lines',
+           name='Lines',
            )):
 
     for item in railway_lines['features']:
@@ -242,13 +252,13 @@ def preset_items_railway_lines():
             pass
 
           with tag('text',
-                   text='Voltage',
+                   text='Voltage (V)',
                    key='voltage',
                    ):
             pass
 
           with tag('text',
-                   text='Voltage',
+                   text='Frequency (Hz)',
                    key='frequency',
                    ):
             pass
@@ -263,13 +273,13 @@ def preset_items_railway_lines():
             pass
 
           with tag('text',
-                   text='Voltage',
+                   text='Voltage (construction) (V)',
                    key='construction:voltage',
                    ):
             pass
 
           with tag('text',
-                   text='Voltage',
+                   text='Frequency (construction) (Hz)',
                    key='construction:frequency',
                    ):
             pass
@@ -324,16 +334,15 @@ def preset_items_railway_lines():
                    ):
             pass
 
-          # TODO make link to other presets instead
           with tag('reference',
-                   ref='common_tags',
+                   ref='common_references',
                    ):
             pass
 
 
 def preset_items_signals():
   with(tag('group',
-           name='Railway signals',
+           name='Signals',
            )):
 
     for feature in all_signals['features']:
@@ -430,9 +439,8 @@ def preset_items_signals():
                      ):
               pass
 
-          # TODO make link to other presets instead
           with tag('reference',
-                   ref='common_tags',
+                   ref='common_references',
                    ):
             pass
 
@@ -444,9 +452,14 @@ def presets_xml():
            shortdescription='OpenRailwayMap preset',
            description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
            ):
-    chunk_common_tags()
-    preset_items_railway_lines()
-    preset_items_signals()
+    chunk_common_references()
+
+    with(tag('group',
+             name='Railway',
+             )):
+      preset_items_media()
+      preset_items_railway_lines()
+      preset_items_signals()
 
 
 if __name__ == "__main__":
