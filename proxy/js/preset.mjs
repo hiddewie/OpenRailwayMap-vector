@@ -43,9 +43,20 @@ const preset = {
           '@name': feature.description,
           '@icon': `symbols/${feature.icon.default}.svg`,
           '@regions': feature.country,
+          // '@match_expression':
+          //   feature.tags
+          //     .filter(tag => tag.value)
+          //     .map(tag => `("${tag.tag}"="${tag.value}")`)
+          //     .concat()
+          //     .join(' AND ');
+          //
+          //
+          //   tag.values.map(value => `"${tag.tag}"="${value}"`).join(' OR '),
+
           label: [
             { '@text': feature.description },
           ],
+          space: '',
           key: feature.tags
             .filter(tag => tag.value)
             .map(tag => ({
@@ -55,8 +66,10 @@ const preset = {
           combo: feature.tags
             .filter(tag => tag.values)
             .map(tag => ({
+              '@text': tag.tag, // TODO generate proper label
               '@key': tag.tag,
-              '@value': tag.values.join(','),
+              '@values': tag.values.join(','),
+              '@match': 'keyvalue!',
             })),
         })),
       }
