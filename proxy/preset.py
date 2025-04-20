@@ -5,6 +5,11 @@ from yaml import load
 from yattag import Doc, indent
 
 all_signals = load(open('features/signals_railway_signals.yaml', 'r'), Loader=Loader)
+train_protections = load(open('features/train_protection.yaml', 'r'), Loader=Loader)
+loading_gauges = load(open('features/loading_gauge.yaml', 'r'), Loader=Loader)
+poi = load(open('features/poi.yaml', 'r'), Loader=Loader)
+stations = load(open('features/stations.yaml', 'r'), Loader=Loader)
+railway_lines = load(open('features/railway_line.yaml', 'r'), Loader=Loader)
 
 doc, tag, text = Doc().tagtext()
 doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
@@ -12,44 +17,154 @@ doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
 signal_type_pattern = re.compile('^railway:signal:(?P<type>[^:]+)$')
 
 
-def common_tags():
-  with tag('text',
-           text='Wikipedia',
-           key='wikipedia',
-           ): pass
+def chunk_common_tags():
+  with tag('chunk',
+           id='common_tags',
+           ):
+    with tag('text',
+             text='Wikipedia',
+             key='wikipedia',
+             ): pass
 
-  with tag('text',
-           text='Wikidata',
-           key='wikidata',
-           ): pass
+    with tag('text',
+             text='Wikidata',
+             key='wikidata',
+             ): pass
 
-  with tag('text',
-           text='Wikimedia Commons',
-           key='wikimedia_commons',
-           ): pass
+    with tag('text',
+             text='Wikimedia Commons',
+             key='wikimedia_commons',
+             ): pass
 
-  with tag('text',
-           text='Image',
-           key='image',
-           ): pass
+    with tag('text',
+             text='Image',
+             key='image',
+             ): pass
 
-  with tag('text',
-           text='Mapillary',
-           key='mapillary',
-           ): pass
+    with tag('text',
+             text='Mapillary',
+             key='mapillary',
+             ): pass
 
-  with tag('text',
-           text='Note',
-           key='note',
-           ): pass
+    with tag('text',
+             text='Note',
+             key='note',
+             ): pass
 
-  with tag('text',
-           text='Description',
-           key='description',
-           ): pass
+    with tag('text',
+             text='Description',
+             key='description',
+             ): pass
 
 
-def signals():
+def preset_items_railway_lines():
+  with(tag('group',
+           name='Railway lines',
+           )):
+
+    for item in railway_lines['features']:
+      type = item['type']
+      description = item['description']
+      for feature in [
+        {'prefix': '', 'name': description},
+        {'prefix': 'construction:', 'name': f'{description} (under construction)'},
+        {'prefix': 'proposed:', 'name': f'{description} railway line (disused)'},
+        {'prefix': 'abandoned:', 'name': f'{description} (abandoned)'},
+        {'prefix': 'disused:', 'name': f'{description} (disused)'},
+      ]:
+        prefix = feature['prefix']
+
+        with(tag('item',
+                 type='way',
+                 name=feature['name'],
+                 preset_name_label='true',
+                 )):
+          with tag('link',
+                   wiki=f'Tag:railway={type}',
+                   ):
+            pass
+
+          with tag('space'):
+            pass
+
+          with tag('key',
+                   key=f'{prefix}railway',
+                   value=type,
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Usage',
+                   key=f'{prefix}usage',
+                   values='main,branch,industrial,tourism,military,test,science,leisure',
+                   use_last_as_default='true',
+                   values_sort='false',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Service',
+                   key=f'{prefix}service',
+                   values='yard,spur,siding,crossover',
+                   use_last_as_default='true',
+                   values_sort='false',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Name',
+                   key=f'{prefix}name',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Gauge',
+                   key=f'{prefix}gauge',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('checkbox',
+                   text='Highspeed',
+                   key='highspeed',
+                   ):
+            pass
+
+          with tag('checkbox',
+                   text='Preserved',
+                   key='railway:preserved',
+                   ):
+            pass
+
+          with tag('choice',
+                   text='Train protection',
+                   key=f'train_protection',
+                   # TODO get rid of other
+                   values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   values_sort='false',
+                   ):
+            pass
+
+          with tag('choice',
+                   text='Train protection (under construction)',
+                   key='construction:train_protection',
+                   # TODO get rid of other
+                   values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   values_sort='false',
+                   ):
+            pass
+
+          # TODO make link to other presets instead
+          with tag('reference',
+                   ref='common_tags',
+                   ):
+            pass
+
+
+def preset_items_signals():
   with(tag('group',
            name='Railway signals',
            )):
@@ -164,12 +279,9 @@ def presets_xml():
            shortdescription='OpenRailwayMap preset',
            description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
            ):
-    with tag('chunk',
-             id='common_tags',
-             ):
-      common_tags()
-
-    signals()
+    chunk_common_tags()
+    preset_items_railway_lines()
+    preset_items_signals()
 
 
 if __name__ == "__main__":

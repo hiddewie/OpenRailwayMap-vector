@@ -6,6 +6,7 @@ const all_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals
 const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
+const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 
@@ -75,40 +76,15 @@ const generateSignalFeatures = (features, types) =>
 const railwayLineFeatures = {
   labelProperty: 'standard_label',
   featureLinks: featureLinks.openstreetmap,
-  features: {
-    rail: {
-      name: 'Railway',
-      type: 'line',
-    },
-    tram: {
-      name: 'Tram',
-      type: 'line',
-    },
-    light_rail: {
-      name: 'Light rail',
-      type: 'line',
-    },
-    subway: {
-      name: 'Subway',
-      type: 'line',
-    },
-    monorail: {
-      name: 'Monorail',
-      type: 'line',
-    },
-    narrow_gauge: {
-      name: 'Narrow gauge railway',
-      type: 'line',
-    },
-    miniature: {
-      name: 'Miniature railway',
-      type: 'line',
-    },
-    funicular: {
-      name: 'Funicular',
-      type: 'line',
-    },
-  },
+  features: Object.fromEntries(
+    railway_lines.features.map(feature => [
+      feature.type,
+      {
+        name: featutre.description,
+        type: 'line',
+      },
+    ])
+  ),
   properties: {
     state: {
       name: 'State',

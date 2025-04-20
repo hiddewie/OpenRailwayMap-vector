@@ -1,0 +1,24 @@
+features:
+  - type: rail
+    description: Railway
+
+  - type: tram
+    description: Tram
+
+  - type: light_rail
+    description: Light rail
+
+  - type: subway
+    description: Subway
+
+  - type: monorail
+    description: Monorail
+
+  - type: narrow_gauge
+    description: Narrow gauge railway
+
+  - type: miniature
+    description: Miniature railway
+
+  - type: funicular
+    description: Funicular
