@@ -5,7 +5,14 @@ Content-Type: text/html
 [Asserts]
 body contains "<title>OpenRailwayMap</title>"
 
-# Imported bounds
+# News
+GET {{base_url}}/news.html
+HTTP 200
+Content-Type: text/html
+[Asserts]
+body contains "<em class="flex-fill">April 2025</em>"
+
+# Manifest
 GET {{base_url}}/manifest.json
 HTTP 200
 Content-Type: application/json
@@ -67,3 +74,8 @@ Content-Type: application/json
 GET {{base_url}}/features.json
 HTTP 200
 Content-Type: application/json
+
+# JOSM preset
+GET {{base_url}}/preset.zip
+HTTP 200
+Content-Type: application/zip
