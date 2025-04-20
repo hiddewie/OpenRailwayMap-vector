@@ -11,51 +11,45 @@ doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
 
 signal_type_pattern = re.compile('^railway:signal:(?P<type>[^:]+)$')
 
-with tag('presets',
-         author='Hidde Wieringa',
-         version='1.0',
-         shortdescription='OpenRailwayMap preset',
-         description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
-         ):
-  with tag('chunk',
-           id='common_tags',
-           ):
 
-    with tag('text',
-             text='Wikipedia',
-             key='wikipedia',
-             ): pass
+def common_tags():
+  with tag('text',
+           text='Wikipedia',
+           key='wikipedia',
+           ): pass
 
-    with tag('text',
-             text='Wikidata',
-             key='wikidata',
-             ): pass
+  with tag('text',
+           text='Wikidata',
+           key='wikidata',
+           ): pass
 
-    with tag('text',
-             text='Wikimedia Commons',
-             key='wikimedia_commons',
-             ): pass
+  with tag('text',
+           text='Wikimedia Commons',
+           key='wikimedia_commons',
+           ): pass
 
-    with tag('text',
-             text='Image',
-             key='image',
-             ): pass
+  with tag('text',
+           text='Image',
+           key='image',
+           ): pass
 
-    with tag('text',
-             text='Mapillary',
-             key='mapillary',
-             ): pass
+  with tag('text',
+           text='Mapillary',
+           key='mapillary',
+           ): pass
 
-    with tag('text',
-             text='Note',
-             key='note',
-             ): pass
+  with tag('text',
+           text='Note',
+           key='note',
+           ): pass
 
-    with tag('text',
-             text='Description',
-             key='description',
-             ): pass
+  with tag('text',
+           text='Description',
+           key='description',
+           ): pass
 
+
+def signals():
   with(tag('group',
            name='Railway signals',
            )):
@@ -162,5 +156,22 @@ with tag('presets',
                  ):
           pass
 
+
+def presets_xml():
+  with tag('presets',
+           author='Hidde Wieringa',
+           version='1.0',
+           shortdescription='OpenRailwayMap preset',
+           description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
+           ):
+    with tag('chunk',
+             id='common_tags',
+             ):
+      common_tags()
+
+    signals()
+
+
 if __name__ == "__main__":
+  presets_xml()
   print(indent(doc.getvalue()))
