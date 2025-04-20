@@ -8,24 +8,6 @@ const all_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals
 // const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 // const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
-
-/*
-
-
-
-  - description: Verschubverbot
-    country: AT
-    icon:
-      match: 'railway:signal:shunting:height'
-      cases:
-        - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
-      default: 'at/verschubverbot-aufgehoben'
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
- */
-
 const preset = {
   presets: {
     '@xmlns': 'http://josm.openstreetmap.de/tagging-preset-1.0',
@@ -40,13 +22,15 @@ const preset = {
 
         item: all_signals.features.map(feature => ({
           '@type': 'node',
-          '@name': feature.description,
+          '@name': `${feature.country ? `${feature.country}: ` : ''}${feature.description}`, // TODO group by country?
           '@icon': `symbols/${feature.icon.default}.svg`,
           '@regions': feature.country,
+          '@preset_name_label': true,
 
-          label: [
-            { '@text': feature.description },
-          ],
+          link: {
+            '@wiki': 'Tag:railway=signal', // TODO better link to country specific tagging
+          },
+
           space: '',
           key: feature.tags
             .filter(tag => tag.value)
@@ -70,9 +54,10 @@ const preset = {
               '@key': tag.tag,
               '@values': tag.values.join(','),
               '@match': 'keyvalue!',
-              '@use_last_as_default': 'true',
+              '@use_last_as_default': true,
             })),
         })),
+        optional: '',
       }
     ],
   }
