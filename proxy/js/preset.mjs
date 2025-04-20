@@ -8,13 +8,37 @@ const all_signals = yaml.parse(fs.readFileSync('features/signals_railway_signals
 // const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 // const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
-const preset = {
+/**
+ * Documentation in https://josm.openstreetmap.de/wiki/TaggingPresets
+ * See examples in https://josm.openstreetmap.de/browser/josm/trunk/resources/data/defaultpresets.xml
+ */
+
+function ele(parent, tag, cb) {
+
+}
+
+function buildDocument() {
+
+}
+
+// @formatter:off
+const document = create({version: '1.0', encoding: 'UTF-8'})
+  .ele('http://josm.openstreetmap.de/tagging-preset-1.0', 'presets')
+    .ele('author').txt('Hidde Wieringa').up()
+    .ele('version').txt('1.0').up()
+    .ele('shortdescription').txt('OpenRailwayMap preset').up()
+    .ele('description').txt('Preset to tag railway infrastructure such as railway lines, signals and railway places of interest').up()
+  .up()
+// @formatter:on
+
+
+{
   presets: {
     '@xmlns': 'http://josm.openstreetmap.de/tagging-preset-1.0',
     author: 'Hidde Wieringa',
     version: '1.0',
     shortdescription: 'OpenRailwayMap preset',
-    description: 'Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
+    description: '',
 
     group: [
       {
@@ -31,7 +55,7 @@ const preset = {
             '@wiki': 'Tag:railway=signal', // TODO better link to country specific tagging
           },
 
-          space: '',
+          space: {},
           key: feature.tags
             .filter(tag => tag.value)
             .map(tag => ({
@@ -57,13 +81,14 @@ const preset = {
               '@use_last_as_default': true,
             })),
         })),
-        optional: '',
+        optional: {},
       }
     ],
   }
 };
 
-const document = create({version: '1.0', encoding:'utf-8'}, preset);
+
+// const document = create({version: '1.0', encoding:'utf-8'}, preset);
 const xml = document.end({ prettyPrint: true });
 
 if (import.meta.url.endsWith(process.argv[1])) {

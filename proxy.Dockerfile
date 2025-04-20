@@ -20,15 +20,23 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
   node /build/features.mjs \
     > /build/features.json
 
-FROM build-yaml AS build-preset
-
-RUN npm install xmlbuilder2
+FROM python:3-alpine AS build-preset
 
 RUN apk add --no-cache zip
 
-RUN --mount=type=bind,source=proxy/js/preset.mjs,target=preset.mjs \
+RUN pip install --no-cache-dir \
+  pyyaml \
+  yattag
+
+WORKDIR /build
+
+# RUN pip3 install
+# RUN npm install xmlbuilder2
+
+
+RUN --mount=type=bind,source=proxy/preset.py,target=preset.py \
   --mount=type=bind,source=features,target=features \
-  node /build/preset.mjs \
+  python preset.py \
     > preset.xml
 
 RUN --mount=type=bind,source=symbols,target=symbols \

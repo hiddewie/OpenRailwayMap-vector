@@ -1876,8 +1876,8 @@ features:
     icon:
       match: 'railway:signal:distant_crossing:states'
       cases:
-        - { regex: '^(.*;)?DE-AVG:bü201(;.*)?$', value: 'de/avg/bue201' }
         - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
+      default: 'de/avg/bue201'
     tags:
       - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
       - { tag: 'railway:signal:distant_crossing:form', value: 'light' }
