@@ -1908,6 +1908,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 10,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
+        // TODO use features from poi.yaml
         filter: ['==', ['get', 'feature'], 'general/border'],
         layout: {
           'icon-overlap': 'cooperative',
@@ -1923,6 +1924,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 12,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
+        // TODO use features from poi.yaml
         filter: ['any',
           ['==', ['get', 'feature'], 'general/owner-change'],
           ['==', ['get', 'feature'], 'general/radio-mast'],
@@ -1943,6 +1945,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 13,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
+        // TODO use features from poi.yaml
         filter: ['any',
           ['==', ['get', 'feature'], 'general/lubricator'],
           ['==', ['get', 'feature'], 'general/fuel'],
@@ -1977,6 +1980,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_standard',
+      // TODO use features from poi.yaml
       'source-layer': 'standard_railway_symbols',
       filter: ['any',
         ['==', ['get', 'feature'], 'general/buffer_stop'],
@@ -2024,6 +2028,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 16,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
+        // TODO use features from poi.yaml
         filter: ['any',
           ['==', ['get', 'feature'], 'general/crossing'],
           ['==', ['get', 'feature'], 'general/level-crossing'],

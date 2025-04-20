@@ -381,6 +381,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     osm_id,
     osm_type,
     way,
+    -- TODO use features with tags from poi.yaml
     CASE
       WHEN railway = 'crossing' THEN 'general/crossing'
       WHEN railway = 'level_crossing' THEN
@@ -422,7 +423,6 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     END AS feature,
     CASE
       WHEN railway = 'crossing' THEN -1::int
-      WHEN railway = 'tram_stop' THEN 1::int
       ELSE 0
     END AS priority,
     ref,

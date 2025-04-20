@@ -7,7 +7,7 @@ from yattag import Doc, indent
 all_signals = load(open('features/signals_railway_signals.yaml', 'r'), Loader=Loader)
 train_protections = load(open('features/train_protection.yaml', 'r'), Loader=Loader)
 loading_gauges = load(open('features/loading_gauge.yaml', 'r'), Loader=Loader)
-poi = load(open('features/poi.yaml', 'r'), Loader=Loader)
+pois = load(open('features/poi.yaml', 'r'), Loader=Loader)
 stations = load(open('features/stations.yaml', 'r'), Loader=Loader)
 railway_lines = load(open('features/railway_line.yaml', 'r'), Loader=Loader)
 track_classes = load(open('features/track_class.yaml', 'r'), Loader=Loader)
@@ -502,6 +502,60 @@ def preset_items_signals():
           preset_items_signals_for_country(features)
 
 
+def preset_items_poi(poi):
+  with(tag('item',
+           type='node',
+           name=poi['description'],
+           icon=f'symbols/{poi['feature']}.svg',
+           preset_name_label='true',
+           )):
+    for ftag in poi['tags']:
+      if 'value' in ftag:
+        with tag('link',
+                 wiki=f'Tag:{ftag['tag']}={ftag['value']}',
+                 ):
+          pass
+
+    with tag('space'):
+      pass
+
+    for ftag in poi['tags']:
+      if 'value' in ftag:
+        with tag('key',
+                 key=ftag['tag'],
+                 value=ftag['value'],
+                 ): pass
+
+    for ftag in poi['tags']:
+      if 'values' in ftag:
+        with tag('combo',
+                 text=ftag['tag'],  # TODO generate proper label
+                 key=ftag['tag'],
+                 values=','.join(ftag['values']),
+                 match='keyvalue!',
+                 ): pass
+
+    with tag('optional'):
+      with tag('text',
+               text='Reference',
+               key='ref',
+               ):
+        pass
+
+      with tag('reference',
+               ref='common_references',
+               ):
+        pass
+
+
+def preset_items_pois():
+  for poi in pois['features']:
+    preset_items_poi(poi)
+    if 'variants' in poi:
+      for variant in poi['variants']:
+        preset_items_poi(variant)
+
+
 def presets_xml():
   with tag('presets',
            author='Hidde Wieringa',
@@ -520,6 +574,7 @@ def presets_xml():
       preset_items_media()
       preset_items_railway_lines()
       preset_items_signals()
+      preset_items_pois()
 
 
 if __name__ == "__main__":
