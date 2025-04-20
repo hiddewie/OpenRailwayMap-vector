@@ -36,6 +36,71 @@ def chunk_common_references():
       pass
 
 
+def chunk_train_protection():
+  # TODO this does not work yet: needs unique tag keys
+  # Also see https://wiki.openstreetmap.org/wiki/Proposal:Railway:train_protection
+  with tag('chunk',
+           id='train_protection',
+           ):
+    with tag('combo',
+             text='Train protection',
+             key='railway:train_protection',
+             values_searchable='true',
+             values_sort='false',
+             ):
+      for train_protection in train_protections['train_protections']:
+        if train_protection['train_protection'] != 'other':
+          with tag('list_entry',
+                   value=train_protection['train_protection'],
+                   short_description=train_protection['legend'],
+                   ):
+            pass
+
+    with tag('combo',
+             text='Train protection (under construction)',
+             key='construction:railway:train_protection',
+             values_searchable='true',
+             values_sort='false',
+             ):
+      for train_protection in train_protections['train_protections']:
+        if train_protection['train_protection'] != 'other':
+          with tag('list_entry',
+                   value=train_protection['train_protection'],
+                   short_description=train_protection['legend'],
+                   ):
+            pass
+
+
+def chunk_loading_gauge():
+  with tag('chunk',
+           id='loading_gauge',
+           ):
+    with tag('combo',
+             text='Loading gauge',
+             key='loading_gauge',
+             values=','.join(loading_gauge['value'] for loading_gauge in loading_gauges['loading_gauges']),
+             values_sort='false',
+             values_searchable='true',
+             use_last_as_default='true',
+             ):
+      pass
+
+
+def chunk_track_class():
+  with tag('chunk',
+           id='track_class',
+           ):
+    with tag('combo',
+             text='Track class',
+             key='railway:track_class',
+             values=','.join(track_class['value'] for track_class in track_classes['track_classes']),
+             values_searchable='true',
+             values_sort='false',
+             use_last_as_default='true',
+             ):
+      pass
+
+
 def preset_items_media():
   with(tag('item',
            type='node,way,relation',
@@ -163,25 +228,8 @@ def preset_items_railway_lines():
                    ):
             pass
 
-          with tag('combo',
-                   text='Train protection',
-                   key=f'train_protection',
-                   # TODO get rid of other
-                   values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
-                   short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
-                   values_searchable='true',
-                   values_sort='false',
-                   ):
-            pass
-
-          with tag('combo',
-                   text='Train protection (under construction)',
-                   key='construction:train_protection',
-                   # TODO get rid of other
-                   values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
-                   short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
-                   values_searchable='true',
-                   values_sort='false',
+          with tag('reference',
+                   ref='train_protection',
                    ):
             pass
 
@@ -290,23 +338,13 @@ def preset_items_railway_lines():
                    ):
             pass
 
-          with tag('combo',
-                   text='Loading gauge',
-                   key='loading_gauge',
-                   values=','.join(loading_gauge['value'] for loading_gauge in loading_gauges['loading_gauges']),
-                   values_sort='false',
-                   values_searchable='true',
-                   use_last_as_default='true',
+          with tag('reference',
+                   ref='loading_gauge',
                    ):
             pass
 
-          with tag('combo',
-                   text='Track class',
-                   key='railway:track_class',
-                   values=','.join(track_class['value'] for track_class in track_classes['track_classes']),
-                   values_searchable='true',
-                   values_sort='false',
-                   use_last_as_default='true',
+          with tag('reference',
+                   ref='track_class',
                    ):
             pass
 
@@ -472,6 +510,9 @@ def presets_xml():
            description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
            ):
     chunk_common_references()
+    chunk_train_protection()
+    chunk_loading_gauge()
+    chunk_track_class()
 
     with(tag('group',
              name='Railway',
