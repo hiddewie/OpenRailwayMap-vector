@@ -79,7 +79,7 @@ def preset_items_railway_lines():
       for feature in [
         {'prefix': '', 'name': description},
         {'prefix': 'construction:', 'name': f'{description} (under construction)'},
-        {'prefix': 'proposed:', 'name': f'{description} railway line (disused)'},
+        {'prefix': 'proposed:', 'name': f'{description} (proposed)'},
         {'prefix': 'abandoned:', 'name': f'{description} (abandoned)'},
         {'prefix': 'disused:', 'name': f'{description} (disused)'},
       ]:
@@ -340,109 +340,128 @@ def preset_items_railway_lines():
             pass
 
 
+def preset_items_signals_for_country(features):
+  for feature in features:
+
+    types = []
+    for ftag in feature['tags']:
+      matches = signal_type_pattern.match(ftag['tag'])
+      if matches:
+        types.append(matches.group('type'))
+
+    with(tag('item',
+             type='node',
+             name=feature['description'],
+             icon=f'symbols/{feature['icon']['default']}.svg',
+             preset_name_label='true',
+             )):
+
+      if 'country' in feature:
+        doc.attr(regions=feature['country'])
+
+      with tag('link',
+               wiki='Tag:railway=signal',
+               ):
+        pass
+
+      with tag('space'):
+        pass
+
+      with tag('combo',
+               text='Signal direction',
+               key='railway:signal:direction',
+               values='forward,backward,both',
+               ):
+        pass
+
+      with tag('key',
+               key='railway',
+               value='signal',
+               ):
+        pass
+
+      for ftag in feature['tags']:
+        if 'value' in ftag:
+          with tag('key',
+                   key=ftag['tag'],
+                   value=ftag['value'],
+                   ): pass
+
+      # TODO better support a combo or multiselect of valid values
+      if 'match' in feature['icon']:
+        with tag('text',
+                 text=feature['icon']['match'],  # TODO generate proper label
+                 key=feature['icon']['match'],
+                 ): pass
+
+      for ftag in feature['tags']:
+        if 'values' in ftag:
+          with tag('combo',
+                   text=ftag['tag'],  # TODO generate proper label
+                   key=ftag['tag'],
+                   values=','.join(ftag['values']),
+                   match='keyvalue!',
+                   use_last_as_default='true',
+                   ): pass
+
+      with tag('optional'):
+        with tag('combo',
+                 text='Signal position',
+                 key='railway:signal:position',
+                 values='right,left,in_track,bridge,overhead,catenary_mast',
+                 short_descriptions='Right,Left,In track,Bridge,Overhead,Catenary mast',
+                 values_sort='false',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Reference',
+                 key='ref',
+                 ):
+          pass
+
+        for type in types:
+          with tag('text',
+                   text='Caption' if len(types) == 1 else f'Caption ({type})',
+                   key=f'railway:signal:{type}:caption',
+                   ):
+            pass
+
+        for type in types:
+          with tag('check',
+                   text='Deactivated' if len(types) == 1 else f'Deactivated ({type})',
+                   key=f'railway:signal:{type}:deactivated',
+                   default='false',
+                   ):
+            pass
+
+        with tag('reference',
+                 ref='common_references',
+                 ):
+          pass
+
+
 def preset_items_signals():
+  all_signals_by_country = {}
+  for feature in all_signals['features']:
+    country = feature.get('country')
+    if country not in all_signals_by_country:
+      all_signals_by_country[country] = []
+    all_signals_by_country[country].append(feature)
+
   with(tag('group',
            name='Signals',
            )):
 
-    for feature in all_signals['features']:
-
-      types = []
-      for ftag in feature['tags']:
-        matches = signal_type_pattern.match(ftag['tag'])
-        if matches:
-          types.append(matches.group('type'))
-
-      with(tag('item',
-               type='node',
-               name=f'{'country' in feature and f'{feature['country']}: ' or ''}{feature['description']}',  # TODO group by country?
-               icon=f'symbols/{feature['icon']['default']}.svg',
-               preset_name_label='true',
-               )):
-
-        if 'country' in feature:
-          doc.attr(regions=feature['country'])
-
-        with tag('link',
-                 wiki='Tag:railway=signal',
-                 ):
-          pass
-
-        with tag('space'):
-          pass
-
-        with tag('combo',
-                 text='Signal direction',
-                 key='railway:signal:direction',
-                 values='forward,backward,both',
-                 ):
-          pass
-
-        with tag('key',
-                 key='railway',
-                 value='signal',
-                 ):
-          pass
-
-        for ftag in feature['tags']:
-          if 'value' in ftag:
-            with tag('key',
-                     key=ftag['tag'],
-                     value=ftag['value'],
-                     ): pass
-
-        # TODO better support a combo or multiselect of valid values
-        if 'match' in feature['icon']:
-          with tag('text',
-                   text=feature['icon']['match'],  # TODO generate proper label
-                   key=feature['icon']['match'],
-                   ): pass
-
-        for ftag in feature['tags']:
-          if 'values' in ftag:
-            with tag('combo',
-                     text=ftag['tag'],  # TODO generate proper label
-                     key=ftag['tag'],
-                     values=','.join(ftag['values']),
-                     match='keyvalue!',
-                     use_last_as_default='true',
-                     ): pass
-
-        with tag('optional'):
-          with tag('combo',
-                   text='Signal position',
-                   key='railway:signal:position',
-                   values='right,left,in_track,bridge,overhead,catenary_mast',
-                   short_descriptions='Right,Left,In track,Bridge,Overhead,Catenary mast',
-                   values_sort='false',
-                   ):
-            pass
-
-          with tag('text',
-                   text='Reference',
-                   key='ref',
-                   ):
-            pass
-
-          for type in types:
-            with tag('text',
-                     text='Caption' if len(types) == 1 else f'Caption ({type})',
-                     key=f'railway:signal:{type}:caption',
-                     ):
-              pass
-
-          for type in types:
-            with tag('check',
-                     text='Deactivated' if len(types) == 1 else f'Deactivated ({type})',
-                     key=f'railway:signal:{type}:deactivated',
-                     default='false',
-                     ):
-              pass
-
-          with tag('reference',
-                   ref='common_references',
-                   ):
-            pass
+    for country, features in all_signals_by_country.items():
+      if country is None:
+        preset_items_signals_for_country(features)
+      else:
+        with(tag('group',
+                 name=country,
+                 regions=country,
+                 )):
+          preset_items_signals_for_country(features)
 
 
 def presets_xml():
