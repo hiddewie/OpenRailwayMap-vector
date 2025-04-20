@@ -10,6 +10,7 @@ loading_gauges = load(open('features/loading_gauge.yaml', 'r'), Loader=Loader)
 poi = load(open('features/poi.yaml', 'r'), Loader=Loader)
 stations = load(open('features/stations.yaml', 'r'), Loader=Loader)
 railway_lines = load(open('features/railway_line.yaml', 'r'), Loader=Loader)
+track_classes = load(open('features/track_class.yaml', 'r'), Loader=Loader)
 
 doc, tag, text = Doc().tagtext()
 doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
@@ -119,41 +120,207 @@ def preset_items_railway_lines():
             pass
 
           with tag('text',
+                   text='Reference',
+                   key=f'ref',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('text',
                    text='Gauge',
                    key=f'{prefix}gauge',
                    use_last_as_default='true',
                    ):
             pass
 
-          with tag('checkbox',
+          with tag('text',
+                   text='Operator',
+                   key='operator',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Reporting marks',
+                   key='reporting_marks',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('check',
                    text='Highspeed',
                    key='highspeed',
                    ):
             pass
 
-          with tag('checkbox',
-                   text='Preserved',
-                   key='railway:preserved',
-                   ):
-            pass
-
-          with tag('choice',
+          with tag('combo',
                    text='Train protection',
                    key=f'train_protection',
                    # TODO get rid of other
                    values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
                    short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   values_searchable='true',
                    values_sort='false',
                    ):
             pass
 
-          with tag('choice',
+          with tag('combo',
                    text='Train protection (under construction)',
                    key='construction:train_protection',
                    # TODO get rid of other
                    values=','.join(train_protection['train_protection'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
                    short_descriptions=','.join(train_protection['legend'] for train_protection in train_protections['train_protections'] if train_protection['train_protection'] != 'other'),
+                   values_searchable='true',
                    values_sort='false',
+                   ):
+            pass
+
+          with tag('check',
+                   text='Bridge',
+                   key='bridge',
+                   ):
+            pass
+
+          # TODO move to bridge/tunnel preset?
+          with tag('text',
+                   text='Bridge name',
+                   key='bridge:name',
+                   ):
+            pass
+
+          with tag('check',
+                   text='Tunnel',
+                   key='tunnel',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Tunnel name',
+                   key='tunnel:name',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Layer',
+                   key='layer',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Max speed',
+                   key='maxspeed',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Max speed (forward)',
+                   key='maxspeed:forward',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Max speed (backward)',
+                   key='maxspeed:backward',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Preferred direction',
+                   key='railway:preferred_direction',
+                   values='forward,backward',
+                   values_sort='false',
+                   ):
+            pass
+
+          with tag('multiselect',
+                   text='Electrification',
+                   key='electrified',
+                   values='contact_line;rail;ground-level_power_supply;4th_rail;yes;no',
+                   values_sort='false',
+                   rows=6,
+                   ):
+            pass
+
+          with tag('text',
+                   text='Voltage',
+                   key='voltage',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Voltage',
+                   key='frequency',
+                   ):
+            pass
+
+          with tag('multiselect',
+                   text='Electrification (under construction)',
+                   key='construction:electrified',
+                   values='contact_line;rail;ground-level_power_supply;4th_rail;yes;no',
+                   values_sort='false',
+                   rows=6,
+                   ):
+            pass
+
+          with tag('text',
+                   text='Voltage',
+                   key='construction:voltage',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Voltage',
+                   key='construction:frequency',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Track reference',
+                   key='railway:track_ref',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Loading gauge',
+                   key='loading_gauge',
+                   values=','.join(loading_gauge['value'] for loading_gauge in loading_gauges['loading_gauges']),
+                   values_sort='false',
+                   values_searchable='true',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Track class',
+                   key='railway:track_class',
+                   values=','.join(track_class['value'] for track_class in track_classes['track_classes']),
+                   values_searchable='true',
+                   values_sort='false',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('check',
+                   text='Preserved',
+                   key='railway:preserved',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Traffic mode',
+                   key='railway:traffic_mode',
+                   values='mixed,passenger,freight',
+                   values_sort='false',
+                   use_last_as_default='true',
+                   ):
+            pass
+
+          with tag('combo',
+                   text='Radio',
+                   key='railway:radio',
+                   values='gsm-r,analogue,trs',
+                   values_sort='false',
+                   use_last_as_default='true',
                    ):
             pass
 
@@ -233,43 +400,41 @@ def preset_items_signals():
                      ): pass
 
         with tag('optional'):
-          pass
+          with tag('combo',
+                   text='Signal position',
+                   key='railway:signal:position',
+                   values='right,left,in_track,bridge,overhead,catenary_mast',
+                   short_descriptions='Right,Left,In track,Bridge,Overhead,Catenary mast',
+                   values_sort='false',
+                   ):
+            pass
 
-        with tag('combo',
-                 text='Signal position',
-                 key='railway:signal:position',
-                 values='right,left,in_track,bridge,overhead,catenary_mast',
-                 short_descriptions='Right,Left,In track,Bridge,Overhead,Catenary mast',
-                 values_sort='false',
-                 ):
-          pass
-
-        with tag('text',
-                 text='Reference',
-                 key='ref',
-                 ):
-          pass
-
-        for type in types:
           with tag('text',
-                   text='Caption' if len(types) == 1 else f'Caption ({type})',
-                   key=f'railway:signal:{type}:caption',
+                   text='Reference',
+                   key='ref',
                    ):
             pass
 
-        for type in types:
-          with tag('check',
-                   text='Deactivated' if len(types) == 1 else f'Deactivated ({type})',
-                   key=f'railway:signal:{type}:deactivated',
-                   default='false',
+          for type in types:
+            with tag('text',
+                     text='Caption' if len(types) == 1 else f'Caption ({type})',
+                     key=f'railway:signal:{type}:caption',
+                     ):
+              pass
+
+          for type in types:
+            with tag('check',
+                     text='Deactivated' if len(types) == 1 else f'Deactivated ({type})',
+                     key=f'railway:signal:{type}:deactivated',
+                     default='false',
+                     ):
+              pass
+
+          # TODO make link to other presets instead
+          with tag('reference',
+                   ref='common_tags',
                    ):
             pass
-
-        # TODO make link to other presets instead
-        with tag('reference',
-                 ref='common_tags',
-                 ):
-          pass
 
 
 def presets_xml():
