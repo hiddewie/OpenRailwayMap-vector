@@ -43,15 +43,6 @@ const preset = {
           '@name': feature.description,
           '@icon': `symbols/${feature.icon.default}.svg`,
           '@regions': feature.country,
-          // '@match_expression':
-          //   feature.tags
-          //     .filter(tag => tag.value)
-          //     .map(tag => `("${tag.tag}"="${tag.value}")`)
-          //     .concat()
-          //     .join(' AND ');
-          //
-          //
-          //   tag.values.map(value => `"${tag.tag}"="${value}"`).join(' OR '),
 
           label: [
             { '@text': feature.description },
@@ -63,6 +54,15 @@ const preset = {
               '@key': tag.tag,
               '@value': tag.value,
             })),
+          // TODO better support a combo or multiselect of valid values
+          text: feature.icon.match
+            ? [
+              {
+                '@text': feature.icon.match, // TODO generate proper label
+                '@key': feature.icon.match,
+              }
+            ]
+            : [],
           combo: feature.tags
             .filter(tag => tag.values)
             .map(tag => ({
@@ -70,6 +70,7 @@ const preset = {
               '@key': tag.tag,
               '@values': tag.values.join(','),
               '@match': 'keyvalue!',
+              '@use_last_as_default': 'true',
             })),
         })),
       }
@@ -77,27 +78,8 @@ const preset = {
   }
 };
 
-//
-// const root = create({ version: '1.0' })
-//   .ele('root', { att: 'val' })
-//     .ele('foo')
-//       .ele('bar').txt('foobar').up()
-//     .up()
-//     .ele('baz').up()
-//   .up();
-
-// const builder = new XMLBuilder();
-
 const document = create({version: '1.0', encoding:'utf-8'}, preset);
 const xml = document.end({ prettyPrint: true });
-// const preset = builder.build({
-//   '?xml': ''
-//   presets: [
-//     {
-//
-//     },
-//   ],
-// });
 
 if (import.meta.url.endsWith(process.argv[1])) {
   console.log(xml)
