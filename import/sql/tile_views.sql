@@ -381,50 +381,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     osm_id,
     osm_type,
     way,
-    -- TODO use features with tags from poi.yaml
-    CASE
-      WHEN railway = 'crossing' THEN 'general/crossing'
-      WHEN railway = 'level_crossing' THEN
-        CASE
-          WHEN crossing_barrier AND crossing_light THEN 'general/level-crossing-light-barrier'
-          WHEN crossing_barrier THEN 'general/level-crossing-barrier'
-          WHEN crossing_light THEN 'general/level-crossing-light'
-          ELSE 'general/level-crossing'
-        END
-      WHEN railway = 'phone' THEN 'general/phone'
-      WHEN railway = 'border' THEN 'general/border'
-      WHEN railway = 'owner_change' THEN 'general/owner-change'
-      WHEN railway = 'lubricator' THEN 'general/lubricator'
-      WHEN railway = 'fuel' THEN 'general/fuel'
-      WHEN railway = 'sand_store' THEN 'general/sand_store'
-      WHEN railway = 'aei' THEN 'general/aei'
-      WHEN railway = 'buffer_stop' THEN 'general/buffer_stop'
-      WHEN railway = 'derail' THEN 'general/derail'
-      WHEN railway = 'defect_detector' THEN 'general/defect_detector'
-      WHEN railway = 'hump_yard' THEN 'general/hump_yard'
-      WHEN railway = 'loading_gauge' THEN 'general/loading_gauge'
-      WHEN railway = 'preheating' THEN 'general/preheating'
-      WHEN railway = 'compressed_air_supply' THEN 'general/compressed_air_supply'
-      WHEN railway = 'waste_disposal' THEN 'general/waste_disposal'
-      WHEN railway = 'coaling_facility' THEN 'general/coaling_facility'
-      WHEN railway = 'wash' THEN 'general/wash'
-      WHEN railway = 'water_tower' THEN 'general/water_tower'
-      WHEN railway = 'water_crane' THEN 'general/water_crane'
-      WHEN railway = 'workshop' THEN 'general/workshop'
-      WHEN railway = 'engine_shed' THEN 'general/engine_shed'
-      WHEN railway = 'museum' THEN 'general/museum'
-      WHEN railway = 'power_supply' THEN 'general/power_supply'
-      WHEN railway = 'rolling_highway' THEN 'general/rolling_highway'
-      WHEN railway = 'radio' THEN
-        CASE
-          WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
-          WHEN man_made = 'antenna' THEN 'general/radio-antenna'
-        END
-    END AS feature,
-    CASE
-      WHEN railway = 'crossing' THEN -1::int
-      ELSE 0
-    END AS priority,
+    feature,
     ref,
     wikidata,
     wikimedia_commons,
@@ -434,28 +391,7 @@ CREATE OR REPLACE VIEW standard_railway_symbols AS
     note,
     description
   FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway')
-
-  UNION ALL
-
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    'general/subway-entrance' as feature,
-    0 as priority,
-    ref,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-    FROM subway_entrances
-
-  ORDER BY priority DESC;
+  ORDER BY rank DESC;
 
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT

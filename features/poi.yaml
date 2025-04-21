@@ -16,11 +16,12 @@ features:
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'radio' }
-      # TODO man_made IN (mast, tower)
+      - { tag: 'man_made', values: ['mast', 'tower'] }
     variants:
       - description: antenna
         feature: 'general/radio-antenna'
         tags:
+          - { tag: 'railway', value: 'radio' }
           - { tag: 'man_made', value: 'antenna' }
 
   - description: Lubricator
@@ -136,6 +137,30 @@ features:
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
 
+  - description: Phone
+    minzoom: 16
+    feature: 'general/phone'
+    tags:
+      - { tag: 'railway', value: 'phone' }
+
+  - description: Subway entrance
+    feature: 'general/subway-entrance'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'subway_entrance' }
+
+  - description: Buffer stop
+    feature: 'general/buffer_stop'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'buffer_stop' }
+
+  - description: Derailer
+    feature: 'general/derail'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'derail' }
+
   - description: Crossing
     feature: 'general/crossing'
     minzoom: 16
@@ -165,27 +190,3 @@ features:
         feature: 'general/level-crossing'
         tags:
           - { tag: 'railway', value: 'level_crossing' }
-
-  - description: Phone
-    minzoom: 16
-    feature: 'general/phone'
-    tags:
-      - { tag: 'railway', value: 'phone' }
-
-  - description: Subway entrance
-    feature: 'general/subway-entrance'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'subway_entrance' }
-
-  - description: Buffer stop
-    feature: 'general/buffer_stop'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'buffer_stop' }
-
-  - description: Derailer
-    feature: 'general/derail'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'derail' }
