@@ -673,13 +673,13 @@ const onStyleChange = () => {
             layers: next.layers.map(layer =>
               layerHasDateFilter(layer)
                 ? {
-                    ...layer,
-                    filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
-                  }
+                  ...layer,
+                  filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
+                }
                 : layer,
             )
           })
-        : undefined,
+          : undefined,
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
@@ -1029,9 +1029,11 @@ map.addControl(new SearchControl(), 'top-left');
 
 const attributionOptions = {
   compact: true,
+  // The field below may be mutated to dynamically add the data freshness information to the existing control
   customAttribution: '<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>',
 }
-map.addControl(new maplibregl.AttributionControl(attributionOptions), 'bottom-right');
+const attributionControl = new maplibregl.AttributionControl(attributionOptions)
+map.addControl(attributionControl, 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
@@ -1210,28 +1212,17 @@ function formatTimespan(timespan) {
   }
 }
 
-// fetch(`${origin}/high`)
-fetch(`https://openrailwaymap.fly.dev/high`)
+fetch(`${origin}/high`)
   .then(response => response.json())
-  .then(source =>{
-    if (source.replication_timestamp	) {
+  .then(source => {
+    if (source.replication_timestamp) {
       const timestamp = new Date(source.replication_timestamp)
       const timespan = new Date().getTime() - timestamp.getTime();
 
-      // map.removeControl(attributionControl)
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated ${formatTimespan(timespan)} ago`
 
-      attributionOptions.customAttribution= `<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a> &mdash; data updated ${formatTimespan(timespan)} ago`
       // Forcefully update the control, even if the map does not fire events.
       attributionControl._updateAttributions();
-      // attributionControl = new maplibregl.AttributionControl({
-      //   compact: true,
-      //   customAttribution:,
-      // })
-      // map.addControl(attributionControl)
-
-      console.info('got replication_timestamp', source.replication_timestamp	)
-    } else {
-      console.info('no replication_timestamp')
     }
   })
   .catch(error => console.error('Error while fetching tile metadata', error));
