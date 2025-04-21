@@ -763,6 +763,98 @@ def preset_items_signal_boxes():
           pass
 
 
+def preset_items_switches():
+  with(tag('item',
+           type='node',
+           name='Switch',
+           icon=f'symbols/general/switch-default.svg',
+           preset_name_label='true',
+           )):
+    with tag('link',
+             wiki=f'Tag:railway=switch',
+             ):
+      pass
+    with tag('key',
+             key=f'railway',
+             value='switch',
+             ):
+      pass
+
+    with tag('space'):
+      pass
+
+    with tag('text',
+             text='Reference',
+             key='ref',
+             ):
+      pass
+
+    with tag('combo',
+             text='Type',
+             key='railway:switch',
+             values='default,three_way,four_way,single_slip,double_slip,wye,abt',
+             values_searchable='true',
+             values_sort='false',
+             ):
+      pass
+
+    with tag('optional'):
+      with tag('combo',
+               text='Turnout direction',
+               key='railway:turnout_side',
+               values='left,right',
+               values_sort='false',
+               ):
+        pass
+
+      with tag('check',
+               text='Heated',
+               key='railway:switch:heated',
+               ):
+        pass
+
+      with tag('check',
+               text='Operated locally',
+               key='railway:local_operated',
+               ):
+        pass
+
+      with tag('check',
+               text='Resetting switch',
+               key='railway:switch:resetting',
+               ):
+        pass
+
+      with tag('check',
+               text='Electric',
+               key='railway:switch:electric',
+               ):
+        pass
+
+      with tag('check',
+               text='Movable frog',
+               key='railway:switch:movable_frog',
+               ):
+        pass
+
+      with tag('text',
+               text='Max speed (straight)',
+               key='railway:maxspeed:straight',
+               ):
+        pass
+
+      with tag('text',
+               text='Max speed (diverging)',
+               key='railway:maxspeed:diverging',
+               ):
+        pass
+
+      with tag('reference',
+               ref='common_references',
+               ):
+        pass
+
+
 def presets_xml():
   with tag('presets',
            author='Hidde Wieringa',
@@ -785,6 +877,7 @@ def presets_xml():
       preset_items_turntables()
       preset_items_stations()
       preset_items_signal_boxes()
+      preset_items_switches()
 
 
 if __name__ == "__main__":
