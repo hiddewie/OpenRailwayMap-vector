@@ -133,26 +133,6 @@ postgres:
         note: string
         description: string
 
-    standard_railway_symbols:
-      schema: public
-      table: standard_railway_symbols
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        osm_type: string
-        feature: string
-        ref: string
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     railway_text_km:
       schema: public
       table: railway_text_km
@@ -294,6 +274,13 @@ postgres:
       schema: public
       function: railway_line_high
       maxzoom: 14
+
+    # --- Standard --- #
+
+    standard_railway_symbols:
+      schema: public
+      function: standard_railway_symbols
+      minzoom: 10
 
     # --- Signals --- #
 

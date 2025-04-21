@@ -35,10 +35,10 @@ local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.vari
   '${tag}',`).join('')}
 }
 
-function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []), feature]).map((feature, featureIndex) => `
-  if ${feature.tags.map(tag => `${tag.value ? `tags['${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags['${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.feature}', ${featureIndex + 1} end`).join('')}
+function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []).map(variant => ({...variant, minzoom: feature.minzoom})), feature]).map((feature, featureIndex) => `
+  if ${feature.tags.map(tag => `${tag.value ? `tags['${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags['${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.feature}', ${featureIndex + 1}, ${feature.minzoom} end`).join('')}
   
-  return nil, 0
+  return nil, 0, 100
 end
 
 return {

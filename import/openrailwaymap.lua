@@ -202,6 +202,7 @@ local pois = osm2pgsql.define_table({
     { column = 'way', type = 'point' },
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
+    { column = 'minzoom', type = 'integer' },
     { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
@@ -643,12 +644,13 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_poi_values(tags.railway) then
-    local feature, rank = tag_functions.poi(tags)
+    local feature, rank, minzoom = tag_functions.poi(tags)
 
     pois:insert({
       way = object:as_point(),
       feature = feature,
       rank = rank,
+      minzoom = minzoom,
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -873,12 +875,13 @@ function osm2pgsql.process_way(object)
   end
 
   if railway_poi_values(tags.railway) then
-    local feature, rank = tag_functions.poi(tags)
+    local feature, rank, minzoom = tag_functions.poi(tags)
 
     pois:insert({
       way = object:as_polygon():centroid(),
       feature = feature,
       rank = rank,
+      minzoom = minzoom,
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,

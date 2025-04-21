@@ -1899,73 +1899,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-width': turntable_casing_width,
       }
     },
-    ...imageLayerWithOutline(
-      theme,
-      'railway_symbols_minzoom_outline_10',
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 10,
-        maxzoom: 12,
-        source: 'openrailwaymap_standard',
-        'source-layer': 'standard_railway_symbols',
-        filter: ['any',
-          ...poi.features
-            .filter(feature => feature.minzoom <= 10)
-            .flatMap(feature => [feature, ...(feature.variants || [])])
-            .map(feature => ['==', ['get', 'feature'], feature.feature])
-        ],
-        layout: {
-          'icon-overlap': 'cooperative',
-        },
-      },
-    ),
-    ...imageLayerWithOutline(
-      theme,
-      'railway_symbols_minzoom_outline_12',
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 12,
-        maxzoom: 13,
-        source: 'openrailwaymap_standard',
-        'source-layer': 'standard_railway_symbols',
-        filter: ['any',
-          ...poi.features
-            .filter(feature => feature.minzoom <= 12)
-            .flatMap(feature => [feature, ...(feature.variants || [])])
-            .map(feature => ['==', ['get', 'feature'], feature.feature])
-        ],
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-        },
-      },
-    ),
-    ...imageLayerWithOutline(
-      theme,
-      'railway_symbols_minzoom_outline_13',
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 13,
-        maxzoom: 16,
-        filter: ['any',
-          ...poi.features
-            .filter(feature => feature.minzoom <= 13)
-            .flatMap(feature => [feature, ...(feature.variants || [])])
-            .map(feature => ['==', ['get', 'feature'], feature.feature])
-        ],
-        source: 'openrailwaymap_standard',
-        'source-layer': 'standard_railway_symbols',
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-        },
-      },
-    ),
     {
-      id: 'railway_symbols_minzoom_16',
+      id: 'railway_symbols_minzoom',
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_standard',
@@ -2009,11 +1944,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     },
     ...imageLayerWithOutline(
       theme,
-      'railway_symbols_minzoom_outline_16',
+      'railway_symbols_minzoom_outline',
       ['get', 'feature'],
       {
         type: 'symbol',
-        minzoom: 16,
+        minzoom: 10,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
         filter: ['all',

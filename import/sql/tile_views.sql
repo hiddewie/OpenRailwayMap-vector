@@ -375,23 +375,67 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   FROM
     grouped_stations_with_route_count;
 
-CREATE OR REPLACE VIEW standard_railway_symbols AS
+CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    feature,
-    ref,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM pois
-  ORDER BY rank DESC;
+    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(
+        way,
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_symbols",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT
