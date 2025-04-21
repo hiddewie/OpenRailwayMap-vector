@@ -1398,8 +1398,14 @@ const preferredDirectionLayer = (theme, id, filter, color) => ({
   'source-layer': 'railway_line_high',
   filter,
   paint: {
-    'icon-color': color,
-    'icon-halo-color': colors[theme].halo,
+    'icon-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+      color,
+    ],
+    'icon-halo-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+      colors[theme].halo,
+    ],
     'icon-halo-width': 2.0,
   },
   layout: {
