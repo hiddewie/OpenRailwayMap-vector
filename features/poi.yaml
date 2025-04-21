@@ -161,6 +161,12 @@ features:
     tags:
       - { tag: 'railway', value: 'derail' }
 
+  - description: Retarder
+    feature: 'general/retarder'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'rail_brake' }
+
   - description: Crossing
     feature: 'general/crossing'
     minzoom: 16
