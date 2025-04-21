@@ -624,10 +624,7 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   minPitch: 0,
   maxPitch: 0,
-  attributionControl: {
-    compact: true,
-    customAttribution: '<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>',
-  },
+  attributionControl: false,
 });
 
 function selectStyle(style) {
@@ -1030,6 +1027,13 @@ map.addControl(new ConfigurationControl());
 
 map.addControl(new SearchControl(), 'top-left');
 
+const attributionOptions = {
+  compact: true,
+  // The field below may be mutated to dynamically add the data freshness information to the existing control
+  customAttribution: '<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>',
+}
+const attributionControl = new maplibregl.AttributionControl(attributionOptions)
+map.addControl(attributionControl, 'bottom-right');
 map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
@@ -1189,6 +1193,39 @@ map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+
+function formatTimespan(timespan) {
+  if (timespan < 60 * 1000) {
+    return '< 1 minute'
+  } else if (timespan < 1.5 * 60 * 1000) {
+    return '1 minute'
+  } else if (timespan < 60 * 60 * 1000) {
+    return `${Math.floor(timespan / (60 * 1000))} minutes`
+  } else if (timespan < 1.5 * 60 * 60 * 1000) {
+    return '1 hour'
+  } else if (timespan < 24 * 60 * 60 * 1000) {
+    return `${Math.floor(timespan / (60 * 60 * 1000))} hours`
+  } else if (timespan < 1.5 * 24 * 60 * 60 * 1000) {
+    return '1 day'
+  } else {
+    return `${Math.floor(timespan / (24 * 60 * 60 * 1000))} days`
+  }
+}
+
+fetch(`${origin}/high`)
+  .then(response => response.json())
+  .then(source => {
+    if (source.replication_timestamp) {
+      const timestamp = new Date(source.replication_timestamp)
+      const timespan = new Date().getTime() - timestamp.getTime();
+
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated <abbr title="${timestamp}">${formatTimespan(timespan)} ago</abbr>`
+
+      // Forcefully update the control, even if the map does not fire events.
+      attributionControl._updateAttributions();
+    }
+  })
+  .catch(error => console.error('Error while fetching tile metadata', error));
 
 let hoveredFeature = null
 map.on('mousemove', event => {

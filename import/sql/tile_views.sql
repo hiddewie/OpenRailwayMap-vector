@@ -375,87 +375,67 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   FROM
     grouped_stations_with_route_count;
 
-CREATE OR REPLACE VIEW standard_railway_symbols AS
+CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    -- TODO use features with tags from poi.yaml
-    CASE
-      WHEN railway = 'crossing' THEN 'general/crossing'
-      WHEN railway = 'level_crossing' THEN
-        CASE
-          WHEN crossing_barrier AND crossing_light THEN 'general/level-crossing-light-barrier'
-          WHEN crossing_barrier THEN 'general/level-crossing-barrier'
-          WHEN crossing_light THEN 'general/level-crossing-light'
-          ELSE 'general/level-crossing'
-        END
-      WHEN railway = 'phone' THEN 'general/phone'
-      WHEN railway = 'border' THEN 'general/border'
-      WHEN railway = 'owner_change' THEN 'general/owner-change'
-      WHEN railway = 'lubricator' THEN 'general/lubricator'
-      WHEN railway = 'fuel' THEN 'general/fuel'
-      WHEN railway = 'sand_store' THEN 'general/sand_store'
-      WHEN railway = 'aei' THEN 'general/aei'
-      WHEN railway = 'buffer_stop' THEN 'general/buffer_stop'
-      WHEN railway = 'derail' THEN 'general/derail'
-      WHEN railway = 'defect_detector' THEN 'general/defect_detector'
-      WHEN railway = 'hump_yard' THEN 'general/hump_yard'
-      WHEN railway = 'loading_gauge' THEN 'general/loading_gauge'
-      WHEN railway = 'preheating' THEN 'general/preheating'
-      WHEN railway = 'compressed_air_supply' THEN 'general/compressed_air_supply'
-      WHEN railway = 'waste_disposal' THEN 'general/waste_disposal'
-      WHEN railway = 'coaling_facility' THEN 'general/coaling_facility'
-      WHEN railway = 'wash' THEN 'general/wash'
-      WHEN railway = 'water_tower' THEN 'general/water_tower'
-      WHEN railway = 'water_crane' THEN 'general/water_crane'
-      WHEN railway = 'workshop' THEN 'general/workshop'
-      WHEN railway = 'engine_shed' THEN 'general/engine_shed'
-      WHEN railway = 'museum' THEN 'general/museum'
-      WHEN railway = 'power_supply' THEN 'general/power_supply'
-      WHEN railway = 'rolling_highway' THEN 'general/rolling_highway'
-      WHEN railway = 'radio' THEN
-        CASE
-          WHEN man_made IN ('mast', 'tower') THEN 'general/radio-mast'
-          WHEN man_made = 'antenna' THEN 'general/radio-antenna'
-        END
-    END AS feature,
-    CASE
-      WHEN railway = 'crossing' THEN -1::int
-      ELSE 0
-    END AS priority,
-    ref,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM pois
-  WHERE railway IN ('crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'sand_store', 'coaling_facility', 'wash', 'water_tower', 'water_crane', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway')
+    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(
+        way,
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
 
-  UNION ALL
-
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    'general/subway-entrance' as feature,
-    0 as priority,
-    ref,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-    FROM subway_entrances
-
-  ORDER BY priority DESC;
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_symbols",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT

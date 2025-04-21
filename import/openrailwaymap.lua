@@ -200,11 +200,10 @@ local pois = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
-    { column = 'railway', type = 'text' },
+    { column = 'feature', type = 'text' },
+    { column = 'rank', type = 'integer' },
+    { column = 'minzoom', type = 'integer' },
     { column = 'ref', type = 'text' },
-    { column = 'man_made', type = 'text' },
-    { column = 'crossing_light', type = 'boolean' },
-    { column = 'crossing_barrier', type = 'boolean' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'image', type = 'text' },
@@ -541,7 +540,7 @@ function split_semicolon_to_sql_array(value)
 end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
-local railway_poi_values = osm2pgsql.make_check_values_func({'crossing', 'level_crossing', 'phone', 'border', 'owner_change', 'radio', 'lubricator', 'fuel', 'wash', 'water_tower', 'water_crane', 'sand_store', 'coaling_facility', 'waste_disposal', 'compressed_air_supply', 'preheating', 'loading_gauge', 'hump_yard', 'defect_detector', 'aei', 'buffer_stop', 'derail', 'workshop', 'engine_shed', 'museum', 'power_supply', 'rolling_highway'})
+local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
@@ -645,12 +644,13 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_poi_values(tags.railway) then
+    local feature, rank, minzoom = tag_functions.poi(tags)
+
     pois:insert({
       way = object:as_point(),
-      railway = tags.railway,
-      man_made = tags.man_made,
-      crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
-      crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      feature = feature,
+      rank = rank,
+      minzoom = minzoom,
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -875,12 +875,13 @@ function osm2pgsql.process_way(object)
   end
 
   if railway_poi_values(tags.railway) then
+    local feature, rank, minzoom = tag_functions.poi(tags)
+
     pois:insert({
       way = object:as_polygon():centroid(),
-      railway = tags.railway,
-      man_made = tags.man_made,
-      crossing_light = tags['crossing:light'] and (tags['crossing:light'] ~= 'no'),
-      crossing_barrier = tags['crossing:barrier'] and (tags['crossing:barrier'] ~= 'no'),
+      feature = feature,
+      rank = rank,
+      minzoom = minzoom,
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
