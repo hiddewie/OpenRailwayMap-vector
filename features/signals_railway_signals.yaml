@@ -1962,36 +1962,36 @@ features:
       match: 'railway:signal:route:states'
       # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-{A}' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-{B}' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-{C}' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-{D}' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-{E}' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-{F}' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-{G}' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-{H}' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-{I}' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-{J}' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-{K}' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-{L}' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-{M}' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-{N}' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-{O}' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-{P}' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-{Q}' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-{R}' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-{S}' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-{T}' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-{U}' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-{V}' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-{W}' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-{X}' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-{Y}' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-{Z}' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-{Ä}' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-{Ö}' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-{Ü}' }
         - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-{ẞ}' }
+        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-{Ü}' }
+        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-{Ö}' }
+        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-{Ä}' }
+        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-{Z}' }
+        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-{Y}' }
+        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-{X}' }
+        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-{W}' }
+        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-{V}' }
+        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-{U}' }
+        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-{T}' }
+        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-{S}' }
+        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-{R}' }
+        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-{Q}' }
+        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-{P}' }
+        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-{O}' }
+        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-{N}' }
+        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-{M}' }
+        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-{L}' }
+        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-{K}' }
+        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-{J}' }
+        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-{I}' }
+        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-{H}' }
+        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-{G}' }
+        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-{F}' }
+        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-{E}' }
+        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-{D}' }
+        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-{C}' }
+        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-{B}' }
+        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-{A}' }
       default: 'de/zs2-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
@@ -2003,36 +2003,36 @@ features:
       match: 'railway:signal:route_distant:states'
       # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2v-{A}' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2v-{B}' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2v-{C}' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2v-{D}' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2v-{E}' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2v-{F}' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2v-{G}' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2v-{H}' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2v-{I}' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2v-{J}' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2v-{K}' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2v-{L}' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2v-{M}' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2v-{N}' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2v-{O}' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2v-{P}' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2v-{Q}' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2v-{R}' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2v-{S}' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2v-{T}' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2v-{U}' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2v-{V}' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2v-{W}' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2v-{X}' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2v-{Y}' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2v-{Z}' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2v-{Ä}' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2v-{Ö}' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2v-{Ü}' }
         - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2v-{ẞ}' }
+        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2v-{Ü}' }
+        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2v-{Ö}' }
+        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2v-{Ä}' }
+        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2v-{Z}' }
+        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2v-{Y}' }
+        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2v-{X}' }
+        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2v-{W}' }
+        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2v-{V}' }
+        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2v-{U}' }
+        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2v-{T}' }
+        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2v-{S}' }
+        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2v-{R}' }
+        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2v-{Q}' }
+        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2v-{P}' }
+        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2v-{O}' }
+        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2v-{N}' }
+        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2v-{M}' }
+        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2v-{L}' }
+        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2v-{K}' }
+        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2v-{J}' }
+        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2v-{I}' }
+        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2v-{H}' }
+        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2v-{G}' }
+        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2v-{F}' }
+        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2v-{E}' }
+        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2v-{D}' }
+        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2v-{C}' }
+        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2v-{B}' }
+        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2v-{A}' }
       default: 'de/zs2v-unknown'
     tags:
       - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
