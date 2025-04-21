@@ -106,6 +106,7 @@ features:
         tags:
           - { tag: 'railway', value: 'water_crane' }
 
+  # TODO these are not part of standard layer
   - description: Axle counter
     feature: 'general/vacancy-detection-axle-counter'
     minzoom: 13
