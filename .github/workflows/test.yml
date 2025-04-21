@@ -236,6 +236,19 @@ jobs:
         run: |
           hurl --test --verbose --variable base_url=http://localhost:8000 test/proxy.hurl
 
+      - name: Download preset
+        if: always()
+        run: |
+          curl -sSf -o preset.zip http://localhost:8000/preset.zip
+
+      - name: Store preset
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: presets
+          path: preset.zip
+          if-no-files-found: warn
+
   test-tiles:
     name: Test tiles
     runs-on: ubuntu-latest
@@ -366,7 +379,7 @@ jobs:
           working-directory: proxy/test/ui
           browser: chrome
 
-      - name: Store
+      - name: Store screenshots
         uses: actions/upload-artifact@v4
         if: always()
         with:
