@@ -2,128 +2,201 @@ features:
   - description: Border crossing
     feature: 'general/border'
     minzoom: 12
+    tags:
+      - { tag: 'railway', value: 'border' }
 
   - description: Owner change
     feature: 'general/owner-change'
     minzoom: 12
+    tags:
+      - { tag: 'railway', value: 'owner_change' }
 
   - description: Radio mast
     feature: 'general/radio-mast'
     minzoom: 12
+    tags:
+      - { tag: 'railway', value: 'radio' }
+      # TODO man_made IN (mast, tower)
     variants:
       - description: antenna
         feature: 'general/radio-antenna'
+        tags:
+          - { tag: 'man_made', value: 'antenna' }
 
   - description: Lubricator
     minzoom: 13
     feature: 'general/lubricator'
+    tags:
+      - { tag: 'railway', value: 'lubricator' }
 
   - description: Fuel
     minzoom: 13
     feature: 'general/fuel'
+    tags:
+      - { tag: 'railway', value: 'fuel' }
 
   - description: Sand store
     minzoom: 13
     feature: 'general/sand_store'
+    tags:
+      - { tag: 'railway', value: 'sand_store' }
 
   - description: Defect detector
     minzoom: 13
     feature: 'general/defect_detector'
+    tags:
+      - { tag: 'railway', value: 'defect_detector' }
 
   - description: Automatic equipment identification
     minzoom: 13
     feature: 'general/aei'
+    tags:
+      - { tag: 'railway', value: 'aei' }
 
   - description: Hump
     minzoom: 13
     feature: 'general/hump_yard'
+    tags:
+      - { tag: 'railway', value: 'hump_yard' }
 
   - description: Loading gauge
     minzoom: 13
     feature: 'general/loading_gauge'
+    tags:
+      - { tag: 'railway', value: 'loading_gauge' }
 
   - description: Preheating
     minzoom: 13
     feature: 'general/preheating'
+    tags:
+      - { tag: 'railway', value: 'preheating' }
 
   - description: Compressed air supply
     minzoom: 13
     feature: 'general/compressed_air_supply'
+    tags:
+      - { tag: 'railway', value: 'compressed_air_supply' }
 
   - description: Waste disposal
     minzoom: 13
     feature: 'general/waste_disposal'
+    tags:
+      - { tag: 'railway', value: 'waste_disposal' }
 
   - description: Coaling facility
     minzoom: 13
     feature: 'general/coaling_facility'
+    tags:
+      - { tag: 'railway', value: 'coaling_facility' }
 
   - description: Wash
     minzoom: 13
     feature: 'general/wash'
+    tags:
+      - { tag: 'railway', value: 'wash' }
 
   - description: Water tower
     feature: 'general/water_tower'
     minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'water_tower' }
     variants:
-    - description: Crane
-      feature: 'general/water_crane'
+      - description: Crane
+        feature: 'general/water_crane'
+        tags:
+          - { tag: 'railway', value: 'water_crane' }
 
   - description: Axle counter
     feature: 'general/vacancy-detection-axle-counter'
     minzoom: 13
+    tags:
+      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
     variants:
-    - description: Insulated rail joint
-      feature: 'general/vacancy-detection-insulated-rail-joint'
+      - description: Insulated rail joint
+        feature: 'general/vacancy-detection-insulated-rail-joint'
+        tags:
+          - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
 
   - description: Workshop
     minzoom: 13
     feature: 'general/workshop'
+    tags:
+      - { tag: 'railway', value: 'workshop' }
 
   - description: Engine Shed
     minzoom: 13
     feature: 'general/engine_shed'
+    tags:
+      - { tag: 'railway', value: 'engine_shed' }
 
   - description: Railway Museum
     minzoom: 13
     feature: 'general/museum'
+    tags:
+      - { tag: 'railway', value: 'museum' }
 
   - description: Power Supply
     minzoom: 13
     feature: 'general/power_supply'
+    tags:
+      - { tag: 'railway', value: 'power_supply' }
 
   - description: Rolling Highway
     minzoom: 13
     feature: 'general/rolling_highway'
+    tags:
+      - { tag: 'railway', value: 'rolling_highway' }
 
   - description: Crossing
     feature: 'general/crossing'
     minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'crossing' }
     variants:
-      - description: Level crossing
-        feature: 'general/level-crossing'
-
-      - description: Level crossing with lights
-        feature: 'general/level-crossing-light'
+      - description: Level crossing with lights and barrier
+        feature: 'general/level-crossing-light-barrier'
+        tags:
+          - { tag: 'railway', value: 'level_crossing' }
+          - { tag: 'crossing:light', values: ['yes', 'traffic_signals', 'traffic_lights', 'traffic_signal'] }
+          - { tag: 'crossing:barrier', values: ['half', 'full', 'double_half', 'yes', 'gate', 'separate', 'lift_gate', 'gates', 'chain', 'closed'] }
 
       - description: Level crossing with barrier
         feature: 'general/level-crossing-barrier'
+        tags:
+          - { tag: 'railway', value: 'level_crossing' }
+          - { tag: 'crossing:barrier', values: ['half', 'full', 'double_half', 'yes', 'gate', 'separate', 'lift_gate', 'gates', 'chain', 'closed'] }
 
-      - description: Level crossing with lights and barrier
-        feature: 'general/level-crossing-light-barrier'
+      - description: Level crossing with lights
+        feature: 'general/level-crossing-light'
+        tags:
+          - { tag: 'railway', value: 'level_crossing' }
+          - { tag: 'crossing:light', values: ['yes', 'traffic_signals', 'traffic_lights', 'traffic_signal'] }
+
+      - description: Level crossing
+        feature: 'general/level-crossing'
+        tags:
+          - { tag: 'railway', value: 'level_crossing' }
 
   - description: Phone
     minzoom: 16
     feature: 'general/phone'
+    tags:
+      - { tag: 'railway', value: 'phone' }
 
   - description: Subway entrance
     feature: 'general/subway-entrance'
     minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'subway_entrance' }
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
     minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'buffer_stop' }
 
   - description: Derailer
     feature: 'general/derail'
     minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'derail' }
