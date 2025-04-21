@@ -106,18 +106,6 @@ features:
         tags:
           - { tag: 'railway', value: 'water_crane' }
 
-  # TODO these are not part of standard layer
-  - description: Axle counter
-    feature: 'general/vacancy-detection-axle-counter'
-    minzoom: 13
-    tags:
-      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
-    variants:
-      - description: Insulated rail joint
-        feature: 'general/vacancy-detection-insulated-rail-joint'
-        tags:
-          - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
-
   - description: Workshop
     minzoom: 13
     feature: 'general/workshop'
