@@ -1956,6 +1956,28 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
+  - description: Richtungsanzeiger (Zs 2)
+    country: DE
+    icon:
+      match: 'railway:signal:route:states'
+      cases:
+        - { regex: '^(.*;)?[K](;.*)?$', value: 'de/zs2-{K}' }
+      default: 'de/zs2-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Richtungsvoranzeiger (Zs 2v)
+    country: DE
+    icon:
+      match: 'railway:signal:route_distant:states'
+      cases:
+        - { regex: '^(.*;)?[K](;.*)?$', value: 'de/zs2v-{K}' }
+      default: 'de/zs2v-unknown'
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
+
   - description: Speed signals (Zs 3v) (sign)
     country: DE
     icon:
