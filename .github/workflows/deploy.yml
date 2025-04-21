@@ -19,11 +19,19 @@ jobs:
       - name: Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+      # Generate a preset version that increments every day whenever the preset is regenerated.
+      # See the version format documentation in https://josm.openstreetmap.de/wiki/TaggingPresets#Thedocumentprologue
+      - name: Generate preset version
+        id: preset-version
+        shell: bash
+        run: |
+          echo "version=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" >> $GITHUB_OUTPUT
+
       - name: Deploy
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
-          flyctl deploy --config proxy.fly.toml --local-only
+          flyctl deploy --config proxy.fly.toml --build-arg 'PRESET_VERSION=${{ steps.preset-version.outputs.version }}' --local-only
 
   generate-tiles-low-med:
     name: Generate low zoom tiles

@@ -22,6 +22,8 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
 
 FROM python:3-alpine AS build-preset
 
+ARG PRESET_VERSION
+
 RUN apk add --no-cache zip
 
 RUN pip install --no-cache-dir \

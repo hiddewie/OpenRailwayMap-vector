@@ -1,3 +1,4 @@
+from os import environ
 import re
 
 from yaml import CLoader as Loader
@@ -903,9 +904,9 @@ def preset_items_milestones():
 def presets_xml():
   with tag('presets',
            author='Hidde Wieringa',
-           version='1.0',
-           shortdescription='OpenRailwayMap preset',
-           description='Preset to tag railway infrastructure such as railway lines, signals and railway places of interest',
+           version=environ.get('PRESET_VERSION', '1.0'),
+           shortdescription='Railways',
+           description='OpenRailwayMap preset to tag railway infrastructure such as railway lines, stations, signals, switches and railway places of interest',
            ):
     chunk_common_references()
     chunk_train_protection()
