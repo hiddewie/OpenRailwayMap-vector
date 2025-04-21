@@ -1908,12 +1908,17 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'railway_symbols_minzoom',
       type: 'symbol',
-      minzoom: 16,
+      minzoom: 12,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'feature'], 'general/buffer_stop'],
-        ['==', ['get', 'feature'], 'general/derail'],
+      filter: ['in',
+        ['get', 'feature'],
+        ['literal',
+          poi.features
+            .flatMap(feature => [feature, ...(feature.variants || [])])
+            .filter(feature => !feature.colored_icon)
+            .map(feature => feature.feature)
+        ],
       ],
       paint: {
         'icon-color': colors[theme].styles.standard.symbols,
@@ -1957,9 +1962,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 10,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        filter: ['all',
-          ['!=', ['get', 'feature'], 'general/buffer_stop'],
-          ['!=', ['get', 'feature'], 'general/derail'],
+        filter: ['in',
+          ['get', 'feature'],
+          ['literal',
+            poi.features
+              .flatMap(feature => [feature, ...(feature.variants || [])])
+              .filter(feature => feature.colored_icon)
+              .map(feature => feature.feature)
+          ],
         ],
         layout: {
           'symbol-z-order': 'source',
@@ -3871,8 +3881,8 @@ const legendData = {
         ]
       },
     ],
-    "openrailwaymap_standard-standard_railway_symbols": [
-      ...poi.features.map(feature => ({
+    "openrailwaymap_standard-standard_railway_symbols":
+      poi.features.map(feature => ({
         legend: feature.description,
         type: 'point',
         minzoom: feature.minzoom,
@@ -3885,8 +3895,7 @@ const legendData = {
             feature: variant.feature,
           },
         })) : undefined,
-      }))
-    ],
+      })),
     "high-railway_text_km": [
       {
         legend: 'Milestone',
