@@ -1219,7 +1219,7 @@ fetch(`${origin}/high`)
       const timestamp = new Date(source.replication_timestamp)
       const timespan = new Date().getTime() - timestamp.getTime();
 
-      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated ${formatTimespan(timespan)} ago`
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated <abbr title="${timestamp}">${formatTimespan(timespan)} ago</abbr>`
 
       // Forcefully update the control, even if the map does not fire events.
       attributionControl._updateAttributions();
