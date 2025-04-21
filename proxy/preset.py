@@ -855,6 +855,51 @@ def preset_items_switches():
         pass
 
 
+def preset_items_milestones():
+  with(tag('item',
+           type='node',
+           name='Milestone',
+           # TODO icon
+           # icon=f'symbols/general/milestone.svg',
+           preset_name_label='true',
+           )):
+    with tag('link',
+             wiki=f'Tag:railway=milestone',
+             ):
+      pass
+    with tag('key',
+             key=f'railway',
+             value='milestone',
+             ):
+      pass
+
+    with tag('space'):
+      pass
+
+    with tag('text',
+             text='Position',
+             key='railway:position',
+             ):
+      pass
+
+    with tag('text',
+             text='Exact position',
+             key='railway:position:exact',
+             ):
+      pass
+
+    with tag('check',
+             text='On catenary mast',
+             key='railway:milestone:catenary_mast',
+             ):
+      pass
+
+    with tag('reference',
+             ref='common_references',
+             ):
+      pass
+
+
 def presets_xml():
   with tag('presets',
            author='Hidde Wieringa',
@@ -878,6 +923,7 @@ def presets_xml():
       preset_items_stations()
       preset_items_signal_boxes()
       preset_items_switches()
+      preset_items_milestones()
 
 
 if __name__ == "__main__":
