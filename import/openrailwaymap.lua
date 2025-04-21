@@ -568,7 +568,7 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  -- TODO parse feature and property properly
+  -- TODO parse feature and state properly
   if railway_station_values(tags['railway'])
      or railway_station_values(tags['construction:railway'])
      or railway_station_values(tags['proposed:railway'])
