@@ -17,6 +17,7 @@ This repository aims to contain all code, configuration and tooling for the Open
 - [Docker](https://www.docker.com/) is used to package the software and data for local development and deployment.
 - Continuous Integration and Deployment is done using [Github Actions](https://docs.github.com/en/actions).
 - Deployment is done using [`fly.io`](https://fly.io/).
+- A preset for [JOSM](https://josm.openstreetmap.de/) is generated for mapping assistance.
 
 ## Changes from the CartoCSS style
 
