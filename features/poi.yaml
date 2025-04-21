@@ -1,7 +1,7 @@
 features:
   - description: Border crossing
     feature: 'general/border'
-    minzoom: 12
+    minzoom: 10
     tags:
       - { tag: 'railway', value: 'border' }
 

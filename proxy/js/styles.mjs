@@ -1906,10 +1906,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       {
         type: 'symbol',
         minzoom: 10,
+        maxzoom: 12,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        // TODO use features from poi.yaml
-        filter: ['==', ['get', 'feature'], 'general/border'],
+        filter: ['any',
+          ...poi.features
+            .filter(feature => feature.minzoom <= 10)
+            .flatMap(feature => [feature, ...(feature.variants || [])])
+            .map(feature => ['==', ['get', 'feature'], feature.feature])
+        ],
         layout: {
           'icon-overlap': 'cooperative',
         },
@@ -1922,13 +1927,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       {
         type: 'symbol',
         minzoom: 12,
+        maxzoom: 13,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        // TODO use features from poi.yaml
         filter: ['any',
-          ['==', ['get', 'feature'], 'general/owner-change'],
-          ['==', ['get', 'feature'], 'general/radio-mast'],
-          ['==', ['get', 'feature'], 'general/radio-antenna'],
+          ...poi.features
+            .filter(feature => feature.minzoom <= 12)
+            .flatMap(feature => [feature, ...(feature.variants || [])])
+            .map(feature => ['==', ['get', 'feature'], feature.feature])
         ],
         layout: {
           'symbol-z-order': 'source',
@@ -1943,32 +1949,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       {
         type: 'symbol',
         minzoom: 13,
+        maxzoom: 16,
+        filter: ['any',
+          ...poi.features
+            .filter(feature => feature.minzoom <= 13)
+            .flatMap(feature => [feature, ...(feature.variants || [])])
+            .map(feature => ['==', ['get', 'feature'], feature.feature])
+        ],
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
-        // TODO use features from poi.yaml
-        filter: ['any',
-          ['==', ['get', 'feature'], 'general/lubricator'],
-          ['==', ['get', 'feature'], 'general/fuel'],
-          ['==', ['get', 'feature'], 'general/sand_store'],
-          ['==', ['get', 'feature'], 'general/aei'],
-          ['==', ['get', 'feature'], 'general/defect_detector'],
-          ['==', ['get', 'feature'], 'general/hump_yard'],
-          ['==', ['get', 'feature'], 'general/loading_gauge'],
-          ['==', ['get', 'feature'], 'general/preheating'],
-          ['==', ['get', 'feature'], 'general/compressed_air_supply'],
-          ['==', ['get', 'feature'], 'general/waste_disposal'],
-          ['==', ['get', 'feature'], 'general/coaling_facility'],
-          ['==', ['get', 'feature'], 'general/wash'],
-          ['==', ['get', 'feature'], 'general/water_tower'],
-          ['==', ['get', 'feature'], 'general/water_crane'],
-          ['==', ['get', 'feature'], 'general/vacancy-detection-insulated-rail-joint'],
-          ['==', ['get', 'feature'], 'general/vacancy-detection-axle-counter'],
-          ['==', ['get', 'feature'], 'general/workshop'],
-          ['==', ['get', 'feature'], 'general/engine_shed'],
-          ['==', ['get', 'feature'], 'general/museum'],
-          ['==', ['get', 'feature'], 'general/power_supply'],
-          ['==', ['get', 'feature'], 'general/rolling_highway'],
-        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -1980,12 +1969,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_standard',
-      // TODO use features from poi.yaml
       'source-layer': 'standard_railway_symbols',
-      filter: ['any',
-        ['==', ['get', 'feature'], 'general/buffer_stop'],
-        ['==', ['get', 'feature'], 'general/derail'],
-      ],
       paint: {
         'icon-color': colors[theme].styles.standard.symbols,
         'icon-halo-color': ['case',
