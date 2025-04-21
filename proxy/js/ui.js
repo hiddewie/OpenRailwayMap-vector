@@ -673,13 +673,13 @@ const onStyleChange = () => {
             layers: next.layers.map(layer =>
               layerHasDateFilter(layer)
                 ? {
-                  ...layer,
-                  filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
-                }
+                    ...layer,
+                    filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
+                  }
                 : layer,
             )
           })
-          : undefined,
+        : undefined,
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
