@@ -18,6 +18,16 @@ doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
 signal_type_pattern = re.compile('^railway:signal:(?P<type>[^:]+)$')
 
 
+def all_states(description):
+  return [
+    {'prefix': '', 'name': description},
+    {'prefix': 'construction:', 'name': f'{description} (under construction)'},
+    {'prefix': 'proposed:', 'name': f'{description} (proposed)'},
+    {'prefix': 'abandoned:', 'name': f'{description} (abandoned)'},
+    {'prefix': 'disused:', 'name': f'{description} (disused)'},
+  ]
+
+
 def chunk_common_references():
   with tag('chunk',
            id='common_references',
@@ -140,14 +150,7 @@ def preset_items_railway_lines():
 
     for item in railway_lines['features']:
       type = item['type']
-      description = item['description']
-      for feature in [
-        {'prefix': '', 'name': description},
-        {'prefix': 'construction:', 'name': f'{description} (under construction)'},
-        {'prefix': 'proposed:', 'name': f'{description} (proposed)'},
-        {'prefix': 'abandoned:', 'name': f'{description} (abandoned)'},
-        {'prefix': 'disused:', 'name': f'{description} (disused)'},
-      ]:
+      for feature in all_states(item['description']):
         prefix = feature['prefix']
 
         with(tag('item',
@@ -504,7 +507,7 @@ def preset_items_signals():
 
 def preset_items_poi(poi):
   with(tag('item',
-           type='node',
+           type='node,way',
            name=poi['description'],
            icon=f'symbols/{poi['feature']}.svg',
            preset_name_label='true',
@@ -548,6 +551,14 @@ def preset_items_poi(poi):
         pass
 
 
+def preset_items_pois():
+  for poi in pois['features']:
+    preset_items_poi(poi)
+    if 'variants' in poi:
+      for variant in poi['variants']:
+        preset_items_poi(variant)
+
+
 def preset_items_turntables():
   preset_items_poi({
     'description': 'Turntable',
@@ -566,12 +577,93 @@ def preset_items_turntables():
   })
 
 
-def preset_items_pois():
-  for poi in pois['features']:
-    preset_items_poi(poi)
-    if 'variants' in poi:
-      for variant in poi['variants']:
-        preset_items_poi(variant)
+def preset_items_stations():
+  for item in stations['features']:
+    for feature in all_states(item['description']):
+      prefix = feature['prefix']
+      with(tag('item',
+               type='node',
+               name=feature['name'],
+               icon=f'symbols/general/{item['feature']}.svg',
+               preset_name_label='true',
+               )):
+        with tag('link',
+                 wiki=f'Tag:{prefix}railway={item['feature']}',
+                 ):
+          pass
+
+        with tag('key',
+                 key=f'{prefix}railway',
+                 value=item['feature'],
+                 ):
+          pass
+
+        with tag('space'):
+          pass
+
+        with tag('text',
+                 text='Name',
+                 key='name',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Short name',
+                 key='short_name',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Railway reference',
+                 key='railway:ref',
+                 ):
+          pass
+
+        if item['feature'] in ['station', 'halt']:
+          with tag('multiselect',
+                   text='Station type',
+                   key=f'{prefix}station',
+                   values='train;subway;light_rail;monorail;funicular;tram;miniature;bus',
+                   values_sort='false',
+                   rows=8,
+                   ):
+            pass
+
+        with tag('optional'):
+          with tag('text',
+                   text='Reference',
+                   key='ref',
+                   ):
+            pass
+
+          with tag('text',
+                   text='UIC reference',
+                   key='uic_ref',
+                   ):
+            pass
+
+          with tag('text',
+                   text='UIC name',
+                   key='uic_name',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Operator',
+                   key='operator',
+                   ):
+            pass
+
+          with tag('text',
+                   text='Network',
+                   key='network',
+                   ):
+            pass
+
+          with tag('reference',
+                   ref='common_references',
+                   ):
+            pass
 
 
 def presets_xml():
@@ -594,6 +686,7 @@ def presets_xml():
       preset_items_signals()
       preset_items_pois()
       preset_items_turntables()
+      preset_items_stations()
 
 
 if __name__ == "__main__":
