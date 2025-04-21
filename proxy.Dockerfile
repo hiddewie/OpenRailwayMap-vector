@@ -30,10 +30,6 @@ RUN pip install --no-cache-dir \
 
 WORKDIR /build
 
-# RUN pip3 install
-# RUN npm install xmlbuilder2
-
-
 RUN --mount=type=bind,source=proxy/preset.py,target=preset.py \
   --mount=type=bind,source=features,target=features \
   python preset.py \
