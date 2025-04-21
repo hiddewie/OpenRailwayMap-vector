@@ -666,6 +666,103 @@ def preset_items_stations():
             pass
 
 
+def preset_items_signal_boxes():
+  for feature in [
+    {'feature': 'signal_box', 'description': 'Signal box'},
+    {'feature': 'crossing_box', 'description': 'Crossing box'},
+    {'feature': 'blockpost', 'description': 'Block post'},
+  ]:
+    with(tag('item',
+             type='node,way',
+             name=feature['description'],
+             # TODO icon
+             # icon=f'symbols/general/{feature['feature[}.svg',
+             preset_name_label='true',
+             )):
+      with tag('link',
+               wiki=f'Tag:railway={feature['feature']}',
+               ):
+        pass
+      with tag('key',
+               key=f'railway',
+               value=feature['feature'],
+               ):
+        pass
+
+      with tag('key',
+               key=f'building',
+               value='yes',
+               ):
+        pass
+
+      with tag('space'):
+        pass
+
+      if feature['feature'] == 'signal_box':
+        with tag('combo',
+                 text='Type',
+                 key='railway:signal_box',
+                 values='mechanical,electric,track_diagram,electronic,yes',
+                 values_searchable='true',
+                 values_sort='false',
+                 ):
+          pass
+
+      with tag('text',
+               text='Name',
+               key='name',
+               ):
+        pass
+
+      with tag('text',
+               text='Railway reference',
+               key='railway:ref',
+               ):
+        pass
+
+      with tag('optional'):
+        with tag('text',
+                 text='Position',
+                 key='railway:position',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Exact position',
+                 key='railway:position:exact',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Operating times',
+                 key='operating_times',
+                 ):
+          pass
+
+        with tag('check',
+                 text='Operated locally',
+                 key='railway:local_operated',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Date of opening',
+                 key='start_date',
+                 ):
+          pass
+
+        with tag('text',
+                 text='Date of closing',
+                 key='end_date',
+                 ):
+          pass
+
+        with tag('reference',
+                 ref='common_references',
+                 ):
+          pass
+
+
 def presets_xml():
   with tag('presets',
            author='Hidde Wieringa',
@@ -687,6 +784,7 @@ def presets_xml():
       preset_items_pois()
       preset_items_turntables()
       preset_items_stations()
+      preset_items_signal_boxes()
 
 
 if __name__ == "__main__":
