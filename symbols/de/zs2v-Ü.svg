@@ -1,52 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="11.999999"
-   height="12"
-   viewBox="0 0 11.999999 12"
-   version="1.1"
-   id="svg3653"
-   sodipodi:docname="zs2v-{Ü}.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs3657" />
-  <sodipodi:namedview
-     id="namedview3655"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="60.2028"
-     inkscape:cx="4.9167148"
-     inkscape:cy="5.6392726"
-     inkscape:window-width="1920"
-     inkscape:window-height="1128"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="text847" />
-  <rect
-     x="-1.2"
-     y="-1.2"
-     width="14.399999"
-     height="14.4"
-     fill="rgb(0%, 0%, 0%)"
-     fill-opacity="1"
-     id="rect3649" />
-  <g
-     aria-label="Ü"
-     id="text847"
-     style="font-size:11.1309px;line-height:1.25;-inkscape-font-specification:sans-serif;font-variant-ligatures:none;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.834819">
-    <path
-       d="m 2.8938913,2.888457 h 1.1033071 v 4.929554 q 0,1.3044024 0.4728458,1.8805134 Q 4.9428901,10.2692 6.002717,10.2692 q 1.054392,0 1.5272378,-0.5706756 Q 8.0028007,9.1224134 8.0028007,7.818011 V 2.888457 h 1.103307 v 5.0654292 q 0,1.5870229 -0.7880764,2.3968398 -0.7826415,0.809816 -2.3153143,0.809816 -1.5381078,0 -2.3261842,-0.809816 Q 2.8938913,9.5409091 2.8938913,7.9538862 Z M 6.513608,0.83945822 H 7.616915 V 1.9427652 H 6.513608 Z m -2.1250889,0 h 1.103307 V 1.9427652 h -1.103307 z"
-       style="fill:#fefc5d;fill-opacity:1"
-       id="path15166" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.999999" height="12" viewBox="0 0 11.999999 12">
+<rect x="-1.2" y="-1.2" width="14.399999" height="14.4" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(99.607843%, 98.823529%, 36.470588%)" fill-opacity="1" d="M 2.894531 2.886719 L 3.996094 2.886719 L 3.996094 7.816406 C 3.996094 8.6875 4.15625 9.3125 4.46875 9.699219 C 4.785156 10.078125 5.296875 10.269531 6.003906 10.269531 C 6.707031 10.269531 7.214844 10.078125 7.53125 9.699219 C 7.84375 9.3125 8.003906 8.6875 8.003906 7.816406 L 8.003906 2.886719 L 9.105469 2.886719 L 9.105469 7.953125 C 9.105469 9.011719 8.84375 9.8125 8.316406 10.351562 C 7.796875 10.890625 7.023438 11.160156 6.003906 11.160156 C 4.976562 11.160156 4.203125 10.890625 3.675781 10.351562 C 3.15625 9.8125 2.894531 9.011719 2.894531 7.953125 Z M 6.511719 0.839844 L 7.617188 0.839844 L 7.617188 1.941406 L 6.511719 1.941406 Z M 4.386719 0.839844 L 5.492188 0.839844 L 5.492188 1.941406 L 4.386719 1.941406 Z M 4.386719 0.839844 "/>
 </svg>

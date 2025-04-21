@@ -1,52 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="11.999999"
-   height="12"
-   viewBox="0 0 11.999999 12"
-   version="1.1"
-   id="svg6"
-   sodipodi:docname="zs2v-{V}.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs10" />
-  <sodipodi:namedview
-     id="namedview8"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="31.674929"
-     inkscape:cx="3.7884852"
-     inkscape:cy="2.4783007"
-     inkscape:window-width="1920"
-     inkscape:window-height="1128"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="text847" />
-  <rect
-     x="-1.2"
-     y="-1.2"
-     width="14.399999"
-     height="14.4"
-     fill="rgb(0%, 0%, 0%)"
-     fill-opacity="1"
-     id="rect2" />
-  <g
-     aria-label="V"
-     id="text847"
-     style="font-size:13.3333px;line-height:1.25;-inkscape-font-specification:sans-serif;font-variant-ligatures:none;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle">
-    <path
-       d="M 5.2545587,10.860014 1.5436306,1.1399864 H 2.917325 L 5.9967443,9.3235595 9.082674,1.1399864 h 1.367184 L 6.7454403,10.860014 Z"
-       style="fill:#fefc5d;fill-opacity:1"
-       id="path16621" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11.999999" height="12" viewBox="0 0 11.999999 12">
+<rect x="-1.2" y="-1.2" width="14.399999" height="14.4" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(99.607843%, 98.823529%, 36.470588%)" fill-opacity="1" d="M 5.253906 10.859375 L 1.542969 1.140625 L 2.917969 1.140625 L 5.996094 9.324219 L 9.082031 1.140625 L 10.449219 1.140625 L 6.746094 10.859375 Z M 5.253906 10.859375 "/>
 </svg>
