@@ -80,7 +80,7 @@ const railwayLineFeatures = {
     railway_lines.features.map(feature => [
       feature.type,
       {
-        name: featutre.description,
+        name: feature.description,
         type: 'line',
       },
     ])
