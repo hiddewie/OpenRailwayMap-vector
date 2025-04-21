@@ -10,7 +10,7 @@ GET {{base_url}}/news.html
 HTTP 200
 Content-Type: text/html
 [Asserts]
-body contains "<em class="flex-fill">April 2025</em>"
+body contains "<em class=\"flex-fill\">April 2025</em>"
 
 # Manifest
 GET {{base_url}}/manifest.json
