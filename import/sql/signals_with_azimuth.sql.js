@@ -10,59 +10,59 @@ const otherFeatureTypes = signals_railway_signals.types.filter(type => !(type.la
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
+// TODO combined features
 const sql = `
+-- Table with functional signal features
+CREATE OR REPLACE VIEW signal_features_view AS
+  SELECT
+    *
+  FROM (
+    ${signals_railway_signals.types.map(type => `
+    SELECT
+      id as signal_id,
+      '${type.type}' as type,
+  
+      CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+        -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+        WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+          THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
+            WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
+            ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
+          END` : `'${feature.icon.default}'`}
+      `).join('')}
+        -- Unknown signal (${type.type})
+        WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+          'general/signal-unknown-${type.type}'
+      END as feature
+      
+    FROM signals s
+    WHERE
+      railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
+`).join(`
+UNION ALL
+`)}
+  ) q
+  WHERE feature IS NOT NULL;
+
+-- Use the view directly such that the query in the view can be updated
+CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
+  SELECT
+    *
+  FROM
+    signal_features_view;
+
+CREATE INDEX IF NOT EXISTS signal_features_id_index
+  ON signal_features
+  USING btree(signal_id);
+
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
--- and the functional signal feature
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   SELECT
-    id,
-    osm_id,
-    s.way as way,
-    railway,
-    ref,
-    ref_multiline,
-    caption,
-    deactivated,
-    signal_direction,
-    dominant_speed,
-    speed_limit_speed,
-    speed_limit_distant_speed,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int ELSE NULL END as voltage,
-    CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+(\\.[0-9]+)?$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
-    rank,
+    id as signal_id,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
-    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth,
-      
-    ${signals_railway_signals.types.map(type => `
-    CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-        THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-          WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
-          ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-        END` : `'${feature.icon.default}'`}
-    `).join('')}
-      -- Unknown signal (${type.type})
-      WHEN "railway:signal:${type.type}" IS NOT NULL THEN
-        'general/signal-unknown-${type.type}'
-    END as feature_${type.type},
-    `).join('')}
-      
-    -- TODO support type per feature
-    CASE ${signals_railway_signals.features.map(feature => feature.type ? `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')} THEN '${feature.type}'
-    ` : '').join('')}
-    END as type
+    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
     
   FROM signals s
   LEFT JOIN LATERAL (
@@ -81,58 +81,97 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   SELECT
     *
   FROM
-    signals_with_azimuth_view
-  WHERE
-    ${signals_railway_signals.types.map(type => `feature_${type.type} IS NOT NULL`).join(' OR ')};
+    signals_with_azimuth_view;
 
-CREATE INDEX IF NOT EXISTS signals_with_azimuth_geom_index
+CREATE INDEX IF NOT EXISTS signals_with_azimuth_id_index
   ON signals_with_azimuth
-  USING GIST(way);
+  USING btree(signal_id);
 
-CREATE OR REPLACE VIEW signals_railway_signal_features AS
-  SELECT *
-  FROM (
-    SELECT
-      signals_with_azimuth.*,
-      -- Build up array of available features
-      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      array_remove(
-        ARRAY[${otherFeatureTypes.map(type => `feature_${type}`).join(', ')}],
-        NULL
-      ) AS features
-    FROM signals_with_azimuth
-  ) AS s
-  WHERE array_length(features, 1) > 0;
-
-CREATE OR REPLACE VIEW speed_railway_signal_features AS
-  SELECT *
-  FROM (
-    SELECT
-      signals_with_azimuth.*,
-      -- Build up array of available features
-      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      array_remove(
-        ARRAY[${speedFeatureTypes.map(type => `feature_${type}`).join(', ')}],
-        NULL
-        ) AS features
-      FROM signals_with_azimuth
-  ) AS s
-  WHERE array_length(features, 1) > 0;
+-- CREATE OR REPLACE VIEW signals_railway_signal_features AS
+--   SELECT
+--     s.*,
+--     sa.azimuth as azimuth,
+--     (
+--       SELECT array_agg(feature) 
+--       FROM signal_features sf 
+--       WHERE sf.signal_id = s.id 
+--         AND sf.type IN (${otherFeatureTypes.map(type => `'${type}'`).join(', ')})
+--     ) as features
+--     -- sf.feature as feature,
+--     -- sf.type as feature_type
+--   FROM signals s
+--   JOIN signals_with_azimuth sa
+--     ON s.id = sa.signal_id
+--   --JOIN signal_features sf
+--   --  ON s.id = sa.signal_id 
+--   --    AND 
+--   WHERE array_length(features, 1) > 0;
+-- 
+-- CREATE OR REPLACE VIEW speed_railway_signal_features AS
+--   SELECT
+--     s.*,
+--     sa.azimuth as azimuth,
+--     (
+--       SELECT array_agg(feature) 
+--       FROM signal_features sf 
+--       WHERE sf.signal_id = s.id 
+--         AND sf.type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')})
+--     ) as features
+--   FROM signals s
+--   JOIN signals_with_azimuth sa
+--     ON s.id = sa.signal_id
+--   WHERE array_length(features, 1) > 0;
 
 CREATE OR REPLACE VIEW electricity_railway_signal_features AS
-  SELECT *
-  FROM (
-    SELECT
-      signals_with_azimuth.*,
-      -- Build up array of available features
-      -- The order of the array is hardcoded, defining the importance of features (earlier is more important)
-      array_remove(
-        ARRAY[${electrificationFeatureTypes.map(type => `feature_${type}`).join(', ')}],
-        NULL
-        ) AS features
-      FROM signals_with_azimuth
-  ) AS s
-  WHERE array_length(features, 1) > 0;
+  SELECT
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.voltage,
+    s.frequency,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description,
+    ANY_VALUE(sa.azimuth) as azimuth,
+    array_agg(feature) as features
+    -- (
+    --   SELECT  
+    --   FROM signal_features sf 
+    --   WHERE sf.signal_id = s.id 
+    --     AND sf.type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')})
+    -- ) as features
+  FROM signals s
+  JOIN signals_with_azimuth sa
+    ON s.id = sa.signal_id
+  JOIN signal_features sf
+    ON s.id = sf.signal_id 
+      AND sf.type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')})
+  GROUP BY 
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.voltage,
+    s.frequency,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description
+    ;
 `
 
 console.log(sql);
