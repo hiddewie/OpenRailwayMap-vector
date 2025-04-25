@@ -1,5 +1,5 @@
-from os import environ
 import re
+from os import environ
 
 from yaml import CLoader as Loader
 from yaml import load
@@ -907,6 +907,8 @@ def presets_xml():
            version=environ.get('PRESET_VERSION', '1.0'),
            shortdescription='Railways',
            description='OpenRailwayMap preset to tag railway infrastructure such as railway lines, stations, signals, switches and railway places of interest',
+           icon='symbols/general/station.svg',
+           link='https://github.com/hiddewie/OpenRailwayMap-vector',
            ):
     chunk_common_references()
     chunk_train_protection()
