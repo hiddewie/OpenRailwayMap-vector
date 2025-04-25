@@ -59,6 +59,8 @@ CREATE INDEX IF NOT EXISTS signal_features_id_index
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
   SELECT
     id as signal_id,
+    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int ELSE NULL END as voltage,
+    CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+(\\.[0-9]+)?$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
       st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
@@ -87,40 +89,92 @@ CREATE INDEX IF NOT EXISTS signals_with_azimuth_id_index
   ON signals_with_azimuth
   USING btree(signal_id);
 
--- CREATE OR REPLACE VIEW signals_railway_signal_features AS
---   SELECT
---     s.*,
---     sa.azimuth as azimuth,
---     (
---       SELECT array_agg(feature) 
---       FROM signal_features sf 
---       WHERE sf.signal_id = s.id 
---         AND sf.type IN (${otherFeatureTypes.map(type => `'${type}'`).join(', ')})
---     ) as features
---     -- sf.feature as feature,
---     -- sf.type as feature_type
---   FROM signals s
---   JOIN signals_with_azimuth sa
---     ON s.id = sa.signal_id
---   --JOIN signal_features sf
---   --  ON s.id = sa.signal_id 
---   --    AND 
---   WHERE array_length(features, 1) > 0;
--- 
--- CREATE OR REPLACE VIEW speed_railway_signal_features AS
---   SELECT
---     s.*,
---     sa.azimuth as azimuth,
---     (
---       SELECT array_agg(feature) 
---       FROM signal_features sf 
---       WHERE sf.signal_id = s.id 
---         AND sf.type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')})
---     ) as features
---   FROM signals s
---   JOIN signals_with_azimuth sa
---     ON s.id = sa.signal_id
---   WHERE array_length(features, 1) > 0;
+CREATE OR REPLACE VIEW signals_railway_signal_features AS
+  SELECT
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description,
+    ANY_VALUE(sa.azimuth) as azimuth,
+    array_agg(sf.feature) as features,
+    ANY_VALUE(sf.type) as type
+    -- ) as features
+    -- sf.feature as feature,
+    -- sf.type as feature_type
+  FROM signals s
+  JOIN signals_with_azimuth sa
+    ON s.id = sa.signal_id
+  JOIN signal_features sf
+    ON s.id = sf.signal_id 
+      AND sf.type IN (${otherFeatureTypes.map(type => `'${type}'`).join(', ')})
+  GROUP BY 
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description
+;
+
+CREATE OR REPLACE VIEW speed_railway_signal_features AS
+  SELECT
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description,
+    ANY_VALUE(sa.azimuth) as azimuth,
+    array_agg(sf.feature) as features,
+    ANY_VALUE(sf.type) as type
+  FROM signals s
+  JOIN signals_with_azimuth sa
+    ON s.id = sa.signal_id
+  JOIN signal_features sf
+    ON s.id = sf.signal_id 
+      AND sf.type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')})
+  GROUP BY 
+    s.id,
+    s.osm_id,
+    s.way,
+    s.signal_direction,
+    s.ref,
+    s.caption,
+    s.deactivated,
+    s.wikidata,
+    s.wikimedia_commons,
+    s.image,
+    s.mapillary,
+    s.wikipedia,
+    s.note,
+    s.description
+;
 
 CREATE OR REPLACE VIEW electricity_railway_signal_features AS
   SELECT
@@ -131,8 +185,8 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
     s.ref,
     s.caption,
     s.deactivated,
-    s.voltage,
-    s.frequency,
+    ANY_VALUE(sa.voltage) as voltage,
+    ANY_VALUE(sa.frequency) as frequency,
     s.wikidata,
     s.wikimedia_commons,
     s.image,
@@ -141,7 +195,8 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
     s.note,
     s.description,
     ANY_VALUE(sa.azimuth) as azimuth,
-    array_agg(feature) as features
+    array_agg(sf.feature) as features,
+    ANY_VALUE(sf.type) as type
     -- (
     --   SELECT  
     --   FROM signal_features sf 
@@ -162,8 +217,8 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
     s.ref,
     s.caption,
     s.deactivated,
-    s.voltage,
-    s.frequency,
+    sa.voltage,
+    sa.frequency,
     s.wikidata,
     s.wikimedia_commons,
     s.image,
@@ -171,7 +226,7 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
     s.wikipedia,
     s.note,
     s.description
-    ;
+;
 `
 
 console.log(sql);
