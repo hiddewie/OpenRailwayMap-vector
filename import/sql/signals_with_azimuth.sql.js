@@ -47,10 +47,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
             END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}
         `).join('')}
           -- Unknown signal (${type.type})
-          WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+          ELSE
             ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
         END as feature
       FROM signals s
+      WHERE "railway:signal:${type.type}" IS NOT NULL
     ) sf
     WHERE feature[1] IS NOT NULL
   `).join(`
