@@ -625,7 +625,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     id,
     osm_id,
     way,
-    feature_electricity as feature,
+    features[1] as feature,
     azimuth,
     (signal_direction = 'both') as direction_both,
     ref,
