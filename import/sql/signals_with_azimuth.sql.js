@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     signal_id,
     any_value(type) as type,
     layer,
-    array_agg(feature ORDER BY rank DESC NULLS LAST) as features
+    array_agg(feature ORDER BY rank ASC NULLS LAST) as features
   FROM signals_with_features sf
   GROUP BY signal_id, layer;
 
