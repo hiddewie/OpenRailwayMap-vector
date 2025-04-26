@@ -10,7 +10,6 @@ const otherFeatureTypes = signals_railway_signals.types.filter(type => !(type.la
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
-// TODO combined features
 const sql = `
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
