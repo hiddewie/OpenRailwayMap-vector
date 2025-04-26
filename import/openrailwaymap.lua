@@ -539,6 +539,10 @@ function split_semicolon_to_sql_array(value)
   return result .. '}'
 end
 
+function semicolon_to_record_separator(value)
+  return value and value:gsub(";", "\u{001E}") or nil
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -711,8 +715,8 @@ function osm2pgsql.process_node(object)
       signal_direction = tags['railway:signal:direction'],
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
-      speed_limit_speed = tags['railway:signal:speed_limit:speed'],
-      speed_limit_distant_speed = tags['railway:signal:speed_limit_distant:speed'],
+      speed_limit_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit:speed']),
+      speed_limit_distant_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit_distant:speed']),
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
       caption = signal_caption(tags),
       wikidata = tags.wikidata,
