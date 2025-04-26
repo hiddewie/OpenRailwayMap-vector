@@ -31,10 +31,10 @@ END $$;
 
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
+  ${signals_railway_signals.types.map(type => `
   SELECT
     *
   FROM (
-    ${signals_railway_signals.types.map(type => `
     SELECT
       id as signal_id,
       '${type.type}'::signal_type as type,
@@ -56,11 +56,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
     FROM signals s
     WHERE
       railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
+  ) sf
+  WHERE feature IS NOT NULL
 `).join(`
-UNION ALL
-`)}
-  ) q
-  WHERE feature IS NOT NULL;
+  UNION ALL
+`)};
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
