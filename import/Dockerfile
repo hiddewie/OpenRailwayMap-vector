@@ -52,6 +52,8 @@ COPY import/docker-startup.sh docker-startup.sh
 COPY import/openrailwaymap.lua openrailwaymap.lua
 COPY import/osmium-tags-filter osmium-tags-filter
 
+RUN echo '\\timing' >> ~/.psqlrc
+
 COPY --from=build-lua \
   /build/tags.lua tags.lua
 

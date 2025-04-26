@@ -8,6 +8,7 @@ set -o pipefail
 OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
+# For debugging, add --echo-queries
 PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
 
 function filter_data() {
