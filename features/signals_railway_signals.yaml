@@ -121,37 +121,37 @@ tags:
 
 # Define an ordering for determining importance of signal types
 types:
-  - { type: main }
-  - { type: combined }
-  - { type: distant }
-  - { type: train_protection }
-  - { type: main_repeated }
+  - { type: main, layer: signals }
+  - { type: combined, layer: signals }
+  - { type: distant, layer: signals }
+  - { type: train_protection, layer: signals }
+  - { type: main_repeated, layer: signals }
   - { type: speed_limit, layer: speed }
   - { type: speed_limit_distant, layer: speed }
-  - { type: minor }
-  - { type: passing }
-  - { type: shunting }
-  - { type: radio }
-  - { type: stop }
-  - { type: stop_demand }
-  - { type: station_distant }
-  - { type: crossing }
-  - { type: crossing_distant }
-  - { type: crossing_info }
-  - { type: crossing_hint }
-  - { type: ring }
-  - { type: whistle }
+  - { type: minor, layer: signals }
+  - { type: passing, layer: signals }
+  - { type: shunting, layer: signals }
+  - { type: radio, layer: signals }
+  - { type: stop, layer: signals }
+  - { type: stop_demand, layer: signals }
+  - { type: station_distant, layer: signals }
+  - { type: crossing, layer: signals }
+  - { type: crossing_distant, layer: signals }
+  - { type: crossing_info, layer: signals }
+  - { type: crossing_hint, layer: signals }
+  - { type: ring, layer: signals }
+  - { type: whistle, layer: signals }
   - { type: electricity, layer: electrification }
-  - { type: departure }
-  - { type: resetting_switch }
-  - { type: resetting_switch_distant }
-  - { type: humping }
-  - { type: snowplow }
-  - { type: wrong_road }
-  - { type: short_route }
-  - { type: route }
-  - { type: brake_test }
-  - { type: helper_engine }
+  - { type: departure, layer: signals }
+  - { type: resetting_switch, layer: signals }
+  - { type: resetting_switch_distant, layer: signals }
+  - { type: humping, layer: signals }
+  - { type: snowplow, layer: signals }
+  - { type: wrong_road, layer: signals }
+  - { type: short_route, layer: signals }
+  - { type: route, layer: signals }
+  - { type: brake_test, layer: signals }
+  - { type: helper_engine, layer: signals }
 
 features:
 

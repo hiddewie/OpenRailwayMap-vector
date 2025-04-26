@@ -5,12 +5,21 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const speedFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'speed').map(type => type.type);
 const electrificationFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'electrification').map(type => type.type);
-const otherFeatureTypes = signals_railway_signals.types.filter(type => !(type.layer === 'speed' || type.layer === 'electrification')).map(type => type.type);
+const otherFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'signals').map(type => type.type);
 
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
 const sql = `
+CREATE TYPE signal_layer AS ENUM (
+  'speed',
+  'electrification',
+  'signals'
+);
+CREATE TYPE signal_type AS ENUM (${signals_railway_signals.types.map(type => `
+  '${type.type}'`).join(',')}
+);
+
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
   SELECT
@@ -19,7 +28,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
     ${signals_railway_signals.types.map(type => `
     SELECT
       id as signal_id,
-      '${type.type}' as type,
+      '${type.type}'::signal_type as type,
+      '${type.layer}'::signal_layer as layer,
   
       CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
         -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}

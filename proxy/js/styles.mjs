@@ -4759,7 +4759,7 @@ const legendData = {
           direction_both: false,
         },
       },
-      ...signal_types.filter(type => !['speed', 'electrification'].includes(type.layer)).map(type => ({
+      ...signal_types.filter(type => type.layer === 'signals').map(type => ({
         legend: `unknown signal (${type.type})`,
         type: 'point',
         properties: {
