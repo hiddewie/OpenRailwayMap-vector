@@ -25,13 +25,11 @@ function filter_data() {
 }
 
 function import_db() {
-  echo "Creating default database"
-  psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || createdb gis
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_topology;'
-  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
+  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
 
   echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database

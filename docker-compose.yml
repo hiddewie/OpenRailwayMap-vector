@@ -3,9 +3,6 @@ services:
     image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
       context: db
-    command: |
-      postgres 
-      -c shared_preload_libraries='pg_stat_statements'
     ports:
       - '5432:5432'
     shm_size: 1g
@@ -14,8 +11,9 @@ services:
       - PG_WORK_MEM
       - PG_MAINTENANCE_WORK_MEM
       - PGDATA=/var/lib/postgresql/postgres-data
+      - POSTGRES_DB=gis
     healthcheck:
-      test: pg_isready -U postgres
+      test: pg_isready -U postgres -d gis
       interval: 1s
       timeout: 1s
       retries: 3
