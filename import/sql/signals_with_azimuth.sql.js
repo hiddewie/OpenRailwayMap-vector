@@ -71,7 +71,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
 
 CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
   ON signal_features
-  USING btree(signal_id, type);
+  USING btree(signal_id, layer);
 
 CLUSTER signal_features 
   USING signal_features_signal_id_index;
@@ -79,17 +79,17 @@ CLUSTER signal_features
 CREATE OR REPLACE VIEW speed_signal_features AS
   SELECT *
   FROM signal_features
-  WHERE type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')});
+  WHERE layer = 'speed';
 
 CREATE OR REPLACE VIEW electrification_signal_features AS
   SELECT *
   FROM signal_features
-  WHERE type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')});
+  WHERE layer = 'electrification';
 
 CREATE OR REPLACE VIEW signal_signal_features AS
   SELECT *
   FROM signal_features
-  WHERE type IN (${signalFeatureTypes.map(type => `'${type}'`).join(', ')});
+  WHERE layer = 'signals';
 
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
