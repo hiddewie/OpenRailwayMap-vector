@@ -51,8 +51,6 @@ CREATE OR REPLACE VIEW signal_features_view AS
             ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
         END as feature
       FROM signals s
-      WHERE
-        railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
     ) sf
     WHERE feature[1] IS NOT NULL
   `).join(`
