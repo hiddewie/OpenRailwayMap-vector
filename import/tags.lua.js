@@ -19,12 +19,6 @@ local signal_tags = {${signals_railway_signals.tags.map(tag => `
   '${tag}',`).join('')}
 }
 
-function signal_rank(tags)${signals_railway_signals.types.map((type, typeIndex) => `
-  if tags['railway:signal:${type.type}'] then return ${signals_railway_signals.types.length - typeIndex} end`).join('')}
-  
-  return 0
-end
-
 function signal_deactivated(tags)
   return (${signals_railway_signals.types.map((type, typeIndex) => `
     tags['railway:signal:${type.type}:deactivated']${(typeIndex < signals_railway_signals.types.length - 1) ? ' or' : ''}`).join('')}
@@ -44,7 +38,6 @@ end
 return {
   train_protection = train_protection,
   signal_tags = signal_tags,
-  signal_rank = signal_rank,
   signal_deactivated = signal_deactivated,
   poi_railway_values = poi_railway_values,
   poi = poi,

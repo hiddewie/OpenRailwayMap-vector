@@ -287,7 +287,6 @@ local signal_columns = {
   { column = 'id', sql_type = 'serial', create_only = true },
   { column = 'way', type = 'point' },
   { column = 'railway', type = 'text' },
-  { column = 'rank', type = 'smallint' },
   { column = 'deactivated', type = 'boolean' },
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
@@ -713,7 +712,6 @@ function osm2pgsql.process_node(object)
     local signal = {
       way = object:as_point(),
       railway = tags.railway,
-      rank = tag_functions.signal_rank(tags),
       deactivated = tag_functions.signal_deactivated(tags),
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
