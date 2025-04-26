@@ -5,7 +5,7 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const speedFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'speed').map(type => type.type);
 const electrificationFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'electrification').map(type => type.type);
-const otherFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'signals').map(type => type.type);
+const signalFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'signals').map(type => type.type);
 
 /**
  * Template that builds the SQL view taking the YAML configuration into account
@@ -71,10 +71,25 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
 
 CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
   ON signal_features
-  USING btree(signal_id);
-  
+  USING btree(signal_id, type);
+
 CLUSTER signal_features 
   USING signal_features_signal_id_index;
+
+CREATE OR REPLACE VIEW speed_signal_features AS
+  SELECT *
+  FROM signal_features
+  WHERE type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')});
+
+CREATE OR REPLACE VIEW electrification_signal_features AS
+  SELECT *
+  FROM signal_features
+  WHERE type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')});
+
+CREATE OR REPLACE VIEW signal_signal_features AS
+  SELECT *
+  FROM signal_features
+  WHERE type IN (${signalFeatureTypes.map(type => `'${type}'`).join(', ')});
 
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
@@ -112,152 +127,6 @@ CREATE INDEX IF NOT EXISTS signals_with_azimuth_signal_id_index
   
 CLUSTER signals_with_azimuth 
   USING signals_with_azimuth_signal_id_index;
-
-CREATE OR REPLACE VIEW signals_railway_signal_features AS
-  SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.ref_multiline,
-    s.caption,
-    s.deactivated,
-    s.rank,
-    s.railway,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    ANY_VALUE(sa.azimuth) as azimuth,
-    array_agg(sf.feature) as features,
-    ANY_VALUE(sf.type) as type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN signal_features sf
-    ON s.id = sf.signal_id 
-      AND sf.type IN (${otherFeatureTypes.map(type => `'${type}'`).join(', ')})
-  GROUP BY 
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.ref_multiline,
-    s.rank,
-    s.railway,
-    s.caption,
-    s.deactivated,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description
-;
-
-CREATE OR REPLACE VIEW speed_railway_signal_features AS
-  SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.rank,
-    s.dominant_speed,
-    s.caption,
-    s.deactivated,
-    s.speed_limit_speed,
-    s.speed_limit_distant_speed,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    ANY_VALUE(sa.azimuth) as azimuth,
-    array_agg(sf.feature) as features,
-    ANY_VALUE(sf.type) as type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN signal_features sf
-    ON s.id = sf.signal_id 
-      AND sf.type IN (${speedFeatureTypes.map(type => `'${type}'`).join(', ')})
-  GROUP BY 
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.rank,
-    s.dominant_speed,
-    s.caption,
-    s.deactivated,
-    s.speed_limit_speed,
-    s.speed_limit_distant_speed,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description
-;
-
-CREATE OR REPLACE VIEW electricity_railway_signal_features AS
-  SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.rank,
-    s.caption,
-    s.deactivated,
-    ANY_VALUE(sa.voltage) as voltage,
-    ANY_VALUE(sa.frequency) as frequency,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    ANY_VALUE(sa.azimuth) as azimuth,
-    array_agg(sf.feature) as features,
-    ANY_VALUE(sf.type) as type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN signal_features sf
-    ON s.id = sf.signal_id 
-      AND sf.type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')})
-  GROUP BY 
-    s.id,
-    s.osm_id,
-    s.way,
-    s.signal_direction,
-    s.ref,
-    s.rank,
-    s.caption,
-    s.deactivated,
-    sa.voltage,
-    sa.frequency,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description
-;
 `
 
 console.log(sql);
