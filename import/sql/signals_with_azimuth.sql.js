@@ -29,22 +29,6 @@ EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
 
-CREATE TABLE IF NOT EXISTS signal_features_data (
-  feature TEXT NOT NULL,
-  type TEXT,
-  layer signal_layer NOT NULL,
-  rank INT NOT NULL
-);
-TRUNCATE signal_features_data;
-INSERT INTO signal_features_data
-  VALUES
-  ${signals_railway_signals.features.filter(feature => feature.tags.some(it => it.tag.match(/^railway:signal:[^:]+$/))).map((feature, index) => ({type: feature.tags.find(it => it.tag.match(/^railway:signal:[^:]+$/)).tag.replace(/^railway:signal:([^:]+)$/, '$1'), feature, index})).flatMap(({feature, type, index}) => [{feature: feature.icon.default, type: feature.type, layer: layerByType[type], index}, ...((feature.icon.cases || []).map(iconCase => ({feature: iconCase.value.replace(/\{[^}]+}/, '{}'), type: feature.type, layer: layerByType[type], index})))]).map(({feature, type, layer, index}) => `
-    ('${feature}', ${type ? `'${type}'` : 'NULL'}, '${layer}', ${index})`).join(',')};
-
-CREATE INDEX IF NOT EXISTS signal_features_data_feature_index 
-  ON signal_features_data
-  USING btree(feature);
-
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
   WITH signals_with_features_0 AS (
@@ -58,9 +42,9 @@ CREATE OR REPLACE VIEW signal_features_view AS
           -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
           WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
             THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", '${feature.type}', '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']`}`).join('')}
-              ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']` : ''}
-            END` : `ARRAY['${feature.icon.default}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']`}
+              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
+              ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
+            END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}
         `).join('')}
           -- Unknown signal (${type.type})
           WHEN "railway:signal:${type.type}" IS NOT NULL THEN
@@ -81,7 +65,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature[1] as feature,
       feature[2] as feature_variable,
       feature[3] as type,
-      feature[4] as layer,
+      feature[4]::signal_layer as layer,
       feature[5]::INT as rank
     FROM signals_with_features_0
   )
