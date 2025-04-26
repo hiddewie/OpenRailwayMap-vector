@@ -86,6 +86,11 @@ function refresh_materialized_views() {
   $PSQL -f sql/update_station_importance.sql
 }
 
+function analyze() {
+  echo "Analyze data"
+  $PSQL -c "VACUUM ANALYZE"
+}
+
 function print_summary() {
   echo "Database summary"
   $PSQL -c "select concat(relname, ' (', relkind ,')') as name, pg_size_pretty(pg_table_size(oid)) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%' order by pg_table_size(oid) desc;"
@@ -99,6 +104,7 @@ import)
   import_db
   reduce_data
   create_update_functions_views
+  analyze
   print_summary
 
   ;;
@@ -114,6 +120,7 @@ refresh)
 
   create_update_functions_views
   refresh_materialized_views
+  analyze
   print_summary
 
   ;;
