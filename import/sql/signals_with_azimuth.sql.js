@@ -51,9 +51,12 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
   FROM
     signal_features_view;
 
-CREATE INDEX IF NOT EXISTS signal_features_id_index
+CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
   ON signal_features
   USING btree(signal_id);
+  
+CLUSTER signal_features 
+  USING signal_features_signal_id_index;
 
 -- Table with signals including their azimuth based on the direction of the signal and the railway line
 CREATE OR REPLACE VIEW signals_with_azimuth_view AS
@@ -85,9 +88,12 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
   FROM
     signals_with_azimuth_view;
 
-CREATE INDEX IF NOT EXISTS signals_with_azimuth_id_index
+CREATE INDEX IF NOT EXISTS signals_with_azimuth_signal_id_index
   ON signals_with_azimuth
   USING btree(signal_id);
+  
+CLUSTER signals_with_azimuth 
+  USING signals_with_azimuth_signal_id_index;
 
 CREATE OR REPLACE VIEW signals_railway_signal_features AS
   SELECT
@@ -111,9 +117,6 @@ CREATE OR REPLACE VIEW signals_railway_signal_features AS
     ANY_VALUE(sa.azimuth) as azimuth,
     array_agg(sf.feature) as features,
     ANY_VALUE(sf.type) as type
-    -- ) as features
-    -- sf.feature as feature,
-    -- sf.type as feature_type
   FROM signals s
   JOIN signals_with_azimuth sa
     ON s.id = sa.signal_id
@@ -212,12 +215,6 @@ CREATE OR REPLACE VIEW electricity_railway_signal_features AS
     ANY_VALUE(sa.azimuth) as azimuth,
     array_agg(sf.feature) as features,
     ANY_VALUE(sf.type) as type
-    -- (
-    --   SELECT  
-    --   FROM signal_features sf 
-    --   WHERE sf.signal_id = s.id 
-    --     AND sf.type IN (${electrificationFeatureTypes.map(type => `'${type}'`).join(', ')})
-    -- ) as features
   FROM signals s
   JOIN signals_with_azimuth sa
     ON s.id = sa.signal_id
