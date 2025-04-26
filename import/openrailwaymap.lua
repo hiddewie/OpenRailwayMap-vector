@@ -310,13 +310,6 @@ local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = signal_columns,
-  indexes = {
-    -- For joining signal features with this table
-    { column = 'id', method = 'btree', unique = true },
-    { column = 'way', method = 'gist' },
-  },
-  -- The queried table is signals_with_azimuth
-  cluster = 'no',
 })
 
 local boxes = osm2pgsql.define_table({
