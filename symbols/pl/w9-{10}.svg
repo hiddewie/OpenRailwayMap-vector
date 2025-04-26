@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="400" height="599.7" version="1.1" viewBox="0 0 105.83 158.67" xmlns="http://www.w3.org/2000/svg">
- <g transform="matrix(.26445 0 0 .26445 .026585 0)" stroke="#000" stroke-width="40">
+<svg width="15.341" height="23" version="1.1" viewBox="0 0 4.0589 6.0854" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.010142 0 0 .010142 -.00043876 0)" stroke="#000" stroke-width="40">
   <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
-  <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
+  <path d="M 18.531,40 200.001,504.99 381.471,40" fill="none"/>
  </g>
- <path d="m61.648 11.906h-8.7313l-8.7312 17.462h8.7312v43.656h8.7313z" stroke-miterlimit="5" stroke-width="8.7312"/>
+ <path d="m2.3629 0.45662h-0.33487l-0.33486 0.66971h0.33486v1.6743h0.33487z" stroke-miterlimit="5" stroke-width=".33486"/>
 </svg>
