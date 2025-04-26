@@ -13,6 +13,7 @@ tags:
   - 'railway:signal:crossing:repeated'
   - 'railway:signal:crossing:shortened'
   - 'railway:signal:crossing_distant'
+  - 'railway:signal:crossing_distant:states'
   - 'railway:signal:crossing_distant:shortened'
   - 'railway:signal:crossing_distant:form'
   - 'railway:signal:crossing_hint'
@@ -79,6 +80,9 @@ tags:
   - 'railway:signal:route:design'
   - 'railway:signal:route:form'
   - 'railway:signal:route:states'
+  - 'railway:signal:route_distant'
+  - 'railway:signal:route_distant:form'
+  - 'railway:signal:route_distant:states'
   - 'railway:signal:short_route'
   - 'railway:signal:short_route:form'
   - 'railway:signal:shunting'
@@ -119,7 +123,6 @@ tags:
   - 'railway:vacancy_detection'
   - 'railway:signal:position'
 
-# Define an ordering for determining importance of signal types
 types:
   - { type: main, layer: signals }
   - { type: combined, layer: signals }
@@ -129,6 +132,7 @@ types:
   - { type: speed_limit, layer: speed }
   - { type: speed_limit_distant, layer: speed }
   - { type: minor, layer: signals }
+  - { type: minor_distant, layer: signals }
   - { type: passing, layer: signals }
   - { type: shunting, layer: signals }
   - { type: radio, layer: signals }
@@ -150,8 +154,12 @@ types:
   - { type: wrong_road, layer: signals }
   - { type: short_route, layer: signals }
   - { type: route, layer: signals }
+  - { type: route_distant, layer: signals }
   - { type: brake_test, layer: signals }
   - { type: helper_engine, layer: signals }
+  - { type: steam_locomotive, layer: signals }
+  - { type: fouling_point, layer: signals }
+  - { type: preheating, layer: signals }
 
 features:
 
@@ -1874,13 +1882,13 @@ features:
   - description: Karlsruhe AVG crossing signals
     country: DE
     icon:
-      match: 'railway:signal:distant_crossing:states'
+      match: 'railway:signal:crossing_distant:states'
       cases:
         - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
       default: 'de/avg/bue201'
     tags:
-      - { tag: 'railway:signal:distant_crossing', value: 'DE-AVG:bü201' }
-      - { tag: 'railway:signal:distant_crossing:form', value: 'light' }
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü201' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'light' }
 
   - description: Karlsruhe AVG Stop Demand
     country: DE

@@ -3,9 +3,9 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
-const speedFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'speed').map(type => type.type);
-const electrificationFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'electrification').map(type => type.type);
-const signalFeatureTypes = signals_railway_signals.types.filter(type => type.layer === 'signals').map(type => type.type);
+const layerByType = Object.fromEntries(
+  signals_railway_signals.types.map(type => [type.type, type.layer])
+);
 
 /**
  * Template that builds the SQL view taking the YAML configuration into account
@@ -29,38 +29,65 @@ EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
 
+drop table signal_features_data;
+CREATE TABLE IF NOT EXISTS signal_features_data (
+  feature TEXT NOT NULL,
+  type TEXT,
+  layer signal_layer NOT NULL,
+  rank INT NOT NULL
+);
+TRUNCATE signal_features_data;
+INSERT INTO signal_features_data
+  VALUES
+  ${signals_railway_signals.features.filter(feature => feature.tags.some(it => it.tag.match(/^railway:signal:[^:]+$/))).map((feature, index) => ({type: feature.tags.find(it => it.tag.match(/^railway:signal:[^:]+$/)).tag.replace(/^railway:signal:([^:]+)$/, '$1'), feature, index})).flatMap(({feature, type, index}) => [{feature: feature.icon.default, type: feature.type, layer: layerByType[type], index}, ...((feature.icon.cases || []).map(iconCase => ({feature: iconCase.value, type: feature.type, layer: layerByType[type], index})))]).map(({feature, type, layer, index}) => `
+    ('${feature}', ${type ? `'${type}'` : 'NULL'}, '${layer}', ${index})`).join(',')};
+
+CREATE INDEX IF NOT EXISTS signal_features_data_feature_index 
+  ON signal_features_data
+  USING btree(feature);
+
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
-  ${signals_railway_signals.types.map(type => `
-  SELECT
-    *
-  FROM (
+  WITH signals_with_features AS (
+    ${signals_railway_signals.types.map(type => `
     SELECT
-      id as signal_id,
-      '${type.type}'::signal_type as type,
-      '${type.layer}'::signal_layer as layer,
-  
-      CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
-        -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-        WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-          THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-            WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
-            ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-          END` : `'${feature.icon.default}'`}
-      `).join('')}
-        -- Unknown signal (${type.type})
-        WHEN "railway:signal:${type.type}" IS NOT NULL THEN
-          'general/signal-unknown-${type.type}'
-      END as feature
-      
-    FROM signals s
-    WHERE
-      railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
-  ) sf
-  WHERE feature IS NOT NULL
-`).join(`
-  UNION ALL
-`)};
+      *
+    FROM (
+      SELECT
+        id,
+        CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+          -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+          WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+            THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
+              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
+              ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
+            END` : `'${feature.icon.default}'`}
+        `).join('')}
+          -- Unknown signal (${type.type})
+          WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+            'general/signal-unknown-${type.type}'
+        END as feature
+        
+      FROM signals s
+      WHERE
+        railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
+    ) sf
+    WHERE feature IS NOT NULL
+  `).join(`
+    UNION ALL
+  `)}
+  )
+  SELECT
+    s.id as signal_id,
+    any_value(sfd.type) as type,
+    sfd.layer,
+    array_agg(sfd.feature ORDER BY sfd.rank) as features
+  FROM signals_with_features sf
+  JOIN signals s
+    ON sf.id = s.id
+  JOIN signal_features_data sfd
+    ON sf.feature = sfd.feature
+  GROUP BY s.id, sfd.layer;
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS

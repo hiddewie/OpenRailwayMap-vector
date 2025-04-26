@@ -497,14 +497,6 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 --- Speed ---
 
 CREATE OR REPLACE VIEW speed_railway_signals AS
-  WITH grouped_features AS (
-    SELECT
-      sf.signal_id,
-      ARRAY_AGG(feature) as features,
-      ANY_VALUE(type) as type
-    FROM speed_signal_features sf
-    GROUP BY sf.signal_id
-  )
   SELECT
     s.id,
     s.osm_id,
@@ -531,7 +523,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
   FROM signals s
   JOIN signals_with_azimuth sa
     ON s.id = sa.signal_id
-  JOIN grouped_features sf
+  JOIN speed_signal_features sf
     ON s.id = sf.signal_id
   ORDER BY
     rank NULLS FIRST,
@@ -606,14 +598,6 @@ DO $do$ BEGIN
 END $do$;
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
-  WITH grouped_features AS (
-    SELECT
-      sf.signal_id,
-      ARRAY_AGG(feature) as features,
-      ANY_VALUE(type) as type
-    FROM signal_signal_features sf
-    GROUP BY sf.signal_id
-  )
   SELECT
     s.id,
     s.osm_id,
@@ -642,7 +626,7 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
   FROM signals s
   JOIN signals_with_azimuth sa
     ON s.id = sa.signal_id
-  JOIN grouped_features sf
+  JOIN signal_signal_features sf
     ON s.id = sf.signal_id
   ORDER BY rank NULLS FIRST;
 
@@ -669,7 +653,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     s.note,
     s.description,
     sa.azimuth,
-    sf.feature,
+    sf.features[1] as feature,
     sf.type as type
   FROM signals s
   JOIN signals_with_azimuth sa
