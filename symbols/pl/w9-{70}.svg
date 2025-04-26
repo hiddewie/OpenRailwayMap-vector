@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="22.5" viewBox="0 0 15 22.5">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 15 0 L 15 22.5 L 0 22.5 Z M 0 0 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.5 1.5 L 13.5 1.5 L 13.5 21 L 1.5 21 Z M 1.5 1.5 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 1.5 0.75 L 1.5 1.5 L 7.554688 21 L 13.5 1.5 L 13.5 0.75 L 12 0.75 L 7.5 16.5 L 3 0.75 Z M 1.5 0.75 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.027344 4.753906 L 6.027344 2.683594 L 10.125 2.683594 L 10.125 3.714844 L 7.6875 9.886719 L 6.53125 9.886719 L 8.972656 3.714844 L 7.0625 3.714844 L 7.0625 4.753906 Z M 6.027344 4.753906 "/>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="400" height="599.7" version="1.1" viewBox="0 0 105.83 158.67" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.26445 0 0 .26445 .026585 0)" stroke="#000" stroke-width="40">
+  <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
+  <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
+ </g>
+ <path d="m35.454 11.906v8.7312h25.234l-25.234 52.388h9.6914l25.234-52.388v-8.7312z"/>
 </svg>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="400" height="599.7" version="1.1" viewBox="0 0 105.83 158.67" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.26445 0 0 .26445 .026585 0)" stroke="#000" stroke-width="40">
+  <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
+  <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
+ </g>
+ <g transform="matrix(.5 0 0 .5 -153.46 -189.18)">
+  <path d="m386.06 402.17c-1.9669 0.0191-3.952 0.31365-5.9004 0.9033-8.9068 2.6956-15.035 10.954-15.035 20.26h10.582c0-4.6868 3.0315-8.7715 7.5174-10.129s9.2743 0.35988 11.873 4.2602c2.5988 3.9002 2.3413 8.9815-0.63872 12.599-9e-5 1e-4 8e-5 4.1e-4 0 5.1e-4l-29.335 35.603v10.583h42.333v-10.583h-28.62l23.79-28.874c-4.5252-3.7287-4.5258-3.7292 0-5.2e-4 5.9175-7.182 6.4395-17.451 1.2795-25.195-3.87-5.8081-10.282-9.2152-17.004-9.418-0.28007-8e-3 -0.56083-0.0115-0.84181-9e-3z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="-inkscape-stroke:none;font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m439.21 402.17a21.167 21.167 0 0 0-21.167 21.167v31.75a21.167 21.167 0 0 0 21.167 21.167 21.167 21.167 0 0 0 21.167-21.167v-31.75a21.167 21.167 0 0 0-21.167-21.167zm0 10.583a10.583 10.583 0 0 1 10.583 10.583v31.75a10.583 10.583 0 0 1-10.583 10.583 10.583 10.583 0 0 1-10.583-10.583v-31.75a10.583 10.583 0 0 1 10.583-10.583z"/>
+ </g>
+</svg>

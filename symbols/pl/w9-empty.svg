@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="22.5" viewBox="0 0 15 22.5">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 15 0 L 15 22.5 L 0 22.5 Z M 0 0 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.5 1.5 L 13.5 1.5 L 13.5 21 L 1.5 21 Z M 1.5 1.5 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 1.5 21 L 1.5 20.25 L 7.554688 0.75 L 13.5 20.25 L 13.5 21 L 12 21 L 7.5 5.25 L 3 21 Z M 1.5 21 "/>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="15.341" height="23" version="1.1" viewBox="0 0 4.059 6.0854" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.010142 0 0 -.010142 .0010196 6.0854)" stroke="#000" stroke-width="40">
+  <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
+  <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
+ </g>
 </svg>

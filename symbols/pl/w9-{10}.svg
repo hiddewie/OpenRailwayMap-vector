@@ -5,5 +5,5 @@
   <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
   <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
  </g>
- <path d="m61.648 11.906-26.194 34.925v8.7312h26.194v17.463h8.7312v-61.119zm0 14.552v20.373h-15.28z"/>
+ <path d="m61.648 11.906h-8.7313l-8.7312 17.462h8.7312v43.656h8.7313z" stroke-miterlimit="5" stroke-width="8.7312"/>
 </svg>
