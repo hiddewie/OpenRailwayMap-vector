@@ -29,7 +29,6 @@ EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
 
-drop table signal_features_data;
 CREATE TABLE IF NOT EXISTS signal_features_data (
   feature TEXT NOT NULL,
   type TEXT,
@@ -39,7 +38,7 @@ CREATE TABLE IF NOT EXISTS signal_features_data (
 TRUNCATE signal_features_data;
 INSERT INTO signal_features_data
   VALUES
-  ${signals_railway_signals.features.filter(feature => feature.tags.some(it => it.tag.match(/^railway:signal:[^:]+$/))).map((feature, index) => ({type: feature.tags.find(it => it.tag.match(/^railway:signal:[^:]+$/)).tag.replace(/^railway:signal:([^:]+)$/, '$1'), feature, index})).flatMap(({feature, type, index}) => [{feature: feature.icon.default, type: feature.type, layer: layerByType[type], index}, ...((feature.icon.cases || []).map(iconCase => ({feature: iconCase.value, type: feature.type, layer: layerByType[type], index})))]).map(({feature, type, layer, index}) => `
+  ${signals_railway_signals.features.filter(feature => feature.tags.some(it => it.tag.match(/^railway:signal:[^:]+$/))).map((feature, index) => ({type: feature.tags.find(it => it.tag.match(/^railway:signal:[^:]+$/)).tag.replace(/^railway:signal:([^:]+)$/, '$1'), feature, index})).flatMap(({feature, type, index}) => [{feature: feature.icon.default, type: feature.type, layer: layerByType[type], index}, ...((feature.icon.cases || []).map(iconCase => ({feature: iconCase.value.replace(/\{[^}]+}/, '{}'), type: feature.type, layer: layerByType[type], index})))]).map(({feature, type, layer, index}) => `
     ('${feature}', ${type ? `'${type}'` : 'NULL'}, '${layer}', ${index})`).join(',')};
 
 CREATE INDEX IF NOT EXISTS signal_features_data_feature_index 
@@ -48,46 +47,51 @@ CREATE INDEX IF NOT EXISTS signal_features_data_feature_index
 
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
-  WITH signals_with_features AS (
+  WITH signals_with_features_0 AS (
     ${signals_railway_signals.types.map(type => `
     SELECT
       *
     FROM (
       SELECT
-        id,
-        CASE ${signals_railway_signals.features.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+        id as signal_id,
+        CASE ${signals_railway_signals.features.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
           -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
           WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
             THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}')` : `'${iconCase.value}'`}`).join('')}
-              ${feature.icon.default ? `ELSE '${feature.icon.default}'` : ''}
-            END` : `'${feature.icon.default}'`}
+              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", '${feature.type}', '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']`}`).join('')}
+              ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']` : ''}
+            END` : `ARRAY['${feature.icon.default}', NULL, '${feature.type}', '${type.layer}', '${feature.rank}']`}
         `).join('')}
           -- Unknown signal (${type.type})
           WHEN "railway:signal:${type.type}" IS NOT NULL THEN
-            'general/signal-unknown-${type.type}'
+            ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
         END as feature
-        
       FROM signals s
       WHERE
         railway IN ('signal', 'buffer_stop', 'derail', 'vacancy_detection')
     ) sf
-    WHERE feature IS NOT NULL
+    WHERE feature[1] IS NOT NULL
   `).join(`
     UNION ALL
   `)}
+  ),
+  signals_with_features AS (
+    SELECT
+      signal_id,
+      feature[1] as feature,
+      feature[2] as feature_variable,
+      feature[3] as type,
+      feature[4] as layer,
+      feature[5]::INT as rank
+    FROM signals_with_features_0
   )
   SELECT
-    s.id as signal_id,
-    any_value(sfd.type) as type,
-    sfd.layer,
-    array_agg(sfd.feature ORDER BY sfd.rank) as features
+    signal_id,
+    any_value(type) as type,
+    layer,
+    array_agg(feature ORDER BY rank DESC NULLS LAST) as features
   FROM signals_with_features sf
-  JOIN signals s
-    ON sf.id = s.id
-  JOIN signal_features_data sfd
-    ON sf.feature = sfd.feature
-  GROUP BY s.id, sfd.layer;
+  GROUP BY signal_id, layer;
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
