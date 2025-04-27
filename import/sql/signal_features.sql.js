@@ -118,21 +118,6 @@ CREATE INDEX IF NOT EXISTS signal_features_way_index
 
 CLUSTER signal_features 
   USING signal_features_way_index;
-
-CREATE OR REPLACE VIEW speed_signal_features AS
-  SELECT *
-  FROM signal_features
-  WHERE layer = 'speed';
-
-CREATE OR REPLACE VIEW electrification_signal_features AS
-  SELECT *
-  FROM signal_features
-  WHERE layer = 'electrification';
-
-CREATE OR REPLACE VIEW signal_signal_features AS
-  SELECT *
-  FROM signal_features
-  WHERE layer = 'signals';
 `
 
 console.log(sql);

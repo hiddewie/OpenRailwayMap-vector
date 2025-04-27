@@ -519,7 +519,8 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     features[1] as feature0,
     features[2] as feature1,
     type
-  FROM speed_signal_features
+  FROM signal_features
+  WHERE layer = 'speed'
   ORDER BY
     rank NULLS FIRST,
     dominant_speed DESC NULLS FIRST;
@@ -617,7 +618,8 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     features[4] as feature3,
     features[5] as feature4,
     type
-  FROM signal_signal_features
+  FROM signal_features
+  WHERE layer = 'signals'
   ORDER BY rank NULLS FIRST;
 
 --- Electrification ---
@@ -643,5 +645,6 @@ CREATE OR REPLACE VIEW electrification_signals AS
     azimuth,
     features[1] as feature,
     type as type
-  FROM electrification_signal_features
+  FROM signal_features
+  WHERE layer = 'electrification'
   ORDER BY rank NULLS FIRST;
