@@ -31,43 +31,42 @@ END $$;
 
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
+  -- For every type of signal, generate the feature and related metadata
   WITH signals_with_features_0 AS (
+    SELECT
+      id as signal_id,
+      ${signals_railway_signals.types.map(type => `
+      CASE ${signals_railway_signals.features.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+        -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+        WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+          THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
+            WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
+            ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
+          END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}
+      `).join('')}
+        -- Unknown signal (${type.type})
+        WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+          ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
+      END as feature_${type.type}`).join(',')}
+    FROM signals s
+  ),
+  -- Output a feature row for every feature
+  signals_with_features_1 AS (
     ${signals_railway_signals.types.map(type => `
     SELECT
-      *
-    FROM (
-      SELECT
-        id as signal_id,
-        CASE ${signals_railway_signals.features.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
-          -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-          WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
-            THEN ${feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-              WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
-              ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
-            END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}
-        `).join('')}
-          -- Unknown signal (${type.type})
-          ELSE
-            ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
-        END as feature
-      FROM signals s
-      WHERE "railway:signal:${type.type}" IS NOT NULL
-    ) sf
-    WHERE feature[1] IS NOT NULL
+      signal_id,
+      feature_${type.type}[1] as feature,
+      feature_${type.type}[2] as feature_variable,
+      feature_${type.type}[3] as type,
+      feature_${type.type}[4]::signal_layer as layer,
+      feature_${type.type}[5]::INT as rank
+    FROM signals_with_features_0
+    WHERE feature_${type.type} IS NOT NULL
   `).join(`
     UNION ALL
   `)}
   ),
-  signals_with_features_1 AS (
-    SELECT
-      signal_id,
-      feature[1] as feature,
-      feature[2] as feature_variable,
-      feature[3] as type,
-      feature[4]::signal_layer as layer,
-      feature[5]::INT as rank
-    FROM signals_with_features_0
-  ),
+  -- Group features by signal, and aggregate the results
   signals_with_features AS (
     SELECT
       signal_id,
@@ -78,6 +77,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     FROM signals_with_features_1 sf
     GROUP BY signal_id, layer
   )
+  -- Calculate signal-specific details like fields, azimuth and features
   SELECT
     s.*,
     sf.type,
