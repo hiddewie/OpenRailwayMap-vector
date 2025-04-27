@@ -75,14 +75,14 @@ function reduce_data() {
 function create_update_functions_views() {
   echo "Post processing imported data"
   $PSQL -f sql/functions.sql
-  $PSQL -f sql/signals_with_azimuth.sql
+  $PSQL -f sql/signal_features.sql
   $PSQL -f sql/get_station_importance.sql
   $PSQL -f sql/tile_views.sql
 }
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
-  $PSQL -f sql/update_signals_with_azimuth.sql
+  $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
 }
 

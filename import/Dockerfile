@@ -17,10 +17,10 @@ WORKDIR /build
 
 RUN npm install yaml
 
-RUN --mount=type=bind,source=import/sql/signals_with_azimuth.sql.js,target=signals_with_azimuth.sql.js \
+RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_features.sql.js \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
-  node signals_with_azimuth.sql.js \
-    > /build/signals_with_azimuth.sql
+  node signal_features.sql.js \
+    > /build/signal_features.sql
 
 FROM debian:trixie-slim
 
@@ -58,7 +58,7 @@ COPY --from=build-lua \
   /build/tags.lua tags.lua
 
 COPY --from=build-signals \
-  /build/signals_with_azimuth.sql sql/signals_with_azimuth.sql
+  /build/signal_features.sql sql/signal_features.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 
