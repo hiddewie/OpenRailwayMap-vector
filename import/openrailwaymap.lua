@@ -306,17 +306,12 @@ local signal_columns = {
 for _, tag in ipairs(tag_functions.signal_tags) do
   table.insert(signal_columns, { column = tag, type = 'text' })
 end
-local signal_index_columns = {
-    { column = 'way', method = 'gist' },
-}
-for _, type in ipairs(tag_functions.signal_types) do
-  table.insert(signal_index_columns, { method = 'btree', expression = ('("railway:signal:' .. type .. '" IS NOT NULL)') })
-end
 local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = signal_columns,
-  indexes = signal_index_columns,
+  -- The queried table is signal_features
+  cluster = 'no',
 })
 
 local boxes = osm2pgsql.define_table({

@@ -15,9 +15,6 @@ function train_protection(tags, prefix)${signals_railway_line.features.map((feat
   return nil, 0
 end
 
-local signal_types = {${signals_railway_signals.types.map(type => `
-  '${type.type}',`).join('')}
-}
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
   '${tag}',`).join('')}
 }
@@ -40,7 +37,6 @@ end
 
 return {
   train_protection = train_protection,
-  signal_types = signal_types,
   signal_tags = signal_tags,
   signal_deactivated = signal_deactivated,
   poi_railway_values = poi_railway_values,
