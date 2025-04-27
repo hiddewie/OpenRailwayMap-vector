@@ -58,7 +58,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     UNION ALL
   `)}
   ),
-  signals_with_features AS (
+  signals_with_features_1 AS (
     SELECT
       signal_id,
       feature[1] as feature,
@@ -67,15 +67,43 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature[4]::signal_layer as layer,
       feature[5]::INT as rank
     FROM signals_with_features_0
+  ),
+  signals_with_features AS (
+    SELECT
+      signal_id,
+      any_value(type) as type,
+      layer,
+      array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
+      MAX(rank) as rank
+    FROM signals_with_features_1 sf
+    GROUP BY signal_id, layer
   )
   SELECT
-    signal_id,
-    any_value(type) as type,
-    layer,
-    array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
-    MAX(rank) as rank
+    s.*,
+    sf.type,
+    sf.layer,
+    sf.features,
+    sf.rank,
+    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int ELSE NULL END as voltage,
+    CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+(\\.[0-9]+)?$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
+    (signal_direction = 'both') as direction_both,
+    degrees(ST_Azimuth(
+      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
+      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
+    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
   FROM signals_with_features sf
-  GROUP BY signal_id, layer;
+  JOIN signals s
+    ON s.id = sf.signal_id
+  LEFT JOIN LATERAL (
+    SELECT line.way as way
+    FROM railway_line line
+    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature', 'funicular')
+    ORDER BY s.way <-> line.way
+    LIMIT 1
+  ) as sl ON true
+  WHERE
+    (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
+      OR railway IN ('derail', 'vacancy_detection');
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
@@ -84,12 +112,12 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
   FROM
     signal_features_view;
 
-CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
+CREATE INDEX IF NOT EXISTS signal_features_way_index
   ON signal_features
-  USING btree(signal_id, layer);
+  USING gist(way);
 
 CLUSTER signal_features 
-  USING signal_features_signal_id_index;
+  USING signal_features_way_index;
 
 CREATE OR REPLACE VIEW speed_signal_features AS
   SELECT *
@@ -105,44 +133,6 @@ CREATE OR REPLACE VIEW signal_signal_features AS
   SELECT *
   FROM signal_features
   WHERE layer = 'signals';
-
--- Table with signals including their azimuth based on the direction of the signal and the railway line
-CREATE OR REPLACE VIEW signals_with_azimuth_view AS
-  SELECT
-    id as signal_id,
-    CASE WHEN "railway:signal:electricity:voltage" ~ '^[0-9]+$' then "railway:signal:electricity:voltage"::int ELSE NULL END as voltage,
-    CASE WHEN "railway:signal:electricity:frequency" ~ '^[0-9]+(\\.[0-9]+)?$' then "railway:signal:electricity:frequency"::real ELSE NULL END as frequency,
-    (signal_direction = 'both') as direction_both,
-    degrees(ST_Azimuth(
-      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
-      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
-    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
-    
-  FROM signals s
-  LEFT JOIN LATERAL (
-    SELECT line.way as way
-    FROM railway_line line
-    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature', 'funicular')
-    ORDER BY s.way <-> line.way
-    LIMIT 1
-  ) as sl ON true
-  WHERE
-    (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-      OR railway IN ('derail', 'vacancy_detection');
-
--- Use the view directly such that the query in the view can be updated
-CREATE MATERIALIZED VIEW IF NOT EXISTS signals_with_azimuth AS
-  SELECT
-    *
-  FROM
-    signals_with_azimuth_view;
-
-CREATE INDEX IF NOT EXISTS signals_with_azimuth_signal_id_index
-  ON signals_with_azimuth
-  USING btree(signal_id);
-  
-CLUSTER signals_with_azimuth 
-  USING signals_with_azimuth_signal_id_index;
 `
 
 console.log(sql);

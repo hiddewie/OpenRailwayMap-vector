@@ -498,32 +498,28 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
 
 CREATE OR REPLACE VIEW speed_railway_signals AS
   SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    sa.direction_both,
-    s.ref,
-    s.dominant_speed,
-    s.caption,
-    s.deactivated,
-    s.speed_limit_speed,
-    s.speed_limit_distant_speed,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    sa.azimuth,
-    sf.features[1] as feature0,
-    sf.features[2] as feature1,
-    sf.type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN speed_signal_features sf
-    ON s.id = sf.signal_id
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    dominant_speed,
+    caption,
+    deactivated,
+    speed_limit_speed,
+    speed_limit_distant_speed,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    features[1] as feature0,
+    features[2] as feature1,
+    type
+  FROM speed_signal_features
   ORDER BY
     rank NULLS FIRST,
     dominant_speed DESC NULLS FIRST;
@@ -598,63 +594,54 @@ END $do$;
 
 CREATE OR REPLACE VIEW signals_railway_signals AS
   SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    sa.direction_both,
-    s.ref,
-    s.ref_multiline,
-    s.caption,
-    s.deactivated,
-    s.railway,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    sa.azimuth,
-    sf.features[1] as feature0,
-    sf.features[2] as feature1,
-    sf.features[3] as feature2,
-    sf.features[4] as feature3,
-    sf.features[5] as feature4,
-    sf.type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN signal_signal_features sf
-    ON s.id = sf.signal_id
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    ref_multiline,
+    caption,
+    deactivated,
+    railway,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    type
+  FROM signal_signal_features
   ORDER BY rank NULLS FIRST;
 
 --- Electrification ---
 
 CREATE OR REPLACE VIEW electrification_signals AS
-  -- Contains a single feature per signal
   SELECT
-    s.id,
-    s.osm_id,
-    s.way,
-    sa.direction_both,
-    s.ref,
-    s.caption,
-    s.deactivated,
-    sa.voltage,
-    sa.frequency,
-    s.wikidata,
-    s.wikimedia_commons,
-    s.image,
-    s.mapillary,
-    s.wikipedia,
-    s.note,
-    s.description,
-    sa.azimuth,
-    sf.features[1] as feature,
-    sf.type as type
-  FROM signals s
-  JOIN signals_with_azimuth sa
-    ON s.id = sa.signal_id
-  JOIN electrification_signal_features sf
-    ON s.id = sf.signal_id
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    caption,
+    deactivated,
+    voltage,
+    frequency,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    features[1] as feature,
+    type as type
+  FROM electrification_signal_features
   ORDER BY rank NULLS FIRST;
