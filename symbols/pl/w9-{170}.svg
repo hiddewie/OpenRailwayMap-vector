@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="15.341" height="23" version="1.1" viewBox="0 0 4.0589 6.0854" xmlns="http://www.w3.org/2000/svg">
- <g transform="matrix(.010142 0 0 .010142 -.00043876 0)" stroke="#000" stroke-width="40">
-  <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
-  <path d="M 18.531,40 200.001,504.99 381.471,40" fill="none"/>
- </g>
- <path d="m1.6475 0.45662h-0.25369l-0.25369 0.50736h0.25369v1.2684h0.25369z" stroke-miterlimit="5" stroke-width=".25369"/>
- <path d="m1.9012 0.45662v0.25369h0.73315l-0.73315 1.5221h0.28158l0.73315-1.5221v-0.25369z" stroke-width=".038352"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15.341" height="23" viewBox="0 0 15.341 23">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 20.013693 19.973482 L 380.045898 19.973482 L 380.045898 580.046225 L 20.013693 580.046225 Z M 20.013693 19.973482 " transform="matrix(0.0383321, 0, 0, 0.0383321, -0.00154136, 0)"/>
+<path fill="none" stroke-width="40" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 18.48511 40.04887 L 199.978843 504.941856 L 381.472575 40.04887 " transform="matrix(0.0383321, 0, 0, 0.0383321, -0.00154136, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.226562 1.726562 L 5.269531 1.726562 L 4.308594 3.644531 L 5.269531 3.644531 L 5.269531 8.4375 L 6.226562 8.4375 Z M 6.226562 1.726562 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 7.1875 1.726562 L 7.1875 2.683594 L 9.957031 2.683594 L 7.1875 8.4375 L 8.25 8.4375 L 11.019531 2.683594 L 11.019531 1.726562 Z M 7.1875 1.726562 "/>
 </svg>

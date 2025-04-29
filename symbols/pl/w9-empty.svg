@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="15.341" height="23" version="1.1" viewBox="0 0 4.059 6.0854" xmlns="http://www.w3.org/2000/svg">
- <g transform="matrix(.010142 0 0 -.010142 .0010196 6.0854)" stroke="#000" stroke-width="40">
-  <rect x="20" y="20" width="360" height="560" fill="#fff" stroke-linecap="round"/>
-  <path d="m18.531 40 181.47 464.99 181.47-464.99" fill="none"/>
- </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15.341" height="23" viewBox="0 0 15.341 23">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 19.975044 19.970843 L 380.010643 19.970843 L 380.010643 580.048864 L 19.975044 580.048864 Z M 19.975044 19.970843 " transform="matrix(0.0383317, 0, 0, -0.0383317, 0.00385358, 22.999892)"/>
+<path fill="none" stroke-width="40" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 18.548354 40.04642 L 200.043797 504.943787 L 381.437333 40.04642 " transform="matrix(0.0383317, 0, 0, -0.0383317, 0.00385358, 22.999892)"/>
 </svg>
