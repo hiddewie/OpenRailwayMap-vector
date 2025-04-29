@@ -123,6 +123,9 @@ tags:
   - 'railway:vacancy_detection'
   - 'railway:signal:position'
 
+# A mapping of every type of signal that is imported
+# Every type that is known in the tag array above should also be present here
+# Every type is shown in a certain layer
 types:
   - { type: main, layer: signals }
   - { type: combined, layer: signals }
@@ -161,6 +164,14 @@ types:
   - { type: fouling_point, layer: signals }
   - { type: preheating, layer: signals }
 
+# The features below define a certain signal.
+# For every type of feature, the feature will be determined.
+# If the type is tagged on the signal (for example `railway:signal:main=QQ:blabla`) which does not match
+#   one of the features below, the signal will be marked as an "unknown signal" of that type. This allows
+#   viewers to view which signals exist, but are not defined yet in the features below, or mistagged in
+#   the OpenStreetMap data.
+# Feature matching happens from top to bottom, where earlier matches are shown "lower" on the pole if one
+#   node defines more than one signal.
 features:
 
   # --- General --- #
