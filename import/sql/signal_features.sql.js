@@ -21,14 +21,6 @@ EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
 
-DO $$ BEGIN
-  CREATE TYPE signal_type AS ENUM (${signals_railway_signals.types.map(type => `
-    '${type.type}'`).join(',')}
-  );
-EXCEPTION
-  WHEN duplicate_object THEN null;
-END $$;
-
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
   -- For every type of signal, generate the feature and related metadata
