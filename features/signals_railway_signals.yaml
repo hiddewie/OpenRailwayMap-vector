@@ -4277,7 +4277,7 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-      - { tag: 'railway:signal:speed_limit:speed:caption', value: 'C' }
+      - { tag: 'railway:signal:speed_limit:caption', value: 'C' }
 
   - description: Wskaźnik odcinka ograniczonej prędkości (W9)
     country: PL
