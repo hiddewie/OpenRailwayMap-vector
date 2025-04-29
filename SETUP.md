@@ -52,6 +52,10 @@ After updating the data, run a new import:
 docker compose run --build import import
 ```
 
+### JOSM preset
+
+Download the generated JOSM preset on http://localhost:8000/preset.zip.
+
 ## Tests
 
 Tests use [*hurl*](https://hurl.dev/docs/installation.html).
