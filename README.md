@@ -67,7 +67,7 @@ The [deployment documentation](DEPLOYMENT.md) describes how the OpenRailwayMap i
 
 ## License
 
-Copyright © 2024 Hidde Wieringa
+Copyright © 2024–2025 Hidde Wieringa
 
 The [original map style (CartoCSS)](https://github.com/OpenRailwayMap/OpenRailwayMap-CartoCSS/)
 is copyright © 2017–2019 Michael Reichert

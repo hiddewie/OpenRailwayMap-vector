@@ -136,6 +136,7 @@ types:
   - { type: speed_limit_distant, layer: speed }
   - { type: minor, layer: signals }
   - { type: minor_distant, layer: signals }
+  - { type: minor_distant }
   - { type: passing, layer: signals }
   - { type: shunting, layer: signals }
   - { type: radio, layer: signals }
@@ -158,11 +159,15 @@ types:
   - { type: short_route, layer: signals }
   - { type: route, layer: signals }
   - { type: route_distant, layer: signals }
+  - { type: route_distant }
   - { type: brake_test, layer: signals }
   - { type: helper_engine, layer: signals }
   - { type: steam_locomotive, layer: signals }
   - { type: fouling_point, layer: signals }
   - { type: preheating, layer: signals }
+  - { type: steam_locomotive }
+  - { type: fouling_point }
+  - { type: preheating }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
