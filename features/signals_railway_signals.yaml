@@ -93,6 +93,7 @@ tags:
   - 'railway:signal:snowplow:form'
   - 'railway:signal:snowplow:type'
   - 'railway:signal:speed_limit'
+  - 'railway:signal:speed_limit:caption'
   - 'railway:signal:speed_limit:form'
   - 'railway:signal:speed_limit:speed'
   - 'railway:signal:speed_limit:states'
@@ -4294,6 +4295,14 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Wskaźnik odcinka ograniczonej prędkości czoło pociągu (W9)
+    country: PL
+    icon: { default: 'pl/w9-C' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit:caption', value: 'C' }
 
   - description: Wskaźnik odcinka ograniczonej prędkości (W9)
     country: PL
