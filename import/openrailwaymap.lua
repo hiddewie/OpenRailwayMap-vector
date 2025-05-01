@@ -907,6 +907,13 @@ local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platfor
 function osm2pgsql.process_relation(object)
   local tags = object.tags
 
+  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+    platforms:insert({
+      way = object:as_multilinestring():centroid(),
+      name = tags.name,
+    })
+  end
+
   if tags.type == 'route' and route_values(tags.route) then
     local has_members = false
     local stop_members = {}
