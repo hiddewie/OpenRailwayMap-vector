@@ -93,6 +93,7 @@ tags:
   - 'railway:signal:snowplow:form'
   - 'railway:signal:snowplow:type'
   - 'railway:signal:speed_limit'
+  - 'railway:signal:speed_limit:caption'
   - 'railway:signal:speed_limit:form'
   - 'railway:signal:speed_limit:speed'
   - 'railway:signal:speed_limit:states'
@@ -3428,22 +3429,22 @@ features:
       match: 'railway:signal:stop:carriages'
       cases:
         # Free match to allow matching multiple values on a single sign, separated by ;
-        - { regex: '18', value: 'nl/304-{18}' }
-        - { regex: '16', value: 'nl/304-{16}' }
-        - { regex: '15', value: 'nl/304-{15}' }
-        - { regex: '14', value: 'nl/304-{14}' }
-        - { regex: '13', value: 'nl/304-{13}' }
-        - { regex: '12', value: 'nl/304-{12}' }
-        - { regex: '11', value: 'nl/304-{11}' }
-        - { regex: '10', value: 'nl/304-{10}' }
-        - { regex: '9', value: 'nl/304-{9}' }
-        - { regex: '8', value: 'nl/304-{8}' }
-        - { regex: '7', value: 'nl/304-{7}' }
-        - { regex: '6', value: 'nl/304-{6}' }
-        - { regex: '5', value: 'nl/304-{5}' }
-        - { regex: '4', value: 'nl/304-{4}' }
-        - { regex: '3', value: 'nl/304-{3}' }
-        - { regex: '2', value: 'nl/304-{2}' }
+        - { regex: '18', value: 'nl/304-18' }
+        - { regex: '16', value: 'nl/304-16' }
+        - { regex: '15', value: 'nl/304-15' }
+        - { regex: '14', value: 'nl/304-14' }
+        - { regex: '13', value: 'nl/304-13' }
+        - { regex: '12', value: 'nl/304-12' }
+        - { regex: '11', value: 'nl/304-11' }
+        - { regex: '10', value: 'nl/304-10' }
+        - { regex: '9', value: 'nl/304-9' }
+        - { regex: '8', value: 'nl/304-8' }
+        - { regex: '7', value: 'nl/304-7' }
+        - { regex: '6', value: 'nl/304-6' }
+        - { regex: '5', value: 'nl/304-5' }
+        - { regex: '4', value: 'nl/304-4' }
+        - { regex: '3', value: 'nl/304-3' }
+        - { regex: '2', value: 'nl/304-2' }
       default: 'nl/304-empty'
     tags:
       - { tag: 'railway:signal:stop', value: 'NL:304' }
@@ -4278,6 +4279,14 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Wskaźnik odcinka ograniczonej prędkości czoło pociągu (W9)
+    country: PL
+    icon: { default: 'pl/w9-C' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit:caption', value: 'C' }
 
   - description: Wskaźnik odcinka ograniczonej prędkości (W9)
     country: PL

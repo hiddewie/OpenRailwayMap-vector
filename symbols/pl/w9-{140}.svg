@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="22.5" viewBox="0 0 15 22.5">
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 15 0 L 15 22.5 L 0 22.5 Z M 0 0 "/>
-<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.5 1.5 L 13.5 1.5 L 13.5 21 L 1.5 21 Z M 1.5 1.5 "/>
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 1.5 0.75 L 1.5 1.5 L 7.554688 21 L 13.5 1.5 L 13.5 0.75 L 12 0.75 L 7.5 16.5 L 3 0.75 Z M 1.5 0.75 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 5.679688 7.117188 L 5.679688 2.847656 L 4.964844 3.371094 L 4.964844 2.605469 L 5.679688 2.085938 L 6.40625 2.085938 L 6.40625 7.117188 Z M 5.679688 7.117188 "/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.816406 6.367188 L 6.816406 5.6875 L 8.496094 2.089844 L 9.300781 2.089844 L 7.601562 5.6875 L 8.910156 5.6875 L 8.910156 4.242188 L 9.632812 4.242188 L 9.632812 5.6875 L 10.035156 5.6875 L 10.035156 6.367188 L 9.632812 6.367188 L 9.632812 7.113281 L 8.910156 7.113281 L 8.910156 6.367188 Z M 6.816406 6.367188 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15.341" height="23" viewBox="0 0 15.341 23">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="40" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 20.013693 19.973482 L 380.045898 19.973482 L 380.045898 580.046225 L 20.013693 580.046225 Z M 20.013693 19.973482 " transform="matrix(0.0383321, 0, 0, 0.0383321, -0.00154136, 0)"/>
+<path fill="none" stroke-width="40" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 18.48511 40.04887 L 199.978843 504.941856 L 381.472575 40.04887 " transform="matrix(0.0383321, 0, 0, 0.0383321, -0.00154136, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.226562 1.726562 L 5.269531 1.726562 L 4.308594 3.644531 L 5.269531 3.644531 L 5.269531 8.4375 L 6.226562 8.4375 Z M 6.226562 1.726562 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 10.0625 1.726562 L 7.183594 5.5625 L 7.183594 6.519531 L 10.0625 6.519531 L 10.0625 8.4375 L 11.019531 8.4375 L 11.019531 1.726562 Z M 10.0625 3.324219 L 10.0625 5.5625 L 8.382812 5.5625 Z M 10.0625 3.324219 "/>
 </svg>
