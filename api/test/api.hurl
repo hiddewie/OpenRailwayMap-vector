@@ -6,26 +6,26 @@ HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$" count == 20
-jsonpath "$[0].name" == "Berlin Südkreuz"
-jsonpath "$[1].name" == "Berlin-Spandau"
-jsonpath "$[2].name" == "Berlin Ostbahnhof"
-jsonpath "$[3].name" == "Berlin Hauptbahnhof"
-jsonpath "$[4].name" == "Berlin Gesundbrunnen"
-jsonpath "$[5].name" == "Ostkreuz"
-jsonpath "$[6].name" == "Berlin Potsdamer Platz"
-jsonpath "$[7].name" == "Bornholmer Straße"
-jsonpath "$[8].name" == "Warschauer Straße"
-jsonpath "$[9].name" == "Baumschulenweg"
-jsonpath "$[10].name" == "Schöneweide"
-jsonpath "$[11].name" == "Gesundbrunnen"
-jsonpath "$[12].name" == "Alexanderplatz"
-jsonpath "$[13].name" == "Nordbahnhof"
+jsonpath "$[0].name" == "Berlin Hauptbahnhof"
+jsonpath "$[1].name" == "Hauptbahnhof"
+jsonpath "$[2].name" == "Südkreuz (Ringbahn)"
+jsonpath "$[3].name" == "Südkreuz (Nord-Süd)"
+jsonpath "$[4].name" == "Berlin Südkreuz"
+jsonpath "$[5].name" == "Berlin-Spandau"
+jsonpath "$[6].name" == "Berlin Ostbahnhof"
+jsonpath "$[7].name" == "Ostkreuz"
+jsonpath "$[8].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[9].name" == "Berlin Ostkreuz (Ostbahn)"
+jsonpath "$[10].name" == "Berlin Gesundbrunnen"
+jsonpath "$[11].name" == "Alexanderplatz"
+jsonpath "$[12].name" == "Schöneweide"
+jsonpath "$[13].name" == "Berlin-Schöneweide"
 jsonpath "$[14].name" == "Berlin Alexanderplatz"
-jsonpath "$[15].name" == "Berlin Zoologischer Garten"
-jsonpath "$[16].name" == "Westkreuz"
-jsonpath "$[17].name" == "Brandenburger Tor"
-jsonpath "$[18].name" == "Berlin Friedrichstraße"
-jsonpath "$[19].name" == "Zoologischer Garten"
+jsonpath "$[15].name" == "Berlin Friedrichstraße"
+jsonpath "$[16].name" == "Berlin Potsdamer Platz"
+jsonpath "$[17].name" == "S Friedrichstraße"
+jsonpath "$[18].name" == "Warschauer Straße"
+jsonpath "$[19].name" == "Bornholmer Straße"
 
 # Facility request with limit
 GET {{base_url}}/facility
@@ -166,10 +166,10 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 5
 jsonpath "$[0].name" == "Ostkreuz"
-jsonpath "$[1].name" == "Berlin Ostkreuz (Stadtbahn-F)"
-jsonpath "$[2].name" == "Berlin Ostkreuz (Ringbahn-F)"
-jsonpath "$[3].name" == "Berlin Ostkreuz (Ostbahn)"
-jsonpath "$[4].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[1].name" == "Berlin Ostkreuz (Ostbahn)"
+jsonpath "$[2].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[3].name" == "Berlin Ostkreuz (Ringbahn-F)"
+jsonpath "$[4].name" == "Berlin Ostkreuz (Stadtbahn-F)"
 
 # Facility search for name, reference or UIC reference
 GET {{base_url}}/facility
