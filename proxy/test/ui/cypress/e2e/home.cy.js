@@ -131,7 +131,7 @@ describe('home page', () => {
 
     cy.get('input[type=search]').type('berlin{enter}')
 
-    cy.contains('Zoologischer Garten').click()
+    cy.contains('Berlin Hauptbahnhof').click()
 
     cy.wait(3000)
     cy.screenshot()
