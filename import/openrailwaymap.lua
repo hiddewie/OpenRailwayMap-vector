@@ -407,9 +407,13 @@ local stop_areas = osm2pgsql.define_table({
   name = 'stop_areas',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'platform_ref_ids', sql_type = 'int8[]' },
+    { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
+    { column = 'platform_ref_ids', method = 'gin' },
+    { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
   },
 })
@@ -927,16 +931,27 @@ function osm2pgsql.process_relation(object)
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
     local has_members = false
+    local stop_members = {}
+    local platform_members = {}
     local node_members = {}
     for _, member in ipairs(object.members) do
-      if member.type == 'n' and member.role ~= 'stop' and member.role ~= 'platform' then
-        table.insert(node_members, member.ref)
+      if member.type == 'n' then
+        if member.role == 'stop' then
+          table.insert(stop_members, member.ref)
+        elseif member.role == 'platform' then
+          table.insert(platform_members, member.ref)
+        else
+          -- Station has no role defined
+          table.insert(node_members, member.ref)
+        end
         has_members = true
       end
     end
 
     if has_members then
       stop_areas:insert({
+        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
+        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
       })
     end
