@@ -556,6 +556,10 @@ function updateTheme() {
   selectedTheme = resolvedTheme;
 }
 
+function onEditorChange(editor) {
+  updateConfiguration('editor', editor);
+}
+
 function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
@@ -866,11 +870,20 @@ class EditControl {
     button.type = 'button';
     button.title = 'Edit map data'
     button.onclick = _ => {
-      const domain = dateControl.active
-        ? 'https://www.openhistoricalmap.org'
-        : 'https://www.openstreetmap.org';
+      if (configuration.editor && configuration.editor === 'josm') {
+        const bounds = this._map.getBounds();
+        const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
 
-      window.open(`${domain}/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
+        fetch(josmUrl).then().catch(error => {
+          console.error('Error invoking JOSM remote control:', error)
+        })
+      } else {
+        const domain = dateControl.active
+          ? 'https://www.openhistoricalmap.org'
+          : 'https://www.openstreetmap.org';
+
+        window.open(`${domain}/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
+      }
     }
     createDomElement('span', 'maplibregl-ctrl-icon', button);
 
