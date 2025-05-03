@@ -3172,6 +3172,13 @@ features:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+  - description: SPAD
+    country: GB
+    icon: { default: 'gb/SPAD' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'GB-NR:SPAD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   - description: Distant
     country: GB
     icon: { default: 'gb/distant-light' }
@@ -3186,12 +3193,19 @@ features:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
-  - description: SPAD
+  - description: Repeated (banner)
     country: GB
-    icon: { default: 'gb/SPAD' }
+    icon: { default: 'gb/repeated-banner' }
     tags:
-      - { tag: 'railway:signal:main', value: 'GB-NR:SPAD' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Repeated off
+    country: GB
+    icon: { default: 'gb/repeated-off' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: Shunting
     country: GB
@@ -3240,20 +3254,6 @@ features:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
       - { tag: 'railway:signal:route:form', value: 'light' }
       - { tag: 'railway:signal:route:design', value: 'theatre' }
-
-  - description: Repeated (banner)
-    country: GB
-    icon: { default: 'gb/repeated-banner' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-
-  - description: Repeated off
-    country: GB
-    icon: { default: 'gb/repeated-off' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: Departure
     country: GB
