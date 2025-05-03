@@ -2535,18 +2535,156 @@ features:
 
   # --- FI --- #
 
-  - description: crossing signal To
+  - description: Balise
     country: FI
-    icon: { default: 'fi/to1' }
+    icon: { default: 'fi/t-262' }
     tags:
-      - { tag: 'railway:signal:crossing', value: 'FI:To' }
-      - { tag: 'railway:signal:crossing:form', value: 'light' }
+      - { tag: 'railway:signal:main', value: 'FI:Po' }
+      - { tag: 'railway:signal:main:form', value: 'balise' }
+
+  - description: main light signals (new)
+    country: FI
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-new' }
+        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-new' }
+      default: 'fi/po0-new'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FI:Po' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: main light signals (old)
+    country: FI
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-old' }
+        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-old' }
+      default: 'fi/po0-old'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FI:Po-v' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Main signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-main' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'FI:Yo' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: combined block signal type So
+    country: FI
+    icon: { default: 'fi/eo1-po1-combined-block' }
+    tags:
+      - { tag: 'railway:signal:combined', value: 'FI:So' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Combined signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-combined' }
+    tags:
+      - { tag: 'railway:signal:combined', value: 'FI:Yo' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: distant light signals (new)
+    country: FI
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?FI:Eo2(;.*)?$', value: 'fi/eo2-new' }
+        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-new' }
+      default: 'fi/eo0-new'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'FI:Eo' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant light signals (old)
+    country: FI
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-old' }
+      default: 'fi/eo0-old'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Distant signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-distant' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'FI:Yo' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant signal
+    country: FI
+    icon: { default: 'fi/t-301A' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'FI:T-301A' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: JKV alkaa
+    country: FI
+    icon: { default: 'fi/t-140' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-140', 'FI:T-140A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV päättyy
+    country: FI
+    icon: { default: 'fi/t-141' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-141', 'FI:T-141A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV rakennusalue alkaa
+    country: FI
+    icon: { default: 'fi/t-142' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-142', 'FI:T-142A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: JKV rakennusalue päättyy
+    country: FI
+    icon: { default: 'fi/t-143' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-143', 'FI:T-143A'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Baliisiryhmämerkki
+    country: FI
+    icon: { default: 'fi/t-144' }
+    tags:
+      - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Main repeated light
+    country: FI
+    icon: { default: 'fi/ko1' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'FI:Ko' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: minor light signals type Lo at moveable bridges
+    country: FI
+    icon: { default: 'fi/lo0' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'FI:Lo' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
 
   - description: shunting light signals type Ro (new)
     country: FI
     icon: { default: 'fi/ro0-new' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'FI:Ro' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Shunting signal type Yo
+    country: FI
+    icon: { default: 'fi/yo-shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FI:Yo' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Stop
@@ -2598,80 +2736,12 @@ features:
       - { tag: 'railway:signal:stop', value: 'FI:T-310' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: minor light signals type Lo at moveable bridges
+  - description: crossing signal To
     country: FI
-    icon: { default: 'fi/lo0' }
+    icon: { default: 'fi/to1' }
     tags:
-      - { tag: 'railway:signal:minor', value: 'FI:Lo' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
-
-  - description: distant light signals (new)
-    country: FI
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?FI:Eo2(;.*)?$', value: 'fi/eo2-new' }
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-new' }
-      default: 'fi/eo0-new'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'FI:Eo' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant light signals (old)
-    country: FI
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-old' }
-      default: 'fi/eo0-old'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant signal
-    country: FI
-    icon: { default: 'fi/t-301A' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'FI:T-301A' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: Balise
-    country: FI
-    icon: { default: 'fi/t-262' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'FI:Po' }
-      - { tag: 'railway:signal:main:form', value: 'balise' }
-
-  - description: main light signals (new)
-    country: FI
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-new' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-new' }
-      default: 'fi/po0-new'
-    tags:
-      - { tag: 'railway:signal:main', value: 'FI:Po' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: main light signals (old)
-    country: FI
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-old' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-old' }
-      default: 'fi/po0-old'
-    tags:
-      - { tag: 'railway:signal:main', value: 'FI:Po-v' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: combined block signal type So
-    country: FI
-    icon: { default: 'fi/eo1-po1-combined-block' }
-    tags:
-      - { tag: 'railway:signal:combined', value: 'FI:So' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:crossing', value: 'FI:To' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
 
   - description: Nopeusmerkki, speed signal
     country: FI
@@ -2758,41 +2828,6 @@ features:
       - { tag: 'railway:signal:electricity', value: 'FI:T-125' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
-  - description: Combined signal type Yo
-    country: FI
-    icon: { default: 'fi/yo-combined' }
-    tags:
-      - { tag: 'railway:signal:combined', value: 'FI:Yo' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Main signal type Yo
-    country: FI
-    icon: { default: 'fi/yo-main' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'FI:Yo' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Distant signal type Yo
-    country: FI
-    icon: { default: 'fi/yo-distant' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'FI:Yo' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Shunting signal type Yo
-    country: FI
-    icon: { default: 'fi/yo-shunting' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'FI:Yo' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Main repeated light
-    country: FI
-    icon: { default: 'fi/ko1' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'FI:Ko' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-
   - description: Liikennepaikan raja -merkki
     country: FI
     icon: { default: 'fi/t-164' }
@@ -2813,41 +2848,6 @@ features:
     tags:
       - { tag: 'railway:signal:station_distant', value: 'FI:T-166' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
-
-  - description: JKV alkaa
-    country: FI
-    icon: { default: 'fi/t-140' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-140', 'FI:T-140A'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: JKV päättyy
-    country: FI
-    icon: { default: 'fi/t-141' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-141', 'FI:T-141A'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: JKV rakennusalue alkaa
-    country: FI
-    icon: { default: 'fi/t-142' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-142', 'FI:T-142A'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: JKV rakennusalue päättyy
-    country: FI
-    icon: { default: 'fi/t-143' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-143', 'FI:T-143A'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Baliisiryhmämerkki
-    country: FI
-    icon: { default: 'fi/t-144' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Järjestelyopastin
     country: FI
