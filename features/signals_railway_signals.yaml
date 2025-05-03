@@ -4493,28 +4493,6 @@ features:
 
   # --- SE --- #
 
-  - description: Mellansignal (dvärg)
-    country: SE
-    icon: { default: 'se/shunting-main' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:height', value: 'dwarf' }
-
-  - description: Växlingsdvärgsignal
-    country: SE
-    icon: { default: 'se/shunting' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'SE:Växlingsdvärgsignal' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Skyddsstopplykta
-    country: SE
-    icon: { default: 'se/skyddsstopplykta' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'SE:Skyddsstopplykta' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
-
   - description: Mellanblocksignal, Utfartsblocksignal (main)
     country: SE
     # TODO support icons for each variant
@@ -4592,6 +4570,28 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'SE:orienteringstavla' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Mellansignal (dvärg)
+    country: SE
+    icon: { default: 'se/shunting-main' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'SE:Mellansignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  - description: Växlingsdvärgsignal
+    country: SE
+    icon: { default: 'se/shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'SE:Växlingsdvärgsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Skyddsstopplykta
+    country: SE
+    icon: { default: 'se/skyddsstopplykta' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'SE:Skyddsstopplykta' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: Vägskyddssignal
     country: SE
