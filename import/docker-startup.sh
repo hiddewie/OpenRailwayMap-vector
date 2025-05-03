@@ -114,7 +114,6 @@ refresh)
 
   create_update_functions_views
   refresh_materialized_views
-  analyze
   print_summary
 
   ;;
