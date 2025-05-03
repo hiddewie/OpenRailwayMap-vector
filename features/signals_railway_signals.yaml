@@ -1685,47 +1685,6 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
 
-  - description: Richtungsanzeiger (Zs 2)
-    country: DE
-    icon:
-      match: 'railway:signal:route:states'
-      # TODO allow extracting match from group
-      cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
-      default: 'de/zs2-unknown'
-    tags:
-      - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Speed signals (Zs 3v) (sign)
     country: DE
     icon:
@@ -2314,6 +2273,47 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Richtungsanzeiger (Zs 2)
+    country: DE
+    icon:
+      match: 'railway:signal:route:states'
+      # TODO allow extracting match from group
+      cases:
+        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
+        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
+        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
+        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
+        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
+        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
+        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
+        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
+        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
+        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
+        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
+        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
+        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
+        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
+        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
+        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
+        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
+        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
+        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
+        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
+        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
+        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
+        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
+        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
+        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
+        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
+        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
+        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
+        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
+        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
+      default: 'de/zs2-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: power off advance sign El 1v
     country: DE
