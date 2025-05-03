@@ -1,3 +1,3 @@
-FROM ghcr.io/baosystems/postgis:17-3.5
+FROM imresamu/postgis:17-3.5-alpine
 
 COPY tune-postgis.sh /docker-entrypoint-initdb.d/tune-postgis.sh
