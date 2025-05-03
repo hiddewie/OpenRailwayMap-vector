@@ -3749,12 +3749,6 @@ features:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: Wskaźnik SBL (W18)
-    country: PL
-    icon: { default: 'pl/w18' }
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
-
   - description: Sygnalizator powtarzający (Sp)
     country: PL
     icon:
@@ -4296,6 +4290,12 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Wskaźnik SBL (W18)
+    country: PL
+    icon: { default: 'pl/w18' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
 
   - description: Semafor kształtowy
     country: PL
