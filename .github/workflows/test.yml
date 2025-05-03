@@ -153,12 +153,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up path
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Install Hurl
         env:
           VERSION: '5.0.1'
+          ARCH: ${{ runner.arch == 'X64' && 'x86_64' || 'aarch64' }}
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_arm64.deb
+          
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/${VERSION}/hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          tar xzf "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz"
+          mv "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu/bin/hurl" "$HOME/.local/bin/hurl"
+          rm hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          rm -r "hurl-${VERSION}-${ARCH}-unknown-linux-gnu"
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
@@ -200,12 +211,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up path
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Install Hurl
         env:
           VERSION: '5.0.1'
+          ARCH: ${{ runner.arch == 'X64' && 'x86_64' || 'aarch64' }}
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_arm64.deb
+
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/${VERSION}/hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          tar xzf "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz"
+          mv "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu/bin/hurl" "$HOME/.local/bin/hurl"
+          rm hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          rm -r "hurl-${VERSION}-${ARCH}-unknown-linux-gnu"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
@@ -270,12 +292,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up path
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Install Hurl
         env:
           VERSION: '5.0.1'
+          ARCH: ${{ runner.arch == 'X64' && 'x86_64' || 'aarch64' }}
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_arm64.deb
+
+          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/${VERSION}/hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          tar xzf "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz"
+          mv "./hurl-${VERSION}-${ARCH}-unknown-linux-gnu/bin/hurl" "$HOME/.local/bin/hurl"
+          rm hurl-${VERSION}-${ARCH}-unknown-linux-gnu.tar.gz
+          rm -r "hurl-${VERSION}-${ARCH}-unknown-linux-gnu"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
