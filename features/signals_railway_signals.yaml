@@ -3329,13 +3329,6 @@ features:
 
   # --- NL --- #
 
-  - description: departure signal
-    country: NL
-    icon: { default: 'nl/departure' }
-    tags:
-      - { tag: 'railway:signal:departure', values: ['NL', 'NL:VL'] }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
-
   - description: dwarf shunting signals
     country: NL
     icon: { default: 'nl/main_light_dwarf_shunting' }
@@ -3387,20 +3380,6 @@ features:
       - { tag: 'railway:signal:distant', value: 'NL' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: middenvoetbrugsein
-    country: NL
-    icon: { default: 'nl/215b' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'NL:middenvoetbrugsein' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
-
-  - description: Humping ("heuvelen")
-    country: NL
-    icon: { default: 'nl/270a' }
-    tags:
-      - { tag: 'railway:signal:humping', value: 'NL:270' }
-      - { tag: 'railway:signal:humping:form', value: 'light' }
-
   - description: train protection block markers (arrow)
     country: NL
     icon:
@@ -3430,62 +3409,12 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
-  - description: stopplaatssein
-    country: NL
-    icon: { default: 'nl/303' }
-    tags:
-      - { tag: 'railway:signal:stop', values: ['NL:303', 'NL:stopplaatssein'] }
-      - { tag: 'railway:signal:stop:form', value: 'light' }
-
-  - description: treinlengtebord
-    country: NL
-    # TODO implement partial platform train length values (railway:signal:stop:carriages_partial_platform=*)
-    icon:
-      match: 'railway:signal:stop:carriages'
-      cases:
-        # Free match to allow matching multiple values on a single sign, separated by ;
-        - { regex: '18', value: 'nl/304-18' }
-        - { regex: '16', value: 'nl/304-16' }
-        - { regex: '15', value: 'nl/304-15' }
-        - { regex: '14', value: 'nl/304-14' }
-        - { regex: '13', value: 'nl/304-13' }
-        - { regex: '12', value: 'nl/304-12' }
-        - { regex: '11', value: 'nl/304-11' }
-        - { regex: '10', value: 'nl/304-10' }
-        - { regex: '9', value: 'nl/304-9' }
-        - { regex: '8', value: 'nl/304-8' }
-        - { regex: '7', value: 'nl/304-7' }
-        - { regex: '6', value: 'nl/304-6' }
-        - { regex: '5', value: 'nl/304-5' }
-        - { regex: '4', value: 'nl/304-4' }
-        - { regex: '3', value: 'nl/304-3' }
-        - { regex: '2', value: 'nl/304-2' }
-      default: 'nl/304-empty'
-    tags:
-      - { tag: 'railway:signal:stop', value: 'NL:304' }
-      - { tag: 'railway:signal:stop:form', value: 'sign' }
-
-  - description: distant crossing
-    country: NL
-    # TODO process caption / distant crossing position
-    icon: { default: 'nl/318a' }
-    tags:
-      - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
-      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
-
   - description: drive on sight
     country: NL
     icon: { default: 'nl/317' }
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:317' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: station
-    country: NL
-    icon: { default: 'nl/305' }
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'NL:305' }
-      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: ETCS cab signalling (start)
     country: NL
@@ -3542,6 +3471,77 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:333' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: middenvoetbrugsein
+    country: NL
+    icon: { default: 'nl/215b' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'NL:middenvoetbrugsein' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: departure signal
+    country: NL
+    icon: { default: 'nl/departure' }
+    tags:
+      - { tag: 'railway:signal:departure', values: ['NL', 'NL:VL'] }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Humping ("heuvelen")
+    country: NL
+    icon: { default: 'nl/270a' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'NL:270' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
+
+  - description: stopplaatssein
+    country: NL
+    icon: { default: 'nl/303' }
+    tags:
+      - { tag: 'railway:signal:stop', values: ['NL:303', 'NL:stopplaatssein'] }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  - description: treinlengtebord
+    country: NL
+    # TODO implement partial platform train length values (railway:signal:stop:carriages_partial_platform=*)
+    icon:
+      match: 'railway:signal:stop:carriages'
+      cases:
+        # Free match to allow matching multiple values on a single sign, separated by ;
+        - { regex: '18', value: 'nl/304-18' }
+        - { regex: '16', value: 'nl/304-16' }
+        - { regex: '15', value: 'nl/304-15' }
+        - { regex: '14', value: 'nl/304-14' }
+        - { regex: '13', value: 'nl/304-13' }
+        - { regex: '12', value: 'nl/304-12' }
+        - { regex: '11', value: 'nl/304-11' }
+        - { regex: '10', value: 'nl/304-10' }
+        - { regex: '9', value: 'nl/304-9' }
+        - { regex: '8', value: 'nl/304-8' }
+        - { regex: '7', value: 'nl/304-7' }
+        - { regex: '6', value: 'nl/304-6' }
+        - { regex: '5', value: 'nl/304-5' }
+        - { regex: '4', value: 'nl/304-4' }
+        - { regex: '3', value: 'nl/304-3' }
+        - { regex: '2', value: 'nl/304-2' }
+      default: 'nl/304-empty'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NL:304' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: distant crossing
+    country: NL
+    # TODO process caption / distant crossing position
+    icon: { default: 'nl/318a' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
+  - description: station
+    country: NL
+    icon: { default: 'nl/305' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'NL:305' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: L signal
     country: NL
