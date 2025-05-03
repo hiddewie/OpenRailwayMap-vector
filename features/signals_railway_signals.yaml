@@ -189,51 +189,6 @@ features:
 
   # --- AT --- #
 
-  - description: Verschubverbot
-    country: AT
-    icon:
-      match: 'railway:signal:shunting:height'
-      cases:
-        - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
-      default: 'at/verschubverbot-aufgehoben'
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Sperrsignale (sign)
-    country: AT
-    icon: { default: 'at/weiterfahrt-verboten' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:weiterfahrt_verboten' }
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
-
-  - description: Sperrsignale (semaphore)
-    country: AT
-    icon: { default: 'at/weiterfahrt-erlaubt' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:sperrsignal' }
-      - { tag: 'railway:signal:minor:form', value: 'semaphore' }
-
-  - description: distant (light)
-    country: AT
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
-      default: 'at/vorsignal-vorsicht'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant (semaphore)
-    country: AT
-    icon: { default: 'at/vorsicht-semaphore' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
   - description: Hauptsignal (abfahrt)
     country: AT
     icon: { default: 'at/hauptsignal-abfahrt' }
@@ -265,33 +220,12 @@ features:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Verschubhalttafel
-    country: AT
-    icon: { default: 'at/verschubhalttafel' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
-
-  - description: Wartesignal ohne "Verschubverbot aufgehoben"
-    country: AT
-    icon: { default: 'at/wartesignal' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'AT-V2:wartesignal' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
-
   - description: Main entry sign Ne 1
     country: AT
     icon: { default: 'at/trapeztafel' }
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:trapeztafel' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
-
-  - description: Kreuztafel
-    country: AT
-    icon: { default: 'at/kreuztafel' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Hauptsignal (semaphore)
     country: AT
@@ -305,28 +239,41 @@ features:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
-  - description: Bedarfshalt
+  - description: distant (light)
     country: AT
-    icon: { default: 'at/bedarfshalt' }
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
+      default: 'at/vorsignal-vorsicht'
     tags:
-      - { tag: 'railway:signal:stop_demand', value: 'AT:bedarfshalt-signal' }
-      - { tag: 'railway:signal:stop_demand:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: Haltestellentafel
+  - description: distant (semaphore)
     country: AT
-    icon: { default: 'at/haltestellentafel' }
+    icon: { default: 'at/vorsicht-semaphore' }
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
-      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
-  - description: Schutzsignal (abfahrt)
+  - description: Kreuztafel
     country: AT
-    icon: { default: 'at/schutzsignal-abfahrt' }
+    icon: { default: 'at/kreuztafel' }
     tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
-      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+
+  - description: LZB Bereichskennzeichen
+    country: AT
+    icon: { default: 'at/lzb-bereichskennzeichen' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
 
   - description: Schutzsignal (Signalnachahmer)
     country: AT
@@ -337,89 +284,12 @@ features:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-  - description: Schutzsignal
-    country: AT
-    icon: { default: 'at/schutzsignal' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
-
-  - description: Überwachungssignal
-    country: AT
-    icon: { default: 'at/ek_gesichert' }
-    tags:
-      - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
-      - { tag: 'railway:signal:crossing:form', value: 'light' }
-
-  - description: Pfeifpflock
-    country: AT
-    icon: { default: 'at/pfeifpflock' }
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'AT-V2:pfeifpflock' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: Gruppenpfeifpflock
-    country: AT
-    icon: { default: 'at/gruppenpfeifpflock' }
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'AT-V2:gruppenpfeifpflock' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: Endpflock
-    country: AT
-    icon: { default: 'at/endpflock' }
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: Fahrwegende
-    country: AT
-    icon: { default: 'at/fahrwegende' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:fahrwegende' }
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
-
-  - description: Haltepunkt
-    country: AT
-    icon: { default: 'at/haltepunkt' }
-    tags:
-      - { tag: 'railway:signal:stop', value: 'AT-V2:haltepunkt' }
-      - { tag: 'railway:signal:stop:form', value: 'sign' }
-
-  - description: Haltscheibe
-    country: AT
-    icon: { default: 'at/haltscheibe' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
-
-  - description: Abfahrt
-    country: AT
-    icon: { default: 'at/abfahrt' }
-    tags:
-      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
-
-  - description: Fahrerlaubnissignal
-    country: AT
-    icon: { default: 'at/fahrerlaubnis' }
-    tags:
-      - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
-
   - description: Signalnachahmer
     country: AT
     icon: { default: 'at/signalnachahmer' }
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-
-  - description: LZB Bereichskennzeichen
-    country: AT
-    icon: { default: 'at/lzb-bereichskennzeichen' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Geschwindigkeitsvoranzeiger (sign)
     country: AT
@@ -538,6 +408,140 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'AT-V2:ek-sicht_pfeiftafel' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Sperrsignale (sign)
+    country: AT
+    icon: { default: 'at/weiterfahrt-verboten' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:weiterfahrt_verboten' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Sperrsignale (semaphore)
+    country: AT
+    icon: { default: 'at/weiterfahrt-erlaubt' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:sperrsignal' }
+      - { tag: 'railway:signal:minor:form', value: 'semaphore' }
+
+
+  - description: Schutzsignal (abfahrt)
+    country: AT
+    icon: { default: 'at/schutzsignal-abfahrt' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Schutzsignal
+    country: AT
+    icon: { default: 'at/schutzsignal' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+
+  - description: Fahrwegende
+    country: AT
+    icon: { default: 'at/fahrwegende' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:fahrwegende' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Haltscheibe
+    country: AT
+    icon: { default: 'at/haltscheibe' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Verschubverbot
+    country: AT
+    icon:
+      match: 'railway:signal:shunting:height'
+      cases:
+        - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
+      default: 'at/verschubverbot-aufgehoben'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Verschubhalttafel
+    country: AT
+    icon: { default: 'at/verschubhalttafel' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Wartesignal ohne "Verschubverbot aufgehoben"
+    country: AT
+    icon: { default: 'at/wartesignal' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:wartesignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Bedarfshalt
+    country: AT
+    icon: { default: 'at/bedarfshalt' }
+    tags:
+      - { tag: 'railway:signal:stop_demand', value: 'AT:bedarfshalt-signal' }
+      - { tag: 'railway:signal:stop_demand:form', value: 'light' }
+
+  - description: Haltestellentafel
+    country: AT
+    icon: { default: 'at/haltestellentafel' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AT-V2:haltestellentafel' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Überwachungssignal
+    country: AT
+    icon: { default: 'at/ek_gesichert' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Pfeifpflock
+    country: AT
+    icon: { default: 'at/pfeifpflock' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AT-V2:pfeifpflock' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Gruppenpfeifpflock
+    country: AT
+    icon: { default: 'at/gruppenpfeifpflock' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AT-V2:gruppenpfeifpflock' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Endpflock
+    country: AT
+    icon: { default: 'at/endpflock' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Haltepunkt
+    country: AT
+    icon: { default: 'at/haltepunkt' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AT-V2:haltepunkt' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Abfahrt
+    country: AT
+    icon: { default: 'at/abfahrt' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Fahrerlaubnissignal
+    country: AT
+    icon: { default: 'at/fahrerlaubnis' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: Ankündigung Stromabnehmer tief
     country: AT
