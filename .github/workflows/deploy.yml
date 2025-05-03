@@ -6,7 +6,7 @@ on:
 jobs:
   deploy-proxy:
     name: Deploy proxy
-   runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04-arm
     environment: proxy-production
 
     steps:
@@ -35,7 +35,7 @@ jobs:
 
   generate-tiles-low-med:
     name: Generate low zoom tiles
-   runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04-arm
 
     environment: tiles-production-low
 
@@ -130,7 +130,7 @@ jobs:
 
   deploy-api:
     name: Deploy API
-   runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-24.04-arm
     environment: api-production
 
     steps:
