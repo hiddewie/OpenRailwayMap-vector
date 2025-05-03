@@ -410,7 +410,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: proxy/test/ui
-          browser: chrome
+          browser: firefox # TODO check arch
 
       - name: Store screenshots
         uses: actions/upload-artifact@v4
