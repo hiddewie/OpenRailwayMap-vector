@@ -838,28 +838,6 @@ features:
 
   # --- CH --- #
 
-  - description: Vorsignal System L
-    country: CH
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?CH-FDV:538(;.*)?$', value: 'ch/fdv-l-538' }
-        - { regex: '^(.*;)?CH-FDV:536(;.*)?$', value: 'ch/fdv-l-536' }
-        - { regex: '^(.*;)?CH-FDV:529(;.*)?$', value: 'ch/fdv-l-529' }
-        - { regex: '^(.*;)?CH-FDV:534(;.*)?$', value: 'ch/fdv-l-534' }
-      default: 'ch/fdv-l-528'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Mini-Hauptsignal System L
-    country: CH
-    icon: { default: 'ch/fdv-l-522.1' }
-    tags:
-      - { tag: 'railway:signal:combined', value: 'CH-FDV:512' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:height', value: 'dwarf' }
-
   - description: Hauptsignal System L
     country: CH
     icon:
@@ -874,6 +852,14 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Mini-Hauptsignal System L
+    country: CH
+    icon: { default: 'ch/fdv-l-522.1' }
+    tags:
+      - { tag: 'railway:signal:combined', value: 'CH-FDV:512' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:height', value: 'dwarf' }
 
   - description: Hauptsignal System L (combined)
     country: CH
@@ -893,17 +879,6 @@ features:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:l' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Vorsignal System N
-    country: CH
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'ch/fdv-n-521' }
-      default: 'ch/fdv-n-533'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
   - description: Hauptsignal System N
     country: CH
     icon:
@@ -917,12 +892,30 @@ features:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Minor signal
+  - description: Vorsignal System L
     country: CH
-    icon: { default: 'ch/fdv-232' }
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?CH-FDV:538(;.*)?$', value: 'ch/fdv-l-538' }
+        - { regex: '^(.*;)?CH-FDV:536(;.*)?$', value: 'ch/fdv-l-536' }
+        - { regex: '^(.*;)?CH-FDV:529(;.*)?$', value: 'ch/fdv-l-529' }
+        - { regex: '^(.*;)?CH-FDV:534(;.*)?$', value: 'ch/fdv-l-534' }
+      default: 'ch/fdv-l-528'
     tags:
-      - { tag: 'railway:signal:minor', value: 'CH-FDV:232' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Vorsignal System N
+    country: CH
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'ch/fdv-n-521' }
+      default: 'ch/fdv-n-533'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Fahrtstellungsmelder
     country: CH
@@ -930,6 +923,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'CH-FDV:559' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Minor signal
+    country: CH
+    icon: { default: 'ch/fdv-232' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'CH-FDV:232' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
 
   - description: Vorsignal verminderte Geschwindigkeit
     country: CH
