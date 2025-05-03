@@ -85,7 +85,7 @@ jobs:
 
   build-api:
     name: Build API
-    runs-on: ubuntu-latest
+    uns-on: ubuntu-24.04-arm
 
     needs:
       - import
@@ -134,7 +134,7 @@ jobs:
 
   test-api:
     name: Test API
-    runs-on: ubuntu-latest
+    uns-on: ubuntu-24.04-arm
 
     needs:
       - build-api
@@ -181,7 +181,7 @@ jobs:
 
   test-proxy:
     name: Test proxy
-    runs-on: ubuntu-latest
+    uns-on: ubuntu-24.04-arm
 
     needs:
       - import
@@ -251,7 +251,7 @@ jobs:
 
   test-tiles:
     name: Test tiles
-    runs-on: ubuntu-latest
+    uns-on: ubuntu-24.04-arm
 
     needs:
       - import
@@ -313,7 +313,7 @@ jobs:
 
   test-ui:
     name: Test UI
-    runs-on: ubuntu-latest
+    uns-on: ubuntu-24.04-arm
 
     needs:
       - test-proxy
