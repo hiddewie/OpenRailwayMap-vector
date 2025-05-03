@@ -266,14 +266,12 @@ features:
       - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-
   - description: LZB Bereichskennzeichen
     country: AT
     icon: { default: 'at/lzb-bereichskennzeichen' }
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
 
   - description: Schutzsignal (Signalnachahmer)
     country: AT
@@ -423,7 +421,6 @@ features:
       - { tag: 'railway:signal:minor', value: 'AT-V2:sperrsignal' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
 
-
   - description: Schutzsignal (abfahrt)
     country: AT
     icon: { default: 'at/schutzsignal-abfahrt' }
@@ -439,7 +436,6 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
-
 
   - description: Fahrwegende
     country: AT
