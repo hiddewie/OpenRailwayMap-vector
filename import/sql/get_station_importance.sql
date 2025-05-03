@@ -51,21 +51,55 @@ CREATE OR REPLACE VIEW platforms_and_their_routes_clustered AS
 -- Join clustered stop positions with station nodes
 CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
   SELECT
-    s.id as id,
-    sprc.route_ids AS route_ids
-  FROM stations AS s
-  LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
-    ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400));
+    id,
+    array_agg(route_id) as route_ids
+  FROM (
+    SELECT
+      s.id as id,
+      UNNEST(sprc.route_ids) as route_id
+    FROM stations AS s
+    LEFT OUTER JOIN stop_positions_and_their_routes_clustered AS sprc
+      ON (sprc.stop_name = s.name AND ST_DWithin(s.way, sprc.geom, 400))
+
+    UNION ALL
+
+    SELECT
+      s.id as id,
+      r.osm_id as route_id
+    FROM stations s
+    JOIN stop_areas sa
+      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+    JOIN routes r
+      ON sa.stop_ref_ids && r.stop_ref_ids
+  ) sr
+  GROUP BY id;
 
 -- Join clustered platforms with station nodes
 CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   SELECT
-    s.id as id,
-    sprc.route_ids AS route_ids
-  FROM stations AS s
-  JOIN platforms_and_their_routes_clustered AS sprc
-    ON (ST_DWithin(s.way, sprc.geom, 60))
-  WHERE s.railway IN ('station', 'halt', 'tram_stop');
+    id,
+    array_agg(route_id) as route_ids
+  FROM (
+    SELECT
+      s.id as id,
+      UNNEST(sprc.route_ids) as route_id
+    FROM stations AS s
+    JOIN platforms_and_their_routes_clustered AS sprc
+      ON (ST_DWithin(s.way, sprc.geom, 60))
+    WHERE s.railway IN ('station', 'halt', 'tram_stop')
+
+    UNION ALL
+
+    SELECT
+      s.id as id,
+      r.osm_id as route_id
+    FROM stations s
+    JOIN stop_areas sa
+      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+    JOIN routes r
+      ON sa.platform_ref_ids && r.platform_ref_ids
+  ) sr
+  GROUP BY id;
 
 -- Clustered stations without route counts
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
