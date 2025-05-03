@@ -937,7 +937,7 @@ function osm2pgsql.process_relation(object)
   end
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
-    local has_members = false
+    local has_node_members = false
     local stop_members = {}
     local platform_members = {}
     local node_members = {}
@@ -950,12 +950,12 @@ function osm2pgsql.process_relation(object)
         else
           -- Station has no role defined
           table.insert(node_members, member.ref)
+          has_node_members = true
         end
-        has_members = true
       end
     end
 
-    if has_members then
+    if has_node_members then
       stop_areas:insert({
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
