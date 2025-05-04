@@ -3990,6 +3990,18 @@ features:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:d1' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Wskaźnik jazdy pociągu towarowego (W22)
+    country: PL
+    icon: { default: 'pl/w22' }
+    tags:
+      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
+
+  - description: Wskaźnik SBL (W18)
+    country: PL
+    icon: { default: 'pl/w18' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
+
   - description: Wskaźniki kierunku jazdy (W2, W26a,  W26b)
     country: PL
     icon:
@@ -4095,12 +4107,6 @@ features:
       default: 'pl/w19'
     tags:
       - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
-
-  - description: Wskaźnik jazdy pociągu towarowego (W22)
-    country: PL
-    icon: { default: 'pl/w22' }
-    tags:
-      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
@@ -4290,12 +4296,6 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Wskaźnik SBL (W18)
-    country: PL
-    icon: { default: 'pl/w18' }
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
 
   - description: Semafor kształtowy
     country: PL
