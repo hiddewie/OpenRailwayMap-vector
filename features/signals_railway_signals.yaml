@@ -3742,77 +3742,12 @@ features:
 
   # --- PL --- #
 
-  - description: Semafor kształtowy
+  - description: Wskaźnik usytuowania (W1)
     country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
-      default: 'pl/sr1'
+    icon: { default: 'pl/w1' }
     tags:
-      - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: Semafory półsamoczynne
-    country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
-        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
-      default: 'pl/s2-3'
-    tags:
-    - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-    - { tag: 'railway:signal:main:form', value: 'light' }
-    - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
-
-  - description: Semafory SBL i półsamoczynne
-    country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
-        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
-      default: 'pl/s2-2'
-    tags:
-      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Semafory półsamoczynne (4- i 5-komorowe)
-    country: PL
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
-        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
-      default: 'pl/s13-4'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
-
-  - description: Semafory półsamoczynne (3-komorowe)
-    country: PL
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
-      default: 'pl/s13-3'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Sygnalizator powtarzający (Sp)
     country: PL
@@ -4055,12 +3990,17 @@ features:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:d1' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Wskaźnik usytuowania (W1)
+  - description: Wskaźnik jazdy pociągu towarowego (W22)
     country: PL
-    icon: { default: 'pl/w1' }
+    icon: { default: 'pl/w22' }
     tags:
-      - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
+
+  - description: Wskaźnik SBL (W18)
+    country: PL
+    icon: { default: 'pl/w18' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
 
   - description: Wskaźniki kierunku jazdy (W2, W26a,  W26b)
     country: PL
@@ -4157,12 +4097,6 @@ features:
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'PL-PKP:w17' }
 
-  - description: Wskaźnik SBL (W18)
-    country: PL
-    icon: { default: 'pl/w18' }
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
-
   - description: Wskaźniki braku drogi hamowania (W19 i W20)
     country: PL
     icon:
@@ -4173,12 +4107,6 @@ features:
       default: 'pl/w19'
     tags:
       - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
-
-  - description: Wskaźnik jazdy pociągu towarowego (W22)
-    country: PL
-    icon: { default: 'pl/w22' }
-    tags:
-      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
@@ -4368,6 +4296,78 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Semafor kształtowy
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
+        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
+      default: 'pl/sr1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: Semafory półsamoczynne
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
+        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
+      default: 'pl/s2-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
+
+  - description: Semafory SBL i półsamoczynne
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
+        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
+      default: 'pl/s2-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Semafory półsamoczynne (4- i 5-komorowe)
+    country: PL
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
+        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
+      default: 'pl/s13-4'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
+
+  - description: Semafory półsamoczynne (3-komorowe)
+    country: PL
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
+        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
+        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
+      default: 'pl/s13-3'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: Wskaźniki uprzedzające o opuszczeniu pantografu (We1)
     country: PL
