@@ -87,7 +87,7 @@ The YAML files in the `features` directory are templated into SQL and Lua code.
 You can view the generated files:
 ```shell
 docker build --target build-signals --tag build-signals --file import/Dockerfile . \
-  && docker run --rm --entrypoint cat build-signals /build/signals_with_azimuth.sql | less
+  && docker run --rm --entrypoint cat build-signals /build/signal_features.sql | less
 
 docker build --target build-lua --tag build-lua --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-lua /build/tags.lua | less

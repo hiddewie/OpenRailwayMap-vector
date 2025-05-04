@@ -501,24 +501,26 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     id,
     osm_id,
     way,
-    features[1] as feature0,
-    features[2] as feature1,
-    type,
-    azimuth,
-    (signal_direction = 'both') as direction_both,
+    direction_both,
     ref,
+    dominant_speed,
     caption,
     deactivated,
-    replace(speed_limit_speed, ';', U&'\001E') as speed_limit_speed,
-    replace(speed_limit_distant_speed, ';', U&'\001E') as speed_limit_distant_speed,
+    speed_limit_speed,
+    speed_limit_distant_speed,
     wikidata,
     wikimedia_commons,
     image,
     mapillary,
     wikipedia,
     note,
-    description
-  FROM speed_railway_signal_features
+    description,
+    azimuth,
+    features[1] as feature0,
+    features[2] as feature1,
+    type
+  FROM signal_features
+  WHERE layer = 'speed'
   ORDER BY
     rank NULLS FIRST,
     dominant_speed DESC NULLS FIRST;
@@ -596,26 +598,28 @@ CREATE OR REPLACE VIEW signals_railway_signals AS
     id,
     osm_id,
     way,
-    features[1] as feature0,
-    features[2] as feature1,
-    features[3] as feature2,
-    features[4] as feature3,
-    features[5] as feature4,
-    railway,
+    direction_both,
     ref,
     ref_multiline,
     caption,
     deactivated,
-    azimuth,
-    (signal_direction = 'both') as direction_both,
+    railway,
     wikidata,
     wikimedia_commons,
     image,
     mapillary,
     wikipedia,
     note,
-    description
-  FROM signals_railway_signal_features
+    description,
+    azimuth,
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    type
+  FROM signal_features
+  WHERE layer = 'signals'
   ORDER BY rank NULLS FIRST;
 
 --- Electrification ---
@@ -625,9 +629,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     id,
     osm_id,
     way,
-    feature_electricity as feature,
-    azimuth,
-    (signal_direction = 'both') as direction_both,
+    direction_both,
     ref,
     caption,
     deactivated,
@@ -639,6 +641,10 @@ CREATE OR REPLACE VIEW electrification_signals AS
     mapillary,
     wikipedia,
     note,
-    description
-  FROM electricity_railway_signal_features
+    description,
+    azimuth,
+    features[1] as feature,
+    type as type
+  FROM signal_features
+  WHERE layer = 'electrification'
   ORDER BY rank NULLS FIRST;

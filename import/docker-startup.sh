@@ -8,6 +8,7 @@ set -o pipefail
 OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 
+# For debugging, add --echo-queries
 PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
 
 function filter_data() {
@@ -24,13 +25,11 @@ function filter_data() {
 }
 
 function import_db() {
-  echo "Creating default database"
-  psql -c "SELECT 1 FROM pg_database WHERE datname = 'gis';" | grep -q 1 || createdb gis
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_topology;'
-  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
+  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
 
   echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database
@@ -76,14 +75,14 @@ function reduce_data() {
 function create_update_functions_views() {
   echo "Post processing imported data"
   $PSQL -f sql/functions.sql
-  $PSQL -f sql/signals_with_azimuth.sql
+  $PSQL -f sql/signal_features.sql
   $PSQL -f sql/get_station_importance.sql
   $PSQL -f sql/tile_views.sql
 }
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
-  $PSQL -f sql/update_signals_with_azimuth.sql
+  $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
 }
 

@@ -287,7 +287,6 @@ local signal_columns = {
   { column = 'id', sql_type = 'serial', create_only = true },
   { column = 'way', type = 'point' },
   { column = 'railway', type = 'text' },
-  { column = 'rank', type = 'smallint' },
   { column = 'deactivated', type = 'boolean' },
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
@@ -295,6 +294,8 @@ local signal_columns = {
   { column = 'speed_limit_speed', type = 'text' },
   { column = 'speed_limit_distant_speed', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
+  { column = 'voltage', type = 'integer' },
+  { column = 'frequency', type = 'real' },
   { column = 'caption', type = 'text' },
   { column = 'wikidata', type = 'text' },
   { column = 'wikimedia_commons', type = 'text' },
@@ -311,7 +312,7 @@ local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = signal_columns,
-  -- The queried table is signals_with_azimuth
+  -- The queried table is signal_features
   cluster = 'no',
 })
 
@@ -407,9 +408,13 @@ local stop_areas = osm2pgsql.define_table({
   name = 'stop_areas',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'platform_ref_ids', sql_type = 'int8[]' },
+    { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
+    { column = 'platform_ref_ids', method = 'gin' },
+    { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
   },
 })
@@ -537,6 +542,10 @@ function split_semicolon_to_sql_array(value)
   end
 
   return result .. '}'
+end
+
+function semicolon_to_record_separator(value)
+  return value and value:gsub(";", "\u{001E}") or nil
 end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
@@ -704,16 +713,17 @@ function osm2pgsql.process_node(object)
     local signal = {
       way = object:as_point(),
       railway = tags.railway,
-      rank = tag_functions.signal_rank(tags),
       deactivated = tag_functions.signal_deactivated(tags),
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
       ["railway:signal:speed_limit:speed"] = speed_limit_speed,
       ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
-      speed_limit_speed = tags['railway:signal:speed_limit:speed'],
-      speed_limit_distant_speed = tags['railway:signal:speed_limit_distant:speed'],
+      speed_limit_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit:speed']),
+      speed_limit_distant_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit_distant:speed']),
       dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
+      voltage = tonumber(tags['railway:signal:electricity:voltage']),
+      frequency = tonumber(tags['railway:signal:electricity:frequency']),
       caption = signal_caption(tags),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -933,17 +943,28 @@ function osm2pgsql.process_relation(object)
   end
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
-    local has_members = false
+    local has_node_members = false
+    local stop_members = {}
+    local platform_members = {}
     local node_members = {}
     for _, member in ipairs(object.members) do
-      if member.type == 'n' and member.role ~= 'stop' and member.role ~= 'platform' then
-        table.insert(node_members, member.ref)
-        has_members = true
+      if member.type == 'n' then
+        if member.role == 'stop' then
+          table.insert(stop_members, member.ref)
+        elseif member.role == 'platform' then
+          table.insert(platform_members, member.ref)
+        else
+          -- Station has no role defined
+          table.insert(node_members, member.ref)
+          has_node_members = true
+        end
       end
     end
 
-    if has_members then
+    if has_node_members then
       stop_areas:insert({
+        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
+        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
       })
     end
