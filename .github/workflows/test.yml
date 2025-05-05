@@ -155,7 +155,7 @@ jobs:
 
       - name: Install Hurl
         env:
-          VERSION: '5.0.1'
+          VERSION: '6.1.1'
         run: |
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
@@ -202,7 +202,7 @@ jobs:
 
       - name: Install Hurl
         env:
-          VERSION: '5.0.1'
+          VERSION: '6.1.1'
         run: |
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
@@ -272,7 +272,7 @@ jobs:
 
       - name: Install Hurl
         env:
-          VERSION: '5.0.1'
+          VERSION: '6.1.1'
         run: |
           curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
           sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
