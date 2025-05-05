@@ -11,6 +11,7 @@ HTTP 200
 Content-Type: text/html
 [Asserts]
 body contains "<em class=\"flex-fill\">April 2025</em>"
+header "X-Content-Hash" matches "^[0-9a-f]{40}$"
 
 # Manifest
 GET {{base_url}}/manifest.json
