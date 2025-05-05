@@ -1099,7 +1099,6 @@ function openJOSM(josmUrl, osmType, osmId) {
   const selectString = (osmType && osmId) ? `&select=${osmType}${osmId}` : '';
 
   fetch(`${josmUrl}${selectString}`)
-    .then()
     .catch(error => {
       console.error('Error invoking JOSM remote control:', error)
     })
