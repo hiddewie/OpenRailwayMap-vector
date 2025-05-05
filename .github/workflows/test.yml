@@ -179,6 +179,8 @@ jobs:
           VERSION: '6.1.1'
         run: |
           curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
@@ -232,6 +234,8 @@ jobs:
           VERSION: '6.1.1'
         run: |
           curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
@@ -308,6 +312,8 @@ jobs:
           VERSION: '6.1.1'
         run: |
           curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
