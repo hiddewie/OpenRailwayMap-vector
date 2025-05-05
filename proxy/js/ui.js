@@ -18,6 +18,8 @@ const backgroundUrlControl = document.getElementById('backgroundUrl');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
+const editorIDControl =  document.getElementById('editorID');
+const editorJOSMControl =  document.getElementById('editorJOSM');
 const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
@@ -223,6 +225,13 @@ function showConfiguration() {
     themeDarkControl.checked = true
   } else if (theme === 'light') {
     themeLightControl.checked = true;
+  }
+
+  const editor = configuration.editor ?? defaultConfiguration.editor;
+  if (editor === 'josm') {
+    editorJOSMControl.checked = true;
+  } else {
+    editorIDControl.checked = true;
   }
 
   configurationBackdrop.style.display = 'block';
@@ -871,21 +880,17 @@ class EditControl {
     button.type = 'button';
     button.title = 'Edit map data'
     button.onclick = _ => {
-      switch (configuration.editor || defaultConfiguration.editor) {
-        case 'id':
-          const domain = dateControl.active
-            ? 'https://www.openhistoricalmap.org'
-            : 'https://www.openstreetmap.org';
+      const editor = configuration.editor ?? defaultConfiguration.editor
+      if (editor === 'josm') {
+        const bounds = this._map.getBounds();
+        const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
+        openJOSM(josmUrl)
+      } else {
+        const domain = dateControl.active
+          ? 'https://www.openhistoricalmap.org'
+          : 'https://www.openstreetmap.org';
 
-          window.open(`${domain}/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
-          break;
-
-        case 'josm':
-          const bounds = this._map.getBounds();
-          const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
-
-          fetch(josmUrl).catch(error => console.error('Error invoking JOSM remote control:', error))
-          break;
+        window.open(`${domain}/edit#map=${Math.round(this._map.getZoom()) + 1}/${this._map.getCenter().lat}/${this._map.getCenter().lng}`, '_blank');
       }
     }
     createDomElement('span', 'maplibregl-ctrl-icon', button);
@@ -1090,7 +1095,20 @@ const onStylesheetChange = styleSheet => {
   onMapZoom(map.getZoom());
 }
 
+function openJOSM(josmUrl, osmType, osmId) {
+  const selectString = (osmType && osmId) ? `&select=${osmType}${osmId}` : '';
+
+  fetch(`${josmUrl}${selectString}`)
+    .then()
+    .catch(error => {
+      console.error('Error invoking JOSM remote control:', error)
+    })
+  }
+
 function popupContent(feature) {
+  const bounds = map.getBounds();
+  const editor = configuration.editor ?? defaultConfiguration.editor;
+  const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
   const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
@@ -1197,7 +1215,9 @@ function popupContent(feature) {
       <div class="btn-group btn-group-sm">
         ${osm_ids.length > 1 ? `<button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>` : ''}
         <a title="View source" href="${featureCatalog.featureLinks.view.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">View</a>
-        <a title="Edit source" href="${featureCatalog.featureLinks.edit.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">Edit</a>
+        ${editor === 'josm' ?
+          `<div title="Edit Source" onclick="openJOSM('${josmUrl}', '${osmType}', '${osm_id}')" class="btn btn-outline-primary">Edit</div>` :
+          `<a title="Edit source" href="${featureCatalog.featureLinks.edit.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">Edit</a>`}
       </div>
     `).join('')}</h6>
     ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
