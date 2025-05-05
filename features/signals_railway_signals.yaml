@@ -320,7 +320,7 @@ features:
       - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Verschubverbot
+  - description: Verschubsignal
     country: AT
     icon:
       match: 'railway:signal:shunting:height'
