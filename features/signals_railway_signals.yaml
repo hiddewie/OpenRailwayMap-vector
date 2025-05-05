@@ -191,7 +191,11 @@ features:
 
   - description: Signalnachahmer with Ersatzsignal
     country: AT
-    icon: { default: 'at/signalnachahmer-ersatzsignal' }
+    icon:
+      match: 'railway:signal:main_repeated:magnet'
+      cases:
+        - { regex: '^yes$', value: 'signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
+      default: 'at/signalnachahmer-ersatzsignal'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -199,7 +203,11 @@ features:
 
   - description: Signalnachahmer
     country: AT
-    icon: { default: 'at/signalnachahmer' }
+    icon:
+      match: 'railway:signal:main_repeated:magnet'
+      cases:
+        - { regex: '^yes$', value: 'signalnachahmer-magnet', description: '1000Hz magnet' }
+      default: 'at/signalnachahmer'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
