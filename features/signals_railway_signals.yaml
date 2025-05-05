@@ -263,6 +263,7 @@ features:
     country: AT
     icon:
       # TODO handle railway:signal:main:substitute_signal=AT-V2:ersatzsignal
+      # TODO handle railway:signal:main:substitute_signal=AT-V2:vorsichtssignal
       # TODO handle railway:signal:main:function=exit (AS)
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
