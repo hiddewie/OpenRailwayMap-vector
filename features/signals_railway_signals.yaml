@@ -189,10 +189,17 @@ features:
 
   # --- AT --- #
 
+  - description: Signalnachahmer with Ersatzsignal
+    country: AT
+    icon: { default: 'at/signalnachahmer-ersatzsignal' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:substitute_signal', value: 'AT-V2:ersatzsignal' }
+
   - description: Signalnachahmer
     country: AT
     icon: { default: 'at/signalnachahmer' }
-    # TODO add handle railway:signal:main_repeated:substitute_signal=AT-V2:ersatzsignal
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
