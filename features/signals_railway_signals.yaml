@@ -1161,404 +1161,40 @@ features:
 
   # --- DE --- #
 
-  - description: main entry sign Ne 1
+  - description: shunting stop sign Ra 10
     country: DE
-    icon: { default: 'de/ne1' }
+    icon: { default: 'de/ra10' }
     tags:
-      - { tag: 'railway:signal:main', value: 'DE-ESO:ne1' }
-      - { tag: 'railway:signal:main:form', value: 'sign' }
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra10' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: main semaphore signals type Hp
+  - description: main signal invalid for shunting trains Zs 103 (sign)
     country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-semaphore' }
-      default: 'de/hp0-semaphore'
+    icon: { default: 'de/zs103' }
     tags:
-      - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:zs103' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: main light signals type Hp
+  - description: shunting signal Ra 11 without Sh 1
     country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-light' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-light' }
-      default: 'de/hp0-light'
+    icon: { default: 'de/ra11-sign' }
     tags:
-      - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: main light signals type Hl
+  - description: shunting signal Ra 11 with Sh 1
     country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:hl2(;.*)?$', value: 'de/hl2' }
-        - { regex: '^(.*;)?DE-ESO:hl3b(;.*)?$', value: 'de/hl3b' }
-        - { regex: '^(.*;)?DE-ESO:hl3a(;.*)?$', value: 'de/hl3a' }
-        - { regex: '^(.*;)?DE-ESO:hl1(;.*)?$', value: 'de/hl1' }
-      default: 'de/hl0-main'
+    icon: { default: 'de/ra11-sh1' }
     tags:
-      - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-  - description: tram Fahrsignal mit Anmeldung LSA
+  - description: shunting signal Ra 11b (without Sh 1)
     country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1-st9' }
-      default: 'de/bostrab/f0-st9'
+    icon: { default: 'de/ra11b' }
     tags:
-      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
-
-  - description: tram Fahrsignal
-    country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1' }
-      default: 'de/bostrab/f0'
-    tags:
-      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: BOStrab Hauptsignal
-    country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
-        - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
-        - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
-        - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
-        - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
-        - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
-        - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
-      default: 'de/bostrab/h0'
-    tags:
-      - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Hamburger Hochbahn main signal
-    country: DE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^.*$', value: 'de/hha/h0' }
-      default: 'de/hha/h1'
-    tags:
-      - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: main signals type Ks
-    country: DE
-    icon: { default: 'de/ks-main' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: combined light signals type Hl
-    country: DE
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:hl11(;.*)?$', value: 'de/hl11' }
-        - { regex: '^(.*;)?DE-ESO:hl12b(;.*)?$', value: 'de/hl12b' }
-        - { regex: '^(.*;)?DE-ESO:hl12a(;.*)?$', value: 'de/hl12a' }
-        - { regex: '^(.*;)?DE-ESO:hl10(;.*)?$', value: 'de/hl10' }
-      default: 'de/hl0-combined'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: combined light signals type Sv
-    country: DE
-    icon:
-      # TODO add shortened
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
-        - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
-      default: ''
-    tags:
-      - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: tram Hauptsignal mit Vorsignal
-    country: DE
-    icon: { default: 'de/bostrab/h' }
-    tags:
-      - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: combined signals type Ks
-    country: DE
-    icon:
-      match: 'railway:signal:combined:shortened'
-      cases:
-        - { regex: '^yes$', value: 'de/ks-combined-shortened' }
-      default: 'de/ks-combined'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: distant signal announcement signs Ne 3 (normal)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:type'
-      cases:
-        - { regex: '^II$', value: 'de/ne3-normal-II' }
-        - { regex: '^III$', value: 'de/ne3-normal-III' }
-        - { regex: '^IV$', value: 'de/ne3-normal-IV' }
-      default: 'de/ne3-normal-I'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: distant signal announcement signs Ne 3 (dwarf)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:type'
-      cases:
-        - { regex: '^II$', value: 'de/ne3-dwarf-II' }
-        - { regex: '^III$', value: 'de/ne3-dwarf-III' }
-        - { regex: '^IV$', value: 'de/ne3-dwarf-IV' }
-      default: 'de/ne3-dwarf-I'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-      - { tag: 'railway:signal:distant:height', value: 'dwarf' }
-
-  - description: Hamburger Hochbahn distant signal
-    country: DE
-    icon: { default: 'de/hha/v1' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-HHA:v' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant signal replacement by sign So 106
-    country: DE
-    icon: { default: 'de/so106' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:so106' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: distant light signals type Vr (repeated)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
-      default: 'de/vr0-light-repeated'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
-
-  - description: distant light signals type Vr (shortened)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-shortened' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-shortened' }
-      default: 'de/vr0-light-shortened'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
-
-  - description: distant light signals type Vr
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
-      default: 'de/vr0-light'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant semaphore signals type Vr
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
-      default: 'de/vr0-semaphore'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
-  - description: distant signal replacement by sign Ne 2
-    country: DE
-    icon:
-      match: 'railway:signal:distant:shortened'
-      cases:
-        - { regex: '^yes$', value: 'de/ne2-reduced-distance' }
-      default: 'de/ne2'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: distant signal replacement at reduced distance by sign So 3 (DV 301)
-    country: DE
-    icon: { default: 'de/ne2-dv301-reduced-distance' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
-
-  - description: distant light signals type Hl
-    country: DE
-    icon:
-      match: 'railway:signal:distant:repeated'
-      cases:
-        - { regex: '^yes$', value: 'de/hl1-distant-repeated' }
-      default: 'de/hl1-distant'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:hl' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Karlsruhe VBK Vorsignale (light)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
-        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
-      default: 'de/vbk/fv1'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Karlsruhe VBK Vorsignale (sign)
-    country: DE
-    icon: { default: 'de/vbk/fv0' }
-    tags:
-      - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: BOStrab distant signal
-    country: DE
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
-        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
-        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
-        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
-        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
-      default: 'de/bostrab/v0'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant signals type Ks (repeated)
-    country: DE
-    icon: { default: 'de/ks-distant-repeated' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
-
-  - description: distant signals type Ks (shortened)
-    country: DE
-    icon: { default: 'de/ks-distant-shortened' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
-
-  - description: distant signals type Ks
-    country: DE
-    icon: { default: 'de/ks-distant' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: tram signal "start of train protection" So 1
-    country: DE
-    icon: { default: 'de/bostrab/so1' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-      - { tag: 'railway:signal:train_protection:type', value: 'start' }
-
-  - description: tram signal "end of train protection" So 2
-    country: DE
-    icon: { default: 'de/bostrab/so2' }
-    tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-      - { tag: 'railway:signal:train_protection:type', value: 'end' }
-
-  - description: ETCS block marker Ne 14
-    country: DE
-    icon:
-      match: 'railway:signal:position'
-      cases:
-        - { regex: '^left$', value: 'de/ne14-right' }
-        - { regex: '^overhead$', value: 'de/ne14-down' }
-      default: 'de/ne14-left'
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-
-  - description: LZB section start
-    country: DE
-    icon: { default: 'de/lzb-section-start' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:lzb-bereichskennzeichen' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Blockkennzeichen
-    country: DE
-    icon:
-      match: 'ref_multiline'
-      cases:
-        - { regex: '^([^\n]{4}\n[^\n]{1,4})|([^\n]{1,4}\n[^\n]{4})$', value: 'de/blockkennzeichen-4x2' }
-        - { regex: '^[^\n]{4}$', value: 'de/blockkennzeichen-4x1' }
-        - { regex: '^([^\n]{3}\n[^\n]{1,3})|([^\n]{1,3}\n[^\n]{3})$', value: 'de/blockkennzeichen-3x2' }
-        - { regex: '^[^\n]{3}$', value: 'de/blockkennzeichen-3x1' }
-        - { regex: '^([^\n]{2}\n[^\n]{1,2})|([^\n]{1,2}\n[^\n]{2})$', value: 'de/blockkennzeichen-2x2' }
-        - { regex: '^[^\n]{2}$', value: 'de/blockkennzeichen-2x1' }
-        - { regex: '^[^\n]\n[^\n]$', value: 'de/blockkennzeichen-1x2' }
-        - { regex: '^[^\n]$', value: 'de/blockkennzeichen-1x1' }
-      default: 'de/blockkennzeichen'
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:blockkennzeichen' }
-
-  - description: Signalhaltmelder Zugleitbetrieb
-    country: DE
-    icon: { default: 'de/zlb-haltmelder-light' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'DE-DB:signalhaltmelder' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-
-  - description: Fahrtanzeiger
-    country: DE
-    icon: { default: 'de/fahrtanzeiger' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11b' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: tram minor stop sign Sh 1
     country: DE
@@ -1626,40 +1262,72 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: shunting stop sign Ra 10
+  - description: tram signal "start of train protection" So 1
     country: DE
-    icon: { default: 'de/ra10' }
+    icon: { default: 'de/bostrab/so1' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra10' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
-  - description: main signal invalid for shunting trains Zs 103 (sign)
+  - description: tram signal "end of train protection" So 2
     country: DE
-    icon: { default: 'de/zs103' }
+    icon: { default: 'de/bostrab/so2' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'DE-ESO:zs103' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
-  - description: shunting signal Ra 11 without Sh 1
+  - description: ETCS block marker Ne 14
     country: DE
-    icon: { default: 'de/ra11-sign' }
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { regex: '^left$', value: 'de/ne14-right' }
+        - { regex: '^overhead$', value: 'de/ne14-down' }
+      default: 'de/ne14-left'
     tags:
-      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
-  - description: shunting signal Ra 11 with Sh 1
+  - description: LZB section start
     country: DE
-    icon: { default: 'de/ra11-sh1' }
+    icon: { default: 'de/lzb-section-start' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:lzb-bereichskennzeichen' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: shunting signal Ra 11b (without Sh 1)
+  - description: Blockkennzeichen
     country: DE
-    icon: { default: 'de/ra11b' }
+    icon:
+      match: 'ref_multiline'
+      cases:
+        - { regex: '^([^\n]{4}\n[^\n]{1,4})|([^\n]{1,4}\n[^\n]{4})$', value: 'de/blockkennzeichen-4x2' }
+        - { regex: '^[^\n]{4}$', value: 'de/blockkennzeichen-4x1' }
+        - { regex: '^([^\n]{3}\n[^\n]{1,3})|([^\n]{1,3}\n[^\n]{3})$', value: 'de/blockkennzeichen-3x2' }
+        - { regex: '^[^\n]{3}$', value: 'de/blockkennzeichen-3x1' }
+        - { regex: '^([^\n]{2}\n[^\n]{1,2})|([^\n]{1,2}\n[^\n]{2})$', value: 'de/blockkennzeichen-2x2' }
+        - { regex: '^[^\n]{2}$', value: 'de/blockkennzeichen-2x1' }
+        - { regex: '^[^\n]\n[^\n]$', value: 'de/blockkennzeichen-1x2' }
+        - { regex: '^[^\n]$', value: 'de/blockkennzeichen-1x1' }
+      default: 'de/blockkennzeichen'
     tags:
-      - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11b' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection', value: 'DE-ESO:blockkennzeichen' }
+
+  - description: Signalhaltmelder Zugleitbetrieb
+    country: DE
+    icon: { default: 'de/zlb-haltmelder-light' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'DE-DB:signalhaltmelder' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Fahrtanzeiger
+    country: DE
+    icon: { default: 'de/fahrtanzeiger' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: tram passing prohibited sign So 5
     country: DE
@@ -1859,41 +1527,6 @@ features:
       - { tag: 'railway:signal:resetting_switch_distant', value: 'DE-ESO:ne12' }
       - { tag: 'railway:signal:resetting_switch_distant:form', value: 'sign' }
 
-  - description: wrong road signal Zs 6 (DB) (sign)
-    country: DE
-    icon: { default: 'de/zs6-sign' }
-    tags:
-      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
-
-  - description: wrong road signal Zs 6 (DB) (light)
-    country: DE
-    icon: { default: 'de/zs6-db-light' }
-    tags:
-      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
-
-  - description: wrong road signal Zs 7 (DR) (light)
-    country: DE
-    icon: { default: 'de/zs7-dr-light' }
-    tags:
-      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
-
-  - description: entry into dead-end / early stop marker Zs 13 (sign)
-    country: DE
-    icon: { default: 'de/zs13-sign' }
-    tags:
-      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
-      - { tag: 'railway:signal:short_route:form', value: 'sign' }
-
-  - description: entry into dead-end / early stop marker Zs 13 (light)
-    country: DE
-    icon: { default: 'de/zs13-light' }
-    tags:
-      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
-      - { tag: 'railway:signal:short_route:form', value: 'light' }
-
   - description: humping signal Ra 6-9
     country: DE
     icon: { default: 'de/ra7' }
@@ -1976,46 +1609,40 @@ features:
       - { tag: 'railway:signal:stop_demand', value: 'DE-AVG:hw1' }
       - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
-  - description: Richtungsanzeiger (Zs 2)
+  - description: wrong road signal Zs 6 (DB) (sign)
     country: DE
-    icon:
-      match: 'railway:signal:route:states'
-      # TODO allow extracting match from group
-      cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
-      default: 'de/zs2-unknown'
+    icon: { default: 'de/zs6-sign' }
     tags:
-      - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+
+  - description: wrong road signal Zs 6 (DB) (light)
+    country: DE
+    icon: { default: 'de/zs6-db-light' }
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: wrong road signal Zs 7 (DR) (light)
+    country: DE
+    icon: { default: 'de/zs7-dr-light' }
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (sign)
+    country: DE
+    icon: { default: 'de/zs13-sign' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'sign' }
+
+  - description: entry into dead-end / early stop marker Zs 13 (light)
+    country: DE
+    icon: { default: 'de/zs13-light' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
 
   - description: Richtungsvoranzeiger (Zs 2v)
     country: DE
@@ -2079,28 +1706,6 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
-
-  - description: Speed signals (Zs 3) (light)
-    country: DE
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^([1-9]|1[0-6])0$', value: 'de/zs3-sign-up-{}', example: 'de/zs3-sign-up-{50}' }
-      default: 'de/zs3-empty-sign-up'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed signals (Zs 3) (light)
-    country: DE
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-{70}' }
-      default: 'de/zs3-light-unknown'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: West German branch line speed signals (Lf 4 DS 301)
     country: DE
@@ -2183,6 +1788,360 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: distant signal announcement signs Ne 3 (normal)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+        - { regex: '^II$', value: 'de/ne3-normal-II' }
+        - { regex: '^III$', value: 'de/ne3-normal-III' }
+        - { regex: '^IV$', value: 'de/ne3-normal-IV' }
+      default: 'de/ne3-normal-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: distant signal announcement signs Ne 3 (dwarf)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+        - { regex: '^II$', value: 'de/ne3-dwarf-II' }
+        - { regex: '^III$', value: 'de/ne3-dwarf-III' }
+        - { regex: '^IV$', value: 'de/ne3-dwarf-IV' }
+      default: 'de/ne3-dwarf-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
+  - description: Hamburger Hochbahn distant signal
+    country: DE
+    icon: { default: 'de/hha/v1' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-HHA:v' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant signal replacement by sign So 106
+    country: DE
+    icon: { default: 'de/so106' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:so106' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: distant light signals type Vr (repeated)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
+      default: 'de/vr0-light-repeated'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
+
+  - description: distant light signals type Vr (shortened)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-shortened' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-shortened' }
+      default: 'de/vr0-light-shortened'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+
+  - description: distant light signals type Vr
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
+      default: 'de/vr0-light'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant semaphore signals type Vr
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
+        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
+      default: 'de/vr0-semaphore'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+  - description: distant signal replacement by sign Ne 2
+    country: DE
+    icon:
+      match: 'railway:signal:distant:shortened'
+      cases:
+        - { regex: '^yes$', value: 'de/ne2-reduced-distance' }
+      default: 'de/ne2'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: distant signal replacement at reduced distance by sign So 3 (DV 301)
+    country: DE
+    icon: { default: 'de/ne2-dv301-reduced-distance' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+
+  - description: distant light signals type Hl
+    country: DE
+    icon:
+      match: 'railway:signal:distant:repeated'
+      cases:
+        - { regex: '^yes$', value: 'de/hl1-distant-repeated' }
+      default: 'de/hl1-distant'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:hl' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale (light)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
+        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+      default: 'de/vbk/fv1'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Karlsruhe VBK Vorsignale (sign)
+    country: DE
+    icon: { default: 'de/vbk/fv0' }
+    tags:
+      - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: BOStrab distant signal
+    country: DE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
+        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
+        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
+        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
+        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
+      default: 'de/bostrab/v0'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: distant signals type Ks (repeated)
+    country: DE
+    icon: { default: 'de/ks-distant-repeated' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
+
+  - description: distant signals type Ks (shortened)
+    country: DE
+    icon: { default: 'de/ks-distant-shortened' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+
+  - description: distant signals type Ks
+    country: DE
+    icon: { default: 'de/ks-distant' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: main entry sign Ne 1
+    country: DE
+    icon: { default: 'de/ne1' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:ne1' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: main semaphore signals type Hp
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-semaphore' }
+        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-semaphore' }
+      default: 'de/hp0-semaphore'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: main light signals type Hp
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-light' }
+        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-light' }
+      default: 'de/hp0-light'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: main light signals type Hl
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:hl2(;.*)?$', value: 'de/hl2' }
+        - { regex: '^(.*;)?DE-ESO:hl3b(;.*)?$', value: 'de/hl3b' }
+        - { regex: '^(.*;)?DE-ESO:hl3a(;.*)?$', value: 'de/hl3a' }
+        - { regex: '^(.*;)?DE-ESO:hl1(;.*)?$', value: 'de/hl1' }
+      default: 'de/hl0-main'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: tram Fahrsignal mit Anmeldung LSA
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2-st9' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1-st9' }
+      default: 'de/bostrab/f0-st9'
+    tags:
+      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
+
+  - description: tram Fahrsignal
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2' }
+        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1' }
+      default: 'de/bostrab/f0'
+    tags:
+      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: BOStrab Hauptsignal
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
+        - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
+        - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
+        - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
+        - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
+        - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
+        - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
+      default: 'de/bostrab/h0'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Hamburger Hochbahn main signal
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^.*$', value: 'de/hha/h0' }
+      default: 'de/hha/h1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: main signals type Ks
+    country: DE
+    icon: { default: 'de/ks-main' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: combined light signals type Hl
+    country: DE
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:hl11(;.*)?$', value: 'de/hl11' }
+        - { regex: '^(.*;)?DE-ESO:hl12b(;.*)?$', value: 'de/hl12b' }
+        - { regex: '^(.*;)?DE-ESO:hl12a(;.*)?$', value: 'de/hl12a' }
+        - { regex: '^(.*;)?DE-ESO:hl10(;.*)?$', value: 'de/hl10' }
+      default: 'de/hl0-combined'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: combined light signals type Sv
+    country: DE
+    icon:
+      # TODO add shortened
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
+        - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
+      default: ''
+    tags:
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: tram Hauptsignal mit Vorsignal
+    country: DE
+    icon: { default: 'de/bostrab/h' }
+    tags:
+      - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: combined signals type Ks
+    country: DE
+    icon:
+      match: 'railway:signal:combined:shortened'
+      cases:
+        - { regex: '^yes$', value: 'de/ks-combined-shortened' }
+      default: 'de/ks-combined'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Speed signals (Zs 3) (light)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-6])0$', value: 'de/zs3-sign-up-{}', example: 'de/zs3-sign-up-{50}' }
+      default: 'de/zs3-empty-sign-up'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed signals (Zs 3) (light)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^([1-9]|1[0-6]|20)0$', value: 'de/zs3-light-{}', example: 'de/zs3-light-{70}' }
+      default: 'de/zs3-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: Tram speed limit (G 2a) (sign)
     country: DE
@@ -2314,6 +2273,47 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Richtungsanzeiger (Zs 2)
+    country: DE
+    icon:
+      match: 'railway:signal:route:states'
+      # TODO allow extracting match from group
+      cases:
+        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
+        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
+        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
+        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
+        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
+        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
+        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
+        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
+        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
+        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
+        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
+        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
+        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
+        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
+        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
+        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
+        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
+        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
+        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
+        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
+        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
+        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
+        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
+        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
+        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
+        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
+        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
+        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
+        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
+        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
+      default: 'de/zs2-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: power off advance sign El 1v
     country: DE
@@ -3742,77 +3742,12 @@ features:
 
   # --- PL --- #
 
-  - description: Semafor kształtowy
+  - description: Wskaźnik usytuowania (W1)
     country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
-      default: 'pl/sr1'
+    icon: { default: 'pl/w1' }
     tags:
-      - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: Semafory półsamoczynne
-    country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
-        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
-      default: 'pl/s2-3'
-    tags:
-    - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-    - { tag: 'railway:signal:main:form', value: 'light' }
-    - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
-
-  - description: Semafory SBL i półsamoczynne
-    country: PL
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
-        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
-      default: 'pl/s2-2'
-    tags:
-      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Semafory półsamoczynne (4- i 5-komorowe)
-    country: PL
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
-        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
-      default: 'pl/s13-4'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
-
-  - description: Semafory półsamoczynne (3-komorowe)
-    country: PL
-    icon:
-      match: 'railway:signal:combined:states'
-      cases:
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
-      default: 'pl/s13-3'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Sygnalizator powtarzający (Sp)
     country: PL
@@ -4055,12 +3990,17 @@ features:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:d1' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Wskaźnik usytuowania (W1)
+  - description: Wskaźnik jazdy pociągu towarowego (W22)
     country: PL
-    icon: { default: 'pl/w1' }
+    icon: { default: 'pl/w22' }
     tags:
-      - { tag: 'railway:signal:distant', value: 'PL-PKP:w1' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
+
+  - description: Wskaźnik SBL (W18)
+    country: PL
+    icon: { default: 'pl/w18' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
 
   - description: Wskaźniki kierunku jazdy (W2, W26a,  W26b)
     country: PL
@@ -4157,12 +4097,6 @@ features:
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'PL-PKP:w17' }
 
-  - description: Wskaźnik SBL (W18)
-    country: PL
-    icon: { default: 'pl/w18' }
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
-
   - description: Wskaźniki braku drogi hamowania (W19 i W20)
     country: PL
     icon:
@@ -4173,12 +4107,6 @@ features:
       default: 'pl/w19'
     tags:
       - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
-
-  - description: Wskaźnik jazdy pociągu towarowego (W22)
-    country: PL
-    icon: { default: 'pl/w22' }
-    tags:
-      - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
@@ -4368,6 +4296,78 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-tram:bt-2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Semafor kształtowy
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
+        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
+      default: 'pl/sr1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: Semafory półsamoczynne
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
+        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
+      default: 'pl/s2-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
+
+  - description: Semafory SBL i półsamoczynne
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
+        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
+      default: 'pl/s2-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Semafory półsamoczynne (4- i 5-komorowe)
+    country: PL
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
+        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
+        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
+        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
+        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
+        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
+      default: 'pl/s13-4'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
+
+  - description: Semafory półsamoczynne (3-komorowe)
+    country: PL
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
+        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
+        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
+      default: 'pl/s13-3'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: Wskaźniki uprzedzające o opuszczeniu pantografu (We1)
     country: PL
