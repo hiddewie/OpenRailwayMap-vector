@@ -192,6 +192,7 @@ features:
   - description: Signalnachahmer
     country: AT
     icon: { default: 'at/signalnachahmer' }
+    # TODO add handle railway:signal:main_repeated:substitute_signal=AT-V2:ersatzsignal
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -261,6 +262,9 @@ features:
   - description: Hauptsignal (light)
     country: AT
     icon:
+      # TODO handle railway:signal:main:substitute_signal=AT-V2:ersatzsignal
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
         - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
