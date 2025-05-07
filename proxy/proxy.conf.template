@@ -152,6 +152,7 @@ server {
 
   location = /news.html {
     root /etc/nginx/public;
+    add_header X-Content-Hash ${NEWS_HASH};
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 

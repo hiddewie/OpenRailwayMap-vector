@@ -44,6 +44,7 @@ RUN --mount=type=bind,source=symbols,target=symbols \
 
 FROM nginx:1-alpine
 
+COPY proxy/script/with-news-hash.sh /with-news-hash.sh
 COPY proxy/proxy.conf.template /etc/nginx/templates/proxy.conf.template
 COPY proxy/manifest.json /etc/nginx/public/manifest.json
 COPY proxy/index.html /etc/nginx/public/index.html
@@ -62,3 +63,6 @@ COPY --from=build-preset \
 
 COPY --from=build-features \
   /build/features.json /etc/nginx/public/features.json
+
+ENTRYPOINT ["/with-news-hash.sh"]
+CMD ["nginx", "-g", "daemon off;"]
