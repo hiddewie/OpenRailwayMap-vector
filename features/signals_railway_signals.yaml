@@ -629,6 +629,30 @@ features:
       - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
       - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
 
+  - description: Räumarbeit aufnehmen
+    country: AT
+    icon: { default: 'at/räumarbeit-aufnehmen' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:räumarbeit_aufnehmen' }
+      - { tag: 'railway:signal:snowplow:type', value: 'down' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Mittelräumer heben
+    country: AT
+    icon: { default: 'at/mittelräumer-heben' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:mittelräumer_heben' }
+      - { tag: 'railway:signal:snowplow:type', values: 'up' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Räumarbeit einstellen
+    country: AT
+    icon: { default: 'at/räumarbeit-einstellen' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:räumarbeit_einstellen' }
+      - { tag: 'railway:signal:snowplow:type', value: 'up' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
   # --- BE --- #
 
   - description: Grand Signal d'Arrêt
