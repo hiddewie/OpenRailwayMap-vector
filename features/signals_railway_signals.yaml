@@ -4378,7 +4378,7 @@ features:
         - { regex: '^left$', value: 'pl/we1c' }
       default: 'pl/we1a'
     tags:
-      - { tag: 'railway:signal:electricity', value: 'PL-PKP:we1' }
+      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we1a', 'PL-PKP:we1b', 'PL-PKP:we1c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
