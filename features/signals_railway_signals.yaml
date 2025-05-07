@@ -642,7 +642,7 @@ features:
     icon: { default: 'at/mittelräumer-heben' }
     tags:
       - { tag: 'railway:signal:snowplow', value: 'AT-V2:mittelräumer_heben' }
-      - { tag: 'railway:signal:snowplow:type', values: 'up' }
+      - { tag: 'railway:signal:snowplow:type', value: 'up' }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
 
   - description: Räumarbeit einstellen
