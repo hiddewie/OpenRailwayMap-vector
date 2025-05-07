@@ -328,11 +328,41 @@ features:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+  - description: Hauptsignal mit ersatzsignal (light)
+    country: AT
+    icon:
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
+      default: 'at/hauptsignal-ersatzsignal-halt'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:ersatzsignal' }
+
+  - description: Hauptsignal mit vorsichtssignal (light)
+    country: AT
+    icon:
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
+      default: 'at/hauptsignal-vorsichtssignal-halt'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:vorsichtssignal' }
+
   - description: Hauptsignal (light)
     country: AT
     icon:
-      # TODO handle railway:signal:main:substitute_signal=AT-V2:ersatzsignal
-      # TODO handle railway:signal:main:substitute_signal=AT-V2:vorsichtssignal
       # TODO handle railway:signal:main:function=exit (AS)
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
