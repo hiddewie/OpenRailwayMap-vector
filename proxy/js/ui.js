@@ -991,7 +991,7 @@ class AboutControl {
     fetch(`${location.origin}/news.html`)
       .then(news => {
         // Attach news hash to the button
-        this._newsHash = news.headers.get('etag');
+        this._newsHash = news.headers.get('x-content-hash');
         if (this._newsHash && !configuration.newsHash || this._newsHash !== configuration.newsHash) {
           button.classList.add('news-updated');
           console.info('News has been updated');
