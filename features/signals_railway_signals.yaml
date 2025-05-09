@@ -500,6 +500,13 @@ features:
       - { tag: 'railway:signal:resetting_switch', value: 'AT:weichenüberwachungssignal_plb' }
       - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
 
+  - description: Zuglaufmeldestelle (SLB)
+    country: AT
+    icon: { default: 'at/zuglaufmeldestelle' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AT-SLB:zuglaufmeldestelle' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: EK poor sight (GKB)
     country: AT
     icon: { default: 'at/ek-60' }
