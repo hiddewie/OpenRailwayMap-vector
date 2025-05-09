@@ -486,6 +486,15 @@ features:
       - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: EK poor sight (GKB)
+    country: AT
+    icon: { default: 'at/ek-60' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AT-GKB:ek_60' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit', value: 'AT-GKB:ek_60' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: Haltepunkt
     country: AT
     icon: { default: 'at/haltepunkt' }
