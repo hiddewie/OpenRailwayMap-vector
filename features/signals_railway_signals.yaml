@@ -742,6 +742,13 @@ features:
       - { tag: 'railway:signal:snowplow:type', value: 'up' }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
 
+  - description: Abdrucksignal
+    country: AT
+    icon: { default: 'de/abdrucksignal' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'AT-V2:abdrucksignal' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
+
   # --- BE --- #
 
   - description: Grand Signal d'Arrêt
