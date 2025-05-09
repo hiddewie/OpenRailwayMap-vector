@@ -493,6 +493,13 @@ features:
       - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: Weichenüberwachungssignal (PLB)
+    country: AT
+    icon: { default: 'at/weichenüberwachungssignal_plb' }
+    tags:
+      - { tag: 'railway:signal:resetting_switch', value: 'AT:weichenüberwachungssignal_plb' }
+      - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
+
   - description: EK poor sight (GKB)
     country: AT
     icon: { default: 'at/ek-60' }
