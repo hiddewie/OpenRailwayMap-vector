@@ -328,6 +328,35 @@ features:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
+  - description: Hauptsignal mit verschubsignal & ersatzsignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal-ersatzsignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:ersatzsignal' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Hauptsignal mit verschubsignal & vorsichtssignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal-vorsichtssignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:vorsichtssignal' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Hauptsignal mit verschubsignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
   - description: Hauptsignal mit ersatzsignal (light)
     country: AT
     icon:
@@ -424,8 +453,8 @@ features:
     icon:
       match: 'railway:signal:shunting:height'
       cases:
-        - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
-      default: 'at/verschubverbot-aufgehoben'
+        - { regex: '^dwarf$', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
+      default: 'at/verschubsignal'
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
