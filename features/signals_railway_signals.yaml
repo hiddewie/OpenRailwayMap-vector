@@ -466,6 +466,13 @@ features:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
+  - description: Wartesignal mit "Verschubverbot aufgehoben"
+    country: AT
+    icon: { default: 'at/wartesignal-verschubverbot-aufgehoben' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:wartesignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
   - description: Wartesignal ohne "Verschubverbot aufgehoben"
     country: AT
     icon: { default: 'at/wartesignal' }
