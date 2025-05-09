@@ -465,6 +465,13 @@ features:
       - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+  - description: Rautentafel
+    country: AT
+    icon: { default: 'at/rautentafel' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'AT-V2:rautentafel' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
   - description: Pfeifpflock
     country: AT
     icon: { default: 'at/pfeifpflock' }
