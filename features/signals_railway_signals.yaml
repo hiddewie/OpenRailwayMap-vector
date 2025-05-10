@@ -1349,7 +1349,6 @@ features:
 
   - description: Speed limit N (sign)
     country: CZ
-    # TODO handle two speed limits on one sign
     # TODO handle two speed limits on one sign, speed switch (black || with white dots)
     icon:
       match: 'railway:signal:speed_limit:speed'
@@ -1357,7 +1356,7 @@ features:
         - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-N-sign-{}', example: 'cz/speed-N-sign-{80}' }
       default: 'cz/speed-N-sign-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n'] }
+      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Speed limit (light)
