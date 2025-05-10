@@ -1290,6 +1290,59 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'light' }
       - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
 
+  # --- CZ --- #
+
+  - description: Shunting (light)
+    country: CZ
+    icon: { default: 'cz/shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', values: ['CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:posun_zakazan'] }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Distant (light)
+    country: CZ
+    icon: { default: 'cz/distant' }
+    tags:
+      - { tag: 'railway:signal:distant', values: ['CZ', 'CZ-D1:samostatna_predvest'] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Speed limit (light)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
+      default: 'cz/hlavni_navestidlo-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest
+  - description: Main (light)
+    country: CZ
+    icon: { default: 'cz/main-clear' }
+    tags:
+      - { tag: 'railway:signal:main', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Combined (light)
+    country: CZ
+    icon: { default: 'cz/combined-clear' }
+    tags:
+      - { tag: 'railway:signal:combined', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Distant speed limit (light)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
+      default: 'cz/hlavni_navestidlo-distant-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'CZ-D1:hlavni_navestidlo' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
   # --- DE --- #
 
   - description: shunting stop sign Ra 10
