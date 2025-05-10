@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="8" height="31.828247" viewBox="0 0 8 31.828247">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 0 L 8 0 L 8 31.828125 L 0 31.828125 Z M 0 0 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="3.45398" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(12.156863%, 10.196078%, 9.019608%)" stroke-opacity="1" stroke-miterlimit="10" d="M 2419.347892 -4903.749604 L 2517.382504 -4903.749604 L 2517.382504 -5304.162249 L 2419.347892 -5304.162249 Z M 2419.347892 -4903.749604 " transform="matrix(0.0788146, 0, 0, 0.0788054, -190.54331, 418.133463)"/>
+<path fill-rule="nonzero" fill="rgb(12.156863%, 10.196078%, 9.019608%)" fill-opacity="1" stroke-width="3.45398" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(12.156863%, 10.196078%, 9.019608%)" stroke-opacity="1" stroke-miterlimit="10" d="M 2419.347892 -5087.647959 L 2517.382504 -5087.647959 L 2517.382504 -5119.371665 L 2419.347892 -5119.371665 Z M 2419.347892 -5087.647959 " transform="matrix(0.0788146, 0, 0, 0.0788054, -190.54331, 418.133463)"/>
+</svg>

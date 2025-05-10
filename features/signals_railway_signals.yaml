@@ -1290,6 +1290,124 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'light' }
       - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
 
+  # --- CZ --- #
+
+  # TODO shunting wait signal (sign), (blue V)
+  # TODO shunting wait signal (light), (blue V with lights), possibly group
+
+  - description: Shunting (light)
+    country: CZ
+    icon: { default: 'cz/shunting' }
+    tags:
+      - { tag: 'railway:signal:shunting', values: ['CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:posun_zakazan'] }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Distant (light)
+    country: CZ
+    icon: { default: 'cz/distant' }
+    tags:
+      - { tag: 'railway:signal:distant', values: ['CZ', 'CZ-D1:samostatna_predvest'] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  # TODO speed limit "5" or "3" on main/combined signal
+
+  # TODO route signal for departure (green number) below main/combined signal
+  # TODO route signal (white letter) below main/combined signal
+
+  - description: Distant speed limit NS (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-NS-distant-{}', example: 'cz/speed-NS-distant-{80}' }
+      default: 'cz/speed-NS-distant-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ-D1:predvestnik_ns'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Distant speed limit N (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
+      default: 'cz/speed-distant-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:predvestnik_n'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Speed limit NS (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
+      default: 'cz/speed-NS-sign-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['CZ-D1:rychlostnik_ns'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed limit N (sign)
+    country: CZ
+    # TODO handle two speed limits on one sign, speed switch (black || with white dots)
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-N-sign-{}', example: 'cz/speed-N-sign-{80}' }
+      default: 'cz/speed-N-sign-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed limit (light)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        # TODO differentiate for 30 km/h with |3| form (yellow)
+        - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
+      default: 'cz/hlavni_navestidlo-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest (white light)
+  - description: Main (light)
+    country: CZ
+    # TODO differentiate main signal forms
+    icon: { default: 'cz/main-clear' }
+    tags:
+      - { tag: 'railway:signal:main', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Combined (light)
+    country: CZ
+    # TODO differentiate combined signal forms
+    icon: { default: 'cz/combined-clear' }
+    tags:
+      - { tag: 'railway:signal:combined', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  # TODO: distant signal without home signal (different display form)
+  - description: Distant speed limit (light)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
+      default: 'cz/hlavni_navestidlo-distant-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  # TODO: Skupinové návěstidlo -- Group signal
+
+  # TODO Zkrácená vzdálenost -- reduced distanace marker
+
+  # TODO entry / exit signal markers
+
+  # TODO electricity signals
+
   # --- DE --- #
 
   - description: shunting stop sign Ra 10
