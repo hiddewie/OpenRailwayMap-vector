@@ -1314,6 +1314,17 @@ features:
   # TODO route signal for departure (green number) below main/combined signal
   # TODO route signal (white letter) below main/combined signal
 
+  - description: Distant speed limit (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
+      default: 'cz/speed-distant-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
   - description: Speed limit (light)
     country: CZ
     icon:
