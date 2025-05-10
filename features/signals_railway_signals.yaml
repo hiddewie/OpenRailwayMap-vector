@@ -1322,8 +1322,21 @@ features:
         - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
       default: 'cz/speed-distant-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:rychlostnik_n'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Speed limit (sign)
+    country: CZ
+    # TODO handle two speed limits on one sign
+    # TODO handle two speed limits on one sign, speed switch (black || with white dots)
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-{}', example: 'cz/speed-{80}' }
+      default: 'cz/speed-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Speed limit (light)
     country: CZ
