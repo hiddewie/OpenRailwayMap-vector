@@ -1314,7 +1314,18 @@ features:
   # TODO route signal for departure (green number) below main/combined signal
   # TODO route signal (white letter) below main/combined signal
 
-  - description: Distant speed limit (sign)
+  - description: Distant speed limit NS (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-NS-distant-{}', example: 'cz/speed-NS-distant-{80}' }
+      default: 'cz/speed-NS-distant-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ-D1:predvestnik_ns'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Distant speed limit N (sign)
     country: CZ
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
@@ -1322,18 +1333,29 @@ features:
         - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
       default: 'cz/speed-distant-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:rychlostnik_n'] }
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:predvestnik_n'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Speed limit (sign)
+  - description: Speed limit NS (sign)
+    country: CZ
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
+      default: 'cz/speed-NS-sign-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', values: ['CZ-D1:rychlostnik_ns'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed limit N (sign)
     country: CZ
     # TODO handle two speed limits on one sign
     # TODO handle two speed limits on one sign, speed switch (black || with white dots)
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-{}', example: 'cz/speed-{80}' }
-      default: 'cz/speed-empty'
+        - { regex: '^[3-9]0|1[0-3]0$', value: 'cz/speed-N-sign-{}', example: 'cz/speed-N-sign-{80}' }
+      default: 'cz/speed-N-sign-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
