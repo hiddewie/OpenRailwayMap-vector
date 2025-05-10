@@ -52,7 +52,9 @@ tags:
   - 'railway:signal:main:PT_priority'
   - 'railway:signal:main_repeated'
   - 'railway:signal:main_repeated:form'
+  - 'railway:signal:main_repeated:magnet'
   - 'railway:signal:main_repeated:states'
+  - 'railway:signal:main_repeated:substitute_signal'
   - 'railway:signal:minor'
   - 'railway:signal:minor:form'
   - 'railway:signal:minor:states'
@@ -189,36 +191,28 @@ features:
 
   # --- AT --- #
 
-  - description: Hauptsignal (abfahrt)
-    country: AT
-    icon: { default: 'at/hauptsignal-abfahrt' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
-
-  - description: Hauptsignal (fahrerlaubnis)
-    country: AT
-    icon: { default: 'at/hauptsignal-fahrerlaubnis' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
-      - { tag: 'railway:signal:departure:form', value: 'light' }
-
-  - description: Hauptsignal (light)
+  - description: Signalnachahmer with Ersatzsignal
     country: AT
     icon:
-      match: 'railway:signal:main:states'
+      match: 'railway:signal:main_repeated:magnet'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei', description: 'clear' }
-      default: 'at/hauptsignal-halt'
+        - { regex: '^yes$', value: 'signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
+      default: 'at/signalnachahmer-ersatzsignal'
     tags:
-      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:substitute_signal', value: 'AT-V2:ersatzsignal' }
+
+  - description: Signalnachahmer
+    country: AT
+    icon:
+      match: 'railway:signal:main_repeated:magnet'
+      cases:
+        - { regex: '^yes$', value: 'signalnachahmer-magnet', description: '1000Hz magnet' }
+      default: 'at/signalnachahmer'
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: Main entry sign Ne 1
     country: AT
@@ -226,68 +220,6 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:trapeztafel' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
-
-  - description: Hauptsignal (semaphore)
-    country: AT
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
-      default: 'at/hauptsignal-semaphore'
-    tags:
-      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: distant (light)
-    country: AT
-    icon:
-      match: 'railway:signal:distant:states'
-      cases:
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
-      default: 'at/vorsignal-vorsicht'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: distant (semaphore)
-    country: AT
-    icon: { default: 'at/vorsicht-semaphore' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
-      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-
-  - description: Kreuztafel
-    country: AT
-    icon: { default: 'at/kreuztafel' }
-    tags:
-      - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: LZB Bereichskennzeichen
-    country: AT
-    icon: { default: 'at/lzb-bereichskennzeichen' }
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Schutzsignal (Signalnachahmer)
-    country: AT
-    icon: { default: 'at/schutzsignal-signalnachahmer' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'AT-V2:schutzsignal' }
-      - { tag: 'railway:signal:minor:form', value: 'light' }
-      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-
-  - description: Signalnachahmer
-    country: AT
-    icon: { default: 'at/signalnachahmer' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
-      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   - description: Geschwindigkeitsvoranzeiger (sign)
     country: AT
@@ -311,28 +243,6 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-  - description: Geschwindigkeitsanzeiger (sign)
-    country: AT
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-sign-{}', example: 'at/geschwindigkeitsanzeiger-sign-{160}' }
-      default: 'at/geschwindigkeitsanzeiger-empty-sign'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Geschwindigkeitsanzeiger (light)
-    country: AT
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-light-{}', example: 'at/geschwindigkeitsanzeiger-light-{120}' }
-      default: 'at/geschwindigkeitsanzeiger-empty-light'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
   - description: Ankündigungstafel
     country: AT
     type: line
@@ -345,36 +255,6 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungstafel' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Geschwindigkeitstafel
-    country: AT
-    type: line
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-sign-{}', example: 'at/geschwindigkeitstafel-sign-{60}' }
-      default: 'at/geschwindigkeitstafel-empty-sign'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
-    country: AT
-    icon: { default: 'at/x40' }
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-SLB:x40' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Anfangssignal
-    country: AT
-    icon:
-      match: 'railway:signal:speed_limit:speed'
-      cases:
-        - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}', example: 'at/anfangssignal-{60}' }
-      default: 'at/anfangssignal-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
   - description: Ankündigungssignal
     country: AT
     icon:
@@ -386,13 +266,6 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigungssignal' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Endsignal
-    country: AT
-    icon: { default: 'at/endsignal' }
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:endsignal' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
   - description: Ankündigung EK sicht
     country: AT
     icon: { default: 'at/ankündigung-ek-sicht' }
@@ -400,12 +273,136 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:ankündigung_ek-sicht' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: EK sicht Pfeiftafel
+  - description: distant (semaphore)
     country: AT
-    icon: { default: 'at/ek-sicht-pfeiftafel' }
+    icon: { default: 'at/vorsicht-semaphore' }
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:ek-sicht_pfeiftafel' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+  - description: Kreuztafel
+    country: AT
+    icon: { default: 'at/kreuztafel' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AT-V2:kreuztafel' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: LZB Bereichskennzeichen
+    country: AT
+    icon: { default: 'at/lzb-bereichskennzeichen' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AT-V2:lzb-bereichskennzeichen' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: distant (light)
+    country: AT
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
+      default: 'at/vorsignal-vorsicht'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Hauptsignal (abfahrt)
+    country: AT
+    icon: { default: 'at/hauptsignal-abfahrt' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:departure', value: 'AT-V2:abfahrt' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Hauptsignal (semaphore)
+    country: AT
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
+      default: 'at/hauptsignal-semaphore'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: Hauptsignal mit verschubsignal & ersatzsignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal-ersatzsignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:ersatzsignal' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Hauptsignal mit verschubsignal & vorsichtssignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal-vorsichtssignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:vorsichtssignal' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Hauptsignal mit verschubsignal
+    country: AT
+    icon: { default: 'at/hauptsignal-verschubsignal' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Hauptsignal mit ersatzsignal (light)
+    country: AT
+    icon:
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
+      default: 'at/hauptsignal-ersatzsignal-halt'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:ersatzsignal' }
+
+  - description: Hauptsignal mit vorsichtssignal (light)
+    country: AT
+    icon:
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
+      default: 'at/hauptsignal-vorsichtssignal-halt'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', value: 'AT-V2:vorsichtssignal' }
+
+  - description: Hauptsignal (light)
+    country: AT
+    icon:
+      # TODO handle railway:signal:main:function=exit (AS)
+      # TODO handle railway:signal:main:function=entry (ES)
+      match: 'railway:signal:main:states'
+      cases:
+        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei', description: 'clear' }
+      default: 'at/hauptsignal-halt'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Sperrsignale (sign)
     country: AT
@@ -451,13 +448,13 @@ features:
       - { tag: 'railway:signal:minor', value: 'AT-V2:haltscheibe' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Verschubverbot
+  - description: Verschubsignal
     country: AT
     icon:
       match: 'railway:signal:shunting:height'
       cases:
-        - { regex: '^dwarf$', value: 'at/verschubverbot-aufgehoben-dwarf', description: 'zwerg' }
-      default: 'at/verschubverbot-aufgehoben'
+        - { regex: '^dwarf$', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
+      default: 'at/verschubsignal'
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
@@ -468,6 +465,13 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Wartesignal mit "Verschubverbot aufgehoben"
+    country: AT
+    icon: { default: 'at/wartesignal-verschubverbot-aufgehoben' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AT-V2:wartesignal' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Wartesignal ohne "Verschubverbot aufgehoben"
     country: AT
@@ -497,6 +501,13 @@ features:
       - { tag: 'railway:signal:crossing', value: 'AT-V2:ek_überwachungssignal' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+  - description: Rautentafel
+    country: AT
+    icon: { default: 'at/rautentafel' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'AT-V2:rautentafel' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
   - description: Pfeifpflock
     country: AT
     icon: { default: 'at/pfeifpflock' }
@@ -518,6 +529,29 @@ features:
       - { tag: 'railway:signal:whistle', value: 'AT-V2:endpflock' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: Weichenüberwachungssignal (PLB)
+    country: AT
+    icon: { default: 'at/weichenüberwachungssignal_plb' }
+    tags:
+      - { tag: 'railway:signal:resetting_switch', value: 'AT:weichenüberwachungssignal_plb' }
+      - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
+
+  - description: Zuglaufmeldestelle (SLB)
+    country: AT
+    icon: { default: 'at/zuglaufmeldestelle' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AT-SLB:zuglaufmeldestelle' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: EK poor sight (GKB)
+    country: AT
+    icon: { default: 'at/ek-60' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AT-GKB:ek_60' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit', value: 'AT-GKB:ek_60' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: Haltepunkt
     country: AT
     icon: { default: 'at/haltepunkt' }
@@ -538,6 +572,72 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'AT-V2:fahrerlaubnissignal' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Geschwindigkeitsanzeiger (sign)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[0-6]|[1-9])0$', value: 'at/geschwindigkeitsanzeiger-sign-{}', example: 'at/geschwindigkeitsanzeiger-sign-{160}' }
+      default: 'at/geschwindigkeitsanzeiger-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Geschwindigkeitsanzeiger (light)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[024]|[2-9])0$', value: 'at/geschwindigkeitsanzeiger-light-{}', example: 'at/geschwindigkeitsanzeiger-light-{120}' }
+      default: 'at/geschwindigkeitsanzeiger-empty-light'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitsanzeiger' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Geschwindigkeitstafel
+    country: AT
+    type: line
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(1[0-6]0|[1-9][05]|5)$', value: 'at/geschwindigkeitstafel-sign-{}', example: 'at/geschwindigkeitstafel-sign-{60}' }
+      default: 'at/geschwindigkeitstafel-empty-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:geschwindigkeitstafel' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Salzburger Lokalbahn & Pinzgauer Lokalbahn X40
+    country: AT
+    icon: { default: 'at/x40' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-SLB:x40' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Anfangssignal
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^[1-6]0$', value: 'at/anfangssignal-{}', example: 'at/anfangssignal-{60}' }
+      default: 'at/anfangssignal-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:anfangssignal' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Endsignal
+    country: AT
+    icon: { default: 'at/endsignal' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:endsignal' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: EK sicht Pfeiftafel
+    country: AT
+    icon: { default: 'at/ek-sicht-pfeiftafel' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AT-V2:ek-sicht_pfeiftafel' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Ankündigung Stromabnehmer tief
     country: AT
@@ -624,6 +724,37 @@ features:
       - { tag: 'railway:signal:electricity', value: 'AT-V2:schaltzeiger' }
       - { tag: 'railway:signal:electricity:type', value: 'power_indicator' }
       - { tag: 'railway:signal:electricity:form', value: 'semaphore' }
+
+  - description: Räumarbeit aufnehmen
+    country: AT
+    icon: { default: 'at/räumarbeit-aufnehmen' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:räumarbeit_aufnehmen' }
+      - { tag: 'railway:signal:snowplow:type', value: 'down' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Mittelräumer heben
+    country: AT
+    icon: { default: 'at/mittelräumer-heben' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:mittelräumer_heben' }
+      - { tag: 'railway:signal:snowplow:type', value: 'up' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Räumarbeit einstellen
+    country: AT
+    icon: { default: 'at/räumarbeit-einstellen' }
+    tags:
+      - { tag: 'railway:signal:snowplow', value: 'AT-V2:räumarbeit_einstellen' }
+      - { tag: 'railway:signal:snowplow:type', value: 'up' }
+      - { tag: 'railway:signal:snowplow:form', value: 'sign' }
+
+  - description: Abdrucksignal
+    country: AT
+    icon: { default: 'de/abdrucksignal' }
+    tags:
+      - { tag: 'railway:signal:humping', value: 'AT-V2:abdrucksignal' }
+      - { tag: 'railway:signal:humping:form', value: 'light' }
 
   # --- BE --- #
 

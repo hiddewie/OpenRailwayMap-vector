@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="23.050322" viewBox="0 0 15 23.050322">
+<path fill-rule="nonzero" fill="rgb(100%, 75.686275%, 0%)" fill-opacity="1" d="M 6.519531 23.050781 L 6.519531 7.4375 L 8.480469 7.4375 L 8.480469 23.050781 Z M 6.519531 23.050781 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.519531 7.433594 L 8.480469 7.433594 L 8.480469 14.203125 L 6.519531 14.203125 Z M 6.519531 7.433594 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 6.519531 19.75 L 8.480469 19.75 L 8.480469 23.050781 L 6.519531 23.050781 Z M 6.519531 19.75 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 75.686275%, 0%)" fill-opacity="1" d="M 1.730469 0.00390625 L 14.996094 13.269531 L 13.269531 14.996094 L 0.00390625 1.730469 Z M 1.730469 0.00390625 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 75.686275%, 0%)" fill-opacity="1" d="M 0.00390625 13.269531 L 13.269531 0.00390625 L 14.996094 1.730469 L 1.730469 14.996094 Z M 0.00390625 13.269531 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 13.273438 0 L 15 1.726562 L 12.953125 3.773438 L 11.226562 2.046875 Z M 13.273438 0 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 2.046875 11.226562 L 3.773438 12.953125 L 1.726562 15 L 0 13.273438 Z M 2.046875 11.226562 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.222656 12.949219 L 12.949219 11.222656 L 14.996094 13.269531 L 13.269531 14.996094 Z M 11.222656 12.949219 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0.00390625 1.730469 L 1.730469 0.00390625 L 3.777344 2.050781 L 2.050781 3.777344 Z M 0.00390625 1.730469 "/>
+<path fill="none" stroke-width="2.594803" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 2.83447 52.034789 L -7.458086 34.20724 L 13.127302 34.20708 Z M 2.83447 52.034789 " transform="matrix(0.192602, 0.333597, -0.333597, 0.192602, 20.347868, 8.266792)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 75.686275%, 0%)" fill-opacity="1" d="M 3.535156 19.234375 L 7.5 12.367188 L 11.464844 19.234375 Z M 3.535156 19.234375 "/>
+</svg>

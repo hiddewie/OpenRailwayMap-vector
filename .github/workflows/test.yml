@@ -14,7 +14,14 @@ concurrency:
 jobs:
   import:
     name: Import data
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     steps:
       - name: Checkout
@@ -43,7 +50,7 @@ jobs:
           path: |
             data/germany.osm.pbf
             data/filtered/germany.osm.pbf
-          key: ${{ runner.os }}-data-${{ steps.get-date.outputs.date }}-berlin
+          key: data-${{ steps.get-date.outputs.date }}-berlin
 
       - name: Download Berlin
         if: ${{ steps.cache.outputs.cache-hit != 'true' }}
@@ -80,12 +87,19 @@ jobs:
       - name: Upload database artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}/openrailwaymap-import-db.tar
 
   build-api:
     name: Build API
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     needs:
       - import
@@ -107,7 +121,7 @@ jobs:
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}
 
       - name: Load database image
@@ -129,12 +143,19 @@ jobs:
       - name: Upload API artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openrailwaymap-api
+          name: ${{ runner.arch }}-openrailwaymap-api
           path: ${{ runner.temp }}/openrailwaymap-api.tar
 
   test-api:
     name: Test API
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     needs:
       - build-api
@@ -157,13 +178,14 @@ jobs:
         env:
           VERSION: '6.1.1'
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-api
+          name: ${{ runner.arch }}-openrailwaymap-api
           path: ${{ runner.temp }}
 
       - name: Load API image
@@ -181,7 +203,14 @@ jobs:
 
   test-proxy:
     name: Test proxy
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     needs:
       - import
@@ -204,13 +233,14 @@ jobs:
         env:
           VERSION: '6.1.1'
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}
 
       - name: Load database image
@@ -245,13 +275,20 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: presets
+          name: ${{ runner.arch }}-presets
           path: preset.zip
           if-no-files-found: warn
 
   test-tiles:
     name: Test tiles
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     needs:
       - import
@@ -274,13 +311,14 @@ jobs:
         env:
           VERSION: '6.1.1'
         run: |
-          curl --location --remote-name https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_amd64.deb
-          sudo apt update && sudo apt install ./hurl_${VERSION}_amd64.deb
+          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          sudo apt update
+          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}
 
       - name: Load database image
@@ -313,7 +351,14 @@ jobs:
 
   test-ui:
     name: Test UI
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
 
     needs:
       - test-proxy
@@ -338,7 +383,7 @@ jobs:
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}
 
       - name: Load database image
@@ -348,7 +393,7 @@ jobs:
       - name: Download API artifact
         uses: actions/download-artifact@v4
         with:
-          name: openrailwaymap-api
+          name: ${{ runner.arch }}-openrailwaymap-api
           path: ${{ runner.temp }}
 
       - name: Load API image
@@ -377,12 +422,12 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: proxy/test/ui
-          browser: chrome
+          browser: ${{ runner.arch == 'X64' && 'chrome' || 'firefox' }}
 
       - name: Store screenshots
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: screenshots
+          name: ${{ runner.arch }}-screenshots
           path: proxy/test/ui/cypress/screenshots
           if-no-files-found: warn
