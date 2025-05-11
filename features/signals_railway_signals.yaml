@@ -1367,7 +1367,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^[3-9]0|1[0-36]0$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
+        - { regex: '^[3-9]0|1[0-356]0|95|135$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
       default: 'cz/speed-NS-sign-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', values: ['CZ-D1:rychlostnik_ns'] }
