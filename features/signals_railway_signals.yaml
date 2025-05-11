@@ -1401,12 +1401,12 @@ features:
 
   # TODO semaphore main signals (red / yellow arms)
 
-  - description: Main stop (light)
+  - description: Main stop (sign)
     country: CZ
-    icon: { default: 'cz/main-1-stop' }
+    icon: { default: 'cz/main-sign-stop' }
     tags:
       - { tag: 'railway:signal:main', value: 'CZ-D1:stuj' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
 
   # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest (white light)
   - description: Main (light)
