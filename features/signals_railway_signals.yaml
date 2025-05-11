@@ -1359,7 +1359,7 @@ features:
         - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
       default: 'cz/speed-distant-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:predvestnik_n'] }
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Speed limit NS (sign)
