@@ -196,7 +196,7 @@ features:
     icon:
       match: 'railway:signal:main_repeated:magnet'
       cases:
-        - { regex: '^yes$', value: 'signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
+        - { regex: '^yes$', value: 'at/signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
       default: 'at/signalnachahmer-ersatzsignal'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
@@ -208,7 +208,7 @@ features:
     icon:
       match: 'railway:signal:main_repeated:magnet'
       cases:
-        - { regex: '^yes$', value: 'signalnachahmer-magnet', description: '1000Hz magnet' }
+        - { regex: '^yes$', value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
       default: 'at/signalnachahmer'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
@@ -751,7 +751,7 @@ features:
 
   - description: Abdrucksignal
     country: AT
-    icon: { default: 'de/abdrucksignal' }
+    icon: { default: 'at/abdrucksignal' }
     tags:
       - { tag: 'railway:signal:humping', value: 'AT-V2:abdrucksignal' }
       - { tag: 'railway:signal:humping:form', value: 'light' }

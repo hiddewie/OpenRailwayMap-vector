@@ -4564,7 +4564,7 @@ const legendData = {
           train_protection: train_protection.train_protection,
           train_protection_rank: 1,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
         variants: [
           {
@@ -4572,7 +4572,7 @@ const legendData = {
               train_protection: null,
               train_protection_rank: 0,
               train_protection_construction: train_protection.train_protection,
-              train_protection_rank_construction: 1,
+              train_protection_construction_rank: 1,
             }
           }
         ],
@@ -4590,7 +4590,7 @@ const legendData = {
           train_protection: null,
           train_protection_rank: 0,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
       },
     ],
@@ -4608,7 +4608,7 @@ const legendData = {
           train_protection: train_protection.train_protection,
           train_protection_rank: 1,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
         variants: [
           {
@@ -4616,7 +4616,7 @@ const legendData = {
               train_protection: null,
               train_protection_rank: 0,
               train_protection_construction: train_protection.train_protection,
-              train_protection_rank_construction: 1,
+              train_protection_construction_rank: 1,
             }
           }
         ],
@@ -4634,7 +4634,7 @@ const legendData = {
           train_protection: null,
           train_protection_rank: 0,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
       },
       {
@@ -4650,7 +4650,7 @@ const legendData = {
           train_protection: 'etcs',
           train_protection_rank: 1,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
       },
       {
@@ -4666,7 +4666,7 @@ const legendData = {
           train_protection: 'etcs',
           train_protection_rank: 1,
           train_protection_construction: null,
-          train_protection_rank_construction: 0,
+          train_protection_construction_rank: 0,
         },
       },
     ],
