@@ -1371,6 +1371,12 @@ features:
       - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
+  # TODO semaphore distant signal (orange disk)
+
+  # TODO semaphore main signals (red / yellow arms)
+
+  # TODO semaphore shunting signals (blue kite)
+
   # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest (white light)
   - description: Main (light)
     country: CZ
