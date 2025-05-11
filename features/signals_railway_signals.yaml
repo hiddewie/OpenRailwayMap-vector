@@ -1434,7 +1434,7 @@ features:
         - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
       default: 'cz/hlavni_navestidlo-distant-light-unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
   # TODO: Skupinové návěstidlo -- Group signal
