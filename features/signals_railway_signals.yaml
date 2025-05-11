@@ -1292,6 +1292,13 @@ features:
 
   # --- CZ --- #
 
+  - description: End of shunting marker
+    country: CZ
+    icon: { default: 'cz/shunting-end' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:oznacnik' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
   - description: Shunting stop
     country: CZ
     icon: { default: 'cz/shunting-stop' }
@@ -1429,7 +1436,7 @@ features:
 
   # TODO entry / exit signal markers
 
-  # TODO electricity signals
+  # TODO electricity signals, blue and orange
 
   # --- DE --- #
 
