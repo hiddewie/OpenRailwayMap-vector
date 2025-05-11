@@ -1292,8 +1292,27 @@ features:
 
   # --- CZ --- #
 
-  # TODO shunting wait signal (sign), (blue V)
-  # TODO shunting wait signal (light), (blue V with lights), possibly group
+  - description: Shunting stop
+    country: CZ
+    icon: { default: 'cz/shunting-stop' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:posun_zakazan' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Shunting wait (sign)
+    country: CZ
+    icon: { default: 'cz/shunting-wait-sign' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:vyckavaci_navestidlo' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Shunting wait (light)
+    country: CZ
+    # TODO shunting group signal (group marker)
+    icon: { default: 'cz/shunting-wait-light' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:vyckavaci_navestidlo' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Shunting (light)
     country: CZ
@@ -1374,8 +1393,6 @@ features:
   # TODO semaphore distant signal (orange disk)
 
   # TODO semaphore main signals (red / yellow arms)
-
-  # TODO semaphore shunting signals (blue kite)
 
   # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest (white light)
   - description: Main (light)
