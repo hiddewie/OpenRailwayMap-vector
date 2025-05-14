@@ -1747,6 +1747,20 @@ features:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü3' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
+  - description: tram crossing light Bü
+    country: DE
+    icon: { default: 'de/bostrab/bü' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'DE-BOStrab:bü' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: tram distant crossing light Bü 2
+    country: DE
+    icon: { default: 'de/bostrab/bü2' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-BOStrab:bü2' }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
+
   - description: Bü 4 Whistle Sign
     country: DE
     icon:
