@@ -1916,18 +1916,18 @@ features:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
-  - description: entry into dead-end / early stop marker Zs 13 (sign)
+  - description: entry into dead-end / early stop marker Zs 13 / Zs 6 (DR) (sign)
     country: DE
     icon: { default: 'de/zs13-sign' }
     tags:
-      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route', values: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'sign' }
 
-  - description: entry into dead-end / early stop marker Zs 13 (light)
+  - description: entry into dead-end / early stop marker Zs 13 / Zs 6 (DR) (light)
     country: DE
     icon: { default: 'de/zs13-light' }
     tags:
-      - { tag: 'railway:signal:short_route', value: 'DE-ESO:zs13' }
+      - { tag: 'railway:signal:short_route', values: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'light' }
 
   - description: Richtungsvoranzeiger (Zs 2v)
