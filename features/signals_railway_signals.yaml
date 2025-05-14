@@ -1548,6 +1548,13 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Hamburger Hochbahn Sh 3
+    country: DE
+    icon: { default: 'de/hha/sh3' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-HHA:sh3' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
   - description: tram signal "start of train protection" So 1
     country: DE
     icon: { default: 'de/bostrab/so1' }
