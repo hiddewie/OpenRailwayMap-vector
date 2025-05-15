@@ -2406,8 +2406,7 @@ features:
       match: 'railway:signal:combined:states'
       cases:
         - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
-        - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
-      default: ''
+      default: 'de/sv-sv0'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
