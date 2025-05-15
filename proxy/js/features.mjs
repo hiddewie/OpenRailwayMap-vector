@@ -656,6 +656,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag, {name: tag}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
