@@ -179,15 +179,17 @@ features:
 
   # --- General --- #
 
-  - description: Vacancy detection
-    icon:
-      match: 'railway:vacancy_detection'
-      cases:
-        - { regex: '^insulated_rail_joint$', value: 'general/vacancy-detection-insulated-rail-joint', description: 'insulated rail joint' }
-        - { regex: '^axle_counter$', value: 'general/vacancy-detection-axle-counter', description: 'axle counter' }
-      default: 'general/vacancy-detection'
+  - description: 'Vacancy detection: insulated rail joint'
+    icon: { default: 'general/vacancy-detection-insulated-rail-joint' }
     tags:
       - { tag: 'railway', value: 'vacancy_detection' }
+      - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
+
+  - description: 'Vacancy detection: axle counter'
+    icon: { default: 'general/vacancy-detection-axle-counter' }
+    tags:
+      - { tag: 'railway', value: 'vacancy_detection' }
+      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
   # --- AT --- #
 
