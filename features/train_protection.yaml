@@ -7,6 +7,7 @@ train_protections:
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
   - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
+  - { train_protection: 'nexteo', legend: 'Nouveau système d''EXploitation des Trains Est-Ouest (NEXTEO)', color: '#9133cc' }
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
   - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
@@ -88,6 +89,10 @@ features:
   - train_protection: kvb
     tags:
       - { tag: 'railway:kvb', value: 'yes' }
+
+  - train_protection: nexteo
+    tags:
+      - { tag: 'railway:nexteo', value: 'yes' }
 
   - train_protection: atc
     tags:
