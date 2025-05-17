@@ -16,7 +16,7 @@ function train_protection(tags, prefix)${signals_railway_line.features.map((feat
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
-  '${tag}',`).join('')}
+  { tag = '${tag.tag}', type = '${tag.type}' },`).join('')}
 }
 
 function signal_deactivated(tags)

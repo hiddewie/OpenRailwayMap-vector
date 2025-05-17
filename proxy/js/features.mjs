@@ -10,9 +10,9 @@ const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', '
 
 const signal_types = all_signals.types;
 
-const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
-const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
-const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
+const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'speed' && `railway:signal:${type.type}` === tag.tag)))
+const signals_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'signals' && `railway:signal:${type.type}` === tag.tag)))
+const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'electrification' && `railway:signal:${type.type}` === tag.tag)))
 
 // TODO add links to documentation
 
@@ -569,15 +569,10 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      speed_limit_speed: {
-        name: 'Speed limit',
-      },
-      speed_limit_distant_speed: {
-        name: 'Distant speed limit',
-      },
       direction_both: {
         name: 'both directions',
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -611,7 +606,7 @@ const features = {
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => !['speed', 'electrification'].includes(type.layer))),
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
     properties: {
       feature1: {
         name: 'Secondary signal',
@@ -656,6 +651,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -766,6 +762,7 @@ const features = {
           template: '%d V',
         },
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
