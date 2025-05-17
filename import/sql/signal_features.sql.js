@@ -75,16 +75,6 @@ function stringSql(tag) {
  * Template that builds the SQL view taking the YAML configuration into account
  */
 const sql = `
-DO $$ BEGIN
-  CREATE TYPE signal_layer AS ENUM (
-    'speed',
-    'electrification',
-    'signals'
-  );
-EXCEPTION
-  WHEN duplicate_object THEN null;
-END $$;
-
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
   -- For every type of signal, generate the feature and related metadata
@@ -178,34 +168,78 @@ CLUSTER signal_features
   
 --- Speed ---
 
-CREATE OR REPLACE VIEW speed_railway_signals AS
-  SELECT
-    id,
-    osm_id,
-    way,
-    direction_both,
-    ref,
-    dominant_speed,
-    caption,
-    deactivated,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    azimuth,${signals_railway_signals.tags.map(tag => `
-    ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-    features[1] as feature0,
-    features[2] as feature1,
-    type
-  FROM signal_features
-  WHERE layer = 'speed'
-  ORDER BY
-    rank NULLS FIRST,
-    dominant_speed DESC NULLS FIRST;
+CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+  RETURN (
+    SELECT
+      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way')
+    FROM (
+      SELECT
+        id,
+        osm_id,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        direction_both,
+        ref,
+        dominant_speed,
+        caption,
+        deactivated,
+        wikidata,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description,
+        azimuth,${signals_railway_signals.tags.map(tag => `
+        ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
+        features[1] as feature0,
+        features[2] as feature1,
+        type
+      FROM signal_features
+      WHERE way && ST_TileEnvelope(z, x, y)
+        AND layer = 'speed'
+      ORDER BY rank NULLS FIRST
+    ) as tile
+    WHERE way IS NOT NULL
+  );
   
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "speed_railway_signals",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "ref": "string",
+          "caption": "string",
+          "azimuth": "number",
+          "direction_both": "boolean",
+          "deactivated": "boolean",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string",${signals_railway_signals.tags.map(tag => `
+          "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
+          "feature0": "string",
+          "feature1": "string",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Signals ---
 
 CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integer)

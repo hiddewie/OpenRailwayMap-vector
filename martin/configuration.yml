@@ -179,155 +179,7 @@ postgres:
 
     # --- Speed --- #
 
-    speed_railway_signals:
-      schema: public
-      table: speed_railway_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        feature0: string
-        feature1: string
-        type: string
-        ref: string
-        caption: string
-        azimuth: number
-        direction_both: boolean
-        deactivated: boolean
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-        'railway:signal:brake_test': string
-        'railway:signal:brake_test:form': string
-        'railway:signal:combined': string
-        'railway:signal:combined:form': string
-        'railway:signal:combined:states': string
-        'railway:signal:combined:shortened': string
-        'railway:signal:combined:substitute_signal': string
-        'railway:signal:combined:height': string
-        'railway:signal:crossing': string
-        'railway:signal:crossing:form': string
-        'railway:signal:crossing:repeated': string
-        'railway:signal:crossing:shortened': string
-        'railway:signal:crossing_distant': string
-        'railway:signal:crossing_distant:states': string
-        'railway:signal:crossing_distant:shortened': string
-        'railway:signal:crossing_distant:form': string
-        'railway:signal:crossing_hint': string
-        'railway:signal:crossing_hint:form': string
-        'railway:signal:crossing_info': string
-        'railway:signal:crossing_info:form': string
-        'railway:signal:departure': string
-        'railway:signal:departure:form': string
-        'railway:signal:departure:states': string
-        'railway:signal:distant': string
-        'railway:signal:distant:form': string
-        'railway:signal:distant:repeated': string
-        'railway:signal:distant:shortened': string
-        'railway:signal:distant:states': string
-        'railway:signal:distant:height': string
-        'railway:signal:distant:type': string
-        'railway:signal:distant:distance': string
-        'railway:signal:electricity': string
-        'railway:signal:electricity:type': string
-        'railway:signal:electricity:form': string
-        'railway:signal:electricity:for': string
-        'railway:signal:electricity:turn_direction': string
-        'railway:signal:electricity:voltage': string
-        'railway:signal:electricity:frequency': string
-        'railway:signal:fouling_point': string
-        'railway:signal:helper_engine': string
-        'railway:signal:helper_engine:form': string
-        'railway:signal:humping': string
-        'railway:signal:humping:form': string
-        'railway:signal:main': string
-        'railway:signal:main:design': string
-        'railway:signal:main:form': string
-        'railway:signal:main:height': string
-        'railway:signal:main:states': string
-        'railway:signal:main:substitute_signal': string
-        'railway:signal:main:PT_priority': string
-        'railway:signal:main_repeated': string
-        'railway:signal:main_repeated:form': string
-        'railway:signal:main_repeated:magnet': string
-        'railway:signal:main_repeated:states': string
-        'railway:signal:main_repeated:substitute_signal': string
-        'railway:signal:minor': string
-        'railway:signal:minor:form': string
-        'railway:signal:minor:states': string
-        'railway:signal:minor:height': string
-        'railway:signal:minor_distant': string
-        'railway:signal:minor_distant:form': string
-        'railway:signal:minor_distant:states': string
-        'railway:signal:minor:substitute_signal': string
-        'railway:signal:passing': string
-        'railway:signal:passing:form': string
-        'railway:signal:passing:type': string
-        'railway:signal:resetting_switch': string
-        'railway:signal:resetting_switch:form': string
-        'railway:signal:resetting_switch_distant': string
-        'railway:signal:resetting_switch_distant:form': string
-        'railway:signal:preheating': string
-        'railway:signal:preheating:form': string
-        'railway:signal:ring': string
-        'railway:signal:ring:form': string
-        'railway:signal:ring:only_transit': string
-        'railway:signal:radio': string
-        'railway:signal:radio:form': string
-        'railway:signal:radio:frequency': string
-        'railway:signal:route': string
-        'railway:signal:route:design': string
-        'railway:signal:route:form': string
-        'railway:signal:route:states': string
-        'railway:signal:route_distant': string
-        'railway:signal:route_distant:form': string
-        'railway:signal:route_distant:states': string
-        'railway:signal:short_route': string
-        'railway:signal:short_route:form': string
-        'railway:signal:shunting': string
-        'railway:signal:shunting:form': string
-        'railway:signal:shunting:states': string
-        'railway:signal:shunting:height': string
-        'railway:signal:snowplow': string
-        'railway:signal:snowplow:form': string
-        'railway:signal:snowplow:type': string
-        'railway:signal:speed_limit': string
-        'railway:signal:speed_limit:caption': string
-        'railway:signal:speed_limit:form': string
-        'railway:signal:speed_limit:speed': string
-        'railway:signal:speed_limit:states': string
-        'railway:signal:speed_limit_distant': string
-        'railway:signal:speed_limit_distant:form': string
-        'railway:signal:speed_limit_distant:speed': string
-        'railway:signal:speed_limit_distant:mobile': string
-        'railway:signal:speed_limit:pointing': string
-        'railway:signal:station_distant': string
-        'railway:signal:station_distant:form': string
-        'railway:signal:stop': string
-        'railway:signal:steam_locomotive': string
-        'railway:signal:steam_locomotive:form': string
-        'railway:signal:stop:form': string
-        'railway:signal:stop:caption': string
-        'railway:signal:stop:carriages': string
-        'railway:signal:stop_demand': string
-        'railway:signal:stop_demand:form': string
-        'railway:signal:train_protection': string
-        'railway:signal:train_protection:form': string
-        'railway:signal:train_protection:shape': string
-        'railway:signal:train_protection:type': string
-        'railway:signal:whistle': string
-        'railway:signal:whistle:form': string
-        'railway:signal:whistle:only_transit': string
-        'railway:signal:wrong_road': string
-        'railway:signal:wrong_road:form': string
-        'railway:vacancy_detection': string
-        'railway:signal:position': string
+    # speed_railway_signals, see function below
 
     # --- Signals --- #
 
@@ -353,6 +205,13 @@ postgres:
       schema: public
       function: standard_railway_symbols
       minzoom: 10
+
+    # --- Speed --- #
+
+    speed_railway_signals:
+      schema: public
+      function: speed_railway_signals
+      minzoom: 13
 
     # --- Signals --- #
 
