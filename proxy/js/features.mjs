@@ -606,7 +606,7 @@ const features = {
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => !['speed', 'electrification'].includes(type.layer))),
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
     properties: {
       feature1: {
         name: 'Secondary signal',

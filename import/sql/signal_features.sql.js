@@ -195,8 +195,7 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     wikipedia,
     note,
     description,
-    azimuth,
-    ${signals_railway_signals.tags.map(tag => `
+    azimuth,${signals_railway_signals.tags.map(tag => `
     ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
     features[1] as feature0,
     features[2] as feature1,
@@ -208,38 +207,89 @@ CREATE OR REPLACE VIEW speed_railway_signals AS
     dominant_speed DESC NULLS FIRST;
   
 --- Signals ---
-  
-CREATE OR REPLACE VIEW signals_railway_signals AS
-  SELECT
-    id,
-    osm_id,
-    way,
-    direction_both,
-    ref,
-    ref_multiline,
-    caption,
-    deactivated,
-    railway,
-    wikidata,
-    wikimedia_commons,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    azimuth,
-    ${signals_railway_signals.tags.map(tag => `
-    ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-    features[1] as feature0,
-    features[2] as feature1,
-    features[3] as feature2,
-    features[4] as feature3,
-    features[5] as feature4,
-    type
-  FROM signal_features
-  WHERE layer = 'signals'
-  ORDER BY rank NULLS FIRST;
-  
+
+CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+  RETURN (
+    SELECT
+      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way')
+    FROM (
+      SELECT
+        id,
+        osm_id,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        direction_both,
+        ref,
+        ref_multiline,
+        caption,
+        deactivated,
+        railway,
+        wikidata,
+        wikimedia_commons,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description,
+        azimuth,${signals_railway_signals.tags.map(tag => `
+        ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
+        features[1] as feature0,
+        features[2] as feature1,
+        features[3] as feature2,
+        features[4] as feature3,
+        features[5] as feature4,
+        type
+      FROM signal_features
+      WHERE way && ST_TileEnvelope(z, x, y)
+        AND layer = 'signals'
+      ORDER BY rank NULLS FIRST
+    ) as tile
+    WHERE way IS NOT NULL
+  );
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_railway_signals IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_railway_signals",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "railway": "string",
+          "ref": "string",
+          "ref_multiline": "string",
+          "caption": "string",
+          "deactivated": "boolean",
+          "azimuth": "number",
+          "direction_both": "boolean",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string",${signals_railway_signals.tags.map(tag => `
+          "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
+          "feature0": "string",
+          "feature1": "string",
+          "feature2": "string",
+          "feature3": "string",
+          "feature4": "string",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+
 --- Electrification ---
 
 CREATE OR REPLACE VIEW electrification_signals AS
@@ -260,8 +310,7 @@ CREATE OR REPLACE VIEW electrification_signals AS
     wikipedia,
     note,
     description,
-    azimuth,
-    ${signals_railway_signals.tags.map(tag => `
+    azimuth,${signals_railway_signals.tags.map(tag => `
     ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
     features[1] as feature,
     type as type
