@@ -186,8 +186,8 @@ features:
     icon:
       match: 'railway:vacancy_detection'
       cases:
-        - { regex: '^insulated_rail_joint$', value: 'general/vacancy-detection-insulated-rail-joint', description: 'insulated rail joint' }
-        - { regex: '^axle_counter$', value: 'general/vacancy-detection-axle-counter', description: 'axle counter' }
+        - { exact: 'insulated_rail_joint', value: 'general/vacancy-detection-insulated-rail-joint', description: 'insulated rail joint' }
+        - { exact: 'axle_counter', value: 'general/vacancy-detection-axle-counter', description: 'axle counter' }
       default: 'general/vacancy-detection'
     tags:
       - { tag: 'railway', value: 'vacancy_detection' }
@@ -302,9 +302,9 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
       default: 'at/vorsignal-vorsicht'
     tags:
       - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
@@ -324,8 +324,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
+        - { any: ['AT-V2:frei_mit_40', 'AT-V2:frei_mit_20'], value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
+        - { exact: 'AT-V2:frei', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
       default: 'at/hauptsignal-semaphore'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -367,9 +367,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_20', 'AT-V2:hauptsignal_frei_mit_40'], value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
       default: 'at/hauptsignal-ersatzsignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -383,9 +383,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_20', 'AT-V2:hauptsignal_frei_mit_40'], value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
       default: 'at/hauptsignal-vorsichtssignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -399,9 +399,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_20', 'AT-V2:hauptsignal_frei_mit_40'], value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/hauptsignal-frei', description: 'clear' }
       default: 'at/hauptsignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -779,8 +779,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?BE-SME:W(;.*)?$', value: 'be/bme/simplified_xnw' }
-        - { regex: '^(.*;)?BE-SME:N(;.*)?$', value: 'be/bme/simplified_ny' }
+        - { exact: 'BE-SME:W', value: 'be/bme/simplified_xnw' }
+        - { exact: 'BE-SME:N', value: 'be/bme/simplified_ny' }
       default: 'be/bme/simplified_unknown'
     tags:
       - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
@@ -973,11 +973,11 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:550(;.*)?$', value: 'ch/fdv-l-550' }
-        - { regex: '^(.*;)?CH-FDV:547(;.*)?$', value: 'ch/fdv-l-547' }
-        - { regex: '^(.*;)?CH-FDV:542(;.*)?$', value: 'ch/fdv-l-542' }
-        - { regex: '^(.*;)?CH-FDV:545(;.*)?$', value: 'ch/fdv-l-545' }
-        - { regex: '^(.*;)?CH-FDV:530(;.*)?$', value: 'ch/fdv-l-530' }
+        - { exact: 'CH-FDV:550', value: 'ch/fdv-l-550' }
+        - { exact: 'CH-FDV:547', value: 'ch/fdv-l-547' }
+        - { exact: 'CH-FDV:542', value: 'ch/fdv-l-542' }
+        - { exact: 'CH-FDV:545', value: 'ch/fdv-l-545' }
+        - { exact: 'CH-FDV:530', value: 'ch/fdv-l-530' }
       default: 'ch/fdv-l-524'
     tags:
       - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
@@ -996,14 +996,14 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:548(;.*)?$', value: 'ch/fdv-l-548' }
-        - { regex: '^(.*;)?CH-FDV:551(;.*)?$', value: 'ch/fdv-l-551' }
-        - { regex: '^(.*;)?CH-FDV:546(;.*)?$', value: 'ch/fdv-l-546' }
-        - { regex: '^(.*;)?CH-FDV:543(;.*)?$', value: 'ch/fdv-l-543' }
-        - { regex: '^(.*;)?CH-FDV:539(;.*)?$', value: 'ch/fdv-l-539' }
-        - { regex: '^(.*;)?CH-FDV:537(;.*)?$', value: 'ch/fdv-l-537' }
-        - { regex: '^(.*;)?CH-FDV:535(;.*)?$', value: 'ch/fdv-l-535' }
-        - { regex: '^(.*;)?CH-FDV:531(;.*)?$', value: 'ch/fdv-l-531' }
+        - { exact: 'CH-FDV:548', value: 'ch/fdv-l-548' }
+        - { exact: 'CH-FDV:551', value: 'ch/fdv-l-551' }
+        - { exact: 'CH-FDV:546', value: 'ch/fdv-l-546' }
+        - { exact: 'CH-FDV:543', value: 'ch/fdv-l-543' }
+        - { exact: 'CH-FDV:539', value: 'ch/fdv-l-539' }
+        - { exact: 'CH-FDV:537', value: 'ch/fdv-l-537' }
+        - { exact: 'CH-FDV:535', value: 'ch/fdv-l-535' }
+        - { exact: 'CH-FDV:531', value: 'ch/fdv-l-531' }
       default: 'ch/fdv-l-525'
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:l' }
@@ -1014,9 +1014,9 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:523(;.*)?$', value: 'ch/fdv-n-523' }
-        - { regex: '^(.*;)?CH-FDV:552(;.*)?$', value: 'ch/fdv-n-552' }
-        - { regex: '^(.*;)?CH-FDV:(532|533)(;.*)?$', value: 'ch/fdv-n-532' }
+        - { exact: 'CH-FDV:523', value: 'ch/fdv-n-523' }
+        - { exact: 'CH-FDV:552', value: 'ch/fdv-n-552' }
+        - { any: ['CH-FDV:532', 'CH-FDV:533'], value: 'ch/fdv-n-532' }
       default: 'ch/fdv-n-526'
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
@@ -1027,10 +1027,10 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:538(;.*)?$', value: 'ch/fdv-l-538' }
-        - { regex: '^(.*;)?CH-FDV:536(;.*)?$', value: 'ch/fdv-l-536' }
-        - { regex: '^(.*;)?CH-FDV:529(;.*)?$', value: 'ch/fdv-l-529' }
-        - { regex: '^(.*;)?CH-FDV:534(;.*)?$', value: 'ch/fdv-l-534' }
+        - { exact: 'CH-FDV:538$', value: 'ch/fdv-l-538' }
+        - { exact: 'CH-FDV:536$', value: 'ch/fdv-l-536' }
+        - { exact: 'CH-FDV:529$', value: 'ch/fdv-l-529' }
+        - { exact: 'CH-FDV:534$', value: 'ch/fdv-l-534' }
       default: 'ch/fdv-l-528'
     tags:
       - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
@@ -1041,7 +1041,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'ch/fdv-n-521' }
+        - { any: ['CH-FDV:522', 'CH-FDV:521'], value: 'ch/fdv-n-521' }
       default: 'ch/fdv-n-533'
     tags:
       - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
@@ -1497,7 +1497,7 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^normal$', value: 'de/sh1-light-normal', description: 'normal height' }
+        - { exact: 'normal', value: 'de/sh1-light-normal', description: 'normal height' }
       default: 'de/sh0-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
@@ -1524,7 +1524,7 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^normal$', value: 'de/sh1-semaphore-normal' }
+        - { exact: 'normal', value: 'de/sh1-semaphore-normal' }
       default: 'de/sh0-semaphore-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
@@ -1579,8 +1579,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'de/ne14-right' }
-        - { regex: '^overhead$', value: 'de/ne14-down' }
+        - { exact: 'left', value: 'de/ne14-right' }
+        - { exact: 'overhead', value: 'de/ne14-down' }
       default: 'de/ne14-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
@@ -1817,7 +1817,7 @@ features:
     icon:
       match: 'railway:signal:snowplow:type'
       cases:
-        - { regex: '^down$', value: 'de/ne7-yellow-down' }
+        - { exact: 'down', value: 'de/ne7-yellow-down' }
       default: 'de/ne7-yellow-up'
     tags:
       - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
@@ -1870,7 +1870,7 @@ features:
     icon:
       match: 'railway:signal:departure:states'
       cases:
-        - { regex: '^DE-ESO:zp10$', value: 'de/zp10-db' }
+        - { exact: 'DE-ESO:zp10', value: 'de/zp10-db' }
       default: 'de/zp9-db'
     tags:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
@@ -1881,7 +1881,7 @@ features:
     icon:
       match: 'railway:signal:departure:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
+        - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2' }
       default: 'de/bostrab/a1'
     tags:
       - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
@@ -1906,7 +1906,7 @@ features:
     icon:
       match: 'railway:signal:crossing_distant:states'
       cases:
-        - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
+        - { exact: 'DE-AVG:bü201v', value: 'de/avg/bue201v' }
       default: 'de/avg/bue201'
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü201' }
@@ -1960,36 +1960,36 @@ features:
       match: 'railway:signal:route_distant:states'
       # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2v-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2v-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2v-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2v-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2v-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2v-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2v-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2v-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2v-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2v-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2v-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2v-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2v-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2v-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2v-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2v-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2v-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2v-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2v-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2v-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2v-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2v-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2v-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2v-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2v-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2v-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2v-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2v-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2v-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2v-A' }
+        - { exact: 'ẞ', value: 'de/zs2v-ẞ' }
+        - { exact: 'Ü', value: 'de/zs2v-Ü' }
+        - { exact: 'Ö', value: 'de/zs2v-Ö' }
+        - { exact: 'Ä', value: 'de/zs2v-Ä' }
+        - { exact: 'Z', value: 'de/zs2v-Z' }
+        - { exact: 'Y', value: 'de/zs2v-Y' }
+        - { exact: 'X', value: 'de/zs2v-X' }
+        - { exact: 'W', value: 'de/zs2v-W' }
+        - { exact: 'V', value: 'de/zs2v-V' }
+        - { exact: 'U', value: 'de/zs2v-U' }
+        - { exact: 'T', value: 'de/zs2v-T' }
+        - { exact: 'S', value: 'de/zs2v-S' }
+        - { exact: 'R', value: 'de/zs2v-R' }
+        - { exact: 'Q', value: 'de/zs2v-Q' }
+        - { exact: 'P', value: 'de/zs2v-P' }
+        - { exact: 'O', value: 'de/zs2v-O' }
+        - { exact: 'N', value: 'de/zs2v-N' }
+        - { exact: 'M', value: 'de/zs2v-M' }
+        - { exact: 'L', value: 'de/zs2v-L' }
+        - { exact: 'K', value: 'de/zs2v-K' }
+        - { exact: 'J', value: 'de/zs2v-J' }
+        - { exact: 'I', value: 'de/zs2v-I' }
+        - { exact: 'H', value: 'de/zs2v-H' }
+        - { exact: 'G', value: 'de/zs2v-G' }
+        - { exact: 'F', value: 'de/zs2v-F' }
+        - { exact: 'E', value: 'de/zs2v-E' }
+        - { exact: 'D', value: 'de/zs2v-D' }
+        - { exact: 'C', value: 'de/zs2v-C' }
+        - { exact: 'B', value: 'de/zs2v-B' }
+        - { exact: 'A', value: 'de/zs2v-A' }
       default: 'de/zs2v-unknown'
     tags:
       - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
@@ -2104,9 +2104,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'de/ne3-normal-II' }
-        - { regex: '^III$', value: 'de/ne3-normal-III' }
-        - { regex: '^IV$', value: 'de/ne3-normal-IV' }
+        - { exact: 'II', value: 'de/ne3-normal-II' }
+        - { exact: 'III', value: 'de/ne3-normal-III' }
+        - { exact: 'IV', value: 'de/ne3-normal-IV' }
       default: 'de/ne3-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
@@ -2117,9 +2117,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'de/ne3-dwarf-II' }
-        - { regex: '^III$', value: 'de/ne3-dwarf-III' }
-        - { regex: '^IV$', value: 'de/ne3-dwarf-IV' }
+        - { exact: 'II', value: 'de/ne3-dwarf-II' }
+        - { exact: 'III', value: 'de/ne3-dwarf-III' }
+        - { exact: 'IV', value: 'de/ne3-dwarf-IV' }
       default: 'de/ne3-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
@@ -2145,8 +2145,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light-repeated' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light-repeated' }
       default: 'de/vr0-light-repeated'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2158,8 +2158,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-shortened' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-shortened' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light-shortened' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light-shortened' }
       default: 'de/vr0-light-shortened'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2171,8 +2171,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light' }
       default: 'de/vr0-light'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2183,8 +2183,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-semaphore' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-semaphore' }
       default: 'de/vr0-semaphore'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2225,8 +2225,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
-        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+        - { exact: 'DE-VBK:fv2', value: 'de/vbk/fv2' }
+        - { exact: 'DE-VBK:fv3', value: 'de/vbk/fv3' }
       default: 'de/vbk/fv1'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
@@ -2244,11 +2244,11 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
-        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
-        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
-        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
-        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
+        - { exact: 'DE-BOStrab:v2', value: 'de/bostrab/v2'}
+        - { exact: 'DE-BOStrab:v1', value: 'de/bostrab/v1'}
+        - { exact: 'DE-VAGN:vr2', value: 'de/vag-nuremberg/vr2'}
+        - { exact: 'DE-VAGN:vr1', value: 'de/vag-nuremberg/vr1'}
+        - { exact: 'DE-VAGN:vr0', value: 'de/vag-nuremberg/vr0'}
       default: 'de/bostrab/v0'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
@@ -2289,8 +2289,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-semaphore' }
+        - { exact: 'DE-ESO:hp2', value: 'de/hp2-semaphore' }
+        - { exact: 'DE-ESO:hp1', value: 'de/hp1-semaphore' }
       default: 'de/hp0-semaphore'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
@@ -2301,8 +2301,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-light' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-light' }
+        - { exact: 'DE-ESO:hp2', value: 'de/hp2-light' }
+        - { exact: 'DE-ESO:hp1', value: 'de/hp1-light' }
       default: 'de/hp0-light'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
@@ -2313,10 +2313,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hl2(;.*)?$', value: 'de/hl2' }
-        - { regex: '^(.*;)?DE-ESO:hl3b(;.*)?$', value: 'de/hl3b' }
-        - { regex: '^(.*;)?DE-ESO:hl3a(;.*)?$', value: 'de/hl3a' }
-        - { regex: '^(.*;)?DE-ESO:hl1(;.*)?$', value: 'de/hl1' }
+        - { exact: 'DE-ESO:hl2', value: 'de/hl2' }
+        - { exact: 'DE-ESO:hl3b', value: 'de/hl3b' }
+        - { exact: 'DE-ESO:hl3a', value: 'de/hl3a' }
+        - { exact: 'DE-ESO:hl1', value: 'de/hl1' }
       default: 'de/hl0-main'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
@@ -2327,10 +2327,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1-st9' }
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5-st9' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3-st9' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2-st9' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1-st9' }
       default: 'de/bostrab/f0-st9'
     tags:
       - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
@@ -2342,10 +2342,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1' }
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1' }
       default: 'de/bostrab/f0'
     tags:
       - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
@@ -2356,13 +2356,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
-        - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
-        - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
-        - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
-        - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
-        - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
-        - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
+        - { exact: 'DE-BOStrab:h2', value: 'de/bostrab/h2' }
+        - { exact: 'DE-BOStrab:h1', value: 'de/bostrab/h1' }
+        - { exact: 'DE-VAGN:hp2', value: 'de/vag-nuremberg/hp2' }
+        - { exact: 'DE-VAGN:hp1', value: 'de/vag-nuremberg/hp1' }
+        - { all: ['DE-VAGN:hp0', 'off'], value: 'de/vag-nuremberg/off' }
+        - { exact: 'DE-VAGN:hp3', value: 'de/vag-nuremberg/hp3' }
+        - { exact: 'DE-VAGN:hp0', value: 'de/vag-nuremberg/hp0' }
       default: 'de/bostrab/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
@@ -2373,8 +2373,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^.*$', value: 'de/hha/h0' }
-      default: 'de/hha/h1'
+        - { exact: 'DE-HHA:h1', value: 'de/hha/h1' }
+      default: 'de/hha/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2391,10 +2391,10 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hl11(;.*)?$', value: 'de/hl11' }
-        - { regex: '^(.*;)?DE-ESO:hl12b(;.*)?$', value: 'de/hl12b' }
-        - { regex: '^(.*;)?DE-ESO:hl12a(;.*)?$', value: 'de/hl12a' }
-        - { regex: '^(.*;)?DE-ESO:hl10(;.*)?$', value: 'de/hl10' }
+        - { exact: 'DE-ESO:hl11', value: 'de/hl11' }
+        - { exact: 'DE-ESO:hl12b', value: 'de/hl12b' }
+        - { exact: 'DE-ESO:hl12a', value: 'de/hl12a' }
+        - { exact: 'DE-ESO:hl10', value: 'de/hl10' }
       default: 'de/hl0-combined'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
@@ -2406,8 +2406,8 @@ features:
       # TODO add shortened
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
-        - { regex: '^(.*;)?DE-ESO:sv0(;.*)?$', value: 'de/sv-sv0' }
+        - { exact: 'DE-ESO:hp0', value: 'de/sv-hp0' }
+        - { exact: 'DE-ESO:sv0', value: 'de/sv-sv0' }
       default: ''
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
@@ -2590,36 +2590,36 @@ features:
       match: 'railway:signal:route:states'
       # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
+        - { exact: 'ẞ', value: 'de/zs2-ẞ' }
+        - { exact: 'Ü', value: 'de/zs2-Ü' }
+        - { exact: 'Ö', value: 'de/zs2-Ö' }
+        - { exact: 'Ä', value: 'de/zs2-Ä' }
+        - { exact: 'Z', value: 'de/zs2-Z' }
+        - { exact: 'Y', value: 'de/zs2-Y' }
+        - { exact: 'X', value: 'de/zs2-X' }
+        - { exact: 'W', value: 'de/zs2-W' }
+        - { exact: 'V', value: 'de/zs2-V' }
+        - { exact: 'U', value: 'de/zs2-U' }
+        - { exact: 'T', value: 'de/zs2-T' }
+        - { exact: 'S', value: 'de/zs2-S' }
+        - { exact: 'R', value: 'de/zs2-R' }
+        - { exact: 'Q', value: 'de/zs2-Q' }
+        - { exact: 'P', value: 'de/zs2-P' }
+        - { exact: 'O', value: 'de/zs2-O' }
+        - { exact: 'N', value: 'de/zs2-N' }
+        - { exact: 'M', value: 'de/zs2-M' }
+        - { exact: 'L', value: 'de/zs2-L' }
+        - { exact: 'K', value: 'de/zs2-K' }
+        - { exact: 'J', value: 'de/zs2-J' }
+        - { exact: 'I', value: 'de/zs2-I' }
+        - { exact: 'H', value: 'de/zs2-H' }
+        - { exact: 'G', value: 'de/zs2-G' }
+        - { exact: 'F', value: 'de/zs2-F' }
+        - { exact: 'E', value: 'de/zs2-E' }
+        - { exact: 'D', value: 'de/zs2-D' }
+        - { exact: 'C', value: 'de/zs2-C' }
+        - { exact: 'B', value: 'de/zs2-B' }
+        - { exact: 'A', value: 'de/zs2-A' }
       default: 'de/zs2-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
@@ -2678,9 +2678,9 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^left$', value: 'de/el6-left' }
-        - { regex: '^through$', value: 'de/el6-through' }
-        - { regex: '^right$', value: 'de/el6-right' }
+        - { exact: 'left', value: 'de/el6-left' }
+        - { exact: 'through', value: 'de/el6-through' }
+        - { exact: 'right', value: 'de/el6-right' }
       default: 'de/el6'
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
@@ -2853,8 +2853,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-new' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-new' }
+        - { exact: 'FI:Po2', value: 'fi/po2-new' }
+        - { exact: 'FI:Po1', value: 'fi/po1-new' }
       default: 'fi/po0-new'
     tags:
       - { tag: 'railway:signal:main', value: 'FI:Po' }
@@ -2865,8 +2865,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-old' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-old' }
+        - { exact: 'FI:Po2', value: 'fi/po2-old' }
+        - { exact: 'FI:Po1', value: 'fi/po1-old' }
       default: 'fi/po0-old'
     tags:
       - { tag: 'railway:signal:main', value: 'FI:Po-v' }
@@ -2898,8 +2898,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FI:Eo2(;.*)?$', value: 'fi/eo2-new' }
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-new' }
+        - { exact: 'FI:Eo2', value: 'fi/eo2-new' }
+        - { exact: 'FI:Eo1', value: 'fi/eo1-new' }
       default: 'fi/eo0-new'
     tags:
       - { tag: 'railway:signal:distant', value: 'FI:Eo' }
@@ -2910,7 +2910,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-old' }
+        - { exact: 'FI:Eo1', value: 'fi/eo1-old' }
       default: 'fi/eo0-old'
     tags:
       - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
@@ -3204,15 +3204,15 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FR:Cv(;.*)?$', value: 'fr/C-Cv' }
-        - { regex: '^(.*;)?FR:Mr?(;.*)?$', value: 'fr/C-M' }
-        - { regex: '^(.*;)?FR:RRc?(\(Ac?\))(;.*)?$', value: 'fr/C-RR-A' }
-        - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/C-R-A' }
-        - { regex: '^(.*;)?FR:RRc?(;.*)?$', value: 'fr/C-RR' }
-        - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/C-R' }
-        - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/C-A' }
-        - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
-        - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/C-S' }
+        - { exact: 'FR:Cv', value: 'fr/C-Cv' }
+        - { any: ['FR:M', 'FR:Mr'], value: 'fr/C-M' }
+        - { any: ['FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)'], value: 'fr/C-RR-A' }
+        - { any: ['FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)'], value: 'fr/C-R-A' }
+        - { any: ['FR:RR', 'FR:RRc'], value: 'fr/C-RR' }
+        - { any: ['FR:R', 'FR:Rc'], value: 'fr/C-R' }
+        - { any: ['FR:A', 'FR:Ac'], value: 'fr/C-A' }
+        - { any: ['FR:VL', 'FR:VLc'], value: 'fr/C-VL' }
+        - { any: ['FR:S', 'FR:Sc'], value: 'fr/C-S' }
       # TODO split on shape
       default: 'fr/C-C'
     tags:
@@ -3224,10 +3224,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/S-R-A' }
-        - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/S-R' }
-        - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/S-A' }
-        - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/S-VL' }
+        - { any: ['FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)'], value: 'fr/S-R-A' }
+        - { any: ['FR:R', 'FR:Rc'], value: 'fr/S-R' }
+        - { any: ['FR:A', 'FR:Ac'], value: 'fr/S-A' }
+        - { any: ['FR:VL', 'FR:VLc'], value: 'fr/S-VL' }
       # TODO split on shape
       default: 'fr/S-S'
     tags:
@@ -3239,8 +3239,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FR:R(;.*)?$', value: 'fr/A-R' }
-        - { regex: '^(.*;)?FR:A(;.*)?$', value: 'fr/A-A' }
+        - { exact: 'FR:R', value: 'fr/A-R' }
+        - { exact: 'FR:A', value: 'fr/A-A' }
       default: 'fr/A-VL'
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
@@ -3465,7 +3465,7 @@ features:
     icon:
       match: 'railway:signal:main:design'
       cases:
-        - { regex: '^combined$', value: 'gb/main-combined-light' }
+        - { exact: 'combined', value: 'gb/main-combined-light' }
       default: 'gb/main-individual-light'
     tags:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
@@ -3532,17 +3532,17 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^(off;)?position_1;position_2;position_3;position_4(;off)?$', value: 'gb/route-feather-1234' }
-        - { regex: '^(off;)?position_1;position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-1456' }
-        - { regex: '^(off;)?position_1;position_4;position_5(;off)?$', value: 'gb/route-feather-145' }
-        - { regex: '^(off;)?position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-456' }
-        - { regex: '^(off;)?position_1;position_2;position_3(;off)?$', value: 'gb/route-feather-123' }
-        - { regex: '^(off;)?position_1;position_2;position_4(;off)?$', value: 'gb/route-feather-124' }
-        - { regex: '^(off;)?position_4;position_5(;off)?$', value: 'gb/route-feather-45' }
-        - { regex: '^(off;)?position_1;position_4(;off)?$', value: 'gb/route-feather-14' }
-        - { regex: '^(off;)?position_1;position_2(;off)?$', value: 'gb/route-feather-12' }
-        - { regex: '^(off;)?position_4(;off)?$', value: 'gb/route-feather-4' }
-        - { regex: '^(off;)?position_1(;off)?$', value: 'gb/route-feather-1' }
+        - { all: ['position_1', 'position_2', 'position_3', 'position_4'], value: 'gb/route-feather-1234' }
+        - { all: ['position_1', 'position_4', 'position_5', 'position_6'], value: 'gb/route-feather-1456' }
+        - { all: ['position_1', 'position_4', 'position_5'], value: 'gb/route-feather-145' }
+        - { all: ['position_4', 'position_5', 'position_6'], value: 'gb/route-feather-456' }
+        - { all: ['position_1', 'position_2', 'position_3'], value: 'gb/route-feather-123' }
+        - { all: ['position_1', 'position_2', 'position_4'], value: 'gb/route-feather-124' }
+        - { all: ['position_4', 'position_5'], value: 'gb/route-feather-45' }
+        - { all: ['position_1', 'position_4'], value: 'gb/route-feather-14' }
+        - { all: ['position_1', 'position_2'], value: 'gb/route-feather-12' }
+        - { exact: 'position_4', value: 'gb/route-feather-4' }
+        - { exact: 'position_1', value: 'gb/route-feather-1' }
       default: 'gb/route-feather-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
@@ -3554,7 +3554,10 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^(.*;)?[CSFU](;.*)?$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{S}' }
+        - { exact: 'U', value: 'gb/route-theatre-U' }
+        - { exact: 'S', value: 'gb/route-theatre-S' }
+        - { exact: 'F', value: 'gb/route-theatre-F' }
+        - { exact: 'C', value: 'gb/route-theatre-C' }
       default: 'gb/route-theatre-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
@@ -3692,8 +3695,8 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'nl/227b-arrow-right' }
-        - { regex: '^overhead$', value: 'nl/227b-arrow-down' }
+        - { exact: 'left', value: 'nl/227b-arrow-right' }
+        - { exact: 'overhead', value: 'nl/227b-arrow-down' }
       default: 'nl/227b-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
@@ -3707,8 +3710,8 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'nl/227b-triangle-right' }
-        - { regex: '^overhead$', value: 'nl/227b-triangle-down' }
+        - { exact: 'left', value: 'nl/227b-triangle-right' }
+        - { exact: 'overhead', value: 'nl/227b-triangle-down' }
       default: 'nl/227b-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
@@ -3812,23 +3815,22 @@ features:
     icon:
       match: 'railway:signal:stop:carriages'
       cases:
-        # Free match to allow matching multiple values on a single sign, separated by ;
-        - { regex: '18', value: 'nl/304-18' }
-        - { regex: '16', value: 'nl/304-16' }
-        - { regex: '15', value: 'nl/304-15' }
-        - { regex: '14', value: 'nl/304-14' }
-        - { regex: '13', value: 'nl/304-13' }
-        - { regex: '12', value: 'nl/304-12' }
-        - { regex: '11', value: 'nl/304-11' }
-        - { regex: '10', value: 'nl/304-10' }
-        - { regex: '9', value: 'nl/304-9' }
-        - { regex: '8', value: 'nl/304-8' }
-        - { regex: '7', value: 'nl/304-7' }
-        - { regex: '6', value: 'nl/304-6' }
-        - { regex: '5', value: 'nl/304-5' }
-        - { regex: '4', value: 'nl/304-4' }
-        - { regex: '3', value: 'nl/304-3' }
-        - { regex: '2', value: 'nl/304-2' }
+        - { exact: '18', value: 'nl/304-18' }
+        - { exact: '16', value: 'nl/304-16' }
+        - { exact: '15', value: 'nl/304-15' }
+        - { exact: '14', value: 'nl/304-14' }
+        - { exact: '13', value: 'nl/304-13' }
+        - { exact: '12', value: 'nl/304-12' }
+        - { exact: '11', value: 'nl/304-11' }
+        - { exact: '10', value: 'nl/304-10' }
+        - { exact: '9', value: 'nl/304-9' }
+        - { exact: '8', value: 'nl/304-8' }
+        - { exact: '7', value: 'nl/304-7' }
+        - { exact: '6', value: 'nl/304-6' }
+        - { exact: '5', value: 'nl/304-5' }
+        - { exact: '4', value: 'nl/304-4' }
+        - { exact: '3', value: 'nl/304-3' }
+        - { exact: '2', value: 'nl/304-2' }
       default: 'nl/304-empty'
     tags:
       - { tag: 'railway:signal:stop', value: 'NL:304' }
@@ -4029,8 +4031,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'nl/311-right' }
-        - { regex: '^left$', value: 'nl/311-left' }
+        - { exact: 'right', value: 'nl/311-right' }
+        - { exact: 'left', value: 'nl/311-left' }
       default: 'nl/311'
     tags:
       - { tag: 'railway:signal:electricity', value: 'NL:311' }
@@ -4042,8 +4044,8 @@ features:
     icon:
       match: 'railway:signal:electricity:voltage'
       cases:
-        - { regex: '^1500$', value: 'nl/320-1500' }
-        - { regex: '^25000$', value: 'nl/320-25000' }
+        - { exact: '1500', value: 'nl/320-1500' }
+        - { exact: '25000', value: 'nl/320-25000' }
       default: 'nl/320-unknown'
     tags:
       - { tag: 'railway:signal:electricity', value: 'NL:320' }
@@ -4064,8 +4066,8 @@ features:
     icon:
       match: 'railway:signal:main_repeated:states'
       cases:
-        - { regex: '^PL-PKP:sp1;PL-PKP:sp4$', value: 'pl/sp1-2' }
-        - { regex: '^(.*;)?PL-PKP:sp2(;.*)?$', value: 'pl/sp2-3' }
+        - { all: ['PL-PKP:sp1', 'PL-PKP:sp4'], value: 'pl/sp1-2' }
+        - { exact: 'PL-PKP:sp2', value: 'pl/sp2-3' }
       default: 'pl/sp1-3'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'PL-PKP:sp' }
@@ -4076,8 +4078,8 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs2$', value: 'pl/wetcs2' }
-        - { regex: '^PL-PKP:wetcs3$', value: 'pl/wetcs3' }
+        - { exact: 'PL-PKP:wetcs2', value: 'pl/wetcs2' }
+        - { exact: 'PL-PKP:wetcs3', value: 'pl/wetcs3' }
       default: 'pl/wetcs1'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs1', 'PL-PKP:wetcs2', 'PL-PKP:wetcs3'] }
@@ -4088,8 +4090,8 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs5$', value: 'pl/wetcs5' }
-        - { regex: '^PL-PKP:wetcs6$', value: 'pl/wetcs6' }
+        - { exact: 'PL-PKP:wetcs5', value: 'pl/wetcs5' }
+        - { exact: 'PL-PKP:wetcs6', value: 'pl/wetcs6' }
       default: 'pl/wetcs4'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs4', 'PL-PKP:wetcs5', 'PL-PKP:wetcs6'] }
@@ -4100,8 +4102,8 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs8$', value: 'pl/wetcs8' }
-        - { regex: '^PL-PKP:wetcs9$', value: 'pl/wetcs9' }
+        - { exact: 'PL-PKP:wetcs8', value: 'pl/wetcs8' }
+        - { exact: 'PL-PKP:wetcs9', value: 'pl/wetcs9' }
       default: 'pl/wetcs7'
     tags:
       - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs7', 'PL-PKP:wetcs8', 'PL-PKP:wetcs9'] }
@@ -4112,8 +4114,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'pl/wetcs10-right' }
-        - { regex: '^overhead$', value: 'pl/wetcs10-down' }
+        - { exact: 'left', value: 'pl/wetcs10-right' }
+        - { exact: 'overhead', value: 'pl/wetcs10-down' }
       default: 'pl/wetcs10-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs10' }
@@ -4125,8 +4127,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'pl/wetcs11-right' }
-        - { regex: '^overhead$', value: 'pl/wetcs11-down' }
+        - { exact: 'left', value: 'pl/wetcs11-right' }
+        - { exact: 'overhead', value: 'pl/wetcs11-down' }
       default: 'pl/wetcs11-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs11' }
@@ -4145,9 +4147,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11a-dwarf-II' }
-        - { regex: '^III$', value: 'pl/w11a-dwarf-III' }
-        - { regex: '^IV$', value: 'pl/w11a-dwarf-IV' }
+        - { exact: 'II', value: 'pl/w11a-dwarf-II' }
+        - { exact: 'III', value: 'pl/w11a-dwarf-III' }
+        - { exact: 'IV', value: 'pl/w11a-dwarf-IV' }
       default: 'pl/w11a-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
@@ -4159,9 +4161,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11a-normal-II' }
-        - { regex: '^III$', value: 'pl/w11a-normal-III' }
-        - { regex: '^IV$', value: 'pl/w11a-normal-IV' }
+        - { exact: 'II', value: 'pl/w11a-normal-II' }
+        - { exact: 'III', value: 'pl/w11a-normal-III' }
+        - { exact: 'IV', value: 'pl/w11a-normal-IV' }
       default: 'pl/w11a-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
@@ -4172,9 +4174,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11b-dwarf-II' }
-        - { regex: '^III$', value: 'pl/w11b-dwarf-III' }
-        - { regex: '^IV$', value: 'pl/w11b-dwarf-IV' }
+        - { exact: 'II', value: 'pl/w11b-dwarf-II' }
+        - { exact: 'III', value: 'pl/w11b-dwarf-III' }
+        - { exact: 'IV', value: 'pl/w11b-dwarf-IV' }
       default: 'pl/w11b-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
@@ -4186,9 +4188,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11b-normal-II' }
-        - { regex: '^III$', value: 'pl/w11b-normal-III' }
-        - { regex: '^IV$', value: 'pl/w11b-normal-IV' }
+        - { exact: 'II', value: 'pl/w11b-normal-II' }
+        - { exact: 'III', value: 'pl/w11b-normal-III' }
+        - { exact: 'IV', value: 'pl/w11b-normal-IV' }
       default: 'pl/w11b-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
@@ -4223,7 +4225,7 @@ features:
     icon:
       match: 'railway:signal:minor:states'
       cases:
-        - { regex: '^PL-PKP:s1$', value: 'pl/z-1-s1' }
+        - { exact: 'PL-PKP:s1', value: 'pl/z-1-s1' }
       default: 'pl/z-2-s1'
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
@@ -4241,7 +4243,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^PL-PKP:os1;PL-PKP:os4$', value: 'pl/os1-1' }
+        - { all: ['PL-PKP:os1', 'PL-PKP:os4'], value: 'pl/os1-1' }
       default: 'pl/os1-2'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
@@ -4266,7 +4268,7 @@ features:
     icon:
       match: 'railway:signal:shunting:states'
       cases:
-        - { regex: '^PL-PKP:ms1$', value: 'pl/ms-1' }
+        - { exact: 'PL-PKP:ms1', value: 'pl/ms-1' }
       default: 'pl/ms-2'
     tags:
       - { tag: 'railway:signal:shunting', value: 'PL-PKP:ms' }
@@ -4277,8 +4279,8 @@ features:
     icon:
       match: 'railway:signal:distant'
       cases:
-        - { regex: '^PL-PKP:od$', value: 'pl/od' }
-        - { regex: '^PL-PKP:ot$', value: 'pl/ot' }
+        - { exact: 'PL-PKP:od', value: 'pl/od' }
+        - { exact: 'PL-PKP:ot', value: 'pl/ot' }
       default: 'pl/on'
     tags:
       - { tag: 'railway:signal:distant', values: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
@@ -4288,7 +4290,7 @@ features:
     icon:
       match: 'railway:signal:humping:form'
       cases:
-        - { regex: '^light$', value: 'pl/rt3-light' }
+        - { exact: 'light', value: 'pl/rt3-light' }
       default: 'pl/rt3-semaphore'
     tags:
       - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
@@ -4349,9 +4351,9 @@ features:
     icon:
       match: 'railway:signal:whistle'
       cases:
-      - { regex: '^PL-PKP:w6a$', value: 'pl/w6a' }
-      - { regex: '^PL-PKP:w6b$', value: 'pl/w6b' }
-      - { regex: '^PL-PKP:w7$', value: 'pl/w7' }
+      - { exact: 'PL-PKP:w6a', value: 'pl/w6a' }
+      - { exact: 'PL-PKP:w6b', value: 'pl/w6b' }
+      - { exact: 'PL-PKP:w7', value: 'pl/w7' }
       default: 'pl/w6'
     tags:
       - { tag: 'railway:signal:whistle', values: ['PL-PKP:w6', 'PL-PKP:w6a', 'PL-PKP:w6b', 'PL-PKP:w7'] }
@@ -4362,7 +4364,7 @@ features:
     icon:
       match: 'railway:signal:helper_engine'
       cases:
-      - { regex: '^PL-PKP:w10b$', value: 'pl/w10b' }
+      - { exact: 'PL-PKP:w10b', value: 'pl/w10b' }
       default: 'pl/w10a'
     tags:
       - { tag: 'railway:signal:helper_engine', values: ['PL-PKP:w10a', 'PL-PKP:w10b'] }
@@ -4412,8 +4414,8 @@ features:
     icon:
       match: 'railway:signal:short_route'
       cases:
-        - { regex: '^PL-PKP:w20$', value: 'pl/w20' }
-        - { regex: '^PL-PKP:w19;PL-PKP:w20$', value: 'pl/w19-20' }
+        - { exact: 'PL-PKP:w20', value: 'pl/w20' }
+        - { exact: 'PL-PKP:w19;PL-PKP:w20', value: 'pl/w19-20' }
       default: 'pl/w19'
     tags:
       - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
@@ -4612,8 +4614,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
+        - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
+        - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
       default: 'pl/sr1'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
@@ -4624,8 +4626,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
-        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-4-A' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-4-B' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-4-C' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-4-D' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s5-3-A' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s5-3-B' }
       default: 'pl/s2-3'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4637,9 +4643,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
-        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
+        - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-3-A' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-3-B' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-3-C' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-3-D' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s1-2-A' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s1-2-B' }
       default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4650,16 +4660,31 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
-        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s12a'], value: 'pl/s6-10a-5-A' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s12a'], value: 'pl/s6-10a-5-B' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s13a'], value: 'pl/s6-10a-5-C' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s13a'], value: 'pl/s6-10a-5-D' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s8'], value: 'pl/s6-5-A' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s8'], value: 'pl/s6-5-B' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s9'], value: 'pl/s6-5-C' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s9'], value: 'pl/s6-5-D' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s12a'], value: 'pl/s10a-5-A' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s12a'], value: 'pl/s10a-5-B' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s13a'], value: 'pl/s10a-5-C' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s13a'], value: 'pl/s10a-5-D' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s12'], value: 'pl/s10-5-A' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s12'], value: 'pl/s10-5-B' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s13'], value: 'pl/s10-5-C' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s13'], value: 'pl/s10-5-D' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s10a'], value: 'pl/s6-10a-4-A' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s10a'], value: 'pl/s6-10a-4-B' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s11a'], value: 'pl/s6-10a-4-C' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s11a'], value: 'pl/s6-10a-4-D' }
+        - { any: ['PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-4' }
+        - { any: ['PL-PKP:s8', 'PL-PKP:s9'], value: 'pl/s9-4' }
+        - { any: ['PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-4' }
+        - { any: ['PL-PKP:s12a', 'PL-PKP:s13a'], value: 'pl/s13a-4' }
+        - { any: ['PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-4' }
       default: 'pl/s13-4'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
@@ -4671,9 +4696,9 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
+        - { any: ['PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-3' }
+        - { any: ['PL-PKP:s12a', 'PL-PKP:s13a'], value: 'pl/s13a-3' }
+        - { any: ['PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-3' }
       default: 'pl/s13-3'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
@@ -4684,8 +4709,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we1b' }
-        - { regex: '^left$', value: 'pl/we1c' }
+        - { exact: 'right', value: 'pl/we1b' }
+        - { exact: 'left', value: 'pl/we1c' }
       default: 'pl/we1a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we1a', 'PL-PKP:we1b', 'PL-PKP:we1c'] }
@@ -4697,8 +4722,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we2b' }
-        - { regex: '^left$', value: 'pl/we2c' }
+        - { exact: 'right', value: 'pl/we2b' }
+        - { exact: 'left', value: 'pl/we2c' }
       default: 'pl/we2a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we2a', 'PL-PKP:we2b', 'PL-PKP:we2c'] }
@@ -4710,8 +4735,8 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we3b$', value: 'pl/we3b' }
-        - { regex: '^PL-PKP:we3c$', value: 'pl/we3c' }
+        - { exact: 'PL-PKP:we3b', value: 'pl/we3b' }
+        - { exact: 'PL-PKP:we3c', value: 'pl/we3c' }
       default: 'pl/we3a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b', 'PL-PKP:we3c'] }
@@ -4723,8 +4748,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we4b' }
-        - { regex: '^left$', value: 'pl/we4c' }
+        - { exact: 'right', value: 'pl/we4b' }
+        - { exact: 'left', value: 'pl/we4c' }
       default: 'pl/we4a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we4a', 'PL-PKP:we4b', 'PL-PKP:we4c'] }
@@ -4736,8 +4761,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we8b' }
-        - { regex: '^left$', value: 'pl/we8c' }
+        - { exact: 'right', value: 'pl/we8b' }
+        - { exact: 'left', value: 'pl/we8c' }
       default: 'pl/we8a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we8a', 'PL-PKP:we8b', 'PL-PKP:we8c'] }
@@ -4749,8 +4774,8 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we9b$', value: 'pl/we9b' }
-        - { regex: '^PL-PKP:we9c$', value: 'pl/we9c' }
+        - { exact: 'PL-PKP:we9b', value: 'pl/we9b' }
+        - { exact: 'PL-PKP:we9c', value: 'pl/we9c' }
       default: 'pl/we9a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b', 'PL-PKP:we9c'] }
@@ -4762,11 +4787,11 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we10b$', value: 'pl/we10b' }
-        - { regex: '^PL-PKP:we10c$', value: 'pl/we10c' }
-        - { regex: '^PL-PKP:we10d$', value: 'pl/we10d' }
-        - { regex: '^PL-PKP:we10e$', value: 'pl/we10e' }
-        - { regex: '^PL-PKP:we10f$', value: 'pl/we10f' }
+        - { exact: 'PL-PKP:we10b', value: 'pl/we10b' }
+        - { exact: 'PL-PKP:we10c', value: 'pl/we10c' }
+        - { exact: 'PL-PKP:we10d', value: 'pl/we10d' }
+        - { exact: 'PL-PKP:we10e', value: 'pl/we10e' }
+        - { exact: 'PL-PKP:we10f', value: 'pl/we10f' }
       default: 'pl/we10a'
     tags:
       - { tag: 'railway:signal:electricity', values: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
