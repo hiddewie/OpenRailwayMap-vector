@@ -38,11 +38,11 @@ Open a pull request where you provide details about the new train protection sys
 
 Railway signals are present on three layers. The features are defined in a YAML file [`features/signals_railway_signals.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/signals_railway_signals.yaml).
 
-The file contains a list of train protection systems, each with a code, a legend and a color.
+The file contains a list of signal tags, a list of signal types and all known signal features.
 
-In the body of the file, add a new entry for the new railway signal. The signals are grouped by country. Every signal has a description, a set of tags and an icon. The icon can optionally have a `match` clause to match tag values to render the feature differently based on the matched tag value. 
+In the body of the file, add a new entry for the new railway signal. The signals are grouped by country. Every signal has a description, a set of tags and an icon. The icon can optionally have a `match` clause to match tag values to render the feature differently based on the matched tag value.
 
-For example, to match railway signals with tags `railway:signal:shunting=AT-V2:verschubhalttafel` and `railway:signal:shunting:form=sign` with icon `de/ra10`:
+For example, to match railway signals with tags `railway:signal:shunting=AT-V2:verschubhalttafel` and `railway:signal:shunting:form=sign` with icon `at/verschubhalttafel`:
 ```yaml
 features:
   # ...
