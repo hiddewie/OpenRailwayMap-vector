@@ -15,21 +15,15 @@ The file contains a list of train protection systems, each with a code, a legend
 At the top of the file, add an entry for the legend, For example:
 ```yaml
 train_protections:
-  # ...
   - { train_protection: 'new', legend: 'Description about this new train protection system', color: '#abc123' }
-  # ...
 ```
 
 In the body of the file, add a new entry at a certain place in the list. The `rank` should match the ordering of the entries. The value of `train_protection` should match the value in the legend entries. For example:
 ```yaml
 features:
-  # ...
-
   - train_protection: new
     tags:
       - { tag: 'railway:new', value: 'yes' }
-
-  # ...
 ```
 
 Open a pull request where you provide details about the new train protection system. Ensure the pull request contains references to documentation and places on the map where the train protection system exists.
@@ -45,48 +39,42 @@ In the body of the file, add a new entry for the new railway signal. The signals
 For example, to match railway signals with tags `railway:signal:shunting=AT-V2:verschubhalttafel` and `railway:signal:shunting:form=sign` with icon `at/verschubhalttafel`:
 ```yaml
 features:
-  # ...
-  
   - description: Verschubhalttafel
     country: AT
     icon: { default: 'at/verschubhalttafel' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
-
-  # ...
 ```
 
-A more complicated example where the different forms of features with tags `railway:signal:main=AT-V2:hauptsignal` and `railway:signal:main:form=semaphore` are rendered with different icons, based on the value of the `railway:signal:main:states` tag. Each of the cases will be matched as a [regular expression](https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-POSIX-REGEXP) against the tag value. These variants of the icon will also be shown in the legend, described by the `description` of each of the cases: 
+A more complicated example matches a tag to show a different icon and legend for different values of the same feature. Matching is always performed from top to bottom. For example the signal `railway:signal:train_protection=BE:PRA` has a different icon for each of the signal positions: `railway:signal:position` can be `left`, `overhead` or `right` (the default value). Every variant can have its own description which will be used in the legend:
 ```yaml
 features:
-  # ...
-
-  - description: Hauptsignal (semaphore)
-    country: AT
+  - description: train protection block markers
+    country: BE
     icon:
-      match: 'railway:signal:main:states'
+      match: 'railway:signal:position'
       cases:
-        - regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$'
-          value: 'at/hp2-semaphore'
-          description: '20/40 km/h'
-        - regex: '^(.*;)?AT-V2:frei(;.*)?$'
-          value: 'at/hp1-semaphore'
-          description: 'clear'
-      default: 'de/hp0-semaphore'
+        - exact: 'left'
+          value: 'be/PRA-arrow-right'
+          description: 'left'
+        - exact: 'overhead'
+          value: 'be/PRA-arrow-down'
+          description: 'overhead'
+      default: 'be/PRA-arrow-left'
     tags:
-      - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  # ...
+      - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 ```
 
-A final example for speed signals which display an icon depending on the matched speed value. The `value` property contains `{}` as part of the icon, which is replaced automatically with the matched tag value, for example `{80}`. In particular an `example` must be given, which is used in the legend:
+For speed signals there is a specific (calculated) tag available to match on for the icon:
+- `railway:signal:speed_limit:speed:max` for speed limit signals
+- `railway:signal:speed_limit_distant:speed:max` for distant speed limit signals
+This tag contains the largest numerical value of the `railway:signal:speed_limit:speed` or `railway:signal:speed_limit_distant:speed` tags respectively, for usage in matching and substitution.
 
+For example a speed signals which display an icon depending on the matched speed value. The `value` property contains `{}` as part of the icon, which is replaced automatically with the matched tag value, for example `{80}`. In particular an `example` must be given, which is used in the legend:
 ```yaml
 features:
-  # ...
-
   - description: Geschwindigkeitsvoranzeiger (sign)
     country: AT
     icon:
@@ -99,20 +87,82 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-  
-  # ...
 ```
 Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-{80}-sign.svg`.
+
+The type of the matched tag matters. You can find the type of every tag at the top of the file. Any tag without a type is a string tag, so matching is always performed on the full tag value.
+
+Matching a tag with a `boolean` type (`yes`/`no`) does not need to match a value. For example `railway:signal:main_repeated:magnet` is a boolean tag:
+```yaml
+features:
+  - description: Signalnachahmer
+    country: AT
+    icon:
+      match: 'railway:signal:main_repeated:magnet'
+      cases:
+        - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
+      default: 'at/signalnachahmer'
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+```
+
+Matching a tag with an `array` type (`;`-separated values) can happen in multiple ways:
+- `exact` match: the given match value must equal at least one of the tag values
+- `regex` match: the given match value must match with the at least one of the tag values
+- `any` match: at least one element in the given match array must be in the tag values
+- `all` match: all elements in the given match array must be in the tag values
+
+Matching an `exact` and `any` value. For example a node with `railway:signal:distant:states=AT-V2:hauptsignal_frei_mit_60;AT-V2:hauptsignal_frei_mit_40` will match the first case, and a node with `railway:signal:distant:states=AT-V2:hauptsignal_frei_mit_20;AT-V2:hauptsignal_frei` will match the second case:
+```yaml
+features:
+- description: distant (light)
+  country: AT
+  icon:
+    match: 'railway:signal:distant:states'
+    cases:
+      - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
+      - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
+      - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
+    default: 'at/vorsignal-vorsicht'
+  tags:
+    - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
+    - { tag: 'railway:signal:distant:form', value: 'light' }
+```
+
+Matching with `exact` and `all`. For example a node with `railway:signal:main:states=PL-PKP:sr1;PL-PKP:sr2` will match the second case:
+```yaml
+features:
+  - description: Semafor kształtowy
+    country: PL
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
+        - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
+      default: 'pl/sr1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+```
 
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
 tags:
   # ...
-  - 'railway:signal:combined:form'
+  - { tag: 'railway:signal:combined:form' }
   # ...
 ```
+If the tag has a `yes`/`no` value, add `type: boolean`. If the tag has a semicolon (`;`) separated value, add `type: array`.  
 
 Next, ensure the icon exists in the [symbols directory](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/symbols). The icon must be an SVG file, minified and of the correct dimensions (most icons are between 10 and 24 pixels wide / high).
+
+The icon must not contain text. Using an SVG tool, convert the text to the shape of the text. In Inkscape, use the menu item *Path* > *Object to Path*.
+
+The SVG of the icon must be compressed. For example using the `rsvg-convert` tool, execute the command:
+```shell
+rsvg-convert icon.svg --width 16 --keep-aspect-ratio --format svg > icon-compressed.svg
+```
 
 Open a pull request where you provide details about the new railway signals. Ensure the pull request contains references to documentation and places on the map where these signals exist.
 

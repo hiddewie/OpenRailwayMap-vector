@@ -456,7 +456,7 @@ features:
     icon:
       match: 'railway:signal:shunting:height'
       cases:
-        - { regex: '^dwarf$', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
+        - { exact: 'dwarf', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
       default: 'at/verschubsignal'
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
@@ -663,9 +663,9 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^left$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
-        - { regex: '^through$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
-        - { regex: '^right$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
+        - { exact: 'left', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
+        - { exact: 'through', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
+        - { exact: 'right', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
       default: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer'
     tags:
       - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
@@ -912,8 +912,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'be/PRA-arrow-right' }
-        - { regex: '^overhead$', value: 'be/PRA-arrow-down' }
+        - { exact: 'left', value: 'be/PRA-arrow-right' }
+        - { exact: 'overhead', value: 'be/PRA-arrow-down' }
       default: 'be/PRA-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
@@ -926,8 +926,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'be/PRA-triangle-right' }
-        - { regex: '^overhead$', value: 'be/PRA-triangle-down' }
+        - { exact: 'left', value: 'be/PRA-triangle-right' }
+        - { exact: 'overhead', value: 'be/PRA-triangle-down' }
       default: 'be/PRA-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
