@@ -1,24 +1,32 @@
 local tag_functions = require('tags')
 
 function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
+  if type(o) == 'table' then
+    local s = '{ '
+    local first = true
+    for k, v in pairs(o) do
+      if first then
+        first = false
+      else
+        s = s .. ', '
       end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
+      if type(k) ~= 'number' then
+        k = '"'..k..'"'
+      end
+      s = s .. '['..k..'] = ' .. dump(v)
+    end
+    return s .. ' }'
+  else
+    return tostring(o)
+  end
 end
 
 function map(tbl, f)
-    local t = {}
-    for k,v in pairs(tbl) do
-        t[k] = f(v)
-    end
-    return t
+  local t = {}
+  for k,v in pairs(tbl) do
+    t[k] = f(v)
+  end
+  return t
 end
 
 function strip_prefix(value, prefix)
@@ -291,8 +299,9 @@ local signal_columns = {
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
-  { column = 'speed_limit_speed', type = 'text' },
-  { column = 'speed_limit_distant_speed', type = 'text' },
+  -- TODO make integer, range matching
+  { column = 'railway:signal:speed_limit:speed:max', type = 'text' },
+  { column = 'railway:signal:speed_limit_distant:speed:max', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
   { column = 'voltage', type = 'integer' },
   { column = 'frequency', type = 'real' },
@@ -305,8 +314,21 @@ local signal_columns = {
   { column = 'note', type = 'text' },
   { column = 'description', type = 'text' },
 }
+local osm2psql_types = {
+  boolean = 'boolean',
+  array = 'text',
+}
+local sql_types = {
+  boolean = 'boolean',
+  array = 'text[]',
+}
 for _, tag in ipairs(tag_functions.signal_tags) do
-  table.insert(signal_columns, { column = tag, type = 'text' })
+  local definition = {
+    column = tag.tag,
+    type = (tag.type and osm2psql_types[tag.type] or 'text'),
+    sql_type = (tag.type and sql_types[tag.type] or 'text'),
+  }
+  table.insert(signal_columns, definition)
 end
 local signals = osm2pgsql.define_table({
   name = 'signals',
@@ -707,8 +729,8 @@ function osm2pgsql.process_node(object)
     -- We cast the highest speed to text to make it possible to only select those speeds
     -- we have an icon for. Otherwise we might render an icon for 40 kph if
     -- 42 is tagged (but invalid tagging).
-    local speed_limit_speed = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed']
-    local speed_limit_distant_speed = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed']
+    local speed_limit_speed_max = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed']
+    local speed_limit_distant_speed_max = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed']
 
     local signal = {
       way = object:as_point(),
@@ -717,13 +739,13 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
-      ["railway:signal:speed_limit:speed"] = speed_limit_speed,
-      ["railway:signal:speed_limit_distant:speed"] = speed_limit_distant_speed,
-      speed_limit_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit:speed']),
-      speed_limit_distant_speed = semicolon_to_record_separator(tags['railway:signal:speed_limit_distant:speed']),
-      dominant_speed = speed_int(tostring(speed_limit_speed) or tostring(speed_limit_distant_speed)),
+      ["railway:signal:speed_limit:speed:max"] = speed_limit_speed_max,
+      ["railway:signal:speed_limit_distant:speed:max"] = speed_limit_distant_speed_max,
+      -- TODO remove, use raw values
+      dominant_speed = speed_int(tostring(speed_limit_speed_max) or tostring(speed_limit_distant_speed_max)),
       voltage = tonumber(tags['railway:signal:electricity:voltage']),
       frequency = tonumber(tags['railway:signal:electricity:frequency']),
+      -- TODO end
       caption = signal_caption(tags),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -735,8 +757,12 @@ function osm2pgsql.process_node(object)
     }
 
     for _, tag in ipairs(tag_functions.signal_tags) do
-      if tag ~= 'railway:signal:speed_limit:speed' and tag ~= 'railway:signal:speed_limit_distant:speed' then
-        signal[tag] = tags[tag]
+      if tag.type == 'boolean' then
+        signal[tag.tag] = tags[tag.tag] == 'yes'
+      elseif tag.type == 'array' then
+        signal[tag.tag] = split_semicolon_to_sql_array(tags[tag.tag])
+      else
+        signal[tag.tag] = tags[tag.tag]
       end
     end
 

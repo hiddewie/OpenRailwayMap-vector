@@ -90,7 +90,7 @@ features:
   - description: Geschwindigkeitsvoranzeiger (sign)
     country: AT
     icon:
-      match: 'railway:signal:speed_limit_distant:speed'
+      match: 'railway:signal:speed_limit_distant:speed:max'
       cases:
         - regex: '^(1[02]|[1-9])0$'
           value: 'at/geschwindigkeitsvoranzeiger-{}-sign'

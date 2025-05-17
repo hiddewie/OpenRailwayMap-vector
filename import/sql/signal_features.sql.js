@@ -15,6 +15,62 @@ const signalsWithSignalType = signals_railway_signals.features.map(feature => ({
   ),
 }));
 
+const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
+  [tag.tag, tag.type]))
+
+function matchTagValueSql(tag, value) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `'${value}' = ANY("${tag}")`
+    case 'boolean':
+      if (value) {
+        throw new Error(`Value given for boolean tag '${tag}' ('${value}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" = '${value}'`
+  }
+}
+
+function matchTagValuesSql(tag, values) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] <@ "${tag}"`
+    case 'boolean':
+      if (values) {
+        throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" IN (${values.map(value => `'${value}'`).join(', ')})`
+  }
+}
+
+function matchTagRegexSql(tag, regex) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `'${regex}' ~!@# ANY("${tag}")`
+    case 'boolean':
+      if (regex) {
+        throw new Error(`Regex given for boolean tag '${tag}' ('${regex}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" ~ '${regex}'`
+  }
+}
+
+function stringSql(tag) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `array_to_string("${tag}", ',')`
+    case 'boolean':
+      // Fallthrough
+    default:
+      return `"${tag}"`
+  }
+}
+
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -40,12 +96,12 @@ CREATE OR REPLACE VIEW signal_features_view AS
         WHEN "railway:signal:${type.type}" IS NOT NULL THEN
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-            WHEN ${feature.tags.map(tag => `"${tag.tag}" ${tag.value ? `= '${tag.value}'`: tag.values ? `IN (${tag.values.map(value => `'${value}'`).join(', ')})` : ''}`).join(' AND ')}
+            WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : matchTagValuesSql(tag.tag, tag.values)).join(' AND ')}
               THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN "${feature.icon.match}" ~ '${iconCase.regex}' THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', "${feature.icon.match}", '${iconCase.value.replace(/^.*\{}/, '}')}'), "${feature.icon.match}", ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
+                WHEN ${matchTagRegexSql(feature.icon.match, iconCase.regex)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
                 ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
               END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`) : 'NULL'}
-          `).join('')}
+            `).join('')}
             -- Unknown signal (${type.type})
             ELSE
               ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]

@@ -569,12 +569,6 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      speed_limit_speed: {
-        name: 'Speed limit',
-      },
-      speed_limit_distant_speed: {
-        name: 'Distant speed limit',
-      },
       direction_both: {
         name: 'both directions',
       },
