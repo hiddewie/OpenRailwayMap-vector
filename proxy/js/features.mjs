@@ -578,6 +578,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -767,6 +768,7 @@ const features = {
           template: '%d V',
         },
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
