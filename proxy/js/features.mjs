@@ -10,9 +10,9 @@ const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', '
 
 const signal_types = all_signals.types;
 
-const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
-const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
-const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
+const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'speed' && `railway:signal:${type.type}` === tag.tag)))
+const signals_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'signals' && `railway:signal:${type.type}` === tag.tag)))
+const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'electrification' && `railway:signal:${type.type}` === tag.tag)))
 
 // TODO add links to documentation
 
@@ -656,7 +656,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag, {name: tag}])),
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
