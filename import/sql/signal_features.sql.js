@@ -175,6 +175,99 @@ CREATE INDEX IF NOT EXISTS signal_features_way_index
 
 CLUSTER signal_features 
   USING signal_features_way_index;
+  
+--- Speed ---
+
+CREATE OR REPLACE VIEW speed_railway_signals AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    dominant_speed,
+    caption,
+    deactivated,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    ${signals_railway_signals.tags.map(tag => `
+    ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    type
+  FROM signal_features
+  WHERE layer = 'speed'
+  ORDER BY
+    rank NULLS FIRST,
+    dominant_speed DESC NULLS FIRST;
+  
+--- Signals ---
+  
+CREATE OR REPLACE VIEW signals_railway_signals AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    ref_multiline,
+    caption,
+    deactivated,
+    railway,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    ${signals_railway_signals.tags.map(tag => `
+    ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    type
+  FROM signal_features
+  WHERE layer = 'signals'
+  ORDER BY rank NULLS FIRST;
+  
+--- Electrification ---
+
+CREATE OR REPLACE VIEW electrification_signals AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    direction_both,
+    ref,
+    caption,
+    deactivated,
+    voltage,
+    frequency,
+    wikidata,
+    wikimedia_commons,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    azimuth,
+    ${signals_railway_signals.tags.map(tag => `
+    ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
+    features[1] as feature,
+    type as type
+  FROM signal_features
+  WHERE layer = 'electrification'
+  ORDER BY rank NULLS FIRST;
 `
 
 console.log(sql);
