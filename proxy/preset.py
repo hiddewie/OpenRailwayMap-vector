@@ -446,10 +446,6 @@ def preset_items_signals_for_country(features):
 
       if 'match' in feature['icon']:
         match = feature['icon']['match']
-        if match == 'railway:signal:speed_limit:speed:max':
-          match = 'railway:signal:speed_limit:speed'
-        elif match == 'railway:signal:speed_limit_distant:speed:max':
-          match = 'railway:signal:speed_limit_distant:speed'
         if match == 'ref_multiline':
           match = 'ref'
 

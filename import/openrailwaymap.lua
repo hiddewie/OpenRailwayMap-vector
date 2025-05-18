@@ -299,9 +299,6 @@ local signal_columns = {
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
-  -- TODO make integer, range matching
-  { column = 'railway:signal:speed_limit:speed:max', type = 'text' },
-  { column = 'railway:signal:speed_limit_distant:speed:max', type = 'text' },
   { column = 'dominant_speed', type = 'real' },
   { column = 'voltage', type = 'integer' },
   { column = 'frequency', type = 'real' },
@@ -725,13 +722,6 @@ function osm2pgsql.process_node(object)
 
   if railway_signal_values(tags.railway) then
     local ref_multiline, newline_count = (tags.ref or ''):gsub(' ', '\n')
-
-    -- We cast the highest speed to text to make it possible to only select those speeds
-    -- we have an icon for. Otherwise we might render an icon for 40 kph if
-    -- 42 is tagged (but invalid tagging).
-    local speed_limit_speed_max = tags['railway:signal:speed_limit'] and largest_speed_noconvert(tags['railway:signal:speed_limit:speed']) or tags['railway:signal:speed_limit:speed']
-    local speed_limit_distant_speed_max = tags['railway:signal:speed_limit_distant'] and largest_speed_noconvert(tags['railway:signal:speed_limit_distant:speed']) or tags['railway:signal:speed_limit_distant:speed']
-
     local signal = {
       way = object:as_point(),
       railway = tags.railway,
@@ -739,10 +729,7 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
-      ["railway:signal:speed_limit:speed:max"] = speed_limit_speed_max,
-      ["railway:signal:speed_limit_distant:speed:max"] = speed_limit_distant_speed_max,
       -- TODO remove, use raw values
-      dominant_speed = speed_int(tostring(speed_limit_speed_max) or tostring(speed_limit_distant_speed_max)),
       voltage = tonumber(tags['railway:signal:electricity:voltage']),
       frequency = tonumber(tags['railway:signal:electricity:frequency']),
       -- TODO end

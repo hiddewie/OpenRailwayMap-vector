@@ -74,14 +74,18 @@ function matchTagRegexSql(tag, regex) {
   }
 }
 
-function stringSql(tag) {
+function stringSql(tag, matchCase) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `array_to_string("${tag}", ',')`
+      return `(select match from (select regexp_substr(match, '${matchCase.regex}') as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
     case 'boolean':
-      // Fallthrough
-    default:
       return `"${tag}"`
+    default:
+      if (matchCase.regex) {
+        return `regexp_substr("${tag}", '${matchCase.regex}', 1, 1, '', 1)`
+      } else {
+        return `"${tag}"`
+      }
   }
 }
 
@@ -114,7 +118,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : matchTagAnyValueSql(tag.tag, tag.values)).join(' AND ')}
               THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
+                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
                 ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
               END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`) : 'NULL'}
             `).join('')}

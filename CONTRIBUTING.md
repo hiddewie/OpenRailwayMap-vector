@@ -67,29 +67,6 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 ```
 
-For speed signals there is a specific (calculated) tag available to match on for the icon:
-- `railway:signal:speed_limit:speed:max` for speed limit signals
-- `railway:signal:speed_limit_distant:speed:max` for distant speed limit signals
-This tag contains the largest numerical value of the `railway:signal:speed_limit:speed` or `railway:signal:speed_limit_distant:speed` tags respectively, for usage in matching and substitution.
-
-For example a speed signals which display an icon depending on the matched speed value. The `value` property contains `{}` as part of the icon, which is replaced automatically with the matched tag value, for example `{80}`. In particular an `example` must be given, which is used in the legend:
-```yaml
-features:
-  - description: Geschwindigkeitsvoranzeiger (sign)
-    country: AT
-    icon:
-      match: 'railway:signal:speed_limit_distant:speed:max'
-      cases:
-        - regex: '^(1[02]|[1-9])0$'
-          value: 'at/geschwindigkeitsvoranzeiger-{}-sign'
-          example: 'at/geschwindigkeitsvoranzeiger-{80}-sign'
-      default: 'at/geschwindigkeitsvoranzeiger-empty-sign'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-```
-Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-{80}-sign.svg`.
-
 The type of the matched tag matters. You can find the type of every tag at the top of the file. Any tag without a type is a string tag, so matching is always performed on the full tag value.
 
 Matching a tag with a `boolean` type (`yes`/`no`) does not need to match a value. For example `railway:signal:main_repeated:magnet` is a boolean tag:
@@ -145,6 +122,22 @@ features:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 ```
+
+Matching an array (speed limit) tag with `regex`. The match result is substituted into the icon. For array `regex` matches, the longest, and then the highest result is taken. For example a speed limit signal matches speed limits that have a valid icon, based on the `railway:signal:speed_limit:speed` or `railway:signal:speed_limit_distant:speed` tag. The speed tags have an array type. For example a signal with `railway:signal:speed_limit_distant:speed=60;80;off` would match the regular expression, and the resulting icon would be `at/geschwindigkeitsvoranzeiger-light-{80}`:
+```yaml
+features:
+  - description: Geschwindigkeitsvoranzeiger (light)
+    country: AT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
+      default: 'at/geschwindigkeitsvoranzeiger-empty-light'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+```
+Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-light-{80}.svg`.
 
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
