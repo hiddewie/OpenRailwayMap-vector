@@ -541,6 +541,10 @@ end
 
 -- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
 function split_semicolon_to_sql_array(value)
+  if not value then
+    return nil
+  end
+
   local result = '{'
 
   local first = true
