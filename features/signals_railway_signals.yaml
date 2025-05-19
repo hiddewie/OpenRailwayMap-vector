@@ -4545,12 +4545,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-4-A' }
-        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-4-B' }
-        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-4-C' }
-        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-4-D' }
-        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s5-3-A' }
-        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s5-3-B' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s5-3' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s5-3' }
       default: 'pl/s2-3'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4563,12 +4563,12 @@ features:
       match: 'railway:signal:main:states'
       cases:
         - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
-        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-3-A' }
-        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-3-B' }
-        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-3-C' }
-        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-3-D' }
-        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s1-2-A' }
-        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s1-2-B' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s1-2' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s1-2' }
       default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4579,26 +4579,26 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { all: ['PL-PKP:s6', 'PL-PKP:s12a'], value: 'pl/s6-10a-5-A' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s12a'], value: 'pl/s6-10a-5-B' }
-        - { all: ['PL-PKP:s6', 'PL-PKP:s13a'], value: 'pl/s6-10a-5-C' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s13a'], value: 'pl/s6-10a-5-D' }
-        - { all: ['PL-PKP:s6', 'PL-PKP:s8'], value: 'pl/s6-5-A' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s8'], value: 'pl/s6-5-B' }
-        - { all: ['PL-PKP:s6', 'PL-PKP:s9'], value: 'pl/s6-5-C' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s9'], value: 'pl/s6-5-D' }
-        - { all: ['PL-PKP:s10a', 'PL-PKP:s12a'], value: 'pl/s10a-5-A' }
-        - { all: ['PL-PKP:s11a', 'PL-PKP:s12a'], value: 'pl/s10a-5-B' }
-        - { all: ['PL-PKP:s10a', 'PL-PKP:s13a'], value: 'pl/s10a-5-C' }
-        - { all: ['PL-PKP:s11a', 'PL-PKP:s13a'], value: 'pl/s10a-5-D' }
-        - { all: ['PL-PKP:s10', 'PL-PKP:s12'], value: 'pl/s10-5-A' }
-        - { all: ['PL-PKP:s11', 'PL-PKP:s12'], value: 'pl/s10-5-B' }
-        - { all: ['PL-PKP:s10', 'PL-PKP:s13'], value: 'pl/s10-5-C' }
-        - { all: ['PL-PKP:s11', 'PL-PKP:s13'], value: 'pl/s10-5-D' }
-        - { all: ['PL-PKP:s6', 'PL-PKP:s10a'], value: 'pl/s6-10a-4-A' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s10a'], value: 'pl/s6-10a-4-B' }
-        - { all: ['PL-PKP:s6', 'PL-PKP:s11a'], value: 'pl/s6-10a-4-C' }
-        - { all: ['PL-PKP:s7', 'PL-PKP:s11a'], value: 'pl/s6-10a-4-D' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s12a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s12a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s13a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s13a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s8'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s8'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s9'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s9'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s12a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s12a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s13a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s13a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s12'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s12'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s13'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s13'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s10a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s10a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s11a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s11a'], value: 'pl/s6-10a-4' }
         - { any: ['PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-4' }
         - { any: ['PL-PKP:s8', 'PL-PKP:s9'], value: 'pl/s9-4' }
         - { any: ['PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-4' }
