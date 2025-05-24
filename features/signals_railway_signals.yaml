@@ -2762,6 +2762,15 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
+  # --- DK --- #
+
+  - description: TODO
+    country: DK
+    icon: { default: 'dk/TODO' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'light' }
+      - { tag: 'railway:signal:main:form', value: '' }
+
   # --- ES --- #
 
   - description: end of catenary
