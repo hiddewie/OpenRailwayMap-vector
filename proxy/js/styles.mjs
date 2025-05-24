@@ -8,6 +8,15 @@ const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'u
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 
+const poiColored = poi.features
+  .flatMap(feature => [feature, ...(feature.variants || []).map(it => ({...it, minzoom: feature.minzoom}))])
+  .filter(feature => feature.colored_icon);
+const poiUncolored = poi.features
+  .flatMap(feature => [feature, ...(feature.variants || []).map(it => ({...it, minzoom: feature.minzoom}))])
+  .filter(feature => !feature.colored_icon);
+
+const poiZooms = [...new Set(poi.features.filter(feature => feature.minzoom).map(feature => feature.minzoom))].sort()
+
 const signal_types = all_signals.types;
 
 const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
@@ -1905,78 +1914,72 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-width': turntable_casing_width,
       }
     },
-    {
-      id: 'railway_symbols_minzoom',
-      type: 'symbol',
-      minzoom: 12,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
-      filter: ['in',
-        ['get', 'feature'],
-        ['literal',
-          poi.features
-            .flatMap(feature => [feature, ...(feature.variants || [])])
-            .filter(feature => !feature.colored_icon)
-            .map(feature => feature.feature)
-        ],
-      ],
-      paint: {
-        'icon-color': colors[theme].styles.standard.symbols,
-        'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
-        ],
-        'icon-halo-blur': ['case',
-          ['boolean', ['feature-state', 'hover'], false], 1.0,
-          0.0,
-        ],
-        'icon-halo-width': ['case',
-          ['boolean', ['feature-state', 'hover'], false], 3.0,
-          2.0,
-        ],
-        'text-color': colors[theme].styles.standard.symbols,
-        'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
-        ],
-        'text-halo-width': 2,
-      },
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': ['concat', 'sdf:', ['get', 'feature']],
-        'text-field': ['coalesce', ['get', 'ref'], ''],
-        'text-font': font.regular,
-        'text-size': 11,
-        'text-padding': 15,
-        'text-offset': [0, 1.5],
-        'text-optional': true,
-      },
-    },
-    ...imageLayerWithOutline(
-      theme,
-      'railway_symbols_minzoom_outline',
-      ['get', 'feature'],
+    ...poiZooms.flatMap((zoom, index, zooms) => [
       {
+        id: `railway_symbols_colored_zoom_${zoom}`,
         type: 'symbol',
-        minzoom: 10,
+        minzoom: zoom,
+        maxzoom: (index + 1 < zooms.length) ? zooms[index + 1] : undefined,
         source: 'openrailwaymap_standard',
         'source-layer': 'standard_railway_symbols',
         filter: ['in',
           ['get', 'feature'],
-          ['literal',
-            poi.features
-              .flatMap(feature => [feature, ...(feature.variants || [])])
-              .filter(feature => feature.colored_icon)
-              .map(feature => feature.feature)
-          ],
+          ['literal', poiUncolored.filter(feature => feature.minzoom <= zoom).map(feature => feature.feature)],
         ],
+        paint: {
+          'icon-color': colors[theme].styles.standard.symbols,
+          'icon-halo-color': ['case',
+            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+            colors[theme].halo,
+          ],
+          'icon-halo-blur': ['case',
+            ['boolean', ['feature-state', 'hover'], false], 1.0,
+            0.0,
+          ],
+          'icon-halo-width': ['case',
+            ['boolean', ['feature-state', 'hover'], false], 3.0,
+            2.0,
+          ],
+          'text-color': colors[theme].styles.standard.symbols,
+          'text-halo-color': ['case',
+            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+            colors[theme].halo,
+          ],
+          'text-halo-width': 2,
+        },
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
+          'icon-image': ['concat', 'sdf:', ['get', 'feature']],
+          'text-field': ['coalesce', ['get', 'ref'], ''],
+          'text-font': font.regular,
+          'text-size': 11,
+          'text-padding': 15,
+          'text-offset': [0, 1.5],
+          'text-optional': true,
         },
       },
-    ),
+      ...imageLayerWithOutline(
+        theme,
+        `railway_symbols_outline_zoom_${zoom}`,
+        ['get', 'feature'],
+        {
+          type: 'symbol',
+          minzoom: zoom,
+          maxzoom: (index + 1 < zooms.length) ? zooms[index + 1] : undefined,
+          source: 'openrailwaymap_standard',
+          'source-layer': 'standard_railway_symbols',
+          filter: ['in',
+            ['get', 'feature'],
+            ['literal', poiColored.filter(feature => feature.minzoom <= zoom).map(feature => feature.feature)],
+          ],
+          layout: {
+            'symbol-z-order': 'source',
+            'icon-overlap': 'always',
+          },
+        },
+      ),
+    ]),
     {
       id: 'railway_text_track_numbers',
       type: 'symbol',
