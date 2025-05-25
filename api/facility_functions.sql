@@ -36,7 +36,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "name" text,
-  "railway" text,
+  "feature" text,
+  "state" text,
   "railway_ref" text,
   "station" text,
   "uic_ref" text,
