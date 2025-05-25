@@ -301,6 +301,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     railway_text_stations
   WHERE
     feature = 'station'
+    AND state = 'present'
     AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
     AND railway_ref IS NOT NULL
     AND route_count >= 20;
@@ -328,6 +329,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     railway_text_stations
   WHERE
     feature = 'station'
+    AND state = 'present'
     AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
     AND railway_ref IS NOT NULL
     AND route_count >= 8
