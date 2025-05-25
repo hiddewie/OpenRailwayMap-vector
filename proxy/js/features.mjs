@@ -762,19 +762,7 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      frequency: {
-        name: 'Frequency',
-        format: {
-          template: '%.2d Hz',
-        },
-      },
-      voltage: {
-        name: 'Voltage',
-        format: {
-          template: '%d V',
-        },
-      },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description, format: tag.format}])),
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,

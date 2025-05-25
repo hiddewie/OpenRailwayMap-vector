@@ -299,9 +299,6 @@ local signal_columns = {
   { column = 'ref', type = 'text' },
   { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
-  { column = 'dominant_speed', type = 'real' },
-  { column = 'voltage', type = 'integer' },
-  { column = 'frequency', type = 'real' },
   { column = 'caption', type = 'text' },
   { column = 'wikidata', type = 'text' },
   { column = 'wikimedia_commons', type = 'text' },
@@ -733,10 +730,6 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
-      -- TODO remove, use raw values
-      voltage = tonumber(tags['railway:signal:electricity:voltage']),
-      frequency = tonumber(tags['railway:signal:electricity:frequency']),
-      -- TODO end
       caption = signal_caption(tags),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,

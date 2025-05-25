@@ -36,8 +36,8 @@ tags:
   - { tag: 'railway:signal:electricity:form', description: 'Electricity form' }
   - { tag: 'railway:signal:electricity:for', description: 'Electricity for' }
   - { tag: 'railway:signal:electricity:turn_direction', description: 'Electricity turn direction' }
-  - { tag: 'railway:signal:electricity:voltage', description: 'Electricity voltage' }
-  - { tag: 'railway:signal:electricity:frequency', description: 'Electricity frequency' }
+  - { tag: 'railway:signal:electricity:voltage', description: 'Electricity voltage', format: { template: '%d V' } }
+  - { tag: 'railway:signal:electricity:frequency', description: 'Electricity frequency', format: { template: '%.2d Hz' } }
   - { tag: 'railway:signal:fouling_point', description: 'Fouling point' }
   - { tag: 'railway:signal:helper_engine', description: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', description: 'Helper engine form' }
