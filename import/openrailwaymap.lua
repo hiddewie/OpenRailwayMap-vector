@@ -577,9 +577,9 @@ local railway_state_tags = {
   preserved = 'preserved:railway',
   -- Razed is not included
 }
-function railway_feature_and_state(railway_value_func)
-  for state, railway_tag in ipairs(railway_state_tags) do
-    local feature = railway_value_func(railway_tag)
+function railway_feature_and_state(tags, railway_value_func)
+  for state, railway_tag in pairs(railway_state_tags) do
+    local feature = railway_value_func(tags[railway_tag])
     if feature then
       return feature, state
     end
@@ -618,7 +618,7 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  local station_feature, station_state = railway_feature_and_state(railway_station_values)
+  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     -- Gather name tags for searching
     local name_tags = {}
