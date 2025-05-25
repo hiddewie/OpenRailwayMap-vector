@@ -44,7 +44,8 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
     name,
     key AS name_key,
     value AS name_value,
-    railway,
+    feature,
+    state,
     station,
     railway_ref,
     uic_ref,
@@ -60,13 +61,14 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
     description,
     geom
   FROM (
-    SELECT DISTINCT ON (osm_ids, key, value, name, railway, station, railway_ref, uic_ref, route_count, geom)
+    SELECT DISTINCT ON (osm_ids, key, value, name, feature, state, station, railway_ref, uic_ref, route_count, geom)
       id,
       osm_ids,
       (each(name_tags)).key AS key,
       (each(name_tags)).value AS value,
       name,
-      railway,
+      feature,
+      state,
       station,
       railway_ref,
       uic_ref,
@@ -82,7 +84,6 @@ CREATE TABLE openrailwaymap_facilities_for_search AS
       description,
       center as geom
     FROM grouped_stations_with_route_count
-    -- TODO support other states as well
   ) AS duplicated;
 
 CREATE INDEX openrailwaymap_facilities_name_index
