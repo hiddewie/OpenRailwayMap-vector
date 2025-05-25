@@ -57,12 +57,24 @@ const generateSignalFeatures = (features, types) =>
       ],
       ...(
         feature.icon.match
-          ? feature.icon.cases.map(iconCase => [iconCase.value, {
-            country: feature.country,
-            name: `${feature.description}${iconCase.description ? ` (${iconCase.description})` : ''}`,
-          }])
+          ? [
+            ...[...new Set(
+              feature.icon.cases
+                .filter(iconCase => !iconCase.description)
+                .map(iconCase => iconCase.value)
+            )].map(iconCaseValue => [iconCaseValue, {
+              country: feature.country,
+              name: feature.description,
+            }]),
+            ...feature.icon.cases
+              .filter(iconCase => iconCase.description)
+              .map(iconCase => [iconCase.value, {
+                country: feature.country,
+                name: `${feature.description} (${iconCase.description})`,
+              }]),
+          ]
           : []
-      )
+      ),
     ]),
     ...types.map(type => [
       `general/signal-unknown-${type.type}`,
