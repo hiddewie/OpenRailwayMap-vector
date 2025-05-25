@@ -139,40 +139,10 @@ features:
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
 
-  - description: Phone
-    minzoom: 16
-    feature: 'general/phone'
-    tags:
-      - { tag: 'railway', value: 'phone' }
-
-  - description: Subway entrance
-    feature: 'general/subway-entrance'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'subway_entrance' }
-
-  - description: Buffer stop
-    feature: 'general/buffer_stop'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'buffer_stop' }
-
-  - description: Derailer
-    feature: 'general/derail'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'derail' }
-
-  - description: Retarder
-    feature: 'general/retarder'
-    minzoom: 16
-    tags:
-      - { tag: 'railway', value: 'rail_brake' }
-
   - description: Crossing
     feature: 'general/crossing'
     colored_icon: true
-    minzoom: 16
+    minzoom: 15
     tags:
       - { tag: 'railway', value: 'crossing' }
     variants:
@@ -203,3 +173,33 @@ features:
         colored_icon: true
         tags:
           - { tag: 'railway', value: 'level_crossing' }
+
+  - description: Phone
+    minzoom: 16
+    feature: 'general/phone'
+    tags:
+      - { tag: 'railway', value: 'phone' }
+
+  - description: Subway entrance
+    feature: 'general/subway-entrance'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'subway_entrance' }
+
+  - description: Buffer stop
+    feature: 'general/buffer_stop'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'buffer_stop' }
+
+  - description: Derailer
+    feature: 'general/derail'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'derail' }
+
+  - description: Retarder
+    feature: 'general/retarder'
+    minzoom: 16
+    tags:
+      - { tag: 'railway', value: 'rail_brake' }

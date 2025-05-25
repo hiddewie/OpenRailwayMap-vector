@@ -423,11 +423,12 @@ def preset_items_signals_for_country(features):
                ):
         pass
 
-      with tag('key',
-               key='railway',
-               value='signal',
-               ):
-        pass
+      if not any(ftag['tag'] == 'railway' for ftag in feature['tags']):
+        with tag('key',
+                 key='railway',
+                 value='signal',
+                 ):
+          pass
 
       for ftag in feature['tags']:
         if 'value' in ftag:

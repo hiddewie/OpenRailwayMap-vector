@@ -179,15 +179,17 @@ features:
 
   # --- General --- #
 
-  - description: Vacancy detection
-    icon:
-      match: 'railway:vacancy_detection'
-      cases:
-        - { exact: 'insulated_rail_joint', value: 'general/vacancy-detection-insulated-rail-joint', description: 'insulated rail joint' }
-        - { exact: 'axle_counter', value: 'general/vacancy-detection-axle-counter', description: 'axle counter' }
-      default: 'general/vacancy-detection'
+  - description: 'Vacancy detection: insulated rail joint'
+    icon: { default: 'general/vacancy-detection-insulated-rail-joint' }
     tags:
       - { tag: 'railway', value: 'vacancy_detection' }
+      - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
+
+  - description: 'Vacancy detection: axle counter'
+    icon: { default: 'general/vacancy-detection-axle-counter' }
+    tags:
+      - { tag: 'railway', value: 'vacancy_detection' }
+      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
   # --- AT --- #
 
@@ -2374,8 +2376,7 @@ features:
       match: 'railway:signal:combined:states'
       cases:
         - { exact: 'DE-ESO:hp0', value: 'de/sv-hp0' }
-        - { exact: 'DE-ESO:sv0', value: 'de/sv-sv0' }
-      default: ''
+      default: 'de/sv-sv0'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }

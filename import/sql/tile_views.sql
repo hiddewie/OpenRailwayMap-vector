@@ -405,7 +405,8 @@ RETURN (
       description
     FROM pois
     WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
+      -- Tiles are generated from zoom 14 onwards
+      AND (z >= 14 OR z >= minzoom)
     ORDER BY rank DESC
   ) as tile
   WHERE way IS NOT NULL
@@ -423,6 +424,7 @@ DO $do$ BEGIN
           "osm_type": "string",
           "feature": "string",
           "ref": "string",
+          "minzoom": "integer",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "image": "string",
