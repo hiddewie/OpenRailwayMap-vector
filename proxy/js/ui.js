@@ -1153,7 +1153,7 @@ function popupContent(feature) {
         if (!format) {
           return stringValue;
         } else if (format.template) {
-          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
+          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
         } else if (format.lookup) {
           const lookupCatalog = features && features[format.lookup];
           if (!lookupCatalog) {

@@ -18,6 +18,13 @@ doc.asis('<?xml version="1.0" encoding="UTF-8"?>')
 
 signal_type_pattern = re.compile('^railway:signal:(?P<type>[^:]+)$')
 
+tag_types = {}
+tag_descriptions = {}
+for t in all_signals['tags']:
+  if 'type' in t:
+    tag_types[t['tag']] = t['type']
+  tag_descriptions[t['tag']] = t['description']
+
 
 def all_states(description):
   return [
@@ -430,22 +437,47 @@ def preset_items_signals_for_country(features):
                    value=ftag['value'],
                    ): pass
 
+        elif ('values' not in ftag) and (ftag['tag'] in tag_types) and tag_types[ftag['tag']] == 'boolean':
+          with tag('key',
+                   key=ftag['tag'],
+                   value='yes',
+                   ): pass
+
       # TODO better support a combo or multiselect of valid values
+
       if 'match' in feature['icon']:
-        with tag('text',
-                 text=feature['icon']['match'],  # TODO generate proper label
-                 key=feature['icon']['match'],
-                 ): pass
+        match = feature['icon']['match']
+        if match == 'ref_multiline':
+          match = 'ref'
+
+        text = (tag_descriptions[match] if match in tag_descriptions else match)
+
+        if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
+          with tag('check',
+                   text=text,
+                   key=match,
+                   ): pass
+        else:
+          with tag('text',
+                   text=text,
+                   key=match,
+                   ): pass
 
       for ftag in feature['tags']:
         if 'values' in ftag:
-          with tag('combo',
-                   text=ftag['tag'],  # TODO generate proper label
-                   key=ftag['tag'],
-                   values=','.join(ftag['values']),
-                   match='keyvalue!',
-                   use_last_as_default='true',
-                   ): pass
+          if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
+            with tag('check',
+                     text=tag_descriptions[ftag['tag']],
+                     key=ftag['tag'],
+                     ): pass
+          else:
+            with tag('combo',
+                     text=tag_descriptions[ftag['tag']],
+                     key=ftag['tag'],
+                     values=','.join(ftag['values']),
+                     match='keyvalue!',
+                     use_last_as_default='true',
+                     ): pass
 
       with tag('optional'):
         with tag('combo',

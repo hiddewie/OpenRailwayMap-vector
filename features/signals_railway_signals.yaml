@@ -1,130 +1,130 @@
 tags:
   # railway tag is included by default
-  - 'railway:signal:brake_test'
-  - 'railway:signal:brake_test:form'
-  - 'railway:signal:combined'
-  - 'railway:signal:combined:form'
-  - 'railway:signal:combined:states'
-  - 'railway:signal:combined:shortened'
-  - 'railway:signal:combined:substitute_signal'
-  - 'railway:signal:combined:height'
-  - 'railway:signal:crossing'
-  - 'railway:signal:crossing:form'
-  - 'railway:signal:crossing:repeated'
-  - 'railway:signal:crossing:shortened'
-  - 'railway:signal:crossing_distant'
-  - 'railway:signal:crossing_distant:states'
-  - 'railway:signal:crossing_distant:shortened'
-  - 'railway:signal:crossing_distant:form'
-  - 'railway:signal:crossing_hint'
-  - 'railway:signal:crossing_hint:form'
-  - 'railway:signal:crossing_info'
-  - 'railway:signal:crossing_info:form'
-  - 'railway:signal:departure'
-  - 'railway:signal:departure:form'
-  - 'railway:signal:departure:states'
-  - 'railway:signal:distant'
-  - 'railway:signal:distant:form'
-  - 'railway:signal:distant:repeated'
-  - 'railway:signal:distant:shortened'
-  - 'railway:signal:distant:states'
-  - 'railway:signal:distant:height'
-  - 'railway:signal:distant:type'
-  - 'railway:signal:distant:distance'
-  - 'railway:signal:electricity'
-  - 'railway:signal:electricity:type'
-  - 'railway:signal:electricity:form'
-  - 'railway:signal:electricity:for'
-  - 'railway:signal:electricity:turn_direction'
-  - 'railway:signal:electricity:voltage'
-  - 'railway:signal:electricity:frequency'
-  - 'railway:signal:fouling_point'
-  - 'railway:signal:helper_engine'
-  - 'railway:signal:helper_engine:form'
-  - 'railway:signal:humping'
-  - 'railway:signal:humping:form'
-  - 'railway:signal:main'
-  - 'railway:signal:main:design'
-  - 'railway:signal:main:form'
-  - 'railway:signal:main:height'
-  - 'railway:signal:main:states'
-  - 'railway:signal:main:substitute_signal'
-  - 'railway:signal:main:PT_priority'
-  - 'railway:signal:main_repeated'
-  - 'railway:signal:main_repeated:form'
-  - 'railway:signal:main_repeated:magnet'
-  - 'railway:signal:main_repeated:states'
-  - 'railway:signal:main_repeated:substitute_signal'
-  - 'railway:signal:minor'
-  - 'railway:signal:minor:form'
-  - 'railway:signal:minor:states'
-  - 'railway:signal:minor:height'
-  - 'railway:signal:minor_distant'
-  - 'railway:signal:minor_distant:form'
-  - 'railway:signal:minor_distant:states'
-  - 'railway:signal:minor:substitute_signal'
-  - 'railway:signal:passing'
-  - 'railway:signal:passing:form'
-  - 'railway:signal:passing:type'
-  - 'railway:signal:resetting_switch'
-  - 'railway:signal:resetting_switch:form'
-  - 'railway:signal:resetting_switch_distant'
-  - 'railway:signal:resetting_switch_distant:form'
-  - 'railway:signal:preheating'
-  - 'railway:signal:preheating:form'
-  - 'railway:signal:ring'
-  - 'railway:signal:ring:form'
-  - 'railway:signal:ring:only_transit'
-  - 'railway:signal:radio'
-  - 'railway:signal:radio:form'
-  - 'railway:signal:radio:frequency'
-  - 'railway:signal:route'
-  - 'railway:signal:route:design'
-  - 'railway:signal:route:form'
-  - 'railway:signal:route:states'
-  - 'railway:signal:route_distant'
-  - 'railway:signal:route_distant:form'
-  - 'railway:signal:route_distant:states'
-  - 'railway:signal:short_route'
-  - 'railway:signal:short_route:form'
-  - 'railway:signal:shunting'
-  - 'railway:signal:shunting:form'
-  - 'railway:signal:shunting:states'
-  - 'railway:signal:shunting:height'
-  - 'railway:signal:snowplow'
-  - 'railway:signal:snowplow:form'
-  - 'railway:signal:snowplow:type'
-  - 'railway:signal:speed_limit'
-  - 'railway:signal:speed_limit:caption'
-  - 'railway:signal:speed_limit:form'
-  - 'railway:signal:speed_limit:speed'
-  - 'railway:signal:speed_limit:states'
-  - 'railway:signal:speed_limit_distant'
-  - 'railway:signal:speed_limit_distant:form'
-  - 'railway:signal:speed_limit_distant:speed'
-  - 'railway:signal:speed_limit_distant:mobile'
-  - 'railway:signal:speed_limit:pointing'
-  - 'railway:signal:station_distant'
-  - 'railway:signal:station_distant:form'
-  - 'railway:signal:stop'
-  - 'railway:signal:steam_locomotive'
-  - 'railway:signal:steam_locomotive:form'
-  - 'railway:signal:stop:form'
-  - 'railway:signal:stop:caption'
-  - 'railway:signal:stop:carriages'
-  - 'railway:signal:stop_demand'
-  - 'railway:signal:stop_demand:form'
-  - 'railway:signal:train_protection'
-  - 'railway:signal:train_protection:form'
-  - 'railway:signal:train_protection:shape'
-  - 'railway:signal:train_protection:type'
-  - 'railway:signal:whistle'
-  - 'railway:signal:whistle:form'
-  - 'railway:signal:whistle:only_transit'
-  - 'railway:signal:wrong_road'
-  - 'railway:signal:wrong_road:form'
-  - 'railway:vacancy_detection'
-  - 'railway:signal:position'
+  - { tag: 'railway:signal:brake_test', description: 'Brake test' }
+  - { tag: 'railway:signal:brake_test:form', description: 'Brake test form' }
+  - { tag: 'railway:signal:combined', description: 'Combined' }
+  - { tag: 'railway:signal:combined:form', description: 'Combined form' }
+  - { tag: 'railway:signal:combined:states', description: 'Combined states', type: array }
+  - { tag: 'railway:signal:combined:shortened', description: 'Combined shortened', type: boolean }
+  - { tag: 'railway:signal:combined:substitute_signal', description: 'Combined substitute signal' }
+  - { tag: 'railway:signal:combined:height', description: 'Combined height' }
+  - { tag: 'railway:signal:crossing', description: 'Crossing' }
+  - { tag: 'railway:signal:crossing:form', description: 'Crossing form' }
+  - { tag: 'railway:signal:crossing:repeated', description: 'Crossing repeated', type: boolean }
+  - { tag: 'railway:signal:crossing:shortened', description: 'Crossing shortened', type: boolean }
+  - { tag: 'railway:signal:crossing_distant', description: 'Crossing distant' }
+  - { tag: 'railway:signal:crossing_distant:states', description: 'Crossing distant states', type: array }
+  - { tag: 'railway:signal:crossing_distant:shortened', description: 'Crossing distant shortened', type: boolean }
+  - { tag: 'railway:signal:crossing_distant:form', description: 'Crossing distant form' }
+  - { tag: 'railway:signal:crossing_hint', description: 'Crossing hint' }
+  - { tag: 'railway:signal:crossing_hint:form', description: 'Crossing hint form' }
+  - { tag: 'railway:signal:crossing_info', description: 'Crossing info' }
+  - { tag: 'railway:signal:crossing_info:form', description: 'Crossing info form' }
+  - { tag: 'railway:signal:departure', description: 'Departure' }
+  - { tag: 'railway:signal:departure:form', description: 'Departure form' }
+  - { tag: 'railway:signal:departure:states', description: 'Departure states', type: array }
+  - { tag: 'railway:signal:distant', description: 'Distant' }
+  - { tag: 'railway:signal:distant:form', description: 'Distant form' }
+  - { tag: 'railway:signal:distant:repeated', description: 'Distant repeated', type: boolean }
+  - { tag: 'railway:signal:distant:shortened', description: 'Distant shortened', type: boolean }
+  - { tag: 'railway:signal:distant:states', description: 'Distant states', type: array }
+  - { tag: 'railway:signal:distant:height', description: 'Distant height' }
+  - { tag: 'railway:signal:distant:type', description: 'Distant type' }
+  - { tag: 'railway:signal:distant:distance', description: 'Distant distance' }
+  - { tag: 'railway:signal:electricity', description: 'Electricity' }
+  - { tag: 'railway:signal:electricity:type', description: 'Electricity type' }
+  - { tag: 'railway:signal:electricity:form', description: 'Electricity form' }
+  - { tag: 'railway:signal:electricity:for', description: 'Electricity for' }
+  - { tag: 'railway:signal:electricity:turn_direction', description: 'Electricity turn direction' }
+  - { tag: 'railway:signal:electricity:voltage', description: 'Electricity voltage', format: { template: '%d V' } }
+  - { tag: 'railway:signal:electricity:frequency', description: 'Electricity frequency', format: { template: '%.2d Hz' } }
+  - { tag: 'railway:signal:fouling_point', description: 'Fouling point' }
+  - { tag: 'railway:signal:helper_engine', description: 'Helper engine' }
+  - { tag: 'railway:signal:helper_engine:form', description: 'Helper engine form' }
+  - { tag: 'railway:signal:humping', description: 'Humping' }
+  - { tag: 'railway:signal:humping:form', description: 'Humping form' }
+  - { tag: 'railway:signal:main', description: 'Main' }
+  - { tag: 'railway:signal:main:design', description: 'Main design' }
+  - { tag: 'railway:signal:main:form', description: 'Main form' }
+  - { tag: 'railway:signal:main:height', description: 'Main height' }
+  - { tag: 'railway:signal:main:states', description: 'Main states', type: array }
+  - { tag: 'railway:signal:main:substitute_signal', description: 'Main substitute signal' }
+  - { tag: 'railway:signal:main:PT_priority', description: 'Main PT priority' }
+  - { tag: 'railway:signal:main_repeated', description: 'Main repeated' }
+  - { tag: 'railway:signal:main_repeated:form', description: 'Main repeated form' }
+  - { tag: 'railway:signal:main_repeated:magnet', description: 'Main repeated magnet', type: boolean }
+  - { tag: 'railway:signal:main_repeated:states', description: 'Main repeated states', type: array }
+  - { tag: 'railway:signal:main_repeated:substitute_signal', description: 'Main repeated substitute signal' }
+  - { tag: 'railway:signal:minor', description: 'Minor' }
+  - { tag: 'railway:signal:minor:form', description: 'Minor form' }
+  - { tag: 'railway:signal:minor:states', description: 'Minor states', type: array }
+  - { tag: 'railway:signal:minor:height', description: 'Minor height' }
+  - { tag: 'railway:signal:minor_distant', description: 'Minor distant' }
+  - { tag: 'railway:signal:minor_distant:form', description: 'Minor distant form' }
+  - { tag: 'railway:signal:minor_distant:states', description: 'Minor distant states', type: array }
+  - { tag: 'railway:signal:minor:substitute_signal', description: 'Minor substitute signal' }
+  - { tag: 'railway:signal:passing', description: 'Passing' }
+  - { tag: 'railway:signal:passing:form', description: 'Passing form' }
+  - { tag: 'railway:signal:passing:type', description: 'Passing type' }
+  - { tag: 'railway:signal:resetting_switch', description: 'Resetting switch' }
+  - { tag: 'railway:signal:resetting_switch:form', description: 'Resetting switch form' }
+  - { tag: 'railway:signal:resetting_switch_distant', description: 'Resetting switch distant' }
+  - { tag: 'railway:signal:resetting_switch_distant:form', description: 'Resetting switch distant form' }
+  - { tag: 'railway:signal:preheating', description: 'Preheating' }
+  - { tag: 'railway:signal:preheating:form', description: 'Preheating form' }
+  - { tag: 'railway:signal:ring', description: 'Ring' }
+  - { tag: 'railway:signal:ring:form', description: 'Ring form' }
+  - { tag: 'railway:signal:ring:only_transit', description: 'Ring only transit', type: boolean }
+  - { tag: 'railway:signal:radio', description: 'Radio' }
+  - { tag: 'railway:signal:radio:form', description: 'Radio form' }
+  - { tag: 'railway:signal:radio:frequency', description: 'Radio frequency' }
+  - { tag: 'railway:signal:route', description: 'Route' }
+  - { tag: 'railway:signal:route:design', description: 'Route design' }
+  - { tag: 'railway:signal:route:form', description: 'Route form' }
+  - { tag: 'railway:signal:route:states', description: 'Route states', type: array }
+  - { tag: 'railway:signal:route_distant', description: 'Route distant' }
+  - { tag: 'railway:signal:route_distant:form', description: 'Route distant form' }
+  - { tag: 'railway:signal:route_distant:states', description: 'Route distant states', type: array }
+  - { tag: 'railway:signal:short_route', description: 'Short route' }
+  - { tag: 'railway:signal:short_route:form', description: 'Short route form' }
+  - { tag: 'railway:signal:shunting', description: 'Shunting' }
+  - { tag: 'railway:signal:shunting:form', description: 'Shunting form' }
+  - { tag: 'railway:signal:shunting:states', description: 'Shunting states', type: array }
+  - { tag: 'railway:signal:shunting:height', description: 'Shunting height' }
+  - { tag: 'railway:signal:snowplow', description: 'Snowplow' }
+  - { tag: 'railway:signal:snowplow:form', description: 'Snowplow form' }
+  - { tag: 'railway:signal:snowplow:type', description: 'Snowplow type' }
+  - { tag: 'railway:signal:speed_limit', description: 'Speed limit' }
+  - { tag: 'railway:signal:speed_limit:caption', description: 'Speed limit caption' }
+  - { tag: 'railway:signal:speed_limit:form', description: 'Speed limit form' }
+  - { tag: 'railway:signal:speed_limit:speed', description: 'Speed limit speed', type: array }
+  - { tag: 'railway:signal:speed_limit:states', description: 'Speed limit states', type: array }
+  - { tag: 'railway:signal:speed_limit_distant', description: 'Speed limit distant' }
+  - { tag: 'railway:signal:speed_limit_distant:form', description: 'Speed limit distant form' }
+  - { tag: 'railway:signal:speed_limit_distant:speed', description: 'Speed limit distant speed', type: array }
+  - { tag: 'railway:signal:speed_limit_distant:mobile', description: 'Speed limit distant mobile', type: boolean }
+  - { tag: 'railway:signal:speed_limit:pointing', description: 'Speed limit pointing' }
+  - { tag: 'railway:signal:station_distant', description: 'Station distant' }
+  - { tag: 'railway:signal:station_distant:form', description: 'Station distant form' }
+  - { tag: 'railway:signal:steam_locomotive', description: 'Steam locomotive' }
+  - { tag: 'railway:signal:steam_locomotive:form', description: 'Steam locomotive form' }
+  - { tag: 'railway:signal:stop', description: 'Stop' }
+  - { tag: 'railway:signal:stop:form', description: 'Stop form' }
+  - { tag: 'railway:signal:stop:caption', description: 'Stop caption' }
+  - { tag: 'railway:signal:stop:carriages', description: 'Stop carriages', type: array }
+  - { tag: 'railway:signal:stop_demand', description: 'Stop demand' }
+  - { tag: 'railway:signal:stop_demand:form', description: 'Stop demand form' }
+  - { tag: 'railway:signal:train_protection', description: 'Train protection' }
+  - { tag: 'railway:signal:train_protection:form', description: 'Train protection form' }
+  - { tag: 'railway:signal:train_protection:shape', description: 'Train protection shape' }
+  - { tag: 'railway:signal:train_protection:type', description: 'Train protection type' }
+  - { tag: 'railway:signal:whistle', description: 'Whistle' }
+  - { tag: 'railway:signal:whistle:form', description: 'Whistle form' }
+  - { tag: 'railway:signal:whistle:only_transit', description: 'Whistle only transit', type: boolean }
+  - { tag: 'railway:signal:wrong_road', description: 'Wrong road' }
+  - { tag: 'railway:signal:wrong_road:form', description: 'Wrong road form' }
+  - { tag: 'railway:vacancy_detection', description: 'Vacancy detection' }
+  - { tag: 'railway:signal:position', description: 'Position' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
@@ -198,7 +198,7 @@ features:
     icon:
       match: 'railway:signal:main_repeated:magnet'
       cases:
-        - { regex: '^yes$', value: 'at/signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
+        - { value: 'at/signalnachahmer-ersatzsignal-magnet', description: '1000Hz magnet' }
       default: 'at/signalnachahmer-ersatzsignal'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
@@ -210,7 +210,7 @@ features:
     icon:
       match: 'railway:signal:main_repeated:magnet'
       cases:
-        - { regex: '^yes$', value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
+        - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
       default: 'at/signalnachahmer'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
@@ -301,9 +301,9 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_60(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei_mit_(2|4)0(;.*)?$', value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:hauptsignal_frei(;.*)?$', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-hauptsignal-frei', description: 'clear' }
       default: 'at/vorsignal-vorsicht'
     tags:
       - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
@@ -323,8 +323,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_(4|2)0(;.*)?$', value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
+        - { any: ['AT-V2:frei_mit_40', 'AT-V2:frei_mit_20'], value: 'at/hauptsignal-frei_mit_40-semaphore', description: '20/40 km/h' }
+        - { exact: 'AT-V2:frei', value: 'at/hauptsignal-frei-semaphore', description: 'clear' }
       default: 'at/hauptsignal-semaphore'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -366,9 +366,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:frei_mit_60', value: 'at/hauptsignal-ersatzsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:frei_mit_20', 'AT-V2:frei_mit_40'], value: 'at/hauptsignal-ersatzsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:frei', value: 'at/hauptsignal-ersatzsignal-frei', description: 'clear' }
       default: 'at/hauptsignal-ersatzsignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -382,9 +382,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:frei_mit_60', value: 'at/hauptsignal-vorsichtssignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:frei_mit_20', 'AT-V2:frei_mit_40'], value: 'at/hauptsignal-vorsichtssignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:frei', value: 'at/hauptsignal-vorsichtssignal-frei', description: 'clear' }
       default: 'at/hauptsignal-vorsichtssignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -398,9 +398,9 @@ features:
       # TODO handle railway:signal:main:function=entry (ES)
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?AT-V2:frei_mit_60(;.*)?$', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei_mit_(2|4)0(;.*)?$', value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
-        - { regex: '^(.*;)?AT-V2:frei(;.*)?$', value: 'at/hauptsignal-frei', description: 'clear' }
+        - { exact: 'AT-V2:frei_mit_60', value: 'at/hauptsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:frei_mit_20', 'AT-V2:frei_mit_40'], value: 'at/hauptsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:frei', value: 'at/hauptsignal-frei', description: 'clear' }
       default: 'at/hauptsignal-halt'
     tags:
       - { tag: 'railway:signal:main', value: 'AT-V2:hauptsignal' }
@@ -455,7 +455,7 @@ features:
     icon:
       match: 'railway:signal:shunting:height'
       cases:
-        - { regex: '^dwarf$', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
+        - { exact: 'dwarf', value: 'at/verschubsignal-dwarf', description: 'zwerg' }
       default: 'at/verschubsignal'
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubsignal' }
@@ -655,21 +655,21 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'AT-V2:ankündigung_hauptschalter_aus' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
 
   - description: Halt für Fahrzeuge mit angehobenem Stromabnehmer
     country: AT
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^left$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
-        - { regex: '^through$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
-        - { regex: '^right$', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
+        - { exact: 'left', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-left' }
+        - { exact: 'through', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-through' }
+        - { exact: 'right', value: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer-right' }
       default: 'at/halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer'
     tags:
       - { tag: 'railway:signal:electricity', value: 'AT-V2:halt_fuer_fahrzeuge_mit_angehobenem_stromabnehmer' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light', 'semaphore'] }
 
   - description: Hauptschalter ein
     country: AT
@@ -693,7 +693,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'AT-V2:hauptschalter_aus' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
 
   - description: Stromabnehmer tief
     country: AT
@@ -778,8 +778,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?BE-SME:W(;.*)?$', value: 'be/bme/simplified_xnw' }
-        - { regex: '^(.*;)?BE-SME:N(;.*)?$', value: 'be/bme/simplified_ny' }
+        - { exact: 'BE-SME:W', value: 'be/bme/simplified_xnw' }
+        - { exact: 'BE-SME:N', value: 'be/bme/simplified_ny' }
       default: 'be/bme/simplified_unknown'
     tags:
       - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
@@ -800,7 +800,7 @@ features:
     country: BE
     icon: { default: 'be/PSA' }
     tags:
-      - { tag: 'railway:signal:shunting', values: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
+      - { tag: 'railway:signal:shunting', any: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
 
   - description: (BME) Shunting signal, 2 color
     country: BE
@@ -911,8 +911,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'be/PRA-arrow-right' }
-        - { regex: '^overhead$', value: 'be/PRA-arrow-down' }
+        - { exact: 'left', value: 'be/PRA-arrow-right' }
+        - { exact: 'overhead', value: 'be/PRA-arrow-down' }
       default: 'be/PRA-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
@@ -925,8 +925,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'be/PRA-triangle-right' }
-        - { regex: '^overhead$', value: 'be/PRA-triangle-down' }
+        - { exact: 'left', value: 'be/PRA-triangle-right' }
+        - { exact: 'overhead', value: 'be/PRA-triangle-down' }
       default: 'be/PRA-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
@@ -972,11 +972,11 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:550(;.*)?$', value: 'ch/fdv-l-550' }
-        - { regex: '^(.*;)?CH-FDV:547(;.*)?$', value: 'ch/fdv-l-547' }
-        - { regex: '^(.*;)?CH-FDV:542(;.*)?$', value: 'ch/fdv-l-542' }
-        - { regex: '^(.*;)?CH-FDV:545(;.*)?$', value: 'ch/fdv-l-545' }
-        - { regex: '^(.*;)?CH-FDV:530(;.*)?$', value: 'ch/fdv-l-530' }
+        - { exact: 'CH-FDV:550', value: 'ch/fdv-l-550' }
+        - { exact: 'CH-FDV:547', value: 'ch/fdv-l-547' }
+        - { exact: 'CH-FDV:542', value: 'ch/fdv-l-542' }
+        - { exact: 'CH-FDV:545', value: 'ch/fdv-l-545' }
+        - { exact: 'CH-FDV:530', value: 'ch/fdv-l-530' }
       default: 'ch/fdv-l-524'
     tags:
       - { tag: 'railway:signal:main', value: 'CH-FDV:l' }
@@ -995,14 +995,14 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:548(;.*)?$', value: 'ch/fdv-l-548' }
-        - { regex: '^(.*;)?CH-FDV:551(;.*)?$', value: 'ch/fdv-l-551' }
-        - { regex: '^(.*;)?CH-FDV:546(;.*)?$', value: 'ch/fdv-l-546' }
-        - { regex: '^(.*;)?CH-FDV:543(;.*)?$', value: 'ch/fdv-l-543' }
-        - { regex: '^(.*;)?CH-FDV:539(;.*)?$', value: 'ch/fdv-l-539' }
-        - { regex: '^(.*;)?CH-FDV:537(;.*)?$', value: 'ch/fdv-l-537' }
-        - { regex: '^(.*;)?CH-FDV:535(;.*)?$', value: 'ch/fdv-l-535' }
-        - { regex: '^(.*;)?CH-FDV:531(;.*)?$', value: 'ch/fdv-l-531' }
+        - { exact: 'CH-FDV:548', value: 'ch/fdv-l-548' }
+        - { exact: 'CH-FDV:551', value: 'ch/fdv-l-551' }
+        - { exact: 'CH-FDV:546', value: 'ch/fdv-l-546' }
+        - { exact: 'CH-FDV:543', value: 'ch/fdv-l-543' }
+        - { exact: 'CH-FDV:539', value: 'ch/fdv-l-539' }
+        - { exact: 'CH-FDV:537', value: 'ch/fdv-l-537' }
+        - { exact: 'CH-FDV:535', value: 'ch/fdv-l-535' }
+        - { exact: 'CH-FDV:531', value: 'ch/fdv-l-531' }
       default: 'ch/fdv-l-525'
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:l' }
@@ -1013,9 +1013,9 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:523(;.*)?$', value: 'ch/fdv-n-523' }
-        - { regex: '^(.*;)?CH-FDV:552(;.*)?$', value: 'ch/fdv-n-552' }
-        - { regex: '^(.*;)?CH-FDV:(532|533)(;.*)?$', value: 'ch/fdv-n-532' }
+        - { exact: 'CH-FDV:523', value: 'ch/fdv-n-523' }
+        - { exact: 'CH-FDV:552', value: 'ch/fdv-n-552' }
+        - { any: ['CH-FDV:532', 'CH-FDV:533'], value: 'ch/fdv-n-532' }
       default: 'ch/fdv-n-526'
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
@@ -1026,10 +1026,10 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:538(;.*)?$', value: 'ch/fdv-l-538' }
-        - { regex: '^(.*;)?CH-FDV:536(;.*)?$', value: 'ch/fdv-l-536' }
-        - { regex: '^(.*;)?CH-FDV:529(;.*)?$', value: 'ch/fdv-l-529' }
-        - { regex: '^(.*;)?CH-FDV:534(;.*)?$', value: 'ch/fdv-l-534' }
+        - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
+        - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
+        - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
+        - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
       default: 'ch/fdv-l-528'
     tags:
       - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
@@ -1040,7 +1040,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?CH-FDV:(522|521)(;.*)?$', value: 'ch/fdv-n-521' }
+        - { any: ['CH-FDV:522', 'CH-FDV:521'], value: 'ch/fdv-n-521' }
       default: 'ch/fdv-n-533'
     tags:
       - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
@@ -1069,7 +1069,7 @@ features:
       default: 'ch/fdv-209-empty'
     tags:
       # TODO support CH-FDV:210, with railway:signal:speed_limit_distant:speed:trainclass_low
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:209', 'CH-FDV:210'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['CH-FDV:209', 'CH-FDV:210'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Anfangssignal verminderte Geschwindigkeit
@@ -1126,7 +1126,7 @@ features:
         - { regex: '^([4-9]|1[0-2])0$', value: 'ch/fdv-540-{}', example: 'ch/fdv-540-{40}' }
       default: 'ch/fdv-540-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CH-FDV:540', 'CH-FDV:541'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['CH-FDV:540', 'CH-FDV:541'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
   - description: Geschwindigkeits-Ausführung
@@ -1160,15 +1160,15 @@ features:
     icon: { default: 'ch/fdv-704' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:704' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'semaphore'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'semaphore'] }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
   - description: Endsignal zum Senksignal
     country: CH
     icon: { default: 'ch/fdv-705' }
     tags:
-      - { tag: 'railway:signal:electricity', values: ['CH-FDV:705', 'CH-FDV:706'] }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity', any: ['CH-FDV:705', 'CH-FDV:706'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
   - description: Aufhebungssignal zum Senksignal
@@ -1232,7 +1232,7 @@ features:
     icon: { default: 'ch/fdv-714' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:714' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'joint' } # TODO why joint?
 
   - description: Zonen-Schutzstreckensignal
@@ -1256,7 +1256,7 @@ features:
     country: CH
     icon: { default: 'ch/fdv-719' }
     tags:
-      - { tag: 'railway:signal:electricity', values: ['CH-FDV:719', 'CH-SBB:719'] }
+      - { tag: 'railway:signal:electricity', any: ['CH-FDV:719', 'CH-SBB:719'] }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
       - { tag: 'railway:signal:electricity:type', value: 'system_change_advance' }
 
@@ -1327,14 +1327,14 @@ features:
     country: CZ
     icon: { default: 'cz/shunting' }
     tags:
-      - { tag: 'railway:signal:shunting', values: ['CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:posun_zakazan'] }
+      - { tag: 'railway:signal:shunting', any: ['CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:posun_zakazan'] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Distant (light)
     country: CZ
     icon: { default: 'cz/distant' }
     tags:
-      - { tag: 'railway:signal:distant', values: ['CZ', 'CZ-D1:samostatna_predvest'] }
+      - { tag: 'railway:signal:distant', any: ['CZ', 'CZ-D1:samostatna_predvest'] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
   # TODO speed limit "5" or "3" on main/combined signal
@@ -1350,7 +1350,7 @@ features:
         - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-NS-distant-{}', example: 'cz/speed-NS-distant-{80}' }
       default: 'cz/speed-NS-distant-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ-D1:predvestnik_ns'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['CZ-D1:predvestnik_ns'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Distant speed limit N (sign)
@@ -1361,7 +1361,7 @@ features:
         - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
       default: 'cz/speed-distant-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Speed limit NS (sign)
@@ -1372,7 +1372,7 @@ features:
         - { regex: '^[3-9]0|1[0-356]0|95|135$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
       default: 'cz/speed-NS-sign-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['CZ-D1:rychlostnik_ns'] }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ-D1:rychlostnik_ns'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Speed limit N (sign)
@@ -1384,7 +1384,7 @@ features:
         - { regex: '^[1-9]0|1[0-36]0|[1678]5|1[02]5$', value: 'cz/speed-N-sign-{}', example: 'cz/speed-N-sign-{80}' }
       default: 'cz/speed-N-sign-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n'] }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Speed limit (light)
@@ -1396,7 +1396,7 @@ features:
         - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
       default: 'cz/hlavni_navestidlo-light-unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   # TODO semaphore distant signal (orange disk)
@@ -1416,7 +1416,7 @@ features:
     # TODO differentiate main signal forms
     icon: { default: 'cz/main-clear' }
     tags:
-      - { tag: 'railway:signal:main', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:main', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Combined (light)
@@ -1424,7 +1424,7 @@ features:
     # TODO differentiate combined signal forms
     icon: { default: 'cz/combined-clear' }
     tags:
-      - { tag: 'railway:signal:combined', values: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:combined', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   # TODO: distant signal without home signal (different display form)
@@ -1436,7 +1436,7 @@ features:
         - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
       default: 'cz/hlavni_navestidlo-distant-light-unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
   # TODO: Skupinové návěstidlo -- Group signal
@@ -1496,7 +1496,7 @@ features:
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^normal$', value: 'de/sh1-light-normal', description: 'normal height' }
+        - { exact: 'normal', value: 'de/sh1-light-normal', description: 'normal height' }
       default: 'de/sh0-light-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
@@ -1516,14 +1516,14 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
-      - { tag: 'railway:signal:minor:states', value: 'DE-ESO:sh0;DE-ESO:wn7' }
+      - { tag: 'railway:signal:minor:states', all: ['DE-ESO:sh0', 'DE-ESO:wn7'] }
 
   - description: minor semaphore signals type Sh
     country: DE
     icon:
       match: 'railway:signal:minor:height'
       cases:
-        - { regex: '^normal$', value: 'de/sh1-semaphore-normal' }
+        - { exact: 'normal', value: 'de/sh1-semaphore-normal' }
       default: 'de/sh0-semaphore-dwarf'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
@@ -1561,7 +1561,7 @@ features:
     country: DE
     icon: { default: 'de/bostrab/so1' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
+      - { tag: 'railway:signal:train_protection', any: ['DE-BOStrab:so1', 'DE-AVG:so1'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
@@ -1569,7 +1569,7 @@ features:
     country: DE
     icon: { default: 'de/bostrab/so2' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
+      - { tag: 'railway:signal:train_protection', any: ['DE-BOStrab:so2', 'DE-AVG:so2'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
@@ -1578,8 +1578,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'de/ne14-right' }
-        - { regex: '^overhead$', value: 'de/ne14-down' }
+        - { exact: 'left', value: 'de/ne14-right' }
+        - { exact: 'overhead', value: 'de/ne14-down' }
       default: 'de/ne14-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:ne14' }
@@ -1675,14 +1675,14 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
-      - { tag: 'railway:signal:crossing:repeated', value: 'yes' }
+      - { tag: 'railway:signal:crossing:repeated' }
 
   - description: Bü 0/1 (sign)
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/bue0-ds-shortened', description: 'shortened' }
+        - { value: 'de/bue0-ds-shortened', description: 'shortened' }
       default: 'de/bue0-ds'
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
@@ -1693,14 +1693,14 @@ features:
     icon: { default: 'de/bue1-ds-repeated' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
-      - { tag: 'railway:signal:crossing:repeated', value: 'yes' }
+      - { tag: 'railway:signal:crossing:repeated' }
 
   - description: Bü 0/1 (light)
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/bue1-ds-shortened', description: 'shortened' }
+        - { value: 'de/bue1-ds-shortened', description: 'shortened' }
       default: 'de/bue1-ds'
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
@@ -1711,14 +1711,14 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:so16' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
-      - { tag: 'railway:signal:crossing:repeated', value: 'yes' }
+      - { tag: 'railway:signal:crossing:repeated' }
 
   - description: So 16a/b
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/bue1-dv-shortened', description: 'shortened' }
+        - { value: 'de/bue1-dv-shortened', description: 'shortened' }
       default: 'de/bue1-dv'
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:so16' }
@@ -1743,7 +1743,7 @@ features:
     icon:
       match: 'railway:signal:crossing_distant:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/bue2-ds-reduced-distance', description: 'reduced distance' }
+        - { value: 'de/bue2-ds-reduced-distance', description: 'reduced distance' }
       default: 'de/bue2-ds'
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü2' }
@@ -1775,7 +1775,7 @@ features:
     icon:
       match: 'railway:signal:whistle:only_transit'
       cases:
-        - { regex: '^yes$', value: 'de/bue4-ds-only-transit', description: 'only transit' }
+        - { value: 'de/bue4-ds-only-transit', description: 'only transit' }
       default: 'de/bue4-ds'
     tags:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:db:bü4' }
@@ -1786,7 +1786,7 @@ features:
     icon:
       match: 'railway:signal:whistle:only_transit'
       cases:
-        - { regex: '^yes$', value: 'de/pf1-dv-only-transit', description: 'only transit' }
+        - { value: 'de/pf1-dv-only-transit', description: 'only transit' }
       default: 'de/pf1-dv'
     tags:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf1' }
@@ -1805,7 +1805,7 @@ features:
     icon:
       match: 'railway:signal:ring:only_transit'
       cases:
-        - { regex: '^yes$', value: 'de/bue5-only-transit', description: 'only transit' }
+        - { value: 'de/bue5-only-transit', description: 'only transit' }
       default: 'de/bue5'
     tags:
       - { tag: 'railway:signal:ring', value: 'DE-ESO:bü5' }
@@ -1816,7 +1816,7 @@ features:
     icon:
       match: 'railway:signal:snowplow:type'
       cases:
-        - { regex: '^down$', value: 'de/ne7-yellow-down' }
+        - { exact: 'down', value: 'de/ne7-yellow-down' }
       default: 'de/ne7-yellow-up'
     tags:
       - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
@@ -1869,7 +1869,7 @@ features:
     icon:
       match: 'railway:signal:departure:states'
       cases:
-        - { regex: '^DE-ESO:zp10$', value: 'de/zp10-db' }
+        - { exact: 'DE-ESO:zp10', value: 'de/zp10-db' }
       default: 'de/zp9-db'
     tags:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
@@ -1880,10 +1880,10 @@ features:
     icon:
       match: 'railway:signal:departure:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:a2(;.*)?$', value: 'de/bostrab/a2' }
+        - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2' }
       default: 'de/bostrab/a1'
     tags:
-      - { tag: 'railway:signal:departure', values: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
+      - { tag: 'railway:signal:departure', any: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: crossing info sign
@@ -1905,7 +1905,7 @@ features:
     icon:
       match: 'railway:signal:crossing_distant:states'
       cases:
-        - { regex: '^(.*;)?DE-AVG:bü201v(;.*)?$', value: 'de/avg/bue201v' }
+        - { exact: 'DE-AVG:bü201v', value: 'de/avg/bue201v' }
       default: 'de/avg/bue201'
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü201' }
@@ -1943,52 +1943,22 @@ features:
     country: DE
     icon: { default: 'de/zs13-sign' }
     tags:
-      - { tag: 'railway:signal:short_route', values: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
+      - { tag: 'railway:signal:short_route', any: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'sign' }
 
   - description: entry into dead-end / early stop marker Zs 13 / Zs 6 (DR) (light)
     country: DE
     icon: { default: 'de/zs13-light' }
     tags:
-      - { tag: 'railway:signal:short_route', values: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
+      - { tag: 'railway:signal:short_route', any: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'light' }
 
   - description: Richtungsvoranzeiger (Zs 2v)
     country: DE
     icon:
       match: 'railway:signal:route_distant:states'
-      # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2v-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2v-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2v-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2v-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2v-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2v-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2v-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2v-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2v-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2v-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2v-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2v-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2v-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2v-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2v-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2v-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2v-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2v-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2v-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2v-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2v-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2v-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2v-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2v-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2v-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2v-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2v-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2v-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2v-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2v-A' }
+        - { regex: '^([A-ZÄÖÜẞ])$', value: 'de/zs2v-{}', example: 'de/zs2v-{ẞ}' }
       default: 'de/zs2v-unknown'
     tags:
       - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
@@ -2083,7 +2053,7 @@ features:
         - { regex: '^(5|[1-7][0-5])$', value: 'de/bostrab/g1a-{}', example: 'de/bostrab/g1a-{40}' }
       default: 'de/bostrab/g1a-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['DE-BOStrab:g1', 'DE-BOStrab:g1a', 'DE-BSVG:g1a'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Tram distance speed limit (G 1b) (light)
@@ -2095,7 +2065,7 @@ features:
         - { regex: '^[1-7]0$', value: 'de/bostrab/g1b-{}', example: 'de/bostrab/g1b-{40}' }
       default: 'de/bostrab/g1b-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', values: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
   - description: distant signal announcement signs Ne 3 (normal)
@@ -2103,9 +2073,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'de/ne3-normal-II' }
-        - { regex: '^III$', value: 'de/ne3-normal-III' }
-        - { regex: '^IV$', value: 'de/ne3-normal-IV' }
+        - { exact: 'II', value: 'de/ne3-normal-II' }
+        - { exact: 'III', value: 'de/ne3-normal-III' }
+        - { exact: 'IV', value: 'de/ne3-normal-IV' }
       default: 'de/ne3-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
@@ -2116,9 +2086,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'de/ne3-dwarf-II' }
-        - { regex: '^III$', value: 'de/ne3-dwarf-III' }
-        - { regex: '^IV$', value: 'de/ne3-dwarf-IV' }
+        - { exact: 'II', value: 'de/ne3-dwarf-II' }
+        - { exact: 'III', value: 'de/ne3-dwarf-III' }
+        - { exact: 'IV', value: 'de/ne3-dwarf-IV' }
       default: 'de/ne3-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
@@ -2144,34 +2114,34 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-repeated' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-repeated' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light-repeated' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light-repeated' }
       default: 'de/vr0-light-repeated'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
+      - { tag: 'railway:signal:distant:repeated' }
 
   - description: distant light signals type Vr (shortened)
     country: DE
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light-shortened' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light-shortened' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light-shortened' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light-shortened' }
       default: 'de/vr0-light-shortened'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+      - { tag: 'railway:signal:distant:shortened' }
 
   - description: distant light signals type Vr
     country: DE
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-light' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-light' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-light' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-light' }
       default: 'de/vr0-light'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2182,8 +2152,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:vr2(;.*)?$', value: 'de/vr2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:vr1(;.*)?$', value: 'de/vr1-semaphore' }
+        - { exact: 'DE-ESO:vr2', value: 'de/vr2-semaphore' }
+        - { exact: 'DE-ESO:vr1', value: 'de/vr1-semaphore' }
       default: 'de/vr0-semaphore'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
@@ -2194,7 +2164,7 @@ features:
     icon:
       match: 'railway:signal:distant:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/ne2-reduced-distance' }
+        - { value: 'de/ne2-reduced-distance' }
       default: 'de/ne2'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
@@ -2206,14 +2176,14 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:dr:so3' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+      - { tag: 'railway:signal:distant:shortened' }
 
   - description: distant light signals type Hl
     country: DE
     icon:
       match: 'railway:signal:distant:repeated'
       cases:
-        - { regex: '^yes$', value: 'de/hl1-distant-repeated' }
+        - { value: 'de/hl1-distant-repeated' }
       default: 'de/hl1-distant'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:hl' }
@@ -2224,8 +2194,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-VBK:fv2(;.*)?$', value: 'de/vbk/fv2' }
-        - { regex: '^(.*;)?DE-VBK:fv3(;.*)?$', value: 'de/vbk/fv3' }
+        - { exact: 'DE-VBK:fv2', value: 'de/vbk/fv2' }
+        - { exact: 'DE-VBK:fv3', value: 'de/vbk/fv3' }
       default: 'de/vbk/fv1'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-VBK:fv' }
@@ -2235,7 +2205,7 @@ features:
     country: DE
     icon: { default: 'de/vbk/fv0' }
     tags:
-      - { tag: 'railway:signal:distant', values: ['DE-VBK:fv', 'DE-VBK:fv0'] }
+      - { tag: 'railway:signal:distant', any: ['DE-VBK:fv', 'DE-VBK:fv0'] }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: BOStrab distant signal
@@ -2243,11 +2213,11 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:v2(;.*)?$', value: 'de/bostrab/v2'}
-        - { regex: '^(.*;)?DE-BOStrab:v1(;.*)?$', value: 'de/bostrab/v1'}
-        - { regex: '^(.*;)?DE-VAGN:vr2(;.*)?$', value: 'de/vag-nuremberg/vr2'}
-        - { regex: '^(.*;)?DE-VAGN:vr1(;.*)?$', value: 'de/vag-nuremberg/vr1'}
-        - { regex: '^(.*;)?DE-VAGN:vr0(;.*)?$', value: 'de/vag-nuremberg/vr0'}
+        - { exact: 'DE-BOStrab:v2', value: 'de/bostrab/v2'}
+        - { exact: 'DE-BOStrab:v1', value: 'de/bostrab/v1'}
+        - { exact: 'DE-VAGN:vr2', value: 'de/vag-nuremberg/vr2'}
+        - { exact: 'DE-VAGN:vr1', value: 'de/vag-nuremberg/vr1'}
+        - { exact: 'DE-VAGN:vr0', value: 'de/vag-nuremberg/vr0'}
       default: 'de/bostrab/v0'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
@@ -2259,7 +2229,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated', value: 'yes' }
+      - { tag: 'railway:signal:distant:repeated' }
 
   - description: distant signals type Ks (shortened)
     country: DE
@@ -2267,7 +2237,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shortened', value: 'yes' }
+      - { tag: 'railway:signal:distant:shortened' }
 
   - description: distant signals type Ks
     country: DE
@@ -2288,8 +2258,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-semaphore' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-semaphore' }
+        - { exact: 'DE-ESO:hp2', value: 'de/hp2-semaphore' }
+        - { exact: 'DE-ESO:hp1', value: 'de/hp1-semaphore' }
       default: 'de/hp0-semaphore'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
@@ -2300,8 +2270,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp2(;.*)?$', value: 'de/hp2-light' }
-        - { regex: '^(.*;)?DE-ESO:hp1(;.*)?$', value: 'de/hp1-light' }
+        - { exact: 'DE-ESO:hp2', value: 'de/hp2-light' }
+        - { exact: 'DE-ESO:hp1', value: 'de/hp1-light' }
       default: 'de/hp0-light'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
@@ -2312,10 +2282,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hl2(;.*)?$', value: 'de/hl2' }
-        - { regex: '^(.*;)?DE-ESO:hl3b(;.*)?$', value: 'de/hl3b' }
-        - { regex: '^(.*;)?DE-ESO:hl3a(;.*)?$', value: 'de/hl3a' }
-        - { regex: '^(.*;)?DE-ESO:hl1(;.*)?$', value: 'de/hl1' }
+        - { exact: 'DE-ESO:hl2', value: 'de/hl2' }
+        - { exact: 'DE-ESO:hl3b', value: 'de/hl3b' }
+        - { exact: 'DE-ESO:hl3a', value: 'de/hl3a' }
+        - { exact: 'DE-ESO:hl1', value: 'de/hl1' }
       default: 'de/hl0-main'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
@@ -2326,13 +2296,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2-st9' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1-st9' }
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5-st9' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3-st9' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2-st9' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1-st9' }
       default: 'de/bostrab/f0-st9'
     tags:
-      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
 
@@ -2341,13 +2311,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f5(;.*)?$', value: 'de/bostrab/f5' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f3(;.*)?$', value: 'de/bostrab/f3' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f2(;.*)?$', value: 'de/bostrab/f2' }
-        - { regex: '^(.*;)?(DE-AVG|DE-BOStrab):f1(;.*)?$', value: 'de/bostrab/f1' }
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1' }
       default: 'de/bostrab/f0'
     tags:
-      - { tag: 'railway:signal:main', values: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: BOStrab Hauptsignal
@@ -2355,13 +2325,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?DE-BOStrab:h2(;.*)?$', value: 'de/bostrab/h2' }
-        - { regex: '^(.*;)?DE-BOStrab:h1(;.*)?$', value: 'de/bostrab/h1' }
-        - { regex: '^(.*;)?DE-VAGN:hp2(;.*)?$', value: 'de/vag-nuremberg/hp2' }
-        - { regex: '^(.*;)?DE-VAGN:hp1(;.*)?$', value: 'de/vag-nuremberg/hp1' }
-        - { regex: '^(.*;)?DE-VAGN:(.*);off(;.*)?$', value: 'de/vag-nuremberg/off' }
-        - { regex: '^(.*;)?DE-VAGN:hp3(;.*)?$', value: 'de/vag-nuremberg/hp3' }
-        - { regex: '^(.*;)?DE-VAGN:hp0(;.*)?$', value: 'de/vag-nuremberg/hp0' }
+        - { exact: 'DE-BOStrab:h2', value: 'de/bostrab/h2' }
+        - { exact: 'DE-BOStrab:h1', value: 'de/bostrab/h1' }
+        - { exact: 'DE-VAGN:hp2', value: 'de/vag-nuremberg/hp2' }
+        - { exact: 'DE-VAGN:hp1', value: 'de/vag-nuremberg/hp1' }
+        - { all: ['DE-VAGN:hp0', 'off'], value: 'de/vag-nuremberg/off' }
+        - { exact: 'DE-VAGN:hp3', value: 'de/vag-nuremberg/hp3' }
+        - { exact: 'DE-VAGN:hp0', value: 'de/vag-nuremberg/hp0' }
       default: 'de/bostrab/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-BOStrab:h' }
@@ -2372,8 +2342,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^.*$', value: 'de/hha/h0' }
-      default: 'de/hha/h1'
+        - { exact: 'DE-HHA:h1', value: 'de/hha/h1' }
+      default: 'de/hha/h0'
     tags:
       - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2390,10 +2360,10 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hl11(;.*)?$', value: 'de/hl11' }
-        - { regex: '^(.*;)?DE-ESO:hl12b(;.*)?$', value: 'de/hl12b' }
-        - { regex: '^(.*;)?DE-ESO:hl12a(;.*)?$', value: 'de/hl12a' }
-        - { regex: '^(.*;)?DE-ESO:hl10(;.*)?$', value: 'de/hl10' }
+        - { exact: 'DE-ESO:hl11', value: 'de/hl11' }
+        - { exact: 'DE-ESO:hl12b', value: 'de/hl12b' }
+        - { exact: 'DE-ESO:hl12a', value: 'de/hl12a' }
+        - { exact: 'DE-ESO:hl10', value: 'de/hl10' }
       default: 'de/hl0-combined'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
@@ -2405,7 +2375,7 @@ features:
       # TODO add shortened
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?DE-ESO:hp0(;.*)?$', value: 'de/sv-hp0' }
+        - { exact: 'DE-ESO:hp0', value: 'de/sv-hp0' }
       default: 'de/sv-sv0'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
@@ -2423,7 +2393,7 @@ features:
     icon:
       match: 'railway:signal:combined:shortened'
       cases:
-        - { regex: '^yes$', value: 'de/ks-combined-shortened' }
+        - { value: 'de/ks-combined-shortened' }
       default: 'de/ks-combined'
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
@@ -2460,7 +2430,7 @@ features:
         - { regex: '^(5|[1-7][05])$', value: 'de/bostrab/g2a-{}', example: 'de/bostrab/g2a-{40}' }
       default: 'de/bostrab/g2a-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Tram speed limit (G 2b) (light)
@@ -2472,7 +2442,7 @@ features:
         - { regex: '^[1-7]0$', value: 'de/bostrab/g2b-{}', example: 'de/bostrab/g2b-{40}' }
       default: 'de/bostrab/g2b-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: Tram signal G3
@@ -2547,7 +2517,7 @@ features:
     country: DE
     icon: { default: 'de/lf2-sign' }
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['DE-ESO:lf2', 'DE-ESO:db:lf2'] }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-ESO:lf2', 'DE-ESO:db:lf2'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Langsamfahrbeginnscheibe
@@ -2586,38 +2556,8 @@ features:
     country: DE
     icon:
       match: 'railway:signal:route:states'
-      # TODO allow extracting match from group
       cases:
-        - { regex: '^(.*;)?ẞ(;.*)?$', value: 'de/zs2-ẞ' }
-        - { regex: '^(.*;)?Ü(;.*)?$', value: 'de/zs2-Ü' }
-        - { regex: '^(.*;)?Ö(;.*)?$', value: 'de/zs2-Ö' }
-        - { regex: '^(.*;)?Ä(;.*)?$', value: 'de/zs2-Ä' }
-        - { regex: '^(.*;)?Z(;.*)?$', value: 'de/zs2-Z' }
-        - { regex: '^(.*;)?Y(;.*)?$', value: 'de/zs2-Y' }
-        - { regex: '^(.*;)?X(;.*)?$', value: 'de/zs2-X' }
-        - { regex: '^(.*;)?W(;.*)?$', value: 'de/zs2-W' }
-        - { regex: '^(.*;)?V(;.*)?$', value: 'de/zs2-V' }
-        - { regex: '^(.*;)?U(;.*)?$', value: 'de/zs2-U' }
-        - { regex: '^(.*;)?T(;.*)?$', value: 'de/zs2-T' }
-        - { regex: '^(.*;)?S(;.*)?$', value: 'de/zs2-S' }
-        - { regex: '^(.*;)?R(;.*)?$', value: 'de/zs2-R' }
-        - { regex: '^(.*;)?Q(;.*)?$', value: 'de/zs2-Q' }
-        - { regex: '^(.*;)?P(;.*)?$', value: 'de/zs2-P' }
-        - { regex: '^(.*;)?O(;.*)?$', value: 'de/zs2-O' }
-        - { regex: '^(.*;)?N(;.*)?$', value: 'de/zs2-N' }
-        - { regex: '^(.*;)?M(;.*)?$', value: 'de/zs2-M' }
-        - { regex: '^(.*;)?L(;.*)?$', value: 'de/zs2-L' }
-        - { regex: '^(.*;)?K(;.*)?$', value: 'de/zs2-K' }
-        - { regex: '^(.*;)?J(;.*)?$', value: 'de/zs2-J' }
-        - { regex: '^(.*;)?I(;.*)?$', value: 'de/zs2-I' }
-        - { regex: '^(.*;)?H(;.*)?$', value: 'de/zs2-H' }
-        - { regex: '^(.*;)?G(;.*)?$', value: 'de/zs2-G' }
-        - { regex: '^(.*;)?F(;.*)?$', value: 'de/zs2-F' }
-        - { regex: '^(.*;)?E(;.*)?$', value: 'de/zs2-E' }
-        - { regex: '^(.*;)?D(;.*)?$', value: 'de/zs2-D' }
-        - { regex: '^(.*;)?C(;.*)?$', value: 'de/zs2-C' }
-        - { regex: '^(.*;)?B(;.*)?$', value: 'de/zs2-B' }
-        - { regex: '^(.*;)?A(;.*)?$', value: 'de/zs2-A' }
+        - { regex: '^([A-ZÄÖÜẞ])$', value: 'de/zs2-{}', example: 'de/zs2-{ẞ}' }
       default: 'de/zs2-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
@@ -2637,7 +2577,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
 
   - description: power on sign El 2
     country: DE
@@ -2645,7 +2585,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
 
   - description: pantograph down advance El 3
     country: DE
@@ -2661,7 +2601,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
 
   - description: pantograph up El 5
     country: DE
@@ -2669,21 +2609,21 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
 
   - description: end of catenary sign El 6
     country: DE
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^left$', value: 'de/el6-left' }
-        - { regex: '^through$', value: 'de/el6-through' }
-        - { regex: '^right$', value: 'de/el6-right' }
+        - { exact: 'left', value: 'de/el6-left' }
+        - { exact: 'through', value: 'de/el6-through' }
+        - { exact: 'right', value: 'de/el6-right' }
       default: 'de/el6'
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light', 'semaphore'] }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light', 'semaphore'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
 
   - description: power off shortly sign El 7 (S-Bahn Berlin)
     country: DE
@@ -2699,7 +2639,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
 
   - description: power off shortly
     country: DE
@@ -2707,7 +2647,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity', values: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
+      - { tag: 'railway:signal:electricity', any: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
 
   - description: tram sign power off shortly El 1
     country: DE
@@ -2769,7 +2709,7 @@ features:
     # TODO add turn direction
     icon: { default: 'es/FI14A' }
     tags:
-      - { tag: 'railway:signal:electricity', values: ['ES:FI14A', 'ES:FI14B'] }
+      - { tag: 'railway:signal:electricity', any: ['ES:FI14A', 'ES:FI14B'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
 
@@ -2851,8 +2791,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-new' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-new' }
+        - { exact: 'FI:Po2', value: 'fi/po2-new' }
+        - { exact: 'FI:Po1', value: 'fi/po1-new' }
       default: 'fi/po0-new'
     tags:
       - { tag: 'railway:signal:main', value: 'FI:Po' }
@@ -2863,8 +2803,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FI:Po2(;.*)?$', value: 'fi/po2-old' }
-        - { regex: '^(.*;)?FI:Po1(;.*)?$', value: 'fi/po1-old' }
+        - { exact: 'FI:Po2', value: 'fi/po2-old' }
+        - { exact: 'FI:Po1', value: 'fi/po1-old' }
       default: 'fi/po0-old'
     tags:
       - { tag: 'railway:signal:main', value: 'FI:Po-v' }
@@ -2896,8 +2836,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FI:Eo2(;.*)?$', value: 'fi/eo2-new' }
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-new' }
+        - { exact: 'FI:Eo2', value: 'fi/eo2-new' }
+        - { exact: 'FI:Eo1', value: 'fi/eo1-new' }
       default: 'fi/eo0-new'
     tags:
       - { tag: 'railway:signal:distant', value: 'FI:Eo' }
@@ -2908,7 +2848,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FI:Eo1(;.*)?$', value: 'fi/eo1-old' }
+        - { exact: 'FI:Eo1', value: 'fi/eo1-old' }
       default: 'fi/eo0-old'
     tags:
       - { tag: 'railway:signal:distant', value: 'FI:Eo-v' }
@@ -2932,35 +2872,35 @@ features:
     country: FI
     icon: { default: 'fi/t-140' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-140', 'FI:T-140A'] }
+      - { tag: 'railway:signal:train_protection', any: ['FI:T-140', 'FI:T-140A'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: JKV päättyy
     country: FI
     icon: { default: 'fi/t-141' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-141', 'FI:T-141A'] }
+      - { tag: 'railway:signal:train_protection', any: ['FI:T-141', 'FI:T-141A'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: JKV rakennusalue alkaa
     country: FI
     icon: { default: 'fi/t-142' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-142', 'FI:T-142A'] }
+      - { tag: 'railway:signal:train_protection', any: ['FI:T-142', 'FI:T-142A'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: JKV rakennusalue päättyy
     country: FI
     icon: { default: 'fi/t-143' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-143', 'FI:T-143A'] }
+      - { tag: 'railway:signal:train_protection', any: ['FI:T-143', 'FI:T-143A'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Baliisiryhmämerkki
     country: FI
     icon: { default: 'fi/t-144' }
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
+      - { tag: 'railway:signal:train_protection', any: ['FI:T-144', 'FI:T-144A', 'FI:T-144B', 'FI:T-144C'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Main repeated light
@@ -3164,14 +3104,14 @@ features:
     country: FI
     icon: { default: 'fi/t-171' }
     tags:
-      - { tag: 'railway:signal:snowplow', values: ['FI:T-170A', 'FI:T-171'] }
+      - { tag: 'railway:signal:snowplow', any: ['FI:T-170A', 'FI:T-171'] }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
 
   - description: Raise snowplow blades (area)
     country: FI
     icon: { default: 'fi/t-171A' }
     tags:
-      - { tag: 'railway:signal:snowplow', values: ['FI:T-170B', 'FI:T-171A'] }
+      - { tag: 'railway:signal:snowplow', any: ['FI:T-170B', 'FI:T-171A'] }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
 
   - description: Raise snowplow blades (old)
@@ -3202,15 +3142,15 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FR:Cv(;.*)?$', value: 'fr/C-Cv' }
-        - { regex: '^(.*;)?FR:Mr?(;.*)?$', value: 'fr/C-M' }
-        - { regex: '^(.*;)?FR:RRc?(\(Ac?\))(;.*)?$', value: 'fr/C-RR-A' }
-        - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/C-R-A' }
-        - { regex: '^(.*;)?FR:RRc?(;.*)?$', value: 'fr/C-RR' }
-        - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/C-R' }
-        - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/C-A' }
-        - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/C-VL' }
-        - { regex: '^(.*;)?FR:Sc?(;.*)?$', value: 'fr/C-S' }
+        - { exact: 'FR:Cv', value: 'fr/C-Cv' }
+        - { any: ['FR:M', 'FR:Mr'], value: 'fr/C-M' }
+        - { any: ['FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)'], value: 'fr/C-RR-A' }
+        - { any: ['FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)'], value: 'fr/C-R-A' }
+        - { any: ['FR:RR', 'FR:RRc'], value: 'fr/C-RR' }
+        - { any: ['FR:R', 'FR:Rc'], value: 'fr/C-R' }
+        - { any: ['FR:A', 'FR:Ac'], value: 'fr/C-A' }
+        - { any: ['FR:VL', 'FR:VLc'], value: 'fr/C-VL' }
+        - { any: ['FR:S', 'FR:Sc'], value: 'fr/C-S' }
       # TODO split on shape
       default: 'fr/C-C'
     tags:
@@ -3222,10 +3162,10 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?FR:Rc?(\(Ac?\))(;.*)?$', value: 'fr/S-R-A' }
-        - { regex: '^(.*;)?FR:Rc?(;.*)?$', value: 'fr/S-R' }
-        - { regex: '^(.*;)?FR:Ac?(;.*)?$', value: 'fr/S-A' }
-        - { regex: '^(.*;)?FR:VLc?(;.*)?$', value: 'fr/S-VL' }
+        - { any: ['FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)'], value: 'fr/S-R-A' }
+        - { any: ['FR:R', 'FR:Rc'], value: 'fr/S-R' }
+        - { any: ['FR:A', 'FR:Ac'], value: 'fr/S-A' }
+        - { any: ['FR:VL', 'FR:VLc'], value: 'fr/S-VL' }
       # TODO split on shape
       default: 'fr/S-S'
     tags:
@@ -3237,8 +3177,8 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^(.*;)?FR:R(;.*)?$', value: 'fr/A-R' }
-        - { regex: '^(.*;)?FR:A(;.*)?$', value: 'fr/A-A' }
+        - { exact: 'FR:R', value: 'fr/A-R' }
+        - { exact: 'FR:A', value: 'fr/A-A' }
       default: 'fr/A-VL'
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
@@ -3323,7 +3263,7 @@ features:
       default: 'fr/TIV-distance-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
-      - { tag: 'railway:signal:speed_limit_distant:mobile', value: 'yes' }
+      - { tag: 'railway:signal:speed_limit_distant:mobile' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: TIV-D (fixed)
@@ -3376,7 +3316,7 @@ features:
     icon: { default: 'fr/SECT' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
   - description: Start of Neutral Zone
@@ -3384,7 +3324,7 @@ features:
     icon: { default: 'fr/CC_EXE' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:CC_EXE' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
   - description: End of Neutral Zone
@@ -3392,7 +3332,7 @@ features:
     icon: { default: 'fr/CC_FIN' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   - description: End of Neutral Zone (reversible trains)
@@ -3408,7 +3348,7 @@ features:
     icon: { default: 'fr/BP_DIS' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:BP_DIS' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
   - description: Start of Pantograph Down
@@ -3431,7 +3371,7 @@ features:
     country: FR
     icon: { default: 'fr/BIMODE' }
     tags:
-      - { tag: 'railway:signal:electricity', values: ['FR:BIMODE', 'FR:BIMODE_A'] }
+      - { tag: 'railway:signal:electricity', any: ['FR:BIMODE', 'FR:BIMODE_A'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
   - description: End of Catenaries
@@ -3454,7 +3394,7 @@ features:
     icon: { default: 'fr/GIVRE' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
-      - { tag: 'railway:signal:electricity:form', values: ['sign', 'light'] }
+      - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
 
   # --- GB --- #
 
@@ -3463,7 +3403,7 @@ features:
     icon:
       match: 'railway:signal:main:design'
       cases:
-        - { regex: '^combined$', value: 'gb/main-combined-light' }
+        - { exact: 'combined', value: 'gb/main-combined-light' }
       default: 'gb/main-individual-light'
     tags:
       - { tag: 'railway:signal:main', value: 'GB-NR:main' }
@@ -3530,17 +3470,17 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^(off;)?position_1;position_2;position_3;position_4(;off)?$', value: 'gb/route-feather-1234' }
-        - { regex: '^(off;)?position_1;position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-1456' }
-        - { regex: '^(off;)?position_1;position_4;position_5(;off)?$', value: 'gb/route-feather-145' }
-        - { regex: '^(off;)?position_4;position_5;position_6(;off)?$', value: 'gb/route-feather-456' }
-        - { regex: '^(off;)?position_1;position_2;position_3(;off)?$', value: 'gb/route-feather-123' }
-        - { regex: '^(off;)?position_1;position_2;position_4(;off)?$', value: 'gb/route-feather-124' }
-        - { regex: '^(off;)?position_4;position_5(;off)?$', value: 'gb/route-feather-45' }
-        - { regex: '^(off;)?position_1;position_4(;off)?$', value: 'gb/route-feather-14' }
-        - { regex: '^(off;)?position_1;position_2(;off)?$', value: 'gb/route-feather-12' }
-        - { regex: '^(off;)?position_4(;off)?$', value: 'gb/route-feather-4' }
-        - { regex: '^(off;)?position_1(;off)?$', value: 'gb/route-feather-1' }
+        - { all: ['position_1', 'position_2', 'position_3', 'position_4'], value: 'gb/route-feather-1234' }
+        - { all: ['position_1', 'position_4', 'position_5', 'position_6'], value: 'gb/route-feather-1456' }
+        - { all: ['position_1', 'position_4', 'position_5'], value: 'gb/route-feather-145' }
+        - { all: ['position_4', 'position_5', 'position_6'], value: 'gb/route-feather-456' }
+        - { all: ['position_1', 'position_2', 'position_3'], value: 'gb/route-feather-123' }
+        - { all: ['position_1', 'position_2', 'position_4'], value: 'gb/route-feather-124' }
+        - { all: ['position_4', 'position_5'], value: 'gb/route-feather-45' }
+        - { all: ['position_1', 'position_4'], value: 'gb/route-feather-14' }
+        - { all: ['position_1', 'position_2'], value: 'gb/route-feather-12' }
+        - { exact: 'position_4', value: 'gb/route-feather-4' }
+        - { exact: 'position_1', value: 'gb/route-feather-1' }
       default: 'gb/route-feather-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
@@ -3552,7 +3492,7 @@ features:
     icon:
       match: 'railway:signal:route:states'
       cases:
-        - { regex: '^(.*;)?[CSFU](;.*)?$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{S}' }
+        - { regex: '^[CFSU]$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{U}' }
       default: 'gb/route-theatre-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
@@ -3690,8 +3630,8 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'nl/227b-arrow-right' }
-        - { regex: '^overhead$', value: 'nl/227b-arrow-down' }
+        - { exact: 'left', value: 'nl/227b-arrow-right' }
+        - { exact: 'overhead', value: 'nl/227b-arrow-down' }
       default: 'nl/227b-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
@@ -3705,8 +3645,8 @@ features:
       # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'nl/227b-triangle-right' }
-        - { regex: '^overhead$', value: 'nl/227b-triangle-down' }
+        - { exact: 'left', value: 'nl/227b-triangle-right' }
+        - { exact: 'overhead', value: 'nl/227b-triangle-down' }
       default: 'nl/227b-triangle-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
@@ -3787,7 +3727,7 @@ features:
     country: NL
     icon: { default: 'nl/departure' }
     tags:
-      - { tag: 'railway:signal:departure', values: ['NL', 'NL:VL'] }
+      - { tag: 'railway:signal:departure', any: ['NL', 'NL:VL'] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: Humping ("heuvelen")
@@ -3801,7 +3741,7 @@ features:
     country: NL
     icon: { default: 'nl/303' }
     tags:
-      - { tag: 'railway:signal:stop', values: ['NL:303', 'NL:stopplaatssein'] }
+      - { tag: 'railway:signal:stop', any: ['NL:303', 'NL:stopplaatssein'] }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
   - description: treinlengtebord
@@ -3810,23 +3750,7 @@ features:
     icon:
       match: 'railway:signal:stop:carriages'
       cases:
-        # Free match to allow matching multiple values on a single sign, separated by ;
-        - { regex: '18', value: 'nl/304-18' }
-        - { regex: '16', value: 'nl/304-16' }
-        - { regex: '15', value: 'nl/304-15' }
-        - { regex: '14', value: 'nl/304-14' }
-        - { regex: '13', value: 'nl/304-13' }
-        - { regex: '12', value: 'nl/304-12' }
-        - { regex: '11', value: 'nl/304-11' }
-        - { regex: '10', value: 'nl/304-10' }
-        - { regex: '9', value: 'nl/304-9' }
-        - { regex: '8', value: 'nl/304-8' }
-        - { regex: '7', value: 'nl/304-7' }
-        - { regex: '6', value: 'nl/304-6' }
-        - { regex: '5', value: 'nl/304-5' }
-        - { regex: '4', value: 'nl/304-4' }
-        - { regex: '3', value: 'nl/304-3' }
-        - { regex: '2', value: 'nl/304-2' }
+        - { regex: '^([2-9]|1[0-68])$', value: 'nl/304-{}', example: 'nl/304-{8}' }
       default: 'nl/304-empty'
     tags:
       - { tag: 'railway:signal:stop', value: 'NL:304' }
@@ -3837,7 +3761,7 @@ features:
     # TODO process caption / distant crossing position
     icon: { default: 'nl/318a' }
     tags:
-      - { tag: 'railway:signal:crossing_distant', values: ['NL:318a', 'NL:318b'] }
+      - { tag: 'railway:signal:crossing_distant', any: ['NL:318a', 'NL:318b'] }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
   - description: station
@@ -3853,7 +3777,7 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', value: 'L;off' }
+      - { tag: 'railway:signal:speed_limit:states', all: ['L', 'off'] }
 
   - description: H signal
     country: NL
@@ -3861,7 +3785,7 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', value: 'H;off' }
+      - { tag: 'railway:signal:speed_limit:states', all: ['H', 'off'] }
 
   - description: X/G signal
     country: NL
@@ -3869,7 +3793,7 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', value: 'X;G;off' }
+      - { tag: 'railway:signal:speed_limit:states', all: ['X', 'G', 'off'] }
 
   - description: distant speed limit distant (sign)
     country: NL
@@ -4027,8 +3951,8 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'nl/311-right' }
-        - { regex: '^left$', value: 'nl/311-left' }
+        - { exact: 'right', value: 'nl/311-right' }
+        - { exact: 'left', value: 'nl/311-left' }
       default: 'nl/311'
     tags:
       - { tag: 'railway:signal:electricity', value: 'NL:311' }
@@ -4040,8 +3964,8 @@ features:
     icon:
       match: 'railway:signal:electricity:voltage'
       cases:
-        - { regex: '^1500$', value: 'nl/320-1500' }
-        - { regex: '^25000$', value: 'nl/320-25000' }
+        - { exact: '1500', value: 'nl/320-1500' }
+        - { exact: '25000', value: 'nl/320-25000' }
       default: 'nl/320-unknown'
     tags:
       - { tag: 'railway:signal:electricity', value: 'NL:320' }
@@ -4062,9 +3986,9 @@ features:
     icon:
       match: 'railway:signal:main_repeated:states'
       cases:
-        - { regex: '^PL-PKP:sp1;PL-PKP:sp4$', value: 'pl/sp1-2' }
-        - { regex: '^(.*;)?PL-PKP:sp2(;.*)?$', value: 'pl/sp2-3' }
-      default: 'pl/sp1-3'
+        - { exact: 'PL-PKP:sp2', value: 'pl/sp2-3' }
+        - { exact: 'PL-PKP:sp3', value: 'pl/sp1-3' }
+      default: 'pl/sp1-2'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'PL-PKP:sp' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -4074,11 +3998,11 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs2$', value: 'pl/wetcs2' }
-        - { regex: '^PL-PKP:wetcs3$', value: 'pl/wetcs3' }
+        - { exact: 'PL-PKP:wetcs2', value: 'pl/wetcs2' }
+        - { exact: 'PL-PKP:wetcs3', value: 'pl/wetcs3' }
       default: 'pl/wetcs1'
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs1', 'PL-PKP:wetcs2', 'PL-PKP:wetcs3'] }
+      - { tag: 'railway:signal:train_protection', any: ['PL-PKP:wetcs1', 'PL-PKP:wetcs2', 'PL-PKP:wetcs3'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Wskaźniki ETCS L1
@@ -4086,11 +4010,11 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs5$', value: 'pl/wetcs5' }
-        - { regex: '^PL-PKP:wetcs6$', value: 'pl/wetcs6' }
+        - { exact: 'PL-PKP:wetcs5', value: 'pl/wetcs5' }
+        - { exact: 'PL-PKP:wetcs6', value: 'pl/wetcs6' }
       default: 'pl/wetcs4'
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs4', 'PL-PKP:wetcs5', 'PL-PKP:wetcs6'] }
+      - { tag: 'railway:signal:train_protection', any: ['PL-PKP:wetcs4', 'PL-PKP:wetcs5', 'PL-PKP:wetcs6'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Wskaźniki ETCS L2
@@ -4098,11 +4022,11 @@ features:
     icon:
       match: 'railway:signal:train_protection'
       cases:
-        - { regex: '^PL-PKP:wetcs8$', value: 'pl/wetcs8' }
-        - { regex: '^PL-PKP:wetcs9$', value: 'pl/wetcs9' }
+        - { exact: 'PL-PKP:wetcs8', value: 'pl/wetcs8' }
+        - { exact: 'PL-PKP:wetcs9', value: 'pl/wetcs9' }
       default: 'pl/wetcs7'
     tags:
-      - { tag: 'railway:signal:train_protection', values: ['PL-PKP:wetcs7', 'PL-PKP:wetcs8', 'PL-PKP:wetcs9'] }
+      - { tag: 'railway:signal:train_protection', any: ['PL-PKP:wetcs7', 'PL-PKP:wetcs8', 'PL-PKP:wetcs9'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Wskaźnik zatrzymania ETCS (WETCS10)
@@ -4110,8 +4034,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'pl/wetcs10-right' }
-        - { regex: '^overhead$', value: 'pl/wetcs10-down' }
+        - { exact: 'left', value: 'pl/wetcs10-right' }
+        - { exact: 'overhead', value: 'pl/wetcs10-down' }
       default: 'pl/wetcs10-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs10' }
@@ -4123,8 +4047,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { regex: '^left$', value: 'pl/wetcs11-right' }
-        - { regex: '^overhead$', value: 'pl/wetcs11-down' }
+        - { exact: 'left', value: 'pl/wetcs11-right' }
+        - { exact: 'overhead', value: 'pl/wetcs11-down' }
       default: 'pl/wetcs11-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'PL-PKP:wetcs11' }
@@ -4143,9 +4067,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11a-dwarf-II' }
-        - { regex: '^III$', value: 'pl/w11a-dwarf-III' }
-        - { regex: '^IV$', value: 'pl/w11a-dwarf-IV' }
+        - { exact: 'II', value: 'pl/w11a-dwarf-II' }
+        - { exact: 'III', value: 'pl/w11a-dwarf-III' }
+        - { exact: 'IV', value: 'pl/w11a-dwarf-IV' }
       default: 'pl/w11a-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
@@ -4157,9 +4081,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11a-normal-II' }
-        - { regex: '^III$', value: 'pl/w11a-normal-III' }
-        - { regex: '^IV$', value: 'pl/w11a-normal-IV' }
+        - { exact: 'II', value: 'pl/w11a-normal-II' }
+        - { exact: 'III', value: 'pl/w11a-normal-III' }
+        - { exact: 'IV', value: 'pl/w11a-normal-IV' }
       default: 'pl/w11a-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11a' }
@@ -4170,9 +4094,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11b-dwarf-II' }
-        - { regex: '^III$', value: 'pl/w11b-dwarf-III' }
-        - { regex: '^IV$', value: 'pl/w11b-dwarf-IV' }
+        - { exact: 'II', value: 'pl/w11b-dwarf-II' }
+        - { exact: 'III', value: 'pl/w11b-dwarf-III' }
+        - { exact: 'IV', value: 'pl/w11b-dwarf-IV' }
       default: 'pl/w11b-dwarf-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
@@ -4184,9 +4108,9 @@ features:
     icon:
       match: 'railway:signal:distant:type'
       cases:
-        - { regex: '^II$', value: 'pl/w11b-normal-II' }
-        - { regex: '^III$', value: 'pl/w11b-normal-III' }
-        - { regex: '^IV$', value: 'pl/w11b-normal-IV' }
+        - { exact: 'II', value: 'pl/w11b-normal-II' }
+        - { exact: 'III', value: 'pl/w11b-normal-III' }
+        - { exact: 'IV', value: 'pl/w11b-normal-IV' }
       default: 'pl/w11b-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:w11b' }
@@ -4221,8 +4145,8 @@ features:
     icon:
       match: 'railway:signal:minor:states'
       cases:
-        - { regex: '^PL-PKP:s1$', value: 'pl/z-1-s1' }
-      default: 'pl/z-2-s1'
+        - { any: ['PL-PKP:z2', 'PL-PKP:ms2'], value: 'pl/z-2-s1' }
+      default: 'pl/z-1-s1'
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
@@ -4239,11 +4163,11 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { regex: '^PL-PKP:os1;PL-PKP:os4$', value: 'pl/os1-1' }
-      default: 'pl/os1-2'
+        - { any: ['PL-PKP:os2', 'PL-PKP:os3'], value: 'pl/os1-2' }
+      default: 'pl/os1-1'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
-      - { tag: 'railway:signal:distant:form', values: ['light', 'semaphore'] }
+      - { tag: 'railway:signal:distant:form', any: ['light', 'semaphore'] }
 
   - description: Tarcze ostrzegawcze przejazdowe (ToP)
     country: PL
@@ -4264,8 +4188,8 @@ features:
     icon:
       match: 'railway:signal:shunting:states'
       cases:
-        - { regex: '^PL-PKP:ms1$', value: 'pl/ms-1' }
-      default: 'pl/ms-2'
+        - { exact: 'PL-PKP:ms2', value: 'pl/ms-2' }
+      default: 'pl/ms-1'
     tags:
       - { tag: 'railway:signal:shunting', value: 'PL-PKP:ms' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
@@ -4275,18 +4199,18 @@ features:
     icon:
       match: 'railway:signal:distant'
       cases:
-        - { regex: '^PL-PKP:od$', value: 'pl/od' }
-        - { regex: '^PL-PKP:ot$', value: 'pl/ot' }
+        - { exact: 'PL-PKP:od', value: 'pl/od' }
+        - { exact: 'PL-PKP:ot', value: 'pl/ot' }
       default: 'pl/on'
     tags:
-      - { tag: 'railway:signal:distant', values: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
+      - { tag: 'railway:signal:distant', any: ['PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot'] }
 
   - description: Tarcze rozrządowe (Tr, kształtowa i świetlna)
     country: PL
     icon:
       match: 'railway:signal:humping:form'
       cases:
-        - { regex: '^light$', value: 'pl/rt3-light' }
+        - { exact: 'light', value: 'pl/rt3-light' }
       default: 'pl/rt3-semaphore'
     tags:
       - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
@@ -4318,7 +4242,7 @@ features:
       - { regex: '^[A-ZŁ]$', value: 'pl/w2-{}', example: 'pl/w2-{K}' }
       default: 'pl/w2-{W}'
     tags:
-      - { tag: 'railway:signal:route', values: ['PL-PKP:w2', 'PL-PKP:w26a', 'PL-PKP:w26b'] }
+      - { tag: 'railway:signal:route', any: ['PL-PKP:w2', 'PL-PKP:w26a', 'PL-PKP:w26b'] }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Wskaźnik unieważnienia (W3)
@@ -4326,7 +4250,7 @@ features:
     icon: { default: 'pl/w3' }
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:w3' }
-      - { tag: 'railway:signal:minor:form', values: ['light', 'semaphore'] }
+      - { tag: 'railway:signal:minor:form', any: ['light', 'semaphore'] }
 
   - description: Wskaźnik zatrzymania (W4)
     country: PL
@@ -4347,12 +4271,12 @@ features:
     icon:
       match: 'railway:signal:whistle'
       cases:
-      - { regex: '^PL-PKP:w6a$', value: 'pl/w6a' }
-      - { regex: '^PL-PKP:w6b$', value: 'pl/w6b' }
-      - { regex: '^PL-PKP:w7$', value: 'pl/w7' }
+      - { exact: 'PL-PKP:w6a', value: 'pl/w6a' }
+      - { exact: 'PL-PKP:w6b', value: 'pl/w6b' }
+      - { exact: 'PL-PKP:w7', value: 'pl/w7' }
       default: 'pl/w6'
     tags:
-      - { tag: 'railway:signal:whistle', values: ['PL-PKP:w6', 'PL-PKP:w6a', 'PL-PKP:w6b', 'PL-PKP:w7'] }
+      - { tag: 'railway:signal:whistle', any: ['PL-PKP:w6', 'PL-PKP:w6a', 'PL-PKP:w6b', 'PL-PKP:w7'] }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Wskaźniki odcinka z popychaniem (W10a i W10b)
@@ -4360,10 +4284,10 @@ features:
     icon:
       match: 'railway:signal:helper_engine'
       cases:
-      - { regex: '^PL-PKP:w10b$', value: 'pl/w10b' }
+      - { exact: 'PL-PKP:w10b', value: 'pl/w10b' }
       default: 'pl/w10a'
     tags:
-      - { tag: 'railway:signal:helper_engine', values: ['PL-PKP:w10a', 'PL-PKP:w10b'] }
+      - { tag: 'railway:signal:helper_engine', any: ['PL-PKP:w10a', 'PL-PKP:w10b'] }
       - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
 
   - description: Wskaźnik przejazdowy (W11p)
@@ -4371,7 +4295,7 @@ features:
     icon:
       match: 'railway:signal:crossing:repeated'
       cases:
-        - { regex: '^yes$', value: 'pl/w11p-2' }
+        - { value: 'pl/w11p-2' }
       default: 'pl/w11p-1'
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'PL-PKP:w11p' }
@@ -4410,11 +4334,11 @@ features:
     icon:
       match: 'railway:signal:short_route'
       cases:
-        - { regex: '^PL-PKP:w20$', value: 'pl/w20' }
-        - { regex: '^PL-PKP:w19;PL-PKP:w20$', value: 'pl/w19-20' }
+        - { exact: 'PL-PKP:w20', value: 'pl/w20' }
+        - { exact: 'PL-PKP:w19;PL-PKP:w20', value: 'pl/w19-20' }
       default: 'pl/w19'
     tags:
-      - { tag: 'railway:signal:short_route', values: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
+      - { tag: 'railway:signal:short_route', any: ['PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20'] }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
@@ -4556,7 +4480,7 @@ features:
       default: 'pl/w21-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
-      - { tag: 'railway:signal:speed_limit:form', values: ['light', 'sign'] }
+      - { tag: 'railway:signal:speed_limit:form', any: ['light', 'sign'] }
 
   - description: Wskaźnik zmiany prędkości (W27a)
     country: PL
@@ -4610,8 +4534,8 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:sr3(;.*)?$', value: 'pl/sr3' }
-        - { regex: '^PL-PKP:sr1;PL-PKP:sr2$', value: 'pl/sr2' }
+        - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
+        - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
       default: 'pl/sr1'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
@@ -4622,8 +4546,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-4' }
-        - { regex: '^PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s5-3' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-4' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s5-3' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s5-3' }
       default: 'pl/s2-3'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4635,9 +4563,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1a(;.*)?$', value: 'pl/s1a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[23];(.*;)?PL-PKP:s[45](;.*)?$', value: 'pl/s1-3' }
-        - { regex: '^(.*;)?PL-PKP:s1;PL-PKP:s[45](;.*)?$', value: 'pl/s1-2' }
+        - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s4'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s4'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s2', 'PL-PKP:s5'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s3', 'PL-PKP:s5'], value: 'pl/s1-3' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s4'], value: 'pl/s1-2' }
+        - { all: ['PL-PKP:s1', 'PL-PKP:s5'], value: 'pl/s1-2' }
       default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -4648,16 +4580,31 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s6-10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s6-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a;(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s10a-5' }
-        - { regex: '^(.*;)?PL-PKP:s1[01];(.*;)?PL-PKP:s1[23](;.*)?$', value: 'pl/s10-5' }
-        - { regex: '^(.*;)?PL-PKP:s[67];(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s6-10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s[67](;.*)?$', value: 'pl/s6-4' }
-        - { regex: '^(.*;)?PL-PKP:s[89](;.*)?$', value: 'pl/s9-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-4' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-4' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s12a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s12a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s13a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s13a'], value: 'pl/s6-10a-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s8'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s8'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s9'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s9'], value: 'pl/s6-5' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s12a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s12a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s13a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s13a'], value: 'pl/s10a-5' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s12'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s12'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s10', 'PL-PKP:s13'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s11', 'PL-PKP:s13'], value: 'pl/s10-5' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s10a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s10a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s11a'], value: 'pl/s6-10a-4' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s11a'], value: 'pl/s6-10a-4' }
+        - { any: ['PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-4' }
+        - { any: ['PL-PKP:s8', 'PL-PKP:s9'], value: 'pl/s9-4' }
+        - { any: ['PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-4' }
+        - { any: ['PL-PKP:s12a', 'PL-PKP:s13a'], value: 'pl/s13a-4' }
+        - { any: ['PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-4' }
       default: 'pl/s13-4'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
@@ -4669,9 +4616,9 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { regex: '^(.*;)?PL-PKP:s1[01]a(;.*)?$', value: 'pl/s10a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[23]a(;.*)?$', value: 'pl/s13a-3' }
-        - { regex: '^(.*;)?PL-PKP:s1[01](;.*)?$', value: 'pl/s10-3' }
+        - { any: ['PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-3' }
+        - { any: ['PL-PKP:s12a', 'PL-PKP:s13a'], value: 'pl/s13a-3' }
+        - { any: ['PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-3' }
       default: 'pl/s13-3'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
@@ -4682,11 +4629,11 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we1b' }
-        - { regex: '^left$', value: 'pl/we1c' }
+        - { exact: 'right', value: 'pl/we1b' }
+        - { exact: 'left', value: 'pl/we1c' }
       default: 'pl/we1a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we1a', 'PL-PKP:we1b', 'PL-PKP:we1c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we1a', 'PL-PKP:we1b', 'PL-PKP:we1c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
@@ -4695,11 +4642,11 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we2b' }
-        - { regex: '^left$', value: 'pl/we2c' }
+        - { exact: 'right', value: 'pl/we2b' }
+        - { exact: 'left', value: 'pl/we2c' }
       default: 'pl/we2a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we2a', 'PL-PKP:we2b', 'PL-PKP:we2c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we2a', 'PL-PKP:we2b', 'PL-PKP:we2c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
@@ -4708,11 +4655,11 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we3b$', value: 'pl/we3b' }
-        - { regex: '^PL-PKP:we3c$', value: 'pl/we3c' }
+        - { exact: 'PL-PKP:we3b', value: 'pl/we3b' }
+        - { exact: 'PL-PKP:we3c', value: 'pl/we3c' }
       default: 'pl/we3a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we3a', 'PL-PKP:we3b', 'PL-PKP:we3c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we3a', 'PL-PKP:we3b', 'PL-PKP:we3c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -4721,11 +4668,11 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we4b' }
-        - { regex: '^left$', value: 'pl/we4c' }
+        - { exact: 'right', value: 'pl/we4b' }
+        - { exact: 'left', value: 'pl/we4c' }
       default: 'pl/we4a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we4a', 'PL-PKP:we4b', 'PL-PKP:we4c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we4a', 'PL-PKP:we4b', 'PL-PKP:we4c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
@@ -4734,11 +4681,11 @@ features:
     icon:
       match: 'railway:signal:electricity:turn_direction'
       cases:
-        - { regex: '^right$', value: 'pl/we8b' }
-        - { regex: '^left$', value: 'pl/we8c' }
+        - { exact: 'right', value: 'pl/we8b' }
+        - { exact: 'left', value: 'pl/we8c' }
       default: 'pl/we8a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we8a', 'PL-PKP:we8b', 'PL-PKP:we8c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we8a', 'PL-PKP:we8b', 'PL-PKP:we8c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -4747,11 +4694,11 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we9b$', value: 'pl/we9b' }
-        - { regex: '^PL-PKP:we9c$', value: 'pl/we9c' }
+        - { exact: 'PL-PKP:we9b', value: 'pl/we9b' }
+        - { exact: 'PL-PKP:we9c', value: 'pl/we9c' }
       default: 'pl/we9a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we9a', 'PL-PKP:we9b', 'PL-PKP:we9c'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we9a', 'PL-PKP:we9b', 'PL-PKP:we9c'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
@@ -4760,14 +4707,14 @@ features:
     icon:
       match: 'railway:signal:electricity'
       cases:
-        - { regex: '^PL-PKP:we10b$', value: 'pl/we10b' }
-        - { regex: '^PL-PKP:we10c$', value: 'pl/we10c' }
-        - { regex: '^PL-PKP:we10d$', value: 'pl/we10d' }
-        - { regex: '^PL-PKP:we10e$', value: 'pl/we10e' }
-        - { regex: '^PL-PKP:we10f$', value: 'pl/we10f' }
+        - { exact: 'PL-PKP:we10b', value: 'pl/we10b' }
+        - { exact: 'PL-PKP:we10c', value: 'pl/we10c' }
+        - { exact: 'PL-PKP:we10d', value: 'pl/we10d' }
+        - { exact: 'PL-PKP:we10e', value: 'pl/we10e' }
+        - { exact: 'PL-PKP:we10f', value: 'pl/we10f' }
       default: 'pl/we10a'
     tags:
-      - { tag: 'railway:signal:electricity', values: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
+      - { tag: 'railway:signal:electricity', any: ['PL-PKP:we10a', 'PL-PKP:we10b', 'PL-PKP:we10c', 'PL-PKP:we10d', 'PL-PKP:we10e', 'PL-PKP:we10f'] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_change' }
 
@@ -4802,7 +4749,7 @@ features:
     # TODO support icons for each variant
     icon: { default: 'se/main-block' }
     tags:
-      - { tag: 'railway:signal:main', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
+      - { tag: 'railway:signal:main', any: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Linjeplatssignal (main)
@@ -4817,7 +4764,7 @@ features:
     # TODO support icons for each variant
     icon: { default: 'se/main' }
     tags:
-      - { tag: 'railway:signal:main', values: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
+      - { tag: 'railway:signal:main', any: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Mellanblocksignal, Utfartsblocksignal (combined)
@@ -4825,7 +4772,7 @@ features:
     # TODO support icons for each variant
     icon: { default: 'se/combined-block' }
     tags:
-      - { tag: 'railway:signal:combined', values: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
+      - { tag: 'railway:signal:combined', any: ['SE:Utfartsblocksignal', 'SE:Mellanblocksignal'] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: Infartssignal, Mellansignal, Utfartssignal (combined)
@@ -4833,7 +4780,7 @@ features:
     # TODO support icons for each variant
     icon: { default: 'se/combined' }
     tags:
-      - { tag: 'railway:signal:combined', values: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
+      - { tag: 'railway:signal:combined', any: ['SE:Huvudsignal', 'SE:Utfartssignal', 'SE:Infartssignal', 'SE:Mellansignal'] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: Linjeplatssignal (combined)

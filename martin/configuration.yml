@@ -179,92 +179,16 @@ postgres:
 
     # --- Speed --- #
 
-    speed_railway_signals:
-      schema: public
-      table: speed_railway_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        feature0: string
-        feature1: string
-        type: string
-        ref: string
-        caption: string
-        azimuth: number
-        direction_both: boolean
-        deactivated: boolean
-        speed_limit_speed: string
-        speed_limit_distant_speed: string
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
+    # speed_railway_signals, see function below
 
     # --- Signals --- #
 
-    signals_railway_signals:
-      schema: public
-      table: signals_railway_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        ref: string
-        ref_multiline: string
-        caption: string
-        feature0: string
-        feature1: string
-        feature2: string
-        feature3: string
-        feature4: string
-        deactivated: boolean
-        azimuth: number
-        direction_both: boolean
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     # signals_signal_boxes, see function below
+    # signals_railway_signals, see function below
 
     # --- Electrification --- #
 
-    electrification_signals:
-      schema: public
-      table: electrification_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        feature: string
-        azimuth: number
-        direction_both: boolean
-        ref: string
-        caption: string
-        deactivated: boolean
-        frequency: number
-        voltage: integer
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
+    # electrification_signals, see function below
 
   functions:
 
@@ -282,6 +206,13 @@ postgres:
       function: standard_railway_symbols
       minzoom: 10
 
+    # --- Speed --- #
+
+    speed_railway_signals:
+      schema: public
+      function: speed_railway_signals
+      minzoom: 13
+
     # --- Signals --- #
 
     signals_signal_boxes:
@@ -289,6 +220,18 @@ postgres:
       function: signals_signal_boxes
       minzoom: 8
       maxzoom: 14
+
+    signals_railway_signals:
+      schema: public
+      function: signals_railway_signals
+      minzoom: 13
+
+    # --- Electrification --- #
+
+    electrification_signals:
+      schema: public
+      function: electrification_signals
+      minzoom: 13
 
 fonts:
   - /config/fonts
