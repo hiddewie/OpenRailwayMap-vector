@@ -4445,13 +4445,13 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|2[0-4])0$', value: 'pl/w8-{}', example: 'pl/w8-{60}' }
+        - { regex: '^(1[0-9]|2[0-4])0|[1-9][05]$', value: 'pl/w8-{}', example: 'pl/w8-{60}' }
       default: 'pl/w8-empty'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'PL-PKP:w8' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Wskaźnik odcinka ograniczonej prędkości czoło pociągu (W9)
+  - description: Wskaźnik odcinka ograniczonej prędkości (czoło pociągu) (W9)
     country: PL
     icon: { default: 'pl/w9-C' }
     tags:
@@ -4464,7 +4464,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|2[0-4])0$', value: 'pl/w9-{}', example: 'pl/w9-{60}' }
+        - { regex: '^(1[0-9]|2[0-4])0|[1-9][05]$', value: 'pl/w9-{}', example: 'pl/w9-{60}' }
       default: 'pl/w9-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w9' }
@@ -4488,7 +4488,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([1-9]|1[0-9]|2[0-5])0$', value: 'pl/w27a-{}', example: 'pl/w27a-{80}' }
+        - { regex: '^(1[0-9]|2[0-4])0|[1-9][05]$', value: 'pl/w27a-{}', example: 'pl/w27a-{80}' }
       default: 'pl/w27a-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w27a' }
@@ -4702,7 +4702,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
-  - description: Wskaźniki zmiany systemu zasilania (We10a, We10b, We10c, We10d, We10e, We10f)
+  - description: Wskaźniki zmiany systemu zasilania (We10)
     country: PL
     icon:
       match: 'railway:signal:electricity'
