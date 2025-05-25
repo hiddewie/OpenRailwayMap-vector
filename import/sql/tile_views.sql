@@ -248,6 +248,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS station_size,
     name,
     CASE
+      WHEN state != 'present' THEN 100
       WHEN feature = 'station' AND station = 'light_rail' THEN 450
       WHEN feature = 'station' AND station = 'subway' THEN 400
       WHEN feature = 'station' THEN 800
