@@ -238,7 +238,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     center as way,
     railway_ref,
-    railway,
+    feature,
+    state,
     station,
     CASE
       WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
@@ -247,18 +248,18 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS station_size,
     name,
     CASE
-      WHEN railway = 'station' AND station = 'light_rail' THEN 450
-      WHEN railway = 'station' AND station = 'subway' THEN 400
-      WHEN railway = 'station' THEN 800
-      WHEN railway = 'halt' AND station = 'light_rail' THEN 500
-      WHEN railway = 'halt' THEN 550
-      WHEN railway = 'tram_stop' THEN 300
-      WHEN railway = 'service_station' THEN 600
-      WHEN railway = 'yard' THEN 700
-      WHEN railway = 'junction' THEN 650
-      WHEN railway = 'spur_junction' THEN 420
-      WHEN railway = 'site' THEN 600
-      WHEN railway = 'crossover' THEN 700
+      WHEN feature = 'station' AND station = 'light_rail' THEN 450
+      WHEN feature = 'station' AND station = 'subway' THEN 400
+      WHEN feature = 'station' THEN 800
+      WHEN feature = 'halt' AND station = 'light_rail' THEN 500
+      WHEN feature = 'halt' THEN 550
+      WHEN feature = 'tram_stop' THEN 300
+      WHEN feature = 'service_station' THEN 600
+      WHEN feature = 'yard' THEN 700
+      WHEN feature = 'junction' THEN 650
+      WHEN feature = 'spur_junction' THEN 420
+      WHEN feature = 'site' THEN 600
+      WHEN feature = 'crossover' THEN 700
       ELSE 50
     END AS rank,
     uic_ref,
@@ -282,7 +283,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     way,
     id,
     osm_id,
-    railway,
+    feature,
+    state,
     station,
     station_size,
     railway_ref as label,
@@ -298,7 +300,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   FROM
     railway_text_stations
   WHERE
-    railway = 'station'
+    feature = 'station'
     AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
     AND railway_ref IS NOT NULL
     AND route_count >= 20;
@@ -308,7 +310,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     way,
     id,
     osm_id,
-    railway,
+    feature,
+    state,
     station,
     station_size,
     railway_ref as label,
@@ -324,7 +327,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   FROM
     railway_text_stations
   WHERE
-    railway = 'station'
+    feature = 'station'
     AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
     AND railway_ref IS NOT NULL
     AND route_count >= 8
@@ -336,7 +339,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     way,
     id,
     osm_id,
-    railway,
+    feature,
+    state,
     station,
     station_size,
     railway_ref as label,
@@ -360,7 +364,8 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     id,
     nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     buffered as way,
-    railway,
+    feature,
+    state,
     station,
     railway_ref as label,
     name,

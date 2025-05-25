@@ -228,8 +228,8 @@ local stations = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
-    { column = 'railway', type = 'text' },
     { column = 'feature', type = 'text' },
+    { column = 'state', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'station', type = 'text' },
@@ -568,6 +568,26 @@ function semicolon_to_record_separator(value)
   return value and value:gsub(";", "\u{001E}") or nil
 end
 
+local railway_state_tags = {
+  present = 'railway',
+  construction = 'construction:railway',
+  proposed = 'proposed:railway',
+  disused = 'disused:railway',
+  abandoned = 'abandoned:railway',
+  preserved = 'preserved:railway',
+  -- Razed is not included
+}
+function railway_feature_and_state(railway_value_func)
+  for state, railway_tag in ipairs(railway_state_tags) do
+    local feature = railway_value_func(railway_tag)
+    if feature then
+      return feature, state
+    end
+  end
+
+  return nil, nil
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -575,6 +595,7 @@ local railway_position_values = osm2pgsql.make_check_values_func({'milestone', '
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
 local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
+
 function osm2pgsql.process_node(object)
   local tags = object.tags
   local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
@@ -597,24 +618,8 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  -- TODO parse feature and state properly
-  if railway_station_values(tags['railway'])
-     or railway_station_values(tags['construction:railway'])
-     or railway_station_values(tags['proposed:railway'])
-     or railway_station_values(tags['disused:railway'])
-     or railway_station_values(tags['abandoned:railway'])
-     or railway_station_values(tags['razed:railway'])
-     or railway_station_values(tags['preserved:railway'])
-   then
-
-    local feature = tags['railway']
-      or tags['construction:railway']
-      or tags['proposed:railway']
-      or tags['disused:railway']
-      or tags['abandoned:railway']
-      or tags['razed:railway']
-      or tags['preserved:railway']
-
+  local station_feature, station_state = railway_feature_and_state(railway_station_values)
+  if station_feature then
     -- Gather name tags for searching
     local name_tags = {}
     for key, value in pairs(tags) do
@@ -630,8 +635,8 @@ function osm2pgsql.process_node(object)
       for station in string.gmatch(tags.station, '[^;]+') do
         stations:insert({
           way = object:as_point(),
-          railway = tags['railway'],
-          feature = feature,
+          feature = station_feature,
+          state = station_state,
           name = tags.name or tags.short_name,
           ref = tags.ref,
           station = station,
@@ -653,7 +658,8 @@ function osm2pgsql.process_node(object)
       stations:insert({
         way = object:as_point(),
         railway = tags['railway'],
-        feature = feature,
+        feature = station_feature,
+        state = station_state,
         name = tags.name or tags.short_name,
         ref = tags.ref,
         station = nil,

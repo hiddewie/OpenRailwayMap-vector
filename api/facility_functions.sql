@@ -156,7 +156,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         DISTINCT ON (osm_ids)
         r.osm_ids,
         r.name,
-        r.railway,
+        r.feature,
+        r.state,
         r.railway_ref,
         r.station,
         r.uic_ref,
@@ -209,7 +210,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
         DISTINCT ON (osm_ids)
         r.osm_ids,
         r.name,
-        r.railway,
+        r.feature,
+        r.state,
         r.railway_ref,
         r.station,
         r.uic_ref,

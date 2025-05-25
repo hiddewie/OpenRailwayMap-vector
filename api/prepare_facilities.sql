@@ -5,7 +5,8 @@ CREATE TABLE openrailwaymap_ref AS
   SELECT
     ARRAY[osm_id] AS osm_ids,
     name,
-    railway,
+    feature,
+    state,
     station,
     ref,
     railway_ref,
@@ -22,7 +23,6 @@ CREATE TABLE openrailwaymap_ref AS
     way AS geom
   FROM stations
   WHERE
-    -- TODO support other states as well
     (railway_ref IS NOT NULL OR uic_ref IS NOT NULL);
 
 CREATE INDEX openrailwaymap_ref_railway_ref_idx

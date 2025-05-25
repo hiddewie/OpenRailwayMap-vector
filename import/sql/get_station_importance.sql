@@ -86,7 +86,7 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
     FROM stations AS s
     JOIN platforms_and_their_routes_clustered AS sprc
       ON (ST_DWithin(s.way, sprc.geom, 60))
-    WHERE s.railway IN ('station', 'halt', 'tram_stop')
+    WHERE s.feature IN ('station', 'halt', 'tram_stop')
 
     UNION ALL
 
@@ -104,12 +104,13 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 -- Clustered stations without route counts
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
-    row_number() over (order by name, station, railway_ref, uic_ref, railway) as id,
+    row_number() over (order by name, station, railway_ref, uic_ref, feature) as id,
     name,
     station,
     railway_ref,
     uic_ref,
-    railway,
+    feature,
+    state,
     array_agg(facilities.id) as station_ids,
     ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way)) ) as center,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
@@ -117,10 +118,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   FROM (
     SELECT
       *,
-      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
+      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
     FROM stations
   ) AS facilities
-  GROUP BY cluster_id, name, station, railway_ref, uic_ref, railway;
+  GROUP BY cluster_id, name, station, railway_ref, uic_ref, feature, state;
 
 CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
   ON stations_clustered
@@ -190,13 +191,14 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     any_value(clustered.station) as station,
     any_value(clustered.railway_ref) as railway_ref,
     any_value(clustered.uic_ref) as uic_ref,
-    any_value(clustered.railway) as railway,
+    any_value(clustered.feature) as feature,
+    any_value(clustered.state) as state,
     any_value(clustered.count) as count
   FROM (
     SELECT
       id,
       UNNEST(sc.station_ids) as station_id,
-      name, station, railway_ref, uic_ref, railway, station_ids, center, buffered, count
+      name, station, railway_ref, uic_ref, feature, state, station_ids, center, buffered, count
     FROM stations_clustered sc
   ) clustered
   JOIN stations s
