@@ -224,7 +224,7 @@ const railwayLineFeatures = {
 
 // TODO move tram / metro stops to stations
 const stationFeatures = {
-  featureProperty: 'railway',
+  featureProperty: 'feature',
   labelProperty: 'name',
   featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
@@ -233,6 +233,9 @@ const stationFeatures = {
   properties: {
     station: {
       name: 'Type',
+    },
+    state: {
+      name: 'State',
     },
     label: {
       name: 'Reference',

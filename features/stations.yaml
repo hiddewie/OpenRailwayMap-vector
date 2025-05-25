@@ -4,6 +4,8 @@ features:
     example:
       label: Gd
       name: Gouda
+      feature: station
+      state: present
       station_size: normal
     variants:
       - description: (large)
@@ -23,6 +25,8 @@ features:
     example:
       name: Deventer
       station_size: small
+      feature: halt
+      state: present
 
   - description: Tram stop
     feature: tram_stop
@@ -31,6 +35,8 @@ features:
       name: Llacuna
       count: 2
       station_size: small
+      feature: tram_stop
+      state: present
 
   - description: Service station
     feature: service_station
@@ -38,6 +44,8 @@ features:
     example:
       name: Wiederitzsch
       station_size: small
+      feature: service_station
+      state: present
 
   - description: Railway yard
     feature: yard
@@ -46,6 +54,8 @@ features:
       label: Św
       name: Świerże Górne
       station_size: small
+      feature: yard
+      state: present
 
   - description: Junction
     feature: junction
@@ -53,6 +63,8 @@ features:
     example:
       name: Kijfhoek Zuid
       station_size: small
+      feature: junction
+      state: present
 
   - description: Spur junction
     feature: spur_junction
@@ -60,6 +72,8 @@ features:
     example:
       name: Neusüdende
       station_size: small
+      feature: spur_junction
+      state: present
 
   - description: Railway site
     feature: site
@@ -67,6 +81,8 @@ features:
     example:
       name: Pápateszér
       station_size: small
+      feature: site
+      state: present
 
   - description: Crossover
     feature: crossover
@@ -74,3 +90,5 @@ features:
     example:
       name: Przemiarki
       station_size: small
+      feature: crossover
+      state: present
