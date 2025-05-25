@@ -3881,7 +3881,7 @@ const legendData = {
             railway: feature.feature,
           },
           variants: (feature.variants || []).map(variant => ({
-            legend: variant.legend,
+            legend: variant.description,
             properties: variant.example,
           })),
         })),
@@ -3897,24 +3897,31 @@ const legendData = {
             railway: feature.feature,
           },
           variants: (feature.variants || []).map(variant => ({
-            legend: variant.legend,
+            legend: variant.description,
             properties: variant.example,
           })),
         })),
     "openrailwaymap_standard-standard_railway_text_stations":
-      stations.features.map(feature => ({
-        legend: feature.description,
-        type: 'point',
-        minzoom: feature.minzoom,
-        properties: {
-          ...feature.example,
-          railway: feature.feature,
+      stations.features.flatMap(feature => [
+        {
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
+          properties: {
+            ...feature.example,
+            railway: feature.feature,
+          },
         },
-        variants: (feature.variants || []).map(variant => ({
-          legend: variant.legend,
-          properties: variant.example,
+        ...(feature.variants || []).map(variant => ({
+          legend: `${feature.description}: ${variant.description}`,
+          type: 'point',
+          minzoom: variant.minzoom ?? feature.minzoom,
+          properties: {
+            ...feature.example,
+            ...variant.example,
+          },
         })),
-      })),
+      ]),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
     "openrailwaymap_standard-standard_railway_turntables": [
       {

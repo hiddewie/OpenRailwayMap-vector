@@ -8,16 +8,29 @@ features:
       state: present
       station_size: normal
     variants:
-      - description: (large)
+      - description: large
         example:
           label: MH
           name: München
           station_size: large
-      - description: (small)
+      - description: small
+        minzoom: 10
         example:
           label: HMEL
           name: Melle
           station_size: small
+      - description: disused, abandoned, preserved
+        minzoom: 10
+        example:
+          name: "جرسيف"
+          station_size: small
+          state: disused
+      - description: construction, proposed
+        minzoom: 10
+        example:
+          name: "هدية"
+          station_size: small
+          state: construction
 
   - description: Halt
     feature: halt
@@ -51,8 +64,8 @@ features:
     feature: yard
     minzoom: 8
     example:
-      label: Św
-      name: Świerże Górne
+      label: KCM
+      name: Murray
       station_size: small
       feature: yard
       state: present
@@ -61,7 +74,8 @@ features:
     feature: junction
     minzoom: 10
     example:
-      name: Kijfhoek Zuid
+      label: Han
+      name: Haanrade
       station_size: small
       feature: junction
       state: present
