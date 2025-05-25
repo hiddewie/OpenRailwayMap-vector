@@ -95,6 +95,7 @@ postgres:
       srid: 3857
       geometry_column: way
       geometry_type: POINT
+      minzoom: 8
       properties:
         id: integer
         osm_id: string
