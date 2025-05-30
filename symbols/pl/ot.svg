@@ -1,7 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.327069" height="22" viewBox="0 0 12.327069 22">
-<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.303727" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.848334 8.000215 C 15.848334 12.334931 12.334931 15.848334 8.000215 15.848334 C 3.665498 15.848334 0.152095 12.334931 0.152095 8.000215 C 0.152095 3.665498 3.665498 0.152095 8.000215 0.152095 C 12.334931 0.152095 15.848334 3.665498 15.848334 8.000215 Z M 15.848334 8.000215 " transform="matrix(0.770487, 0, 0, 0.770487, 0, 0)"/>
-<path fill-rule="evenodd" fill="rgb(100%, 60%, 0%)" fill-opacity="1" stroke-width="0.607453" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 14.778596 8.000215 C 14.778596 11.74176 11.74176 14.778596 8.000215 14.778596 C 4.258669 14.778596 1.221833 11.74176 1.221833 8.000215 C 1.221833 4.258669 4.258669 1.221833 8.000215 1.221833 C 11.74176 1.221833 14.778596 4.258669 14.778596 8.000215 Z M 14.778596 8.000215 " transform="matrix(0.770487, 0, 0, 0.770487, 0, 0)"/>
-<path fill-rule="evenodd" fill="rgb(100%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(40%, 40%, 40%)" stroke-opacity="1" stroke-miterlimit="4" d="M 46.8994 37.98722 L 56.603587 37.988268 L 56.585967 85.125623 L 51.742829 90.739877 L 46.903542 85.125237 Z M 46.8994 37.98722 " transform="matrix(0.173874, -0.184781, 0.184781, 0.173874, -14.287193, 15.650977)"/>
-<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(40%, 40%, 40%)" stroke-opacity="1" stroke-miterlimit="4" d="M 49.024664 40.08854 L 54.470617 40.079896 L 54.46849 84.200809 L 51.74715 87.374572 L 49.022537 84.209454 Z M 49.024664 40.08854 " transform="matrix(0.173874, -0.184781, 0.184781, 0.173874, -14.287193, 15.650977)"/>
+<svg width="9.65" height="24" version="1.1" viewBox="0 0 9.65 24" xmlns="http://www.w3.org/2000/svg">
+ <path d="m4.825 9.558v7.559" fill="none" stroke="#c0c0c0" stroke-miterlimit="5" stroke-width="1.308"/>
+ <g>
+  <g fill-rule="evenodd">
+   <g>
+    <path d="m9.558 4.825c0 2.614-2.119 4.733-4.733 4.733-2.614 0-4.733-2.119-4.733-4.733 0-2.614 2.119-4.733 4.733-4.733 2.614 0 4.733 2.119 4.733 4.733z" fill="#fff" stroke="#000" stroke-width=".1832"/>
+    <path d="m8.913 4.825c0 2.257-1.832 4.088-4.088 4.088-2.257 0-4.088-1.832-4.088-4.088 0-2.257 1.832-4.088 4.088-4.088 2.257 0 4.088 1.832 4.088 4.088z" fill="#f90" stroke="#000" stroke-width=".3664"/>
+    <path d="m0.694 10.32 1.321-1.404 6.816 6.418 0.1529 1.465-1.471-0.06421z" fill="#f00" stroke="#c0c0c0" stroke-width=".103"/>
+    <path d="m1.287 10.29 0.74-0.7889 6.382 6.005 0.08868 0.8256-0.8287-0.03669z" fill="#fff" stroke="#c0c0c0" stroke-width=".103"/>
+   </g>
+   <path d="m5.73 10.49s0-0.8387 0.8387-0.8387c0.8387 0 0.8387 0.8387 0.8387 0.8387v1.397s0 0.8387-0.8387 0.8387c-0.8387 0-0.8387-0.6974-0.8387-0.6974z" fill="#c0c0c0" stroke-width=".6031"/>
+  </g>
+  <path d="m7.127 10.49c0 0.3086-0.2497 0.5584-0.5584 0.5584-0.3086 0-0.5584-0.2497-0.5584-0.5584 0-0.3086 0.2497-0.5584 0.5584-0.5584 0.3086 0 0.5584 0.2497 0.5584 0.5584z" fill="#f90" stroke-width=".6031"/>
+  <path d="m7.127 11.89c0 0.3086-0.2497 0.5584-0.5584 0.5584-0.3086 0-0.5584-0.2497-0.5584-0.5584 0-0.3086 0.2497-0.5584 0.5584-0.5584 0.3086 0 0.5584 0.2497 0.5584 0.5584z" fill="#00c85e" stroke-width=".6031"/>
+ </g>
+ <g transform="matrix(.474 0 0 .474 2.413 16.42)" stroke="#000">
+  <path transform="matrix(.05541 0 0 .05541 0 6.697)" d="m7.473-113h168.7v272.7h-168.7zm0 0" fill="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <path transform="matrix(.05541 0 0 .05541 0 6.697)" d="m24.75-113 66.34 108.5 69.02-107.5" fill="none" stroke-width="30"/>
+  <path transform="matrix(.05541 0 0 .05541 0 6.697)" d="m162.1 159.7-71.07-108.6-67.33 106.6" fill="none" stroke-width="30"/>
+ </g>
 </svg>
