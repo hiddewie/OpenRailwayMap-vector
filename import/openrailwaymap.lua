@@ -385,6 +385,24 @@ local railway_positions = osm2pgsql.define_table({
   },
 })
 
+local catenary = osm2pgsql.define_table({
+  name = 'catenary',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'way', type = 'geometry' },
+    { column = 'ref', type = 'text' },
+    { column = 'railway_position_exact', type = 'text' },
+    { column = 'structure', type = 'text' },
+    { column = 'supporting', type = 'text' },
+    { column = 'attachment', type = 'text' },
+    { column = 'tensioning', type = 'text' },
+    { column = 'insulator', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
+  },
+})
+
 local railway_switches = osm2pgsql.define_table({
   name = 'railway_switches',
   ids = { type = 'node', id_column = 'osm_id' },
@@ -796,6 +814,21 @@ function osm2pgsql.process_node(object)
       description = tags.description,
     })
   end
+
+  if tags.power == 'catenary_mast' then
+    catenary:insert({
+      way = object:as_point(),
+      ref = tags.ref,
+      railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
+      structure = tags.structure,
+      supporting = tags['catenary_mast:supporting'],
+      attachment = tags['catenary_mast:attachment'],
+      tensioning = tags.tensioning,
+      insulator = tags.insulator,
+      note = tags.note,
+      description = tags.description,
+    })
+  end
 end
 
 local max_segment_length = 10000
@@ -915,6 +948,21 @@ function osm2pgsql.process_way(object)
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
+    })
+  end
+
+  if tags.power == 'catenary_portal' then
+    catenary:insert({
+      way = object:as_linestring(),
+      ref = tags.ref,
+      railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
+      structure = tags.structure,
+      supporting = nil,
+      attachment = nil,
+      tensioning = tags.tensioning,
+      insulator = tags.insulator,
       note = tags.note,
       description = tags.description,
     })
