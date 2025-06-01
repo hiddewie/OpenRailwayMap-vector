@@ -195,6 +195,27 @@ postgres:
 
     # electrification_signals, see function below
 
+    catenary:
+      schema: public
+      table: electrification_catenary
+      srid: 3857
+      geometry_column: way
+      geometry_type: GEOMETRY
+      properties:
+        id: integer
+        osm_id: integer
+        osm_type: string
+        ref: string
+        feature: string
+        position: string
+        structure: string
+        supporting: string
+        attachment: string
+        tensioning: string
+        insulator: string
+        note: string
+        description: string
+
   functions:
 
     # --- Shared --- #

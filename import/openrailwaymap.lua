@@ -391,6 +391,7 @@ local catenary = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'geometry' },
+    { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'railway_position_exact', type = 'text' },
     { column = 'structure', type = 'text' },
@@ -819,6 +820,7 @@ function osm2pgsql.process_node(object)
     catenary:insert({
       way = object:as_point(),
       ref = tags.ref,
+      feature = 'mast',
       railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
       structure = tags.structure,
       supporting = tags['catenary_mast:supporting'],
@@ -957,6 +959,7 @@ function osm2pgsql.process_way(object)
     catenary:insert({
       way = object:as_linestring(),
       ref = tags.ref,
+      feature = 'portal',
       railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
       structure = tags.structure,
       supporting = nil,
