@@ -4140,16 +4140,17 @@ features:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
 
-  - description: Tarcza zaporowa świetlna
+  - description: Tarcza zaporowa świetlna (Tz)
     country: PL
     icon:
-      match: 'railway:signal:minor:states'
+      match: 'railway:signal:minor:substitute_signal'
       cases:
-        - { any: ['PL-PKP:z2', 'PL-PKP:ms2'], value: 'pl/z-2-s1' }
+        - { exact: 'PL-PKP:sz', value: 'pl/z-2-s1' }
       default: 'pl/z-1-s1'
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:minor:states', any: ['PL-PKP:s1', 'PL-PKP:s1;PL-PKP:ms2'] }
 
   - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
