@@ -129,6 +129,7 @@ const colors = {
     signals: {
       direction: '#a8d8bcff'
     },
+    catenary: 'blue',
   },
   dark: {
     text: {
@@ -214,6 +215,7 @@ const colors = {
     signals: {
       direction: '#a8d8bcff'
     },
+    catenary: 'blue',
   },
 };
 
@@ -3136,7 +3138,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           14, 2,
           15, 3,
         ],
-        'circle-color': 'blue',
+        'circle-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].catenary,
+        ],
       },
     },
     {
@@ -3147,7 +3152,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'catenary',
       filter: ['==', ['get', 'feature'], 'portal'],
       paint: {
-        'line-color': 'blue',
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].catenary,
+        ],
         'line-width': ['interpolate', ['exponential', 1.2], ['zoom'],
           14, 1.5,
           15, 2.0,
