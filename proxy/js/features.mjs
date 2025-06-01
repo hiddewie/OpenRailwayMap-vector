@@ -796,6 +796,49 @@ const features = {
       },
     },
   },
+  'openrailwaymap_electrification-catenary': {
+    featureProperty: 'feature',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      mast: {
+        name: 'Catenary mast',
+      },
+      portal: {
+        name: 'Catenary portal',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      position: {
+        name: 'Position',
+      },
+      structure: {
+        name: 'Structure',
+      },
+      supporting: {
+        name: 'Supporting',
+      },
+      attachment: {
+        name: 'Attachment',
+      },
+      tensioning: {
+        name: 'Tensioning',
+      },
+      insulator: {
+        name: 'Insulator',
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
 
   // Search results
 
