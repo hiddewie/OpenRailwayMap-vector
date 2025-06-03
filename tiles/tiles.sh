@@ -56,21 +56,21 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: speed"
 
   rm -f "$OUTPUT_DIR/speed.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source speed_railway_signals --output-file "$OUTPUT_DIR/speed.mbtiles"
+  $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source speed_railway_signals --output-file "$OUTPUT_DIR/speed.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/speed.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/speed.mbtiles"
 
   echo "Tiles: signals"
 
   rm -f "$OUTPUT_DIR/signals.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
+  $MARTIN --min-zoom 10 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/signals.mbtiles"
 
   echo "Tiles: electrification"
 
   rm -f "$OUTPUT_DIR/electrification.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source electrification_signals --output-file "$OUTPUT_DIR/electrification.mbtiles"
+  $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source electrification_signals,catenary --output-file "$OUTPUT_DIR/electrification.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/electrification.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/electrification.mbtiles"
 fi
