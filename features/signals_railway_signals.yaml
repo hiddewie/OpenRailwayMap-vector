@@ -4150,7 +4150,6 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
-      - { tag: 'railway:signal:minor:states', any: ['PL-PKP:s1', 'PL-PKP:s1;PL-PKP:ms2'] }
 
   - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
