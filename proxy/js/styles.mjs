@@ -2467,7 +2467,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       type: 'symbol',
       minzoom: 14,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_points',
+      'source-layer': 'transport_points_centroids',
       filter: ['let', 'date', defaultDate,
         ['all',
           ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['var', 'date']],
@@ -4535,7 +4535,7 @@ const legendData = {
         }
       },
     ],
-    'openhistoricalmap-transport_points': [
+    'openhistoricalmap-transport_points_centroids': [
       {
         legend: 'Station',
         properties: {

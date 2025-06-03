@@ -378,7 +378,7 @@ const features = {
       },
     },
   },
-  'openhistoricalmap-transport_points': {
+  'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
     labelProperty: 'name',
     featureLinks: featureLinks.openhistoricalmap,
