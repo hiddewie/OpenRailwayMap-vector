@@ -885,6 +885,20 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+  - description: Buffer stop (sign)
+    country: BE
+    icon: { default: 'be/RH-sign' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'BE:RH' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Buffer stop (light)
+    country: BE
+    icon: { default: 'be/RH-light' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'BE:RH' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+
   - description: Panto distant
     country: BE
     icon: { default: 'be/PBA' }
