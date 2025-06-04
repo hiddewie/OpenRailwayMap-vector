@@ -1018,6 +1018,13 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
+  - description: Contact line segmentation
+    country: BE
+    icon: { default: 'be/FLC' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'BE:SLC' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
   - description: train protection block markers (arrow)
     country: BE
     icon:
