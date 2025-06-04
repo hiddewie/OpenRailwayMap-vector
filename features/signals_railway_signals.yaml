@@ -31,6 +31,7 @@ tags:
   - { tag: 'railway:signal:distant:height', description: 'Distant height' }
   - { tag: 'railway:signal:distant:type', description: 'Distant type' }
   - { tag: 'railway:signal:distant:distance', description: 'Distant distance' }
+  - { tag: 'railway:signal:distant:regime', description: 'Distant regime' }
   - { tag: 'railway:signal:electricity', description: 'Electricity' }
   - { tag: 'railway:signal:electricity:type', description: 'Electricity type' }
   - { tag: 'railway:signal:electricity:form', description: 'Electricity form' }
@@ -50,6 +51,7 @@ tags:
   - { tag: 'railway:signal:main:states', description: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', description: 'Main substitute signal' }
   - { tag: 'railway:signal:main:PT_priority', description: 'Main PT priority' }
+  - { tag: 'railway:signal:main:regime', description: 'Main regime' }
   - { tag: 'railway:signal:main_repeated', description: 'Main repeated' }
   - { tag: 'railway:signal:main_repeated:form', description: 'Main repeated form' }
   - { tag: 'railway:signal:main_repeated:magnet', description: 'Main repeated magnet', type: boolean }
@@ -837,8 +839,22 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  # TODO opposite regime
-  - description: Grand Signal d'Arrêt
+  - description: Grand Signal d'Arrêt (opposite regime)
+    country: BE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'BE:RB', value: 'be/GSA-opposite-RB' }
+        - { exact: 'BE:2J', value: 'be/GSA-opposite-2J' }
+        - { exact: 'BE:VJV', value: 'be/GSA-opposite-VJV' }
+        - { exact: 'BE:VJH', value: 'be/GSA-opposite-VJH' }
+        - { exact: 'BE:V', value: 'be/GSA-opposite-V' }
+      default: 'be/GSA-opposite-R'
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE:GSA' }
+      - { tag: 'railway:signal:main:regime', value: 'opposite' }
+
+  - description: Grand Signal d'Arrêt (normal regime)
     country: BE
     icon:
       match: 'railway:signal:main:states'
@@ -852,8 +868,20 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
 
-  # TODO opposite regime
-  - description: Distant signal
+  - description: Distant signal (opposite regime)
+    country: BE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { exact: 'BE:2J', value: 'be/SAI-opposite-2J' }
+        - { exact: 'BE:VJV', value: 'be/SAI-opposite-VJV' }
+        - { exact: 'BE:VJH', value: 'be/SAI-opposite-VJH' }
+      default: 'be/SAI-opposite-V'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'BE:SAI' }
+      - { tag: 'railway:signal:distant:regime', value: 'opposite' }
+
+  - description: Distant signal (normal regime)
     country: BE
     icon:
       match: 'railway:signal:distant:states'
