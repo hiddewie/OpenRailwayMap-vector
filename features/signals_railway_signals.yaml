@@ -997,6 +997,13 @@ features:
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'BE:PRB' }
 
+  - description: Station announcement
+    country: BE
+    icon: { default: 'be/PAPA' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'BE:PAPA' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   - description: Panto distant
     country: BE
     icon: { default: 'be/PBA' }
