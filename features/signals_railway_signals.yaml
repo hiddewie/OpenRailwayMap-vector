@@ -899,6 +899,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  - description: Regime change indicator
+    country: BE
+    icon: { default: 'be/ECS' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'BE:ECS' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: Balise marker
     country: BE
     icon: { default: 'be/PRB' }
