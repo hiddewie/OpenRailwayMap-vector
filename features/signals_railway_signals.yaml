@@ -899,16 +899,15 @@ features:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
-  - description: Regime change indicator
+  - description: Main signal indicator
     country: BE
-    icon: { default: 'be/ECS' }
-    tags:
-      - { tag: 'railway:signal:route', value: 'BE:ECS' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
-  - description: Regime change indicator
-    country: BE
-    icon: { default: 'be/ECS' }
+    icon:
+      match: 'railway:signal:route:states'
+      cases:
+        - { exact: 'BE:ECS-V', value: 'be/ECS-V', description: 'regime change' }
+        - { exact: 'BE:ECS-U', value: 'be/ECS-U', description: 'dead end' }
+        - { exact: 'BE:ECS-CAB', value: 'be/ECS-CAB', description: 'cab signalling' }
+      default: 'be/ECS-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'BE:ECS' }
       - { tag: 'railway:signal:route:form', value: 'light' }
