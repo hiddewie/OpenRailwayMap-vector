@@ -682,20 +682,6 @@ const onStyleChange = () => {
     // Change styles
     map.setStyle(mapStyles[selectedTheme][mapStyle], {
       validate: false,
-      transformStyle:
-        dateActive
-          ? (previous, next) => ({
-            ...next,
-            layers: next.layers.map(layer =>
-              layerHasDateFilter(layer)
-                ? {
-                    ...layer,
-                    filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
-                  }
-                : layer,
-            )
-          })
-        : undefined,
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
@@ -719,16 +705,7 @@ const onStyleChange = () => {
 }
 
 const onDateChange = () => {
-  const style = map.getStyle();
-
-  if (style) {
-    style.layers
-      .filter(layerHasDateFilter)
-      .forEach(layer => {
-        map.setFilter(layer.id, ['let', 'date', selectedDate, ...layer.filter.slice(3)])
-      });
-  }
-
+  map.setGlobalStateProperty('date', selectedDate);
   onPageParametersChange();
 }
 
@@ -1232,6 +1209,7 @@ map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('styledata', () => onDateChange());
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
@@ -1370,4 +1348,3 @@ fetch(`${location.origin}/features.json`)
   .catch(error => console.error('Error during fetching of features', error))
 
 onStyleChange();
-onDateChange();
