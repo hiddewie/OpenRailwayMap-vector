@@ -899,6 +899,12 @@ features:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  - description: Balise marker
+    country: BE
+    icon: { default: 'be/PRB' }
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'BE:PRB' }
+
   - description: Panto distant
     country: BE
     icon: { default: 'be/PBA' }
