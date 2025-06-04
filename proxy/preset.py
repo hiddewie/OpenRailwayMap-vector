@@ -437,7 +437,13 @@ def preset_items_signals_for_country(features):
                    value=ftag['value'],
                    ): pass
 
-        elif ('values' not in ftag) and (ftag['tag'] in tag_types) and tag_types[ftag['tag']] == 'boolean':
+        elif 'all' in ftag:
+          with tag('key',
+                   key=ftag['tag'],
+                   value=';'.join(ftag['all']),
+                   ): pass
+
+        elif ('any' not in ftag) and (ftag['tag'] in tag_types) and tag_types[ftag['tag']] == 'boolean':
           with tag('key',
                    key=ftag['tag'],
                    value='yes',
@@ -464,20 +470,14 @@ def preset_items_signals_for_country(features):
                    ): pass
 
       for ftag in feature['tags']:
-        if 'values' in ftag:
-          if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
-            with tag('check',
-                     text=tag_descriptions[ftag['tag']],
-                     key=ftag['tag'],
-                     ): pass
-          else:
-            with tag('combo',
-                     text=tag_descriptions[ftag['tag']],
-                     key=ftag['tag'],
-                     values=','.join(ftag['values']),
-                     match='keyvalue!',
-                     use_last_as_default='true',
-                     ): pass
+        if 'any' in ftag:
+          with tag('combo',
+                   text=tag_descriptions[ftag['tag']],
+                   key=ftag['tag'],
+                   values=','.join(ftag['any']),
+                   match='keyvalue!',
+                   use_last_as_default='true',
+                   ): pass
 
       with tag('optional'):
         with tag('combo',
