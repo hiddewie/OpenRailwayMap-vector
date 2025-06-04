@@ -760,54 +760,6 @@ features:
 
   # --- BE --- #
 
-  - description: Grand Signal d'Arrêt
-    country: BE
-    icon: { default: 'be/GSA-V' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'BE:GSA' }
-
-  - description: (BME) Approach (semaphore)
-    country: BE
-    icon: { default: 'be/bme/semaphore_approach' }
-    tags:
-      - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: (BME) Simplified main signal
-    country: BE
-    icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { exact: 'BE-SME:W', value: 'be/bme/simplified_xnw' }
-        - { exact: 'BE-SME:N', value: 'be/bme/simplified_ny' }
-      default: 'be/bme/simplified_unknown'
-    tags:
-      - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
-
-  - description: Répétiteur à Traits Lumineux
-    country: BE
-    icon: { default: 'be/RTL-open' }
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'BE:RTL' }
-
-  - description: Signal d'Arrêt Simplifié
-    country: BE
-    icon: { default: 'be/SAS' }
-    tags:
-      - { tag: 'railway:signal:minor', value: 'BE:SAS' }
-
-  - description: Petit Signal d'Arrêt
-    country: BE
-    icon: { default: 'be/PSA' }
-    tags:
-      - { tag: 'railway:signal:shunting', any: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
-
-  - description: (BME) Shunting signal, 2 color
-    country: BE
-    icon: { default: 'be/bme/shunting_twocolour_ny' }
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'BE-SME:small_signal_two_colour' }
-
   - description: Speed limit light (part of main signal)
     country: BE
     icon:
@@ -885,6 +837,54 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+  - description: Grand Signal d'Arrêt
+    country: BE
+    icon: { default: 'be/GSA-V' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE:GSA' }
+
+  - description: (BME) Approach (semaphore)
+    country: BE
+    icon: { default: 'be/bme/semaphore_approach' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: (BME) Simplified main signal
+    country: BE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'BE-SME:W', value: 'be/bme/simplified_xnw' }
+        - { exact: 'BE-SME:N', value: 'be/bme/simplified_ny' }
+      default: 'be/bme/simplified_unknown'
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE-SME:simplified_stop_signal' }
+
+  - description: Répétiteur à Traits Lumineux
+    country: BE
+    icon: { default: 'be/RTL-open' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'BE:RTL' }
+
+  - description: Signal d'Arrêt Simplifié
+    country: BE
+    icon: { default: 'be/SAS' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'BE:SAS' }
+
+  - description: Petit Signal d'Arrêt
+    country: BE
+    icon: { default: 'be/PSA' }
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['BE:PSA', 'BE-SME:small_signal_triangle'] }
+
+  - description: (BME) Shunting signal, 2 color
+    country: BE
+    icon: { default: 'be/bme/shunting_twocolour_ny' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'BE-SME:small_signal_two_colour' }
+
   - description: Buffer stop (sign)
     country: BE
     icon: { default: 'be/RH-sign' }
@@ -898,6 +898,13 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  - description: Regime change indicator
+    country: BE
+    icon: { default: 'be/ECS' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'BE:ECS' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Regime change indicator
     country: BE
