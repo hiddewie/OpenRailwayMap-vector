@@ -471,10 +471,10 @@ def preset_items_signals_for_country(features):
 
       for ftag in feature['tags']:
         if 'any' in ftag:
-          with tag('combo',
+          with tag('multiselect',
                    text=tag_descriptions[ftag['tag']],
                    key=ftag['tag'],
-                   values=','.join(ftag['any']),
+                   values=';'.join(ftag['any']),
                    match='keyvalue!',
                    use_last_as_default='true',
                    ): pass
