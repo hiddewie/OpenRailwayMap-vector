@@ -837,11 +837,33 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+  # TODO opposite regime
   - description: Grand Signal d'Arrêt
     country: BE
-    icon: { default: 'be/GSA-V' }
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'BE:RB', value: 'be/GSA-RB' }
+        - { exact: 'BE:2J', value: 'be/GSA-2J' }
+        - { exact: 'BE:VJV', value: 'be/GSA-VJV' }
+        - { exact: 'BE:VJH', value: 'be/GSA-VJH' }
+        - { exact: 'BE:V', value: 'be/GSA-V' }
+      default: 'be/GSA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
+
+  # TODO opposite regime
+  - description: Distant signal
+    country: BE
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { exact: 'BE:2J', value: 'be/SAI-2J' }
+        - { exact: 'BE:VJV', value: 'be/SAI-VJV' }
+        - { exact: 'BE:VJH', value: 'be/SAI-VJH' }
+      default: 'be/SAI-V'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'BE:SAI' }
 
   - description: (BME) Approach (semaphore)
     country: BE
