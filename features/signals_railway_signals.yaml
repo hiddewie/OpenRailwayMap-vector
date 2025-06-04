@@ -949,6 +949,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  - description: End of platform
+    country: BE
+    icon: { default: 'be/PREQ' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'BE:PREQ' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Main signal indicator
     country: BE
     icon:

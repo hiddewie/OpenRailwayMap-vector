@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="31.029999"
+   height="22.029999"
+   viewBox="0 0 31.029999 22.029999"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <rect
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.03;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1"
+     width="31"
+     height="22"
+     x="0.015"
+     y="0.015"
+     ry="1"
+     rx="1" />
+  <path
+     d="M 20.6964,18.800053 V 3.2558534 c 0,-0.466326 -0.388605,-0.880838 -0.854931,-0.880838 -0.466326,0 -0.880838,0.414512 -0.880838,0.880838 V 9.2921843 H 12.069369 V 3.2558534 c 0,-0.466326 -0.414512,-0.880838 -0.880838,-0.880838 -0.466326,0 -0.854931,0.414512 -0.854931,0.880838 V 18.800053 c 0,0.466326 0.388605,0.854931 0.854931,0.854931 0.466326,0 0.880838,-0.388605 0.880838,-0.854931 v -7.7721 h 6.891262 v 7.7721 c 0,0.466326 0.414512,0.854931 0.880838,0.854931 0.466326,0 0.854931,-0.388605 0.854931,-0.854931 z"
+     id="text1"
+     style="font-size:25.907px;font-family:Isonorm;-inkscape-font-specification:'Isonorm, Normal';fill-rule:evenodd;stroke:#000000;stroke-width:0.0529917;stroke-linejoin:bevel"
+     aria-label="H" />
+</svg>
