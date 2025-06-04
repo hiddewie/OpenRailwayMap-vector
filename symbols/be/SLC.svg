@@ -1,54 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="90.708672"
-   height="105.82676"
-   viewBox="0 0 90.708672 105.82676"
-   version="1.1"
-   id="svg1"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <g
-     id="layer1"
-     transform="translate(-75.590553,-45.354332)">
-    <rect
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.13386;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-       id="rect8"
-       width="90.708664"
-       height="75.590553"
-       x="75.590553"
-       y="60.472443" />
-    <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.13386;stroke-linecap:square;stroke-linejoin:bevel"
-       id="rect1"
-       width="90.708672"
-       height="15.118095"
-       x="75.590553"
-       y="136.06299" />
-    <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.13386;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-       id="rect3"
-       width="90.708672"
-       height="15.118111"
-       x="75.590553"
-       y="105.82677"
-       ry="0" />
-    <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.13386;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-       id="rect5"
-       width="90.708672"
-       height="15.118111"
-       x="75.590553"
-       y="75.590553" />
-    <rect
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.13386;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-       id="rect7"
-       width="90.708672"
-       height="15.118111"
-       x="75.590553"
-       y="45.354332" />
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12.000003" height="14" viewBox="0 0 12.000003 14">
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 2 L 12 2 L 12 12 L 0 12 Z M 0 2 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 12 L 12 12 L 12 14 L 0 14 Z M 0 12 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 8 L 12 8 L 12 10 L 0 10 Z M 0 8 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 4 L 12 4 L 12 6 L 0 6 Z M 0 4 "/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 0 L 12 0 L 12 2 L 0 2 Z M 0 0 "/>
 </svg>
