@@ -579,6 +579,7 @@ const defaultConfiguration = {
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
   editor: 'id',
+  view: {},
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -624,6 +625,7 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  ...(configuration.view || defaultConfiguration.view),
   // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
   ...determineZoomCenterFromHash(window.location.hash),
 });
@@ -638,6 +640,7 @@ const map = new maplibregl.Map({
   minPitch: 0,
   maxPitch: 0,
   attributionControl: false,
+  ...(configuration.view || defaultConfiguration.view),
 });
 
 function selectStyle(style) {
@@ -1227,6 +1230,8 @@ map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
