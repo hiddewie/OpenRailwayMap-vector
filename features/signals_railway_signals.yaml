@@ -767,8 +767,8 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^([4-9]0)$', value: 'be/chiffre-vitesse-{}', example: 'be/chiffre-vitesse-{60}' }
-      default: 'be/chiffre-vitesse-empty'
+        - { regex: '^([4-9]0)$', value: 'be/VIS-{}', example: 'be/VIS-{60}' }
+      default: 'be/VIS-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'BE:VIS' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
@@ -1031,7 +1031,7 @@ features:
 
   - description: Contact line segmentation
     country: BE
-    icon: { default: 'be/FLC' }
+    icon: { default: 'be/SLC' }
     tags:
       - { tag: 'railway:signal:electricity', value: 'BE:SLC' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
