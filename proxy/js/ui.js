@@ -262,8 +262,7 @@ function showNews() {
 
   const newsHash = aboutControl.newsHash()
   if (newsHash) {
-    configuration.newsHash = newsHash;
-    storeConfiguration(localStorage, configuration);
+    updateConfiguration('newsHash', newsHash);
   }
 }
 
