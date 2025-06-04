@@ -874,6 +874,17 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'BE:PVV' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Speed sign for distant signal
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^90$', value: 'be/PVSA-{}', example: 'be/PVSA-{90}' }
+      default: 'be/PVSA-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
   - description: Panto distant
     country: BE
     icon: { default: 'be/PBA' }
