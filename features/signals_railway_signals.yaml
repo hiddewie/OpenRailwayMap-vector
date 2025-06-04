@@ -949,6 +949,17 @@ features:
       - { tag: 'railway:signal:stop', value: 'BE:RH' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  - description: Stop position
+    country: BE
+    icon:
+      match: 'railway:signal:stop:carriages'
+      cases:
+        - { regex: '^(2|3|4|6|8|10|12)$', value: 'be/PMQ-{}', example: 'be/PMQ-{8}' }
+      default: 'be/PMQ-unknown'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'BE:PMQ' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: End of platform
     country: BE
     icon: { default: 'be/PREQ' }
