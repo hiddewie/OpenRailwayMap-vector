@@ -980,6 +980,17 @@ features:
       - { tag: 'railway:signal:route', value: 'BE:ECS' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
+  - description: Distant speed limit light (part of main signal)
+    country: BE
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^([4-9]0)$', value: 'be/ARV-{}', example: 'be/ARV-{60}' }
+      default: 'be/ARV-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'BE:ARV' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
   - description: Balise marker
     country: BE
     icon: { default: 'be/PRB' }
