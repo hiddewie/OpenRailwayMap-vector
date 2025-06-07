@@ -112,14 +112,33 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
     feature,
     state,
     array_agg(facilities.id) as station_ids,
-    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way)) ) as center,
+    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way))) as center,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
     ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
     SELECT
       *,
       ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
-    FROM stations
+    FROM (
+      SELECT
+        st_collect(any_value(s.way), st_collect(q.way)) as way,
+        name,
+        station,
+        railway_ref,
+        uic_ref,
+        feature,
+        state
+      FROM stations s
+      left join stop_areas sa
+        on array[s.osm_id] <@ sa.node_ref_ids
+      left join (
+        select sa.osm_id, se.way
+        from stop_areas sa
+        join subway_entrances se
+          on array[se.osm_id] <@ sa.node_ref_ids
+      ) q on q.osm_id = sa.osm_id
+      group by name, station, railway_ref, uic_ref, feature, state, id
+    ) stations_with_entrances
   ) AS facilities
   GROUP BY cluster_id, name, station, railway_ref, uic_ref, feature, state;
 
