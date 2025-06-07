@@ -408,6 +408,46 @@ const features = {
       },
     },
   },
+  'openrailwaymap_standard-standard_subway_entrances': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {},
+    properties: {
+      name: {
+        name: 'Name',
+      },
+      ref: {
+        name: 'Reference',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
   'openrailwaymap_standard-standard_railway_symbols': {
     featureLinks: featureLinks.openstreetmap,
     features: Object.fromEntries(

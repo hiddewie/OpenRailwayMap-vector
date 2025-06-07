@@ -2000,6 +2000,45 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ),
     ]),
     {
+      id: 'standard_subway_entrances',
+      type: 'symbol',
+      minzoom: 16,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_subway_entrances',
+      paint: {
+        'icon-color': colors[theme].styles.standard.subway,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
+        ],
+        'icon-halo-blur': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 1.0,
+          0.0,
+        ],
+        'icon-halo-width': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 3.0,
+          2.0,
+        ],
+        'text-color': colors[theme].styles.standard.subway,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': 'sdf:general/subway-entrance',
+        'text-field': '{ref}',
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 15,
+        'text-offset': [0, 1.5],
+        'text-optional': true,
+      },
+    },
+    {
       id: 'railway_text_track_numbers',
       type: 'symbol',
       minzoom: 16,
@@ -3981,6 +4020,13 @@ const legendData = {
             }
           }
         ]
+      },
+    ],
+    "openrailwaymap_standard-standard_subway_entrances": [
+      {
+        legend: 'Subway entrance',
+        type: 'point',
+        properties: {},
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":

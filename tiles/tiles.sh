@@ -49,7 +49,7 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: standard"
 
   rm -f "$OUTPUT_DIR/standard.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref --output-file "$OUTPUT_DIR/standard.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_subway_entrances --output-file "$OUTPUT_DIR/standard.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/standard.mbtiles"
 
