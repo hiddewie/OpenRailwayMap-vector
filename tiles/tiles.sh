@@ -76,7 +76,12 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: signals"
 
   rm -f "$OUTPUT_DIR/signals.mbtiles"
-  $MARTIN --min-zoom 10 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
+  $MARTIN --min-zoom 10 --max-zoom 12 --source signals_signal_boxes --output-file "$OUTPUT_DIR/signals.mbtiles"
+  rm -f "$OUTPUT_DIR/signals-13.mbtiles"
+  $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source signals_railway_signals,signals_signal_boxes --output-file "$OUTPUT_DIR/signals-13.mbtiles"
+  mbtiles copy --on-duplicate override "$OUTPUT_DIR/signals-13.mbtiles" "$OUTPUT_DIR/signals.mbtiles"
+  mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" minzoom 10
+  mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" maxzoom "$MAX_ZOOM"
   mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/signals.mbtiles"
 
