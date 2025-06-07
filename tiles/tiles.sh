@@ -42,7 +42,12 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: high"
 
   rm -f "$OUTPUT_DIR/high.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file "$OUTPUT_DIR/high.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom 9 --source railway_line_high --output-file "$OUTPUT_DIR/high.mbtiles"
+  rm -f "$OUTPUT_DIR/high-10.mbtiles"
+  $MARTIN --min-zoom 10 --max-zoom "$MAX_ZOOM" --source railway_line_high,railway_text_km --output-file "$OUTPUT_DIR/high-10.mbtiles"
+  mbtiles copy --on-duplicate override "$OUTPUT_DIR/high-10.mbtiles" "$OUTPUT_DIR/high.mbtiles"
+  mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" minzoom 8
+  mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" maxzoom "$MAX_ZOOM"
   mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/high.mbtiles"
 
