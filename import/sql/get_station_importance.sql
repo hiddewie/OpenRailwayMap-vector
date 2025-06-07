@@ -127,7 +127,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         railway_ref,
         uic_ref,
         feature,
-        state
+        state,
+        id
       FROM stations s
       left join stop_areas sa
         on array[s.osm_id] <@ sa.node_ref_ids
