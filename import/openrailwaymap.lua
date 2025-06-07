@@ -735,6 +735,7 @@ function osm2pgsql.process_node(object)
   if tags.railway == 'subway_entrance' then
     subway_entrances:insert({
       way = object:as_point(),
+      ref = tags.ref,
       name = tags.name,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
