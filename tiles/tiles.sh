@@ -49,7 +49,15 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: standard"
 
   rm -f "$OUTPUT_DIR/standard.mbtiles"
-  $MARTIN --min-zoom 8 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_subway_entrances --output-file "$OUTPUT_DIR/standard.mbtiles"
+  $MARTIN --min-zoom 8 --max-zoom 12 --source standard_railway_turntables,standard_railway_text_stations,standard_railway_symbols --output-file "$OUTPUT_DIR/standard.mbtiles"
+  rm -f "$OUTPUT_DIR/standard-13.mbtiles"
+  $MARTIN --min-zoom 13 --max-zoom 13 --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols --output-file "$OUTPUT_DIR/standard-13.mbtiles"
+  rm -f "$OUTPUT_DIR/standard-14.mbtiles"
+  $MARTIN --min-zoom 14 --max-zoom "$MAX_ZOOM" --source standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_subway_entrances --output-file "$OUTPUT_DIR/standard-14.mbtiles"
+  mbtiles copy --on-duplicate override "$OUTPUT_DIR/standard-13.mbtiles" "$OUTPUT_DIR/standard.mbtiles"
+  mbtiles copy --on-duplicate override "$OUTPUT_DIR/standard-14.mbtiles" "$OUTPUT_DIR/standard.mbtiles"
+  mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" minzoom 8
+  mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" maxzoom "$MAX_ZOOM"
   mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/standard.mbtiles"
 
