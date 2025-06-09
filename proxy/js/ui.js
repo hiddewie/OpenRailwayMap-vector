@@ -840,6 +840,7 @@ class SearchControl {
     button.onclick = _ => showSearch();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', '', button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Search'
 
     return this._container;
@@ -915,6 +916,7 @@ class LegendControl {
     button.title = 'Show/hide map legend';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', '', button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Legend'
 
     button.onclick = () => this.options.onLegendToggle()
@@ -950,6 +952,7 @@ class AboutControl {
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', undefined, button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
@@ -963,6 +966,7 @@ class AboutControl {
     aboutButton.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
     const aboutText = createDomElement('span', undefined, aboutButton);
+    aboutText.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     aboutText.innerText = 'About'
 
     aboutButton.onclick = () => this.options.onAboutToggle();
