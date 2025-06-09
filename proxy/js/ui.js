@@ -761,7 +761,14 @@ class DateControl {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', this._container);
-    this.slider = createDomElement('input', 'date-input', this._container);
+    this.icon.title = 'Toggle date selection'
+    this.icon.onclick = () => {
+      this.slider.classList.toggle('hide-mobile-show-desktop');
+      this.slider.classList.toggle('show-mobile-hide-desktop');
+      this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
+      this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
+    };
+    this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
     this.slider.type = 'range'
     this.slider.min = 1758
     this.slider.max = (new Date()).getFullYear()
@@ -776,7 +783,7 @@ class DateControl {
       this.detectChanges();
       this.updateDisplay();
     }
-    this.dateDisplay = createDomElement('span', 'date-display', this._container);
+    this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
     this.active = null;
 
     this.detectChanges();
@@ -816,9 +823,11 @@ class DateControl {
 
     if (this.active === true && previouslyActive !== true) {
       this.icon.classList.add('active')
+      this.dateDisplay.classList.add('active')
       this.options.onActivation()
     } else if (this.active === false && previouslyActive !== false) {
       this.icon.classList.remove('active')
+      this.dateDisplay.classList.remove('active')
       this.options.onDeactivation();
     }
   }

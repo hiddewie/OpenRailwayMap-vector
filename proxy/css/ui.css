@@ -221,6 +221,9 @@ body {
 .maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon.active {
   background-color: var(--bs-success);
 }
+.maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon {
+  cursor: pointer;
+}
 
 .maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon-text,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon-text,
@@ -243,6 +246,22 @@ body {
   padding: 0;
   margin: .5rem .5rem .5rem .2rem;
   vertical-align: middle;
+}
+@media (max-width: 767px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.hide-mobile-show-desktop {
+    display: none;
+  }
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-display.hide-mobile-show-desktop:not(.active) {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.show-mobile-hide-desktop {
+    display: none;
+  }
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-display.show-mobile-hide-desktop:not(.active) {
+    display: none;
+  }
 }
 .maplibregl-ctrl.maplibregl-ctrl-date .date-display {
   padding-right: .5rem;
