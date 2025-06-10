@@ -48,12 +48,13 @@ jobs:
         id: cache-data
         with:
           path: |
-            data/germany.osm.pbf
-            data/filtered/germany.osm.pbf
+            data/berlin.osm.pbf
+            data/filtered/berlin.osm.pbf
           key: data-${{ steps.get-date.outputs.date }}-berlin
+          enableCrossOsArchive: true
 
       - name: Download Berlin
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 
