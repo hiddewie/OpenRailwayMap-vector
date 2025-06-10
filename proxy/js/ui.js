@@ -712,31 +712,46 @@ const onDateChange = () => {
 class StyleControl {
   constructor(options) {
     this.options = options
-    this.radioButtons = {};
+    this.buttons = {};
   }
 
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
-    const buttonGroup = createDomElement('div', 'btn-group-vertical', this._container);
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
+    const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
     Object.entries(knownStyles).forEach(([style, {name}]) => {
-      const id = `style-${style}`
-      const radio = createDomElement('input', 'btn-check', buttonGroup);
-      radio.id = id
-      radio.type = 'radio'
-      radio.name = 'style'
-      radio.value = style
-      radio.onclick = () => this.options.onStyleChange(style)
-      radio.checked = (this.options.initialSelection === style)
-      const label = createDomElement('label', 'btn btn-outline-success', buttonGroup);
-      label.htmlFor = id
-      label.innerText = name
+      const button = createDomElement('button', '', buttonGroup);
+      button.innerText = name
+      button.onclick = () => {
+        buttonGroup.classList.remove('active')
+        this.activateStyle(style);
+        this.options.onStyleChange(style)
+      }
 
-      this.radioButtons[style] = radio;
+      this.buttons[style] = button;
     });
 
+    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
+    container.onclick = () => {
+      buttonGroup.classList.toggle('active')
+    };
+    const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
+    icon.title = 'Select map style'
+
+    this.activateStyle(selectedStyle);
+
     return this._container;
+  }
+
+  activateStyle(style) {
+    Object.entries(this.buttons).forEach(([buttonStyle, button]) => {
+      if (buttonStyle == style) {
+        button.classList.add('active')
+      } else {
+        button.classList.remove('active')
+      }
+    })
   }
 
   onRemove() {
@@ -745,7 +760,7 @@ class StyleControl {
   }
 
   onExternalStyleChange(style) {
-    const radio = this.radioButtons[style];
+    const radio = this.buttons[style];
     if (radio && !radio.checked) {
       radio.checked = true;
     }
@@ -760,7 +775,8 @@ class DateControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
-    this.icon = createDomElement('span', 'maplibregl-ctrl-icon', this._container);
+    const container = createDomElement('button', '', this._container);
+    this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
     this.icon.onclick = () => {
       this.slider.classList.toggle('hide-mobile-show-desktop');
