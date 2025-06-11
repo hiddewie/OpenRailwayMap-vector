@@ -127,6 +127,10 @@ body {
   box-shadow: 0 0 6px 4px var(--bs-blue);
 }
 
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style {
+  box-shadow: 0 0 0 2px rgba(var(--bs-success-rgb), .5);
+}
+
 .maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon,
@@ -138,7 +142,9 @@ body {
 .maplibregl-ctrl-group button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-edit .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-configuration .maplibregl-ctrl-icon,
-.maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon {
+.maplibregl-ctrl-group.maplibregl-ctrl-date button .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group button.maplibregl-ctrl-style .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group button.maplibregl-ctrl-style-toggle .maplibregl-ctrl-icon {
   background-image: none;
   background-color: var(--bs-body-color);
   mask-size: contain;
@@ -160,25 +166,21 @@ body {
   mask-image: url("data:image/svg+xml,%3Csvg width='800px' height='800px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z' stroke='%23000000' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   width: 1.5rem;
   height: 1.4rem;
-  margin-right: 4px;
 }
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg fill='%23000000' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' enable-background='new 0 0 52 52' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M26.7,42.8c0.8,0,1.5,0.7,1.5,1.5v3.2c0,0.8-0.7,1.5-1.5,1.5h-3.2c-0.8,0-1.5-0.7-1.5-1.5v-3.2 c0-0.8,0.7-1.5,1.5-1.5H26.7z'/%3E%3Cpath d='M28.2,35.1c0-2.1,1.3-4,3.1-4.8h0.1c5.2-2.1,8.8-7.2,8.8-13.2c0-7.8-6.4-14.2-14.2-14.2 c-7.2,0-13.2,5.3-14.2,12.2v0.1c-0.1,0.9,0.6,1.6,1.5,1.6h3.2c0.8,0,1.4-0.5,1.5-1.1v-0.2c0.7-3.7,4-6.5,7.9-6.5 c4.5,0,8.1,3.6,8.1,8.1c0,2.1-0.8,4-2.1,5.5l-0.1,0.1c-0.9,1-2.1,1.6-3.3,2c-4,1.4-6.7,5.2-6.7,9.4v1.5c0,0.8,0.6,1.4,1.4,1.4h3.2 c0.8,0,1.6-0.6,1.6-1.5L28.2,35.1z'/%3E%3C/g%3E%3C/svg%3E");
   width: 1.5rem;
   height: 1.4rem;
-  margin-right: 4px;
 }
 .maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M4 3a2 2 0 0 0-2 2v13a3 3 0 0 0 3 3h14c1.645 0 3-1.355 3-3V8a1 1 0 0 0-1.016-1.014A1 1 0 0 0 20 8v10c0 .565-.435 1-1 1-.552 0-1-.449-1-1V5a2 2 0 0 0-2-2H4zm3 3h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm0 6h6a1 1 0 0 1 0 2H7a1 1 0 0 1 0-2zm0 4h6a1 1 0 0 1 0 2H7a1 1 0 0 1 0-2z'/%3E%3C/svg%3E");
   width: 1.5rem;
   height: 1.4rem;
-  margin-right: 4px;
 }
 .maplibregl-ctrl-group button.maplibregl-ctrl-about .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E");
   width: 1.5rem;
   height: 1.4rem;
-  margin-right: 2px;
 }
 .maplibregl-ctrl-group button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E");
@@ -215,31 +217,107 @@ body {
   width: 1.5rem;
   height: 1.4rem;
 }
-.maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon {
+.maplibregl-ctrl-group.maplibregl-ctrl-date button .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 100 100' xml:space='preserve'%3E%3Cpath d='M76 42H24c-1.1 0-2 .9-2 2v30c0 3.3 2.7 6 6 6h44c3.3 0 6-2.7 6-6V44c0-1.1-.9-2-2-2zM40 70c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm14 0c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm0-14c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm14 0c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2v-4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4zm4-30h-5v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2H41v-2c0-2.2-1.8-4-4-4s-4 1.8-4 4v2h-5c-3.3 0-6 2.7-6 6v2c0 1.1.9 2 2 2h52c1.1 0 2-.9 2-2v-2c0-3.3-2.7-6-6-6z'/%3E%3C/svg%3E%0A");
   width: 1.6rem;
   height: 1.6rem;
+  margin: .1rem;
   vertical-align: middle;
   background-color: var(--bs-body-color);
 }
-.maplibregl-ctrl-group.maplibregl-ctrl-date .maplibregl-ctrl-icon.active {
+.maplibregl-ctrl-group button.maplibregl-ctrl-style-toggle .maplibregl-ctrl-icon {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='24' height='25.115' viewBox='0 0 2.156 2.257'%3E%3Cpath d='m.098.687.94.466a.09.09 0 0 0 .08 0l.94-.466a.09.09 0 0 0 0-.161l-.94-.467a.09.09 0 0 0-.08 0l-.94.467a.09.09 0 0 0 0 .16zm.98-.446.738.365-.738.366L.341.606Z'/%3E%3Cpath d='m1.979.885-.9.446L.177.885a.09.09 0 0 0-.08.161l.94.466a.09.09 0 0 0 .08 0l.94-.466a.09.09 0 0 0-.08-.161z'/%3E%3Cpath d='m1.979 1.227-.9.447-.901-.447a.09.09 0 0 0-.08.162l.94.466a.09.09 0 0 0 .08 0l.94-.466a.09.09 0 1 0-.08-.162z'/%3E%3Cpath d='m1.979 1.57-.9.446-.901-.446a.09.09 0 0 0-.08.161l.94.466a.09.09 0 0 0 .08 0l.94-.466a.09.09 0 1 0-.08-.161Z'/%3E%3C/svg%3E");
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: .2rem;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-date button .maplibregl-ctrl-icon.active {
   background-color: var(--bs-success);
+}
+
+.maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon-text,
+.maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon-text,
+.maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon-text {
+  margin-left: 4px;
+}
+.maplibregl-ctrl-group button.maplibregl-ctrl-about .maplibregl-ctrl-icon-text {
+  margin-left: 2px;
 }
 
 .maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact {
   margin-left: 100px;
 }
 
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style {
+  position: relative;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style {
+  display: flex;
+  flex-direction: column;
+  font-size: .9rem;
+}
+@media (max-width: 767px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style {
+    position: absolute;
+    right: 0;
+    margin-right: 2rem;
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+    background: var(--bs-body-bg);
+  }
+  .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style:not(.active) {
+    display: none;
+  }
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style button {
+  width: auto;
+  height: auto;
+  padding: .3rem 1rem;
+  color: var(--bs-success);
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style button:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style button:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style button.active {
+  background-color: var(--bs-success);
+  color: var(--bs-body-bg);
+}
+
 .maplibregl-ctrl-group.maplibregl-ctrl-date {
   visibility: hidden;
 }
-.maplibregl-ctrl.maplibregl-ctrl-date .date-input {
+.maplibregl-ctrl-group.maplibregl-ctrl-date button {
+  display: inline-block;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-date .date-input {
   width: 200px;
   padding: 0;
-  margin: .5rem .5rem .5rem .2rem;
+  margin: 0 .5rem 0 .2rem;
   vertical-align: middle;
 }
-.maplibregl-ctrl.maplibregl-ctrl-date .date-display {
+@media (max-width: 767px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.hide-mobile-show-desktop {
+    display: none;
+  }
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-display.hide-mobile-show-desktop:not(.active) {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.show-mobile-hide-desktop {
+    display: none;
+  }
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .date-display.show-mobile-hide-desktop:not(.active) {
+    display: none;
+  }
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-date .date-display {
   padding-right: .5rem;
   display: inline-block;
   width: 4rem;
