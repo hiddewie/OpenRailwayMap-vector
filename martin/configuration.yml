@@ -89,9 +89,9 @@ postgres:
         osm_id: integer
         feature: string
 
-    standard_subway_entrances:
+    standard_station_entrances:
       schema: public
-      table: subway_entrances
+      table: station_entrances
       srid: 3857
       geometry_column: way
       geometry_type: POLYGON

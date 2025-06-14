@@ -408,7 +408,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_subway_entrances': {
+  'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
     features: {},
     properties: {

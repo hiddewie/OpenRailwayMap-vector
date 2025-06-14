@@ -2000,11 +2000,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ),
     ]),
     {
-      id: 'standard_subway_entrances',
+      id: 'standard_station_entrances',
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_standard',
-      'source-layer': 'standard_subway_entrances',
+      'source-layer': 'standard_station_entrances',
       paint: {
         'icon-color': colors[theme].styles.standard.subway,
         'icon-halo-color': ['case',
@@ -4022,7 +4022,7 @@ const legendData = {
         ]
       },
     ],
-    "openrailwaymap_standard-standard_subway_entrances": [
+    "openrailwaymap_standard-standard_station_entrances": [
       {
         legend: 'Subway entrance',
         type: 'point',

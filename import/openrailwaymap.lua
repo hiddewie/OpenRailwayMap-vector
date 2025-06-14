@@ -273,8 +273,8 @@ local platforms = osm2pgsql.define_table({
   },
 })
 
-local subway_entrances = osm2pgsql.define_table({
-  name = 'subway_entrances',
+local station_entrances = osm2pgsql.define_table({
+  name = 'station_entrances',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
@@ -614,7 +614,11 @@ local railway_position_values = osm2pgsql.make_check_values_func({'milestone', '
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
 local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
-
+local railway_entrances_values = osm2pgsql.make_check_values_func({'subway_entrance', 'train_station_entrance'})
+local entrance_types = {
+  subway_entrance = 'subway',
+  train_station_entrance = 'train',
+}
 function osm2pgsql.process_node(object)
   local tags = object.tags
   local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
@@ -732,9 +736,10 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if tags.railway == 'subway_entrance' then
-    subway_entrances:insert({
+  if railway_entrances_values(tags.railway) then
+    station_entrances:insert({
       way = object:as_point(),
+      type = entrance_types[tags.railway],
       ref = tags.ref,
       name = tags.name,
       wikidata = tags.wikidata,

@@ -135,7 +135,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       left join (
         select sa.osm_id, se.way
         from stop_areas sa
-        join subway_entrances se
+        join station_entrances se
           on array[se.osm_id] <@ sa.node_ref_ids
       ) q on q.osm_id = sa.osm_id
       group by name, station, railway_ref, uic_ref, feature, state, id
