@@ -847,7 +847,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-electrification_railway_symbols': {
+  'openrailwaymap_electrification-electrification_railway_symbols': {
     featureLinks: featureLinks.openstreetmap,
     features: Object.fromEntries(
       poi.features
