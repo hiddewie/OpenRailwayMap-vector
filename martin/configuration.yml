@@ -228,6 +228,7 @@ postgres:
         ref: string
         feature: string
         position: string
+        transition: boolean
         structure: string
         supporting: string
         attachment: string
