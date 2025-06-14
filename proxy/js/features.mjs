@@ -410,7 +410,15 @@ const features = {
   },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
-    features: {},
+    featureProperty: 'type',
+    features: {
+      subway: {
+        name: 'Subway entrance',
+      },
+      train: {
+        name: 'Train station entrance',
+      },
+    },
     properties: {
       name: {
         name: 'Name',
