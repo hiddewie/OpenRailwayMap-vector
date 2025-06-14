@@ -467,6 +467,9 @@ const features = {
         ))
     ),
     properties: {
+      name: {
+        name: 'Name',
+      },
       ref: {
         name: 'Reference',
       },
