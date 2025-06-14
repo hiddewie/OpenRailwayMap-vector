@@ -211,7 +211,7 @@ local pois = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
-    { column = 'layer', type = 'string' },
+    { column = 'layer', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
