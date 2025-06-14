@@ -623,6 +623,7 @@ local entrance_types = {
   subway_entrance = 'subway',
   train_station_entrance = 'train',
 }
+local vehicles = {'train', 'subway', 'light_rail', 'monorail', 'funicular', 'miniature'}
 function osm2pgsql.process_node(object)
   local tags = object.tags
   local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
@@ -658,38 +659,36 @@ function osm2pgsql.process_node(object)
       end
     end
 
+    -- Determine the type of station
+    local feature_stations = {}
     if tags.station then
       for station in string.gmatch(tags.station, '[^;]+') do
-        stations:insert({
-          way = object:as_point(),
-          feature = station_feature,
-          state = station_state,
-          name = tags.name or tags.short_name,
-          ref = tags.ref,
-          station = station,
-          railway_ref = tags['railway:ref'] or tags['ref:crs'],
-          uic_ref = tags['uic_ref'],
-          name_tags = name_tags,
-          operator = tags.operator,
-          network = tags.network,
-          wikidata = tags.wikidata,
-          wikimedia_commons = wikimedia_commons,
-          image = image,
-          mapillary = tags.mapillary,
-          wikipedia = tags.wikipedia,
-          note = tags.note,
-          description = tags.description,
-        })
+        feature_stations[station] = true
       end
-    else
+    end
+
+    for vehicle in vehicles do
+      if tags[vehicle] == 'yes' then
+        feature_stations[vehicle] = true
+      end
+    end
+
+    if #feature_stations == 0 then
+      if tags.railway == 'tram_stop' then
+        feature_stations['tram'] = true
+      else
+        feature_stations['train'] = true
+      end
+    end
+
+    for station, _ in feature_stations do
       stations:insert({
         way = object:as_point(),
-        railway = tags['railway'],
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
         ref = tags.ref,
-        station = nil,
+        station = station,
         railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags,
@@ -703,7 +702,6 @@ function osm2pgsql.process_node(object)
         note = tags.note,
         description = tags.description,
       })
-    end
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
