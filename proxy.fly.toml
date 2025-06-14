@@ -6,7 +6,7 @@ primary_region = 'ams'
 
 [build.args]
   PUBLIC_PROTOCOL="https"
-  PUBLIC_HOST="openrailwaymap.fly.dev"
+  PUBLIC_HOST="openrailwaymap.app"
 
 [http_service]
   internal_port = 8000
@@ -26,7 +26,7 @@ primary_region = 'ams'
   TILES_UPSTREAM_SOUTH_AMERICA = "ams.openrailwaymap-tiles-south-america.internal:3000"
   API_UPSTREAM = "ams.openrailwaymap-api.internal:5000"
   PUBLIC_PROTOCOL = "https"
-  PUBLIC_HOST = "openrailwaymap.fly.dev"
+  PUBLIC_HOST = "openrailwaymap.app"
   NGINX_RESOLVER = "[fdaa::3] valid=10m ipv6=on"
   NGINX_CACHE_TTL = "86400"
   CLIENT_CACHE_TTL_ASSETS_FRESH = "3600"
