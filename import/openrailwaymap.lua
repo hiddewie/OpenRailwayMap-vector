@@ -704,7 +704,7 @@ function osm2pgsql.process_node(object)
     end
   end
 
-  if railway_poi_values(tags.railway) then
+  if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
     local feature, rank, minzoom = tag_functions.poi(tags)
 
     pois:insert({
@@ -945,7 +945,7 @@ function osm2pgsql.process_way(object)
     })
   end
 
-  if railway_poi_values(tags.railway) then
+  if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
     local feature, rank, minzoom = tag_functions.poi(tags)
 
     pois:insert({
