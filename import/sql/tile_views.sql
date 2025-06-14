@@ -415,6 +415,7 @@ RETURN (
     WHERE way && ST_TileEnvelope(z, x, y)
       -- Tiles are generated from zoom 14 onwards
       AND (z >= 14 OR z >= minzoom)
+      AND layer = 'standard'
     ORDER BY rank DESC
   ) as tile
   WHERE way IS NOT NULL
