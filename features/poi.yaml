@@ -139,12 +139,18 @@ features:
     tags:
       - { tag: 'railway', value: 'engine_shed' }
 
-  - description: Railway Museum
-    feature: 'general/museum'
+  - description: Railway museum
     layer: standard
     minzoom: 13
+    feature: 'general/museum'
     tags:
       - { tag: 'railway', value: 'museum' }
+    variants:
+      - description: Museum of rail transport
+        feature: 'general/museum-rail-transport'
+        tags:
+          - { tag: 'tourism', value: 'museum' }
+          - { tag: 'museum', value: 'railway' }
 
   - description: Power Supply
     feature: 'general/power_supply'
