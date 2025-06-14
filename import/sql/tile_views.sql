@@ -518,31 +518,31 @@ RETURN (
   SELECT
     ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
   FROM (
-         SELECT
-           ST_AsMVTGeom(
-             way,
-             ST_TileEnvelope(z, x, y),
-             4096, 64, true
-           ) AS way,
-           id,
-           osm_id,
-           osm_type,
-           feature,
-           ref,
-           wikidata,
-           wikimedia_commons,
-           image,
-           mapillary,
-           wikipedia,
-           note,
-           description
-         FROM pois
-         WHERE way && ST_TileEnvelope(z, x, y)
-           -- Tiles are generated from zoom 14 onwards
-           AND (z >= 14 OR z >= minzoom)
-           AND layer = 'electrification'
-         ORDER BY rank DESC
-       ) as tile
+    SELECT
+      ST_AsMVTGeom(
+        way,
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      -- Tiles are generated from zoom 14 onwards
+      AND (z >= 14 OR z >= minzoom)
+      AND layer = 'electrification'
+    ORDER BY rank DESC
+  ) as tile
   WHERE way IS NOT NULL
 );
 
