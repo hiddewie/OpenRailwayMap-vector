@@ -126,6 +126,12 @@ features:
     feature: 'general/museum'
     tags:
       - { tag: 'railway', value: 'museum' }
+    variants:
+      - description: Museum of rail transport
+        feature: 'general/museum-rail-transport'
+        tags:
+          - { tag: 'tourism', value: 'museum' }
+          - { tag: 'museum', value: 'railway' }
 
   - description: Power Supply
     minzoom: 13
