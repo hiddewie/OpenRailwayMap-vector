@@ -280,6 +280,7 @@ local station_entrances = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
+    { column = 'type', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
