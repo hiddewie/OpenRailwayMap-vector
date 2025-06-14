@@ -127,6 +127,8 @@
     { "key": "railway", "value": "signal" },
     { "key": "railway", "value": "buffer_stop" },
     { "key": "railway", "value": "derail" },
+    { "key": "railway", "value": "subway_entrance" },
+    { "key": "railway", "value": "train_station_entrance" },
     { "key": "railway:signal:brake_test" },
     { "key": "railway:signal:brake_test:form" },
     { "key": "railway:signal:combined" },
