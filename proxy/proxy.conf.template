@@ -228,7 +228,7 @@ server {
       rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances last;
       rewrite ^/speed$ /speed_railway_signals last;
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
-      rewrite ^/electrification$ /electrification_signals,catenary last;
+      rewrite ^/electrification$ /electrification_signals,catenary,electrification_railway_symbols last;
     }
 
     limit_req zone=tiles burst=${RATELIMIT_TILES_BURST} nodelay;

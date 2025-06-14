@@ -88,7 +88,7 @@ if [[ "${TILES}" != 'low-med' ]]; then
   echo "Tiles: electrification"
 
   rm -f "$OUTPUT_DIR/electrification.mbtiles"
-  $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source electrification_signals,catenary --output-file "$OUTPUT_DIR/electrification.mbtiles"
+  $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source electrification_signals,catenary,electrification_railway_symbols --output-file "$OUTPUT_DIR/electrification.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/electrification.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/electrification.mbtiles"
 fi

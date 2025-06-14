@@ -2,6 +2,7 @@ features:
   - description: Border crossing
     feature: 'general/border'
     colored_icon: true
+    layer: standard
     minzoom: 10
     tags:
       - { tag: 'railway', value: 'border' }
@@ -9,12 +10,14 @@ features:
   - description: Owner change
     feature: 'general/owner-change'
     colored_icon: true
+    layer: standard
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'owner_change' }
 
   - description: Radio mast
     feature: 'general/radio-mast'
+    layer: standard
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'radio' }
@@ -27,79 +30,92 @@ features:
           - { tag: 'man_made', value: 'antenna' }
 
   - description: Lubricator
+    layer: standard
     minzoom: 13
     feature: 'general/lubricator'
     tags:
       - { tag: 'railway', value: 'lubricator' }
 
   - description: Fuel
+    layer: standard
     minzoom: 13
     feature: 'general/fuel'
     tags:
       - { tag: 'railway', value: 'fuel' }
 
   - description: Sand store
+    layer: standard
     minzoom: 13
     feature: 'general/sand_store'
     tags:
       - { tag: 'railway', value: 'sand_store' }
 
   - description: Defect detector
+    layer: standard
     minzoom: 13
     feature: 'general/defect_detector'
     tags:
       - { tag: 'railway', value: 'defect_detector' }
 
   - description: Automatic equipment identification
+    layer: standard
     minzoom: 13
     feature: 'general/aei'
     tags:
       - { tag: 'railway', value: 'aei' }
 
   - description: Hump
+    layer: standard
     minzoom: 13
     feature: 'general/hump_yard'
     tags:
       - { tag: 'railway', value: 'hump_yard' }
 
   - description: Loading gauge
+    layer: standard
     minzoom: 13
     feature: 'general/loading_gauge'
     tags:
       - { tag: 'railway', value: 'loading_gauge' }
 
   - description: Preheating
+    layer: standard
     minzoom: 13
     feature: 'general/preheating'
     tags:
       - { tag: 'railway', value: 'preheating' }
 
   - description: Compressed air supply
+    layer: standard
     minzoom: 13
     feature: 'general/compressed_air_supply'
     tags:
       - { tag: 'railway', value: 'compressed_air_supply' }
 
   - description: Waste disposal
+    layer: standard
     minzoom: 13
     feature: 'general/waste_disposal'
     tags:
       - { tag: 'railway', value: 'waste_disposal' }
 
   - description: Coaling facility
+    layer: standard
     minzoom: 13
     feature: 'general/coaling_facility'
     tags:
       - { tag: 'railway', value: 'coaling_facility' }
 
   - description: Wash
-    minzoom: 13
     feature: 'general/wash'
+    layer: standard
+    minzoom: 13
     tags:
       - { tag: 'railway', value: 'wash' }
 
   - description: Water tower
     feature: 'general/water_tower'
+    layer: standard
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'water_tower' }
@@ -110,18 +126,21 @@ features:
           - { tag: 'railway', value: 'water_crane' }
 
   - description: Workshop
-    minzoom: 13
     feature: 'general/workshop'
+    layer: standard
+    minzoom: 13
     tags:
       - { tag: 'railway', value: 'workshop' }
 
   - description: Engine Shed
-    minzoom: 13
     feature: 'general/engine_shed'
+    layer: standard
+    minzoom: 13
     tags:
       - { tag: 'railway', value: 'engine_shed' }
 
   - description: Railway museum
+    layer: standard
     minzoom: 13
     feature: 'general/museum'
     tags:
@@ -134,20 +153,23 @@ features:
           - { tag: 'museum', value: 'railway' }
 
   - description: Power Supply
-    minzoom: 13
     feature: 'general/power_supply'
+    layer: electrification
+    minzoom: 13
     tags:
       - { tag: 'railway', value: 'power_supply' }
 
   - description: Rolling Highway
-    minzoom: 13
     feature: 'general/rolling_highway'
+    layer: standard
+    minzoom: 13
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
 
   - description: Crossing
     feature: 'general/crossing'
     colored_icon: true
+    layer: standard
     minzoom: 15
     tags:
       - { tag: 'railway', value: 'crossing' }
@@ -181,6 +203,7 @@ features:
           - { tag: 'railway', value: 'level_crossing' }
 
   - description: Phone
+    layer: standard
     minzoom: 16
     feature: 'general/phone'
     tags:
@@ -188,18 +211,21 @@ features:
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
+    layer: standard
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'buffer_stop' }
 
   - description: Derailer
     feature: 'general/derail'
+    layer: standard
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'derail' }
 
   - description: Retarder
     feature: 'general/retarder'
+    layer: standard
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'rail_brake' }
