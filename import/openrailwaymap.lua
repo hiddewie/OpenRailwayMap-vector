@@ -395,7 +395,7 @@ local catenary = osm2pgsql.define_table({
     { column = 'way', type = 'geometry' },
     { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
-    { column = 'railway_position_exact', type = 'text' },
+    { column = 'position', type = 'text' },
     { column = 'transition', type = 'boolean' },
     { column = 'structure', type = 'text' },
     { column = 'supporting', type = 'text' },

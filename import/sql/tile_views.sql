@@ -505,26 +505,6 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   FROM railway_switches
   ORDER by char_length(ref);
 
---- Electrification ---
-
-CREATE OR REPLACE VIEW electrification_catenary AS
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    ref,
-    feature,
-    railway_position_exact as position,
-    structure,
-    supporting,
-    attachment,
-    tensioning,
-    insulator,
-    note,
-    description
-  FROM catenary;
-
 --- Signals ---
 
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
