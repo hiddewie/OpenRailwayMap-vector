@@ -459,12 +459,15 @@ const features = {
   'openrailwaymap_standard-standard_railway_symbols': {
     featureLinks: featureLinks.openstreetmap,
     features: Object.fromEntries(
-      poi.features.flatMap(feature =>
-        [
-          [feature.feature, {name: feature.description}]
-        ].concat(
-          (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
-        ))
+      poi.features
+        .filter(feature => feature.layer === 'standard')
+        .flatMap(feature =>
+          [
+            [feature.feature, {name: feature.description}]
+          ].concat(
+            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+          )
+        )
     ),
     properties: {
       ref: {
@@ -814,6 +817,53 @@ const features = {
         name: 'Deactivated',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description, format: tag.format}])),
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      image: {
+        name: 'Image',
+        link: links.image,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
+  'openrailwaymap_standard-electrification_railway_symbols': {
+    featureLinks: featureLinks.openstreetmap,
+    features: Object.fromEntries(
+      poi.features
+        .filter(feature => feature.layer === 'electrification')
+        .flatMap(feature =>
+          [
+            [feature.feature, {name: feature.description}]
+          ].concat(
+            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+          )
+        )
+    ),
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,

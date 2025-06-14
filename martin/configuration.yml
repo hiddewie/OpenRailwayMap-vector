@@ -279,5 +279,10 @@ postgres:
       function: electrification_signals
       minzoom: 13
 
+    electrification_railway_symbols:
+      schema: public
+      function: electrification_railway_symbols
+      minzoom: 13
+
 fonts:
   - /config/fonts

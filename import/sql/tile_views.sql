@@ -524,6 +524,71 @@ CREATE OR REPLACE VIEW electrification_catenary AS
     description
   FROM catenary;
 
+CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(
+        way,
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      wikidata,
+      wikimedia_commons,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      -- Tiles are generated from zoom 14 onwards
+      AND (z >= 14 OR z >= minzoom)
+      AND layer = 'electrification'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION electrification_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "electrification_railway_symbols",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "minzoom": "integer",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Signals ---
 
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
