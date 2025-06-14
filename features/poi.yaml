@@ -121,7 +121,7 @@ features:
     tags:
       - { tag: 'railway', value: 'engine_shed' }
 
-  - description: Railway Museum
+  - description: Railway museum
     minzoom: 13
     feature: 'general/museum'
     tags:
