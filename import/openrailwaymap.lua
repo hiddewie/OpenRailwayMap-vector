@@ -667,7 +667,7 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    for vehicle in vehicles do
+    for _, vehicle in ipairs(vehicles) do
       if tags[vehicle] == 'yes' then
         feature_stations[vehicle] = true
       end
@@ -681,7 +681,7 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    for station, _ in feature_stations do
+    for station, _ in pairs(feature_stations) do
       stations:insert({
         way = object:as_point(),
         feature = station_feature,
@@ -702,6 +702,7 @@ function osm2pgsql.process_node(object)
         note = tags.note,
         description = tags.description,
       })
+    end
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
