@@ -611,6 +611,37 @@ function railway_feature_and_state(tags, railway_value_func)
   return nil, nil
 end
 
+local vehicles = {'train', 'subway', 'light_rail', 'monorail', 'funicular', 'miniature'}
+function station_type(tags)
+  -- Determine the type of station
+  local feature_stations = {}
+  local has_entries = false
+
+  if tags.station then
+    for station in string.gmatch(tags.station, '[^;]+') do
+      feature_stations[station] = true
+      has_entries = true
+    end
+  else
+    for _, vehicle in ipairs(vehicles) do
+      if tags[vehicle] == 'yes' then
+        feature_stations[vehicle] = true
+        has_entries = true
+      end
+    end
+  end
+
+  if not has_entries then
+    if tags.railway == 'tram_stop' then
+      feature_stations['tram'] = true
+    else
+      feature_stations['train'] = true
+    end
+  end
+
+  return feature_stations
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -658,38 +689,14 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    if tags.station then
-      for station in string.gmatch(tags.station, '[^;]+') do
-        stations:insert({
-          way = object:as_point(),
-          feature = station_feature,
-          state = station_state,
-          name = tags.name or tags.short_name,
-          ref = tags.ref,
-          station = station,
-          railway_ref = tags['railway:ref'] or tags['ref:crs'],
-          uic_ref = tags['uic_ref'],
-          name_tags = name_tags,
-          operator = tags.operator,
-          network = tags.network,
-          wikidata = tags.wikidata,
-          wikimedia_commons = wikimedia_commons,
-          image = image,
-          mapillary = tags.mapillary,
-          wikipedia = tags.wikipedia,
-          note = tags.note,
-          description = tags.description,
-        })
-      end
-    else
+    for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object:as_point(),
-        railway = tags['railway'],
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
         ref = tags.ref,
-        station = nil,
+        station = station,
         railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags,
