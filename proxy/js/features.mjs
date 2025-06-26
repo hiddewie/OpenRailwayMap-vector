@@ -615,10 +615,17 @@ const features = {
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
-    featureProperty: 'feature0',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
     properties: {
+      feature0: {
+        name: 'Secondary signal',
+        format: {
+          // Recursive feature lookup
+          lookup: 'openrailwaymap_speed-speed_railway_signals',
+        },
+      },
       feature1: {
         name: 'Secondary signal',
         format: {
