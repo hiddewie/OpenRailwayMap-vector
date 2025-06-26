@@ -35,6 +35,7 @@ const knownStyles = [
   'gauge',
   'loading_gauge',
   'track_class',
+  'operator',
 ];
 const knownThemes = [
   'light',

@@ -390,6 +390,12 @@ const knownStyles = {
       default: 'track_class',
     },
   },
+  operator: {
+    name: 'Operator',
+    styles: {
+      default: 'operator',
+    },
+  },
 };
 
 const defaultStyle = Object.keys(knownStyles)[0];
