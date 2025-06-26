@@ -3567,7 +3567,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: 'black',
+          color: ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         },
         {
           id: 'railway_line_med',
@@ -3578,7 +3578,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             present: undefined,
           },
           width: 2,
-          color: 'red',
+          color: ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         },
         {
           id: 'railway_line_high',
@@ -3593,7 +3593,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: 'blue',
+          color: ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         },
       ],
     ),
