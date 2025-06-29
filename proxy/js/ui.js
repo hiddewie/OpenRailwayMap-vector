@@ -1262,7 +1262,7 @@ function popupContent(feature) {
     if (hasWikimediaImage) {
       const sanitizedName = properties.wikimedia_commons.replace('File:', '').replaceAll(' ', '_');
       const nameHash = MD5(sanitizedName)
-      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}`
+      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
       const popupImageLink = createDomElement('a', undefined, popupImageContainer)
       popupImageLink.href = `https://commons.wikimedia.org/wiki/${encodeURIComponent(properties.wikimedia_commons)}`
       popupImageLink.target = '_blank'
