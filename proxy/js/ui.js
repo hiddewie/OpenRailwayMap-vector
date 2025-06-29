@@ -1205,29 +1205,6 @@ function popupContent(feature) {
     ? String(properties.osm_id).split('\u001e')
     : [];
 
-  // const wikidata = properties.wikidata;
-  // // TODO check starts with Q....
-  // fetch(`https://www.wikidata.org/w/api.php?action=wbgetclaims&property=P18&format=json&entity=${encodeURIComponent(wikidata)}`)
-  //   .then(result => result.json())
-  //   .then(result => {
-  //     const element = document.getElementById(`wikidata-${wikidata}`)
-  //     if (element) {
-  //       const name = result.claims.P18[0].mainsnak.datavalue.value
-  //       const sanitizedName = name.replaceAll(' ', '_');
-  //       const nameHash = MD5(sanitizedName)
-  //       const imageUrl = `https://upload.wikimedia.org/wikipedia/commons/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${sanitizedName}`
-  //
-  //       element.src = imageUrl;
-  //     } else {
-  //       console.info(`Element for wikidata ${wikidata} not found`)
-  //     }
-  //   })
-  //   .catch(error => {
-  //     hideSearchResults();
-  //     hideSearch();
-  //     console.error('Error during facility search', error);
-  //   });
-
   // Build HTML content dynamically to avoid cross site scripting
 
   const popupContainer = createDomElement('div');
