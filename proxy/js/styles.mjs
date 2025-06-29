@@ -5712,12 +5712,12 @@ const legendData = {
   },
   operator: {
     'openrailwaymap_low-railway_line_high': [
-      // TODO
-      ...track_classes.track_classes.map(track_class => ({
-        legend: track_class.value,
+      {
+        legend: 'Railway line',
         type: 'line',
         properties: {
-          track_class: track_class.value,
+          operator: 'ABC',
+          operator_hash: 0,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -5725,12 +5725,13 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      })),
+      },
       {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          track_class: null,
+          operator: null,
+          operator_hash: null,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -5741,12 +5742,12 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      // TODO
-      ...track_classes.track_classes.map(track_class => ({
-        legend: track_class.value,
+      {
+        legend: 'Railway line',
         type: 'line',
         properties: {
-          track_class: track_class.value,
+          operator: 'ABC',
+          operator_hash: 0,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -5754,12 +5755,13 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      })),
+      },
       {
         legend: '(unknown)',
         type: 'line',
         properties: {
-          track_class: null,
+          operator: null,
+          operator_hash: null,
           feature: 'rail',
           state: 'present',
           usage: 'main',
