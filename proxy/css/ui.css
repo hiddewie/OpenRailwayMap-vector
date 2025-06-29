@@ -327,6 +327,12 @@ body {
   vertical-align: middle;
 }
 
+.maplibregl-popup-content img {
+  margin: 0 -10px;
+  width: calc(100% + 20px);
+  height: auto;
+}
+
 input[type=url] {
   font-family: monospace;
 }

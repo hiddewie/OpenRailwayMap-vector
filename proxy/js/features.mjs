@@ -199,10 +199,6 @@ const railwayLineFeatures = {
       name: 'Wikimedia',
       link: links.wikimedia_commons,
     },
-    image: {
-      name: 'Image',
-      link: links.image,
-    },
     mapillary: {
       name: 'Mapillary',
       link: links.mapillary,
@@ -256,10 +252,6 @@ const stationFeatures = {
     wikimedia_commons: {
       name: 'Wikimedia',
       link: links.wikimedia_commons,
-    },
-    image: {
-      name: 'Image',
-      link: links.image,
     },
     mapillary: {
       name: 'Mapillary',
