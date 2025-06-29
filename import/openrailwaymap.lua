@@ -611,7 +611,7 @@ function railway_feature_and_state(tags, railway_value_func)
   return nil, nil
 end
 
-local vehicles = {'train', 'subway', 'light_rail', 'monorail', 'funicular', 'miniature'}
+local vehicles = {'train', 'subway', 'light_rail', 'tram', 'monorail', 'funicular', 'miniature'}
 function station_type(tags)
   -- Determine the type of station
   local feature_stations = {}
