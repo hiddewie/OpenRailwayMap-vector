@@ -1098,7 +1098,7 @@ const railwayLine = (theme, text, layers) => [
       'text-size': 11,
       'text-padding': 10,
       'text-max-width': 5,
-      'symbol-spacing': 150,
+      'symbol-spacing': 200,
     },
   })),
 ];
