@@ -426,10 +426,6 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
-      },
       mapillary: {
         name: 'Mapillary',
         link: links.mapillary,
@@ -475,10 +471,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -526,10 +518,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -584,10 +572,6 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
-      },
       mapillary: {
         name: 'Mapillary',
         link: links.mapillary,
@@ -641,10 +625,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -721,10 +701,6 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
-      },
       mapillary: {
         name: 'Mapillary',
         link: links.mapillary,
@@ -768,10 +744,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -820,10 +792,6 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
-      },
       mapillary: {
         name: 'Mapillary',
         link: links.mapillary,
@@ -866,10 +834,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
