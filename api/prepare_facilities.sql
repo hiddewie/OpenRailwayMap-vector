@@ -15,6 +15,7 @@ CREATE TABLE openrailwaymap_ref AS
     ARRAY[network] AS network,
     ARRAY[wikidata] AS wikidata,
     ARRAY[wikimedia_commons] AS wikimedia_commons,
+    ARRAY[wikimedia_commons_file] AS wikimedia_commons_file,
     ARRAY[image] AS image,
     ARRAY[mapillary] AS mapillary,
     ARRAY[wikipedia] AS wikipedia,

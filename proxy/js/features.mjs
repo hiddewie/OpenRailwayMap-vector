@@ -29,7 +29,6 @@ const links = {
   wikimedia_commons: 'https://commons.wikimedia.org/wiki/%s',
   wikipedia: 'https://wikipedia.org/wiki/%s',
   wikidata: 'https://www.wikidata.org/wiki/%s',
-  image: '%s',
   mapillary: 'https://www.mapillary.com/app/?pKey=%s',
 };
 

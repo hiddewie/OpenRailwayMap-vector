@@ -1255,22 +1255,22 @@ function popupContent(feature) {
     }
   })
 
-  const hasWikimediaImage = properties.wikimedia_commons && typeof properties.wikimedia_commons === 'string' && properties.wikimedia_commons.startsWith('File:')
-  if (hasWikimediaImage || properties.image) {
+  // Images are not output as properties
+  if (properties.wikimedia_commons_file || properties.image) {
     const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
-    if (hasWikimediaImage) {
-      const sanitizedName = properties.wikimedia_commons.replace('File:', '').replaceAll(' ', '_');
+    if (properties.wikimedia_commons_file) {
+      const sanitizedName = properties.wikimedia_commons_file.replaceAll(' ', '_');
       const nameHash = MD5(sanitizedName)
       const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
       const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://commons.wikimedia.org/wiki/${encodeURIComponent(properties.wikimedia_commons)}`
+      popupImageLink.href = `https://commons.wikimedia.org/wiki/${encodeURIComponent(properties.wikimedia_commons_file)}`
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikimedia Commons: ${properties.wikimedia_commons}`
+      popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
 
       const popupImage = createDomElement('img', undefined, popupImageLink);
       popupImage.src = wikimediaUrl
-      popupImage.title = properties.wikimedia_commons
+      popupImage.title = properties.wikimedia_commons_file
     }
 
     if (properties.image) {

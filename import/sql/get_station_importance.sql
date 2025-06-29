@@ -196,6 +196,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
     array_remove(array_agg(DISTINCT s.wikimedia_commons ORDER BY s.wikimedia_commons), null) as wikimedia_commons,
+    array_remove(array_agg(DISTINCT s.wikimedia_commons_file ORDER BY s.wikimedia_commons_file), null) as wikimedia_commons_file,
     array_remove(array_agg(DISTINCT s.wikipedia ORDER BY s.wikipedia), null) as wikipedia,
     array_remove(array_agg(DISTINCT s.image ORDER BY s.image), null) as image,
     array_remove(array_agg(DISTINCT s.mapillary ORDER BY s.mapillary), null) as mapillary,

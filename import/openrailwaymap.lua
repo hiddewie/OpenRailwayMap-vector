@@ -118,14 +118,14 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
 end
 
 -- Protect against unwanted links in the UI
+local file_prefix_length = string.len('File:')
 function wikimedia_commons_or_image(wikimedia_commons, image)
-    if image and image:find('^File:') and not wikimedia_commons then
-      return image, nil
-    elseif image and image:find('^https://') then
-      return wikimedia_commons, image
-    else
-      return wikimedia_commons, nil
-    end
+    local image_https = (image and image:find('^https://') and image) or nil
+    local image_wikimedia_commons_file = (image and image:find('^File:') and image:sub(file_prefix_length + 1)) or nil
+    local wikimedia_commons_file = (wikimedia_commons and wikimedia_commons:find('^File:') and wikimedia_commons:sub(file_prefix_length + 1)) or nil
+    local wikimedia_commons_not_file = (wikimedia_commons and (not wikimedia_commons:find('^File:')) and wikimedia_commons) or nil
+
+    return wikimedia_commons_not_file, image_wikimedia_commons_file or wikimedia_commons_file, image_https
 end
 
 function signal_caption(tags)
@@ -194,6 +194,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'radio', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -216,6 +217,7 @@ local pois = osm2pgsql.define_table({
     { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -242,6 +244,7 @@ local stations = osm2pgsql.define_table({
     { column = 'network', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -286,6 +289,7 @@ local station_entrances = osm2pgsql.define_table({
     { column = 'ref', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -348,6 +352,7 @@ local boxes = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -380,6 +385,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'operator', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -422,6 +428,7 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'resetting', type = 'boolean' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
     { column = 'image', type = 'text' },
     { column = 'mapillary', type = 'text' },
     { column = 'wikipedia', type = 'text' },
@@ -656,7 +663,7 @@ local entrance_types = {
 }
 function osm2pgsql.process_node(object)
   local tags = object.tags
-  local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
+  local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
 
   if railway_box_values(tags.railway) then
     local point = object:as_point()
@@ -668,6 +675,7 @@ function osm2pgsql.process_node(object)
       ref = tags['railway:ref'],
       name = tags.name,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -726,6 +734,7 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -757,6 +766,7 @@ function osm2pgsql.process_node(object)
       name = tags.name,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -777,6 +787,7 @@ function osm2pgsql.process_node(object)
       caption = signal_caption(tags),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -808,6 +819,7 @@ function osm2pgsql.process_node(object)
       operator = tags['operator'],
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -827,6 +839,7 @@ function osm2pgsql.process_node(object)
       resetting = tags['railway:switch:resetting'] == 'yes',
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -858,7 +871,7 @@ local railway_values = osm2pgsql.make_check_values_func({'rail', 'tram', 'light_
 local railway_turntable_values = osm2pgsql.make_check_values_func({'turntable', 'traverser'})
 function osm2pgsql.process_way(object)
   local tags = object.tags
-  local wikimedia_commons, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
+  local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
 
   if railway_values(tags.railway) then
     local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
@@ -948,6 +961,7 @@ function osm2pgsql.process_way(object)
       name = tags.name,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,
@@ -969,6 +983,7 @@ function osm2pgsql.process_way(object)
       ref = tags.ref,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
       image = image,
       mapillary = tags.mapillary,
       wikipedia = tags.wikipedia,

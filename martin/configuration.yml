@@ -48,6 +48,7 @@ postgres:
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -72,6 +73,7 @@ postgres:
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -103,6 +105,7 @@ postgres:
         ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -129,6 +132,7 @@ postgres:
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -152,6 +156,7 @@ postgres:
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -173,6 +178,7 @@ postgres:
         zero: boolean
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -196,6 +202,7 @@ postgres:
         resetting: boolean
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
