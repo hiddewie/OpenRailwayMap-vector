@@ -232,6 +232,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
         r.network,
         r.wikidata,
         r.wikimedia_commons,
+        r.wikimedia_commons_file,
         r.image,
         r.mapillary,
         r.wikipedia,

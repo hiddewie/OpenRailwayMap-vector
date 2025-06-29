@@ -124,6 +124,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
                 m.ref AS milestone_ref,
                 m.wikidata,
                 m.wikimedia_commons,
+                m.wikimedia_commons_file,
                 m.image,
                 m.mapillary,
                 m.wikipedia,
