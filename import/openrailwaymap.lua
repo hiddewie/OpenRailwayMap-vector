@@ -309,6 +309,7 @@ local signal_columns = {
   { column = 'caption', type = 'text' },
   { column = 'wikidata', type = 'text' },
   { column = 'wikimedia_commons', type = 'text' },
+  { column = 'wikimedia_commons_file', type = 'text' },
   { column = 'image', type = 'text' },
   { column = 'mapillary', type = 'text' },
   { column = 'wikipedia', type = 'text' },

@@ -1264,7 +1264,7 @@ function popupContent(feature) {
       const nameHash = MD5(sanitizedName)
       const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
       const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://commons.wikimedia.org/wiki/${encodeURIComponent(properties.wikimedia_commons_file)}`
+      popupImageLink.href = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(properties.wikimedia_commons_file)}#/media/File:${encodeURIComponent(properties.wikimedia_commons_file)}`
       popupImageLink.target = '_blank'
       popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
 
