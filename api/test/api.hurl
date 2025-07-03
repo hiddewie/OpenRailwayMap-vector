@@ -22,10 +22,10 @@ jsonpath "$[12].name" == "Alexanderplatz"
 jsonpath "$[13].name" == "S Friedrichstraße"
 jsonpath "$[14].name" == "Berlin-Schöneweide"
 jsonpath "$[15].name" == "Schöneweide"
-jsonpath "$[16].name" == "Berlin Alexanderplatz"
-jsonpath "$[17].name" == "Berlin Friedrichstraße"
+jsonpath "$[16].name" == "Berlin Friedrichstraße"
+jsonpath "$[17].name" == "Berlin Alexanderplatz"
 jsonpath "$[18].name" == "Bornholmer Straße"
-jsonpath "$[19].name" == "Berlin Potsdamer Platz"
+jsonpath "$[19].name" == "Warschauer Straße"
 
 # Facility request with limit
 GET {{base_url}}/facility
