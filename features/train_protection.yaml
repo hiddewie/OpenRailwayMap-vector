@@ -42,9 +42,6 @@ train_protections:
   - { train_protection: 'other', legend: '(other)', color: 'black' }
 
 features:
-  - train_protection: ptc
-    tags:
-      - { tag: 'railway:ptc', value: 'yes' }
 
   - train_protection: etcs
     tags:
@@ -65,6 +62,30 @@ features:
   - train_protection: etcs_2
     tags:
       - { tag: 'railway:etcs', value: '3' }
+
+  - train_protection: acses
+    tags:
+      - { tag: 'railway:acses', value: 'yes' }
+
+  - train_protection: itcs
+    tags:
+      - { tag: 'railway:itcs', value: 'yes' }
+
+  - train_protection: etms
+    tags:
+      - { tag: 'railway:etms', value: 'yes' }
+
+  - train_protection: cbtc
+    tags:
+      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
+
+  - train_protection: ptc
+    tags:
+      - { tag: 'railway:ptc', value: 'yes' }
+
+  - train_protection: atc
+    tags:
+      - { tag: 'railway:atc', value: 'yes' }
 
   - train_protection: asfa
     tags:
@@ -94,10 +115,6 @@ features:
     tags:
       - { tag: 'railway:nexteo', value: 'yes' }
 
-  - train_protection: atc
-    tags:
-      - { tag: 'railway:atc', value: 'yes' }
-
   - train_protection: atb
     tags:
       - { tag: 'railway:atb', value: 'yes' }
@@ -125,10 +142,6 @@ features:
   - train_protection: pzb
     tags:
       - { tag: 'railway:pzb', value: 'yes' }
-
-  - train_protection: acses
-    tags:
-      - { tag: 'railway:acses', value: 'yes' }
 
   - train_protection: als
     tags:
@@ -182,10 +195,6 @@ features:
     tags:
       - { tag: 'railway:tcb', value: 'yes' }
 
-  - train_protection: cbtc
-    tags:
-      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
-
   - train_protection: ctcs
     tags:
       - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3D', '4'] }
@@ -194,17 +203,9 @@ features:
     tags:
       - { tag: 'railway:ebicab', values: ['yes', '700', '900'] }
 
-  - train_protection: etms
-    tags:
-      - { tag: 'railway:etms', value: 'yes' }
-
   - train_protection: evm
     tags:
       - { tag: 'railway:evm', value: 'yes' }
-
-  - train_protection: itcs
-    tags:
-      - { tag: 'railway:itcs', value: 'yes' }
 
   - train_protection: ls
     tags:
