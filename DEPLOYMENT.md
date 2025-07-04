@@ -1,6 +1,6 @@
 # Deployment
 
-This document describes how the OpenRailwayMap is deployed to https://openrailwaymap.fly.dev using [Github Actions](https://docs.github.com/en/actions) and [`fly.io`](https://fly.io/).
+This document describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions) and [`fly.io`](https://fly.io/).
 
 ## Automatic deployment
 
@@ -43,4 +43,4 @@ Build and deploy the caching proxy:
 flyctl deploy --config proxy.fly.toml --local-only
 ```
 
-The OpenRailwayMap is now available on https://openrailwaymap.fly.dev.
+The OpenRailwayMap is now available on https://openrailwaymap.app.
