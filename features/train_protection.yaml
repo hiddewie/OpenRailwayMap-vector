@@ -11,7 +11,6 @@ train_protections:
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
   - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
-  - { train_protection: 'ctc', legend: 'Centralized traffic control (CTC)', color: '#4b8dd6' }
   - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
   - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
@@ -87,10 +86,6 @@ features:
   - train_protection: atc
     tags:
       - { tag: 'railway:atc', value: 'yes' }
-
-  - train_protection: ctc
-    tags:
-      - { tag: 'railway:ctc', value: 'yes' }
 
   - train_protection: asfa
     tags:
@@ -311,10 +306,6 @@ features:
   - train_protection: none
     tags:
       - { tag: 'railway:atc', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:ctc', value: 'no' }
 
   - train_protection: none
     tags:
