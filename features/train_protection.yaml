@@ -11,10 +11,11 @@ train_protections:
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
   - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
+  - { train_protection: 'ctc', legend: 'Centralized traffic control (CTC)', color: '#4b8dd6' }
   - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
   - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: 'pink' }
+  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#43b54d' }
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -86,6 +87,10 @@ features:
   - train_protection: atc
     tags:
       - { tag: 'railway:atc', value: 'yes' }
+
+  - train_protection: ctc
+    tags:
+      - { tag: 'railway:ctc', value: 'yes' }
 
   - train_protection: asfa
     tags:
