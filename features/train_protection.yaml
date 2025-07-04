@@ -310,6 +310,22 @@ features:
 
   - train_protection: none
     tags:
+      - { tag: 'railway:atc', value: 'no' }
+
+  - train_protection: none
+    tags:
+      - { tag: 'railway:ctc', value: 'no' }
+
+  - train_protection: none
+    tags:
+      - { tag: 'railway:etms', value: 'no' }
+
+  - train_protection: none
+    tags:
+      - { tag: 'railway:ptc', value: 'no' }
+
+  - train_protection: none
+    tags:
       - { tag: 'railway:scmt', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
