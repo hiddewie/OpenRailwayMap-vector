@@ -39,7 +39,7 @@ train_protections:
   - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
   - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
   - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'hsl(187, 100%, 40%)' }
-  - { train_protection: 'other', legend: '(other)', color: 'black' }
+  - { train_protection: 'none', legend: 'No train protection', color: 'black' }
 
 features:
 
@@ -287,43 +287,43 @@ features:
     tags:
       - { tag: 'railway:atp4b', value: 'yes' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:pzb', value: 'no' }
       - { tag: 'railway:lzb', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:atb', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:atc', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:scmt', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:asfa', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:kvb', value: 'no' }
       - { tag: 'railway:tvm', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:ls', value: 'no' }
       - { tag: 'railway:etcs', value: 'no' }
 
-  - train_protection: other
+  - train_protection: none
     tags:
       - { tag: 'railway:zsi127', value: 'no' }
