@@ -24,8 +24,6 @@ const speed_railway_signals = all_signals.features.filter(feature => feature.tag
 const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
 const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
 
-const origin = `${process.env.PUBLIC_PROTOCOL}://${process.env.PUBLIC_HOST}`
-
 const knownStyles = [
   'standard',
   'historical',
@@ -739,42 +737,42 @@ const sources = {
   },
   openrailwaymap_low: {
     type: 'vector',
-    url: `${origin}/railway_line_high`,
+    url: '/railway_line_high',
     promoteId: 'id',
   },
   standard_railway_text_stations_low: {
     type: 'vector',
-    url: `${origin}/standard_railway_text_stations_low`,
+    url: '/standard_railway_text_stations_low',
     promoteId: 'id',
   },
   standard_railway_text_stations_med: {
     type: 'vector',
-    url: `${origin}/standard_railway_text_stations_med`,
+    url: '/standard_railway_text_stations_med',
     promoteId: 'id',
   },
   high: {
     type: 'vector',
-    url: `${origin}/high`,
+    url: '/high',
     promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: `${origin}/standard`,
+    url: '/standard',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
     type: 'vector',
-    url: `${origin}/speed`,
+    url: '/speed',
     promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: `${origin}/signals`,
+    url: '/signals',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: `${origin}/electrification`,
+    url: '/electrification',
     promoteId: 'id',
   },
   openhistoricalmap: {
@@ -3623,18 +3621,18 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
 const makeStyle = (selectedStyle, theme) => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
-  glyphs: `${origin}/font/{fontstack}/{range}`,
+  glyphs: '/font/{fontstack}/{range}',
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,
   sprite: [
     {
       id: 'sdf',
-      url: `${origin}/sdf_sprite/symbols`
+      url: '/sdf_sprite/symbols'
     },
     {
       id: 'default',
-      url: `${origin}/sprite/symbols`
+      url: '/sprite/symbols'
     }
   ],
   version: 8,

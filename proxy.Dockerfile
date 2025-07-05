@@ -6,9 +6,6 @@ RUN npm install yaml
 
 FROM build-yaml AS build-styles
 
-ARG PUBLIC_PROTOCOL
-ARG PUBLIC_HOST
-
 RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
