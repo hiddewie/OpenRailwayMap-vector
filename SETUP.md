@@ -19,8 +19,7 @@ docker compose up --build --watch martin
 
 Prepare and start the API:
 ```shell
-api/prepare-api.sh
-docker compose up api
+docker compose up --build api
 ```
 
 Start the web server:
