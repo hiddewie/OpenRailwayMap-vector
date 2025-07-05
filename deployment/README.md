@@ -276,16 +276,9 @@ Verify the timer works as intended:
 systemctl start prune-docker.service
 ```
 
-### TODO
-
-- configure client certificates
-
 ## Cloudflare
 
 Configure Cloudflare to point to the IPv6 address of the server.
-
-TODO:
-- configure client certificates
 
 ## Ready!
 
