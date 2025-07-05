@@ -14,3 +14,5 @@ tmp
 *.osm.pbf
 .idea
 tiles
+localhost.pem
+localhost-key.pem
