@@ -22,8 +22,6 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
 
 FROM python:3-alpine AS build-preset
 
-ARG PRESET_VERSION
-
 RUN apk add --no-cache zip
 
 RUN pip install --no-cache-dir \
@@ -32,6 +30,7 @@ RUN pip install --no-cache-dir \
 
 WORKDIR /build
 
+ARG PRESET_VERSION
 RUN --mount=type=bind,source=proxy/preset.py,target=preset.py \
   --mount=type=bind,source=features,target=features \
   python preset.py \
