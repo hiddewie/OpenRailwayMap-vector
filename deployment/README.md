@@ -43,6 +43,18 @@ Verify Docker works
 docker run hello-world
 ```
 
+### JQ
+
+Install JQ:
+```shell
+apt install jq
+```
+
+Verify JQ works:
+```shell
+echo '{}' | jq .
+```
+
 ### User
 
 Create new user `openrailwaymap` which has permission to access the Docker daemon:
@@ -107,11 +119,28 @@ Edit `/etc/systemd/system/openrailwaymap.service`:
 ```
 [Unit]
 Description=Run OpenRailwayMap
+After=network.target
 
 [Service]
 Type=simple
+Restart=always
+RestartSec=5
 ExecStart=/home/openrailwaymap/OpenRailwayMap-vector/deployment/start.sh
 User=openrailwaymap
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemd:
+```shell
+systemctl daemon-reload
+```
+
+Enable and start the service:
+```shell
+systemctl enable openrailwaymap.service
+systemctl start openrailwaymap.service
 ```
 
 ### Daily update
