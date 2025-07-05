@@ -127,10 +127,6 @@ Create a file `compose.override.yaml`:
 ```yaml
 services:
   martin-proxy:
-    build:
-      args:
-        PUBLIC_PROTOCOL: https
-        PUBLIC_HOST: openrailwaymap.app
     volumes:
       - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
       - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'

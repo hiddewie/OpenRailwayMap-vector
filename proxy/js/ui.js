@@ -676,6 +676,33 @@ function onPageParametersChange() {
   }
 }
 
+// See https://github.com/maplibre/maplibre-gl-js/issues/182#issuecomment-2462045216
+// Rewrite paths to default to the current origin
+function rewriteStylePathsToOrigin(style) {
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => [
+        key,
+        source && source.url && source.url.startsWith('/')
+          ? ({...source, url: `${location.origin}${source.url}` })
+          : source
+      ])
+  )
+
+  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
+    ? `${location.origin}${style.glyphs}`
+    : style.glyphs
+
+  style.sprite = style.sprite
+    .map(sprite =>
+      sprite.url && sprite.url.startsWith('/')
+        ? ({...sprite, url: `${location.origin}${sprite.url}` })
+        : sprite
+    )
+
+  return style
+}
+
 let lastSetMapStyle = null;
 const onStyleChange = () => {
   const supportsDate = knownStyles[selectedStyle].styles.date;
@@ -690,6 +717,10 @@ const onStyleChange = () => {
     // Change styles
     map.setStyle(mapStyles[selectedTheme][mapStyle], {
       validate: false,
+      transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
+        return next;
+      },
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
@@ -697,6 +728,7 @@ const onStyleChange = () => {
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
       transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
         onStylesheetChange(next);
         return next;
       },
