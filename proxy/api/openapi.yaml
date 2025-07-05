@@ -14,6 +14,7 @@ info:
 
 servers:
   - url: https://openrailwaymap.app
+  - url: http://localhost:8000
 
 tags:
   - name: search
@@ -33,6 +34,24 @@ paths:
       summary: Status endpoint
       tags:
         - status
+
+  /api/replication_timestamp:
+    get:
+      operationId: replicationTimestamp
+      description: The replication timestamp of the OpenStreetMap data
+      summary: Replication endpoint
+      tags:
+        - replication
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  replication_timestamp:
+                    type: string
 
   /api/facility:
     get:
