@@ -131,12 +131,6 @@ map $request_uri $tiles_upstream {
 }
 
 server {
-  listen 8000;
-  server_name openrailwaymap.fly.dev;
-  return 301 https://openrailwaymap.app$request_uri;
-}
-
-server {
   listen 8000 default_server;
   listen [::]:8000 ipv6only=on;
   listen 443 ssl;
