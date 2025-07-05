@@ -83,7 +83,7 @@ SSL is supported by generating a trusted certificate, and installing it in the p
   docker compose up --build --watch martin-proxy
   ```
 
-Go to `https://localhost` which should show the OpenRailwayMap over SSL, without browser warnings.
+The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings.
 
 ## Tests
 
