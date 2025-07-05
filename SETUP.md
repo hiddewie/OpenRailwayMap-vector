@@ -60,7 +60,7 @@ Download the generated JOSM preset on http://localhost:8000/preset.zip.
 
 SSL is supported by generating a trusted certificate, and installing it in the proxy.
 
--[Install mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file)
+- [Install mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file)
 - Install the `mkcert` CA in the system:
   ```shell
   mkcert -install
