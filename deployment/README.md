@@ -80,6 +80,12 @@ cd OpenRailwayMap-vector
 
 ### Github Packages
 
+Use the `openrailwaymap` user:
+```shell
+su openrailwaymap
+cd
+```
+
 Generate an access token that has read access to Github Packages:
   - No expiration
   - Scopes: `read:packages`
@@ -95,41 +101,121 @@ Verify that pulling packages works:
 docker compose pull db
 ```
 
+### System service
+
+Edit `/etc/systemd/system/openrailwaymap.service`:
+```
+[Unit]
+Description=Run OpenRailwayMap
+
+[Service]
+Type=simple
+ExecStart=/home/openrailwaymap/OpenRailwayMap-vector/deployment/start.sh
+User=openrailwaymap
+```
+
 ### Daily update
 
-- Start everything
-- ```shell
-  git pull
-  docker compose pull db
-  docker compose up --no-build --wait --force-recreate db
-  docker compose up --build --wait --no-deps --force-recreate martin
-  docker compose up --build --wait --no-deps --force-recreate martin-proxy
-  ```
-- Install database
-- Install proxy
-- Install tiles
-- Install cron to update daily
-  - TODO
-  - ```shell
-    git clone git@github.com:hiddewie/OpenRailwayMap-vector.git
-    
-    docker compose up --pull --no-build
-    ```
+Install the daily update timer and service
+
+Edit `/etc/systemd/system/update-openrailwaymap.timer`:
+```
+[Unit]
+Description=Daily update OpenRailwayMap
+
+[Timer]
+OnCalendar=*-*-* 08:00:00 Europe/Amsterdam
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Edit `/etc/systemd/system/update-openrailwaymap.service`:
+```
+[Unit]
+Description=Update OpenRailwayMap
+OnSuccess=restart-openrailwaymap.service
+
+[Service]
+Type=oneshot
+ExecStart=/home/openrailwaymap/OpenRailwayMap-vector/deployment/pull-and-update.sh
+User=openrailwaymap
+```
+
+Edit `/etc/systemd/system/restart-openrailwaymap.service`:
+```
+[Unit]
+Description=Restart OpenRailwayMap service
+
+[Service]
+Type=oneshot
+ExecStart=systemctl restart openrailwaymap.service
+```
+
+Reload systemd:
+```shell
+systemctl daemon-reload
+```
+
+Enable the timer:
+```shell
+systemctl enable update-openrailwaymap.timer
+```
+
+Verify the timer is installed:
+```shell
+systemctl list-timers --all
+```
+
+Verify the timer works as intended:
+```shell
+systemctl start update-openrailwaymap.service
+```
 
 ### Daily Docker cleanup
 
-Configure the cronjob:
-```shell
-cd /etc/cron.daily
-echo '#!/bin/bash' > /etc/cron.daily/docker-prune-daily
-echo >> /etc/cron.daily/docker-prune-daily
-echo 'docker system prune --force' >> /etc/cron.daily/docker-prune-daily
-chmod +x /etc/cron.daily/docker-prune-daily
+Edit `/etc/systemd/system/prune-docker.timer`:
 ```
-  
-Verify the cronjob with:
+[Unit]
+Description=Daily Docker prune
+
+[Timer]
+OnCalendar=*-*-* 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Edit `/etc/systemd/system/prune-docker.service`:
+```
+[Unit]
+Description=Prune Docker
+
+[Service]
+Type=oneshot
+ExecStart=docker system prune --force
+```
+
+Reload systemd:
 ```shell
-run-parts /etc/cron.daily
+systemctl daemon-reload
+```
+
+Enable the timer:
+```shell
+systemctl enable prune-docker.timer
+```
+
+Verify the timer is installed:
+```shell
+systemctl list-timers --all
+```
+
+Verify the timer works as intended:
+```shell
+systemctl start prune-docker.service
 ```
 
 ### TODO
