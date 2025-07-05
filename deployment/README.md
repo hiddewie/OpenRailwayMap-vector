@@ -127,8 +127,9 @@ Create a file `compose.override.yaml`:
 ```yaml
 services:
   martin-proxy:
-    - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
-    - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
+    volumes:
+      - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
+      - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
 ```
 
 ### System service
