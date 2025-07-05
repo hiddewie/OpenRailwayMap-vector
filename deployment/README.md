@@ -113,6 +113,24 @@ Verify that pulling packages works:
 docker compose pull db
 ```
 
+### SSL
+
+Use the `openrailwaymap` user:
+```shell
+su openrailwaymap
+cd ~/OpenRailwayMap-vector
+```
+
+Ensure the SSL certificate and key are installed in `/etc/nginx/ssl`.
+
+Create a file `compose.override.yaml`:
+```yaml
+services:
+  martin-proxy:
+    - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
+    - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
+```
+
 ### System service
 
 Edit `/etc/systemd/system/openrailwaymap.service`:

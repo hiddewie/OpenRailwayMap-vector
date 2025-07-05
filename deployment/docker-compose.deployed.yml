@@ -1,0 +1,5 @@
+services:
+  proxy:
+    martin-proxy:
+      - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
+      - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
