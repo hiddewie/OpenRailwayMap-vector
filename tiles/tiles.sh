@@ -13,7 +13,7 @@
 set -e
 
 OUTPUT_DIR="/tiles"
-echo "Exporting tiles for bounding box $BBOX into output directory $OUTPUT_DIR. Replication timestamp: ${REPLICATION_TIMESTAMP:-unknown}."
+echo "Exporting tiles for bounding box $BBOX into output directory $OUTPUT_DIR."
 
 export MARTIN="martin-cp --config /config/configuration.yml --mbtiles-type flat --on-duplicate abort --skip-agg-tiles-hash --bbox=$BBOX"
 
@@ -24,17 +24,14 @@ if [[ "${TILES}" != 'high' ]]; then
 
   rm -f "$OUTPUT_DIR/railway_line_high.mbtiles"
   $MARTIN --min-zoom 0 --max-zoom 7 --source railway_line_high --output-file "$OUTPUT_DIR/railway_line_high.mbtiles"
-  mbtiles meta-set "$OUTPUT_DIR/railway_line_high.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/railway_line_high.mbtiles"
 
   rm -f "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
   $MARTIN --min-zoom 0 --max-zoom 6 --source standard_railway_text_stations_low --output-file "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
-  mbtiles meta-set "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_low.mbtiles"
 
   rm -f "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
   $MARTIN --min-zoom 7 --max-zoom 7 --source standard_railway_text_stations_med --output-file "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
-  mbtiles meta-set "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/standard_railway_text_stations_med.mbtiles"
 fi
 
@@ -48,7 +45,6 @@ if [[ "${TILES}" != 'low-med' ]]; then
   mbtiles copy --on-duplicate override "$OUTPUT_DIR/high-10.mbtiles" "$OUTPUT_DIR/high.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" minzoom 8
   mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" maxzoom "$MAX_ZOOM"
-  mbtiles meta-set "$OUTPUT_DIR/high.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/high.mbtiles"
 
   echo "Tiles: standard"
@@ -63,14 +59,12 @@ if [[ "${TILES}" != 'low-med' ]]; then
   mbtiles copy --on-duplicate override "$OUTPUT_DIR/standard-14.mbtiles" "$OUTPUT_DIR/standard.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" minzoom 8
   mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" maxzoom "$MAX_ZOOM"
-  mbtiles meta-set "$OUTPUT_DIR/standard.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/standard.mbtiles"
 
   echo "Tiles: speed"
 
   rm -f "$OUTPUT_DIR/speed.mbtiles"
   $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source speed_railway_signals --output-file "$OUTPUT_DIR/speed.mbtiles"
-  mbtiles meta-set "$OUTPUT_DIR/speed.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/speed.mbtiles"
 
   echo "Tiles: signals"
@@ -82,14 +76,12 @@ if [[ "${TILES}" != 'low-med' ]]; then
   mbtiles copy --on-duplicate override "$OUTPUT_DIR/signals-13.mbtiles" "$OUTPUT_DIR/signals.mbtiles"
   mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" minzoom 10
   mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" maxzoom "$MAX_ZOOM"
-  mbtiles meta-set "$OUTPUT_DIR/signals.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/signals.mbtiles"
 
   echo "Tiles: electrification"
 
   rm -f "$OUTPUT_DIR/electrification.mbtiles"
   $MARTIN --min-zoom 13 --max-zoom "$MAX_ZOOM" --source electrification_signals,catenary,electrification_railway_symbols --output-file "$OUTPUT_DIR/electrification.mbtiles"
-  mbtiles meta-set "$OUTPUT_DIR/electrification.mbtiles" replication_timestamp "$REPLICATION_TIMESTAMP"
   mbtiles summary "$OUTPUT_DIR/electrification.mbtiles"
 fi
 

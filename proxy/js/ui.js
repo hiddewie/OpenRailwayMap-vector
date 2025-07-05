@@ -1360,7 +1360,7 @@ function formatTimespan(timespan) {
   }
 }
 
-fetch(`${origin}/high`)
+fetch(`${origin}/api/replication_timestamp`)
   .then(response => response.json())
   .then(source => {
     if (source.replication_timestamp) {

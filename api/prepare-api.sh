@@ -48,6 +48,7 @@ docker compose exec db pg_dump \
   --table openrailwaymap_ref \
   --table openrailwaymap_milestones \
   --table openrailwaymap_tracks_with_ref \
+  --table osm2pgsql_properties \
   > api/api.sql
 
 echo 'Importing API data into Postgres container'

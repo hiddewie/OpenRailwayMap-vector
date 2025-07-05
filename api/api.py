@@ -9,6 +9,7 @@ from fastapi import Query
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
+from openrailwaymap_api.replication_api import ReplicationAPI
 
 
 @contextlib.asynccontextmanager
@@ -45,6 +46,12 @@ MAX_LIMIT = 200
 @app.get("/api/status")
 async def status():
     api = StatusAPI()
+    return await api()
+
+
+@app.get("/api/replication_timestamp")
+async def replication_timestamp():
+    api = ReplicationAPI(app.state.database)
     return await api()
 
 
