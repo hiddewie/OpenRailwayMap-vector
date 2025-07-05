@@ -1,7 +1,6 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-DROP TABLE IF EXISTS openrailwaymap_ref;
-CREATE TABLE openrailwaymap_ref AS
+CREATE MATERIALIZED VIEW openrailwaymap_ref AS
   SELECT
     ARRAY[osm_id] AS osm_ids,
     name,
@@ -36,8 +35,7 @@ CREATE INDEX openrailwaymap_ref_uic_ref_idx
     USING BTREE(uic_ref)
   WHERE uic_ref IS NOT NULL;
 
-DROP TABLE IF EXISTS openrailwaymap_facilities_for_search;
-CREATE TABLE openrailwaymap_facilities_for_search AS
+CREATE MATERIALIZED VIEW openrailwaymap_facilities_for_search AS
   SELECT
     id,
     osm_ids,

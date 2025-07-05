@@ -1,8 +1,7 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 -- Prepare the database for querying milestones
 
-DROP TABLE IF EXISTS openrailwaymap_milestones;
-CREATE TABLE openrailwaymap_milestones AS
+CREATE MATERIALIZED VIEW openrailwaymap_milestones AS
   SELECT DISTINCT ON (osm_id)
     osm_id,
     position,
@@ -93,8 +92,7 @@ CREATE INDEX openrailwaymap_milestones_position_idx
   ON openrailwaymap_milestones
     USING gist(geom);
 
-DROP TABLE IF EXISTS openrailwaymap_tracks_with_ref;
-CREATE TABLE openrailwaymap_tracks_with_ref AS
+CREATE MATERIALIZED VIEW openrailwaymap_tracks_with_ref AS
   SELECT
     osm_id,
     feature,
