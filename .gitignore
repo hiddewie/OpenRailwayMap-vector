@@ -13,5 +13,4 @@ tmp
 .env
 *.osm.pbf
 .idea
-tiles
 compose.override.yaml

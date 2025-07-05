@@ -72,12 +72,6 @@ Run tests against the proxy:
 hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
 ```
 
-Run tests against the tiles:
-
-```shell
-hurl --test --verbose --variable base_url=http://localhost:3000 tiles/test/tiles.hurl
-```
-
 ## Development
 
 ### Code generation
