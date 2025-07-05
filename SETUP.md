@@ -56,6 +56,35 @@ docker compose run --build import import
 
 Download the generated JOSM preset on http://localhost:8000/preset.zip.
 
+### Enabling SSL
+
+SSL is supported by generating a trusted certificate, and installing it in the proxy.
+
+- [Install mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file)
+- Install the `mkcert` CA in the system:
+  ```shell
+  mkcert -install
+  ```
+- Restart your browser
+- Run `mkcert` to generate certificates for `localhost`:
+  ```shell
+  mkcert localhost
+  ```
+- Create a file `compose.override.yaml` with 
+  ```yaml
+  services:
+    martin-proxy:
+      volumes:
+        - './localhost.pem:/etc/nginx/ssl/certificate.pem'
+        - './localhost-key.pem:/etc/nginx/ssl/key.pem'
+  ```
+- Restart the proxy with:
+  ```shell
+  docker compose up --build --watch martin-proxy
+  ```
+
+The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings.
+
 ## Tests
 
 Tests use [*hurl*](https://hurl.dev/docs/installation.html).

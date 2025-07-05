@@ -14,3 +14,5 @@ tmp
 *.osm.pbf
 .idea
 compose.override.yaml
+localhost.pem
+localhost-key.pem
