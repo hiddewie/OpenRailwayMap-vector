@@ -8,7 +8,7 @@ The OpenRailwayMap is deployed on a server to provide a database with OpenStreet
 
 ## Diagram
 
-TODO
+![](diagram.svg)
 
 ## Setup
 
