@@ -100,15 +100,11 @@ services:
     image: ghcr.io/hiddewie/openrailwaymap-api:latest
     build:
       context: api
-      target: runtime
     environment:
       - PORT=5000
       - HOST=0.0.0.0
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=gis
     ports:
       - '5000:5000'
-
-  api-import:
-    image: ghcr.io/hiddewie/openrailwaymap-api:latest
-    build:
-      context: api
-      target: import
