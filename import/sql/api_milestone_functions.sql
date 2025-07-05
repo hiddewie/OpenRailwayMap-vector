@@ -12,7 +12,6 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-DROP FUNCTION query_milestones(double precision, text, integer);
 CREATE OR REPLACE FUNCTION query_milestones(
   input_pos double precision,
   input_ref text,

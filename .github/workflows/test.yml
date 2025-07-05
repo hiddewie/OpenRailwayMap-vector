@@ -119,23 +119,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download database artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}
-
-      - name: Load database image
+      - name: Build API
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
-
-      - name: Start database
-        run: |
-          docker compose up --no-build --wait db
-
-      - name: Prepare API
-        run: |
-          api/prepare-api.sh
+          docker compose build api
 
       - name: Save API image
         run: |

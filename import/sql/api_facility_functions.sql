@@ -1,5 +1,4 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
-CREATE EXTENSION IF NOT EXISTS unaccent;
 
 CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_to_space(str TEXT) RETURNS TEXT AS $$
 BEGIN
@@ -29,7 +28,6 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-DROP FUNCTION query_facilities_by_name(text, integer);
 CREATE OR REPLACE FUNCTION query_facilities_by_name(
   input_name text,
   input_limit integer
@@ -134,7 +132,6 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-DROP FUNCTION query_facilities_by_ref(text, integer);
 CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   input_ref text,
   input_limit integer
@@ -191,7 +188,6 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-DROP FUNCTION query_facilities_by_uic_ref(text, integer);
 CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
   input_uic_ref text,
   input_limit integer

@@ -24,13 +24,18 @@ function filter_data() {
   fi
 }
 
-function import_db() {
+function enable_disable_extensions() {
+  echo "Enabling and disabling Postgres extensions"
+
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
   $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
+  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS unaccent;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_topology;'
   $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
   $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
+}
 
+function import_db() {
   echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database
   osm2pgsql \
@@ -74,16 +79,21 @@ function reduce_data() {
 
 function create_update_functions_views() {
   echo "Post processing imported data"
-  $PSQL -f sql/functions.sql
+  $PSQL -f sql/tile_functions.sql
+  $PSQL -f sql/api_facility_functions.sql
+  $PSQL -f sql/api_milestone_functions.sql
   $PSQL -f sql/signal_features.sql
   $PSQL -f sql/get_station_importance.sql
   $PSQL -f sql/tile_views.sql
+  $PSQL -f sql/api_facility_views.sql
+  $PSQL -f sql/api_milestone_views.sql
 }
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
+  $PSQL -f sql/update_api_views.sql
 }
 
 function print_summary() {
@@ -96,6 +106,7 @@ case "$1" in
 import)
 
   filter_data
+  enable_disable_extensions
   import_db
   reduce_data
   create_update_functions_views

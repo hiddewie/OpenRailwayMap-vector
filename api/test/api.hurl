@@ -1,3 +1,11 @@
+# Status
+GET {{base_url}}/status
+HTTP 200
+
+# Replication timestamp
+GET {{base_url}}/replication_timestamp
+HTTP 200
+
 # Facility request
 GET {{base_url}}/facility
 [QueryStringParams]
