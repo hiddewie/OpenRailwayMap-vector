@@ -295,7 +295,6 @@ jobs:
       - test-proxy
       - test-api
       - build-api
-      - test-tiles
 
     steps:
       - name: Checkout
