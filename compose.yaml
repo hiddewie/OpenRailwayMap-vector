@@ -108,6 +108,7 @@ services:
         PUBLIC_HOST: localhost:8000
     ports:
       - '8000:8000'
+      - '443:443'
     environment:
       TILES_UPSTREAM_LOW: martin:3000
       TILES_UPSTREAM_AFRICA: martin:3000
