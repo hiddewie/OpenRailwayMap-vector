@@ -2,4 +2,5 @@
 
 cd /home/openrailwaymap/OpenRailwayMap-vector
 
-exec docker compose up db martin martin-proxy api
+docker compose up db martin api
+docker compose up --force-recreate --no-deps martin-proxy
