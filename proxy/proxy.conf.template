@@ -1,9 +1,5 @@
 resolver ${NGINX_RESOLVER};
 
-limit_req_zone $binary_remote_addr zone=assets:10m rate=${RATELIMIT_ASSETS_PER_SECOND}r/s;
-limit_req_zone $binary_remote_addr zone=api:10m rate=${RATELIMIT_API_PER_SECOND}r/s;
-limit_req_zone $binary_remote_addr zone=tiles:10m rate=${RATELIMIT_TILES_PER_SECOND}r/s;
-
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
                  max_size=10g
@@ -141,10 +137,6 @@ server {
   ssl_certificate /etc/nginx/ssl/certificate.pem;
   ssl_certificate_key /etc/nginx/ssl/key.pem;
 
-  limit_req_status 429;
-  limit_req_log_level warn;
-  limit_req zone=assets burst=${RATELIMIT_ASSETS_BURST} nodelay;
-
   set $rewrite_tile_urls ${REWRITE_TILE_URLS};
 
   location = / {
@@ -208,7 +200,6 @@ server {
     index api.html;
     port_in_redirect off;
     error_page 404 = @api;
-    limit_req zone=api burst=${RATELIMIT_API_BURST};
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
   }
 
@@ -237,8 +228,6 @@ server {
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
       rewrite ^/electrification$ /electrification_signals,catenary,electrification_railway_symbols last;
     }
-
-    limit_req zone=tiles burst=${RATELIMIT_TILES_BURST} nodelay;
 
     set $upstream $tiles_upstream;
     proxy_pass $upstream;
