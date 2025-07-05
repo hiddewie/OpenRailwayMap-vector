@@ -138,7 +138,14 @@ server {
 
 server {
   listen 8000 default_server;
+  listen [::]:8000 ipv6only=on;
+  listen 443 ssl;
+  listen [::]:443 ipv6only=on ssl;
+
   server_name localhost;
+
+  ssl_certificate /etc/nginx/ssl/certificate.pem;
+  ssl_certificate_key /etc/nginx/ssl/key.pem;
 
   limit_req_status 429;
   limit_req_log_level warn;

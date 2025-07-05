@@ -14,3 +14,6 @@ tmp
 *.osm.pbf
 .idea
 tiles
+compose.override.yaml
+localhost.pem
+localhost-key.pem
