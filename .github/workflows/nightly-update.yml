@@ -118,7 +118,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker compose build martin-proxy
+          docker compose build --build-arg "PRESET_VERSION=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" martin-proxy
 
       - name: Push image
         run: |
