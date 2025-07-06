@@ -50,6 +50,7 @@ services:
       - inf
 
   martin:
+    image: ghcr.io/hiddewie/openrailwaymap-martin:latest
     build:
       dockerfile: martin.Dockerfile
     depends_on:
