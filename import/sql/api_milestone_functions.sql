@@ -132,11 +132,15 @@ CREATE OR REPLACE FUNCTION query_milestones(
                 m.operator,
                 ABS(input_pos - m.position) AS error
               FROM openrailwaymap_milestones AS m
-              JOIN openrailwaymap_tracks_with_ref AS t
-                ON t.geom && m.geom AND ST_Intersects(t.geom, m.geom) AND t.ref = input_ref
+              JOIN railway_line AS t
+                ON t.way && m.geom
+                   AND ST_Intersects(t.way, m.geom)
+                   AND t.ref = input_ref
+                   AND feature in ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram')
+                   AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
               WHERE m.position BETWEEN (input_pos - 10.0)::FLOAT AND (input_pos + 10.0)::FLOAT
               -- sort by distance from searched location, then osm_id for stable sorting
-              ORDER BY error ASC, m.osm_id
+              ORDER BY error, m.osm_id
             ) AS milestones
             GROUP BY milestones.position, milestones.error, milestones.line_ref, milestones.operator
           ) AS unique_milestones
