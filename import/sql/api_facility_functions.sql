@@ -160,28 +160,28 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (osm_ids)
-        r.osm_ids,
-        r.name,
-        r.feature,
-        r.state,
-        r.railway_ref,
-        r.station,
-        r.uic_ref,
-        r.operator,
-        r.network,
-        r.wikidata,
-        r.wikimedia_commons,
-        r.wikimedia_commons_file,
-        r.image,
-        r.mapillary,
-        r.wikipedia,
-        r.note,
-        r.description,
-        ST_X(ST_Transform(r.geom, 4326)) AS latitude,
-        ST_Y(ST_Transform(r.geom, 4326)) AS longitude
-      FROM openrailwaymap_ref r
-      WHERE r.railway_ref = input_ref
+        DISTINCT ON (osm_id)
+        ARRAY[osm_id] as osm_ids,
+        name,
+        feature,
+        state,
+        railway_ref,
+        station,
+        uic_ref,
+        ARRAY[operator] AS operator,
+        ARRAY[network] AS network,
+        ARRAY[wikidata] AS wikidata,
+        ARRAY[wikimedia_commons] AS wikimedia_commons,
+        ARRAY[wikimedia_commons_file] AS wikimedia_commons_file,
+        ARRAY[image] AS image,
+        ARRAY[mapillary] AS mapillary,
+        ARRAY[wikipedia] AS wikipedia,
+        ARRAY[note] AS note,
+        ARRAY[description] AS description,
+        ST_X(ST_Transform(way, 4326)) AS latitude,
+        ST_Y(ST_Transform(way, 4326)) AS longitude
+      FROM stations
+      WHERE railway_ref = input_ref
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
@@ -216,28 +216,28 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (osm_ids)
-        r.osm_ids,
-        r.name,
-        r.feature,
-        r.state,
-        r.railway_ref,
-        r.station,
-        r.uic_ref,
-        r.operator,
-        r.network,
-        r.wikidata,
-        r.wikimedia_commons,
-        r.wikimedia_commons_file,
-        r.image,
-        r.mapillary,
-        r.wikipedia,
-        r.note,
-        r.description,
-        ST_X(ST_Transform(r.geom, 4326)) AS latitude,
-        ST_Y(ST_Transform(r.geom, 4326)) AS longitude
-      FROM openrailwaymap_ref r
-      WHERE r.uic_ref = input_uic_ref
+        DISTINCT ON (osm_id)
+        ARRAY[osm_id] as osm_ids,
+        name,
+        feature,
+        state,
+        railway_ref,
+        station,
+        uic_ref,
+        ARRAY[operator] AS operator,
+        ARRAY[network] AS network,
+        ARRAY[wikidata] AS wikidata,
+        ARRAY[wikimedia_commons] AS wikimedia_commons,
+        ARRAY[wikimedia_commons_file] AS wikimedia_commons_file,
+        ARRAY[image] AS image,
+        ARRAY[mapillary] AS mapillary,
+        ARRAY[wikipedia] AS wikipedia,
+        ARRAY[note] AS note,
+        ARRAY[description] AS description,
+        ST_X(ST_Transform(way, 4326)) AS latitude,
+        ST_Y(ST_Transform(way, 4326)) AS longitude
+      FROM stations
+      WHERE uic_ref = input_uic_ref
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
