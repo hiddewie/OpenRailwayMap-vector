@@ -71,6 +71,7 @@ services:
           path: symbols
 
   martin-proxy:
+    image: ghcr.io/hiddewie/openrailwaymap-proxy:latest
     build:
       dockerfile: proxy.Dockerfile
     ports:
