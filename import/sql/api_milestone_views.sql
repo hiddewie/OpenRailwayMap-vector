@@ -81,7 +81,7 @@ CREATE MATERIALIZED VIEW openrailwaymap_milestones AS
       WHERE railway_position_exact IS NOT NULL
     ) AS features_with_position
     WHERE position IS NOT NULL
-    ORDER BY osm_id ASC, precision DESC
+    ORDER BY osm_id, precision DESC
   ) AS duplicates_merged;
 
 CREATE INDEX openrailwaymap_milestones_geom_idx
