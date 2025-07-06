@@ -160,28 +160,28 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (osm_id)
-        ARRAY[osm_id] as osm_ids,
-        name,
-        feature,
-        state,
-        railway_ref,
-        station,
-        uic_ref,
-        ARRAY[operator] AS operator,
-        ARRAY[network] AS network,
-        ARRAY[wikidata] AS wikidata,
-        ARRAY[wikimedia_commons] AS wikimedia_commons,
-        ARRAY[wikimedia_commons_file] AS wikimedia_commons_file,
-        ARRAY[image] AS image,
-        ARRAY[mapillary] AS mapillary,
-        ARRAY[wikipedia] AS wikipedia,
-        ARRAY[note] AS note,
-        ARRAY[description] AS description,
-        ST_X(ST_Transform(way, 4326)) AS latitude,
-        ST_Y(ST_Transform(way, 4326)) AS longitude
-      FROM stations
-      WHERE railway_ref = input_ref
+        DISTINCT ON (s.osm_id)
+        ARRAY[s.osm_id] as osm_ids,
+        s.name,
+        s.feature,
+        s.state,
+        s.railway_ref,
+        s.station,
+        s.uic_ref,
+        ARRAY[s.operator] AS operator,
+        ARRAY[s.network] AS network,
+        ARRAY[s.wikidata] AS wikidata,
+        ARRAY[s.wikimedia_commons] AS wikimedia_commons,
+        ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,
+        ARRAY[s.image] AS image,
+        ARRAY[s.mapillary] AS mapillary,
+        ARRAY[s.wikipedia] AS wikipedia,
+        ARRAY[s.note] AS note,
+        ARRAY[s.description] AS description,
+        ST_X(ST_Transform(s.way, 4326)) AS latitude,
+        ST_Y(ST_Transform(s.way, 4326)) AS longitude
+      FROM stations s
+      WHERE s.railway_ref = input_ref
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
@@ -216,28 +216,28 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (osm_id)
-        ARRAY[osm_id] as osm_ids,
-        name,
-        feature,
-        state,
-        railway_ref,
-        station,
-        uic_ref,
-        ARRAY[operator] AS operator,
-        ARRAY[network] AS network,
-        ARRAY[wikidata] AS wikidata,
-        ARRAY[wikimedia_commons] AS wikimedia_commons,
-        ARRAY[wikimedia_commons_file] AS wikimedia_commons_file,
-        ARRAY[image] AS image,
-        ARRAY[mapillary] AS mapillary,
-        ARRAY[wikipedia] AS wikipedia,
-        ARRAY[note] AS note,
-        ARRAY[description] AS description,
-        ST_X(ST_Transform(way, 4326)) AS latitude,
-        ST_Y(ST_Transform(way, 4326)) AS longitude
-      FROM stations
-      WHERE uic_ref = input_uic_ref
+        DISTINCT ON (s.osm_id)
+        ARRAY[s.osm_id] as osm_ids,
+        s.name,
+        s.feature,
+        s.state,
+        s.railway_ref,
+        s.station,
+        s.uic_ref,
+        ARRAY[s.operator] AS operator,
+        ARRAY[s.network] AS network,
+        ARRAY[s.wikidata] AS wikidata,
+        ARRAY[s.wikimedia_commons] AS wikimedia_commons,
+        ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,
+        ARRAY[s.image] AS image,
+        ARRAY[s.mapillary] AS mapillary,
+        ARRAY[s.wikipedia] AS wikipedia,
+        ARRAY[s.note] AS note,
+        ARRAY[s.description] AS description,
+        ST_X(ST_Transform(s.way, 4326)) AS latitude,
+        ST_Y(ST_Transform(s.way, 4326)) AS longitude
+      FROM stations s
+      WHERE s.uic_ref = input_uic_ref
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
