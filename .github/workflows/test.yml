@@ -169,6 +169,16 @@ jobs:
           sudo apt update
           sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
 
+      - name: Download database artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ runner.arch }}-openrailwaymap-import-db
+          path: ${{ runner.temp }}
+
+      - name: Load database image
+        run: |
+          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
+
       - name: Download API artifact
         uses: actions/download-artifact@v4
         with:
@@ -178,6 +188,10 @@ jobs:
       - name: Load API image
         run: |
           cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
+
+      - name: Start database
+        run: |
+          docker compose up --no-build --wait db
 
       - name: Start API
         run: |
