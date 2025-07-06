@@ -81,7 +81,7 @@ CREATE MATERIALIZED VIEW openrailwaymap_milestones AS
       WHERE railway_position_exact IS NOT NULL
     ) AS features_with_position
     WHERE position IS NOT NULL
-    ORDER BY osm_id ASC, precision DESC
+    ORDER BY osm_id, precision DESC
   ) AS duplicates_merged;
 
 CREATE INDEX openrailwaymap_milestones_geom_idx
@@ -91,25 +91,3 @@ CREATE INDEX openrailwaymap_milestones_geom_idx
 CREATE INDEX openrailwaymap_milestones_position_idx
   ON openrailwaymap_milestones
     USING gist(geom);
-
-CREATE MATERIALIZED VIEW openrailwaymap_tracks_with_ref AS
-  SELECT
-    osm_id,
-    feature,
-    name,
-    ref,
-    way AS geom
-  FROM railway_line
-  WHERE
-    feature IN ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram')
-    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
-    AND ref IS NOT NULL
-    AND osm_id > 0;
-
-CREATE INDEX planet_osm_line_ref_geom_idx
-  ON openrailwaymap_tracks_with_ref
-    USING gist(geom);
-
-CREATE INDEX planet_osm_line_ref_idx
-  ON openrailwaymap_tracks_with_ref
-    USING btree(ref);
