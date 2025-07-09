@@ -35,7 +35,7 @@ Upstream changes will be merged into this project.
 
 The API has been adapted from [the OpenRailwayMap API](https://github.com/OpenRailwayMap/OpenRailwayMap-api). The API powers the search in the OpenRailwayMap UI, and provides facility (stations, halts, tram stops, yards, sidings, crossovers, including disused, abandoned, razed, proposed and under construction) searches by name and reference and milestone searches by combination of line number and mileage. The searches are full text, based on PostgreSQL's full text search functionalities.
 
-The API documentation can be found at https://openrailwaymap.app/api. You can also view [the raw OpenAPI specification](proxy/api/openapi.yaml).
+The API documentation can be found at https://openrailwaymap.app/api.html. You can also view [the raw OpenAPI specification](proxy/api/openapi.yaml).
 
 ## Mapping presets
 

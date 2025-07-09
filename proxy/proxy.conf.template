@@ -21,69 +21,84 @@ server {
 
   location = / {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /index.html {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /news.html {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header X-Content-Hash ${NEWS_HASH};
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /manifest.json {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /favicon.ico {
     root /etc/nginx/public/image;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /js {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /css {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /image {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /style {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /features.json {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /preset.zip {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
+  location = /api.html {
+    root /etc/nginx/public/api;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
+  location = /openapi.yaml {
+    root /etc/nginx/public/api;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /api {
-    root /etc/nginx/public;
-    index api.html;
-    port_in_redirect off;
-    error_page 404 = @api;
-    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
-  }
-
-  location @api {
     set $upstream http://${API_UPSTREAM};
     proxy_pass $upstream;
     proxy_http_version 1.1;
@@ -98,6 +113,7 @@ server {
     proxy_set_header X-Forwarded-Proto ${PUBLIC_PROTOCOL};
     proxy_read_timeout 600;
     proxy_redirect off;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
   }
 
   location / {
