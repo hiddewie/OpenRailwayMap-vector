@@ -3602,6 +3602,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           states: {
             present: undefined,
           },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
@@ -3616,6 +3617,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           states: {
             present: undefined,
           },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
           width: 2,
           color: trackClassFillColor,
         },
@@ -3628,6 +3630,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
             16, 3,
