@@ -59,6 +59,7 @@ RETURN (
       radio,
       wikidata,
       wikimedia_commons,
+      wikimedia_commons_file,
       image,
       mapillary,
       wikipedia,
@@ -126,37 +127,37 @@ RETURN (
             state = 'present'
               AND service IS NULL
               AND (
-                feature = 'rail' AND usage = 'main'
+                feature IN ('rail', 'ferry') AND usage = 'main'
               )
           WHEN z < 8 THEN
             state = 'present'
               AND service IS NULL
               AND (
-                feature = 'rail' AND usage IN ('main', 'branch')
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
               )
           WHEN z < 9 THEN
             state IN ('present', 'construction', 'proposed')
               AND service IS NULL
               AND (
-                feature = 'rail' AND usage IN ('main', 'branch')
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
               )
           WHEN z < 10 THEN
             state IN ('present', 'construction', 'proposed')
               AND service IS NULL
               AND (
-                feature = 'rail' AND usage IN ('main', 'branch', 'industrial')
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch', 'industrial')
                   OR (feature = 'light_rail' AND usage IN ('main', 'branch'))
               )
           WHEN z < 11 THEN
             state IN ('present', 'construction', 'proposed')
               AND service IS NULL
               AND (
-                feature IN ('rail', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
+                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
               )
           WHEN z < 12 THEN
             (service IS NULL OR service IN ('spur', 'yard'))
               AND (
-                feature IN ('rail', 'narrow_gauge', 'light_rail')
+                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
                   OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
               )
           ELSE

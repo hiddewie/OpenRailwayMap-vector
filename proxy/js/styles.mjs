@@ -84,6 +84,7 @@ const colors = {
         yard: '#000000',
         spur: '#87491d',
         industrial: '#87491d',
+        ferry: '#1e81b0',
         unknown: '#000000',
         casing: {
           railway: '#ffffff',
@@ -169,6 +170,7 @@ const colors = {
         yard: '#000000',
         spur: '#87491d',
         industrial: '#87491d',
+        ferry: '#1e81b0',
         unknown: '#000000',
         casing: {
           railway: '#ffffff',
@@ -1540,6 +1542,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           states: {
             present: undefined,
           },
+          filter: ['==', ['get', 'feature'], 'rail'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
@@ -1552,6 +1555,22 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['get', 'highspeed'], colors[theme].hover.alternative,
             colors[theme].hover.main,
           ],
+        },
+        {
+          id: 'railway_ferry_main_low',
+          minzoom: 0,
+          maxzoom: 7,
+          source: 'openrailwaymap_low',
+          states: {
+            present: undefined,
+          },
+          filter: ['==', ['get', 'feature'], 'ferry'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            0, 0.5,
+            7, 2,
+          ],
+          color: colors[theme].styles.standard.ferry,
+          hoverColor: colors[theme].hover.main,
         },
 
         // Medium zooms
@@ -1567,7 +1586,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
-          filter: ['==', ['get', 'usage'], 'main'],
+          filter: ['all',
+            ['==', ['get', 'feature'], 'rail'],
+            ['==', ['get', 'usage'], 'main'],
+          ],
           width: 2,
           color: ['case',
             ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
@@ -1588,9 +1610,26 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             construction: construction_dasharray,
             proposed: proposed_dasharray,
           },
-          filter: ['==', ['get', 'usage'], 'branch'],
+          filter: ['all',
+            ['==', ['get', 'feature'], 'rail'],
+            ['==', ['get', 'usage'], 'branch'],
+          ],
           width: 2,
           color: colors[theme].styles.standard.branch,
+        },
+        {
+          id: 'railway_ferry_med',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_low',
+          states: {
+            present: undefined,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
+          },
+          filter: ['==', ['get', 'feature'], 'ferry'],
+          width: 2,
+          color: colors[theme].styles.standard.ferry,
         },
 
         // High zooms
@@ -1773,6 +1812,23 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 2,
           ],
           color: colors[theme].styles.standard.industrial,
+        },
+        {
+          id: 'railway_ferry_high',
+          minzoom: 8,
+          source: 'high',
+          states: {
+            present: undefined,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
+          },
+          filter: ['==', ['get', 'feature'], 'ferry'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            8, 2,
+            14, 2,
+            16, 3,
+          ],
+          color: colors[theme].styles.standard.ferry,
         },
         {
           id: 'railway_line_branch_high',
@@ -3693,6 +3749,23 @@ const legendData = {
           way_length: 1.0,
         }
       },
+      {
+        legend: 'Ferry',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'ferry',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'F1',
+          standard_label: 'F1 Ship',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
     ],
     "high-railway_line_high": [
       {
@@ -4017,6 +4090,23 @@ const legendData = {
           ref: 'T1',
           standard_label: 'T1 Name',
           track_ref: '8b',
+          way_length: 1.0,
+        }
+      },
+      {
+        legend: 'Ferry',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'ferry',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'F1',
+          standard_label: 'F1 Ship',
+          track_ref: null,
           way_length: 1.0,
         }
       },

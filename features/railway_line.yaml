@@ -22,3 +22,6 @@ features:
 
   - type: funicular
     description: Funicular
+
+  - type: ferry
+    description: Ferry

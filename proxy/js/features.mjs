@@ -107,7 +107,7 @@ const railwayLineFeatures = {
       name: 'Service',
     },
     highspeed: {
-      name: 'Highspeed',
+      name: 'High speed',
     },
     preferred_direction: {
       name: 'Preferred direction',
