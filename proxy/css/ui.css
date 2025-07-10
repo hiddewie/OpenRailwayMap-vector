@@ -327,7 +327,11 @@ body {
   vertical-align: middle;
 }
 
-.maplibregl-popup-content img {
+.maplibregl-popup-content img.osm-type-icon {
+  width: 1.4rem;
+  margin-right: 0.5rem;
+}
+.maplibregl-popup-content img.popup-image {
   margin: 0 -10px;
   width: calc(100% + 20px);
   height: auto;
