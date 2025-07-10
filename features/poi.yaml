@@ -159,6 +159,13 @@ features:
     tags:
       - { tag: 'railway', value: 'power_supply' }
 
+  - description: Isolated track section
+    feature: 'general/isolated-track-section'
+    layer: electrification
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'isolated_track_section' }
+
   - description: Rolling Highway
     feature: 'general/rolling_highway'
     layer: standard
