@@ -141,7 +141,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
-  "osm_types" bigint[],
+  "osm_types" char[],
   "name" text,
   "feature" text,
   "state" text,
@@ -199,7 +199,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
-  "osm_types" bigint[],
+  "osm_types" char[],
   "name" text,
   "feature" text,
   "state" text,
