@@ -166,6 +166,13 @@ features:
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
 
+  - description: Isolated track section
+    feature: 'general/isolated-track-section'
+    layer: electrification
+    minzoom: 14
+    tags:
+      - { tag: 'railway', value: 'isolated_track_section' }
+
   - description: Crossing
     feature: 'general/crossing'
     colored_icon: true
