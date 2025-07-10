@@ -3643,17 +3643,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
   operator: [
     ...railwayLine(theme,
-      ['concat',
-        ['coalesce', ['get', 'operator'], ''],
-        ['case',
-          ['all',
-            ['!=', ['coalesce', ['get', 'operator'], ''], ''],
-            ['!=', ['coalesce', ['get', 'standard_label'], ''], ''],
-          ], ' | ',
-          ''
-        ],
-        ['coalesce', ['get', 'standard_label'], ''],
-      ],
+      ['coalesce', ['get', 'primary_operator'], ''],
       [
         {
           id: 'railway_line_low',
