@@ -19,7 +19,7 @@ docker compose up --build --watch martin
 
 Prepare and start the API:
 ```shell
-docker compose up --build api
+docker compose up --build --watch api
 ```
 
 Start the web server:
@@ -42,7 +42,7 @@ docker compose run --build import refresh
 
 The OSM data file can be updated with:
 ```shell
-docker compose run --build import refresh
+docker compose run --build import update
 ```
 This command will request all updates in the region and process them into the OSM data file.
 
