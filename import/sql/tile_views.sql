@@ -241,6 +241,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     id,
     nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
+    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
     center as way,
     railway_ref,
     feature,
@@ -350,6 +351,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     way,
     id,
     osm_id,
+    osm_type,
     feature,
     state,
     station,
@@ -375,6 +377,7 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
     id,
     nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
+    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
     buffered as way,
     feature,
     state,

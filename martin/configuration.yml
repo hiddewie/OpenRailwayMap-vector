@@ -122,6 +122,7 @@ postgres:
       properties:
         id: integer
         osm_id: string
+        osm_type: string
         feature: string
         state: string
         station: string
@@ -148,6 +149,7 @@ postgres:
       properties:
         id: integer
         osm_id: string
+        osm_type: string
         feature: string
         state: string
         station: string

@@ -4,6 +4,7 @@ CREATE MATERIALIZED VIEW openrailwaymap_facilities_for_search AS
   SELECT
     id,
     osm_ids,
+    osm_types,
     to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space(value))) AS terms,
     name,
     key AS name_key,
@@ -29,6 +30,7 @@ CREATE MATERIALIZED VIEW openrailwaymap_facilities_for_search AS
     SELECT DISTINCT ON (osm_ids, key, value, name, feature, state, station, railway_ref, uic_ref, route_count, geom)
       id,
       osm_ids,
+      osm_types,
       (each(name_tags)).key AS key,
       (each(name_tags)).value AS value,
       name,

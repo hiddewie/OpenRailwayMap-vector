@@ -192,6 +192,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(station_id ORDER BY station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
     array_agg(osm_id ORDER BY osm_id) as osm_ids,
+    array_agg(osm_type ORDER BY osm_id) as osm_types,
     array_remove(array_agg(DISTINCT s.operator ORDER BY s.operator), null) as operator,
     array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,

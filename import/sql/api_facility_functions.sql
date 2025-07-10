@@ -33,6 +33,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
+  "osm_types" char[],
   "name" text,
   "feature" text,
   "state" text,
@@ -58,6 +59,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
     RETURN QUERY
       SELECT
         b.osm_ids,
+        b.osm_types,
         b.name,
         b.feature,
         b.state,
@@ -80,6 +82,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
       FROM (
         SELECT DISTINCT ON (a.osm_ids)
           a.osm_ids,
+          a.osm_types,
           a.name,
           a.feature,
           a.state,
@@ -102,6 +105,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         FROM (
           SELECT
             fs.osm_ids,
+            fs.osm_types,
             fs.name,
             fs.feature,
             fs.state,
@@ -137,6 +141,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
+  "osm_types" bigint[],
   "name" text,
   "feature" text,
   "state" text,
@@ -162,6 +167,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
       SELECT
         DISTINCT ON (s.osm_id)
         ARRAY[s.osm_id] as osm_ids,
+        ARRAY[s.osm_type] as osm_types,
         s.name,
         s.feature,
         s.state,
@@ -193,6 +199,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
+  "osm_types" bigint[],
   "name" text,
   "feature" text,
   "state" text,
@@ -218,6 +225,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
       SELECT
         DISTINCT ON (s.osm_id)
         ARRAY[s.osm_id] as osm_ids,
+        ARRAY[s.osm_type] as osm_types,
         s.name,
         s.feature,
         s.state,

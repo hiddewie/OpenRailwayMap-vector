@@ -1183,7 +1183,7 @@ function popupContent(feature) {
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
-  const determineOsmType = (properties, featureContent) => {
+  const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
       return properties.osm_type === 'N' ? 'node' : 'way';
     } else {
@@ -1191,7 +1191,27 @@ function popupContent(feature) {
       return featureType === 'point' ? 'node' : 'way';
     }
   }
-  const osmType = determineOsmType(properties, featureContent);
+
+  const determineOsmFeatures = (properties, featureContent) => {
+    const osmIds = properties.osm_id
+      ? String(properties.osm_id).split('\u001e')
+      : [];
+    const defaultOsmType = determineDefaultOsmType(properties, featureContent);
+    const osmTypes = properties.osm_type
+      ? String(properties.osm_type).split('\u001e')
+      : [];
+
+    return osmIds.map((osm_id, index) => {
+      const osmType = osmTypes && osmTypes.length > index
+        ? osmTypes[index] === 'N' ? 'node' : 'way'
+        : defaultOsmType;
+
+      return {
+        id: osm_id,
+        type: osmType,
+      };
+    })
+  }
 
   const formatPropertyValue = (value, format) =>
     String(value)
@@ -1232,10 +1252,7 @@ function popupContent(feature) {
       link,
     }));
 
-
-  const osm_ids = properties.osm_id
-    ? String(properties.osm_id).split('\u001e')
-    : [];
+  const osmFeatures = determineOsmFeatures(properties, featureContent);
 
   // Build HTML content dynamically to avoid cross site scripting
 
@@ -1256,32 +1273,32 @@ function popupContent(feature) {
   }
 
   const popupOsmIds = createDomElement('h6', undefined, popupContainer);
-  osm_ids.forEach(osm_id => {
+  osmFeatures.forEach(({id, type}) => {
     const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
-    if (osm_ids.length > 1) {
+    if (osmFeatures.length > 1) {
       const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
       osmIdButton.type = 'button'
       osmIdButton.disabled = 'disabled';
 
       const osmIdContent = createDomElement('code', undefined, osmIdButton);
-      osmIdContent.innerText = osm_id;
+      osmIdContent.innerText = id;
     }
 
     const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
     osmIdLink.title = 'View source'
-    osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))
+    osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
     osmIdLink.target = '_blank'
     osmIdLink.innerText = 'View'
 
     if (editor === 'josm') {
       const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
       editButton.title = 'Edit Source'
-      editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, osmType, osm_id)
+      editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
       editButton.innerText = 'Edit'
     } else {
       const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
       editButton.title = 'Edit Source'
-      editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))
+      editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
       editButton.target = '_blank'
       editButton.innerText = 'Edit'
     }

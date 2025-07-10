@@ -228,7 +228,7 @@ local pois = osm2pgsql.define_table({
 
 local stations = osm2pgsql.define_table({
   name = 'stations',
-  ids = { type = 'node', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
@@ -652,13 +652,29 @@ function station_type(tags)
   return feature_stations
 end
 
+local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
+function name_tags(tags)
+  -- Gather name tags for searching
+  local found_name_tags = {}
+
+  for key, value in pairs(tags) do
+    for _, name_tag in ipairs(known_name_tags) do
+      if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
+        found_name_tags[key] = value
+        break
+      end
+    end
+  end
+
+  return found_name_tags
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
-local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
 local railway_entrances_values = osm2pgsql.make_check_values_func({'subway_entrance', 'train_station_entrance'})
 local entrance_types = {
   subway_entrance = 'subway',
@@ -689,17 +705,6 @@ function osm2pgsql.process_node(object)
 
   local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
-    -- Gather name tags for searching
-    local name_tags = {}
-    for key, value in pairs(tags) do
-      for _, name_tag in ipairs(known_name_tags) do
-        if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
-          name_tags[key] = value
-          break
-        end
-      end
-    end
-
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object:as_point(),
@@ -710,7 +715,7 @@ function osm2pgsql.process_node(object)
         station = station,
         railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
-        name_tags = name_tags,
+        name_tags = name_tags(tags),
         operator = tags.operator,
         network = tags.network,
         wikidata = tags.wikidata,
@@ -929,6 +934,33 @@ function osm2pgsql.process_way(object)
         operator = split_semicolon_to_sql_array(tags['operator']),
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        wikimedia_commons_file = wikimedia_commons_file,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
+      })
+    end
+  end
+
+  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
+  if station_feature then
+    for station, _ in pairs(station_type(tags)) do
+      stations:insert({
+        way = object:as_linestring():centroid(),
+        feature = station_feature,
+        state = station_state,
+        name = tags.name or tags.short_name,
+        ref = tags.ref,
+        station = station,
+        railway_ref = tags['railway:ref'] or tags['ref:crs'],
+        uic_ref = tags['uic_ref'],
+        name_tags = name_tags(tags),
+        operator = tags.operator,
+        network = tags.network,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,

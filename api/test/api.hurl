@@ -136,7 +136,9 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
 jsonpath "$[0].osm_ids" count == 1
+jsonpath "$[0].osm_types" count == 1
 jsonpath "$[0].osm_ids[0]" == 4746086763
+jsonpath "$[0].osm_types[0]" == "N"
 
 # Facility search for reference
 GET {{base_url}}/facility
@@ -205,6 +207,7 @@ jsonpath "$[0].osm_ids[0]" == 244129991
 jsonpath "$[0].osm_ids[1]" == 271777826
 jsonpath "$[0].osm_ids[2]" == 1679221136
 jsonpath "$[0].osm_ids[3]" == 1787945074
+jsonpath "$[0].osm_types" count == 4
 jsonpath "$[2].railway_ref" == "BLST"
 jsonpath "$[2].station" == "light_rail"
 jsonpath "$[2].uic_ref" == "8089020"
