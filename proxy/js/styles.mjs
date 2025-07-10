@@ -5860,6 +5860,7 @@ const legendData = {
         type: 'line',
         properties: {
           operator: 'ABC',
+          primary_operator: 'ABC',
           operator_hash: 0,
           feature: 'rail',
           state: 'present',
@@ -5874,6 +5875,7 @@ const legendData = {
         type: 'line',
         properties: {
           operator: null,
+          primary_operator: null,
           operator_hash: null,
           feature: 'rail',
           state: 'present',
@@ -5890,6 +5892,7 @@ const legendData = {
         type: 'line',
         properties: {
           operator: 'ABC',
+          primary_operator: null,
           operator_hash: 0,
           feature: 'rail',
           state: 'present',
@@ -5904,6 +5907,7 @@ const legendData = {
         type: 'line',
         properties: {
           operator: null,
+          primary_operator: null,
           operator_hash: null,
           feature: 'rail',
           state: 'present',

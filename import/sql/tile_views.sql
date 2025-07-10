@@ -54,7 +54,9 @@ RETURN (
       gauge_label,
       loading_gauge,
       operator,
-      get_byte(sha256(operator::bytea), 0) as operator_hash,
+      get_byte(sha256(primary_operator::bytea), 0) as operator_hash,
+      primary_operator,
+      owner,
       traffic_mode,
       radio,
       wikidata,
@@ -107,7 +109,12 @@ RETURN (
         gauges[3] AS gauge2,
         (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
         loading_gauge,
-        array_to_string(operator, ', ') as operator,
+        array_to_string(operator, U&'\\001E') as operator,
+        owner,
+        CASE
+          WHEN ARRAY[owner] <@ operator THEN owner
+          ELSE operator[1]
+        END AS primary_operator,
         traffic_mode,
         radio,
         wikidata,
@@ -218,6 +225,8 @@ DO $do$ BEGIN
           "reporting_marks": "string",
           "operator": "string",
           "operator_hash": "number",
+          "primary_operator": "string",
+          "owner": "string",
           "traffic_mode": "string",
           "radio": "string",
           "wikidata": "string",
