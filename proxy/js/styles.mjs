@@ -3649,7 +3649,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       paint: {
-        'fill-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'fill-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         'fill-opacity': ['case',
           ['boolean', ['feature-state', 'hover'], false], 0.3,
           0.2,
@@ -3674,7 +3674,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['==', ['get', 'state'], state],
       ],
       paint: {
-        'line-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'line-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         'line-opacity': 0.3,
         'line-width': 2 ,
         'line-dasharray': dasharray,
