@@ -24,7 +24,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
   "longitude" double precision,
   "line_ref" text,
   "milestone_ref" text,
-  "operator" text,
+  "operator" text[],
   "wikidata" text,
   "wikimedia_commons" text,
   "wikimedia_commons_file" text,
