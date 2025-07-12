@@ -327,12 +327,10 @@ paths:
                       description: |
                         Reference number of the feature.
                     operator:
-                      type: array
-                      items:
-                        type: string
-                        description: |
-                          operator of the infrastructure
-                        nullable: true
+                      type: string
+                      description: |
+                        operator of the infrastructure
+                      nullable: true
                     railway:
                       type: string
                       description: |
@@ -373,8 +371,7 @@ paths:
                     mapillary:
                     milestone_ref:
                     note:
-                    operator:
-                      - DB InfraGO AG
+                    operator: DB InfraGO AG
                     osm_id: 11562536788
                     position: 22.7
                     railway: milestone
@@ -389,7 +386,7 @@ paths:
                     mapillary:
                     milestone_ref:
                     note:
-                      - operator: DB InfraGO AG
+                    operator: DB InfraGO AG
                     osm_id: 11558214672
                     position: 22.6
                     railway: milestone

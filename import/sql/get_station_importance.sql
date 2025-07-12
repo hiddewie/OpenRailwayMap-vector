@@ -223,24 +223,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
       name, station, railway_ref, uic_ref, feature, state, station_ids, center, buffered, count
     FROM stations_clustered sc
   ) clustered
-  JOIN (
-    SELECT
-      id,
-      name_tags,
-      osm_id,
-      osm_type,
-      UNNEST(operator) as operator,
-      UNNEST(network) as network,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      wikipedia,
-      image,
-      mapillary,
-      note,
-      description
-    FROM stations
-  ) s
+  JOIN stations s
     ON clustered.station_id = s.id
   JOIN stations_with_route_count sr
     ON clustered.station_id = sr.id
