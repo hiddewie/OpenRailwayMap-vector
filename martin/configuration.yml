@@ -45,6 +45,9 @@ postgres:
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
@@ -70,6 +73,9 @@ postgres:
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
@@ -129,6 +135,9 @@ postgres:
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         count: integer
         uic_ref: string
         wikidata: string
@@ -155,6 +164,9 @@ postgres:
         station: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string

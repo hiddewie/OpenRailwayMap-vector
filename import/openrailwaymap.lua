@@ -581,8 +581,9 @@ function split_semicolon_to_sql_array(value)
   local first = true
   if value then
     for part in string.gmatch(value, '[^;]+') do
-      if part then
+      local stripped_part = strip_prefix(part, ' ')
 
+      if stripped_part then
         if first then
           first = false
         else
