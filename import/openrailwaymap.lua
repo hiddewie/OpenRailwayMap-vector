@@ -591,7 +591,7 @@ function split_semicolon_to_sql_array(value)
         end
 
         -- Raw SQL array syntax
-        result = result .. "\"" .. part:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
+        result = result .. "\"" .. stripped_part:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
       end
     end
   end
