@@ -25,7 +25,15 @@ async def lifespan(app):
         print('Connected to database')
         app.state.database = pool
 
-        yield
+        async with httpx.AsyncClient(timeout=3.0) as http_client:
+            print('Created HTTP client')
+            app.state.http_client = http_client
+
+            yield
+
+            app.state.http_client = None
+
+            print('Closed HTTP client')
 
         app.state.database = None
 
