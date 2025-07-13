@@ -4,7 +4,8 @@ RUN apk add --no-cache \
         curl \
     && python3 -m pip install --no-cache-dir --no-color --no-python-version-warning --disable-pip-version-check --break-system-packages \
         fastapi[standard] \
-        asyncpg
+        asyncpg \
+        httpx
 
 WORKDIR /app
 COPY openrailwaymap_api openrailwaymap_api
