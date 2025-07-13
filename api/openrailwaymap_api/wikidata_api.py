@@ -36,5 +36,5 @@ class WikidataAPI:
         sanitized_name = name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
-        resource_url = f"https://upload.wikimedia.org/wikipedia/commons/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}"
+        resource_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
         return RedirectResponse(resource_url)
