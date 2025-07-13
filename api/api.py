@@ -6,10 +6,13 @@ import asyncpg
 from fastapi import FastAPI
 from fastapi import Query
 
+import httpx
+
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
 from openrailwaymap_api.replication_api import ReplicationAPI
+from openrailwaymap_api.wikidata_api import WikidataAPI
 
 
 @contextlib.asynccontextmanager
