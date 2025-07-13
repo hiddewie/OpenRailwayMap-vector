@@ -1323,7 +1323,7 @@ function popupContent(feature) {
 
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
-      popupImage.title = properties.wikimedia_commons_file
+      popupImage.title = properties.wikidata
       popupImage.alt = '' // Do not display broken images
     }
 
