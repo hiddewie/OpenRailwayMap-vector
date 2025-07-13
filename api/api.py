@@ -83,3 +83,11 @@ async def milestone(
 ):
     api = MilestoneAPI(app.state.database)
     return await api(ref=ref, position=position, limit=limit)
+
+
+@app.get("/api/wikidata/{id}")
+async def wikidata(
+        id: str
+):
+    api = WikidataAPI(app.state.http_client)
+    return await api(id=id)
