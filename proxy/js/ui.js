@@ -1327,6 +1327,7 @@ function popupContent(feature) {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = wikimediaUrl
       popupImage.title = properties.wikimedia_commons_file
+      popupImage.alt = '' // Do not display broken images
     }
 
     if (properties.image) {
@@ -1338,6 +1339,7 @@ function popupContent(feature) {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = properties.image
       popupImage.title = properties.image
+      popupImage.alt = '' // Do not display broken images
     }
   }
 
