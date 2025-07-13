@@ -1079,12 +1079,13 @@ const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
 });
-map.addControl(dateControl);
-map.addControl(styleControl);
-map.addControl(new maplibregl.NavigationControl({
+const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: false,
-}));
+})
+map.addControl(dateControl);
+map.addControl(styleControl);
+map.addControl(navigationControl);
 map.addControl(
   new maplibregl.GeolocateControl({
     positionOptions: {
@@ -1135,6 +1136,15 @@ const onMapZoom = zoom => {
     center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
   });
   legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
+}
+const onMapRotate = bearing => {
+  const rotated = Math.abs(bearing) >= 1;
+  const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
+  if (rotated && !rotatedShownOnIcon) {
+    navigationControl._compassIcon.classList.add('rotated');
+  } else if (!rotated && rotatedShownOnIcon) {
+    navigationControl._compassIcon.classList.remove('rotated');
+  }
 }
 
 const onStylesheetChange = styleSheet => {
@@ -1410,6 +1420,7 @@ map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('rotate', () => onMapRotate(map.getBearing()));
 map.on('styledata', () => onDateChange());
 
 function formatTimespan(timespan) {
@@ -1549,3 +1560,4 @@ fetch(`${location.origin}/features.json`)
   .catch(error => console.error('Error during fetching of features', error))
 
 onStyleChange();
+onMapRotate();
