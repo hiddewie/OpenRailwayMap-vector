@@ -396,3 +396,32 @@ paths:
         '400':
           description: |
             Bad request: invalid parameter values
+
+  /api/wikidata/{entity}:
+    get:
+      operationId: wikidataImage
+      summary: Find the image from Wikidata
+      description: |
+        The Wikidata image endpoint returns the URL of the image thumbnail for a given Wikidata entity.
+      tags:
+        - wikidata
+      parameters:
+        - name: entity
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 'Q2655858'
+          description: |
+            The Wikidata entity ID
+      responses:
+        '404':
+          description: Entity not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The reason that the entity was not found
+        '307':
+          description: |
+            Location of the Wikikdata thumbnail image
