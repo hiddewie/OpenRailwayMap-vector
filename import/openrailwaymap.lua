@@ -684,7 +684,7 @@ function parse_railway_position(position, position_exact)
     local found_positions = false
 
     for part in string.gmatch(position_exact, '[^;]+') do
-      local stripped_part = strip_prefix(strip_prefix(part, ' '), 'mi:')
+      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', ''):gsub(',', '.')
 
       if stripped_part then
         table.insert(parsed_positions, {
@@ -705,7 +705,7 @@ function parse_railway_position(position, position_exact)
 
   if position then
     for part in string.gmatch(position, '[^;]+') do
-      local stripped_part = strip_prefix(strip_prefix(part, ' '), 'mi:')
+      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', ''):gsub(',', '.')
 
       if stripped_part then
         table.insert(parsed_positions, {

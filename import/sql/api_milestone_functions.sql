@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
 ) RETURNS TABLE(
   "osm_id" bigint,
   "railway" text,
-  "position" double precision,
+  "position" real,
   "latitude" double precision,
   "longitude" double precision,
   "line_ref" text,
