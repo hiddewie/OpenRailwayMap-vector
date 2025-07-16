@@ -2839,6 +2839,27 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
+  - description: RSAG Vorfahrt gewähren (So 11)
+    country: DE
+    icon: { default: 'de/rsag/so11' }
+    tags:
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so11' }
+
+  - description: RSAG Vorfahrt (So 12)
+    country: DE
+    icon: { default: 'de/rsag/so12' }
+    tags:
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so12' }
+
+  - description: RSAG Halt bei Überflutung (So 13)
+    country: DE
+    icon: { default: 'de/rsag/so13' }
+    tags:
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so13' }
+
   # --- ES --- #
 
   - description: end of catenary
