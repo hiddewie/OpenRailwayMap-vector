@@ -494,9 +494,9 @@ CREATE OR REPLACE VIEW railway_text_km AS
     osm_id,
     way,
     railway,
-    pos,
-    (railway_pos_decimal(pos) = '0') as zero,
-    railway_pos_round(pos, 0)::text as pos_int,
+    position_text as pos,
+    zero,
+    round(position_numeric) as pos_int,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -505,24 +505,7 @@ CREATE OR REPLACE VIEW railway_text_km AS
     wikipedia,
     note,
     description
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      way,
-      railway,
-      COALESCE(railway_position, railway_pos_round(railway_position_exact, 1)::text) AS pos,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM railway_positions
-  ) AS r
-  WHERE pos IS NOT NULL
+  FROM railway_positions
   ORDER by zero;
 
 CREATE OR REPLACE VIEW standard_railway_switch_ref AS

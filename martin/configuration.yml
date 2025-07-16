@@ -188,7 +188,7 @@ postgres:
         osm_id: integer
         railway: string
         pos: string
-        pos_int: string
+        pos_int: integer
         zero: boolean
         wikidata: string
         wikimedia_commons: string

@@ -384,6 +384,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'railway', type = 'text' },
     { column = 'position_numeric', type = 'real' },
     { column = 'position_text', type = 'text', not_null = true },
+    { column = 'zero', type = 'boolean' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'operator', type = 'text' },
@@ -866,13 +867,15 @@ function osm2pgsql.process_node(object)
     signals:insert(signal)
   end
 
-  if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:exact']) then
-    for _, position in ipairs(parse_railway_position(tags['railway:position'], tags['railway:position:exact'])) do
+  local position, position_exact = tags['railway:position'], tags['railway:position:exact']
+  if railway_position_values(tags.railway) and (position or position_exact) then
+    for _, position in ipairs(parse_railway_position(position, position_exact)) do
       railway_positions:insert({
         way = object:as_point(),
         railway = tags.railway,
         position_numeric = position.numeric,
         position_text = position.text,
+        zero = position.numeric ~= nil and ((math.abs(position.numeric) % 1) < 0.001),
         name = tags['name'],
         ref = tags['ref'],
         operator = tags['operator'],
