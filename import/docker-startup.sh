@@ -86,7 +86,6 @@ function create_update_functions_views() {
   $PSQL -f sql/get_station_importance.sql
   $PSQL -f sql/tile_views.sql
   $PSQL -f sql/api_facility_views.sql
-  $PSQL -f sql/api_milestone_views.sql
 }
 
 function refresh_materialized_views() {
