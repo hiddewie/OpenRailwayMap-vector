@@ -189,7 +189,7 @@ CREATE INDEX IF NOT EXISTS stations_with_route_count_idx
 CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
   SELECT
     -- Aggregated station columns
-    array_agg(station_id ORDER BY station_id) as station_ids,
+    array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
     array_agg(osm_id ORDER BY osm_id) as osm_ids,
     array_agg(osm_type ORDER BY osm_id) as osm_types,
