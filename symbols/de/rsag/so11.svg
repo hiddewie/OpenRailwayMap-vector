@@ -1,21 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg version="1.1"
-     width="100px" height="100px"
-     xmlns="http://www.w3.org/2000/svg">
-  <rect x="0" y="0" width="100%" height="100%" fill="yellow"/>
-
-  <rect
-    fill="none"
-    stroke="red"
-    stroke-width="5px"
-    x="5" y="5" width="90" height="90"
-  />
-
-  <polygon class="shapes"
-           fill="none"
-           stroke="red"
-           stroke-width="7px"
-           points="18,22 82,22 50,76"
-  />
-
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<rect x="-1.6" y="-1.6" width="19.2" height="19.2" fill="rgb(100%, 100%, 0%)" fill-opacity="1"/>
+<path fill="none" stroke-width="5" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.004883 5.004883 L 94.995117 5.004883 L 94.995117 94.995117 L 5.004883 94.995117 Z M 5.004883 5.004883 " transform="matrix(0.16, 0, 0, 0.16, 0, 0)"/>
+<path fill="none" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 17.993164 21.99707 L 82.006836 21.99707 L 50 76.000977 Z M 17.993164 21.99707 " transform="matrix(0.16, 0, 0, 0.16, 0, 0)"/>
 </svg>
