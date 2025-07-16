@@ -382,8 +382,8 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'railway', type = 'text' },
-    { column = 'railway_position', type = 'text' },
-    { column = 'railway_position_exact', type = 'text' },
+    { column = 'position_numeric', type = 'real' },
+    { column = 'position_text', type = 'text', not_null = true },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'operator', type = 'text' },
@@ -671,6 +671,49 @@ function name_tags(tags)
   return found_name_tags
 end
 
+function parse_railway_position(position, position_exact)
+  -- Parse one or more positions from a position or exact position
+  local parsed_positions = {}
+
+  if position_exact then
+    local found_positions = false
+
+    for part in string.gmatch(position_exact, '[^;]+') do
+      local stripped_part = strip_prefix(strip_prefix(part, ' '), 'mi:')
+
+      if stripped_part then
+        table.insert(parsed_positions, {
+          numeric = tonumber(stripped_part),
+          text = stripped_part,
+        })
+
+        found_positions = true
+      end
+    end
+
+    if found_positions then
+      return parsed_positions
+    end
+  end
+
+  -- Fall back to non-exact positions
+
+  if position then
+    for part in string.gmatch(position, '[^;]+') do
+      local stripped_part = strip_prefix(strip_prefix(part, ' '), 'mi:')
+
+      if stripped_part then
+        table.insert(parsed_positions, {
+          numeric = tonumber(stripped_part),
+          text = stripped_part,
+        })
+      end
+    end
+  end
+
+  return parsed_positions
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -820,23 +863,25 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_position_values(tags.railway) and (tags['railway:position'] or tags['railway:position:exact']) then
-    railway_positions:insert({
-      way = object:as_point(),
-      railway = tags.railway,
-      railway_position = strip_prefix(tags['railway:position'], 'mi:'),
-      railway_position_exact = strip_prefix(tags['railway:position:exact'], 'mi:'),
-      name = tags['name'],
-      ref = tags['ref'],
-      operator = tags['operator'],
-      wikidata = tags.wikidata,
-      wikimedia_commons = wikimedia_commons,
-      wikimedia_commons_file = wikimedia_commons_file,
-      image = image,
-      mapillary = tags.mapillary,
-      wikipedia = tags.wikipedia,
-      note = tags.note,
-      description = tags.description,
-    })
+    for _, position in ipairs(parse_railway_position(tags['railway:position'], tags['railway:position:exact'])) do
+      railway_positions:insert({
+        way = object:as_point(),
+        railway = tags.railway,
+        position_numeric = position.numeric,
+        position_text = position.text,
+        name = tags['name'],
+        ref = tags['ref'],
+        operator = tags['operator'],
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        wikimedia_commons_file = wikimedia_commons_file,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
+      })
+    end
   end
 
   if railway_switch_values(tags.railway) and tags.ref then
