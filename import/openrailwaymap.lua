@@ -396,6 +396,10 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
   },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    { column = 'position_numeric', method = 'btree', where = 'position_numeric IS NOT NULL' },
+  },
 })
 
 local catenary = osm2pgsql.define_table({

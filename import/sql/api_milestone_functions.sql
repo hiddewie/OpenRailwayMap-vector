@@ -1,17 +1,5 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-CREATE OR REPLACE FUNCTION railway_api_valid_float(value TEXT) RETURNS FLOAT AS $$
-BEGIN
-  IF value ~ '^-?[0-9]+(\.[0-9]+)?$' THEN
-    RETURN value::FLOAT;
-  END IF;
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql
-  IMMUTABLE
-  LEAKPROOF
-  PARALLEL SAFE;
-
 CREATE OR REPLACE FUNCTION query_milestones(
   input_pos double precision,
   input_ref text,
@@ -99,7 +87,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
             SELECT
               array_agg(milestones.osm_id) AS osm_id,
               array_agg(milestones.railway) AS railway,
-              milestones.position AS position,
+              milestones.position_numeric AS position,
               array_agg(milestones.geom) AS geom,
               milestones.line_ref,
               milestones.operator,
@@ -117,8 +105,8 @@ CREATE OR REPLACE FUNCTION query_milestones(
               SELECT
                 m.osm_id,
                 m.railway,
-                m.position,
-                ST_Transform(m.geom, 4326) AS geom,
+                m.position_numeric,
+                ST_Transform(m.way, 4326) AS geom,
                 t.ref AS line_ref,
                 m.ref AS milestone_ref,
                 m.wikidata,
@@ -130,19 +118,20 @@ CREATE OR REPLACE FUNCTION query_milestones(
                 m.note,
                 m.description,
                 m.operator,
-                ABS(input_pos - m.position) AS error
-              FROM openrailwaymap_milestones AS m
+                ABS(input_pos - m.position_numeric) AS error
+              FROM railway_positions AS m
               JOIN railway_line AS t
-                ON t.way && m.geom
-                   AND ST_Intersects(t.way, m.geom)
+                ON t.way && m.way
+                   AND ST_Intersects(t.way, m.way)
                    AND t.ref = input_ref
                    AND feature in ('rail', 'narrow_gauge', 'subway', 'light_rail', 'tram')
                    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
-              WHERE m.position BETWEEN (input_pos - 10.0)::FLOAT AND (input_pos + 10.0)::FLOAT
+              WHERE position_numeric IS NOT NULL
+                AND position_numeric BETWEEN (input_pos - 10.0)::FLOAT AND (input_pos + 10.0)::FLOAT
               -- sort by distance from searched location, then osm_id for stable sorting
               ORDER BY error, m.osm_id
             ) AS milestones
-            GROUP BY milestones.position, milestones.error, milestones.line_ref, milestones.operator
+            GROUP BY milestones.position_numeric, milestones.error, milestones.line_ref, milestones.operator
           ) AS unique_milestones
         ) AS top_of_array
       ) AS ranked
