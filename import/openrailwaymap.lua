@@ -1093,16 +1093,14 @@ function osm2pgsql.process_relation(object)
     local platform_members = {}
     local node_members = {}
     for _, member in ipairs(object.members) do
-      if member.type == 'n' then
-        if member.role == 'stop' then
-          table.insert(stop_members, member.ref)
-        elseif member.role == 'platform' then
-          table.insert(platform_members, member.ref)
-        else
-          -- Station has no role defined
-          table.insert(node_members, member.ref)
-          has_node_members = true
-        end
+      if member.role == 'stop' and member.type == 'n' then
+        table.insert(stop_members, member.ref)
+      elseif member.role == 'platform' then
+        table.insert(platform_members, member.ref)
+      elseif member.type == 'n' then
+        -- Station has no role defined
+        table.insert(node_members, member.ref)
+        has_node_members = true
       end
     end
 
