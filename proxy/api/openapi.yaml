@@ -337,7 +337,7 @@ paths:
                         type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
                       nullable: true
                     position:
-                      type: number
+                      type: string
                       description: |
                         Mileage of the feature
                       nullable: true

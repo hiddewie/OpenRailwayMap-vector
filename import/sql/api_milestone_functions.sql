@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
 ) RETURNS TABLE(
   "osm_id" bigint,
   "railway" text,
-  "position" real,
+  "position" text,
   "latitude" double precision,
   "longitude" double precision,
   "line_ref" text,
@@ -87,7 +87,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
             SELECT
               array_agg(milestones.osm_id) AS osm_id,
               array_agg(milestones.railway) AS railway,
-              milestones.position_numeric AS position,
+              milestones.position_text AS position,
               array_agg(milestones.geom) AS geom,
               milestones.line_ref,
               milestones.operator,
@@ -105,7 +105,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
               SELECT
                 m.osm_id,
                 m.railway,
-                m.position_numeric,
+                m.position_text,
                 ST_Transform(m.way, 4326) AS geom,
                 t.ref AS line_ref,
                 m.ref AS milestone_ref,
@@ -131,7 +131,7 @@ CREATE OR REPLACE FUNCTION query_milestones(
               -- sort by distance from searched location, then osm_id for stable sorting
               ORDER BY error, m.osm_id
             ) AS milestones
-            GROUP BY milestones.position_numeric, milestones.error, milestones.line_ref, milestones.operator
+            GROUP BY milestones.position_text, milestones.error, milestones.line_ref, milestones.operator
           ) AS unique_milestones
         ) AS top_of_array
       ) AS ranked
