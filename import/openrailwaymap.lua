@@ -587,18 +587,13 @@ function to_sql_array(items)
 
   local result = '{'
 
-  local first = true
-  if value then
-    for index, part in ipairs(items) do
-      if stripped_part then
-        if index > 0 then
-          result = result .. ','
-        end
-
-        -- Raw SQL array syntax
-        result = result .. "\"" .. stripped_part:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
-      end
+  for index, item in ipairs(items) do
+    if index > 1 then
+      result = result .. ','
     end
+
+    -- Raw SQL array syntax
+    result = result .. "\"" .. item:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
   end
 
   return result .. '}'

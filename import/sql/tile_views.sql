@@ -671,6 +671,8 @@ END $do$;
 CREATE OR REPLACE VIEW railway_catenary AS
   SELECT
     id,
+    osm_id,
+    osm_type,
     way,
     feature,
     ref,
