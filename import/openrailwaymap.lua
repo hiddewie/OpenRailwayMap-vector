@@ -579,9 +579,9 @@ function electrification_state(tags)
     return nil, nil, nil
 end
 
--- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
-function split_semicolon_to_sql_array(value)
-  if not value then
+function to_sql_array(items)
+  -- Put the items in a table into a raw SQL array string (quoted and comma-delimited)
+  if not items then
     return nil
   end
 
@@ -589,13 +589,9 @@ function split_semicolon_to_sql_array(value)
 
   local first = true
   if value then
-    for part in string.gmatch(value, '[^;]+') do
-      local stripped_part = strip_prefix(part, ' ')
-
+    for index, part in ipairs(items) do
       if stripped_part then
-        if first then
-          first = false
-        else
+        if index > 0 then
           result = result .. ','
         end
 
@@ -606,6 +602,26 @@ function split_semicolon_to_sql_array(value)
   end
 
   return result .. '}'
+end
+
+-- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
+function split_semicolon_to_sql_array(value)
+  if not value then
+    return nil
+  end
+
+  local items = {}
+
+  if value then
+    for part in string.gmatch(value, '[^;]+') do
+      local stripped_part = strip_prefix(part, ' ')
+      if stripped_part then
+        table.insert(items, stripped_part)
+      end
+    end
+  end
+
+  return to_sql_array(items)
 end
 
 function semicolon_to_record_separator(value)
