@@ -699,7 +699,7 @@ function parse_railway_position(position, position_exact)
     local found_positions = false
 
     for part in string.gmatch(position_exact, '[^;]+') do
-      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', ''):gsub(',', '.')
+      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', '')
 
       if stripped_part then
         table.insert(parsed_positions, stripped_part)
@@ -719,7 +719,7 @@ function parse_railway_position(position, position_exact)
     local found_positions = false
 
     for part in string.gmatch(position, '[^;]+') do
-      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', ''):gsub(',', '.')
+      local stripped_part = part:gsub('^ ', ''):gsub('^mi:', '')
 
       if stripped_part then
         table.insert(parsed_positions, stripped_part)
@@ -889,7 +889,8 @@ function osm2pgsql.process_node(object)
 
   if railway_position_values(tags.railway) and (position or position_exact) then
     for _, position in ipairs(parse_railway_position(position, position_exact)) do
-      local position_numeric = tonumber(position)
+      local position_with_dots, _ = position:gsub(',', '.')
+      local position_numeric = tonumber(position_with_dots)
 
       railway_positions:insert({
         way = object:as_point(),
