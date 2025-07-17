@@ -466,6 +466,9 @@ const features = {
       ref: {
         name: 'Reference',
       },
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -566,6 +569,9 @@ const features = {
       resetting: {
         name: 'Resetting',
       },
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -620,6 +626,9 @@ const features = {
         name: 'both directions',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -695,6 +704,9 @@ const features = {
         name: 'both directions',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -738,6 +750,9 @@ const features = {
     properties: {
       ref: {
         name: 'Reference',
+      },
+      position: {
+        name: 'Position',
       },
       wikidata: {
         name: 'Wikidata',
@@ -786,6 +801,9 @@ const features = {
         name: 'Deactivated',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description, format: tag.format}])),
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -828,6 +846,9 @@ const features = {
     properties: {
       ref: {
         name: 'Reference',
+      },
+      position: {
+        name: 'Position',
       },
       wikidata: {
         name: 'Wikidata',

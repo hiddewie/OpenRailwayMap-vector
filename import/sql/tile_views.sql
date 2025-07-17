@@ -292,8 +292,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
     nullif(array_to_string(note, U&'\001E'), '') as note,
     nullif(array_to_string(description, U&'\001E'), '') as description
-  FROM
-    grouped_stations_with_route_count
+  FROM grouped_stations_with_route_count
   ORDER BY
     rank DESC NULLS LAST,
     route_count DESC NULLS LAST;
@@ -321,8 +320,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     wikipedia,
     note,
     description
-  FROM
-    railway_text_stations
+  FROM railway_text_stations
   WHERE
     feature = 'station'
     AND state = 'present'
@@ -353,8 +351,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
     wikipedia,
     note,
     description
-  FROM
-    railway_text_stations
+  FROM railway_text_stations
   WHERE
     feature = 'station'
     AND state = 'present'
@@ -389,8 +386,7 @@ CREATE OR REPLACE VIEW standard_railway_text_stations AS
     wikipedia,
     note,
     description
-  FROM
-    railway_text_stations
+  FROM railway_text_stations
   WHERE
     name IS NOT NULL;
 
@@ -417,8 +413,7 @@ CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
     nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
     nullif(array_to_string(note, U&'\001E'), '') as note,
     nullif(array_to_string(description, U&'\001E'), '') as description
-  FROM
-    grouped_stations_with_route_count;
+  FROM grouped_stations_with_route_count;
 
 CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
@@ -442,6 +437,7 @@ RETURN (
       feature,
       ref,
       name,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
@@ -474,6 +470,7 @@ DO $do$ BEGIN
           "ref": "string",
           "name": "string",
           "minzoom": "integer",
+          "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "image": "string",
@@ -519,6 +516,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     turnout_side,
     local_operated,
     resetting,
+    nullif(array_to_string(position, U&'\001E'), '') as position,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -553,6 +551,7 @@ RETURN (
       osm_type,
       feature,
       ref,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
@@ -584,6 +583,7 @@ DO $do$ BEGIN
           "feature": "string",
           "ref": "string",
           "minzoom": "integer",
+          "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "image": "string",
@@ -625,6 +625,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         feature,
         ref,
         name,
+        nullif(array_to_string(position, U&'\001E'), '') as position,
         wikimedia_commons,
         wikimedia_commons_file,
         image,
@@ -652,6 +653,7 @@ DO $do$ BEGIN
           "feature": "string",
           "ref": "string",
           "name": "string",
+          "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "image": "string",
@@ -665,3 +667,20 @@ DO $do$ BEGIN
   }
   $$::json || '$tj$';
 END $do$;
+
+CREATE OR REPLACE VIEW railway_catenary AS
+  SELECT
+    id,
+    way,
+    feature,
+    ref,
+    transition,
+    structure,
+    supporting,
+    attachment,
+    tensioning,
+    insulator,
+    nullif(array_to_string(position, U&'\001E'), '') as position,
+    note,
+    description
+  FROM catenary;

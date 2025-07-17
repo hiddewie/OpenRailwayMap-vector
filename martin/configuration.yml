@@ -214,6 +214,7 @@ postgres:
         turnout_side: string
         local_operated: boolean
         resetting: boolean
+        position: string
         wikidata: string
         wikimedia_commons: string
         wikimedia_commons_file: string
@@ -238,7 +239,7 @@ postgres:
 
     catenary:
       schema: public
-      table: catenary
+      table: railway_catenary
       srid: 3857
       geometry_column: way
       geometry_type: GEOMETRY
@@ -248,13 +249,13 @@ postgres:
         osm_type: string
         ref: string
         feature: string
-        position: string
         transition: boolean
         structure: string
         supporting: string
         attachment: string
         tensioning: string
         insulator: string
+        position: string
         note: string
         description: string
 
