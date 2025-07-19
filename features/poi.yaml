@@ -222,6 +222,13 @@ features:
     tags:
       - { tag: 'railway', value: 'carrier_truck_pit' }
 
+  - description: Bogie exchange
+    feature: 'general/gauge-conversion'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'gauge_conversion' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
