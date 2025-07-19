@@ -201,6 +201,13 @@ features:
     tags:
       - { tag: 'railway', value: 'loading_tower' }
 
+  - description: Unloading hole
+    feature: 'general/unloading-hole'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'unloading_hole' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
