@@ -229,6 +229,13 @@ features:
     tags:
       - { tag: 'railway', value: 'gauge_conversion' }
 
+  - description: Car shuttle
+    feature: 'general/car-shuttle'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'car_shuttle' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
