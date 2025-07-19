@@ -36,6 +36,13 @@ features:
     tags:
       - { tag: 'railway', value: 'container_terminal' }
 
+  - description: Ferry terminal
+    feature: 'general/ferry-terminal'
+    layer: standard
+    minzoom: 12
+    tags:
+      - { tag: 'railway', value: 'ferry_terminal' }
+
   - description: Lubricator
     layer: standard
     minzoom: 13
