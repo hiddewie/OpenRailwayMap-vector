@@ -29,6 +29,13 @@ features:
           - { tag: 'railway', value: 'radio' }
           - { tag: 'man_made', value: 'antenna' }
 
+  - description: Container terminal
+    feature: 'general/container-terminal'
+    layer: standard
+    minzoom: 12
+    tags:
+      - { tag: 'railway', value: 'container_terminal' }
+
   - description: Lubricator
     layer: standard
     minzoom: 13
