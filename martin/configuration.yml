@@ -190,6 +190,7 @@ postgres:
         pos: string
         pos_int: integer
         zero: boolean
+        type: string
         wikidata: string
         wikimedia_commons: string
         wikimedia_commons_file: string

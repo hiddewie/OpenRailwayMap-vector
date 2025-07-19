@@ -513,6 +513,9 @@ const features = {
       pos: {
         name: 'Position',
       },
+      type: {
+        name: 'Type',
+      },
       operator: {
         name: 'Operator',
       },

@@ -494,6 +494,7 @@ CREATE OR REPLACE VIEW railway_text_km AS
     position_text as pos,
     zero,
     round(position_numeric) as pos_int,
+    type,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
