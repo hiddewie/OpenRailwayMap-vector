@@ -173,6 +173,13 @@ features:
     tags:
       - { tag: 'railway', value: 'pit' }
 
+  - description: Loading rack
+    feature: 'general/loading-rack'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'loading_rack' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
