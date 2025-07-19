@@ -132,7 +132,7 @@ features:
     tags:
       - { tag: 'railway', value: 'workshop' }
 
-  - description: Engine Shed
+  - description: Engine shed
     feature: 'general/engine_shed'
     layer: standard
     minzoom: 13
@@ -152,19 +152,26 @@ features:
           - { tag: 'tourism', value: 'museum' }
           - { tag: 'museum', value: 'railway' }
 
-  - description: Power Supply
+  - description: Power supply
     feature: 'general/power_supply'
     layer: electrification
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'power_supply' }
 
-  - description: Rolling Highway
+  - description: Rolling highway
     feature: 'general/rolling_highway'
     layer: standard
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
+
+  - description: Pit
+    feature: 'general/pit'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'pit' }
 
   - description: Isolated track section
     feature: 'general/isolated-track-section'
