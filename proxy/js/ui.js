@@ -1560,4 +1560,4 @@ fetch(`${location.origin}/features.json`)
   .catch(error => console.error('Error during fetching of features', error))
 
 onStyleChange();
-onMapRotate();
+onMapRotate(map.getBearing());
