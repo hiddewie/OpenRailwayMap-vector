@@ -243,6 +243,13 @@ features:
     tags:
       - { tag: 'railway', value: 'car_shuttle' }
 
+  - description: Rotary car dumper
+    feature: 'general/car-dumper'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'car_dumper' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
