@@ -215,6 +215,13 @@ features:
     tags:
       - { tag: 'railway', value: 'track_scale' }
 
+  - description: Transporter car
+    feature: 'general/carrier-truck-pit'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'carrier_truck_pit' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
