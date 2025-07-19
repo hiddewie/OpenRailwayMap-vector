@@ -208,6 +208,13 @@ features:
     tags:
       - { tag: 'railway', value: 'unloading_hole' }
 
+  - description: Weigh bridge
+    feature: 'general/track-scale'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'track_scale' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
