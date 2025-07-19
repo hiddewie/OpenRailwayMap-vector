@@ -194,6 +194,13 @@ features:
     tags:
       - { tag: 'railway', value: 'loading_ramp' }
 
+  - description: Loading tower
+    feature: 'general/loading-tower'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'loading_tower' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification
