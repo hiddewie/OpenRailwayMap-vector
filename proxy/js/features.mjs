@@ -757,6 +757,9 @@ const features = {
       position: {
         name: 'Position',
       },
+      operator: {
+        name: 'Operator',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
