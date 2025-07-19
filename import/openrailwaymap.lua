@@ -704,12 +704,12 @@ function parse_railway_position(position)
 
   if position:find('^mi:') then
     return {
-      position = position:gsub('^mi:', ''),
+      text = position:gsub('^mi:', ''),
       type = 'mi',
     }
   elseif position:find('^pkm:') then
     return {
-      position = position:gsub('^pkm:', ''),
+      text = position:gsub('^pkm:', ''),
       type = 'pkm',
     }
   else
