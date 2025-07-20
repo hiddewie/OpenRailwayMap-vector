@@ -3748,7 +3748,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'circle-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
-          '#008206',
+          ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         ],
         'circle-radius': 4,
         'circle-stroke-color': 'white',
@@ -3771,7 +3771,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'fill-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
-          '#008206',
+          ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         ],
         'fill-outline-color': 'white',
       },
@@ -4020,10 +4020,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'ref'], null],
       ],
       paint: {
-        'text-color': colors[theme].styles.standard.signalBox.text,
+        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].styles.standard.signalBox.halo,
+          colors[theme].halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -4045,10 +4045,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'name'], null],
       ],
       paint: {
-        'text-color': colors[theme].styles.standard.signalBox.text,
+        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].styles.standard.signalBox.halo,
+          colors[theme].halo,
         ],
         'text-halo-width': 1.5,
       },
