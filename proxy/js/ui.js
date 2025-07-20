@@ -585,8 +585,8 @@ function updateBackgroundMapContainer() {
 }
 
 const defaultConfiguration = {
-  backgroundSaturation: 0.0,
-  backgroundOpacity: 1.0,
+  backgroundSaturation: 0.2,
+  backgroundOpacity: 0.5,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
