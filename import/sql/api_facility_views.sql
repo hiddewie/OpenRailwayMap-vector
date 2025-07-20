@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-CREATE MATERIALIZED VIEW openrailwaymap_facilities_for_search AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
   SELECT
     id,
     osm_ids,
@@ -54,6 +54,6 @@ CREATE MATERIALIZED VIEW openrailwaymap_facilities_for_search AS
     FROM grouped_stations_with_route_count
   ) AS duplicated;
 
-CREATE INDEX openrailwaymap_facilities_name_index
+CREATE INDEX IF NOT EXISTS openrailwaymap_facilities_name_index
   ON openrailwaymap_facilities_for_search
     USING gin(terms);
