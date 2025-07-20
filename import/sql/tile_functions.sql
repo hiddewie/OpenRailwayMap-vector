@@ -1,3 +1,10 @@
+CREATE OR REPLACE FUNCTION fmod(
+  dividend double precision,
+  divisor double precision
+) RETURNS double precision
+  LANGUAGE sql IMMUTABLE AS
+    'SELECT dividend - floor(dividend / divisor) * divisor';
+
 CREATE OR REPLACE FUNCTION railway_to_int(value TEXT) RETURNS INTEGER AS $$
 BEGIN
   IF value ~ '^-?[0-9]+$' THEN

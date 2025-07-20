@@ -126,7 +126,7 @@ tags:
   - { tag: 'railway:signal:wrong_road', description: 'Wrong road' }
   - { tag: 'railway:signal:wrong_road:form', description: 'Wrong road form' }
   - { tag: 'railway:vacancy_detection', description: 'Vacancy detection' }
-  - { tag: 'railway:signal:position', description: 'Position' }
+  - { tag: 'railway:signal:position', description: 'Signal position' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here

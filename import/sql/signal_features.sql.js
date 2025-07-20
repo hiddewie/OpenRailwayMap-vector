@@ -180,11 +180,12 @@ CREATE OR REPLACE VIEW signal_features_view AS
     SELECT
       id,
       azimuth,
-      ST_translate(
-        way, 
-        1 * cos(azimuth + (CASE "railway:signal:position" WHEN 'right' THEN 1.0 WHEN 'left' THEN -1.0 ELSE 0.0 END) * pi() / 2.0),
-        1 * sin(azimuth + (CASE "railway:signal:position" WHEN 'right' THEN 1.0 WHEN 'left' THEN -1.0 ELSE 0.0 END) * pi() / 2.0)
-      ) as way
+      way
+      -- ST_translate(
+      --   way, 
+      --   1.0 * (CASE "railway:signal:position" WHEN 'right' THEN azimuth - pi() / 2.0 WHEN 'left' THEN azimuth + pi() / 2.0 ELSE 0.0 END),
+      --   1.0 * (CASE "railway:signal:position" WHEN 'right' THEN azimuth - pi() / 2.0 WHEN 'left' THEN azimuth + pi() / 2.0 ELSE 0.0 END)
+      -- ) as way
     FROM signals_with_azimuth
   )
   -- Aggregate calculated properties and features for final view
@@ -212,7 +213,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     sf.features,
     sf.rank,
     (signal_direction = 'both') as direction_both,
-    degrees(sa.azimuth) as azimuth
+    degrees(fmod(sa.azimuth, 2.0 * pi())) as azimuth
   FROM signals_with_features sf
   JOIN signals s
     ON s.id = sf.signal_id

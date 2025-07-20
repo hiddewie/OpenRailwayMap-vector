@@ -749,7 +749,10 @@ const onStyleChange = () => {
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate);
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('date', selectedDate);
+  }
+
   onPageParametersChange();
 }
 
@@ -1138,6 +1141,10 @@ const onMapZoom = zoom => {
   legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 }
 const onMapRotate = bearing => {
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('bearing', bearing);
+  }
+
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
   if (rotated && !rotatedShownOnIcon) {
