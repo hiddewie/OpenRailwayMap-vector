@@ -3648,6 +3648,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
+      filter: ['!=', ['get', 'operator'], null],
       paint: {
         'fill-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         'fill-opacity': ['case',
