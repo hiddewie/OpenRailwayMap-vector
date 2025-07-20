@@ -20,6 +20,9 @@
     let FF_FOUC_FIX;
   </script>
 
+  <script src="js/maplibre-gl-5.6/maplibre-gl.js" defer></script>
+  <script src="js/ui.js" defer></script>
+
   <title>OpenRailwayMap</title>
 </head>
 
@@ -184,7 +187,7 @@
       </div>
       <div class="modal-body" id="about-content">
         <p class="about-banner-container">
-          <img src="image/banner.png" alt="OpenRailwayMap banner" width="1280" height="640" class="banner">
+          <img src="image/banner.png" alt="OpenRailwayMap banner" width="1280" height="640" class="banner" loading="lazy">
         </p>
         <p>
           Welcome to the OpenRailwayMap!
@@ -220,9 +223,6 @@
   <div id="background-map"></div>
   <div id="map"></div>
 </div>
-
-<script src="js/maplibre-gl-5.6/maplibre-gl.js"></script>
-<script src="js/ui.js"></script>
 </body>
 
 </html>
