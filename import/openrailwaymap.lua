@@ -935,7 +935,7 @@ function osm2pgsql.process_node(object)
         position_numeric = position_numeric,
         position_text = position.text,
         type = position.type,
-        zero = position_numeric ~= nil and ((math.abs(position_numeric) % 1) < 0.001),
+        zero = position_numeric ~= nil and (math.abs(position_numeric - math.floor(position_numeric + 0.5)) < 0.05),
         name = tags['name'],
         ref = tags['ref'],
         operator = tags['operator'],
