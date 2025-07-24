@@ -2862,14 +2862,14 @@ features:
 
   # --- DK --- #
 
-  - description: Main signal (PU)
+  - description: Perronudkørselssignal
     country: DK
     icon: { default: 'dk/main-PU' }
     tags:
       - { tag: 'railway:signal:main', value: 'DK-SR:PU' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Main signal (SU)
+  - description: Stationsbloksignal for Udkørsel
     country: DK
     icon: { default: 'dk/main-SU' }
     tags:
