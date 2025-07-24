@@ -15,8 +15,7 @@ This repository aims to contain all code, configuration and tooling for the Open
 - The user interface uses [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) to visualize the map content.
 - The style is specified using the [MapLibre Style Specification](https://maplibre.org/maplibre-style-spec/).
 - [Docker](https://www.docker.com/) is used to package the software and data for local development and deployment.
-- Continuous Integration and Deployment is done using [Github Actions](https://docs.github.com/en/actions).
-- Deployment is done using [`fly.io`](https://fly.io/).
+- Continuous Integration and daily data updates are done using [Github Actions](https://docs.github.com/en/actions).
 
 ## Changes from the CartoCSS style
 
@@ -36,11 +35,11 @@ Upstream changes will be merged into this project.
 
 The API has been adapted from [the OpenRailwayMap API](https://github.com/OpenRailwayMap/OpenRailwayMap-api). The API powers the search in the OpenRailwayMap UI, and provides facility (stations, halts, tram stops, yards, sidings, crossovers, including disused, abandoned, razed, proposed and under construction) searches by name and reference and milestone searches by combination of line number and mileage. The searches are full text, based on PostgreSQL's full text search functionalities.
 
-The API documentation can be found at https://openrailwaymap.fly.dev/api. You can also view [the raw OpenAPI specification](proxy/api/openapi.yaml).
+The API documentation can be found at https://openrailwaymap.app/api.html. You can also view [the raw OpenAPI specification](proxy/api/openapi.yaml).
 
 ## Mapping presets
 
-Presets for [JOSM](https://josm.openstreetmap.de/) and [Vespucci](https://vespucci.io/) are generated for mapping assistance. The preset is available for download on https://openrailwaymap.fly.dev/preset.zip. The preset is also available directly from the [Tagging Presets register in JOSM Preferences](https://josm.openstreetmap.de/wiki/Help/Preferences/TaggingPresetPreference). [Vespucci](https://vespucci.io/help/en/Presets/) can use the same presets for mobile mapping.
+Presets for [JOSM](https://josm.openstreetmap.de/) and [Vespucci](https://vespucci.io/) are generated for mapping assistance. The preset is available for download on https://openrailwaymap.app/preset.zip. The preset is also available directly from the [Tagging Presets register in JOSM Preferences](https://josm.openstreetmap.de/wiki/Help/Preferences/TaggingPresetPreference). [Vespucci](https://vespucci.io/help/en/Presets/) can use the same presets for mobile mapping.
 
 ## Contributing
 
@@ -63,7 +62,7 @@ View the [setup documentation](SETUP.md) for details.
 
 ## Deployment
 
-The [deployment documentation](DEPLOYMENT.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.fly.dev using [Github Actions](https://docs.github.com/en/actions) and [`fly.io`](https://fly.io/).
+The [deployment documentation](deployment/README.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions), Cloudflare and a server running the software.
 
 ## License
 

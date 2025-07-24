@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+<defs>
+<radialGradient id="radial-pattern-0" gradientUnits="userSpaceOnUse" cx="35" cy="35" fx="35" fy="35" r="30.188976">
+<stop offset="0.449495" stop-color="rgb(100%, 100%, 60.784314%)" stop-opacity="1"/>
+<stop offset="1" stop-color="rgb(100%, 92.156863%, 25.490196%)" stop-opacity="1"/>
+</radialGradient>
+</defs>
+<path fill-rule="evenodd" fill="url(#radial-pattern-0)" stroke-width="0.377953" stroke-linecap="round" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.007567 5.007567 L 64.992437 5.007567 L 64.992437 64.992437 L 5.007567 64.992437 Z M 5.007567 5.007567 " transform="matrix(0.198748, 0, 0, 0.198748, -0.956181, -0.956181)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="4.53543" stroke-linecap="square" stroke-linejoin="bevel" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.007567 5.007567 L 64.992437 64.992437 " transform="matrix(0.198748, 0, 0, 0.198748, -0.956181, -0.956181)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="4.53543" stroke-linecap="square" stroke-linejoin="bevel" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.007567 64.992437 L 64.992437 5.007567 " transform="matrix(0.198748, 0, 0, 0.198748, -0.956181, -0.956181)"/>
+</svg>

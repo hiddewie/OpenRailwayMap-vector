@@ -86,7 +86,7 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
     FROM stations AS s
     JOIN platforms_and_their_routes_clustered AS sprc
       ON (ST_DWithin(s.way, sprc.geom, 60))
-    WHERE s.railway IN ('station', 'halt', 'tram_stop')
+    WHERE s.feature IN ('station', 'halt', 'tram_stop')
 
     UNION ALL
 
@@ -104,23 +104,44 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 -- Clustered stations without route counts
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
-    row_number() over (order by name, station, railway_ref, uic_ref, railway) as id,
+    row_number() over (order by name, station, railway_ref, uic_ref, feature) as id,
     name,
     station,
     railway_ref,
     uic_ref,
-    railway,
+    feature,
+    state,
     array_agg(facilities.id) as station_ids,
-    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way)) ) as center,
+    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way))) as center,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
     ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
     SELECT
       *,
-      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, railway) AS cluster_id
-    FROM stations
+      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
+    FROM (
+      SELECT
+        st_collect(any_value(s.way), st_collect(q.way)) as way,
+        name,
+        station,
+        railway_ref,
+        uic_ref,
+        feature,
+        state,
+        id
+      FROM stations s
+      left join stop_areas sa
+        on array[s.osm_id] <@ sa.node_ref_ids
+      left join (
+        select sa.osm_id, se.way
+        from stop_areas sa
+        join station_entrances se
+          on array[se.osm_id] <@ sa.node_ref_ids
+      ) q on q.osm_id = sa.osm_id
+      group by name, station, railway_ref, uic_ref, feature, state, id
+    ) stations_with_entrances
   ) AS facilities
-  GROUP BY cluster_id, name, station, railway_ref, uic_ref, railway;
+  GROUP BY cluster_id, name, station, railway_ref, uic_ref, feature, state;
 
 CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
   ON stations_clustered
@@ -168,13 +189,15 @@ CREATE INDEX IF NOT EXISTS stations_with_route_count_idx
 CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
   SELECT
     -- Aggregated station columns
-    array_agg(station_id ORDER BY station_id) as station_ids,
+    array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
     array_agg(osm_id ORDER BY osm_id) as osm_ids,
+    array_agg(osm_type ORDER BY osm_id) as osm_types,
     array_remove(array_agg(DISTINCT s.operator ORDER BY s.operator), null) as operator,
     array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
     array_remove(array_agg(DISTINCT s.wikimedia_commons ORDER BY s.wikimedia_commons), null) as wikimedia_commons,
+    array_remove(array_agg(DISTINCT s.wikimedia_commons_file ORDER BY s.wikimedia_commons_file), null) as wikimedia_commons_file,
     array_remove(array_agg(DISTINCT s.wikipedia ORDER BY s.wikipedia), null) as wikipedia,
     array_remove(array_agg(DISTINCT s.image ORDER BY s.image), null) as image,
     array_remove(array_agg(DISTINCT s.mapillary ORDER BY s.mapillary), null) as mapillary,
@@ -190,13 +213,14 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     any_value(clustered.station) as station,
     any_value(clustered.railway_ref) as railway_ref,
     any_value(clustered.uic_ref) as uic_ref,
-    any_value(clustered.railway) as railway,
+    any_value(clustered.feature) as feature,
+    any_value(clustered.state) as state,
     any_value(clustered.count) as count
   FROM (
     SELECT
       id,
       UNNEST(sc.station_ids) as station_id,
-      name, station, railway_ref, uic_ref, railway, station_ids, center, buffered, count
+      name, station, railway_ref, uic_ref, feature, state, station_ids, center, buffered, count
     FROM stations_clustered sc
   ) clustered
   JOIN stations s

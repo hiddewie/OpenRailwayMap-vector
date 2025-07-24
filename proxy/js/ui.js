@@ -27,6 +27,8 @@ const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
 const aboutBackdrop = document.getElementById('about-backdrop');
 
+const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_};
+
 const icons = {
   railway: {
     station: '<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="16" viewBox="0 0 5120 5120"><path d="M1215 4784c-46-24-63-43-81-90-13-34-14-52-7-81 6-21 113-204 237-408 125-203 228-374 229-378 1-5-29-18-68-31-219-71-376-206-475-411-89-184-85-115-85-1310 0-1138-2-1097 56-1243 98-248 318-434 584-494 88-19 1822-19 1910 0 309 70 537 293 621 607 18 66 19 126 19 1125 0 1200 4 1131-85 1315-56 116-134 213-223 281-70 53-201 119-274 138-26 7-47 17-46 22s105 178 231 384c134 219 233 391 237 412 5 26 1 49-13 80-45 104-170 129-245 50-15-16-60-82-100-148l-73-119H1556l-73 119c-83 136-105 163-150 182-42 18-81 18-118-2zm2145-629c0-2-42-73-93-157l-94-153H1948l-94 153c-52 84-94 155-94 157 0 3 360 5 800 5s800-2 800-5zm-1512-975c48-30 72-75 72-140 0-100-60-160-160-160s-160 60-160 159c0 63 26 113 74 142 43 26 130 26 174-1zm1600 0c48-30 72-75 72-140 0-100-60-160-160-160s-160 60-160 160 60 160 160 160c37 0 66-6 88-20zm28-797c34-11 67-35 110-77 98-98 94-69 94-706s4-608-94-706c-102-101-26-95-1042-92l-879 3-47 23c-60 30-120 90-150 150l-23 47-3 559c-3 654-7 623 92 722 100 99 23 92 1022 93 788 1 875-1 920-16z"/></svg>',
@@ -43,6 +45,10 @@ const icons = {
     crossing: '<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="16" viewBox="0 0 5120 5120"><g><path d="M2270 3875V2630l145-72 145-73 145 73 145 72v2490h-580V3875z"/><path d="M405 3034c-110-42-202-77-203-79-3-3 23-99 104-381l15-52 749-378c412-208 746-382 742-386-4-3-338-174-742-378s-739-375-743-380c-15-14-129-422-120-431 4-4 99-41 209-83l202-75 971 490 971 490 972-490 971-490 201 75c111 42 205 79 209 83 9 8-105 417-120 431-4 5-339 176-743 380s-738 375-742 378c-4 4 330 178 742 386l749 378 16 56c9 31 37 128 62 215s44 160 41 162c-2 3-97 39-210 81l-206 76-971-488-971-489-969 488c-533 268-972 487-977 487-5-1-99-35-209-76z"/><path d="m2413 967-143-72V0h580v895l-144 73c-79 39-145 72-147 71-2 0-68-32-146-72z"/></g></svg>',
   },
   edit: '<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="16" fill="#007bff" viewBox="0 0 24 24"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>',
+  osm: {
+    node: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiI+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDEwMCUsIDEwMCUsIDEwMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMS44MjgxMjUgMC4zMjgxMjUgTCAxMC4xNzE4NzUgMC4zMjgxMjUgQyAxMSAwLjMyODEyNSAxMS42NzE4NzUgMSAxMS42NzE4NzUgMS44MjgxMjUgTCAxMS42NzE4NzUgMTAuMTcxODc1IEMgMTEuNjcxODc1IDExIDExIDExLjY3MTg3NSAxMC4xNzE4NzUgMTEuNjcxODc1IEwgMS44MjgxMjUgMTEuNjcxODc1IEMgMSAxMS42NzE4NzUgMC4zMjgxMjUgMTEgMC4zMjgxMjUgMTAuMTcxODc1IEwgMC4zMjgxMjUgMS44MjgxMjUgQyAwLjMyODEyNSAxIDEgMC4zMjgxMjUgMS44MjgxMjUgMC4zMjgxMjUgWiBNIDEuODI4MTI1IDAuMzI4MTI1ICIvPgo8cGF0aCBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9InJnYig3NC41MDk4MDQlLCA5MC4xOTYwNzglLCA3NC41MDk4MDQlKSIgZmlsbC1vcGFjaXR5PSIxIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlPSJyZ2IoMCUsIDAlLCAwJSkiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAxNTIgMTI4IEMgMTUyIDE0MS4yNSAxNDEuMjUgMTUyIDEyOCAxNTIgQyAxMTQuNzUgMTUyIDEwNCAxNDEuMjUgMTA0IDEyOCBDIDEwNCAxMTQuNzUgMTE0Ljc1IDEwNCAxMjggMTA0IEMgMTQxLjI1IDEwNCAxNTIgMTE0Ljc1IDE1MiAxMjggWiBNIDE1MiAxMjggIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjA0Njg3NSwgMCwgMCwgMC4wNDY4NzUsIDAsIDApIi8+CjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2U9InJnYigwJSwgMCUsIDAlKSIgc3Ryb2tlLW9wYWNpdHk9IjEiIHN0cm9rZS1taXRlcmxpbWl0PSI0IiBkPSJNIDM5IDcgTCAyMTcgNyBDIDIzNC42NjY2NjcgNyAyNDkgMjEuMzMzMzMzIDI0OSAzOSBMIDI0OSAyMTcgQyAyNDkgMjM0LjY2NjY2NyAyMzQuNjY2NjY3IDI0OSAyMTcgMjQ5IEwgMzkgMjQ5IEMgMjEuMzMzMzMzIDI0OSA3IDIzNC42NjY2NjcgNyAyMTcgTCA3IDM5IEMgNyAyMS4zMzMzMzMgMjEuMzMzMzMzIDcgMzkgNyBaIE0gMzkgNyAiIHRyYW5zZm9ybT0ibWF0cml4KDAuMDQ2ODc1LCAwLCAwLCAwLjA0Njg3NSwgMCwgMCkiLz4KPC9zdmc+Cg==',
+    way: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiI+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDEwMCUsIDEwMCUsIDEwMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMS44MjgxMjUgMC4zMjgxMjUgTCAxMC4xNzE4NzUgMC4zMjgxMjUgQyAxMSAwLjMyODEyNSAxMS42NzE4NzUgMSAxMS42NzE4NzUgMS44MjgxMjUgTCAxMS42NzE4NzUgMTAuMTcxODc1IEMgMTEuNjcxODc1IDExIDExIDExLjY3MTg3NSAxMC4xNzE4NzUgMTEuNjcxODc1IEwgMS44MjgxMjUgMTEuNjcxODc1IEMgMSAxMS42NzE4NzUgMC4zMjgxMjUgMTEgMC4zMjgxMjUgMTAuMTcxODc1IEwgMC4zMjgxMjUgMS44MjgxMjUgQyAwLjMyODEyNSAxIDEgMC4zMjgxMjUgMS44MjgxMjUgMC4zMjgxMjUgWiBNIDEuODI4MTI1IDAuMzI4MTI1ICIvPgo8cGF0aCBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlPSJyZ2IoODAlLCA4MCUsIDgwJSkiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAxNjkgNTggTCA1NyAxNDUgTCAxOTUgMTk5ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8cGF0aCBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9InJnYigwJSwgMCUsIDAlKSIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNIDkuMDQ2ODc1IDIuNzE4NzUgQyA5LjA0Njg3NSAzLjMzOTg0NCA4LjU0Mjk2OSAzLjg0Mzc1IDcuOTIxODc1IDMuODQzNzUgQyA3LjMwMDc4MSAzLjg0Mzc1IDYuNzk2ODc1IDMuMzM5ODQ0IDYuNzk2ODc1IDIuNzE4NzUgQyA2Ljc5Njg3NSAyLjA5NzY1NiA3LjMwMDc4MSAxLjU5Mzc1IDcuOTIxODc1IDEuNTkzNzUgQyA4LjU0Mjk2OSAxLjU5Mzc1IDkuMDQ2ODc1IDIuMDk3NjU2IDkuMDQ2ODc1IDIuNzE4NzUgWiBNIDkuMDQ2ODc1IDIuNzE4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMy43OTY4NzUgNi43OTY4NzUgQyAzLjc5Njg3NSA3LjQxNzk2OSAzLjI5Mjk2OSA3LjkyMTg3NSAyLjY3MTg3NSA3LjkyMTg3NSBDIDIuMDUwNzgxIDcuOTIxODc1IDEuNTQ2ODc1IDcuNDE3OTY5IDEuNTQ2ODc1IDYuNzk2ODc1IEMgMS41NDY4NzUgNi4xNzU3ODEgMi4wNTA3ODEgNS42NzE4NzUgMi42NzE4NzUgNS42NzE4NzUgQyAzLjI5Mjk2OSA1LjY3MTg3NSAzLjc5Njg3NSA2LjE3NTc4MSAzLjc5Njg3NSA2Ljc5Njg3NSBaIE0gMy43OTY4NzUgNi43OTY4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMTAuMjY1NjI1IDkuMzI4MTI1IEMgMTAuMjY1NjI1IDkuOTQ5MjE5IDkuNzYxNzE5IDEwLjQ1MzEyNSA5LjE0MDYyNSAxMC40NTMxMjUgQyA4LjUxOTUzMSAxMC40NTMxMjUgOC4wMTU2MjUgOS45NDkyMTkgOC4wMTU2MjUgOS4zMjgxMjUgQyA4LjAxNTYyNSA4LjcwNzAzMSA4LjUxOTUzMSA4LjIwMzEyNSA5LjE0MDYyNSA4LjIwMzEyNSBDIDkuNzYxNzE5IDguMjAzMTI1IDEwLjI2NTYyNSA4LjcwNzAzMSAxMC4yNjU2MjUgOS4zMjgxMjUgWiBNIDEwLjI2NTYyNSA5LjMyODEyNSAiLz4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZT0icmdiKDAlLCAwJSwgMCUpIiBzdHJva2Utb3BhY2l0eT0iMSIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGQ9Ik0gMzkgNyBMIDIxNyA3IEMgMjM0LjY2NjY2NyA3IDI0OSAyMS4zMzMzMzMgMjQ5IDM5IEwgMjQ5IDIxNyBDIDI0OSAyMzQuNjY2NjY3IDIzNC42NjY2NjcgMjQ5IDIxNyAyNDkgTCAzOSAyNDkgQyAyMS4zMzMzMzMgMjQ5IDcgMjM0LjY2NjY2NyA3IDIxNyBMIDcgMzkgQyA3IDIxLjMzMzMzMyAyMS4zMzMzMzMgNyAzOSA3IFogTSAzOSA3ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8L3N2Zz4K',
+  }
 }
 
 function registerLastSearchResults(results) {
@@ -262,8 +268,7 @@ function showNews() {
 
   const newsHash = aboutControl.newsHash()
   if (newsHash) {
-    configuration.newsHash = newsHash;
-    storeConfiguration(localStorage, configuration);
+    updateConfiguration('newsHash', newsHash);
   }
 }
 
@@ -389,6 +394,12 @@ const knownStyles = {
     name: 'Track class',
     styles: {
       default: 'track_class',
+    },
+  },
+  operator: {
+    name: 'Operator',
+    styles: {
+      default: 'operator',
     },
   },
 };
@@ -575,11 +586,12 @@ function updateBackgroundMapContainer() {
 
 const defaultConfiguration = {
   backgroundSaturation: 0.0,
-  backgroundOpacity: 1.0,
+  backgroundOpacity: 0.35,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
   editor: 'id',
+  view: {},
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -625,6 +637,7 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  ...(configuration.view || defaultConfiguration.view),
   // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
   ...determineZoomCenterFromHash(window.location.hash),
 });
@@ -639,6 +652,7 @@ const map = new maplibregl.Map({
   minPitch: 0,
   maxPitch: 0,
   attributionControl: false,
+  ...(configuration.view || defaultConfiguration.view),
 });
 
 function selectStyle(style) {
@@ -666,6 +680,33 @@ function onPageParametersChange() {
   }
 }
 
+// See https://github.com/maplibre/maplibre-gl-js/issues/182#issuecomment-2462045216
+// Rewrite paths to default to the current origin
+function rewriteStylePathsToOrigin(style) {
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => [
+        key,
+        source && source.url && source.url.startsWith('/')
+          ? ({...source, url: `${location.origin}${source.url}` })
+          : source
+      ])
+  )
+
+  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
+    ? `${location.origin}${style.glyphs}`
+    : style.glyphs
+
+  style.sprite = style.sprite
+    .map(sprite =>
+      sprite.url && sprite.url.startsWith('/')
+        ? ({...sprite, url: `${location.origin}${sprite.url}` })
+        : sprite
+    )
+
+  return style
+}
+
 let lastSetMapStyle = null;
 const onStyleChange = () => {
   const supportsDate = knownStyles[selectedStyle].styles.date;
@@ -680,20 +721,10 @@ const onStyleChange = () => {
     // Change styles
     map.setStyle(mapStyles[selectedTheme][mapStyle], {
       validate: false,
-      transformStyle:
-        dateActive
-          ? (previous, next) => ({
-            ...next,
-            layers: next.layers.map(layer =>
-              layerHasDateFilter(layer)
-                ? {
-                    ...layer,
-                    filter: ['let', 'date', selectedDate, ...layer.filter.slice(3)],
-                  }
-                : layer,
-            )
-          })
-        : undefined,
+      transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
+        return next;
+      },
     });
 
     legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
@@ -701,6 +732,7 @@ const onStyleChange = () => {
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
       transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
         onStylesheetChange(next);
         return next;
       },
@@ -717,47 +749,53 @@ const onStyleChange = () => {
 }
 
 const onDateChange = () => {
-  const style = map.getStyle();
-
-  if (style) {
-    style.layers
-      .filter(layerHasDateFilter)
-      .forEach(layer => {
-        map.setFilter(layer.id, ['let', 'date', selectedDate, ...layer.filter.slice(3)])
-      });
-  }
-
+  map.setGlobalStateProperty('date', selectedDate);
   onPageParametersChange();
 }
 
 class StyleControl {
   constructor(options) {
     this.options = options
-    this.radioButtons = {};
+    this.buttons = {};
   }
 
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-style');
-    const buttonGroup = createDomElement('div', 'btn-group-vertical', this._container);
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
+    const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
     Object.entries(knownStyles).forEach(([style, {name}]) => {
-      const id = `style-${style}`
-      const radio = createDomElement('input', 'btn-check', buttonGroup);
-      radio.id = id
-      radio.type = 'radio'
-      radio.name = 'style'
-      radio.value = style
-      radio.onclick = () => this.options.onStyleChange(style)
-      radio.checked = (this.options.initialSelection === style)
-      const label = createDomElement('label', 'btn btn-outline-success', buttonGroup);
-      label.htmlFor = id
-      label.innerText = name
+      const button = createDomElement('button', '', buttonGroup);
+      button.innerText = name
+      button.onclick = () => {
+        buttonGroup.classList.remove('active')
+        this.activateStyle(style);
+        this.options.onStyleChange(style)
+      }
 
-      this.radioButtons[style] = radio;
+      this.buttons[style] = button;
     });
 
+    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
+    container.onclick = () => {
+      buttonGroup.classList.toggle('active')
+    };
+    const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
+    icon.title = 'Select map style'
+
+    this.activateStyle(selectedStyle);
+
     return this._container;
+  }
+
+  activateStyle(style) {
+    Object.entries(this.buttons).forEach(([buttonStyle, button]) => {
+      if (buttonStyle === style) {
+        button.classList.add('active')
+      } else {
+        button.classList.remove('active')
+      }
+    })
   }
 
   onRemove() {
@@ -766,7 +804,7 @@ class StyleControl {
   }
 
   onExternalStyleChange(style) {
-    const radio = this.radioButtons[style];
+    const radio = this.buttons[style];
     if (radio && !radio.checked) {
       radio.checked = true;
     }
@@ -781,8 +819,16 @@ class DateControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
-    this.icon = createDomElement('span', 'maplibregl-ctrl-icon', this._container);
-    this.slider = createDomElement('input', 'date-input', this._container);
+    const container = createDomElement('button', '', this._container);
+    this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
+    this.icon.title = 'Toggle date selection'
+    this.icon.onclick = () => {
+      this.slider.classList.toggle('hide-mobile-show-desktop');
+      this.slider.classList.toggle('show-mobile-hide-desktop');
+      this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
+      this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
+    };
+    this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
     this.slider.type = 'range'
     this.slider.min = 1758
     this.slider.max = (new Date()).getFullYear()
@@ -797,7 +843,7 @@ class DateControl {
       this.detectChanges();
       this.updateDisplay();
     }
-    this.dateDisplay = createDomElement('span', 'date-display', this._container);
+    this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
     this.active = null;
 
     this.detectChanges();
@@ -837,9 +883,11 @@ class DateControl {
 
     if (this.active === true && previouslyActive !== true) {
       this.icon.classList.add('active')
+      this.dateDisplay.classList.add('active')
       this.options.onActivation()
     } else if (this.active === false && previouslyActive !== false) {
       this.icon.classList.remove('active')
+      this.dateDisplay.classList.remove('active')
       this.options.onDeactivation();
     }
   }
@@ -861,6 +909,7 @@ class SearchControl {
     button.onclick = _ => showSearch();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', '', button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Search'
 
     return this._container;
@@ -936,6 +985,7 @@ class LegendControl {
     button.title = 'Show/hide map legend';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', '', button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Legend'
 
     button.onclick = () => this.options.onLegendToggle()
@@ -971,6 +1021,7 @@ class AboutControl {
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
     const text = createDomElement('span', undefined, button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
@@ -984,6 +1035,7 @@ class AboutControl {
     aboutButton.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
     const aboutText = createDomElement('span', undefined, aboutButton);
+    aboutText.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     aboutText.innerText = 'About'
 
     aboutButton.onclick = () => this.options.onAboutToggle();
@@ -1027,12 +1079,13 @@ const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
 });
-map.addControl(dateControl);
-map.addControl(styleControl);
-map.addControl(new maplibregl.NavigationControl({
+const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: false,
-}));
+})
+map.addControl(dateControl);
+map.addControl(styleControl);
+map.addControl(navigationControl);
 map.addControl(
   new maplibregl.GeolocateControl({
     positionOptions: {
@@ -1084,6 +1137,15 @@ const onMapZoom = zoom => {
   });
   legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 }
+const onMapRotate = bearing => {
+  const rotated = Math.abs(bearing) >= 1;
+  const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
+  if (rotated && !rotatedShownOnIcon) {
+    navigationControl._compassIcon.classList.add('rotated');
+  } else if (!rotated && rotatedShownOnIcon) {
+    navigationControl._compassIcon.classList.remove('rotated');
+  }
+}
 
 const onStylesheetChange = styleSheet => {
   const styleName = styleSheet.metadata.name;
@@ -1107,7 +1169,6 @@ function openJOSM(josmUrl, osmType, osmId) {
 function popupContent(feature) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
-  const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
   const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
@@ -1136,7 +1197,7 @@ function popupContent(feature) {
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
 
-  const determineOsmType = (properties, featureContent) => {
+  const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
       return properties.osm_type === 'N' ? 'node' : 'way';
     } else {
@@ -1144,16 +1205,36 @@ function popupContent(feature) {
       return featureType === 'point' ? 'node' : 'way';
     }
   }
-  const osmType = determineOsmType(properties, featureContent);
 
-  const formatPropertyValue = (value, format, link) =>
+  const determineOsmFeatures = (properties, featureContent) => {
+    const osmIds = properties.osm_id
+      ? String(properties.osm_id).split('\u001e')
+      : [];
+    const defaultOsmType = determineDefaultOsmType(properties, featureContent);
+    const osmTypes = properties.osm_type
+      ? String(properties.osm_type).split('\u001e')
+      : [];
+
+    return osmIds.map((osm_id, index) => {
+      const osmType = osmTypes && osmTypes.length > index
+        ? osmTypes[index] === 'N' ? 'node' : 'way'
+        : defaultOsmType;
+
+      return {
+        id: osm_id,
+        type: osmType,
+      };
+    })
+  }
+
+  const formatPropertyValue = (value, format) =>
     String(value)
       .split('\u001e')
       .map(stringValue => {
         if (!format) {
           return stringValue;
         } else if (format.template) {
-          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => value.toFixed(Number(decimals)));
+          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
         } else if (format.lookup) {
           const lookupCatalog = features && features[format.lookup];
           if (!lookupCatalog) {
@@ -1173,61 +1254,174 @@ function popupContent(feature) {
           return stringValue;
         }
       })
-      .map(formatted =>
-        link
-          ? `<a href="${link.replace('%s', () => formatted)}" target="_blank">${formatted}</a>`
-          : formatted
-      )
       .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([_, {paragraph}]) => !paragraph)
-    .flatMap(
-      ([property, {name, format, link}]) =>
-        (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
-          ? [`<span class="badge rounded-pill text-bg-light">${name}${properties[property] === true ? '' : `: ${formatPropertyValue(properties[property], format, link)}`}</span>`]
-          : []
-    )
-    .join('');
+    .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
+    .map(([property, {name, format, link, paragraph}]) => ({
+      title: name,
+      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
+      paragraph,
+      link,
+    }));
 
-  const paragraphValues = Object.entries(featureCatalog.properties || {})
-    .filter(([_, {paragraph}]) => paragraph)
-    .flatMap(
-      ([property, {name, format, link}]) =>
-        (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false)
-          ? [`<p><span class="fw-bold">${name}</span>${properties[property] === true ? '' : `: ${formatPropertyValue(properties[property], format, link)}`}</p>`]
-          : []
-    )
-    .join('');
+  const osmFeatures = determineOsmFeatures(properties, featureContent);
 
-  const osm_ids = properties.osm_id
-    ? String(properties.osm_id).split('\u001e')
-    : [];
+  // Build HTML content dynamically to avoid cross site scripting
 
-  return `
-    <h5>${featureDescription ? featureDescription : ''}</h5>
-    ${properties.icon || label ? `<h6>
-      ${properties.icon ? `<span title="${properties.railway}">${properties.icon}</span>` : ''}
-      ${label ? label : ''}
-    </h6>` : ''}
-    <h6>${osm_ids.map(osm_id => `
-      <div class="btn-group btn-group-sm">
-        ${osm_ids.length > 1 ? `<button type="button" class="btn btn-outline-secondary" disabled><code>${osm_id}</code></button>` : ''}
-        <a title="View source" href="${featureCatalog.featureLinks.view.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">View</a>
-        ${editor === 'josm' ?
-          `<div title="Edit Source" onclick="openJOSM('${josmUrl}', '${osmType}', '${osm_id}')" class="btn btn-outline-primary">Edit</div>` :
-          `<a title="Edit source" href="${featureCatalog.featureLinks.edit.replace('{osm_type}', osmType).replace('{osm_id}', osm_id).replace('{date}', String(selectedDate))}" target="_blank" class="btn btn-outline-primary">Edit</a>`}
-      </div>
-    `).join('')}</h6>
-    ${propertyValues ? `<h6>${propertyValues}</h6>` : ''}
-    ${paragraphValues}
-  `;
+  const popupContainer = createDomElement('div');
+
+  const popupTitle = createDomElement('h5', undefined, popupContainer);
+  popupTitle.innerText = featureDescription;
+
+  if (properties.icon || label) {
+    const popupLabel = createDomElement('h6', undefined, popupContainer);
+    if (properties.icon) {
+      const popupLabelSpan = createDomElement('span', undefined, popupLabel);
+      popupLabelSpan.title = properties.railway;
+      popupLabelSpan.innerText = properties.icon;
+    } else {
+      popupLabel.innerText = label;
+    }
+  }
+
+  const popupOsmIds = createDomElement('h6', undefined, popupContainer);
+  osmFeatures.forEach(({id, type}) => {
+    const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
+
+    const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
+    osmIdButton.type = 'button'
+    osmIdButton.disabled = 'disabled';
+
+    const osmTypeContent = createDomElement('img', 'osm-type-icon', osmIdButton);
+    osmTypeContent.src = icons.osm[type];
+    osmTypeContent.alt = type;
+
+    const osmIdContent = createDomElement('code', undefined, osmIdButton);
+    osmIdContent.innerText = id;
+
+    const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+    osmIdLink.title = 'View source'
+    osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+    osmIdLink.target = '_blank'
+    osmIdLink.innerText = 'View'
+
+    if (editor === 'josm') {
+      const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
+      editButton.title = 'Edit Source'
+      editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
+      editButton.innerText = 'Edit'
+    } else {
+      const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+      editButton.title = 'Edit Source'
+      editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+      editButton.target = '_blank'
+      editButton.innerText = 'Edit'
+    }
+  })
+
+  // Images are not output as properties
+  if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
+    const popupImageContainer = createDomElement('p', undefined, popupContainer);
+
+    if (properties.wikidata) {
+      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
+      popupImageLink.href = `https://www.wikidata.org/wiki/${encodeURIComponent(properties.wikidata)}`
+      popupImageLink.target = '_blank'
+      popupImageLink.alt = `Wikidata: ${properties.wikidata}`
+
+      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+      popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
+      popupImage.title = properties.wikidata
+      popupImage.alt = '' // Do not display broken images
+    }
+
+    if (properties.wikimedia_commons_file) {
+      const sanitizedName = properties.wikimedia_commons_file.replaceAll(' ', '_');
+      const nameHash = MD5(sanitizedName)
+      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
+      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
+      popupImageLink.href = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(properties.wikimedia_commons_file)}#/media/File:${encodeURIComponent(properties.wikimedia_commons_file)}`
+      popupImageLink.target = '_blank'
+      popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
+
+      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+      popupImage.src = wikimediaUrl
+      popupImage.title = properties.wikimedia_commons_file
+      popupImage.alt = '' // Do not display broken images
+    }
+
+    if (properties.image) {
+      const popupImageLink = createDomElement('a', undefined, popupImageContainer);
+      popupImageLink.href = properties.image
+      popupImageLink.target = '_blank'
+      popupImageLink.alt = `Image: ${properties.image}`
+
+      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+      popupImage.src = properties.image
+      popupImage.title = properties.image
+      popupImage.alt = '' // Do not display broken images
+    }
+  }
+
+  if (propertyValues.some(it => !it.paragraph)) {
+    const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
+    propertyValues
+      .filter(it => !it.paragraph)
+      .forEach(({title, body, link}) => {
+        const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
+
+        const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
+        popupValueTitle.innerText = title;
+
+        if (body) {
+          if (link) {
+            const popupValueBody = createDomElement('span', undefined, popupValue);
+            const popupValueColon = createDomElement('span', undefined, popupValueBody);
+            popupValueColon.innerText = ': ';
+            const popupValueLink = createDomElement('a', undefined, popupValueBody);
+            popupValueLink.href = link.replace('%s', () => encodeURIComponent(body))
+            popupValueLink.target = '_blank'
+            const popupValueText = createDomElement('span', undefined, popupValueLink);
+            popupValueText.innerText = body;
+          } else {
+            const popupValueBody = createDomElement('span', undefined, popupValue);
+            popupValueBody.innerText = `: ${body}`;
+          }
+        }
+      })
+  }
+
+  if (propertyValues.some(it => it.paragraph)) {
+    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+    propertyValues
+      .filter(it => it.paragraph)
+      .forEach(({title, body}) => {
+        const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
+
+        const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
+        popupValueTitle.innerText = title;
+
+        if (body) {
+          // Paragraph bodies do not support links
+          const popupValueBody = createDomElement('span', undefined, popupParagraph);
+          popupValueBody.innerText = `: ${body}`;
+        }
+      })
+  }
+
+  return popupContainer
 }
 
 map.on('load', () => onMapZoom(map.getZoom()));
 map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('styledata', () => onDateChange());
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
@@ -1247,7 +1441,7 @@ function formatTimespan(timespan) {
   }
 }
 
-fetch(`${origin}/high`)
+fetch(`${origin}/api/replication_timestamp`)
   .then(response => response.json())
   .then(source => {
     if (source.replication_timestamp) {
@@ -1345,7 +1539,7 @@ map.on('click', event => {
     }
     new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setHTML(popupContent(feature))
+      .setDOMContent(popupContent(feature))
       .addTo(map);
   }
 });
@@ -1366,4 +1560,4 @@ fetch(`${location.origin}/features.json`)
   .catch(error => console.error('Error during fetching of features', error))
 
 onStyleChange();
-onDateChange();
+onMapRotate(map.getBearing());

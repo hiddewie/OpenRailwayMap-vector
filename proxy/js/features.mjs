@@ -10,9 +10,9 @@ const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', '
 
 const signal_types = all_signals.types;
 
-const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
-const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
-const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
+const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'speed' && `railway:signal:${type.type}` === tag.tag)))
+const signals_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'signals' && `railway:signal:${type.type}` === tag.tag)))
+const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'electrification' && `railway:signal:${type.type}` === tag.tag)))
 
 // TODO add links to documentation
 
@@ -29,7 +29,6 @@ const links = {
   wikimedia_commons: 'https://commons.wikimedia.org/wiki/%s',
   wikipedia: 'https://wikipedia.org/wiki/%s',
   wikidata: 'https://www.wikidata.org/wiki/%s',
-  image: '%s',
   mapillary: 'https://www.mapillary.com/app/?pKey=%s',
 };
 
@@ -57,12 +56,24 @@ const generateSignalFeatures = (features, types) =>
       ],
       ...(
         feature.icon.match
-          ? feature.icon.cases.map(iconCase => [iconCase.value, {
-            country: feature.country,
-            name: `${feature.description}${iconCase.description ? ` (${iconCase.description})` : ''}`,
-          }])
+          ? [
+            ...[...new Set(
+              feature.icon.cases
+                .filter(iconCase => !iconCase.description)
+                .map(iconCase => iconCase.value)
+            )].map(iconCaseValue => [iconCaseValue, {
+              country: feature.country,
+              name: feature.description,
+            }]),
+            ...feature.icon.cases
+              .filter(iconCase => iconCase.description)
+              .map(iconCase => [iconCase.value, {
+                country: feature.country,
+                name: `${feature.description} (${iconCase.description})`,
+              }]),
+          ]
           : []
-      )
+      ),
     ]),
     ...types.map(type => [
       `general/signal-unknown-${type.type}`,
@@ -96,7 +107,7 @@ const railwayLineFeatures = {
       name: 'Service',
     },
     highspeed: {
-      name: 'Highspeed',
+      name: 'High speed',
     },
     preferred_direction: {
       name: 'Preferred direction',
@@ -173,6 +184,9 @@ const railwayLineFeatures = {
     operator: {
       name: 'Operator',
     },
+    owner: {
+      name: 'Owner',
+    },
     traffic_mode: {
       name: 'Traffic mode',
     },
@@ -186,10 +200,6 @@ const railwayLineFeatures = {
     wikimedia_commons: {
       name: 'Wikimedia',
       link: links.wikimedia_commons,
-    },
-    image: {
-      name: 'Image',
-      link: links.image,
     },
     mapillary: {
       name: 'Mapillary',
@@ -212,7 +222,7 @@ const railwayLineFeatures = {
 
 // TODO move tram / metro stops to stations
 const stationFeatures = {
-  featureProperty: 'railway',
+  featureProperty: 'feature',
   labelProperty: 'name',
   featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
@@ -221,6 +231,9 @@ const stationFeatures = {
   properties: {
     station: {
       name: 'Type',
+    },
+    state: {
+      name: 'State',
     },
     label: {
       name: 'Reference',
@@ -241,10 +254,6 @@ const stationFeatures = {
     wikimedia_commons: {
       name: 'Wikimedia',
       link: links.wikimedia_commons,
-    },
-    image: {
-      name: 'Image',
-      link: links.image,
     },
     mapillary: {
       name: 'Mapillary',
@@ -363,7 +372,7 @@ const features = {
       },
     },
   },
-  'openhistoricalmap-transport_points': {
+  'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
     labelProperty: 'name',
     featureLinks: featureLinks.openhistoricalmap,
@@ -393,17 +402,21 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_symbols': {
+  'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
-    features: Object.fromEntries(
-      poi.features.flatMap(feature =>
-        [
-          [feature.feature, {name: feature.description}]
-        ].concat(
-          (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
-        ))
-    ),
+    featureProperty: 'type',
+    features: {
+      subway: {
+        name: 'Subway entrance',
+      },
+      train: {
+        name: 'Train station entrance',
+      },
+    },
     properties: {
+      name: {
+        name: 'Name',
+      },
       ref: {
         name: 'Reference',
       },
@@ -415,9 +428,54 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
+  'openrailwaymap_standard-standard_railway_symbols': {
+    featureLinks: featureLinks.openstreetmap,
+    features: Object.fromEntries(
+      poi.features
+        .filter(feature => feature.layer === 'standard')
+        .flatMap(feature =>
+          [
+            [feature.feature, {name: feature.description}]
+          ].concat(
+            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+          )
+        )
+    ),
+    properties: {
+      name: {
+        name: 'Name',
+      },
+      ref: {
+        name: 'Reference',
+      },
+      position: {
+        name: 'Position',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
       },
       mapillary: {
         name: 'Mapillary',
@@ -455,6 +513,9 @@ const features = {
       pos: {
         name: 'Position',
       },
+      type: {
+        name: 'Type',
+      },
       operator: {
         name: 'Operator',
       },
@@ -465,10 +526,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -515,6 +572,9 @@ const features = {
       resetting: {
         name: 'Resetting',
       },
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -522,10 +582,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -569,14 +625,12 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      speed_limit_speed: {
-        name: 'Speed limit',
-      },
-      speed_limit_distant_speed: {
-        name: 'Distant speed limit',
-      },
       direction_both: {
         name: 'both directions',
+      },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      position: {
+        name: 'Position',
       },
       wikidata: {
         name: 'Wikidata',
@@ -585,10 +639,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -611,7 +661,7 @@ const features = {
   'openrailwaymap_signals-signals_railway_signals': {
     featureProperty: 'feature0',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => !['speed', 'electrification'].includes(type.layer))),
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
     properties: {
       feature1: {
         name: 'Secondary signal',
@@ -656,6 +706,10 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      position: {
+        name: 'Position',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -663,10 +717,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -704,6 +754,12 @@ const features = {
       ref: {
         name: 'Reference',
       },
+      position: {
+        name: 'Position',
+      },
+      operator: {
+        name: 'Operator',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -711,10 +767,6 @@ const features = {
       wikimedia_commons: {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
-      },
-      image: {
-        name: 'Image',
-        link: links.image,
       },
       mapillary: {
         name: 'Mapillary',
@@ -754,17 +806,9 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      frequency: {
-        name: 'Frequency',
-        format: {
-          template: '%.2d Hz',
-        },
-      },
-      voltage: {
-        name: 'Voltage',
-        format: {
-          template: '%d V',
-        },
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description, format: tag.format}])),
+      position: {
+        name: 'Position',
       },
       wikidata: {
         name: 'Wikidata',
@@ -774,9 +818,51 @@ const features = {
         name: 'Wikimedia',
         link: links.wikimedia_commons,
       },
-      image: {
-        name: 'Image',
-        link: links.image,
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
+  'openrailwaymap_electrification-electrification_railway_symbols': {
+    featureLinks: featureLinks.openstreetmap,
+    features: Object.fromEntries(
+      poi.features
+        .filter(feature => feature.layer === 'electrification')
+        .flatMap(feature =>
+          [
+            [feature.feature, {name: feature.description}]
+          ].concat(
+            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+          )
+        )
+    ),
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      position: {
+        name: 'Position',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
       },
       mapillary: {
         name: 'Mapillary',
@@ -785,6 +871,52 @@ const features = {
       wikipedia: {
         name: 'Wikipedia',
         link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
+  'openrailwaymap_electrification-catenary': {
+    featureProperty: 'feature',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      mast: {
+        name: 'Catenary mast',
+      },
+      portal: {
+        name: 'Catenary portal',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      position: {
+        name: 'Position',
+      },
+      transition: {
+        name: 'Transition point',
+      },
+      structure: {
+        name: 'Structure',
+      },
+      supporting: {
+        name: 'Supporting',
+      },
+      attachment: {
+        name: 'Attachment',
+      },
+      tensioning: {
+        name: 'Tensioning',
+      },
+      insulator: {
+        name: 'Insulator',
       },
       note: {
         name: 'Note',

@@ -6,7 +6,7 @@ describe('home page', () => {
   it('switching layers (light mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
-    cy.contains('.btn.btn-outline-success', 'Infrastructure').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Infrastructure').click()
     cy.url().should('not.include', 'style=standard')
 
     cy.wait(3000)
@@ -19,34 +19,34 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Speed').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Train protection').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Electrification').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Gauge').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
     cy.url().should('include', 'style=gauge')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Loading gauge').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
     cy.url().should('include', 'style=loading_gauge')
 
-    cy.contains('.btn.btn-outline-success', 'Track class').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
     cy.url().should('include', 'style=track_class')
 
     cy.wait(3000)
@@ -76,34 +76,34 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Speed').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Train protection').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Electrification').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Gauge').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
     cy.url().should('include', 'style=gauge')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.btn.btn-outline-success', 'Loading gauge').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
     cy.url().should('include', 'style=loading_gauge')
 
-    cy.contains('.btn.btn-outline-success', 'Track class').click()
+    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
     cy.url().should('include', 'style=track_class')
 
     cy.wait(3000)

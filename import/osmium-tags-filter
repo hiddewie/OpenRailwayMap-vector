@@ -6,6 +6,9 @@ nwr/construction:railway
 nwr/proposed:railway
 n/public_transport=stop_position
 nwr/public_transport=platform
+n/power=catenary_mast
+nw/museum=railway
+w/power=catenary_portal
 r/public_transport=stop_area
 r/route=train
 r/route=tram

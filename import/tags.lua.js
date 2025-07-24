@@ -16,7 +16,7 @@ function train_protection(tags, prefix)${signals_railway_line.features.map((feat
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
-  '${tag}',`).join('')}
+  { tag = '${tag.tag}', type = '${tag.type}' },`).join('')}
 }
 
 function signal_deactivated(tags)
@@ -29,8 +29,8 @@ local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.vari
   '${tag}',`).join('')}
 }
 
-function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []).map(variant => ({...variant, minzoom: feature.minzoom})), feature]).map((feature, featureIndex) => `
-  if ${feature.tags.map(tag => `${tag.value ? `tags['${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags['${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.feature}', ${featureIndex + 1}, ${feature.minzoom} end`).join('')}
+function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []).map(variant => ({...variant, minzoom: feature.minzoom, layer: feature.layer })), feature]).map((feature, featureIndex) => `
+  if ${feature.tags.map(tag => `${tag.value ? `tags['${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags['${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.feature}', ${featureIndex + 1}, ${feature.minzoom}, '${feature.layer}' end`).join('')}
   
   return nil, 0, 100
 end

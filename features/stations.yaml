@@ -4,18 +4,33 @@ features:
     example:
       label: Gd
       name: Gouda
+      feature: station
+      state: present
       station_size: normal
     variants:
-      - description: (large)
+      - description: large
         example:
           label: MH
           name: München
           station_size: large
-      - description: (small)
+      - description: small
+        minzoom: 10
         example:
           label: HMEL
           name: Melle
           station_size: small
+      - description: disused, abandoned, preserved
+        minzoom: 10
+        example:
+          name: "جرسيف"
+          station_size: small
+          state: disused
+      - description: construction, proposed
+        minzoom: 10
+        example:
+          name: "هدية"
+          station_size: small
+          state: construction
 
   - description: Halt
     feature: halt
@@ -23,6 +38,8 @@ features:
     example:
       name: Deventer
       station_size: small
+      feature: halt
+      state: present
 
   - description: Tram stop
     feature: tram_stop
@@ -31,6 +48,8 @@ features:
       name: Llacuna
       count: 2
       station_size: small
+      feature: tram_stop
+      state: present
 
   - description: Service station
     feature: service_station
@@ -38,21 +57,28 @@ features:
     example:
       name: Wiederitzsch
       station_size: small
+      feature: service_station
+      state: present
 
   - description: Railway yard
     feature: yard
     minzoom: 8
     example:
-      label: Św
-      name: Świerże Górne
+      label: KCM
+      name: Murray
       station_size: small
+      feature: yard
+      state: present
 
   - description: Junction
     feature: junction
     minzoom: 10
     example:
-      name: Kijfhoek Zuid
+      label: Han
+      name: Haanrade
       station_size: small
+      feature: junction
+      state: present
 
   - description: Spur junction
     feature: spur_junction
@@ -60,6 +86,8 @@ features:
     example:
       name: Neusüdende
       station_size: small
+      feature: spur_junction
+      state: present
 
   - description: Railway site
     feature: site
@@ -67,6 +95,8 @@ features:
     example:
       name: Pápateszér
       station_size: small
+      feature: site
+      state: present
 
   - description: Crossover
     feature: crossover
@@ -74,3 +104,5 @@ features:
     example:
       name: Przemiarki
       station_size: small
+      feature: crossover
+      state: present

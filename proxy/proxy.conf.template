@@ -1,211 +1,115 @@
 resolver ${NGINX_RESOLVER};
 
-limit_req_zone $binary_remote_addr zone=assets:10m rate=${RATELIMIT_ASSETS_PER_SECOND}r/s;
-limit_req_zone $binary_remote_addr zone=api:10m rate=${RATELIMIT_API_PER_SECOND}r/s;
-limit_req_zone $binary_remote_addr zone=tiles:10m rate=${RATELIMIT_TILES_PER_SECOND}r/s;
-
 proxy_cache_path /var/cache/nginx/
                  levels=1:2
                  max_size=10g
                  use_temp_path=off
                  keys_zone=cache:50m;
 
-map $request_uri $tiles_upstream {
-  # See https://chrishewett.com/blog/slippy-tile-explorer/
-  # Match tiles on the form /name/z/x/y
-  # Tile coordinate recurrence relation: (x_min_{z+1}, y_min_{z+1}, x_max_{z+1}, y_max_{z+1}) = (2 * x_min_{z}, 2 * y_min_{z}, 2 * x_max_{z} + 1, 2 * y_max_{z} + 1)
-  # See https://www.regular-expressions.info/numericranges.html
-  # See https://www.regex-range.com/
-
-  # This is not beautiful, but it works
-
-  # Zoom 0-7 is handled by the default tile server
-
-  # Africa (Zoom 4: x=7..10 y=7..15 or lon=-22.5..67.5 lat=21.94..-85.05)
-  # Generate with `node tile-ranges.js 7 10 7 15 TILES_UPSTREAM_AFRICA`
-  # Zoom 8: x=112..175 y=112..255
-  "~^/[^/]+/8/(11[2-9]|1[2-6][0-9]|17[0-5])/(11[2-9]|1[2-9][0-9]|2[0-4][0-9]|25[0-5])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 9: x=224..351 y=224..511
-  "~^/[^/]+/9/(22[4-9]|2[3-9][0-9]|3[0-4][0-9]|35[01])/(22[4-9]|2[3-9][0-9]|[34][0-9]{2}|50[0-9]|51[01])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 10: x=448..703 y=448..1023
-  "~^/[^/]+/10/(44[89]|4[5-9][0-9]|[56][0-9]{2}|70[0-3])/(44[89]|4[5-9][0-9]|[5-9][0-9]{2}|10[01][0-9]|102[0-3])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 11: x=896..1407 y=896..2047
-  "~^/[^/]+/11/(89[6-9]|9[0-9]{2}|1[0-3][0-9]{2}|140[0-7])/(89[6-9]|9[0-9]{2}|1[0-9]{3}|20[0-3][0-9]|204[0-7])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 12: x=1792..2815 y=1792..4095
-  "~^/[^/]+/12/(179[2-9]|1[89][0-9]{2}|2[0-7][0-9]{2}|280[0-9]|281[0-5])/(179[2-9]|1[89][0-9]{2}|[23][0-9]{3}|40[0-8][0-9]|409[0-5])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 13: x=3584..5631 y=3584..8191
-  "~^/[^/]+/13/(358[4-9]|359[0-9]|3[6-9][0-9]{2}|4[0-9]{3}|5[0-5][0-9]{2}|56[0-2][0-9]|563[01])/(358[4-9]|359[0-9]|3[6-9][0-9]{2}|[4-7][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])$" http://${TILES_UPSTREAM_AFRICA};
-  # Zoom 14: x=7168..11263 y=7168..16383
-  "~^/[^/]+/14/(716[89]|71[7-9][0-9]|7[2-9][0-9]{2}|[89][0-9]{3}|10[0-9]{3}|11[01][0-9]{2}|112[0-5][0-9]|1126[0-3])/(716[89]|71[7-9][0-9]|7[2-9][0-9]{2}|[89][0-9]{3}|1[0-5][0-9]{3}|16[0-2][0-9]{2}|163[0-7][0-9]|1638[0-3])$" http://${TILES_UPSTREAM_AFRICA};
-
-  # Asia (Zoom 4: x=10..15 y=0..7 or lon=45..180 lat=85.05..0)
-  # Generate with `node tile-ranges.js 10 15 0 7 TILES_UPSTREAM_ASIA`
-  # Zoom 8: x=160..255 y=0..127
-  "~^/[^/]+/8/(16[0-9]|1[7-9][0-9]|2[0-4][0-9]|25[0-5])/([0-9]|[1-9][0-9]|1[01][0-9]|12[0-7])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 9: x=320..511 y=0..255
-  "~^/[^/]+/9/(32[0-9]|3[3-9][0-9]|4[0-9]{2}|50[0-9]|51[01])/([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 10: x=640..1023 y=0..511
-  "~^/[^/]+/10/(64[0-9]|6[5-9][0-9]|[7-9][0-9]{2}|10[01][0-9]|102[0-3])/([0-9]|[1-9][0-9]|[1-4][0-9]{2}|50[0-9]|51[01])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 11: x=1280..2047 y=0..1023
-  "~^/[^/]+/11/(128[0-9]|129[0-9]|1[3-9][0-9]{2}|20[0-3][0-9]|204[0-7])/([0-9]|[1-9][0-9]{1,2}|10[01][0-9]|102[0-3])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 12: x=2560..4095 y=0..2047
-  "~^/[^/]+/12/(256[0-9]|25[7-9][0-9]|2[6-9][0-9]{2}|3[0-9]{3}|40[0-8][0-9]|409[0-5])/([0-9]|[1-9][0-9]{1,2}|1[0-9]{3}|20[0-3][0-9]|204[0-7])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 13: x=5120..8191 y=0..4095
-  "~^/[^/]+/13/(512[0-9]|51[3-9][0-9]|5[2-9][0-9]{2}|[67][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])/([0-9]|[1-9][0-9]{1,2}|[1-3][0-9]{3}|40[0-8][0-9]|409[0-5])$" http://${TILES_UPSTREAM_ASIA};
-  # Zoom 14: x=10240..16383 y=0..8191
-  "~^/[^/]+/14/(1024[0-9]|102[5-9][0-9]|10[3-9][0-9]{2}|1[1-5][0-9]{3}|16[0-2][0-9]{2}|163[0-7][0-9]|1638[0-3])/([0-9]|[1-9][0-9]{1,2}|[1-7][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])$" http://${TILES_UPSTREAM_ASIA};
-
-  # Europe (Zoom 4: x=6..9 y=0..6 or lon=-45..45 lat=85.05..21.94)
-  # Generate with `node tile-ranges.js 6 9 0 6 TILES_UPSTREAM_EUROPE`
-  # Zoom 8: x=96..159 y=0..111
-  "~^/[^/]+/8/(9[6-9]|1[0-5][0-9])/([0-9]|[1-9][0-9]|10[0-9]|11[01])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 9: x=192..319 y=0..223
-  "~^/[^/]+/9/(19[2-9]|2[0-9]{2}|3[01][0-9])/([0-9]|[1-9][0-9]|1[0-9]{2}|2[01][0-9]|22[0-3])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 10: x=384..639 y=0..447
-  "~^/[^/]+/10/(38[4-9]|39[0-9]|[45][0-9]{2}|6[0-3][0-9])/([0-9]|[1-9][0-9]|[1-3][0-9]{2}|4[0-3][0-9]|44[0-7])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 11: x=768..1279 y=0..895
-  "~^/[^/]+/11/(76[89]|7[7-9][0-9]|[89][0-9]{2}|1[01][0-9]{2}|12[0-7][0-9])/([0-9]|[1-9][0-9]|[1-7][0-9]{2}|8[0-8][0-9]|89[0-5])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 12: x=1536..2559 y=0..1791
-  "~^/[^/]+/12/(153[6-9]|15[4-9][0-9]|1[6-9][0-9]{2}|2[0-4][0-9]{2}|25[0-5][0-9])/([0-9]|[1-9][0-9]{1,2}|1[0-6][0-9]{2}|17[0-8][0-9]|179[01])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 13: x=3072..5119 y=0..3583
-  "~^/[^/]+/13/(307[2-9]|30[89][0-9]|3[1-9][0-9]{2}|4[0-9]{3}|50[0-9]{2}|51[01][0-9])/([0-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|3[0-4][0-9]{2}|35[0-7][0-9]|358[0-3])$" http://${TILES_UPSTREAM_EUROPE};
-  # Zoom 14: x=6144..10239 y=0..7167
-  "~^/[^/]+/14/(614[4-9]|61[5-9][0-9]|6[2-9][0-9]{2}|[7-9][0-9]{3}|10[01][0-9]{2}|102[0-3][0-9])/([0-9]|[1-9][0-9]{1,2}|[1-6][0-9]{3}|70[0-9]{2}|71[0-5][0-9]|716[0-7])$" http://${TILES_UPSTREAM_EUROPE};
-
-  # North America (Zoom 4: x=0..5 y=0..6 or lon=-180..-45 lat=85.05..21.94)
-  # Generate with `node tile-ranges.js 0 5 0 6 TILES_UPSTREAM_NORTH_AMERICA`
-  # Zoom 8: x=0..95 y=0..111
-  "~^/[^/]+/8/([0-9]|[1-8][0-9]|9[0-5])/([0-9]|[1-9][0-9]|10[0-9]|11[01])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 9: x=0..191 y=0..223
-  "~^/[^/]+/9/([0-9]|[1-9][0-9]|1[0-8][0-9]|19[01])/([0-9]|[1-9][0-9]|1[0-9]{2}|2[01][0-9]|22[0-3])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 10: x=0..383 y=0..447
-  "~^/[^/]+/10/([0-9]|[1-9][0-9]|[12][0-9]{2}|3[0-7][0-9]|38[0-3])/([0-9]|[1-9][0-9]|[1-3][0-9]{2}|4[0-3][0-9]|44[0-7])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 11: x=0..767 y=0..895
-  "~^/[^/]+/11/([0-9]|[1-9][0-9]|[1-6][0-9]{2}|7[0-5][0-9]|76[0-7])/([0-9]|[1-9][0-9]|[1-7][0-9]{2}|8[0-8][0-9]|89[0-5])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 12: x=0..1535 y=0..1791
-  "~^/[^/]+/12/([0-9]|[1-9][0-9]{1,2}|1[0-4][0-9]{2}|15[0-2][0-9]|153[0-5])/([0-9]|[1-9][0-9]{1,2}|1[0-6][0-9]{2}|17[0-8][0-9]|179[01])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 13: x=0..3071 y=0..3583
-  "~^/[^/]+/13/([0-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|30[0-6][0-9]|307[01])/([0-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|3[0-4][0-9]{2}|35[0-7][0-9]|358[0-3])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-  # Zoom 14: x=0..6143 y=0..7167
-  "~^/[^/]+/14/([0-9]|[1-9][0-9]{1,2}|[1-5][0-9]{3}|60[0-9]{2}|61[0-3][0-9]|614[0-3])/([0-9]|[1-9][0-9]{1,2}|[1-6][0-9]{3}|70[0-9]{2}|71[0-5][0-9]|716[0-7])$" http://${TILES_UPSTREAM_NORTH_AMERICA};
-
-  # Oceania (Zoom 4: x=11..15 y=8..15 or lon=67.5..180 lat=0..-85.05)
-  # Generate with `node tile-ranges.js 11 15 8 15 TILES_UPSTREAM_OCEANIA`
-  # Zoom 8: x=176..255 y=128..255
-  "~^/[^/]+/8/(17[6-9]|1[89][0-9]|2[0-4][0-9]|25[0-5])/(12[89]|1[3-9][0-9]|2[0-4][0-9]|25[0-5])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 9: x=352..511 y=256..511
-  "~^/[^/]+/9/(35[2-9]|3[6-9][0-9]|4[0-9]{2}|50[0-9]|51[01])/(25[6-9]|2[6-9][0-9]|[34][0-9]{2}|50[0-9]|51[01])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 10: x=704..1023 y=512..1023
-  "~^/[^/]+/10/(70[4-9]|7[1-9][0-9]|[89][0-9]{2}|10[01][0-9]|102[0-3])/(51[2-9]|5[2-9][0-9]|[6-9][0-9]{2}|10[01][0-9]|102[0-3])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 11: x=1408..2047 y=1024..2047
-  "~^/[^/]+/11/(140[89]|14[1-9][0-9]|1[5-9][0-9]{2}|20[0-3][0-9]|204[0-7])/(102[4-9]|10[3-9][0-9]|1[1-9][0-9]{2}|20[0-3][0-9]|204[0-7])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 12: x=2816..4095 y=2048..4095
-  "~^/[^/]+/12/(281[6-9]|28[2-9][0-9]|29[0-9]{2}|3[0-9]{3}|40[0-8][0-9]|409[0-5])/(204[89]|20[5-9][0-9]|2[1-9][0-9]{2}|3[0-9]{3}|40[0-8][0-9]|409[0-5])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 13: x=5632..8191 y=4096..8191
-  "~^/[^/]+/13/(563[2-9]|56[4-9][0-9]|5[7-9][0-9]{2}|[67][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])/(409[6-9]|4[1-9][0-9]{2}|[5-7][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])$" http://${TILES_UPSTREAM_OCEANIA};
-  # Zoom 14: x=11264..16383 y=8192..16383
-  "~^/[^/]+/14/(1126[4-9]|112[7-9][0-9]|11[3-9][0-9]{2}|1[2-5][0-9]{3}|16[0-2][0-9]{2}|163[0-7][0-9]|1638[0-3])/(819[2-9]|8[2-9][0-9]{2}|9[0-9]{3}|1[0-5][0-9]{3}|16[0-2][0-9]{2}|163[0-7][0-9]|1638[0-3])$" http://${TILES_UPSTREAM_OCEANIA};
-
-  # South America (Zoom 4: x=0..6 y=7..15 or lon=-180..-22.5 lat=21.94..-85.05)
-  # Generate with `node tile-ranges.js 0 6 7 15 TILES_UPSTREAM_SOUTH_AMERICA`
-  # Zoom 8: x=0..111 y=112..255
-  "~^/[^/]+/8/([0-9]|[1-9][0-9]|10[0-9]|11[01])/(11[2-9]|1[2-9][0-9]|2[0-4][0-9]|25[0-5])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 9: x=0..223 y=224..511
-  "~^/[^/]+/9/([0-9]|[1-9][0-9]|1[0-9]{2}|2[01][0-9]|22[0-3])/(22[4-9]|2[3-9][0-9]|[34][0-9]{2}|50[0-9]|51[01])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 10: x=0..447 y=448..1023
-  "~^/[^/]+/10/([0-9]|[1-9][0-9]|[1-3][0-9]{2}|4[0-3][0-9]|44[0-7])/(44[89]|4[5-9][0-9]|[5-9][0-9]{2}|10[01][0-9]|102[0-3])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 11: x=0..895 y=896..2047
-  "~^/[^/]+/11/([0-9]|[1-9][0-9]|[1-7][0-9]{2}|8[0-8][0-9]|89[0-5])/(89[6-9]|9[0-9]{2}|1[0-9]{3}|20[0-3][0-9]|204[0-7])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 12: x=0..1791 y=1792..4095
-  "~^/[^/]+/12/([0-9]|[1-9][0-9]{1,2}|1[0-6][0-9]{2}|17[0-8][0-9]|179[01])/(179[2-9]|1[89][0-9]{2}|[23][0-9]{3}|40[0-8][0-9]|409[0-5])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 13: x=0..3583 y=3584..8191
-  "~^/[^/]+/13/([0-9]|[1-9][0-9]{1,2}|[12][0-9]{3}|3[0-4][0-9]{2}|35[0-7][0-9]|358[0-3])/(358[4-9]|359[0-9]|3[6-9][0-9]{2}|[4-7][0-9]{3}|80[0-9]{2}|81[0-8][0-9]|819[01])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-  # Zoom 14: x=0..7167 y=7168..16383
-  "~^/[^/]+/14/([0-9]|[1-9][0-9]{1,2}|[1-6][0-9]{3}|70[0-9]{2}|71[0-5][0-9]|716[0-7])/(716[89]|71[7-9][0-9]|7[2-9][0-9]{2}|[89][0-9]{3}|1[0-5][0-9]{3}|16[0-2][0-9]{2}|163[0-7][0-9]|1638[0-3])$" http://${TILES_UPSTREAM_SOUTH_AMERICA};
-
-  # Tile specifications
-  "~^/(high|standard|speed|signals|electrification)$" http://${TILES_UPSTREAM_EUROPE};
-
-  # Fallback: default tile server
-  default http://${TILES_UPSTREAM_LOW};
-}
-
 server {
   listen 8000 default_server;
+  listen [::]:8000 ipv6only=on;
+  listen 443 ssl;
+  listen [::]:443 ipv6only=on ssl;
+
   server_name localhost;
 
-  limit_req_status 429;
-  limit_req_log_level warn;
-  limit_req zone=assets burst=${RATELIMIT_ASSETS_BURST} nodelay;
+  ssl_certificate /etc/nginx/ssl/certificate.pem;
+  ssl_certificate_key /etc/nginx/ssl/key.pem;
 
   set $rewrite_tile_urls ${REWRITE_TILE_URLS};
 
+  gzip on;
+  gzip_disable "msie6";
+
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_http_version 1.1;
+  gzip_min_length 256;
+  gzip_types application/atom+xml application/geo+json application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/rdf+xml application/rss+xml application/xhtml+xml application/xml font/eot font/otf font/ttf image/svg+xml text/css text/javascript text/html text/plain text/xml;
+
   location = / {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /index.html {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /news.html {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header X-Content-Hash ${NEWS_HASH};
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /manifest.json {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /favicon.ico {
     root /etc/nginx/public/image;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /js {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /css {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /image {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /style {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /features.json {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location = /preset.zip {
     root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
+  location = /api.html {
+    root /etc/nginx/public/api;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
+  location = /openapi.yaml {
+    root /etc/nginx/public/api;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /api {
-    root /etc/nginx/public;
-    index api.html;
-    port_in_redirect off;
-    error_page 404 = @api;
-    limit_req zone=api burst=${RATELIMIT_API_BURST};
-    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
-  }
-
-  location @api {
     set $upstream http://${API_UPSTREAM};
     proxy_pass $upstream;
     proxy_http_version 1.1;
@@ -220,20 +124,19 @@ server {
     proxy_set_header X-Forwarded-Proto ${PUBLIC_PROTOCOL};
     proxy_read_timeout 600;
     proxy_redirect off;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
   }
 
   location / {
     if ($rewrite_tile_urls = true) {
       rewrite ^/high$ /railway_line_high,railway_text_km last;
-      rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref last;
+      rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances last;
       rewrite ^/speed$ /speed_railway_signals last;
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
-      rewrite ^/electrification$ /electrification_signals last;
+      rewrite ^/electrification$ /electrification_signals,catenary,electrification_railway_symbols last;
     }
 
-    limit_req zone=tiles burst=${RATELIMIT_TILES_BURST} nodelay;
-
-    set $upstream $tiles_upstream;
+    set $upstream http://${TILES_UPSTREAM};
     proxy_pass $upstream;
     proxy_http_version 1.1;
     proxy_cache cache;

@@ -1,3 +1,11 @@
+# Status
+GET {{base_url}}/status
+HTTP 200
+
+# Replication timestamp
+GET {{base_url}}/replication_timestamp
+HTTP 200
+
 # Facility request
 GET {{base_url}}/facility
 [QueryStringParams]
@@ -22,10 +30,10 @@ jsonpath "$[12].name" == "Alexanderplatz"
 jsonpath "$[13].name" == "S Friedrichstraße"
 jsonpath "$[14].name" == "Berlin-Schöneweide"
 jsonpath "$[15].name" == "Schöneweide"
-jsonpath "$[16].name" == "Berlin Alexanderplatz"
-jsonpath "$[17].name" == "Berlin Friedrichstraße"
+jsonpath "$[16].name" == "Berlin Friedrichstraße"
+jsonpath "$[17].name" == "Berlin Alexanderplatz"
 jsonpath "$[18].name" == "Bornholmer Straße"
-jsonpath "$[19].name" == "Berlin Potsdamer Platz"
+jsonpath "$[19].name" == "Warschauer Straße"
 
 # Facility request with limit
 GET {{base_url}}/facility
@@ -128,7 +136,9 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
 jsonpath "$[0].osm_ids" count == 1
+jsonpath "$[0].osm_types" count == 1
 jsonpath "$[0].osm_ids[0]" == 4746086763
+jsonpath "$[0].osm_types[0]" == "N"
 
 # Facility search for reference
 GET {{base_url}}/facility
@@ -189,13 +199,15 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 3
 jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
-jsonpath "$[0].railway" == "tram_stop"
+jsonpath "$[0].feature" == "tram_stop"
+jsonpath "$[0].state" == "present"
 jsonpath "$[0].rank" == 32
 jsonpath "$[0].osm_ids" count == 4
 jsonpath "$[0].osm_ids[0]" == 244129991
 jsonpath "$[0].osm_ids[1]" == 271777826
 jsonpath "$[0].osm_ids[2]" == 1679221136
 jsonpath "$[0].osm_ids[3]" == 1787945074
+jsonpath "$[0].osm_types" count == 4
 jsonpath "$[2].railway_ref" == "BLST"
 jsonpath "$[2].station" == "light_rail"
 jsonpath "$[2].uic_ref" == "8089020"
@@ -272,7 +284,7 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].line_ref" == "6020"
-jsonpath "$[0].position" == 22.7
+jsonpath "$[0].position" == "22.7"
 
 # Milestone request too small limit
 GET {{base_url}}/milestone

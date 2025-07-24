@@ -39,14 +39,19 @@ postgres:
       properties:
         id: integer
         osm_id: string
-        railway: string
+        feature: string
+        state: string
         station: string
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -62,14 +67,19 @@ postgres:
       properties:
         id: integer
         osm_id: string
-        railway: string
+        feature: string
+        state: string
         station: string
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -87,24 +97,52 @@ postgres:
         osm_id: integer
         feature: string
 
+    standard_station_entrances:
+      schema: public
+      table: station_entrances
+      srid: 3857
+      geometry_column: way
+      geometry_type: POLYGON
+      properties:
+        id: integer
+        osm_id: integer
+        type: string
+        name: string
+        ref: string
+        wikidata: string
+        wikimedia_commons: string
+        wikimedia_commons_file: string
+        image: string
+        mapillary: string
+        wikipedia: string
+        note: string
+        description: string
+
     standard_railway_text_stations:
       schema: public
       table: standard_railway_text_stations
       srid: 3857
       geometry_column: way
       geometry_type: POINT
+      minzoom: 8
       properties:
         id: integer
         osm_id: string
-        railway: string
+        osm_type: string
+        feature: string
+        state: string
         station: string
         station_size: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         count: integer
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -120,13 +158,19 @@ postgres:
       properties:
         id: integer
         osm_id: string
-        railway: string
+        osm_type: string
+        feature: string
+        state: string
         station: string
         label: string
         name: string
+        operator: string
+        operator_hash: string
+        network: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -144,10 +188,12 @@ postgres:
         osm_id: integer
         railway: string
         pos: string
-        pos_int: string
+        pos_int: integer
         zero: boolean
+        type: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -169,8 +215,10 @@ postgres:
         turnout_side: string
         local_operated: boolean
         resetting: boolean
+        position: string
         wikidata: string
         wikimedia_commons: string
+        wikimedia_commons_file: string
         image: string
         mapillary: string
         wikipedia: string
@@ -179,90 +227,36 @@ postgres:
 
     # --- Speed --- #
 
-    speed_railway_signals:
-      schema: public
-      table: speed_railway_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        feature0: string
-        feature1: string
-        type: string
-        ref: string
-        caption: string
-        azimuth: number
-        direction_both: boolean
-        deactivated: boolean
-        speed_limit_speed: string
-        speed_limit_distant_speed: string
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
+    # speed_railway_signals, see function below
 
     # --- Signals --- #
 
-    signals_railway_signals:
-      schema: public
-      table: signals_railway_signals
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        ref: string
-        ref_multiline: string
-        caption: string
-        feature0: string
-        feature1: string
-        feature2: string
-        feature3: string
-        feature4: string
-        deactivated: boolean
-        azimuth: number
-        direction_both: boolean
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     # signals_signal_boxes, see function below
+    # signals_railway_signals, see function below
 
     # --- Electrification --- #
 
-    electrification_signals:
+    # electrification_signals, see function below
+
+    catenary:
       schema: public
-      table: electrification_signals
+      table: railway_catenary
       srid: 3857
       geometry_column: way
-      geometry_type: POINT
+      geometry_type: GEOMETRY
       properties:
         id: integer
         osm_id: integer
-        feature: string
-        azimuth: number
-        direction_both: boolean
+        osm_type: string
         ref: string
-        caption: string
-        deactivated: boolean
-        frequency: number
-        voltage: integer
-        wikidata: string
-        wikimedia_commons: string
-        image: string
-        mapillary: string
-        wikipedia: string
+        feature: string
+        transition: boolean
+        structure: string
+        supporting: string
+        attachment: string
+        tensioning: string
+        insulator: string
+        position: string
         note: string
         description: string
 
@@ -282,6 +276,13 @@ postgres:
       function: standard_railway_symbols
       minzoom: 10
 
+    # --- Speed --- #
+
+    speed_railway_signals:
+      schema: public
+      function: speed_railway_signals
+      minzoom: 13
+
     # --- Signals --- #
 
     signals_signal_boxes:
@@ -289,6 +290,23 @@ postgres:
       function: signals_signal_boxes
       minzoom: 8
       maxzoom: 14
+
+    signals_railway_signals:
+      schema: public
+      function: signals_railway_signals
+      minzoom: 13
+
+    # --- Electrification --- #
+
+    electrification_signals:
+      schema: public
+      function: electrification_signals
+      minzoom: 13
+
+    electrification_railway_symbols:
+      schema: public
+      function: electrification_railway_symbols
+      minzoom: 13
 
 fonts:
   - /config/fonts

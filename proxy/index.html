@@ -12,13 +12,16 @@
   <link rel="manifest" href="manifest.json">
 
   <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
-  <link rel="stylesheet" href="css/maplibre-gl-5.5/maplibre-gl.css">
+  <link rel="stylesheet" href="css/maplibre-gl-5.6/maplibre-gl.css">
   <link rel="stylesheet" href="css/ui.css">
 
   <script>
     // See https://stackoverflow.com/a/64158043/711129
     let FF_FOUC_FIX;
   </script>
+
+  <script src="js/maplibre-gl-5.6/maplibre-gl.js" defer></script>
+  <script src="js/ui.js" defer></script>
 
   <title>OpenRailwayMap</title>
 </head>
@@ -130,7 +133,7 @@
             <small class="form-text">
               The tile URL for the background map.<br>
               Raster tiles: A URL serving raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers, for example <code>https://tile.openstreetmap.org/{z}/{x}/{y}.png</code>.<br>
-              Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://americanamap.org/style.json</code>.
+              Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
             </small>
           </div>
           <div class="mb-3">
@@ -184,7 +187,7 @@
       </div>
       <div class="modal-body" id="about-content">
         <p class="about-banner-container">
-          <img src="image/banner.png" alt="OpenRailwayMap banner" width="1280" height="640" class="banner">
+          <img src="image/banner.png" alt="OpenRailwayMap banner" width="1280" height="640" class="banner" loading="lazy">
         </p>
         <p>
           Welcome to the OpenRailwayMap!
@@ -220,9 +223,6 @@
   <div id="background-map"></div>
   <div id="map"></div>
 </div>
-
-<script src="js/maplibre-gl-5.5/maplibre-gl.js"></script>
-<script src="js/ui.js"></script>
 </body>
 
 </html>

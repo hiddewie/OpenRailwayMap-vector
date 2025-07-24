@@ -19,8 +19,7 @@ docker compose up --build --watch martin
 
 Prepare and start the API:
 ```shell
-api/prepare-api.sh
-docker compose up api
+docker compose up --build --watch api
 ```
 
 Start the web server:
@@ -43,7 +42,7 @@ docker compose run --build import refresh
 
 The OSM data file can be updated with:
 ```shell
-docker compose run --build import refresh
+docker compose run --build import update
 ```
 This command will request all updates in the region and process them into the OSM data file.
 
@@ -55,6 +54,35 @@ docker compose run --build import import
 ### JOSM preset
 
 Download the generated JOSM preset on http://localhost:8000/preset.zip.
+
+### Enabling SSL
+
+SSL is supported by generating a trusted certificate, and installing it in the proxy.
+
+- [Install mkcert](https://github.com/FiloSottile/mkcert?tab=readme-ov-file)
+- Install the `mkcert` CA in the system:
+  ```shell
+  mkcert -install
+  ```
+- Restart your browser
+- Run `mkcert` to generate certificates for `localhost`:
+  ```shell
+  mkcert localhost
+  ```
+- Create a file `compose.override.yaml` with 
+  ```yaml
+  services:
+    martin-proxy:
+      volumes:
+        - './localhost.pem:/etc/nginx/ssl/certificate.pem'
+        - './localhost-key.pem:/etc/nginx/ssl/key.pem'
+  ```
+- Restart the proxy with:
+  ```shell
+  docker compose up --build --watch martin-proxy
+  ```
+
+The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings.
 
 ## Tests
 
@@ -70,12 +98,6 @@ Run tests against the proxy:
 
 ```shell
 hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
-```
-
-Run tests against the tiles:
-
-```shell
-hurl --test --verbose --variable base_url=http://localhost:3000 tiles/test/tiles.hurl
 ```
 
 ## Development

@@ -13,7 +13,8 @@ info:
   version: current
 
 servers:
-  - url: https://openrailwaymap.fly.dev
+  - url: https://openrailwaymap.app
+  - url: http://localhost:8000
 
 tags:
   - name: search
@@ -33,6 +34,24 @@ paths:
       summary: Status endpoint
       tags:
         - status
+
+  /api/replication_timestamp:
+    get:
+      operationId: replicationTimestamp
+      description: The replication timestamp of the OpenStreetMap data
+      summary: Replication endpoint
+      tags:
+        - replication
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  replication_timestamp:
+                    type: string
 
   /api/facility:
     get:
@@ -101,6 +120,15 @@ paths:
                         type: integer
                         description: |
                           OSM node ID
+                    osm_types:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - 'N'
+                          - 'W'
+                        description: |
+                          The type of OSM object, same order as the IDs
                     name:
                       type: string
                       nullable: true
@@ -162,6 +190,7 @@ paths:
                       - 244129991
                       - 1787945074
                       - 1679221136
+                    osm_types: [N, N, N, N]
                     name: Landsberger Allee/Petersburger Straße
                     railway: tram_stop
                     railway_ref:
@@ -182,6 +211,7 @@ paths:
                   - osm_ids:
                       - 1860777038
                       - 98878581
+                    osm_types: [N, N]
                     name: S Landsberger Allee
                     railway: tram_stop
                     railway_ref:
@@ -201,6 +231,7 @@ paths:
                     rank: 28
                   - osm_ids:
                       - 3872632789
+                    osm_types: [N]
                     name: Landsberger Allee
                     railway: station
                     railway_ref: BLST
@@ -306,7 +337,7 @@ paths:
                         type of the facility following Tagging rules (https://wiki.openstreetmap.org/wiki/OpenRailwayMap/Tagging#Operating_Sites), e.g. `milestone`, `level_crossing`, `signal`.
                       nullable: true
                     position:
-                      type: number
+                      type: string
                       description: |
                         Mileage of the feature
                       nullable: true
@@ -365,3 +396,32 @@ paths:
         '400':
           description: |
             Bad request: invalid parameter values
+
+  /api/wikidata/{entity}:
+    get:
+      operationId: wikidataImage
+      summary: Find the image from Wikidata
+      description: |
+        The Wikidata image endpoint returns the URL of the image thumbnail for a given Wikidata entity.
+      tags:
+        - wikidata
+      parameters:
+        - name: entity
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 'Q2655858'
+          description: |
+            The Wikidata entity ID
+      responses:
+        '404':
+          description: Entity not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: The reason that the entity was not found
+        '307':
+          description: |
+            Location of the Wikikdata thumbnail image

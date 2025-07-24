@@ -6,9 +6,13 @@ import asyncpg
 from fastapi import FastAPI
 from fastapi import Query
 
+import httpx
+
 from openrailwaymap_api.facility_api import FacilityAPI
 from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
+from openrailwaymap_api.replication_api import ReplicationAPI
+from openrailwaymap_api.wikidata_api import WikidataAPI
 
 
 @contextlib.asynccontextmanager
@@ -24,7 +28,15 @@ async def lifespan(app):
         print('Connected to database')
         app.state.database = pool
 
-        yield
+        async with httpx.AsyncClient(timeout=3.0) as http_client:
+            print('Created HTTP client')
+            app.state.http_client = http_client
+
+            yield
+
+            app.state.http_client = None
+
+            print('Closed HTTP client')
 
         app.state.database = None
 
@@ -48,6 +60,12 @@ async def status():
     return await api()
 
 
+@app.get("/api/replication_timestamp")
+async def replication_timestamp():
+    api = ReplicationAPI(app.state.database)
+    return await api()
+
+
 @app.get("/api/facility")
 async def facility(
         q: Annotated[str | None, Query()] = None,
@@ -68,3 +86,11 @@ async def milestone(
 ):
     api = MilestoneAPI(app.state.database)
     return await api(ref=ref, position=position, limit=limit)
+
+
+@app.get("/api/wikidata/{id}")
+async def wikidata(
+        id: str
+):
+    api = WikidataAPI(app.state.http_client)
+    return await api(id=id)

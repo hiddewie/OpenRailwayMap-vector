@@ -86,6 +86,8 @@
     { "key": "uic_ref" },
     { "key": "usage" },
     { "key": "voltage" },
+    { "key": "power", "value": "catenary_mast" },
+    { "key": "power", "value": "catenary_portal" },
     { "key": "railway", "value": "station" },
     { "key": "railway", "value": "halt" },
     { "key": "railway", "value": "tram_stop" },
@@ -125,6 +127,9 @@
     { "key": "railway", "value": "signal" },
     { "key": "railway", "value": "buffer_stop" },
     { "key": "railway", "value": "derail" },
+    { "key": "railway", "value": "subway_entrance" },
+    { "key": "railway", "value": "train_station_entrance" },
+    { "key": "railway", "value": "isolated_track_section" },
     { "key": "railway:signal:brake_test" },
     { "key": "railway:signal:brake_test:form" },
     { "key": "railway:signal:combined" },
@@ -241,6 +246,8 @@
     { "key": "railway:signal:wrong_road:form" },
     { "key": "railway:vacancy_detection" },
     { "key": "railway:signal:position" },
-    { "key": "ref:crs" }
+    { "key": "ref:crs" },
+    { "key": "tourism", "value": "museum" },
+    { "key": "museum", "value": "railway" }
   ]
 }
