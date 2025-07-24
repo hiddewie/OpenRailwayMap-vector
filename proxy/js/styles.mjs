@@ -1428,6 +1428,7 @@ const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
     id: `${id}_outline`,
     ...layer,
     paint: {
+      ...(layer.paint || {}),
       'icon-halo-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
         colors[theme].halo,
@@ -2651,16 +2652,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 14,
       source: 'openrailwaymap_speed',
       'source-layer': 'speed_railway_signals',
       filter: ['step', ['zoom'],
-        ['all',
-          ['!=', ['get', 'feature0'], null],
-          ['!=', ['get', 'azimuth'], null],
-          ['==', ['get', 'type'], 'line'],
-        ],
-        14,
         ['all',
           ['!=', ['get', 'feature0'], null],
           ['!=', ['get', 'azimuth'], null],
@@ -2944,7 +2939,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'railway_signals_direction',
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 14,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_signals',
       filter: ['all',
@@ -2952,19 +2947,36 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'feature0'], ''],
       ],
       paint: {
-        'icon-color': colors[theme].signals.direction,
-        'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+        // 'icon-color': colors[theme].signals.direction,
+        // 'icon-halo-color': ['case',
+        //   ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+        //   colors[theme].halo,
+        // ],
+        // 'icon-halo-width': 2.0,
+        // 'icon-halo-blur': 2.0,
+        // 'icon-opacity': ['/', ['+', ['sin', ['*', ['get', 'azimuth'], Math.PI / 180.0]], 1], 2.0],
+
+        'icon-opacity': ['let',
+          'bearing', ['global-state', 'bearing'],
+          'azimuth', 0,// ['get', 'azimuth'],
+          ['case',
+            // ['/', ['+', ['sin', ['*', ['get', 'azimuth'], Math.PI / 180.0]], 1], 2.0]
+            ['all',
+              // ['!=', ['var', 'azimuth'], null],
+              ['any',
+                ['<=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 0 + 60],
+                ['>=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 360 - 60],
+              ],
+            ], 1.0,
+            0.3,
+          ],
         ],
-        'icon-halo-width': 2.0,
-        'icon-halo-blur': 2.0,
       },
       layout: {
         'icon-overlap': 'always',
         'icon-image': ['case',
-          ['coalesce', ['get', 'direction_both'], false], 'sdf:general/signal-direction-both',
-          'sdf:general/signal-direction',
+          ['coalesce', ['get', 'direction_both'], false], 'general/signal-direction-both',
+          'general/signal-direction',
         ],
         'icon-anchor': ['case',
           ['coalesce', ['get', 'direction_both'], false], 'center',
@@ -2991,6 +3003,24 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
           filter: ['!=', ['get', `feature${featureIndex}`], null],
+          paint: {
+
+            'icon-opacity': ['let',
+              'bearing', ['global-state', 'bearing'],
+              'azimuth', 0,// ['get', 'azimuth'],
+              ['case',
+                // ['/', ['+', ['sin', ['*', ['get', 'azimuth'], Math.PI / 180.0]], 1], 2.0]
+                ['all',
+                  // ['!=', ['var', 'azimuth'], null],
+                  ['any',
+                    ['<=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 0 + 60],
+                    ['>=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 360 - 60],
+                  ],
+                ], 1.0,
+                0.3,
+              ],
+            ],
+          },
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
@@ -3010,6 +3040,23 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
           filter: ['!=', ['get', `feature${featureIndex}`], null],
+          paint: {
+            'icon-opacity': ['let',
+              'bearing', ['global-state', 'bearing'],
+              'azimuth', 0,// ['get', 'azimuth'],
+              ['case',
+                // ['/', ['+', ['sin', ['*', ['get', 'azimuth'], Math.PI / 180.0]], 1], 2.0]
+                ['all',
+                  // ['!=', ['var', 'azimuth'], null],
+                  ['any',
+                    ['<=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 0 + 60],
+                    ['>=', ['%', ['+', ['var', 'azimuth'], ['var', 'bearing'], 360.0], 360.0], 360 - 60],
+                  ],
+                ], 1.0,
+                0.3,
+              ],
+            ],
+          },
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
@@ -3306,7 +3353,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'electrification_signals_direction',
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 14,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
       filter: ['all',
@@ -4085,6 +4132,14 @@ const makeStyle = (selectedStyle, theme) => ({
   ],
   version: 8,
   layers: layers[theme][selectedStyle],
+  state: {
+    date: {
+      default: (new Date()).getFullYear(),
+    },
+    bearing: {
+      default: 0.0,
+    },
+  },
 });
 
 const legendData = {
@@ -6502,11 +6557,6 @@ function makeLegendStyle(style, theme) {
     name: `${sourceStyle.name} legend`,
     layers: legendLayers,
     sources: legendSources,
-    state: {
-      date: {
-        default: (new Date()).getFullYear(),
-      }
-    },
     metadata: {
       name: style,
     }
