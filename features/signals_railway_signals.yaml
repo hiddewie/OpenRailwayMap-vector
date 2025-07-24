@@ -2860,6 +2860,22 @@ features:
       - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-RSAG:so13' }
 
+  # --- DK --- #
+
+  - description: Main signal (PU)
+    country: DK
+    icon: { default: 'dk/main-PU' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:PU' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Main signal (SU)
+    country: DK
+    icon: { default: 'dk/main-SU' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:SU' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # --- ES --- #
 
   - description: end of catenary
