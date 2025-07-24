@@ -698,25 +698,36 @@ function name_tags(tags)
   return found_name_tags
 end
 
+function position_is_zero(position)
+  return position:find('^%-?%d+$') or position:find('^%-?%d*[,/.]0*$')
+end
+
 function parse_railway_position(position)
   if not position then
     return nil
   end
 
   if position:find('^mi:') then
+    local stripped_position = position:gsub('^mi: ?', '')
+
     return {
-      text = position:gsub('^mi:', ''),
+      text = stripped_position,
       type = 'mi',
+      zero = position_is_zero(stripped_position),
     }
   elseif position:find('^pkm:') then
+    local stripped_position = position:gsub('^pkm: ?', '')
+
     return {
-      text = position:gsub('^pkm:', ''),
+      text = stripped_position,
       type = 'pkm',
+      zero = position_is_zero(stripped_position),
     }
   else
     return {
       text = position,
       type = 'km',
+      zero = position_is_zero(position),
     }
   end
 end
@@ -935,7 +946,7 @@ function osm2pgsql.process_node(object)
         position_numeric = position_numeric,
         position_text = position.text,
         type = position.type,
-        zero = position_numeric ~= nil and (math.abs(position_numeric - math.floor(position_numeric + 0.5)) < 0.05),
+        zero = position.zero,
         name = tags['name'],
         ref = tags['ref'],
         operator = tags['operator'],
