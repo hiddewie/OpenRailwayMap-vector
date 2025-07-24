@@ -709,23 +709,30 @@ function parse_railway_position(position)
 
   if position:find('^mi:') then
     local stripped_position = position:gsub('^mi: ?', '')
+    local position_with_dot = stripped_position:gsub(',', '.')
 
     return {
       text = stripped_position,
+      numeric = tonumber(position_with_dot),
       type = 'mi',
       zero = position_is_zero(stripped_position),
     }
   elseif position:find('^pkm:') then
     local stripped_position = position:gsub('^pkm: ?', '')
+    local position_with_dot = stripped_position:gsub(',', '.')
 
     return {
       text = stripped_position,
+      numeric = tonumber(position_with_dot),
       type = 'pkm',
       zero = position_is_zero(stripped_position),
     }
   else
+    local position_with_dot = position:gsub(',', '.')
+
     return {
       text = position,
+      numeric = tonumber(position_with_dot),
       type = 'km',
       zero = position_is_zero(position),
     }
@@ -733,33 +740,12 @@ function parse_railway_position(position)
 end
 
 function parse_railway_positions(position, position_exact)
-  -- Parse one or more positions from a position or exact position
+  -- Collect positions, from both normal and exact positions, eliminating duplicates
 
-  if position_exact then
-    local parsed_positions = {}
-    local found_positions = false
-
-    for part in string.gmatch(position_exact, '[^;]+') do
-      local stripped_part = part:gsub('^ ', '')
-      local position = parse_railway_position(stripped_part)
-
-      if position then
-        table.insert(parsed_positions, position)
-        found_positions = true
-      end
-    end
-
-    if found_positions then
-      return parsed_positions
-    end
-  end
-
-  -- Fall back to non-exact positions
+  local parsed_positions = {}
+  local found_positions = false
 
   if position then
-    local parsed_positions = {}
-    local found_positions = false
-
     for part in string.gmatch(position, '[^;]+') do
       local stripped_part = part:gsub('^ ', '')
       local position = parse_railway_position(stripped_part)
@@ -769,13 +755,39 @@ function parse_railway_positions(position, position_exact)
         found_positions = true
       end
     end
+  end
 
-    if found_positions then
-      return parsed_positions
+  if position_exact then
+    for part in string.gmatch(position_exact, '[^;]+') do
+      local stripped_part = part:gsub('^ ', '')
+      local position = parse_railway_position(stripped_part)
+
+      if position then
+        local found_existing_position = false
+
+        if found_positions and position.numeric ~= nil then
+          for _, existing_position in ipairs(parsed_positions) do
+            -- Verify if the position is close to another position. Note that this matches slightly outside the first decimal's precision.
+            if existing_position.numeric ~= nil and math.abs(existing_position.numeric - position.numeric) < 0.1 then
+              existing_position.numeric = position.numeric
+              found_existing_position = true
+            end
+          end
+        end
+
+        if not found_existing_position then
+          table.insert(parsed_positions, position)
+          found_positions = true
+        end
+      end
     end
   end
 
-  return nil
+  if found_positions then
+    return parsed_positions
+  else
+    return nil
+  end
 end
 
 function format_railway_position(item)
@@ -937,13 +949,10 @@ function osm2pgsql.process_node(object)
 
   if railway_position_values(tags.railway) and (position or position_exact) then
     for _, position in ipairs(parse_railway_positions(position, position_exact)) do
-      local position_with_dots, _ = position.text:gsub(',', '.')
-      local position_numeric = tonumber(position_with_dots)
-
       railway_positions:insert({
         way = object:as_point(),
         railway = tags.railway,
-        position_numeric = position_numeric,
+        position_numeric = position.numeric,
         position_text = position.text,
         type = position.type,
         zero = position.zero,
