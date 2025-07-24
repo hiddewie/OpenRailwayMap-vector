@@ -492,6 +492,7 @@ CREATE OR REPLACE VIEW railway_text_km AS
     way,
     railway,
     position_text as pos,
+    position_exact as pos_exact,
     zero,
     round(position_numeric) as pos_int,
     type,

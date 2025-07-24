@@ -188,6 +188,7 @@ postgres:
         osm_id: integer
         railway: string
         pos: string
+        pos_exact: string
         pos_int: integer
         zero: boolean
         type: string

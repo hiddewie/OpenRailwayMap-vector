@@ -513,6 +513,9 @@ const features = {
       pos: {
         name: 'Position',
       },
+      pos_exact: {
+        name: 'Exact position',
+      },
       type: {
         name: 'Type',
       },

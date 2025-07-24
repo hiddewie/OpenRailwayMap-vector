@@ -393,6 +393,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'railway', type = 'text' },
     { column = 'position_numeric', type = 'real' },
     { column = 'position_text', type = 'text', not_null = true },
+    { column = 'position_exact', type = 'text' },
     { column = 'type', type = 'text', not_null = true },
     { column = 'zero', type = 'boolean' },
     { column = 'name', type = 'text' },
@@ -716,6 +717,7 @@ function parse_railway_position(position)
       numeric = tonumber(position_with_dot),
       type = 'mi',
       zero = position_is_zero(stripped_position),
+      exact = nil,
     }
   elseif position:find('^pkm:') then
     local stripped_position = position:gsub('^pkm: ?', '')
@@ -726,6 +728,7 @@ function parse_railway_position(position)
       numeric = tonumber(position_with_dot),
       type = 'pkm',
       zero = position_is_zero(stripped_position),
+      exact = nil,
     }
   else
     local position_with_dot = position:gsub(',', '.')
@@ -735,6 +738,7 @@ function parse_railway_position(position)
       numeric = tonumber(position_with_dot),
       type = 'km',
       zero = position_is_zero(position),
+      exact = nil,
     }
   end
 end
@@ -770,6 +774,7 @@ function parse_railway_positions(position, position_exact)
             -- Verify if the position is close to another position. Note that this matches slightly outside the first decimal's precision.
             if existing_position.numeric ~= nil and math.abs(existing_position.numeric - position.numeric) < 0.1 then
               existing_position.numeric = position.numeric
+              existing_position.exact = position.text
               found_existing_position = true
             end
           end
@@ -791,7 +796,11 @@ function parse_railway_positions(position, position_exact)
 end
 
 function format_railway_position(item)
-  return item.text .. ' (' .. item.type .. ')'
+  if item.exact then
+    return item.text .. ' @ ' .. item.exact.. ' (' .. item.type .. ')'
+  else
+    return item.text .. ' (' .. item.type .. ')'
+  end
 end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
@@ -954,6 +963,7 @@ function osm2pgsql.process_node(object)
         railway = tags.railway,
         position_numeric = position.numeric,
         position_text = position.text,
+        position_exact = position.exact,
         type = position.type,
         zero = position.zero,
         name = tags['name'],
