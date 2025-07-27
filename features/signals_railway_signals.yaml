@@ -5,6 +5,7 @@ tags:
   - { tag: 'railway:signal:combined', description: 'Combined' }
   - { tag: 'railway:signal:combined:form', description: 'Combined form' }
   - { tag: 'railway:signal:combined:states', description: 'Combined states', type: array }
+  - { tag: 'railway:signal:combined:shape', description: 'Combined shape' }
   - { tag: 'railway:signal:combined:shortened', description: 'Combined shortened', type: boolean }
   - { tag: 'railway:signal:combined:substitute_signal', description: 'Combined substitute signal' }
   - { tag: 'railway:signal:combined:height', description: 'Combined height' }
@@ -4748,6 +4749,30 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Semafory półsamoczynne (dwukolumnowe, 6-komorowe)
+    country: PL
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { all: ['PL-PKP:s6', 'PL-PKP:s12a'], value: 'pl/s6-10a-6' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s12a'], value: 'pl/s6-10a-6' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s13a'], value: 'pl/s6-10a-6' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s13a'], value: 'pl/s6-10a-6' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s8'], value: 'pl/s6-6' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s8'], value: 'pl/s6-6' }
+        - { all: ['PL-PKP:s6', 'PL-PKP:s9'], value: 'pl/s6-6' }
+        - { all: ['PL-PKP:s7', 'PL-PKP:s9'], value: 'pl/s6-6' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s12a'], value: 'pl/s10a-6' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s12a'], value: 'pl/s10a-6' }
+        - { all: ['PL-PKP:s10a', 'PL-PKP:s13a'], value: 'pl/s10a-6' }
+        - { all: ['PL-PKP:s11a', 'PL-PKP:s13a'], value: 'pl/s10a-6' }
+      default: 'pl/s10-6'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
+      - { tag: 'railway:signal:combined:shape', value: 'two_column' }
 
   - description: Semafory półsamoczynne (4- i 5-komorowe)
     country: PL
