@@ -1,7 +1,7 @@
 {
   "data_format": 1,
   "data_url": "https://raw.githubusercontent.com/hiddewie/OpenRailwayMap-vector/master/taginfo.json",
-  "data_updated": "20250323T153000Z",
+  "data_updated": "20250727T205800Z",
   "project": {
     "name": "OpenRailwayMap-vector",
     "description": "Vector tile-based railway map rendering based on OpenStreetMap data.",
@@ -135,6 +135,7 @@
     { "key": "railway:signal:combined" },
     { "key": "railway:signal:combined:form" },
     { "key": "railway:signal:combined:states" },
+    { "key": "railway:signal:combined:shape" },
     { "key": "railway:signal:combined:shortened" },
     { "key": "railway:signal:combined:substitute_signal" },
     { "key": "railway:signal:combined:height" },
