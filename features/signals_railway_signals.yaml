@@ -3691,21 +3691,24 @@ features:
 
   - description: 1ª categoria (1 light)
     country: IT
-    icon: { default: 'it/1v' }
+    icon: { default: 'it/main-1v' }
+    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT_1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: 1ª categoria (2 lights)
     country: IT
-    icon: { default: 'it/2v' }
+    icon: { default: 'it/main-2v' }
+    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT_2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: 1ª categoria (3 lights)
     country: IT
-    icon: { default: 'it/3v' }
+    icon: { default: 'it/main-3v' }
+    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT_3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3713,6 +3716,7 @@ features:
   - description: Avviso (1 light)
     country: IT
     icon: { default: 'it/avviso-1v' }
+    # TODO match states
     tags:
       - { tag: 'railway:signal:distant', value: 'IT_1V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -3720,6 +3724,7 @@ features:
   - description: Avviso (2 lights)
     country: IT
     icon: { default: 'it/avviso-2v' }
+    # TODO match states
     tags:
       - { tag: 'railway:signal:distant', value: 'IT_2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -3823,14 +3828,14 @@ features:
 
   - description: Level crossing (light)
     country: IT
-    icon: { default: 'it/crossing' }
+    icon: { default: 'it/crossing-light' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT_1V' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
   - description: Level crossing (sign)
     country: IT
-    icon: { default: 'it/crossing' }
+    icon: { default: 'it/crossing-sign' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT_PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="15.428007"
+   height="15.337177"
+   viewBox="0 0 15.428007 15.337178"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="crossing-distant.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="38.510074"
+     inkscape:cx="6.2581028"
+     inkscape:cy="9.4131214"
+     inkscape:window-width="1920"
+     inkscape:window-height="1128"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <path
+     id="rect2"
+     style="stroke:#ffd700"
+     d="m 4.6562089,0.50018155 6.0898391,0.00344 4.181555,9.09859025 -0.01936,5.2338522 -14.40803455,-0.03215 -2.0418e-4,-5.2017062 z"
+     sodipodi:nodetypes="ccccccc" />
+  <circle
+     style="fill:#073300;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
+     id="path4524"
+     cx="7.701128"
+     cy="7.603003"
+     r="1.1337463" />
+  <circle
+     style="fill:#ffcf00;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
+     id="path4524-6"
+     cx="7.701128"
+     cy="11.596786"
+     r="1.1337463" />
+  <circle
+     style="fill:#ffcf00;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
+     id="path4524-6-7"
+     cx="11.879793"
+     cy="11.596786"
+     r="1.1337463" />
+  <circle
+     style="fill:#ffcf00;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
+     id="path4524-6-7-5"
+     cx="3.5224626"
+     cy="11.596786"
+     r="1.1337463" />
+  <circle
+     style="fill:#073300;fill-opacity:1;stroke:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill;stop-color:#000000"
+     id="path4524-3"
+     cx="7.701128"
+     cy="3.60922"
+     r="1.1337463" />
+</svg>
