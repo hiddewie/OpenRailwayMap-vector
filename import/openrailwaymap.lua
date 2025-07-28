@@ -350,6 +350,20 @@ local signals = osm2pgsql.define_table({
   cluster = 'no',
 })
 
+local signals_features_1 = osm2pgsql.define_table({
+  name = 'signals_features_1',
+  ids = { type = 'node', id_column = 'osm_id' },
+  columns = {
+    { column = 'feature', type = 'text' },
+    { column = 'feature_variable', type = 'text' },
+    { column = 'type', type = 'text' },
+    { column = 'layer', sql_type = 'signal_layer' },
+    { column = 'rank', sql_type = 'integer' },
+  },
+  -- The queried table is signal_features
+  cluster = 'no',
+})
+
 local boxes = osm2pgsql.define_table({
   name = 'boxes',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -608,23 +622,33 @@ function to_sql_array(items)
 end
 
 -- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
-function split_semicolon_to_sql_array(value)
+function split_semicolon(value)
   if not value then
     return nil
   end
 
   local items = {}
+  local has_items = false
 
   if value then
     for part in string.gmatch(value, '[^;]+') do
       local stripped_part = strip_prefix(part, ' ')
       if stripped_part then
         table.insert(items, stripped_part)
+        has_items = true
       end
     end
   end
 
-  return to_sql_array(items)
+  if has_items then
+    return items
+  else
+    return nil
+  end
+end
+
+function split_semicolon_to_sql_array(value)
+  return to_sql_array(split_semicolon(value))
 end
 
 function semicolon_to_record_separator(value)
@@ -803,6 +827,44 @@ function format_railway_position(item)
   end
 end
 
+function contains(haystack, needle)
+  for _, item in ipairs(haystack) do
+    if item == value then
+      return true
+    end
+  end
+
+  return false
+end
+
+function contains_all(haystack, needles)
+  for _, needle in ipairs(needles) do
+    if not contains(haystack, needle) then
+      return false
+  end
+
+  return true
+end
+
+function contains_any(haystack, needles)
+  for _, needle in ipairs(needles) do
+    if contains(haystack, needle) then
+      return true
+  end
+
+  return false
+end
+
+function match_tag_value(tag, tag_value, haystack)
+  if tag_functions.signal_tag_types[tag] == 'array' then
+    return contains(haystack, tag_value)
+  elseif tag_functions.signal_tag_types[tag] == 'boolean' then
+    return tag_value == 'yes'
+  else
+    return tag_value == haystack
+  end
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -954,6 +1016,113 @@ function osm2pgsql.process_node(object)
     end
 
     signals:insert(signal)
+
+    local has_feature = false
+    for _, type in ipairs(tag_functions.signal_types) do
+      local type_tag = 'railway:signal:' .. type.type
+
+      if tags[type_tag] then
+
+        for rank, feature in ipairs(tag_functions.signal_features) do
+          local has_type_tag = false
+          for _, tag in ipairs(feature.tags) do
+            if tag.tag == type_tag then
+              has_type_tag = true
+              break
+            end
+          end
+
+          if has_type_tag then
+            local match = true
+            for _, tag in ipairs(feature.tags) do
+              if tag.value then
+                match = match and match_tag_value(tag.tag, tag.value, )
+                if tag_functions.signal_tag_types[tag.tag] == 'array' then
+                  local value_match = false
+                  for _, item in split_semicolon(tags[tag.tag])) do
+                    if item == tag.value
+                      value_match = true
+                      break
+                    end
+                  end
+
+                  match = match and value_match
+                elseif tag_functions.signal_tag_types[tag.tag] == 'boolean' then
+                  local value_match = tag.value == 'yes'
+                  match = match and value_match
+                else
+                  local value_match = tag.value == tags[tag.tag]
+                  match = match and value_match
+                end
+              elseif tag.all then
+                if tag_functions.signal_tag_types[tag.tag] == 'array' then
+                  local value_match = false
+                  for _, item in split_semicolon(tags[tag.tag])) do
+                    if item == tag.value
+                      value_match = true
+                      break
+                    end
+                  end
+
+                  match = match and value_match
+                elseif tag_functions.signal_tag_types[tag.tag] == 'boolean' then
+                  local value_match = tag.value == 'yes'
+                  match = match and value_match
+                else
+                  match = false
+                end
+              elseif tag.any then
+
+              end
+
+              if not match then
+                break
+              end
+            end
+
+            if match then
+              -- TODO icon matching
+              local signal_feature = {
+                feature = feature.icon.default,
+                feature_variable = nil,
+                type = feature.type,
+                layer = type.layer,
+                rank = rank,
+              }
+              signals_features_1:insert(signal_feature)
+
+              break
+            end
+          end
+        end
+
+        -- Unknown signal
+        local signal_feature = {
+          feature = 'general/signal-unknown-' .. type.type,
+          feature_variable = nil,
+          type = nil,
+          layer = type.layer,
+          rank = nil,
+        }
+        signals_features_1:insert(signal_feature)
+      end
+    end
+
+    if not has_feature then
+      -- Unknown signal
+      local feature = 'general/signal-unknown'
+      local layer = type.layer
+
+      local signal_feature = {
+        feature = feature,
+        feature_variable = feature_variable,
+        type = type,
+        layer = layer,
+        rank = rank,
+      }
+
+      signals_features_1:insert(signal_feature)
+    end
   end
 
   if railway_position_values(tags.railway) and (position or position_exact) then
