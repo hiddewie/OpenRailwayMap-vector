@@ -3687,6 +3687,161 @@ features:
       - { tag: 'railway:signal:crossing', value: 'GB-NR:crossing' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
+  # --- IT --- #
+
+  - description: 1ª categoria (1 light)
+    country: IT
+    icon: { default: 'it/1v' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'IT_1V' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 1ª categoria (2 lights)
+    country: IT
+    icon: { default: 'it/2v' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'IT_2V' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 1ª categoria (3 lights)
+    country: IT
+    icon: { default: 'it/3v' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'IT_3V' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Avviso (1 light)
+    country: IT
+    icon: { default: 'it/avviso-1v' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT_1V' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Avviso (2 lights)
+    country: IT
+    icon: { default: 'it/avviso-2v' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT_2V' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Triangle speed limit
+    country: IT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { exact: '30', value: 'it/tri-30', description: '30 km/h' }
+        - { exact: '60', value: 'it/tri-60', description: '60 km/h' }
+      default: 'it/tri-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT_TRI' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Rappel
+    country: IT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { exact: '100', value: 'it/rappel-100', description: '100 km/h' }
+        - { exact: '60', value: 'it/rappel-60', description: '60 km/h' }
+      default: 'it/rappel-30'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT_RAP' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Speed limit
+    country: IT
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^160$', value: 'it/speed-{}', example: 'it/speed-{160}' }
+      default: 'it/speed-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', any: ['IT_1R', 'IT_2R', 'IT_3R'] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Distant speed limit
+    country: IT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^160$', value: 'it/speed-distant-{}', example: 'it/speed-distant-{160}' }
+      default: 'it/speed-distant-unknown'
+    tags:
+      # TODO match railway:signal:speed_limit_distant:distance = 1 or 2
+      - { tag: 'railway:signal:speed_limit_distant', any: ['IT_1R', 'IT_2R', 'IT_3R'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Halt
+    country: IT
+    icon: { default: 'it/stop' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'IT_HALT' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halt
+    country: IT
+    # TODO match railway:signal:stop_distant:distance = 1 or 2
+    icon: { default: 'it/stop-distant' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'IT_HALT' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+
+  - description: Marmotte
+    country: IT
+    icon: { default: 'it/marmotte' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'IT_MAR' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Segnali alti di manovra
+    country: IT
+    icon: { default: 'it/MAN' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'IT_MAN' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Picchetto limite di manovra
+    country: IT
+    icon: { default: 'it/PLIM' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'IT_PLIM' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Route
+    country: IT
+    icon: { default: 'it/route-unknown' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'IT_ROUTE' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Distant crossing
+    country: IT
+    icon: { default: 'it/crossing-distant' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', any: ['IT_D_CT'] }
+      - { tag: 'railway:signal:crossing_distant:form', value: 'light' }
+
+  - description: Level crossing (light)
+    country: IT
+    icon: { default: 'it/crossing' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'IT_1V' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Level crossing (sign)
+    country: IT
+    icon: { default: 'it/crossing' }
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'IT_PL' }
+      - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Indicatori di partenza
+    country: IT
+    icon: { default: 'it/PAR' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'IT_PAR' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
