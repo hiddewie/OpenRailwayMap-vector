@@ -1,112 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="4.6445308"
-   height="18.855799"
-   viewBox="0 0 4.6445306 18.855799"
-   version="1.1"
-   id="svg16"
-   sodipodi:docname="PLIM.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs20" />
-  <sodipodi:namedview
-     id="namedview18"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="23.742515"
-     inkscape:cx="-5.5596469"
-     inkscape:cy="11.350946"
-     inkscape:window-width="1920"
-     inkscape:window-height="1128"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg16" />
-  <path
-     fill-rule="nonzero"
-     fill="rgb(100%, 100%, 100%)"
-     fill-opacity="1"
-     d="M 2.320312,0 4.605469,2.285156 2.320312,4.566406 0.0390625,2.285156 Z m 0,0"
-     id="path14"
-     style="fill:#ffffff;fill-opacity:1" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="m 0,10.40959 h 4.644531 v 1.695478 H 0 Z m 0,0"
-     id="path2"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#ffffff"
-     fill-opacity="1"
-     d="M 0,8.7141125 H 4.644531 V 10.40959 H 0 Z m 0,0"
-     id="path4"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="M 0,7.1940293 H 4.644531 V 8.8895071 H 0 Z m 0,0"
-     id="path6"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#ffffff"
-     fill-opacity="1"
-     d="m 0,5.5007173 h 4.644531 v 1.693312 H 0 Z m 0,0"
-     id="path8"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="M 0,3.9784686 H 4.644531 V 5.6739462 H 0 Z m 0,0"
-     id="path10"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#ffffff"
-     fill-opacity="1"
-     d="M 0,2.285156 H 4.644531 V 3.9784686 H 0 Z m 0,0"
-     id="path12"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="m 0,13.769365 h 4.644531 v 1.695478 H 0 Z m 0,0"
-     id="path2-3"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#ffffff"
-     fill-opacity="1"
-     d="m 0,12.073887 h 4.644531 v 1.695478 H 0 Z m 0,0"
-     id="path4-6"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="m 0,17.160321 h 4.644531 v 1.695478 H 0 Z m 0,0"
-     id="path2-3-3"
-     style="stroke-width:0.744535" />
-  <path
-     fill-rule="nonzero"
-     fill="#ffffff"
-     fill-opacity="1"
-     d="m 0,15.464843 h 4.644531 v 1.695478 H 0 Z m 0,0"
-     id="path4-6-5"
-     style="stroke-width:0.744535" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="4.5" height="18.269035" viewBox="0 0 4.5 18.269035">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 2.25 0 L 4.460938 2.214844 L 2.25 4.425781 L 0.0390625 2.214844 Z M 2.25 0 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 10.085938 L 4.5 10.085938 L 4.5 11.726562 L 0 11.726562 Z M 0 10.085938 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 8.441406 L 4.5 8.441406 L 4.5 10.085938 L 0 10.085938 Z M 0 8.441406 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 6.96875 L 4.5 6.96875 L 4.5 8.613281 L 0 8.613281 Z M 0 6.96875 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 5.328125 L 4.5 5.328125 L 4.5 6.96875 L 0 6.96875 Z M 0 5.328125 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 3.855469 L 4.5 3.855469 L 4.5 5.496094 L 0 5.496094 Z M 0 3.855469 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 2.214844 L 4.5 2.214844 L 4.5 3.855469 L 0 3.855469 Z M 0 2.214844 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 13.339844 L 4.5 13.339844 L 4.5 14.984375 L 0 14.984375 Z M 0 13.339844 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 11.699219 L 4.5 11.699219 L 4.5 13.339844 L 0 13.339844 Z M 0 11.699219 "/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0 16.625 L 4.5 16.625 L 4.5 18.269531 L 0 18.269531 Z M 0 16.625 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 0 14.984375 L 4.5 14.984375 L 4.5 16.625 L 0 16.625 Z M 0 14.984375 "/>
 </svg>

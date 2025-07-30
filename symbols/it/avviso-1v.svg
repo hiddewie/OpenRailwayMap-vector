@@ -1,49 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="12.425"
-   height="12.3"
-   viewBox="0 0 12.425 12.3"
-   version="1.1"
-   id="svg1160"
-   sodipodi:docname="avviso-1v.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1164" />
-  <sodipodi:namedview
-     id="namedview1162"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="16.697357"
-     inkscape:cx="-12.337282"
-     inkscape:cy="4.5216737"
-     inkscape:window-width="1920"
-     inkscape:window-height="1128"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1160" />
-  <path
-     fill-rule="nonzero"
-     fill="#262626"
-     fill-opacity="1"
-     d="M 12.275,6.146094 C 12.275,9.4625 9.5562503,12.15 6.216406,12.15 2.864844,12.15 0.15000001,9.4625 0.15000001,6.146094 c 0,-3.3125 2.71484399,-5.99609399 6.06640599,-5.99609399 3.3398443,0 6.058594,2.68359399 6.058594,5.99609399 z m 0,0"
-     id="path1156-3"
-     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.3;stroke-dasharray:none;stroke-opacity:1" />
-  <path
-     fill-rule="nonzero"
-     fill="#ff0000"
-     fill-opacity="1"
-     d="m 8.626562,6.15 c 0,1.332031 -1.082031,2.414062 -2.414062,2.414062 -1.332031,0 -2.414062,-1.082031 -2.414062,-2.414062 0,-1.332031 1.082031,-2.414062 2.414062,-2.414062 1.332031,0 2.414062,1.082031 2.414062,2.414062 z m 0,0"
-     id="path1158-6"
-     style="fill:#ffdd00;fill-opacity:1" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="11.879276" viewBox="0 0 12 11.879276">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.3" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 12.27535 6.147787 C 12.27535 9.464356 9.557381 12.149968 6.216545 12.149968 C 2.863574 12.149968 0.14965 9.464356 0.14965 6.147787 C 0.14965 2.835262 2.863574 0.14965 6.216545 0.14965 C 9.557381 0.14965 12.27535 2.835262 12.27535 6.147787 Z M 12.27535 6.147787 " transform="matrix(0.965795, 0, 0, 0.965795, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(100%, 86.666667%, 0%)" fill-opacity="1" d="M 8.332031 5.941406 C 8.332031 7.226562 7.285156 8.269531 6 8.269531 C 4.714844 8.269531 3.667969 7.226562 3.667969 5.941406 C 3.667969 4.652344 4.714844 3.609375 6 3.609375 C 7.285156 3.609375 8.332031 4.652344 8.332031 5.941406 Z M 8.332031 5.941406 "/>
 </svg>
