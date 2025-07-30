@@ -3786,7 +3786,7 @@ features:
   - description: Halt
     country: IT
     # TODO match railway:signal:stop_distant:distance = 1 or 2
-    icon: { default: 'it/stop-distant' }
+    icon: { default: 'it/stop-distant-1' }
     tags:
       - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
