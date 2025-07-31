@@ -2651,7 +2651,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
-      minzoom: 14,
+      minzoom: 13,
       source: 'openrailwaymap_speed',
       'source-layer': 'speed_railway_signals',
       filter: ['step', ['zoom'],
@@ -2954,7 +2954,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'railway_signals_direction',
       type: 'symbol',
-      minzoom: 14,
+      minzoom: 13,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_signals',
       filter: ['all',
@@ -3326,7 +3326,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     {
       id: 'electrification_signals_direction',
       type: 'symbol',
-      minzoom: 14,
+      minzoom: 13,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
       filter: ['all',
