@@ -981,7 +981,7 @@ function osm2pgsql.process_node(object)
     end
   end
 
-  if railway_switch_values(tags.railway) and tags.ref then
+  if railway_switch_values(tags.railway) then
     railway_switches:insert({
       way = object:as_point(),
       railway = tags.railway,
