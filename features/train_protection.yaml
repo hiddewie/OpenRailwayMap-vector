@@ -112,13 +112,13 @@ features:
     tags:
       - { tag: 'railway:tvm', values: ['300', '430'] }
 
-  - train_protection: kvb
-    tags:
-      - { tag: 'railway:kvb', value: 'yes' }
-
   - train_protection: nexteo
     tags:
       - { tag: 'railway:nexteo', value: 'yes' }
+
+  - train_protection: kvb
+    tags:
+      - { tag: 'railway:kvb', value: 'yes' }
 
   - train_protection: atb
     tags:
