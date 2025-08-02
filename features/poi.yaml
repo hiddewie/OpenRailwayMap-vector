@@ -2,7 +2,7 @@ features:
   - description: Border crossing
     feature: 'general/border'
     colored_icon: true
-    layer: standard
+    layer: operator
     minzoom: 10
     tags:
       - { tag: 'railway', value: 'border' }
@@ -10,7 +10,7 @@ features:
   - description: Owner change
     feature: 'general/owner-change'
     colored_icon: true
-    layer: standard
+    layer: operator
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'owner_change' }
