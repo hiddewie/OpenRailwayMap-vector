@@ -4707,22 +4707,23 @@ const legendData = {
         properties: {},
       },
     ],
-    // TODO electrification & operator
-    "openrailwaymap_operator-operator_railway_symbols":
-      poi.features.map(feature => ({
-        legend: feature.description,
-        type: 'point',
-        minzoom: feature.minzoom,
-        properties: {
-          feature: feature.feature,
-        },
-        variants: feature.variants ? feature.variants.map(variant => ({
-          legend: variant.description,
+    "openrailwaymap_standard-standard_railway_symbols":
+      poi.features
+        .filter(feature => feature.layer === 'standard')
+        .map(feature => ({
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
           properties: {
-            feature: variant.feature,
+            feature: feature.feature,
           },
-        })) : undefined,
-      })),
+          variants: feature.variants ? feature.variants.map(variant => ({
+            legend: variant.description,
+            properties: {
+              feature: variant.feature,
+            },
+          })) : undefined,
+        })),
     "high-railway_text_km": [
       {
         legend: 'Milestone',
@@ -5855,6 +5856,23 @@ const legendData = {
         },
       })),
     ],
+    "openrailwaymap_electrification-electrification_railway_symbols":
+      poi.features
+        .filter(feature => feature.layer === 'electrification')
+        .map(feature => ({
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
+          properties: {
+            feature: feature.feature,
+          },
+          variants: feature.variants ? feature.variants.map(variant => ({
+            legend: variant.description,
+            properties: {
+              feature: variant.feature,
+            },
+          })) : undefined,
+        })),
   },
   gauge: {
     'openrailwaymap_low-railway_line_high': [
@@ -6386,6 +6404,23 @@ const legendData = {
         },
       },
     ],
+    "openrailwaymap_operator-operator_railway_symbols":
+      poi.features
+        .filter(feature => feature.layer === 'operator')
+        .map(feature => ({
+          legend: feature.description,
+          type: 'point',
+          minzoom: feature.minzoom,
+          properties: {
+            feature: feature.feature,
+          },
+          variants: feature.variants ? feature.variants.map(variant => ({
+            legend: variant.description,
+            properties: {
+              feature: variant.feature,
+            },
+          })) : undefined,
+        })),
   },
 }
 
