@@ -692,3 +692,73 @@ CREATE OR REPLACE VIEW railway_catenary AS
     note,
     description
   FROM catenary;
+
+--- Operator ---
+
+CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
+  FROM (
+         SELECT
+           ST_AsMVTGeom(
+             way,
+             ST_TileEnvelope(z, x, y),
+             4096, 64, true
+           ) AS way,
+           id,
+           osm_id,
+           osm_type,
+           feature,
+           ref,
+           nullif(array_to_string(position, U&'\001E'), '') as position,
+           wikidata,
+           wikimedia_commons,
+           wikimedia_commons_file,
+           image,
+           mapillary,
+           wikipedia,
+           note,
+           description
+         FROM pois
+         WHERE way && ST_TileEnvelope(z, x, y)
+           -- Tiles are generated from zoom 14 onwards
+           AND (z >= 14 OR z >= minzoom)
+           AND layer = 'operator'
+         ORDER BY rank DESC
+       ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION operator_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "operator_railway_symbols",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "minzoom": "integer",
+          "position": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;

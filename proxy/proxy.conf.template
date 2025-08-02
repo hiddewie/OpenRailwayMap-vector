@@ -134,6 +134,7 @@ server {
       rewrite ^/speed$ /speed_railway_signals last;
       rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
       rewrite ^/electrification$ /electrification_signals,catenary,electrification_railway_symbols last;
+      rewrite ^/operator$ /operator_railway_symbols last;
     }
 
     set $upstream http://${TILES_UPSTREAM};
