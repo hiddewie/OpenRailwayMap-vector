@@ -17,6 +17,7 @@ const poiUncolored = poi.features
 
 const poiZoomsStandard = [...new Set(poi.features.filter(feature => feature.minzoom && feature.layer === 'standard').map(feature => feature.minzoom))].sort()
 const poiZoomsElectrification = [...new Set(poi.features.filter(feature => feature.minzoom && feature.layer === 'electrification').map(feature => feature.minzoom))].sort()
+const poiZoomsOperator = [...new Set(poi.features.filter(feature => feature.minzoom && feature.layer === 'operator').map(feature => feature.minzoom))].sort()
 
 const signal_types = all_signals.types;
 
@@ -775,6 +776,11 @@ const sources = {
   openrailwaymap_electrification: {
     type: 'vector',
     url: '/electrification',
+    promoteId: 'id',
+  },
+  openrailwaymap_operator: {
+    type: 'vector',
+    url: '/operator',
     promoteId: 'id',
   },
   openhistoricalmap: {
@@ -4062,6 +4068,50 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-size': 11,
       }
     },
+    ...poiZoomsOperator.map((zoom, index, zooms) => ({
+      id: `operator_symbols_zoom_${zoom}`,
+      type: 'symbol',
+      minzoom: zoom,
+      maxzoom: (index + 1 < zooms.length) ? zooms[index + 1] : undefined,
+      source: 'openrailwaymap_operator',
+      'source-layer': 'operator_railway_symbols',
+      filter: ['in',
+        ['get', 'feature'],
+        ['literal', poiUncolored.filter(feature => feature.minzoom <= zoom).map(feature => feature.feature)],
+      ],
+      paint: {
+        'icon-color': colors[theme].styles.standard.symbols,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
+        ],
+        'icon-halo-blur': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 1.0,
+          0.0,
+        ],
+        'icon-halo-width': ['case',
+          ['boolean', ['feature-state', 'hover'], false], 3.0,
+          2.0,
+        ],
+        'text-color': colors[theme].styles.standard.symbols,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': ['concat', 'sdf:', ['get', 'feature']],
+        'text-field': ['coalesce', ['get', 'ref'], ''],
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 15,
+        'text-offset': [0, 1.5],
+        'text-optional': true,
+      },
+    })),
     searchResults,
   ],
 }]));
@@ -4635,6 +4685,7 @@ const legendData = {
         properties: {},
       },
     ],
+    // TODO electrification & operator
     "openrailwaymap_standard-standard_railway_symbols":
       poi.features.map(feature => ({
         legend: feature.description,
