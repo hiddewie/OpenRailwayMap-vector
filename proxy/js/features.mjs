@@ -885,7 +885,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-operator_railway_symbols': poiFeatures('operator'),
+  'openrailwaymap_operator-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
 
