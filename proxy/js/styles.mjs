@@ -755,32 +755,32 @@ const sources = {
   },
   high: {
     type: 'vector',
-    url: '/high',
+    url: '/railway_line_high,railway_text_km',
     promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
     type: 'vector',
-    url: '/speed',
+    url: '/speed_railway_signals',
     promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals',
+    url: '/signals_railway_signals,signals_signal_boxes',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: '/electrification',
+    url: '/electrification_signals,catenary,electrification_railway_symbols',
     promoteId: 'id',
   },
   openrailwaymap_operator: {
     type: 'vector',
-    url: '/operator',
+    url: '/operator_railway_symbols',
     promoteId: 'id',
   },
   openhistoricalmap: {

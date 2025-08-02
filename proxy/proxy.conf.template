@@ -17,8 +17,6 @@ server {
   ssl_certificate /etc/nginx/ssl/certificate.pem;
   ssl_certificate_key /etc/nginx/ssl/key.pem;
 
-  set $rewrite_tile_urls ${REWRITE_TILE_URLS};
-
   gzip on;
   gzip_disable "msie6";
 
@@ -128,15 +126,6 @@ server {
   }
 
   location / {
-    if ($rewrite_tile_urls = true) {
-      rewrite ^/high$ /railway_line_high,railway_text_km last;
-      rewrite ^/standard$ /standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances last;
-      rewrite ^/speed$ /speed_railway_signals last;
-      rewrite ^/signals$ /signals_railway_signals,signals_signal_boxes last;
-      rewrite ^/electrification$ /electrification_signals,catenary,electrification_railway_symbols last;
-      rewrite ^/operator$ /operator_railway_symbols last;
-    }
-
     set $upstream http://${TILES_UPSTREAM};
     proxy_pass $upstream;
     proxy_http_version 1.1;

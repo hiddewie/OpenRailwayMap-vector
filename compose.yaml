@@ -90,7 +90,6 @@ services:
       CLIENT_CACHE_TTL_API_STALE: '0'
       CLIENT_CACHE_TTL_TILES_FRESH: '0'
       CLIENT_CACHE_TTL_TILES_STALE: '0'
-      REWRITE_TILE_URLS: 'true'
     develop:
       watch:
         - action: rebuild
