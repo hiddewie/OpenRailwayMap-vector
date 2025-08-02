@@ -220,6 +220,53 @@ const railwayLineFeatures = {
   },
 };
 
+const poiFeatures = layer => ({
+  featureLinks: featureLinks.openstreetmap,
+  features: Object.fromEntries(
+    poi.features
+      .filter(feature => feature.layer === layer)
+      .flatMap(feature =>
+        [
+          [feature.feature, {name: feature.description}]
+        ].concat(
+          (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+        )
+      )
+  ),
+  properties: {
+    ref: {
+      name: 'Reference',
+    },
+    position: {
+      name: 'Position',
+    },
+    wikidata: {
+      name: 'Wikidata',
+      link: links.wikidata,
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia',
+      link: links.wikimedia_commons,
+    },
+    mapillary: {
+      name: 'Mapillary',
+      link: links.mapillary,
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+      link: links.wikipedia,
+    },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
+  },
+})
+
 // TODO move tram / metro stops to stations
 const stationFeatures = {
   featureProperty: 'feature',
@@ -446,55 +493,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_symbols': {
-    featureLinks: featureLinks.openstreetmap,
-    features: Object.fromEntries(
-      poi.features
-        .filter(feature => feature.layer === 'standard')
-        .flatMap(feature =>
-          [
-            [feature.feature, {name: feature.description}]
-          ].concat(
-            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
-          )
-        )
-    ),
-    properties: {
-      name: {
-        name: 'Name',
-      },
-      ref: {
-        name: 'Reference',
-      },
-      position: {
-        name: 'Position',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
+  'openrailwaymap_standard-standard_railway_symbols': poiFeatures('standard'),
   "high-railway_text_km": {
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
@@ -839,52 +838,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_railway_symbols': {
-    featureLinks: featureLinks.openstreetmap,
-    features: Object.fromEntries(
-      poi.features
-        .filter(feature => feature.layer === 'electrification')
-        .flatMap(feature =>
-          [
-            [feature.feature, {name: feature.description}]
-          ].concat(
-            (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
-          )
-        )
-    ),
-    properties: {
-      ref: {
-        name: 'Reference',
-      },
-      position: {
-        name: 'Position',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
+  'openrailwaymap_electrification-electrification_railway_symbols': poiFeatures('electrification'),
   'openrailwaymap_electrification-catenary': {
     featureProperty: 'feature',
     featureLinks: featureLinks.openstreetmap,
@@ -931,6 +885,7 @@ const features = {
       },
     },
   },
+  'openrailwaymap_electrification-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
 
