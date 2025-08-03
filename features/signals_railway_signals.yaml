@@ -3692,7 +3692,11 @@ features:
 
   - description: Route
     country: IT
-    icon: { default: 'it/route-unknown' }
+    icon:
+      match: 'railway:signal:route:states'
+      cases:
+        - { regex: '^[1-4]$', value: 'it/route-{}', example: 'it/route-{4}' }
+      default: 'it/route-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
       - { tag: 'railway:signal:route:form', value: 'light' }
