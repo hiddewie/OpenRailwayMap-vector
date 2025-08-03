@@ -3885,8 +3885,13 @@ features:
 
   - description: Avviso (2 lights)
     country: IT
-    icon: { default: 'it/avviso-2v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { any: ['Y-G', '(Y-G)', '(Y)-G', 'Y-(G)', '(Y)-(G)'], value: 'it/avviso-2v-Y-G' }
+        - { exact: '(Y)', value: 'it/avviso-2v-(Y)' }
+        - { exact: 'G', value: 'it/avviso-2v-G' }
+      default: 'it/avviso-2v-Y'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
