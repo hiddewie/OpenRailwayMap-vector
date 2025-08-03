@@ -3704,8 +3704,11 @@ features:
 
   - description: 1ª categoria (Avvio & Avanzamento) (1 light)
     country: IT
-    icon: { default: 'it/main-1v-AVV-AVA' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'G', value: 'it/main-1v-AVV-AVA-G' }
+      default: 'it/main-1v-AVV-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3731,8 +3734,11 @@ features:
 
   - description: 1ª categoria (Avanzamento) (1 light)
     country: IT
-    icon: { default: 'it/main-1v-AVA' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'G', value: 'it/main-1v-AVA-G' }
+      default: 'it/main-1v-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3758,8 +3764,11 @@ features:
 
   - description: 1ª categoria (Avvio) (1 light)
     country: IT
-    icon: { default: 'it/main-1v-AVV' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'G', value: 'it/main-1v-AVV-G' }
+      default: 'it/main-1v-AVV-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3785,8 +3794,11 @@ features:
 
   - description: 1ª categoria (1 light)
     country: IT
-    icon: { default: 'it/main-1v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'G', value: 'it/main-1v-G' }
+      default: 'it/main-1v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3809,8 +3821,11 @@ features:
 
   - description: Segnale accoppiato (1 light)
     country: IT
-    icon: { default: 'it/combined-1v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { exact: 'G', value: 'it/combined-1v-G' }
+      default: 'it/combined-1v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:1V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
