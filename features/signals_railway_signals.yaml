@@ -3714,6 +3714,30 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Segnale accoppiato (1 light)
+    country: IT
+    icon: { default: 'it/combined-1v' }
+    # TODO match states
+    tags:
+      - { tag: 'railway:signal:combined', value: 'IT:1V' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Segnale accoppiato (2 lights)
+    country: IT
+    icon: { default: 'it/combined-2v' }
+    # TODO match states
+    tags:
+      - { tag: 'railway:signal:combined', value: 'IT:2V' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: Segnale accoppiato (3 lights)
+    country: IT
+    icon: { default: 'it/combined-3v' }
+    # TODO match states
+    tags:
+      - { tag: 'railway:signal:combined', value: 'IT:3V' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
   - description: Avviso (1 light)
     country: IT
     icon: { default: 'it/avviso-1v' }
