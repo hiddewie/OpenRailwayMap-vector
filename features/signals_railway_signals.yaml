@@ -3700,7 +3700,7 @@ features:
       default: 'it/route-unknown'
     tags:
       - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:form', value : 'light' }
 
   - description: 1ª categoria (Avvio & Avanzamento) (1 light)
     country: IT
