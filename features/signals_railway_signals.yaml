@@ -3690,6 +3690,13 @@ features:
 
   # --- IT --- #
 
+  - description: Route
+    country: IT
+    icon: { default: 'it/route-unknown' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: 1ª categoria (1 light)
     country: IT
     icon: { default: 'it/main-1v' }
@@ -3836,13 +3843,6 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'IT:PLIM' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
-
-  - description: Route
-    country: IT
-    icon: { default: 'it/route-unknown' }
-    tags:
-      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Distant crossing
     country: IT
