@@ -10,6 +10,27 @@ The OpenRailwayMap is deployed on a server to provide a database with OpenStreet
 
 ![](diagram.svg)
 
+## Data import
+
+An initial import of OSM data is required. After the initial data import, the daily update will ensure the data is kept up to date.
+
+Download the OSM planet file:
+```shell
+deployment/download-planet.sh
+```
+This will download around 90GB.
+
+Filter the OSM data, package it and push it to the container registry:
+```shell
+deployment/filter-and-package-planet.sh
+```
+This will process the planet OSM file, and output it into a Docker container. The filtering process takes time and a few GB of memory.
+
+Optionally delete the source OSM data file to reduce disk space usage:
+```shell
+rm -f data/planet.osm.pbf
+```
+
 ## Setup
 
 ### Docker

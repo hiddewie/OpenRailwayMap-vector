@@ -128,9 +128,15 @@ refresh)
 
   ;;
 
+filter)
+
+  filter_data
+
+  ;;
+
 *)
 
-  echo "Invalid argument '$1'. Supported: import, update, refresh"
+  echo "Invalid argument '$1'. Supported: import, update, refresh, filter"
   exit 1
 
   ;;
