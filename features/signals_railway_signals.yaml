@@ -3874,8 +3874,11 @@ features:
 
   - description: Avviso (1 light)
     country: IT
-    icon: { default: 'it/avviso-1v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:distant:states'
+      cases:
+        - { exact: 'G', value: 'it/avviso-1v-G' }
+      default: 'it/avviso-1v-Y'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:1V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
