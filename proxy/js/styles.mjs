@@ -3013,7 +3013,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       imageLayerWithOutline(
         theme,
         `railway_signals_high_${featureIndex}`,
-        ['get', `feature${featureIndex}`],
+        featureIndex == 0
+          ? ['get', `feature${featureIndex}`]
+          : ['case',
+              ['==', ['slice', ['get', `feature${featureIndex}`], 0, 20], 'de/blockkennzeichen-'], 'de/blockkennzeichen',
+              ['get', `feature${featureIndex}`],
+            ],
         {
           type: 'symbol',
           minzoom: 16,
