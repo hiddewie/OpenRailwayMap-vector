@@ -19,38 +19,53 @@ HTTP 200
 Content-Type: application/json
 
 # Proxy to tiles
-GET {{base_url}}/speed
+GET {{base_url}}/railway_line_high
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard
+GET {{base_url}}/standard_railway_text_stations_low
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/speed
+GET {{base_url}}/standard_railway_text_stations_med
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals
+GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/electrification
+GET {{base_url}}/speed_railway_signals
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/signals_railway_signals,signals_signal_boxes
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/electrification_signals,catenary,electrification_railway_symbols
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/operator_railway_symbols
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 # (local URLs)
-GET {{base_url}}/signals_railway_signals/14/8803/5371
+GET {{base_url}}/signals_railway_signals,signals_signal_boxes/14/8803/5371
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/x-protobuf
 
-GET {{base_url}}/signals_railway_signals/18/140807/85974
+GET {{base_url}}/signals_railway_signals,signals_signal_boxes/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
