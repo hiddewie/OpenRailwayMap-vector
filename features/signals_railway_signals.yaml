@@ -50,6 +50,8 @@ tags:
   - { tag: 'railway:signal:main:design', description: 'Main design' }
   - { tag: 'railway:signal:main:form', description: 'Main form' }
   - { tag: 'railway:signal:main:height', description: 'Main height' }
+  - { tag: 'railway:signal:main:shape', description: 'Main shape' }
+  - { tag: 'railway:signal:main:lit_letter', description: 'Main lit letter' }
   - { tag: 'railway:signal:main:states', description: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', description: 'Main substitute signal' }
   - { tag: 'railway:signal:main:PT_priority', description: 'Main PT priority' }
