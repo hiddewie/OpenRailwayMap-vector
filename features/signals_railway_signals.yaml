@@ -3815,8 +3815,17 @@ features:
 
   - description: 1ª categoria (3 lights)
     country: IT
-    icon: { default: 'it/main-3v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'Y-Y', value: 'it/main-3v-Y-Y' }
+        - { exact: 'R-Y-Y', value: 'it/main-3v-R-Y-Y' }
+        - { exact: '(Y-G)', value: 'it/main-3v-Y-G' }
+        - { exact: 'R-Y', value: 'it/main-3v-R-Y' }
+        - { exact: 'R-G', value: 'it/main-3v-R-G' }
+        - { exact: 'Y', value: 'it/main-3v-Y' }
+        - { exact: 'G', value: 'it/main-3v-G' }
+      default: 'it/main-3v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3835,7 +3844,7 @@ features:
   - description: Segnale accoppiato (2 lights)
     country: IT
     icon:
-      match: 'railway:signal:main:states'
+      match: 'railway:signal:combined:states'
       cases:
         - { exact: 'R-Y', value: 'it/combined-2v-R-Y' }
         - { exact: 'R-G', value: 'it/combined-2v-R-G' }
@@ -3848,8 +3857,17 @@ features:
 
   - description: Segnale accoppiato (3 lights)
     country: IT
-    icon: { default: 'it/combined-3v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:combined:states'
+      cases:
+        - { exact: 'Y-Y', value: 'it/combined-3v-Y-Y' }
+        - { exact: 'R-Y-Y', value: 'it/combined-3v-R-Y-Y' }
+        - { exact: '(Y-G)', value: 'it/combined-3v-Y-G' }
+        - { exact: 'R-Y', value: 'it/combined-3v-R-Y' }
+        - { exact: 'R-G', value: 'it/combined-3v-R-G' }
+        - { exact: 'Y', value: 'it/combined-3v-Y' }
+        - { exact: 'G', value: 'it/combined-3v-G' }
+      default: 'it/combined-3v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
