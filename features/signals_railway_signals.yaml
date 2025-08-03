@@ -3719,7 +3719,6 @@ features:
   - description: 1ª categoria (Avvio & Avanzamento) (2 lights)
     country: IT
     icon: { default: 'it/main-2v-AVV-AVA' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3728,7 +3727,6 @@ features:
   - description: 1ª categoria (Avvio & Avanzamento) (3 lights)
     country: IT
     icon: { default: 'it/main-3v-AVV-AVA' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3749,7 +3747,6 @@ features:
   - description: 1ª categoria (Avanzamento) (2 lights)
     country: IT
     icon: { default: 'it/main-2v-AVA' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3758,7 +3755,6 @@ features:
   - description: 1ª categoria (Avanzamento) (3 lights)
     country: IT
     icon: { default: 'it/main-3v-AVA' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3779,7 +3775,6 @@ features:
   - description: 1ª categoria (Avvio) (2 lights)
     country: IT
     icon: { default: 'it/main-2v-AVV' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3788,7 +3783,6 @@ features:
   - description: 1ª categoria (Avvio) (3 lights)
     country: IT
     icon: { default: 'it/main-3v-AVV' }
-    # TODO match states
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3807,8 +3801,14 @@ features:
 
   - description: 1ª categoria (2 lights)
     country: IT
-    icon: { default: 'it/main-2v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'R-Y', value: 'it/main-2v-R-Y' }
+        - { exact: 'R-G', value: 'it/main-2v-R-G' }
+        - { exact: 'Y', value: 'it/main-2v-Y' }
+        - { exact: 'G', value: 'it/main-2v-G' }
+      default: 'it/main-2v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -3834,8 +3834,14 @@ features:
 
   - description: Segnale accoppiato (2 lights)
     country: IT
-    icon: { default: 'it/combined-2v' }
-    # TODO match states
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'R-Y', value: 'it/combined-2v-R-Y' }
+        - { exact: 'R-G', value: 'it/combined-2v-R-G' }
+        - { exact: 'Y', value: 'it/combined-2v-Y' }
+        - { exact: 'G', value: 'it/combined-2v-G' }
+      default: 'it/combined-2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
