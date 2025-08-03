@@ -3701,6 +3701,30 @@ features:
       - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
+  - description: Avanzamento & Avvio
+    country: IT
+    icon: { default: 'it/main-AVV-AVA' }
+    tags:
+      - { tag: 'railway:signal:main:substitute_signal', any: ['IT:AVA;IT:AVV', 'IT:AVV;IT:AVA'] }
+
+  - description: Avanzamento
+    country: IT
+    icon: { default: 'it/main-AVA' }
+    tags:
+      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVA' }
+
+  - description: Avvio (main)
+    country: IT
+    icon: { default: 'it/main-AVV' }
+    tags:
+      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVV' }
+
+  - description: Avvio (departure)
+    country: IT
+    icon: { default: 'it/departure-AVV' }
+    tags:
+      - { tag: 'railway:signal:departure:substitute_signal', value: 'IT:AVV' }
+
   - description: 1ª categoria (1 light)
     country: IT
     icon: { default: 'it/main-1v' }
