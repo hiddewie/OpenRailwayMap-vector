@@ -24,6 +24,7 @@ tags:
   - { tag: 'railway:signal:departure', description: 'Departure' }
   - { tag: 'railway:signal:departure:form', description: 'Departure form' }
   - { tag: 'railway:signal:departure:states', description: 'Departure states', type: array }
+  - { tag: 'railway:signal:departure:substitute_signal', description: 'Departure substitute signal', type: array }
   - { tag: 'railway:signal:distant', description: 'Distant' }
   - { tag: 'railway:signal:distant:form', description: 'Distant form' }
   - { tag: 'railway:signal:distant:repeated', description: 'Distant repeated', type: boolean }
@@ -3719,12 +3720,6 @@ features:
     tags:
       - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVV' }
 
-  - description: Avvio (departure)
-    country: IT
-    icon: { default: 'it/departure-AVV' }
-    tags:
-      - { tag: 'railway:signal:departure:substitute_signal', value: 'IT:AVV' }
-
   - description: 1ª categoria (1 light)
     country: IT
     icon: { default: 'it/main-1v' }
@@ -3892,6 +3887,14 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Indicatori di partenza (Avvio)
+    country: IT
+    icon: { default: 'it/PAR-AVV' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'IT:PAR' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+      - { tag: 'railway:signal:departure:substitute_signal', value: 'IT:AVV' }
 
   - description: Indicatori di partenza
     country: IT
