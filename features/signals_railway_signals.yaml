@@ -1590,49 +1590,49 @@ features:
 
   # --- DE --- #
 
-  - description: shunting stop sign Ra 10
+  - description: Shunting stop sign (Ra 10)
     country: DE
     icon: { default: 'de/ra10' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra10' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: main signal invalid for shunting trains Zs 103 (sign)
+  - description: Main signal invalid for shunting trains sign (Zs 103)
     country: DE
     icon: { default: 'de/zs103' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'DE-ESO:zs103' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: shunting signal Ra 11 without Sh 1
+  - description: Wait sign (Ra 11)
     country: DE
     icon: { default: 'de/ra11-sign' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: shunting signal Ra 11 with Sh 1
+  - description: Wait sign with Sh 1 (Ra 11)
     country: DE
     icon: { default: 'de/ra11-sh1' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-  - description: shunting signal Ra 11b (without Sh 1)
+  - description: Wait sign (Ra 11b)
     country: DE
     icon: { default: 'de/ra11b' }
     tags:
       - { tag: 'railway:signal:shunting', value: 'DE-ESO:ra11b' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: tram minor stop sign Sh 1
+  - description: Mandatory stop (Sh 1, Tram)
     country: DE
     icon: { default: 'de/bostrab/sh1' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh1' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: minor light signals type Sh
+  - description: Shunting light signals (Sh)
     country: DE
     icon:
       match: 'railway:signal:minor:height'
@@ -1643,7 +1643,7 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
-  - description: minor light signals type Sh attached to main signals
+  - description: Shunting light signals attached to main signals (Sh)
     country: DE
     icon:
       default: 'de/sh1-light-dwarf'
@@ -1651,7 +1651,7 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh1' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
-  - description: minor semaphore signals type Sh with wn7
+  - description: Derailer state signal (Wn 7)
     country: DE
     icon: { default: 'de/wn7-semaphore-normal' }
     tags:
@@ -1659,7 +1659,7 @@ features:
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
       - { tag: 'railway:signal:minor:states', all: ['DE-ESO:sh0', 'DE-ESO:wn7'] }
 
-  - description: minor semaphore signals type Sh
+  - description: Shunting semaphore signals (Sh)
     country: DE
     icon:
       match: 'railway:signal:minor:height'
@@ -1670,35 +1670,35 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
 
-  - description: minor sign signal type Sh
+  - description: Proceeding prohibition (at buffer stop) (Sh 0)
     country: DE
     icon: { default: 'de/sh0-sign' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh0' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Sh 2 buffer stop
+  - description: Protective stop (Sh 2)
     country: DE
     icon: { default: 'de/sh2' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: tram signal Sh 2
+  - description: Protective stop (Sh 2, tram)
     country: DE
     icon: { default: 'de/bostrab/sh2' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
-  - description: Hamburger Hochbahn Sh 3
+  - description: Emergency stop (Sh 3, Hamburger Hochbahn)
     country: DE
     icon: { default: 'de/hha/sh3' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-HHA:sh3' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
-  - description: tram signal "start of train protection" So 1
+  - description: Start of train protection (So 1, tram)
     country: DE
     icon: { default: 'de/bostrab/so1' }
     tags:
@@ -1706,7 +1706,7 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
-  - description: tram signal "end of train protection" So 2
+  - description: End of train protection (So 2, tram)
     country: DE
     icon: { default: 'de/bostrab/so2' }
     tags:
@@ -1714,7 +1714,7 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
-  - description: ETCS block marker Ne 14
+  - description: ETCS stop marker (Ne 14)
     country: DE
     icon:
       match: 'railway:signal:position'
@@ -1727,14 +1727,14 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
-  - description: LZB section start
+  - description: LZB section start (LZB-Bereichskennzeichen)
     country: DE
     icon: { default: 'de/lzb-section-start' }
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:lzb-bereichskennzeichen' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: Blockkennzeichen
+  - description: ETCS/LZB block marker
     country: DE
     icon:
       match: 'ref_multiline'
@@ -1751,21 +1751,21 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', value: 'DE-ESO:blockkennzeichen' }
 
-  - description: Signalhaltmelder Zugleitbetrieb
+  - description: Entry signal halt indicator (Signalhaltmelder)
     country: DE
     icon: { default: 'de/zlb-haltmelder-light' }
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'DE-DB:signalhaltmelder' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-  - description: Fahrtanzeiger
+  - description: Driving permission indicator (Fahrtanzeiger)
     country: DE
     icon: { default: 'de/fahrtanzeiger' }
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'DE-ESO:fahrtanzeiger' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
-  - description: tram passing prohibited sign So 5
+  - description: Passing-by prohibited sign (So 5, tram)
     country: DE
     icon: { default: 'de/bostrab/so5' }
     tags:
@@ -1773,7 +1773,7 @@ features:
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'no_passing' }
 
-  - description: tram passing prohibited end sign So 6
+  - description: Passing-by prohibited end sign (So 6, tram)
     country: DE
     icon: { default: 'de/bostrab/so6' }
     tags:
@@ -1781,28 +1781,28 @@ features:
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'passing_allowed' }
 
-  - description: stop demand post Ne 5 (light)
+  - description: Stop demand board (Ne 5)
     country: DE
     icon: { default: 'de/ne5-light' }
     tags:
       - { tag: 'railway:signal:stop_demand', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
-  - description: stop demand post Ne 5 (sign)
+  - description: Stop board (Ne 5)
     country: DE
     icon: { default: 'de/ne5-sign' }
     tags:
       - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: stop demand post BOStrab Sh 7 (sign)
+  - description: Stop board (Sh 7, tram)
     country: DE
     icon: { default: 'de/bostrab/sh7' }
     tags:
       - { tag: 'railway:signal:stop', value: 'DE-BOStrab:sh7' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: station distant sign Ne 6
+  - description: Halt/station anouncment sign (Ne 6)
     country: DE
     icon: { default: 'de/ne6' }
     tags:
@@ -1810,7 +1810,7 @@ features:
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   # TODO support variants of same feature
-  - description: Bü 0/1 (sign, repeated)
+  - description: Crossing (always) unsecured (Bü 0, sign, repeater)
     country: DE
     icon: { default: 'de/bue0-ds-repeated' }
     tags:
@@ -1818,7 +1818,7 @@ features:
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
       - { tag: 'railway:signal:crossing:repeated' }
 
-  - description: Bü 0/1 (sign)
+  - description: Crossing (always) unsecured (Bü 0, sign)
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
@@ -1829,14 +1829,14 @@ features:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
 
-  - description: Bü 0/1 (light, repeated)
+  - description: Crossing unsecured/secured (repeater) (Bü 0/1)
     country: DE
     icon: { default: 'de/bue1-ds-repeated' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
       - { tag: 'railway:signal:crossing:repeated' }
 
-  - description: Bü 0/1 (light)
+  - description: Crossing unsecured/secured signal (Bü 0/1)
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
@@ -1846,7 +1846,7 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:bü' }
 
-  - description: So 16a/b (repeated)
+  - description: Crossing unsecured/secured signal (repeater) (So 16b/a)
     country: DE
     icon: { default: 'de/bue1-dv-repeated' }
     tags:
@@ -1854,7 +1854,7 @@ features:
       - { tag: 'railway:signal:crossing:form', value: 'light' }
       - { tag: 'railway:signal:crossing:repeated' }
 
-  - description: So 16a/b
+  - description: Crossing unsecured/secured signal (So 16b/a)
     country: DE
     icon:
       match: 'railway:signal:crossing:shortened'
@@ -1865,53 +1865,53 @@ features:
       - { tag: 'railway:signal:crossing', value: 'DE-ESO:so16' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
-  - description: crossing distant sign (warning board) So 15 (DV 301)
+  - description: Expect So16 crossing signal sign (So 15, DV 301)
     country: DE
     icon: { default: 'de/so15' }
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so15' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: distant crossing So 14
+  - description: Crossing switch-on location pole (So 14, DV 301)
     country: DE
     icon: { default: 'de/so14' }
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:so14' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: crossing distant sign Bü 2
+  - description: Expect Bü 0/1 crossing signal (Bü 2)
     country: DE
     icon:
       match: 'railway:signal:crossing_distant:shortened'
       cases:
-        - { value: 'de/bue2-ds-reduced-distance', description: 'reduced distance' }
+        - { value: 'de/bue2-ds-reduced-distance', description: 'shortened' }
       default: 'de/bue2-ds'
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü2' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: crossing distant sign Bü 3
+  - description: Crossing switch-on location board (Bü 3)
     country: DE
     icon: { default: 'de/bue3' }
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-ESO:bü3' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: tram crossing light Bü
+  - description: Crossing unsecured/secured signal (Bü 0/1, tram)
     country: DE
     icon: { default: 'de/bostrab/bü' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-BOStrab:bü' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
-  - description: tram distant crossing light Bü 2
+  - description: Expect Bü 0/1 crossing signal (Bü 2, tram)
     country: DE
     icon: { default: 'de/bostrab/bü2' }
     tags:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-BOStrab:bü2' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'sign' }
 
-  - description: Bü 4 Whistle Sign
+  - description: Whistle sign (Bü 4)
     country: DE
     icon:
       match: 'railway:signal:whistle:only_transit'
@@ -1922,7 +1922,7 @@ features:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:db:bü4' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
-  - description: whistle sign Pf 1 (DV 301)
+  - description: Whistle sign (Pf 1, DV 301)
     country: DE
     icon:
       match: 'railway:signal:whistle:only_transit'
@@ -1933,7 +1933,7 @@ features:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf1' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
-  - description: whistle twice sign Pf 2 (DV 301)
+  - description: Whistle twice sign (Pf 2) (DV 301)
     country: DE
     icon:
       default: 'de/pf2-dv'
@@ -1941,7 +1941,7 @@ features:
       - { tag: 'railway:signal:whistle', value: 'DE-ESO:dr:pf2' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
-  - description: ring sign Bü 5
+  - description: Ring bell sign (Bü 5)
     country: DE
     icon:
       match: 'railway:signal:ring:only_transit'
@@ -1952,7 +1952,7 @@ features:
       - { tag: 'railway:signal:ring', value: 'DE-ESO:bü5' }
       - { tag: 'railway:signal:ring:form', value: 'sign' }
 
-  - description: Lift / Fold snowplow Ne 7 (sign)
+  - description: Lift / Fold snowplow sign (Ne 7)
     country: DE
     icon:
       match: 'railway:signal:snowplow:type'
@@ -1963,49 +1963,49 @@ features:
       - { tag: 'railway:signal:snowplow', value: 'DE-ESO:ne7' }
       - { tag: 'railway:signal:snowplow:form', value: 'sign' }
 
-  - description: Ne13 resetting switch signal
+  - description: Resetting switch signal (Ne 13)
     country: DE
     icon: { default: 'de/ne13a' }
     tags:
       - { tag: 'railway:signal:resetting_switch', value: 'DE-ESO:ne13' }
       - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
 
-  - description: Ne12 resetting switch distant signal
+  - description: Expect and mind resetting switch signal (Ne 12)
     country: DE
     icon: { default: 'de/ne12' }
     tags:
       - { tag: 'railway:signal:resetting_switch_distant', value: 'DE-ESO:ne12' }
       - { tag: 'railway:signal:resetting_switch_distant:form', value: 'sign' }
 
-  - description: humping signal Ra 6-9
+  - description: Humping signal (Ra 6-9)
     country: DE
     icon: { default: 'de/ra7' }
     tags:
       - { tag: 'railway:signal:humping', value: 'DE-ESO:ra' }
       - { tag: 'railway:signal:humping:form', value: 'light' }
 
-  - description: tram läuten Sh 4
+  - description: Ring bell sign (Sh 4, tram)
     country: DE
     icon: { default: 'de/bostrab/sh4' }
     tags:
       - { tag: 'railway:signal:ring', value: 'DE-BOStrab:sh4' }
       - { tag: 'railway:signal:ring:form', value: 'sign' }
 
-  - description: helper engine signal Ts
+  - description: Helper engine sign (Ts)
     country: DE
     icon: { default: 'de/ts1' }
     tags:
       - { tag: 'railway:signal:helper_engine', value: 'DE-ESO:ts' }
       - { tag: 'railway:signal:helper_engine:form', value: 'sign' }
 
-  - description: brake test signal Zp 6-8
+  - description: Brake test signal (Zp 6-8)
     country: DE
     icon: { default: 'de/zp8' }
     tags:
       - { tag: 'railway:signal:brake_test', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:brake_test:form', value: 'light' }
 
-  - description: Zp 9 (departure order) or Zp 10 (close doors)
+  - description: Departure order / Close doors (Zp 9 / Zp 10)
     country: DE
     icon:
       match: 'railway:signal:departure:states'
@@ -2016,7 +2016,7 @@ features:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: tram departure signals
+  - description: Close doors / Departure order (A1 / A2, tram)
     country: DE
     icon:
       match: 'railway:signal:departure:states'
@@ -2027,21 +2027,21 @@ features:
       - { tag: 'railway:signal:departure', any: ['DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: crossing info sign
+  - description: Crossing marking sign (Bü-Kennzeichentafel)
     country: DE
     icon: { default: 'de/bue-crossing-info' }
     tags:
       - { tag: 'railway:signal:crossing_info', value: 'DE-ESO:bü-kennzeichentafel' }
       - { tag: 'railway:signal:crossing_info:form', value: 'sign' }
 
-  - description: crossing anouncement sign
+  - description: Crossing anouncement sign (Bü-Ankündetafel)
     country: DE
     icon: { default: 'de/bue-crossing-hint' }
     tags:
       - { tag: 'railway:signal:crossing_hint', value: 'DE-ESO:bü-ankündetafel' }
       - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
 
-  - description: Karlsruhe AVG crossing signals
+  - description: Crossing signals (Bü 201, tram Karlsruhe / AVG)
     country: DE
     icon:
       match: 'railway:signal:crossing_distant:states'
@@ -2052,49 +2052,49 @@ features:
       - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü201' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'light' }
 
-  - description: Karlsruhe AVG Stop Demand
+  - description: AVG stop demand (Hw 1, tram Karlsruhe / AVG)
     country: DE
     icon: { default: 'de/avg/hw1' }
     tags:
       - { tag: 'railway:signal:stop_demand', value: 'DE-AVG:hw1' }
       - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
-  - description: wrong road signal Zs 6 (DB) (sign)
+  - description: Opposite track sign (Zs 6)
     country: DE
     icon: { default: 'de/zs6-sign' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
       - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
 
-  - description: wrong road signal Zs 6 (DB) (light)
+  - description: Opposite track signal (Zs 6)
     country: DE
     icon: { default: 'de/zs6-db-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:db:zs6' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
-  - description: wrong road signal Zs 7 (DR) (light)
+  - description: Opposite track signal (Zs 7, DV 301)
     country: DE
     icon: { default: 'de/zs7-dr-light' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'DE-ESO:dr:zs7' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
-  - description: entry into dead-end / early stop marker Zs 13 / Zs 6 (DR) (sign)
+  - description: Entry into dead-end sign (Zs 13 / Zs 6 DV 301)
     country: DE
     icon: { default: 'de/zs13-sign' }
     tags:
       - { tag: 'railway:signal:short_route', any: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'sign' }
 
-  - description: entry into dead-end / early stop marker Zs 13 / Zs 6 (DR) (light)
+  - description: Entry into dead-end signal (Zs 13 / Zs 6 DV 301)
     country: DE
     icon: { default: 'de/zs13-light' }
     tags:
       - { tag: 'railway:signal:short_route', any: ['DE-ESO:zs13', 'DE-ESO:dr:zs6'] }
       - { tag: 'railway:signal:short_route:form', value: 'light' }
 
-  - description: Richtungsvoranzeiger (Zs 2v)
+  - description: Route pre-indicator (Zs 2v)
     country: DE
     icon:
       match: 'railway:signal:route_distant:states'
@@ -2105,7 +2105,7 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'DE-ESO:zs2v' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
 
-  - description: Speed signals (Zs 3v) (sign)
+  - description: Speed limit through switches sign (distant) (Zs 3v)
     country: DE
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
@@ -2116,7 +2116,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Speed signals (Zs 3v) (light)
+  - description: Speed limit through switches signal (distant) (Zs 3v)
     country: DE
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
@@ -2127,7 +2127,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:zs3v' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-  - description: West German branch line speed signals (Lf 4 DS 301)
+  - description: Expect speed restriction (on branch lines) (Lf 4, DS 301)
     country: DE
     type: line
     icon:
@@ -2139,7 +2139,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:db:lf4' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: East German branch line speed signals (Lf 4)
+  - description: Speed sign (Lf 4, DV 301)
     country: DE
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
@@ -2150,7 +2150,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:dr:lf4' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: German line speed signals (Lf 6)
+  - description: Expect new line speed sign (Lf 6)
     country: DE
     type: line
     icon:
@@ -2162,7 +2162,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:lf6' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Langsamfahrscheibe
+  - description: Expect temporary speed restriction sign (Lf 1)
     country: DE
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
@@ -2209,7 +2209,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', any: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-  - description: distant signal announcement signs Ne 3 (normal)
+  - description: Distant signal announcement signs (Ne 3, normal)
     country: DE
     icon:
       match: 'railway:signal:distant:type'
@@ -2222,7 +2222,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: distant signal announcement signs Ne 3 (dwarf)
+  - description: Distant signal announcement signs (Ne 3, dwarf)
     country: DE
     icon:
       match: 'railway:signal:distant:type'
@@ -2243,14 +2243,14 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-HHA:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: distant signal replacement by sign So 106
+  - description: Distant signal stand-in sign (So 106, DV 301)
     country: DE
     icon: { default: 'de/so106' }
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:so106' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: distant light signals type Vr (repeated)
+  - description: Distant light signals type Vr (repeated)
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -2263,7 +2263,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:repeated' }
 
-  - description: distant light signals type Vr (shortened)
+  - description: Distant light signals type Vr (shortened)
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -2276,7 +2276,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:shortened' }
 
-  - description: distant light signals type Vr
+  - description: Distant light signals type Vr
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -2288,7 +2288,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: distant semaphore signals type Vr
+  - description: Distant semaphore signals type Vr
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -2300,7 +2300,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:vr' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
-  - description: distant signal replacement by sign Ne 2
+  - description: Distant signal stand-in sign (Ne 2)
     country: DE
     icon:
       match: 'railway:signal:distant:shortened'
@@ -2311,7 +2311,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:db:ne2' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: distant signal replacement at reduced distance by sign So 3 (DV 301)
+  - description: Distant signal stand-in sign shortened (So 3, DV 301)
     country: DE
     icon: { default: 'de/ne2-dv301-reduced-distance' }
     tags:
@@ -2319,7 +2319,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'sign' }
       - { tag: 'railway:signal:distant:shortened' }
 
-  - description: distant light signals type Hl
+  - description: Distant light signals type Hl
     country: DE
     icon:
       match: 'railway:signal:distant:repeated'
@@ -2349,7 +2349,7 @@ features:
       - { tag: 'railway:signal:distant', any: ['DE-VBK:fv', 'DE-VBK:fv0'] }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
-  - description: BOStrab distant signal
+  - description: BOStrab distant signal (V)
     country: DE
     icon:
       match: 'railway:signal:distant:states'
@@ -2364,7 +2364,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: distant signals type Ks (repeated)
+  - description: Distant signals type Ks (repeated)
     country: DE
     icon: { default: 'de/ks-distant-repeated' }
     tags:
@@ -2372,7 +2372,7 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:repeated' }
 
-  - description: distant signals type Ks (shortened)
+  - description: Distant signals type Ks (shortened)
     country: DE
     icon: { default: 'de/ks-distant-shortened' }
     tags:
@@ -2380,21 +2380,21 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:shortened' }
 
-  - description: distant signals type Ks
+  - description: Distant signals type Ks
     country: DE
     icon: { default: 'de/ks-distant' }
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: main entry sign Ne 1
+  - description: Main signal stand-in sign (Ne 1)
     country: DE
     icon: { default: 'de/ne1' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ne1' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
-  - description: main semaphore signals type Hp
+  - description: Main semaphore signals type Hp
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2406,7 +2406,7 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
-  - description: main light signals type Hp
+  - description: Main light signals type Hp
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2418,7 +2418,7 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: main light signals type Hl
+  - description: Main light signals type Hl
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2432,7 +2432,7 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: tram Fahrsignal mit Anmeldung LSA
+  - description: Proceed signal with registration (F1-5 + A, tram)
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2447,7 +2447,7 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
 
-  - description: tram Fahrsignal
+  - description: Proceed signal (F1-5, tram)
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2461,7 +2461,7 @@ features:
       - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: BOStrab Hauptsignal
+  - description: BOStrab main signal
     country: DE
     icon:
       match: 'railway:signal:main:states'
@@ -2489,14 +2489,14 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-HHA:h' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: main signals type Ks
+  - description: Main signals type Ks
     country: DE
     icon: { default: 'de/ks-main' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: combined light signals type Hl
+  - description: Combined light signals type Hl
     country: DE
     icon:
       match: 'railway:signal:combined:states'
@@ -2510,7 +2510,7 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: combined light signals type Sv
+  - description: Combined light signals type Sv
     country: DE
     icon:
       # TODO add shortened
@@ -2522,14 +2522,14 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: tram Hauptsignal mit Vorsignal
+  - description: BOStrab combined signals
     country: DE
     icon: { default: 'de/bostrab/h' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: combined signals type Ks
+  - description: Combined signals type Ks
     country: DE
     icon:
       match: 'railway:signal:combined:shortened'
@@ -2540,7 +2540,7 @@ features:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Speed signals (Zs 3) (light)
+  - description: Speed limit through switches sign (Zs 3)
     country: DE
     icon:
       match: 'railway:signal:speed_limit:speed'
@@ -2551,7 +2551,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Speed signals (Zs 3) (light)
+  - description: Speed limit through switches signal (Zs 3)
     country: DE
     icon:
       match: 'railway:signal:speed_limit:speed'
@@ -2562,7 +2562,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:zs3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: Tram speed limit (G 2a) (sign)
+  - description: Speed limit sign (G2a, tram)
     country: DE
     type: tram
     icon:
@@ -2574,7 +2574,7 @@ features:
       - { tag: 'railway:signal:speed_limit', any: ['DE-BOStrab:g2', 'DE-BOStrab:g2a', 'DE-BSVG:g2a'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Tram speed limit (G 2b) (light)
+  - description: Speed limit signal (G2b, tram)
     country: DE
     type: tram
     icon:
@@ -2586,7 +2586,7 @@ features:
       - { tag: 'railway:signal:speed_limit', any: ['DE-BOStrab:g2', 'DE-BOStrab:g2b'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: Tram signal G3
+  - description: End of speed limit sign (G3, tram)
     country: DE
     type: tram
     icon: { default: 'de/bostrab/g3' }
@@ -2594,7 +2594,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: German tram speed limit signals as signs (G 4)
+  - description: Speed limit increase sign (G4, tram)
     country: DE
     type: tram
     icon:
@@ -2618,7 +2618,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-UESTRA:g5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: East German line speed signal "Eckentafel" (Lf 5)
+  - description: Start of speed restriction (Lf 5, DV 301)
     country: DE
     type: line
     icon: { default: 'de/lf5-dv301-sign' }
@@ -2626,7 +2626,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: West German line speed signal "Anfangstafel" (Lf 5)
+  - description:  Start of speed restriction (Lf 5, DS 301)
     country: DE
     type: line
     icon: { default: 'de/lf5-ds301-sign' }
@@ -2634,7 +2634,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:lf5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: German line speed signals (Lf 7)
+  - description: Line speed sign (Lf 7)
     country: DE
     type: line
     icon:
@@ -2654,14 +2654,14 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-HHA:l4' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Anfangsscheibe
+  - description: Start of temporary speed restriction (Lf 2)
     country: DE
     icon: { default: 'de/lf2-sign' }
     tags:
       - { tag: 'railway:signal:speed_limit', any: ['DE-ESO:lf2', 'DE-ESO:db:lf2'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Langsamfahrbeginnscheibe
+  - description: Start of temporary speed restriction (Lf 1/2, DV 301)
     country: DE
     icon:
       match: 'railway:signal:speed_limit:speed'
@@ -2672,28 +2672,28 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf1/2' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Endscheibe
+  - description: End of temporary speed restriction (Lf 3)
     country: DE
     icon: { default: 'de/lf3-sign' }
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:lf3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Ende der Geschwindigkeitsbeschränkung (sign)
+  - description: End of speed limit through switches sign (Zs 10)
     country: DE
     icon: { default: 'de/zs10-sign' }
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Ende der Geschwindigkeitsbeschränkung (light)
+  - description: End of speed limit through switches signal (Zs 10)
     country: DE
     icon: { default: 'de/zs10-light' }
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:db:zs10' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: Richtungsanzeiger (Zs 2)
+  - description: Route indicator (Zs 2)
     country: DE
     icon:
       match: 'railway:signal:route:states'
@@ -2704,7 +2704,7 @@ features:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
-  - description: power off advance sign El 1v
+  - description: Power off anouncement sign (El 1v)
     country: DE
     icon: { default: 'de/el1v' }
     tags:
@@ -2712,7 +2712,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-ESO:el1v' }
 
-  - description: power off sign El 1
+  - description: Power off sign (El 1)
     country: DE
     icon: { default: 'de/el1' }
     tags:
@@ -2720,7 +2720,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el1', 'DE-BOStrab:st3', 'DE-HHA:s1'] }
 
-  - description: power on sign El 2
+  - description: Power on sign (El 2)
     country: DE
     icon: { default: 'de/el2' }
     tags:
@@ -2728,7 +2728,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el2', 'DE-BOStrab:st4', 'DE-HHA:s2'] }
 
-  - description: pantograph down advance El 3
+  - description: Pantograph down anouncement sign (El 3)
     country: DE
     icon: { default: 'de/el3' }
     tags:
@@ -2736,7 +2736,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-ESO:el3' }
 
-  - description: pantograph down El 4
+  - description: Pantograph down El 4
     country: DE
     icon: { default: 'de/el4' }
     tags:
@@ -2744,7 +2744,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el4', 'DE-BOStrab:st5'] }
 
-  - description: pantograph up El 5
+  - description: Pantograph up El 5
     country: DE
     icon: { default: 'de/el5' }
     tags:
@@ -2752,7 +2752,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el5', 'DE-BOStrab:st6'] }
 
-  - description: end of catenary sign El 6
+  - description: End of catenary sign (El 6)
     country: DE
     icon:
       match: 'railway:signal:electricity:turn_direction'
@@ -2766,7 +2766,7 @@ features:
       - { tag: 'railway:signal:electricity:form', any: ['sign', 'light', 'semaphore'] }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el6', 'DE-BOStrab:st8'] }
 
-  - description: power off shortly sign El 7 (S-Bahn Berlin)
+  - description: Power off shortly sign (El 7, S-Bahn Berlin)
     country: DE
     icon: { default: 'de/el7' }
     tags:
@@ -2774,7 +2774,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-ESO:el7' }
 
-  - description: tram power off shortly signal (St 7)
+  - description: Power off shortly signal (St 7, tram)
     country: DE
     icon: { default: 'de/bostrab/st7' }
     tags:
@@ -2782,7 +2782,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-BOStrab:st7', 'DE-AVG:st7'] }
 
-  - description: power off shortly
+  - description: Power off shortly (El 1-2)
     country: DE
     icon: { default: 'de/el1-el2' }
     tags:
@@ -2790,7 +2790,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', any: ['DE-ESO:el1;DE-ESO:el2', 'DE-ESO:el2:DE-ESO:el1'] }
 
-  - description: tram sign power off shortly El 1
+  - description: Sign power off shortly (El 1, tram)
     country: DE
     icon: { default: 'de/avg/el1' }
     tags:
@@ -2798,7 +2798,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-AVG:el1' }
 
-  - description: Streckentrennung (anfang)
+  - description: Begin of isolated overlap
     country: DE
     icon: { default: 'de/streckentrennung-anfang' }
     tags:
@@ -2806,7 +2806,7 @@ features:
       - { tag: 'railway:signal:electricity:type', value: 'begin_of_isolated_overlap' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
 
-  - description: Streckentrennung (ende)
+  - description: End of isolated overlap
     country: DE
     icon: { default: 'de/streckentrennung-ende' }
     tags:
@@ -2843,21 +2843,21 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
-  - description: RSAG Vorfahrt gewähren (So 11)
+  - description: Give way (So 11, tram, RSAG)
     country: DE
     icon: { default: 'de/rsag/so11' }
     tags:
       - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-RSAG:so11' }
 
-  - description: RSAG Vorfahrt (So 12)
+  - description: Right of way (So 12, tram, RSAG)
     country: DE
     icon: { default: 'de/rsag/so12' }
     tags:
       - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-RSAG:so12' }
 
-  - description: RSAG Halt bei Überflutung (So 13)
+  - description: Halt during flooding (So 13, tram, RSAG)
     country: DE
     icon: { default: 'de/rsag/so13' }
     tags:
