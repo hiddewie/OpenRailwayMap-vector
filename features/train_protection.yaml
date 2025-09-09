@@ -41,6 +41,7 @@ train_protections:
   - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
   - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
   - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'hsl(187, 100%, 40%)' }
+  - { train_protection: 'twc', legend: 'Track Warrant Control (TWC)', color: '#884400' }
   - { train_protection: 'none', legend: 'No train protection', color: 'black' }
 
 features:
@@ -296,6 +297,10 @@ features:
   - train_protection: satp
     tags:
       - { tag: 'railway:atp4b', value: 'yes' }
+
+  - train_protection: twc
+    tags:
+      - { tag: 'railway:twc', value: 'yes' }
 
   - train_protection: none
     tags:
