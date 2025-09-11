@@ -2615,7 +2615,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(100|[2-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-{40}' }
+        - { regex: '^(100|[1-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-{40}' }
       default: 'de/bostrab/g4-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
