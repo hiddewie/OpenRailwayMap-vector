@@ -2462,6 +2462,20 @@ features:
       - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: tram Fahrsignal (sign)
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5-sign' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3-sign' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2-sign' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1-sign' }
+      default: 'de/bostrab/f0-sign'
+    tags:
+      - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
   - description: BOStrab Hauptsignal
     country: DE
     icon:
