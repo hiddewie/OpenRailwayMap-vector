@@ -3990,7 +3990,7 @@ features:
     country: IT
     icon: { default: 'it/crossing-light' }
     tags:
-      - { tag: 'railway:signal:crossing', value: 'IT:1V' }
+      - { tag: 'railway:signal:crossing', value: 'IT:CT' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
   - description: Level crossing (sign)
