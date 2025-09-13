@@ -1038,7 +1038,14 @@ function osm2pgsql.process_way(object)
     local bridge = tags['bridge'] and tags['bridge'] ~= 'no' or false
     local name = railway_line_name(state_name, tunnel, tags['tunnel:name'], bridge, tags['bridge:name'])
 
-    local preferred_direction = tags['railway:preferred_direction']
+    local oneway_map = {
+      ['yes'] = 'forward',
+      ['-1'] = 'backward',
+      ['no'] = 'both',
+      ['alternating'] = 'both',
+      ['reversible'] = 'both',
+    }
+    local preferred_direction = tags['railway:preferred_direction'] or oneway_map[tags['oneway']]
     local dominant_speed, speed_label = dominant_speed_label(state, preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     -- Segmentize linestring to optimize tile queries
