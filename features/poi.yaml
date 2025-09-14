@@ -293,6 +293,13 @@ features:
         tags:
           - { tag: 'railway', value: 'level_crossing' }
 
+  - description: Hi-rail vehicle access point
+    layer: standard
+    minzoom: 16
+    feature: 'general/hirail_access'
+    tags:
+      - { tag: 'railway', value: 'hirail_access' }
+
   - description: Phone
     layer: standard
     minzoom: 16
