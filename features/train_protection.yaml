@@ -350,6 +350,6 @@ features:
     tags:
       - { tag: 'railway:zsi127', value: 'no' }
 
-    - train_protection: none
+  - train_protection: none
     tags:
       - { tag: 'railway:jkv', value: 'no' }
