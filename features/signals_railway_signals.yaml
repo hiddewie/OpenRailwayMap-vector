@@ -55,7 +55,6 @@ tags:
   - { tag: 'railway:signal:main:states', description: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', description: 'Main substitute signal' }
   - { tag: 'railway:signal:main:PT_priority', description: 'Main PT priority' }
-  - { tag: 'railway:signal:main:regime', description: 'Main regime' }
   - { tag: 'railway:signal:main_repeated', description: 'Main repeated' }
   - { tag: 'railway:signal:main_repeated:form', description: 'Main repeated form' }
   - { tag: 'railway:signal:main_repeated:magnet', description: 'Main repeated magnet', type: boolean }
@@ -130,6 +129,7 @@ tags:
   - { tag: 'railway:signal:wrong_road', description: 'Wrong road' }
   - { tag: 'railway:signal:wrong_road:form', description: 'Wrong road form' }
   - { tag: 'railway:vacancy_detection', description: 'Vacancy detection' }
+  - { tag: 'railway:signal:regime', description: 'Signal regime' }
   - { tag: 'railway:signal:position', description: 'Position' }
 
 # A mapping of every type of signal that is imported
@@ -856,7 +856,7 @@ features:
       default: 'be/GSA-opposite-R'
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
-      - { tag: 'railway:signal:main:regime', value: 'opposite' }
+      - { tag: 'railway:signal:regime', value: 'opposite' }
 
   - description: Grand Signal d'Arrêt (normal regime)
     country: BE
