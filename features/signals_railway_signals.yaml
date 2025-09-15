@@ -3576,14 +3576,26 @@ features:
 
   # --- GB --- #
 
-  - description: Whistle
+  - description: Whistle stencil
     country: GB
-    icon:
-      match: 'railway:signal:whistle'
-      cases:
-        - { exact: 'GB-NR:stencil', value: 'gb/whistle-stencil' }
-        - { exact: 'GB-NR:board', value: 'gb/whistle-board' }
-        - { exact: 'GB-NR:continuous', value: 'gb/whistle-continuous' }
+    icon: { default: 'gb/whistle-stencil' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'GB-NR:stencil' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Whistle board
+    country: GB
+    icon: { default: 'gb/whistle-board' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'GB-NR:board' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Whistle continuous
+    country: GB
+    icon: { default: 'gb/whistle-continuous' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'GB-NR:continuous' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Main (light)
     country: GB
