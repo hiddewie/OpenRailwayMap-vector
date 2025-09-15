@@ -2,6 +2,7 @@ track_classes:
   - { value: 'A', color: 'hsl(248, 100%, 40%)' }
   - { value: 'B1', color: 'hsl(220, 100%, 40%)' }
   - { value: 'B2', color: 'hsl(200, 100%, 40%)' }
+  - { value: 'C1', color: 'hsl(190, 100%, 40%)' }
   - { value: 'C2', color: 'hsl(180, 100%, 40%)' }
   - { value: 'C3', color: 'hsl(160, 100%, 40%)' }
   - { value: 'C3L', color: 'hsl(140, 100%, 40%)' }
@@ -10,6 +11,7 @@ track_classes:
   - { value: 'CM2', color: 'hsl(80, 100%, 40%)' }
   - { value: 'CM3', color: 'hsl(60, 100%, 40%)' }
   - { value: 'CM4', color: 'hsl(40, 100%, 40%)' }
+  - { value: 'D', color: 'hsl(10, 100%, 40%)' }
   - { value: 'D2', color: 'hsl(30, 100%, 40%)' }
   - { value: 'D3', color: 'hsl(20, 100%, 40%)' }
   - { value: 'D4', color: 'hsl(10, 100%, 40%)' }

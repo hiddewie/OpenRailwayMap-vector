@@ -23,6 +23,7 @@ train_protections:
   - { train_protection: 'tcb', legend: 'Track Circuit Block (TCB)', color: 'hsl(147, 100%, 40%)' }
   - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
   - { train_protection: 'ebicab', legend: 'EBICAB', color: 'pink' } # portugal & bulgaria
+  - { train_protection: 'jkv', legend: 'Junakulunvalvonta (JKV)', color: 'pink' } # finland
   - { train_protection: 'etms', legend: 'Electronic Train Management System (ETMS)', color: 'hsl(48, 100%, 40%)' }
   - { train_protection: 'evm', legend: 'Elektronikus Vonatmegállító (EVM)', color: 'hsl(137, 100%, 40%)' }
   - { train_protection: 'itcs', legend: 'Incremental Train Control System (ITCS)', color: 'hsl(35, 100%, 40%)' }
@@ -208,6 +209,10 @@ features:
     tags:
       - { tag: 'railway:ebicab', values: ['yes', '700', '900'] }
 
+  - train_protection: jkv
+    tags:
+      - { tag: 'railway:jkv', value: 'yes' }
+
   - train_protection: evm
     tags:
       - { tag: 'railway:evm', value: 'yes' }
@@ -344,3 +349,7 @@ features:
   - train_protection: none
     tags:
       - { tag: 'railway:zsi127', value: 'no' }
+
+  - train_protection: none
+    tags:
+      - { tag: 'railway:jkv', value: 'no' }

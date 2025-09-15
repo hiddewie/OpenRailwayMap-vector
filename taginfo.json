@@ -99,6 +99,7 @@
     { "key": "railway", "value": "site" },
     { "key": "railway", "value": "crossing" },
     { "key": "railway", "value": "level_crossing" },
+    { "key": "railway", "value": "hirail_access" },
     { "key": "railway", "value": "phone" },
     { "key": "railway", "value": "border" },
     { "key": "railway", "value": "owner_change" },
