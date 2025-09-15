@@ -453,9 +453,6 @@ def preset_items_signals_for_country(features):
 
       if 'match' in feature['icon']:
         match = feature['icon']['match']
-        if match == 'ref_multiline':
-          match = 'ref'
-
         text = (tag_descriptions[match] if match in tag_descriptions else match)
 
         if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
