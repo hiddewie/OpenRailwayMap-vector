@@ -3117,7 +3117,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 15,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
-      filter: ['!=', ['get', 'name'], null],
+      filter: ['any',
+        ['!=', ['get', 'name'], null],
+        ['!=', ['get', 'ref'], null],
+      ],
       paint: {
         'text-color': colors[theme].styles.standard.signalBox.text,
         'text-halo-color': ['case',
@@ -3127,7 +3130,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-halo-width': 1.5,
       },
       layout: {
-        'text-field': '{name}',
+        'text-field': ['coalesce', ['get', 'name'], ['get', 'ref'], ''],
         'text-font': font.bold,
         'text-size': 11,
       }

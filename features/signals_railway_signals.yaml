@@ -1979,10 +1979,13 @@ features:
 
   - description: humping signal Ra 6-9
     country: DE
-    icon: { default: 'de/ra7' }
+    icon:
+      match: 'railway:signal:humping:form'
+      cases:
+        - { exact: 'semaphore', value: 'de/ra7-semaphore', description: 'semaphore' }
+      default: 'de/ra7'
     tags:
       - { tag: 'railway:signal:humping', value: 'DE-ESO:ra' }
-      - { tag: 'railway:signal:humping:form', value: 'light' }
 
   - description: tram läuten Sh 4
     country: DE
@@ -2217,6 +2220,7 @@ features:
         - { exact: 'II', value: 'de/ne3-normal-II' }
         - { exact: 'III', value: 'de/ne3-normal-III' }
         - { exact: 'IV', value: 'de/ne3-normal-IV' }
+        - { exact: 'V', value: 'de/ne3-normal-V' }
       default: 'de/ne3-normal-I'
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
@@ -2461,6 +2465,20 @@ features:
       - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: tram Fahrsignal (sign)
+    country: DE
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { any: ['DE-AVG:f5', 'DE-BOStrab:f5'], value: 'de/bostrab/f5-sign' }
+        - { any: ['DE-AVG:f3', 'DE-BOStrab:f3'], value: 'de/bostrab/f3-sign' }
+        - { any: ['DE-AVG:f2', 'DE-BOStrab:f2'], value: 'de/bostrab/f2-sign' }
+        - { any: ['DE-AVG:f1', 'DE-BOStrab:f1'], value: 'de/bostrab/f1-sign' }
+      default: 'de/bostrab/f0-sign'
+    tags:
+      - { tag: 'railway:signal:main', any: ['DE-AVG:f', 'DE-BOStrab:f'] }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
   - description: BOStrab Hauptsignal
     country: DE
     icon:
@@ -2600,7 +2618,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(100|[2-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-{40}' }
+        - { regex: '^(100|[1-9]0|[235]5)$', value: 'de/bostrab/g4-{}', example: 'de/bostrab/g4-{40}' }
       default: 'de/bostrab/g4-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
@@ -3990,7 +4008,7 @@ features:
     country: IT
     icon: { default: 'it/crossing-light' }
     tags:
-      - { tag: 'railway:signal:crossing', value: 'IT:1V' }
+      - { tag: 'railway:signal:crossing', value: 'IT:CT' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
 
   - description: Level crossing (sign)
