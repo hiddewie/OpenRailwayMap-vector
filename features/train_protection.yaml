@@ -16,6 +16,7 @@ train_protections:
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
   - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#43b54d' }
   - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#43b54d' }
+  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#43b54d' }
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -136,6 +137,10 @@ features:
   - train_protection: atb
     tags:
       - { tag: 'railway:atb-vv', value: 'yes' }
+
+  - train_protection: atms
+    tags:
+      - { tag: 'railway:atms', value: 'yes' }
 
   - train_protection: zsi127
     tags:
