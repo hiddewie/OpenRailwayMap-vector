@@ -252,6 +252,7 @@
     { "key": "railway:signal:wrong_road:form" },
     { "key": "railway:vacancy_detection" },
     { "key": "railway:signal:position" },
+    { "key": "railway:signal:regime" },
     { "key": "ref:crs" },
     { "key": "tourism", "value": "museum" },
     { "key": "museum", "value": "railway" }

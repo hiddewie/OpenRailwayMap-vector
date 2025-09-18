@@ -313,7 +313,6 @@ local signal_columns = {
   { column = 'railway', type = 'text' },
   { column = 'deactivated', type = 'boolean' },
   { column = 'ref', type = 'text' },
-  { column = 'ref_multiline', type = 'text' },
   { column = 'signal_direction', type = 'text' },
   { column = 'caption', type = 'text' },
   { column = 'position', sql_type = 'text[]' },
@@ -923,13 +922,11 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_signal_values(tags.railway) then
-    local ref_multiline, newline_count = (tags.ref or ''):gsub(' ', '\n')
     local signal = {
       way = object:as_point(),
       railway = tags.railway,
       deactivated = tag_functions.signal_deactivated(tags),
       ref = tags.ref,
-      ref_multiline = ref_multiline ~= '' and ref_multiline or nil,
       signal_direction = tags['railway:signal:direction'],
       caption = signal_caption(tags),
       position = to_sql_array(map(parse_railway_positions(position, position_exact), format_railway_position)),
