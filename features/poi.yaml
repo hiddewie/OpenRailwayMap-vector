@@ -311,6 +311,7 @@ features:
     feature: 'general/buffer_stop'
     layer: standard
     minzoom: 16
+    colored_icon: true
     tags:
       - { tag: 'railway', value: 'buffer_stop' }
 
@@ -318,6 +319,7 @@ features:
     feature: 'general/derail'
     layer: standard
     minzoom: 16
+    colored_icon: true
     tags:
       - { tag: 'railway', value: 'derail' }
 

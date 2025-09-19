@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="15.110512" viewBox="0 0 16 15.110512">
-<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.901932 0 L 0.901932 6.301655 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
-<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0 14.403217 L 16.203125 14.403217 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
-<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 13.501286 14.403217 L 0.901932 1.799908 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
-<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 4.501747 5.403679 L 13.501286 14.403217 L 4.501747 14.403217 L 4.501747 5.403679 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="#ba0000" stroke-opacity="1" stroke-miterlimit="4" d="M 0.901932 0 L 0.901932 6.301655 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="#ba0000" stroke-opacity="1" stroke-miterlimit="4" d="M 0 14.403217 L 16.203125 14.403217 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="#ba0000" stroke-opacity="1" stroke-miterlimit="4" d="M 13.501286 14.403217 L 0.901932 1.799908 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
+<path fill="none" stroke-width="1.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="#ba0000" stroke-opacity="1" stroke-miterlimit="4" d="M 4.501747 5.403679 L 13.501286 14.403217 L 4.501747 14.403217 L 4.501747 5.403679 " transform="matrix(0.987464, 0, 0, 0.987464, 0, 0)"/>
 </svg>
