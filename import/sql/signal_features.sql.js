@@ -305,11 +305,27 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         description,
         azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-        features[1] as feature0,
-        features[2] as feature1,
-        features[3] as feature2,
-        features[4] as feature3,
-        features[5] as feature4,
+        CASE
+          WHEN railway = 'buffer_stop' THEN 'general/buffer_stop' 
+          WHEN railway = 'derail' THEN 'general/derail' 
+          ELSE features[1] 
+        END as feature0,
+        CASE
+          WHEN railway IN ('buffer_stop', 'derail') THEN features[1] 
+          ELSE features[2] 
+        END as feature1,
+        CASE
+          WHEN railway IN ('buffer_stop', 'derail') THEN features[2] 
+          ELSE features[3] 
+        END as feature2,
+        CASE
+          WHEN railway IN ('buffer_stop', 'derail') THEN features[3] 
+          ELSE features[4] 
+        END as feature3,
+        CASE
+          WHEN railway IN ('buffer_stop', 'derail') THEN features[4] 
+          ELSE features[5] 
+        END as feature4,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
