@@ -3009,26 +3009,34 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         },
       )
     ),
-    ...imageLayerWithOutline(
-      theme,
-      'railway_signals_high_derail_buffer_stop',
-      ['case',
-        ['==', ['get', 'railway'], 'derail'], 'general/derail',
-        ['==', ['get', 'railway'], 'buffer_stop'], 'general/buffer_stop',
-        ''
-      ],
-      {
-        type: 'symbol',
-        minzoom: 16,
-        source: 'openrailwaymap_signals',
-        'source-layer': 'signals_railway_signals',
-        filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-        },
+    {
+      id: 'railway_signals_high_derail_buffer_stop',
+      type: 'symbol',
+      minzoom: 16,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_signals',
+      filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+      paint: {
+        'icon-color': colors[theme].styles.standard.stationsText,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].halo,
+        ],
+        'icon-halo-width': 1,
       },
-    ),
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': ['case',
+          ['==', ['get', 'railway'], 'derail'], 'sdf:general/derail',
+          ['==', ['get', 'railway'], 'buffer_stop'], 'sdf:general/buffer_stop',
+          ''
+        ],
+        'icon-rotate': ['get', 'azimuth'],
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'map',
+      },
+    },
     ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex =>
       imageLayerWithOutline(
         theme,
