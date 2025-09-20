@@ -1203,7 +1203,7 @@ function popupContent(feature) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
   const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
-  const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` (${featureContent.country})` : ''}` : null;
+  const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
 
   const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
@@ -1255,7 +1255,7 @@ function popupContent(feature) {
               console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
               return stringValue;
             } else {
-              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}`;
+              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
             }
           }
         } else if (format.country_prefix) {
