@@ -1,6 +1,6 @@
 /**
  * MapLibre GL JS
- * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.7.0/LICENSE.txt
+ * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.7.3/LICENSE.txt
  */
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -10125,6 +10125,10 @@ var $root = {
 	glyphs: {
 		type: "string"
 	},
+	"font-faces": {
+		type: "array",
+		value: "fontFaces"
+	},
 	transition: {
 		type: "transition"
 	},
@@ -13343,17 +13347,14 @@ function deref(layer, parent) {
     return result;
 }
 /**
- * Given an array of layers, some of which may contain `ref` properties
- * whose value is the `id` of another property, return a new array where
- * such layers have been augmented with the 'type', 'source', etc. properties
- * from the parent layer, and the `ref` property has been removed.
  *
  * The input is not modified. The output may contain references to portions
  * of the input.
  *
- * @private
- * @param {Array<Layer>} layers
- * @returns {Array<Layer>}
+ * @param layers - array of layers, some of which may contain `ref` properties
+ * whose value is the `id` of another property
+ * @returns a new array where such layers have been augmented with the 'type', 'source', etc. properties
+ * from the parent layer, and the `ref` property has been removed.
  */
 function derefLayers(layers) {
     layers = layers.slice();
@@ -14480,8 +14481,6 @@ Color.white = new Color(1, 1, 1, 1);
 Color.transparent = new Color(0, 0, 0, 0);
 Color.red = new Color(1, 0, 0, 1);
 
-// Flow type declarations for Intl cribbed from
-// https://github.com/facebook/flow/issues/1270
 class Collator {
     constructor(caseSensitive, diacriticSensitive, locale) {
         if (caseSensitive)
@@ -15522,7 +15521,7 @@ class IndexOf {
     }
     static parse(args, context) {
         if (args.length <= 2 || args.length >= 5) {
-            return context.error(`Expected 3 or 4 arguments, but found ${args.length - 1} instead.`);
+            return context.error(`Expected 2 or 3 arguments, but found ${args.length - 1} instead.`);
         }
         const needle = context.parse(args[1], 1, ValueType);
         const haystack = context.parse(args[2], 2, ValueType);
@@ -15726,7 +15725,7 @@ class Slice {
     }
     static parse(args, context) {
         if (args.length <= 2 || args.length >= 5) {
-            return context.error(`Expected 3 or 4 arguments, but found ${args.length - 1} instead.`);
+            return context.error(`Expected 2 or 3 arguments, but found ${args.length - 1} instead.`);
         }
         const input = context.parse(args[1], 1, ValueType);
         const beginIndex = context.parse(args[2], 2, NumberType);
@@ -18878,14 +18877,18 @@ function interpolationFactor(input, base, lowerValue, upperValue) {
 }
 
 class StyleExpression {
-    constructor(expression, propertySpec) {
+    constructor(expression, propertySpec, globalState) {
         this.expression = expression;
         this._warningHistory = {};
         this._evaluator = new EvaluationContext();
         this._defaultValue = propertySpec ? getDefaultValue(propertySpec) : null;
         this._enumValues = propertySpec && propertySpec.type === 'enum' ? propertySpec.values : null;
+        this._globalState = globalState;
     }
     evaluateWithoutErrorHandling(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         this._evaluator.globals = globals;
         this._evaluator.feature = feature;
         this._evaluator.featureState = featureState;
@@ -18895,6 +18898,9 @@ class StyleExpression {
         return this.expression.evaluate(this._evaluator);
     }
     evaluate(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         this._evaluator.globals = globals;
         this._evaluator.feature = feature || null;
         this._evaluator.featureState = featureState || null;
@@ -18935,42 +18941,56 @@ function isExpression(expression) {
  *
  * @private
  */
-function createExpression(expression, propertySpec) {
+function createExpression(expression, propertySpec, globalState) {
     const parser = new ParsingContext(expressions$1, isExpressionConstant, [], propertySpec ? getExpectedType(propertySpec) : undefined);
     // For string-valued properties, coerce to string at the top level rather than asserting.
     const parsed = parser.parse(expression, undefined, undefined, undefined, propertySpec && propertySpec.type === 'string' ? { typeAnnotation: 'coerce' } : undefined);
     if (!parsed) {
         return error(parser.errors);
     }
-    return success(new StyleExpression(parsed, propertySpec));
+    return success(new StyleExpression(parsed, propertySpec, globalState));
 }
 class ZoomConstantExpression {
-    constructor(kind, expression) {
+    constructor(kind, expression, globalState) {
         this.kind = kind;
         this._styleExpression = expression;
         this.isStateDependent = kind !== 'constant' && !isStateConstant(expression.expression);
         this.globalStateRefs = findGlobalStateRefs(expression.expression);
+        this._globalState = globalState;
     }
     evaluateWithoutErrorHandling(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         return this._styleExpression.evaluateWithoutErrorHandling(globals, feature, featureState, canonical, availableImages, formattedSection);
     }
     evaluate(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         return this._styleExpression.evaluate(globals, feature, featureState, canonical, availableImages, formattedSection);
     }
 }
 class ZoomDependentExpression {
-    constructor(kind, expression, zoomStops, interpolationType) {
+    constructor(kind, expression, zoomStops, interpolationType, globalState) {
         this.kind = kind;
         this.zoomStops = zoomStops;
         this._styleExpression = expression;
         this.isStateDependent = kind !== 'camera' && !isStateConstant(expression.expression);
         this.globalStateRefs = findGlobalStateRefs(expression.expression);
         this.interpolationType = interpolationType;
+        this._globalState = globalState;
     }
     evaluateWithoutErrorHandling(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         return this._styleExpression.evaluateWithoutErrorHandling(globals, feature, featureState, canonical, availableImages, formattedSection);
     }
     evaluate(globals, feature, featureState, canonical, availableImages, formattedSection) {
+        if (this._globalState) {
+            globals = addGlobalState(globals, this._globalState);
+        }
         return this._styleExpression.evaluate(globals, feature, featureState, canonical, availableImages, formattedSection);
     }
     interpolationFactor(input, lower, upper) {
@@ -18985,8 +19005,8 @@ class ZoomDependentExpression {
 function isZoomExpression(expression) {
     return expression._styleExpression !== undefined;
 }
-function createPropertyExpression(expressionInput, propertySpec) {
-    const expression = createExpression(expressionInput, propertySpec);
+function createPropertyExpression(expressionInput, propertySpec, globalState) {
+    const expression = createExpression(expressionInput, propertySpec, globalState);
     if (expression.result === 'error') {
         return expression;
     }
@@ -19011,13 +19031,13 @@ function createPropertyExpression(expressionInput, propertySpec) {
     }
     if (!zoomCurve) {
         return success(isFeatureConstantResult ?
-            new ZoomConstantExpression('constant', expression.value) :
-            new ZoomConstantExpression('source', expression.value));
+            new ZoomConstantExpression('constant', expression.value, globalState) :
+            new ZoomConstantExpression('source', expression.value, globalState));
     }
     const interpolationType = zoomCurve instanceof Interpolate ? zoomCurve.interpolation : undefined;
     return success(isFeatureConstantResult ?
-        new ZoomDependentExpression('camera', expression.value, zoomCurve.labels, interpolationType) :
-        new ZoomDependentExpression('composite', expression.value, zoomCurve.labels, interpolationType));
+        new ZoomDependentExpression('camera', expression.value, zoomCurve.labels, interpolationType, globalState) :
+        new ZoomDependentExpression('composite', expression.value, zoomCurve.labels, interpolationType, globalState));
 }
 // serialization wrapper for old-style stop functions normalized to the
 // expression interface
@@ -19037,12 +19057,12 @@ class StylePropertyFunction {
         };
     }
 }
-function normalizePropertyExpression(value, specification) {
+function normalizePropertyExpression(value, specification, globalState) {
     if (isFunction$1(value)) {
         return new StylePropertyFunction(value, specification);
     }
     else if (isExpression(value)) {
-        const expression = createPropertyExpression(value, specification);
+        const expression = createPropertyExpression(value, specification, globalState);
         if (expression.result === 'error') {
             // this should have been caught in validation
             throw new Error(expression.value.map(err => `${err.key}: ${err.message}`).join(', '));
@@ -19071,6 +19091,7 @@ function normalizePropertyExpression(value, specification) {
         }
         return {
             globalStateRefs: new Set(),
+            _globalState: null,
             kind: 'constant',
             evaluate: () => constant
         };
@@ -19167,6 +19188,18 @@ function getDefaultValue(spec) {
             return (spec.default === undefined ? null : spec.default);
     }
 }
+function addGlobalState(globals, globalState) {
+    const { zoom, heatmapDensity, elevation, lineProgress, isSupportedScript, accumulated } = globals !== null && globals !== void 0 ? globals : {};
+    return {
+        zoom,
+        heatmapDensity,
+        elevation,
+        lineProgress,
+        isSupportedScript,
+        accumulated,
+        globalState
+    };
+}
 
 function isExpressionFilter(filter) {
     if (filter === true || filter === false) {
@@ -19219,17 +19252,18 @@ const filterSpec = {
  * passes its test.
  *
  * @private
- * @param {Array} filter MapLibre filter
- * @returns {Function} filter-evaluating function
+ * @param filter MapLibre filter
+ * @param [globalState] Global state object to be used for evaluating 'global-state' expressions
+ * @returns filter-evaluating function
  */
-function featureFilter(filter) {
+function featureFilter(filter, globalState) {
     if (filter === null || filter === undefined) {
         return { filter: () => true, needGeometry: false, getGlobalStateRefs: () => new Set() };
     }
     if (!isExpressionFilter(filter)) {
         filter = convertFilter$1(filter);
     }
-    const compiled = createExpression(filter, filterSpec);
+    const compiled = createExpression(filter, filterSpec, globalState);
     if (compiled.result === 'error') {
         throw new Error(compiled.value.map(err => `${err.key}: ${err.message}`).join(', '));
     }
@@ -19849,19 +19883,18 @@ function getKey(layer) {
     return key;
 }
 /**
- * Given an array of layers, return an array of arrays of layers where all
- * layers in each group have identical layout-affecting properties. These
- * are the properties that were formerly used by explicit `ref` mechanism
+ * Groups layers by their layout-affecting properties.
+ * These are the properties that were formerly used by explicit `ref` mechanism
  * for layers: 'type', 'source', 'source-layer', 'minzoom', 'maxzoom',
  * 'filter', and 'layout'.
  *
  * The input is not modified. The output layers are references to the
  * input layers.
  *
- * @private
- * @param {Array<Layer>} layers
- * @param {Object} [cachedKeys] - an object to keep already calculated keys.
- * @returns {Array<Array<Layer>>}
+ * @param layers - an array of {@link LayerSpecification}.
+ * @param cachedKeys - an object to keep already calculated keys.
+ * @returns an array of arrays of {@link LayerSpecification} objects, where each inner array
+ * contains layers that share the same layout-affecting properties.
  */
 function groupByLayout(layers, cachedKeys) {
     const groups = {};
@@ -21554,8 +21587,8 @@ function expressions(style) {
             layer.filter = convertFilter(layer.filter);
         }
     });
-    eachProperty(style, { paint: true, layout: true }, ({ path, value, reference, set }) => {
-        if (isExpression(value))
+    eachProperty(style, { paint: true, layout: true }, ({ path, key, value, reference, set }) => {
+        if (isExpression(value) || key.endsWith('-transition') || reference === null)
             return;
         if (typeof value === 'object' && !Array.isArray(value)) {
             set(convertFunction(value, reference));
@@ -21625,7 +21658,7 @@ function migrate(style) {
         migrated = true;
     }
     eachProperty(style, { paint: true, layout: true }, ({ value, reference, set }) => {
-        if (reference.type === 'color') {
+        if ((reference === null || reference === void 0 ? void 0 : reference.type) === 'color') {
             set(migrateColors(value));
         }
     });
@@ -22867,29 +22900,30 @@ const rtlWorkerPlugin = new RTLWorkerPlugin();
 
 /**
  * @internal
- * A parameter that can be evaluated to a value
+ * A parameter that can be evaluated to a value.
+ * It's main purpose is a parameter to expression `evaluate` methods.
  */
 class EvaluationParameters {
     // "options" may also be another EvaluationParameters to copy, see CrossFadedProperty.possiblyEvaluate
     constructor(zoom, options) {
+        // has to be an own property of an object to be used in expressions
+        // if defined as class method, it'll hidden from operations
+        // that iterate over own enumerable properties
+        // (i..e spread operator (...), Object.keys(), for...in statement, etc.)
+        this.isSupportedScript = isSupportedScript;
         this.zoom = zoom;
         if (options) {
             this.now = options.now || 0;
             this.fadeDuration = options.fadeDuration || 0;
             this.zoomHistory = options.zoomHistory || new ZoomHistory();
             this.transition = options.transition || {};
-            this.globalState = options.globalState || {};
         }
         else {
             this.now = 0;
             this.fadeDuration = 0;
             this.zoomHistory = new ZoomHistory();
             this.transition = {};
-            this.globalState = {};
         }
-    }
-    isSupportedScript(str) {
-        return isStringInSupportedScript(str, rtlWorkerPlugin.getRTLTextPluginStatus() === 'loaded');
     }
     crossFadingFactor() {
         if (this.fadeDuration === 0) {
@@ -22907,6 +22941,9 @@ class EvaluationParameters {
             { fromScale: 2, toScale: 1, t: fraction + (1 - fraction) * t } :
             { fromScale: 0.5, toScale: 1, t: 1 - (1 - t) * fraction };
     }
+}
+function isSupportedScript(str) {
+    return isStringInSupportedScript(str, rtlWorkerPlugin.getRTLTextPluginStatus() === 'loaded');
 }
 
 /**
@@ -22928,10 +22965,10 @@ class EvaluationParameters {
  *  (constant) expressions.
  */
 class PropertyValue {
-    constructor(property, value) {
+    constructor(property, value, globalState) {
         this.property = property;
         this.value = value;
-        this.expression = normalizePropertyExpression(value === undefined ? property.specification.default : value, property.specification);
+        this.expression = normalizePropertyExpression(value === undefined ? property.specification.default : value, property.specification, globalState);
     }
     isDataDriven() {
         return this.expression.kind === 'source' || this.expression.kind === 'composite';
@@ -22955,9 +22992,9 @@ class PropertyValue {
  * `TransitioningPropertyValue`.
  */
 class TransitionablePropertyValue {
-    constructor(property) {
+    constructor(property, globalState) {
         this.property = property;
-        this.value = new PropertyValue(property, undefined);
+        this.value = new PropertyValue(property, undefined, globalState);
     }
     transitioned(parameters, prior) {
         return new TransitioningPropertyValue(this.property, this.value, prior, extend({}, parameters.transition, this.transition), parameters.now);
@@ -22973,27 +23010,28 @@ class TransitionablePropertyValue {
  * `Transitioning` instance for the same set of properties.
  */
 class Transitionable {
-    constructor(properties) {
+    constructor(properties, globalState) {
         this._properties = properties;
         this._values = Object.create(properties.defaultTransitionablePropertyValues);
+        this._globalState = globalState;
     }
     getValue(name) {
         return clone(this._values[name].value.value);
     }
     setValue(name, value) {
         if (!Object.prototype.hasOwnProperty.call(this._values, name)) {
-            this._values[name] = new TransitionablePropertyValue(this._values[name].property);
+            this._values[name] = new TransitionablePropertyValue(this._values[name].property, this._globalState);
         }
         // Note that we do not _remove_ an own property in the case where a value is being reset
         // to the default: the transition might still be non-default.
-        this._values[name].value = new PropertyValue(this._values[name].property, value === null ? undefined : clone(value));
+        this._values[name].value = new PropertyValue(this._values[name].property, value === null ? undefined : clone(value), this._globalState);
     }
     getTransition(name) {
         return clone(this._values[name].transition);
     }
     setTransition(name, value) {
         if (!Object.prototype.hasOwnProperty.call(this._values, name)) {
-            this._values[name] = new TransitionablePropertyValue(this._values[name].property);
+            this._values[name] = new TransitionablePropertyValue(this._values[name].property, this._globalState);
         }
         this._values[name].transition = clone(value) || undefined;
     }
@@ -23113,9 +23151,10 @@ class Transitioning {
  * `PossiblyEvaluated` instance for the same set of properties.
  */
 class Layout {
-    constructor(properties) {
+    constructor(properties, globalState) {
         this._properties = properties;
         this._values = Object.create(properties.defaultPropertyValues);
+        this._globalState = globalState;
     }
     hasValue(name) {
         return this._values[name].value !== undefined;
@@ -23124,7 +23163,7 @@ class Layout {
         return clone(this._values[name].value);
     }
     setValue(name, value) {
-        this._values[name] = new PropertyValue(this._values[name].property, value === null ? undefined : clone(value));
+        this._values[name] = new PropertyValue(this._values[name].property, value === null ? undefined : clone(value), this._globalState);
     }
     serialize() {
         const result = {};
@@ -23379,9 +23418,9 @@ class Properties {
                 this.overridableProperties.push(property);
             }
             const defaultPropertyValue = this.defaultPropertyValues[property] =
-                new PropertyValue(prop, undefined);
+                new PropertyValue(prop, undefined, undefined);
             const defaultTransitionablePropertyValue = this.defaultTransitionablePropertyValues[property] =
-                new TransitionablePropertyValue(prop);
+                new TransitionablePropertyValue(prop, undefined);
             this.defaultTransitioningPropertyValues[property] =
                 defaultTransitionablePropertyValue.untransitioned();
             this.defaultPossiblyEvaluatedValues[property] =
@@ -23400,10 +23439,11 @@ const TRANSITION_SUFFIX = '-transition';
  * A base class for style layers
  */
 class StyleLayer extends Evented {
-    constructor(layer, properties) {
+    constructor(layer, properties, globalState) {
         super();
         this.id = layer.id;
         this.type = layer.type;
+        this._globalState = globalState;
         this._featureFilter = { filter: () => true, needGeometry: false, getGlobalStateRefs: () => new Set() };
         if (layer.type === 'custom')
             return;
@@ -23415,13 +23455,13 @@ class StyleLayer extends Evented {
             this.source = layer.source;
             this.sourceLayer = layer['source-layer'];
             this.filter = layer.filter;
-            this._featureFilter = featureFilter(layer.filter);
+            this._featureFilter = featureFilter(layer.filter, globalState);
         }
         if (properties.layout) {
-            this._unevaluatedLayout = new Layout(properties.layout);
+            this._unevaluatedLayout = new Layout(properties.layout, globalState);
         }
         if (properties.paint) {
-            this._transitionablePaint = new Transitionable(properties.paint);
+            this._transitionablePaint = new Transitionable(properties.paint, globalState);
             for (const property in layer.paint) {
                 this.setPaintProperty(property, layer.paint[property], { validate: false });
             }
@@ -23435,7 +23475,7 @@ class StyleLayer extends Evented {
     }
     setFilter(filter) {
         this.filter = filter;
-        this._featureFilter = featureFilter(filter);
+        this._featureFilter = featureFilter(filter, this._globalState);
     }
     getCrossfadeParameters() {
         return this._crossfadeParameters;
@@ -25795,7 +25835,6 @@ function addCircleVertex(layoutVertexArray, x, y, extrudeX, extrudeY) {
 class CircleBucket {
     constructor(options) {
         this.zoom = options.zoom;
-        this.globalState = options.globalState;
         this.overscaling = options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
@@ -25826,7 +25865,7 @@ class CircleBucket {
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
-            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom, { globalState: this.globalState }), evaluationFeature, canonical))
+            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom), evaluationFeature, canonical))
                 continue;
             const sortKey = sortFeaturesByKey ?
                 circleSortKey.evaluate(evaluationFeature, {}, canonical) :
@@ -25857,8 +25896,7 @@ class CircleBucket {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
     }
     isEmpty() {
@@ -25933,7 +25971,7 @@ class CircleBucket {
                 segment.primitiveLength += (verticesPerAxis - 1) * (verticesPerAxis - 1) * 2;
             }
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions: {}, canonical, globalState: this.globalState });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions: {}, canonical });
     }
 }
 register('CircleBucket', CircleBucket, { omit: ['layers'] });
@@ -26182,6 +26220,48 @@ function offsetLine(rings, offset) {
     }
     return newRings;
 }
+function intersectionTestMapMap({ queryGeometry, size }, point) {
+    return polygonIntersectsBufferedPoint(queryGeometry, point, size);
+}
+function intersectionTestMapViewport({ queryGeometry, size, transform, unwrappedTileID, getElevation }, point) {
+    const w = transform.projectTileCoordinates(point.x, point.y, unwrappedTileID, getElevation).signedDistanceFromCamera;
+    const adjustedSize = size * (w / transform.cameraToCenterDistance);
+    return polygonIntersectsBufferedPoint(queryGeometry, point, adjustedSize);
+}
+function intersectionTestViewportMap({ queryGeometry, size, transform, unwrappedTileID, getElevation }, point) {
+    const w = transform.projectTileCoordinates(point.x, point.y, unwrappedTileID, getElevation).signedDistanceFromCamera;
+    const adjustedSize = size * (transform.cameraToCenterDistance / w);
+    return polygonIntersectsBufferedPoint(queryGeometry, projectPoint(point, transform, unwrappedTileID, getElevation), adjustedSize);
+}
+function intersectionTestViewportViewport({ queryGeometry, size, transform, unwrappedTileID, getElevation }, point) {
+    return polygonIntersectsBufferedPoint(queryGeometry, projectPoint(point, transform, unwrappedTileID, getElevation), size);
+}
+function circleIntersection({ queryGeometry, size, transform, unwrappedTileID, getElevation, pitchAlignment = 'map', pitchScale = 'map' }, geometry) {
+    const intersectionTest = pitchAlignment === 'map'
+        ? (pitchScale === 'map' ? intersectionTestMapMap : intersectionTestMapViewport)
+        : (pitchScale === 'map' ? intersectionTestViewportMap : intersectionTestViewportViewport);
+    const param = { queryGeometry, size, transform, unwrappedTileID, getElevation };
+    for (const ring of geometry) {
+        for (const point of ring) {
+            if (intersectionTest(param, point)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+function projectPoint(tilePoint, transform, unwrappedTileID, getElevation) {
+    // Convert `tilePoint` from tile coordinates to clip coordinates.
+    const clipPoint = transform.projectTileCoordinates(tilePoint.x, tilePoint.y, unwrappedTileID, getElevation).point;
+    // Convert `clipPoint` from clip coordinates into pixel/screen coordinates.
+    const pixelPoint = new Point((clipPoint.x * 0.5 + 0.5) * transform.width, (-clipPoint.y * 0.5 + 0.5) * transform.height);
+    return pixelPoint;
+}
+function projectQueryGeometry$1(queryGeometry, transform, unwrappedTileID, getElevation) {
+    return queryGeometry.map((p) => {
+        return projectPoint(p, transform, unwrappedTileID, getElevation);
+    });
+}
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
@@ -26210,8 +26290,8 @@ const isCircleStyleLayer = (layer) => layer.type === 'circle';
  * A style layer that defines a circle
  */
 class CircleStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$9);
+    constructor(layer, globalState) {
+        super(layer, properties$9, globalState);
     }
     createBucket(parameters) {
         return new CircleBucket(parameters);
@@ -26231,38 +26311,28 @@ class CircleStyleLayer extends StyleLayer {
         // Otherwise, compare geometry in the plane of the viewport
         // A circle with fixed scaling relative to the viewport gets larger in tile space as it moves into the distance
         // A circle with fixed scaling relative to the map gets smaller in viewport space as it moves into the distance
-        const alignWithMap = this.paint.get('circle-pitch-alignment') === 'map';
-        const transformedPolygon = alignWithMap ? translatedPolygon : projectQueryGeometry$1(translatedPolygon, transform, unwrappedTileID, getElevation);
-        const transformedSize = alignWithMap ? size * pixelsToTileUnits : size;
-        for (const ring of geometry) {
-            for (const point of ring) {
-                const transformedPoint = alignWithMap ? point : projectPoint(point, transform, unwrappedTileID, getElevation);
-                let adjustedSize = transformedSize;
-                const w = transform.projectTileCoordinates(point.x, point.y, unwrappedTileID, getElevation).signedDistanceFromCamera;
-                if (this.paint.get('circle-pitch-scale') === 'viewport' && this.paint.get('circle-pitch-alignment') === 'map') {
-                    adjustedSize *= w / transform.cameraToCenterDistance;
-                }
-                else if (this.paint.get('circle-pitch-scale') === 'map' && this.paint.get('circle-pitch-alignment') === 'viewport') {
-                    adjustedSize *= transform.cameraToCenterDistance / w;
-                }
-                if (polygonIntersectsBufferedPoint(transformedPolygon, transformedPoint, adjustedSize))
-                    return true;
-            }
+        const pitchScale = this.paint.get('circle-pitch-scale');
+        const pitchAlignment = this.paint.get('circle-pitch-alignment');
+        let transformedPolygon;
+        let transformedSize;
+        if (pitchAlignment === 'map') {
+            transformedPolygon = translatedPolygon;
+            transformedSize = size * pixelsToTileUnits;
         }
-        return false;
+        else {
+            transformedPolygon = projectQueryGeometry$1(translatedPolygon, transform, unwrappedTileID, getElevation);
+            transformedSize = size;
+        }
+        return circleIntersection({
+            queryGeometry: transformedPolygon,
+            size: transformedSize,
+            transform,
+            unwrappedTileID,
+            getElevation,
+            pitchAlignment,
+            pitchScale
+        }, geometry);
     }
-}
-function projectPoint(tilePoint, transform, unwrappedTileID, getElevation) {
-    // Convert `tilePoint` from tile coordinates to clip coordinates.
-    const clipPoint = transform.projectTileCoordinates(tilePoint.x, tilePoint.y, unwrappedTileID, getElevation).point;
-    // Convert `clipPoint` from clip coordinates into pixel/screen coordinates.
-    const pixelPoint = new Point((clipPoint.x * 0.5 + 0.5) * transform.width, (-clipPoint.y * 0.5 + 0.5) * transform.height);
-    return pixelPoint;
-}
-function projectQueryGeometry$1(queryGeometry, transform, unwrappedTileID, getElevation) {
-    return queryGeometry.map((p) => {
-        return projectPoint(p, transform, unwrappedTileID, getElevation);
-    });
 }
 
 class HeatmapBucket extends CircleBucket {
@@ -26439,8 +26509,8 @@ class HeatmapStyleLayer extends StyleLayer {
     createBucket(options) {
         return new HeatmapBucket(options);
     }
-    constructor(layer) {
-        super(layer, properties$8);
+    constructor(layer, globalState) {
+        super(layer, properties$8, globalState);
         this.heatmapFbos = new Map();
         // make sure color ramp texture is generated for default heatmap color too
         this._updateColorRamp();
@@ -26464,11 +26534,17 @@ class HeatmapStyleLayer extends StyleLayer {
             this.heatmapFbos.delete(HEATMAP_FULL_RENDER_FBO_KEY);
         }
     }
-    queryRadius() {
-        return 0;
+    queryRadius(bucket) {
+        return getMaximumPaintValue('heatmap-radius', this, bucket);
     }
-    queryIntersectsFeature() {
-        return false;
+    queryIntersectsFeature({ queryGeometry, feature, featureState, geometry, transform, pixelsToTileUnits, unwrappedTileID, getElevation }) {
+        return circleIntersection({
+            queryGeometry,
+            size: this.paint.get('heatmap-radius').evaluate(feature, featureState) * pixelsToTileUnits,
+            transform,
+            unwrappedTileID,
+            getElevation
+        }, geometry);
     }
     hasOffscreenPass() {
         return this.paint.get('heatmap-opacity') !== 0 && this.visibility !== 'none';
@@ -26492,8 +26568,8 @@ var properties$7 = ({ get paint() { return getPaint$7(); } });
 
 const isHillshadeStyleLayer = (layer) => layer.type === 'hillshade';
 class HillshadeStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$7);
+    constructor(layer, globalState) {
+        super(layer, properties$7, globalState);
         this.recalculate({ zoom: 0, zoomHistory: {} }, undefined);
     }
     getIlluminationProperties() {
@@ -26757,8 +26833,8 @@ register('DEMData', DEMData);
 
 const isColorReliefStyleLayer = (layer) => layer.type === 'color-relief';
 class ColorReliefStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$6);
+    constructor(layer, globalState) {
+        super(layer, properties$6, globalState);
     }
     /**
      * Create the color ramp, enforcing a maximum length for the vectors. This modifies the internal color ramp,
@@ -26849,7 +26925,8 @@ function hasPattern(type, layers, options) {
     }
     return hasPattern;
 }
-function addPatternDependencies(type, layers, patternFeature, zoom, options) {
+function addPatternDependencies(type, layers, patternFeature, parameters, options) {
+    const { zoom } = parameters;
     const patterns = options.patternDependencies;
     for (const layer of layers) {
         const patternProperty = layer.paint.get(`${type}-pattern`);
@@ -28619,7 +28696,6 @@ const EARCUT_MAX_RINGS$1 = 500;
 class FillBucket {
     constructor(options) {
         this.zoom = options.zoom;
-        this.globalState = options.globalState;
         this.overscaling = options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
@@ -28642,7 +28718,7 @@ class FillBucket {
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
-            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom, { globalState: this.globalState }), evaluationFeature, canonical))
+            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom), evaluationFeature, canonical))
                 continue;
             const sortKey = sortFeaturesByKey ?
                 fillSortKey.evaluate(evaluationFeature, {}, canonical, options.availableImages) :
@@ -28665,7 +28741,7 @@ class FillBucket {
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
             if (this.hasPattern) {
-                const patternFeature = addPatternDependencies('fill', this.layers, bucketFeature, this.zoom, options);
+                const patternFeature = addPatternDependencies('fill', this.layers, bucketFeature, { zoom: this.zoom }, options);
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
                 this.patternFeatures.push(patternFeature);
@@ -28681,8 +28757,7 @@ class FillBucket {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
     }
     addFeatures(options, canonical, imagePositions) {
@@ -28723,7 +28798,7 @@ class FillBucket {
                 vertexArray.emplaceBack(x, y);
             }, this.segments, this.layoutVertexArray, this.indexArray, subdivided.verticesFlattened, subdivided.indicesTriangles, this.segments2, this.indexArray2, subdivided.indicesLineList);
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical, globalState: this.globalState });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical });
     }
 }
 register('FillBucket', FillBucket, { omit: ['layers', 'patternFeatures'] });
@@ -28748,8 +28823,8 @@ var properties$5 = ({ get paint() { return getPaint$5(); }, get layout() { retur
 
 const isFillStyleLayer = (layer) => layer.type === 'fill';
 class FillStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$5);
+    constructor(layer, globalState) {
+        super(layer, properties$5, globalState);
     }
     recalculate(parameters, availableImages) {
         super.recalculate(parameters, availableImages);
@@ -29182,7 +29257,6 @@ function addVertex$1(vertexArray, x, y, nx, ny, nz, t, e) {
 class FillExtrusionBucket {
     constructor(options) {
         this.zoom = options.zoom;
-        this.globalState = options.globalState;
         this.overscaling = options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
@@ -29201,7 +29275,7 @@ class FillExtrusionBucket {
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
-            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom, { globalState: this.globalState }), evaluationFeature, canonical))
+            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom), evaluationFeature, canonical))
                 continue;
             const bucketFeature = {
                 id,
@@ -29213,7 +29287,7 @@ class FillExtrusionBucket {
                 patterns: {}
             };
             if (this.hasPattern) {
-                this.features.push(addPatternDependencies('fill-extrusion', this.layers, bucketFeature, this.zoom, options));
+                this.features.push(addPatternDependencies('fill-extrusion', this.layers, bucketFeature, { zoom: this.zoom }, options));
             }
             else {
                 this.addFeature(bucketFeature, bucketFeature.geometry, index, canonical, {}, options.subdivisionGranularity);
@@ -29231,8 +29305,7 @@ class FillExtrusionBucket {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
     }
     isEmpty() {
@@ -29272,7 +29345,7 @@ class FillExtrusionBucket {
                 this.centroidVertexArray.emplaceBack(centroidX, centroidY);
             }
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical, globalState: this.globalState });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical });
     }
     processPolygon(centroid, canonical, feature, polygon, subdivisionGranularity) {
         if (polygon.length < 1) {
@@ -29398,8 +29471,8 @@ class Point3D extends Point {
 }
 const isFillExtrusionStyleLayer = (layer) => layer.type === 'fill-extrusion';
 class FillExtrusionStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$4);
+    constructor(layer, globalState) {
+        super(layer, properties$4, globalState);
     }
     createBucket(parameters) {
         return new FillExtrusionBucket(parameters);
@@ -29606,7 +29679,6 @@ const MAX_LINE_DISTANCE = Math.pow(2, LINE_DISTANCE_BUFFER_BITS - 1) / LINE_DIST
 class LineBucket {
     constructor(options) {
         this.zoom = options.zoom;
-        this.globalState = options.globalState;
         this.overscaling = options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
@@ -29634,7 +29706,7 @@ class LineBucket {
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
-            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom, { globalState: this.globalState }), evaluationFeature, canonical))
+            if (!this.layers[0]._featureFilter.filter(new EvaluationParameters(this.zoom), evaluationFeature, canonical))
                 continue;
             const sortKey = sortFeaturesByKey ?
                 lineSortKey.evaluate(evaluationFeature, {}, canonical) :
@@ -29659,7 +29731,7 @@ class LineBucket {
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
             if (this.hasPattern) {
-                const patternBucketFeature = addPatternDependencies('line', this.layers, bucketFeature, this.zoom, options);
+                const patternBucketFeature = addPatternDependencies('line', this.layers, bucketFeature, { zoom: this.zoom }, options);
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
                 this.patternFeatures.push(patternBucketFeature);
@@ -29675,8 +29747,7 @@ class LineBucket {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
     }
     addFeatures(options, canonical, imagePositions) {
@@ -29726,7 +29797,7 @@ class LineBucket {
         for (const line of geometry) {
             this.addLine(line, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity);
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical, globalState: this.globalState });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical });
     }
     addLine(vertices, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity) {
         this.distance = 0;
@@ -30064,8 +30135,8 @@ class LineFloorwidthProperty extends DataDrivenProperty {
 let lineFloorwidthProperty;
 const isLineStyleLayer = (layer) => layer.type === 'line';
 class LineStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$3);
+    constructor(layer, globalState) {
+        super(layer, properties$3, globalState);
         this.gradientVersion = 0;
         if (!lineFloorwidthProperty) {
             lineFloorwidthProperty =
@@ -32423,7 +32494,6 @@ class SymbolBucket {
     constructor(options) {
         this.collisionBoxArray = options.collisionBoxArray;
         this.zoom = options.zoom;
-        this.globalState = options.globalState;
         this.overscaling = options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
@@ -32497,7 +32567,7 @@ class SymbolBucket {
         const icons = options.iconDependencies;
         const stacks = options.glyphDependencies;
         const availableImages = options.availableImages;
-        const globalProperties = new EvaluationParameters(this.zoom, { globalState: this.globalState });
+        const globalProperties = new EvaluationParameters(this.zoom);
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = layer._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
@@ -32590,12 +32660,10 @@ class SymbolBucket {
         if (!this.stateDependentLayers.length)
             return;
         this.text.programConfigurations.updatePaintArrays(states, vtLayer, this.layers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
         this.icon.programConfigurations.updatePaintArrays(states, vtLayer, this.layers, {
-            imagePositions,
-            globalState: this.globalState
+            imagePositions
         });
     }
     isEmpty() {
@@ -32677,7 +32745,7 @@ class SymbolBucket {
             segment.primitiveLength += 2;
             this.glyphOffsetArray.emplaceBack(glyphOffset[0]);
             if (i === quads.length - 1 || sectionIndex !== quads[i + 1].sectionIndex) {
-                arrays.programConfigurations.populatePaintArrays(layoutVertexArray.length, feature, feature.index, { imagePositions: {}, canonical, formattedSection: sections && sections[sectionIndex], globalState: this.globalState });
+                arrays.programConfigurations.populatePaintArrays(layoutVertexArray.length, feature, feature.index, { imagePositions: {}, canonical, formattedSection: sections && sections[sectionIndex] });
             }
         }
         arrays.placedSymbolArray.emplaceBack(labelAnchor.x, labelAnchor.y, glyphOffsetArrayStart, this.glyphOffsetArray.length - glyphOffsetArrayStart, vertexStartIndex, lineStartIndex, lineLength, labelAnchor.segment, sizeVertex ? sizeVertex[0] : 0, sizeVertex ? sizeVertex[1] : 0, lineOffset[0], lineOffset[1], writingMode, 
@@ -33016,8 +33084,8 @@ register('FormatSectionOverride', FormatSectionOverride, { omit: ['defaultValue'
 
 const isSymbolStyleLayer = (layer) => layer.type === 'symbol';
 class SymbolStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$2);
+    constructor(layer, globalState) {
+        super(layer, properties$2, globalState);
     }
     recalculate(parameters, availableImages) {
         super.recalculate(parameters, availableImages);
@@ -33117,7 +33185,7 @@ class SymbolStyleLayer extends StyleLayer {
         if (textField.value.kind === 'constant' && textField.value.value instanceof Formatted) {
             checkSections(textField.value.value.sections);
         }
-        else if (textField.value.kind === 'source') {
+        else if (textField.value.kind === 'source' || textField.value.kind === 'composite') {
             const checkExpression = (expression) => {
                 if (hasOverrides)
                     return;
@@ -33164,8 +33232,8 @@ var properties$1 = ({ get paint() { return getPaint$1(); } });
 
 const isBackgroundStyleLayer = (layer) => layer.type === 'background';
 class BackgroundStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties$1);
+    constructor(layer, globalState) {
+        super(layer, properties$1, globalState);
     }
 }
 
@@ -33186,8 +33254,8 @@ var properties = ({ get paint() { return getPaint(); } });
 
 const isRasterStyleLayer = (layer) => layer.type === 'raster';
 class RasterStyleLayer extends StyleLayer {
-    constructor(layer) {
-        super(layer, properties);
+    constructor(layer, globalState) {
+        super(layer, properties, globalState);
     }
 }
 
@@ -33215,8 +33283,8 @@ function validateCustomStyleLayer(layerObject) {
 }
 const isCustomStyleLayer = (layer) => layer.type === 'custom';
 class CustomStyleLayer extends StyleLayer {
-    constructor(implementation) {
-        super(implementation, {});
+    constructor(implementation, globalState) {
+        super(implementation, {}, globalState);
         this.onAdd = (map) => {
             if (this.implementation.onAdd) {
                 this.implementation.onAdd(map, map.painter.context.gl);
@@ -33243,31 +33311,31 @@ class CustomStyleLayer extends StyleLayer {
     }
 }
 
-function createStyleLayer(layer) {
+function createStyleLayer(layer, globalState) {
     if (layer.type === 'custom') {
-        return new CustomStyleLayer(layer);
+        return new CustomStyleLayer(layer, globalState);
     }
     switch (layer.type) {
         case 'background':
-            return new BackgroundStyleLayer(layer);
+            return new BackgroundStyleLayer(layer, globalState);
         case 'circle':
-            return new CircleStyleLayer(layer);
+            return new CircleStyleLayer(layer, globalState);
         case 'color-relief':
-            return new ColorReliefStyleLayer(layer);
+            return new ColorReliefStyleLayer(layer, globalState);
         case 'fill':
-            return new FillStyleLayer(layer);
+            return new FillStyleLayer(layer, globalState);
         case 'fill-extrusion':
-            return new FillExtrusionStyleLayer(layer);
+            return new FillExtrusionStyleLayer(layer, globalState);
         case 'heatmap':
-            return new HeatmapStyleLayer(layer);
+            return new HeatmapStyleLayer(layer, globalState);
         case 'hillshade':
-            return new HillshadeStyleLayer(layer);
+            return new HillshadeStyleLayer(layer, globalState);
         case 'line':
-            return new LineStyleLayer(layer);
+            return new LineStyleLayer(layer, globalState);
         case 'raster':
-            return new RasterStyleLayer(layer);
+            return new RasterStyleLayer(layer, globalState);
         case 'symbol':
-            return new SymbolStyleLayer(layer);
+            return new SymbolStyleLayer(layer, globalState);
     }
 }
 
@@ -33972,15 +34040,19 @@ class OverscaledTileID {
         }
     }
     isChildOf(parent) {
-        if (parent.wrap !== this.wrap) {
-            // We can't be a child if we're in a different world copy
-            return false;
-        }
-        const zDifference = this.canonical.z - parent.canonical.z;
-        // We're first testing for z == 0, to avoid a 32 bit shift, which is undefined.
-        return parent.overscaledZ === 0 || (parent.overscaledZ < this.overscaledZ &&
-            parent.canonical.x === (this.canonical.x >> zDifference) &&
-            parent.canonical.y === (this.canonical.y >> zDifference));
+        if (parent.wrap !== this.wrap)
+            return false; // different world copy
+        const zDifference = this.overscaledZ - parent.overscaledZ;
+        if (zDifference <= 0)
+            return false; // must be deeper zoom
+        //special case for root tile (bitwise math doesn't work for root)
+        if (parent.overscaledZ === 0)
+            return this.overscaledZ > 0;
+        const dz = this.canonical.z - parent.canonical.z;
+        if (dz < 0)
+            return false; // parent can't be deeper canonically
+        return (parent.canonical.x === (this.canonical.x >> dz) &&
+            parent.canonical.y === (this.canonical.y >> dz));
     }
     children(sourceMaxZoom) {
         if (this.overscaledZ >= sourceMaxZoom) {
@@ -34154,16 +34226,27 @@ function applySourceDiff(updateable, diff, promoteId) {
     }
 }
 function mergeSourceDiffs(existingDiff, newDiff) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     if (!existingDiff) {
         return newDiff !== null && newDiff !== void 0 ? newDiff : {};
     }
     if (!newDiff) {
         return existingDiff;
     }
-    const merged = Object.assign({}, existingDiff);
+    let merged = Object.assign({}, existingDiff);
     if (newDiff.removeAll) {
-        merged.removeAll = true;
+        merged = { removeAll: true };
+    }
+    if (newDiff.remove) {
+        const newRemovedSet = new Set(newDiff.remove);
+        if (merged.add) {
+            merged.add = merged.add.filter(f => !newRemovedSet.has(f.id));
+        }
+        if (merged.update) {
+            merged.update = merged.update.filter(f => !newRemovedSet.has(f.id));
+        }
+        const existingAddSet = new Set(((_a = existingDiff.add) !== null && _a !== void 0 ? _a : []).map((f) => f.id));
+        newDiff.remove = newDiff.remove.filter(id => !existingAddSet.has(id));
     }
     if (newDiff.remove) {
         const removedSet = new Set(merged.remove ? merged.remove.concat(newDiff.remove) : newDiff.remove);
@@ -34175,17 +34258,17 @@ function mergeSourceDiffs(existingDiff, newDiff) {
         merged.add = Array.from(addMap.values());
     }
     if (newDiff.update) {
-        const updateMap = new Map((_a = merged.update) === null || _a === void 0 ? void 0 : _a.map((feature) => [feature.id, feature]));
+        const updateMap = new Map((_b = merged.update) === null || _b === void 0 ? void 0 : _b.map((feature) => [feature.id, feature]));
         for (const feature of newDiff.update) {
-            const featureUpdate = (_b = updateMap.get(feature.id)) !== null && _b !== void 0 ? _b : { id: feature.id };
+            const featureUpdate = (_c = updateMap.get(feature.id)) !== null && _c !== void 0 ? _c : { id: feature.id };
             if (feature.newGeometry) {
                 featureUpdate.newGeometry = feature.newGeometry;
             }
             if (feature.addOrUpdateProperties) {
-                featureUpdate.addOrUpdateProperties = ((_c = featureUpdate.addOrUpdateProperties) !== null && _c !== void 0 ? _c : []).concat(feature.addOrUpdateProperties);
+                featureUpdate.addOrUpdateProperties = ((_d = featureUpdate.addOrUpdateProperties) !== null && _d !== void 0 ? _d : []).concat(feature.addOrUpdateProperties);
             }
             if (feature.removeProperties) {
-                featureUpdate.removeProperties = ((_d = featureUpdate.removeProperties) !== null && _d !== void 0 ? _d : []).concat(feature.removeProperties);
+                featureUpdate.removeProperties = ((_e = featureUpdate.removeProperties) !== null && _e !== void 0 ? _e : []).concat(feature.removeProperties);
             }
             if (feature.removeAllProperties) {
                 featureUpdate.removeAllProperties = true;
@@ -34193,6 +34276,9 @@ function mergeSourceDiffs(existingDiff, newDiff) {
             updateMap.set(feature.id, featureUpdate);
         }
         merged.update = Array.from(updateMap.values());
+    }
+    if (merged.remove && merged.add) {
+        merged.remove = merged.remove.filter(id => merged.add.findIndex((f) => f.id === id) === -1);
     }
     return merged;
 }
@@ -34406,7 +34492,7 @@ class FeatureIndex {
         this.loadVTLayers();
         const params = args.params;
         const pixelsToTileUnits = EXTENT$1 / args.tileSize / args.scale;
-        const filter = featureFilter(params.filter);
+        const filter = featureFilter(params.filter, params.globalState);
         const queryGeometry = args.queryGeometry;
         const queryPadding = args.queryPadding * pixelsToTileUnits;
         const bounds = Bounds.fromPoints(queryGeometry);
@@ -34498,10 +34584,10 @@ class FeatureIndex {
     }
     // Given a set of symbol indexes that have already been looked up,
     // return a matching set of GeoJSONFeatures
-    lookupSymbolFeatures(symbolFeatureIndexes, serializedLayers, bucketIndex, sourceLayerIndex, filterSpec, filterLayerIDs, availableImages, styleLayers) {
+    lookupSymbolFeatures(symbolFeatureIndexes, serializedLayers, bucketIndex, sourceLayerIndex, filterParams, filterLayerIDs, availableImages, styleLayers) {
         const result = {};
         this.loadVTLayers();
-        const filter = featureFilter(filterSpec);
+        const filter = featureFilter(filterParams.filterSpec, filterParams.globalState);
         for (const symbolFeatureIndex of symbolFeatureIndexes) {
             this.loadMatchingFeature(result, bucketIndex, sourceLayerIndex, symbolFeatureIndex, filter, filterLayerIDs, availableImages, styleLayers, serializedLayers);
         }
@@ -36518,22 +36604,22 @@ exports.zoomScale = zoomScale;
 define('worker', ['./shared'], (function (performance) { 'use strict';
 
 class StyleLayerIndex {
-    constructor(layerConfigs) {
+    constructor(layerConfigs, globalState) {
         this.keyCache = {};
         if (layerConfigs) {
-            this.replace(layerConfigs);
+            this.replace(layerConfigs, globalState);
         }
     }
-    replace(layerConfigs) {
+    replace(layerConfigs, globalState) {
         this._layerConfigs = {};
         this._layers = {};
-        this.update(layerConfigs, []);
+        this.update(layerConfigs, [], globalState);
     }
-    update(layerConfigs, removedIds) {
+    update(layerConfigs, removedIds, globalState) {
         for (const layerConfig of layerConfigs) {
             this._layerConfigs[layerConfig.id] = layerConfig;
-            const layer = this._layers[layerConfig.id] = performance.createStyleLayer(layerConfig);
-            layer._featureFilter = performance.featureFilter(layer.filter);
+            const layer = this._layers[layerConfig.id] = performance.createStyleLayer(layerConfig, globalState);
+            layer._featureFilter = performance.featureFilter(layer.filter, globalState);
             if (this.keyCache[layerConfig.id])
                 delete this.keyCache[layerConfig.id];
         }
@@ -36619,7 +36705,6 @@ class WorkerTile {
         this.returnDependencies = !!params.returnDependencies;
         this.promoteId = params.promoteId;
         this.inFlightDependencies = [];
-        this.globalState = params.globalState;
     }
     parse(data, layerIndex, availableImages, actor, subdivisionGranularity) {
         return performance.__awaiter(this, void 0, void 0, function* () {
@@ -36666,7 +36751,7 @@ class WorkerTile {
                         continue;
                     if (layer.visibility === 'none')
                         continue;
-                    recalculateLayers(family, this.zoom, availableImages, this.globalState);
+                    recalculateLayers(family, this.zoom, availableImages);
                     const bucket = buckets[layer.id] = layer.createBucket({
                         index: featureIndex.bucketLayerIDs.length,
                         layers: family,
@@ -36675,8 +36760,7 @@ class WorkerTile {
                         overscaling: this.overscaling,
                         collisionBoxArray: this.collisionBoxArray,
                         sourceLayerIndex,
-                        sourceID: this.source,
-                        globalState: this.globalState
+                        sourceID: this.source
                     });
                     bucket.populate(features, options, this.tileID.canonical);
                     featureIndex.bucketLayerIDs.push(family.map((l) => l.id));
@@ -36713,7 +36797,7 @@ class WorkerTile {
             for (const key in buckets) {
                 const bucket = buckets[key];
                 if (bucket instanceof performance.SymbolBucket) {
-                    recalculateLayers(bucket.layers, this.zoom, availableImages, this.globalState);
+                    recalculateLayers(bucket.layers, this.zoom, availableImages);
                     performance.performSymbolLayout({
                         bucket,
                         glyphMap,
@@ -36729,7 +36813,7 @@ class WorkerTile {
                     (bucket instanceof performance.LineBucket ||
                         bucket instanceof performance.FillBucket ||
                         bucket instanceof performance.FillExtrusionBucket)) {
-                    recalculateLayers(bucket.layers, this.zoom, availableImages, this.globalState);
+                    recalculateLayers(bucket.layers, this.zoom, availableImages);
                     bucket.addFeatures(options, this.tileID.canonical, imageAtlas.patternPositions);
                 }
             }
@@ -36748,9 +36832,9 @@ class WorkerTile {
         });
     }
 }
-function recalculateLayers(layers, zoom, availableImages, globalState) {
+function recalculateLayers(layers, zoom, availableImages) {
     // Layers are shared and may have been used by a WorkerTile with a different zoom.
-    const parameters = new performance.EvaluationParameters(zoom, { globalState });
+    const parameters = new performance.EvaluationParameters(zoom);
     for (const layer of layers) {
         layer.recalculate(parameters, availableImages);
     }
@@ -36873,7 +36957,6 @@ class VectorTileWorkerSource {
             }
             const workerTile = this.loaded[uid];
             workerTile.showCollisionBoxes = params.showCollisionBoxes;
-            workerTile.globalState = params.globalState;
             if (workerTile.status === 'parsing') {
                 const result = yield workerTile.parse(workerTile.vectorTile, this.layerIndex, this.availableImages, this.actor, params.subdivisionGranularity);
                 // if we have cancelled the original parse, make sure to pass the rawTileData from the original fetch
@@ -38546,6 +38629,7 @@ class Worker {
         this.workerSources = {};
         this.demWorkerSources = {};
         this.externalWorkerSourceTypes = {};
+        this.globalStates = new Map();
         this.self.registerWorkerSource = (name, WorkerSource) => {
             if (this.externalWorkerSourceTypes[name]) {
                 throw new Error(`Worker source with name "${name}" already registered.`);
@@ -38608,6 +38692,7 @@ class Worker {
             delete this.availableImages[mapId];
             delete this.workerSources[mapId];
             delete this.demWorkerSources[mapId];
+            this.globalStates.delete(mapId);
         }));
         this.actor.registerMessageHandler("SR" /* MessageType.setReferrer */, (_mapId, params) => performance.__awaiter(this, void 0, void 0, function* () {
             this.referrer = params;
@@ -38622,11 +38707,25 @@ class Worker {
             return this._setImages(mapId, params);
         });
         this.actor.registerMessageHandler("UL" /* MessageType.updateLayers */, (mapId, params) => performance.__awaiter(this, void 0, void 0, function* () {
-            this._getLayerIndex(mapId).update(params.layers, params.removedIds);
+            this._getLayerIndex(mapId).update(params.layers, params.removedIds, this._getGlobalState(mapId));
+        }));
+        this.actor.registerMessageHandler("UGS" /* MessageType.updateGlobalState */, (mapId, params) => performance.__awaiter(this, void 0, void 0, function* () {
+            const globalState = this._getGlobalState(mapId);
+            for (const key in params) {
+                globalState[key] = params[key];
+            }
         }));
         this.actor.registerMessageHandler("SL" /* MessageType.setLayers */, (mapId, params) => performance.__awaiter(this, void 0, void 0, function* () {
-            this._getLayerIndex(mapId).replace(params);
+            this._getLayerIndex(mapId).replace(params, this._getGlobalState(mapId));
         }));
+    }
+    _getGlobalState(mapId) {
+        let state = this.globalStates.get(mapId);
+        if (!state) {
+            state = {};
+            this.globalStates.set(mapId, state);
+        }
+        return state;
     }
     _setImages(mapId, images) {
         return performance.__awaiter(this, void 0, void 0, function* () {
@@ -38721,7 +38820,7 @@ define('index', ['exports', './shared'], (function (exports, performance$1) { 'u
 
 var name = "maplibre-gl";
 var description = "BSD licensed community fork of mapbox-gl, a WebGL interactive maps library";
-var version$2 = "5.7.0";
+var version$2 = "5.7.3";
 var main = "dist/maplibre-gl.js";
 var style = "dist/maplibre-gl.css";
 var license = "BSD-3-Clause";
@@ -38744,7 +38843,7 @@ var dependencies = {
 	"@mapbox/unitbezier": "^0.0.1",
 	"@mapbox/vector-tile": "^2.0.4",
 	"@mapbox/whoots-js": "^3.1.0",
-	"@maplibre/maplibre-gl-style-spec": "^23.3.0",
+	"@maplibre/maplibre-gl-style-spec": "^24.1.1",
 	"@maplibre/vt-pbf": "^4.0.3",
 	"@types/geojson": "^7946.0.16",
 	"@types/geojson-vt": "3.2.5",
@@ -38770,7 +38869,7 @@ var devDependencies = {
 	"@rollup/plugin-strip": "^3.0.4",
 	"@rollup/plugin-terser": "^0.4.4",
 	"@rollup/plugin-typescript": "^12.1.4",
-	"@stylistic/eslint-plugin": "^5.2.3",
+	"@stylistic/eslint-plugin": "^5.3.1",
 	"@types/benchmark": "^2.1.5",
 	"@types/d3": "^7.4.3",
 	"@types/earcut": "^3.0.0",
@@ -38780,45 +38879,45 @@ var devDependencies = {
 	"@types/minimist": "^1.2.5",
 	"@types/murmurhash-js": "^1.0.6",
 	"@types/nise": "^1.4.5",
-	"@types/node": "^24.3.0",
+	"@types/node": "^24.5.2",
 	"@types/offscreencanvas": "^2019.7.3",
 	"@types/pixelmatch": "^5.2.6",
 	"@types/pngjs": "^6.0.5",
-	"@types/react": "^19.1.10",
-	"@types/react-dom": "^19.1.7",
+	"@types/react": "^19.1.13",
+	"@types/react-dom": "^19.1.9",
 	"@types/request": "^2.48.13",
 	"@types/shuffle-seed": "^1.1.3",
 	"@types/window-or-global": "^1.0.6",
-	"@typescript-eslint/eslint-plugin": "^8.40.0",
-	"@typescript-eslint/parser": "^8.39.0",
+	"@typescript-eslint/eslint-plugin": "^8.44.0",
+	"@typescript-eslint/parser": "^8.43.0",
 	"@vitest/coverage-v8": "3.2.4",
-	"@vitest/eslint-plugin": "^1.3.4",
+	"@vitest/eslint-plugin": "^1.3.12",
 	"@vitest/ui": "3.2.4",
 	address: "^2.0.3",
 	autoprefixer: "^10.4.21",
 	benchmark: "^2.1.4",
 	canvas: "^3.2.0",
-	cspell: "^9.2.0",
-	cssnano: "^7.1.0",
+	cspell: "^9.2.1",
+	cssnano: "^7.1.1",
 	d3: "^7.9.0",
 	"d3-queue": "^3.0.7",
-	"devtools-protocol": "^0.0.1504847",
+	"devtools-protocol": "^0.0.1517051",
 	diff: "^8.0.2",
 	"dts-bundle-generator": "^9.5.1",
-	eslint: "^9.33.0",
+	eslint: "^9.35.0",
 	"eslint-plugin-html": "^8.1.3",
 	"eslint-plugin-import": "^2.32.0",
 	"eslint-plugin-react": "^7.37.5",
 	"eslint-plugin-tsdoc": "0.4.0",
-	expect: "^30.0.5",
+	expect: "^30.1.2",
 	glob: "^11.0.3",
-	globals: "^16.3.0",
+	globals: "^16.4.0",
 	"is-builtin-module": "^5.0.0",
 	jsdom: "^26.1.0",
 	"junit-report-builder": "^5.1.1",
 	minimist: "^1.2.8",
 	"mock-geolocation": "^1.0.11",
-	"monocart-coverage-reports": "^2.12.6",
+	"monocart-coverage-reports": "^2.12.9",
 	nise: "^6.1.1",
 	"npm-font-open-sans": "^1.1.0",
 	"npm-run-all": "^4.1.5",
@@ -38829,22 +38928,22 @@ var devDependencies = {
 	"postcss-cli": "^11.0.1",
 	"postcss-inline-svg": "^6.0.0",
 	"pretty-bytes": "^7.0.1",
-	puppeteer: "^24.9.0",
+	puppeteer: "^24.22.0",
 	react: "^19.1.1",
 	"react-dom": "^19.1.1",
-	rollup: "^4.47.1",
-	"rollup-plugin-sourcemaps2": "^0.5.3",
+	rollup: "^4.50.2",
+	"rollup-plugin-sourcemaps2": "^0.5.4",
 	"rollup-plugin-visualizer": "^6.0.3",
 	rw: "^1.3.3",
 	semver: "^7.7.2",
-	sharp: "^0.34.3",
+	sharp: "^0.34.4",
 	"shuffle-seed": "^1.1.6",
 	st: "^3.0.3",
-	stylelint: "^16.23.1",
+	stylelint: "^16.24.0",
 	"stylelint-config-standard": "^39.0.0",
 	"ts-node": "^10.9.2",
 	tslib: "^2.8.1",
-	typedoc: "^0.28.10",
+	typedoc: "^0.28.13",
 	"typedoc-plugin-markdown": "^4.8.1",
 	typescript: "^5.9.2",
 	vitest: "3.2.4",
@@ -40120,7 +40219,7 @@ class Light extends performance$1.Evented {
             'color': new performance$1.DataConstantProperty(performance$1.v8Spec.light.color),
             'intensity': new performance$1.DataConstantProperty(performance$1.v8Spec.light.intensity),
         });
-        this._transitionable = new performance$1.Transitionable(lightProperties);
+        this._transitionable = new performance$1.Transitionable(lightProperties, undefined);
         this.setLight(lightOptions);
         this._transitioning = this._transitionable.untransitioned();
     }
@@ -40176,7 +40275,7 @@ const TRANSITION_SUFFIX = '-transition';
 class Sky extends performance$1.Evented {
     constructor(sky) {
         super();
-        this._transitionable = new performance$1.Transitionable(properties$1);
+        this._transitionable = new performance$1.Transitionable(properties$1, undefined);
         this.setSky(sky);
         this._transitioning = this._transitionable.untransitioned();
         this.recalculate(new performance$1.EvaluationParameters(0));
@@ -40633,7 +40732,10 @@ function queryRenderedSymbols(styleLayers, serializedLayers, sourceCaches, query
     }
     bucketQueryData.sort(sortTilesIn);
     for (const queryData of bucketQueryData) {
-        const bucketSymbols = queryData.featureIndex.lookupSymbolFeatures(renderedSymbols[queryData.bucketInstanceId], serializedLayers, queryData.bucketIndex, queryData.sourceLayerIndex, params.filter, params.layers, params.availableImages, styleLayers);
+        const bucketSymbols = queryData.featureIndex.lookupSymbolFeatures(renderedSymbols[queryData.bucketInstanceId], serializedLayers, queryData.bucketIndex, queryData.sourceLayerIndex, {
+            filterSpec: params.filter,
+            globalState: params.globalState
+        }, params.layers, params.availableImages, styleLayers);
         for (const layerID in bucketSymbols) {
             const resultFeatures = result[layerID] = result[layerID] || [];
             const layerSymbols = bucketSymbols[layerID];
@@ -41170,6 +41272,7 @@ class VectorTileSource extends performance$1.Evented {
             }
             catch (err) {
                 this._tileJSONRequest = null;
+                this._loaded = true; // let's pretend it's loaded so the source will be ignored
                 this.fire(new performance$1.ErrorEvent(err));
             }
         });
@@ -41237,8 +41340,7 @@ class VectorTileSource extends performance$1.Evented {
                 pixelRatio: this.map.getPixelRatio(),
                 showCollisionBoxes: this.map.showCollisionBoxes,
                 promoteId: this.promoteId,
-                subdivisionGranularity: this.map.style.projection.subdivisionGranularity,
-                globalState: this.map.getGlobalState()
+                subdivisionGranularity: this.map.style.projection.subdivisionGranularity
             };
             params.request.collectResourceTiming = this._collectResourceTiming;
             let messageType = "RT" /* MessageType.reloadTile */;
@@ -41389,6 +41491,7 @@ class RasterTileSource extends performance$1.Evented {
             }
             catch (err) {
                 this._tileJSONRequest = null;
+                this._loaded = true; // let's pretend it's loaded so the source will be ignored
                 this.fire(new performance$1.ErrorEvent(err));
             }
         });
@@ -42015,8 +42118,7 @@ class GeoJSONSource extends performance$1.Evented {
                 pixelRatio: this.map.getPixelRatio(),
                 showCollisionBoxes: this.map.showCollisionBoxes,
                 promoteId: this.promoteId,
-                subdivisionGranularity: this.map.style.projection.subdivisionGranularity,
-                globalState: this.map.getGlobalState()
+                subdivisionGranularity: this.map.style.projection.subdivisionGranularity
             };
             tile.abortController = new AbortController();
             const data = yield this.actor.sendAsync({ type: message, data: params }, tile.abortController);
@@ -42987,7 +43089,7 @@ class Tile {
         const layer = vtLayers._geojsonTileLayer || vtLayers[sourceLayer];
         if (!layer)
             return;
-        const filter = performance$1.featureFilter(params && params.filter);
+        const filter = performance$1.featureFilter(params === null || params === void 0 ? void 0 : params.filter, params === null || params === void 0 ? void 0 : params.globalState);
         const { z, x, y } = this.tileID.canonical;
         const coord = { z, x, y };
         for (let i = 0; i < layer.length; i++) {
@@ -43983,38 +44085,71 @@ class SourceCache extends performance$1.Evented {
         return this._tiles[id];
     }
     /**
-     * For a given set of tiles, retain children that are loaded and have a zoom
-     * between `zoom` (exclusive) and `maxCoveringZoom` (inclusive)
+     * Retain the uppermost loaded children of each provided target tile, within a variable covering zoom range.
+     *
+     * On pitched maps, different parts of the screen show different zoom levels simultaneously.
+     * Ideal tiles are generated using coveringTiles() above, which returns the ideal tile set for
+     * the current pitched plane, which can carry tiles of varying zooms (overscaledZ).
+     * See: https://maplibre.org/maplibre-gl-js/docs/examples/level-of-detail-control/
+     *
+     * A fixed `maxCoveringZoom` on a pitched map would incorrectly intersect with some
+     * ideal tiles and cause distant high-pitch tiles to skip their uppermost children.
+     *
+     * To solve this, we calculate the max covering zoom for each ideal tile separately using its
+     * `overscaledZ`. This effectively makes the "max covering zoom plane" parallel to the
+     * "ideal tile plane," ensuring that we correctly capture the uppermost children
+     * of each ideal tile across the pitched view.
+     *
+     * Analogy: imagine two sheets of paper in 3D space:
+     *   - one sheet = ideal tiles at varying overscaledZ
+     *   - the second sheet = maxCoveringZoom
      */
-    _retainLoadedChildren(idealTiles, zoom, maxCoveringZoom, retain) {
-        for (const id in this._tiles) {
-            let tile = this._tiles[id];
-            // only consider renderable tiles up to maxCoveringZoom
-            if (retain[id] ||
-                !tile.hasData() ||
-                tile.tileID.overscaledZ <= zoom ||
-                tile.tileID.overscaledZ > maxCoveringZoom)
+    _retainLoadedChildren(targetTiles, retain) {
+        const targetTileIDs = Object.values(targetTiles);
+        const loadedDescendents = this._getLoadedDescendents(targetTileIDs);
+        // retain the uppermost descendents of target tiles
+        for (const targetID of targetTileIDs) {
+            const descendentTiles = loadedDescendents[targetID.key];
+            if (!descendentTiles)
                 continue;
-            // loop through parents and retain the topmost loaded one if found
-            let topmostLoadedID = tile.tileID;
-            while (tile && tile.tileID.overscaledZ > zoom + 1) {
-                const parentID = tile.tileID.scaledTo(tile.tileID.overscaledZ - 1);
-                tile = this._tiles[parentID.key];
-                if (tile && tile.hasData()) {
-                    topmostLoadedID = parentID;
+            const targetTileMaxCoveringZoom = targetID.overscaledZ + SourceCache.maxUnderzooming;
+            // determine the topmost zoom (overscaledZ) in the set of descendent tiles. (i.e. zoom 4 tiles are topmost relative to zoom 5)
+            let topmostZoom = Infinity;
+            for (const tile of descendentTiles) {
+                const zoom = tile.tileID.overscaledZ;
+                if (zoom <= targetTileMaxCoveringZoom && zoom < topmostZoom) {
+                    topmostZoom = zoom;
                 }
             }
-            // loop through ancestors of the topmost loaded child to see if there's one that needed it
-            let tileID = topmostLoadedID;
-            while (tileID.overscaledZ > zoom) {
-                tileID = tileID.scaledTo(tileID.overscaledZ - 1);
-                if (idealTiles[tileID.key] || (idealTiles[tileID.canonical.key])) {
-                    // found a parent that needed a loaded child; retain that child
-                    retain[topmostLoadedID.key] = topmostLoadedID;
-                    break;
+            // retain all uppermost descendents (with the same overscaledZ) in the topmost zoom below the target tile
+            if (topmostZoom !== Infinity) {
+                for (const tile of descendentTiles) {
+                    if (tile.tileID.overscaledZ === topmostZoom) {
+                        retain[tile.tileID.key] = tile.tileID;
+                    }
                 }
             }
         }
+    }
+    /**
+     * Return dictionary of qualified loaded descendents for each provided target tile id
+     */
+    _getLoadedDescendents(targetTileIDs) {
+        var _a;
+        const loadedDescendents = {};
+        // enumerate tiles currently in this source and find the loaded descendents of each target tile
+        for (const sourceKey in this._tiles) {
+            const sourceTile = this._tiles[sourceKey];
+            if (!sourceTile.hasData())
+                continue;
+            // determine if the loaded source tile (hasData) is a qualified descendent of any target tile
+            for (const targetID of targetTileIDs) {
+                if (sourceTile.tileID.isChildOf(targetID)) {
+                    (loadedDescendents[_a = targetID.key] || (loadedDescendents[_a] = [])).push(sourceTile);
+                }
+            }
+        }
+        return loadedDescendents;
     }
     /**
      * Find a loaded parent of the given tile (up to minCoveringZoom)
@@ -44112,7 +44247,7 @@ class SourceCache extends performance$1.Evented {
             }
         }
     }
-    _updateCoveredAndRetainedTiles(retain, minCoveringZoom, maxCoveringZoom, zoom, idealTileIDs, terrain) {
+    _updateCoveredAndRetainedTiles(retain, minCoveringZoom, idealTileIDs, terrain) {
         const tilesForFading = {};
         const fadingTiles = {};
         const ids = Object.keys(retain);
@@ -44137,7 +44272,7 @@ class SourceCache extends performance$1.Evented {
             fadingTiles[id] = tileID;
         }
         // for tiles that are still fading in, also find children to cross-fade with
-        this._retainLoadedChildren(fadingTiles, zoom, maxCoveringZoom, retain);
+        this._retainLoadedChildren(fadingTiles, retain);
         for (const id in tilesForFading) {
             if (!retain[id]) {
                 // If a tile is only needed for fading, mark it as covered so that it isn't rendered on it's own.
@@ -44228,7 +44363,6 @@ class SourceCache extends performance$1.Evented {
         // Determine the overzooming/underzooming amounts.
         const zoom = coveringZoomLevel(transform, this._source);
         const minCoveringZoom = Math.max(zoom - SourceCache.maxOverzooming, this._source.minzoom);
-        const maxCoveringZoom = Math.max(zoom + SourceCache.maxUnderzooming, this._source.minzoom);
         // When sourcecache is used for terrain also load parent tiles to avoid flickering when zooming out
         if (this.usedForTerrain) {
             const parents = {};
@@ -44255,7 +44389,7 @@ class SourceCache extends performance$1.Evented {
         // parent or child tiles that are *already* loaded.
         const retain = this._updateRetainedTiles(idealTileIDs, zoom);
         if (isRasterType(this._source.type)) {
-            this._updateCoveredAndRetainedTiles(retain, minCoveringZoom, maxCoveringZoom, zoom, idealTileIDs, terrain);
+            this._updateCoveredAndRetainedTiles(retain, minCoveringZoom, idealTileIDs, terrain);
         }
         for (const retainedId in retain) {
             // Make sure retained tiles always clear any existing fade holds
@@ -44284,12 +44418,16 @@ class SourceCache extends performance$1.Evented {
             }
         }
     }
+    /**
+     * Set tiles to be retained on update of this source. For ideal tiles that do not have data, retain their loaded
+     * children so they can be displayed as substitutes pending load of each ideal tile (to reduce flickering).
+     * If no loaded children are available, fallback to seeking loaded parents as an alternative substitute.
+     */
     _updateRetainedTiles(idealTileIDs, zoom) {
         var _a;
         const retain = {};
         const checked = {};
         const minCoveringZoom = Math.max(zoom - SourceCache.maxOverzooming, this._source.minzoom);
-        const maxCoveringZoom = Math.max(zoom + SourceCache.maxUnderzooming, this._source.minzoom);
         const missingTiles = {};
         for (const tileID of idealTileIDs) {
             const tile = this._addTile(tileID);
@@ -44302,8 +44440,7 @@ class SourceCache extends performance$1.Evented {
                 missingTiles[tileID.key] = tileID;
             }
         }
-        // retain any loaded children of ideal tiles up to maxCoveringZoom
-        this._retainLoadedChildren(missingTiles, zoom, maxCoveringZoom, retain);
+        this._retainLoadedChildren(missingTiles, retain);
         for (const tileID of idealTileIDs) {
             let tile = this._tiles[tileID.key];
             if (tile.hasData())
@@ -44322,11 +44459,15 @@ class SourceCache extends performance$1.Evented {
             else {
                 // check if all 4 immediate children are loaded (i.e. the missing ideal tile is covered)
                 const children = tileID.children(this._source.maxzoom);
-                if (retain[children[0].key] &&
+                if (children.length === 4 &&
+                    retain[children[0].key] &&
                     retain[children[1].key] &&
                     retain[children[2].key] &&
                     retain[children[3].key])
                     continue; // tile is covered by children
+                if (children.length === 1 &&
+                    retain[children[0].key])
+                    continue; // tile is covered by overscaled child
             }
             // We couldn't find child tiles that entirely cover the ideal tile; look for parents now.
             // As we ascend up the tile pyramid of the ideal tile, we check whether the parent
@@ -49416,8 +49557,14 @@ function cameraForBoxAndBearing(options, padding, bounds, bearing, tr) {
 class MercatorCameraHelper {
     get useGlobeControls() { return false; }
     handlePanInertia(pan, transform) {
+        // Reduce the offset so that it never goes past the horizon. If it goes past
+        // the horizon, the pan direction is opposite of the intended direction.
+        const offsetLength = pan.mag();
+        const pixelsToHorizon = Math.abs(getMercatorHorizon(transform));
+        const horizonFactor = 0.75; // Must be < 1 to prevent the offset from crossing the horizon
+        const offsetAsPoint = pan.mult(Math.min(pixelsToHorizon * horizonFactor / offsetLength, 1.0));
         return {
-            easingOffset: pan,
+            easingOffset: offsetAsPoint,
             easingCenter: transform.center,
         };
     }
@@ -50053,7 +50200,7 @@ const properties = new performance$1.Properties({
 class GlobeProjection extends performance$1.Evented {
     constructor(projection) {
         super();
-        this._transitionable = new performance$1.Transitionable(properties);
+        this._transitionable = new performance$1.Transitionable(properties, undefined);
         this.setProjection(projection);
         this._transitioning = this._transitionable.untransitioned();
         this.recalculate(new performance$1.EvaluationParameters(0));
@@ -52597,11 +52744,13 @@ class Style extends performance$1.Evented {
             return;
         }
         const sourceIdsToReload = new Set();
-        for (const layerId in this._layers) {
-            const layer = this._layers[layerId];
-            const layoutAffectingGlobalStateRefs = layer.getLayoutAffectingGlobalStateRefs();
-            const paintAffectingGlobalStateRefs = layer.getPaintAffectingGlobalStateRefs();
-            for (const ref of globalStateRefs) {
+        const globalStateChange = {};
+        for (const ref of globalStateRefs) {
+            globalStateChange[ref] = this._globalState[ref];
+            for (const layerId in this._layers) {
+                const layer = this._layers[layerId];
+                const layoutAffectingGlobalStateRefs = layer.getLayoutAffectingGlobalStateRefs();
+                const paintAffectingGlobalStateRefs = layer.getPaintAffectingGlobalStateRefs();
                 if (layoutAffectingGlobalStateRefs.has(ref)) {
                     sourceIdsToReload.add(layer.source);
                 }
@@ -52612,6 +52761,8 @@ class Style extends performance$1.Evented {
                 }
             }
         }
+        // Propagate global state changes to workers
+        this.dispatcher.broadcast("UGS" /* MessageType.updateGlobalState */, globalStateChange);
         for (const id in this.sourceCaches) {
             if (sourceIdsToReload.has(id)) {
                 this._reloadSource(id);
@@ -52650,7 +52801,7 @@ class Style extends performance$1.Evented {
         this._load(empty, { validate: false });
     }
     _load(json, options, previousStyle) {
-        var _a, _b, _c;
+        var _a, _b;
         let nextState = options.transformStyle ? options.transformStyle(previousStyle, json) : json;
         if (options.validate && emitValidationErrors(this, performance$1.validateStyle(nextState))) {
             return;
@@ -52673,12 +52824,13 @@ class Style extends performance$1.Evented {
         this._setProjectionInternal(((_a = this.stylesheet.projection) === null || _a === void 0 ? void 0 : _a.type) || 'mercator');
         this.sky = new Sky(this.stylesheet.sky);
         this.map.setTerrain((_b = this.stylesheet.terrain) !== null && _b !== void 0 ? _b : null);
-        this.setGlobalState((_c = this.stylesheet.state) !== null && _c !== void 0 ? _c : null);
         this.fire(new performance$1.Event('data', { dataType: 'style' }));
         this.fire(new performance$1.Event('style.load'));
     }
     _createLayers() {
+        var _a;
         const dereferencedLayers = performance$1.derefLayers(this.stylesheet.layers);
+        this.setGlobalState((_a = this.stylesheet.state) !== null && _a !== void 0 ? _a : null);
         // Broadcast layers to workers first, so that expensive style processing (createStyleLayer)
         // can happen in parallel on both main and worker threads.
         this.dispatcher.broadcast("SL" /* MessageType.setLayers */, dereferencedLayers);
@@ -52687,7 +52839,7 @@ class Style extends performance$1.Evented {
         // reset serialization field, to be populated only when needed
         this._serializedLayers = null;
         for (const layer of dereferencedLayers) {
-            const styledLayer = performance$1.createStyleLayer(layer);
+            const styledLayer = performance$1.createStyleLayer(layer, this._globalState);
             styledLayer.setEventedParent(this, { layer: { id: layer.id } });
             this._layers[layer.id] = styledLayer;
         }
@@ -53186,7 +53338,7 @@ class Style extends performance$1.Evented {
         if (layerObject.type === 'custom') {
             if (emitValidationErrors(this, performance$1.validateCustomStyleLayer(layerObject)))
                 return;
-            layer = performance$1.createStyleLayer(layerObject);
+            layer = performance$1.createStyleLayer(layerObject, this._globalState);
         }
         else {
             if ('source' in layerObject && typeof layerObject.source === 'object') {
@@ -53197,7 +53349,7 @@ class Style extends performance$1.Evented {
             // this layer is not in the style.layers array, so we pass an impossible array index
             if (this._validate(performance$1.validateStyle.layer, `layers.${id}`, layerObject, { arrayIndex: -1 }, options))
                 return;
-            layer = performance$1.createStyleLayer(layerObject);
+            layer = performance$1.createStyleLayer(layerObject, this._globalState);
             this._validateLayer(layer);
             layer.setEventedParent(this, { layer: { id } });
         }
@@ -53607,7 +53759,7 @@ class Style extends performance$1.Evented {
         // LayerSpecification is serialized StyleLayer, and this casting is safe.
         const serializedLayers = this._serializedAllLayers();
         const layersAsSet = params.layers instanceof Set ? params.layers : Array.isArray(params.layers) ? new Set(params.layers) : null;
-        const paramsStrict = Object.assign(Object.assign({}, params), { layers: layersAsSet });
+        const paramsStrict = Object.assign(Object.assign({}, params), { layers: layersAsSet, globalState: this._globalState });
         for (const id in this.sourceCaches) {
             if (params.layers && !includedSources[id])
                 continue;
@@ -53623,11 +53775,11 @@ class Style extends performance$1.Evented {
         return this._flattenAndSortRenderedFeatures(sourceResults);
     }
     querySourceFeatures(sourceID, params) {
-        if (params && params.filter) {
+        if (params === null || params === void 0 ? void 0 : params.filter) {
             this._validate(performance$1.validateStyle.filter, 'querySourceFeatures.filter', params.filter, null, params);
         }
         const sourceCache = this.sourceCaches[sourceID];
-        return sourceCache ? querySourceFeatures(sourceCache, params) : [];
+        return sourceCache ? querySourceFeatures(sourceCache, params ? Object.assign(Object.assign({}, params), { globalState: this._globalState }) : { globalState: this._globalState }) : [];
     }
     getLight() {
         return this.light.getLight();
@@ -63632,8 +63784,6 @@ let Map$1 = class Map extends Camera {
      * Sets a global state property that can be retrieved with the [`global-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#global-state).
      * If the value is null, it resets the property to its default value defined in the [`state` style property](https://maplibre.org/maplibre-style-spec/root/#state).
      *
-     * Note that changing `global-state` values defined in layout properties is not supported, and will be ignored.
-     *
      * @param propertyName - The name of the state property to set.
      * @param value - The value of the state property to set.
      */
@@ -65744,8 +65894,7 @@ let Map$1 = class Map extends Camera {
                 now,
                 fadeDuration,
                 zoomHistory: this.style.zoomHistory,
-                transition: this.style.getTransition(),
-                globalState: this.style.getGlobalState()
+                transition: this.style.getTransition()
             });
             const factor = parameters.crossFadingFactor();
             if (factor !== 1 || factor !== this._crossFadingFactor) {
@@ -66044,7 +66193,7 @@ const defaultOptions$3 = {
  * let nav = new NavigationControl();
  * map.addControl(nav, 'top-left');
  * ```
- * @see [Display map navigation controls](https://maplibre.org/maplibre-gl-js/docs/examples/navigation/)
+ * @see [Display map navigation controls](https://maplibre.org/maplibre-gl-js/docs/examples/display-map-navigation-controls/)
  */
 class NavigationControl {
     /**
@@ -67317,19 +67466,15 @@ class GeolocateControl extends performance$1.Evented {
                 this._accuracyCircleMarker.setLngLat(center).addTo(this._map);
                 this._userLocationDotMarker.setLngLat(center).addTo(this._map);
                 this._accuracy = position.coords.accuracy;
-                if (this.options.showUserLocation && this.options.showAccuracyCircle) {
-                    this._updateCircleRadius();
-                }
+                this._updateCircleRadiusIfNeeded();
             }
             else {
                 this._userLocationDotMarker.remove();
                 this._accuracyCircleMarker.remove();
             }
         };
-        this._onZoom = () => {
-            if (this.options.showUserLocation && this.options.showAccuracyCircle) {
-                this._updateCircleRadius();
-            }
+        this._onUpdate = () => {
+            this._updateCircleRadiusIfNeeded();
         };
         this._onError = (error) => {
             if (!this._map) {
@@ -67416,7 +67561,10 @@ class GeolocateControl extends performance$1.Evented {
                 this._accuracyCircleMarker = new Marker({ element: this._circleElement, pitchAlignment: 'map' });
                 if (this.options.trackUserLocation)
                     this._watchState = 'OFF';
-                this._map.on('zoom', this._onZoom);
+                this._map.on('zoom', this._onUpdate);
+                this._map.on('move', this._onUpdate);
+                this._map.on('rotate', this._onUpdate);
+                this._map.on('pitch', this._onUpdate);
             }
             this._geolocateButton.addEventListener('click', () => this.trigger());
             this._setup = true;
@@ -67460,7 +67608,10 @@ class GeolocateControl extends performance$1.Evented {
             this._accuracyCircleMarker.remove();
         }
         DOM.remove(this._container);
-        this._map.off('zoom', this._onZoom);
+        this._map.off('zoom', this._onUpdate);
+        this._map.off('move', this._onUpdate);
+        this._map.off('rotate', this._onUpdate);
+        this._map.off('pitch', this._onUpdate);
         this._map = undefined;
         numberOfWatches = 0;
         noTimeout = false;
@@ -67506,15 +67657,17 @@ class GeolocateControl extends performance$1.Evented {
                 throw new Error(`Unexpected watchState ${this._watchState}`);
         }
     }
-    _updateCircleRadius() {
-        const bounds = this._map.getBounds();
-        const southEastPoint = bounds.getSouthEast();
-        const northEastPoint = bounds.getNorthEast();
-        const mapHeightInMeters = southEastPoint.distanceTo(northEastPoint);
-        const mapHeightInPixels = this._map._container.clientHeight;
-        const circleDiameter = Math.ceil(2 * (this._accuracy / (mapHeightInMeters / mapHeightInPixels)));
-        this._circleElement.style.width = `${circleDiameter}px`;
-        this._circleElement.style.height = `${circleDiameter}px`;
+    _updateCircleRadiusIfNeeded() {
+        const userLocation = this._userLocationDotMarker.getLngLat();
+        if (!this.options.showUserLocation || !this.options.showAccuracyCircle || !this._accuracy || !userLocation) {
+            return;
+        }
+        const screenPosition = this._map.project(userLocation);
+        const userLocationWith100Px = this._map.unproject([screenPosition.x + 100, screenPosition.y]);
+        const pixelsToMeters = userLocation.distanceTo(userLocationWith100Px) / 100;
+        const circleDiameter = 2 * this._accuracy / pixelsToMeters;
+        this._circleElement.style.width = `${circleDiameter.toFixed(2)}px`;
+        this._circleElement.style.height = `${circleDiameter.toFixed(2)}px`;
     }
     /**
      * Programmatically request and move the map to the user's location.

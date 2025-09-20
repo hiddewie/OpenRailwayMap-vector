@@ -836,15 +836,14 @@ type CrossfadeParameters = {
 	toScale: number;
 	t: number;
 };
-declare class EvaluationParameters {
+declare class EvaluationParameters implements GlobalProperties {
 	zoom: number;
 	now: number;
 	fadeDuration: number;
 	zoomHistory: ZoomHistory;
 	transition: TransitionSpecification;
-	globalState: Record<string, any>;
+	isSupportedScript: (_: string) => boolean;
 	constructor(zoom: number, options?: any);
-	isSupportedScript(str: string): boolean;
 	crossFadingFactor(): number;
 	getCrossfadeParameters(): CrossfadeParameters;
 }
@@ -862,7 +861,7 @@ declare class PropertyValue<T, R> {
 	property: Property<T, R>;
 	value: PropertyValueSpecification<T> | void;
 	expression: StylePropertyExpression;
-	constructor(property: Property<T, R>, value: PropertyValueSpecification<T> | void);
+	constructor(property: Property<T, R>, value: PropertyValueSpecification<T> | void, globalState: Record<string, any>);
 	isDataDriven(): boolean;
 	getGlobalStateRefs(): Set<string>;
 	possiblyEvaluate(parameters: EvaluationParameters, canonical?: CanonicalTileID, availableImages?: Array<string>): R;
@@ -875,7 +874,7 @@ declare class TransitionablePropertyValue<T, R> {
 	property: Property<T, R>;
 	value: PropertyValue<T, R>;
 	transition: TransitionSpecification | void;
-	constructor(property: Property<T, R>);
+	constructor(property: Property<T, R>, globalState: Record<string, any>);
 	transitioned(parameters: TransitionParameters, prior: TransitioningPropertyValue<T, R>): TransitioningPropertyValue<T, R>;
 	untransitioned(): TransitioningPropertyValue<T, R>;
 }
@@ -884,7 +883,8 @@ declare class Transitionable<Props> {
 	_values: {
 		[K in keyof Props]: TransitionablePropertyValue<any, unknown>;
 	};
-	constructor(properties: Properties<Props>);
+	private _globalState;
+	constructor(properties: Properties<Props>, globalState: Record<string, any>);
 	getValue<S extends keyof Props, T>(name: S): PropertyValueSpecification<T> | void;
 	setValue<S extends keyof Props, T>(name: S, value: PropertyValueSpecification<T> | void): void;
 	getTransition<S extends keyof Props>(name: S): TransitionSpecification | void;
@@ -916,7 +916,8 @@ declare class Layout<Props> {
 	_values: {
 		[K in keyof Props]: PropertyValue<any, PossiblyEvaluatedPropertyValue<any>>;
 	};
-	constructor(properties: Properties<Props>);
+	private _globalState;
+	constructor(properties: Properties<Props>, globalState: Record<string, any>);
 	hasValue<S extends keyof Props>(name: S): boolean;
 	getValue<S extends keyof Props>(name: S): any;
 	setValue<S extends keyof Props>(name: S, value: any): void;
@@ -1568,12 +1569,12 @@ declare class HeatmapStyleLayer extends StyleLayer {
 	_transitioningPaint: Transitioning<HeatmapPaintProps>;
 	paint: PossiblyEvaluated<HeatmapPaintProps, HeatmapPaintPropsPossiblyEvaluated>;
 	createBucket(options: any): HeatmapBucket;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	_handleSpecialPaintPropertyUpdate(name: string): void;
 	_updateColorRamp(): void;
 	resize(): void;
-	queryRadius(): number;
-	queryIntersectsFeature(): boolean;
+	queryRadius(bucket: Bucket): number;
+	queryIntersectsFeature({ queryGeometry, feature, featureState, geometry, transform, pixelsToTileUnits, unwrappedTileID, getElevation }: QueryIntersectsFeatureParams): boolean;
 	hasOffscreenPass(): boolean;
 }
 type SerializedGrid = {
@@ -2655,14 +2656,36 @@ declare class SourceCache extends Evented {
 	 */
 	getTileByID(id: string): Tile;
 	/**
-	 * For a given set of tiles, retain children that are loaded and have a zoom
-	 * between `zoom` (exclusive) and `maxCoveringZoom` (inclusive)
+	 * Retain the uppermost loaded children of each provided target tile, within a variable covering zoom range.
+	 *
+	 * On pitched maps, different parts of the screen show different zoom levels simultaneously.
+	 * Ideal tiles are generated using coveringTiles() above, which returns the ideal tile set for
+	 * the current pitched plane, which can carry tiles of varying zooms (overscaledZ).
+	 * See: https://maplibre.org/maplibre-gl-js/docs/examples/level-of-detail-control/
+	 *
+	 * A fixed `maxCoveringZoom` on a pitched map would incorrectly intersect with some
+	 * ideal tiles and cause distant high-pitch tiles to skip their uppermost children.
+	 *
+	 * To solve this, we calculate the max covering zoom for each ideal tile separately using its
+	 * `overscaledZ`. This effectively makes the "max covering zoom plane" parallel to the
+	 * "ideal tile plane," ensuring that we correctly capture the uppermost children
+	 * of each ideal tile across the pitched view.
+	 *
+	 * Analogy: imagine two sheets of paper in 3D space:
+	 *   - one sheet = ideal tiles at varying overscaledZ
+	 *   - the second sheet = maxCoveringZoom
 	 */
-	_retainLoadedChildren(idealTiles: {
-		[_ in any]: OverscaledTileID;
-	}, zoom: number, maxCoveringZoom: number, retain: {
-		[_ in any]: OverscaledTileID;
+	_retainLoadedChildren(targetTiles: {
+		[_: string]: OverscaledTileID;
+	}, retain: {
+		[_: string]: OverscaledTileID;
 	}): void;
+	/**
+	 * Return dictionary of qualified loaded descendents for each provided target tile id
+	 */
+	_getLoadedDescendents(targetTileIDs: OverscaledTileID[]): {
+		[_: string]: Tile[];
+	};
 	/**
 	 * Find a loaded parent of the given tile (up to minCoveringZoom)
 	 */
@@ -2684,13 +2707,18 @@ declare class SourceCache extends Evented {
 	handleWrapJump(lng: number): void;
 	_updateCoveredAndRetainedTiles(retain: {
 		[_: string]: OverscaledTileID;
-	}, minCoveringZoom: number, maxCoveringZoom: number, zoom: number, idealTileIDs: OverscaledTileID[], terrain?: Terrain): void;
+	}, minCoveringZoom: number, idealTileIDs: OverscaledTileID[], terrain?: Terrain): void;
 	/**
 	 * Removes tiles that are outside the viewport and adds new tiles that
 	 * are inside the viewport.
 	 */
 	update(transform: ITransform, terrain?: Terrain): void;
 	releaseSymbolFadeTiles(): void;
+	/**
+	 * Set tiles to be retained on update of this source. For ideal tiles that do not have data, retain their loaded
+	 * children so they can be displayed as substitutes pending load of each ideal tile (to reduce flickering).
+	 * If no loaded children are available, fallback to seeking loaded parents as an alternative substitute.
+	 */
 	_updateRetainedTiles(idealTileIDs: Array<OverscaledTileID>, zoom: number): {
 		[_: string]: OverscaledTileID;
 	};
@@ -2971,7 +2999,7 @@ declare class SymbolStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<SymbolPaintProps>;
 	_transitioningPaint: Transitioning<SymbolPaintProps>;
 	paint: PossiblyEvaluated<SymbolPaintProps, SymbolPaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	recalculate(parameters: EvaluationParameters, availableImages: Array<string>): void;
 	getValueAndResolveTokens(name: any, feature: Feature, canonical: CanonicalTileID, availableImages: Array<string>): any;
 	createBucket(parameters: BucketParameters<any>): SymbolBucket;
@@ -3099,7 +3127,6 @@ declare class SymbolBucket implements Bucket {
 	static addDynamicAttributes: typeof addDynamicAttributes;
 	collisionBoxArray: CollisionBoxArray;
 	zoom: number;
-	globalState: Record<string, any>;
 	overscaling: number;
 	layers: Array<SymbolStyleLayer>;
 	layerIds: Array<string>;
@@ -4525,6 +4552,7 @@ type QueryParameters = {
 		filter?: FilterSpecification;
 		layers?: Set<string> | null;
 		availableImages?: Array<string>;
+		globalState?: Record<string, any>;
 	};
 };
 type QueryResults = {
@@ -4570,7 +4598,10 @@ export declare class FeatureIndex {
 	}, sourceFeatureState?: SourceFeatureState, intersectionTest?: (feature: VectorTileFeature, styleLayer: StyleLayer, featureState: any, id: string | number | void) => boolean | number): void;
 	lookupSymbolFeatures(symbolFeatureIndexes: Array<number>, serializedLayers: {
 		[_: string]: StyleLayer;
-	}, bucketIndex: number, sourceLayerIndex: number, filterSpec: FilterSpecification, filterLayerIDs: Set<string> | null, availableImages: Array<string>, styleLayers: {
+	}, bucketIndex: number, sourceLayerIndex: number, filterParams: {
+		filterSpec: FilterSpecification;
+		globalState: Record<string, any>;
+	}, filterLayerIDs: Set<string> | null, availableImages: Array<string>, styleLayers: {
 		[_: string]: StyleLayer;
 	}): QueryResults;
 	hasLayer(id: string): boolean;
@@ -4693,7 +4724,6 @@ type WorkerTileParameters = TileParameters & {
 	collectResourceTiming?: boolean;
 	returnDependencies?: boolean;
 	subdivisionGranularity: SubdivisionGranularitySetting;
-	globalState: Record<string, any>;
 };
 type WorkerDEMTileParameters = TileParameters & {
 	rawImageData: RGBAImage | ImageBitmap | ImageData;
@@ -5010,6 +5040,7 @@ export type QueryRenderedFeaturesOptions = {
 };
 type QueryRenderedFeaturesOptionsStrict = Omit<QueryRenderedFeaturesOptions, "layers"> & {
 	layers: Set<string> | null;
+	globalState?: Record<string, any>;
 };
 /**
  * The options object related to the {@link Map.querySourceFeatures} method
@@ -5029,6 +5060,9 @@ export type QuerySourceFeatureOptions = {
 	 * @defaultValue true
 	 */
 	validate?: boolean;
+};
+type QuerySourceFeatureOptionsStrict = QuerySourceFeatureOptions & {
+	globalState?: Record<string, any>;
 };
 type QueryRenderedFeaturesResults = {
 	[key: string]: QueryRenderedFeaturesResultsItem[];
@@ -5126,11 +5160,7 @@ export declare class Tile {
 	}, serializedLayers: {
 		[_: string]: any;
 	}, sourceFeatureState: SourceFeatureState, queryGeometry: Array<Point>, cameraQueryGeometry: Array<Point>, scale: number, params: Pick<QueryRenderedFeaturesOptionsStrict, "filter" | "layers" | "availableImages"> | undefined, transform: IReadonlyTransform, maxPitchScaleFactor: number, pixelPosMatrix: mat4, getElevation: undefined | ((x: number, y: number) => number)): QueryResults;
-	querySourceFeatures(result: Array<GeoJSONFeature>, params?: {
-		sourceLayer?: string;
-		filter?: FilterSpecification;
-		validate?: boolean;
-	}): void;
+	querySourceFeatures(result: Array<GeoJSONFeature>, params?: QuerySourceFeatureOptionsStrict): void;
 	hasData(): boolean;
 	patternsLoaded(): boolean;
 	setExpiryData(data: ExpiryData): void;
@@ -5165,7 +5195,6 @@ declare class SourceFeatureState {
 declare class CircleBucket<Layer extends CircleStyleLayer | HeatmapStyleLayer> implements Bucket {
 	index: number;
 	zoom: number;
-	globalState: Record<string, any>;
 	overscaling: number;
 	layerIds: Array<string>;
 	layers: Array<Layer>;
@@ -5234,7 +5263,7 @@ declare class CircleStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<CirclePaintProps>;
 	_transitioningPaint: Transitioning<CirclePaintProps>;
 	paint: PossiblyEvaluated<CirclePaintProps, CirclePaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	createBucket(parameters: BucketParameters<any>): CircleBucket<any>;
 	queryRadius(bucket: Bucket): number;
 	queryIntersectsFeature({ queryGeometry, feature, featureState, geometry, transform, pixelsToTileUnits, unwrappedTileID, getElevation }: QueryIntersectsFeatureParams): boolean;
@@ -5248,7 +5277,6 @@ declare class FillBucket implements Bucket {
 	stateDependentLayers: Array<FillStyleLayer>;
 	stateDependentLayerIds: Array<string>;
 	patternFeatures: Array<BucketFeature>;
-	globalState: Record<string, any>;
 	layoutVertexArray: FillLayoutArray;
 	layoutVertexBuffer: VertexBuffer;
 	indexArray: TriangleIndexArray;
@@ -5312,7 +5340,7 @@ declare class FillStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<FillPaintProps>;
 	_transitioningPaint: Transitioning<FillPaintProps>;
 	paint: PossiblyEvaluated<FillPaintProps, FillPaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	recalculate(parameters: EvaluationParameters, availableImages: Array<string>): void;
 	createBucket(parameters: BucketParameters<any>): FillBucket;
 	queryRadius(): number;
@@ -5322,7 +5350,6 @@ declare class FillStyleLayer extends StyleLayer {
 declare class FillExtrusionBucket implements Bucket {
 	index: number;
 	zoom: number;
-	globalState: Record<string, any>;
 	overscaling: number;
 	layers: Array<FillExtrusionStyleLayer>;
 	layerIds: Array<string>;
@@ -5391,7 +5418,7 @@ declare class FillExtrusionStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<FillExtrusionPaintProps>;
 	_transitioningPaint: Transitioning<FillExtrusionPaintProps>;
 	paint: PossiblyEvaluated<FillExtrusionPaintProps, FillExtrusionPaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	createBucket(parameters: BucketParameters<FillExtrusionStyleLayer>): FillExtrusionBucket;
 	queryRadius(): number;
 	is3D(): boolean;
@@ -5421,7 +5448,7 @@ declare class HillshadeStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<HillshadePaintProps>;
 	_transitioningPaint: Transitioning<HillshadePaintProps>;
 	paint: PossiblyEvaluated<HillshadePaintProps, HillshadePaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	getIlluminationProperties(): {
 		directionRadians: number[];
 		altitudeRadians: number[];
@@ -5452,7 +5479,7 @@ declare class ColorReliefStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<ColorReliefPaintProps>;
 	_transitioningPaint: Transitioning<ColorReliefPaintProps>;
 	paint: PossiblyEvaluated<ColorReliefPaintProps, ColorReliefPaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	/**
 	 * Create the color ramp, enforcing a maximum length for the vectors. This modifies the internal color ramp,
 	 * so that the remapping is only performed once.
@@ -5486,7 +5513,6 @@ declare class LineBucket implements Bucket {
 	e2: number;
 	index: number;
 	zoom: number;
-	globalState: Record<string, any>;
 	overscaling: number;
 	layers: Array<LineStyleLayer>;
 	layerIds: Array<string>;
@@ -5593,7 +5619,7 @@ declare class LineStyleLayer extends StyleLayer {
 	_transitionablePaint: Transitionable<LinePaintProps>;
 	_transitioningPaint: Transitioning<LinePaintProps>;
 	paint: PossiblyEvaluated<LinePaintProps, LinePaintPropsPossiblyEvaluated>;
-	constructor(layer: LayerSpecification);
+	constructor(layer: LayerSpecification, globalState: Record<string, any>);
 	_handleSpecialPaintPropertyUpdate(name: string): void;
 	gradientExpression(): import("@maplibre/maplibre-gl-style-spec").StylePropertyExpression;
 	recalculate(parameters: EvaluationParameters, availableImages: Array<string>): void;
@@ -6798,7 +6824,6 @@ type BucketParameters<Layer extends TypedStyleLayer> = {
 	collisionBoxArray: CollisionBoxArray;
 	sourceLayerIndex: number;
 	sourceID: string;
-	globalState: Record<string, any>;
 };
 type PopulateParameters = {
 	featureIndex: FeatureIndex;
@@ -6942,10 +6967,11 @@ export declare abstract class StyleLayer extends Evented {
 	queryRadius?(bucket: Bucket): number;
 	queryIntersectsFeature?(params: QueryIntersectsFeatureParams): boolean | number;
 	createBucket?(parameters: BucketParameters<any>): Bucket;
+	private _globalState;
 	constructor(layer: LayerSpecification | CustomLayerInterface, properties: Readonly<{
 		layout?: Properties<any>;
 		paint?: Properties<any>;
-	}>);
+	}>, globalState: Record<string, any>);
 	setFilter(filter: FilterSpecification | void): void;
 	getCrossfadeParameters(): CrossfadeParameters;
 	getLayoutProperty(name: string): any;
@@ -7119,6 +7145,7 @@ export declare const enum MessageType {
 	getGlyphs = "GG",
 	getImages = "GI",
 	setImages = "SI",
+	updateGlobalState = "UGS",
 	setLayers = "SL",
 	updateLayers = "UL",
 	syncRTLPluginState = "SRPS",
@@ -7178,6 +7205,10 @@ export type RequestResponseMessageMap = {
 	];
 	[MessageType.setImages]: [
 		string[],
+		void
+	];
+	[MessageType.updateGlobalState]: [
+		Record<string, any>,
 		void
 	];
 	[MessageType.setLayers]: [
@@ -10629,8 +10660,6 @@ declare class Map$1 extends Camera {
 	 * Sets a global state property that can be retrieved with the [`global-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#global-state).
 	 * If the value is null, it resets the property to its default value defined in the [`state` style property](https://maplibre.org/maplibre-style-spec/root/#state).
 	 *
-	 * Note that changing `global-state` values defined in layout properties is not supported, and will be ignored.
-	 *
 	 * @param propertyName - The name of the state property to set.
 	 * @param value - The value of the state property to set.
 	 */
@@ -12325,7 +12354,7 @@ export type NavigationControlOptions = {
  * let nav = new NavigationControl();
  * map.addControl(nav, 'top-left');
  * ```
- * @see [Display map navigation controls](https://maplibre.org/maplibre-gl-js/docs/examples/navigation/)
+ * @see [Display map navigation controls](https://maplibre.org/maplibre-gl-js/docs/examples/display-map-navigation-controls/)
  */
 export declare class NavigationControl implements IControl {
 	_map: Map$1;
@@ -13342,8 +13371,8 @@ export declare class GeolocateControl extends Evented implements IControl {
 	 * @param position - the Geolocation API Position
 	 */
 	_updateMarker: (position?: GeolocationPosition | null) => void;
-	_updateCircleRadius(): void;
-	_onZoom: () => void;
+	_updateCircleRadiusIfNeeded(): void;
+	_onUpdate: () => void;
 	_onError: (error: GeolocationPositionError) => void;
 	_finish: () => void;
 	_setupUI: () => void;
