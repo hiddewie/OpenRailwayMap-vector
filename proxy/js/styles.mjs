@@ -1483,6 +1483,16 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'standard_railway_platforms',
       paint: {
         'fill-color': '#aaa',
+      },
+    },
+    {
+      id: 'railway_platforms',
+      type: 'fill',
+      minzoom: 15,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      paint: {
+        'fill-color': '#aaa',
         // 'fill-color': ['case',
         //   ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors[theme].styles.standard.past,
         //   ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors[theme].styles.standard.future,
