@@ -282,7 +282,7 @@ local platforms = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'point' },
+    { column = 'way', type = 'geometry' },
     { column = 'name', type = 'text' },
   },
 })
@@ -1125,7 +1125,7 @@ function osm2pgsql.process_way(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
-      way = object:as_linestring():centroid(),
+      way = object:as_linestring(),
       name = tags.name,
     })
   end
@@ -1208,7 +1208,7 @@ function osm2pgsql.process_relation(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
-      way = object:as_multilinestring():centroid(),
+      way = object:as_multilinestring(),
       name = tags.name,
     })
   end
