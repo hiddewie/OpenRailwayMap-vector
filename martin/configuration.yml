@@ -177,6 +177,19 @@ postgres:
         note: string
         description: string
 
+    standard_railway_platforms:
+      schema: public
+      table: standard_railway_platforms
+      srid: 3857
+      geometry_column: way
+      geometry_type: GEOMETRY
+      properties:
+        id: integer
+        osm_id: string
+        osm_type: string
+        feature: string
+        name: string
+
     railway_text_km:
       schema: public
       table: railway_text_km
