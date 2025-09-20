@@ -459,6 +459,16 @@ const features = {
     },
     labelProperty: 'name',
   },
+  'openrailwaymap_standard-standard_railway_platforms': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      platform: {
+        name: 'Platform',
+        type: 'polygon',
+      },
+    },
+    labelProperty: 'name',
+  },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
     featureProperty: 'type',
