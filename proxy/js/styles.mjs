@@ -3002,7 +3002,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           maxzoom: 16,
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
-          filter: ['!=', ['get', `feature${featureIndex}`], null],
+          filter: ['all',
+            ['==', ['get', 'railway'], 'signal'],
+            ['!=', ['get', `feature${featureIndex}`], null],
+          ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
@@ -3010,6 +3013,26 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
         },
       )
+    ),
+    ...imageLayerWithOutline(
+      theme,
+      'railway_signals_high_derail_buffer_stop',
+      ['case',
+        ['==', ['get', 'railway'], 'derail'], 'general/derail',
+        ['==', ['get', 'railway'], 'buffer_stop'], 'general/buffer_stop',
+        ''
+      ],
+      {
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
     ),
     ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex =>
       imageLayerWithOutline(
@@ -3025,7 +3048,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': ['case',
+              ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], ['literal', [0, -20 * (featureIndex + 1)]],
+              ['literal', [0, -20 * featureIndex]]
+            ],
           },
         },
       )
