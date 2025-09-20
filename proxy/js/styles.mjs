@@ -4729,6 +4729,12 @@ const legendData = {
       {
         legend: 'Subway entrance',
         type: 'point',
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_platforms": [
+      {
+        legend: 'Platform',
+        type: 'polygon',
         properties: {},
       },
     ],
