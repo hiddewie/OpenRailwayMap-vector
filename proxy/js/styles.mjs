@@ -758,7 +758,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
@@ -1512,6 +1512,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
       },
     },
+    // TODO standard_railway_platform_edges
     {
       id: 'railway_grouped_stations',
       type: 'fill',
@@ -2110,6 +2111,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-padding': 10,
       },
     },
+    // TODO standard_railway_platform_edges
     {
       id: 'standard_station_entrances',
       type: 'symbol',
@@ -4763,11 +4765,13 @@ const legendData = {
         properties: {},
       },
     ],
-    "openrailwaymap_standard-standard_railway_platforms": [
+    "openrailwaymap_standard-standard_railway_platform_edges": [
       {
-        legend: 'Platform',
-        type: 'polygon',
-        properties: {},
+        legend: 'Platform edge',
+        type: 'line',
+        properties: {
+          ref: 3,
+        },
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":

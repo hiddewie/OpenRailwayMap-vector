@@ -571,6 +571,17 @@ SELECT
   tactile_paving
 FROM platforms;
 
+CREATE OR REPLACE VIEW standard_railway_platform_edges AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    'platform_edge' as feature,
+    ref,
+    height,
+    tactile_paving
+  FROM platform_edge;
+
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT
     id,

@@ -180,6 +180,20 @@ postgres:
         departures_board: boolean
         tactile_paving: boolean
 
+    standard_railway_platform_edges:
+      schema: public
+      table: standard_railway_platform_edges
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        id: integer
+        osm_id: string
+        feature: string
+        ref: string
+        height: string
+        tactile_paving: boolean
+
     railway_text_km:
       schema: public
       table: railway_text_km

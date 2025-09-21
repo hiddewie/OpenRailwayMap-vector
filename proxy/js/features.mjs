@@ -503,6 +503,24 @@ const features = {
       },
     }
   },
+  'openrailwaymap_standard-standard_railway_platform_edges': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      platform: {
+        name: 'Platform edge',
+        type: 'line',
+      },
+    },
+    labelProperty: 'ref',
+    properties: {
+      height: {
+        name: 'Height',
+      },
+      tactile_paving: {
+        name: 'Tactile paving',
+      },
+    }
+  },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
     featureProperty: 'type',
