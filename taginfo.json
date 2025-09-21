@@ -135,6 +135,8 @@
     { "key": "railway", "value": "subway_entrance" },
     { "key": "railway", "value": "train_station_entrance" },
     { "key": "railway", "value": "isolated_track_section" },
+    { "key": "railway", "value": "platform" },
+    { "key": "railway", "value": "platform_edge" },
     { "key": "railway:signal:brake_test" },
     { "key": "railway:signal:brake_test:form" },
     { "key": "railway:signal:combined" },
