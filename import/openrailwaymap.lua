@@ -1125,7 +1125,7 @@ function osm2pgsql.process_way(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
-      way = object:as_linestring(),
+      way = object:as_polygon(),
       name = tags.name,
     })
   end
