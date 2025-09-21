@@ -467,6 +467,41 @@ const features = {
       },
     },
     labelProperty: 'name',
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      height: {
+        name: 'Height',
+      },
+      surface: {
+        name: 'Surface',
+      },
+      elevator: {
+        name: 'Elevator',
+      },
+      shelter: {
+        name: 'Shelter',
+      },
+      lit: {
+        name: 'Lit',
+      },
+      bin: {
+        name: 'Bin',
+      },
+      bench: {
+        name: 'Bench',
+      },
+      wheelchair: {
+        name: 'Wheelchair accessible',
+      },
+      departures_board: {
+        name: 'Departures board',
+      },
+      tactile_paving: {
+        name: 'Tactile paving',
+      },
+    }
   },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
