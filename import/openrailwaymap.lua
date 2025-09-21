@@ -304,7 +304,7 @@ local platform_edge = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'linestring' },
-    { column = 'ref', sql_type = 'text[]' },
+    { column = 'ref', sql_type = 'text' },
     { column = 'height', type = 'real' },
     { column = 'tactile_paving', type = 'boolean' },
   },
