@@ -1483,6 +1483,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'standard_railway_platforms',
       paint: {
         'fill-color': '#aaa',
+        'fill-outline-color': '#aaa',
       },
     },
     {
