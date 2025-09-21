@@ -361,6 +361,72 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   ORDER BY
     route_count DESC NULLS LAST;
 
+CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
+  FROM (
+   SELECT
+     ST_AsMVTGeom(
+       way,
+       ST_TileEnvelope(z, x, y),
+       4096, 64, true
+     ) AS way,
+     id,
+     osm_id,
+     type,
+     name,
+     ref,
+     CASE
+       WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
+       ELSE COALESCE(name, ref)
+       END AS label,
+     wikidata,
+     wikimedia_commons,
+     wikimedia_commons_file,
+     image,
+     mapillary,
+     wikipedia,
+     note,
+     description
+   FROM station_entrances
+   WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_station_entrances IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_station_entrances",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "type": "string",
+          "name": "string",
+          "ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
     way,
