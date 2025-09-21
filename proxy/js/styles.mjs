@@ -117,6 +117,7 @@ const colors = {
           resetting: '#414925',
         },
         symbols: 'black',
+        platform: '#aaa',
       },
     },
     km: {
@@ -204,6 +205,7 @@ const colors = {
           resetting: '#bdc2ab',
         },
         symbols: 'white',
+        platform: '#aaa',
       },
     },
     km: {
@@ -1481,9 +1483,33 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       minzoom: 15,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_platforms',
+      filter: ['any',
+        ['==', ["geometry-type"], 'Polygon'],
+        ['==', ["geometry-type"], 'MultiPolygon'],
+      ],
       paint: {
-        'fill-color': '#aaa',
-        'fill-outline-color': '#aaa',
+        'fill-color': colors[theme].styles.standard.platform,
+      },
+    },
+    {
+      id: 'railway_platforms_outline',
+      type: 'line',
+      minzoom: 15,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['any',
+        ['==', ["geometry-type"], 'Polygon'],
+        ['==', ["geometry-type"], 'MultiPolygon'],
+      ],
+      layout: {
+        'line-join': 'round',
+      },
+      paint: {
+        'line-width': 2,
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
+          colors[theme].styles.standard.platform,
+        ],
       },
     },
     {
