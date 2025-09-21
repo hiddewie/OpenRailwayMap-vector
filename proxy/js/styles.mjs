@@ -2738,7 +2738,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 13,
         source: 'openrailwaymap_speed',
         'source-layer': 'speed_railway_signals',
-        filter: ['get', `deactivated${featureIndex}`],
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -3013,7 +3013,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         maxzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['get', `deactivated${featureIndex}`],
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -3023,7 +3023,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     ]),
     ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex => [
-      imageLayerWithOutline(
+      ...imageLayerWithOutline(
         theme,
         `railway_signals_high_${featureIndex}`,
         ['get', `feature${featureIndex}`],
@@ -3046,7 +3046,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         minzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['get', `deactivated${featureIndex}`],
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
