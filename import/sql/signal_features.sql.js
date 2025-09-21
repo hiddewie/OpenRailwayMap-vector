@@ -118,13 +118,13 @@ CREATE OR REPLACE VIEW signal_features_view AS
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')}
               THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
-                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
-              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`) : 'NULL'}
+                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated" = 'yes', '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated" = 'yes', '${type.layer}', '${feature.rank}']`}`).join('')}
+                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated" = 'yes', '${type.layer}', '${feature.rank}']` : ''}
+              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated" = 'yes', '${type.layer}', '${feature.rank}']`) : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, false, '${type.layer}', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -137,8 +137,9 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${type.type}[1] as feature,
       feature_${type.type}[2] as feature_variable,
       feature_${type.type}[3] as type,
-      feature_${type.type}[4]::signal_layer as layer,
-      feature_${type.type}[5]::INT as rank
+      feature_${type.type}[4] as deactivated,
+      feature_${type.type}[5]::signal_layer as layer,
+      feature_${type.type}[6]::INT as rank
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
@@ -152,6 +153,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       any_value(type) as type,
       layer,
       array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
+      array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
       MAX(rank) as rank
     FROM signals_with_features_1 sf
     GROUP BY signal_id, layer
@@ -162,6 +164,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     sf.type,
     sf.layer,
     sf.features,
+    sf.deactivated,
     sf.rank,
     (signal_direction = 'both') as direction_both,
     degrees(ST_Azimuth(
@@ -215,7 +218,6 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         direction_both,
         ref,
         caption,
-        deactivated,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
         wikimedia_commons,
@@ -229,6 +231,8 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature0,
         features[2] as feature1,
+        deactivated[1] as deactivated0,
+        deactivated[2] as deactivated1,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -252,7 +256,6 @@ DO $do$ BEGIN
           "caption": "string",
           "azimuth": "number",
           "direction_both": "boolean",
-          "deactivated": "boolean",
           "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
@@ -265,6 +268,8 @@ DO $do$ BEGIN
           "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature0": "string",
           "feature1": "string",
+          "deactivated0": "boolean",
+          "deactivated1": "boolean",
           "type": "string"
         }
       }
@@ -292,7 +297,6 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         direction_both,
         ref,
         caption,
-        deactivated,
         railway,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
@@ -310,6 +314,11 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         features[3] as feature2,
         features[4] as feature3,
         features[5] as feature4,
+        deactivated[1] as deactivated0,
+        deactivated[2] as deactivated1,
+        deactivated[3] as deactivated2,
+        deactivated[4] as deactivated3,
+        deactivated[5] as deactivated4,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -332,7 +341,6 @@ DO $do$ BEGIN
           "railway": "string",
           "ref": "string",
           "caption": "string",
-          "deactivated": "boolean",
           "azimuth": "number",
           "direction_both": "boolean",
           "position": "string",
@@ -350,6 +358,11 @@ DO $do$ BEGIN
           "feature2": "string",
           "feature3": "string",
           "feature4": "string",
+          "deactivated0": "boolean",
+          "deactivated1": "boolean",
+          "deactivated2": "boolean",
+          "deactivated3": "boolean",
+          "deactivated4": "boolean",
           "type": "string"
         }
       }
@@ -377,7 +390,6 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         direction_both,
         ref,
         caption,
-        deactivated,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
         wikimedia_commons,
@@ -390,6 +402,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature,
+        deactivated[1] as deactivated,
         type as type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -413,7 +426,6 @@ DO $do$ BEGIN
           "direction_both": "boolean",
           "ref": "string",
           "caption": "string",
-          "deactivated": "boolean",
           "frequency": "number",
           "voltage": "integer",
           "position": "string",
@@ -426,7 +438,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",${signals_railway_signals.tags.map(tag => `
           "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
-          "feature": "string"
+          "feature": "string",
+          "deactivated": "boolean"
         }
       }
     ]
