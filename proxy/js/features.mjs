@@ -208,6 +208,9 @@ const railwayLineFeatures = {
     wikipedia: {
       name: 'Wikipedia',
       link: links.wikipedia,
+      format: {
+        country_prefix: {}
+      },
     },
     note: {
       name: 'Note',
@@ -255,6 +258,9 @@ const poiFeatures = layer => ({
     wikipedia: {
       name: 'Wikipedia',
       link: links.wikipedia,
+      format: {
+        country_prefix: {}
+      },
     },
     note: {
       name: 'Note',
@@ -309,6 +315,9 @@ const stationFeatures = {
     wikipedia: {
       name: 'Wikipedia',
       link: links.wikipedia,
+      format: {
+        country_prefix: {}
+      },
     },
     note: {
       name: 'Note',
