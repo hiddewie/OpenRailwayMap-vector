@@ -168,6 +168,17 @@ postgres:
         osm_type: string
         feature: string
         name: string
+        ref: string
+        height: string
+        surface: boolean
+        elevator: boolean
+        shelter: boolean
+        lit: boolean
+        bin: boolean
+        bench: boolean
+        wheelchair: boolean
+        departures_board: boolean
+        tactile_paving: boolean
 
     railway_text_km:
       schema: public

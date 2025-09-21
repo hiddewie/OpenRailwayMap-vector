@@ -557,7 +557,18 @@ SELECT
   osm_type,
   way,
   'platform' as feature,
-  name
+  name,
+  ref,
+  height,
+  surface,
+  elevator,
+  shelter,
+  lit,
+  bin,
+  bench,
+  wheelchair,
+  departures_board,
+  tactile_paving
 FROM platforms;
 
 CREATE OR REPLACE VIEW railway_text_km AS
