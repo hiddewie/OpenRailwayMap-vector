@@ -1262,8 +1262,19 @@ function osm2pgsql.process_relation(object)
 
   if tags.public_transport == 'platform' or tags.railway == 'platform' then
     platforms:insert({
-      way = object:as_multilinestring(),
+      way = object:as_multipolygon(),
       name = tags.name,
+      ref = split_semicolon_to_sql_array(tags.ref),
+      height = tags.height,
+      surface = tags.surface,
+      elevator = tags.elevator == 'yes',
+      shelter = tags.shelter == 'yes',
+      lit = tags.lit == 'yes',
+      bin = tags.bin == 'yes',
+      bench = tags.bench == 'yes',
+      wheelchair = tags.wheelchair == 'yes',
+      departures_board = tags.departures_board == 'yes',
+      tactile_paving = tags.tactile_paving == 'yes',
     })
   end
 
