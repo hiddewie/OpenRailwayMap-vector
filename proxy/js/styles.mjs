@@ -1547,18 +1547,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
       paint: {
         'line-width': 3,
-
-        // 'text-color': ['case',
-        //   ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.track.hover,
-        //   colors[theme].styles.standard.track.text,
-        // ],
-        // 'text-halo-color': colors[theme].styles.standard.track.halo,
-        // 'text-halo-width': 4,
-        // 'text-halo-blur': 2,
-        // 'line-color': ['case',
-        //   ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-        //   colors[theme].styles.standard.platform,
-        // ],
         'line-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
           colors[theme].styles.standard.track.halo,
