@@ -506,7 +506,7 @@ const features = {
   'openrailwaymap_standard-standard_railway_platform_edges': {
     featureLinks: featureLinks.openstreetmap,
     features: {
-      platform: {
+      platform_edge: {
         name: 'Platform edge',
         type: 'line',
       },
