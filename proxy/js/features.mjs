@@ -473,6 +473,9 @@ const features = {
       },
       height: {
         name: 'Height',
+        format: {
+          template: '%.2d m',
+        },
       },
       surface: {
         name: 'Surface',
@@ -515,6 +518,9 @@ const features = {
     properties: {
       height: {
         name: 'Height',
+        format: {
+          template: '%.2d m',
+        },
       },
       tactile_paving: {
         name: 'Tactile paving',
