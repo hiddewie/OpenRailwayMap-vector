@@ -1941,6 +1941,20 @@ features:
       - { tag: 'railway:signal:ring', value: 'DE-ESO:bü5' }
       - { tag: 'railway:signal:ring:form', value: 'sign' }
 
+  - description: start ringing Pl 3
+    country: DE
+    icon: { default: 'de/pl3' }
+    tags:
+      - { tag: 'railway:signal:ring', value: 'DE-ESO:dr:pl3' }
+      - { tag: 'railway:signal:ring:form', value: 'sign' }
+
+  - description: stop ringing Pl 4
+    country: DE
+    icon: { default: 'de/pl4' }
+    tags:
+      - { tag: 'railway:signal:ring', value: 'DE-ESO:dr:pl4' }
+      - { tag: 'railway:signal:ring:form', value: 'sign' }
+
   - description: Lift / Fold snowplow Ne 7 (sign)
     country: DE
     icon:
