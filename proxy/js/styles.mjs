@@ -2699,8 +2699,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'icon-rotation-alignment': 'map',
       },
     },
-    ...[0, 1].flatMap(featureIndex =>
-      imageLayerWithOutline(
+    ...[0, 1].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         theme,
         `speed_railway_signals_${featureIndex}`,
         ['get', `feature${featureIndex}`],
@@ -2731,21 +2731,22 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             'icon-offset': [0, -20 * featureIndex],
           },
         },
-      )
-    ),
-    {
-      id: 'speed_railway_signals_deactivated',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_speed',
-      'source-layer': 'speed_railway_signals',
-      filter: ['get', 'deactivated'],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': 'general/signal-deactivated',
-      }
-    },
+      ),
+      {
+        id: `speed_railway_signals_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_speed',
+        'source-layer': 'speed_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': [0, -20 * featureIndex],
+        }
+      },
+    ]),
     {
       id: `speed_railway_signals_text`,
       type: 'symbol',
@@ -2986,8 +2987,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     // Show at most 2 combined features
-    ...[0, 1].flatMap(featureIndex =>
-      imageLayerWithOutline(
+    ...[0, 1].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         theme,
         `railway_signals_medium_${featureIndex}`,
         ['get', `feature${featureIndex}`],
@@ -3004,10 +3005,25 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             'icon-offset': [0, -20 * featureIndex],
           },
         },
-      )
-    ),
-    ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex =>
-      imageLayerWithOutline(
+      ),
+      {
+        id: `railway_signals_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 13,
+        maxzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': [0, -20 * featureIndex],
+        }
+      },
+    ]),
+    ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         theme,
         `railway_signals_high_${featureIndex}`,
         ['get', `feature${featureIndex}`],
@@ -3023,8 +3039,22 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             'icon-offset': [0, -20 * featureIndex],
           },
         },
-      )
-    ),
+      ),
+      {
+        id: `railway_signals_high_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': [0, -20 * featureIndex],
+        }
+      },
+    ]),
     {
       id: `railway_signals_high_text`,
       type: 'symbol',
@@ -3059,19 +3089,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'text-anchor': 'top',
         'text-offset': [0, 1.5],
       },
-    },
-    {
-      id: 'railway_signals_deactivated',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'signals_railway_signals',
-      filter: ['get', 'deactivated'],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': 'general/signal-deactivated',
-      }
     },
     {
       id: 'signal_boxes_text_medium',
@@ -5325,7 +5342,7 @@ const legendData = {
           feature0: feature.icon.default,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -5342,7 +5359,7 @@ const legendData = {
           feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: [
@@ -5361,7 +5378,7 @@ const legendData = {
           feature0: 'pl/w21-{40}',
           type: 'line',
           azimuth: null,
-          deactivated: true,
+          deactivated0: true,
           direction_both: false,
         },
       },
@@ -5372,7 +5389,7 @@ const legendData = {
           feature0: `general/signal-unknown-${type.type}`,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
       })),
@@ -5549,7 +5566,7 @@ const legendData = {
           feature0: feature.icon.default,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -5566,7 +5583,7 @@ const legendData = {
           feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: [
@@ -5586,7 +5603,7 @@ const legendData = {
           feature0: 'de/ks-combined',
           type: 'line',
           azimuth: null,
-          deactivated: true,
+          deactivated0: true,
           direction_both: false,
         },
       },
@@ -5597,7 +5614,7 @@ const legendData = {
           feature0: `general/signal-unknown-${type.type}`,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
       })),

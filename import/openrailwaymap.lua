@@ -311,7 +311,6 @@ local signal_columns = {
   { column = 'id', sql_type = 'serial', create_only = true },
   { column = 'way', type = 'point' },
   { column = 'railway', type = 'text' },
-  { column = 'deactivated', type = 'boolean' },
   { column = 'ref', type = 'text' },
   { column = 'signal_direction', type = 'text' },
   { column = 'caption', type = 'text' },
@@ -925,7 +924,6 @@ function osm2pgsql.process_node(object)
     local signal = {
       way = object:as_point(),
       railway = tags.railway,
-      deactivated = tag_functions.signal_deactivated(tags),
       ref = tags.ref,
       signal_direction = tags['railway:signal:direction'],
       caption = signal_caption(tags),
