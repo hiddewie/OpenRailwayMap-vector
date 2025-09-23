@@ -51,7 +51,6 @@ const generateSignalFeatures = (features, types) =>
         {
           country: feature.country,
           name: feature.description,
-          type: feature.type,
         }
       ],
       ...(
