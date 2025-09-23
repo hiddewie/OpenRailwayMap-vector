@@ -19,12 +19,6 @@ local signal_tags = {${signals_railway_signals.tags.map(tag => `
   { tag = '${tag.tag}', type = '${tag.type}' },`).join('')}
 }
 
-function signal_deactivated(tags)
-  return (${signals_railway_signals.types.map((type, typeIndex) => `
-    tags['railway:signal:${type.type}:deactivated']${(typeIndex < signals_railway_signals.types.length - 1) ? ' or' : ''}`).join('')}
-  ) == 'yes'
-end
-
 local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.variants || []), feature]).flatMap(feature => feature.tags).filter(tag => tag.tag === 'railway').flatMap(tag => tag.value ? [tag.value] : (tag.values ? tag.values : [])).map(tag => `
   '${tag}',`).join('')}
 }
@@ -38,7 +32,6 @@ end
 return {
   train_protection = train_protection,
   signal_tags = signal_tags,
-  signal_deactivated = signal_deactivated,
   poi_railway_values = poi_railway_values,
   poi = poi,
 }

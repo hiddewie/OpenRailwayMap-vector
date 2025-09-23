@@ -2,6 +2,7 @@ tags:
   # railway tag is included by default
   - { tag: 'railway:signal:brake_test', description: 'Brake test' }
   - { tag: 'railway:signal:brake_test:form', description: 'Brake test form' }
+  - { tag: 'railway:signal:brake_test:deactivated', description: 'Brake test deactivated', type: boolean }
   - { tag: 'railway:signal:combined', description: 'Combined' }
   - { tag: 'railway:signal:combined:form', description: 'Combined form' }
   - { tag: 'railway:signal:combined:states', description: 'Combined states', type: array }
@@ -9,22 +10,28 @@ tags:
   - { tag: 'railway:signal:combined:shortened', description: 'Combined shortened', type: boolean }
   - { tag: 'railway:signal:combined:substitute_signal', description: 'Combined substitute signal' }
   - { tag: 'railway:signal:combined:height', description: 'Combined height' }
+  - { tag: 'railway:signal:combined:deactivated', description: 'Combined deactivated', type: boolean }
   - { tag: 'railway:signal:crossing', description: 'Crossing' }
   - { tag: 'railway:signal:crossing:form', description: 'Crossing form' }
   - { tag: 'railway:signal:crossing:repeated', description: 'Crossing repeated', type: boolean }
   - { tag: 'railway:signal:crossing:shortened', description: 'Crossing shortened', type: boolean }
+  - { tag: 'railway:signal:crossing:deactivated', description: 'Crossing deactivated', type: boolean }
   - { tag: 'railway:signal:crossing_distant', description: 'Crossing distant' }
   - { tag: 'railway:signal:crossing_distant:states', description: 'Crossing distant states', type: array }
   - { tag: 'railway:signal:crossing_distant:shortened', description: 'Crossing distant shortened', type: boolean }
   - { tag: 'railway:signal:crossing_distant:form', description: 'Crossing distant form' }
+  - { tag: 'railway:signal:crossing_distant:deactivated', description: 'Crossing deactivated', type: boolean }
   - { tag: 'railway:signal:crossing_hint', description: 'Crossing hint' }
   - { tag: 'railway:signal:crossing_hint:form', description: 'Crossing hint form' }
+  - { tag: 'railway:signal:crossing_hint:deactivated', description: 'Crossing deactivated', type: boolean }
   - { tag: 'railway:signal:crossing_info', description: 'Crossing info' }
   - { tag: 'railway:signal:crossing_info:form', description: 'Crossing info form' }
+  - { tag: 'railway:signal:crossing_info:deactivated', description: 'Crossing deactivated', type: boolean }
   - { tag: 'railway:signal:departure', description: 'Departure' }
   - { tag: 'railway:signal:departure:form', description: 'Departure form' }
   - { tag: 'railway:signal:departure:states', description: 'Departure states', type: array }
   - { tag: 'railway:signal:departure:substitute_signal', description: 'Departure substitute signal', type: array }
+  - { tag: 'railway:signal:departure:deactivated', description: 'Departure deactivated', type: boolean }
   - { tag: 'railway:signal:distant', description: 'Distant' }
   - { tag: 'railway:signal:distant:form', description: 'Distant form' }
   - { tag: 'railway:signal:distant:repeated', description: 'Distant repeated', type: boolean }
@@ -34,6 +41,7 @@ tags:
   - { tag: 'railway:signal:distant:type', description: 'Distant type' }
   - { tag: 'railway:signal:distant:distance', description: 'Distant distance' }
   - { tag: 'railway:signal:distant:regime', description: 'Distant regime' }
+  - { tag: 'railway:signal:distant:deactivated', description: 'Distant deactivated', type: boolean }
   - { tag: 'railway:signal:electricity', description: 'Electricity' }
   - { tag: 'railway:signal:electricity:type', description: 'Electricity type' }
   - { tag: 'railway:signal:electricity:form', description: 'Electricity form' }
@@ -41,11 +49,15 @@ tags:
   - { tag: 'railway:signal:electricity:turn_direction', description: 'Electricity turn direction' }
   - { tag: 'railway:signal:electricity:voltage', description: 'Electricity voltage', format: { template: '%d V' } }
   - { tag: 'railway:signal:electricity:frequency', description: 'Electricity frequency', format: { template: '%.2d Hz' } }
+  - { tag: 'railway:signal:electricity:deactivated', description: 'Electricity deactivated', type: boolean }
   - { tag: 'railway:signal:fouling_point', description: 'Fouling point' }
+  - { tag: 'railway:signal:fouling_point:deactivated', description: 'Fouling point deactivated', type: boolean }
   - { tag: 'railway:signal:helper_engine', description: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', description: 'Helper engine form' }
+  - { tag: 'railway:signal:helper_engine:deactivated', description: 'Helper engine deactivated', type: boolean }
   - { tag: 'railway:signal:humping', description: 'Humping' }
   - { tag: 'railway:signal:humping:form', description: 'Humping form' }
+  - { tag: 'railway:signal:humping:deactivated', description: 'Humping deactivated', type: boolean }
   - { tag: 'railway:signal:main', description: 'Main' }
   - { tag: 'railway:signal:main:design', description: 'Main design' }
   - { tag: 'railway:signal:main:form', description: 'Main form' }
@@ -55,11 +67,13 @@ tags:
   - { tag: 'railway:signal:main:states', description: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', description: 'Main substitute signal' }
   - { tag: 'railway:signal:main:PT_priority', description: 'Main PT priority' }
+  - { tag: 'railway:signal:main:deactivated', description: 'Main PT priority', type: boolean }
   - { tag: 'railway:signal:main_repeated', description: 'Main repeated' }
   - { tag: 'railway:signal:main_repeated:form', description: 'Main repeated form' }
   - { tag: 'railway:signal:main_repeated:magnet', description: 'Main repeated magnet', type: boolean }
   - { tag: 'railway:signal:main_repeated:states', description: 'Main repeated states', type: array }
   - { tag: 'railway:signal:main_repeated:substitute_signal', description: 'Main repeated substitute signal' }
+  - { tag: 'railway:signal:main_repeated:deactivated', description: 'Main repeated deactivated', type: boolean }
   - { tag: 'railway:signal:minor', description: 'Minor' }
   - { tag: 'railway:signal:minor:form', description: 'Minor form' }
   - { tag: 'railway:signal:minor:states', description: 'Minor states', type: array }
@@ -67,67 +81,89 @@ tags:
   - { tag: 'railway:signal:minor_distant', description: 'Minor distant' }
   - { tag: 'railway:signal:minor_distant:form', description: 'Minor distant form' }
   - { tag: 'railway:signal:minor_distant:states', description: 'Minor distant states', type: array }
+  - { tag: 'railway:signal:minor_distant:deactivated', description: 'Minor distant deactivated', type: boolean }
   - { tag: 'railway:signal:minor:substitute_signal', description: 'Minor substitute signal' }
+  - { tag: 'railway:signal:minor:deactivated', description: 'Minor deactivated', type: boolean }
   - { tag: 'railway:signal:passing', description: 'Passing' }
   - { tag: 'railway:signal:passing:form', description: 'Passing form' }
   - { tag: 'railway:signal:passing:type', description: 'Passing type' }
+  - { tag: 'railway:signal:passing:deactivated', description: 'Passing deactivated', type: boolean }
   - { tag: 'railway:signal:resetting_switch', description: 'Resetting switch' }
   - { tag: 'railway:signal:resetting_switch:form', description: 'Resetting switch form' }
+  - { tag: 'railway:signal:resetting_switch:deactivated', description: 'Resetting deactivated', type: boolean }
   - { tag: 'railway:signal:resetting_switch_distant', description: 'Resetting switch distant' }
   - { tag: 'railway:signal:resetting_switch_distant:form', description: 'Resetting switch distant form' }
+  - { tag: 'railway:signal:resetting_switch_distant:deactivated', description: 'Resetting switch deactivated', type: boolean }
   - { tag: 'railway:signal:preheating', description: 'Preheating' }
   - { tag: 'railway:signal:preheating:form', description: 'Preheating form' }
+  - { tag: 'railway:signal:preheating:deactivated', description: 'Preheating deactivated' }
   - { tag: 'railway:signal:ring', description: 'Ring' }
   - { tag: 'railway:signal:ring:form', description: 'Ring form' }
   - { tag: 'railway:signal:ring:only_transit', description: 'Ring only transit', type: boolean }
+  - { tag: 'railway:signal:ring:deactivated', description: 'Ring deactivated', type: boolean }
   - { tag: 'railway:signal:radio', description: 'Radio' }
   - { tag: 'railway:signal:radio:form', description: 'Radio form' }
   - { tag: 'railway:signal:radio:frequency', description: 'Radio frequency' }
+  - { tag: 'railway:signal:radio:deactivated', description: 'Radio deactivated', type: boolean }
   - { tag: 'railway:signal:route', description: 'Route' }
   - { tag: 'railway:signal:route:design', description: 'Route design' }
   - { tag: 'railway:signal:route:form', description: 'Route form' }
   - { tag: 'railway:signal:route:states', description: 'Route states', type: array }
+  - { tag: 'railway:signal:route:deactivated', description: 'Route deactivated', type: boolean }
   - { tag: 'railway:signal:route_distant', description: 'Route distant' }
   - { tag: 'railway:signal:route_distant:form', description: 'Route distant form' }
   - { tag: 'railway:signal:route_distant:states', description: 'Route distant states', type: array }
+  - { tag: 'railway:signal:route_distant:deactivated', description: 'Route distant deactivated', type: boolean }
   - { tag: 'railway:signal:short_route', description: 'Short route' }
   - { tag: 'railway:signal:short_route:form', description: 'Short route form' }
+  - { tag: 'railway:signal:short_route:deactivated', description: 'Short route deactivated', type: boolean }
   - { tag: 'railway:signal:shunting', description: 'Shunting' }
   - { tag: 'railway:signal:shunting:form', description: 'Shunting form' }
   - { tag: 'railway:signal:shunting:states', description: 'Shunting states', type: array }
   - { tag: 'railway:signal:shunting:height', description: 'Shunting height' }
+  - { tag: 'railway:signal:shunting:deactivated', description: 'Shunting deactivated', type: boolean }
   - { tag: 'railway:signal:snowplow', description: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', description: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', description: 'Snowplow type' }
+  - { tag: 'railway:signal:snowplow:deactivated', description: 'Snowplow deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit', description: 'Speed limit' }
   - { tag: 'railway:signal:speed_limit:caption', description: 'Speed limit caption' }
   - { tag: 'railway:signal:speed_limit:form', description: 'Speed limit form' }
   - { tag: 'railway:signal:speed_limit:speed', description: 'Speed limit speed', type: array }
   - { tag: 'railway:signal:speed_limit:states', description: 'Speed limit states', type: array }
+  - { tag: 'railway:signal:speed_limit:pointing', description: 'Speed limit pointing' }
+  - { tag: 'railway:signal:speed_limit:deactivated', description: 'Speed limit deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant', description: 'Speed limit distant' }
   - { tag: 'railway:signal:speed_limit_distant:form', description: 'Speed limit distant form' }
   - { tag: 'railway:signal:speed_limit_distant:speed', description: 'Speed limit distant speed', type: array }
   - { tag: 'railway:signal:speed_limit_distant:mobile', description: 'Speed limit distant mobile', type: boolean }
-  - { tag: 'railway:signal:speed_limit:pointing', description: 'Speed limit pointing' }
+  - { tag: 'railway:signal:speed_limit_distant:deactivated', description: 'Speed limit distant deactivated', type: boolean }
   - { tag: 'railway:signal:station_distant', description: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', description: 'Station distant form' }
+  - { tag: 'railway:signal:station_distant:deactivated', description: 'Station distant deactivated', type: boolean }
   - { tag: 'railway:signal:steam_locomotive', description: 'Steam locomotive' }
   - { tag: 'railway:signal:steam_locomotive:form', description: 'Steam locomotive form' }
+  - { tag: 'railway:signal:steam_locomotive:deactivated', description: 'Steam locomotive deactivated', type: boolean }
   - { tag: 'railway:signal:stop', description: 'Stop' }
   - { tag: 'railway:signal:stop:form', description: 'Stop form' }
   - { tag: 'railway:signal:stop:caption', description: 'Stop caption' }
   - { tag: 'railway:signal:stop:carriages', description: 'Stop carriages', type: array }
+  - { tag: 'railway:signal:stop:deactivated', description: 'Stop deactivated', type: boolean }
   - { tag: 'railway:signal:stop_demand', description: 'Stop demand' }
   - { tag: 'railway:signal:stop_demand:form', description: 'Stop demand form' }
+  - { tag: 'railway:signal:stop_demand:deactivated', description: 'Stop demand deactivated', type: boolean }
   - { tag: 'railway:signal:train_protection', description: 'Train protection' }
   - { tag: 'railway:signal:train_protection:form', description: 'Train protection form' }
   - { tag: 'railway:signal:train_protection:shape', description: 'Train protection shape' }
   - { tag: 'railway:signal:train_protection:type', description: 'Train protection type' }
+  - { tag: 'railway:signal:train_protection:deactivated', description: 'Train protection deactivated', type: boolean }
   - { tag: 'railway:signal:whistle', description: 'Whistle' }
   - { tag: 'railway:signal:whistle:form', description: 'Whistle form' }
   - { tag: 'railway:signal:whistle:only_transit', description: 'Whistle only transit', type: boolean }
+  - { tag: 'railway:signal:whistle:deactivated', description: 'Whistle deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road', description: 'Wrong road' }
   - { tag: 'railway:signal:wrong_road:form', description: 'Wrong road form' }
+  - { tag: 'railway:signal:wrong_road:deactivated', description: 'Wrong road deactivated', type: boolean }
   - { tag: 'railway:vacancy_detection', description: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', description: 'Signal regime' }
   - { tag: 'railway:signal:position', description: 'Position' }

@@ -702,8 +702,11 @@ const features = {
       type: {
         name: 'Type',
       },
-      deactivated: {
-        name: 'Deactivated',
+      deactivated0: {
+        name: 'Primary deactivated',
+      },
+      deactivated1: {
+        name: 'Secondary deactivated',
       },
       direction_both: {
         name: 'both directions',
@@ -780,8 +783,20 @@ const features = {
       type: {
         name: 'Type',
       },
-      deactivated: {
-        name: 'Deactivated',
+      deactivated0: {
+        name: 'Primary deactivated',
+      },
+      deactivated1: {
+        name: 'Secondary deactivated',
+      },
+      deactivated2: {
+        name: 'Tertiary deactivated',
+      },
+      deactivated3: {
+        name: 'Quaternary deactivated',
+      },
+      deactivated4: {
+        name: 'Quinary deactivated',
       },
       direction_both: {
         name: 'both directions',
