@@ -577,12 +577,20 @@ function onThemeChange(theme) {
   updateTheme();
 }
 
+let selectedTheme;
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
 
+  selectedTheme = resolvedTheme;
+
   document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
-  map?.setGlobalStateProperty('theme', selectedDate);
-  legendMap?.setGlobalStateProperty('theme', selectedDate);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('theme', resolvedTheme);
+  }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('theme', resolvedTheme);
+  }
 }
 
 function onEditorChange(editor) {
@@ -703,8 +711,13 @@ function rewriteStylePathsToOrigin(style) {
         ? ({...sprite, url: `${location.origin}${sprite.url}` })
         : sprite
     )
+}
 
-  return style
+// Provide global state defaults as configured by the user
+// Subsequent global state changes are applied directly to the map with setGlobalStateProperty
+function rewriteGlobalStateDefaults(style) {
+  style.state.date.default = selectedDate;
+  style.state.theme.default = selectedTheme;
 }
 
 let lastSetMapStyle = null;
@@ -723,6 +736,7 @@ const onStyleChange = () => {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        rewriteGlobalStateDefaults(next)
         return next;
       },
     });
@@ -733,6 +747,7 @@ const onStyleChange = () => {
       diff: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        rewriteGlobalStateDefaults(next)
         onStylesheetChange(next);
         return next;
       },

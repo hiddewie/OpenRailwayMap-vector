@@ -4169,6 +4169,14 @@ const makeStyle = selectedStyle => ({
   ],
   version: 8,
   layers: layers[selectedStyle],
+  state: {
+    date: {
+      default: (new Date()).getFullYear(),
+    },
+    theme: {
+      default: 'light',
+    },
+  },
 });
 
 const legendData = {
@@ -6639,14 +6647,6 @@ function makeLegendStyle(style) {
     name: `${sourceStyle.name} legend`,
     layers: legendLayers,
     sources: legendSources,
-    state: {
-      date: {
-        default: (new Date()).getFullYear(),
-      },
-      theme: {
-        default: 'light',
-      },
-    },
     metadata: {
       name: style,
     }
