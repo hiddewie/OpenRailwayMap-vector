@@ -6738,7 +6738,10 @@ function makeLegendStyle(style, theme) {
     state: {
       date: {
         default: (new Date()).getFullYear(),
-      }
+      },
+      theme: {
+        default: 'light',
+      },
     },
     metadata: {
       name: style,
