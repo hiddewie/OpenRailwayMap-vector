@@ -10,6 +10,12 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
 
+FROM build-yaml AS build-taginfo
+
+RUN --mount=type=bind,source=proxy,target=proxy \
+  --mount=type=bind,source=features,target=features \
+  cp proxy/package*json . && npm install && node proxy/js/taginfo.mjs
+
 FROM build-yaml AS build-features
 
 RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
@@ -54,6 +60,9 @@ COPY data/import /etc/nginx/public/import
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style
+
+COPY --from=build-taginfo \
+  /build/taginfo.generated.json /etc/nginx/public/taginfo.generated.json
 
 COPY --from=build-preset \
   /build/preset.zip /etc/nginx/public/preset.zip
