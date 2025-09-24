@@ -575,13 +575,14 @@ function resolveTheme(configuredTheme) {
 function onThemeChange(theme) {
   updateConfiguration('theme', theme);
   updateTheme();
-  onStyleChange();
 }
 
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
+
   document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
-  selectedTheme = resolvedTheme;
+  map?.setGlobalStateProperty('theme', selectedDate);
+  legendMap?.setGlobalStateProperty('theme', selectedDate);
 }
 
 function onEditorChange(editor) {
@@ -604,30 +605,21 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-let selectedTheme;
-updateTheme();
-
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  knownThemes.map(theme =>
-    [theme, Object.fromEntries(
-      Object.values(knownStyles)
-        .flatMap(style => Object.values(style.styles))
-        .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
-    )])
+  Object.values(knownStyles)
+    .flatMap(style => Object.values(style.styles))
+    .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
 const legendStyles = Object.fromEntries(
-  knownThemes.map(theme =>
-    [theme, Object.fromEntries(
-      Object.values(knownStyles)
-        .flatMap(style => Object.values(style.styles))
-        .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
-    )])
+  Object.values(knownStyles)
+    .flatMap(style => Object.values(style.styles))
+    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
 const legendMap = new maplibregl.Map({
@@ -727,7 +719,7 @@ const onStyleChange = () => {
     lastSetMapStyle = mapStyle;
 
     // Change styles
-    map.setStyle(mapStyles[selectedTheme][mapStyle], {
+    map.setStyle(mapStyles[mapStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
@@ -735,7 +727,7 @@ const onStyleChange = () => {
       },
     });
 
-    legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
+    legendMap.setStyle(legendStyles[mapStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
@@ -1574,5 +1566,6 @@ fetch(`${location.origin}/features.json`)
   })
   .catch(error => console.error('Error during fetching of features', error))
 
+updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
