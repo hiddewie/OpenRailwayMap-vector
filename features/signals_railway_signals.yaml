@@ -4552,6 +4552,142 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'voltage_change' }
 
+  # --- NZ --- #
+
+  # crossing_hint
+  - description: Level Crossing Ahead
+    country: NZ
+    icon: { default: 'nz/saltire' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'NZ:saltire' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+  # stop
+  - description: Stop Plate
+    country: NZ
+    icon: { default: 'nz/stop_plate' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_plate' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop Disk
+    country: NZ
+    icon: { default: 'nz/stop_disk' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_disk' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  # main_repeated
+  - description: Single Banner Indicator
+    country: NZ
+    icon: { default: 'nz/banner_indicator3D' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'NZ:banner_indicator3D' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Double Banner Indicator
+    country: NZ
+    icon: { default: 'nz/banner_indicator33' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'NZ:banner_indicator33' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  # route
+  - description: Route Indicator
+    country: NZ
+    icon: { default: 'nz/route_indicator' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'NZ:route_indicator' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Loop Light
+    country: NZ
+    icon: { default: 'nz/L' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'NZ:L' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Electrified Route Light
+    country: NZ
+    icon: { default: 'nz/E' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'NZ:E' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  # train_protection
+  - description: A-Light
+    country: NZ
+    icon: { default: 'nz/A' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:A' }
+      - { tag: 'railway:signal:train_protection:form', value: 'light' }
+
+  # minor
+  - description: Restricted-speed Light
+    country: NZ
+    icon: { default: 'nz/R' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'NZ:R' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Low-speed Light
+    country: NZ
+    icon: { default: 'nz/low_speed' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'NZ:low_speed' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  # main
+  - description: Double multi-unit
+    country: NZ
+    icon: { default: 'nz/main_MM' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Multi-unit above Searchlight
+    country: NZ
+    icon: { default: 'nz/main_MS' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MS' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Multi-unit with marker disk
+    country: NZ
+    icon: { default: 'nz/main_MD' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Searchlight above multi-unit
+    country: NZ
+    icon: { default: 'nz/main_SM' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Double Searchlight
+    country: NZ
+    icon: { default: 'nz/main_SS' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SS' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Searchlight with marker disk
+    country: NZ
+    icon: { default: 'nz/main_SD' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  # speed
+  - description: Dynamic Speed Indicator
+    country: NZ
+    icon: { default: 'nz/speed_indicator' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NZ:speed_indicator' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
   # --- PL --- #
 
   - description: Wskaźnik usytuowania (W1)
