@@ -172,7 +172,6 @@ for (const key in grouped) {
   }
 }
 
-await fs.writeFile(
-  join(__dirname, '../../taginfo.json'),
-  JSON.stringify(taginfo, null, 2),
-);
+if (import.meta.url.endsWith(process.argv[1])) {
+  console.log(JSON.stringify(taginfo, null, 2))
+}

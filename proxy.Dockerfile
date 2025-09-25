@@ -16,7 +16,8 @@ RUN npm install chroma-js@3.1.2
 
 RUN --mount=type=bind,source=proxy,target=proxy \
   --mount=type=bind,source=features,target=features \
-  node proxy/js/taginfo.mjs
+  node proxy/js/taginfo.mjs \
+    > /build/taginfo.json
 
 FROM build-yaml AS build-features
 
