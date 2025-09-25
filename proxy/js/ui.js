@@ -1443,7 +1443,6 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styledata', () => onDateChange());
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
