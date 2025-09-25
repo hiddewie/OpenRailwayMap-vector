@@ -2,7 +2,7 @@ FROM node:22-alpine AS build-yaml
 
 WORKDIR /build
 
-RUN npm install yaml
+RUN npm install yaml@2.8.1
 
 FROM build-yaml AS build-styles
 
@@ -12,9 +12,11 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
 
 FROM build-yaml AS build-taginfo
 
+RUN npm install chroma-js@3.1.2
+
 RUN --mount=type=bind,source=proxy,target=proxy \
   --mount=type=bind,source=features,target=features \
-  cp proxy/package*json . && npm install && node proxy/js/taginfo.mjs
+  node proxy/js/taginfo.mjs
 
 FROM build-yaml AS build-features
 
