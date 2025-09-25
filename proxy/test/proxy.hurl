@@ -95,3 +95,14 @@ Content-Type: application/json
 GET {{base_url}}/preset.zip
 HTTP 200
 Content-Type: application/zip
+
+# Taginfo
+GET {{base_url}}/taginfo.json
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.data_format" == 1
+jsonpath "$.data_url" == "https://openrailwaymap.app/taginfo.json"
+jsonpath "$.project.name" == "OpenRailwayMap-vector"
+jsonpath "$.tags[*].key" includes "name"
+jsonpath "$.tags[*].key" includes "railway"
