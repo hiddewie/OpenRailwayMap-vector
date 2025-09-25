@@ -11,7 +11,7 @@ import chroma from 'chroma-js';
 // that are used in other parts of the code can be manually added
 // to the taginfo.json template file.
 //
-// The generated file is saved to `taginfo.generated.json` and
+// The generated file is saved to `taginfo.json` and
 // served by the proxy.
 //
 
@@ -173,6 +173,6 @@ for (const key in grouped) {
 }
 
 await fs.writeFile(
-  join(__dirname, '../../taginfo.generated.json'),
+  join(__dirname, '../../taginfo.json'),
   JSON.stringify(taginfo, null, 2),
 );

@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/taginfo/taginfo-projects/master/taginfo-project-schema.json",
   "data_format": 1,
-  "data_url": "https://openrailwaymap.app/taginfo.generated.json",
+  "data_url": "https://openrailwaymap.app/taginfo.json",
   "data_updated": "20250727T205800Z",
   "project": {
     "name": "OpenRailwayMap-vector",

@@ -62,7 +62,7 @@ COPY --from=build-styles \
   /build /etc/nginx/public/style
 
 COPY --from=build-taginfo \
-  /build/taginfo.generated.json /etc/nginx/public/taginfo.generated.json
+  /build/taginfo.json /etc/nginx/public/taginfo.json
 
 COPY --from=build-preset \
   /build/preset.zip /etc/nginx/public/preset.zip
