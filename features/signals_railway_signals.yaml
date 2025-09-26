@@ -1820,6 +1820,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: train length stopping marker
+    country: DE
+    icon: { default: 'de/zuglaenge' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'DE-ESO:zuglänge' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: stop demand post BOStrab Sh 7 (sign)
     country: DE
     icon: { default: 'de/bostrab/sh7' }
