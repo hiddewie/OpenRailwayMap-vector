@@ -2225,8 +2225,8 @@ features:
     icon:
       match: 'railway:signal:speed_limit:speed'
       cases:
-        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-{}', example: 'de/lf4-dr-sign-down-{70}' }
-      default: 'de/lf4-dr-sign-down-empty'
+        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-speed-limit-{}', example: 'de/lf4-dr-sign-down-speed-limit-{70}' }
+      default: 'de/lf4-dr-sign-down-speed-limit-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf4' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
