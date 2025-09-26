@@ -2300,6 +2300,31 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'sign' }
       - { tag: 'railway:signal:distant:height', value: 'dwarf' }
 
+  - description: main signal announcement signs So 19 (normal)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+        - { exact: 'II', value: 'de/so19-normal-II' }
+        - { exact: 'III', value: 'de/so19-normal-III' }
+      default: 'de/so19-normal-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:so19' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: main signal announcement signs So 19 (dwarf)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+        - { exact: 'II', value: 'de/so19-dwarf-II' }
+        - { exact: 'III', value: 'de/so19-dwarf-III' }
+      default: 'de/so19-dwarf-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:so19' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
   - description: Hamburger Hochbahn distant signal
     country: DE
     icon: { default: 'de/hha/v1' }
