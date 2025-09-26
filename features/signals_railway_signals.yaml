@@ -1998,6 +1998,20 @@ features:
       - { tag: 'railway:signal:ring', value: 'DE-ESO:dr:pl4' }
       - { tag: 'railway:signal:ring:form', value: 'sign' }
 
+  - description: start ringing LP 4
+    country: DE
+    icon: { default: 'de/lp4' }
+    tags:
+      - { tag: 'railway:signal:ring', value: 'DE-ESO:db:lp4' }
+      - { tag: 'railway:signal:ring:form', value: 'sign' }
+
+  - description: stop ringing LP 5
+    country: DE
+    icon: { default: 'de/lp5' }
+    tags:
+      - { tag: 'railway:signal:ring', value: 'DE-ESO:db:lp5' }
+      - { tag: 'railway:signal:ring:form', value: 'sign' }
+
   - description: Lift / Fold snowplow Ne 7 (sign)
     country: DE
     icon:
