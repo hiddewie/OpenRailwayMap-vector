@@ -2220,6 +2220,17 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'DE-ESO:dr:lf4' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+  - description: East German branch line speed signals (Lf 4)
+    country: DE
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(100|[2-8]0|1?[05])$', value: 'de/lf4-dr-sign-down-{}', example: 'de/lf4-dr-sign-down-{70}' }
+      default: 'de/lf4-dr-sign-down-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-ESO:dr:lf4' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: German line speed signals (Lf 6)
     country: DE
     type: line
