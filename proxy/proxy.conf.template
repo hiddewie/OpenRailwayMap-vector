@@ -9,8 +9,8 @@ proxy_cache_path /var/cache/nginx/
 server {
   listen 8000 default_server;
   listen [::]:8000 ipv6only=on;
-  listen 443 ssl;
-  listen [::]:443 ipv6only=on ssl;
+  listen 8443 ssl;
+  listen [::]:8443 ipv6only=on ssl;
 
   server_name localhost;
 
