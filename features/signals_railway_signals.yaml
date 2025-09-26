@@ -2989,7 +2989,7 @@ features:
     country: DE
     icon: { default: 'de/zugfunk' }
     tags:
-      - { tag: 'railway:signal:radio', value: 'DE-RSAG:so11' }
+      - { tag: 'railway:signal:radio', value: 'DE-ESO:zugfunk-kanalhinweis' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   # --- DK --- #
