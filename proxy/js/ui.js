@@ -575,13 +575,22 @@ function resolveTheme(configuredTheme) {
 function onThemeChange(theme) {
   updateConfiguration('theme', theme);
   updateTheme();
-  onStyleChange();
 }
 
+let selectedTheme;
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
-  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+
   selectedTheme = resolvedTheme;
+
+  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('theme', resolvedTheme);
+  }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('theme', resolvedTheme);
+  }
 }
 
 function onEditorChange(editor) {
@@ -604,30 +613,21 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-let selectedTheme;
-updateTheme();
-
 const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
 
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  knownThemes.map(theme =>
-    [theme, Object.fromEntries(
-      Object.values(knownStyles)
-        .flatMap(style => Object.values(style.styles))
-        .map(style => [style, `${location.origin}/style/${style}-${theme}.json`])
-    )])
+  Object.values(knownStyles)
+    .flatMap(style => Object.values(style.styles))
+    .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
 const legendStyles = Object.fromEntries(
-  knownThemes.map(theme =>
-    [theme, Object.fromEntries(
-      Object.values(knownStyles)
-        .flatMap(style => Object.values(style.styles))
-        .map(style => [style, `${location.origin}/style/legend-${style}-${theme}.json`])
-    )])
+  Object.values(knownStyles)
+    .flatMap(style => Object.values(style.styles))
+    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
 const legendMap = new maplibregl.Map({
@@ -711,8 +711,13 @@ function rewriteStylePathsToOrigin(style) {
         ? ({...sprite, url: `${location.origin}${sprite.url}` })
         : sprite
     )
+}
 
-  return style
+// Provide global state defaults as configured by the user
+// Subsequent global state changes are applied directly to the map with setGlobalStateProperty
+function rewriteGlobalStateDefaults(style) {
+  style.state.date.default = selectedDate;
+  style.state.theme.default = selectedTheme;
 }
 
 let lastSetMapStyle = null;
@@ -727,20 +732,22 @@ const onStyleChange = () => {
     lastSetMapStyle = mapStyle;
 
     // Change styles
-    map.setStyle(mapStyles[selectedTheme][mapStyle], {
+    map.setStyle(mapStyles[mapStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        rewriteGlobalStateDefaults(next)
         return next;
       },
     });
 
-    legendMap.setStyle(legendStyles[selectedTheme][mapStyle], {
+    legendMap.setStyle(legendStyles[mapStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        rewriteGlobalStateDefaults(next)
         onStylesheetChange(next);
         return next;
       },
@@ -1436,7 +1443,6 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styledata', () => onDateChange());
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
@@ -1574,5 +1580,6 @@ fetch(`${location.origin}/features.json`)
   })
   .catch(error => console.error('Error during fetching of features', error))
 
+updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
