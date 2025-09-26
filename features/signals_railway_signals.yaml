@@ -2122,6 +2122,13 @@ features:
       - { tag: 'railway:signal:stop_demand', value: 'DE-AVG:hw1' }
       - { tag: 'railway:signal:stop_demand:form', value: 'light' }
 
+  - description: Karlsruhe AVG end of EBO structure gauge Ra 14
+    country: DE
+    icon: { default: 'de/avg/ra14' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-AVG:ra14' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: wrong road signal Zs 6 (DB) (sign)
     country: DE
     icon: { default: 'de/zs6-sign' }
