@@ -558,7 +558,7 @@ SELECT
   way,
   'platform' as feature,
   name,
-  ref,
+  nullif(array_to_string(ref, U&'\001E'), '') as ref,
   height,
   surface,
   elevator,
