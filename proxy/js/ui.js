@@ -1356,7 +1356,9 @@ function popupContent(feature) {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
       popupImage.title = properties.wikidata
-      popupImage.alt = '' // Do not display broken images
+      popupImage.alt = `Wikidata: ${properties.wikidata}`
+      popupImage.style.display = 'none' // Do not display images that cannot load
+      popupImage.onload = () => popupImage.style.display = 'block'
     }
 
     if (properties.wikimedia_commons_file) {
@@ -1371,7 +1373,9 @@ function popupContent(feature) {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = wikimediaUrl
       popupImage.title = properties.wikimedia_commons_file
-      popupImage.alt = '' // Do not display broken images
+      popupImage.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
+      popupImage.style.display = 'none' // Do not display images that cannot load
+      popupImage.onload = () => popupImage.style.display = 'block'
     }
 
     if (properties.image) {
@@ -1383,7 +1387,9 @@ function popupContent(feature) {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = properties.image
       popupImage.title = properties.image
-      popupImage.alt = '' // Do not display broken images
+      popupImage.alt = `Image: ${properties.image}`
+      popupImage.style.display = 'none' // Do not display images that cannot load
+      popupImage.onload = () => popupImage.style.display = 'block'
     }
   }
 
