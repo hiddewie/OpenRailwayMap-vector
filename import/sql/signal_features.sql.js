@@ -18,6 +18,29 @@ const signalsWithSignalType = signals_railway_signals.features.map(feature => ({
 const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
   [tag.tag, tag.type]))
 
+const iconDimensions = (await Promise.all(
+    signals_railway_signals.features
+      // TODO variants
+      .map(async feature => ({
+        feature: feature.icon.default,
+        iconSvg: await fs.promises.readFile(`symbols/${feature.icon.default}.svg`, 'utf8'),
+      }))))
+  .map(feature => {
+    const svg = feature.iconSvg
+    // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
+    const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
+    if (!matches) {
+      throw new Error(`Could not find <svg> element with width/height for feature ${feature.feature} in SVG content "${svg}"`)
+    }
+    return {
+      feature: feature.feature,
+      icon: {
+        width: parseFloat(matches[1]),
+        height: parseFloat(matches[2])
+      },
+    }
+  })
+
 function matchTagValueSql(tag, value) {
   switch (tagTypes[tag]) {
     case 'array':
@@ -196,9 +219,9 @@ CREATE INDEX IF NOT EXISTS signal_features_way_index
   ON signal_features
   USING gist(way);
 
-CLUSTER signal_features 
+CLUSTER signal_features
   USING signal_features_way_index;
-  
+
 --- Speed ---
 
 CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer)
@@ -241,7 +264,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
     ) as tile
     WHERE way IS NOT NULL
   );
-  
+
 -- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
