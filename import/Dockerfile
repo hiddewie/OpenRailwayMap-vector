@@ -19,6 +19,7 @@ RUN npm install yaml
 
 RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_features.sql.js \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
+  --mount=type=bind,source=symbols,target=symbols \
   node signal_features.sql.js \
     > /build/signal_features.sql
 
