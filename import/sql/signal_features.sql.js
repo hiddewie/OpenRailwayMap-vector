@@ -111,6 +111,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
   WITH signals_with_features_0 AS (
     SELECT
       id as signal_id,
+      railway,
       ${signals_railway_signals.types.map(type => `
       CASE 
         WHEN "railway:signal:${type.type}" IS NOT NULL THEN
@@ -145,6 +146,18 @@ CREATE OR REPLACE VIEW signal_features_view AS
   `).join(`
     UNION ALL
   `)}
+    UNION ALL
+    SELECT
+      signal_id,
+      'general/signal-unknown' as feature,
+      NULL as feature_variable,
+      NULL as type,
+      false as deactivated,
+      'signals' as layer,
+      NULL as rank
+    FROM signals_with_features_0
+    WHERE railway = 'signal'
+      AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
   ),
   -- Group features by signal, and aggregate the results
   signals_with_features AS (

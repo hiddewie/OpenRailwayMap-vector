@@ -80,6 +80,12 @@ const generateSignalFeatures = (features, types) =>
         name: `Unknown signal (${type.type})`,
       }
     ]),
+    [
+      'general/signal-unknown',
+      {
+        name: 'Unknown signal',
+      },
+    ],
   ]);
 
 // TODO move icon SVGs to proxy
