@@ -3955,7 +3955,7 @@ features:
       cases:
         - { exact: 'R-Y', value: 'it/main-2v-R-Y' }
         - { exact: 'R-G', value: 'it/main-2v-R-G' }
-        - { exact: 'Y', value: 'it/main-2v-Y' }
+#        - { exact: 'Y', value: 'it/main-2v-Y' }
         - { exact: 'G', value: 'it/main-2v-G' }
       default: 'it/main-2v-R'
     tags:
@@ -3972,7 +3972,7 @@ features:
         - { exact: '(Y-G)', value: 'it/main-3v-Y-G' }
         - { exact: 'R-Y', value: 'it/main-3v-R-Y' }
         - { exact: 'R-G', value: 'it/main-3v-R-G' }
-        - { exact: 'Y', value: 'it/main-3v-Y' }
+#        - { exact: 'Y', value: 'it/main-3v-Y' }
         - { exact: 'G', value: 'it/main-3v-G' }
       default: 'it/main-3v-R'
     tags:
@@ -3997,7 +3997,7 @@ features:
       cases:
         - { exact: 'R-Y', value: 'it/combined-2v-R-Y' }
         - { exact: 'R-G', value: 'it/combined-2v-R-G' }
-        - { exact: 'Y', value: 'it/combined-2v-Y' }
+#        - { exact: 'Y', value: 'it/combined-2v-Y' }
         - { exact: 'G', value: 'it/combined-2v-G' }
       default: 'it/combined-2v-R'
     tags:
@@ -4014,7 +4014,7 @@ features:
         - { exact: '(Y-G)', value: 'it/combined-3v-Y-G' }
         - { exact: 'R-Y', value: 'it/combined-3v-R-Y' }
         - { exact: 'R-G', value: 'it/combined-3v-R-G' }
-        - { exact: 'Y', value: 'it/combined-3v-Y' }
+#        - { exact: 'Y', value: 'it/combined-3v-Y' }
         - { exact: 'G', value: 'it/combined-3v-G' }
       default: 'it/combined-3v-R'
     tags:
