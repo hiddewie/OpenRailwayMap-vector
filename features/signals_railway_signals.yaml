@@ -2106,13 +2106,16 @@ features:
 
   - description: Karlsruhe AVG crossing signals
     country: DE
-    icon:
-      match: 'railway:signal:crossing_distant:states'
-      cases:
-        - { exact: 'DE-AVG:bü201v', value: 'de/avg/bue201v' }
-      default: 'de/avg/bue201'
+    icon: { default: 'de/avg/bue201' }
     tags:
-      - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü201' }
+      - { tag: 'railway:signal:crossing', value: 'DE-AVG:bü200' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Karlsruhe AVG distant crossing signals
+    country: DE
+    icon: { default: 'de/avg/bue201v' }
+    tags:
+      - { tag: 'railway:signal:crossing_distant', value: 'DE-AVG:bü200v' }
       - { tag: 'railway:signal:crossing_distant:form', value: 'light' }
 
   - description: Karlsruhe AVG Stop Demand
