@@ -267,6 +267,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         features[2] as feature1,
         deactivated[1] as deactivated0,
         deactivated[2] as deactivated1,
+        signal_height[1] as offset1,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -304,6 +305,7 @@ DO $do$ BEGIN
           "feature1": "string",
           "deactivated0": "boolean",
           "deactivated1": "boolean",
+          "offset1": "number",
           "type": "string"
         }
       }
@@ -353,6 +355,10 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         deactivated[3] as deactivated2,
         deactivated[4] as deactivated3,
         deactivated[5] as deactivated4,
+        signal_height[1] as offset1,
+        signal_height[1] + signal_height[2] as offset2,
+        signal_height[1] + signal_height[2] + signal_height[3] as offset3,
+        signal_height[1] + signal_height[2] + signal_height[3] + signal_height[4] as offset4,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -397,6 +403,10 @@ DO $do$ BEGIN
           "deactivated2": "boolean",
           "deactivated3": "boolean",
           "deactivated4": "boolean",
+          "offset1": "number",
+          "offset2": "number",
+          "offset3": "number",
+          "offset4": "number",
           "type": "string"
         }
       }
