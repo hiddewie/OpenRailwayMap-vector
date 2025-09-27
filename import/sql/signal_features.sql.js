@@ -5,41 +5,49 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
-// Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
-const signalsWithSignalType = signals_railway_signals.features.map(feature => ({
-  ...feature,
-  signalTypes: Object.fromEntries(
-    layers.map(layer =>
-      [layer, signals_railway_signals.types.filter(type => type.layer === layer).find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type]
+async function parseSvgDimensions(feature) {
+  const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
+  // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
+  const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
+  if (!matches) {
+    throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
+  }
+  return {
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2])
+  }
+}
+
+const signalsWithSignalType = await Promise.all(
+  signals_railway_signals.features
+    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
+    .map(feature => ({
+      ...feature,
+      signalTypes: Object.fromEntries(
+        layers.map(layer =>
+          [layer, signals_railway_signals.types.filter(type => type.layer === layer).find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type]
+        )
+      )})
     )
-  ),
-}));
+    // Determine icon dimensions
+    .map(async feature => ({
+      ...feature,
+      feature: feature.feature,
+      icon: {
+        ...feature.icon,
+        cases: feature.icon.cases
+          ? await Promise.all(feature.icon.cases.map(async iconCase => ({
+              ...iconCase,
+              dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
+            })))
+          : undefined,
+        dimensions: await parseSvgDimensions(feature.icon.default),
+      }
+    }))
+);
 
 const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
   [tag.tag, tag.type]))
-
-const iconDimensions = (await Promise.all(
-    signals_railway_signals.features
-      // TODO variants
-      .map(async feature => ({
-        feature: feature.icon.default,
-        iconSvg: await fs.promises.readFile(`symbols/${feature.icon.default}.svg`, 'utf8'),
-      }))))
-  .map(feature => {
-    const svg = feature.iconSvg
-    // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
-    const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
-    if (!matches) {
-      throw new Error(`Could not find <svg> element with width/height for feature ${feature.feature} in SVG content "${svg}"`)
-    }
-    return {
-      feature: feature.feature,
-      icon: {
-        width: parseFloat(matches[1]),
-        height: parseFloat(matches[2])
-      },
-    }
-  })
 
 function matchTagValueSql(tag, value) {
   switch (tagTypes[tag]) {
@@ -141,13 +149,13 @@ CREATE OR REPLACE VIEW signal_features_view AS
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')}
               THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}']`}`).join('')}
-                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}']` : ''}
-              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}']`) : 'NULL'}
+                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`}`).join('')}
+                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']` : ''}
+              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon.dimensions.height}']`) : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, 'false', '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, 'false', '${type.layer}', NULL, '17.1']
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -162,7 +170,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${type.type}[3] as type,
       feature_${type.type}[4]::boolean as deactivated,
       feature_${type.type}[5]::signal_layer as layer,
-      feature_${type.type}[6]::INT as rank
+      feature_${type.type}[6]::INT as rank,
+      feature_${type.type}[7]::REAL as icon_height
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
@@ -177,6 +186,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       layer,
       array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
       array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
+      array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
       MAX(rank) as rank
     FROM signals_with_features_1 sf
     GROUP BY signal_id, layer
@@ -188,6 +198,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     sf.layer,
     sf.features,
     sf.deactivated,
+    sf.icon_height,
     sf.rank,
     (signal_direction = 'both') as direction_both,
     degrees(ST_Azimuth(
