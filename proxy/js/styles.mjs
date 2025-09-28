@@ -2742,7 +2742,9 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? [0, 0]
+              : [['literal', 0], ['get', `offset${featureIndex}`]],
           },
         },
       ),
@@ -2757,7 +2759,9 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? [0, 0]
+            : [['literal', 0], ['get', `offset${featureIndex}`]],
         }
       },
     ]),
@@ -3015,7 +3019,9 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? [0, 0]
+              : [['literal', 0], ['get', `offset${featureIndex}`]],
           },
         },
       ),
@@ -3031,7 +3037,9 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? [0, 0]
+            : [['literal', 0], ['get', `offset${featureIndex}`]],
         }
       },
     ]),
@@ -3048,7 +3056,22 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-anchor': 'bottom',
+            'icon-offset': featureIndex == 0
+              ? ['match', ['get', `offset1`],
+                ...Array.from({length: 100}, (_, i) => i).flatMap(i => [
+                  i,
+                  ['literal', [0, i / 2]]
+                ]),
+                ['literal', [0, 0]],
+              ],
+              : ['match', [`-`, ['get', `offset${featureIndex}`], ['/', ['get', `offset1`], 2]],
+                ...Array.from({length: 100}, (_, i) => i).flatMap(i => [
+                  i,
+                  ['literal', [0, -(i + 4 * featureIndex)]]
+                ]),
+                ['literal', [0, 0]],
+              ],
           },
         },
       ),
@@ -3063,7 +3086,9 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? [0, 0]
+            : [['literal', 0], ['get', `offset${featureIndex}`]],
         }
       },
     ]),
