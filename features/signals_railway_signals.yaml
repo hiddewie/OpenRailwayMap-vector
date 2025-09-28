@@ -138,6 +138,7 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:speed', description: 'Speed limit distant speed', type: array }
   - { tag: 'railway:signal:speed_limit_distant:mobile', description: 'Speed limit distant mobile', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:deactivated', description: 'Speed limit distant deactivated', type: boolean }
+  - { tag: 'railway:signal:speed_limit_distant:distance', description: 'Speed limit distant distance', type: boolean }
   - { tag: 'railway:signal:station_distant', description: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', description: 'Station distant form' }
   - { tag: 'railway:signal:station_distant:deactivated', description: 'Station distant deactivated', type: boolean }
@@ -4080,17 +4081,29 @@ features:
       - { tag: 'railway:signal:speed_limit', any: ['IT:1R', 'IT:2R', 'IT:3R'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Distant speed limit
+  - description: Distant speed limit (distance 1)
     country: IT
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^160$', value: 'it/speed-distant-{}', example: 'it/speed-distant-{160}' }
-      default: 'it/speed-distant-unknown'
+        - { regex: '^160$', value: 'it/speed-distant-1-{}', example: 'it/speed-distant-1-{160}' }
+      default: 'it/speed-distant-1-unknown'
     tags:
-      # TODO match railway:signal:speed_limit_distant:distance = 1 or 2
       - { tag: 'railway:signal:speed_limit_distant', any: ['IT:1R', 'IT:2R', 'IT:3R'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant:distance', value: '1' }
+
+  - description: Distant speed limit (distance 2)
+    country: IT
+    icon:
+      match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^160$', value: 'it/speed-distant-2-{}', example: 'it/speed-distant-2-{160}' }
+      default: 'it/speed-distant-2-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', any: ['IT:1R', 'IT:2R', 'IT:3R'] }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant:distance', value: '2' }
 
   - description: Halt
     country: IT
