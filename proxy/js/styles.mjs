@@ -2743,8 +2743,15 @@ const layers = {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-offset': featureIndex == 0
-              ? [0, 0]
-              : [['literal', 0], ['get', `offset${featureIndex}`]],
+              ? ['literal', [0, 0]]
+              : ['match', ['get', `offset${featureIndex}`],
+                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                  i,
+                  // Gap of 2 pixels for halo and spacing
+                  ['literal', [0, -(i + 2 * featureIndex)]]
+                ]),
+                ['literal', [0, 0]],
+              ],
           },
         },
       ),
@@ -2760,8 +2767,15 @@ const layers = {
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
-            ? [0, 0]
-            : [['literal', 0], ['get', `offset${featureIndex}`]],
+            ? ['literal', [0, 0]]
+            : ['match', ['get', `offset${featureIndex}`],
+              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                i,
+                // Gap of 2 pixels for halo and spacing
+                ['literal', [0, -(i + 2 * featureIndex)]]
+              ]),
+              ['literal', [0, 0]],
+            ],
         }
       },
     ]),
@@ -3020,8 +3034,15 @@ const layers = {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-offset': featureIndex == 0
-              ? [0, 0]
-              : [['literal', 0], ['get', `offset${featureIndex}`]],
+              ? ['literal', [0, 0]]
+              : ['match', ['get', `offset${featureIndex}`],
+                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                  i,
+                  // Gap of 2 pixels for halo and spacing
+                  ['literal', [0, -(i + 2 * featureIndex)]]
+                ]),
+                ['literal', [0, 0]],
+              ],
           },
         },
       ),
@@ -3038,8 +3059,15 @@ const layers = {
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
-            ? [0, 0]
-            : [['literal', 0], ['get', `offset${featureIndex}`]],
+            ? ['literal', [0, 0]]
+            : ['match', ['get', `offset${featureIndex}`],
+              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                i,
+                // Gap of 2 pixels for halo and spacing
+                ['literal', [0, -(i + 2 * featureIndex)]]
+              ]),
+              ['literal', [0, 0]],
+            ],
         }
       },
     ]),
@@ -3082,8 +3110,15 @@ const layers = {
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
-            ? [0, 0]
-            : [['literal', 0], ['get', `offset${featureIndex}`]],
+            ? ['literal', [0, 0]]
+            : ['match', ['get', `offset${featureIndex}`],
+              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                i,
+                // Gap of 2 pixels for halo and spacing
+                ['literal', [0, -(i + 2 * featureIndex)]]
+              ]),
+              ['literal', [0, 0]],
+            ],
         }
       },
     ]),
