@@ -4086,7 +4086,7 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^160$', value: 'it/speed-distant-{}', example: 'it/speed-distant-1-{160}' }
+        - { regex: '^160$', value: 'it/speed-distant-1-{}', example: 'it/speed-distant-1-{160}' }
       default: 'it/speed-distant-1-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', any: ['IT:1R', 'IT:2R', 'IT:3R'] }
@@ -4098,8 +4098,8 @@ features:
     icon:
       match: 'railway:signal:speed_limit_distant:speed'
       cases:
-        - { regex: '^160$', value: 'it/speed-distant-{}', example: 'it/speed-distant-{160}' }
-      default: 'it/speed-distant-unknown'
+        - { regex: '^160$', value: 'it/speed-distant-2-{}', example: 'it/speed-distant-2-{160}' }
+      default: 'it/speed-distant-2-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', any: ['IT:1R', 'IT:2R', 'IT:3R'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
