@@ -3057,17 +3057,19 @@ const layers = {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-anchor': 'bottom',
+            // Offset every icon with half of the bottom icon height so the bottom icon is anchored in its center
             'icon-offset': featureIndex == 0
               ? ['match', ['get', `offset1`],
-                ...Array.from({length: 100}, (_, i) => i).flatMap(i => [
+                  ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
+                    i,
+                    ['literal', [0, i / 2]]
+                  ]),
+                  ['literal', [0, 0]],
+                ]
+              : ['match', ['ceil', [`-`, ['get', `offset${featureIndex}`], ['/', ['get', `offset1`], 2]]],
+                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
                   i,
-                  ['literal', [0, i / 2]]
-                ]),
-                ['literal', [0, 0]],
-              ],
-              : ['match', [`-`, ['get', `offset${featureIndex}`], ['/', ['get', `offset1`], 2]],
-                ...Array.from({length: 100}, (_, i) => i).flatMap(i => [
-                  i,
+                  // Gap of 4 pixels for halo and spacing
                   ['literal', [0, -(i + 4 * featureIndex)]]
                 ]),
                 ['literal', [0, 0]],
