@@ -267,7 +267,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         features[2] as feature1,
         deactivated[1] as deactivated0,
         deactivated[2] as deactivated1,
-        icon_height[1] as offset1,
+        CEIL(icon_height[1]) as offset1,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -355,10 +355,10 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         deactivated[3] as deactivated2,
         deactivated[4] as deactivated3,
         deactivated[5] as deactivated4,
-        icon_height[1] as offset1,
-        icon_height[1] + icon_height[2] as offset2,
-        icon_height[1] + icon_height[2] + icon_height[3] as offset3,
-        icon_height[1] + icon_height[2] + icon_height[3] + icon_height[4] as offset4,
+        CEIL(icon_height[1]) as offset1,
+        CEIL(icon_height[1] + icon_height[2]) as offset2,
+        CEIL(icon_height[1] + icon_height[2] + icon_height[3]) as offset3,
+        CEIL(icon_height[1] + icon_height[2] + icon_height[3] + icon_height[4]) as offset4,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
