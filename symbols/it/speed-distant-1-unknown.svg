@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="13.710939"
-   height="11.642411"
-   viewBox="0 0 13.710938 11.642411"
+   width="13.710938"
+   height="11.642914"
+   viewBox="0 0 13.710937 11.642914"
    version="1.1"
    id="svg12"
    sodipodi:docname="speed-distant-1-unknown.svg"
@@ -38,9 +38,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="86.898492"
-     inkscape:cx="6.6399311"
-     inkscape:cy="6.9333769"
+     inkscape:zoom="43.449246"
+     inkscape:cx="6.536362"
+     inkscape:cy="4.4764873"
      inkscape:window-width="2560"
      inkscape:window-height="1368"
      inkscape:window-x="0"
@@ -77,12 +77,8 @@
      x="3.3482117e-09"
      y="7.7058716" />
   <path
-     fill-rule="nonzero"
-     fill="#000000"
-     fill-opacity="1"
-     d="M 13.724526,7.4296875 V 11.332729 H 0.13025976 V 7.4296875 Z m 0,0"
      id="path10775"
-     style="fill:#ffffff;fill-opacity:1;stroke-width:0.971019"
-     mask="url(#mask19407)"
-     transform="matrix(1.0085825,0,0,1.0085825,-0.13137771,0.21241914)" />
+     mask="none"
+     style="font-size:8.07672px;font-family:Aptos;-inkscape-font-specification:Aptos;font-variant-ligatures:none;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.979353;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+     d="M 11.988282,7.7053667 4.7355966e-7,11.148727 v 0.492187 0.002 H 1.7304693 L 13.710938,8.2034137 v -0.498047 z" />
 </svg>
