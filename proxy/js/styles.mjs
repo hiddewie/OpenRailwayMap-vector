@@ -2742,7 +2742,14 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
       ),
@@ -2757,7 +2764,14 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
         }
       },
     ]),
@@ -3015,7 +3029,14 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
       ),
@@ -3031,7 +3052,14 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
         }
       },
     ]),
@@ -3048,7 +3076,15 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-anchor': 'center',
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
       ),
@@ -3063,7 +3099,14 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': [0, -20 * featureIndex],
+          'icon-offset': featureIndex == 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
         }
       },
     ]),
