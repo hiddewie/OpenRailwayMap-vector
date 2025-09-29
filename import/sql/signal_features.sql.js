@@ -186,7 +186,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
       NULL as type,
       false as deactivated,
       'signals' as layer,
-      NULL as rank
+      NULL as rank,
+      17.1 as icon_height
     FROM signals_with_features_0
     WHERE railway = 'signal'
       AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
