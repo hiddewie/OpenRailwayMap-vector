@@ -4242,7 +4242,9 @@ features:
     icon: { default: 'nl/main_light_dwarf_shunting' }
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:height', value: 'dwarf' }
+      - { tag: 'railway:signal:shunting', value: 'NL' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: train protection block marker light
@@ -4250,6 +4252,8 @@ features:
     icon: { default: 'nl/main_light_white_bar' }
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:train_protection', value: 'NL:228' }
       - { tag: 'railway:signal:train_protection:form', value: 'light' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
@@ -4265,6 +4269,8 @@ features:
     icon: { default: 'nl/main_light_shunting' }
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:shunting', value: 'NL' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: main repeated light
