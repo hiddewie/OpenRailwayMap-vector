@@ -138,7 +138,7 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:speed', description: 'Speed limit distant speed', type: array }
   - { tag: 'railway:signal:speed_limit_distant:mobile', description: 'Speed limit distant mobile', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:deactivated', description: 'Speed limit distant deactivated', type: boolean }
-  - { tag: 'railway:signal:speed_limit_distant:distance', description: 'Speed limit distant distance', type: boolean }
+  - { tag: 'railway:signal:speed_limit_distant:distance', description: 'Speed limit distant distance' }
   - { tag: 'railway:signal:station_distant', description: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', description: 'Station distant form' }
   - { tag: 'railway:signal:station_distant:deactivated', description: 'Station distant deactivated', type: boolean }
