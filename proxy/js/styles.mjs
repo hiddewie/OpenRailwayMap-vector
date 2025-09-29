@@ -2744,13 +2744,11 @@ const layers = {
             'icon-overlap': 'always',
             'icon-offset': featureIndex == 0
               ? ['literal', [0, 0]]
-              : ['match', ['get', `offset${featureIndex}`],
-                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                  i,
-                  // Gap of 2 pixels for halo and spacing
-                  ['literal', [0, -(i + 2 * featureIndex)]]
-                ]),
-                ['literal', [0, 0]],
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
               ],
           },
         },
@@ -2768,13 +2766,11 @@ const layers = {
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
             ? ['literal', [0, 0]]
-            : ['match', ['get', `offset${featureIndex}`],
-              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                i,
-                // Gap of 2 pixels for halo and spacing
-                ['literal', [0, -(i + 2 * featureIndex)]]
-              ]),
-              ['literal', [0, 0]],
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
             ],
         }
       },
@@ -3035,13 +3031,11 @@ const layers = {
             'icon-overlap': 'always',
             'icon-offset': featureIndex == 0
               ? ['literal', [0, 0]]
-              : ['match', ['get', `offset${featureIndex}`],
-                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                  i,
-                  // Gap of 2 pixels for halo and spacing
-                  ['literal', [0, -(i + 2 * featureIndex)]]
-                ]),
-                ['literal', [0, 0]],
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
               ],
           },
         },
@@ -3060,13 +3054,11 @@ const layers = {
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
             ? ['literal', [0, 0]]
-            : ['match', ['get', `offset${featureIndex}`],
-              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                i,
-                // Gap of 2 pixels for halo and spacing
-                ['literal', [0, -(i + 2 * featureIndex)]]
-              ]),
-              ['literal', [0, 0]],
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
             ],
         }
       },
@@ -3087,13 +3079,11 @@ const layers = {
             'icon-anchor': 'center',
             'icon-offset': featureIndex == 0
               ? ['literal', [0, 0]]
-              : ['match', ['get', `offset${featureIndex}`],
-                ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                  i,
-                  // Gap of 2 pixels for halo and spacing
-                  ['literal', [0, -(i + 2 * featureIndex)]]
-                ]),
-                ['literal', [0, 0]],
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
               ],
           },
         },
@@ -3111,13 +3101,11 @@ const layers = {
           'icon-image': 'general/signal-deactivated',
           'icon-offset': featureIndex == 0
             ? ['literal', [0, 0]]
-            : ['match', ['get', `offset${featureIndex}`],
-              ...Array.from({length: 100}, (_, i) => i + 1).flatMap(i => [
-                i,
-                // Gap of 2 pixels for halo and spacing
-                ['literal', [0, -(i + 2 * featureIndex)]]
-              ]),
-              ['literal', [0, 0]],
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
             ],
         }
       },
