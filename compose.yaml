@@ -76,13 +76,12 @@ services:
       dockerfile: proxy.Dockerfile
     ports:
       - '8000:8000'
-      - '443:443'
+      - '8443:8443'
     environment:
       TILES_UPSTREAM: martin:3000
       API_UPSTREAM: api:5000
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
-      NGINX_RESOLVER: '127.0.0.11 ipv6=off'
       NGINX_CACHE_TTL: '0'
       CLIENT_CACHE_TTL_ASSETS_FRESH: '0'
       CLIENT_CACHE_TTL_ASSETS_STALE: '0'
