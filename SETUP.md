@@ -86,7 +86,7 @@ SSL is supported by generating a trusted certificate, and installing it in the p
 
 The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
 
-You can modify the TLS port 443 to port 8443 in the Docker Compose configuration, if you want the container to start without priviledges, for example using Podman.
+You can modify the TLS port 443 to port 8443 [in the Compose configuration](./compose.yaml), if you want the container to start without privileges, for example using Podman.
 
 ## Tests
 
