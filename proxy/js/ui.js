@@ -1401,7 +1401,10 @@ function popupContent(feature) {
       .filter(it => !it.paragraph)
       .forEach(({title, body, value, link, tooltip}) => {
         const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
-        popupValue.title = tooltip;
+        if (tooltip) {
+          popupValue.title = tooltip;
+          popupValue.style.cursor = 'help';
+        }
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
         popupValueTitle.innerText = title;
