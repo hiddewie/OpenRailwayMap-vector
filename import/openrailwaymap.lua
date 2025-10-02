@@ -836,6 +836,10 @@ local entrance_types = {
   subway_entrance = 'subway',
   train_station_entrance = 'train',
 }
+local reversed_signal_direction = {
+  right = 'left',
+  left = 'right',
+}
 function osm2pgsql.process_node(object)
   local tags = object.tags
   local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
@@ -981,6 +985,11 @@ function osm2pgsql.process_node(object)
       else
         signal[tag.tag] = tags[tag.tag]
       end
+    end
+
+    -- Special handling for signal position: flip if reversed signal direction
+    if signal_direction == 'backwards' and signal["railway:signal:position"] then
+      signal["railway:signal:position"] = reversed_signal_direction[signal["railway:signal:position"]] or signal["railway:signal:position"]
     end
 
     signals:insert(signal)
