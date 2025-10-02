@@ -921,8 +921,7 @@ function osm2pgsql.process_node(object)
   end
 
   -- Platforms: gnore bus-only platforms
-  if (tags.public_transport == 'platform' or tags.railway == 'platform')
-    and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes') then
+  if tags.railway == 'platform' or (tags.public_transport == 'platform' and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes')) then
     platforms:insert({
       way = object:as_point(),
       name = tags.name,
@@ -1159,8 +1158,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- Platforms: gnore bus-only platforms
-  if (tags.public_transport == 'platform' or tags.railway == 'platform')
-    and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes') then
+  if tags.railway == 'platform' or (tags.public_transport == 'platform' and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes')) then
     platforms:insert({
       way = object:as_polygon(),
       name = tags.name,
@@ -1264,8 +1262,7 @@ function osm2pgsql.process_relation(object)
   local tags = object.tags
 
   -- Platforms: gnore bus-only platforms
-  if (tags.public_transport == 'platform' or tags.railway == 'platform')
-    and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes') then
+  if tags.railway == 'platform' or (tags.public_transport == 'platform' and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or tags.bus ~= 'yes')) then
     platforms:insert({
       way = object:as_multipolygon(),
       name = tags.name,
