@@ -1177,7 +1177,7 @@ function osm2pgsql.process_way(object)
   end
 
   if is_railway_platform(tags) then
-      platforms:insert({
+    platforms:insert({
       way = object:as_polygon(),
       name = tags.name,
       ref = split_semicolon_to_sql_array(tags.ref),
