@@ -836,7 +836,7 @@ local entrance_types = {
   subway_entrance = 'subway',
   train_station_entrance = 'train',
 }
-local reversed_signal_direction = {
+local reversed_signal_position = {
   right = 'left',
   left = 'right',
 }
@@ -987,9 +987,9 @@ function osm2pgsql.process_node(object)
       end
     end
 
-    -- Special handling for signal position: flip if reversed signal direction
-    if signal_direction == 'backwards' and signal["railway:signal:position"] then
-      signal["railway:signal:position"] = reversed_signal_direction[signal["railway:signal:position"]] or signal["railway:signal:position"]
+    -- Special handling for signal position: flip position if reversed signal direction
+    if signal.signal_direction == 'backward' and signal["railway:signal:position"] then
+      signal["railway:signal:position"] = reversed_signal_position[signal["railway:signal:position"]] or signal["railway:signal:position"]
     end
 
     signals:insert(signal)
