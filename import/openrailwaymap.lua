@@ -825,6 +825,26 @@ function format_railway_position(item)
   end
 end
 
+function is_railway_platform(tags)
+  -- Ignore non-railway platforms
+  return tags.railway == 'platform'
+    or (
+      tags.public_transport == 'platform'
+      and (
+        tags.train == 'yes'
+        or tags.tram == 'yes'
+        or tags.subway == 'yes'
+        or tags.light_rail == 'yes'
+        or not (
+          tags.bus == 'yes'
+          or tags.trolleybus == 'yes'
+          or tags.share_taxi == 'yes'
+          or tags.ferry == 'yes'
+        )
+      )
+    )
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -920,11 +940,8 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  -- Platforms: gnore bus-only platforms
-  if tags.railway == 'platform'
-    or (tags.public_transport == 'platform'
-      and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or not (tags.bus == 'yes' or tags.trolleybus == 'yes' or tags.share_taxi == 'yes' or tags.ferry == 'yes'))
-    ) then    platforms:insert({
+  if is_railway_platform(tags) then
+    platforms:insert({
       way = object:as_point(),
       name = tags.name,
       ref = split_semicolon_to_sql_array(tags.ref),
@@ -1159,11 +1176,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Platforms: gnore bus-only platforms
-  if tags.railway == 'platform'
-    or (tags.public_transport == 'platform'
-      and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or not (tags.bus == 'yes' or tags.trolleybus == 'yes' or tags.share_taxi == 'yes' or tags.ferry == 'yes'))
-    ) then
+  if is_railway_platform(tags) then
       platforms:insert({
       way = object:as_polygon(),
       name = tags.name,
@@ -1266,11 +1279,7 @@ local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platfor
 function osm2pgsql.process_relation(object)
   local tags = object.tags
 
-  -- Platforms: gnore bus-only platforms
-  if tags.railway == 'platform'
-    or (tags.public_transport == 'platform'
-      and (tags.train == 'yes' or tags.tram == 'yes' or tags.subway == 'yes' or tags.light_rail == 'yes' or not (tags.bus == 'yes' or tags.trolleybus == 'yes' or tags.share_taxi == 'yes' or tags.ferry == 'yes'))
-    ) then
+  if is_railway_platform(tags) then
     platforms:insert({
       way = object:as_multipolygon(),
       name = tags.name,
