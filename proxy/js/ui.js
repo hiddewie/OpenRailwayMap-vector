@@ -1281,12 +1281,13 @@ function popupContent(feature) {
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([_, {paragraph}]) => !paragraph)
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph}]) => ({
+    .map(([property, {name, format, link, paragraph, description}]) => ({
       title: name,
       value: properties[property],
       body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
       paragraph,
       link,
+      tooltip: description,
     }));
 
   const osmFeatures = determineOsmFeatures(properties, featureContent);
@@ -1398,8 +1399,9 @@ function popupContent(feature) {
     const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
     propertyValues
       .filter(it => !it.paragraph)
-      .forEach(({title, body, value, link}) => {
+      .forEach(({title, body, value, link, tooltip}) => {
         const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
+        popupValue.title = tooltip;
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
         popupValueTitle.innerText = title;

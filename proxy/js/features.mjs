@@ -716,7 +716,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
       position: {
         name: 'Position',
       },
@@ -806,7 +806,7 @@ const features = {
       direction_both: {
         name: 'both directions',
       },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description}])),
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
       position: {
         name: 'Position',
       },
@@ -906,7 +906,7 @@ const features = {
       deactivated: {
         name: 'Deactivated',
       },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, {name: tag.description, format: tag.format}])),
+      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
       position: {
         name: 'Position',
       },
