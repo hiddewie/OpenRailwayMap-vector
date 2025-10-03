@@ -1367,7 +1367,7 @@ function osm2pgsql.process_relation(object)
     end
   end
 
-  if tags.type == 'public_transport' and public_transport == 'stop_area_group' then
+  if tags.type == 'public_transport' and tags.public_transport == 'stop_area_group' then
     local has_members = false
     local stop_area_members = {}
     for _, member in ipairs(object.members) do
