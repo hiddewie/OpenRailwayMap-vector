@@ -508,6 +508,17 @@ local stop_areas = osm2pgsql.define_table({
   },
 })
 
+local stop_area_groups = osm2pgsql.define_table({
+  name = 'stop_area_groups',
+  ids = { type = 'relation', id_column = 'osm_id' },
+  columns = {
+    { column = 'stop_area_ref_ids', sql_type = 'int8[]' },
+  },
+  indexes = {
+    { column = 'stop_area_ref_ids', method = 'gin' },
+  },
+})
+
 local railway_line_states = {}
 -- ordered from lower to higher importance
 local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
@@ -1352,6 +1363,23 @@ function osm2pgsql.process_relation(object)
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
+      })
+    end
+  end
+
+  if tags.type == 'public_transport' and public_transport == 'stop_area_group' then
+    local has_members = false
+    local stop_area_members = {}
+    for _, member in ipairs(object.members) do
+      if member.type == 'r' then
+        table.insert(stop_area_members, member.ref)
+        has_members = true
+      end
+    end
+
+    if has_members then
+      stop_area_groups:insert({
+        stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
   end
