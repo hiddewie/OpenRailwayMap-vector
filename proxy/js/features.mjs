@@ -455,7 +455,7 @@ const features = {
     features: {
       station_area_group: {
         name: 'Station area group',
-        type: 'polygon',
+        type: 'relation',
       },
     },
   },

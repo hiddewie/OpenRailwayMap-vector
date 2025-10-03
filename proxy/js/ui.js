@@ -1220,7 +1220,7 @@ function popupContent(feature) {
       return properties.osm_type === 'N' ? 'node' : properties.osm_type == 'R' ? 'relation' : 'way';
     } else {
       const featureType = featureContent && featureContent.type || 'point';
-      return featureType === 'point' ? 'node' : 'way';
+      return featureType === 'point' ? 'node' : featureType === 'relation' ? 'relation' : 'way';
     }
   }
 
