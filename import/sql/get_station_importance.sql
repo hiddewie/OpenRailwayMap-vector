@@ -260,6 +260,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   JOIN stations s
     ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
       OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
   JOIN grouped_stations_with_route_count gs
     -- TODO match type
     ON ARRAY[s.osm_id] <@ gs.osm_ids
