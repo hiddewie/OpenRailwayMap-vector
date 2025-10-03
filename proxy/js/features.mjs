@@ -450,6 +450,15 @@ const features = {
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
+  'openrailwaymap_standard-standard_railway_grouped_station_areas': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      station_area_group: {
+        name: 'Station area group',
+        type: 'polygon',
+      },
+    },
+  },
   'openrailwaymap_standard-standard_railway_turntables': {
     featureLinks: featureLinks.openstreetmap,
     features: {

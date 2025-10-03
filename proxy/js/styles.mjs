@@ -670,7 +670,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
@@ -1388,6 +1388,19 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
  */
 const layers = {
   standard: [
+    {
+      id: 'railway_grouped_station_areas',
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_grouped_station_areas',
+      paint: {
+        // TODO color
+        'line-color': 'black',
+        'line-width': 2,
+        'line-dasharray': [4, 4],
+      },
+    },
     {
       id: 'railway_grouped_stations',
       type: 'fill',
@@ -4746,6 +4759,7 @@ const legendData = {
         })),
       ]),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
+    "openrailwaymap_standard-standard_railway_grouped_station_areas": [],
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',

@@ -240,20 +240,34 @@ CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_buffered_index
   ON grouped_stations_with_route_count
     USING GIST(buffered);
 
+CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_osm_ids_index
+  ON grouped_stations_with_route_count
+    USING GIN(osm_ids);
+
+CLUSTER grouped_stations_with_route_count
+  USING grouped_stations_with_route_count_center_index;
+
+-- TODO view
 CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   SELECT
-    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(gs.buffered))), 20) as buffered
-  FROM grouped_stations_with_route_count gs
-  JOIN stations s
-    -- TODO match type
-    ON ARRAY[s.osm_id] <@ gs.osm_ids
+    sag.osm_id as id,
+    sag.osm_id as osm_id,
+    'station_area_group' as feature,
+    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(gs.buffered))), 20) as way
+  FROM stop_area_groups sag
   JOIN stop_areas sa
+    ON ARRAY[sa.osm_id] <@ sag.stop_area_ref_ids
+  JOIN stations s
     ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
       OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
-  JOIN stop_area_groups sag
-    ON ARRAY[sa.osm_id] <@ sag.stop_area_ref_ids
-  GROUP BY gs.id;
+  JOIN grouped_stations_with_route_count gs
+    -- TODO match type
+    ON ARRAY[s.osm_id] <@ gs.osm_ids
+  GROUP BY sag.osm_id;
 
 CREATE INDEX IF NOT EXISTS stop_area_groups_buffered_index
   ON stop_area_groups_buffered
-    USING GIST(buffered);
+    USING GIST(way);
+
+CLUSTER stop_area_groups_buffered
+  USING stop_area_groups_buffered_index;
