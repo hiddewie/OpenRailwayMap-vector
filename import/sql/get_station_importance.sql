@@ -68,7 +68,8 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
       r.osm_id as route_id
     FROM stations s
     JOIN stop_areas sa
-      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
     JOIN routes r
       ON sa.stop_ref_ids && r.stop_ref_ids
   ) sr
@@ -95,7 +96,8 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
       r.osm_id as route_id
     FROM stations s
     JOIN stop_areas sa
-      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
     JOIN routes r
       ON sa.platform_ref_ids && r.platform_ref_ids
   ) sr
@@ -131,7 +133,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         id
       FROM stations s
       left join stop_areas sa
-        on array[s.osm_id] <@ sa.node_ref_ids
+        ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+          OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
       left join (
         select sa.osm_id, se.way
         from stop_areas sa
