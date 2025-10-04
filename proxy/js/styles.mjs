@@ -119,6 +119,7 @@ const colors = {
       },
       symbols: themeSwitch('black', 'white'),
       platform: themeSwitch('#aaa', '#aaa'),
+      stationAreaGroup: themeSwitch('black', 'white'),
     },
   },
   km: {
@@ -1395,8 +1396,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_station_areas',
       paint: {
-        // TODO color
-        'line-color': 'black',
+        'line-color': colors.styles.standard.stationAreaGroup,
         'line-width': 2,
         'line-dasharray': [4, 4],
       },
