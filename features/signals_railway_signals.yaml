@@ -153,6 +153,9 @@ tags:
   - { tag: 'railway:signal:stop_demand', title: 'Stop demand' }
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_demand:deactivated', title: 'Stop demand deactivated', type: boolean }
+  - { tag: 'railway:signal:switch', description: 'Switch' }
+  - { tag: 'railway:signal:switch:form', description: 'Switch form' }
+  - { tag: 'railway:signal:switch:states', description: 'Switch states', type: array }
   - { tag: 'railway:signal:train_protection', title: 'Train protection' }
   - { tag: 'railway:signal:train_protection:form', title: 'Train protection form' }
   - { tag: 'railway:signal:train_protection:shape', title: 'Train protection shape' }
@@ -196,6 +199,7 @@ types:
   - { type: whistle, layer: signals }
   - { type: electricity, layer: electrification }
   - { type: departure, layer: signals }
+  - { type: switch, layer: signals }
   - { type: resetting_switch, layer: signals }
   - { type: resetting_switch_distant, layer: signals }
   - { type: humping, layer: signals }
@@ -2828,6 +2832,71 @@ features:
     tags:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
       - { tag: 'railway:signal:route:form', value: 'light' }
+
+- description: tram switch signal
+    country: DE
+    icon:
+      match: 'railway:signal:switch:states'
+      cases:
+        - { exact: 'DE-BOStrab:w14', value: 'de/bostrab/w14', description: 'no trailing-point movement' }
+        - { exact: 'DE-BOStrab:w13', value: 'de/bostrab/w13', description: 'switch set to the left' }
+        - { exact: 'DE-BOStrab:w3', value: 'de/bostrab/w3', description: 'switch set to the left (low speed)' }
+        - { exact: 'DE-BOStrab:w12', value: 'de/bostrab/w12', description: 'switch set to the right' }
+        - { exact: 'DE-BOStrab:w2', value: 'de/bostrab/w2', description: 'switch set to the right (low speed)' }
+        - { exact: 'DE-BOStrab:w11', value: 'de/bostrab/w11', description: 'switch set to straight-ahead' }
+        - { exact: 'DE-BOStrab:w1', value: 'de/bostrab/w1', description: 'switch set to straight-ahead (low speed)' }
+        - { exact: 'DE-BOStrab:w0', value: 'de/bostrab/w0', description: 'switch in use' }
+      default: 'de/bostrab/w-unknown'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:w' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: tram no trailing-point movement W 14 (sign)
+    country: DE
+    icon: { default: 'de/bostrab/w14-sign' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:w' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+      - { tag: 'railway:signal:switch:states', exact: 'DE-BOStrab:w14' }
+
+ - description: Karlsruhe tram switch signal
+    country: DE
+    icon:
+      match: 'railway:signal:switch:states'
+      cases:
+        - { exact: 'DE-VBK:w15', value: 'de/bostrab/w14-yellow', description: 'trailing-point movement allowed' }
+        - { exact: 'DE-VBK:w13', value: 'de/bostrab/w13-yellow', description: 'switch set to the left' }
+        - { exact: 'DE-VBK:w3', value: 'de/bostrab/w3-yellow', description: 'switch set to the left (low speed)' }
+        - { exact: 'DE-VBK:w12', value: 'de/bostrab/w12-yellow', description: 'switch set to the right' }
+        - { exact: 'DE-VBK:w2', value: 'de/bostrab/w2-yellow', description: 'switch set to the right (low speed)' }
+        - { exact: 'DE-VBK:w11', value: 'de/bostrab/w11-yellow', description: 'switch set to straight-ahead' }
+        - { exact: 'DE-VBK:w1', value: 'de/bostrab/w1-yellow', description: 'switch set to straight-ahead (low speed)' }
+        - { exact: 'DE-VBK:w0', value: 'de/vbk/w0', description: 'stop, switch in use' }
+      default: 'de/vbk/w5'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-VBK:w' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Karlsruhe tram switch distant signal
+    country: DE
+    icon: { default: 'de/vbk/wv1' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-VBK:wv' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: tram signal contact St 1
+    country: DE
+    icon: { default: 'de/bostrab/st1' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:st1' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: tram switch contact St 2
+    country: DE
+    icon: { default: 'de/bostrab/st2' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:st2' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
 
   - description: power off advance sign El 1v
     country: DE
