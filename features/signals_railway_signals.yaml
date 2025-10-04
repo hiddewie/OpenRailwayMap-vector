@@ -2833,7 +2833,7 @@ features:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
-- description: tram switch signal
+  - description: tram switch signal
     country: DE
     icon:
       match: 'railway:signal:switch:states'
@@ -2859,7 +2859,7 @@ features:
       - { tag: 'railway:signal:switch:form', value: 'sign' }
       - { tag: 'railway:signal:switch:states', exact: 'DE-BOStrab:w14' }
 
- - description: Karlsruhe tram switch signal
+  - description: Karlsruhe tram switch signal
     country: DE
     icon:
       match: 'railway:signal:switch:states'
