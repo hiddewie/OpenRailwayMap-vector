@@ -258,9 +258,14 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
     ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
       OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
       OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
-  JOIN grouped_stations_with_route_count gs
-    -- TODO match type
-    ON ARRAY[s.osm_id] <@ gs.osm_ids
+  JOIN (
+    SELECT
+      unnest(osm_ids) AS osm_id,
+      unnest(osm_types) AS osm_type,
+      buffered
+    FROM grouped_stations_with_route_count
+  ) gs
+    ON s.osm_id = gs.osm_id and s.osm_type = gs.osm_type
   GROUP BY sag.osm_id
   -- Only use station area groups that have more than one station area
   HAVING COUNT(distinct sa.osm_id) > 1;
