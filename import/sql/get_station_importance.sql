@@ -247,12 +247,9 @@ CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_osm_ids_index
 CLUSTER grouped_stations_with_route_count
   USING grouped_stations_with_route_count_center_index;
 
--- TODO view
 CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   SELECT
-    sag.osm_id as id,
-    sag.osm_id as osm_id,
-    'station_area_group' as feature,
+    sag.osm_id,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(gs.buffered))), 20) as way
   FROM stop_area_groups sag
   JOIN stop_areas sa
