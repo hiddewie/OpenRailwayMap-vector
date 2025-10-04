@@ -153,9 +153,9 @@ tags:
   - { tag: 'railway:signal:stop_demand', title: 'Stop demand' }
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_demand:deactivated', title: 'Stop demand deactivated', type: boolean }
-  - { tag: 'railway:signal:switch', description: 'Switch' }
-  - { tag: 'railway:signal:switch:form', description: 'Switch form' }
-  - { tag: 'railway:signal:switch:states', description: 'Switch states', type: array }
+  - { tag: 'railway:signal:switch', title: 'Switch' }
+  - { tag: 'railway:signal:switch:form', title: 'Switch form' }
+  - { tag: 'railway:signal:switch:states', title: 'Switch states', type: array }
   - { tag: 'railway:signal:train_protection', title: 'Train protection' }
   - { tag: 'railway:signal:train_protection:form', title: 'Train protection form' }
   - { tag: 'railway:signal:train_protection:shape', title: 'Train protection shape' }
