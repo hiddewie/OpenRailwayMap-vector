@@ -264,7 +264,9 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   JOIN grouped_stations_with_route_count gs
     -- TODO match type
     ON ARRAY[s.osm_id] <@ gs.osm_ids
-  GROUP BY sag.osm_id;
+  GROUP BY sag.osm_id
+  -- Only use station area groups that have more than one station area
+  HAVING COUNT(distinct sa.osm_id) > 1;
 
 CREATE INDEX IF NOT EXISTS stop_area_groups_buffered_index
   ON stop_area_groups_buffered
