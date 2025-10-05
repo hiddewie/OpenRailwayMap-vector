@@ -696,7 +696,7 @@ const sources = {
   openhistoricalmap: {
     type: 'vector',
     tiles: [`https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf`],
-    attribution: '<a href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
+    attribution: '<a target="_blank" href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
   },
 };
 
