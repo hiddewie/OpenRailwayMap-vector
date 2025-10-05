@@ -157,6 +157,47 @@
             </small>
           </div>
           <div class="mb-3">
+            <label class="form-label">Future railway infrastructure</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureNone" value="none" checked onchange="onFutureInfrastructureChange('none');">
+                <label class="form-check-label" for="futureInfrastructureNone">None</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureConstruction" value="construction" onchange="onFutureInfrastructureChange('construction');">
+                <label class="form-check-label" for="futureInfrastructureConstruction">Under construction</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureConstructionProposed" value="construction-proposed" onchange="onFutureInfrastructureChange('construction-proposed');">
+                <label class="form-check-label" for="futureInfrastructureConstructionProposed">Under construction and proposed</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control which future infrastructure should be shown on the map.
+            </small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Historical railway infrastructure</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureNone" value="none" checked onchange="onHistoricalInfrastructureChange('none');">
+                <label class="form-check-label" for="historicalInfrastructureNone">None</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureOpenHistoricalMap" value="openhistoricalmap" onchange="onHistoricalInfrastructureChange('openhistoricalmap');">
+                <label class="form-check-label" for="historicalInfrastructureOpenHistoricalMap">OpenHistoricalMap</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureOpenStreetMap" value="openstreetmap" onchange="onHistoricalInfrastructureChange('openstreetmap');">
+                <label class="form-check-label" for="historicalInfrastructureOpenStreetMap">OpenStreetMap (abandoned infrastructure)</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control which future railway infrastructure should be shown on the map.<br>
+              <b>Note:</b> Tagging and non-existing features in OpenStreetMap like demolished railways is <a target="_blank" href="https://wiki.openstreetmap.org/wiki/Demolished_railways">discouraged</a>. It is encouraged instead to use the OpenHistoricalMap to create and maintain historical data.
+            </small>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Editor</label>
             <div>
               <div class="form-check form-check-inline">
