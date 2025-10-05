@@ -18,6 +18,12 @@ const backgroundUrlControl = document.getElementById('backgroundUrl');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
+const historicalInfrastructureNoneControl = document.getElementById('historicalInfrastructureNone');
+const historicalInfrastructureOpenHistoricalMapControl = document.getElementById('historicalInfrastructureOpenHistoricalMap');
+const historicalInfrastructureOpenStreetMapControl = document.getElementById('historicalInfrastructureOpenStreetMap');
+const futureInfrastructureNoneControl = document.getElementById('futureInfrastructureNone');
+const futureInfrastructureConstructionControl = document.getElementById('futureInfrastructureConstruction');
+const futureInfrastructureConstructionProposedControl = document.getElementById('futureInfrastructureConstructionProposed');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
 const backgroundMapContainer = document.getElementById('background-map');
@@ -240,6 +246,24 @@ function showConfiguration() {
     themeDarkControl.checked = true
   } else if (theme === 'light') {
     themeLightControl.checked = true;
+  }
+
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  if (futureInfrastructure === 'none') {
+    futureInfrastructureNoneControl.checked = true;
+  } else if (futureInfrastructure === 'construction') {
+    futureInfrastructureConstructionControl.checked = true
+  } else if (futureInfrastructure === 'construction-proposed') {
+    futureInfrastructureConstructionProposedControl.checked = true;
+  }
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure;
+  if (historicalInfrastructure === 'none') {
+    historicalInfrastructureNoneControl.checked = true;
+  } else if (historicalInfrastructure === 'openhistoricalmap') {
+    historicalInfrastructureOpenHistoricalMapControl.checked = true
+  } else if (historicalInfrastructure === 'openstreetmap') {
+    historicalInfrastructureOpenStreetMapControl.checked = true;
   }
 
   const editor = configuration.editor ?? defaultConfiguration.editor;
