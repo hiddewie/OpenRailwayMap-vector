@@ -4560,10 +4560,10 @@ const makeStyle = selectedStyle => ({
       default: true,
     },
     showAbandonedInfrastructure: {
-      default: true,
+      default: false,
     },
     showRazedInfrastructure: {
-      default: true,
+      default: false,
     },
     openHistoricalMap: {
       default: true,
