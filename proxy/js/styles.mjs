@@ -1601,7 +1601,21 @@ const layers = {
 
         // High zooms
         // ensure that width interpolation matches medium zooms
-
+        {
+          id: 'railway_line_abandoned_razed',
+          minzoom: 12,
+          source: 'high',
+          states: {
+            abandoned: abandoned_dasharray,
+            razed: razed_dasharray,
+          },
+          filter: ['any',
+            ['==', ['get', 'state'], 'abandoned'],
+            ['==', ['get', 'state'], 'razed'],
+          ],
+          width: 2,
+          color: colors.styles.standard.abandoned,
+        },
         {
           id: 'railway_line_miniature',
           minzoom: 12,
