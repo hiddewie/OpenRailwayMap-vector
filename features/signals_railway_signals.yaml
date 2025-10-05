@@ -5236,6 +5236,70 @@ features:
     tags:
       - { tag: 'railway:signal:fouling_point', value: 'PL-metro:wm17' }
 
+  - description: Sygnalizacja świetlna (AT-1)
+    country: PL
+    icon: { default: 'pl/tram/at-1' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'PL-tram:at-1' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Sygnalizacja świetlna wzbudzana (AT-2)
+    country: PL
+    icon: { default: 'pl/tram/at-2' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'PL-tram:at-2' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+      # TODO AT-3 and AT-4
+
+  - description: Ruch kolizyjny (AT-5)
+    country: PL
+    icon: { default: 'pl/tram/at-5' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'PL-tram:at-5' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+  - description: Blokada zwrotnicy (BT-3)
+    country: PL
+    icon: { default: 'pl/tram/bt-3' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'PL-tram:bt-3' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop – zwrotnica eksploatowana jednostronnie (BT-4)
+    country: PL
+    icon: { default: 'pl/tram/bt-4' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'PL-tram:bt-3' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Zwrotnica elektryczna lewoskrętna (DT-1)
+    country: PL
+    icon: { default: 'pl/tram/dt-1' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'PL-tram:dt-1' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: Zwrotnica elektryczna lewoskrętna (DT-2)
+    country: PL
+    icon: { default: 'pl/tram/dt-2' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'PL-tram:dt-2' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: Znaki sterowania zwrotnicy
+    country: PL
+    icon:
+      match: 'railway:signal:switch'
+      cases:
+        - { exact: 'PL-tram:switch_olsztyn', value: 'pl/tram/switch_olsztyn' }
+        - { exact: 'PL-tram:switch_poznan', value: 'pl/tram/switch_poznan' }
+        - { exact: 'PL-tram:switch_wroclaw', value: 'pl/tram/switch_wroclaw' }
+      default: 'pl/tram/switch_warszawa'
+    tags:
+      - { tag: 'railway:signal:switch', any: ['PL-tram:switch_olsztyn', 'PL-tram:switch_poznan', 'PL-tram:switch_wroclaw', 'PL-tram:switch_warszawa'] }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+      
   - description: Tarcza zwolnić bieg (D6)
     country: PL
     icon:
