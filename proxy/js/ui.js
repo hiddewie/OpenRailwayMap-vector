@@ -624,10 +624,17 @@ function onEditorChange(editor) {
 
 function onHistoricalInfrastructureChange(historicalInfrastructure) {
   updateConfiguration('historicalInfrastructure', historicalInfrastructure);
+
+  map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
+  map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
 }
 
 function onFutureInfrastructureChange(futureInfrastructure) {
   updateConfiguration('futureInfrastructure', futureInfrastructure);
+
+  map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
+  map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
 }
 
 function updateBackgroundMapContainer() {
@@ -753,6 +760,15 @@ function rewriteStylePathsToOrigin(style) {
 function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate;
   style.state.theme.default = selectedTheme;
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
+  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
+  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
 }
 
 let lastSetMapStyle = null;
