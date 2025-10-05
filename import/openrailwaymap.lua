@@ -660,7 +660,7 @@ local railway_state_tags = {
   disused = 'disused:railway',
   abandoned = 'abandoned:railway',
   preserved = 'preserved:railway',
-  -- Razed is not included
+  razed = 'razed:railway',
 }
 function railway_feature_and_state(tags, railway_value_func)
   for state, railway_tag in pairs(railway_state_tags) do
