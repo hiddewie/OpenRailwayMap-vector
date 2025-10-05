@@ -2407,6 +2407,7 @@ const layers = {
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
           'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
           true,
         ],
       ],
