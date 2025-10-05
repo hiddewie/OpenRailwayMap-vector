@@ -628,6 +628,8 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
   map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
   map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
   map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+
+  onStyleChange();
 }
 
 function onFutureInfrastructureChange(futureInfrastructure) {
@@ -773,7 +775,8 @@ function rewriteGlobalStateDefaults(style) {
 
 let lastSetMapStyle = null;
 const onStyleChange = () => {
-  const supportsDate = knownStyles[selectedStyle].styles.date;
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  const supportsDate = knownStyles[selectedStyle].styles.date && historicalInfrastructure === 'openhistoricalmap';
   const dateActive = supportsDate && dateControl.active;
   const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
