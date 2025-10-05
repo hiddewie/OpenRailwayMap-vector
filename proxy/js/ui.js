@@ -598,6 +598,14 @@ function onEditorChange(editor) {
   updateConfiguration('editor', editor);
 }
 
+function onHistoricalInfrastructureChange(historicalInfrastructure) {
+  updateConfiguration('historicalInfrastructure', historicalInfrastructure);
+}
+
+function onFutureInfrastructureChange(futureInfrastructure) {
+  updateConfiguration('futureInfrastructure', futureInfrastructure);
+}
+
 function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
@@ -608,6 +616,8 @@ const defaultConfiguration = {
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
+  historicalInfrastructure: 'openhistoricalmap',
+  futureInfrastructure: 'construction-proposed',
   editor: 'id',
   view: {},
 };
