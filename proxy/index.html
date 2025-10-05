@@ -103,21 +103,21 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundSaturation" class="form-label">Background map saturation</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundOpacity" class="form-label" >Background map opacity</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundUrl" class="form-label" >Background map tile URL</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
@@ -136,7 +136,7 @@
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Theme</label>
             <div>
               <div class="form-check form-check-inline">
@@ -156,7 +156,7 @@
               Control the theme of OpenRailwayMap. The default is to follow the system and browser preferences. A light or dark theme can also be configured.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Future railway infrastructure</label>
             <div>
               <div class="form-check form-check-inline">
@@ -176,7 +176,7 @@
               Control which future infrastructure should be shown on the map.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Historical railway infrastructure</label>
             <div>
               <div class="form-check form-check-inline">
@@ -197,7 +197,7 @@
               <b>Note:</b> Tagging and non-existing features in OpenStreetMap like demolished railways is <a target="_blank" href="https://wiki.openstreetmap.org/wiki/Demolished_railways">discouraged</a>. It is encouraged instead to use the OpenHistoricalMap to create and maintain historical data.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Editor</label>
             <div>
               <div class="form-check form-check-inline">
