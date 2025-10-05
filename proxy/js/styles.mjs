@@ -341,7 +341,7 @@ const bridge_casing_add = 3;
 // TODO move to variable
 const abandoned_dasharray = [2.5, 2.5];
 const disused_dasharray = [2.5, 2.5];
-const razed_dasharray = [1.5, 3.5];
+const razed_dasharray = [1, 5];
 const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
 const present_dasharray = [1];
