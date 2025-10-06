@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="15.750666" viewBox="0 0 12 15.750666">
-<path fill="none" stroke-width="1.125" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 3.865458 2.811612 L 10.68901 2.811612 L 10.68901 15.177011 L 3.865458 15.177011 Z M 3.865458 2.811612 " transform="matrix(0.960025, 0, 0, 0.960025, 0, 0)"/>
-<path fill="none" stroke-width="1.125" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 12.039886 16.080307 L 0.887021 0.561509 " transform="matrix(0.960025, 0, 0, 0.960025, 0, 0)"/>
-<path fill="none" stroke-width="1.125" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 5.623225 0.561509 L 0.561509 0.561509 L 0.561509 5.623225 " transform="matrix(0.960025, 0, 0, 0.960025, 0, 0)"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22.439137" height="12" viewBox="0 0 22.439137 12">
+<path fill="none" stroke-width="0.0170233" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(72.941176%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 11.417051 0.00976651 L 13.092008 0.00976651 L 13.092008 14.991594 L 11.417051 14.991594 Z M 11.417051 0.00976651 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 9.132812 0.0078125 L 10.472656 0.0078125 L 10.472656 11.992188 L 9.132812 11.992188 Z M 9.132812 0.0078125 "/>
+<path fill="none" stroke-width="0.0170233" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(72.941176%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 14.918346 0.00976651 L 16.588419 0.00976651 L 16.588419 14.991594 L 14.918346 14.991594 Z M 14.918346 0.00976651 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.933594 0.0078125 L 13.269531 0.0078125 L 13.269531 11.992188 L 11.933594 11.992188 Z M 11.933594 0.0078125 "/>
+<path fill="none" stroke-width="1.2868" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.597118 14.605817 C 15.597118 14.605817 15.943829 10.376918 18.580787 6.768192 C 20.944283 3.545243 23.884003 2.177932 23.884003 2.177932 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 19.105469 1.742188 L 18.855469 4.695312 L 22.4375 0.195312 L 16.6875 0.0273438 Z M 19.105469 1.742188 "/>
 </svg>

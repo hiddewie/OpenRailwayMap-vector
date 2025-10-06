@@ -558,7 +558,7 @@ SELECT
   way,
   'platform' as feature,
   name,
-  ref,
+  nullif(array_to_string(ref, U&'\001E'), '') as ref,
   height,
   surface,
   elevator,
@@ -626,6 +626,14 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     description
   FROM railway_switches
   ORDER by char_length(ref);
+
+CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
+  SELECT
+    osm_id as id,
+    osm_id as osm_id,
+    'station_area_group' as feature,
+    way
+  FROM stop_area_groups_buffered;
 
 --- Electrification ---
 

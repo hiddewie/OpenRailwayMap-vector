@@ -6,6 +6,8 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 ## Development
 
+Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
+
 Import the data:
 ```shell
 docker compose run --build import import
@@ -82,7 +84,9 @@ SSL is supported by generating a trusted certificate, and installing it in the p
   docker compose up --build --watch martin-proxy
   ```
 
-The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings.
+The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
+
+You can modify the TLS port 443 to port 8443 [in the Compose configuration](./compose.yaml), if you want the container to start without privileges, for example using Podman.
 
 ## Tests
 

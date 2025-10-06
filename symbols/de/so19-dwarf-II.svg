@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+<path fill="rgb(90%, 47%, 9%)" stroke-width="0.15" stroke="rgb(0%, 0%, 0%)" d="M 0.075,0.075 V 15.925 H 15.925 V 0.075 Z" />
+<circle fill="rgb(100%, 100%, 100%)" cx="6" cy="3" r="2.3" />
+<circle fill="rgb(100%, 100%, 100%)" cx="6" cy="9" r="2.3" />
+</svg>

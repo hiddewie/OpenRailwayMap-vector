@@ -156,6 +156,7 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:radio:frequency']
 end
 
 local railway_line = osm2pgsql.define_table({
@@ -499,11 +500,24 @@ local stop_areas = osm2pgsql.define_table({
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
+    { column = 'way_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
+    { column = 'way_ref_ids', method = 'gin' },
+  },
+})
+
+local stop_area_groups = osm2pgsql.define_table({
+  name = 'stop_area_groups',
+  ids = { type = 'relation', id_column = 'osm_id' },
+  columns = {
+    { column = 'stop_area_ref_ids', sql_type = 'int8[]' },
+  },
+  indexes = {
+    { column = 'stop_area_ref_ids', method = 'gin' },
   },
 })
 
@@ -824,6 +838,26 @@ function format_railway_position(item)
   end
 end
 
+function is_railway_platform(tags)
+  -- Ignore non-railway platforms
+  return tags.railway == 'platform'
+    or (
+      tags.public_transport == 'platform'
+      and (
+        tags.train == 'yes'
+        or tags.tram == 'yes'
+        or tags.subway == 'yes'
+        or tags.light_rail == 'yes'
+        or not (
+          tags.bus == 'yes'
+          or tags.trolleybus == 'yes'
+          or tags.share_taxi == 'yes'
+          or tags.ferry == 'yes'
+        )
+      )
+    )
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -834,6 +868,10 @@ local railway_entrances_values = osm2pgsql.make_check_values_func({'subway_entra
 local entrance_types = {
   subway_entrance = 'subway',
   train_station_entrance = 'train',
+}
+local reversed_signal_position = {
+  right = 'left',
+  left = 'right',
 }
 function osm2pgsql.process_node(object)
   local tags = object.tags
@@ -919,7 +957,7 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+  if is_railway_platform(tags) then
     platforms:insert({
       way = object:as_point(),
       name = tags.name,
@@ -980,6 +1018,11 @@ function osm2pgsql.process_node(object)
       else
         signal[tag.tag] = tags[tag.tag]
       end
+    end
+
+    -- Special handling for signal position: flip position if reversed signal direction
+    if signal.signal_direction == 'backward' and signal["railway:signal:position"] then
+      signal["railway:signal:position"] = reversed_signal_position[signal["railway:signal:position"]] or signal["railway:signal:position"]
     end
 
     signals:insert(signal)
@@ -1155,7 +1198,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+  if is_railway_platform(tags) then
     platforms:insert({
       way = object:as_polygon(),
       name = tags.name,
@@ -1258,7 +1301,7 @@ local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platfor
 function osm2pgsql.process_relation(object)
   local tags = object.tags
 
-  if tags.public_transport == 'platform' or tags.railway == 'platform' then
+  if is_railway_platform(tags) then
     platforms:insert({
       way = object:as_multipolygon(),
       name = tags.name,
@@ -1301,10 +1344,11 @@ function osm2pgsql.process_relation(object)
   end
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
-    local has_node_members = false
+    local has_members = false
     local stop_members = {}
     local platform_members = {}
     local node_members = {}
+    local way_members = {}
     for _, member in ipairs(object.members) do
       if member.role == 'stop' and member.type == 'n' then
         table.insert(stop_members, member.ref)
@@ -1313,15 +1357,37 @@ function osm2pgsql.process_relation(object)
       elseif member.type == 'n' then
         -- Station has no role defined
         table.insert(node_members, member.ref)
-        has_node_members = true
+        has_members = true
+      elseif member.type == 'w' then
+        -- Station has no role defined
+        table.insert(way_members, member.ref)
+        has_members = true
       end
     end
 
-    if has_node_members then
+    if has_members then
       stop_areas:insert({
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
+        way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
+      })
+    end
+  end
+
+  if tags.type == 'public_transport' and tags.public_transport == 'stop_area_group' then
+    local has_members = false
+    local stop_area_members = {}
+    for _, member in ipairs(object.members) do
+      if member.type == 'r' then
+        table.insert(stop_area_members, member.ref)
+        has_members = true
+      end
+    end
+
+    if has_members then
+      stop_area_groups:insert({
+        stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
   end
