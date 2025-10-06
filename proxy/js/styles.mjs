@@ -32,188 +32,103 @@ const knownStyles = [
   'track_class',
   'operator',
 ];
-const knownThemes = [
-  'light',
-  'dark',
-];
 
 const globalMinZoom = 1;
 const globalMaxZoom = 20;
 
+const themeSwitch = (light, dark) =>
+  ['case',
+    ['==', ['global-state', 'theme'], 'light'], light,
+    dark
+  ];
+
 const colors = {
-  light: {
-    text: {
-      main: 'black',
-      halo: 'white',
-    },
-    halo: 'white',
-    casing: 'white',
-    hover: {
-      main: '#ff0000',
-      // High speed lines and 25kV are the hover color by default
-      alternative: '#ffc107',
-      textHalo: 'yellow',
-    },
-    railwayLine: {
-      text: '#585858',
-    },
-    styles: {
-      standard: {
-        main: '#ff8100',
-        highspeed: '#ff0c00',
-        branch: '#c4b600',
-        narrowGauge: '#c0da00',
-        no_usage: '#000000',
-        disused: '#70584d',
-        tourism: '#5b4d70',
-        military: '#764765',
-        test: '#3d634e',
-        abandoned: '#7f6a62',
-        razed: '#94847e',
-        tram: '#d877b8',
-        subway: '#0300c3',
-        light_rail: '#00bd14',
-        monorail: '#00bd8b',
-        miniature: '#7d7094',
-        funicular: '#d87777',
-        siding: '#000000',
-        crossover: '#000000',
-        yard: '#000000',
-        spur: '#87491d',
-        industrial: '#87491d',
-        ferry: '#1e81b0',
-        unknown: '#000000',
-        casing: {
-          railway: '#ffffff',
-          bridge: '#000000',
-        },
-        tunnelCover: 'rgba(255, 255, 255, 50%)',
-        turntable: {
-          fill: '#ababab',
-          casing: '#808080',
-        },
-        stationsText: 'blue',
-        yardText: '#87491D',
-        tramStopText: '#D877B8',
-        lightRailText: '#0e5414',
-        monorailText: '#00674d',
-        miniatureText: '#503285',
-        funicularText: '#d75656',
-        defaultText: '#616161',
-        past: '#535353',
-        future: '#fff732',
-        signalBox: {
-          text: '#404040',
-          halo: '#bfffb3',
-        },
-        track: {
-          text: 'white',
-          halo: 'blue',
-          hover: 'yellow',
-        },
-        switch: {
-          default: '#003687',
-          localOperated: '#005129',
-          resetting: '#414925',
-        },
-        symbols: 'black',
-      },
-    },
-    km: {
-      text: 'hsl(268, 100%, 40%)'
-    },
-    signals: {
-      direction: '#a8d8bcff'
-    },
-    catenary: 'blue',
+  text: {
+    main: themeSwitch('black', 'white'),
+    halo: themeSwitch('white', 'black'),
   },
-  dark: {
-    text: {
-      main: 'white',
-      halo: 'black',
-    },
-    halo: '#333',
-    casing: '#666',
-    hover: {
-      main: '#ff0000',
-      // High speed lines and 25kV are the hover color by default
-      alternative: '#ffc107',
-      textHalo: '#28281e',
-    },
-    railwayLine: {
-      text: '#ccc',
-    },
-    styles: {
-      standard: {
-        main: '#ff8100',
-        highspeed: '#ff0c00',
-        branch: '#c4b600',
-        narrowGauge: '#c0da00',
-        no_usage: '#000000',
-        disused: '#70584d',
-        tourism: '#5b4d70',
-        military: '#764765',
-        test: '#3d634e',
-        abandoned: '#7f6a62',
-        razed: '#94847e',
-        tram: '#d877b8',
-        subway: '#0300c3',
-        light_rail: '#00bd14',
-        monorail: '#00bd8b',
-        miniature: '#7d7094',
-        funicular: '#d87777',
-        siding: '#000000',
-        crossover: '#000000',
-        yard: '#000000',
-        spur: '#87491d',
-        industrial: '#87491d',
-        ferry: '#1e81b0',
-        unknown: '#000000',
-        casing: {
-          railway: '#ffffff',
-          bridge: '#ddd',
-        },
-        tunnelCover: 'rgba(0, 0, 0, 25%)',
-        turntable: {
-          fill: '#ababab',
-          casing: '#808080',
-        },
-        trackHalo: '#00298d',
-        stationsText: '#bdcfff',
-        yardText: '#ffa35f',
-        tramStopText: '#f8c7e8',
-        lightRailText: '#83ea8f',
-        monorailText: '#5fffd7',
-        miniatureText: '#503285',
-        funicularText: '#daa3a3',
-        defaultText: '#d2d2d2',
-        past: '#dadada',
-        future: '#fffdcc',
-        signalBox: {
-          text: '#bfffb3',
-          halo: '#404040',
-        },
-        track: {
-          text: 'white',
-          halo: '#00298d',
-          hover: 'yellow',
-        },
-        switch: {
-          default: '#a7c6fc',
-          localOperated: '#85f5bd',
-          resetting: '#bdc2ab',
-        },
-        symbols: 'white',
-      },
-    },
-    km: {
-      text: 'hsl(268, 5%, 86%)',
-    },
-    signals: {
-      direction: '#a8d8bcff'
-    },
-    catenary: 'blue',
+  halo: themeSwitch('white', '#333'),
+  casing: themeSwitch('white', '#666'),
+  hover: {
+    main: themeSwitch('#ff0000', '#ff0000'),
+    // High speed lines and 25kV are the hover color by default
+    alternative: themeSwitch('#ffc107', '#ffc107'),
+    textHalo: themeSwitch('yellow', '#28281e'),
   },
+  railwayLine: {
+    text: themeSwitch('#585858', '#ccc'),
+  },
+  styles: {
+    standard: {
+      main: themeSwitch('#ff8100', '#ff8100'),
+      highspeed: themeSwitch('#ff0c00', '#ff0c00'),
+      branch: themeSwitch('#c4b600', '#c4b600'),
+      narrowGauge: themeSwitch('#c0da00', '#c0da00'),
+      no_usage: themeSwitch('#000000', '#000000'),
+      disused: themeSwitch('#70584d', '#70584d'),
+      tourism: themeSwitch('#5b4d70', '#5b4d70'),
+      military: themeSwitch('#764765', '#764765'),
+      test: themeSwitch('#3d634e', '#3d634e'),
+      abandoned: themeSwitch('#7f6a62', '#7f6a62'),
+      razed: themeSwitch('#94847e', '#94847e'),
+      tram: themeSwitch('#d877b8', '#d877b8'),
+      subway: themeSwitch('#0300c3', '#0300c3'),
+      light_rail: themeSwitch('#00bd14', '#00bd14'),
+      monorail: themeSwitch('#00bd8b', '#00bd8b'),
+      miniature: themeSwitch('#7d7094', '#7d7094'),
+      funicular: themeSwitch('#d87777', '#d87777'),
+      siding: themeSwitch('#000000', '#000000'),
+      crossover: themeSwitch('#000000', '#000000'),
+      yard: themeSwitch('#000000', '#000000'),
+      spur: themeSwitch('#87491d', '#87491d'),
+      industrial: themeSwitch('#87491d', '#87491d'),
+      ferry: themeSwitch('#1e81b0', '#1e81b0'),
+      unknown: themeSwitch('#000000', '#000000'),
+      casing: {
+        railway: themeSwitch('#ffffff', '#ffffff'),
+        bridge: themeSwitch('#000000', '#ddd'),
+      },
+      tunnelCover: themeSwitch('rgba(255, 255, 255, 50%)', 'rgba(0, 0, 0, 25%)'),
+      turntable: {
+        fill: themeSwitch('#ababab', '#ababab'),
+        casing: themeSwitch('#808080', '#808080'),
+      },
+      stationsText: themeSwitch('blue', '#bdcfff'),
+      yardText: themeSwitch('#87491D', '#ffa35f'),
+      tramStopText: themeSwitch('#D877B8', '#f8c7e8'),
+      lightRailText: themeSwitch('#0e5414', '#83ea8f'),
+      monorailText: themeSwitch('#00674d', '#5fffd7'),
+      miniatureText: themeSwitch('#503285', '#503285'),
+      funicularText: themeSwitch('#d75656', '#daa3a3'),
+      defaultText: themeSwitch('#616161', '#d2d2d2'),
+      past: themeSwitch('#535353', '#dadada'),
+      future: themeSwitch('#fff732', '#fffdcc'),
+      signalBox: {
+        text: themeSwitch('#404040', '#bfffb3'),
+        halo: themeSwitch('#bfffb3', '#404040'),
+      },
+      track: {
+        text: themeSwitch('white', 'white'),
+        halo: themeSwitch('blue', '#00298d'),
+        hover: themeSwitch('yellow', 'yellow'),
+      },
+      switch: {
+        default: themeSwitch('#003687', '#a7c6fc'),
+        localOperated: themeSwitch('#005129', '#85f5bd'),
+        resetting: themeSwitch('#414925', '#bdc2ab'),
+      },
+      symbols: themeSwitch('black', 'white'),
+      platform: themeSwitch('#aaa', '#aaa'),
+      stationAreaGroup: themeSwitch('black', 'white'),
+    },
+  },
+  km: {
+    text: themeSwitch('hsl(268, 100%, 40%)', 'hsl(268, 5%, 86%)'),
+  },
+  signals: {
+    direction: themeSwitch('#a8d8bcff', '#a8d8bcff'),
+  },
+  catenary: themeSwitch('blue', 'blue'),
 };
 
 const font = {
@@ -414,8 +329,8 @@ const gaugeLegends = [
   {min: 2000, legend: '2000 - 3000 mm'},
 ];
 
-const trainProtectionColor = (theme, field) => ['case',
-  ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+const trainProtectionColor = field => ['case',
+  ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
   ...signals_railway_line.train_protections.flatMap(train_protection =>
     [['==', ['get', field], train_protection.train_protection], train_protection.color]),
   'grey',
@@ -444,9 +359,9 @@ const speedColor = ['case',
   // Reverse hue order
   ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
 ]
-const speedHoverColor = theme => ['case',
-  ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors[theme].hover.alternative,
-  colors[theme].hover.main,
+const speedHoverColor = ['case',
+  ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors.hover.alternative,
+  colors.hover.main,
 ]
 
 const electrification_construction_dashes = [2.5, 2.5];
@@ -475,10 +390,10 @@ const color_12_5kv_60hz = '#999900';
 const color_20kv_50hz = '#FFCC66';
 const color_20kv_60hz = '#FF9966';
 
-const electrificationColor = (theme, voltageProperty, frequencyProperty) => ['case',
+const electrificationColor = (voltageProperty, frequencyProperty) => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['==', ['get', voltageProperty], 25000], colors[theme].hover.alternative,
-    colors[theme].hover.main,
+    ['==', ['get', voltageProperty], 25000], colors.hover.alternative,
+    colors.hover.main,
   ],
   ['all', ['==', ['get', frequencyProperty], 60], ['==', ['get', voltageProperty], 25000]], color_25kv_60hz,
   ['all', ['==', ['get', frequencyProperty], 50], ['==', ['get', voltageProperty], 25000]], color_25kv_50hz,
@@ -588,10 +503,10 @@ const color_gauge_narrow = '#C0C0FF';
 const color_gauge_standard = '#808080';
 const color_gauge_unknown = '#C0C0C0';
 
-const gaugeColor = (theme, gaugeProperty, gaugeIntProperty) => ['case',
+const gaugeColor = (gaugeProperty, gaugeIntProperty) => ['case',
   ['boolean', ['feature-state', 'hover'], false], ['case',
-    ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors[theme].hover.alternative,
-    colors[theme].hover.main,
+    ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', 1450, ['get', gaugeIntProperty]], ['<=', ['get', gaugeIntProperty], 1524]], colors.hover.alternative,
+    colors.hover.main,
   ],
   // monorails or tracks with monorail gauge value
   ['any',
@@ -756,7 +671,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
@@ -798,7 +713,7 @@ const searchResults = {
   },
 };
 
-const railwayLine = (theme, text, layers) => [
+const railwayLine = (text, layers) => [
 
   // Tunnels
 
@@ -821,7 +736,7 @@ const railwayLine = (theme, text, layers) => [
         'line-sort-key': sort,
       },
       paint: {
-        'line-color': colors[theme].casing,
+        'line-color': colors.casing,
         'line-width': width,
         'line-gap-width': railway_casing_add,
         'line-dasharray': dash ?? undefined,
@@ -848,7 +763,7 @@ const railwayLine = (theme, text, layers) => [
       },
       paint: {
         'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
           color,
         ],
         'line-width': width,
@@ -874,12 +789,12 @@ const railwayLine = (theme, text, layers) => [
       'line-sort-key': sort,
     },
     paint: {
-      'line-color': colors[theme].styles.standard.tunnelCover,
+      'line-color': colors.styles.standard.tunnelCover,
       'line-width': width,
     },
   })),
   ...layers.flatMap(({id, filter, color, states}) =>
-    preferredDirectionLayer(theme, `${id}_tunnel_preferred_direction`,
+    preferredDirectionLayer(`${id}_tunnel_preferred_direction`,
       ['all',
         ['get', 'tunnel'],
         ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
@@ -916,7 +831,7 @@ const railwayLine = (theme, text, layers) => [
         'line-sort-key': sort,
       },
       paint: {
-        'line-color': colors[theme].casing,
+        'line-color': colors.casing,
         'line-width': width,
         'line-gap-width': railway_casing_add,
         'line-dasharray': dash ?? undefined,
@@ -944,7 +859,7 @@ const railwayLine = (theme, text, layers) => [
       },
       paint: {
         'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
           color,
         ],
         'line-width': width,
@@ -983,7 +898,7 @@ const railwayLine = (theme, text, layers) => [
           'line-sort-key': sort,
         },
         paint: {
-          'line-color': colors[theme].styles.standard.casing.bridge,
+          'line-color': colors.styles.standard.casing.bridge,
           'line-width': width,
           'line-gap-width': bridge_casing_add,
         }
@@ -1013,7 +928,7 @@ const railwayLine = (theme, text, layers) => [
           'line-sort-key': sort,
         },
         paint: {
-          'line-color': colors[theme].casing,
+          'line-color': colors.casing,
           'line-width': width,
           'line-gap-width': railway_casing_add,
         }
@@ -1040,7 +955,7 @@ const railwayLine = (theme, text, layers) => [
       },
       paint: {
         'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
           color,
         ],
         'line-width': width,
@@ -1053,7 +968,6 @@ const railwayLine = (theme, text, layers) => [
 
   ...layers.flatMap(({id, filter, color, states}) =>
     preferredDirectionLayer(
-      theme,
       `${id}_preferred_direction`,
       ['all',
         ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
@@ -1071,7 +985,7 @@ const railwayLine = (theme, text, layers) => [
 
   // Text layers
 
-  railwayKmText(theme),
+  railwayKmText,
 
   ...layers.flatMap(({id, minzoom, maxzoom, source, filter, states}) => ({
     id: `${id}_text`,
@@ -1085,10 +999,10 @@ const railwayLine = (theme, text, layers) => [
       filter ?? true,
     ],
     paint: {
-      'text-color': colors[theme].railwayLine.text,
+      'text-color': colors.railwayLine.text,
       'text-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-        colors[theme].halo,
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+        colors.halo,
       ],
       'text-halo-width': 2,
     },
@@ -1106,7 +1020,7 @@ const railwayLine = (theme, text, layers) => [
 ];
 
 
-const historicalRailwayLine = (theme, text, layers) => [
+const historicalRailwayLine = (text, layers) => [
 
   // Tunnels
 
@@ -1129,7 +1043,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-sort-key': sort,
     },
     paint: {
-      'line-color': colors[theme].casing,
+      'line-color': colors.casing,
       'line-width': width,
       'line-gap-width': railway_casing_add,
       'line-dasharray': dash ?? undefined,
@@ -1155,7 +1069,7 @@ const historicalRailwayLine = (theme, text, layers) => [
     },
     paint: {
       'line-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
         color,
       ],
       'line-width': width,
@@ -1181,7 +1095,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-sort-key': sort,
     },
     paint: {
-      'line-color': colors[theme].styles.standard.tunnelCover,
+      'line-color': colors.styles.standard.tunnelCover,
       'line-width': width,
     },
   })),
@@ -1208,7 +1122,7 @@ const historicalRailwayLine = (theme, text, layers) => [
       'line-sort-key': sort,
     },
     paint: {
-      'line-color': colors[theme].casing,
+      'line-color': colors.casing,
       'line-width': width,
       'line-gap-width': railway_casing_add,
       'line-dasharray': dash ?? undefined,
@@ -1235,7 +1149,7 @@ const historicalRailwayLine = (theme, text, layers) => [
     },
     paint: {
       'line-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
         color,
       ],
       'line-width': width,
@@ -1265,7 +1179,7 @@ const historicalRailwayLine = (theme, text, layers) => [
         'line-sort-key': sort,
       },
       paint: {
-        'line-color': colors[theme].styles.standard.casing.bridge,
+        'line-color': colors.styles.standard.casing.bridge,
         'line-width': width,
         'line-gap-width': bridge_casing_add,
       }
@@ -1289,7 +1203,7 @@ const historicalRailwayLine = (theme, text, layers) => [
         'line-sort-key': sort,
       },
       paint: {
-        'line-color': colors[theme].casing,
+        'line-color': colors.casing,
         'line-width': width,
         'line-gap-width': railway_casing_add,
       }
@@ -1316,7 +1230,7 @@ const historicalRailwayLine = (theme, text, layers) => [
     },
     paint: {
       'line-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors[theme].hover.main,
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
         color,
       ],
       'line-width': width,
@@ -1339,10 +1253,10 @@ const historicalRailwayLine = (theme, text, layers) => [
       filter ?? true,
     ],
     paint: {
-      'text-color': colors[theme].railwayLine.text,
+      'text-color': colors.railwayLine.text,
       'text-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-        colors[theme].halo,
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+        colors.halo,
       ],
       'text-halo-width': 2,
     },
@@ -1359,7 +1273,7 @@ const historicalRailwayLine = (theme, text, layers) => [
   })),
 ];
 
-const railwayKmText = theme => ({
+const railwayKmText = {
   id: 'railway_text_km',
   type: 'symbol',
   minzoom: 10,
@@ -1371,10 +1285,10 @@ const railwayKmText = theme => ({
     true,
   ],
   paint: {
-    'text-color': colors[theme].km.text,
+    'text-color': colors.km.text,
     'text-halo-color': ['case',
-      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-      colors[theme].halo,
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+      colors.halo,
     ],
     'text-halo-width': 1,
   },
@@ -1388,9 +1302,9 @@ const railwayKmText = theme => ({
     'text-font': ['Fira Code Bold'],
     'text-size': 11,
   },
-});
+};
 
-const preferredDirectionLayer = (theme, id, filter, color) => ({
+const preferredDirectionLayer = (id, filter, color) => ({
   id,
   type: 'symbol',
   minzoom: 15,
@@ -1399,12 +1313,12 @@ const preferredDirectionLayer = (theme, id, filter, color) => ({
   filter,
   paint: {
     'icon-color': ['case',
-      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
       color,
     ],
     'icon-halo-color': ['case',
-      ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-      colors[theme].halo,
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+      colors.halo,
     ],
     'icon-halo-width': 2.0,
   },
@@ -1425,14 +1339,14 @@ const preferredDirectionLayer = (theme, id, filter, color) => ({
   },
 });
 
-const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
+const imageLayerWithOutline = (id, spriteExpression, layer) => [
   {
     id: `${id}_outline`,
     ...layer,
     paint: {
       'icon-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-        colors[theme].halo,
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+        colors.halo,
       ],
       'icon-halo-blur': ['case',
         ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -1473,8 +1387,20 @@ const imageLayerWithOutline = (theme, id, spriteExpression, layer) => [
  * - line color
  * - line dashes
  */
-const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
+const layers = {
   standard: [
+    {
+      id: 'railway_grouped_station_areas',
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_grouped_station_areas',
+      paint: {
+        'line-color': colors.styles.standard.stationAreaGroup,
+        'line-width': 2,
+        'line-dasharray': [4, 4],
+      },
+    },
     {
       id: 'railway_grouped_stations',
       type: 'fill',
@@ -1483,15 +1409,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'standard_railway_grouped_stations',
       paint: {
         'fill-color': ['case',
-          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors[theme].styles.standard.past,
-          ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors[theme].styles.standard.future,
-          ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.light_rail,
-          ['==', ['get', 'station'], 'subway'], colors[theme].styles.standard.subway,
-          ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorail,
-          ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniature,
-          ['==', ['get', 'station'], 'funicular'], colors[theme].styles.standard.funicular,
-          ['==', ['get', 'station'], 'tram'], colors[theme].styles.standard.tram,
-          colors[theme].styles.standard.main,
+          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors.styles.standard.past,
+          ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors.styles.standard.future,
+          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
+          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
+          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
+          colors.styles.standard.main,
         ],
         'fill-opacity': ['case',
           ['boolean', ['feature-state', 'hover'], false], 0.3,
@@ -1516,20 +1442,72 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'line-color': ['case',
           // Use outline color of feature, without taking state into account
-          ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.light_rail,
-          ['==', ['get', 'station'], 'subway'], colors[theme].styles.standard.subway,
-          ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorail,
-          ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniature,
-          ['==', ['get', 'station'], 'funicular'], colors[theme].styles.standard.funicular,
-          ['==', ['get', 'station'], 'tram'], colors[theme].styles.standard.tram,
-          colors[theme].styles.standard.main,
+          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
+          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
+          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
+          colors.styles.standard.main,
         ],
         'line-opacity': 0.3,
         'line-width': 2 ,
         'line-dasharray': dasharray,
       },
     })),
-    ...railwayLine(theme,
+    {
+      id: 'railway_platforms',
+      type: 'fill',
+      minzoom: 15,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['any',
+        ['==', ["geometry-type"], 'Polygon'],
+        ['==', ["geometry-type"], 'MultiPolygon'],
+      ],
+      paint: {
+        'fill-color': colors.styles.standard.platform,
+      },
+    },
+    {
+      id: 'railway_platforms_outline',
+      type: 'line',
+      minzoom: 15,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['any',
+        ['==', ["geometry-type"], 'Polygon'],
+        ['==', ["geometry-type"], 'MultiPolygon'],
+      ],
+      layout: {
+        'line-join': 'round',
+      },
+      paint: {
+        'line-width': 2,
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.styles.standard.platform,
+        ],
+      },
+    },
+    {
+      id: 'railway_platforms_edges',
+      type: 'line',
+      minzoom: 17,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platform_edges',
+      layout: {
+        'line-join': 'round',
+      },
+      paint: {
+        'line-width': 3,
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.styles.standard.track.halo,
+        ],
+      },
+    },
+    ...railwayLine(
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
         14,
@@ -1550,12 +1528,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             7, 2,
           ],
           color: ['case',
-            ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
-            colors[theme].styles.standard.main,
+            ['get', 'highspeed'], colors.styles.standard.highspeed,
+            colors.styles.standard.main,
           ],
           hoverColor: ['case',
-            ['get', 'highspeed'], colors[theme].hover.alternative,
-            colors[theme].hover.main,
+            ['get', 'highspeed'], colors.hover.alternative,
+            colors.hover.main,
           ],
         },
         {
@@ -1571,8 +1549,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: colors[theme].styles.standard.ferry,
-          hoverColor: colors[theme].hover.main,
+          color: colors.styles.standard.ferry,
+          hoverColor: colors.hover.main,
         },
 
         // Medium zooms
@@ -1594,12 +1572,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           width: 2,
           color: ['case',
-            ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
-            colors[theme].styles.standard.main,
+            ['get', 'highspeed'], colors.styles.standard.highspeed,
+            colors.styles.standard.main,
           ],
           hoverColor: ['case',
-            ['get', 'highspeed'], colors[theme].hover.alternative,
-            colors[theme].hover.main,
+            ['get', 'highspeed'], colors.hover.alternative,
+            colors.hover.main,
           ],
         },
         {
@@ -1617,7 +1595,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['==', ['get', 'usage'], 'branch'],
           ],
           width: 2,
-          color: colors[theme].styles.standard.branch,
+          color: colors.styles.standard.branch,
         },
         {
           id: 'railway_ferry_med',
@@ -1631,7 +1609,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           filter: ['==', ['get', 'feature'], 'ferry'],
           width: 2,
-          color: colors[theme].styles.standard.ferry,
+          color: colors.styles.standard.ferry,
         },
 
         // High zooms
@@ -1648,7 +1626,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           filter: ['==', ['get', 'feature'], 'miniature'],
           width: 2,
-          color: colors[theme].styles.standard.miniature,
+          color: colors.styles.standard.miniature,
         },
         {
           id: 'railway_line_funicular',
@@ -1661,7 +1639,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           filter: ['==', ['get', 'feature'], 'funicular'],
           width: 2,
-          color: colors[theme].styles.standard.funicular,
+          color: colors.styles.standard.funicular,
         },
         {
           id: 'railway_line_disused',
@@ -1671,7 +1649,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             disused: disused_dasharray,
           },
           width: 1.5,
-          color: colors[theme].styles.standard.disused,
+          color: colors.styles.standard.disused,
         },
         {
           id: 'railway_line_narrow_gauge',
@@ -1690,7 +1668,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ],
           ],
           width: 2,
-          color: colors[theme].styles.standard.narrowGauge,
+          color: colors.styles.standard.narrowGauge,
         },
         {
           id: 'railway_line_service',
@@ -1717,11 +1695,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 2,
           ],
           color: ['match', ['get', 'service'],
-            'spur', colors[theme].styles.standard.spur,
-            'siding', colors[theme].styles.standard.siding,
-            'yard', colors[theme].styles.standard.yard,
-            'crossover', colors[theme].styles.standard.crossover,
-            colors[theme].styles.standard.unknown,
+            'spur', colors.styles.standard.spur,
+            'siding', colors.styles.standard.siding,
+            'yard', colors.styles.standard.yard,
+            'crossover', colors.styles.standard.crossover,
+            colors.styles.standard.unknown,
           ],
         },
         {
@@ -1741,11 +1719,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           width: 2,
           color: ['match', ['get', 'feature'],
-            'light_rail', colors[theme].styles.standard.light_rail,
-            'monorail', colors[theme].styles.standard.monorail,
-            'subway', colors[theme].styles.standard.subway,
-            'tram', colors[theme].styles.standard.tram,
-            colors[theme].styles.standard.unknown,
+            'light_rail', colors.styles.standard.light_rail,
+            'monorail', colors.styles.standard.monorail,
+            'subway', colors.styles.standard.subway,
+            'tram', colors.styles.standard.tram,
+            colors.styles.standard.unknown,
           ],
         },
         {
@@ -1770,9 +1748,9 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 2,
           ],
           color: ['match', ['get', 'usage'],
-            'test', colors[theme].styles.standard.test,
-            'military', colors[theme].styles.standard.military,
-            colors[theme].styles.standard.unknown,
+            'test', colors.styles.standard.test,
+            'military', colors.styles.standard.military,
+            colors.styles.standard.unknown,
           ],
         },
         {
@@ -1790,7 +1768,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['==', ['get', 'state'], 'preserved'],
           ],
           width: 2,
-          color: colors[theme].styles.standard.tourism,
+          color: colors.styles.standard.tourism,
         },
         {
           id: 'railway_line_industrial',
@@ -1813,7 +1791,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 1.5,
             16, 2,
           ],
-          color: colors[theme].styles.standard.industrial,
+          color: colors.styles.standard.industrial,
         },
         {
           id: 'railway_ferry_high',
@@ -1830,7 +1808,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: colors[theme].styles.standard.ferry,
+          color: colors.styles.standard.ferry,
         },
         {
           id: 'railway_line_branch_high',
@@ -1850,7 +1828,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: colors[theme].styles.standard.branch,
+          color: colors.styles.standard.branch,
         },
         {
           id: 'railway_line_main_high',
@@ -1871,12 +1849,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 3,
           ],
           color: ['case',
-            ['get', 'highspeed'], colors[theme].styles.standard.highspeed,
-            colors[theme].styles.standard.main,
+            ['get', 'highspeed'], colors.styles.standard.highspeed,
+            colors.styles.standard.main,
           ],
           hoverColor: ['case',
-            ['get', 'highspeed'], colors[theme].hover.alternative,
-            colors[theme].hover.main,
+            ['get', 'highspeed'], colors.hover.alternative,
+            colors.hover.main,
           ],
         },
       ],
@@ -1889,11 +1867,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
       paint: {
-        'icon-color': colors[theme].styles.standard.stationsText,
+        'icon-color': colors.styles.standard.stationsText,
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -1910,17 +1888,17 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
       paint: {
-        'text-color': colors[theme].styles.standard.stationsText,
+        'text-color': colors.styles.standard.stationsText,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
-        'icon-color': colors[theme].styles.standard.stationsText,
+        'icon-color': colors.styles.standard.stationsText,
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -1944,17 +1922,17 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'standard_railway_text_stations_med',
       'source-layer': 'standard_railway_text_stations_med',
       paint: {
-        'text-color': colors[theme].styles.standard.stationsText,
+        'text-color': colors.styles.standard.stationsText,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
-        'icon-color': colors[theme].styles.standard.stationsText,
+        'icon-color': colors.styles.standard.stationsText,
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -1977,7 +1955,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'fill-color': colors[theme].styles.standard.turntable.fill,
+        'fill-color': colors.styles.standard.turntable.fill,
       }
     },
     {
@@ -1987,7 +1965,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_turntables',
       paint: {
-        'line-color': colors[theme].styles.standard.turntable.casing,
+        'line-color': colors.styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       }
     },
@@ -1998,10 +1976,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_symbols',
       paint: {
-        'icon-color': colors[theme].styles.standard.symbols,
+        'icon-color': colors.styles.standard.symbols,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-blur': ['case',
           ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -2011,10 +1989,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['boolean', ['feature-state', 'hover'], false], 3.0,
           2.0,
         ],
-        'text-color': colors[theme].styles.standard.symbols,
+        'text-color': colors.styles.standard.symbols,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -2031,7 +2009,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     ...imageLayerWithOutline(
-      theme,
       `railway_symbols_outline`,
       ['get', 'feature'],
       {
@@ -2046,16 +2023,68 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     ),
     {
+      id: 'railway_platforms_text',
+      type: 'symbol',
+      minzoom: 17,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['all',
+        ['any',
+          ['==', ["geometry-type"], 'Polygon'],
+          ['==', ["geometry-type"], 'MultiPolygon'],
+        ],
+        ['!=', ["get", "name"], null],
+      ],
+      paint: {
+        'text-color': colors.styles.standard.defaultText,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 1.5,
+      },
+      layout: {
+        'text-field': '{name}',
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 10,
+      },
+    },
+    {
+      id: 'standard_railway_platform_edges_text',
+      type: 'symbol',
+      minzoom: 17,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platform_edges',
+      filter: ['!=', ['get', 'ref'], null],
+      paint: {
+        'text-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.styles.standard.track.hover,
+          colors.styles.standard.track.text,
+        ],
+        'text-halo-color': colors.styles.standard.track.halo,
+        'text-halo-width': 4,
+        'text-halo-blur': 2,
+      },
+      layout: {
+        'symbol-placement': 'line',
+        'text-field': '{ref}',
+        'text-font': font.bold,
+        'text-size': 10,
+        'text-padding': 10,
+      },
+    },
+    {
       id: 'standard_station_entrances',
       type: 'symbol',
       minzoom: 16,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_station_entrances',
       paint: {
-        'icon-color': colors[theme].styles.standard.subway,
+        'icon-color': colors.styles.standard.subway,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-blur': ['case',
           ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -2065,10 +2094,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['boolean', ['feature-state', 'hover'], false], 3.0,
           2.0,
         ],
-        'text-color': colors[theme].styles.standard.subway,
+        'text-color': colors.styles.standard.subway,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -2076,7 +2105,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-image': 'sdf:general/subway-entrance',
-        'text-field': '{ref}',
+        'text-field': '{label}',
         'text-font': font.regular,
         'text-size': 11,
         'text-padding': 15,
@@ -2093,10 +2122,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       filter: ['!=', ['get', 'track_ref'], null],
       paint: {
         'text-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].styles.standard.track.hover,
-          colors[theme].styles.standard.track.text,
+          ['boolean', ['feature-state', 'hover'], false], colors.styles.standard.track.hover,
+          colors.styles.standard.track.text,
         ],
-        'text-halo-color': colors[theme].styles.standard.track.halo,
+        'text-halo-color': colors.styles.standard.track.halo,
         'text-halo-width': 4,
         'text-halo-blur': 2,
       },
@@ -2117,13 +2146,13 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'standard_railway_switch_ref',
       paint: {
         'icon-color': ['case',
-          ['get', 'local_operated'], colors[theme].styles.standard.switch.localOperated,
-          ['get', 'resetting'], colors[theme].styles.standard.switch.resetting,
-          colors[theme].styles.standard.switch.default,
+          ['get', 'local_operated'], colors.styles.standard.switch.localOperated,
+          ['get', 'resetting'], colors.styles.standard.switch.resetting,
+          colors.styles.standard.switch.default,
         ],
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-blur': ['case',
           ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -2134,13 +2163,13 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           2.0,
         ],
         'text-color': ['case',
-          ['get', 'local_operated'], colors[theme].styles.standard.switch.localOperated,
-          ['get', 'local_operated'], colors[theme].styles.standard.switch.resetting,
-          colors[theme].styles.standard.switch.default,
+          ['get', 'local_operated'], colors.styles.standard.switch.localOperated,
+          ['get', 'local_operated'], colors.styles.standard.switch.resetting,
+          colors.styles.standard.switch.default,
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -2221,42 +2250,42 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'text-color': ['case',
-          ['==', ['get', 'feature'], 'yard'], colors[theme].styles.standard.yardText,
+          ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
           ['any',
             ['==', ['get', 'feature'], 'station'],
             ['==', ['get', 'feature'], 'halt'],
             ['==', ['get', 'feature'], 'tram_stop'],
           ], ['case',
-            ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            ['==', ['get', 'station'], 'tram'], colors[theme].styles.standard.tramStopText,
-            colors[theme].styles.standard.stationsText,
+            ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.lightRailText,
+            ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorailText,
+            ['==', ['get', 'station'], 'tram'], colors.styles.standard.tramStopText,
+            colors.styles.standard.stationsText,
           ],
-          colors[theme].styles.standard.defaultText,
+          colors.styles.standard.defaultText,
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
         'icon-color': ['case',
-          ['==', ['get', 'feature'], 'yard'], colors[theme].styles.standard.yardText,
+          ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
           ['any',
             ['==', ['get', 'feature'], 'station'],
             ['==', ['get', 'feature'], 'halt'],
             ['==', ['get', 'feature'], 'tram_stop'],
           ], ['case',
-            ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            ['==', ['get', 'station'], 'tram'], colors[theme].styles.standard.tramStopText,
-            colors[theme].styles.standard.stationsText,
+            ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.lightRailText,
+            ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorailText,
+            ['==', ['get', 'station'], 'tram'], colors.styles.standard.tramStopText,
+            colors.styles.standard.stationsText,
           ],
-          colors[theme].styles.standard.defaultText,
+          colors.styles.standard.defaultText,
         ],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -2291,24 +2320,24 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'standard_railway_text_stations',
       paint: {
         'text-color': ['case',
-          ['==', ['get', 'feature'], 'yard'], colors[theme].styles.standard.yardText,
+          ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
           ['any',
             ['==', ['get', 'feature'], 'station'],
             ['==', ['get', 'feature'], 'halt'],
             ['==', ['get', 'feature'], 'tram_stop'],
           ], ['case',
-            ['==', ['get', 'station'], 'light_rail'], colors[theme].styles.standard.lightRailText,
-            ['==', ['get', 'station'], 'monorail'], colors[theme].styles.standard.monorailText,
-            ['==', ['get', 'station'], 'miniature'], colors[theme].styles.standard.miniatureText,
-            ['==', ['get', 'station'], 'funicular'], colors[theme].styles.standard.funicularText,
-            ['==', ['get', 'station'], 'tram'], colors[theme].styles.standard.tramStopText,
-            colors[theme].styles.standard.stationsText,
+            ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.lightRailText,
+            ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorailText,
+            ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniatureText,
+            ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicularText,
+            ['==', ['get', 'station'], 'tram'], colors.styles.standard.tramStopText,
+            colors.styles.standard.stationsText,
           ],
-          colors[theme].styles.standard.defaultText,
+          colors.styles.standard.defaultText,
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -2336,7 +2365,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
   historical: [
     ...historicalRailwayLine(
-      theme,
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
         11,
@@ -2347,21 +2375,21 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_historical_miniature',
           minzoom: 12,
           filter: ['==', ['get', 'type'], 'miniature'],
-          color: colors[theme].styles.standard.miniature,
+          color: colors.styles.standard.miniature,
           width: 2,
         },
         {
           id: 'railway_line_historical_funicular',
           minzoom: 12,
           filter: ['==', ['get', 'type'], 'funicular'],
-          color: colors[theme].styles.standard.funicular,
+          color: colors.styles.standard.funicular,
           width: 2,
         },
         {
           id: 'railway_line_historical_disused',
           minzoom: 11,
           filter: ['==', ['get', 'type'], 'disused'],
-          color: colors[theme].styles.standard.disused,
+          color: colors.styles.standard.disused,
           dash: disused_dasharray,
           width: 1.5,
         },
@@ -2369,7 +2397,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_historical_abandoned',
           minzoom: 11,
           filter: ['==', ['get', 'type'], 'abandoned'],
-          color: colors[theme].styles.standard.abandoned,
+          color: colors.styles.standard.abandoned,
           dash: abandoned_dasharray,
           width: 1.5,
         },
@@ -2377,7 +2405,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_historical_construction',
           minzoom: 10,
           filter: ['==', ['get', 'type'], 'construction'],
-          color: colors[theme].styles.standard.main,
+          color: colors.styles.standard.main,
           dash: construction_dasharray,
           width: 1.5,
         },
@@ -2385,7 +2413,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           id: 'railway_line_historical_proposed',
           minzoom: 10,
           filter: ['==', ['get', 'type'], 'proposed'],
-          color: colors[theme].styles.standard.main,
+          color: colors.styles.standard.main,
           dash: proposed_dasharray,
           width: 1.5,
         },
@@ -2399,7 +2427,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
               ['==', ['get', 'usage'], 'industrial'],
             ],
           ],
-          color: colors[theme].styles.standard.narrowGauge,
+          color: colors.styles.standard.narrowGauge,
           width: 2,
         },
         {
@@ -2410,11 +2438,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['==', ['get', 'usage'], null],
           ],
           color: ['match', ['get', 'service'],
-            'spur', colors[theme].styles.standard.spur,
-            'siding', colors[theme].styles.standard.siding,
-            'yard', colors[theme].styles.standard.yard,
-            'crossover', colors[theme].styles.standard.crossover,
-            colors[theme].styles.standard.unknown,
+            'spur', colors.styles.standard.spur,
+            'siding', colors.styles.standard.siding,
+            'yard', colors.styles.standard.yard,
+            'crossover', colors.styles.standard.crossover,
+            colors.styles.standard.unknown,
           ],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             8, ['match', ['get', 'service'],
@@ -2439,11 +2467,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           width: 2,
           color: ['match', ['get', 'type'],
-            'light_rail', colors[theme].styles.standard.light_rail,
-            'monorail', colors[theme].styles.standard.monorail,
-            'subway', colors[theme].styles.standard.subway,
-            'tram', colors[theme].styles.standard.tram,
-            colors[theme].styles.standard.unknown,
+            'light_rail', colors.styles.standard.light_rail,
+            'monorail', colors.styles.standard.monorail,
+            'subway', colors.styles.standard.subway,
+            'tram', colors.styles.standard.tram,
+            colors.styles.standard.unknown,
           ],
         },
         {
@@ -2462,9 +2490,9 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 2,
           ],
           color: ['match', ['get', 'usage'],
-            'test', colors[theme].styles.standard.test,
-            'military', colors[theme].styles.standard.military,
-            colors[theme].styles.standard.unknown,
+            'test', colors.styles.standard.test,
+            'military', colors.styles.standard.military,
+            colors.styles.standard.unknown,
           ],
         },
         {
@@ -2478,7 +2506,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             ['==', ['get', 'type'], 'preserved'],
           ],
           width: 2,
-          color: colors[theme].styles.standard.tourism,
+          color: colors.styles.standard.tourism,
         },
         {
           id: 'railway_line_historical_industrial',
@@ -2495,7 +2523,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 1.5,
             16, 2,
           ],
-          color: colors[theme].styles.standard.industrial,
+          color: colors.styles.standard.industrial,
         },
         {
           id: 'railway_line_historical_branch',
@@ -2509,7 +2537,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: colors[theme].styles.standard.branch,
+          color: colors.styles.standard.branch,
         },
         {
           id: 'railway_line_historical_main',
@@ -2524,12 +2552,12 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 3,
           ],
           color: ['case',
-            ['==', ['get', 'highspeed'], 'yes'], colors[theme].styles.standard.highspeed,
-            colors[theme].styles.standard.main,
+            ['==', ['get', 'highspeed'], 'yes'], colors.styles.standard.highspeed,
+            colors.styles.standard.main,
           ],
           hoverColor: ['case',
-            ['==', ['get', 'highspeed'], 'yes'], colors[theme].hover.alternative,
-            colors[theme].hover.main,
+            ['==', ['get', 'highspeed'], 'yes'], colors.hover.alternative,
+            colors.hover.main,
           ],
         },
       ],
@@ -2551,22 +2579,22 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'text-color': ['case',
-          ['==', ['get', 'type'], 'halt'], colors[theme].styles.standard.tramStopText,
-          colors[theme].styles.standard.stationsText,
+          ['==', ['get', 'type'], 'halt'], colors.styles.standard.tramStopText,
+          colors.styles.standard.stationsText,
         ],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
         'icon-color': ['case',
-          ['==', ['get', 'type'], 'halt'], colors[theme].styles.standard.tramStopText,
-          colors[theme].styles.standard.stationsText,
+          ['==', ['get', 'type'], 'halt'], colors.styles.standard.tramStopText,
+          colors.styles.standard.stationsText,
         ],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -2585,7 +2613,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   speed: [
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'speed_label'], ''],
       [
         {
@@ -2602,7 +2630,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             7, 2,
           ],
           color: speedColor,
-          hoverColor: speedHoverColor(theme),
+          hoverColor: speedHoverColor,
         },
         {
           id: 'speed_med',
@@ -2617,7 +2645,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: 2,
           color: speedColor,
-          hoverColor: speedHoverColor(theme),
+          hoverColor: speedHoverColor,
         },
         {
           id: 'speed_high',
@@ -2634,7 +2662,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             16, 3,
           ],
           color: speedColor,
-          hoverColor: speedHoverColor(theme),
+          hoverColor: speedHoverColor,
         },
       ],
     ),
@@ -2666,10 +2694,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ],
       ],
       paint: {
-        'icon-color': colors[theme].signals.direction,
+        'icon-color': colors.signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 1.0,
@@ -2699,9 +2727,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'icon-rotation-alignment': 'map',
       },
     },
-    ...[0, 1].flatMap(featureIndex =>
-      imageLayerWithOutline(
-        theme,
+    ...[0, 1].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         `speed_railway_signals_${featureIndex}`,
         ['get', `feature${featureIndex}`],
         {
@@ -2728,24 +2755,39 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
-      )
-    ),
-    {
-      id: 'speed_railway_signals_deactivated',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_speed',
-      'source-layer': 'speed_railway_signals',
-      filter: ['get', 'deactivated'],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': 'general/signal-deactivated',
-      }
-    },
+      ),
+      {
+        id: `speed_railway_signals_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_speed',
+        'source-layer': 'speed_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': featureIndex == 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+        }
+      },
+    ]),
     {
       id: `speed_railway_signals_text`,
       type: 'symbol',
@@ -2757,10 +2799,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'caption'], null],
       ],
       paint: {
-        'text-color': colors[theme].text.main,
+        'text-color': colors.text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
         ],
         'text-halo-width': 1.5,
         'text-halo-blur': 1,
@@ -2781,7 +2823,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   signals: [
-    ...railwayLine(theme,
+    ...railwayLine(
       '',
       [
         {
@@ -2798,7 +2840,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: trainProtectionColor(theme, 'train_protection'),
+          color: trainProtectionColor('train_protection'),
         },
         {
           id: 'railway_line_low_construction',
@@ -2817,7 +2859,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: trainProtectionColor(theme, 'train_protection_construction'),
+          color: trainProtectionColor('train_protection_construction'),
         },
         {
           id: 'railway_line_med',
@@ -2832,7 +2874,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['get', 'train_protection_rank'],
           width: 2,
-          color: trainProtectionColor(theme, 'train_protection'),
+          color: trainProtectionColor('train_protection'),
         },
         {
           id: 'railway_line_med_construction',
@@ -2850,7 +2892,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ],
           sort: ['get', 'train_protection_construction_rank'],
           width: 2,
-          color: trainProtectionColor(theme, 'train_protection_construction'),
+          color: trainProtectionColor('train_protection_construction'),
         },
         {
           id: 'railway_line_high',
@@ -2867,7 +2909,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor(theme, 'train_protection'),
+          color: trainProtectionColor('train_protection'),
         },
         {
           id: 'railway_line_high_construction',
@@ -2887,7 +2929,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor(theme, 'train_protection_construction'),
+          color: trainProtectionColor('train_protection_construction'),
         },
       ],
     ),
@@ -2900,7 +2942,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       filter: ['==', ["geometry-type"], 'Point'],
       paint: {
         'circle-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'circle-radius': 4,
@@ -2920,7 +2962,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'fill-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           '#008206',
         ],
         'fill-outline-color': 'white',
@@ -2952,10 +2994,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'feature0'], ''],
       ],
       paint: {
-        'icon-color': colors[theme].signals.direction,
+        'icon-color': colors.signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 1.0,
@@ -2986,9 +3028,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     // Show at most 2 combined features
-    ...[0, 1].flatMap(featureIndex =>
-      imageLayerWithOutline(
-        theme,
+    ...[0, 1].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         `railway_signals_medium_${featureIndex}`,
         ['get', `feature${featureIndex}`],
         {
@@ -3004,7 +3045,14 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': [0, -20 * featureIndex],
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
       )
@@ -3037,9 +3085,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'icon-rotation-alignment': 'map',
       },
     },
-    ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex =>
-      imageLayerWithOutline(
-        theme,
+    ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex => [
+      ...imageLayerWithOutline(
         `railway_signals_high_${featureIndex}`,
         ['get', `feature${featureIndex}`],
         {
@@ -3051,14 +3098,47 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': ['case',
-              ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], ['literal', [0, -20 * (featureIndex + 1)]],
-              ['literal', [0, -20 * featureIndex]]
-            ],
+            'icon-anchor': 'center',
+            'icon-offset': featureIndex == 0
+              ? ['literal', [0, 0]]
+              : ['interpolate', ['linear'],
+                // Gap of 2 pixels for halo and spacing
+                ['+',
+                    ['get', `offset${featureIndex}`],
+                  ['case',
+                      ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 20,
+                    0
+                  ],
+                  2 * featureIndex
+                    ],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
           },
         },
-      )
-    ),
+      ),
+      {
+        id: `railway_signals_high_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': featureIndex == 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+        }
+      },
+    ]),
     {
       id: `railway_signals_high_text`,
       type: 'symbol',
@@ -3073,10 +3153,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'feature0'], null],
       ],
       paint: {
-        'text-color': colors[theme].text.main,
+        'text-color': colors.text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
         ],
         'text-halo-width': 1.5,
         'text-halo-blur': 1,
@@ -3095,19 +3175,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     {
-      id: 'railway_signals_deactivated',
-      type: 'symbol',
-      minzoom: 13,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'signals_railway_signals',
-      filter: ['get', 'deactivated'],
-      layout: {
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': 'general/signal-deactivated',
-      }
-    },
-    {
       id: 'signal_boxes_text_medium',
       type: 'symbol',
       minzoom: 12,
@@ -3116,10 +3183,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'signals_signal_boxes',
       filter: ['!=', ['get', 'ref'], null],
       paint: {
-        'text-color': colors[theme].styles.standard.signalBox.text,
+        'text-color': colors.styles.standard.signalBox.text,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].styles.standard.signalBox.halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -3141,10 +3208,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'ref'], null],
       ],
       paint: {
-        'text-color': colors[theme].styles.standard.signalBox.text,
+        'text-color': colors.styles.standard.signalBox.text,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].styles.standard.signalBox.halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.styles.standard.signalBox.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -3158,7 +3225,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   electrification: [
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'electrification_label'], ''],
       [
         {
@@ -3174,7 +3241,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: electrificationColor(theme, 'voltage', 'frequency'),
+          color: electrificationColor('voltage', 'frequency'),
         },
         {
           id: 'railway_line_med',
@@ -3186,7 +3253,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: 2,
-          color: electrificationColor(theme, 'voltage', 'frequency'),
+          color: electrificationColor('voltage', 'frequency'),
         },
         {
           id: 'railway_line_high',
@@ -3210,7 +3277,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
               2,
             ],
           ],
-          color: electrificationColor(theme, 'voltage', 'frequency'),
+          color: electrificationColor('voltage', 'frequency'),
         },
         {
           id: 'railway_line_high_proposed',
@@ -3237,7 +3304,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
               2,
             ],
           ],
-          color: electrificationColor(theme, 'future_voltage', 'future_frequency'),
+          color: electrificationColor('future_voltage', 'future_frequency'),
         },
         {
           id: 'railway_line_high_construction',
@@ -3258,7 +3325,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: electrificationColor(theme, 'future_voltage', 'future_frequency'),
+          color: electrificationColor('future_voltage', 'future_frequency'),
         },
       ],
     ),
@@ -3270,11 +3337,11 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       'source-layer': 'catenary',
       filter: ['==', ['get', 'feature'], 'mast'],
       paint: {
-        'icon-color': colors[theme].catenary,
+        'icon-color': colors.catenary,
         'icon-halo-width': 2,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -3301,10 +3368,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'ref'], null],
       ],
       paint: {
-        'text-color': colors[theme].catenary,
+        'text-color': colors.catenary,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -3326,8 +3393,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       filter: ['==', ['get', 'feature'], 'portal'],
       paint: {
         'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].catenary,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.catenary,
         ],
         'line-width': ['interpolate', ['exponential', 1.2], ['zoom'],
           14, 1.5,
@@ -3346,10 +3413,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'feature'], ''],
       ],
       paint: {
-        'icon-color': colors[theme].signals.direction,
+        'icon-color': colors.signals.direction,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-width': 2.0,
         'icon-halo-blur': 1.0,
@@ -3380,7 +3447,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     ...imageLayerWithOutline(
-      theme,
       'electrification_signals',
       ['get', 'feature'],
       {
@@ -3389,10 +3455,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         source: 'openrailwaymap_electrification',
         'source-layer': 'electrification_signals',
         paint: {
-          'text-color': colors[theme].text.main,
+          'text-color': colors.text.main,
           'text-halo-color': ['case',
-            ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-            colors[theme].halo
+            ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+            colors.halo
           ],
           'text-halo-width': 1.5,
           'text-halo-blur': 1,
@@ -3433,10 +3499,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         ['!=', ['get', 'caption'], null],
       ],
       paint: {
-        'text-color': colors[theme].text.main,
+        'text-color': colors.text.main,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
         ],
         'text-halo-width': 1.5,
         'text-halo-blur': 1,
@@ -3460,10 +3526,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_railway_symbols',
       paint: {
-        'icon-color': colors[theme].styles.standard.symbols,
+        'icon-color': colors.styles.standard.symbols,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-blur': ['case',
           ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -3473,10 +3539,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['boolean', ['feature-state', 'hover'], false], 3.0,
           2.0,
         ],
-        'text-color': colors[theme].styles.standard.symbols,
+        'text-color': colors.styles.standard.symbols,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -3496,7 +3562,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   gauge: [
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'gauge_label'], ''],
       [
         {
@@ -3512,7 +3578,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             0, 0.5,
             7, 2,
           ],
-          color: gaugeColor(theme, 'gauge0', 'gaugeint0'),
+          color: gaugeColor('gauge0', 'gaugeint0'),
         },
         {
           id: 'railway_line_med',
@@ -3524,7 +3590,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: 2,
-          color: gaugeColor(theme, 'gauge0', 'gaugeint0'),
+          color: gaugeColor('gauge0', 'gaugeint0'),
         },
         {
           id: 'railway_line_high',
@@ -3539,7 +3605,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: gaugeColor(theme, 'gauge0', 'gaugeint0'),
+          color: gaugeColor('gauge0', 'gaugeint0'),
         },
         {
           id: 'railway_line_high_dual',
@@ -3557,7 +3623,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: gaugeColor(theme, 'gauge1', 'gaugeint1'),
+          color: gaugeColor('gauge1', 'gaugeint1'),
         },
         {
           id: 'railway_line_high_multi',
@@ -3575,7 +3641,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
             14, 2,
             16, 3,
           ],
-          color: gaugeColor(theme, 'gauge2', 'gaugeint2'),
+          color: gaugeColor('gauge2', 'gaugeint2'),
         },
       ],
     ),
@@ -3583,7 +3649,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   loading_gauge: [
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'loading_gauge'], ''],
       [
         {
@@ -3632,7 +3698,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
   ],
 
   track_class: [
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'track_class'], ''],
       [
         {
@@ -3722,7 +3788,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'line-dasharray': dasharray,
       },
     })),
-    ...railwayLine(theme,
+    ...railwayLine(
       ['coalesce', ['get', 'primary_operator'], ''],
       [
         {
@@ -3788,7 +3854,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'circle-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         ],
         'circle-radius': 4,
@@ -3811,7 +3877,7 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       ],
       paint: {
         'fill-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.main,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
         ],
         'fill-outline-color': 'white',
@@ -3847,8 +3913,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -3868,15 +3934,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -3903,15 +3969,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -3979,15 +4045,15 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
       },
       layout: {
@@ -4024,8 +4090,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -4063,8 +4129,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -4088,8 +4154,8 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       paint: {
         'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 1.5,
       },
@@ -4106,10 +4172,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       source: 'openrailwaymap_operator',
       'source-layer': 'operator_railway_symbols',
       paint: {
-        'icon-color': colors[theme].styles.standard.symbols,
+        'icon-color': colors.styles.standard.symbols,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-blur': ['case',
           ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -4119,10 +4185,10 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
           ['boolean', ['feature-state', 'hover'], false], 3.0,
           2.0,
         ],
-        'text-color': colors[theme].styles.standard.symbols,
+        'text-color': colors.styles.standard.symbols,
         'text-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'text-halo-width': 2,
       },
@@ -4139,7 +4205,6 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
       },
     },
     ...imageLayerWithOutline(
-      theme,
       `operator_symbols_outline`,
       ['get', 'feature'],
       {
@@ -4155,9 +4220,9 @@ const layers = Object.fromEntries(knownThemes.map(theme => [theme, {
     ),
     searchResults,
   ],
-}]));
+};
 
-const makeStyle = (selectedStyle, theme) => ({
+const makeStyle = selectedStyle => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
   glyphs: '/font/{fontstack}/{range}',
@@ -4175,7 +4240,15 @@ const makeStyle = (selectedStyle, theme) => ({
     }
   ],
   version: 8,
-  layers: layers[theme][selectedStyle],
+  layers: layers[selectedStyle],
+  state: {
+    date: {
+      default: (new Date()).getFullYear(),
+    },
+    theme: {
+      default: 'light',
+    },
+  },
 });
 
 const legendData = {
@@ -4702,6 +4775,7 @@ const legendData = {
         })),
       ]),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
+    "openrailwaymap_standard-standard_railway_grouped_station_areas": [],
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',
@@ -4723,7 +4797,24 @@ const legendData = {
       {
         legend: 'Subway entrance',
         type: 'point',
-        properties: {},
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_platforms": [
+      {
+        legend: 'Platform',
+        type: 'polygon',
+        properties: {
+          ref: 1,
+        },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_platform_edges": [
+      {
+        legend: 'Platform edge',
+        type: 'line',
+        properties: {
+          ref: 3,
+        },
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":
@@ -5359,7 +5450,7 @@ const legendData = {
           feature0: feature.icon.default,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -5376,7 +5467,7 @@ const legendData = {
           feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: [
@@ -5395,7 +5486,7 @@ const legendData = {
           feature0: 'pl/w21-{40}',
           type: 'line',
           azimuth: null,
-          deactivated: true,
+          deactivated0: true,
           direction_both: false,
         },
       },
@@ -5406,7 +5497,7 @@ const legendData = {
           feature0: `general/signal-unknown-${type.type}`,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
       })),
@@ -5583,7 +5674,7 @@ const legendData = {
           feature0: feature.icon.default,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: (feature.icon.cases ?? []).map(item => ({
@@ -5600,7 +5691,7 @@ const legendData = {
           feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
         variants: [
@@ -5620,7 +5711,7 @@ const legendData = {
           feature0: 'de/ks-combined',
           type: 'line',
           azimuth: null,
-          deactivated: true,
+          deactivated0: true,
           direction_both: false,
         },
       },
@@ -5631,7 +5722,7 @@ const legendData = {
           feature0: `general/signal-unknown-${type.type}`,
           type: 'line',
           azimuth: null,
-          deactivated: false,
+          deactivated0: false,
           direction_both: false,
         },
       })),
@@ -6452,8 +6543,8 @@ const layerVisibleAtZoom = (zoom) =>
 const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
-function makeLegendStyle(style, theme) {
-  const sourceStyle = makeStyle(style, theme);
+function makeLegendStyle(style) {
+  const sourceStyle = makeStyle(style);
   const sourceLayers = sourceStyle.layers;
   const legendZoomLevels = [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
@@ -6492,8 +6583,8 @@ function makeLegendStyle(style, theme) {
       minzoom: legendZoom,
       maxzoom: legendZoom + 1,
       paint: {
-        'text-color': colors[theme].text.main,
-        'text-halo-color': colors[theme].halo,
+        'text-color': colors.text.main,
+        'text-halo-color': colors.halo,
         'text-halo-width': 1,
       },
       layout: {
@@ -6629,11 +6720,6 @@ function makeLegendStyle(style, theme) {
     name: `${sourceStyle.name} legend`,
     layers: legendLayers,
     sources: legendSources,
-    state: {
-      date: {
-        default: (new Date()).getFullYear(),
-      }
-    },
     metadata: {
       name: style,
     }
@@ -6641,8 +6727,6 @@ function makeLegendStyle(style, theme) {
 }
 
 knownStyles.forEach(style => {
-  knownThemes.forEach(theme => {
-    fs.writeFileSync(`${style}-${theme}.json`, JSON.stringify(makeStyle(style, theme)));
-    fs.writeFileSync(`legend-${style}-${theme}.json`, JSON.stringify(makeLegendStyle(style, theme)));
-  });
+  fs.writeFileSync(`${style}.json`, JSON.stringify(makeStyle(style)));
+  fs.writeFileSync(`legend-${style}.json`, JSON.stringify(makeLegendStyle(style)));
 });

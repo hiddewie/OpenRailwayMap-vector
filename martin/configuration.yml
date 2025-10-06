@@ -97,27 +97,6 @@ postgres:
         osm_id: integer
         feature: string
 
-    standard_station_entrances:
-      schema: public
-      table: station_entrances
-      srid: 3857
-      geometry_column: way
-      geometry_type: POLYGON
-      properties:
-        id: integer
-        osm_id: integer
-        type: string
-        name: string
-        ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     standard_railway_text_stations:
       schema: public
       table: standard_railway_text_stations
@@ -176,6 +155,55 @@ postgres:
         wikipedia: string
         note: string
         description: string
+
+    standard_railway_grouped_station_areas:
+      schema: public
+      table: standard_railway_grouped_station_areas
+      srid: 3857
+      geometry_column: way
+      geometry_type: POLYGON
+      properties:
+        id: integer
+        osm_id: integer
+        feature: string
+
+    standard_railway_platforms:
+      schema: public
+      table: standard_railway_platforms
+      srid: 3857
+      geometry_column: way
+      geometry_type: GEOMETRY
+      properties:
+        id: integer
+        osm_id: string
+        osm_type: string
+        feature: string
+        name: string
+        ref: string
+        height: string
+        surface: boolean
+        elevator: boolean
+        shelter: boolean
+        lit: boolean
+        bin: boolean
+        bench: boolean
+        wheelchair: boolean
+        departures_board: boolean
+        tactile_paving: boolean
+
+    standard_railway_platform_edges:
+      schema: public
+      table: standard_railway_platform_edges
+      srid: 3857
+      geometry_column: way
+      geometry_type: LINESTRING
+      properties:
+        id: integer
+        osm_id: string
+        feature: string
+        ref: string
+        height: string
+        tactile_paving: boolean
 
     railway_text_km:
       schema: public
@@ -276,6 +304,11 @@ postgres:
       schema: public
       function: standard_railway_symbols
       minzoom: 10
+
+    standard_station_entrances:
+      schema: public
+      function: standard_station_entrances
+      minzoom: 16
 
     # --- Speed --- #
 

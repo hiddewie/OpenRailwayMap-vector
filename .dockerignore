@@ -1,12 +1,10 @@
 **
-!db/tune-postgis.sh
 !features
 !import/sql
 !import/docker-startup.sh
 !import/tags.lua.js
 !import/osmium-tags-filter
 !import/openrailwaymap.lua
-!data/import
 !martin
 !proxy
 !symbols

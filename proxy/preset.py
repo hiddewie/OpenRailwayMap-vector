@@ -23,7 +23,7 @@ tag_descriptions = {}
 for t in all_signals['tags']:
   if 'type' in t:
     tag_types[t['tag']] = t['type']
-  tag_descriptions[t['tag']] = t['description']
+  tag_descriptions[t['tag']] = t['title']
 
 
 def all_states(description):

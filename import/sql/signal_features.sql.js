@@ -5,15 +5,46 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
-// Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
-const signalsWithSignalType = signals_railway_signals.features.map(feature => ({
-  ...feature,
-  signalTypes: Object.fromEntries(
-    layers.map(layer =>
-      [layer, signals_railway_signals.types.filter(type => type.layer === layer).find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type]
+async function parseSvgDimensions(feature) {
+  const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
+  // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
+  const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
+  if (!matches) {
+    throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
+  }
+  return {
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2])
+  }
+}
+
+const signalsWithSignalType = await Promise.all(
+  signals_railway_signals.features
+    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
+    .map(feature => ({
+      ...feature,
+      signalTypes: Object.fromEntries(
+        layers.map(layer =>
+          [layer, signals_railway_signals.types.filter(type => type.layer === layer).find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type]
+        )
+      )})
     )
-  ),
-}));
+    // Determine icon dimensions
+    .map(async feature => ({
+      ...feature,
+      feature: feature.feature,
+      icon: {
+        ...feature.icon,
+        cases: feature.icon.cases
+          ? await Promise.all(feature.icon.cases.map(async iconCase => ({
+              ...iconCase,
+              dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
+            })))
+          : undefined,
+        dimensions: await parseSvgDimensions(feature.icon.default),
+      }
+    }))
+);
 
 const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
   [tag.tag, tag.type]))
@@ -111,6 +142,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
   WITH signals_with_features_0 AS (
     SELECT
       id as signal_id,
+      railway,
       ${signals_railway_signals.types.map(type => `
       CASE 
         WHEN "railway:signal:${type.type}" IS NOT NULL THEN
@@ -118,13 +150,13 @@ CREATE OR REPLACE VIEW signal_features_view AS
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')}
               THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`}`).join('')}
-                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']` : ''}
-              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, '${type.layer}', '${feature.rank}']`) : 'NULL'}
+                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`}`).join('')}
+                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon.dimensions.height}']` : ''}
+              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon.dimensions.height}']`) : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, 'false', '${type.layer}', NULL, '17.1']
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -137,13 +169,28 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${type.type}[1] as feature,
       feature_${type.type}[2] as feature_variable,
       feature_${type.type}[3] as type,
-      feature_${type.type}[4]::signal_layer as layer,
-      feature_${type.type}[5]::INT as rank
+      feature_${type.type}[4]::boolean as deactivated,
+      feature_${type.type}[5]::signal_layer as layer,
+      feature_${type.type}[6]::INT as rank,
+      feature_${type.type}[7]::REAL as icon_height
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
     UNION ALL
   `)}
+    UNION ALL
+    SELECT
+      signal_id,
+      'general/signal-unknown' as feature,
+      NULL as feature_variable,
+      NULL as type,
+      false as deactivated,
+      'signals' as layer,
+      NULL as rank,
+      17.1 as icon_height
+    FROM signals_with_features_0
+    WHERE railway = 'signal'
+      AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
   ),
   -- Group features by signal, and aggregate the results
   signals_with_features AS (
@@ -152,6 +199,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
       any_value(type) as type,
       layer,
       array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
+      array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
+      array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
       MAX(rank) as rank
     FROM signals_with_features_1 sf
     GROUP BY signal_id, layer
@@ -162,6 +211,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
     sf.type,
     sf.layer,
     sf.features,
+    sf.deactivated,
+    sf.icon_height,
     sf.rank,
     (signal_direction = 'both') as direction_both,
     degrees(ST_Azimuth(
@@ -193,9 +244,9 @@ CREATE INDEX IF NOT EXISTS signal_features_way_index
   ON signal_features
   USING gist(way);
 
-CLUSTER signal_features 
+CLUSTER signal_features
   USING signal_features_way_index;
-  
+
 --- Speed ---
 
 CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer)
@@ -215,7 +266,6 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         direction_both,
         ref,
         caption,
-        deactivated,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
         wikimedia_commons,
@@ -229,6 +279,9 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature0,
         features[2] as feature1,
+        deactivated[1] as deactivated0,
+        deactivated[2] as deactivated1,
+        CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -237,7 +290,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
     ) as tile
     WHERE way IS NOT NULL
   );
-  
+
 -- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
@@ -252,7 +305,6 @@ DO $do$ BEGIN
           "caption": "string",
           "azimuth": "number",
           "direction_both": "boolean",
-          "deactivated": "boolean",
           "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
@@ -265,6 +317,9 @@ DO $do$ BEGIN
           "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature0": "string",
           "feature1": "string",
+          "deactivated0": "boolean",
+          "deactivated1": "boolean",
+          "offset1": "number",
           "type": "string"
         }
       }
@@ -292,7 +347,6 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         direction_both,
         ref,
         caption,
-        deactivated,
         railway,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
@@ -310,6 +364,15 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         features[3] as feature2,
         features[4] as feature3,
         features[5] as feature4,
+        deactivated[1] as deactivated0,
+        deactivated[2] as deactivated1,
+        deactivated[3] as deactivated2,
+        deactivated[4] as deactivated3,
+        deactivated[5] as deactivated4,
+        CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
+        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
+        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -332,7 +395,6 @@ DO $do$ BEGIN
           "railway": "string",
           "ref": "string",
           "caption": "string",
-          "deactivated": "boolean",
           "azimuth": "number",
           "direction_both": "boolean",
           "position": "string",
@@ -350,6 +412,15 @@ DO $do$ BEGIN
           "feature2": "string",
           "feature3": "string",
           "feature4": "string",
+          "deactivated0": "boolean",
+          "deactivated1": "boolean",
+          "deactivated2": "boolean",
+          "deactivated3": "boolean",
+          "deactivated4": "boolean",
+          "offset1": "number",
+          "offset2": "number",
+          "offset3": "number",
+          "offset4": "number",
           "type": "string"
         }
       }
@@ -377,7 +448,6 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         direction_both,
         ref,
         caption,
-        deactivated,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
         wikidata,
         wikimedia_commons,
@@ -390,6 +460,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature,
+        deactivated[1] as deactivated,
         type as type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -413,7 +484,6 @@ DO $do$ BEGIN
           "direction_both": "boolean",
           "ref": "string",
           "caption": "string",
-          "deactivated": "boolean",
           "frequency": "number",
           "voltage": "integer",
           "position": "string",
@@ -426,7 +496,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",${signals_railway_signals.tags.map(tag => `
           "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
-          "feature": "string"
+          "feature": "string",
+          "deactivated": "boolean"
         }
       }
     ]

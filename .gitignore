@@ -16,3 +16,6 @@ tmp
 compose.override.yaml
 localhost.pem
 localhost-key.pem
+node_modules
+taginfo.json
+.DS_Store

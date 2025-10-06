@@ -82,7 +82,6 @@ services:
       API_UPSTREAM: api:5000
       PUBLIC_PROTOCOL: http
       PUBLIC_HOST: localhost:8000
-      NGINX_RESOLVER: '127.0.0.11 ipv6=off'
       NGINX_CACHE_TTL: '0'
       CLIENT_CACHE_TTL_ASSETS_FRESH: '0'
       CLIENT_CACHE_TTL_ASSETS_STALE: '0'

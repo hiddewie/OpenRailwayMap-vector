@@ -361,6 +361,72 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   ORDER BY
     route_count DESC NULLS LAST;
 
+CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
+  FROM (
+   SELECT
+     ST_AsMVTGeom(
+       way,
+       ST_TileEnvelope(z, x, y),
+       4096, 64, true
+     ) AS way,
+     id,
+     osm_id,
+     type,
+     name,
+     ref,
+     CASE
+       WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
+       ELSE COALESCE(name, ref)
+       END AS label,
+     wikidata,
+     wikimedia_commons,
+     wikimedia_commons_file,
+     image,
+     mapillary,
+     wikipedia,
+     note,
+     description
+   FROM station_entrances
+   WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_station_entrances IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_station_entrances",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "type": "string",
+          "name": "string",
+          "ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE VIEW standard_railway_text_stations AS
   SELECT
     way,
@@ -484,6 +550,38 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_platforms AS
+SELECT
+  id,
+  osm_id,
+  osm_type,
+  way,
+  'platform' as feature,
+  name,
+  nullif(array_to_string(ref, U&'\001E'), '') as ref,
+  height,
+  surface,
+  elevator,
+  shelter,
+  lit,
+  bin,
+  bench,
+  wheelchair,
+  departures_board,
+  tactile_paving
+FROM platforms;
+
+CREATE OR REPLACE VIEW standard_railway_platform_edges AS
+  SELECT
+    id,
+    osm_id,
+    way,
+    'platform_edge' as feature,
+    ref,
+    height,
+    tactile_paving
+  FROM platform_edge;
+
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT
     id,
@@ -528,6 +626,14 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
     description
   FROM railway_switches
   ORDER by char_length(ref);
+
+CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
+  SELECT
+    osm_id as id,
+    osm_id as osm_id,
+    'station_area_group' as feature,
+    way
+  FROM stop_area_groups_buffered;
 
 --- Electrification ---
 
