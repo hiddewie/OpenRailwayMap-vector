@@ -897,22 +897,35 @@ class DateControl {
       this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
       this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
     };
+
+    this.allDates = createDomElement('input', '', this._container);
+    this.allDates.type = 'checkbox'
+    this.allDates.id = 'all-dates'
+    this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;' // TODO
+
+    this.label = createDomElement('label', '', this._container);
+    this.label.innerText = 'All time'
+    this.label.htmlFor = 'all-dates'
+    this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;' // TODO
+
     this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
     this.slider.type = 'range'
     this.slider.min = 1758
     this.slider.max = (new Date()).getFullYear()
     this.slider.step = 1
-    this.slider.valueAsNumber = this.options.initialSelection;
+    this.slider.valueAsNumber = this.options.initialSelection ?? defaultDate;
     this.slider.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.slider.valueAsNumber);
+      this.options.onChange(this.allDates.value ? null : this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
       this.detectChanges();
       this.updateDisplay();
     }
+
     this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
+
     this.active = null;
 
     this.detectChanges();
@@ -927,11 +940,15 @@ class DateControl {
   }
 
   onExternalDateChange(date) {
-    if (date && this.slider.valueAsNumber !== date) {
-      this.slider.valueAsNumber = date;
-      this.detectChanges();
-      this.updateDisplay();
+    if (date === null) {
+      // TODO
+    } else {
+      if (date && this.slider.valueAsNumber !== date) {
+        this.slider.valueAsNumber = date;
+      }
     }
+    this.detectChanges();
+    this.updateDisplay();
   }
 
   isShown() {
