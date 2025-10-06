@@ -122,7 +122,7 @@ const colors = {
       stationAreaGroup: themeSwitch('black', 'white'),
     },
     signals: {
-      bufferStopDerailer: themeSwitch('#a8d8bcff', '#a8d8bcff'),
+      bufferStopDerailer: themeSwitch('#BF1A1D', '#bdcfff'),
     },
   },
   km: {
@@ -2992,9 +2992,17 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_signals',
-      filter: ['all',
-        ['!=', ['get', 'azimuth'], null],
-        ['!=', ['get', 'feature0'], ''],
+      filter: ['step', ['zoom'],
+        ['all',
+          ['==', ['get', 'railway'], 'signal'],
+          ['!=', ['get', 'azimuth'], null],
+          ['!=', ['get', 'feature0'], ''],
+        ],
+        13,
+        ['all',
+          ['!=', ['get', 'azimuth'], null],
+          ['!=', ['get', 'feature0'], ''],
+        ],
       ],
       paint: {
         'icon-color': colors.signals.direction,
@@ -3080,7 +3088,7 @@ const layers = {
         'icon-overlap': 'always',
         'icon-image': ['case',
           ['==', ['get', 'railway'], 'derail'], 'sdf:general/derail',
-          ['==', ['get', 'railway'], 'buffer_stop'], 'sdf:general/buffer_stop',
+          ['==', ['get', 'railway'], 'buffer_stop'], 'sdf:general/buffer_stop-signal',
           ''
         ],
         'icon-rotate': ['get', 'azimuth'],
@@ -3102,21 +3110,19 @@ const layers = {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-anchor': 'center',
-            'icon-offset': featureIndex == 0
-              ? ['literal', [0, 0]]
-              : ['interpolate', ['linear'],
-                // Gap of 2 pixels for halo and spacing
-                ['+',
-                    ['get', `offset${featureIndex}`],
-                  ['case',
-                      ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 20,
-                    0
-                  ],
-                  2 * featureIndex
-                    ],
-                0, ['literal', [0, 0]],
-                1000, ['literal', [0, -1000]],
+            'icon-offset': ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`],
+                ['case',
+                  ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16,
+                  0
+                ],
+                2 * featureIndex
               ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
           },
         },
       ),

@@ -1,87 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   width="28.051466"
-   height="15.001361"
-   viewBox="0 0 28.051466 15.001361"
-   version="1.1"
-   id="svg2723"
-   sodipodi:docname="derail.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs2727" />
-  <sodipodi:namedview
-     id="namedview2725"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="13.889901"
-     inkscape:cx="1.7998689"
-     inkscape:cy="-1.6918767"
-     inkscape:window-width="1920"
-     inkscape:window-height="1128"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg2723" />
-  <path
-     fill="none"
-     stroke-width="0.0170233"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-     stroke="#ba0000"
-     stroke-opacity="1"
-     stroke-miterlimit="4"
-     d="m 11.418641,0.00851167 h 1.675777 V 14.99285 h -1.675777 z m 0,0"
-     id="path2711" />
-  <path
-     fill-rule="nonzero"
-     fill="#ba0000"
-     fill-opacity="1"
-     d="m 11.418654,0.00853533 h 1.675781 V 14.992911 h -1.675781 z m 0,0"
-     id="path2713"
-     style="fill:#000000;fill-opacity:1" />
-  <path
-     fill="none"
-     stroke-width="0.0170233"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-     stroke="#ba0000"
-     stroke-opacity="1"
-     stroke-miterlimit="4"
-     d="m 14.918632,0.00851167 h 1.671871 V 14.99285 h -1.671871 z m 0,0"
-     id="path2715" />
-  <path
-     fill-rule="nonzero"
-     fill="#ba0000"
-     fill-opacity="1"
-     d="m 14.918653,0.00853533 h 1.671876 V 14.992911 h -1.671876 z m 0,0"
-     id="path2717"
-     style="fill:#000000;fill-opacity:1" />
-  <path
-     fill="none"
-     stroke-width="1.2868"
-     stroke-linecap="butt"
-     stroke-linejoin="miter"
-     stroke="#ba0000"
-     stroke-opacity="1"
-     stroke-miterlimit="4"
-     d="m 15.598318,14.606132 c 0,0 0.343749,-4.230458 2.980461,-7.8359187 2.363276,-3.2265545 5.304674,-4.5937383 5.304674,-4.5937383"
-     id="path2719"
-     style="stroke:#000000;stroke-opacity:1" />
-  <path
-     fill-rule="evenodd"
-     fill="#ba0000"
-     fill-opacity="1"
-     d="m 23.883497,2.1765038 -0.3125,3.691407 4.480469,-5.62499997 -7.191406,-0.210938 z m 0,0"
-     id="path2721"
-     style="fill:#000000;fill-opacity:1" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22.439137" height="12" viewBox="0 0 22.439137 12">
+<path fill="none" stroke-width="0.0170233" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(72.941176%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 11.417051 0.00976651 L 13.092008 0.00976651 L 13.092008 14.991594 L 11.417051 14.991594 Z M 11.417051 0.00976651 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 9.132812 0.0078125 L 10.472656 0.0078125 L 10.472656 11.992188 L 9.132812 11.992188 Z M 9.132812 0.0078125 "/>
+<path fill="none" stroke-width="0.0170233" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(72.941176%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 14.918346 0.00976651 L 16.588419 0.00976651 L 16.588419 14.991594 L 14.918346 14.991594 Z M 14.918346 0.00976651 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 11.933594 0.0078125 L 13.269531 0.0078125 L 13.269531 11.992188 L 11.933594 11.992188 Z M 11.933594 0.0078125 "/>
+<path fill="none" stroke-width="1.2868" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 15.597118 14.605817 C 15.597118 14.605817 15.943829 10.376918 18.580787 6.768192 C 20.944283 3.545243 23.884003 2.177932 23.884003 2.177932 " transform="matrix(0.799927, 0, 0, 0.799927, 0, 0)"/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 19.105469 1.742188 L 18.855469 4.695312 L 22.4375 0.195312 L 16.6875 0.0273438 Z M 19.105469 1.742188 "/>
 </svg>
