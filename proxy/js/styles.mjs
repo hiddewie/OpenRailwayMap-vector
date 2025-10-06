@@ -122,7 +122,7 @@ const colors = {
       stationAreaGroup: themeSwitch('black', 'white'),
     },
     signals: {
-      bufferStopDerailer: themeSwitch('#BF1A1D', '#bdcfff'),
+      bufferStopDerailer: themeSwitch('#BF1A1D', '#E75454'),
     },
   },
   km: {
