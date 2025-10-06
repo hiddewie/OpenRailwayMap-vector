@@ -48,12 +48,14 @@ const colors = {
     halo: themeSwitch('white', 'black'),
   },
   halo: themeSwitch('white', '#333'),
+  iconHalo: themeSwitch('white', '#ccc'),
   casing: themeSwitch('white', '#666'),
   hover: {
     main: themeSwitch('#ff0000', '#ff0000'),
     // High speed lines and 25kV are the hover color by default
     alternative: themeSwitch('#ffc107', '#ffc107'),
     textHalo: themeSwitch('yellow', '#28281e'),
+    iconHalo: themeSwitch('yellow', '#E7E700'),
   },
   railwayLine: {
     text: themeSwitch('#585858', '#ccc'),
@@ -1345,8 +1347,8 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     ...layer,
     paint: {
       'icon-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-        colors.halo,
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.iconHalo,
+        colors.iconHalo,
       ],
       'icon-halo-blur': ['case',
         ['boolean', ['feature-state', 'hover'], false], 1.0,
