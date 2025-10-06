@@ -199,6 +199,7 @@ types:
   - { type: whistle, layer: signals }
   - { type: electricity, layer: electrification }
   - { type: departure, layer: signals }
+  - { type: switch, layer: signals }
   - { type: resetting_switch, layer: signals }
   - { type: resetting_switch_distant, layer: signals }
   - { type: humping, layer: signals }
