@@ -5275,7 +5275,7 @@ features:
     country: PL
     icon: { default: 'pl/tram/bt-4' }
     tags:
-      - { tag: 'railway:signal:stop', value: 'PL-tram:bt-3' }
+      - { tag: 'railway:signal:stop', value: 'PL-tram:bt-4' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Zwrotnica elektryczna lewoskrętna (DT-1)
