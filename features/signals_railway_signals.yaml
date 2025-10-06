@@ -800,6 +800,38 @@ features:
       - { tag: 'railway:signal:humping', value: 'AT-V2:abdrucksignal' }
       - { tag: 'railway:signal:humping:form', value: 'light' }
 
+  # --- AU --- #
+
+  # --- NSW-Metro --- #
+
+  - description: Location Marker Board
+    country: AU
+    icon: { default: 'au/nsw/metro/location' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:MNWSW:location' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Point Position Indicator
+    country: AU
+    icon: { default: 'au/nsw/metro/points_indiciator' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:MNWSW:points_indiciator' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Route Indicator
+    country: AU
+    icon: { default: 'au/nsw/metro/route_indicator' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:MNWSW:route_indicator' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Fixed Red
+    country: AU
+    icon: { default: 'au/nsw/metro/fixed_red' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:MNWSW:fixed_red' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+
   # --- BE --- #
 
   - description: Speed limit light (part of main signal)
