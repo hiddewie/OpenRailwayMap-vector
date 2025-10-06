@@ -121,6 +121,9 @@ const colors = {
       platform: themeSwitch('#aaa', '#aaa'),
       stationAreaGroup: themeSwitch('black', 'white'),
     },
+    signals: {
+      bufferStopDerailer: themeSwitch('#a8d8bcff', '#a8d8bcff'),
+    },
   },
   km: {
     text: themeSwitch('hsl(268, 100%, 40%)', 'hsl(268, 5%, 86%)'),
@@ -3056,7 +3059,7 @@ const layers = {
           },
         },
       )
-    ),
+    ]),
     {
       id: 'railway_signals_high_derail_buffer_stop',
       type: 'symbol',
@@ -3065,10 +3068,10 @@ const layers = {
       'source-layer': 'signals_railway_signals',
       filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
       paint: {
-        'icon-color': colors[theme].styles.standard.stationsText,
+        'icon-color': colors.styles.signals.bufferStopDerailer,
         'icon-halo-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors[theme].hover.textHalo,
-          colors[theme].halo,
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
         ],
         'icon-halo-width': 1,
       },
