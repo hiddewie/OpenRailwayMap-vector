@@ -2865,6 +2865,14 @@ features:
       - { tag: 'railway:signal:route', value: 'DE-ESO:zs2' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
+  - description: tram no trailing-point movement W 14 (sign)
+    country: DE
+    icon: { default: 'de/bostrab/w14-sign' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:w' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+      - { tag: 'railway:signal:switch:states', value: 'DE-BOStrab:w14' }
+
   - description: tram switch signal
     country: DE
     icon:
@@ -2882,14 +2890,6 @@ features:
     tags:
       - { tag: 'railway:signal:switch', value: 'DE-BOStrab:w' }
       - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: tram no trailing-point movement W 14 (sign)
-    country: DE
-    icon: { default: 'de/bostrab/w14-sign' }
-    tags:
-      - { tag: 'railway:signal:switch', value: 'DE-BOStrab:w' }
-      - { tag: 'railway:signal:switch:form', value: 'sign' }
-      - { tag: 'railway:signal:switch:states', exact: 'DE-BOStrab:w14' }
 
   - description: Karlsruhe tram switch signal
     country: DE
