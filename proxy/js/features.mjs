@@ -696,15 +696,33 @@ const features = {
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
-    featureProperty: 'feature0',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature0: {
+        name: 'Primary signal',
+        format: {
+          lookup: 'speed_railway_signals',
+        },
+      },
       feature1: {
         name: 'Secondary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_speed-speed_railway_signals',
+          lookup: 'speed_railway_signals',
         },
       },
       ref: {
@@ -756,36 +774,51 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
-    featureProperty: 'feature0',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature0: {
+        name: 'Primary signal',
+        format: {
+          lookup: 'signals_railway_signals',
+        },
+      },
       feature1: {
         name: 'Secondary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature2: {
         name: 'Tertiary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature3: {
         name: 'Quaternary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature4: {
         name: 'Quinary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       ref: {
@@ -896,10 +929,29 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_signals': {
-    featureProperty: 'feature',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature: {
+        name: 'Signal',
+        format: {
+          lookup: 'electrification_signals',
+        },
+      },
       direction_both: {
         name: 'both directions',
       },
@@ -1027,6 +1079,15 @@ const features = {
         name: feature.legend,
       },
     ])),
+  },
+  speed_railway_signals: {
+    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
+  },
+  signals_railway_signals: {
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
+  },
+  electrification_signals: {
+    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
   },
 
   boolean: {
