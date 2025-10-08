@@ -123,7 +123,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
     FROM (
       SELECT
-        st_collect(any_value(s.way), st_collect(q.way)) as way,
+        st_collect(any_value(s.way), st_collect(distinct q.way)) as way,
         name,
         station,
         railway_ref,
@@ -136,11 +136,22 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
           OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
       left join (
-        select sa.osm_id, se.way
+        select
+          sa.osm_id as stop_area_id,
+          se.way
         from stop_areas sa
         join station_entrances se
           on array[se.osm_id] <@ sa.node_ref_ids
-      ) q on q.osm_id = sa.osm_id
+
+        union all
+
+        select
+          sa.osm_id as stop_area_id,
+          pl.way
+        from stop_areas sa
+        join platforms pl
+          on array[pl.osm_id] <@ sa.platform_ref_ids
+      ) q on q.stop_area_id = sa.osm_id
       group by name, station, railway_ref, uic_ref, feature, state, id
     ) stations_with_entrances
   ) AS facilities
