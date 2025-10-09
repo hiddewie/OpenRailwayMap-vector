@@ -1399,7 +1399,11 @@ const hillshade = {
     // 'hillshade-shadow-color': '#000000',
     // 'hillshade-highlight-color': 'rgba(255, 255, 255, 0.0)',
     // 'hillshade-accent-color': '#000000',
-    // 'hillshade-exaggeration': 0.5,
+    'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'],
+      8, 0.2,
+      12, 0.5,
+      15, 1.0,
+    ],
   },
 }
 
