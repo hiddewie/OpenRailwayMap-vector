@@ -539,99 +539,30 @@ function clamp(value, min, max) {
 }
 
 function buildBackgroundMapStyle() {
-  // if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
+  if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
     return {
       name: 'Background map',
       version: 8,
       layers: [
-        // {
-        //   id: "background-map",
-        //   type: "raster",
-        //   source: "background_map",
-        // },
         {
-          id: 'osm',
-          type: 'raster',
-          source: 'osm'
+          id: "background-map",
+          type: "raster",
+          source: "background_map",
         },
-        // {
-        //   id: 'hills',
-        //   type: 'hillshade',
-        //   source: 'hillshadeSource',
-        //   paint: {
-        //     // 'hillshade-shadow-color': '#473B24',
-        //     // 'hillshade-method': 'basic',
-        //     'hillshade-method': 'combined',
-        //     'hillshade-shadow-color': '#000000',
-        //     'hillshade-highlight-color': 'rgba(255, 255, 255, 0.0)',
-        //     'hillshade-accent-color': '#000000',
-        //     'hillshade-exaggeration': 0.5,
-        //   }
-        // },
-        {
-          id: 'hills2',
-          type: 'hillshade',
-          source: 'dem',
-          paint: {
-            // 'hillshade-shadow-color': '#473B24',
-            // 'hillshade-method': 'basic',
-            'hillshade-method': 'combined',
-            // 'hillshade-shadow-color': '#000000',
-            // 'hillshade-highlight-color': 'rgba(255, 255, 255, 0.0)',
-            // 'hillshade-accent-color': '#000000',
-            // 'hillshade-exaggeration': 0.5,
-          }
-        }
       ],
       sources: {
-        osm: {
+        background_map: {
           type: 'raster',
-          tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
-          tileSize: 256,
-          attribution: '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap Contributors</a>',
-          maxzoom: 19
-        },
-        // terrainSource: {
-        //   type: 'raster-dem',
-        //   tiles: ['mapterhorn://{z}/{x}/{y}'],
-        //   encoding: 'terrarium',
-        //   tileSize: 512,
-        //   attribution: '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>'
-        // },
-        hillshadeSource: {
-          type: 'raster-dem',
-          tiles: ['mapterhorn://{z}/{x}/{y}'],
-          encoding: 'terrarium',
-          tileSize: 512,
-          attribution: '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>'
-        },
-        dem: {
-          'type': 'raster-dem',
-          'tiles': [
-            'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+          tiles: [
+            configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl,
           ],
-          'encoding': 'terrarium',
-          'tileSize': 256,
-          'maxzoom': 12,
-        }
-        // background_map: {
-        //   type: 'raster',
-        //   tiles: [
-        //     configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl,
-        //   ],
-        //   tileSize: 256,
-        // },
+          tileSize: 256,
+        },
       },
-      terrain: {
-        // source: 'hillshadeSource',
-        source: 'dem',
-        exaggeration: 1
-      },
-      // sky: {},
     };
-  // } else {
-  //   return configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
-  // }
+  } else {
+    return configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+  }
 }
 
 function updateBackgroundMapStyle() {
