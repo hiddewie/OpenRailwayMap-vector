@@ -1396,8 +1396,8 @@ const hillshade = {
     'hillshade-method': 'combined',
     'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'],
       8, 0.2,
-      12, 0.5,
-      15, 1.0,
+      12, 0.4,
+      15, 0.8,
     ],
   },
 }
