@@ -702,17 +702,18 @@ const sources = {
   openhistoricalmap: {
     type: 'vector',
     tiles: [`https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf`],
-    attribution: '<a href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
+    attribution: '<a target="_blank" href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
   },
   dem: {
-    'type': 'raster-dem',
-    'tiles': [
-      // See https://registry.opendata.aws/terrain-tiles/
+    type: 'raster-dem',
+    tiles: [
+      // See
       'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
     ],
-    'encoding': 'terrarium',
-    'tileSize': 256,
-    'maxzoom': 15,
+    attribution: '<a target="_blank" href="https://registry.opendata.aws/terrain-tiles/">Mapzen Terrain</a>',
+    encoding: 'terrarium',
+    tileSize: 256,
+    maxzoom: 15,
   },
 };
 
