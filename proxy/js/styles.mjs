@@ -704,6 +704,16 @@ const sources = {
     tiles: [`https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf`],
     attribution: '<a href="https://www.openhistoricalmap.org/">OpenHistoricalMap</a>',
   },
+  dem: {
+    'type': 'raster-dem',
+    'tiles': [
+      // See https://registry.opendata.aws/terrain-tiles/
+      'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+    ],
+    'encoding': 'terrarium',
+    'tileSize': 256,
+    'maxzoom': 15,
+  },
 };
 
 const searchResults = {
@@ -1377,6 +1387,21 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
   },
 ]
 
+const hillshade = {
+  id: 'hillshade',
+  type: 'hillshade',
+  source: 'dem',
+  paint: {
+    // 'hillshade-shadow-color': '#473B24',
+    // 'hillshade-method': 'basic',
+    'hillshade-method': 'combined',
+    // 'hillshade-shadow-color': '#000000',
+    // 'hillshade-highlight-color': 'rgba(255, 255, 255, 0.0)',
+    // 'hillshade-accent-color': '#000000',
+    // 'hillshade-exaggeration': 0.5,
+  },
+}
+
 /**
  * Strategy for displaying railway lines
  *
@@ -1394,6 +1419,7 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
  */
 const layers = {
   standard: [
+    hillshade,
     {
       id: 'railway_grouped_station_areas',
       type: 'line',
@@ -2369,6 +2395,7 @@ const layers = {
     searchResults,
   ],
   historical: [
+    hillshade,
     ...historicalRailwayLine(
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
@@ -2618,6 +2645,7 @@ const layers = {
   ],
 
   speed: [
+    hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'speed_label'], ''],
       [
@@ -2828,6 +2856,7 @@ const layers = {
   ],
 
   signals: [
+    hillshade,
     ...railwayLine(
       '',
       [
@@ -3236,6 +3265,7 @@ const layers = {
   ],
 
   electrification: [
+    hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'electrification_label'], ''],
       [
@@ -3573,6 +3603,7 @@ const layers = {
   ],
 
   gauge: [
+    hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'gauge_label'], ''],
       [
@@ -3660,6 +3691,7 @@ const layers = {
   ],
 
   loading_gauge: [
+    hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'loading_gauge'], ''],
       [
@@ -3709,6 +3741,7 @@ const layers = {
   ],
 
   track_class: [
+    hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'track_class'], ''],
       [
@@ -3760,6 +3793,7 @@ const layers = {
     searchResults,
   ],
   operator: [
+    hillshade,
     {
       id: 'railway_grouped_stations',
       type: 'fill',

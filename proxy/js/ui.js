@@ -1,7 +1,6 @@
 // Add support for right-to-left languages like Arabic and Hebrew
 maplibregl.setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
 
-
 const searchBackdrop = document.getElementById('search-backdrop');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
 const searchMilestonesTab = document.getElementById('search-milestones-tab');
