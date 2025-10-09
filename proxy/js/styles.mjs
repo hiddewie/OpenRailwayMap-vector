@@ -1393,12 +1393,7 @@ const hillshade = {
   type: 'hillshade',
   source: 'dem',
   paint: {
-    // 'hillshade-shadow-color': '#473B24',
-    // 'hillshade-method': 'basic',
     'hillshade-method': 'combined',
-    // 'hillshade-shadow-color': '#000000',
-    // 'hillshade-highlight-color': 'rgba(255, 255, 255, 0.0)',
-    // 'hillshade-accent-color': '#000000',
     'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'],
       8, 0.2,
       12, 0.5,
