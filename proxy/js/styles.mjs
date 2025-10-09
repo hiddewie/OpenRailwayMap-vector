@@ -707,7 +707,7 @@ const sources = {
   dem: {
     type: 'raster-dem',
     tiles: [
-      // See
+      // See https://registry.opendata.aws/terrain-tiles/
       'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
     ],
     attribution: '<a target="_blank" href="https://registry.opendata.aws/terrain-tiles/">Mapzen Terrain</a>',
