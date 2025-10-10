@@ -148,6 +148,7 @@ tags:
   - { tag: 'railway:signal:stop', title: 'Stop' }
   - { tag: 'railway:signal:stop:form', title: 'Stop form' }
   - { tag: 'railway:signal:stop:caption', title: 'Stop caption' }
+  - { tag: 'railway:signal:stop:states', title: 'Stop states', type: array }
   - { tag: 'railway:signal:stop:carriages', title: 'Stop carriages', type: array }
   - { tag: 'railway:signal:stop:deactivated', title: 'Stop deactivated', type: boolean }
   - { tag: 'railway:signal:stop_distant', title: 'Stop distant' }
@@ -843,6 +844,12 @@ features:
       - { tag: 'railway:signal:stop', value: 'AU:MNWSW:fixed_red' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  - description: Points Cleared
+    country: AU
+    icon: { default: 'au/nsw/metro/points_cleared' }
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:MNWSW:points_cleared' }
+
   # --- AU-LightRail-signs --- #
 
   - description: Coast Off
@@ -1011,6 +1018,202 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:PI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  # --- AU-NSW-signs --- #
+
+  - description: Alert
+    country: AU
+    icon: { default: 'au/nsw/signs/alert' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:NSW:alert' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'sign' }
+
+  - description: Begin ATP
+    country: AU
+    icon: { default: 'au/nsw/signs/begin_ATP' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_ATP' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Begin Single Light Indication
+    country: AU
+    icon: { default: 'au/nsw/signs/begin_single_light' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_single_light' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Begin Train Order Working
+    country: AU
+    icon: { default: 'au/nsw/signs/begin_TOW' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_TOW' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Block Join
+    country: AU
+    icon: { default: 'au/nsw/signs/block_join' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:NSW:block_join' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Catch Point
+    country: AU
+    icon: { default: 'au/nsw/signs/catch_point' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:catch_point' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Derail
+    country: AU
+    icon: { default: 'au/nsw/signs/derail' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:derail' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Electric Train Stop
+    country: AU
+    icon: { default: 'au/nsw/signs/electric_limit' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:NSW:electric_limit' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: End ATP
+    country: AU
+    icon: { default: 'au/nsw/signs/end_ATP' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_ATP' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: End Signalled Authority
+    country: AU
+    icon: { default: 'au/nsw/signs/end_signalled_authority' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_signalled_authority' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: End Single Light Indication
+    country: AU
+    icon: { default: 'au/nsw/signs/end_single_light' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_single_light' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: End Train Order Working
+    country: AU
+    icon: { default: 'au/nsw/signs/end_TOW' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_TOW' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: End Yard Limit
+    country: AU
+    icon: { default: 'au/nsw/signs/EYL' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'AU:NSW:EYL' }
+      - { tag: 'railway:signal:departure:form', value: 'sign' }
+
+  - description: Landmark
+    country: AU
+    icon: { default: 'au/nsw/signs/landmark' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:NSW:landmark' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Loading Gauge Limit
+    country: AU
+    icon: { default: 'au/nsw/signs/loading_gauge' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:loading_gauge' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Location
+    country: AU
+    icon: { default: 'au/nsw/signs/location' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:NSW:location' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: No Whistle
+    country: AU
+    icon: { default: 'au/nsw/signs/no_whistle' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AU:NSW:no_whistle' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Points Cleared
+    country: AU
+    icon: { default: 'au/nsw/signs/points_cleared' }
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:NSW:points_cleared' }
+
+  - description: Shunting Limit
+    country: AU
+    icon: { default: 'au/nsw/signs/shunting_limit' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:NSW:shunting_limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Signalised Level Crossing
+    country: AU
+    icon: { default: 'au/nsw/signs/signalised' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'AU:NSW:signalised' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+  - description: Stop Position
+    country: AU
+    icon:
+      match: 'railway:signal:stop:states'
+      cases:
+        - { any: ['X', 'XPT', 'XPL'], value: 'au/nsw/signs/stop_position/X' }
+        - { exact: '10', value: 'au/nsw/signs/stop_position/10' }
+        - { exact: '8', value: 'au/nsw/signs/stop_position/8' }
+        - { exact: '8H', value: 'au/nsw/signs/stop_position/8H' }
+        - { exact: '8V', value: 'au/nsw/signs/stop_position/8V' }
+        - { exact: '6', value: 'au/nsw/signs/stop_position/6' }
+        - { exact: '6V', value: 'au/nsw/signs/stop_position/6V' }
+        - { exact: '4', value: 'au/nsw/signs/stop_position/4' }
+        - { exact: '4V', value: 'au/nsw/signs/stop_position/4V' }
+        - { exact: '2', value: 'au/nsw/signs/stop_position/2' }
+      default: 'au/nsw/signs/stop_position/unknown'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:stop_position' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop
+    country: AU
+    icon: { default: 'au/nsw/signs/stop' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Unelectrified Turnout
+    country: AU
+    icon: { default: 'au/nsw/signs/turnout' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:NSW:turnout' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Unsignalised Level Crossing
+    country: AU
+    icon: { default: 'au/nsw/signs/unsignalised' }
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'AU:NSW:unsignalised' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+  - description: Whistle
+    country: AU
+    icon: { default: 'au/nsw/signs/whistle' }
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AU:NSW:whistle' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Yard Limit
+    country: AU
+    icon: { default: 'au/nsw/signs/YL' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:NSW:YL' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   # --- BE --- #
 
