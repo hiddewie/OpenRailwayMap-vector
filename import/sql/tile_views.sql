@@ -627,6 +627,14 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   FROM railway_switches
   ORDER by char_length(ref);
 
+CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
+  SELECT
+    osm_id as id,
+    osm_id as osm_id,
+    'station_area_group' as feature,
+    way
+  FROM stop_area_groups_buffered;
+
 --- Electrification ---
 
 CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)

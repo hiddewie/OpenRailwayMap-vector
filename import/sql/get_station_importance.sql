@@ -68,7 +68,8 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
       r.osm_id as route_id
     FROM stations s
     JOIN stop_areas sa
-      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
     JOIN routes r
       ON sa.stop_ref_ids && r.stop_ref_ids
   ) sr
@@ -95,7 +96,8 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
       r.osm_id as route_id
     FROM stations s
     JOIN stop_areas sa
-      ON ARRAY[s.osm_id] <@ sa.node_ref_ids
+      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
     JOIN routes r
       ON sa.platform_ref_ids && r.platform_ref_ids
   ) sr
@@ -121,7 +123,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
     FROM (
       SELECT
-        st_collect(any_value(s.way), st_collect(q.way)) as way,
+        st_collect(any_value(s.way), st_collect(distinct q.way)) as way,
         name,
         station,
         railway_ref,
@@ -131,13 +133,25 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         id
       FROM stations s
       left join stop_areas sa
-        on array[s.osm_id] <@ sa.node_ref_ids
+        ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+          OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
       left join (
-        select sa.osm_id, se.way
+        select
+          sa.osm_id as stop_area_id,
+          se.way
         from stop_areas sa
         join station_entrances se
           on array[se.osm_id] <@ sa.node_ref_ids
-      ) q on q.osm_id = sa.osm_id
+
+        union all
+
+        select
+          sa.osm_id as stop_area_id,
+          pl.way
+        from stop_areas sa
+        join platforms pl
+          on array[pl.osm_id] <@ sa.platform_ref_ids
+      ) q on q.stop_area_id = sa.osm_id
       group by name, station, railway_ref, uic_ref, feature, state, id
     ) stations_with_entrances
   ) AS facilities
@@ -236,3 +250,40 @@ CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_center_index
 CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_buffered_index
   ON grouped_stations_with_route_count
     USING GIST(buffered);
+
+CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_osm_ids_index
+  ON grouped_stations_with_route_count
+    USING GIN(osm_ids);
+
+CLUSTER grouped_stations_with_route_count
+  USING grouped_stations_with_route_count_center_index;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
+  SELECT
+    sag.osm_id,
+    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(gs.buffered))), 20) as way
+  FROM stop_area_groups sag
+  JOIN stop_areas sa
+    ON ARRAY[sa.osm_id] <@ sag.stop_area_ref_ids
+  JOIN stations s
+    ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+      OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
+  JOIN (
+    SELECT
+      unnest(osm_ids) AS osm_id,
+      unnest(osm_types) AS osm_type,
+      buffered
+    FROM grouped_stations_with_route_count
+  ) gs
+    ON s.osm_id = gs.osm_id and s.osm_type = gs.osm_type
+  GROUP BY sag.osm_id
+  -- Only use station area groups that have more than one station area
+  HAVING COUNT(distinct sa.osm_id) > 1;
+
+CREATE INDEX IF NOT EXISTS stop_area_groups_buffered_index
+  ON stop_area_groups_buffered
+    USING GIST(way);
+
+CLUSTER stop_area_groups_buffered
+  USING stop_area_groups_buffered_index;

@@ -48,12 +48,14 @@ const colors = {
     halo: themeSwitch('white', 'black'),
   },
   halo: themeSwitch('white', '#333'),
+  iconHalo: themeSwitch('white', '#ccc'),
   casing: themeSwitch('white', '#666'),
   hover: {
     main: themeSwitch('#ff0000', '#ff0000'),
     // High speed lines and 25kV are the hover color by default
     alternative: themeSwitch('#ffc107', '#ffc107'),
     textHalo: themeSwitch('yellow', '#28281e'),
+    iconHalo: themeSwitch('yellow', '#E7E700'),
   },
   railwayLine: {
     text: themeSwitch('#585858', '#ccc'),
@@ -119,6 +121,10 @@ const colors = {
       },
       symbols: themeSwitch('black', 'white'),
       platform: themeSwitch('#aaa', '#aaa'),
+      stationAreaGroup: themeSwitch('black', 'white'),
+    },
+    signals: {
+      bufferStopDerailer: themeSwitch('#BF1A1D', '#E75454'),
     },
   },
   km: {
@@ -670,7 +676,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
     promoteId: 'id',
   },
   openrailwaymap_speed: {
@@ -1344,8 +1350,8 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     ...layer,
     paint: {
       'icon-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-        colors.halo,
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.iconHalo,
+        colors.iconHalo,
       ],
       'icon-halo-blur': ['case',
         ['boolean', ['feature-state', 'hover'], false], 1.0,
@@ -1389,6 +1395,18 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
 const layers = {
   standard: [
     {
+      id: 'railway_grouped_station_areas',
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_grouped_station_areas',
+      paint: {
+        'line-color': colors.styles.standard.stationAreaGroup,
+        'line-width': 2,
+        'line-dasharray': [4, 4],
+      },
+    },
+    {
       id: 'railway_grouped_stations',
       type: 'fill',
       minzoom: 13,
@@ -1412,6 +1430,36 @@ const layers = {
         ],
       },
     },
+    ...Object.entries({
+      present: present_dasharray,
+      disused: disused_dasharray,
+      abandoned: abandoned_dasharray,
+      preserved: disused_dasharray,
+      construction: construction_dasharray,
+      proposed: proposed_dasharray,
+    }).map(([state, dasharray]) => ({
+      id: `railway_grouped_stations_outline_${state}`,
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_grouped_stations',
+      filter: ['==', ['get', 'state'], state],
+      paint: {
+        'line-color': ['case',
+          // Use outline color of feature, without taking state into account
+          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
+          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
+          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
+          colors.styles.standard.main,
+        ],
+        'line-opacity': 0.3,
+        'line-width': 2 ,
+        'line-dasharray': dasharray,
+      },
+    })),
     {
       id: 'railway_platforms',
       type: 'fill',
@@ -1464,36 +1512,6 @@ const layers = {
         ],
       },
     },
-    ...Object.entries({
-      present: present_dasharray,
-      disused: disused_dasharray,
-      abandoned: abandoned_dasharray,
-      preserved: disused_dasharray,
-      construction: construction_dasharray,
-      proposed: proposed_dasharray,
-    }).map(([state, dasharray]) => ({
-      id: `railway_grouped_stations_outline_${state}`,
-      type: 'line',
-      minzoom: 13,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_grouped_stations',
-      filter: ['==', ['get', 'state'], state],
-      paint: {
-        'line-color': ['case',
-          // Use outline color of feature, without taking state into account
-          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
-          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
-          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
-          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
-          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
-          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
-          colors.styles.standard.main,
-        ],
-        'line-opacity': 0.3,
-        'line-width': 2 ,
-        'line-dasharray': dasharray,
-      },
-    })),
     ...railwayLine(
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
@@ -2976,9 +2994,17 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_signals',
-      filter: ['all',
-        ['!=', ['get', 'azimuth'], null],
-        ['!=', ['get', 'feature0'], ''],
+      filter: ['step', ['zoom'],
+        ['all',
+          ['==', ['get', 'railway'], 'signal'],
+          ['!=', ['get', 'azimuth'], null],
+          ['!=', ['get', 'feature0'], ''],
+        ],
+        13,
+        ['all',
+          ['!=', ['get', 'azimuth'], null],
+          ['!=', ['get', 'feature0'], ''],
+        ],
       ],
       paint: {
         'icon-color': colors.signals.direction,
@@ -3025,7 +3051,10 @@ const layers = {
           maxzoom: 16,
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
-          filter: ['!=', ['get', `feature${featureIndex}`], null],
+          filter: ['all',
+            ['==', ['get', 'railway'], 'signal'],
+            ['!=', ['get', `feature${featureIndex}`], null],
+          ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
@@ -3039,30 +3068,36 @@ const layers = {
               ],
           },
         },
-      ),
-      {
-        id: `railway_signals_deactivated_${featureIndex}`,
-        type: 'symbol',
-        minzoom: 13,
-        maxzoom: 16,
-        source: 'openrailwaymap_signals',
-        'source-layer': 'signals_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-          'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex == 0
-            ? ['literal', [0, 0]]
-            : ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
-              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
-              0, ['literal', [0, 0]],
-              1000, ['literal', [0, -1000]],
-            ],
-        }
-      },
+      )
     ]),
+    {
+      id: 'railway_signals_high_derail_buffer_stop',
+      type: 'symbol',
+      minzoom: 16,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_signals',
+      filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+      paint: {
+        'icon-color': colors.styles.signals.bufferStopDerailer,
+        'icon-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'icon-halo-width': 1,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+        'icon-image': ['case',
+          ['==', ['get', 'railway'], 'derail'], 'sdf:general/derail',
+          ['==', ['get', 'railway'], 'buffer_stop'], 'sdf:general/buffer_stop-signal',
+          ''
+        ],
+        'icon-rotate': ['get', 'azimuth'],
+        'icon-keep-upright': true,
+        'icon-rotation-alignment': 'map',
+      },
+    },
     ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex => [
       ...imageLayerWithOutline(
         `railway_signals_high_${featureIndex}`,
@@ -3077,14 +3112,19 @@ const layers = {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-anchor': 'center',
-            'icon-offset': featureIndex == 0
-              ? ['literal', [0, 0]]
-              : ['interpolate', ['linear'],
-                // Gap of 2 pixels for halo and spacing
-                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
-                0, ['literal', [0, 0]],
-                1000, ['literal', [0, -1000]],
+            'icon-offset': ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`],
+                ['case',
+                  ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16,
+                  0
+                ],
+                2 * featureIndex
               ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
           },
         },
       ),
@@ -4746,6 +4786,7 @@ const legendData = {
         })),
       ]),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
+    "openrailwaymap_standard-standard_railway_grouped_station_areas": [],
     "openrailwaymap_standard-standard_railway_turntables": [
       {
         legend: 'Turntable',

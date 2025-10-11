@@ -500,11 +500,24 @@ local stop_areas = osm2pgsql.define_table({
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
+    { column = 'way_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
+    { column = 'way_ref_ids', method = 'gin' },
+  },
+})
+
+local stop_area_groups = osm2pgsql.define_table({
+  name = 'stop_area_groups',
+  ids = { type = 'relation', id_column = 'osm_id' },
+  columns = {
+    { column = 'stop_area_ref_ids', sql_type = 'int8[]' },
+  },
+  indexes = {
+    { column = 'stop_area_ref_ids', method = 'gin' },
   },
 })
 
@@ -1331,10 +1344,11 @@ function osm2pgsql.process_relation(object)
   end
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
-    local has_node_members = false
+    local has_members = false
     local stop_members = {}
     local platform_members = {}
     local node_members = {}
+    local way_members = {}
     for _, member in ipairs(object.members) do
       if member.role == 'stop' and member.type == 'n' then
         table.insert(stop_members, member.ref)
@@ -1343,15 +1357,37 @@ function osm2pgsql.process_relation(object)
       elseif member.type == 'n' then
         -- Station has no role defined
         table.insert(node_members, member.ref)
-        has_node_members = true
+        has_members = true
+      elseif member.type == 'w' then
+        -- Station has no role defined
+        table.insert(way_members, member.ref)
+        has_members = true
       end
     end
 
-    if has_node_members then
+    if has_members then
       stop_areas:insert({
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
+        way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
+      })
+    end
+  end
+
+  if tags.type == 'public_transport' and tags.public_transport == 'stop_area_group' then
+    local has_members = false
+    local stop_area_members = {}
+    for _, member in ipairs(object.members) do
+      if member.type == 'r' then
+        table.insert(stop_area_members, member.ref)
+        has_members = true
+      end
+    end
+
+    if has_members then
+      stop_area_groups:insert({
+        stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
   end
