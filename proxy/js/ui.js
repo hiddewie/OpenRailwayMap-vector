@@ -15,6 +15,8 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
+const backgroundHillShadeDisabledControl = document.getElementById('backgroundHillShadeDisabled');
+const backgroundHillShadeEnabledControl = document.getElementById('backgroundHillShadeEnabled');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
@@ -235,6 +237,13 @@ function showConfiguration() {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+
+  if (configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade) {
+    backgroundHillShadeEnabledControl.checked = true
+  } else {
+    backgroundHillShadeDisabledControl.checked = true
+  }
+
   const theme = configuration.theme ?? defaultConfiguration.theme;
   if (theme === 'system') {
     themeSystemControl.checked = true;
