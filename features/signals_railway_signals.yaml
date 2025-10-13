@@ -3952,11 +3952,12 @@ features:
 
   - description: Distant Halt
     country: IT
-    match: 'railway:signal:stop_distant:distance'
-    cases: 
+    icon:
+     match: 'railway:signal:stop_distant:distance'
+     cases: 
       - { exact: '1', value: 'it/stop-distant-1'}
       - { exact: '2', value: 'it/stop-distant-2'}
-    icon: { default: 'it/stop-distant-1' }
+     default: 'it/stop-distant-1'
     tags:
       - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
