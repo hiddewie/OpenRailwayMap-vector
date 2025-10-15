@@ -838,6 +838,20 @@ features:
       - { tag: 'railway:signal:stop', value: 'AU:MNWSW:fixed_red' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
 
+  # --- AU-LightRail --- #
+
+  - description: Points Indicator
+    country: AU
+    icon:
+      match: 'railway:signal:minor:states'
+      mode: STACK
+      cases:
+        - { regex: '^(.+)$', value: 'au/LightRail/{}', example: 'au/LightRail/stop' }
+      default: 'au/LightRail/unknown'
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:PI' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
   # --- BE --- #
 
   - description: Speed limit light (part of main signal)
