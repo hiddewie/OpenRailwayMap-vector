@@ -150,6 +150,10 @@ tags:
   - { tag: 'railway:signal:stop:caption', title: 'Stop caption' }
   - { tag: 'railway:signal:stop:carriages', title: 'Stop carriages', type: array }
   - { tag: 'railway:signal:stop:deactivated', title: 'Stop deactivated', type: boolean }
+  - { tag: 'railway:signal:stop_distant', title: 'Stop distant' }
+  - { tag: 'railway:signal:stop_distant:form', title: 'Stop distant form' }
+  - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
+  - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated' }
   - { tag: 'railway:signal:stop_demand', title: 'Stop demand' }
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_demand:deactivated', title: 'Stop demand deactivated', type: boolean }
@@ -190,6 +194,7 @@ types:
   - { type: shunting, layer: signals }
   - { type: radio, layer: signals }
   - { type: stop, layer: signals }
+  - { type: stop_distant, layer: signals }
   - { type: stop_demand, layer: signals }
   - { type: station_distant, layer: signals }
   - { type: crossing, layer: signals }
@@ -4217,17 +4222,21 @@ features:
       - { tag: 'railway:signal:stop', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Distant Halt
+  - description: Distant Halt (distance 1)
     country: IT
-    icon:
-     match: 'railway:signal:stop_distant:distance'
-     cases: 
-      - { exact: '1', value: 'it/stop-distant-1'}
-      - { exact: '2', value: 'it/stop-distant-2'}
-     default: 'it/stop-distant-1'
+    icon: { default: 'it/stop-distant-1' }
     tags:
       - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:stop_distant:distance', value: '1' }
+
+  - description: Distant Halt (distance 2)
+    country: IT
+    icon: { default: 'it/stop-distant-2' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:stop_distant:distance', value: '2' }
 
   - description: Marmotte
     country: IT
