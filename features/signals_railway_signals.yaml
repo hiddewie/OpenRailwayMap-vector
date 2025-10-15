@@ -917,6 +917,13 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'BE:PVSA' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+  - description: Carwash
+    country: BE
+    icon: { default: 'be/SSC' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'BE:SSC' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
   - description: Grand Signal d'Arrêt (opposite regime)
     country: BE
     icon:
