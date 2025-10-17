@@ -875,12 +875,7 @@ function parse_railway_positions(position, position_exact, line_positions)
 end
 
 function format_railway_position(item)
-  -- TODO format line
-  if item.exact then
-    return item.text .. ' @ ' .. item.exact .. ' (' .. item.type .. ')'
-  else
-    return item.text .. ' (' .. item.type .. ')'
-  end
+  return item.text .. (item.exact and (' @ ' .. item.exact) or '') .. ' (' .. item.type .. ')' .. (item.line and (' on ' .. item.line) or '')
 end
 
 function is_railway_platform(tags)
