@@ -91,6 +91,32 @@ jobs:
           name: ${{ runner.arch }}-openrailwaymap-import-db
           path: ${{ runner.temp }}/openrailwaymap-import-db.tar
 
+  test-import:
+    name: Test import
+
+    strategy:
+      matrix:
+        runs-on:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runs-on }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build import image
+        run: |
+          docker build --file import/Dockerfile --target test --tag import-test .
+
+      - name: Run import tests
+        run: |
+          docker run --rm import-test
+
   build-api:
     name: Build API
 
