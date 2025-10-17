@@ -418,6 +418,7 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'position_exact', type = 'text' },
     { column = 'type', type = 'text', not_null = true },
     { column = 'zero', type = 'boolean' },
+    { column = 'line', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'operator', type = 'text' },
