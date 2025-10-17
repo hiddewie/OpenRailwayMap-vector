@@ -1083,6 +1083,7 @@ function osm2pgsql.process_node(object)
         position_exact = position.exact,
         type = position.type,
         zero = position.zero,
+        line = position.line,
         name = tags['name'],
         ref = tags['ref'],
         operator = tags['operator'],
@@ -1270,6 +1271,8 @@ function osm2pgsql.process_way(object)
 
   if railway_box_values(tags.railway) then
     local polygon = object:as_polygon():transform(3857)
+    local position, position_exact, line_positions = find_position_tags(tags)
+
     boxes:insert({
       way = polygon,
       center = polygon:centroid(),
@@ -1292,6 +1295,7 @@ function osm2pgsql.process_way(object)
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
     local feature, rank, minzoom, layer = tag_functions.poi(tags)
+    local position, position_exact, line_positions = find_position_tags(tags)
 
     pois:insert({
       way = object:as_polygon():centroid(),
@@ -1314,6 +1318,8 @@ function osm2pgsql.process_way(object)
   end
 
   if tags.power == 'catenary_portal' then
+    local position, position_exact, line_positions = find_position_tags(tags)
+
     catenary:insert({
       way = object:as_linestring(),
       ref = tags.ref,
