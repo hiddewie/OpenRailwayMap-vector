@@ -15,6 +15,8 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
+const backgroundHillShadeDisabledControl = document.getElementById('backgroundHillShadeDisabled');
+const backgroundHillShadeEnabledControl = document.getElementById('backgroundHillShadeEnabled');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
@@ -235,6 +237,13 @@ function showConfiguration() {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+
+  if (configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade) {
+    backgroundHillShadeEnabledControl.checked = true
+  } else {
+    backgroundHillShadeDisabledControl.checked = true
+  }
+
   const theme = configuration.theme ?? defaultConfiguration.theme;
   if (theme === 'system') {
     themeSystemControl.checked = true;
@@ -569,6 +578,21 @@ function updateBackgroundMapStyle() {
   backgroundMap.setStyle(buildBackgroundMapStyle());
 }
 
+function enableHillShade() {
+  updateConfiguration('backgroundHillShade', false)
+  updateHillShadeOnMap();
+}
+
+function disableHillShade() {
+  updateConfiguration('backgroundHillShade', true)
+  updateHillShadeOnMap();
+}
+
+function updateHillShadeOnMap() {
+  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
+  map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
+}
+
 function resolveTheme(configuredTheme) {
   return configuredTheme === 'system'
     ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
@@ -607,6 +631,7 @@ function updateBackgroundMapContainer() {
 const defaultConfiguration = {
   backgroundSaturation: 0.0,
   backgroundOpacity: 0.35,
+  backgroundHillShade: false,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
@@ -648,6 +673,7 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
   // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
   ...determineZoomCenterFromHash(window.location.hash),
@@ -663,6 +689,7 @@ const map = new maplibregl.Map({
   minPitch: 0,
   maxPitch: 0,
   attributionControl: false,
+  renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
 });
 
@@ -723,6 +750,17 @@ function rewriteGlobalStateDefaults(style) {
   style.state.theme.default = selectedTheme;
 }
 
+function toggleHillShadeLayer(style) {
+  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
+  const layer = style.layers.find(layer => layer.id === 'hillshade')
+  if (layer) {
+    layer.layout = {
+      ...layer.layout,
+      visibility: hillshadeVisible ? 'visible' : 'none'
+    }
+  }
+}
+
 let lastSetMapStyle = null;
 const onStyleChange = () => {
   const supportsDate = knownStyles[selectedStyle].styles.date;
@@ -740,6 +778,7 @@ const onStyleChange = () => {
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
         rewriteGlobalStateDefaults(next)
+        toggleHillShadeLayer(next)
         return next;
       },
     });

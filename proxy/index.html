@@ -111,21 +111,21 @@
             </small>
           </div>
           <div class="mb-3">
-            <label for="backgroundOpacity" class="form-label" >Background map opacity</label>
+            <label for="backgroundOpacity" class="form-label">Background map opacity</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
           <div class="mb-3">
-            <label for="backgroundUrl" class="form-label" >Background map tile URL</label>
+            <label for="backgroundUrl" class="form-label">Background map tile URL</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeRaster" value="raster" checked onchange="updateConfiguration('backgroundType', 'raster'); updateBackgroundMapStyle();">
                 <label class="form-check-label" for="backgroundTypeRaster">Raster</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeVector" value="raster" onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
+                <input class="form-check-input" type="radio" name="backgroundType" id="backgroundTypeVector" value="vector" onchange="updateConfiguration('backgroundType', 'vector'); updateBackgroundMapStyle();">
                 <label class="form-check-label" for="backgroundTypeVector">Vector</label>
               </div>
             </div>
@@ -134,6 +134,22 @@
               The tile URL for the background map.<br>
               Raster tiles: A URL serving raster tiles. See <a href="https://wiki.openstreetmap.org/wiki/Raster_tile_providers" target="_blank">the wiki</a> for a list of raster tile providers, for example <code>https://tile.openstreetmap.org/{z}/{x}/{y}.png</code>.<br>
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="backgroundUrl" class="form-label">Background hill shade</label>
+            <div class="mb-1">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="backgroundHillShade" id="backgroundHillShadeDisabled" value="disabled" checked onchange="enableHillShade()">
+                <label class="form-check-label" for="backgroundHillShadeDisabled">Disabled</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="backgroundHillShade" id="backgroundHillShadeEnabled" value="enabled" onchange="disableHillShade()">
+                <label class="form-check-label" for="backgroundHillShadeEnabled">Enabled</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control whether the background map shows the hillshade overlay.
             </small>
           </div>
           <div class="mb-3">
