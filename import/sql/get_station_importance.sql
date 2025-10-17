@@ -209,6 +209,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(osm_type ORDER BY osm_id) as osm_types,
     array_remove(array_agg(DISTINCT s.operator ORDER BY s.operator), null) as operator,
     array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
+    array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.position, U&'\\001E')), U&'\\001E'), U&'\\001E'), null) as position,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
     array_remove(array_agg(DISTINCT s.wikimedia_commons ORDER BY s.wikimedia_commons), null) as wikimedia_commons,
     array_remove(array_agg(DISTINCT s.wikimedia_commons_file ORDER BY s.wikimedia_commons_file), null) as wikimedia_commons_file,

@@ -305,6 +305,9 @@ const stationFeatures = {
     network: {
       name: 'Network',
     },
+    position: {
+      name: 'Position',
+    },
     wikidata: {
       name: 'Wikidata',
       link: links.wikidata,
