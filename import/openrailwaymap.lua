@@ -738,7 +738,7 @@ function position_is_zero(position)
   return position:find('^%-?%d+$') or position:find('^%-?%d*[,/.]0*$')
 end
 
-function parse_railway_position(position)
+function parse_railway_position(position, line)
   if not position then
     return nil
   end
@@ -753,6 +753,7 @@ function parse_railway_position(position)
       type = 'mi',
       zero = position_is_zero(stripped_position),
       exact = nil,
+      line = line,
     }
   elseif position:find('^pkm:') then
     local stripped_position = position:gsub('^pkm: ?', '')
@@ -764,6 +765,7 @@ function parse_railway_position(position)
       type = 'pkm',
       zero = position_is_zero(stripped_position),
       exact = nil,
+      line = line,
     }
   else
     local position_with_dot = position:gsub(',', '.')
@@ -774,6 +776,7 @@ function parse_railway_position(position)
       type = 'km',
       zero = position_is_zero(position),
       exact = nil,
+      line = line,
     }
   end
 end
@@ -790,13 +793,12 @@ function find_position_tags(tags)
     end
   end
 
-  return line_positions
+  return position, position_exact, line_positions
 end
 
 function parse_railway_positions(position, position_exact, line_positions)
   -- Collect positions, from both normal and exact positions, eliminating duplicates
-
-  -- TODO line_positions
+  -- Parsing is ordered from least specific to most specific
 
   local parsed_positions = {}
   local found_positions = false
@@ -804,10 +806,10 @@ function parse_railway_positions(position, position_exact, line_positions)
   if position then
     for part in string.gmatch(position, '[^;]+') do
       local stripped_part = part:gsub('^ ', '')
-      local position = parse_railway_position(stripped_part)
+      local parsed_position = parse_railway_position(stripped_part, nil)
 
-      if position then
-        table.insert(parsed_positions, position)
+      if parsed_position then
+        table.insert(parsed_positions, parsed_position)
         found_positions = true
       end
     end
@@ -816,26 +818,51 @@ function parse_railway_positions(position, position_exact, line_positions)
   if position_exact then
     for part in string.gmatch(position_exact, '[^;]+') do
       local stripped_part = part:gsub('^ ', '')
-      local position = parse_railway_position(stripped_part)
+      local parsed_position = parse_railway_position(stripped_part, nil)
 
-      if position then
+      if parsed_position then
         local found_existing_position = false
 
-        if found_positions and position.numeric ~= nil then
+        if found_positions and parsed_position.numeric ~= nil then
           for _, existing_position in ipairs(parsed_positions) do
             -- Verify if the position is close to another position. Note that this matches slightly outside the first decimal's precision.
-            if existing_position.numeric ~= nil and math.abs(existing_position.numeric - position.numeric) < 0.1 then
-              existing_position.numeric = position.numeric
-              existing_position.exact = position.text
+            if existing_position.numeric ~= nil and math.abs(existing_position.numeric - parsed_position.numeric) < 0.1 then
+              existing_position.numeric = parsed_position.numeric
+              existing_position.exact = parsed_position.text
               found_existing_position = true
             end
           end
         end
 
         if not found_existing_position then
-          table.insert(parsed_positions, position)
+          table.insert(parsed_positions, parsed_position)
           found_positions = true
         end
+      end
+    end
+  end
+
+  for line, line_position in line_positions do
+    local parsed_position = parse_railway_position(line_position, line)
+
+    if parsed_position then
+      local found_existing_position = false
+
+      if found_positions and parsed_position.numeric ~= nil then
+        for _, existing_position in ipairs(parsed_positions) do
+          -- Verify if the position is close to another position. Note that this matches slightly outside the first decimal's precision.
+          if existing_position.numeric ~= nil and math.abs(existing_position.numeric - parsed_position.numeric) < 0.1 then
+            existing_position.numeric = parsed_position.numeric
+            existing_position.exact = parsed_position.text
+            existing_position.line = parsed_position.line
+            found_existing_position = true
+          end
+        end
+      end
+
+      if not found_existing_position then
+        table.insert(parsed_positions, parsed_position)
+        found_positions = true
       end
     end
   end
