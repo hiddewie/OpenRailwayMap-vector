@@ -783,12 +783,11 @@ function parse_railway_position(position, line)
 end
 
 function find_position_tags(tags)
-  position = tags['railway:position']
-  position_exact = tags['railway:position:exact']
+  local position, position_exact = tags['railway:position'], tags['railway:position:exact']
 
-  exact_line_position_prefix = 'railway:position:exact:'
-  line_positions = {}
-  for tag, value in ipairs(tags) do
+  local exact_line_position_prefix = 'railway:position:exact:'
+  local line_positions = {}
+  for tag, value in pairs(tags) do
     if osm2pgsql.has_prefix(tag, exact_line_position_prefix) then
       line_positions[tag:sub(exact_line_position_prefix:len() + 1)] = value
     end
@@ -843,7 +842,7 @@ function parse_railway_positions(position, position_exact, line_positions)
     end
   end
 
-  for line, line_position in line_positions do
+  for line, line_position in pairs(line_positions) do
     local parsed_position = parse_railway_position(line_position, line)
 
     if parsed_position then
@@ -1075,7 +1074,7 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_position_values(tags.railway) and (position or position_exact) then
-    for _, position in ipairs(parse_railway_positions(position, position_exact)) do
+    for _, position in ipairs(parse_railway_positions(position, position_exact, line_positions)) do
       railway_positions:insert({
         way = object:as_point(),
         railway = tags.railway,
