@@ -2788,7 +2788,7 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex == 0
+            'icon-offset': featureIndex === 0
               ? ['literal', [0, 0]]
               : ['interpolate', ['linear'],
                 // Gap of 2 pixels for halo and spacing
@@ -2810,7 +2810,7 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex == 0
+          'icon-offset': featureIndex === 0
             ? ['literal', [0, 0]]
             : ['interpolate', ['linear'],
               // Gap of 2 pixels for halo and spacing
@@ -3087,7 +3087,7 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex == 0
+            'icon-offset': featureIndex === 0
               ? ['literal', [0, 0]]
               : ['interpolate', ['linear'],
                 // Gap of 2 pixels for halo and spacing
@@ -3097,7 +3097,29 @@ const layers = {
               ],
           },
         },
-      )
+      ),
+      {
+        id: `railway_signals_medium_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 13,
+        maxzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': featureIndex === 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+        }
+      },
     ]),
     {
       id: 'railway_signals_high_derail_buffer_stop',
@@ -3168,7 +3190,7 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex == 0
+          'icon-offset': featureIndex === 0
             ? ['literal', [0, 0]]
             : ['interpolate', ['linear'],
               // Gap of 2 pixels for halo and spacing
