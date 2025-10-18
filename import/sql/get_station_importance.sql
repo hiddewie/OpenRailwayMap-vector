@@ -114,7 +114,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
     feature,
     state,
     array_agg(facilities.id) as station_ids,
-    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way))) as center,
+    ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way)))) as center,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
     ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
