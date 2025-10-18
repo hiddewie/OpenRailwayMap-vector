@@ -189,6 +189,22 @@
               <a href="https://josm.openstreetmap.de/" target="_blank">JOSM</a> is a local desktop application. Ensure that the option <a href="https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl" target="_blank">Remote control</a> is enabled. The JOSM integration also works with compatible remote-controllable apps like <a href="https://merkaartor.be/" target="_blank">Merkaartor</a>.
             </small>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Station labels</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelReference" value="label" checked onchange="onStationLabelChange('label');">
+                <label class="form-check-label" for="stationLabelReference">Reference</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelName" value="name" onchange="onStationLabelChange('name');">
+                <label class="form-check-label" for="stationLabelName">Name</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
+            </small>
+          </div>
         </form>
       </div>
     </div>

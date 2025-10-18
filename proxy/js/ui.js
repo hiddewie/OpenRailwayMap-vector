@@ -17,6 +17,8 @@ const backgroundTypeVectorControl = document.getElementById('backgroundTypeVecto
 const backgroundUrlControl = document.getElementById('backgroundUrl');
 const backgroundHillShadeDisabledControl = document.getElementById('backgroundHillShadeDisabled');
 const backgroundHillShadeEnabledControl = document.getElementById('backgroundHillShadeEnabled');
+const stationLabelNameControl = document.getElementById('stationLabelName');
+const stationLabelReferenceControl = document.getElementById('stationLabelReference');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
@@ -258,6 +260,13 @@ function showConfiguration() {
     editorJOSMControl.checked = true;
   } else {
     editorIDControl.checked = true;
+  }
+
+  const stationLowZoomLabel = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel
+  if (stationLowZoomLabel === 'label') {
+    stationLowZoomLabel.checked = true
+  } else if (stationLowZoomLabel === 'name') {
+    stationLabelNameControl.checked = true
   }
 
   configurationBackdrop.style.display = 'block';
@@ -593,6 +602,17 @@ function updateHillShadeOnMap() {
   map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
 }
 
+function onStationLabelChange(stationlabel) {
+  updateConfiguration('stationLowZoomLabel', stationlabel);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
+}
+
 function resolveTheme(configuredTheme) {
   return configuredTheme === 'system'
     ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
@@ -637,6 +657,7 @@ const defaultConfiguration = {
   theme: 'system',
   editor: 'id',
   view: {},
+  stationLowZoomLabel: 'label'
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -748,6 +769,7 @@ function rewriteStylePathsToOrigin(style) {
 function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate;
   style.state.theme.default = selectedTheme;
+  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 }
 
 function toggleHillShadeLayer(style) {
