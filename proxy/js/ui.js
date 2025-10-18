@@ -637,6 +637,7 @@ const defaultConfiguration = {
   theme: 'system',
   editor: 'id',
   view: {},
+  stationLowZoomLabel: 'label'
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -748,6 +749,7 @@ function rewriteStylePathsToOrigin(style) {
 function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate;
   style.state.theme.default = selectedTheme;
+  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 }
 
 function toggleHillShadeLayer(style) {
