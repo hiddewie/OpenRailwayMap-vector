@@ -135,6 +135,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       left join stop_areas sa
         ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
           OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+          OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
       left join (
         select
           sa.osm_id as stop_area_id,
