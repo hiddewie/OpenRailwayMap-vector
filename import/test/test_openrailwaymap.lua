@@ -3,7 +3,7 @@ package.path = package.path .. ";test/?.lua"
 local assert = require('assert')
 
 -- Global mock
-osm2pgsql = require('mock_osm2psql')
+require('mock_osm2psql')
 
 local openrailwaymap = require('openrailwaymap')
 

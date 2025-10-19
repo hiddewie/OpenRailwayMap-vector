@@ -1,14 +1,34 @@
 -- Mock implementation of the Osm2psql Lua library
 -- See https://osm2pgsql.org/doc/manual.html
 
-function define_table() end
+-- Global mock
+osm2pgsql = {}
 
-function make_check_values_func(values)
-   checker = {}
+local tables = {}
+local data = {}
+
+function osm2pgsql.define_table(table_structure)
+  local name = table_structure.name
+  if tables[name] then
+    error("Table" .. name .. " is already defined")
+  end
+  tables[name] = table_structure
+
+  return {
+    insert = function (_, item)
+      if not data[name] then
+        data[name] = {}
+      end
+
+      table.insert(data[name], item)
+    end,
+  }
+end
+
+function osm2pgsql.make_check_values_func(values)
+   local checker = {}
    for _, value in ipairs(values) do
-     if value == check then
-       checker[value] = true
-     end
+     checker[value] = true
    end
 
    return function (check)
@@ -16,12 +36,16 @@ function make_check_values_func(values)
    end
 end
 
-function has_prefix(a, b)
+function osm2pgsql.has_prefix(a, b)
   return a:sub(1, b:len()) == b
 end
 
-return {
-  define_table = define_table,
-  make_check_values_func = make_check_values_func,
-  has_prefix = has_prefix,
-}
+-- State functions for testing
+function osm2pgsql.get_and_clear_imported_data()
+  local old_data = data
+
+  -- Clear data
+  data = {}
+
+  return old_data
+end
