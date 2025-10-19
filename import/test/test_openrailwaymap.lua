@@ -1,26 +1,7 @@
-package.path = package.path .. ";../?.lua"
+package.path = package.path .. ";test/?.lua"
 
--- Mock Osm2psql
-osm2pgsql = {
-  define_table = function () end,
-
-  make_check_values_func = function (values)
-    checker = {}
-    for _, value in ipairs(values) do
-      if value == check then
-        checker[value] = true
-      end
-    end
-
-    return function (check)
-      return checker[check] or false
-    end
-  end,
-
-  has_prefix = function (a, b)
-    return a:sub(1, b:len()) == b
-  end,
-}
+-- Global mock
+osm2pgsql = require('mock_osm2psql')
 
 local openrailwaymap = require('openrailwaymap')
 
