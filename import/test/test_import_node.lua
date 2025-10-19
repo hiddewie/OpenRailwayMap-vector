@@ -25,6 +25,40 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'crossing_box',
+    ['railway:position'] = '1.2',
+    ['railway:position:exact'] = '1.2345',
+    name = 'name',
+    ['railway:ref'] = 'ref',
+    operator = 'operator',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  boxes = {
+    { way_area = 0, feature = 'crossing_box', ref = 'ref', name = 'name', operator = 'operator', position = '{"1.2 @ 1.2345 (km)"}' },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'blockpost',
+    ['railway:position'] = '1.2',
+    ['railway:position:exact'] = '1.2345',
+    name = 'name',
+    ['railway:ref'] = 'ref',
+    operator = 'operator',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  boxes = {
+    { way_area = 0, feature = 'blockpost', ref = 'ref', name = 'name', operator = 'operator', position = '{"1.2 @ 1.2345 (km)"}' },
+  },
+})
+
 -- Milestones
 osm2pgsql.process_node({
   tags = {
