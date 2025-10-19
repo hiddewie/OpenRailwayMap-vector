@@ -28,7 +28,7 @@ end
 function osm2pgsql.make_check_values_func(values)
    local checker = {}
    for _, value in ipairs(values) do
-     checker[value] = true
+     checker[value] = value
    end
 
    return function (check)
