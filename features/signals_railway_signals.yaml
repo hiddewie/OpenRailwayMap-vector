@@ -2693,6 +2693,21 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-BOStrab:v' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  - description: distant signals type Sk (repeated)
+    country: DE
+    icon: { default: 'de/sk-distant-repeated' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:sk' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated' }
+
+  - description: distant signals type Sk
+    country: DE
+    icon: { default: 'de/sk-distant' }
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:sk' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
   - description: distant signals type Ks (repeated)
     country: DE
     icon: { default: 'de/ks-distant-repeated' }
@@ -2870,6 +2885,22 @@ features:
     icon: { default: 'de/bostrab/h' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-BOStrab:h' }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+  - description: main signals type Sk
+    country: DE
+    icon:
+      default: 'de/sk1-light'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DE-ESO:sk' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: combined signals type Sk
+    country: DE
+    icon:
+      default: 'de/sk0-light'
+    tags:
+      - { tag: 'railway:signal:combined', value: 'DE-ESO:sk' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: combined signals type Ks
