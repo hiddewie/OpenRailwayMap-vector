@@ -2512,20 +2512,6 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', any: ['DE-BOStrab:g1', 'DE-BOStrab:g1b'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
-  - description: distant signal announcement signs Ne 3 (normal)
-    country: DE
-    icon:
-      match: 'railway:signal:distant:type'
-      cases:
-        - { exact: 'II', value: 'de/ne3-normal-II' }
-        - { exact: 'III', value: 'de/ne3-normal-III' }
-        - { exact: 'IV', value: 'de/ne3-normal-IV' }
-        - { exact: 'V', value: 'de/ne3-normal-V' }
-      default: 'de/ne3-normal-I'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
-      - { tag: 'railway:signal:distant:form', value: 'sign' }
-
   - description: distant signal announcement signs Ne 3 (dwarf)
     country: DE
     icon:
@@ -2539,6 +2525,20 @@ features:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
       - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
+  - description: distant signal announcement signs Ne 3 (normal)
+    country: DE
+    icon:
+      match: 'railway:signal:distant:type'
+      cases:
+        - { exact: 'II', value: 'de/ne3-normal-II' }
+        - { exact: 'III', value: 'de/ne3-normal-III' }
+        - { exact: 'IV', value: 'de/ne3-normal-IV' }
+        - { exact: 'V', value: 'de/ne3-normal-V' }
+      default: 'de/ne3-normal-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DE-ESO:ne3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: main signal announcement signs So 19 (normal)
     country: DE
