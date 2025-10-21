@@ -205,6 +205,7 @@ jobs:
       - name: Install Hurl
         run: |
           echo "set man-db/auto-update false" | sudo debconf-communicate && sudo dpkg-reconfigure man-db
+          sudo apt update
           sudo apt install /tmp/hurl.deb
 
       - name: Download database artifact
@@ -283,6 +284,7 @@ jobs:
       - name: Install Hurl
         run: |
           echo "set man-db/auto-update false" | sudo debconf-communicate && sudo dpkg-reconfigure man-db
+          sudo apt update
           sudo apt install /tmp/hurl.deb
 
       - name: Download database artifact
