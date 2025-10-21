@@ -240,6 +240,11 @@ jobs:
         run: |
           hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
 
+      - name: Print logs
+        if: always()
+        run: |
+          docker compose logs
+
   test-proxy:
     name: Test proxy
 
@@ -326,6 +331,11 @@ jobs:
           name: ${{ runner.arch }}-presets
           path: preset.zip
           if-no-files-found: warn
+
+      - name: Print logs
+        if: always()
+        run: |
+          docker compose logs
 
   test-ui:
     name: Test UI
