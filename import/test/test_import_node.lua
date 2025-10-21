@@ -414,6 +414,362 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'water_crane',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/water_crane', rank = 19, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'water_tower',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/water_tower', rank = 20, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'workshop',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/workshop', rank = 21, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'engine_shed',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/engine_shed', rank = 22, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['tourism'] = 'museum',
+    ['museum'] = 'railway',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/museum-rail-transport', rank = 23, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'museum',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/museum', rank = 24, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'power_supply',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/power_supply', rank = 25, layer = 'electrification', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'rolling_highway',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/rolling_highway', rank = 26, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'pit',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/pit', rank = 27, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'loading_rack',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/loading-rack', rank = 28, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'loading_ramp',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/loading-ramp', rank = 29, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'loading_tower',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/loading-tower', rank = 30, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'unloading_hole',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/unloading-hole', rank = 31, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'track_scale',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/track-scale', rank = 32, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'carrier_truck_pit',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/carrier-truck-pit', rank = 33, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'gauge_conversion',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/gauge-conversion', rank = 34, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'car_shuttle',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/car-shuttle', rank = 35, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'car_dumper',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/car-dumper', rank = 36, layer = 'standard', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'isolated_track_section',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/isolated-track-section', rank = 37, layer = 'electrification', minzoom = 14 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'level_crossing',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'level_crossing',
+    ['crossing:light'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/level-crossing-light', rank = 40, layer = 'standard', minzoom = 15 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'level_crossing',
+    ['crossing:barrier'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/level-crossing-barrier', rank = 39, layer = 'standard', minzoom = 15 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'level_crossing',
+    ['crossing:light'] = 'yes',
+    ['crossing:barrier'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/level-crossing-light-barrier', rank = 38, layer = 'standard', minzoom = 15 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'crossing',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/crossing', rank = 42, layer = 'standard', minzoom = 15 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'hirail_access',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/hirail_access', rank = 43, layer = 'standard', minzoom = 16 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'phone',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/phone', rank = 44, layer = 'standard', minzoom = 16 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'buffer_stop',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/buffer_stop', rank = 45, layer = 'standard', minzoom = 16 },
+  },
+  signals = {
+    {},
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'derail',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/derail', rank = 46, layer = 'standard', minzoom = 16 },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'rail_brake',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'general/retarder', rank = 47, layer = 'standard', minzoom = 16 },
+  },
+})
+
 -- Milestones
 
 osm2pgsql.process_node({
