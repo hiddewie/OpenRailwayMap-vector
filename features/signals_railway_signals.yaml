@@ -150,6 +150,10 @@ tags:
   - { tag: 'railway:signal:stop:caption', title: 'Stop caption' }
   - { tag: 'railway:signal:stop:carriages', title: 'Stop carriages', type: array }
   - { tag: 'railway:signal:stop:deactivated', title: 'Stop deactivated', type: boolean }
+  - { tag: 'railway:signal:stop_distant', title: 'Stop distant' }
+  - { tag: 'railway:signal:stop_distant:form', title: 'Stop distant form' }
+  - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
+  - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated' }
   - { tag: 'railway:signal:stop_demand', title: 'Stop demand' }
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_demand:deactivated', title: 'Stop demand deactivated', type: boolean }
@@ -190,6 +194,7 @@ types:
   - { type: shunting, layer: signals }
   - { type: radio, layer: signals }
   - { type: stop, layer: signals }
+  - { type: stop_distant, layer: signals }
   - { type: stop_demand, layer: signals }
   - { type: station_distant, layer: signals }
   - { type: crossing, layer: signals }
@@ -808,14 +813,14 @@ features:
 
   # --- AU --- #
 
-  # --- NSW-Metro --- #
+  # --- AU-NSW-Metro --- #
 
   - description: Location Marker Board
     country: AU
     icon: { default: 'au/nsw/metro/location' }
     tags:
-      - { tag: 'railway:signal:shunting', value: 'AU:MNWSW:location' }
-      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:minor', value: 'AU:MNWSW:location' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: Point Position Indicator
     country: AU
@@ -837,6 +842,175 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'AU:MNWSW:fixed_red' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  # --- AU-LightRail-signs --- #
+
+  - description: Coast Off
+    country: AU
+    icon: { default: 'au/LightRail/signs/coast_off' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:coast_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Coast On
+    country: AU
+    icon: { default: 'au/LightRail/signs/coast_on' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:coast_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: CS
+    country: AU
+    icon: { default: 'au/LightRail/signs/CS' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:NSW:CS' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Train Detector
+    country: AU
+    icon: { default: 'au/LightRail/signs/D' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:NSW:D' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Fixed Red
+    country: AU
+    icon: { default: 'au/LightRail/signs/fixed_red' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:fixed_red' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Limit
+    country: AU
+    icon: { default: 'au/LightRail/signs/LM' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:LM' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Lower APS
+    country: AU
+    icon: { default: 'au/LightRail/signs/lower_APS' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:lower_APS' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Lower OESS
+    country: AU
+    icon: { default: 'au/LightRail/signs/lower_OESS' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:lower_OESS' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Lower OHW
+    country: AU
+    icon: { default: 'au/LightRail/signs/lower_OHW' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:lower_OHW' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Raise APS
+    country: AU
+    icon: { default: 'au/LightRail/signs/raise_APS' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:raise_APS' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Raise OESS
+    country: AU
+    icon: { default: 'au/LightRail/signs/raise_OESS' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:raise_OESS' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Raise OHW
+    country: AU
+    icon: { default: 'au/LightRail/signs/raise_OHW' }
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:NSW:raise_OHW' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Ready to Start
+    country: AU
+    icon: { default: 'au/LightRail/signs/RTS' }
+    tags:
+      - { tag: 'railway:signal:departure', value: 'AU:LightRail:NSW:RTS' }
+      - { tag: 'railway:signal:departure:form', value: 'sign' }
+
+  - description: Set Route
+    country: AU
+    icon: { default: 'au/LightRail/signs/set_route_ACT' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:ACT:set_route' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: Set Route
+    country: AU
+    icon: { default: 'au/LightRail/signs/set_route_NSW' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:NSW:set_route' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: Shunting Limit
+    country: AU
+    icon: { default: 'au/LightRail/signs/SL' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:SL' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Stop
+    country: AU
+    icon: { default: 'au/LightRail/signs/stop' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:NSW:stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop with Instruction
+    country: AU
+    icon: { default: 'au/LightRail/signs/SWI' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:NSW:SWI' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Zone
+    country: AU
+    icon: { default: 'au/LightRail/signs/SZ' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:SZ' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  # --- AU-LightRail-Signals --- #
+
+  - description: Ground Signal
+    country: AU
+    icon:
+      match: 'railway:signal:main:states'
+      cases:
+        - { exact: 'stop', value: 'au/LightRail/signals/ground-stop' }
+      default: 'au/LightRail/signals/ground-clear'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:ground' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Route Indicator
+    country: AU
+    icon: { default: 'au/LightRail/signals/route_indicator' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:route_indicator' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Signal
+    country: AU
+    icon: { default: 'au/LightRail/signals/NSW_SI' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:SI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Points Indicator
+    country: AU
+    icon: { default: 'au/LightRail/signals/NSW_PI' }
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:PI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   # --- BE --- #
 
@@ -4224,13 +4398,21 @@ features:
       - { tag: 'railway:signal:stop', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Halt
+  - description: Distant Halt (distance 1)
     country: IT
-    # TODO match railway:signal:stop_distant:distance = 1 or 2
     icon: { default: 'it/stop-distant-1' }
     tags:
       - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
       - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:stop_distant:distance', value: '1' }
+
+  - description: Distant Halt (distance 2)
+    country: IT
+    icon: { default: 'it/stop-distant-2' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'IT:HALT' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:stop_distant:distance', value: '2' }
 
   - description: Marmotte
     country: IT

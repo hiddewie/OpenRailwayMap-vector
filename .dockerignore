@@ -5,6 +5,7 @@
 !import/tags.lua.js
 !import/osmium-tags-filter
 !import/openrailwaymap.lua
+!import/test
 !martin
 !proxy
 !symbols

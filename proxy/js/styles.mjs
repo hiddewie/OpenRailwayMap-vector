@@ -1936,7 +1936,7 @@ const layers = {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
         'icon-overlap': 'always',
-        'text-field': '{label}',
+        'text-field': ['get', ['global-state', 'stationLowZoomLabel']],
         'text-font': font.bold,
         'text-size': 11,
         'text-padding': 10,
@@ -1970,7 +1970,7 @@ const layers = {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
         'icon-overlap': 'always',
-        'text-field': '{label}',
+        'text-field': ['get', ['global-state', 'stationLowZoomLabel']],
         'text-font': font.bold,
         'text-size': 11,
         'text-padding': 10,
@@ -2328,7 +2328,7 @@ const layers = {
         ]]],
         'icon-overlap': 'always',
         'text-field': ['step', ['zoom'],
-          ['get', 'label'],
+          ['get', ['global-state', 'stationLowZoomLabel']],
           10,
           ['get', 'name'],
         ],
@@ -2688,6 +2688,8 @@ const layers = {
             present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -2788,7 +2790,7 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex == 0
+            'icon-offset': featureIndex === 0
               ? ['literal', [0, 0]]
               : ['interpolate', ['linear'],
                 // Gap of 2 pixels for halo and spacing
@@ -2810,7 +2812,7 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex == 0
+          'icon-offset': featureIndex === 0
             ? ['literal', [0, 0]]
             : ['interpolate', ['linear'],
               // Gap of 2 pixels for halo and spacing
@@ -2936,6 +2938,8 @@ const layers = {
             present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['get', 'train_protection_rank'],
@@ -2953,6 +2957,8 @@ const layers = {
             present: train_protection_construction_dasharray,
             construction: train_protection_construction_dasharray,
             proposed: train_protection_construction_dasharray,
+            disused: train_protection_construction_dasharray,
+            preserved: train_protection_construction_dasharray,
           },
           filter: ['all',
             ['!=', ['get', 'feature'], 'ferry'],
@@ -3087,7 +3093,7 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex == 0
+            'icon-offset': featureIndex === 0
               ? ['literal', [0, 0]]
               : ['interpolate', ['linear'],
                 // Gap of 2 pixels for halo and spacing
@@ -3097,7 +3103,29 @@ const layers = {
               ],
           },
         },
-      )
+      ),
+      {
+        id: `railway_signals_medium_deactivated_${featureIndex}`,
+        type: 'symbol',
+        minzoom: 13,
+        maxzoom: 16,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_signals',
+        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+          'icon-image': 'general/signal-deactivated',
+          'icon-offset': featureIndex === 0
+            ? ['literal', [0, 0]]
+            : ['interpolate', ['linear'],
+              // Gap of 2 pixels for halo and spacing
+              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+        }
+      },
     ]),
     {
       id: 'railway_signals_high_derail_buffer_stop',
@@ -3168,7 +3196,7 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex == 0
+          'icon-offset': featureIndex === 0
             ? ['literal', [0, 0]]
             : ['interpolate', ['linear'],
               // Gap of 2 pixels for halo and spacing
@@ -3641,6 +3669,8 @@ const layers = {
           states: {
             present: undefined,
             construction: gauge_construction_dashes,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -3728,6 +3758,8 @@ const layers = {
             present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
@@ -3780,6 +3812,8 @@ const layers = {
             present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -3875,6 +3909,8 @@ const layers = {
             present: undefined,
             construction: construction_dasharray,
             proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
@@ -3994,7 +4030,7 @@ const layers = {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
         'icon-overlap': 'always',
-        'text-field': '{label}',
+        'text-field': ['get', ['global-state', 'stationLowZoomLabel']],
         'text-font': font.bold,
         'text-size': 11,
         'text-padding': 10,
@@ -4029,7 +4065,7 @@ const layers = {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
         'icon-overlap': 'always',
-        'text-field': '{label}',
+        'text-field': ['get', ['global-state', 'stationLowZoomLabel']],
         'text-font': font.bold,
         'text-size': 11,
         'text-padding': 10,
@@ -4110,7 +4146,7 @@ const layers = {
         ]]],
         'icon-overlap': 'always',
         'text-field': ['step', ['zoom'],
-          ['get', 'label'],
+          ['get', ['global-state', 'stationLowZoomLabel']],
           10,
           ['get', 'name'],
         ],
@@ -4292,6 +4328,9 @@ const makeStyle = selectedStyle => ({
     },
     theme: {
       default: 'light',
+    },
+    stationLowZoomLabel: {
+      default: 'label',
     },
   },
 });

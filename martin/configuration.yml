@@ -48,6 +48,7 @@ postgres:
         operator: string
         operator_hash: string
         network: string
+        position: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
@@ -76,6 +77,7 @@ postgres:
         operator: string
         operator_hash: string
         network: string
+        position: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string
@@ -117,6 +119,7 @@ postgres:
         operator: string
         operator_hash: string
         network: string
+        position: string
         count: integer
         uic_ref: string
         wikidata: string
@@ -146,6 +149,7 @@ postgres:
         operator: string
         operator_hash: string
         network: string
+        position: string
         uic_ref: string
         wikidata: string
         wikimedia_commons: string

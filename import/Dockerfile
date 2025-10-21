@@ -23,6 +23,25 @@ RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_fea
   node signal_features.sql.js \
     > /build/signal_features.sql
 
+FROM debian:trixie-slim AS test
+
+# https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    lua5.4 \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get clean
+
+COPY --from=build-lua \
+  /build/tags.lua tags.lua
+
+COPY import/openrailwaymap.lua openrailwaymap.lua
+COPY import/test test
+
+CMD ["lua", "test/test_openrailwaymap.lua"]
+
 FROM debian:trixie-slim
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image

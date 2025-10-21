@@ -114,7 +114,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
     feature,
     state,
     array_agg(facilities.id) as station_ids,
-    ST_Centroid(ST_RemoveRepeatedPoints(ST_Collect(way))) as center,
+    ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way)))) as center,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
     ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
@@ -135,6 +135,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
       left join stop_areas sa
         ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
           OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+          OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
       left join (
         select
           sa.osm_id as stop_area_id,
@@ -209,6 +210,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_agg(osm_type ORDER BY osm_id) as osm_types,
     array_remove(array_agg(DISTINCT s.operator ORDER BY s.operator), null) as operator,
     array_remove(array_agg(DISTINCT s.network ORDER BY s.network), null) as network,
+    array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.position, U&'\\001E')), U&'\\001E'), U&'\\001E'), null) as position,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
     array_remove(array_agg(DISTINCT s.wikimedia_commons ORDER BY s.wikimedia_commons), null) as wikimedia_commons,
     array_remove(array_agg(DISTINCT s.wikimedia_commons_file ORDER BY s.wikimedia_commons_file), null) as wikimedia_commons_file,
