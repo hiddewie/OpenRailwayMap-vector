@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref_name != 'master' }}
 
+env:
+  HURL_VERSION: '6.1.1'
+
 jobs:
   import:
     name: Import data
@@ -187,13 +190,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Hurl
-        env:
-          VERSION: '6.1.1'
+      - name: Cache Hurl
+        uses: actions/cache@v4
+        id: cache-hurl
+        with:
+          path: /tmp/hurl.deb
+          key: hurl-${{ env.HURL_VERSION }}
+
+      - name: Download Hurl
+        if: ${{ steps.cache-hurl.outputs.cache-hit != 'true' }}
         run: |
-          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
-          sudo apt update
-          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          curl --output /tmp/hurl.deb --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/${{ env.HURL_VERSION }}/hurl_${{ env.HURL_VERSION }}_$(dpkg --print-architecture).deb"
+
+      - name: Install Hurl
+        run: |
+          sudo apt install /tmp/hurl.deb
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
@@ -256,13 +267,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Hurl
-        env:
-          VERSION: '6.1.1'
+      - name: Cache Hurl
+        uses: actions/cache@v4
+        id: cache-hurl
+        with:
+          path: /tmp/hurl.deb
+          key: hurl-${{ env.HURL_VERSION }}
+
+      - name: Download Hurl
+        if: ${{ steps.cache-hurl.outputs.cache-hit != 'true' }}
         run: |
-          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
-          sudo apt update
-          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
+          curl --output /tmp/hurl.deb --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/${{ env.HURL_VERSION }}/hurl_${{ env.HURL_VERSION }}_$(dpkg --print-architecture).deb"
+
+      - name: Install Hurl
+        run: |
+          sudo apt install /tmp/hurl.deb
 
       - name: Download database artifact
         uses: actions/download-artifact@v4
