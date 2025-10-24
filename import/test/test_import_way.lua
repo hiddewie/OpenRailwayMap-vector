@@ -38,8 +38,17 @@ local as_linestring_mock = function ()
     end
   }
 end
+local polygon_way = {
+  centroid = function () end,
+  polygon = function () end,
+  area = function () return 2.0 end,
+}
 local as_polygon_mock = function ()
-  return way
+  return {
+    transform = function ()
+      return polygon_way
+    end
+  }
 end
 
 osm2pgsql.process_way({
@@ -77,10 +86,61 @@ osm2pgsql.process_way({
   tags = {
     ['public_transport'] = 'platform',
   },
-  as_polygon = as_polygon_mock,
+  as_polygon = function()
+    return way
+  end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
     { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false, way = way },
+  },
+})
+
+-- Turntables
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'turntable',
+  },
+  as_polygon = function()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  turntables = {
+    { feature = 'turntable', way = way },
+  },
+})
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'traverser',
+  },
+  as_polygon = function()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  turntables = {
+    { feature = 'traverser', way = way },
+  },
+})
+
+-- Boxes
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'signal_box',
+    ['railway:position'] = '1.2',
+    ['railway:position:exact'] = '1.2345',
+    name = 'name',
+    ['railway:ref'] = 'ref',
+    operator = 'operator',
+  },
+  as_polygon = as_polygon_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  boxes = {
+    { way_area = 2.0, feature = 'signal_box', ref = 'ref', name = 'name', operator = 'operator', position = '{"1.2 @ 1.2345 (km)"}', way = polygon_way },
   },
 })
