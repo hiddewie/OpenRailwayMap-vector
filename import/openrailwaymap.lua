@@ -998,7 +998,6 @@ function osm2pgsql.process_node(object)
   if tags.public_transport == 'stop_position' and tags.name then
     stop_positions:insert({
       way = object:as_point(),
-      railway = tags.railway,
       name = tags.name,
     })
   end

@@ -869,6 +869,21 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+-- Stop positions
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'stop_position',
+    ['name'] = 'name',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stop_positions = {
+    { name = 'name' },
+  },
+})
+
 -- Milestones
 
 osm2pgsql.process_node({
