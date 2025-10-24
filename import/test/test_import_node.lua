@@ -884,6 +884,32 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+-- Platforms
+
+osm2pgsql.process_node({
+  tags = {
+    ['railway'] = 'platform',
+    ['name'] = 'name',
+    ['ref'] = '1;2',
+    ['height'] = '0.3',
+    ['surface'] = 'concrete',
+    ['elevator'] = 'yes',
+    ['shelter'] = 'yes',
+    ['lit'] = 'yes',
+    ['bin'] = 'yes',
+    ['bench'] = 'yes',
+    ['wheelchair'] = 'yes',
+    ['departures_board'] = 'yes',
+    ['tactile_paving'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { name = 'name', bench = true, shelter = true, elevator = true, departures_board = true, surface = 'concrete', height = '0.3', bin = true, ref = '{"1","2"}', tactile_paving = true, wheelchair = true, lit = true },
+  },
+})
+
 -- Milestones
 
 osm2pgsql.process_node({
