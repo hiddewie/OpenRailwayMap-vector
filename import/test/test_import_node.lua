@@ -71,12 +71,12 @@ osm2pgsql.process_node({
   },
   as_point = function () end,
 })
-
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
     { feature = 'station', state = 'present', railway_ref = 'ref', operator = 'operator', station = 'train', name_tags = { name = 'name' }, name = 'name' },
   },
 })
+
 osm2pgsql.process_node({
   tags = {
     ['railway'] = 'halt',
