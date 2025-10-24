@@ -910,6 +910,106 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['train'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['tram'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['subway'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['light_rail'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['bus'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['trolleybus'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['share_taxi'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+
+osm2pgsql.process_node({
+  tags = {
+    ['public_transport'] = 'platform',
+    ['ferry'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+
 -- Entrances
 
 osm2pgsql.process_node({
