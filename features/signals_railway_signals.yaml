@@ -1012,6 +1012,18 @@ features:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:PI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Points Indicator
+    country: AU
+    icon:
+      match: 'railway:signal:minor:states'
+      mode: DYNAMIC
+      cases:
+        - { regex: '^(.+)$', value: 'au/LightRail/{}', example: 'au/LightRail/stop' }
+      default: 'au/LightRail/unknown'
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:PI' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
   # --- BE --- #
 
   - description: Speed limit light (part of main signal)

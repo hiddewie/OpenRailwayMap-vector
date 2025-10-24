@@ -693,6 +693,90 @@ const map = new maplibregl.Map({
   ...(configuration.view || defaultConfiguration.view),
 });
 
+
+/**
+ * based on https://github.com/osm-americana/openstreetmap-americana/blob/1c65cc6/shieldlib/src/screen_gfx.ts
+ * @param {Uint8Array} source
+ * @param {ImageDataArray} dest
+ * @param {number} sourceOffset
+ * @param {number} destOffset
+ */
+function copyPixel(source, dest, sourceOffset, destOffset) {
+  dest[destOffset] = source[sourceOffset]; // Red
+  dest[destOffset + 1] = source[sourceOffset + 1]; // Green
+  dest[destOffset + 2] = source[sourceOffset + 2]; // Blue
+  dest[destOffset + 3] = source[sourceOffset + 3]; // Alpha
+}
+
+/**
+ * based on https://github.com/osm-americana/openstreetmap-americana/blob/1c65cc6/shieldlib/src/screen_gfx.ts
+ * @param {CanvasRenderingContext2D} destination
+ * @param {import('maplibre-gl').StyleImage} source
+ * @param {number} yOffset
+ */
+function transposeImageData(destination, source, yOffset) {
+  const imgData = destination.createImageData(
+    source.data.width,
+    source.data.height
+  );
+  for (let i = 0; i < source.data.data.length; i += 4) {
+    copyPixel(source.data.data, imgData.data, i, i);
+  }
+  destination.putImageData(imgData, 0, yOffset);
+}
+
+/**
+ * Given a list of maplibre images, this function
+ * merges them into into a single image by stacking
+ * each image vertically.
+ * @param {string[]} imageIds
+ */
+function stackImages(imageIds) {
+  const canvas = document.createElement("canvas");
+  const ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext('2d'));
+
+  const images = imageIds.map(id => map.getImage(id));
+
+  // width = max(widths)
+  canvas.width = Math.max(...images.map(img => img.data.width));
+  // height = sum(heights)
+  canvas.height = images.reduce((sum, img) => sum + img.data.height, 0);
+
+  let yOffset = 0;
+  for (const image of images) {
+    transposeImageData(ctx, image, yOffset);
+    yOffset += image.data.height;
+  }
+
+  return canvas;
+}
+
+map.on('styleimagemissing', (event) => {
+  const placeholderRegex = /{(.+)}/;
+  const variants = event.id
+    .match(placeholderRegex)
+    ?.[1]
+    ?.split('\x1E')
+    .map(variant => event.id.replace(placeholderRegex, variant));
+
+  if (!variants) {
+    console.warn('ignoring invalid missing image', event.id);
+    return;
+  }
+
+  const { pixelRatio } = map.getImage(variants[0]);
+
+  const generated = stackImages(variants);
+  const { width, height } = generated;
+  const bytes = generated.getContext('2d').getImageData(0, 0, width, height);
+
+  map.addImage(event.id, {
+    width: width,
+    height: height,
+    data: new Uint8Array(bytes.data.buffer),
+  }, { pixelRatio });
+});
+
 function selectStyle(style) {
   if (selectedStyle !== style) {
     selectedStyle = style;
