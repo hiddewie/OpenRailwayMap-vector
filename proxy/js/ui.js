@@ -751,6 +751,109 @@ function stackImages(imageIds) {
   return canvas;
 }
 
+/** @typedef {{
+  x: string;
+  y: string;
+  width: string;
+  height: string;
+  color?: string;
+}} TextConfig */
+
+/**
+ * @param {string[]} imageIds
+ * @returns {HTMLCanvasElement}
+ */
+function renderTextOnImage(imageIds) {
+  const imageId = imageIds[0].split("?")[0];
+  const image = map.getImage(imageId);
+  const pixelRatio = image.pixelRatio;
+
+  // this array contains each semicolon-separated text value
+  const placeholders = imageIds.map(id => new URLSearchParams(id.split("?")[1]));
+
+  // in rare image, the image might have more than 1 slot for dynamic text
+  const slotCount = Math.max(...[...placeholders[0].values()].map(value => value.split(",").length));
+
+  // if there are multiple values, this image might need to be repeated (stacked) vertically.
+  // for example, two speed signs on the same pole.
+  const repeatCount = Math.ceil(placeholders.length / slotCount);
+
+  /**
+   * @template {keyof TextConfig} T
+   * @param {T} key
+   * @param {number} index
+   * @returns {TextConfig[T]}
+   */
+  const getConfig = (key, index) => {
+    const value = placeholders[0].get(key)?.split(",") || [];
+    return value[index] ?? value[0];
+  }
+
+  const canvas = document.createElement('canvas');
+  const ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext('2d'));
+
+  canvas.width = image.data.width;
+  canvas.height = image.data.height * repeatCount;
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+
+  // for each image
+  for (let i = 0; i < placeholders.length; i += slotCount) {
+    const yOffset = i * image.data.height;
+
+    // draw the base image onto the canvas
+    transposeImageData(ctx, image, yOffset);
+
+    // for each slot in this image
+    for (let j = 0; j < slotCount; j++) {
+      const text = placeholders[i + j].get('text') || '';
+
+      const x = +getConfig('x', j) * pixelRatio;
+      const y = +getConfig('y', j) * pixelRatio + yOffset;
+      const width = +getConfig('width', j) * pixelRatio;
+      const height = +getConfig('height', j) * pixelRatio;
+      const color = getConfig('color', j) || '000';
+
+      // start with a font-size that is probably too large
+      let size = Math.max(width, height);
+
+      // then loop until we find a font-size that fits the bbox
+      /** @type {TextMetrics} */
+      let measured;
+      do {
+        size /= 1.05; // decrease by 5% each time, until we find a suitable size
+
+        ctx.font = [
+          'condensed',
+          500, // font-weight
+          `${size}px`,
+          '"sans-serif-condensed", "Arial Narrow", sans-serif',
+        ].join(' ');
+
+        measured = ctx.measureText(text);
+      } while (
+        // while the text is too big
+        measured.width > width ||
+        measured.actualBoundingBoxDescent > height
+      );
+
+      /** midway */
+      const anchorX = x + width / 2;
+      /**
+       * needs to consider the different in height between the bbox and
+       * the actual text height, so that the text is vertically centered
+       */
+      const anchorY = y + (height - measured.actualBoundingBoxDescent) / 2;
+
+      ctx.fillStyle = `#${color}`;
+      ctx.fillText(text, anchorX, anchorY);
+    }
+  }
+
+  return canvas;
+}
+
 map.on('styleimagemissing', (event) => {
   const placeholderRegex = /{(.+)}/;
   const variants = event.id
@@ -764,9 +867,19 @@ map.on('styleimagemissing', (event) => {
     return;
   }
 
-  const { pixelRatio } = map.getImage(variants[0]);
+  const { pixelRatio } = map.getImage(variants[0].split('?')[0]);
 
-  const generated = stackImages(variants);
+  /** @type {HTMLCanvasElement} */
+  let generated;
+
+  if (variants[0].includes("?")) {
+    // dynamic expression: we want add text onto the image
+    generated = renderTextOnImage(variants)
+  } else {
+    // stack: we want to merge all images into a single image
+    generated = stackImages(variants);
+  }
+
   const { width, height } = generated;
   const bytes = generated.getContext('2d').getImageData(0, 0, width, height);
 

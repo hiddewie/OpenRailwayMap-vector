@@ -1024,6 +1024,32 @@ features:
       - { tag: 'railway:signal:minor', value: 'AU:LightRail:PI' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
+  # --- AU-NSW-signs --- #
+
+  - description: General
+    country: AU
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      mode: DYNAMIC
+      cases:
+        - { regex: '^(.+)$', value: 'au/nsw/speed_G?text={}&x=5&y=0.3&width=12.7&height=9.4', example: 'au/nsw/speed_G' }
+      default: 'au/nsw/speed_G'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AU:NSW:general' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: General + Medium + High
+    country: AU
+    icon:
+      match: 'railway:signal:speed_limit:speed'
+      mode: DYNAMIC
+      cases:
+        - { regex: '^(.+)$', value: 'au/nsw/speed_GMH?text={}&x=0.2&y=0.2,10.2,20.2&width=14.6&height=9.6&color=000,fff,000', example: 'au/nsw/speed_GMH' }
+      default: 'au/nsw/speed_GMH'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'AU:NSW:general_medium_high' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   # --- BE --- #
 
   - description: Speed limit light (part of main signal)
