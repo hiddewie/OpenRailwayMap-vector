@@ -221,7 +221,7 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          docker run --rm -it --net host -v "$PWD/test/api.hurl:/hurl/api.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:8000 /hurl/api.hurl
+          docker run --rm -it --net host -v "$PWD/test/api.hurl:/hurl/api.hurl" ghcr.io/orange-opensource/hurl:{{ env.HURL_VERSION }} --test --verbose --variable base_url=http://localhost:8000 /hurl/api.hurl
 
       - name: Print logs
         if: always()
@@ -283,7 +283,7 @@ jobs:
       - name: Run proxy tests
         working-directory: proxy
         run: |
-          docker run --rm -it --net host -v "$PWD/test/proxy.hurl:/hurl/proxy.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:8000 /hurl/proxy.hurl
+          docker run --rm -it --net host -v "$PWD/test/proxy.hurl:/hurl/proxy.hurl" ghcr.io/orange-opensource/hurl:{{ env.HURL_VERSION }} --test --verbose --variable base_url=http://localhost:8000 /hurl/proxy.hurl
 
       - name: Download preset
         if: always()
