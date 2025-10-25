@@ -368,6 +368,13 @@ postgres:
       function: electrification_railway_symbols
       minzoom: 13
 
+    # --- Gauge --- #
+
+    gauge_railway_line_low:
+      schema: public
+      function: gauge_railway_line_low
+      maxzoom: 7
+
     # --- Operator --- #
 
     operator_railway_symbols:

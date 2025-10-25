@@ -1118,6 +1118,85 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+--- Electrification ---
+
+CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'gauge_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      'present' as state,
+      any_value(usage) as usage,
+      false as tunnel,
+      false bridge,
+      ref,
+      CASE
+        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+        ELSE COALESCE(ref, name)
+      END AS standard_label,
+      railway_to_int(gauges[1]) AS gaugeint0,
+      gauges[1] as gauge0,
+      (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+      max(rank) as rank
+    FROM railway_line
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+        AND state = 'present'
+        AND feature IN ('rail', 'ferry')
+        AND usage = 'main'
+        AND service IS NULL
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      gauge0,
+      gaugeint0,
+      gauge_label
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION gauge_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "gauge_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "gauge0": "string",
+          "gaugeint0": "number",
+          "gauge_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Operator ---
 
 CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
