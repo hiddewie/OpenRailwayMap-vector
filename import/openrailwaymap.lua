@@ -1445,3 +1445,15 @@ function osm2pgsql.process_relation(object)
     end
   end
 end
+
+function osm2pgsql.process_gen()
+  osm2pgsql.run_gen('discrete-isolation', {
+    name = 'stations',
+    debug = true,
+    src_table = 'stations_q',
+    dest_table = 'stations_q',
+    geom_column = 'way',
+    id_column = 'id',
+    importance_column = 'route_count',
+  })
+end

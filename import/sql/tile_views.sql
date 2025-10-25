@@ -300,8 +300,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
 
 CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   SELECT
-    way,
-    id,
+    railway_text_stations.way as way,
+    railway_text_stations.id as id,
     osm_id,
     feature,
     state,
@@ -323,12 +323,15 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
     note,
     description
   FROM railway_text_stations
+  JOIN stations_q
+    ON stations_q.id = railway_text_stations.id
+--       AND stations_q.discr_iso < pow(3.5, 5) * 10 and stations_q.discr_iso < pow(10, 5)
+      AND 100000 < stations_q.discr_iso
   WHERE
     feature = 'station'
     AND state = 'present'
     AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-    AND railway_ref IS NOT NULL
-    AND route_count >= 20;
+    AND railway_ref IS NOT NULL;
 
 CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT

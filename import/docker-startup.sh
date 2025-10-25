@@ -134,9 +134,35 @@ filter)
 
   ;;
 
+process)
+
+  $PSQL -c "drop table if exists stations_q;"
+
+  $PSQL -c "create table if not exists stations_q as
+    select
+      id,
+      center as way,
+      route_count,
+      0.0::real as discr_iso,
+      0::int as irank,
+      0::int as dirank
+    from grouped_stations_with_route_count;
+  "
+
+  $PSQL -c "CREATE INDEX IF NOT EXISTS stations_q_id_idx
+    ON stations_q
+      USING btree(id);
+  "
+
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+
+  ;;
+
 *)
 
-  echo "Invalid argument '$1'. Supported: import, update, refresh, filter"
+  echo "Invalid argument '$1'. Supported: import, update, refresh, filter, process"
   exit 1
 
   ;;
