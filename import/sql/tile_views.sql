@@ -246,7 +246,7 @@ END $do$;
 
 --- Standard ---
 
-CREATE OR REPLACE FUNCTION railway_line_standard_low(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION standard_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -254,7 +254,7 @@ CREATE OR REPLACE FUNCTION railway_line_standard_low(z integer, x integer, y int
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_line_standard_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way', 'id')
   FROM (
     SELECT
       min(id) as id,
@@ -295,11 +295,11 @@ RETURN (
 
 -- Function metadata
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION railway_line_standard_low IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_line_low IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "railway_line_standard_low",
+        "id": "standard_railway_line_low",
         "fields": {
           "id": "integer",
           "feature": "string",
