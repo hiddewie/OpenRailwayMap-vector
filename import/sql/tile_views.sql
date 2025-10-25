@@ -874,6 +874,99 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+--- Signals ---
+
+CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+  RETURN (
+    SELECT
+      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
+    FROM (
+      SELECT
+        ST_AsMVTGeom(
+          CASE
+            WHEN z >= 14 THEN way
+            ELSE center
+          END,
+          ST_TileEnvelope(z, x, y),
+          4096, 64, true
+        ) AS way,
+        id,
+        osm_id,
+        osm_type,
+        feature,
+        ref,
+        name,
+        operator,
+        get_byte(sha256(operator::bytea), 0) as operator_hash,
+        nullif(array_to_string(position, U&'\001E'), '') as position,
+        wikimedia_commons,
+        wikimedia_commons_file,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
+      FROM boxes
+      WHERE way && ST_TileEnvelope(z, x, y)
+    ) as tile
+    WHERE way IS NOT NULL
+  );
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_signal_boxes IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_signal_boxes",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "position": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW railway_catenary AS
+  SELECT
+    id,
+    osm_id,
+    osm_type,
+    way,
+    feature,
+    ref,
+    transition,
+    structure,
+    supporting,
+    attachment,
+    tensioning,
+    insulator,
+    nullif(array_to_string(position, U&'\001E'), '') as position,
+    note,
+    description
+  FROM catenary;
+
 --- Electrification ---
 
 CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer, y integer)
@@ -1024,99 +1117,6 @@ DO $do$ BEGIN
   }
   $$::json || '$tj$';
 END $do$;
-
---- Signals ---
-
-CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-  RETURN (
-    SELECT
-      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
-    FROM (
-      SELECT
-        ST_AsMVTGeom(
-          CASE
-            WHEN z >= 14 THEN way
-            ELSE center
-          END,
-          ST_TileEnvelope(z, x, y),
-          4096, 64, true
-        ) AS way,
-        id,
-        osm_id,
-        osm_type,
-        feature,
-        ref,
-        name,
-        operator,
-        get_byte(sha256(operator::bytea), 0) as operator_hash,
-        nullif(array_to_string(position, U&'\001E'), '') as position,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description
-      FROM boxes
-      WHERE way && ST_TileEnvelope(z, x, y)
-    ) as tile
-    WHERE way IS NOT NULL
-  );
-
--- Function metadata
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION signals_signal_boxes IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "signals_signal_boxes",
-        "fields": {
-          "id": "integer",
-          "osm_id": "integer",
-          "osm_type": "string",
-          "feature": "string",
-          "ref": "string",
-          "name": "string",
-          "operator": "string",
-          "operator_hash": "string",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE VIEW railway_catenary AS
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    feature,
-    ref,
-    transition,
-    structure,
-    supporting,
-    attachment,
-    tensioning,
-    insulator,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    note,
-    description
-  FROM catenary;
 
 --- Operator ---
 
