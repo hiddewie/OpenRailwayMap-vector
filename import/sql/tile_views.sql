@@ -130,12 +130,7 @@ RETURN (
         way && ST_TileEnvelope(z, x, y)
         -- conditionally include features based on zoom level
         AND CASE
-          WHEN z < 7 THEN
-            state = 'present'
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry') AND usage = 'main'
-              )
+          -- Zooms < 7 are handled in the low zoom tiles
           WHEN z < 8 THEN
             state = 'present'
               AND service IS NULL
