@@ -670,13 +670,13 @@ const sources = {
     type: 'vector',
     url: '/electrification_railway_line_low',
   },
-  loading_gauge_railway_line_low: {
-    type: 'vector',
-    url: '/loading_gauge_railway_line_low',
-  },
   gauge_railway_line_low: {
     type: 'vector',
     url: '/gauge_railway_line_low',
+  },
+  loading_gauge_railway_line_low: {
+    type: 'vector',
+    url: '/loading_gauge_railway_line_low',
   },
   track_class_railway_line_low: {
     type: 'vector',
@@ -4378,6 +4378,59 @@ const makeStyle = selectedStyle => ({
 
 const legendData = {
   standard: {
+    "standard_railway_line_low-standard_railway_line_low": [
+      {
+        legend: 'Highspeed main line',
+        type: 'line',
+        properties: {
+          highspeed: true,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'H1',
+          standard_label: 'H1 Name',
+          track_ref: '8b',
+          way_length: 1.0,
+        },
+      },
+      {
+        legend: 'Main line',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'L1',
+          standard_label: 'L1 Name',
+          track_ref: '8b',
+          way_length: 1.0,
+        },
+      },
+      {
+        legend: 'Ferry',
+        type: 'line',
+        properties: {
+          highspeed: false,
+          feature: 'ferry',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: 'F1',
+          standard_label: 'F1 Ship',
+          track_ref: null,
+          way_length: 1.0,
+        }
+      },
+    ],
     "openrailwaymap_low-railway_line_high": [
       {
         legend: 'Highspeed main line',
@@ -5499,6 +5552,32 @@ const legendData = {
     ],
   },
   speed: {
+    'speed_railway_line_low-speed_railway_line_low': [
+      ...speedLegends.map(speed => ({
+        legend: `${speed} km/h`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          tunnel: false,
+          bridge: false,
+          maxspeed: speed,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          tunnel: false,
+          bridge: false,
+          maxspeed: null,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
@@ -5629,6 +5708,50 @@ const legendData = {
     ],
   },
   signals: {
+    'signals_railway_line_low-signals_railway_line_low': [
+      ...signals_railway_line.train_protections.map(train_protection => ({
+        legend: train_protection.legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          train_protection: train_protection.train_protection,
+          train_protection_rank: 1,
+          train_protection_construction: null,
+          train_protection_construction_rank: 0,
+        },
+        variants: [
+          {
+            properties: {
+              train_protection: null,
+              train_protection_rank: 0,
+              train_protection_construction: train_protection.train_protection,
+              train_protection_construction_rank: 1,
+            }
+          }
+        ],
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          train_protection: null,
+          train_protection_rank: 0,
+          train_protection_construction: null,
+          train_protection_construction_rank: 0,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
@@ -5854,6 +5977,68 @@ const legendData = {
     ],
   },
   electrification: {
+    'electrification_railway_line_low-electrification_railway_line_low': [
+      {
+        legend: 'Not electrified',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'no',
+          voltage: null,
+          frequency: null,
+        },
+      },
+      {
+        legend: 'De-electrified / abandoned railway',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'abandoned',
+          voltage: null,
+          frequency: null,
+        },
+      },
+      ...electrificationLegends.map(({legend, voltage, frequency}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage,
+          frequency,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: null,
+          voltage: null,
+          frequency: null,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       {
         legend: 'Not electrified',
@@ -6110,6 +6295,103 @@ const legendData = {
         })),
   },
   gauge: {
+    'gauge_railway_line_low-gauge_railway_line_low': [
+      ...gaugeLegends.map(({min, legend}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: `${min}`,
+          gaugeint0: min,
+          label: `${min}`,
+        },
+      })),
+      {
+        legend: 'Monorail',
+        type: 'line',
+        properties: {
+          feature: 'monorail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: 'monorail',
+          gaugeint0: null,
+        },
+      },
+      {
+        legend: 'Narrow',
+        type: 'line',
+        properties: {
+          feature: 'narrow_gauge',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: 'standard',
+          gaugeint0: null,
+        },
+        variants: [
+          {
+            type: 'line',
+            properties: {
+              feature: 'rail',
+              gauge0: 'narrow',
+            },
+          },
+        ],
+      },
+      {
+        legend: 'Broad',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: 'broad',
+          gaugeint0: null,
+        },
+      },
+      {
+        legend: 'Standard',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: 'standard',
+          gaugeint0: null,
+        },
+      },
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          gauge0: '3500',
+          gaugeint0: 3500,
+          label: '3500'
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
@@ -6420,6 +6702,34 @@ const legendData = {
     ],
   },
   loading_gauge: {
+    'loading_gauge_railway_line_low-loading_gauge_railway_line_low': [
+      ...loading_gauges.loading_gauges.map(loading_gauge => ({
+        legend: loading_gauge.legend,
+        type: 'line',
+        properties: {
+          loading_gauge: loading_gauge.value,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          loading_gauge: null,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       ...loading_gauges.loading_gauges.map(loading_gauge => ({
         legend: loading_gauge.legend,
@@ -6491,6 +6801,34 @@ const legendData = {
     ],
   },
   track_class: {
+    'track_class_railway_line_low-track_class_railway_line_low': [
+      ...track_classes.track_classes.map(track_class => ({
+        legend: track_class.value,
+        type: 'line',
+        properties: {
+          track_class: track_class.value,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      })),
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          track_class: null,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       ...track_classes.track_classes.map(track_class => ({
         legend: track_class.value,
@@ -6562,6 +6900,38 @@ const legendData = {
     ],
   },
   operator: {
+    'operator_railway_line_low-operator_railway_line_low': [
+      {
+        legend: 'Railway line',
+        type: 'line',
+        properties: {
+          operator: 'ABC',
+          primary_operator: 'ABC',
+          operator_hash: 0,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      },
+      {
+        legend: '(unknown)',
+        type: 'line',
+        properties: {
+          operator: null,
+          primary_operator: null,
+          operator_hash: null,
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+        },
+      },
+    ],
     'openrailwaymap_low-railway_line_high': [
       {
         legend: 'Railway line',
