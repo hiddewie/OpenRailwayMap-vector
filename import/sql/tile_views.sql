@@ -244,6 +244,43 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+-- Reusable view for low railway line tiles, grouped per layer
+CREATE OR REPLACE VIEW railway_line_low AS
+  SELECT
+    id,
+    way,
+    feature,
+    state,
+    usage,
+    highspeed,
+    false as tunnel, -- TODO make null, omit
+    false as bridge,
+    ref,
+    CASE
+      WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+      ELSE COALESCE(ref, name)
+    END AS standard_label,
+    speed_label,
+    maxspeed,
+    train_protection_rank,
+    train_protection,
+    train_protection_construction_rank,
+    train_protection_construction,
+    electrification_state,
+    railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+    voltage,
+    frequency,
+    railway_to_int(gauges[1]) AS gaugeint0,
+    gauges[1] as gauge0,
+    (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+    rank
+  FROM railway_line
+  WHERE
+    state = 'present'
+      AND feature IN ('rail', 'ferry')
+      AND usage = 'main'
+      AND service IS NULL;
+
 --- Standard ---
 
 CREATE OR REPLACE FUNCTION standard_railway_line_low(z integer, x integer, y integer)
@@ -264,24 +301,16 @@ RETURN (
         4096, 64, true
       ) as way,
       feature,
-      'present' as state,
+      any_value(state) as state,
       any_value(usage) as usage,
       highspeed,
       false as tunnel,
-      false bridge,
+      false as bridge,
       ref,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
+      standard_label,
       max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
       feature,
       ref,
@@ -731,26 +760,18 @@ RETURN (
         4096, 64, true
       ) as way,
       feature,
-      'present' as state,
+      any_value(state) as state,
       any_value(usage) as usage,
       maxspeed,
       highspeed,
       false as tunnel,
       false bridge,
       ref,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
+      standard_label,
       speed_label,
       max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
       feature,
       ref,
@@ -812,27 +833,19 @@ RETURN (
         4096, 64, true
       ) as way,
       feature,
-      'present' as state,
+      any_value(state) as state,
       any_value(usage) as usage,
       false as tunnel,
-      false bridge,
+      false as bridge,
       ref,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
+      standard_label,
       train_protection_rank,
       train_protection,
       train_protection_construction_rank,
       train_protection_construction,
       max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
       feature,
       ref,
@@ -987,27 +1000,19 @@ RETURN (
         4096, 64, true
       ) as way,
       feature,
-      'present' as state,
+      any_value(state) as state,
       any_value(usage) as usage,
       false as tunnel,
       false bridge,
       ref,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
+      standard_label,
       electrification_state,
-      railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+      electrification_label,
       voltage,
       frequency,
       max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
       feature,
       ref,
@@ -1138,26 +1143,18 @@ RETURN (
         4096, 64, true
       ) as way,
       feature,
-      'present' as state,
+      any_value(state) as state,
       any_value(usage) as usage,
       false as tunnel,
       false bridge,
       ref,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
-      railway_to_int(gauges[1]) AS gaugeint0,
-      gauges[1] as gauge0,
-      (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+      standard_label,
+      gaugeint0,
+      gauge0,
+      gauge_label,
       max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
       feature,
       ref,
