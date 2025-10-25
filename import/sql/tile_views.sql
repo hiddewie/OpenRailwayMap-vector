@@ -1,68 +1,5 @@
 --- Shared ---
 
-CREATE OR REPLACE FUNCTION railway_line_standard(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'railway_line_standard', 4096, 'way', 'id')
-  FROM (
-    SELECT
-      min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
-      feature,
-      'present' as state,
-      highspeed,
-      false as tunnel,
-      false bridge,
-      ref,
-      max(rank) as rank
-    FROM railway_line
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND state = 'present'
-        AND feature IN ('rail', 'ferry')
-        AND usage = 'main'
-        AND service IS NULL
-    GROUP BY
-      feature,
-      ref,
-      highspeed
-    ORDER by
-      rank NULLS LAST
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
--- Function metadata
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION railway_line_standard IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "railway_line_standard",
-        "fields": {
-          "id": "integer",
-          "feature": "string",
-          "state": "string",
-          "highspeed": "boolean",
-          "tunnel": "boolean",
-          "bridge": "boolean",
-          "ref": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
 CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -308,6 +245,69 @@ DO $do$ BEGIN
 END $do$;
 
 --- Standard ---
+
+CREATE OR REPLACE FUNCTION railway_line_standard(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'railway_line_standard', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      'present' as state,
+      highspeed,
+      false as tunnel,
+      false bridge,
+      ref,
+      max(rank) as rank
+    FROM railway_line
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+        AND state = 'present'
+        AND feature IN ('rail', 'ferry')
+        AND usage = 'main'
+        AND service IS NULL
+    GROUP BY
+      feature,
+      ref,
+      highspeed
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_line_standard IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_line_standard",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "highspeed": "boolean",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
