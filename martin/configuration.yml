@@ -391,6 +391,11 @@ postgres:
 
     # --- Operator --- #
 
+    operator_railway_line_low:
+      schema: public
+      function: operator_railway_line_low
+      maxzoom: 7
+
     operator_railway_symbols:
       schema: public
       function: operator_railway_symbols

@@ -245,7 +245,6 @@ DO $do$ BEGIN
 END $do$;
 
 -- Reusable view for low railway line tiles, grouped per layer
-drop view railway_line_low cascade ; -- TODO
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
     id,
@@ -276,8 +275,20 @@ CREATE OR REPLACE VIEW railway_line_low AS
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
     loading_gauge,
     track_class,
+    operator,
+    get_byte(sha256(primary_operator::bytea), 0) as operator_hash,
+    primary_operator,
+    owner,
     rank
-  FROM railway_line
+  FROM (
+    SELECT
+      *,
+      CASE
+        WHEN ARRAY[owner] <@ operator THEN owner
+        ELSE operator[1]
+      END AS primary_operator
+    from railway_line
+  ) as r
   WHERE
     state = 'present'
       AND feature IN ('rail', 'ferry')
@@ -1328,6 +1339,78 @@ DO $do$ BEGIN
 END $do$;
 
 --- Operator ---
+
+CREATE OR REPLACE FUNCTION operator_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      false as tunnel,
+      false bridge,
+      ref,
+      standard_label,
+      operator,
+      operator_hash,
+      primary_operator,
+      owner,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      operator,
+      operator_hash,
+      primary_operator,
+      owner
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION operator_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "operator_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "operator": "string",
+          "operator_hash": "number",
+          "primary_operator": "string",
+          "owner": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea

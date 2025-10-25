@@ -682,6 +682,10 @@ const sources = {
     type: 'vector',
     url: '/track_class_railway_line_low',
   },
+  operator_railway_line_low: {
+    type: 'vector',
+    url: '/operator_railway_line_low',
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
@@ -3910,7 +3914,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'operator_railway_line_low',
+          sourceLayer: 'operator_railway_line_low',
           states: {
             present: undefined,
           },

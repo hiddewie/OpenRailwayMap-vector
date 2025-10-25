@@ -350,6 +350,7 @@ const features = {
   'gauge_railway_line_low-gauge_railway_line_low': railwayLineFeatures,
   'loading_gauge_railway_line_low-loading_gauge_railway_line_low': railwayLineFeatures,
   'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
+  'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperty: 'name',
     featureProperty: 'type',
