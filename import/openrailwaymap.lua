@@ -739,7 +739,11 @@ function name_tags(tags)
 end
 
 function position_is_zero(position)
-  return position:find('^%-?%d+$') or position:find('^%-?%d*[,/.]0*$')
+  if position:find('^%-?%d+$') or position:find('^%-?%d*[,/.]0*$') then
+    return true
+  else
+    return false
+  end
 end
 
 function parse_railway_position(position, line)
@@ -996,7 +1000,6 @@ function osm2pgsql.process_node(object)
   if tags.public_transport == 'stop_position' and tags.name then
     stop_positions:insert({
       way = object:as_point(),
-      railway = tags.railway,
       name = tags.name,
     })
   end
