@@ -245,6 +245,7 @@ DO $do$ BEGIN
 END $do$;
 
 -- Reusable view for low railway line tiles, grouped per layer
+drop view railway_line_low cascade ; -- TODO
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
     id,
@@ -273,6 +274,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     railway_to_int(gauges[1]) AS gaugeint0,
     gauges[1] as gauge0,
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+    loading_gauge,
     rank
   FROM railway_line
   WHERE
@@ -1123,7 +1125,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
---- Electrification ---
+--- Gauge ---
 
 CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
@@ -1187,6 +1189,71 @@ DO $do$ BEGIN
           "gauge0": "string",
           "gaugeint0": "number",
           "gauge_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Gauge ---
+
+CREATE OR REPLACE FUNCTION loading_gauge_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'loading_gauge_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      false as tunnel,
+      false bridge,
+      ref,
+      standard_label,
+      loading_gauge,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      loading_gauge
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION loading_gauge_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "loading_gauge_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "loading_gauge": "string"
         }
       }
     ]

@@ -375,6 +375,13 @@ postgres:
       function: gauge_railway_line_low
       maxzoom: 7
 
+    # --- Loading gauge --- #
+
+    loading_gauge_railway_line_low:
+      schema: public
+      function: loading_gauge_railway_line_low
+      maxzoom: 7
+
     # --- Operator --- #
 
     operator_railway_symbols:
