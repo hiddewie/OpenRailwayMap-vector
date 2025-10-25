@@ -662,6 +662,10 @@ const sources = {
     type: 'vector',
     url: '/speed_railway_line_low',
   },
+  electrification_railway_line_low: {
+    type: 'vector',
+    url: '/electrification_railway_line_low',
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
@@ -3311,7 +3315,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'electrification_railway_line_low',
+          sourceLayer: 'electrification_railway_line_low',
           states: {
             present: undefined,
           },
