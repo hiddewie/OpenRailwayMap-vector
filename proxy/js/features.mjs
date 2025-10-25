@@ -344,6 +344,7 @@ const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_high': railwayLineFeatures,
   'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
+  'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperty: 'name',
     featureProperty: 'type',

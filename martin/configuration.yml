@@ -323,6 +323,11 @@ postgres:
 
     # --- Speed --- #
 
+    speed_railway_line_low:
+      schema: public
+      function: speed_railway_line_low
+      maxzoom: 7
+
     speed_railway_signals:
       schema: public
       function: speed_railway_signals
