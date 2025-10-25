@@ -662,17 +662,25 @@ const sources = {
     type: 'vector',
     url: '/speed_railway_line_low',
   },
+  signals_railway_line_low: {
+    type: 'vector',
+    url: '/signals_railway_line_low',
+  },
   electrification_railway_line_low: {
     type: 'vector',
     url: '/electrification_railway_line_low',
+  },
+  loading_gauge_railway_line_low: {
+    type: 'vector',
+    url: '/loading_gauge_railway_line_low',
   },
   gauge_railway_line_low: {
     type: 'vector',
     url: '/gauge_railway_line_low',
   },
-  signals_railway_line_low: {
+  track_class_railway_line_low: {
     type: 'vector',
-    url: '/signals_railway_line_low',
+    url: '/track_class_railway_line_low',
   },
   openrailwaymap_low: {
     type: 'vector',
@@ -3755,7 +3763,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'loading_gauge_railway_line_low',
+          sourceLayer: 'loading_gauge_railway_line_low',
           states: {
             present: undefined,
           },
@@ -3807,7 +3816,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'track_class_railway_line_low',
+          sourceLayer: 'track_class_railway_line_low',
           states: {
             present: undefined,
           },

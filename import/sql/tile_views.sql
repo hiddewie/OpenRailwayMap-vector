@@ -275,6 +275,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     gauges[1] as gauge0,
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
     loading_gauge,
+    track_class,
     rank
   FROM railway_line
   WHERE
@@ -1196,7 +1197,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
---- Gauge ---
+--- Loading gauge ---
 
 CREATE OR REPLACE FUNCTION loading_gauge_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
@@ -1254,6 +1255,71 @@ DO $do$ BEGIN
           "ref": "string",
           "standard_label": "string",
           "loading_gauge": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Track class ---
+
+CREATE OR REPLACE FUNCTION track_class_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'track_class_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      false as tunnel,
+      false bridge,
+      ref,
+      standard_label,
+      track_class,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      track_class
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION track_class_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "track_class_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "track_class": "string"
         }
       }
     ]

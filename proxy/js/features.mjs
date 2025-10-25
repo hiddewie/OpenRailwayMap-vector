@@ -345,9 +345,11 @@ const features = {
   'openrailwaymap_low-railway_line_high': railwayLineFeatures,
   'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
   'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
+  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
   'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
   'gauge_railway_line_low-gauge_railway_line_low': railwayLineFeatures,
-  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
+  'loading_gauge_railway_line_low-loading_gauge_railway_line_low': railwayLineFeatures,
+  'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperty: 'name',
     featureProperty: 'type',
