@@ -654,9 +654,9 @@ const sources = {
       features: [],
     },
   },
-  railway_line_standard: {
+  railway_line_standard_low: {
     type: 'vector',
-    url: '/railway_line_standard',
+    url: '/railway_line_standard_low',
   },
   openrailwaymap_low: {
     type: 'vector',
@@ -1552,8 +1552,8 @@ const layers = {
           id: 'railway_line_main_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'railway_line_standard',
-          sourceLayer: 'railway_line_standard',
+          source: 'railway_line_standard_low',
+          sourceLayer: 'railway_line_standard_low',
           states: {
             present: undefined,
           },
@@ -1575,8 +1575,8 @@ const layers = {
           id: 'railway_ferry_main_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'railway_line_standard',
-          sourceLayer: 'railway_line_standard',
+          source: 'railway_line_standard_low',
+          sourceLayer: 'railway_line_standard_low',
           states: {
             present: undefined,
           },
