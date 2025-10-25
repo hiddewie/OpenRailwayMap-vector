@@ -666,6 +666,10 @@ const sources = {
     type: 'vector',
     url: '/electrification_railway_line_low',
   },
+  signals_railway_line_low: {
+    type: 'vector',
+    url: '/signals_railway_line_low',
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
@@ -2880,7 +2884,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'signals_railway_line_low',
+          sourceLayer: 'signals_railway_line_low',
           states: {
             present: undefined,
           },
@@ -2896,7 +2901,8 @@ const layers = {
           id: 'railway_line_low_construction',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'signals_railway_line_low',
+          sourceLayer: 'signals_railway_line_low',
           states: {
             present: train_protection_construction_dasharray,
           },

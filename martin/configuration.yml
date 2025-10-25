@@ -335,6 +335,11 @@ postgres:
 
     # --- Signals --- #
 
+    signals_railway_line_low:
+      schema: public
+      function: signals_railway_line_low
+      maxzoom: 7
+
     signals_signal_boxes:
       schema: public
       function: signals_signal_boxes
