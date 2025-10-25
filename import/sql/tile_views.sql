@@ -269,6 +269,10 @@ RETURN (
       false as tunnel,
       false bridge,
       ref,
+      CASE
+        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+        ELSE COALESCE(ref, name)
+      END AS standard_label,
       max(rank) as rank
     FROM railway_line
     WHERE
@@ -280,6 +284,7 @@ RETURN (
     GROUP BY
       feature,
       ref,
+      standard_label,
       highspeed
     ORDER by
       rank NULLS LAST
@@ -301,7 +306,8 @@ DO $do$ BEGIN
           "highspeed": "boolean",
           "tunnel": "boolean",
           "bridge": "boolean",
-          "ref": "string"
+          "ref": "string",
+          "standard_label": "string"
         }
       }
     ]
