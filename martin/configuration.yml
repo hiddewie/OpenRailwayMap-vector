@@ -30,6 +30,8 @@ postgres:
 
     # --- Standard --- #
 
+    # railway_line_standard, see function below
+
     standard_railway_text_stations_low:
       schema: public
       table: standard_railway_text_stations_low
@@ -303,6 +305,11 @@ postgres:
       maxzoom: 14
 
     # --- Standard --- #
+
+    railway_line_standard:
+      schema: public
+      function: railway_line_standard
+      maxzoom: 7
 
     standard_railway_symbols:
       schema: public

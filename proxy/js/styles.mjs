@@ -654,6 +654,10 @@ const sources = {
       features: [],
     },
   },
+  railway_line_standard: {
+    type: 'vector',
+    url: '/railway_line_standard',
+  },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
@@ -732,14 +736,14 @@ const railwayLine = (text, layers) => [
 
   // Tunnels
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_casing_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
-      'source-layer': 'railway_line_high',
+      'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
         ['get', 'tunnel'],
@@ -758,14 +762,14 @@ const railwayLine = (text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_fill_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
-      'source-layer': 'railway_line_high',
+      'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
         ['get', 'tunnel'],
@@ -786,13 +790,13 @@ const railwayLine = (text, layers) => [
       },
     })),
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
     maxzoom,
     source,
-    'source-layer': 'railway_line_high',
+    'source-layer': sourceLayer || 'railway_line_high',
     filter: ['all',
       ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
       ['get', 'tunnel'],
@@ -826,14 +830,14 @@ const railwayLine = (text, layers) => [
 
   // Ground
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_casing_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
-      'source-layer': 'railway_line_high',
+      'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
         ['!', ['get', 'bridge']],
@@ -853,14 +857,14 @@ const railwayLine = (text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_fill_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
-      'source-layer': 'railway_line_high',
+      'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
         ['!', ['get', 'bridge']],
@@ -887,14 +891,14 @@ const railwayLine = (text, layers) => [
 
   ...layers
     .filter(({states}) => 'present' in states)
-    .flatMap(({id, minzoom, maxzoom, source, filter, width, sort}) => [
+    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, sort}) => [
       {
         id: `${id}_bridge_railing`,
         type: 'line',
         minzoom: Math.max(minzoom, 8),
         maxzoom,
         source,
-        'source-layer': 'railway_line_high',
+        'source-layer': sourceLayer || 'railway_line_high',
         filter: ['all',
           ['==', ['get', 'state'], 'present'],
           ['get', 'bridge'],
@@ -924,7 +928,7 @@ const railwayLine = (text, layers) => [
         minzoom: Math.max(minzoom, 8),
         maxzoom,
         source,
-        'source-layer': 'railway_line_high',
+        'source-layer': sourceLayer || 'railway_line_high',
         filter: ['all',
           ['==', ['get', 'state'], 'present'],
           ['get', 'bridge'],
@@ -950,14 +954,14 @@ const railwayLine = (text, layers) => [
       },
     ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_bridge_fill_${state}`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
-      'source-layer': 'railway_line_high',
+      'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
         ['==', ['get', 'state'], state],
         ['get', 'bridge'],
@@ -1002,13 +1006,13 @@ const railwayLine = (text, layers) => [
 
   railwayKmText,
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, filter, states}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, states}) => ({
     id: `${id}_text`,
     type: 'symbol',
     minzoom,
     maxzoom,
     source,
-    'source-layer': 'railway_line_high',
+    'source-layer': sourceLayer || 'railway_line_high',
     filter: ['all',
       ['any', ...Object.keys(states).map(state => ['==', ['get', 'state'], state])],
       filter ?? true,
@@ -1548,7 +1552,8 @@ const layers = {
           id: 'railway_line_main_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'railway_line_standard',
+          sourceLayer: 'railway_line_standard',
           states: {
             present: undefined,
           },
@@ -1570,7 +1575,8 @@ const layers = {
           id: 'railway_ferry_main_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'openrailwaymap_low',
+          source: 'railway_line_standard',
+          sourceLayer: 'railway_line_standard',
           states: {
             present: undefined,
           },
