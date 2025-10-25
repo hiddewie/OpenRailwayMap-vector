@@ -218,7 +218,7 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          docker run --rm --net host -v "$PWD/test/api.hurl:/hurl/api.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:5000 /hurl/api.hurl
+          docker run --rm --net host -v "$PWD/test/api.hurl:/hurl/api.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:5000/api /hurl/api.hurl
 
       - name: Print logs
         if: always()
