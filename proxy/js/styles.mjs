@@ -657,7 +657,6 @@ const sources = {
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
-    promoteId: 'id',
   },
   standard_railway_text_stations_low: {
     type: 'vector',

@@ -8,65 +8,67 @@ CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way', 'id')
   FROM (
     -- TODO calculate labels in frontend
     SELECT
-      id,
-      osm_id,
-      way,
-      way_length,
+      min(id) as id,
+      null as osm_id,
+      st_collect(way) as way,
+      sum(way_length) as way_length,
       feature,
-      state,
-      usage,
-      service,
+      'present' as state,
+      null as usage,
+      null as service,
       highspeed,
-      tunnel,
-      bridge,
-      CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
-      END AS standard_label,
+      false as tunnel,
+      false bridge,
+--       CASE
+--         WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+--         ELSE COALESCE(ref, name)
+--       END AS standard_label,
+--       null as standard_label,
       ref,
-      track_ref,
-      track_class,
-      array_to_string(reporting_marks, ', ') as reporting_marks,
-      preferred_direction,
-      rank,
-      maxspeed,
-      speed_label,
-      train_protection_rank,
-      train_protection,
-      train_protection_construction_rank,
-      train_protection_construction,
-      electrification_state,
-      voltage,
-      frequency,
-      electrification_label,
-      future_voltage,
-      future_frequency,
-      railway_to_int(gauge0) AS gaugeint0,
-      gauge0,
-      railway_to_int(gauge1) AS gaugeint1,
-      gauge1,
-      railway_to_int(gauge2) AS gaugeint2,
-      gauge2,
-      gauge_label,
-      loading_gauge,
-      operator,
-      get_byte(sha256(primary_operator::bytea), 0) as operator_hash,
-      primary_operator,
-      owner,
-      traffic_mode,
-      radio,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
+--       null as track_ref,
+--       null as track_class,
+--       array_to_string(reporting_marks, ', ') as reporting_marks,
+--       null as reporting_marks,
+--       null as preferred_direction,
+      max(rank) as rank
+--       null as maxspeed,
+--       null as speed_label, any_value(speed_label), -- TODO
+--       null as train_protection_rank ,-- max(train_protection_rank) as train_protection_rank,
+--       null as train_protection,
+--       null as train_protection_construction_rank, max(train_protection_construction_rank) as train_protection_construction_rank,
+--       null as train_protection_construction,
+--       null as electrification_state,
+--       null as voltage,
+--       null as frequency,
+--       null as electrification_label, -- any_value(electrification_label) as electrification_label,
+--       null as future_voltage,
+--       null as future_frequency,
+--       railway_to_int(gauge0) AS gaugeint0,
+--       gauge0,
+--       railway_to_int(gauge1) AS gaugeint1,
+--       gauge1,
+--       railway_to_int(gauge2) AS gaugeint2,
+--       gauge2,
+--       any_value(gauge_label) as gauge_label,
+--       loading_gauge,
+--       operator,
+--       null as operator_hash, any_value(get_byte(sha256(primary_operator::bytea), 0)) as operator_hash,
+--       null as primary_operator,
+--       null as owner,
+--       null as traffic_mode,
+--       null as radio,
+--       null as wikidata,
+--       null as wikimedia_commons,
+--       null as wikimedia_commons_file,
+--       null as image,
+--       null as mapillary,
+--       null as wikipedia,
+--       null as note,
+--       null as description
     FROM (
       SELECT
         id,
@@ -171,10 +173,40 @@ RETURN (
             true
         END
     ) AS r
+    GROUP BY
+      feature,
+      ref,
+      highspeed
+--       feature,
+--       state,
+--       usage,
+--       service,
+--       highspeed,
+--       ref,
+--       name,
+--       track_class,
+--       reporting_marks,
+--       maxspeed,
+--       train_protection,
+--       train_protection_construction,
+--       electrification_state,
+--       voltage,
+--       frequency,
+--       future_voltage,
+--       future_frequency,
+--       gauge0,
+--       gauge1,
+--       gauge2,
+--       loading_gauge,
+--       operator,
+--       primary_operator,
+--       owner,
+--       radio
+    HAVING sum(way_length) > 10000
     ORDER by
-      layer,
-      rank NULLS LAST,
-      maxspeed NULLS FIRST
+--       layer, TODO
+      rank NULLS LAST
+--       maxspeed NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
