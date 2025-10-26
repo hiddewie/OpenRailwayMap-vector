@@ -4324,6 +4324,13 @@ features:
       - { tag: 'railway:signal:wrong_road', value: 'FR:TSCS' }
       - { tag: 'railway:signal:wrong_road:form', any: ['sign', 'light'] }
 
+  - description: Distant station
+    country: FR
+    icon: { default: 'fr/GARE' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:GARE' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
