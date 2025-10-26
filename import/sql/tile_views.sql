@@ -71,11 +71,7 @@ RETURN (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(
-          way,
-          ST_TileEnvelope(z, x, y),
-          4096, 64, true
-        ) as way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         way_length,
         feature,
         state,
@@ -412,7 +408,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way', 'id')
   FROM (
     SELECT
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       feature,
@@ -493,7 +489,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
   FROM (
     SELECT
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       feature,
@@ -573,7 +569,7 @@ RETURN (
   FROM (
     SELECT
       id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       osm_id,
       feature
     FROM turntables
@@ -610,11 +606,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way', 'id')
   FROM (
    SELECT
-     ST_AsMVTGeom(
-       way,
-       ST_TileEnvelope(z, x, y),
-       4096, 64, true
-     ) AS way,
+     ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
      id,
      osm_id,
      type,
@@ -676,7 +668,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way', 'id')
   FROM (
     SELECT
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       osm_type,
@@ -829,11 +821,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(
-        way,
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) AS way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       osm_type,
@@ -901,7 +889,7 @@ RETURN (
       id,
       osm_id,
       osm_type,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform' as feature,
       name,
       nullif(array_to_string(ref, U&'\001E'), '') as ref,
@@ -964,7 +952,7 @@ RETURN (
     SELECT
       id,
       osm_id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform_edge' as feature,
       ref,
       height,
@@ -1008,7 +996,7 @@ RETURN (
     SELECT
       id,
       osm_id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway,
       position_text as pos,
       position_exact as pos_exact,
@@ -1073,7 +1061,7 @@ RETURN (
     SELECT
       id,
       osm_id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway,
       ref,
       type,
@@ -1464,11 +1452,7 @@ RETURN (
     ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(
-        way,
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) AS way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       osm_type,
@@ -1534,7 +1518,7 @@ RETURN (
       id,
       osm_id,
       osm_type,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       ref,
       transition,
@@ -1854,11 +1838,7 @@ RETURN (
     ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way', 'id')
   FROM (
          SELECT
-           ST_AsMVTGeom(
-             way,
-             ST_TileEnvelope(z, x, y),
-             4096, 64, true
-           ) AS way,
+           ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
            id,
            osm_id,
            osm_type,

@@ -262,7 +262,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
         direction_both,
         ref,
         caption,
@@ -342,7 +342,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
         direction_both,
         ref,
         caption,
@@ -442,7 +442,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
         direction_both,
         ref,
         caption,
