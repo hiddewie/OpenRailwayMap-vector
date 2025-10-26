@@ -4345,6 +4345,13 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'FR:GARE' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: Distant site
+    country: FR
+    icon: { default: 'fr/APPROCHE_ETS_A' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:APPROCHE_ETS_A' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
