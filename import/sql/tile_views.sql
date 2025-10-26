@@ -951,18 +951,49 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_platforms AS;
-
-CREATE OR REPLACE VIEW standard_railway_platform_edges AS
+CREATE OR REPLACE FUNCTION standard_railway_platform_edges(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    way,
-    'platform_edge' as feature,
-    ref,
-    height,
-    tactile_paving
-  FROM platform_edge;
+    ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      way,
+      'platform_edge' as feature,
+      ref,
+      height,
+      tactile_paving
+    FROM platform_edge
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_platform_edges IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_platform_edges",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "ref": "string",
+          "height": "string",
+          "tactile_paving": "boolean"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW railway_text_km AS
   SELECT
