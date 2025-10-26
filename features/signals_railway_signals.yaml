@@ -4280,6 +4280,13 @@ features:
       - { tag: 'railway:signal:train_protection', any: ['FR:REP_ETCS;FR:REP_TVM', 'FR:repère_arrêt_ETCS;FR:repère_arrêt_TVM'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Shunting limit
+    country: FR
+    icon: { default: 'fr/JAL_MAN' }
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['FR:JAL_MAN', 'FR:jalon_de_manoeuvre_TVM'] }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
