@@ -26,30 +26,6 @@ postgres:
 
     # --- Standard --- #
 
-    railway_text_km:
-      schema: public
-      table: railway_text_km
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        pos: string
-        pos_exact: string
-        pos_int: integer
-        zero: boolean
-        type: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     standard_railway_switch_ref:
       schema: public
       table: standard_railway_switch_ref
@@ -118,6 +94,11 @@ postgres:
       schema: public
       function: railway_line_high
       maxzoom: 14
+
+    railway_text_km:
+      schema: public
+      function: railway_text_km
+      # TODO minzoom / maxzoom
 
     # --- Standard --- #
 

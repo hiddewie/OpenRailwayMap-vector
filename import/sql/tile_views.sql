@@ -995,27 +995,70 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW railway_text_km AS
+CREATE OR REPLACE FUNCTION railway_text_km(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    way,
-    railway,
-    position_text as pos,
-    position_exact as pos_exact,
-    zero,
-    round(position_numeric) as pos_int,
-    type,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_positions
-  ORDER by zero;
+    ST_AsMVT(tile, 'railway_text_km', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      way,
+      railway,
+      position_text as pos,
+      position_exact as pos_exact,
+      zero,
+      round(position_numeric) as pos_int,
+      type,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_positions
+    WHERE way && ST_TileEnvelope(z, x, y)
+    ORDER by zero
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_text_km IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_text_km",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "railway": "string",
+          "pos": "string",
+          "pos_exact": "string",
+          "pos_int": "integer",
+          "zero": "boolean",
+          "type": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   SELECT
