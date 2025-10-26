@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way', 'id')
   FROM (
     -- TODO calculate labels in frontend
     SELECT
@@ -409,7 +409,7 @@ CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integ
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
+    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way', 'id')
   FROM (
     SELECT
       way,
@@ -490,7 +490,7 @@ CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integ
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
+    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
   FROM (
     SELECT
       way,
@@ -561,8 +561,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_med AS;
-
 CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -571,7 +569,7 @@ CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y in
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
+    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way', 'id')
   FROM (
    SELECT
      ST_AsMVTGeom(
@@ -693,7 +691,7 @@ CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
       ST_AsMVTGeom(
@@ -990,7 +988,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
+      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way', 'id')
     FROM (
       SELECT
         ST_AsMVTGeom(
@@ -1153,7 +1151,7 @@ CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
       ST_AsMVTGeom(
@@ -1483,7 +1481,7 @@ CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way', 'id')
   FROM (
          SELECT
            ST_AsMVTGeom(
