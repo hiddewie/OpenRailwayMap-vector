@@ -446,6 +446,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_low IS $tj$' || $$
   {
@@ -524,6 +525,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_med IS $tj$' || $$
   {
@@ -579,6 +581,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
   {
@@ -703,6 +706,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations IS $tj$' || $$
   {
@@ -778,6 +782,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_stations IS $tj$' || $$
   {
@@ -882,26 +887,71 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_platforms AS
-SELECT
-  id,
-  osm_id,
-  osm_type,
-  way,
-  'platform' as feature,
-  name,
-  nullif(array_to_string(ref, U&'\001E'), '') as ref,
-  height,
-  surface,
-  elevator,
-  shelter,
-  lit,
-  bin,
-  bench,
-  wheelchair,
-  departures_board,
-  tactile_paving
-FROM platforms;
+CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_platforms', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      osm_type,
+      way,
+      'platform' as feature,
+      name,
+      nullif(array_to_string(ref, U&'\001E'), '') as ref,
+      height,
+      surface,
+      elevator,
+      shelter,
+      lit,
+      bin,
+      bench,
+      wheelchair,
+      departures_board,
+      tactile_paving
+    FROM platforms
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_platforms IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_platforms",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "name": "string",
+          "ref": "string",
+          "height": "string",
+          "surface": "boolean",
+          "elevator": "boolean",
+          "shelter": "boolean",
+          "lit": "boolean",
+          "bin": "boolean",
+          "bench": "boolean",
+          "wheelchair": "boolean",
+          "departures_board": "boolean",
+          "tactile_paving": "boolean"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW standard_railway_platforms AS;
 
 CREATE OR REPLACE VIEW standard_railway_platform_edges AS
   SELECT
@@ -979,6 +1029,7 @@ RETURN (
   ) as tile
   WHERE way IS NOT NULL
 );
+
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_station_areas IS $tj$' || $$
   {

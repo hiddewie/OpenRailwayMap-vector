@@ -26,30 +26,6 @@ postgres:
 
     # --- Standard --- #
 
-    standard_railway_platforms:
-      schema: public
-      table: standard_railway_platforms
-      srid: 3857
-      geometry_column: way
-      geometry_type: GEOMETRY
-      properties:
-        id: integer
-        osm_id: string
-        osm_type: string
-        feature: string
-        name: string
-        ref: string
-        height: string
-        surface: boolean
-        elevator: boolean
-        shelter: boolean
-        lit: boolean
-        bin: boolean
-        bench: boolean
-        wheelchair: boolean
-        departures_board: boolean
-        tactile_paving: boolean
-
     standard_railway_platform_edges:
       schema: public
       table: standard_railway_platform_edges
@@ -202,6 +178,11 @@ postgres:
       schema: public
       function: standard_station_entrances
       minzoom: 16
+
+    standard_railway_platforms:
+      schema: public
+      function: standard_railway_platforms
+      # TODO minzoom / maxzoom
 
     # --- Speed --- #
 
