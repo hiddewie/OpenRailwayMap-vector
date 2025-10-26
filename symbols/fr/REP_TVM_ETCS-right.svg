@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="14.000001"
+   height="29.414272"
+   viewBox="0 0 14.000001 29.414272"
+   version="1.1"
+   id="svg272"
+   sodipodi:docname="REP_TVM_ETCS-right.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs276" />
+  <sodipodi:namedview
+     id="namedview274"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="19.267857"
+     inkscape:cx="-4.5671918"
+     inkscape:cy="1.115848"
+     inkscape:window-width="2560"
+     inkscape:window-height="1368"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg272" />
+  <rect
+     x="0"
+     y="0"
+     width="14.000001"
+     height="14.000001"
+     fill="#0140b2"
+     fill-opacity="1"
+     id="rect266"
+     style="stroke-width:0.833333" />
+  <path
+     fill-rule="evenodd"
+     fill="#ffffff"
+     fill-opacity="1"
+     d="M 0.48828172,9.3359387 H 6.8867197 V 13.398439 L 14.000001,7.0000007 6.8867197,0.60156272 V 4.6640627 H 0.48828172 Z m 0,0"
+     id="path268" />
+  <path
+     fill-rule="evenodd"
+     fill="#fafa17"
+     fill-opacity="1"
+     d="M 0.48828172,8.6250007 H 7.6015627 V 11.804689 L 12.937501,7.0000007 7.6015627,2.1992197 v 3.175781 H 0.48828172 Z m 0,0"
+     id="path270" />
+  <rect
+     x="0"
+     y="15.414272"
+     width="14.000001"
+     height="14.000001"
+     fill="#0140b2"
+     fill-opacity="1"
+     id="rect653"
+     style="stroke-width:0.833333" />
+  <path
+     fill-rule="evenodd"
+     fill="#ffffff"
+     fill-opacity="1"
+     d="m 0.48828172,15.414273 v 14 L 14.000001,22.328335 Z m 0,0"
+     id="path655" />
+  <path
+     fill-rule="evenodd"
+     fill="#fafa17"
+     fill-opacity="1"
+     d="M 0.48828172,16.379117 V 28.453335 L 12.046876,22.324429 Z m 0,0"
+     id="path657" />
+</svg>
