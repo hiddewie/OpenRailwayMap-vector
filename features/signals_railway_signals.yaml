@@ -4458,6 +4458,20 @@ features:
       - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV1-2' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Shunting to garage
+    country: FR
+    icon: { default: 'fr/G' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:G' }
+      - { tag: 'railway:signal:shunting:form', any: ['sign', 'light'] }
+
+  - description: Shunting to depot
+    country: FR
+    icon: { default: 'fr/D' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:D' }
+      - { tag: 'railway:signal:shunting:form', any: ['sign', 'light'] }
+
   # --- GB --- #
 
   - description: Whistle stencil
