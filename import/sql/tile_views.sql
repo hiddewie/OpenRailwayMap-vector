@@ -14,7 +14,7 @@ RETURN (
     SELECT
       id,
       osm_id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       way_length,
       feature,
       state,
@@ -71,7 +71,7 @@ RETURN (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+        way,
         way_length,
         feature,
         state,
