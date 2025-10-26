@@ -257,7 +257,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way')
+      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
@@ -337,7 +337,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way')
+      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
@@ -437,7 +437,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'electrification_signals', 4096, 'way')
+      ST_AsMVT(tile, 'electrification_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
