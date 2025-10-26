@@ -561,6 +561,44 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      way,
+      osm_id,
+      feature
+    FROM turntables
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_turntables",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
