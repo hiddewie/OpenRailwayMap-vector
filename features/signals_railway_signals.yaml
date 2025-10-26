@@ -4249,8 +4249,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { exact: 'left', value: 'be/REP_TVM-right' }
-        - { exact: 'overhead', value: 'be/REP_TVM-down' }
+        - { exact: 'left', value: 'fr/REP_TVM-right' }
+        - { exact: 'overhead', value: 'fr/REP_TVM-down' }
       default: 'fr/REP_TVM-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_TVM' }
@@ -4261,8 +4261,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { exact: 'left', value: 'be/REP_ETCS-right' }
-        - { exact: 'overhead', value: 'be/REP_ETCS-down' }
+        - { exact: 'left', value: 'fr/REP_ETCS-right' }
+        - { exact: 'overhead', value: 'fr/REP_ETCS-down' }
       default: 'fr/REP_ETCS-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
@@ -4273,8 +4273,8 @@ features:
     icon:
       match: 'railway:signal:position'
       cases:
-        - { exact: 'left', value: 'be/REP_TVM_ETCS-right' }
-        - { exact: 'overhead', value: 'be/REP_TVM_ETCS-down' }
+        - { exact: 'left', value: 'fr/REP_TVM_ETCS-right' }
+        - { exact: 'overhead', value: 'fr/REP_TVM_ETCS-down' }
       default: 'fr/REP_TVM_ETCS-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS;FR:REP_TVM' }
