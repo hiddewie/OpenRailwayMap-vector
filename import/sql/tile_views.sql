@@ -605,27 +605,27 @@ RETURN (
   SELECT
     ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way', 'id')
   FROM (
-   SELECT
-     ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-     id,
-     osm_id,
-     type,
-     name,
-     ref,
-     CASE
-       WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
-       ELSE COALESCE(name, ref)
-       END AS label,
-     wikidata,
-     wikimedia_commons,
-     wikimedia_commons_file,
-     image,
-     mapillary,
-     wikipedia,
-     note,
-     description
-   FROM station_entrances
-   WHERE way && ST_TileEnvelope(z, x, y)
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      type,
+      name,
+      ref,
+      CASE
+        WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
+        ELSE COALESCE(name, ref)
+      END AS label,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM station_entrances
+    WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
