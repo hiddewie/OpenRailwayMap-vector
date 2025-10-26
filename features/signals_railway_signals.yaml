@@ -4223,6 +4223,63 @@ features:
       - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
       - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
 
+  - description: Cab signalling announcement
+    country: FR
+    icon: { default: 'fr/CAB_E' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:CAB_E' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Cab signalling start
+    country: FR
+    icon: { default: 'fr/CAB_R' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:CAB_R' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Cab signalling end
+    country: FR
+    icon: { default: 'fr/CAB_S' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:CAB_S' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: TVM block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'be/REP_TVM-right' }
+        - { exact: 'overhead', value: 'be/REP_TVM-down' }
+      default: 'fr/REP_TVM-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:REP_TVM' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'be/REP_ETCS-right' }
+        - { exact: 'overhead', value: 'be/REP_ETCS-down' }
+      default: 'fr/REP_ETCS-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: TVM and ETCS block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'be/REP_TVM_ETCS-right' }
+        - { exact: 'overhead', value: 'be/REP_TVM_ETCS-down' }
+      default: 'fr/REP_TVM_ETCS-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS;FR:REP_TVM' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
