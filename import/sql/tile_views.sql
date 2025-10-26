@@ -1060,28 +1060,73 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_switch_ref AS
+CREATE OR REPLACE FUNCTION standard_railway_switch_ref(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    way,
-    railway,
-    ref,
-    type,
-    turnout_side,
-    local_operated,
-    resetting,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_switches
-  ORDER by char_length(ref);
+    ST_AsMVT(tile, 'standard_railway_switch_ref', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      way,
+      railway,
+      ref,
+      type,
+      turnout_side,
+      local_operated,
+      resetting,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_switches
+    WHERE way && ST_TileEnvelope(z, x, y)
+    ORDER by char_length(ref)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_switch_ref IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_switch_ref",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "railway": "string",
+          "ref": "string",
+          "type": "string",
+          "turnout_side": "string",
+          "local_operated": "boolean",
+          "resetting": "boolean",
+          "position": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 
 CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x integer, y integer)
   RETURNS bytea

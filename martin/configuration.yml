@@ -26,31 +26,6 @@ postgres:
 
     # --- Standard --- #
 
-    standard_railway_switch_ref:
-      schema: public
-      table: standard_railway_switch_ref
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        ref: string
-        type: string
-        turnout_side: string
-        local_operated: boolean
-        resetting: boolean
-        position: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     # --- Speed --- #
 
     # speed_railway_signals, see function below
@@ -154,6 +129,11 @@ postgres:
     standard_railway_platform_edges:
       schema: public
       function: standard_railway_platform_edges
+      # TODO minzoom / maxzoom
+
+    standard_railway_switch_ref:
+      schema: public
+      table: standard_railway_switch_ref
       # TODO minzoom / maxzoom
 
     # --- Speed --- #
