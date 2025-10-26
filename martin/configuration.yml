@@ -21,24 +21,10 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
-  # Associative arrays of table sources
-  tables:
+  # No tables, see function sources below
+  tables: {}
 
-    # --- Standard --- #
-
-    # --- Speed --- #
-
-    # speed_railway_signals, see function below
-
-    # --- Signals --- #
-
-    # signals_signal_boxes, see function below
-    # signals_railway_signals, see function below
-
-    # --- Electrification --- #
-
-    # electrification_signals, see function below
-
+  # Function sources
   functions:
 
     # --- Shared --- #
