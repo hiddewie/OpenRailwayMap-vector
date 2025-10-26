@@ -4291,19 +4291,26 @@ features:
       - { tag: 'railway:signal:shunting', any: ['FR:JAL_MAN', 'FR:jalon_de_manoeuvre_TVM'] }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
+  - description: Route indicator
+    country: FR
+    icon: { default: 'fr/ID' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'FR:ID' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: Wrong route (entry)
     country: FR
     icon: { default: 'fr/TECS' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'FR:TECS' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', any: ['sign', 'light'] }
 
   - description: Wrong route (exit)
     country: FR
     icon: { default: 'fr/TSCS' }
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'FR:TSCS' }
-      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+      - { tag: 'railway:signal:wrong_road:form', any: ['sign', 'light'] }
 
   # --- GB --- #
 
