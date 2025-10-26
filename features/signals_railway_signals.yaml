@@ -4303,6 +4303,20 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'FR:TIDD' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
 
+  - description: Branch line
+    country: FR
+    icon: { default: 'fr/BIF' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'FR:BIF' }
+      - { tag: 'railway:signal:route_distant:form', value: 'sign' }
+
+  - description: Switch junction
+    country: FR
+    icon: { default: 'fr/Y' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'FR:Y' }
+      - { tag: 'railway:signal:route_distant:form', value: 'sign' }
+
   - description: Route indicator
     country: FR
     icon: { default: 'fr/ID' }
