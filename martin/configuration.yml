@@ -26,38 +26,6 @@ postgres:
 
     # --- Standard --- #
 
-    standard_railway_text_stations:
-      schema: public
-      table: standard_railway_text_stations
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      minzoom: 8
-      properties:
-        id: integer
-        osm_id: string
-        osm_type: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        count: integer
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     standard_railway_grouped_stations:
       schema: public
       table: standard_railway_grouped_stations
@@ -249,6 +217,11 @@ postgres:
       schema: public
       function: standard_railway_turntables
       # TODO minzoom / maxzoom
+
+    standard_railway_text_stations:
+      schema: public
+      function: standard_railway_text_stations
+      minzoom: 8
 
     standard_railway_symbols:
       schema: public

@@ -665,35 +665,84 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations AS
+CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    osm_type,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    count,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    name IS NOT NULL;
+    ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      count,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+        AND name IS NOT NULL
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "count": "integer",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
   SELECT
