@@ -32,7 +32,7 @@ postgres:
     railway_line_high:
       schema: public
       function: railway_line_high
-      maxzoom: 14
+      minzoom: 7
 
     railway_text_km:
       schema: public
