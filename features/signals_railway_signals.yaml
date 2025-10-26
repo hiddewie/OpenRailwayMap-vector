@@ -3981,7 +3981,7 @@ features:
       # TODO split on shape
       default: 'fr/C-C'
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main', any: ['FR:C', 'FR:CV', 'FR:CARRE'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Sémaphore
