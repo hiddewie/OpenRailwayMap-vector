@@ -4352,6 +4352,20 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'FR:APPROCHE_ETS_A' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: Distant site
+    country: FR
+    icon: { default: 'fr/APPROCHE_ETS' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:APPROCHE_ETS' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Station boundary
+    country: FR
+    icon: { default: 'fr/LIMITE_ETS' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:LIMITE_ETS' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
