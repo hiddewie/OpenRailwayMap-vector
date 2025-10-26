@@ -10,7 +10,8 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - PG_WORK_MEM
       - PG_MAINTENANCE_WORK_MEM
-      - PGDATA=/var/lib/postgresql/postgres-data
+      # Custom directory so it is not part of a VOLUME
+      - PGDATA=/data/postgresql
       - POSTGRES_DB=gis
     healthcheck:
       test: pg_isready -U postgres -d gis

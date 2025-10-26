@@ -1,6 +1,6 @@
 /**
  * MapLibre GL JS
- * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.7.3/LICENSE.txt
+ * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.10.0/LICENSE.txt
  */
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -10,7 +10,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var name = "maplibre-gl";
 var description = "BSD licensed community fork of mapbox-gl, a WebGL interactive maps library";
-var version$2 = "5.7.3";
+var version$2 = "5.10.0";
 var main = "dist/maplibre-gl.js";
 var style = "dist/maplibre-gl.css";
 var license = "BSD-3-Clause";
@@ -33,7 +33,7 @@ var dependencies = {
 	"@mapbox/unitbezier": "^0.0.1",
 	"@mapbox/vector-tile": "^2.0.4",
 	"@mapbox/whoots-js": "^3.1.0",
-	"@maplibre/maplibre-gl-style-spec": "^24.1.1",
+	"@maplibre/maplibre-gl-style-spec": "^24.3.0",
 	"@maplibre/vt-pbf": "^4.0.3",
 	"@types/geojson": "^7946.0.16",
 	"@types/geojson-vt": "3.2.5",
@@ -52,36 +52,36 @@ var dependencies = {
 var devDependencies = {
 	"@mapbox/mapbox-gl-rtl-text": "^0.3.0",
 	"@mapbox/mvt-fixtures": "^3.10.0",
-	"@rollup/plugin-commonjs": "^28.0.6",
+	"@rollup/plugin-commonjs": "^28.0.8",
 	"@rollup/plugin-json": "^6.1.0",
-	"@rollup/plugin-node-resolve": "^16.0.1",
+	"@rollup/plugin-node-resolve": "^16.0.3",
 	"@rollup/plugin-replace": "^6.0.2",
 	"@rollup/plugin-strip": "^3.0.4",
 	"@rollup/plugin-terser": "^0.4.4",
 	"@rollup/plugin-typescript": "^12.1.4",
-	"@stylistic/eslint-plugin": "^5.3.1",
+	"@stylistic/eslint-plugin": "^5.5.0",
 	"@types/benchmark": "^2.1.5",
 	"@types/d3": "^7.4.3",
 	"@types/earcut": "^3.0.0",
 	"@types/eslint": "^9.6.1",
 	"@types/gl": "^6.0.5",
-	"@types/jsdom": "^21.1.7",
+	"@types/jsdom": "^27.0.0",
 	"@types/minimist": "^1.2.5",
 	"@types/murmurhash-js": "^1.0.6",
 	"@types/nise": "^1.4.5",
-	"@types/node": "^24.5.2",
+	"@types/node": "^24.9.1",
 	"@types/offscreencanvas": "^2019.7.3",
 	"@types/pixelmatch": "^5.2.6",
 	"@types/pngjs": "^6.0.5",
-	"@types/react": "^19.1.13",
-	"@types/react-dom": "^19.1.9",
+	"@types/react": "^19.2.2",
+	"@types/react-dom": "^19.2.2",
 	"@types/request": "^2.48.13",
 	"@types/shuffle-seed": "^1.1.3",
 	"@types/window-or-global": "^1.0.6",
-	"@typescript-eslint/eslint-plugin": "^8.44.0",
+	"@typescript-eslint/eslint-plugin": "^8.46.2",
 	"@typescript-eslint/parser": "^8.43.0",
 	"@vitest/coverage-v8": "3.2.4",
-	"@vitest/eslint-plugin": "^1.3.12",
+	"@vitest/eslint-plugin": "^1.3.23",
 	"@vitest/ui": "3.2.4",
 	address: "^2.0.3",
 	autoprefixer: "^10.4.21",
@@ -91,19 +91,19 @@ var devDependencies = {
 	cssnano: "^7.1.1",
 	d3: "^7.9.0",
 	"d3-queue": "^3.0.7",
-	"devtools-protocol": "^0.0.1517051",
+	"devtools-protocol": "^0.0.1532728",
 	diff: "^8.0.2",
 	"dts-bundle-generator": "^9.5.1",
-	eslint: "^9.35.0",
+	eslint: "^9.38.0",
 	"eslint-plugin-html": "^8.1.3",
 	"eslint-plugin-import": "^2.32.0",
 	"eslint-plugin-react": "^7.37.5",
 	"eslint-plugin-tsdoc": "0.4.0",
-	expect: "^30.1.2",
+	expect: "^30.2.0",
 	glob: "^11.0.3",
 	globals: "^16.4.0",
 	"is-builtin-module": "^5.0.0",
-	jsdom: "^26.1.0",
+	jsdom: "^27.0.1",
 	"junit-report-builder": "^5.1.1",
 	minimist: "^1.2.8",
 	"mock-geolocation": "^1.0.11",
@@ -117,25 +117,25 @@ var devDependencies = {
 	postcss: "^8.5.6",
 	"postcss-cli": "^11.0.1",
 	"postcss-inline-svg": "^6.0.0",
-	"pretty-bytes": "^7.0.1",
-	puppeteer: "^24.22.0",
+	"pretty-bytes": "^7.1.0",
+	puppeteer: "^24.25.0",
 	react: "^19.1.1",
-	"react-dom": "^19.1.1",
-	rollup: "^4.50.2",
+	"react-dom": "^19.2.0",
+	rollup: "^4.52.5",
 	"rollup-plugin-sourcemaps2": "^0.5.4",
-	"rollup-plugin-visualizer": "^6.0.3",
+	"rollup-plugin-visualizer": "^6.0.5",
 	rw: "^1.3.3",
-	semver: "^7.7.2",
+	semver: "^7.7.3",
 	sharp: "^0.34.4",
 	"shuffle-seed": "^1.1.6",
 	st: "^3.0.3",
-	stylelint: "^16.24.0",
-	"stylelint-config-standard": "^39.0.0",
+	stylelint: "^16.25.0",
+	"stylelint-config-standard": "^39.0.1",
 	"ts-node": "^10.9.2",
 	tslib: "^2.8.1",
-	typedoc: "^0.28.13",
-	"typedoc-plugin-markdown": "^4.8.1",
-	typescript: "^5.9.2",
+	typedoc: "^0.28.14",
+	"typedoc-plugin-markdown": "^4.9.0",
+	typescript: "^5.9.3",
 	vitest: "3.2.4",
 	"vitest-webgl-canvas-mock": "^1.1.0"
 };
@@ -9145,6 +9145,43 @@ function getAABB(points) {
     return [tlX, tlY, brX, brY];
 }
 /**
+ * For a given set of tile ids, returns the edge tile ids for the bounding box.
+ */
+function getEdgeTiles(tileIDs) {
+    if (!tileIDs.length)
+        return new Set();
+    // set a common zoom for calculation (highest zoom) to reproject all tiles to this same zoom
+    const targetZ = Math.max(...tileIDs.map(id => id.canonical.z));
+    // vars to store the min and max tile x/y coordinates for edge finding
+    let minX = Infinity, maxX = -Infinity;
+    let minY = Infinity, maxY = -Infinity;
+    // project all tiles to targetZ while maintaining the reference to the original tile
+    const projected = [];
+    for (const id of tileIDs) {
+        const { x, y, z } = id.canonical;
+        const scale = Math.pow(2, targetZ - z);
+        const px = x * scale;
+        const py = y * scale;
+        projected.push({ id, x: px, y: py });
+        if (px < minX)
+            minX = px;
+        if (px > maxX)
+            maxX = px;
+        if (py < minY)
+            minY = py;
+        if (py > maxY)
+            maxY = py;
+    }
+    // find edge tiles using the reprojected tile ids
+    const edgeTiles = new Set();
+    for (const p of projected) {
+        if (p.x === minX || p.x === maxX || p.y === minY || p.y === maxY) {
+            edgeTiles.add(p.id);
+        }
+    }
+    return edgeTiles;
+}
+/**
  * Given a value `t` that varies between 0 and 1, return
  * an interpolation function that eases between 0 and 1 in a pleasing
  * cubic in-out fashion.
@@ -9832,18 +9869,10 @@ function createAbortError() {
     return new Error(ABORT_ERROR);
 }
 
-const now = typeof performance !== 'undefined' && performance && performance.now ?
-    performance.now.bind(performance) :
-    Date.now.bind(Date);
 let linkEl;
 let reducedMotionQuery;
 /** */
 const browser = {
-    /**
-     * Provides a function that outputs milliseconds: either performance.now()
-     * or a fallback to Date.now()
-     */
-    now,
     frame(abortController, fn, reject) {
         const frameId = requestAnimationFrame((paintStartTimestamp) => {
             unsubscribe();
@@ -9893,6 +9922,104 @@ const browser = {
         return reducedMotionQuery.matches;
     },
 };
+
+/**
+ * Manages time flow with optional freezing capability for deterministic rendering.
+ */
+class TimeManager {
+    constructor() {
+        this._realTime = typeof performance !== 'undefined' && performance && performance.now ?
+            performance.now.bind(performance) :
+            Date.now.bind(Date);
+        this._frozenAt = null;
+    }
+    /**
+     * Gets the current time, either real or frozen.
+     * @returns Current time in milliseconds
+     */
+    getCurrentTime() {
+        return this._frozenAt !== null ? this._frozenAt : this._realTime();
+    }
+    /**
+     * Sets time at a specific timestamp.
+     * @param timestamp - Time in milliseconds to set
+     */
+    setNow(timestamp) {
+        this._frozenAt = timestamp;
+    }
+    /**
+     * Restores normal time flow.
+     */
+    restoreNow() {
+        this._frozenAt = null;
+    }
+    /**
+     * Returns whether time is currently frozen.
+     * @returns True if time is frozen, false otherwise
+     */
+    isFrozen() {
+        return this._frozenAt !== null;
+    }
+}
+const timeManager = new TimeManager();
+/**
+ * Returns the current time in milliseconds.
+ * Uses performance.now() when available, falls back to Date.now().
+ * Time can be frozen using setNow() for deterministic rendering.
+ */
+function now() {
+    return timeManager.getCurrentTime();
+}
+/**
+ * Freezes time at a specific timestamp for deterministic rendering.
+ * Useful for frame-by-frame video capture where each frame needs
+ * a consistent time value.
+ *
+ * @param timestamp - Time in milliseconds to freeze at
+ * @example
+ * ```ts
+ * // Freeze time for video export at 60fps
+ * setNow(0);           // First frame
+ * // ... render frame ...
+ * setNow(16.67);       // Second frame
+ * // ... render frame ...
+ * setNow(33.34);       // Third frame
+ * // ... done ...
+ * restoreNow();        // Resume normal time
+ * ```
+ */
+function setNow(timestamp) {
+    timeManager.setNow(timestamp);
+}
+/**
+ * Restores normal time flow after freezing with setNow().
+ * Call this after finishing deterministic rendering operations.
+ *
+ * @example
+ * ```ts
+ * // After video export, resume normal time
+ * setNow(0);
+ * // ... export frames ...
+ * restoreNow(); // Map animations resume normally
+ * ```
+ */
+function restoreNow() {
+    timeManager.restoreNow();
+}
+/**
+ * Returns whether time is currently frozen.
+ * @returns True if time is frozen via setNow(), false otherwise
+ * @example
+ * ```ts
+ * setNow(1000);
+ * console.log(isTimeFrozen()); // true
+ * restoreNow();
+ * console.log(isTimeFrozen()); // false
+ * ```
+ */
+function isTimeFrozen() {
+    return timeManager.isFrozen();
+}
 
 class DOM {
     static testProp(props) {
@@ -10864,6 +10991,16 @@ var source_vector = {
 	volatile: {
 		type: "boolean",
 		"default": false
+	},
+	encoding: {
+		type: "enum",
+		values: {
+			mvt: {
+			},
+			mlt: {
+			}
+		},
+		"default": "mvt"
 	},
 	"*": {
 		type: "*"
@@ -12809,10 +12946,11 @@ var paint_line = {
 		expression: {
 			interpolated: false,
 			parameters: [
-				"zoom"
+				"zoom",
+				"feature"
 			]
 		},
-		"property-type": "cross-faded"
+		"property-type": "cross-faded-data-driven"
 	},
 	"line-pattern": {
 		type: "resolvedImage",
@@ -21923,10 +22061,7 @@ validateStyleMin.paintProperty = wrapCleanErrors(injectValidateSpec(validatePain
 validateStyleMin.layoutProperty = wrapCleanErrors(injectValidateSpec(validateLayoutProperty$1));
 function injectValidateSpec(validator) {
     return function (options) {
-        return validator({
-            ...options,
-            validateSpec: validate,
-        });
+        return validator(Object.assign({}, options, { validateSpec: validate }));
     };
 }
 function sortErrors(errors) {
@@ -24240,8 +24375,8 @@ class StyleLayer extends Evented {
         // No-op; can be overridden by derived classes.
         return false;
     }
-    isHidden(zoom) {
-        if (this.minzoom && zoom < this.minzoom)
+    isHidden(zoom, roundMinZoom = false) {
+        if (this.minzoom && zoom < (roundMinZoom ? Math.floor(this.minzoom) : this.minzoom))
             return true;
         if (this.maxzoom && zoom >= this.maxzoom)
             return true;
@@ -24323,6 +24458,28 @@ class StyleLayer extends Evented {
             }
         }
         return false;
+    }
+}
+
+// This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
+/* eslint-disable */
+let paint$9;
+const getPaint$9 = () => paint$9 = paint$9 || new Properties({
+    "raster-opacity": new DataConstantProperty(v8Spec["paint_raster"]["raster-opacity"]),
+    "raster-hue-rotate": new DataConstantProperty(v8Spec["paint_raster"]["raster-hue-rotate"]),
+    "raster-brightness-min": new DataConstantProperty(v8Spec["paint_raster"]["raster-brightness-min"]),
+    "raster-brightness-max": new DataConstantProperty(v8Spec["paint_raster"]["raster-brightness-max"]),
+    "raster-saturation": new DataConstantProperty(v8Spec["paint_raster"]["raster-saturation"]),
+    "raster-contrast": new DataConstantProperty(v8Spec["paint_raster"]["raster-contrast"]),
+    "raster-resampling": new DataConstantProperty(v8Spec["paint_raster"]["raster-resampling"]),
+    "raster-fade-duration": new DataConstantProperty(v8Spec["paint_raster"]["raster-fade-duration"]),
+});
+var properties$b = ({ get paint() { return getPaint$9(); } });
+
+const isRasterStyleLayer = (layer) => layer.type === 'raster';
+class RasterStyleLayer extends StyleLayer {
+    constructor(layer, globalState) {
+        super(layer, properties$b, globalState);
     }
 }
 
@@ -24688,6 +24845,37 @@ class StructArrayLayout10ui20 extends StructArray {
 }
 StructArrayLayout10ui20.prototype.bytesPerElement = 20;
 register('StructArrayLayout10ui20', StructArrayLayout10ui20);
+/**
+ * @internal
+ * Implementation of the StructArray layout:
+ * [0] - Uint16[8]
+ *
+ */
+class StructArrayLayout8ui16 extends StructArray {
+    _refreshViews() {
+        this.uint8 = new Uint8Array(this.arrayBuffer);
+        this.uint16 = new Uint16Array(this.arrayBuffer);
+    }
+    emplaceBack(v0, v1, v2, v3, v4, v5, v6, v7) {
+        const i = this.length;
+        this.resize(i + 1);
+        return this.emplace(i, v0, v1, v2, v3, v4, v5, v6, v7);
+    }
+    emplace(i, v0, v1, v2, v3, v4, v5, v6, v7) {
+        const o2 = i * 8;
+        this.uint16[o2 + 0] = v0;
+        this.uint16[o2 + 1] = v1;
+        this.uint16[o2 + 2] = v2;
+        this.uint16[o2 + 3] = v3;
+        this.uint16[o2 + 4] = v4;
+        this.uint16[o2 + 5] = v5;
+        this.uint16[o2 + 6] = v6;
+        this.uint16[o2 + 7] = v7;
+        return i;
+    }
+}
+StructArrayLayout8ui16.prototype.bytesPerElement = 16;
+register('StructArrayLayout8ui16', StructArrayLayout8ui16);
 /**
  * @internal
  * Implementation of the StructArray layout:
@@ -25377,6 +25565,8 @@ class LineExtLayoutArray extends StructArrayLayout2f8 {
 }
 class PatternLayoutArray extends StructArrayLayout10ui20 {
 }
+class DashLayoutArray extends StructArrayLayout8ui16 {
+}
 class SymbolLayoutArray extends StructArrayLayout4i4ui4i24 {
 }
 class SymbolDynamicLayoutArray extends StructArrayLayout3f12 {
@@ -25507,6 +25697,12 @@ const patternAttributes = createLayout([
     { name: 'a_pattern_to', components: 4, type: 'Uint16' },
     { name: 'a_pixel_ratio_from', components: 1, type: 'Uint16' },
     { name: 'a_pixel_ratio_to', components: 1, type: 'Uint16' },
+]);
+
+const dashAttributes = createLayout([
+    // [0, y, height, width]
+    { name: 'a_dasharray_from', components: 4, type: 'Uint16' },
+    { name: 'a_dasharray_to', components: 4, type: 'Uint16' },
 ]);
 
 var murmurhashJs$1 = {exports: {}};
@@ -25956,16 +26152,36 @@ class CrossFadedConstantBinder {
         this.patternFrom = posFrom.tlbr;
         this.patternTo = posTo.tlbr;
     }
+    setConstantDashPositions(dashTo, dashFrom) {
+        this.dashTo = [0, dashTo.y, dashTo.height, dashTo.width];
+        this.dashFrom = [0, dashFrom.y, dashFrom.height, dashFrom.width];
+    }
     setUniform(uniform, globals, currentValue, uniformName) {
-        const pos = uniformName === 'u_pattern_to' ? this.patternTo :
-            uniformName === 'u_pattern_from' ? this.patternFrom :
-                uniformName === 'u_pixel_ratio_to' ? this.pixelRatioTo :
-                    uniformName === 'u_pixel_ratio_from' ? this.pixelRatioFrom : null;
-        if (pos)
-            uniform.set(pos);
+        let value = null;
+        if (uniformName === 'u_pattern_to') {
+            value = this.patternTo;
+        }
+        else if (uniformName === 'u_pattern_from') {
+            value = this.patternFrom;
+        }
+        else if (uniformName === 'u_dasharray_to') {
+            value = this.dashTo;
+        }
+        else if (uniformName === 'u_dasharray_from') {
+            value = this.dashFrom;
+        }
+        else if (uniformName === 'u_pixel_ratio_to') {
+            value = this.pixelRatioTo;
+        }
+        else if (uniformName === 'u_pixel_ratio_from') {
+            value = this.pixelRatioFrom;
+        }
+        if (value !== null) {
+            uniform.set(value);
+        }
     }
     getBinding(context, location, name) {
-        return name.substr(0, 9) === 'u_pattern' ?
+        return (name.substr(0, 9) === 'u_pattern' || name.substr(0, 12) === 'u_dasharray_') ?
             new Uniform4f(context, location) :
             new Uniform1f(context, location);
     }
@@ -26090,7 +26306,7 @@ class CompositeExpressionBinder {
         return new Uniform1f(context, location);
     }
 }
-class CrossFadedCompositeBinder {
+class CrossFadedBinder {
     constructor(expression, type, useIntegerZoom, zoom, PaintVertexArray, layerId) {
         this.expression = expression;
         this.type = type;
@@ -26104,32 +26320,33 @@ class CrossFadedCompositeBinder {
         const start = this.zoomInPaintVertexArray.length;
         this.zoomInPaintVertexArray.resize(length);
         this.zoomOutPaintVertexArray.resize(length);
-        this._setPaintValues(start, length, feature.patterns && feature.patterns[this.layerId], options.imagePositions);
+        this._setPaintValues(start, length, this.getPositionIds(feature), options);
     }
     updatePaintArray(start, end, feature, featureState, options) {
-        this._setPaintValues(start, end, feature.patterns && feature.patterns[this.layerId], options.imagePositions);
+        this._setPaintValues(start, end, this.getPositionIds(feature), options);
     }
-    _setPaintValues(start, end, patterns, positions) {
-        if (!positions || !patterns)
+    _setPaintValues(start, end, positionIds, options) {
+        const positions = this.getPositions(options);
+        if (!positions || !positionIds)
             return;
-        const { min, mid, max } = patterns;
-        const imageMin = positions[min];
-        const imageMid = positions[mid];
-        const imageMax = positions[max];
-        if (!imageMin || !imageMid || !imageMax)
+        const min = positions[positionIds.min];
+        const mid = positions[positionIds.mid];
+        const max = positions[positionIds.max];
+        if (!min || !mid || !max)
             return;
         // We populate two paint arrays because, for cross-faded properties, we don't know which direction
         // we're cross-fading to at layout time. In order to keep vertex attributes to a minimum and not pass
         // unnecessary vertex data to the shaders, we determine which to upload at draw time.
         for (let i = start; i < end; i++) {
-            this.zoomInPaintVertexArray.emplace(i, imageMid.tl[0], imageMid.tl[1], imageMid.br[0], imageMid.br[1], imageMin.tl[0], imageMin.tl[1], imageMin.br[0], imageMin.br[1], imageMid.pixelRatio, imageMin.pixelRatio);
-            this.zoomOutPaintVertexArray.emplace(i, imageMid.tl[0], imageMid.tl[1], imageMid.br[0], imageMid.br[1], imageMax.tl[0], imageMax.tl[1], imageMax.br[0], imageMax.br[1], imageMid.pixelRatio, imageMax.pixelRatio);
+            this.emplace(this.zoomInPaintVertexArray, i, mid, min);
+            this.emplace(this.zoomOutPaintVertexArray, i, mid, max);
         }
     }
     upload(context) {
         if (this.zoomInPaintVertexArray && this.zoomInPaintVertexArray.arrayBuffer && this.zoomOutPaintVertexArray && this.zoomOutPaintVertexArray.arrayBuffer) {
-            this.zoomInPaintVertexBuffer = context.createVertexBuffer(this.zoomInPaintVertexArray, patternAttributes.members, this.expression.isStateDependent);
-            this.zoomOutPaintVertexBuffer = context.createVertexBuffer(this.zoomOutPaintVertexArray, patternAttributes.members, this.expression.isStateDependent);
+            const attributes = this.getVertexAttributes();
+            this.zoomInPaintVertexBuffer = context.createVertexBuffer(this.zoomInPaintVertexArray, attributes, this.expression.isStateDependent);
+            this.zoomOutPaintVertexBuffer = context.createVertexBuffer(this.zoomOutPaintVertexArray, attributes, this.expression.isStateDependent);
         }
     }
     destroy() {
@@ -26137,6 +26354,34 @@ class CrossFadedCompositeBinder {
             this.zoomOutPaintVertexBuffer.destroy();
         if (this.zoomInPaintVertexBuffer)
             this.zoomInPaintVertexBuffer.destroy();
+    }
+}
+class CrossFadedPatternBinder extends CrossFadedBinder {
+    getPositions(options) {
+        return options.imagePositions;
+    }
+    getPositionIds(feature) {
+        return feature.patterns && feature.patterns[this.layerId];
+    }
+    getVertexAttributes() {
+        return patternAttributes.members;
+    }
+    emplace(array, index, midPos, minMaxPos) {
+        array.emplace(index, midPos.tlbr[0], midPos.tlbr[1], midPos.tlbr[2], midPos.tlbr[3], minMaxPos.tlbr[0], minMaxPos.tlbr[1], minMaxPos.tlbr[2], minMaxPos.tlbr[3], midPos.pixelRatio, minMaxPos.pixelRatio);
+    }
+}
+class CrossFadedDasharrayBinder extends CrossFadedBinder {
+    getPositions(options) {
+        return options.dashPositions;
+    }
+    getPositionIds(feature) {
+        return feature.dashes && feature.dashes[this.layerId];
+    }
+    getVertexAttributes() {
+        return dashAttributes.members;
+    }
+    emplace(array, index, midPos, minMaxPos) {
+        array.emplace(index, 0, midPos.y, midPos.height, midPos.width, 0, minMaxPos.y, minMaxPos.height, minMaxPos.width);
     }
 }
 /**
@@ -26185,7 +26430,9 @@ class ProgramConfiguration {
             else if (expression.kind === 'source' || isCrossFaded) {
                 const StructArrayLayout = layoutType(property, type, 'source');
                 this.binders[property] = isCrossFaded ?
-                    new CrossFadedCompositeBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
+                    property === 'line-dasharray' ?
+                        new CrossFadedDasharrayBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
+                        new CrossFadedPatternBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
                     new SourceExpressionBinder(expression, names, type, StructArrayLayout);
                 keys.push(`/a_${property}`);
             }
@@ -26204,7 +26451,7 @@ class ProgramConfiguration {
     populatePaintArrays(newLength, feature, options) {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.populatePaintArray(newLength, feature, options);
         }
     }
@@ -26213,6 +26460,13 @@ class ProgramConfiguration {
             const binder = this.binders[property];
             if (binder instanceof CrossFadedConstantBinder)
                 binder.setConstantPatternPositions(posTo, posFrom);
+        }
+    }
+    setConstantDashPositions(dashTo, dashFrom) {
+        for (const property in this.binders) {
+            const binder = this.binders[property];
+            if (binder instanceof CrossFadedConstantBinder)
+                binder.setConstantDashPositions(dashTo, dashFrom);
         }
     }
     updatePaintArrays(featureStates, featureMap, vtLayer, layer, options) {
@@ -26224,7 +26478,7 @@ class ProgramConfiguration {
                 for (const property in this.binders) {
                     const binder = this.binders[property];
                     if ((binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder ||
-                        binder instanceof CrossFadedCompositeBinder) && binder.expression.isStateDependent === true) {
+                        binder instanceof CrossFadedBinder) && binder.expression.isStateDependent === true) {
                         //AHM: Remove after https://github.com/mapbox/mapbox-gl-js/issues/6255
                         const value = layer.paint.get(property);
                         binder.expression = value.value;
@@ -26255,9 +26509,10 @@ class ProgramConfiguration {
                     result.push(binder.paintVertexAttributes[i].name);
                 }
             }
-            else if (binder instanceof CrossFadedCompositeBinder) {
-                for (let i = 0; i < patternAttributes.members.length; i++) {
-                    result.push(patternAttributes.members[i].name);
+            else if (binder instanceof CrossFadedBinder) {
+                const attributes = binder.getVertexAttributes();
+                for (const attribute of attributes) {
+                    result.push(attribute.name);
                 }
             }
         }
@@ -26304,7 +26559,7 @@ class ProgramConfiguration {
         this._buffers = [];
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (crossfade && binder instanceof CrossFadedCompositeBinder) {
+            if (crossfade && binder instanceof CrossFadedBinder) {
                 const patternVertexBuffer = crossfade.fromScale === 2 ? binder.zoomInPaintVertexBuffer : binder.zoomOutPaintVertexBuffer;
                 if (patternVertexBuffer)
                     this._buffers.push(patternVertexBuffer);
@@ -26317,7 +26572,7 @@ class ProgramConfiguration {
     upload(context) {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.upload(context);
         }
         this.updatePaintBuffers();
@@ -26325,7 +26580,7 @@ class ProgramConfiguration {
     destroy() {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.destroy();
         }
     }
@@ -26385,6 +26640,7 @@ function paintAttributeNames(property, type) {
         'text-halo-width': ['halo_width'],
         'icon-halo-width': ['halo_width'],
         'line-gap-width': ['gapwidth'],
+        'line-dasharray': ['dasharray_to', 'dasharray_from'],
         'line-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
         'fill-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
         'fill-extrusion-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
@@ -26404,7 +26660,11 @@ function getLayoutException(property) {
         'fill-extrusion-pattern': {
             'source': PatternLayoutArray,
             'composite': PatternLayoutArray
-        }
+        },
+        'line-dasharray': {
+            'source': DashLayoutArray,
+            'composite': DashLayoutArray
+        },
     };
     return propertyExceptions[property];
 }
@@ -26425,7 +26685,8 @@ function layoutType(property, type, binderType) {
 register('ConstantBinder', ConstantBinder);
 register('CrossFadedConstantBinder', CrossFadedConstantBinder);
 register('SourceExpressionBinder', SourceExpressionBinder);
-register('CrossFadedCompositeBinder', CrossFadedCompositeBinder);
+register('CrossFadedPatternBinder', CrossFadedPatternBinder);
+register('CrossFadedDasharrayBinder', CrossFadedDasharrayBinder);
 register('CompositeExpressionBinder', CompositeExpressionBinder);
 register('ProgramConfiguration', ProgramConfiguration, { omit: ['_buffers'] });
 register('ProgramConfigurationSet', ProgramConfigurationSet);
@@ -26498,7 +26759,7 @@ class CircleBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.layoutVertexArray = new CircleLayoutArray();
         this.indexArray = new TriangleIndexArray();
         this.segments = new SegmentVector();
@@ -26928,8 +27189,8 @@ let layout$5;
 const getLayout$3 = () => layout$5 = layout$5 || new Properties({
     "circle-sort-key": new DataDrivenProperty(v8Spec["layout_circle"]["circle-sort-key"]),
 });
-let paint$9;
-const getPaint$9 = () => paint$9 = paint$9 || new Properties({
+let paint$8;
+const getPaint$8 = () => paint$8 = paint$8 || new Properties({
     "circle-radius": new DataDrivenProperty(v8Spec["paint_circle"]["circle-radius"]),
     "circle-color": new DataDrivenProperty(v8Spec["paint_circle"]["circle-color"]),
     "circle-blur": new DataDrivenProperty(v8Spec["paint_circle"]["circle-blur"]),
@@ -26942,7 +27203,7 @@ const getPaint$9 = () => paint$9 = paint$9 || new Properties({
     "circle-stroke-color": new DataDrivenProperty(v8Spec["paint_circle"]["circle-stroke-color"]),
     "circle-stroke-opacity": new DataDrivenProperty(v8Spec["paint_circle"]["circle-stroke-opacity"]),
 });
-var properties$b = ({ get paint() { return getPaint$9(); }, get layout() { return getLayout$3(); } });
+var properties$a = ({ get paint() { return getPaint$8(); }, get layout() { return getLayout$3(); } });
 
 const isCircleStyleLayer = (layer) => layer.type === 'circle';
 /**
@@ -26950,7 +27211,7 @@ const isCircleStyleLayer = (layer) => layer.type === 'circle';
  */
 class CircleStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$b, globalState);
+        super(layer, properties$a, globalState);
     }
     createBucket(parameters) {
         return new CircleBucket(parameters);
@@ -27000,15 +27261,15 @@ register('HeatmapBucket', HeatmapBucket, { omit: ['layers'] });
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
-let paint$8;
-const getPaint$8 = () => paint$8 = paint$8 || new Properties({
+let paint$7;
+const getPaint$7 = () => paint$7 = paint$7 || new Properties({
     "heatmap-radius": new DataDrivenProperty(v8Spec["paint_heatmap"]["heatmap-radius"]),
     "heatmap-weight": new DataDrivenProperty(v8Spec["paint_heatmap"]["heatmap-weight"]),
     "heatmap-intensity": new DataConstantProperty(v8Spec["paint_heatmap"]["heatmap-intensity"]),
     "heatmap-color": new ColorRampProperty(v8Spec["paint_heatmap"]["heatmap-color"]),
     "heatmap-opacity": new DataConstantProperty(v8Spec["paint_heatmap"]["heatmap-opacity"]),
 });
-var properties$a = ({ get paint() { return getPaint$8(); } });
+var properties$9 = ({ get paint() { return getPaint$7(); } });
 
 function createImage(image, { width, height }, channels, data) {
     if (!data) {
@@ -27169,7 +27430,7 @@ class HeatmapStyleLayer extends StyleLayer {
         return new HeatmapBucket(options);
     }
     constructor(layer, globalState) {
-        super(layer, properties$a, globalState);
+        super(layer, properties$9, globalState);
         this.heatmapFbos = new Map();
         // make sure color ramp texture is generated for default heatmap color too
         this._updateColorRamp();
@@ -27212,8 +27473,8 @@ class HeatmapStyleLayer extends StyleLayer {
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
-let paint$7;
-const getPaint$7 = () => paint$7 = paint$7 || new Properties({
+let paint$6;
+const getPaint$6 = () => paint$6 = paint$6 || new Properties({
     "hillshade-illumination-direction": new DataConstantProperty(v8Spec["paint_hillshade"]["hillshade-illumination-direction"]),
     "hillshade-illumination-altitude": new DataConstantProperty(v8Spec["paint_hillshade"]["hillshade-illumination-altitude"]),
     "hillshade-illumination-anchor": new DataConstantProperty(v8Spec["paint_hillshade"]["hillshade-illumination-anchor"]),
@@ -27223,12 +27484,12 @@ const getPaint$7 = () => paint$7 = paint$7 || new Properties({
     "hillshade-accent-color": new DataConstantProperty(v8Spec["paint_hillshade"]["hillshade-accent-color"]),
     "hillshade-method": new DataConstantProperty(v8Spec["paint_hillshade"]["hillshade-method"]),
 });
-var properties$9 = ({ get paint() { return getPaint$7(); } });
+var properties$8 = ({ get paint() { return getPaint$6(); } });
 
 const isHillshadeStyleLayer = (layer) => layer.type === 'hillshade';
 class HillshadeStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$9, globalState);
+        super(layer, properties$8, globalState);
         this.recalculate({ zoom: 0, zoomHistory: {} }, undefined);
     }
     getIlluminationProperties() {
@@ -27253,12 +27514,12 @@ class HillshadeStyleLayer extends StyleLayer {
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
-let paint$6;
-const getPaint$6 = () => paint$6 = paint$6 || new Properties({
+let paint$5;
+const getPaint$5 = () => paint$5 = paint$5 || new Properties({
     "color-relief-opacity": new DataConstantProperty(v8Spec["paint_color-relief"]["color-relief-opacity"]),
     "color-relief-color": new ColorRampProperty(v8Spec["paint_color-relief"]["color-relief-color"]),
 });
-var properties$8 = ({ get paint() { return getPaint$6(); } });
+var properties$7 = ({ get paint() { return getPaint$5(); } });
 
 /**
  * @internal
@@ -27493,7 +27754,7 @@ register('DEMData', DEMData);
 const isColorReliefStyleLayer = (layer) => layer.type === 'color-relief';
 class ColorReliefStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$8, globalState);
+        super(layer, properties$7, globalState);
     }
     /**
      * Create the color ramp, enforcing a maximum length for the vectors. This modifies the internal color ramp,
@@ -29359,7 +29620,7 @@ class FillBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.patternFeatures = [];
         this.layoutVertexArray = new FillLayoutArray();
         this.indexArray = new TriangleIndexArray();
@@ -29370,7 +29631,7 @@ class FillBucket {
         this.stateDependentLayerIds = this.layers.filter((l) => l.isStateDependent()).map((l) => l.id);
     }
     populate(features, options, canonical) {
-        this.hasPattern = hasPattern('fill', this.layers, options);
+        this.hasDependencies = hasPattern('fill', this.layers, options);
         const fillSortKey = this.layers[0].layout.get('fill-sort-key');
         const sortFeaturesByKey = !fillSortKey.isConstant();
         const bucketFeatures = [];
@@ -29399,7 +29660,7 @@ class FillBucket {
         }
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
-            if (this.hasPattern) {
+            if (this.hasDependencies) {
                 const patternFeature = addPatternDependencies('fill', this.layers, bucketFeature, { zoom: this.zoom }, options);
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
@@ -29468,8 +29729,8 @@ let layout$3;
 const getLayout$2 = () => layout$3 = layout$3 || new Properties({
     "fill-sort-key": new DataDrivenProperty(v8Spec["layout_fill"]["fill-sort-key"]),
 });
-let paint$5;
-const getPaint$5 = () => paint$5 = paint$5 || new Properties({
+let paint$4;
+const getPaint$4 = () => paint$4 = paint$4 || new Properties({
     "fill-antialias": new DataConstantProperty(v8Spec["paint_fill"]["fill-antialias"]),
     "fill-opacity": new DataDrivenProperty(v8Spec["paint_fill"]["fill-opacity"]),
     "fill-color": new DataDrivenProperty(v8Spec["paint_fill"]["fill-color"]),
@@ -29478,12 +29739,12 @@ const getPaint$5 = () => paint$5 = paint$5 || new Properties({
     "fill-translate-anchor": new DataConstantProperty(v8Spec["paint_fill"]["fill-translate-anchor"]),
     "fill-pattern": new CrossFadedDataDrivenProperty(v8Spec["paint_fill"]["fill-pattern"]),
 });
-var properties$7 = ({ get paint() { return getPaint$5(); }, get layout() { return getLayout$2(); } });
+var properties$6 = ({ get paint() { return getPaint$4(); }, get layout() { return getLayout$2(); } });
 
 const isFillStyleLayer = (layer) => layer.type === 'fill';
 class FillStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$7, globalState);
+        super(layer, properties$6, globalState);
     }
     recalculate(parameters, availableImages) {
         super.recalculate(parameters, availableImages);
@@ -29920,7 +30181,7 @@ class FillExtrusionBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.layoutVertexArray = new FillExtrusionLayoutArray();
         this.centroidVertexArray = new PosArray();
         this.indexArray = new TriangleIndexArray();
@@ -29930,7 +30191,7 @@ class FillExtrusionBucket {
     }
     populate(features, options, canonical) {
         this.features = [];
-        this.hasPattern = hasPattern('fill-extrusion', this.layers, options);
+        this.hasDependencies = hasPattern('fill-extrusion', this.layers, options);
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
@@ -29945,7 +30206,7 @@ class FillExtrusionBucket {
                 type: feature.type,
                 patterns: {}
             };
-            if (this.hasPattern) {
+            if (this.hasDependencies) {
                 this.features.push(addPatternDependencies('fill-extrusion', this.layers, bucketFeature, { zoom: this.zoom }, options));
             }
             else {
@@ -30113,8 +30374,8 @@ function isEntirelyOutside(ring) {
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
-let paint$4;
-const getPaint$4 = () => paint$4 = paint$4 || new Properties({
+let paint$3;
+const getPaint$3 = () => paint$3 = paint$3 || new Properties({
     "fill-extrusion-opacity": new DataConstantProperty(v8Spec["paint_fill-extrusion"]["fill-extrusion-opacity"]),
     "fill-extrusion-color": new DataDrivenProperty(v8Spec["paint_fill-extrusion"]["fill-extrusion-color"]),
     "fill-extrusion-translate": new DataConstantProperty(v8Spec["paint_fill-extrusion"]["fill-extrusion-translate"]),
@@ -30124,14 +30385,14 @@ const getPaint$4 = () => paint$4 = paint$4 || new Properties({
     "fill-extrusion-base": new DataDrivenProperty(v8Spec["paint_fill-extrusion"]["fill-extrusion-base"]),
     "fill-extrusion-vertical-gradient": new DataConstantProperty(v8Spec["paint_fill-extrusion"]["fill-extrusion-vertical-gradient"]),
 });
-var properties$6 = ({ get paint() { return getPaint$4(); } });
+var properties$5 = ({ get paint() { return getPaint$3(); } });
 
 class Point3D extends Point {
 }
 const isFillExtrusionStyleLayer = (layer) => layer.type === 'fill-extrusion';
 class FillExtrusionStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$6, globalState);
+        super(layer, properties$5, globalState);
     }
     createBucket(parameters) {
         return new FillExtrusionBucket(parameters);
@@ -30342,7 +30603,7 @@ class LineBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.patternFeatures = [];
         this.lineClipsArray = [];
         this.gradients = {};
@@ -30358,7 +30619,7 @@ class LineBucket {
         this.stateDependentLayerIds = this.layers.filter((l) => l.isStateDependent()).map((l) => l.id);
     }
     populate(features, options, canonical) {
-        this.hasPattern = hasPattern('line', this.layers, options);
+        this.hasDependencies = hasPattern('line', this.layers, options) || this.hasLineDasharray(this.layers);
         const lineSortKey = this.layers[0].layout.get('line-sort-key');
         const sortFeaturesByKey = !lineSortKey.isConstant();
         const bucketFeatures = [];
@@ -30378,6 +30639,7 @@ class LineBucket {
                 index,
                 geometry: needGeometry ? evaluationFeature.geometry : loadGeometry(feature),
                 patterns: {},
+                dashes: {},
                 sortKey
             };
             bucketFeatures.push(bucketFeature);
@@ -30389,29 +30651,35 @@ class LineBucket {
         }
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
-            if (this.hasPattern) {
-                const patternBucketFeature = addPatternDependencies('line', this.layers, bucketFeature, { zoom: this.zoom }, options);
+            if (this.hasDependencies) {
+                if (hasPattern('line', this.layers, options)) {
+                    addPatternDependencies('line', this.layers, bucketFeature, { zoom: this.zoom }, options);
+                }
+                else if (this.hasLineDasharray(this.layers)) {
+                    this.addLineDashDependencies(this.layers, bucketFeature, this.zoom, options);
+                }
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
-                this.patternFeatures.push(patternBucketFeature);
+                this.patternFeatures.push(bucketFeature);
             }
             else {
-                this.addFeature(bucketFeature, geometry, index, canonical, {}, options.subdivisionGranularity);
+                this.addFeature(bucketFeature, geometry, index, canonical, {}, {}, options.subdivisionGranularity);
             }
             const feature = features[index].feature;
             options.featureIndex.insert(feature, geometry, index, sourceLayerIndex, this.index);
         }
     }
-    update(states, vtLayer, imagePositions) {
+    update(states, vtLayer, imagePositions, dashPositions) {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions
+            imagePositions,
+            dashPositions
         });
     }
-    addFeatures(options, canonical, imagePositions) {
+    addFeatures(options, canonical, imagePositions, dashPositions) {
         for (const feature of this.patternFeatures) {
-            this.addFeature(feature, feature.geometry, feature.index, canonical, imagePositions, options.subdivisionGranularity);
+            this.addFeature(feature, feature.geometry, feature.index, canonical, imagePositions, dashPositions, options.subdivisionGranularity);
         }
     }
     isEmpty() {
@@ -30446,7 +30714,7 @@ class LineBucket {
             return { start, end };
         }
     }
-    addFeature(feature, geometry, index, canonical, imagePositions, subdivisionGranularity) {
+    addFeature(feature, geometry, index, canonical, imagePositions, dashPositions, subdivisionGranularity) {
         const layout = this.layers[0].layout;
         const join = layout.get('line-join').evaluate(feature, {});
         const cap = layout.get('line-cap');
@@ -30456,7 +30724,7 @@ class LineBucket {
         for (const line of geometry) {
             this.addLine(line, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity);
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, dashPositions, canonical });
     }
     addLine(vertices, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity) {
         this.distance = 0;
@@ -30747,6 +31015,43 @@ class LineBucket {
         this.distance += prev.dist(next);
         this.updateScaledDistance();
     }
+    hasLineDasharray(layers) {
+        for (const layer of layers) {
+            const dasharrayProperty = layer.paint.get('line-dasharray');
+            if (dasharrayProperty && !dasharrayProperty.isConstant()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    addLineDashDependencies(layers, bucketFeature, zoom, options) {
+        for (const layer of layers) {
+            const dasharrayProperty = layer.paint.get('line-dasharray');
+            if (!dasharrayProperty || dasharrayProperty.value.kind === 'constant') {
+                continue;
+            }
+            const round = layer.layout.get('line-cap') === 'round';
+            const min = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom: zoom - 1 }, bucketFeature, {}),
+                round
+            };
+            const mid = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom }, bucketFeature, {}),
+                round
+            };
+            const max = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom: zoom + 1 }, bucketFeature, {}),
+                round
+            };
+            const minKey = `${min.dasharray.join(',')},${min.round}`;
+            const midKey = `${mid.dasharray.join(',')},${mid.round}`;
+            const maxKey = `${max.dasharray.join(',')},${max.round}`;
+            options.dashDependencies[minKey] = min;
+            options.dashDependencies[midKey] = mid;
+            options.dashDependencies[maxKey] = max;
+            bucketFeature.dashes[layer.id] = { min: minKey, mid: midKey, max: maxKey };
+        }
+    }
 }
 register('LineBucket', LineBucket, { omit: ['layers', 'patternFeatures'] });
 
@@ -30760,8 +31065,8 @@ const getLayout$1 = () => layout$1 = layout$1 || new Properties({
     "line-round-limit": new DataConstantProperty(v8Spec["layout_line"]["line-round-limit"]),
     "line-sort-key": new DataDrivenProperty(v8Spec["layout_line"]["line-sort-key"]),
 });
-let paint$3;
-const getPaint$3 = () => paint$3 = paint$3 || new Properties({
+let paint$2;
+const getPaint$2 = () => paint$2 = paint$2 || new Properties({
     "line-opacity": new DataDrivenProperty(v8Spec["paint_line"]["line-opacity"]),
     "line-color": new DataDrivenProperty(v8Spec["paint_line"]["line-color"]),
     "line-translate": new DataConstantProperty(v8Spec["paint_line"]["line-translate"]),
@@ -30770,11 +31075,11 @@ const getPaint$3 = () => paint$3 = paint$3 || new Properties({
     "line-gap-width": new DataDrivenProperty(v8Spec["paint_line"]["line-gap-width"]),
     "line-offset": new DataDrivenProperty(v8Spec["paint_line"]["line-offset"]),
     "line-blur": new DataDrivenProperty(v8Spec["paint_line"]["line-blur"]),
-    "line-dasharray": new CrossFadedProperty(v8Spec["paint_line"]["line-dasharray"]),
+    "line-dasharray": new CrossFadedDataDrivenProperty(v8Spec["paint_line"]["line-dasharray"]),
     "line-pattern": new CrossFadedDataDrivenProperty(v8Spec["paint_line"]["line-pattern"]),
     "line-gradient": new ColorRampProperty(v8Spec["paint_line"]["line-gradient"]),
 });
-var properties$5 = ({ get paint() { return getPaint$3(); }, get layout() { return getLayout$1(); } });
+var properties$4 = ({ get paint() { return getPaint$2(); }, get layout() { return getLayout$1(); } });
 
 class LineFloorwidthProperty extends DataDrivenProperty {
     possiblyEvaluate(value, parameters) {
@@ -30795,11 +31100,11 @@ let lineFloorwidthProperty;
 const isLineStyleLayer = (layer) => layer.type === 'line';
 class LineStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$5, globalState);
+        super(layer, properties$4, globalState);
         this.gradientVersion = 0;
         if (!lineFloorwidthProperty) {
             lineFloorwidthProperty =
-                new LineFloorwidthProperty(properties$5.paint.properties['line-width'].specification);
+                new LineFloorwidthProperty(properties$4.paint.properties['line-width'].specification);
             lineFloorwidthProperty.useIntegerZoom = true;
         }
     }
@@ -33153,13 +33458,13 @@ class SymbolBucket {
     constructor(options) {
         this.collisionBoxArray = options.collisionBoxArray;
         this.zoom = options.zoom;
-        this.overscaling = options.overscaling;
+        this.overscaling = isSafari(globalThis) ? Math.min(options.overscaling, 128) : options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
         this.pixelRatio = options.pixelRatio;
         this.sourceLayerIndex = options.sourceLayerIndex;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.hasRTLText = false;
         this.sortKeyRanges = [];
         this.collisionCircleArray = [];
@@ -33685,8 +33990,8 @@ const getLayout = () => layout = layout || new Properties({
     "text-ignore-placement": new DataConstantProperty(v8Spec["layout_symbol"]["text-ignore-placement"]),
     "text-optional": new DataConstantProperty(v8Spec["layout_symbol"]["text-optional"]),
 });
-let paint$2;
-const getPaint$2 = () => paint$2 = paint$2 || new Properties({
+let paint$1;
+const getPaint$1 = () => paint$1 = paint$1 || new Properties({
     "icon-opacity": new DataDrivenProperty(v8Spec["paint_symbol"]["icon-opacity"]),
     "icon-color": new DataDrivenProperty(v8Spec["paint_symbol"]["icon-color"]),
     "icon-halo-color": new DataDrivenProperty(v8Spec["paint_symbol"]["icon-halo-color"]),
@@ -33702,7 +34007,7 @@ const getPaint$2 = () => paint$2 = paint$2 || new Properties({
     "text-translate": new DataConstantProperty(v8Spec["paint_symbol"]["text-translate"]),
     "text-translate-anchor": new DataConstantProperty(v8Spec["paint_symbol"]["text-translate-anchor"]),
 });
-var properties$4 = ({ get paint() { return getPaint$2(); }, get layout() { return getLayout(); } });
+var properties$3 = ({ get paint() { return getPaint$1(); }, get layout() { return getLayout(); } });
 
 // This is an internal expression class. It is only used in GL JS and
 // has GL JS dependencies which can break the standalone style-spec module
@@ -33744,7 +34049,7 @@ register('FormatSectionOverride', FormatSectionOverride, { omit: ['defaultValue'
 const isSymbolStyleLayer = (layer) => layer.type === 'symbol';
 class SymbolStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
-        super(layer, properties$4, globalState);
+        super(layer, properties$3, globalState);
     }
     recalculate(parameters, availableImages) {
         super.recalculate(parameters, availableImages);
@@ -33806,7 +34111,7 @@ class SymbolStyleLayer extends StyleLayer {
         throw new Error('Should take a different path in FeatureIndex');
     }
     _setPaintOverrides() {
-        for (const overridable of properties$4.paint.overridableProperties) {
+        for (const overridable of properties$3.paint.overridableProperties) {
             if (!SymbolStyleLayer.hasPaintOverride(this.layout, overridable)) {
                 continue;
             }
@@ -33831,7 +34136,7 @@ class SymbolStyleLayer extends StyleLayer {
     }
     static hasPaintOverride(layout, propertyName) {
         const textField = layout.get('text-field');
-        const property = properties$4.paint.properties[propertyName];
+        const property = properties$3.paint.properties[propertyName];
         let hasOverrides = false;
         const checkSections = (sections) => {
             for (const section of sections) {
@@ -33881,38 +34186,16 @@ function getIconPadding(layout, feature, canonical, pixelRatio = 1) {
 
 // This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
 /* eslint-disable */
-let paint$1;
-const getPaint$1 = () => paint$1 = paint$1 || new Properties({
+let paint;
+const getPaint = () => paint = paint || new Properties({
     "background-color": new DataConstantProperty(v8Spec["paint_background"]["background-color"]),
     "background-pattern": new CrossFadedProperty(v8Spec["paint_background"]["background-pattern"]),
     "background-opacity": new DataConstantProperty(v8Spec["paint_background"]["background-opacity"]),
 });
-var properties$3 = ({ get paint() { return getPaint$1(); } });
+var properties$2 = ({ get paint() { return getPaint(); } });
 
 const isBackgroundStyleLayer = (layer) => layer.type === 'background';
 class BackgroundStyleLayer extends StyleLayer {
-    constructor(layer, globalState) {
-        super(layer, properties$3, globalState);
-    }
-}
-
-// This file is generated. Edit build/generate-style-code.ts, then run 'npm run codegen'.
-/* eslint-disable */
-let paint;
-const getPaint = () => paint = paint || new Properties({
-    "raster-opacity": new DataConstantProperty(v8Spec["paint_raster"]["raster-opacity"]),
-    "raster-hue-rotate": new DataConstantProperty(v8Spec["paint_raster"]["raster-hue-rotate"]),
-    "raster-brightness-min": new DataConstantProperty(v8Spec["paint_raster"]["raster-brightness-min"]),
-    "raster-brightness-max": new DataConstantProperty(v8Spec["paint_raster"]["raster-brightness-max"]),
-    "raster-saturation": new DataConstantProperty(v8Spec["paint_raster"]["raster-saturation"]),
-    "raster-contrast": new DataConstantProperty(v8Spec["paint_raster"]["raster-contrast"]),
-    "raster-resampling": new DataConstantProperty(v8Spec["paint_raster"]["raster-resampling"]),
-    "raster-fade-duration": new DataConstantProperty(v8Spec["paint_raster"]["raster-fade-duration"]),
-});
-var properties$2 = ({ get paint() { return getPaint(); } });
-
-const isRasterStyleLayer = (layer) => layer.type === 'raster';
-class RasterStyleLayer extends StyleLayer {
     constructor(layer, globalState) {
         super(layer, properties$2, globalState);
     }
@@ -34967,8 +35250,8 @@ class LineAtlas {
             }
         }
         const dashEntry = {
-            y: (this.nextRow + n + 0.5) / this.height,
-            height: 2 * n / this.height,
+            y: this.nextRow + n,
+            height: 2 * n,
             width: length
         };
         this.nextRow += height;
@@ -36707,7 +36990,9 @@ class CanonicalTileID {
     equals(id) {
         return this.z === id.z && this.x === id.x && this.y === id.y;
     }
-    // given a list of urls, choose a url template and return a tile URL
+    /**
+     * given a list of urls, choose a url template and return a tile URL
+     */
     url(urls, pixelRatio, scheme) {
         const bbox = getTileBBox(this.x, this.y, this.z);
         const quadkey = getQuadkey(this.z, this.x, this.y);
@@ -36768,6 +37053,14 @@ class OverscaledTileID {
     equals(id) {
         return this.overscaledZ === id.overscaledZ && this.wrap === id.wrap && this.canonical.equals(id.canonical);
     }
+    /**
+     * Returns a new `OverscaledTileID` representing the tile at the target zoom level.
+     * When targetZ is greater than the current canonical z, the canonical coordinates are unchanged.
+     * When targetZ is less than the current canonical z, the canonical coordinates are updated.
+     * @param targetZ - the zoom level to scale to. Must be less than or equal to this.overscaledZ
+     * @returns a new OverscaledTileID representing the tile at the target zoom level
+     * @throws if targetZ is greater than this.overscaledZ
+     */
     scaledTo(targetZ) {
         if (targetZ > this.overscaledZ)
             throw new Error(`targetZ > this.overscaledZ; targetZ = ${targetZ}; overscaledZ = ${this.overscaledZ}`);
@@ -36778,6 +37071,9 @@ class OverscaledTileID {
         else {
             return new OverscaledTileID(targetZ, this.wrap, targetZ, this.canonical.x >> zDifference, this.canonical.y >> zDifference);
         }
+    }
+    isOverscaled() {
+        return (this.overscaledZ > this.canonical.z);
     }
     /*
      * calculateScaledKey is an optimization:
@@ -37295,6 +37591,9 @@ class GeoJSONSource extends Evented {
             this.workerOptions.promoteId = this.promoteId;
         }
     }
+    _hasPendingWorkerUpdate() {
+        return this._pendingWorkerUpdate.data !== undefined || this._pendingWorkerUpdate.diff !== undefined || this._pendingWorkerUpdate.optionsChanged;
+    }
     _pixelsToTileUnits(pixelValue) {
         return pixelValue * (EXTENT$1 / this.tileSize);
     }
@@ -37402,13 +37701,13 @@ class GeoJSONSource extends Evented {
      */
     setClusterOptions(options) {
         this.workerOptions.cluster = options.cluster;
-        if (options) {
-            if (options.clusterRadius !== undefined)
-                this.workerOptions.superclusterOptions.radius = this._pixelsToTileUnits(options.clusterRadius);
-            if (options.clusterMaxZoom !== undefined) {
-                this.workerOptions.superclusterOptions.maxZoom = this._getClusterMaxZoom(options.clusterMaxZoom);
-            }
+        if (options.clusterRadius !== undefined) {
+            this.workerOptions.superclusterOptions.radius = this._pixelsToTileUnits(options.clusterRadius);
         }
+        if (options.clusterMaxZoom !== undefined) {
+            this.workerOptions.superclusterOptions.maxZoom = this._getClusterMaxZoom(options.clusterMaxZoom);
+        }
+        this._pendingWorkerUpdate.optionsChanged = true;
         this._updateWorkerData();
         return this;
     }
@@ -37473,11 +37772,11 @@ class GeoJSONSource extends Evented {
         return __awaiter(this, void 0, void 0, function* () {
             if (this._isUpdatingWorker)
                 return;
-            const { data, diff } = this._pendingWorkerUpdate;
-            if (!data && !diff) {
-                warnOnce(`No data or diff provided to GeoJSONSource ${this.id}.`);
+            if (!this._hasPendingWorkerUpdate()) {
+                warnOnce(`No pending worker updates for GeoJSONSource ${this.id}.`);
                 return;
             }
+            const { data, diff } = this._pendingWorkerUpdate;
             const options = extend({ type: this.type }, this.workerOptions);
             if (data) {
                 if (typeof data === 'string') {
@@ -37493,6 +37792,8 @@ class GeoJSONSource extends Evented {
                 options.dataDiff = diff;
                 this._pendingWorkerUpdate.diff = undefined;
             }
+            // Reset the flag since this update is using the latest options
+            this._pendingWorkerUpdate.optionsChanged = undefined;
             this._isUpdatingWorker = true;
             this.fire(new Event('dataloading', { dataType: 'source' }));
             try {
@@ -37526,14 +37827,14 @@ class GeoJSONSource extends Evented {
             }
             finally {
                 // If there is more pending data, update worker again.
-                if (this._pendingWorkerUpdate.data || this._pendingWorkerUpdate.diff) {
+                if (this._hasPendingWorkerUpdate()) {
                     this._updateWorkerData();
                 }
             }
         });
     }
     loaded() {
-        return !this._isUpdatingWorker && this._pendingWorkerUpdate.data === undefined && this._pendingWorkerUpdate.diff === undefined;
+        return !this._isUpdatingWorker && !this._hasPendingWorkerUpdate();
     }
     loadTile(tile) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38677,6 +38978,16 @@ function rtlMainThreadPluginFactory() {
 }
 
 const CLOCK_SKEW_RETRY_TIMEOUT = 30000;
+var FadingRoles;
+(function (FadingRoles) {
+    FadingRoles[FadingRoles["Base"] = 0] = "Base";
+    FadingRoles[FadingRoles["Parent"] = 1] = "Parent";
+})(FadingRoles || (FadingRoles = {}));
+var FadingDirections;
+(function (FadingDirections) {
+    FadingDirections[FadingDirections["Departing"] = 0] = "Departing";
+    FadingDirections[FadingDirections["Incoming"] = 1] = "Incoming";
+})(FadingDirections || (FadingDirections = {}));
 /**
  * A tile object is the combination of a Coordinate, which defines
  * its place, as well as a unique ID and data tracking for its content
@@ -38689,6 +39000,7 @@ class Tile {
     constructor(tileID, size) {
         this.timeAdded = 0;
         this.fadeEndTime = 0;
+        this.fadeOpacity = 1;
         this.tileID = tileID;
         this.uid = uniqueId();
         this.uses = 0;
@@ -38708,12 +39020,39 @@ class Tile {
         this.expiredRequestCount = 0;
         this.state = 'loading';
     }
-    registerFadeDuration(duration) {
-        const fadeEndTime = duration + this.timeAdded;
-        if (fadeEndTime < this.fadeEndTime) {
-            return;
-        }
+    isRenderable(symbolLayer) {
+        return (this.hasData() &&
+            (!this.fadeEndTime || this.fadeOpacity > 0) && // raster fading
+            (symbolLayer || !this.holdingForSymbolFade()) // symbol fading
+        );
+    }
+    /**
+     * @internal
+     * Many-to-one crossfade between a base tile and parent/ancestor tile (when zooming)
+     */
+    setCrossFadeLogic({ fadingRole, fadingDirection, fadingParentID, fadeEndTime }) {
+        this.resetFadeLogic();
+        this.fadingRole = fadingRole;
+        this.fadingDirection = fadingDirection;
+        this.fadingParentID = fadingParentID;
         this.fadeEndTime = fadeEndTime;
+    }
+    /**
+     * Self fading for edge tiles (when panning map)
+     */
+    setSelfFadeLogic(fadeEndTime) {
+        this.resetFadeLogic();
+        this.selfFading = true;
+        this.fadeEndTime = fadeEndTime;
+    }
+    resetFadeLogic() {
+        this.fadingRole = null;
+        this.fadingDirection = null;
+        this.fadingParentID = null;
+        this.selfFading = false;
+        this.timeAdded = now();
+        this.fadeEndTime = 0;
+        this.fadeOpacity = 1;
     }
     wasRequested() {
         return this.state === 'errored' || this.state === 'loaded' || this.state === 'reloading';
@@ -38795,6 +39134,7 @@ class Tile {
         if (data.glyphAtlasImage) {
             this.glyphAtlasImage = data.glyphAtlasImage;
         }
+        this.dashPositions = data.dashPositions;
     }
     /**
      * Release any data or WebGL resources referenced by this tile.
@@ -38812,6 +39152,9 @@ class Tile {
         }
         if (this.glyphAtlasTexture) {
             this.glyphAtlasTexture.destroy();
+        }
+        if (this.dashPositions) {
+            this.dashPositions = null;
         }
         this.latestFeatureIndex = null;
         this.state = 'unloaded';
@@ -38967,24 +39310,24 @@ class Tile {
             const sourceLayerStates = states[sourceLayerId];
             if (!sourceLayer || !sourceLayerStates || Object.keys(sourceLayerStates).length === 0)
                 continue;
-            bucket.update(sourceLayerStates, sourceLayer, this.imageAtlas && this.imageAtlas.patternPositions || {});
+            bucket.update(sourceLayerStates, sourceLayer, this.imageAtlas && this.imageAtlas.patternPositions || {}, this.dashPositions || {});
             const layer = painter && painter.style && painter.style.getLayer(id);
             if (layer) {
                 this.queryPadding = Math.max(this.queryPadding, layer.queryRadius(bucket));
             }
         }
     }
-    holdingForFade() {
+    holdingForSymbolFade() {
         return this.symbolFadeHoldUntil !== undefined;
     }
     symbolFadeFinished() {
-        return !this.symbolFadeHoldUntil || this.symbolFadeHoldUntil < browser.now();
+        return !this.symbolFadeHoldUntil || this.symbolFadeHoldUntil < now();
     }
-    clearFadeHold() {
+    clearSymbolFadeHold() {
         this.symbolFadeHoldUntil = undefined;
     }
-    setHoldDuration(duration) {
-        this.symbolFadeHoldUntil = browser.now() + duration;
+    setSymbolHoldDuration(duration) {
+        this.symbolFadeHoldUntil = now() + duration;
     }
     setDependencies(namespace, dependencies) {
         const index = {};
@@ -39621,11 +39964,10 @@ class SourceCache extends Evented {
         this._tiles = {};
         this._cache = new TileCache(0, (tile) => this._unloadTile(tile));
         this._timers = {};
-        this._cacheTimers = {};
         this._maxTileCacheSize = null;
         this._maxTileCacheZoomLevels = null;
-        this._loadedParentTiles = {};
-        this._coveredTiles = {};
+        this._rasterFadeDuration = 0;
+        this._maxFadingAncestorLevels = 5;
         this._state = new SourceFeatureState();
         this._didEmitContent = false;
         this._updated = false;
@@ -39734,7 +40076,7 @@ class SourceCache extends Evented {
      * Return all tile ids ordered with z-order, and cast to numbers
      */
     getIds() {
-        return Object.values(this._tiles).map((tile) => tile.tileID).sort(compareTileId).map(id => id.key);
+        return Object.values(this._tiles).map(tile => tile.tileID).sort(compareTileId).map(id => id.key);
     }
     getRenderableIds(symbolLayer) {
         const renderables = [];
@@ -39754,16 +40096,23 @@ class SourceCache extends Evented {
         return renderables.map(tile => tile.tileID).sort(compareTileId).map(id => id.key);
     }
     hasRenderableParent(tileID) {
-        const parentTile = this.findLoadedParent(tileID, 0);
-        if (parentTile) {
-            return this._isIdRenderable(parentTile.tileID.key);
+        const parentZ = tileID.overscaledZ - 1;
+        if (parentZ >= this._source.minzoom) {
+            const parentTile = this._getLoadedTile(tileID.scaledTo(parentZ));
+            if (parentTile) {
+                return this._isIdRenderable(parentTile.tileID.key);
+            }
         }
         return false;
     }
-    _isIdRenderable(id, symbolLayer) {
-        return this._tiles[id] && this._tiles[id].hasData() &&
-            !this._coveredTiles[id] && (symbolLayer || !this._tiles[id].holdingForFade());
+    _isIdRenderable(id, symbolLayer = false) {
+        var _a;
+        return (_a = this._tiles[id]) === null || _a === void 0 ? void 0 : _a.isRenderable(symbolLayer);
     }
+    /**
+     * Reload tiles in this source. If source data has changed, reload all tiles using a state of 'expired',
+     * otherwise reload only non-errored tiles using state of 'reloading'.
+     */
     reload(sourceDataChanged) {
         if (this._paused) {
             this._shouldReloadOnResume = true;
@@ -39798,7 +40147,7 @@ class SourceCache extends Evented {
         });
     }
     _tileLoaded(tile, id, previousState) {
-        tile.timeAdded = browser.now();
+        tile.timeAdded = now();
         if (previousState === 'expired')
             tile.refreshedUponExpiration = true;
         this._setTileReloadTimer(id, tile);
@@ -39885,29 +40234,33 @@ class SourceCache extends Evented {
     _retainLoadedChildren(targetTiles, retain) {
         const targetTileIDs = Object.values(targetTiles);
         const loadedDescendents = this._getLoadedDescendents(targetTileIDs);
+        const incomplete = {};
         // retain the uppermost descendents of target tiles
         for (const targetID of targetTileIDs) {
-            const descendentTiles = loadedDescendents[targetID.key];
-            if (!descendentTiles)
+            const descendents = loadedDescendents[targetID.key];
+            if (!(descendents === null || descendents === void 0 ? void 0 : descendents.length)) {
+                incomplete[targetID.key] = targetID;
                 continue;
-            const targetTileMaxCoveringZoom = targetID.overscaledZ + SourceCache.maxUnderzooming;
-            // determine the topmost zoom (overscaledZ) in the set of descendent tiles. (i.e. zoom 4 tiles are topmost relative to zoom 5)
-            let topmostZoom = Infinity;
-            for (const tile of descendentTiles) {
-                const zoom = tile.tileID.overscaledZ;
-                if (zoom <= targetTileMaxCoveringZoom && zoom < topmostZoom) {
-                    topmostZoom = zoom;
-                }
             }
-            // retain all uppermost descendents (with the same overscaledZ) in the topmost zoom below the target tile
-            if (topmostZoom !== Infinity) {
-                for (const tile of descendentTiles) {
-                    if (tile.tileID.overscaledZ === topmostZoom) {
-                        retain[tile.tileID.key] = tile.tileID;
-                    }
-                }
+            // find descendents within the max covering zoom range
+            const maxCoveringZoom = targetID.overscaledZ + SourceCache.maxUnderzooming;
+            const candidates = descendents.filter(t => t.tileID.overscaledZ <= maxCoveringZoom);
+            if (!candidates.length) {
+                incomplete[targetID.key] = targetID;
+                continue;
+            }
+            // retain the uppermost descendents in the topmost zoom below the target tile
+            const topZoom = Math.min(...candidates.map(t => t.tileID.overscaledZ));
+            const topIDs = candidates.filter(t => t.tileID.overscaledZ === topZoom).map(t => t.tileID);
+            for (const tileID of topIDs) {
+                retain[tileID.key] = tileID;
+            }
+            //determine if the retained generation is fully covered
+            if (!this._areDescendentsComplete(topIDs, topZoom, targetID.overscaledZ)) {
+                incomplete[targetID.key] = targetID;
             }
         }
+        return incomplete;
     }
     /**
      * Return dictionary of qualified loaded descendents for each provided target tile id
@@ -39930,41 +40283,30 @@ class SourceCache extends Evented {
         return loadedDescendents;
     }
     /**
-     * Find a loaded parent of the given tile (up to minCoveringZoom)
+     * Determine if tile ids fully cover the current generation.
+     * - 1st generation: need 4 children or 1 overscaled child
+     * - 2nd generation: need 16 children or 1 overscaled child
      */
-    findLoadedParent(tileID, minCoveringZoom) {
-        if (tileID.key in this._loadedParentTiles) {
-            const parent = this._loadedParentTiles[tileID.key];
-            if (parent && parent.tileID.overscaledZ >= minCoveringZoom) {
-                return parent;
-            }
-            else {
-                return null;
-            }
+    _areDescendentsComplete(generationIDs, generationZ, ancestorZ) {
+        //if overscaled, seeking 1 tile at generationZ, otherwise seeking a power of 4 for each descending Z
+        if (generationIDs.length === 1 && generationIDs[0].isOverscaled()) {
+            return generationIDs[0].overscaledZ === generationZ;
         }
-        for (let z = tileID.overscaledZ - 1; z >= minCoveringZoom; z--) {
-            const parentTileID = tileID.scaledTo(z);
-            const tile = this._getLoadedTile(parentTileID);
-            if (tile) {
-                return tile;
-            }
+        else {
+            const expectedTiles = Math.pow(4, generationZ - ancestorZ); //4, 16, 64 (for first 3 gens)
+            return expectedTiles === generationIDs.length;
         }
     }
     /**
-     * Find a loaded sibling of the given tile
+     * Get a loaded tile currently in this source.
+     * - loaded tiles exist in this._tiles - a cached tile is not a loaded tile
      */
-    findLoadedSibling(tileID) {
-        // If a tile with this ID already exists, return it
-        return this._getLoadedTile(tileID);
-    }
     _getLoadedTile(tileID) {
         const tile = this._tiles[tileID.key];
-        if (tile && tile.hasData()) {
+        if (tile === null || tile === void 0 ? void 0 : tile.hasData()) {
             return tile;
         }
-        // TileCache ignores wrap in lookup.
-        const cachedTile = this._cache.getByKey(tileID.wrapped().key);
-        return cachedTile;
+        return null;
     }
     /**
      * Resizes the tile cache based on the current viewport's size
@@ -40014,91 +40356,7 @@ class SourceCache extends Evented {
                 tiles[tile.tileID.key] = tile;
             }
             this._tiles = tiles;
-            // Reset tile reload timers
-            for (const id in this._timers) {
-                clearTimeout(this._timers[id]);
-                delete this._timers[id];
-            }
-            for (const id in this._tiles) {
-                const tile = this._tiles[id];
-                this._setTileReloadTimer(id, tile);
-            }
-        }
-    }
-    _updateCoveredAndRetainedTiles(retain, minCoveringZoom, idealTileIDs, terrain) {
-        const tilesForFading = {};
-        const fadingTiles = {};
-        const ids = Object.keys(retain);
-        const now = browser.now();
-        for (const id of ids) {
-            const tileID = retain[id];
-            const tile = this._tiles[id];
-            // when fadeEndTime is 0, the tile is created but registerFadeDuration
-            // has not been called, therefore must be kept in fadingTiles dictionary
-            // for next round of rendering
-            if (!tile || (tile.fadeEndTime !== 0 && tile.fadeEndTime <= now)) {
-                continue;
-            }
-            // if the tile is loaded but still fading in, find parents to cross-fade with it
-            const parentTile = this.findLoadedParent(tileID, minCoveringZoom);
-            const siblingTile = this.findLoadedSibling(tileID);
-            const fadeTileRef = parentTile || siblingTile || null;
-            if (fadeTileRef) {
-                this._addTile(fadeTileRef.tileID);
-                tilesForFading[fadeTileRef.tileID.key] = fadeTileRef.tileID;
-            }
-            fadingTiles[id] = tileID;
-        }
-        // for tiles that are still fading in, also find children to cross-fade with
-        this._retainLoadedChildren(fadingTiles, retain);
-        for (const id in tilesForFading) {
-            if (!retain[id]) {
-                // If a tile is only needed for fading, mark it as covered so that it isn't rendered on it's own.
-                this._coveredTiles[id] = true;
-                retain[id] = tilesForFading[id];
-            }
-        }
-        // disable fading logic in terrain3D mode to avoid rendering two tiles on the same place
-        if (terrain) {
-            const idealRasterTileIDs = {};
-            const missingTileIDs = {};
-            for (const tileID of idealTileIDs) {
-                if (this._tiles[tileID.key].hasData())
-                    idealRasterTileIDs[tileID.key] = tileID;
-                else
-                    missingTileIDs[tileID.key] = tileID;
-            }
-            // search for a complete set of children for each missing tile
-            for (const key in missingTileIDs) {
-                const children = missingTileIDs[key].children(this._source.maxzoom);
-                if (this._tiles[children[0].key] && this._tiles[children[1].key] && this._tiles[children[2].key] && this._tiles[children[3].key]) {
-                    idealRasterTileIDs[children[0].key] = retain[children[0].key] = children[0];
-                    idealRasterTileIDs[children[1].key] = retain[children[1].key] = children[1];
-                    idealRasterTileIDs[children[2].key] = retain[children[2].key] = children[2];
-                    idealRasterTileIDs[children[3].key] = retain[children[3].key] = children[3];
-                    delete missingTileIDs[key];
-                }
-            }
-            // search for parent or sibling for each missing tile
-            for (const key in missingTileIDs) {
-                const tileID = missingTileIDs[key];
-                const parentTile = this.findLoadedParent(tileID, this._source.minzoom);
-                const siblingTile = this.findLoadedSibling(tileID);
-                const fadeTileRef = parentTile || siblingTile || null;
-                if (fadeTileRef) {
-                    idealRasterTileIDs[fadeTileRef.tileID.key] = retain[fadeTileRef.tileID.key] = fadeTileRef.tileID;
-                    // remove idealTiles which would be rendered twice
-                    for (const key in idealRasterTileIDs) {
-                        if (idealRasterTileIDs[key].isChildOf(fadeTileRef.tileID))
-                            delete idealRasterTileIDs[key];
-                    }
-                }
-            }
-            // cover all tiles which are not needed
-            for (const key in this._tiles) {
-                if (!idealRasterTileIDs[key])
-                    this._coveredTiles[key] = true;
-            }
+            this._resetTileReloadTimers();
         }
     }
     /**
@@ -40113,9 +40371,6 @@ class SourceCache extends Evented {
         this.terrain = terrain;
         this.updateCacheSize(transform);
         this.handleWrapJump(this.transform.center.lng);
-        // Covered is a list of retained tiles who's areas are fully covered by other,
-        // better, retained tiles. They are not drawn separately.
-        this._coveredTiles = {};
         let idealTileIDs;
         if (!this.used && !this.usedForTerrain) {
             idealTileIDs = [];
@@ -40138,22 +40393,9 @@ class SourceCache extends Evented {
                 idealTileIDs = idealTileIDs.filter((coord) => this._source.hasTile(coord));
             }
         }
-        // Determine the overzooming/underzooming amounts.
-        const zoom = coveringZoomLevel(transform, this._source);
-        const minCoveringZoom = Math.max(zoom - SourceCache.maxOverzooming, this._source.minzoom);
-        // When sourcecache is used for terrain also load parent tiles to avoid flickering when zooming out
+        // When sourcecache is used for terrain also load parent tiles for complete rendering of 3d terrain levels
         if (this.usedForTerrain) {
-            const parents = {};
-            for (const tileID of idealTileIDs) {
-                if (tileID.canonical.z > this._source.minzoom) {
-                    const parent = tileID.scaledTo(tileID.canonical.z - 1);
-                    parents[parent.key] = parent;
-                    // load very low zoom to calculate tile visibility in transform.coveringTiles and high zoomlevels correct
-                    const parent2 = tileID.scaledTo(Math.max(this._source.minzoom, Math.min(tileID.canonical.z, 5)));
-                    parents[parent2.key] = parent2;
-                }
-            }
-            idealTileIDs = idealTileIDs.concat(Object.values(parents));
+            idealTileIDs = this._addTerrainIdealTiles(idealTileIDs);
         }
         const noPendingDataEmissions = idealTileIDs.length === 0 && !this._updated && this._didEmitContent;
         this._updated = true;
@@ -40165,33 +40407,75 @@ class SourceCache extends Evented {
         // Retain is a list of tiles that we shouldn't delete, even if they are not
         // the most ideal tile for the current viewport. This may include tiles like
         // parent or child tiles that are *already* loaded.
+        const zoom = coveringZoomLevel(transform, this._source);
         const retain = this._updateRetainedTiles(idealTileIDs, zoom);
-        if (isRasterType(this._source.type)) {
-            this._updateCoveredAndRetainedTiles(retain, minCoveringZoom, idealTileIDs, terrain);
+        // enable fading for raster source except when using terrain which doesn't currently support fading
+        const isRaster = isRasterType(this._source.type);
+        if (isRaster && this._rasterFadeDuration > 0 && !terrain) {
+            this._updateFadingTiles(idealTileIDs, retain);
         }
-        for (const retainedId in retain) {
-            // Make sure retained tiles always clear any existing fade holds
-            // so that if they're removed again their fade timer starts fresh.
-            this._tiles[retainedId].clearFadeHold();
+        // clean up non-retained tiles in this source
+        if (isRaster) {
+            this._cleanUpRasterTiles(retain);
         }
-        // Remove the tiles we don't need anymore.
-        const remove = keysDifference(this._tiles, retain);
-        for (const tileID of remove) {
-            const tile = this._tiles[tileID];
-            if (tile.hasSymbolBuckets && !tile.holdingForFade()) {
-                tile.setHoldDuration(this.map._fadeDuration);
+        else {
+            this._cleanUpVectorTiles(retain);
+        }
+    }
+    /**
+     * Remove raster tiles that are no longer retained
+     */
+    _cleanUpRasterTiles(retain) {
+        for (const key in this._tiles) {
+            if (!retain[key]) {
+                this._removeTile(key);
             }
-            else if (!tile.hasSymbolBuckets || tile.symbolFadeFinished()) {
-                this._removeTile(tileID);
+        }
+    }
+    /**
+     * Remove vector tiles that are no longer retained and also not needed for symbol fading
+     */
+    _cleanUpVectorTiles(retain) {
+        for (const key in this._tiles) {
+            const tile = this._tiles[key];
+            // retained - clear fade hold so if it's removed again fade timer starts fresh.
+            if (retain[key]) {
+                tile.clearSymbolFadeHold();
+                continue;
+            }
+            // remove non-retained tiles without symbols
+            if (!tile.hasSymbolBuckets) {
+                this._removeTile(key);
+                continue;
+            }
+            // for tile with symbols - hold for fade - then remove
+            if (!tile.holdingForSymbolFade()) {
+                tile.setSymbolHoldDuration(this.map._fadeDuration);
+            }
+            else if (tile.symbolFadeFinished()) {
+                this._removeTile(key);
             }
         }
-        // Construct caches of loaded parents & siblings
-        this._updateLoadedParentTileCache();
-        this._updateLoadedSiblingTileCache();
+    }
+    /**
+     * Add ideal tiles needed for 3D terrain rendering
+     */
+    _addTerrainIdealTiles(idealTileIDs) {
+        const ancestors = [];
+        for (const tileID of idealTileIDs) {
+            if (tileID.canonical.z > this._source.minzoom) {
+                const parent = tileID.scaledTo(tileID.canonical.z - 1);
+                ancestors.push(parent);
+                // load very low zoom to calculate tile visibility in transform.coveringTiles and high zoom levels correct
+                const parent2 = tileID.scaledTo(Math.max(this._source.minzoom, Math.min(tileID.canonical.z, 5)));
+                ancestors.push(parent2);
+            }
+        }
+        return idealTileIDs.concat(ancestors);
     }
     releaseSymbolFadeTiles() {
         for (const id in this._tiles) {
-            if (this._tiles[id].holdingForFade()) {
+            if (this._tiles[id].holdingForSymbolFade()) {
                 this._removeTile(id);
             }
         }
@@ -40206,52 +40490,24 @@ class SourceCache extends Evented {
         const retain = {};
         const checked = {};
         const minCoveringZoom = Math.max(zoom - SourceCache.maxOverzooming, this._source.minzoom);
-        const missingTiles = {};
-        for (const tileID of idealTileIDs) {
-            const tile = this._addTile(tileID);
+        let missingIdealTiles = {};
+        for (const idealID of idealTileIDs) {
+            const idealTile = this._addTile(idealID);
             // retain the tile even if it's not loaded because it's an ideal tile.
-            retain[tileID.key] = tileID;
-            if (tile.hasData())
-                continue;
-            if (zoom < this._source.maxzoom) {
-                // save missing tiles that potentially have loaded children
-                missingTiles[tileID.key] = tileID;
+            retain[idealID.key] = idealID;
+            if (!idealTile.hasData()) {
+                missingIdealTiles[idealID.key] = idealID;
             }
         }
-        this._retainLoadedChildren(missingTiles, retain);
-        for (const tileID of idealTileIDs) {
-            let tile = this._tiles[tileID.key];
-            if (tile.hasData())
-                continue;
-            // The tile we require is not yet loaded or does not exist;
-            // Attempt to find children that fully cover it.
-            if (zoom + 1 > this._source.maxzoom) {
-                // We're looking for an overzoomed child tile.
-                const childCoord = tileID.children(this._source.maxzoom)[0];
-                const childTile = this.getTile(childCoord);
-                if (!!childTile && childTile.hasData()) {
-                    retain[childCoord.key] = childCoord;
-                    continue; // tile is covered by overzoomed child
-                }
-            }
-            else {
-                // check if all 4 immediate children are loaded (i.e. the missing ideal tile is covered)
-                const children = tileID.children(this._source.maxzoom);
-                if (children.length === 4 &&
-                    retain[children[0].key] &&
-                    retain[children[1].key] &&
-                    retain[children[2].key] &&
-                    retain[children[3].key])
-                    continue; // tile is covered by children
-                if (children.length === 1 &&
-                    retain[children[0].key])
-                    continue; // tile is covered by overscaled child
-            }
-            // We couldn't find child tiles that entirely cover the ideal tile; look for parents now.
+        missingIdealTiles = this._retainLoadedChildren(missingIdealTiles, retain);
+        // for remaining missing tiles with incomplete child coverage, seek a loaded parent tile
+        for (const idealKey in missingIdealTiles) {
+            const tileID = missingIdealTiles[idealKey];
+            let tile = this._tiles[idealKey];
             // As we ascend up the tile pyramid of the ideal tile, we check whether the parent
             // tile has been previously requested (and errored because we only loop over tiles with no data)
             // in order to determine if we need to request its parent.
-            let parentWasRequested = tile.wasRequested();
+            let parentWasRequested = tile === null || tile === void 0 ? void 0 : tile.wasRequested();
             for (let overscaledZ = tileID.overscaledZ - 1; overscaledZ >= minCoveringZoom; --overscaledZ) {
                 const parentId = tileID.scaledTo(overscaledZ);
                 // Break parent tile ascent if this route has been previously checked by another child.
@@ -40277,50 +40533,165 @@ class SourceCache extends Evented {
         }
         return retain;
     }
-    _updateLoadedParentTileCache() {
-        this._loadedParentTiles = {};
-        for (const tileKey in this._tiles) {
-            const path = [];
-            let parentTile;
-            let currentId = this._tiles[tileKey].tileID;
-            // Find the closest loaded ancestor by traversing the tile tree towards the root and
-            // caching results along the way
-            while (currentId.overscaledZ > 0) {
-                // Do we have a cached result from previous traversals?
-                if (currentId.key in this._loadedParentTiles) {
-                    parentTile = this._loadedParentTiles[currentId.key];
-                    break;
-                }
-                path.push(currentId.key);
-                // Is the parent loaded?
-                const parentId = currentId.scaledTo(currentId.overscaledZ - 1);
-                parentTile = this._getLoadedTile(parentId);
-                if (parentTile) {
-                    break;
-                }
-                currentId = parentId;
+    /**
+     * Designate fading bases and parents using a many-to-one relationship where the lower children fade in/out
+     * with their parents. Raster shaders are not currently designed for a one-to-many fade relationship.
+     *
+     * Tiles that are candidates for fading out must be loaded and rendered tiles, as loading a tile to then
+     * fade it out would not appear smoothly. The first source of truth for tile fading always starts at the
+     * ideal tile, which continually changes on map adjustment. The state of the previously rendered ideal
+     * tile plane indicates which direction to fade each part of the newer ideal plane (with varying z).
+     *
+     * For a pitched map, the back of the map can have decreasing zooms while the front can have increasing zooms.
+     * Fade logic must therefore adapt dynamically based on the previously rendered ideal tile set.
+     */
+    _updateFadingTiles(idealTileIDs, retain) {
+        const currentTime = now();
+        const edgeTileIDs = getEdgeTiles(idealTileIDs);
+        for (const idealID of idealTileIDs) {
+            const idealTile = this._tiles[idealID.key];
+            // reset any previously departing(ed) tiles that are now ideal tiles
+            if (idealTile.fadingDirection === FadingDirections.Departing || idealTile.fadeOpacity === 0) {
+                idealTile.resetFadeLogic();
             }
-            // Cache the result of this traversal to all newly visited tiles
-            for (const key of path) {
-                this._loadedParentTiles[key] = parentTile;
-            }
+            const parentIsFader = this._updateFadingAncestor(idealTile, retain, currentTime);
+            if (parentIsFader)
+                continue;
+            const childIsFader = this._updateFadingDescendents(idealTile, retain, currentTime);
+            if (childIsFader)
+                continue;
+            const edgeIsFader = this._updateFadingEdge(idealTile, edgeTileIDs, currentTime);
+            if (edgeIsFader)
+                continue;
+            // for all remaining non-fading ideal tiles reset the fade logic
+            idealTile.resetFadeLogic();
         }
     }
     /**
-     * Update the cache of loaded sibling tiles
+     * Many-to-one cross-fade. Set 4 ideal tiles as the fading base for a rendered parent tile
+     * as the fading parent. Here the parent is fading out and the ideal tile is fading in.
      *
-     * Sibling tiles are tiles that share the same zoom level and
-     * x/y position but have different wrap values
-     * Maintaining sibling tile cache allows fading from old to new tiles
-     * of the same position and zoom level
+     * Parent tile - fading out                                ■                                -- Fading Parent
+     *                                   ┌──────────────┬──────┴───────┬──────────────┐
+     * Ideal tiles - fading in           ■              ■              ■              ■         -- Base Role = Incoming
+     *                             ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐
+     *                             ■   ■   ■   ■  ■   ■   ■   ■  ■   ■   ■   ■  ■   ■   ■   ■
      */
-    _updateLoadedSiblingTileCache() {
-        this._loadedSiblingTiles = {};
-        for (const tileKey in this._tiles) {
-            const currentId = this._tiles[tileKey].tileID;
-            const siblingTile = this._getLoadedTile(currentId);
-            this._loadedSiblingTiles[currentId.key] = siblingTile;
+    _updateFadingAncestor(idealTile, retain, now) {
+        if (!idealTile.hasData())
+            return false;
+        const { tileID: idealID, fadingRole, fadingDirection, fadingParentID } = idealTile;
+        // ideal tile already has fading parent - retain and return
+        if (fadingRole === FadingRoles.Base && fadingDirection === FadingDirections.Incoming && fadingParentID) {
+            retain[fadingParentID.key] = fadingParentID;
+            return true;
         }
+        // find a loaded parent tile to fade with the ideal tile
+        const minAncestorZ = Math.max(idealID.overscaledZ - this._maxFadingAncestorLevels, this._source.minzoom);
+        for (let ancestorZ = idealID.overscaledZ - 1; ancestorZ >= minAncestorZ; ancestorZ--) {
+            const ancestorID = idealID.scaledTo(ancestorZ);
+            const ancestorTile = this._getLoadedTile(ancestorID);
+            if (!ancestorTile)
+                continue;
+            // ideal tile (base) is fading in
+            idealTile.setCrossFadeLogic({
+                fadingRole: FadingRoles.Base,
+                fadingDirection: FadingDirections.Incoming,
+                fadingParentID: ancestorTile.tileID, // fading out
+                fadeEndTime: now + this._rasterFadeDuration
+            });
+            // ancestor tile (parent) is fading out
+            ancestorTile.setCrossFadeLogic({
+                fadingRole: FadingRoles.Parent,
+                fadingDirection: FadingDirections.Departing,
+                fadeEndTime: now + this._rasterFadeDuration
+            });
+            retain[ancestorID.key] = ancestorID;
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Many-to-one cross-fade. Search descendents of ideal tiles as the fading base with the ideal tile
+     * as the fading parent. Here the children are fading out and the ideal tile is fading in.
+     *
+     *                                                         ■
+     *                                   ┌──────────────┬──────┴───────┬──────────────┐
+     * Ideal tiles - fading in           ■              ■              ■              ■          -- Fading Parent
+     *                             ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐  ┌───┬─┴─┬───┐
+     * Child tiles - fading out    ■   ■   ■   ■  ■   ■   ■   ■  ■   ■   ■   ■  ■   ■   ■   ■    -- Base Role = Departing
+     *
+     * Try direct children first. If none found, try grandchildren. Stops at the first generation that provides a fader.
+     */
+    _updateFadingDescendents(idealTile, retain, now) {
+        if (!idealTile.hasData())
+            return false;
+        // search first level of descendents (4 tiles)
+        const idealChildren = idealTile.tileID.children(this._source.maxzoom);
+        let hasFader = this._updateFadingChildren(idealTile, idealChildren, retain, now);
+        if (hasFader)
+            return true;
+        // search second level of descendents (16 tiles)
+        for (const childID of idealChildren) {
+            const grandChildIDs = childID.children(this._source.maxzoom);
+            if (this._updateFadingChildren(idealTile, grandChildIDs, retain, now)) {
+                hasFader = true;
+            }
+        }
+        return hasFader;
+    }
+    _updateFadingChildren(idealTile, childIDs, retain, now) {
+        if (childIDs[0].overscaledZ >= this._source.maxzoom)
+            return false;
+        let foundFader = false;
+        // find loaded child tiles to fade with the ideal tile
+        for (const childID of childIDs) {
+            const childTile = this._getLoadedTile(childID);
+            if (!childTile)
+                continue;
+            const { fadingRole, fadingDirection, fadingParentID } = childTile;
+            if (fadingRole !== FadingRoles.Base || fadingDirection !== FadingDirections.Departing || !fadingParentID) {
+                // child tile (base) is fading out
+                childTile.setCrossFadeLogic({
+                    fadingRole: FadingRoles.Base,
+                    fadingDirection: FadingDirections.Departing,
+                    fadingParentID: idealTile.tileID,
+                    fadeEndTime: now + this._rasterFadeDuration
+                });
+                // ideal tile (parent) is fading in
+                idealTile.setCrossFadeLogic({
+                    fadingRole: FadingRoles.Parent,
+                    fadingDirection: FadingDirections.Incoming,
+                    fadeEndTime: now + this._rasterFadeDuration
+                });
+            }
+            retain[childID.key] = childID;
+            foundFader = true;
+        }
+        return foundFader;
+    }
+    /**
+     * One-to-one self fading for unloaded edge tiles (for panning sideways on map). for loading tiles over gaps it feels
+     * more natural for them to fade in, however if they are already loaded/cached then there is no need to fade as map will
+     * look cohesive with no gaps. Note that draw_raster determines fade priority, as many-to-one fade supersedes edge fading.
+     */
+    _updateFadingEdge(idealTile, edgeTileIDs, now) {
+        const idealID = idealTile.tileID;
+        // tile is already self fading
+        if (idealTile.selfFading) {
+            return true;
+        }
+        // fading not needed for tiles that are already loaded
+        if (idealTile.hasData()) {
+            return false;
+        }
+        // enable fading for loading edges with no data
+        if (edgeTileIDs.has(idealID)) {
+            const fadeEndTime = now + this._rasterFadeDuration;
+            idealTile.setSelfFadeLogic(fadeEndTime);
+            return true;
+        }
+        return false;
     }
     /**
      * Add a tile, given its coordinate, to the pyramid.
@@ -40331,15 +40702,13 @@ class SourceCache extends Evented {
             return tile;
         tile = this._cache.getAndRemove(tileID);
         if (tile) {
+            //reset fading logic to remove stale fading data from cache
+            tile.resetFadeLogic();
+            // set timer for the reloading of the tile upon expiration
             this._setTileReloadTimer(tileID.key, tile);
             // set the tileID because the cached tile could have had a different wrap value
             tile.tileID = tileID;
             this._state.initializeTileState(tile, this.map ? this.map.painter : null);
-            if (this._cacheTimers[tileID.key]) {
-                clearTimeout(this._cacheTimers[tileID.key]);
-                delete this._cacheTimers[tileID.key];
-                this._setTileReloadTimer(tileID.key, tile);
-            }
         }
         const cached = tile;
         if (!tile) {
@@ -40353,17 +40722,35 @@ class SourceCache extends Evented {
         }
         return tile;
     }
+    /**
+     * Set a timeout to reload the tile after it expires
+     */
     _setTileReloadTimer(id, tile) {
-        if (id in this._timers) {
+        this._clearTileReloadTimer(id);
+        const expiryTimeout = tile.getExpiryTimeout();
+        if (expiryTimeout) {
+            const reload = () => {
+                this._reloadTile(id, 'expired');
+                delete this._timers[id];
+            };
+            this._timers[id] = setTimeout(reload, expiryTimeout);
+        }
+    }
+    _clearTileReloadTimer(id) {
+        const timeout = this._timers[id];
+        if (timeout) {
+            clearTimeout(timeout);
+            delete this._timers[id];
+        }
+    }
+    _resetTileReloadTimers() {
+        for (const id in this._timers) {
             clearTimeout(this._timers[id]);
             delete this._timers[id];
         }
-        const expiryTimeout = tile.getExpiryTimeout();
-        if (expiryTimeout) {
-            this._timers[id] = setTimeout(() => {
-                this._reloadTile(id, 'expired');
-                delete this._timers[id];
-            }, expiryTimeout);
+        for (const id in this._tiles) {
+            const tile = this._tiles[id];
+            this._setTileReloadTimer(id, tile);
         }
     }
     /**
@@ -40388,10 +40775,7 @@ class SourceCache extends Evented {
             return;
         tile.uses--;
         delete this._tiles[id];
-        if (this._timers[id]) {
-            clearTimeout(this._timers[id]);
-            delete this._timers[id];
-        }
+        this._clearTileReloadTimer(id);
         if (tile.uses > 0)
             return;
         if (tile.hasData() && tile.state !== 'reloading') {
@@ -40403,21 +40787,26 @@ class SourceCache extends Evented {
             this._unloadTile(tile);
         }
     }
-    /** @internal */
+    /** @internal
+     * Handles incoming source data messages (i.e. after the source has been updated via a worker that has fired
+     * to map.ts data event). For sources with mutable data, the 'content' event fires when the underlying data
+     * to a source has changed. (i.e. GeoJSONSource.setData and ImageSource.setCoordinates)
+     */
     _dataHandler(e) {
-        const eventSourceDataType = e.sourceDataType;
-        if (e.dataType === 'source' && eventSourceDataType === 'metadata') {
+        if (e.dataType !== 'source')
+            return;
+        if (e.sourceDataType === 'metadata') {
             this._sourceLoaded = true;
+            return;
         }
-        // for sources with mutable data, this event fires when the underlying data
-        // to a source is changed. (i.e. GeoJSONSource.setData and ImageSource.serCoordinates)
-        if (this._sourceLoaded && !this._paused && e.dataType === 'source' && eventSourceDataType === 'content') {
-            this.reload(e.sourceDataChanged);
-            if (this.transform) {
-                this.update(this.transform, this.terrain);
-            }
-            this._didEmitContent = true;
+        if (e.sourceDataType !== 'content' || !this._sourceLoaded || this._paused) {
+            return;
         }
+        this.reload(e.sourceDataChanged);
+        if (this.transform) {
+            this.update(this.transform, this.terrain);
+        }
+        this._didEmitContent = true;
     }
     /**
      * Remove all tiles from this pyramid
@@ -40451,7 +40840,7 @@ class SourceCache extends Evented {
         const cameraBounds = Bounds.fromPoints(cameraQueryGeometry);
         for (let i = 0; i < ids.length; i++) {
             const tile = this._tiles[ids[i]];
-            if (tile.holdingForFade()) {
+            if (tile.holdingForSymbolFade()) {
                 // Tiles held for fading are covered by tiles that are closer to ideal
                 continue;
             }
@@ -40506,16 +40895,19 @@ class SourceCache extends Evented {
         if (this._source.hasTransition()) {
             return true;
         }
-        if (isRasterType(this._source.type)) {
-            const now = browser.now();
+        if (isRasterType(this._source.type) && this._rasterFadeDuration > 0) {
+            const currentTime = now();
             for (const id in this._tiles) {
                 const tile = this._tiles[id];
-                if (tile.fadeEndTime >= now) {
+                if (tile.fadeEndTime >= currentTime) {
                     return true;
                 }
             }
         }
         return false;
+    }
+    setRasterFadeDuration(fadeDuration) {
+        this._rasterFadeDuration = fadeDuration;
     }
     /**
      * Set the value of a particular state for a feature
@@ -42207,7 +42599,8 @@ function getAnchors(line, spacing, maxAngle, shapedText, shapedIcon, glyphSize, 
 function resample(line, offset, spacing, angleWindowSize, maxAngle, labelLength, isLineContinued, placeAtMiddle, tileExtent) {
     const halfLabelLength = labelLength / 2;
     const lineLength = getLineLength(line);
-    let distance = 0, markedDistance = offset - spacing;
+    let distance = 0;
+    let markedDistance = offset - spacing;
     let anchors = [];
     for (let i = 0; i < line.length - 1; i++) {
         const a = line[i], b = line[i + 1];
@@ -43440,7 +43833,7 @@ class Placement {
             pitchedLabelPlaneMatrix,
             scale,
             textPixelRatio,
-            holdingForFade: tile.holdingForFade(),
+            holdingForFade: tile.holdingForSymbolFade(),
             collisionBoxArray,
             partiallyEvaluatedTextSize: evaluateSizeForZoom(symbolBucket.textSizeData, this.transform.zoom),
             collisionGroup: this.collisionGroups.get(symbolBucket.sourceID)
@@ -43701,7 +44094,7 @@ class Placement {
             placedGlyphBoxes = placed;
             placeText = placedGlyphBoxes && placedGlyphBoxes.placeable;
             offscreen = placedGlyphBoxes && placedGlyphBoxes.offscreen;
-            if (symbolInstance.useRuntimeCollisionCircles) {
+            if (symbolInstance.useRuntimeCollisionCircles && symbolInstance.centerJustifiedTextSymbolIndex >= 0) {
                 const placedSymbol = bucket.text.placedSymbolArray.get(symbolInstance.centerJustifiedTextSymbolIndex);
                 const fontSize = evaluateSizeForFeature(bucket.textSizeData, partiallyEvaluatedTextSize, placedSymbol);
                 const textPixelPadding = layout.get('text-padding');
@@ -44255,9 +44648,9 @@ class PauseablePlacement {
         return this._done;
     }
     continuePlacement(order, layers, layerTiles) {
-        const startTime = browser.now();
+        const startTime = now();
         const shouldPausePlacement = () => {
-            return this._forceFullPlacement ? false : (browser.now() - startTime) > 2;
+            return this._forceFullPlacement ? false : (now() - startTime) > 2;
         };
         while (this._currentPlacementIndex >= 0) {
             const layerId = order[this._currentPlacementIndex];
@@ -45039,10 +45432,16 @@ var linePatternFrag = '#ifdef GL_ES\nprecision highp float;\n#endif\nuniform low
 var linePatternVert = '\n#define scale 0.015873016\n#define LINE_DISTANCE_SCALE 2.0\nin vec2 a_pos_normal;in vec4 a_data;uniform vec2 u_translation;uniform vec2 u_units_to_pixels;uniform mediump float u_ratio;uniform lowp float u_device_pixel_ratio;out vec2 v_normal;out vec2 v_width2;out float v_linesofar;out float v_gamma_scale;out float v_width;\n#ifdef GLOBE\nout float v_depth;\n#endif\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define lowp float offset\n#pragma mapbox: define mediump float gapwidth\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\n#pragma mapbox: define lowp vec4 pattern_from\n#pragma mapbox: define lowp vec4 pattern_to\n#pragma mapbox: define lowp float pixel_ratio_from\n#pragma mapbox: define lowp float pixel_ratio_to\nvoid main() {\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize lowp float offset\n#pragma mapbox: initialize mediump float gapwidth\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\n#pragma mapbox: initialize mediump vec4 pattern_from\n#pragma mapbox: initialize mediump vec4 pattern_to\n#pragma mapbox: initialize lowp float pixel_ratio_from\n#pragma mapbox: initialize lowp float pixel_ratio_to\nfloat ANTIALIASING=1.0/u_device_pixel_ratio/2.0;vec2 a_extrude=a_data.xy-128.0;float a_direction=mod(a_data.z,4.0)-1.0;float a_linesofar=(floor(a_data.z/4.0)+a_data.w*64.0)*LINE_DISTANCE_SCALE;vec2 pos=floor(a_pos_normal*0.5);mediump vec2 normal=a_pos_normal-2.0*pos;normal.y=normal.y*2.0-1.0;v_normal=normal;gapwidth=gapwidth/2.0;float halfwidth=width/2.0;offset=-1.0*offset;float inset=gapwidth+(gapwidth > 0.0 ? ANTIALIASING : 0.0);float outset=gapwidth+halfwidth*(gapwidth > 0.0 ? 2.0 : 1.0)+(halfwidth==0.0 ? 0.0 : ANTIALIASING);mediump vec2 dist=outset*a_extrude*scale;mediump float u=0.5*a_direction;mediump float t=1.0-abs(u);mediump vec2 offset2=offset*a_extrude*scale*normal.y*mat2(t,-u,u,t);float adjustedThickness=projectLineThickness(pos.y);vec4 projected_no_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation);vec4 projected_with_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation+dist/u_ratio*adjustedThickness);gl_Position=projected_with_extrude;\n#ifdef GLOBE\nv_depth=gl_Position.z/gl_Position.w;\n#endif\n#ifdef TERRAIN3D\nv_gamma_scale=1.0;\n#else\nfloat extrude_length_without_perspective=length(dist);float extrude_length_with_perspective=length((projected_with_extrude.xy-projected_no_extrude.xy)/projected_with_extrude.w*u_units_to_pixels);v_gamma_scale=extrude_length_without_perspective/extrude_length_with_perspective;\n#endif\nv_linesofar=a_linesofar;v_width2=vec2(outset,inset);v_width=floorwidth;}';
 
 // This file is generated. Edit build/generate-shaders.ts, then run `npm run codegen`.
-var lineSDFFrag = 'uniform lowp float u_device_pixel_ratio;uniform sampler2D u_image;uniform float u_sdfgamma;uniform float u_mix;in vec2 v_normal;in vec2 v_width2;in vec2 v_tex_a;in vec2 v_tex_b;in float v_gamma_scale;\n#ifdef GLOBE\nin float v_depth;\n#endif\n#pragma mapbox: define highp vec4 color\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\nvoid main() {\n#pragma mapbox: initialize highp vec4 color\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\nfloat dist=length(v_normal)*v_width2.s;float blur2=(blur+1.0/u_device_pixel_ratio)*v_gamma_scale;float alpha=clamp(min(dist-(v_width2.t-blur2),v_width2.s-dist)/blur2,0.0,1.0);float sdfdist_a=texture(u_image,v_tex_a).a;float sdfdist_b=texture(u_image,v_tex_b).a;float sdfdist=mix(sdfdist_a,sdfdist_b,u_mix);alpha*=smoothstep(0.5-u_sdfgamma/floorwidth,0.5+u_sdfgamma/floorwidth,sdfdist);fragColor=color*(alpha*opacity);\n#ifdef GLOBE\nif (v_depth > 1.0) {discard;}\n#endif\n#ifdef OVERDRAW_INSPECTOR\nfragColor=vec4(1.0);\n#endif\n}';
+var lineSDFFrag = 'uniform lowp float u_device_pixel_ratio;uniform lowp float u_lineatlas_width;uniform sampler2D u_image;uniform float u_mix;in vec2 v_normal;in vec2 v_width2;in vec2 v_tex_a;in vec2 v_tex_b;in float v_gamma_scale;\n#ifdef GLOBE\nin float v_depth;\n#endif\n#pragma mapbox: define highp vec4 color\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\n#pragma mapbox: define mediump vec4 dasharray_from\n#pragma mapbox: define mediump vec4 dasharray_to\nvoid main() {\n#pragma mapbox: initialize highp vec4 color\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\n#pragma mapbox: initialize mediump vec4 dasharray_from\n#pragma mapbox: initialize mediump vec4 dasharray_to\nfloat dist=length(v_normal)*v_width2.s;float blur2=(blur+1.0/u_device_pixel_ratio)*v_gamma_scale;float alpha=clamp(min(dist-(v_width2.t-blur2),v_width2.s-dist)/blur2,0.0,1.0);float sdfdist_a=texture(u_image,v_tex_a).a;float sdfdist_b=texture(u_image,v_tex_b).a;float sdfdist=mix(sdfdist_a,sdfdist_b,u_mix);float sdfgamma=(u_lineatlas_width/256.0/u_device_pixel_ratio)/min(dasharray_from.w,dasharray_to.w);alpha*=smoothstep(0.5-sdfgamma/floorwidth,0.5+sdfgamma/floorwidth,sdfdist);fragColor=color*(alpha*opacity);\n#ifdef GLOBE\nif (v_depth > 1.0) {discard;}\n#endif\n#ifdef OVERDRAW_INSPECTOR\nfragColor=vec4(1.0);\n#endif\n}';
 
 // This file is generated. Edit build/generate-shaders.ts, then run `npm run codegen`.
-var lineSDFVert = '\n#define scale 0.015873016\n#define LINE_DISTANCE_SCALE 2.0\nin vec2 a_pos_normal;in vec4 a_data;uniform vec2 u_translation;uniform mediump float u_ratio;uniform lowp float u_device_pixel_ratio;uniform vec2 u_patternscale_a;uniform float u_tex_y_a;uniform vec2 u_patternscale_b;uniform float u_tex_y_b;uniform vec2 u_units_to_pixels;out vec2 v_normal;out vec2 v_width2;out vec2 v_tex_a;out vec2 v_tex_b;out float v_gamma_scale;\n#ifdef GLOBE\nout float v_depth;\n#endif\n#pragma mapbox: define highp vec4 color\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float gapwidth\n#pragma mapbox: define lowp float offset\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\nvoid main() {\n#pragma mapbox: initialize highp vec4 color\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float gapwidth\n#pragma mapbox: initialize lowp float offset\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\nfloat ANTIALIASING=1.0/u_device_pixel_ratio/2.0;vec2 a_extrude=a_data.xy-128.0;float a_direction=mod(a_data.z,4.0)-1.0;float a_linesofar=(floor(a_data.z/4.0)+a_data.w*64.0)*LINE_DISTANCE_SCALE;vec2 pos=floor(a_pos_normal*0.5);mediump vec2 normal=a_pos_normal-2.0*pos;normal.y=normal.y*2.0-1.0;v_normal=normal;gapwidth=gapwidth/2.0;float halfwidth=width/2.0;offset=-1.0*offset;float inset=gapwidth+(gapwidth > 0.0 ? ANTIALIASING : 0.0);float outset=gapwidth+halfwidth*(gapwidth > 0.0 ? 2.0 : 1.0)+(halfwidth==0.0 ? 0.0 : ANTIALIASING);mediump vec2 dist=outset*a_extrude*scale;mediump float u=0.5*a_direction;mediump float t=1.0-abs(u);mediump vec2 offset2=offset*a_extrude*scale*normal.y*mat2(t,-u,u,t);float adjustedThickness=projectLineThickness(pos.y);vec4 projected_no_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation);vec4 projected_with_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation+dist/u_ratio*adjustedThickness);gl_Position=projected_with_extrude;\n#ifdef GLOBE\nv_depth=gl_Position.z/gl_Position.w;\n#endif\n#ifdef TERRAIN3D\nv_gamma_scale=1.0;\n#else\nfloat extrude_length_without_perspective=length(dist);float extrude_length_with_perspective=length((projected_with_extrude.xy-projected_no_extrude.xy)/projected_with_extrude.w*u_units_to_pixels);v_gamma_scale=extrude_length_without_perspective/extrude_length_with_perspective;\n#endif\nv_tex_a=vec2(a_linesofar*u_patternscale_a.x/floorwidth,normal.y*u_patternscale_a.y+u_tex_y_a);v_tex_b=vec2(a_linesofar*u_patternscale_b.x/floorwidth,normal.y*u_patternscale_b.y+u_tex_y_b);v_width2=vec2(outset,inset);}';
+var lineSDFVert = '\n#define scale 0.015873016\n#define LINE_DISTANCE_SCALE 2.0\nin vec2 a_pos_normal;in vec4 a_data;uniform vec2 u_translation;uniform mediump float u_ratio;uniform lowp float u_device_pixel_ratio;uniform vec2 u_units_to_pixels;uniform float u_tileratio;uniform float u_crossfade_from;uniform float u_crossfade_to;uniform float u_lineatlas_height;out vec2 v_normal;out vec2 v_width2;out vec2 v_tex_a;out vec2 v_tex_b;out float v_gamma_scale;\n#ifdef GLOBE\nout float v_depth;\n#endif\n#pragma mapbox: define highp vec4 color\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float gapwidth\n#pragma mapbox: define lowp float offset\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\n#pragma mapbox: define mediump vec4 dasharray_from\n#pragma mapbox: define mediump vec4 dasharray_to\nvoid main() {\n#pragma mapbox: initialize highp vec4 color\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float gapwidth\n#pragma mapbox: initialize lowp float offset\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\n#pragma mapbox: initialize mediump vec4 dasharray_from\n#pragma mapbox: initialize mediump vec4 dasharray_to\nfloat ANTIALIASING=1.0/u_device_pixel_ratio/2.0;vec2 a_extrude=a_data.xy-128.0;float a_direction=mod(a_data.z,4.0)-1.0;float a_linesofar=(floor(a_data.z/4.0)+a_data.w*64.0)*LINE_DISTANCE_SCALE;vec2 pos=floor(a_pos_normal*0.5);mediump vec2 normal=a_pos_normal-2.0*pos;normal.y=normal.y*2.0-1.0;v_normal=normal;gapwidth=gapwidth/2.0;float halfwidth=width/2.0;offset=-1.0*offset;float inset=gapwidth+(gapwidth > 0.0 ? ANTIALIASING : 0.0);float outset=gapwidth+halfwidth*(gapwidth > 0.0 ? 2.0 : 1.0)+(halfwidth==0.0 ? 0.0 : ANTIALIASING);mediump vec2 dist=outset*a_extrude*scale;mediump float u=0.5*a_direction;mediump float t=1.0-abs(u);mediump vec2 offset2=offset*a_extrude*scale*normal.y*mat2(t,-u,u,t);float adjustedThickness=projectLineThickness(pos.y);vec4 projected_no_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation);vec4 projected_with_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation+dist/u_ratio*adjustedThickness);gl_Position=projected_with_extrude;\n#ifdef GLOBE\nv_depth=gl_Position.z/gl_Position.w;\n#endif\n#ifdef TERRAIN3D\nv_gamma_scale=1.0;\n#else\nfloat extrude_length_without_perspective=length(dist);float extrude_length_with_perspective=length((projected_with_extrude.xy-projected_no_extrude.xy)/projected_with_extrude.w*u_units_to_pixels);v_gamma_scale=extrude_length_without_perspective/extrude_length_with_perspective;\n#endif\nfloat u_patternscale_a_x=u_tileratio/dasharray_from.w/u_crossfade_from;float u_patternscale_a_y=-dasharray_from.z/2.0/u_lineatlas_height;float u_patternscale_b_x=u_tileratio/dasharray_to.w/u_crossfade_to;float u_patternscale_b_y=-dasharray_to.z/2.0/u_lineatlas_height;v_tex_a=vec2(a_linesofar*u_patternscale_a_x/floorwidth,normal.y*u_patternscale_a_y+(float(dasharray_from.y)+0.5)/u_lineatlas_height);v_tex_b=vec2(a_linesofar*u_patternscale_b_x/floorwidth,normal.y*u_patternscale_b_y+(float(dasharray_to.y)+0.5)/u_lineatlas_height);v_width2=vec2(outset,inset);}';
+
+// This file is generated. Edit build/generate-shaders.ts, then run `npm run codegen`.
+var lineGradientSDFFrag = 'uniform lowp float u_device_pixel_ratio;uniform sampler2D u_image;uniform sampler2D u_image_dash;uniform float u_mix;uniform lowp float u_lineatlas_width;in vec2 v_normal;in vec2 v_width2;in vec2 v_tex_a;in vec2 v_tex_b;in float v_gamma_scale;in highp vec2 v_uv;\n#ifdef GLOBE\nin float v_depth;\n#endif\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\n#pragma mapbox: define mediump vec4 dasharray_from\n#pragma mapbox: define mediump vec4 dasharray_to\nvoid main() {\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\n#pragma mapbox: initialize mediump vec4 dasharray_from\n#pragma mapbox: initialize mediump vec4 dasharray_to\nfloat dist=length(v_normal)*v_width2.s;float blur2=(blur+1.0/u_device_pixel_ratio)*v_gamma_scale;float alpha=clamp(min(dist-(v_width2.t-blur2),v_width2.s-dist)/blur2,0.0,1.0);vec4 color=texture(u_image,v_uv);float sdfdist_a=texture(u_image_dash,v_tex_a).a;float sdfdist_b=texture(u_image_dash,v_tex_b).a;float sdfdist=mix(sdfdist_a,sdfdist_b,u_mix);float sdfgamma=(u_lineatlas_width/256.0)/min(dasharray_from.w,dasharray_to.w);float dash_alpha=smoothstep(0.5-sdfgamma/floorwidth,0.5+sdfgamma/floorwidth,sdfdist);fragColor=color*(alpha*dash_alpha*opacity);\n#ifdef GLOBE\nif (v_depth > 1.0) {discard;}\n#endif\n#ifdef OVERDRAW_INSPECTOR\nfragColor=vec4(1.0);\n#endif\n}';
+
+// This file is generated. Edit build/generate-shaders.ts, then run `npm run codegen`.
+var lineGradientSDFVert = '\n#define scale 0.015873016\n#define LINE_DISTANCE_SCALE 2.0\nin vec2 a_pos_normal;in vec4 a_data;in float a_uv_x;in float a_split_index;uniform vec2 u_translation;uniform mediump float u_ratio;uniform lowp float u_device_pixel_ratio;uniform vec2 u_units_to_pixels;uniform float u_image_height;uniform float u_tileratio;uniform float u_crossfade_from;uniform float u_crossfade_to;uniform float u_lineatlas_height;out vec2 v_normal;out vec2 v_width2;out float v_gamma_scale;out highp vec2 v_uv;out vec2 v_tex_a;out vec2 v_tex_b;\n#ifdef GLOBE\nout float v_depth;\n#endif\n#pragma mapbox: define lowp float blur\n#pragma mapbox: define lowp float opacity\n#pragma mapbox: define mediump float gapwidth\n#pragma mapbox: define lowp float offset\n#pragma mapbox: define mediump float width\n#pragma mapbox: define lowp float floorwidth\n#pragma mapbox: define mediump vec4 dasharray_from\n#pragma mapbox: define mediump vec4 dasharray_to\nvoid main() {\n#pragma mapbox: initialize lowp float blur\n#pragma mapbox: initialize lowp float opacity\n#pragma mapbox: initialize mediump float gapwidth\n#pragma mapbox: initialize lowp float offset\n#pragma mapbox: initialize mediump float width\n#pragma mapbox: initialize lowp float floorwidth\n#pragma mapbox: initialize mediump vec4 dasharray_from\n#pragma mapbox: initialize mediump vec4 dasharray_to\nfloat ANTIALIASING=1.0/u_device_pixel_ratio/2.0;vec2 a_extrude=a_data.xy-128.0;float a_direction=mod(a_data.z,4.0)-1.0;float a_linesofar=(floor(a_data.z/4.0)+a_data.w*64.0)*LINE_DISTANCE_SCALE;float texel_height=1.0/u_image_height;float half_texel_height=0.5*texel_height;v_uv=vec2(a_uv_x,a_split_index*texel_height-half_texel_height);vec2 pos=floor(a_pos_normal*0.5);mediump vec2 normal=a_pos_normal-2.0*pos;normal.y=normal.y*2.0-1.0;v_normal=normal;gapwidth=gapwidth/2.0;float halfwidth=width/2.0;offset=-1.0*offset;float inset=gapwidth+(gapwidth > 0.0 ? ANTIALIASING : 0.0);float outset=gapwidth+halfwidth*(gapwidth > 0.0 ? 2.0 : 1.0)+(halfwidth==0.0 ? 0.0 : ANTIALIASING);mediump vec2 dist=outset*a_extrude*scale;mediump float u=0.5*a_direction;mediump float t=1.0-abs(u);mediump vec2 offset2=offset*a_extrude*scale*normal.y*mat2(t,-u,u,t);float adjustedThickness=projectLineThickness(pos.y);vec4 projected_no_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation);vec4 projected_with_extrude=projectTile(pos+offset2/u_ratio*adjustedThickness+u_translation+dist/u_ratio*adjustedThickness);gl_Position=projected_with_extrude;\n#ifdef GLOBE\nv_depth=gl_Position.z/gl_Position.w;\n#endif\n#ifdef TERRAIN3D\nv_gamma_scale=1.0;\n#else\nfloat extrude_length_without_perspective=length(dist);float extrude_length_with_perspective=length((projected_with_extrude.xy-projected_no_extrude.xy)/projected_with_extrude.w*u_units_to_pixels);v_gamma_scale=extrude_length_without_perspective/extrude_length_with_perspective;\n#endif\nfloat u_patternscale_a_x=u_tileratio/dasharray_from.w/u_crossfade_from;float u_patternscale_a_y=-dasharray_from.z/2.0/u_lineatlas_height;float u_patternscale_b_x=u_tileratio/dasharray_to.w/u_crossfade_to;float u_patternscale_b_y=-dasharray_to.z/2.0/u_lineatlas_height;v_tex_a=vec2(a_linesofar*u_patternscale_a_x/floorwidth,normal.y*u_patternscale_a_y+(float(dasharray_from.y)+0.5)/u_lineatlas_height);v_tex_b=vec2(a_linesofar*u_patternscale_b_x/floorwidth,normal.y*u_patternscale_b_y+(float(dasharray_to.y)+0.5)/u_lineatlas_height);v_width2=vec2(outset,inset);}';
 
 // This file is generated. Edit build/generate-shaders.ts, then run `npm run codegen`.
 var rasterFrag = 'uniform float u_fade_t;uniform float u_opacity;uniform sampler2D u_image0;uniform sampler2D u_image1;in vec2 v_pos0;in vec2 v_pos1;uniform float u_brightness_low;uniform float u_brightness_high;uniform float u_saturation_factor;uniform float u_contrast_factor;uniform vec3 u_spin_weights;void main() {vec4 color0=texture(u_image0,v_pos0);vec4 color1=texture(u_image1,v_pos1);if (color0.a > 0.0) {color0.rgb=color0.rgb/color0.a;}if (color1.a > 0.0) {color1.rgb=color1.rgb/color1.a;}vec4 color=mix(color0,color1,u_fade_t);color.a*=u_opacity;vec3 rgb=color.rgb;rgb=vec3(dot(rgb,u_spin_weights.xyz),dot(rgb,u_spin_weights.zxy),dot(rgb,u_spin_weights.yzx));float average=(color.r+color.g+color.b)/3.0;rgb+=(average-rgb)*u_saturation_factor;rgb=(rgb-0.5)*u_contrast_factor+0.5;vec3 u_high_vec=vec3(u_brightness_low,u_brightness_low,u_brightness_low);vec3 u_low_vec=vec3(u_brightness_high,u_brightness_high,u_brightness_high);fragColor=vec4(mix(u_high_vec,u_low_vec,rgb)*color.a,color.a);\n#ifdef OVERDRAW_INSPECTOR\nfragColor=vec4(1.0);\n#endif\n}';
@@ -45138,6 +45537,7 @@ const shaders = {
     lineGradient: prepare(lineGradientFrag, lineGradientVert),
     linePattern: prepare(linePatternFrag, linePatternVert),
     lineSDF: prepare(lineSDFFrag, lineSDFVert),
+    lineGradientSDF: prepare(lineGradientSDFFrag, lineGradientSDFVert),
     raster: prepare(rasterFrag, rasterVert),
     symbolIcon: prepare(symbolIconFrag, symbolIconVert),
     symbolSDF: prepare(symbolSDFFrag, symbolSDFVert),
@@ -45459,14 +45859,16 @@ function getTileZoom(zoom) {
  * This can be used as a helper for implementing the ITransform interface.
  */
 class TransformHelper {
-    constructor(callbacks, minZoom, maxZoom, minPitch, maxPitch, renderWorldCopies) {
+    constructor(callbacks, options) {
+        var _a;
         this._callbacks = callbacks;
         this._tileSize = 512; // constant
-        this._renderWorldCopies = renderWorldCopies === undefined ? true : !!renderWorldCopies;
-        this._minZoom = minZoom || 0;
-        this._maxZoom = maxZoom || 22;
-        this._minPitch = (minPitch === undefined || minPitch === null) ? 0 : minPitch;
-        this._maxPitch = (maxPitch === undefined || maxPitch === null) ? 60 : maxPitch;
+        this._renderWorldCopies = (options === null || options === void 0 ? void 0 : options.renderWorldCopies) === undefined ? true : !!(options === null || options === void 0 ? void 0 : options.renderWorldCopies);
+        this._minZoom = (options === null || options === void 0 ? void 0 : options.minZoom) || 0;
+        this._maxZoom = (options === null || options === void 0 ? void 0 : options.maxZoom) || 22;
+        this._minPitch = ((options === null || options === void 0 ? void 0 : options.minPitch) === undefined || (options === null || options === void 0 ? void 0 : options.minPitch) === null) ? 0 : options === null || options === void 0 ? void 0 : options.minPitch;
+        this._maxPitch = ((options === null || options === void 0 ? void 0 : options.maxPitch) === undefined || (options === null || options === void 0 ? void 0 : options.maxPitch) === null) ? 60 : options === null || options === void 0 ? void 0 : options.maxPitch;
+        this._constrain = (_a = options === null || options === void 0 ? void 0 : options.constrain) !== null && _a !== void 0 ? _a : this._callbacks.constrain;
         this.setMaxBounds();
         this._width = 0;
         this._height = 0;
@@ -45511,7 +45913,7 @@ class TransformHelper {
         this._farZ = thatI.farZ;
         this._autoCalculateNearFarZ = !forceOverrideZ && thatI.autoCalculateNearFarZ;
         if (constrain) {
-            this._constrain();
+            this.constrainInternal();
         }
         this._calcMatrices();
     }
@@ -45544,14 +45946,14 @@ class TransformHelper {
         if (this._minZoom === zoom)
             return;
         this._minZoom = zoom;
-        this.setZoom(this.getConstrained(this._center, this.zoom).zoom);
+        this.setZoom(this.constrain(this._center, this.zoom).zoom);
     }
     get maxZoom() { return this._maxZoom; }
     setMaxZoom(zoom) {
         if (this._maxZoom === zoom)
             return;
         this._maxZoom = zoom;
-        this.setZoom(this.getConstrained(this._center, this.zoom).zoom);
+        this.setZoom(this.constrain(this._center, this.zoom).zoom);
     }
     get minPitch() { return this._minPitch; }
     setMinPitch(pitch) {
@@ -45576,6 +45978,15 @@ class TransformHelper {
             renderWorldCopies = false;
         }
         this._renderWorldCopies = renderWorldCopies;
+    }
+    get constrain() { return this._constrain; }
+    setConstrain(constrain) {
+        if (!constrain) {
+            constrain = this._callbacks.constrain;
+        }
+        this._constrain = constrain;
+        this.constrainInternal();
+        this._calcMatrices();
     }
     get worldSize() {
         return this._tileSize * this._scale;
@@ -45648,14 +46059,14 @@ class TransformHelper {
     }
     get zoom() { return this._zoom; }
     setZoom(zoom) {
-        const constrainedZoom = this.getConstrained(this._center, zoom).zoom;
+        const constrainedZoom = this.constrain(this._center, zoom).zoom;
         if (this._zoom === constrainedZoom)
             return;
         this._unmodified = false;
         this._zoom = constrainedZoom;
         this._tileZoom = Math.max(0, Math.floor(constrainedZoom));
         this._scale = zoomScale(constrainedZoom);
-        this._constrain();
+        this.constrainInternal();
         this._calcMatrices();
     }
     get center() { return this._center; }
@@ -45664,7 +46075,7 @@ class TransformHelper {
             return;
         this._unmodified = false;
         this._center = center;
-        this._constrain();
+        this.constrainInternal();
         this._calcMatrices();
     }
     /**
@@ -45675,7 +46086,7 @@ class TransformHelper {
         if (elevation === this._elevation)
             return;
         this._elevation = elevation;
-        this._constrain();
+        this.constrainInternal();
         this._calcMatrices();
     }
     get padding() { return this._edgeInsets.toJSON(); }
@@ -45732,14 +46143,14 @@ class TransformHelper {
     interpolatePadding(start, target, t) {
         this._unmodified = false;
         this._edgeInsets.interpolate(start, target, t);
-        this._constrain();
+        this.constrainInternal();
         this._calcMatrices();
     }
     resize(width, height, constrain = true) {
         this._width = width;
         this._height = height;
         if (constrain)
-            this._constrain();
+            this.constrainInternal();
         this._calcMatrices();
     }
     /**
@@ -45760,15 +46171,12 @@ class TransformHelper {
         if (bounds) {
             this._lngRange = [bounds.getWest(), bounds.getEast()];
             this._latRange = [bounds.getSouth(), bounds.getNorth()];
-            this._constrain();
+            this.constrainInternal();
         }
         else {
             this._lngRange = null;
             this._latRange = [-MAX_VALID_LATITUDE, MAX_VALID_LATITUDE];
         }
-    }
-    getConstrained(lngLat, zoom) {
-        return this._callbacks.getConstrained(lngLat, zoom);
     }
     /**
      * When the map is pitched, some of the 3D features that intersect a query will not intersect
@@ -45799,12 +46207,12 @@ class TransformHelper {
      * @internal
      * Snaps the transform's center, zoom, etc. into the valid range.
      */
-    _constrain() {
+    constrainInternal() {
         if (!this.center || !this._width || !this._height || this._constraining)
             return;
         this._constraining = true;
         const unmodified = this._unmodified;
-        const { center, zoom } = this.getConstrained(this.center, this.zoom);
+        const { center, zoom } = this.constrain(this.center, this.zoom);
         this.setCenter(center);
         this.setZoom(zoom);
         this._unmodified = unmodified;
@@ -46283,6 +46691,9 @@ class MercatorTransform {
     setMaxBounds(bounds) {
         this._helper.setMaxBounds(bounds);
     }
+    setConstrain(constrain) {
+        this._helper.setConstrain(constrain);
+    }
     overrideNearFarZ(nearZ, farZ) {
         this._helper.overrideNearFarZ(nearZ, farZ);
     }
@@ -46376,6 +46787,9 @@ class MercatorTransform {
     get cameraToCenterDistance() {
         return this._helper.cameraToCenterDistance;
     }
+    get constrain() {
+        return this._helper.constrain;
+    }
     get nearZ() {
         return this._helper.nearZ;
     }
@@ -46388,14 +46802,94 @@ class MercatorTransform {
     setTransitionState(_value, _error) {
         // Do nothing
     }
-    constructor(minZoom, maxZoom, minPitch, maxPitch, renderWorldCopies) {
+    constructor(options) {
         this._posMatrixCache = new Map();
         this._alignedPosMatrixCache = new Map();
         this._fogMatrixCacheF32 = new Map();
+        /**
+         * This mercator implementation returns center lngLat and zoom to ensure that:
+         *
+         * 1) everything beyond the bounds is excluded
+         * 2) a given lngLat is as near the center as possible
+         *
+         * Bounds are those set by maxBounds or North & South "Poles" and, if only 1 globe is displayed, antimeridian.
+         */
+        this.defaultConstrain = (lngLat, zoom) => {
+            zoom = clamp$1(+zoom, this.minZoom, this.maxZoom);
+            const result = {
+                center: new LngLat(lngLat.lng, lngLat.lat),
+                zoom
+            };
+            let lngRange = this._helper._lngRange;
+            if (!this._helper._renderWorldCopies && lngRange === null) {
+                const almost180 = 180 - 1e-10;
+                lngRange = [-almost180, almost180];
+            }
+            const worldSize = this.tileSize * zoomScale(result.zoom); // A world size for the requested zoom level, not the current world size
+            let minY = 0;
+            let maxY = worldSize;
+            let minX = 0;
+            let maxX = worldSize;
+            let scaleY = 0;
+            let scaleX = 0;
+            const { x: screenWidth, y: screenHeight } = this.size;
+            if (this._helper._latRange) {
+                const latRange = this._helper._latRange;
+                minY = mercatorYfromLat(latRange[1]) * worldSize;
+                maxY = mercatorYfromLat(latRange[0]) * worldSize;
+                const shouldZoomIn = maxY - minY < screenHeight;
+                if (shouldZoomIn)
+                    scaleY = screenHeight / (maxY - minY);
+            }
+            if (lngRange) {
+                minX = wrap(mercatorXfromLng(lngRange[0]) * worldSize, 0, worldSize);
+                maxX = wrap(mercatorXfromLng(lngRange[1]) * worldSize, 0, worldSize);
+                if (maxX < minX)
+                    maxX += worldSize;
+                const shouldZoomIn = maxX - minX < screenWidth;
+                if (shouldZoomIn)
+                    scaleX = screenWidth / (maxX - minX);
+            }
+            const { x: originalX, y: originalY } = projectToWorldCoordinates(worldSize, lngLat);
+            let modifiedX, modifiedY;
+            const scale = Math.max(scaleX || 0, scaleY || 0);
+            if (scale) {
+                // zoom in to exclude all beyond the given lng/lat ranges
+                const newPoint = new Point(scaleX ? (maxX + minX) / 2 : originalX, scaleY ? (maxY + minY) / 2 : originalY);
+                result.center = unprojectFromWorldCoordinates(worldSize, newPoint).wrap();
+                result.zoom += scaleZoom(scale);
+                return result;
+            }
+            if (this._helper._latRange) {
+                const h2 = screenHeight / 2;
+                if (originalY - h2 < minY)
+                    modifiedY = minY + h2;
+                if (originalY + h2 > maxY)
+                    modifiedY = maxY - h2;
+            }
+            if (lngRange) {
+                const centerX = (minX + maxX) / 2;
+                let wrappedX = originalX;
+                if (this._helper._renderWorldCopies) {
+                    wrappedX = wrap(originalX, centerX - worldSize / 2, centerX + worldSize / 2);
+                }
+                const w2 = screenWidth / 2;
+                if (wrappedX - w2 < minX)
+                    modifiedX = minX + w2;
+                if (wrappedX + w2 > maxX)
+                    modifiedX = maxX - w2;
+            }
+            // pan the map if the screen goes off the range
+            if (modifiedX !== undefined || modifiedY !== undefined) {
+                const newPoint = new Point(modifiedX !== null && modifiedX !== void 0 ? modifiedX : originalX, modifiedY !== null && modifiedY !== void 0 ? modifiedY : originalY);
+                result.center = unprojectFromWorldCoordinates(worldSize, newPoint).wrap();
+            }
+            return result;
+        };
         this._helper = new TransformHelper({
             calcMatrices: () => { this._calcMatrices(); },
-            getConstrained: (center, zoom) => { return this.getConstrained(center, zoom); }
-        }, minZoom, maxZoom, minPitch, maxPitch, renderWorldCopies);
+            constrain: (center, zoom) => { return this.defaultConstrain(center, zoom); }
+        }, options);
         this._coveringTilesDetailsProvider = new MercatorCoveringTilesDetailsProvider();
     }
     clone() {
@@ -46560,86 +47054,6 @@ class MercatorTransform {
         multiply$5(fogMatrix, this._fogMatrix, fogMatrix);
         cache.set(posMatrixKey, new Float32Array(fogMatrix)); // Must be 32 bit floats, otherwise WebGL calls in Chrome get very slow.
         return cache.get(posMatrixKey);
-    }
-    /**
-     * This mercator implementation returns center lngLat and zoom to ensure that:
-     *
-     * 1) everything beyond the bounds is excluded
-     * 2) a given lngLat is as near the center as possible
-     *
-     * Bounds are those set by maxBounds or North & South "Poles" and, if only 1 globe is displayed, antimeridian.
-     */
-    getConstrained(lngLat, zoom) {
-        zoom = clamp$1(+zoom, this.minZoom, this.maxZoom);
-        const result = {
-            center: new LngLat(lngLat.lng, lngLat.lat),
-            zoom
-        };
-        let lngRange = this._helper._lngRange;
-        if (!this._helper._renderWorldCopies && lngRange === null) {
-            const almost180 = 180 - 1e-10;
-            lngRange = [-almost180, almost180];
-        }
-        const worldSize = this.tileSize * zoomScale(result.zoom); // A world size for the requested zoom level, not the current world size
-        let minY = 0;
-        let maxY = worldSize;
-        let minX = 0;
-        let maxX = worldSize;
-        let scaleY = 0;
-        let scaleX = 0;
-        const { x: screenWidth, y: screenHeight } = this.size;
-        if (this._helper._latRange) {
-            const latRange = this._helper._latRange;
-            minY = mercatorYfromLat(latRange[1]) * worldSize;
-            maxY = mercatorYfromLat(latRange[0]) * worldSize;
-            const shouldZoomIn = maxY - minY < screenHeight;
-            if (shouldZoomIn)
-                scaleY = screenHeight / (maxY - minY);
-        }
-        if (lngRange) {
-            minX = wrap(mercatorXfromLng(lngRange[0]) * worldSize, 0, worldSize);
-            maxX = wrap(mercatorXfromLng(lngRange[1]) * worldSize, 0, worldSize);
-            if (maxX < minX)
-                maxX += worldSize;
-            const shouldZoomIn = maxX - minX < screenWidth;
-            if (shouldZoomIn)
-                scaleX = screenWidth / (maxX - minX);
-        }
-        const { x: originalX, y: originalY } = projectToWorldCoordinates(worldSize, lngLat);
-        let modifiedX, modifiedY;
-        const scale = Math.max(scaleX || 0, scaleY || 0);
-        if (scale) {
-            // zoom in to exclude all beyond the given lng/lat ranges
-            const newPoint = new Point(scaleX ? (maxX + minX) / 2 : originalX, scaleY ? (maxY + minY) / 2 : originalY);
-            result.center = unprojectFromWorldCoordinates(worldSize, newPoint).wrap();
-            result.zoom += scaleZoom(scale);
-            return result;
-        }
-        if (this._helper._latRange) {
-            const h2 = screenHeight / 2;
-            if (originalY - h2 < minY)
-                modifiedY = minY + h2;
-            if (originalY + h2 > maxY)
-                modifiedY = maxY - h2;
-        }
-        if (lngRange) {
-            const centerX = (minX + maxX) / 2;
-            let wrappedX = originalX;
-            if (this._helper._renderWorldCopies) {
-                wrappedX = wrap(originalX, centerX - worldSize / 2, centerX + worldSize / 2);
-            }
-            const w2 = screenWidth / 2;
-            if (wrappedX - w2 < minX)
-                modifiedX = minX + w2;
-            if (wrappedX + w2 > maxX)
-                modifiedX = maxX - w2;
-        }
-        // pan the map if the screen goes off the range
-        if (modifiedX !== undefined || modifiedY !== undefined) {
-            const newPoint = new Point(modifiedX !== null && modifiedX !== void 0 ? modifiedX : originalX, modifiedY !== null && modifiedY !== void 0 ? modifiedY : originalY);
-            result.center = unprojectFromWorldCoordinates(worldSize, newPoint).wrap();
-        }
-        return result;
     }
     calculateCenterFromCameraLngLatAlt(lnglat, alt, bearing, pitch) {
         return this._helper.calculateCenterFromCameraLngLatAlt(lnglat, alt, bearing, pitch);
@@ -47034,7 +47448,7 @@ class MercatorCameraHelper {
         const zoom = optionsZoom ? +options.zoom : tr.zoom;
         let pointAtOffset = tr.centerPoint.add(options.offsetAsPoint);
         const locationAtOffset = tr.screenPointToLocation(pointAtOffset);
-        const { center, zoom: endZoom } = tr.getConstrained(LngLat.convert(options.center || locationAtOffset), zoom !== null && zoom !== void 0 ? zoom : startZoom);
+        const { center, zoom: endZoom } = tr.constrain(LngLat.convert(options.center || locationAtOffset), zoom !== null && zoom !== void 0 ? zoom : startZoom);
         normalizeCenter(tr, center);
         const from = projectToWorldCoordinates(tr.worldSize, locationAtOffset);
         const delta = projectToWorldCoordinates(tr.worldSize, center).sub(from);
@@ -47082,7 +47496,7 @@ class MercatorCameraHelper {
         const optionsZoom = typeof options.zoom !== 'undefined';
         const startZoom = tr.zoom;
         // Obtain target center and zoom
-        const constrained = tr.getConstrained(LngLat.convert(options.center || options.locationAtOffset), optionsZoom ? +options.zoom : startZoom);
+        const constrained = tr.constrain(LngLat.convert(options.center || options.locationAtOffset), optionsZoom ? +options.zoom : startZoom);
         const targetCenter = constrained.center;
         const targetZoom = constrained.zoom;
         normalizeCenter(tr, targetCenter);
@@ -47094,7 +47508,7 @@ class MercatorCameraHelper {
         let scaleOfMinZoom;
         if (optionsMinZoom) {
             const minZoomPreConstrain = Math.min(+options.minZoom, startZoom, targetZoom);
-            const minZoom = tr.getConstrained(targetCenter, minZoomPreConstrain).zoom;
+            const minZoom = tr.constrain(targetCenter, minZoomPreConstrain).zoom;
             scaleOfMinZoom = zoomScale(minZoom - startZoom);
         }
         const easeFunc = (k, scale, centerFactor, pointAtOffset) => {
@@ -47560,13 +47974,13 @@ class VerticalPerspectiveProjection {
         const mercatorY = mercatorYfromLat(this._errorQueryLatitudeDegrees);
         const expectedResult = 2.0 * Math.atan(Math.exp(Math.PI - (mercatorY * Math.PI * 2.0))) - Math.PI * 0.5;
         const newValue = this._errorMeasurement.updateErrorLoop(mercatorY, expectedResult);
-        const now = browser.now();
+        const currentTime = now();
         if (newValue !== this._errorMeasurementLastValue) {
             this._errorCorrectionPreviousValue = this._errorCorrectionUsable; // store the interpolated value
             this._errorMeasurementLastValue = newValue;
-            this._errorMeasurementLastChangeTime = now;
+            this._errorMeasurementLastChangeTime = currentTime;
         }
-        const sinceUpdateSeconds = (now - this._errorMeasurementLastChangeTime) / 1000.0;
+        const sinceUpdateSeconds = (currentTime - this._errorMeasurementLastChangeTime) / 1000.0;
         const mix = Math.min(Math.max(sinceUpdateSeconds / globeConstants.errorTransitionTimeSeconds, 0.0), 1.0);
         const newCorrection = -this._errorMeasurementLastValue; // Note the negation
         this._errorCorrectionUsable = lerp(this._errorCorrectionPreviousValue, newCorrection, easeCubicInOut(mix));
@@ -47600,10 +48014,10 @@ class VerticalPerspectiveProjection {
         // Do nothing.
     }
     hasTransition() {
-        const now = browser.now();
+        const currentTime = now();
         let dirty = false;
         // Error correction transition
-        dirty = dirty || (now - this._errorMeasurementLastChangeTime) / 1000.0 < (globeConstants.errorTransitionTimeSeconds + 0.2);
+        dirty = dirty || (currentTime - this._errorMeasurementLastChangeTime) / 1000.0 < (globeConstants.errorTransitionTimeSeconds + 0.2);
         // Error correction query in flight
         dirty = dirty || (this._errorMeasurement && this._errorMeasurement.awaitingQuery);
         return dirty;
@@ -48461,6 +48875,9 @@ class VerticalPerspectiveTransform {
     setMaxBounds(bounds) {
         this._helper.setMaxBounds(bounds);
     }
+    setConstrain(constrain) {
+        this._helper.setConstrain(constrain);
+    }
     overrideNearFarZ(nearZ, farZ) {
         this._helper.overrideNearFarZ(nearZ, farZ);
     }
@@ -48551,6 +48968,9 @@ class VerticalPerspectiveTransform {
     get renderWorldCopies() {
         return this._helper.renderWorldCopies;
     }
+    get constrain() {
+        return this._helper.constrain;
+    }
     get nearZ() {
         return this._helper.nearZ;
     }
@@ -48563,7 +48983,7 @@ class VerticalPerspectiveTransform {
     setTransitionState(_value) {
         // Do nothing
     }
-    constructor() {
+    constructor(options) {
         //
         // Implementation of globe transform
         //
@@ -48575,10 +48995,20 @@ class VerticalPerspectiveTransform {
         this._globeProjMatrixInverted = createIdentityMat4f64();
         this._cameraPosition = createVec3f64();
         this._globeLatitudeErrorCorrectionRadians = 0;
+        this.defaultConstrain = (lngLat, zoom) => {
+            // Globe: TODO: respect _lngRange, _latRange
+            // It is possible to implement exact constrain for globe, but I don't think it is worth the effort.
+            const constrainedLat = clamp$1(lngLat.lat, -MAX_VALID_LATITUDE, MAX_VALID_LATITUDE);
+            const constrainedZoom = clamp$1(+zoom, this.minZoom + getZoomAdjustment(0, constrainedLat), this.maxZoom);
+            return {
+                center: new LngLat(lngLat.lng, constrainedLat),
+                zoom: constrainedZoom
+            };
+        };
         this._helper = new TransformHelper({
             calcMatrices: () => { this._calcMatrices(); },
-            getConstrained: (center, zoom) => { return this.getConstrained(center, zoom); }
-        });
+            constrain: (center, zoom) => { return this.defaultConstrain(center, zoom); }
+        }, options);
         this._coveringTilesDetailsProvider = new GlobeCoveringTilesDetailsProvider();
     }
     clone() {
@@ -48901,16 +49331,6 @@ class VerticalPerspectiveTransform {
             boundsArray[2] = 180;
         }
         return new LngLatBounds(boundsArray);
-    }
-    getConstrained(lngLat, zoom) {
-        // Globe: TODO: respect _lngRange, _latRange
-        // It is possible to implement exact constrain for globe, but I don't think it is worth the effort.
-        const constrainedLat = clamp$1(lngLat.lat, -MAX_VALID_LATITUDE, MAX_VALID_LATITUDE);
-        const constrainedZoom = clamp$1(+zoom, this.minZoom + getZoomAdjustment(0, constrainedLat), this.maxZoom);
-        return {
-            center: new LngLat(lngLat.lng, constrainedLat),
-            zoom: constrainedZoom
-        };
     }
     calculateCenterFromCameraLngLatAlt(lngLat, alt, bearing, pitch) {
         return this._helper.calculateCenterFromCameraLngLatAlt(lngLat, alt, bearing, pitch);
@@ -49300,6 +49720,9 @@ class GlobeTransform {
     setMaxBounds(bounds) {
         this._helper.setMaxBounds(bounds);
     }
+    setConstrain(constrain) {
+        this._helper.setConstrain(constrain);
+    }
     overrideNearFarZ(nearZ, farZ) {
         this._helper.overrideNearFarZ(nearZ, farZ);
     }
@@ -49393,6 +49816,9 @@ class GlobeTransform {
     get cameraToCenterDistance() {
         return this._helper.cameraToCenterDistance;
     }
+    get constrain() {
+        return this._helper.constrain;
+    }
     get nearZ() {
         return this._helper.nearZ;
     }
@@ -49420,7 +49846,7 @@ class GlobeTransform {
     get currentTransform() {
         return this.isGlobeRendering ? this._verticalPerspectiveTransform : this._mercatorTransform;
     }
-    constructor() {
+    constructor(options) {
         //
         // Implementation of globe transform
         //
@@ -49430,10 +49856,13 @@ class GlobeTransform {
          * Value 0 is mercator, value 1 is globe, anything between is an interpolation between the two projections.
          */
         this._globeness = 1.0;
+        this.defaultConstrain = (lngLat, zoom) => {
+            return this.currentTransform.defaultConstrain(lngLat, zoom);
+        };
         this._helper = new TransformHelper({
             calcMatrices: () => { this._calcMatrices(); },
-            getConstrained: (center, zoom) => { return this.getConstrained(center, zoom); }
-        });
+            constrain: (center, zoom) => { return this.defaultConstrain(center, zoom); }
+        }, options);
         this._globeness = 1; // When transform is cloned for use in symbols, `_updateAnimation` function which usually sets this value never gets called.
         this._mercatorTransform = new MercatorTransform();
         this._verticalPerspectiveTransform = new VerticalPerspectiveTransform();
@@ -49546,9 +49975,6 @@ class GlobeTransform {
     }
     getBounds() {
         return this.currentTransform.getBounds();
-    }
-    getConstrained(lngLat, zoom) {
-        return this.currentTransform.getConstrained(lngLat, zoom);
     }
     calculateCenterFromCameraLngLatAlt(lngLat, alt, bearing, pitch) {
         return this._helper.calculateCenterFromCameraLngLatAlt(lngLat, alt, bearing, pitch);
@@ -49769,7 +50195,7 @@ class VerticalPerspectiveCameraHelper {
         // Special zoom & center handling for globe:
         // Globe constrained center isn't dependent on zoom level
         const startingLat = tr.center.lat;
-        const constrainedCenter = tr.getConstrained(options.center ? LngLat.convert(options.center) : tr.center, tr.zoom).center;
+        const constrainedCenter = tr.constrain(options.center ? LngLat.convert(options.center) : tr.center, tr.zoom).center;
         tr.setCenter(constrainedCenter.wrap());
         // Make sure to compute correct target zoom level if no zoom is specified
         const targetZoom = (typeof options.zoom !== 'undefined') ? +options.zoom : (tr.zoom + getZoomAdjustment(startingLat, constrainedCenter.lat));
@@ -49795,7 +50221,7 @@ class VerticalPerspectiveCameraHelper {
         const preConstrainCenter = options.center ?
             LngLat.convert(options.center) :
             startCenter;
-        const constrainedCenter = tr.getConstrained(preConstrainCenter, startZoom // zoom can be whatever at this stage, it should not affect anything if globe is enabled
+        const constrainedCenter = tr.constrain(preConstrainCenter, startZoom // zoom can be whatever at this stage, it should not affect anything if globe is enabled
         ).center;
         normalizeCenter(tr, constrainedCenter);
         const clonedTr = tr.clone();
@@ -49867,7 +50293,7 @@ class VerticalPerspectiveCameraHelper {
         const startPadding = tr.padding;
         const doPadding = !tr.isPaddingEqual(options.padding);
         // Obtain target center and zoom
-        const constrainedCenter = tr.getConstrained(LngLat.convert(options.center || options.locationAtOffset), startZoom).center;
+        const constrainedCenter = tr.constrain(LngLat.convert(options.center || options.locationAtOffset), startZoom).center;
         const targetZoom = optionsZoom ? +options.zoom : tr.zoom + getZoomAdjustment(tr.center.lat, constrainedCenter.lat);
         // Compute target center that respects offset by creating a temporary transform and calling its `setLocationAtPoint`.
         const clonedTr = tr.clone();
@@ -49888,7 +50314,7 @@ class VerticalPerspectiveCameraHelper {
             const normalizedOptionsMinZoom = +options.minZoom + getZoomAdjustment(targetCenter.lat, 0);
             const normalizedMinZoomPreConstrain = Math.min(normalizedOptionsMinZoom, normalizedStartZoom, normalizedTargetZoom);
             const minZoomPreConstrain = normalizedMinZoomPreConstrain + getZoomAdjustment(0, targetCenter.lat);
-            const minZoom = tr.getConstrained(targetCenter, minZoomPreConstrain).zoom;
+            const minZoom = tr.constrain(targetCenter, minZoomPreConstrain).zoom;
             const normalizedMinZoom = minZoom + getZoomAdjustment(targetCenter.lat, 0);
             scaleOfMinZoom = zoomScale(normalizedMinZoom - normalizedStartZoom);
         }
@@ -50002,12 +50428,13 @@ class GlobeCameraHelper {
     }
 }
 
-function createProjectionFromName(name) {
+function createProjectionFromName(name, transformConstrain) {
+    const transformOptions = { constrain: transformConstrain };
     if (Array.isArray(name)) {
         const globeProjection = new GlobeProjection({ type: name });
         return {
             projection: globeProjection,
-            transform: new GlobeTransform(),
+            transform: new GlobeTransform(transformOptions),
             cameraHelper: new GlobeCameraHelper(globeProjection),
         };
     }
@@ -50016,7 +50443,7 @@ function createProjectionFromName(name) {
             {
                 return {
                     projection: new MercatorProjection(),
-                    transform: new MercatorTransform(),
+                    transform: new MercatorTransform(transformOptions),
                     cameraHelper: new MercatorCameraHelper(),
                 };
             }
@@ -50033,7 +50460,7 @@ function createProjectionFromName(name) {
                     ] });
                 return {
                     projection: globeProjection,
-                    transform: new GlobeTransform(),
+                    transform: new GlobeTransform(transformOptions),
                     cameraHelper: new GlobeCameraHelper(globeProjection),
                 };
             }
@@ -50041,7 +50468,7 @@ function createProjectionFromName(name) {
             {
                 return {
                     projection: new VerticalPerspectiveProjection(),
-                    transform: new VerticalPerspectiveTransform(),
+                    transform: new VerticalPerspectiveTransform(transformOptions),
                     cameraHelper: new VerticalPerspectiveCameraHelper(),
                 };
             }
@@ -50050,7 +50477,7 @@ function createProjectionFromName(name) {
                 warnOnce(`Unknown projection name: ${name}. Falling back to mercator projection.`);
                 return {
                     projection: new MercatorProjection(),
-                    transform: new MercatorTransform(),
+                    transform: new MercatorTransform(transformOptions),
                     cameraHelper: new MercatorCameraHelper(),
                 };
             }
@@ -50087,6 +50514,9 @@ class Style extends Evented {
         });
         this.dispatcher.registerMessageHandler("GI" /* MessageType.getImages */, (mapId, params) => {
             return this.getImages(mapId, params);
+        });
+        this.dispatcher.registerMessageHandler("GDA" /* MessageType.getDashes */, (mapId, params) => {
+            return this.getDashes(mapId, params);
         });
         this.imageManager = new ImageManager();
         this.imageManager.setEventedParent(this);
@@ -50247,7 +50677,7 @@ class Style extends Evented {
         this.fire(new Event('style.load'));
     }
     _createLayers() {
-        var _a;
+        var _a, _b, _c;
         const dereferencedLayers = derefLayers(this.stylesheet.layers);
         this.setGlobalState((_a = this.stylesheet.state) !== null && _a !== void 0 ? _a : null);
         // Broadcast layers to workers first, so that expensive style processing (createStyleLayer)
@@ -50261,6 +50691,10 @@ class Style extends Evented {
             const styledLayer = createStyleLayer(layer, this._globalState);
             styledLayer.setEventedParent(this, { layer: { id: layer.id } });
             this._layers[layer.id] = styledLayer;
+            if (isRasterStyleLayer(styledLayer) && this.sourceCaches[styledLayer.source]) {
+                const rasterFadeDuration = (_c = (_b = layer.paint) === null || _b === void 0 ? void 0 : _b['raster-fade-duration']) !== null && _c !== void 0 ? _c : styledLayer.paint.get('raster-fade-duration');
+                this.sourceCaches[styledLayer.source].setRasterFadeDuration(rasterFadeDuration);
+            }
         }
     }
     _loadSprite(sprite, isUpdate = false, completion = undefined) {
@@ -50973,6 +51407,9 @@ class Style extends Evented {
         if (requiresRelayout) {
             this._updateLayer(layer);
         }
+        if (isRasterStyleLayer(layer) && name === 'raster-fade-duration') {
+            this.sourceCaches[layer.source].setRasterFadeDuration(value);
+        }
         this._changed = true;
         this._updatedPaintProps[layer.id] = true;
         // reset serialization field, to be populated only when needed
@@ -51216,7 +51653,7 @@ class Style extends Evented {
         if (!_update)
             return;
         const parameters = {
-            now: browser.now(),
+            now: now(),
             transition: extend({
                 duration: 300,
                 delay: 0
@@ -51267,7 +51704,7 @@ class Style extends Evented {
         if (!update)
             return;
         const parameters = {
-            now: browser.now(),
+            now: now(),
             transition: extend({
                 duration: 300,
                 delay: 0
@@ -51278,7 +51715,7 @@ class Style extends Evented {
         this.sky.updateTransitions(parameters);
     }
     _setProjectionInternal(name) {
-        const projectionObjects = createProjectionFromName(name);
+        const projectionObjects = createProjectionFromName(name, this.map.transformConstrain);
         this.projection = projectionObjects.projection;
         this.map.migrateProjection(projectionObjects.transform, projectionObjects.cameraHelper);
         for (const key in this.sourceCaches) {
@@ -51368,7 +51805,7 @@ class Style extends Evented {
         // Also force full placement when fadeDuration === 0 to ensure that newly loaded
         // tiles will fully display symbols in their first frame
         forceFullPlacement = forceFullPlacement || this._layerOrderChanged || fadeDuration === 0;
-        if (forceFullPlacement || !this.pauseablePlacement || (this.pauseablePlacement.isDone() && !this.placement.stillRecent(browser.now(), transform.zoom))) {
+        if (forceFullPlacement || !this.pauseablePlacement || (this.pauseablePlacement.isDone() && !this.placement.stillRecent(now(), transform.zoom))) {
             this.pauseablePlacement = new PauseablePlacement(transform, this.map.terrain, this._order, forceFullPlacement, showCollisionBoxes, fadeDuration, crossSourceCollisions, this.placement);
             this._layerOrderChanged = false;
         }
@@ -51382,7 +51819,7 @@ class Style extends Evented {
         else {
             this.pauseablePlacement.continuePlacement(this._order, this._layers, layerTiles);
             if (this.pauseablePlacement.isDone()) {
-                this.placement = this.pauseablePlacement.commit(browser.now());
+                this.placement = this.pauseablePlacement.commit(now());
                 placementCommitted = true;
             }
             if (symbolBucketsChanged) {
@@ -51401,7 +51838,7 @@ class Style extends Evented {
             }
         }
         // needsRender is false when we have just finished a placement that didn't change the visibility of any symbols
-        const needsRerender = !this.pauseablePlacement.isDone() || this.placement.hasTransitions(browser.now());
+        const needsRerender = !this.pauseablePlacement.isDone() || this.placement.hasTransitions(now());
         return needsRerender;
     }
     _releaseSymbolFadeTiles() {
@@ -51453,6 +51890,15 @@ class Style extends Evented {
         this.stylesheet.glyphs = glyphsUrl;
         this.glyphManager.entries = {};
         this.glyphManager.setURL(glyphsUrl);
+    }
+    getDashes(mapId, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = {};
+            for (const [key, dash] of Object.entries(params.dashes)) {
+                result[key] = this.lineAtlas.getDash(dash.dasharray, dash.round);
+            }
+            return result;
+        });
     }
     /**
      * Add a sprite.
@@ -52243,13 +52689,28 @@ const lineSDFUniforms = (context, locations) => ({
     'u_ratio': new Uniform1f(context, locations.u_ratio),
     'u_device_pixel_ratio': new Uniform1f(context, locations.u_device_pixel_ratio),
     'u_units_to_pixels': new Uniform2f(context, locations.u_units_to_pixels),
-    'u_patternscale_a': new Uniform2f(context, locations.u_patternscale_a),
-    'u_patternscale_b': new Uniform2f(context, locations.u_patternscale_b),
-    'u_sdfgamma': new Uniform1f(context, locations.u_sdfgamma),
     'u_image': new Uniform1i(context, locations.u_image),
-    'u_tex_y_a': new Uniform1f(context, locations.u_tex_y_a),
-    'u_tex_y_b': new Uniform1f(context, locations.u_tex_y_b),
-    'u_mix': new Uniform1f(context, locations.u_mix)
+    'u_mix': new Uniform1f(context, locations.u_mix),
+    'u_tileratio': new Uniform1f(context, locations.u_tileratio),
+    'u_crossfade_from': new Uniform1f(context, locations.u_crossfade_from),
+    'u_crossfade_to': new Uniform1f(context, locations.u_crossfade_to),
+    'u_lineatlas_width': new Uniform1f(context, locations.u_lineatlas_width),
+    'u_lineatlas_height': new Uniform1f(context, locations.u_lineatlas_height)
+});
+const lineGradientSDFUniforms = (context, locations) => ({
+    'u_translation': new Uniform2f(context, locations.u_translation),
+    'u_ratio': new Uniform1f(context, locations.u_ratio),
+    'u_device_pixel_ratio': new Uniform1f(context, locations.u_device_pixel_ratio),
+    'u_units_to_pixels': new Uniform2f(context, locations.u_units_to_pixels),
+    'u_image': new Uniform1i(context, locations.u_image),
+    'u_image_height': new Uniform1f(context, locations.u_image_height),
+    'u_tileratio': new Uniform1f(context, locations.u_tileratio),
+    'u_crossfade_from': new Uniform1f(context, locations.u_crossfade_from),
+    'u_crossfade_to': new Uniform1f(context, locations.u_crossfade_to),
+    'u_image_dash': new Uniform1i(context, locations.u_image_dash),
+    'u_mix': new Uniform1f(context, locations.u_mix),
+    'u_lineatlas_width': new Uniform1f(context, locations.u_lineatlas_width),
+    'u_lineatlas_height': new Uniform1f(context, locations.u_lineatlas_height)
 });
 const lineUniformValues = (painter, tile, layer, ratioScale) => {
     const transform = painter.transform;
@@ -52287,23 +52748,32 @@ const linePatternUniformValues = (painter, tile, layer, ratioScale, crossfade) =
         ]
     };
 };
-const lineSDFUniformValues = (painter, tile, layer, ratioScale, dasharray, crossfade) => {
+const lineSDFUniformValues = (painter, tile, layer, ratioScale, crossfade) => {
     const transform = painter.transform;
-    const lineAtlas = painter.lineAtlas;
     const tileRatio = calculateTileRatio(tile, transform);
-    const round = layer.layout.get('line-cap') === 'round';
-    const posA = lineAtlas.getDash(dasharray.from, round);
-    const posB = lineAtlas.getDash(dasharray.to, round);
-    const widthA = posA.width * crossfade.fromScale;
-    const widthB = posB.width * crossfade.toScale;
     return extend(lineUniformValues(painter, tile, layer, ratioScale), {
-        'u_patternscale_a': [tileRatio / widthA, -posA.height / 2],
-        'u_patternscale_b': [tileRatio / widthB, -posB.height / 2],
-        'u_sdfgamma': lineAtlas.width / (Math.min(widthA, widthB) * 256 * painter.pixelRatio) / 2,
+        'u_tileratio': tileRatio,
+        'u_crossfade_from': crossfade.fromScale,
+        'u_crossfade_to': crossfade.toScale,
         'u_image': 0,
-        'u_tex_y_a': posA.y,
-        'u_tex_y_b': posB.y,
-        'u_mix': crossfade.t
+        'u_mix': crossfade.t,
+        'u_lineatlas_width': painter.lineAtlas.width,
+        'u_lineatlas_height': painter.lineAtlas.height,
+    });
+};
+const lineGradientSDFUniformValues = (painter, tile, layer, ratioScale, crossfade, imageHeight) => {
+    const transform = painter.transform;
+    const tileRatio = calculateTileRatio(tile, transform);
+    return extend(lineUniformValues(painter, tile, layer, ratioScale), {
+        'u_image': 0,
+        'u_image_height': imageHeight,
+        'u_tileratio': tileRatio,
+        'u_crossfade_from': crossfade.fromScale,
+        'u_crossfade_to': crossfade.toScale,
+        'u_image_dash': 1,
+        'u_mix': crossfade.t,
+        'u_lineatlas_width': painter.lineAtlas.width,
+        'u_lineatlas_height': painter.lineAtlas.height,
     });
 };
 function calculateTileRatio(tile, transform) {
@@ -52573,6 +53043,7 @@ const programUniforms = {
     lineGradient: lineGradientUniforms,
     linePattern: linePatternUniforms,
     lineSDF: lineSDFUniforms,
+    lineGradientSDF: lineGradientSDFUniforms,
     raster: rasterUniforms,
     symbolIcon: symbolIconUniforms,
     symbolSDF: symbolSDFUniforms,
@@ -54147,6 +54618,70 @@ function getColorRampTexture(context, layer) {
     return layer.colorRampTexture;
 }
 
+function updateGradientTexture(painter, sourceCache, context, gl, layer, bucket, coord, layerGradient) {
+    let textureResolution = 256;
+    if (layer.stepInterpolant) {
+        const sourceMaxZoom = sourceCache.getSource().maxzoom;
+        const potentialOverzoom = coord.canonical.z === sourceMaxZoom ?
+            Math.ceil(1 << (painter.transform.maxZoom - coord.canonical.z)) : 1;
+        const lineLength = bucket.maxLineLength / EXTENT$1;
+        // Logical pixel tile size is 512px, and 1024px right before current zoom + 1
+        const maxTilePixelSize = 1024;
+        // Maximum possible texture coverage heuristic, bound by hardware max texture size
+        const maxTextureCoverage = lineLength * maxTilePixelSize * potentialOverzoom;
+        textureResolution = clamp$1(nextPowerOfTwo(maxTextureCoverage), 256, context.maxTextureSize);
+    }
+    layerGradient.gradient = renderColorRamp({
+        expression: layer.gradientExpression(),
+        evaluationKey: 'lineProgress',
+        resolution: textureResolution,
+        image: layerGradient.gradient || undefined,
+        clips: bucket.lineClipsArray
+    });
+    if (layerGradient.texture) {
+        layerGradient.texture.update(layerGradient.gradient);
+    }
+    else {
+        layerGradient.texture = new Texture(context, layerGradient.gradient, gl.RGBA);
+    }
+    layerGradient.version = layer.gradientVersion;
+    return layerGradient.texture;
+}
+function bindImagePatternTextures(context, gl, tile, programConfiguration, crossfade) {
+    context.activeTexture.set(gl.TEXTURE0);
+    tile.imageAtlasTexture.bind(gl.LINEAR, gl.CLAMP_TO_EDGE);
+    programConfiguration.updatePaintBuffers(crossfade);
+}
+function bindDasharrayTextures(painter, context, gl, programConfiguration, programChanged, crossfade) {
+    if (programChanged || painter.lineAtlas.dirty) {
+        context.activeTexture.set(gl.TEXTURE0);
+        painter.lineAtlas.bind(context);
+    }
+    programConfiguration.updatePaintBuffers(crossfade);
+}
+function bindGradientTextures(painter, sourceCache, context, gl, layer, bucket, coord) {
+    const layerGradient = bucket.gradients[layer.id];
+    let gradientTexture = layerGradient.texture;
+    if (layer.gradientVersion !== layerGradient.version) {
+        gradientTexture = updateGradientTexture(painter, sourceCache, context, gl, layer, bucket, coord, layerGradient);
+    }
+    context.activeTexture.set(gl.TEXTURE0);
+    gradientTexture.bind(layer.stepInterpolant ? gl.NEAREST : gl.LINEAR, gl.CLAMP_TO_EDGE);
+}
+function bindGradientAndDashTextures(painter, sourceCache, context, gl, layer, bucket, coord, programConfiguration, crossfade) {
+    // Bind gradient texture to TEXTURE0
+    const layerGradient = bucket.gradients[layer.id];
+    let gradientTexture = layerGradient.texture;
+    if (layer.gradientVersion !== layerGradient.version) {
+        gradientTexture = updateGradientTexture(painter, sourceCache, context, gl, layer, bucket, coord, layerGradient);
+    }
+    context.activeTexture.set(gl.TEXTURE0);
+    gradientTexture.bind(layer.stepInterpolant ? gl.NEAREST : gl.LINEAR, gl.CLAMP_TO_EDGE);
+    // Bind dash atlas to TEXTURE1
+    context.activeTexture.set(gl.TEXTURE1);
+    painter.lineAtlas.bind(context);
+    programConfiguration.updatePaintBuffers(crossfade);
+}
 function drawLine(painter, sourceCache, layer, coords, renderOptions) {
     if (painter.renderPass !== 'translucent')
         return;
@@ -54157,14 +54692,23 @@ function drawLine(painter, sourceCache, layer, coords, renderOptions) {
         return;
     const depthMode = painter.getDepthModeForSublayer(0, DepthMode.ReadOnly);
     const colorMode = painter.colorModeForRenderPass();
-    const dasharray = layer.paint.get('line-dasharray');
+    const dasharrayProperty = layer.paint.get('line-dasharray');
+    const dasharray = dasharrayProperty.constantOr(1);
     const patternProperty = layer.paint.get('line-pattern');
     const image = patternProperty.constantOr(1);
     const gradient = layer.paint.get('line-gradient');
     const crossfade = layer.getCrossfadeParameters();
-    const programId = image ? 'linePattern' :
-        dasharray ? 'lineSDF' :
-            gradient ? 'lineGradient' : 'line';
+    let programId;
+    if (image)
+        programId = 'linePattern';
+    else if (dasharray && gradient)
+        programId = 'lineGradientSDF';
+    else if (dasharray)
+        programId = 'lineSDF';
+    else if (gradient)
+        programId = 'lineGradient';
+    else
+        programId = 'line';
     const context = painter.context;
     const gl = context.gl;
     const transform = painter.transform;
@@ -54182,6 +54726,7 @@ function drawLine(painter, sourceCache, layer, coords, renderOptions) {
         const programChanged = firstTile || program.program !== prevProgram;
         const terrainData = painter.style.map.terrain && painter.style.map.terrain.getTerrainData(coord);
         const constantPattern = patternProperty.constantOr(null);
+        const constantDasharray = dasharrayProperty && dasharrayProperty.constantOr(null);
         if (constantPattern && tile.imageAtlas) {
             const atlas = tile.imageAtlas;
             const posTo = atlas.patternPositions[constantPattern.to.toString()];
@@ -54189,59 +54734,37 @@ function drawLine(painter, sourceCache, layer, coords, renderOptions) {
             if (posTo && posFrom)
                 programConfiguration.setConstantPatternPositions(posTo, posFrom);
         }
+        else if (constantDasharray) {
+            const round = layer.layout.get('line-cap') === 'round';
+            const dashTo = painter.lineAtlas.getDash(constantDasharray.to, round);
+            const dashFrom = painter.lineAtlas.getDash(constantDasharray.from, round);
+            programConfiguration.setConstantDashPositions(dashTo, dashFrom);
+        }
         const projectionData = transform.getProjectionData({
             overscaledTileID: coord,
             applyGlobeMatrix: !isRenderingToTexture,
             applyTerrainMatrix: true
         });
         const pixelRatio = transform.getPixelScale();
-        const uniformValues = image ? linePatternUniformValues(painter, tile, layer, pixelRatio, crossfade) :
-            dasharray ? lineSDFUniformValues(painter, tile, layer, pixelRatio, dasharray, crossfade) :
-                gradient ? lineGradientUniformValues(painter, tile, layer, pixelRatio, bucket.lineClipsArray.length) :
-                    lineUniformValues(painter, tile, layer, pixelRatio);
+        let uniformValues;
         if (image) {
-            context.activeTexture.set(gl.TEXTURE0);
-            tile.imageAtlasTexture.bind(gl.LINEAR, gl.CLAMP_TO_EDGE);
-            programConfiguration.updatePaintBuffers(crossfade);
+            uniformValues = linePatternUniformValues(painter, tile, layer, pixelRatio, crossfade);
+            bindImagePatternTextures(context, gl, tile, programConfiguration, crossfade);
         }
-        else if (dasharray && (programChanged || painter.lineAtlas.dirty)) {
-            context.activeTexture.set(gl.TEXTURE0);
-            painter.lineAtlas.bind(context);
+        else if (dasharray && gradient) {
+            uniformValues = lineGradientSDFUniformValues(painter, tile, layer, pixelRatio, crossfade, bucket.lineClipsArray.length);
+            bindGradientAndDashTextures(painter, sourceCache, context, gl, layer, bucket, coord, programConfiguration, crossfade);
+        }
+        else if (dasharray) {
+            uniformValues = lineSDFUniformValues(painter, tile, layer, pixelRatio, crossfade);
+            bindDasharrayTextures(painter, context, gl, programConfiguration, programChanged, crossfade);
         }
         else if (gradient) {
-            const layerGradient = bucket.gradients[layer.id];
-            let gradientTexture = layerGradient.texture;
-            if (layer.gradientVersion !== layerGradient.version) {
-                let textureResolution = 256;
-                if (layer.stepInterpolant) {
-                    const sourceMaxZoom = sourceCache.getSource().maxzoom;
-                    const potentialOverzoom = coord.canonical.z === sourceMaxZoom ?
-                        Math.ceil(1 << (painter.transform.maxZoom - coord.canonical.z)) : 1;
-                    const lineLength = bucket.maxLineLength / EXTENT$1;
-                    // Logical pixel tile size is 512px, and 1024px right before current zoom + 1
-                    const maxTilePixelSize = 1024;
-                    // Maximum possible texture coverage heuristic, bound by hardware max texture size
-                    const maxTextureCoverage = lineLength * maxTilePixelSize * potentialOverzoom;
-                    textureResolution = clamp$1(nextPowerOfTwo(maxTextureCoverage), 256, context.maxTextureSize);
-                }
-                layerGradient.gradient = renderColorRamp({
-                    expression: layer.gradientExpression(),
-                    evaluationKey: 'lineProgress',
-                    resolution: textureResolution,
-                    image: layerGradient.gradient || undefined,
-                    clips: bucket.lineClipsArray
-                });
-                if (layerGradient.texture) {
-                    layerGradient.texture.update(layerGradient.gradient);
-                }
-                else {
-                    layerGradient.texture = new Texture(context, layerGradient.gradient, gl.RGBA);
-                }
-                layerGradient.version = layer.gradientVersion;
-                gradientTexture = layerGradient.texture;
-            }
-            context.activeTexture.set(gl.TEXTURE0);
-            gradientTexture.bind(layer.stepInterpolant ? gl.NEAREST : gl.LINEAR, gl.CLAMP_TO_EDGE);
+            uniformValues = lineGradientUniformValues(painter, tile, layer, pixelRatio, bucket.lineClipsArray.length);
+            bindGradientTextures(painter, sourceCache, context, gl, layer, bucket, coord);
+        }
+        else {
+            uniformValues = lineUniformValues(painter, tile, layer, pixelRatio);
         }
         const stencil = painter.stencilModeForClipping(coord);
         program.draw(context, gl.TRIANGLES, depthMode, stencil, colorMode, CullFaceMode.disabled, uniformValues, terrainData, projectionData, layer.id, bucket.layoutVertexBuffer, bucket.indexBuffer, bucket.segments, layer.paint, painter.transform.zoom, programConfiguration, bucket.layoutVertexBuffer2);
@@ -54663,27 +55186,27 @@ function drawTiles(painter, sourceCache, layer, coords, stencilModes, useBorder,
     const projection = painter.style.projection;
     const colorMode = painter.colorModeForRenderPass();
     const align = !painter.options.moving;
+    const rasterOpacity = layer.paint.get('raster-opacity');
+    const rasterResampling = layer.paint.get('raster-resampling');
+    const fadeDuration = layer.paint.get('raster-fade-duration');
+    const isTerrain = !!painter.style.map.terrain;
     // Draw all tiles
     for (const coord of coords) {
         // Set the lower zoom level to sublayer 0, and higher zoom levels to higher sublayers
         // Use gl.LESS to prevent double drawing in areas where tiles overlap.
-        const depthMode = painter.getDepthModeForSublayer(coord.overscaledZ - minTileZ, layer.paint.get('raster-opacity') === 1 ? DepthMode.ReadWrite : DepthMode.ReadOnly, gl.LESS);
+        const depthMode = painter.getDepthModeForSublayer(coord.overscaledZ - minTileZ, rasterOpacity === 1 ? DepthMode.ReadWrite : DepthMode.ReadOnly, gl.LESS);
         const tile = sourceCache.getTile(coord);
-        tile.registerFadeDuration(layer.paint.get('raster-fade-duration'));
-        const parentTile = sourceCache.findLoadedParent(coord, 0);
-        const siblingTile = sourceCache.findLoadedSibling(coord);
-        // Prefer parent tile if present
-        const fadeTileReference = parentTile || siblingTile || null;
-        const fade = getFadeValues(tile, fadeTileReference, sourceCache, layer, painter.transform, painter.style.map.terrain);
-        let parentScaleBy, parentTL;
-        const textureFilter = layer.paint.get('raster-resampling') === 'nearest' ? gl.NEAREST : gl.LINEAR;
+        const textureFilter = rasterResampling === 'nearest' ? gl.NEAREST : gl.LINEAR;
+        // create and bind first texture
         context.activeTexture.set(gl.TEXTURE0);
         tile.texture.bind(textureFilter, gl.CLAMP_TO_EDGE, gl.LINEAR_MIPMAP_NEAREST);
+        // create second texture - use either the current tile or fade tile to bind second texture below
         context.activeTexture.set(gl.TEXTURE1);
+        const { parentTile, parentScaleBy, parentTopLeft, fadeValues } = getFadeProperties(tile, sourceCache, fadeDuration, isTerrain);
+        tile.fadeOpacity = fadeValues.tileOpacity;
         if (parentTile) {
+            parentTile.fadeOpacity = fadeValues.parentTileOpacity;
             parentTile.texture.bind(textureFilter, gl.CLAMP_TO_EDGE, gl.LINEAR_MIPMAP_NEAREST);
-            parentScaleBy = Math.pow(2, parentTile.tileID.overscaledZ - tile.tileID.overscaledZ);
-            parentTL = [tile.tileID.canonical.x * parentScaleBy % 1, tile.tileID.canonical.y * parentScaleBy % 1];
         }
         else {
             tile.texture.bind(textureFilter, gl.CLAMP_TO_EDGE, gl.LINEAR_MIPMAP_NEAREST);
@@ -54695,51 +55218,75 @@ function drawTiles(painter, sourceCache, layer, coords, stencilModes, useBorder,
         }
         const terrainData = painter.style.map.terrain && painter.style.map.terrain.getTerrainData(coord);
         const projectionData = transform.getProjectionData({ overscaledTileID: coord, aligned: align, applyGlobeMatrix: !isRenderingToTexture, applyTerrainMatrix: true });
-        const uniformValues = rasterUniformValues(parentTL || [0, 0], parentScaleBy || 1, fade, layer, corners);
+        const uniformValues = rasterUniformValues(parentTopLeft, parentScaleBy, fadeValues.fadeMix, layer, corners);
         const mesh = projection.getMeshFromTileID(context, coord.canonical, useBorder, allowPoles, 'raster');
         const stencilMode = stencilModes ? stencilModes[coord.overscaledZ] : StencilMode.disabled;
         program.draw(context, gl.TRIANGLES, depthMode, stencilMode, colorMode, flipCullfaceMode ? CullFaceMode.frontCCW : CullFaceMode.backCCW, uniformValues, terrainData, projectionData, layer.id, mesh.vertexBuffer, mesh.indexBuffer, mesh.segments);
     }
 }
-function getFadeValues(tile, parentTile, sourceCache, layer, transform, terrain) {
-    const fadeDuration = layer.paint.get('raster-fade-duration');
-    if (!terrain && fadeDuration > 0) {
-        const now = browser.now();
-        const sinceTile = (now - tile.timeAdded) / fadeDuration;
-        const sinceParent = parentTile ? (now - parentTile.timeAdded) / fadeDuration : -1;
-        const source = sourceCache.getSource();
-        const idealZ = coveringZoomLevel(transform, {
-            tileSize: source.tileSize,
-            roundZoom: source.roundZoom
-        });
-        // if no parent or parent is older, fade in; if parent is younger, fade out
-        const fadeIn = !parentTile || Math.abs(parentTile.tileID.overscaledZ - idealZ) > Math.abs(tile.tileID.overscaledZ - idealZ);
-        const childOpacity = (fadeIn && tile.refreshedUponExpiration) ? 1 : clamp$1(fadeIn ? sinceTile : 1 - sinceParent, 0, 1);
-        // we don't crossfade tiles that were just refreshed upon expiring:
-        // once they're old enough to pass the crossfading threshold
-        // (fadeDuration), unset the `refreshedUponExpiration` flag so we don't
-        // incorrectly fail to crossfade them when zooming
-        if (tile.refreshedUponExpiration && sinceTile >= 1)
-            tile.refreshedUponExpiration = false;
-        if (parentTile) {
-            return {
-                opacity: 1,
-                mix: 1 - childOpacity
-            };
-        }
-        else {
-            return {
-                opacity: childOpacity,
-                mix: 0
-            };
-        }
+/**
+ * Get fade properties for current tile - either cross-fading or self-fading properties.
+ */
+function getFadeProperties(tile, sourceCache, fadeDuration, isTerrain) {
+    const defaults = {
+        parentTile: null,
+        parentScaleBy: 1,
+        parentTopLeft: [0, 0],
+        fadeValues: { tileOpacity: 1, parentTileOpacity: 1, fadeMix: { opacity: 1, mix: 0 } }
+    };
+    if (fadeDuration === 0 || isTerrain)
+        return defaults;
+    // cross-fade with parent first if available
+    if (tile.fadingParentID) {
+        const parentTile = sourceCache._getLoadedTile(tile.fadingParentID);
+        if (!parentTile)
+            return defaults;
+        const parentScaleBy = Math.pow(2, parentTile.tileID.overscaledZ - tile.tileID.overscaledZ);
+        const parentTopLeft = [
+            (tile.tileID.canonical.x * parentScaleBy) % 1,
+            (tile.tileID.canonical.y * parentScaleBy) % 1
+        ];
+        const fadeValues = getCrossFadeValues(tile, parentTile, fadeDuration);
+        return { parentTile, parentScaleBy, parentTopLeft, fadeValues };
     }
-    else {
-        return {
-            opacity: 1,
-            mix: 0
-        };
+    // self-fade for edge tiles
+    if (tile.selfFading) {
+        const fadeValues = getSelfFadeValues(tile, fadeDuration);
+        return { parentTile: null, parentScaleBy: 1, parentTopLeft: [0, 0], fadeValues };
     }
+    return defaults;
+}
+/**
+ * Cross-fade values for a base tile with a parent tile (for zooming in/out)
+ */
+function getCrossFadeValues(tile, parentTile, fadeDuration) {
+    const currentTime = now();
+    const timeSinceTile = (currentTime - tile.timeAdded) / fadeDuration;
+    const timeSinceParent = (currentTime - parentTile.timeAdded) / fadeDuration;
+    // get fading opacity based on current fade direction
+    const doFadeIn = (tile.fadingDirection === FadingDirections.Incoming);
+    const opacity1 = clamp$1(timeSinceTile, 0, 1);
+    const opacity2 = clamp$1(1 - timeSinceParent, 0, 1);
+    const tileOpacity = doFadeIn ? opacity1 : opacity2;
+    const parentTileOpacity = doFadeIn ? opacity2 : opacity1;
+    const fadeMix = {
+        opacity: 1,
+        mix: 1 - tileOpacity
+    };
+    return { tileOpacity, parentTileOpacity, fadeMix };
+}
+/**
+ * Simple fade-in values for tile without a parent (i.e. edge tiles)
+ */
+function getSelfFadeValues(tile, fadeDuration) {
+    const currentTime = now();
+    const timeSinceTile = (currentTime - tile.timeAdded) / fadeDuration;
+    const tileOpacity = clamp$1(timeSinceTile, 0, 1);
+    const fadeMix = {
+        opacity: tileOpacity,
+        mix: 0
+    };
+    return { tileOpacity, fadeMix };
 }
 
 function drawBackground(painter, sourceCache, layer, coords, renderOptions) {
@@ -55395,7 +55942,7 @@ class Painter {
         this.lineAtlas = style.lineAtlas;
         this.imageManager = style.imageManager;
         this.glyphManager = style.glyphManager;
-        this.symbolFadeChange = style.placement.symbolFadeChange(browser.now());
+        this.symbolFadeChange = style.placement.symbolFadeChange(now());
         this.imageManager.beginFrame();
         const layerIds = this.style._order;
         const sourceCaches = this.style.sourceCaches;
@@ -55888,11 +56435,11 @@ class HandlerInertia {
     }
     record(settings) {
         this._drainInertiaBuffer();
-        this._inertiaBuffer.push({ time: browser.now(), settings });
+        this._inertiaBuffer.push({ time: now(), settings });
     }
     _drainInertiaBuffer() {
-        const inertia = this._inertiaBuffer, now = browser.now(), cutoff = 160; //msec
-        while (inertia.length > 0 && now - inertia[0].time > cutoff)
+        const inertia = this._inertiaBuffer, currentTime = now(), cutoff = 160; //msec
+        while (inertia.length > 0 && currentTime - inertia[0].time > cutoff)
             inertia.shift();
     }
     _onMoveEnd(panInertiaOptions) {
@@ -55981,6 +56528,7 @@ function calculateEasing(amount, inertiaDuration, inertiaOptions) {
     };
 }
 
+;
 /**
  * `MapMouseEvent` is the event type for mouse-related map events.
  *
@@ -57473,8 +58021,8 @@ class ScrollZoomHandler {
             return;
         }
         let value = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? e.deltaY * 40 : e.deltaY;
-        const now = browser.now(), timeDelta = now - (this._lastWheelEventTime || 0);
-        this._lastWheelEventTime = now;
+        const currentTime = now(), timeDelta = currentTime - (this._lastWheelEventTime || 0);
+        this._lastWheelEventTime = currentTime;
         if (value !== 0 && (value % wheelZoomDelta) === 0) {
             // This one is definitely a mouse wheel event.
             this._type = 'wheel';
@@ -57571,7 +58119,7 @@ class ScrollZoomHandler {
                 scale = 1 / scale;
             }
             const fromScale = typeof this._targetZoom !== 'number' ? tr.scale : zoomScale(this._targetZoom);
-            this._targetZoom = tr.getConstrained(tr.getCameraLngLat(), scaleZoom(fromScale * scale)).zoom;
+            this._targetZoom = tr.constrain(tr.getCameraLngLat(), scaleZoom(fromScale * scale)).zoom;
             // if this is a mouse wheel, refresh the starting zoom and easing
             // function we're using to smooth out the zooming between wheel
             // events
@@ -57587,7 +58135,7 @@ class ScrollZoomHandler {
         let finished = false;
         let zoom;
         if (this._type === 'wheel' && startZoom && easing) {
-            const lastWheelEventTimeDiff = browser.now() - this._lastWheelEventTime;
+            const lastWheelEventTimeDiff = now() - this._lastWheelEventTime;
             const t = Math.min((lastWheelEventTimeDiff + wheelEventTimeDiffAdjustment) / 200, 1);
             const k = easing(t);
             zoom = interpolateFactory.number(startZoom, targetZoom, k);
@@ -57628,7 +58176,7 @@ class ScrollZoomHandler {
         let easing = defaultEasing;
         if (this._prevEase) {
             const currentEase = this._prevEase;
-            const t = (browser.now() - currentEase.start) / currentEase.duration;
+            const t = (now() - currentEase.start) / currentEase.duration;
             const speed = currentEase.easing(t + 0.01) - currentEase.easing(t);
             // Quick hack to make new bezier that is continuous with last
             const x = 0.27 / Math.sqrt(speed * speed + 0.0001) * 0.01;
@@ -57636,7 +58184,7 @@ class ScrollZoomHandler {
             easing = bezier(x, y, 0.25, 1);
         }
         this._prevEase = {
-            start: browser.now(),
+            start: now(),
             duration,
             easing
         };
@@ -58338,6 +58886,7 @@ class HandlerManager {
         if (options.interactive && options.touchZoomRotate) {
             map.touchZoomRotate.enable(options.touchZoomRotate);
         }
+        this._add('blockableMapEvent', new BlockableMapEventHandler(map));
         const scrollZoom = map.scrollZoom = new ScrollZoomHandler(map, () => this._triggerRenderFrame());
         this._add('scrollZoom', scrollZoom, ['mousePan']);
         if (options.interactive && options.scrollZoom) {
@@ -58348,7 +58897,6 @@ class HandlerManager {
         if (options.interactive && options.keyboard) {
             map.keyboard.enable();
         }
-        this._add('blockableMapEvent', new BlockableMapEventHandler(map));
     }
     _add(handlerName, handler, allowed) {
         this._handlers.push({ handlerName, handler, allowed });
@@ -58484,40 +59032,46 @@ class HandlerManager {
         const preZoomAroundLoc = around.distSqr(tr.centerPoint) < 1.0e-2 ?
             tr.center :
             tr.screenPointToLocation(panDelta ? around.sub(panDelta) : around);
-        if (!terrain) {
-            // Apply zoom, bearing, pitch, roll
-            this._map.cameraHelper.handleMapControlsRollPitchBearingZoom(deltasForHelper, tr);
-            // Apply panning
-            this._map.cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
-        }
-        else {
-            // Apply zoom, bearing, pitch, roll
-            this._map.cameraHelper.handleMapControlsRollPitchBearingZoom(deltasForHelper, tr);
-            // when 3d-terrain is enabled act a little different:
-            //    - dragging do not drag the picked point itself, instead it drags the map by pixel-delta.
-            //      With this approach it is no longer possible to pick a point from somewhere near
-            //      the horizon to the center in one move.
-            //      So this logic avoids the problem, that in such cases you easily loose orientation.
-            if (!this._terrainMovement &&
-                (combinedEventsInProgress.drag || combinedEventsInProgress.zoom)) {
-                // When starting to drag or move, flag it and register moveend to clear flagging
-                this._terrainMovement = true;
-                this._map._elevationFreeze = true;
-                this._map.cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
-            }
-            else if (combinedEventsInProgress.drag && this._terrainMovement) {
-                // drag map
-                tr.setCenter(tr.screenPointToLocation(tr.centerPoint.sub(panDelta)));
-            }
-            else {
-                this._map.cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
-            }
-        }
+        this._handleMapControls({
+            terrain,
+            tr,
+            deltasForHelper,
+            preZoomAroundLoc,
+            combinedEventsInProgress,
+            panDelta,
+        });
         map._applyUpdatedTransform(tr);
         this._map._update();
         if (!combinedResult.noInertia)
             this._inertia.record(combinedResult);
         this._fireEvents(combinedEventsInProgress, deactivatedHandlers, true);
+    }
+    _handleMapControls({ terrain, tr, deltasForHelper, preZoomAroundLoc, combinedEventsInProgress, panDelta }) {
+        const cameraHelper = this._map.cameraHelper;
+        cameraHelper.handleMapControlsRollPitchBearingZoom(deltasForHelper, tr);
+        if (!terrain) {
+            cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
+            return;
+        }
+        if (cameraHelper.useGlobeControls) {
+            if (!this._terrainMovement && (combinedEventsInProgress.drag || combinedEventsInProgress.zoom)) {
+                this._terrainMovement = true;
+                this._map._elevationFreeze = true;
+            }
+            cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
+            return;
+        }
+        if (!this._terrainMovement && (combinedEventsInProgress.drag || combinedEventsInProgress.zoom)) {
+            this._terrainMovement = true;
+            this._map._elevationFreeze = true;
+            cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
+            return;
+        }
+        if (combinedEventsInProgress.drag && this._terrainMovement && panDelta) {
+            tr.setCenter(tr.screenPointToLocation(tr.centerPoint.sub(panDelta)));
+            return;
+        }
+        cameraHelper.handleMapControlsPan(deltasForHelper, tr, preZoomAroundLoc);
     }
     _fireEvents(newEventsInProgress, deactivatedHandlers, allowEndAnimation) {
         const wasMoving = isMoving(this._eventsInProgress);
@@ -58611,7 +59165,7 @@ class Camera extends Evented {
         super();
         // Callback for map._requestRenderFrame
         this._renderFrameCallback = () => {
-            const t = Math.min((browser.now() - this._easeStart) / this._easeOptions.duration, 1);
+            const t = Math.min((now() - this._easeStart) / this._easeOptions.duration, 1);
             this._onEaseFrame(this._easeOptions.easing(t));
             // if _stop is called during _onEaseFrame from _fireMoveEvents we should avoid a new _requestRenderFrame, checking it by ensuring _easeFrameId was not deleted
             if (t < 1 && this._easeFrameId) {
@@ -59291,9 +59845,10 @@ class Camera extends Evented {
      * between old and new values. The map will retain its current values for any
      * details not specified in `options`.
      *
-     * Note: The transition will happen instantly if the user has enabled
-     * the `reduced motion` accessibility feature enabled in their operating system,
-     * unless `options` includes `essential: true`.
+     * !!! note "Reduced Motion"
+     *     The transition will happen instantly if the user has enabled
+     *     the `reduced motion` accessibility feature enabled in their operating system,
+     *     unless `options` includes `essential: true`.
      *
      * Triggers the following events: `movestart`, `move`, `moveend`, `zoomstart`, `zoom`, `zoomend`, `pitchstart`,
      * `pitch`, `pitchend`, `rollstart`, `roll`, `rollend`, and `rotate`.
@@ -59539,9 +60094,10 @@ class Camera extends Evented {
      * evokes flight. The animation seamlessly incorporates zooming and panning to help
      * the user maintain her bearings even after traversing a great distance.
      *
-     * Note: The animation will be skipped, and this will behave equivalently to `jumpTo`
-     * if the user has the `reduced motion` accessibility feature enabled in their operating system,
-     * unless 'options' includes `essential: true`.
+     * !!! note "Reduced Motion"
+     *     The animation will be skipped, and this will behave equivalently to `jumpTo`
+     *     if the user has the `reduced motion` accessibility feature enabled in their operating system,
+     *     unless 'options' includes `essential: true`.
      *
      * Triggers the following events: `movestart`, `move`, `moveend`, `zoomstart`, `zoom`, `zoomend`, `pitchstart`,
      * `pitch`, `pitchend`, `rollstart`, `roll`, `rollend`, and `rotate`.
@@ -59572,7 +60128,7 @@ class Camera extends Evented {
     flyTo(options, eventData) {
         // Fall through to jumpTo if user has set prefers-reduced-motion
         if (!options.essential && browser.prefersReducedMotion) {
-            const coercedOptions = pick(options, ['center', 'zoom', 'bearing', 'pitch', 'roll', 'elevation']);
+            const coercedOptions = pick(options, ['center', 'zoom', 'bearing', 'pitch', 'roll', 'elevation', 'padding']);
             return this.jumpTo(coercedOptions, eventData);
         }
         // This method implements an “optimal path” animation, as detailed in:
@@ -59745,7 +60301,7 @@ class Camera extends Evented {
             finish();
         }
         else {
-            this._easeStart = browser.now();
+            this._easeStart = now();
             this._easeOptions = options;
             this._onEaseFrame = frame;
             this._onEaseEnd = finish;
@@ -60156,7 +60712,7 @@ class TerrainSourceCache extends Evented {
         /**
          * used to determine whether depth & coord framebuffers need updating
          */
-        this._lastTilesetChange = browser.now();
+        this._lastTilesetChange = now();
         this.sourceCache = sourceCache;
         this._tiles = {};
         this._renderableTilesKeys = [];
@@ -60197,7 +60753,7 @@ class TerrainSourceCache extends Evented {
                 tileID.terrainRttPosMatrix32f = new Float64Array(16);
                 ortho(tileID.terrainRttPosMatrix32f, 0, EXTENT$1, EXTENT$1, 0, 0, 1);
                 this._tiles[tileID.key] = new Tile(tileID, this.tileSize);
-                this._lastTilesetChange = browser.now();
+                this._lastTilesetChange = now();
             }
         }
         // free unused tiles
@@ -61053,6 +61609,7 @@ const defaultOptions$4 = {
     maxTileCacheZoomLevels: config.MAX_TILE_CACHE_ZOOM_LEVELS,
     transformRequest: null,
     transformCameraUpdate: null,
+    transformConstrain: null,
     fadeDuration: 300,
     crossSourceCollisions: true,
     clickTolerance: 3,
@@ -61133,6 +61690,9 @@ let Map$1 = class Map extends Camera {
         if (resolvedOptions.renderWorldCopies !== undefined) {
             transform.setRenderWorldCopies(resolvedOptions.renderWorldCopies);
         }
+        if (resolvedOptions.transformConstrain !== null) {
+            transform.setConstrain(resolvedOptions.transformConstrain);
+        }
         super(transform, cameraHelper, { bearingSnap: resolvedOptions.bearingSnap });
         this._idleTriggered = false;
         this._crossFadingFactor = 1;
@@ -61180,6 +61740,7 @@ let Map$1 = class Map extends Camera {
         this._overridePixelRatio = resolvedOptions.pixelRatio;
         this._maxCanvasSize = resolvedOptions.maxCanvasSize;
         this.transformCameraUpdate = resolvedOptions.transformCameraUpdate;
+        this.transformConstrain = resolvedOptions.transformConstrain;
         this.cancelPendingTileRequestsWhileZooming = resolvedOptions.cancelPendingTileRequestsWhileZooming === true;
         this._imageQueueHandle = ImageRequest.addThrottleControl(() => this.isMoving());
         this._requestManager = new RequestManager(resolvedOptions.transformRequest);
@@ -61716,6 +62277,24 @@ let Map$1 = class Map extends Camera {
      */
     setRenderWorldCopies(renderWorldCopies) {
         this.transform.setRenderWorldCopies(renderWorldCopies);
+        return this._update();
+    }
+    /** Sets or clears the callback overriding how the map constrains the viewport's lnglat and zoom to respect the longitude and latitude bounds.
+     *
+     * @param constrain - A {@link TransformConstrainFunction} callback defining how the viewport should respect the bounds.
+     *
+     * `null` clears the callback and reverses the override of the map transform's default constrain function.
+     * @example
+     * ```ts
+     * function customTransformConstrain(lngLat, zoom) {
+     *   return {center: lngLat, zoom: zoom ?? 0};
+     * };
+     * map.setTransformConstrain(customTransformConstrain);
+     * ```
+     * @see [Customize the map transform constrain](https://maplibre.org/maplibre-gl-js/docs/examples/customize-the-map-transform-constrain/)
+     */
+    setTransformConstrain(constrain) {
+        this.transform.setConstrain(constrain);
         return this._update();
     }
     /**
@@ -62835,10 +63414,11 @@ let Map$1 = class Map extends Camera {
      * and [maximum zoom level](https://maplibre.org/maplibre-style-spec/layers/#maxzoom))
      * at which the layer will be rendered.
      *
-     * Note: For style layers using vector sources, style layers cannot be rendered at zoom levels lower than the
-     * minimum zoom level of the _source layer_ because the data does not exist at those zoom levels. If the minimum
-     * zoom level of the source layer is higher than the minimum zoom level defined in the style layer, the style
-     * layer will not be rendered at all zoom levels in the zoom range.
+     * !!! note
+     *     For style layers using vector sources, style layers cannot be rendered at zoom levels lower than the
+     *     minimum zoom level of the _source layer_ because the data does not exist at those zoom levels. If the minimum
+     *     zoom level of the source layer is higher than the minimum zoom level defined in the style layer, the style
+     *     layer will not be rendered at all zoom levels in the zoom range.
      *
      * @param layerId - The ID of the layer to which the zoom extent will be applied.
      * @param minzoom - The minimum zoom to set (0-24).
@@ -63104,7 +63684,8 @@ let Map$1 = class Map extends Camera {
      * - For vector or GeoJSON sources, using the [`promoteId`](https://maplibre.org/maplibre-style-spec/sources/#promoteid) option at the time the source is defined.
      * - For GeoJSON sources, using the [`generateId`](https://maplibre.org/maplibre-style-spec/sources/#generateid) option to auto-assign an `id` based on the feature's index in the source data. If you change feature data using `map.getSource('some id').setData(..)`, you may need to re-apply state taking into account updated `id` values.
      *
-     * _Note: You can use the [`feature-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#feature-state) to access the values in a feature's state object for the purposes of styling._
+     * !!! note
+     *     You can use the [`feature-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#feature-state) to access the values in a feature's state object for the purposes of styling.
      *
      * @param feature - Feature identifier. Feature objects returned from
      * {@link Map.queryRenderedFeatures} or event handlers can be used as feature identifiers.
@@ -63187,7 +63768,8 @@ let Map$1 = class Map extends Camera {
      * A feature's `state` is a set of user-defined key-value pairs that are assigned to a feature at runtime.
      * Features are identified by their `feature.id` attribute, which can be any number or string.
      *
-     * _Note: To access the values in a feature's state object for the purposes of styling the feature, use the [`feature-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#feature-state)._
+     * !!! note
+     *     To access the values in a feature's state object for the purposes of styling the feature, use the [`feature-state` expression](https://maplibre.org/maplibre-style-spec/expressions/#feature-state).
      *
      * @param feature - Feature identifier. Feature objects returned from
      * {@link Map.queryRenderedFeatures} or event handlers can be used as feature identifiers.
@@ -63394,10 +63976,10 @@ let Map$1 = class Map extends Camera {
         if (this.style && this._styleDirty) {
             this._styleDirty = false;
             const zoom = this.transform.zoom;
-            const now = browser.now();
-            this.style.zoomHistory.update(zoom, now);
+            const currentTime = now();
+            this.style.zoomHistory.update(zoom, currentTime);
             const parameters = new EvaluationParameters(zoom, {
-                now,
+                now: currentTime,
                 fadeDuration,
                 zoomHistory: this.style.zoomHistory,
                 transition: this.style.getTransition()
@@ -64287,6 +64869,11 @@ class Marker extends Evented {
         if (!this._element.hasAttribute('aria-label')) {
             this._element.setAttribute('aria-label', map._getUIString('Marker.Title'));
         }
+        // aria-label is set either by user or above default, so set role
+        // since div is interactive and cannot have aria-label without a role
+        if (!this._element.hasAttribute('role')) {
+            this._element.setAttribute('role', 'button');
+        }
         map.getCanvasContainer().appendChild(this._element);
         map.on('move', this._update);
         map.on('moveend', this._update);
@@ -65010,7 +65597,7 @@ class GeolocateControl extends Evented {
                 // and https://w3c.github.io/geolocation-api/#example-5-forcing-the-user-agent-to-return-a-fresh-cached-position
                 return;
             }
-            else if (this.options.trackUserLocation) {
+            else {
                 this._setErrorState();
             }
             if (this._watchState !== 'OFF' && this.options.showUserLocation) {
@@ -65158,6 +65745,14 @@ class GeolocateControl extends Evented {
                 // turn marker grey
                 break;
             case 'ACTIVE_ERROR':
+            case 'BACKGROUND_ERROR':
+                // already in error state
+                break;
+            case 'OFF':
+            case undefined:
+                // when trackUserLocation is false, watchState is undefined
+                // when trackUserLocation is true but not activated, watchState is 'OFF'
+                // in both cases, no error state transition is needed
                 break;
             default:
                 throw new Error(`Unexpected watchState ${this._watchState}`);
@@ -65640,7 +66235,7 @@ class TerrainControl {
  *     .addControl(new GlobeControl());
  * ```
  *
- * @see [Display a globe with a fill extrusion layer](https://maplibre.org/maplibre-gl-js/docs/examples/globe-fill-extrusion/)
+ * @see [Display a globe with a fill extrusion layer](https://maplibre.org/maplibre-gl-js/docs/examples/display-a-globe-with-a-fill-extrusion-layer/)
  */
 class GlobeControl {
     constructor() {
@@ -66447,9 +67042,12 @@ exports.getVersion = getVersion;
 exports.getWorkerCount = getWorkerCount;
 exports.getWorkerUrl = getWorkerUrl;
 exports.importScriptInWorkers = importScriptInWorkers;
+exports.isTimeFrozen = isTimeFrozen;
 exports.prewarm = prewarm;
 exports.removeProtocol = removeProtocol;
+exports.restoreNow = restoreNow;
 exports.setMaxParallelImageRequests = setMaxParallelImageRequests;
+exports.setNow = setNow;
 exports.setRTLTextPlugin = setRTLTextPlugin;
 exports.setWorkerCount = setWorkerCount;
 exports.setWorkerUrl = setWorkerUrl;

@@ -128,8 +128,34 @@ CREATE OR REPLACE FUNCTION query_milestones(
                    AND (service IS NULL OR usage IN ('industrial', 'military', 'test'))
               WHERE position_numeric IS NOT NULL
                 AND position_numeric BETWEEN (input_pos - 10.0)::FLOAT AND (input_pos + 10.0)::FLOAT
+                AND m.line IS NULL
+
+              UNION ALL
+
+              SELECT
+                m.osm_id,
+                m.railway,
+                m.position_text,
+                ST_Transform(m.way, 4326) AS geom,
+                m.line AS line_ref,
+                m.ref AS milestone_ref,
+                m.wikidata,
+                m.wikimedia_commons,
+                m.wikimedia_commons_file,
+                m.image,
+                m.mapillary,
+                m.wikipedia,
+                m.note,
+                m.description,
+                m.operator,
+                ABS(input_pos - m.position_numeric) AS error
+              FROM railway_positions AS m
+              WHERE position_numeric IS NOT NULL
+                AND position_numeric BETWEEN (input_pos - 10.0)::FLOAT AND (input_pos + 10.0)::FLOAT
+                AND m.line = input_ref
+
               -- sort by distance from searched location, then osm_id for stable sorting
-              ORDER BY error, m.osm_id
+              ORDER BY error, osm_id
             ) AS milestones
             GROUP BY milestones.position_text, milestones.error, milestones.line_ref, milestones.operator
           ) AS unique_milestones
