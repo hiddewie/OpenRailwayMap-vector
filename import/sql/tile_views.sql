@@ -1130,7 +1130,7 @@ RETURN (
       osm_id as id,
       osm_id,
       'station_area_group' as feature,
-      way
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
     FROM stop_area_groups_buffered
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
