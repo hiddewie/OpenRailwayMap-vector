@@ -174,7 +174,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION railway_line_high IS $tj$' || $$
   {
@@ -327,7 +326,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_line_low IS $tj$' || $$
   {
@@ -403,37 +401,84 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     rank DESC NULLS LAST,
     route_count DESC NULLS LAST;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    feature = 'station'
-    AND state = 'present'
-    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-    AND railway_ref IS NOT NULL
-    AND route_count >= 20;
+    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
+  FROM (
+    SELECT
+      way,
+      id,
+      osm_id,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+        AND feature = 'station'
+        AND state = 'present'
+        AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+        AND railway_ref IS NOT NULL
+        AND route_count >= 20
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations_low",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
   SELECT
@@ -789,7 +834,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_line_low IS $tj$' || $$
   {
@@ -861,7 +905,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low IS $tj$' || $$
   {
@@ -931,7 +974,6 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_signal_boxes IS $tj$' || $$
   {
@@ -1026,7 +1068,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION electrification_railway_line_low IS $tj$' || $$
   {
@@ -1165,7 +1206,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION gauge_railway_line_low IS $tj$' || $$
   {
@@ -1230,7 +1270,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION loading_gauge_railway_line_low IS $tj$' || $$
   {
@@ -1293,7 +1332,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION track_class_railway_line_low IS $tj$' || $$
   {
@@ -1362,7 +1400,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION operator_railway_line_low IS $tj$' || $$
   {

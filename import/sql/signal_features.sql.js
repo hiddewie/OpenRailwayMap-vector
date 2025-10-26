@@ -291,7 +291,6 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
   {
@@ -382,7 +381,6 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_railway_signals IS $tj$' || $$
   {
@@ -470,7 +468,6 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION electrification_signals IS $tj$' || $$
   {

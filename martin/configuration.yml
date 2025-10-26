@@ -32,35 +32,6 @@ postgres:
 
     # standard_railway_line_low, see function below
 
-    standard_railway_text_stations_low:
-      schema: public
-      table: standard_railway_text_stations_low
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
     standard_railway_text_stations_med:
       schema: public
       table: standard_railway_text_stations_med
@@ -310,6 +281,11 @@ postgres:
       schema: public
       function: standard_railway_line_low
       maxzoom: 7
+
+    standard_railway_text_stations_low:
+      schema: public
+      function: standard_railway_text_stations_low
+      # TODO minzoom / maxzoom
 
     standard_railway_symbols:
       schema: public
