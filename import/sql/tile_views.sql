@@ -744,31 +744,79 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
+CREATE OR REPLACE FUNCTION standard_railway_grouped_stations(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
-    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
-    buffered as way,
-    feature,
-    state,
-    station,
-    railway_ref as label,
-    name,
-    uic_ref,
-    nullif(array_to_string(operator, U&'\001E'), '') as operator,
-    nullif(array_to_string(network, U&'\001E'), '') as network,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    get_byte(sha256(operator[1]::bytea), 0) as operator_hash,
-    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
-    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
-    nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
-    nullif(array_to_string(image, U&'\001E'), '') as image,
-    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
-    nullif(array_to_string(note, U&'\001E'), '') as note,
-    nullif(array_to_string(description, U&'\001E'), '') as description
-  FROM grouped_stations_with_route_count;
+    ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
+      nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
+      buffered as way,
+      feature,
+      state,
+      station,
+      railway_ref as label,
+      name,
+      uic_ref,
+      nullif(array_to_string(operator, U&'\001E'), '') as operator,
+      nullif(array_to_string(network, U&'\001E'), '') as network,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      get_byte(sha256(operator[1]::bytea), 0) as operator_hash,
+      nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+      nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+      nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
+      nullif(array_to_string(image, U&'\001E'), '') as image,
+      nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+      nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+      nullif(array_to_string(note, U&'\001E'), '') as note,
+      nullif(array_to_string(description, U&'\001E'), '') as description
+    FROM grouped_stations_with_route_count
+    WHERE
+      buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_stations IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_grouped_stations",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
