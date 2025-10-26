@@ -326,7 +326,8 @@ CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
   JOIN stations_q
     ON stations_q.id = railway_text_stations.id
 --       AND stations_q.discr_iso < pow(3.5, 5) * 10 and stations_q.discr_iso < pow(10, 5)
-      AND 100000 < stations_q.discr_iso
+      AND stations_q.dirank < pow(3.5, 5) * 10 and stations_q.irank < pow(10, 5)
+--       AND 100000 < stations_q.discr_iso
   WHERE
     feature = 'station'
     AND state = 'present'
