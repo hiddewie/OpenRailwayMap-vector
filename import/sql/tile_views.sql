@@ -1520,9 +1520,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW railway_catenary AS
-;
-
 CREATE OR REPLACE FUNCTION railway_catenary(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
