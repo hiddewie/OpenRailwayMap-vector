@@ -24,42 +24,7 @@ postgres:
   # Associative arrays of table sources
   tables:
 
-    # --- Shared --- #
-
-    # railway_line_high, see function below
-
     # --- Standard --- #
-
-    # standard_railway_line_low, see function below
-
-    standard_railway_text_stations_med:
-      schema: public
-      table: standard_railway_text_stations_med
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
 
     standard_railway_turntables:
       schema: public
@@ -285,6 +250,10 @@ postgres:
     standard_railway_text_stations_low:
       schema: public
       function: standard_railway_text_stations_low
+
+    standard_railway_text_stations_med:
+      schema: public
+      function: standard_railway_text_stations_med
       # TODO minzoom / maxzoom
 
     standard_railway_symbols:

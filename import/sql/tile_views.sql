@@ -441,7 +441,9 @@ RETURN (
         AND state = 'present'
         AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
         AND railway_ref IS NOT NULL
-        AND route_count >= 20
+        AND route_count >= 8
+    ORDER BY
+      route_count DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -480,39 +482,86 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    feature = 'station'
-    AND state = 'present'
-    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-    AND railway_ref IS NOT NULL
-    AND route_count >= 8
-  ORDER BY
-    route_count DESC NULLS LAST;
+    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
+  FROM (
+    SELECT
+      way,
+      id,
+      osm_id,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+        AND feature = 'station'
+        AND state = 'present'
+        AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+        AND railway_ref IS NOT NULL
+        AND route_count >= 20
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_med IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations_med",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW standard_railway_text_stations_med AS;
 
 CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
   RETURNS bytea
