@@ -1,6 +1,6 @@
 /**
  * MapLibre GL JS
- * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.7.3/LICENSE.txt
+ * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v5.10.0/LICENSE.txt
  */
 var maplibregl = (function () {
 'use strict';
@@ -8940,6 +8940,43 @@ function getAABB(points) {
     return [tlX, tlY, brX, brY];
 }
 /**
+ * For a given set of tile ids, returns the edge tile ids for the bounding box.
+ */
+function getEdgeTiles(tileIDs) {
+    if (!tileIDs.length)
+        return new Set();
+    // set a common zoom for calculation (highest zoom) to reproject all tiles to this same zoom
+    const targetZ = Math.max(...tileIDs.map(id => id.canonical.z));
+    // vars to store the min and max tile x/y coordinates for edge finding
+    let minX = Infinity, maxX = -Infinity;
+    let minY = Infinity, maxY = -Infinity;
+    // project all tiles to targetZ while maintaining the reference to the original tile
+    const projected = [];
+    for (const id of tileIDs) {
+        const { x, y, z } = id.canonical;
+        const scale = Math.pow(2, targetZ - z);
+        const px = x * scale;
+        const py = y * scale;
+        projected.push({ id, x: px, y: py });
+        if (px < minX)
+            minX = px;
+        if (px > maxX)
+            maxX = px;
+        if (py < minY)
+            minY = py;
+        if (py > maxY)
+            maxY = py;
+    }
+    // find edge tiles using the reprojected tile ids
+    const edgeTiles = new Set();
+    for (const p of projected) {
+        if (p.x === minX || p.x === maxX || p.y === minY || p.y === maxY) {
+            edgeTiles.add(p.id);
+        }
+    }
+    return edgeTiles;
+}
+/**
  * Given a value `t` that varies between 0 and 1, return
  * an interpolation function that eases between 0 and 1 in a pleasing
  * cubic in-out fashion.
@@ -9928,6 +9965,16 @@ var source_vector = {
 	volatile: {
 		type: "boolean",
 		"default": false
+	},
+	encoding: {
+		type: "enum",
+		values: {
+			mvt: {
+			},
+			mlt: {
+			}
+		},
+		"default": "mvt"
 	},
 	"*": {
 		type: "*"
@@ -11873,10 +11920,11 @@ var paint_line = {
 		expression: {
 			interpolated: false,
 			parameters: [
-				"zoom"
+				"zoom",
+				"feature"
 			]
 		},
-		"property-type": "cross-faded"
+		"property-type": "cross-faded-data-driven"
 	},
 	"line-pattern": {
 		type: "resolvedImage",
@@ -20987,10 +21035,7 @@ validateStyleMin.paintProperty = wrapCleanErrors(injectValidateSpec(validatePain
 validateStyleMin.layoutProperty = wrapCleanErrors(injectValidateSpec(validateLayoutProperty$1));
 function injectValidateSpec(validator) {
     return function (options) {
-        return validator({
-            ...options,
-            validateSpec: validate,
-        });
+        return validator(Object.assign({}, options, { validateSpec: validate }));
     };
 }
 function sortErrors(errors) {
@@ -23761,8 +23806,8 @@ class StyleLayer extends Evented {
         // No-op; can be overridden by derived classes.
         return false;
     }
-    isHidden(zoom) {
-        if (this.minzoom && zoom < this.minzoom)
+    isHidden(zoom, roundMinZoom = false) {
+        if (this.minzoom && zoom < (roundMinZoom ? Math.floor(this.minzoom) : this.minzoom))
             return true;
         if (this.maxzoom && zoom >= this.maxzoom)
             return true;
@@ -24209,6 +24254,37 @@ class StructArrayLayout10ui20 extends StructArray {
 }
 StructArrayLayout10ui20.prototype.bytesPerElement = 20;
 register('StructArrayLayout10ui20', StructArrayLayout10ui20);
+/**
+ * @internal
+ * Implementation of the StructArray layout:
+ * [0] - Uint16[8]
+ *
+ */
+class StructArrayLayout8ui16 extends StructArray {
+    _refreshViews() {
+        this.uint8 = new Uint8Array(this.arrayBuffer);
+        this.uint16 = new Uint16Array(this.arrayBuffer);
+    }
+    emplaceBack(v0, v1, v2, v3, v4, v5, v6, v7) {
+        const i = this.length;
+        this.resize(i + 1);
+        return this.emplace(i, v0, v1, v2, v3, v4, v5, v6, v7);
+    }
+    emplace(i, v0, v1, v2, v3, v4, v5, v6, v7) {
+        const o2 = i * 8;
+        this.uint16[o2 + 0] = v0;
+        this.uint16[o2 + 1] = v1;
+        this.uint16[o2 + 2] = v2;
+        this.uint16[o2 + 3] = v3;
+        this.uint16[o2 + 4] = v4;
+        this.uint16[o2 + 5] = v5;
+        this.uint16[o2 + 6] = v6;
+        this.uint16[o2 + 7] = v7;
+        return i;
+    }
+}
+StructArrayLayout8ui16.prototype.bytesPerElement = 16;
+register('StructArrayLayout8ui16', StructArrayLayout8ui16);
 /**
  * @internal
  * Implementation of the StructArray layout:
@@ -24898,6 +24974,8 @@ class LineExtLayoutArray extends StructArrayLayout2f8 {
 }
 class PatternLayoutArray extends StructArrayLayout10ui20 {
 }
+class DashLayoutArray extends StructArrayLayout8ui16 {
+}
 class SymbolLayoutArray extends StructArrayLayout4i4ui4i24 {
 }
 class SymbolDynamicLayoutArray extends StructArrayLayout3f12 {
@@ -25028,6 +25106,12 @@ const patternAttributes = createLayout([
     { name: 'a_pattern_to', components: 4, type: 'Uint16' },
     { name: 'a_pixel_ratio_from', components: 1, type: 'Uint16' },
     { name: 'a_pixel_ratio_to', components: 1, type: 'Uint16' },
+]);
+
+const dashAttributes = createLayout([
+    // [0, y, height, width]
+    { name: 'a_dasharray_from', components: 4, type: 'Uint16' },
+    { name: 'a_dasharray_to', components: 4, type: 'Uint16' },
 ]);
 
 var murmurhashJs$1 = {exports: {}};
@@ -25477,16 +25561,36 @@ class CrossFadedConstantBinder {
         this.patternFrom = posFrom.tlbr;
         this.patternTo = posTo.tlbr;
     }
+    setConstantDashPositions(dashTo, dashFrom) {
+        this.dashTo = [0, dashTo.y, dashTo.height, dashTo.width];
+        this.dashFrom = [0, dashFrom.y, dashFrom.height, dashFrom.width];
+    }
     setUniform(uniform, globals, currentValue, uniformName) {
-        const pos = uniformName === 'u_pattern_to' ? this.patternTo :
-            uniformName === 'u_pattern_from' ? this.patternFrom :
-                uniformName === 'u_pixel_ratio_to' ? this.pixelRatioTo :
-                    uniformName === 'u_pixel_ratio_from' ? this.pixelRatioFrom : null;
-        if (pos)
-            uniform.set(pos);
+        let value = null;
+        if (uniformName === 'u_pattern_to') {
+            value = this.patternTo;
+        }
+        else if (uniformName === 'u_pattern_from') {
+            value = this.patternFrom;
+        }
+        else if (uniformName === 'u_dasharray_to') {
+            value = this.dashTo;
+        }
+        else if (uniformName === 'u_dasharray_from') {
+            value = this.dashFrom;
+        }
+        else if (uniformName === 'u_pixel_ratio_to') {
+            value = this.pixelRatioTo;
+        }
+        else if (uniformName === 'u_pixel_ratio_from') {
+            value = this.pixelRatioFrom;
+        }
+        if (value !== null) {
+            uniform.set(value);
+        }
     }
     getBinding(context, location, name) {
-        return name.substr(0, 9) === 'u_pattern' ?
+        return (name.substr(0, 9) === 'u_pattern' || name.substr(0, 12) === 'u_dasharray_') ?
             new Uniform4f(context, location) :
             new Uniform1f(context, location);
     }
@@ -25611,7 +25715,7 @@ class CompositeExpressionBinder {
         return new Uniform1f(context, location);
     }
 }
-class CrossFadedCompositeBinder {
+class CrossFadedBinder {
     constructor(expression, type, useIntegerZoom, zoom, PaintVertexArray, layerId) {
         this.expression = expression;
         this.type = type;
@@ -25625,32 +25729,33 @@ class CrossFadedCompositeBinder {
         const start = this.zoomInPaintVertexArray.length;
         this.zoomInPaintVertexArray.resize(length);
         this.zoomOutPaintVertexArray.resize(length);
-        this._setPaintValues(start, length, feature.patterns && feature.patterns[this.layerId], options.imagePositions);
+        this._setPaintValues(start, length, this.getPositionIds(feature), options);
     }
     updatePaintArray(start, end, feature, featureState, options) {
-        this._setPaintValues(start, end, feature.patterns && feature.patterns[this.layerId], options.imagePositions);
+        this._setPaintValues(start, end, this.getPositionIds(feature), options);
     }
-    _setPaintValues(start, end, patterns, positions) {
-        if (!positions || !patterns)
+    _setPaintValues(start, end, positionIds, options) {
+        const positions = this.getPositions(options);
+        if (!positions || !positionIds)
             return;
-        const { min, mid, max } = patterns;
-        const imageMin = positions[min];
-        const imageMid = positions[mid];
-        const imageMax = positions[max];
-        if (!imageMin || !imageMid || !imageMax)
+        const min = positions[positionIds.min];
+        const mid = positions[positionIds.mid];
+        const max = positions[positionIds.max];
+        if (!min || !mid || !max)
             return;
         // We populate two paint arrays because, for cross-faded properties, we don't know which direction
         // we're cross-fading to at layout time. In order to keep vertex attributes to a minimum and not pass
         // unnecessary vertex data to the shaders, we determine which to upload at draw time.
         for (let i = start; i < end; i++) {
-            this.zoomInPaintVertexArray.emplace(i, imageMid.tl[0], imageMid.tl[1], imageMid.br[0], imageMid.br[1], imageMin.tl[0], imageMin.tl[1], imageMin.br[0], imageMin.br[1], imageMid.pixelRatio, imageMin.pixelRatio);
-            this.zoomOutPaintVertexArray.emplace(i, imageMid.tl[0], imageMid.tl[1], imageMid.br[0], imageMid.br[1], imageMax.tl[0], imageMax.tl[1], imageMax.br[0], imageMax.br[1], imageMid.pixelRatio, imageMax.pixelRatio);
+            this.emplace(this.zoomInPaintVertexArray, i, mid, min);
+            this.emplace(this.zoomOutPaintVertexArray, i, mid, max);
         }
     }
     upload(context) {
         if (this.zoomInPaintVertexArray && this.zoomInPaintVertexArray.arrayBuffer && this.zoomOutPaintVertexArray && this.zoomOutPaintVertexArray.arrayBuffer) {
-            this.zoomInPaintVertexBuffer = context.createVertexBuffer(this.zoomInPaintVertexArray, patternAttributes.members, this.expression.isStateDependent);
-            this.zoomOutPaintVertexBuffer = context.createVertexBuffer(this.zoomOutPaintVertexArray, patternAttributes.members, this.expression.isStateDependent);
+            const attributes = this.getVertexAttributes();
+            this.zoomInPaintVertexBuffer = context.createVertexBuffer(this.zoomInPaintVertexArray, attributes, this.expression.isStateDependent);
+            this.zoomOutPaintVertexBuffer = context.createVertexBuffer(this.zoomOutPaintVertexArray, attributes, this.expression.isStateDependent);
         }
     }
     destroy() {
@@ -25658,6 +25763,34 @@ class CrossFadedCompositeBinder {
             this.zoomOutPaintVertexBuffer.destroy();
         if (this.zoomInPaintVertexBuffer)
             this.zoomInPaintVertexBuffer.destroy();
+    }
+}
+class CrossFadedPatternBinder extends CrossFadedBinder {
+    getPositions(options) {
+        return options.imagePositions;
+    }
+    getPositionIds(feature) {
+        return feature.patterns && feature.patterns[this.layerId];
+    }
+    getVertexAttributes() {
+        return patternAttributes.members;
+    }
+    emplace(array, index, midPos, minMaxPos) {
+        array.emplace(index, midPos.tlbr[0], midPos.tlbr[1], midPos.tlbr[2], midPos.tlbr[3], minMaxPos.tlbr[0], minMaxPos.tlbr[1], minMaxPos.tlbr[2], minMaxPos.tlbr[3], midPos.pixelRatio, minMaxPos.pixelRatio);
+    }
+}
+class CrossFadedDasharrayBinder extends CrossFadedBinder {
+    getPositions(options) {
+        return options.dashPositions;
+    }
+    getPositionIds(feature) {
+        return feature.dashes && feature.dashes[this.layerId];
+    }
+    getVertexAttributes() {
+        return dashAttributes.members;
+    }
+    emplace(array, index, midPos, minMaxPos) {
+        array.emplace(index, 0, midPos.y, midPos.height, midPos.width, 0, minMaxPos.y, minMaxPos.height, minMaxPos.width);
     }
 }
 /**
@@ -25706,7 +25839,9 @@ class ProgramConfiguration {
             else if (expression.kind === 'source' || isCrossFaded) {
                 const StructArrayLayout = layoutType(property, type, 'source');
                 this.binders[property] = isCrossFaded ?
-                    new CrossFadedCompositeBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
+                    property === 'line-dasharray' ?
+                        new CrossFadedDasharrayBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
+                        new CrossFadedPatternBinder(expression, type, useIntegerZoom, zoom, StructArrayLayout, layer.id) :
                     new SourceExpressionBinder(expression, names, type, StructArrayLayout);
                 keys.push(`/a_${property}`);
             }
@@ -25725,7 +25860,7 @@ class ProgramConfiguration {
     populatePaintArrays(newLength, feature, options) {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.populatePaintArray(newLength, feature, options);
         }
     }
@@ -25734,6 +25869,13 @@ class ProgramConfiguration {
             const binder = this.binders[property];
             if (binder instanceof CrossFadedConstantBinder)
                 binder.setConstantPatternPositions(posTo, posFrom);
+        }
+    }
+    setConstantDashPositions(dashTo, dashFrom) {
+        for (const property in this.binders) {
+            const binder = this.binders[property];
+            if (binder instanceof CrossFadedConstantBinder)
+                binder.setConstantDashPositions(dashTo, dashFrom);
         }
     }
     updatePaintArrays(featureStates, featureMap, vtLayer, layer, options) {
@@ -25745,7 +25887,7 @@ class ProgramConfiguration {
                 for (const property in this.binders) {
                     const binder = this.binders[property];
                     if ((binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder ||
-                        binder instanceof CrossFadedCompositeBinder) && binder.expression.isStateDependent === true) {
+                        binder instanceof CrossFadedBinder) && binder.expression.isStateDependent === true) {
                         //AHM: Remove after https://github.com/mapbox/mapbox-gl-js/issues/6255
                         const value = layer.paint.get(property);
                         binder.expression = value.value;
@@ -25776,9 +25918,10 @@ class ProgramConfiguration {
                     result.push(binder.paintVertexAttributes[i].name);
                 }
             }
-            else if (binder instanceof CrossFadedCompositeBinder) {
-                for (let i = 0; i < patternAttributes.members.length; i++) {
-                    result.push(patternAttributes.members[i].name);
+            else if (binder instanceof CrossFadedBinder) {
+                const attributes = binder.getVertexAttributes();
+                for (const attribute of attributes) {
+                    result.push(attribute.name);
                 }
             }
         }
@@ -25825,7 +25968,7 @@ class ProgramConfiguration {
         this._buffers = [];
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (crossfade && binder instanceof CrossFadedCompositeBinder) {
+            if (crossfade && binder instanceof CrossFadedBinder) {
                 const patternVertexBuffer = crossfade.fromScale === 2 ? binder.zoomInPaintVertexBuffer : binder.zoomOutPaintVertexBuffer;
                 if (patternVertexBuffer)
                     this._buffers.push(patternVertexBuffer);
@@ -25838,7 +25981,7 @@ class ProgramConfiguration {
     upload(context) {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.upload(context);
         }
         this.updatePaintBuffers();
@@ -25846,7 +25989,7 @@ class ProgramConfiguration {
     destroy() {
         for (const property in this.binders) {
             const binder = this.binders[property];
-            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedCompositeBinder)
+            if (binder instanceof SourceExpressionBinder || binder instanceof CompositeExpressionBinder || binder instanceof CrossFadedBinder)
                 binder.destroy();
         }
     }
@@ -25906,6 +26049,7 @@ function paintAttributeNames(property, type) {
         'text-halo-width': ['halo_width'],
         'icon-halo-width': ['halo_width'],
         'line-gap-width': ['gapwidth'],
+        'line-dasharray': ['dasharray_to', 'dasharray_from'],
         'line-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
         'fill-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
         'fill-extrusion-pattern': ['pattern_to', 'pattern_from', 'pixel_ratio_to', 'pixel_ratio_from'],
@@ -25925,7 +26069,11 @@ function getLayoutException(property) {
         'fill-extrusion-pattern': {
             'source': PatternLayoutArray,
             'composite': PatternLayoutArray
-        }
+        },
+        'line-dasharray': {
+            'source': DashLayoutArray,
+            'composite': DashLayoutArray
+        },
     };
     return propertyExceptions[property];
 }
@@ -25946,7 +26094,8 @@ function layoutType(property, type, binderType) {
 register('ConstantBinder', ConstantBinder);
 register('CrossFadedConstantBinder', CrossFadedConstantBinder);
 register('SourceExpressionBinder', SourceExpressionBinder);
-register('CrossFadedCompositeBinder', CrossFadedCompositeBinder);
+register('CrossFadedPatternBinder', CrossFadedPatternBinder);
+register('CrossFadedDasharrayBinder', CrossFadedDasharrayBinder);
 register('CompositeExpressionBinder', CompositeExpressionBinder);
 register('ProgramConfiguration', ProgramConfiguration, { omit: ['_buffers'] });
 register('ProgramConfigurationSet', ProgramConfigurationSet);
@@ -26019,7 +26168,7 @@ class CircleBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.layoutVertexArray = new CircleLayoutArray();
         this.indexArray = new TriangleIndexArray();
         this.segments = new SegmentVector();
@@ -28880,7 +29029,7 @@ class FillBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.patternFeatures = [];
         this.layoutVertexArray = new FillLayoutArray();
         this.indexArray = new TriangleIndexArray();
@@ -28891,7 +29040,7 @@ class FillBucket {
         this.stateDependentLayerIds = this.layers.filter((l) => l.isStateDependent()).map((l) => l.id);
     }
     populate(features, options, canonical) {
-        this.hasPattern = hasPattern('fill', this.layers, options);
+        this.hasDependencies = hasPattern('fill', this.layers, options);
         const fillSortKey = this.layers[0].layout.get('fill-sort-key');
         const sortFeaturesByKey = !fillSortKey.isConstant();
         const bucketFeatures = [];
@@ -28920,7 +29069,7 @@ class FillBucket {
         }
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
-            if (this.hasPattern) {
+            if (this.hasDependencies) {
                 const patternFeature = addPatternDependencies('fill', this.layers, bucketFeature, { zoom: this.zoom }, options);
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
@@ -29441,7 +29590,7 @@ class FillExtrusionBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.layoutVertexArray = new FillExtrusionLayoutArray();
         this.centroidVertexArray = new PosArray();
         this.indexArray = new TriangleIndexArray();
@@ -29451,7 +29600,7 @@ class FillExtrusionBucket {
     }
     populate(features, options, canonical) {
         this.features = [];
-        this.hasPattern = hasPattern('fill-extrusion', this.layers, options);
+        this.hasDependencies = hasPattern('fill-extrusion', this.layers, options);
         for (const { feature, id, index, sourceLayerIndex } of features) {
             const needGeometry = this.layers[0]._featureFilter.needGeometry;
             const evaluationFeature = toEvaluationFeature(feature, needGeometry);
@@ -29466,7 +29615,7 @@ class FillExtrusionBucket {
                 type: feature.type,
                 patterns: {}
             };
-            if (this.hasPattern) {
+            if (this.hasDependencies) {
                 this.features.push(addPatternDependencies('fill-extrusion', this.layers, bucketFeature, { zoom: this.zoom }, options));
             }
             else {
@@ -29863,7 +30012,7 @@ class LineBucket {
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.patternFeatures = [];
         this.lineClipsArray = [];
         this.gradients = {};
@@ -29879,7 +30028,7 @@ class LineBucket {
         this.stateDependentLayerIds = this.layers.filter((l) => l.isStateDependent()).map((l) => l.id);
     }
     populate(features, options, canonical) {
-        this.hasPattern = hasPattern('line', this.layers, options);
+        this.hasDependencies = hasPattern('line', this.layers, options) || this.hasLineDasharray(this.layers);
         const lineSortKey = this.layers[0].layout.get('line-sort-key');
         const sortFeaturesByKey = !lineSortKey.isConstant();
         const bucketFeatures = [];
@@ -29899,6 +30048,7 @@ class LineBucket {
                 index,
                 geometry: needGeometry ? evaluationFeature.geometry : loadGeometry(feature),
                 patterns: {},
+                dashes: {},
                 sortKey
             };
             bucketFeatures.push(bucketFeature);
@@ -29910,29 +30060,35 @@ class LineBucket {
         }
         for (const bucketFeature of bucketFeatures) {
             const { geometry, index, sourceLayerIndex } = bucketFeature;
-            if (this.hasPattern) {
-                const patternBucketFeature = addPatternDependencies('line', this.layers, bucketFeature, { zoom: this.zoom }, options);
+            if (this.hasDependencies) {
+                if (hasPattern('line', this.layers, options)) {
+                    addPatternDependencies('line', this.layers, bucketFeature, { zoom: this.zoom }, options);
+                }
+                else if (this.hasLineDasharray(this.layers)) {
+                    this.addLineDashDependencies(this.layers, bucketFeature, this.zoom, options);
+                }
                 // pattern features are added only once the pattern is loaded into the image atlas
                 // so are stored during populate until later updated with positions by tile worker in addFeatures
-                this.patternFeatures.push(patternBucketFeature);
+                this.patternFeatures.push(bucketFeature);
             }
             else {
-                this.addFeature(bucketFeature, geometry, index, canonical, {}, options.subdivisionGranularity);
+                this.addFeature(bucketFeature, geometry, index, canonical, {}, {}, options.subdivisionGranularity);
             }
             const feature = features[index].feature;
             options.featureIndex.insert(feature, geometry, index, sourceLayerIndex, this.index);
         }
     }
-    update(states, vtLayer, imagePositions) {
+    update(states, vtLayer, imagePositions, dashPositions) {
         if (!this.stateDependentLayers.length)
             return;
         this.programConfigurations.updatePaintArrays(states, vtLayer, this.stateDependentLayers, {
-            imagePositions
+            imagePositions,
+            dashPositions
         });
     }
-    addFeatures(options, canonical, imagePositions) {
+    addFeatures(options, canonical, imagePositions, dashPositions) {
         for (const feature of this.patternFeatures) {
-            this.addFeature(feature, feature.geometry, feature.index, canonical, imagePositions, options.subdivisionGranularity);
+            this.addFeature(feature, feature.geometry, feature.index, canonical, imagePositions, dashPositions, options.subdivisionGranularity);
         }
     }
     isEmpty() {
@@ -29967,7 +30123,7 @@ class LineBucket {
             return { start, end };
         }
     }
-    addFeature(feature, geometry, index, canonical, imagePositions, subdivisionGranularity) {
+    addFeature(feature, geometry, index, canonical, imagePositions, dashPositions, subdivisionGranularity) {
         const layout = this.layers[0].layout;
         const join = layout.get('line-join').evaluate(feature, {});
         const cap = layout.get('line-cap');
@@ -29977,7 +30133,7 @@ class LineBucket {
         for (const line of geometry) {
             this.addLine(line, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity);
         }
-        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, canonical });
+        this.programConfigurations.populatePaintArrays(this.layoutVertexArray.length, feature, index, { imagePositions, dashPositions, canonical });
     }
     addLine(vertices, feature, join, cap, miterLimit, roundLimit, canonical, subdivisionGranularity) {
         this.distance = 0;
@@ -30268,6 +30424,43 @@ class LineBucket {
         this.distance += prev.dist(next);
         this.updateScaledDistance();
     }
+    hasLineDasharray(layers) {
+        for (const layer of layers) {
+            const dasharrayProperty = layer.paint.get('line-dasharray');
+            if (dasharrayProperty && !dasharrayProperty.isConstant()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    addLineDashDependencies(layers, bucketFeature, zoom, options) {
+        for (const layer of layers) {
+            const dasharrayProperty = layer.paint.get('line-dasharray');
+            if (!dasharrayProperty || dasharrayProperty.value.kind === 'constant') {
+                continue;
+            }
+            const round = layer.layout.get('line-cap') === 'round';
+            const min = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom: zoom - 1 }, bucketFeature, {}),
+                round
+            };
+            const mid = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom }, bucketFeature, {}),
+                round
+            };
+            const max = {
+                dasharray: dasharrayProperty.value.evaluate({ zoom: zoom + 1 }, bucketFeature, {}),
+                round
+            };
+            const minKey = `${min.dasharray.join(',')},${min.round}`;
+            const midKey = `${mid.dasharray.join(',')},${mid.round}`;
+            const maxKey = `${max.dasharray.join(',')},${max.round}`;
+            options.dashDependencies[minKey] = min;
+            options.dashDependencies[midKey] = mid;
+            options.dashDependencies[maxKey] = max;
+            bucketFeature.dashes[layer.id] = { min: minKey, mid: midKey, max: maxKey };
+        }
+    }
 }
 register('LineBucket', LineBucket, { omit: ['layers', 'patternFeatures'] });
 
@@ -30291,7 +30484,7 @@ const getPaint$3 = () => paint$3 = paint$3 || new Properties({
     "line-gap-width": new DataDrivenProperty(v8Spec["paint_line"]["line-gap-width"]),
     "line-offset": new DataDrivenProperty(v8Spec["paint_line"]["line-offset"]),
     "line-blur": new DataDrivenProperty(v8Spec["paint_line"]["line-blur"]),
-    "line-dasharray": new CrossFadedProperty(v8Spec["paint_line"]["line-dasharray"]),
+    "line-dasharray": new CrossFadedDataDrivenProperty(v8Spec["paint_line"]["line-dasharray"]),
     "line-pattern": new CrossFadedDataDrivenProperty(v8Spec["paint_line"]["line-pattern"]),
     "line-gradient": new ColorRampProperty(v8Spec["paint_line"]["line-gradient"]),
 });
@@ -32674,13 +32867,13 @@ class SymbolBucket {
     constructor(options) {
         this.collisionBoxArray = options.collisionBoxArray;
         this.zoom = options.zoom;
-        this.overscaling = options.overscaling;
+        this.overscaling = isSafari(globalThis) ? Math.min(options.overscaling, 128) : options.overscaling;
         this.layers = options.layers;
         this.layerIds = this.layers.map(layer => layer.id);
         this.index = options.index;
         this.pixelRatio = options.pixelRatio;
         this.sourceLayerIndex = options.sourceLayerIndex;
-        this.hasPattern = false;
+        this.hasDependencies = false;
         this.hasRTLText = false;
         this.sortKeyRanges = [];
         this.collisionCircleArray = [];
@@ -34055,7 +34248,8 @@ function getAnchors(line, spacing, maxAngle, shapedText, shapedIcon, glyphSize, 
 function resample(line, offset, spacing, angleWindowSize, maxAngle, labelLength, isLineContinued, placeAtMiddle, tileExtent) {
     const halfLabelLength = labelLength / 2;
     const lineLength = getLineLength(line);
-    let distance = 0, markedDistance = offset - spacing;
+    let distance = 0;
+    let markedDistance = offset - spacing;
     let anchors = [];
     for (let i = 0; i < line.length - 1; i++) {
         const a = line[i], b = line[i + 1];
@@ -35663,7 +35857,9 @@ class CanonicalTileID {
     equals(id) {
         return this.z === id.z && this.x === id.x && this.y === id.y;
     }
-    // given a list of urls, choose a url template and return a tile URL
+    /**
+     * given a list of urls, choose a url template and return a tile URL
+     */
     url(urls, pixelRatio, scheme) {
         const bbox = getTileBBox(this.x, this.y, this.z);
         const quadkey = getQuadkey(this.z, this.x, this.y);
@@ -35724,6 +35920,14 @@ class OverscaledTileID {
     equals(id) {
         return this.overscaledZ === id.overscaledZ && this.wrap === id.wrap && this.canonical.equals(id.canonical);
     }
+    /**
+     * Returns a new `OverscaledTileID` representing the tile at the target zoom level.
+     * When targetZ is greater than the current canonical z, the canonical coordinates are unchanged.
+     * When targetZ is less than the current canonical z, the canonical coordinates are updated.
+     * @param targetZ - the zoom level to scale to. Must be less than or equal to this.overscaledZ
+     * @returns a new OverscaledTileID representing the tile at the target zoom level
+     * @throws if targetZ is greater than this.overscaledZ
+     */
     scaledTo(targetZ) {
         if (targetZ > this.overscaledZ)
             throw new Error(`targetZ > this.overscaledZ; targetZ = ${targetZ}; overscaledZ = ${this.overscaledZ}`);
@@ -35734,6 +35938,9 @@ class OverscaledTileID {
         else {
             return new OverscaledTileID(targetZ, this.wrap, targetZ, this.canonical.x >> zDifference, this.canonical.y >> zDifference);
         }
+    }
+    isOverscaled() {
+        return (this.overscaledZ > this.canonical.z);
     }
     /*
      * calculateScaledKey is an optimization:
@@ -35864,6 +36071,7 @@ class WorkerTile {
                 iconDependencies: {},
                 patternDependencies: {},
                 glyphDependencies: {},
+                dashDependencies: {},
                 availableImages,
                 subdivisionGranularity
             };
@@ -35889,11 +36097,7 @@ class WorkerTile {
                     if (layer.source !== this.source) {
                         warnOnce(`layer.source = ${layer.source} does not equal this.source = ${this.source}`);
                     }
-                    if (layer.minzoom && this.zoom < Math.floor(layer.minzoom))
-                        continue;
-                    if (layer.maxzoom && this.zoom >= layer.maxzoom)
-                        continue;
-                    if (layer.visibility === 'none')
+                    if (layer.isHidden(this.zoom, true))
                         continue;
                     recalculateLayers(family, this.zoom, availableImages);
                     const bucket = buckets[layer.id] = layer.createBucket({
@@ -35935,7 +36139,14 @@ class WorkerTile {
                 this.inFlightDependencies.push(abortController);
                 getPatternsPromise = actor.sendAsync({ type: "GI" /* MessageType.getImages */, data: { icons: patterns, source: this.source, tileID: this.tileID, type: 'patterns' } }, abortController);
             }
-            const [glyphMap, iconMap, patternMap] = yield Promise.all([getGlyphsPromise, getIconsPromise, getPatternsPromise]);
+            const dashes = options.dashDependencies;
+            let getDashesPromise = Promise.resolve({});
+            if (Object.keys(dashes).length) {
+                const abortController = new AbortController();
+                this.inFlightDependencies.push(abortController);
+                getDashesPromise = actor.sendAsync({ type: "GDA" /* MessageType.getDashes */, data: { dashes } }, abortController);
+            }
+            const [glyphMap, iconMap, patternMap, dashPositions] = yield Promise.all([getGlyphsPromise, getIconsPromise, getPatternsPromise, getDashesPromise]);
             const glyphAtlas = new GlyphAtlas(glyphMap);
             const imageAtlas = new ImageAtlas(iconMap, patternMap);
             for (const key in buckets) {
@@ -35953,12 +36164,9 @@ class WorkerTile {
                         subdivisionGranularity: options.subdivisionGranularity
                     });
                 }
-                else if (bucket.hasPattern &&
-                    (bucket instanceof LineBucket ||
-                        bucket instanceof FillBucket ||
-                        bucket instanceof FillExtrusionBucket)) {
+                else if (bucket.hasDependencies && (bucket instanceof FillBucket || bucket instanceof FillExtrusionBucket || bucket instanceof LineBucket)) {
                     recalculateLayers(bucket.layers, this.zoom, availableImages);
-                    bucket.addFeatures(options, this.tileID.canonical, imageAtlas.patternPositions);
+                    bucket.addFeatures(options, this.tileID.canonical, imageAtlas.patternPositions, dashPositions);
                 }
             }
             this.status = 'done';
@@ -35968,6 +36176,7 @@ class WorkerTile {
                 collisionBoxArray: this.collisionBoxArray,
                 glyphAtlasImage: glyphAtlas.image,
                 imageAtlas,
+                dashPositions,
                 // Only used for benchmarking:
                 glyphMap: this.returnDependencies ? glyphMap : null,
                 iconMap: this.returnDependencies ? iconMap : null,
@@ -38115,9 +38324,10 @@ function mergeSourceDiffs(existingDiff, newDiff) {
  * For a full example, see [mapbox-gl-topojson](https://github.com/developmentseed/mapbox-gl-topojson).
  */
 class GeoJSONWorkerSource extends VectorTileWorkerSource {
-    constructor() {
-        super(...arguments);
+    constructor(actor, layerIndex, availableImages, createGeoJSONIndexFunc = createGeoJSONIndex) {
+        super(actor, layerIndex, availableImages);
         this._dataUpdateable = new Map();
+        this._createGeoJSONIndex = createGeoJSONIndexFunc;
     }
     loadVectorTile(params, _abortController) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38130,8 +38340,8 @@ class GeoJSONWorkerSource extends VectorTileWorkerSource {
                 return null;
             }
             const geojsonWrapper = new o(geoJSONTile.features, { version: 2, extent: EXTENT$1 });
-            // Encode the geojson-vt tile into binary vector tile form.  This
-            // is a convenience that allows `FeatureIndex` to operate the same way
+            // Encode the geojson-vt tile into binary vector tile form.
+            // This is a convenience that allows `FeatureIndex` to operate the same way
             // across `VectorTileSource` and `GeoJSONSource` data.
             let pbf = s(geojsonWrapper);
             if (pbf.byteOffset !== 0 || pbf.byteLength !== pbf.buffer.byteLength) {
@@ -38147,7 +38357,10 @@ class GeoJSONWorkerSource extends VectorTileWorkerSource {
     /**
      * Fetches (if appropriate), parses, and index geojson data into tiles. This
      * preparatory method must be called before {@link GeoJSONWorkerSource.loadTile}
-     * can correctly serve up tiles.
+     * can correctly serve up tiles. The first call to this method must contain a valid
+     * {@link params.data}, {@link params.request}, or {@link params.dataDiff}. Subsequent
+     * calls may omit these parameters to reprocess the existing data (such as to update
+     * clustering options).
      *
      * Defers to {@link GeoJSONWorkerSource.loadAndProcessGeoJSON} for the pre-processing.
      *
@@ -38165,11 +38378,13 @@ class GeoJSONWorkerSource extends VectorTileWorkerSource {
                 new RequestPerformance(params.request) : false;
             this._pendingRequest = new AbortController();
             try {
-                this._pendingData = this.loadAndProcessGeoJSON(params, this._pendingRequest);
+                // Load and process data if no data has been loaded previously, or if there is
+                // a new request, data, or dataDiff to process.
+                if (!this._pendingData || params.request || params.data || params.dataDiff) {
+                    this._pendingData = this.loadAndProcessGeoJSON(params, this._pendingRequest);
+                }
                 const data = yield this._pendingData;
-                this._geoJSONIndex = params.cluster ?
-                    new Supercluster(getSuperclusterOptions(params)).load(data.features) :
-                    geojsonvt(data, params.geojsonVtOptions);
+                this._geoJSONIndex = this._createGeoJSONIndex(data, params);
                 this.loaded = {};
                 const result = { data };
                 if (perf) {
@@ -38301,6 +38516,10 @@ class GeoJSONWorkerSource extends VectorTileWorkerSource {
     getClusterLeaves(params) {
         return this._geoJSONIndex.getLeaves(params.clusterId, params.limit, params.offset);
     }
+}
+function createGeoJSONIndex(data, params) {
+    return params.cluster ? new Supercluster(getSuperclusterOptions(params)).load(data.features) :
+        geojsonvt(data, params.geojsonVtOptions);
 }
 function getSuperclusterOptions({ superclusterOptions, clusterProperties }) {
     if (!clusterProperties || !superclusterOptions)
