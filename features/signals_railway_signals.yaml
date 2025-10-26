@@ -4822,24 +4822,15 @@ features:
       - { tag: 'railway:signal:distant', value: 'NL' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: train protection block markers with light (arrow)
+  - description: block marker light
     country: NL
-    icon:
-      match: 'railway:signal:position'
-      cases:
-        - { exact: 'left', value: 'nl/227a-arrow-right' }
-        - { exact: 'overhead', value: 'nl/227a-arrow-down' }
-      default: 'nl/227a-arrow-left'
+    icon: { default: 'nl/227a' }
     tags:
       - { tag: 'railway:signal:shunting', any: ['NL:227', 'NL'] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
       - { tag: 'railway:signal:shunting:states', all: ['NL:227a', 'NL:227c'] }
-      - { tag: 'railway:signal:train_protection', value: 'NL:227' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-      - { tag: 'railway:signal:train_protection:shape', value: 'arrow' }
 
-  - description: train protection block markers (arrow)
+  - description: block marker (arrow)
     country: NL
     icon:
       match: 'railway:signal:position'
@@ -4853,23 +4844,7 @@ features:
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
       - { tag: 'railway:signal:train_protection:shape', value: 'arrow' }
 
-  - description: train protection block markers with light (triangle)
-    country: NL
-    icon:
-      match: 'railway:signal:position'
-      cases:
-        - { exact: 'left', value: 'nl/227a-triangle-right' }
-        - { exact: 'overhead', value: 'nl/227a-triangle-down' }
-      default: 'nl/227a-triangle-left'
-    tags:
-      - { tag: 'railway:signal:shunting', any: ['NL:227', 'NL'] }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-      - { tag: 'railway:signal:shunting:states', all: ['NL:227a', 'NL:227c'] }
-      - { tag: 'railway:signal:train_protection', value: 'NL:227' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-
-  - description: train protection block markers (triangle)
+  - description: block marker (triangle)
     country: NL
     icon:
       match: 'railway:signal:position'
