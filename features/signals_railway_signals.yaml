@@ -4366,6 +4366,98 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'FR:LIMITE_ETS' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: Stop ARRET announcement
+    country: FR
+    icon: { default: 'fr/ARRET_A' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'FR:ARRET_A' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+
+  - description: Stop ARRET
+    country: FR
+    icon: { default: 'fr/ARRET' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop ATC
+    country: FR
+    icon: { default: 'fr/ATC' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ATC' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: STOP announcement
+    country: FR
+    icon: { default: 'fr/STOP_A' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'FR:STOP_A' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+
+  - description: STOP
+    country: FR
+    icon: { default: 'fr/STOP' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:STOP' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: STOP
+    country: FR
+    icon: { default: 'fr/JAL_ARRET' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:JAL_ARRET' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position for passenger trains
+    country: FR
+    icon: { default: 'fr/ARRET_TT' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TT' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position front of train
+    country: FR
+    icon: { default: 'fr/ARRET_TTL' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TTL' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position EAS
+    country: FR
+    icon: { default: 'fr/ARRET_TT_EAS' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TT_EAS' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position for carriages
+    country: FR
+    # TODO match number of carriages
+    icon: { default: 'fr/ARRET_V' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_V' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 1
+    country: FR
+    icon: { default: 'fr/ARRET_TGV1' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV1' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 2
+    country: FR
+    icon: { default: 'fr/ARRET_TGV2' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV2' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 1-2
+    country: FR
+    icon: { default: 'fr/ARRET_TGV1-2' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV1-2' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   # --- GB --- #
 
   - description: Whistle stencil
