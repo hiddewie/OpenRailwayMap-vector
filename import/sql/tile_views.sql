@@ -750,7 +750,7 @@ RETURN (
       id,
       nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
       nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
-      buffered as way,
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
       station,
@@ -1168,11 +1168,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1238,11 +1234,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1314,7 +1306,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
             ELSE center
           END,
           ST_TileEnvelope(z, x, y),
-          4096, 64, true
+          extent => 4096, buffer => 64, clip_geom => true
         ) AS way,
         id,
         osm_id,
@@ -1382,11 +1374,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1578,11 +1566,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1646,11 +1630,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1708,11 +1688,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1770,11 +1746,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
