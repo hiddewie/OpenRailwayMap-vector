@@ -435,13 +435,12 @@ RETURN (
       note,
       description
     FROM railway_text_stations
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND feature = 'station'
-        AND state = 'present'
-        AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-        AND railway_ref IS NOT NULL
-        AND route_count >= 8
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature = 'station'
+      AND state = 'present'
+      AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND railway_ref IS NOT NULL
+      AND route_count >= 8
     ORDER BY
       route_count DESC NULLS LAST
   ) as tile
@@ -516,13 +515,12 @@ RETURN (
       note,
       description
     FROM railway_text_stations
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND feature = 'station'
-        AND state = 'present'
-        AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-        AND railway_ref IS NOT NULL
-        AND route_count >= 20
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature = 'station'
+      AND state = 'present'
+      AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND railway_ref IS NOT NULL
+      AND route_count >= 20
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -577,8 +575,7 @@ RETURN (
       osm_id,
       feature
     FROM turntables
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
+    WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -701,9 +698,8 @@ RETURN (
       note,
       description
     FROM railway_text_stations
-    WHERE
-      way && ST_TileEnvelope(z, x, y)
-        AND name IS NOT NULL
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND name IS NOT NULL
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -778,8 +774,7 @@ RETURN (
       nullif(array_to_string(note, U&'\001E'), '') as note,
       nullif(array_to_string(description, U&'\001E'), '') as description
     FROM grouped_stations_with_route_count
-    WHERE
-      buffered && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -964,13 +959,42 @@ CREATE OR REPLACE VIEW standard_railway_switch_ref AS
   FROM railway_switches
   ORDER by char_length(ref);
 
-CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
+CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    osm_id as id,
-    osm_id as osm_id,
-    'station_area_group' as feature,
-    way
-  FROM stop_area_groups_buffered;
+    ST_AsMVT(tile, 'standard_railway_grouped_station_areas', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      osm_id as id,
+      osm_id,
+      'station_area_group' as feature,
+      way
+    FROM stop_area_groups_buffered
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_station_areas IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_grouped_station_areas",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 --- Speed ---
 

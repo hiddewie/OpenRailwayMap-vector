@@ -26,17 +26,6 @@ postgres:
 
     # --- Standard --- #
 
-    standard_railway_grouped_station_areas:
-      schema: public
-      table: standard_railway_grouped_station_areas
-      srid: 3857
-      geometry_column: way
-      geometry_type: POLYGON
-      properties:
-        id: integer
-        osm_id: integer
-        feature: string
-
     standard_railway_platforms:
       schema: public
       table: standard_railway_platforms
@@ -197,6 +186,11 @@ postgres:
     standard_railway_grouped_stations:
       schema: public
       function: standard_railway_grouped_stations
+      # TODO minzoom / maxzoom
+
+    standard_railway_grouped_station_areas:
+      schema: public
+      function: standard_railway_grouped_station_areas
       # TODO minzoom / maxzoom
 
     standard_railway_symbols:
