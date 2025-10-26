@@ -150,9 +150,9 @@ postgres:
       function: electrification_railway_symbols
       minzoom: 13
 
-    catenary:
+    electrification_catenary:
       schema: public
-      function: railway_catenary
+      function: electrification_catenary
       minzoom: 14
 
     # --- Gauge --- #

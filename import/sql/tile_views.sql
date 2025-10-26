@@ -1504,7 +1504,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION railway_catenary(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -1512,7 +1512,7 @@ CREATE OR REPLACE FUNCTION railway_catenary(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_catenary', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'electrification_catenary', 4096, 'way', 'id')
   FROM (
     SELECT
       id,
@@ -1537,11 +1537,11 @@ RETURN (
 );
 
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION railway_catenary IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION electrification_catenary IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "railway_catenary",
+        "id": "electrification_catenary",
         "fields": {
           "id": "integer",
           "osm_id": "integer",
