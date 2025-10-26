@@ -1380,25 +1380,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW railway_catenary AS
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    feature,
-    ref,
-    transition,
-    structure,
-    supporting,
-    attachment,
-    tensioning,
-    insulator,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    note,
-    description
-  FROM catenary;
-
 --- Electrification ---
 
 CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer, y integer)
@@ -1530,6 +1511,69 @@ DO $do$ BEGIN
           "image": "string",
           "mapillary": "string",
           "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW railway_catenary AS
+;
+
+CREATE OR REPLACE FUNCTION railway_catenary(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'railway_catenary', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      osm_type,
+      way,
+      feature,
+      ref,
+      transition,
+      structure,
+      supporting,
+      attachment,
+      tensioning,
+      insulator,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      note,
+      description
+    FROM catenary
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_catenary IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_catenary",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "ref": "string",
+          "feature": "string",
+          "transition": "boolean",
+          "structure": "string",
+          "supporting": "string",
+          "attachment": "string",
+          "tensioning": "string",
+          "insulator": "string",
+          "position": "string",
           "note": "string",
           "description": "string"
         }
