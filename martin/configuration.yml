@@ -30,6 +30,8 @@ postgres:
 
     # --- Standard --- #
 
+    # standard_railway_line_low, see function below
+
     standard_railway_text_stations_low:
       schema: public
       table: standard_railway_text_stations_low
@@ -304,6 +306,11 @@ postgres:
 
     # --- Standard --- #
 
+    standard_railway_line_low:
+      schema: public
+      function: standard_railway_line_low
+      maxzoom: 7
+
     standard_railway_symbols:
       schema: public
       function: standard_railway_symbols
@@ -316,12 +323,22 @@ postgres:
 
     # --- Speed --- #
 
+    speed_railway_line_low:
+      schema: public
+      function: speed_railway_line_low
+      maxzoom: 7
+
     speed_railway_signals:
       schema: public
       function: speed_railway_signals
       minzoom: 13
 
     # --- Signals --- #
+
+    signals_railway_line_low:
+      schema: public
+      function: signals_railway_line_low
+      maxzoom: 7
 
     signals_signal_boxes:
       schema: public
@@ -336,6 +353,11 @@ postgres:
 
     # --- Electrification --- #
 
+    electrification_railway_line_low:
+      schema: public
+      function: electrification_railway_line_low
+      maxzoom: 7
+
     electrification_signals:
       schema: public
       function: electrification_signals
@@ -346,7 +368,33 @@ postgres:
       function: electrification_railway_symbols
       minzoom: 13
 
+    # --- Gauge --- #
+
+    gauge_railway_line_low:
+      schema: public
+      function: gauge_railway_line_low
+      maxzoom: 7
+
+    # --- Loading gauge --- #
+
+    loading_gauge_railway_line_low:
+      schema: public
+      function: loading_gauge_railway_line_low
+      maxzoom: 7
+
+    # --- Track class --- #
+
+    track_class_railway_line_low:
+      schema: public
+      function: track_class_railway_line_low
+      maxzoom: 7
+
     # --- Operator --- #
+
+    operator_railway_line_low:
+      schema: public
+      function: operator_railway_line_low
+      maxzoom: 7
 
     operator_railway_symbols:
       schema: public

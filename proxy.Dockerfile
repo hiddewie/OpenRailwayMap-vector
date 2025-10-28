@@ -43,7 +43,7 @@ RUN --mount=type=bind,source=proxy/preset.py,target=preset.py \
     > preset.xml
 
 RUN --mount=type=bind,source=symbols,target=symbols \
-  zip -o /build/preset.zip -r \
+  zip -o /build/preset.zip -r -q \
     symbols \
     preset.xml
 

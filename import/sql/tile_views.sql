@@ -130,12 +130,7 @@ RETURN (
         way && ST_TileEnvelope(z, x, y)
         -- conditionally include features based on zoom level
         AND CASE
-          WHEN z < 7 THEN
-            state = 'present'
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry') AND usage = 'main'
-              )
+          -- Zooms < 7 are handled in the low zoom tiles
           WHEN z < 8 THEN
             state = 'present'
               AND service IS NULL
@@ -244,7 +239,117 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+-- Reusable view for low railway line tiles, grouped per layer
+CREATE OR REPLACE VIEW railway_line_low AS
+  SELECT
+    id,
+    way,
+    feature,
+    state,
+    usage,
+    highspeed,
+    ref,
+    CASE
+      WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
+      ELSE COALESCE(ref, name)
+    END AS standard_label,
+    speed_label,
+    maxspeed,
+    train_protection_rank,
+    train_protection,
+    train_protection_construction_rank,
+    train_protection_construction,
+    electrification_state,
+    railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+    voltage,
+    frequency,
+    railway_to_int(gauges[1]) AS gaugeint0,
+    gauges[1] as gauge0,
+    (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+    loading_gauge,
+    track_class,
+    operator,
+    get_byte(sha256(primary_operator::bytea), 0) as operator_hash,
+    primary_operator,
+    owner,
+    rank
+  FROM (
+    SELECT
+      *,
+      CASE
+        WHEN ARRAY[owner] <@ operator THEN owner
+        ELSE operator[1]
+      END AS primary_operator
+    from railway_line
+  ) as r
+  WHERE
+    state = 'present'
+      AND feature IN ('rail', 'ferry')
+      AND usage = 'main'
+      AND service IS NULL;
+
 --- Standard ---
+
+CREATE OR REPLACE FUNCTION standard_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      highspeed,
+      ref,
+      standard_label,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      highspeed
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "highspeed": "boolean",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
@@ -640,9 +745,9 @@ CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
     way
   FROM stop_area_groups_buffered;
 
---- Electrification ---
+--- Speed ---
 
-CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION speed_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -650,58 +755,132 @@ CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'speed_railway_line_low', 4096, 'way', 'id')
   FROM (
     SELECT
+      min(id) as id,
       ST_AsMVTGeom(
-        way,
+        st_simplify(st_collect(way), 100000),
         ST_TileEnvelope(z, x, y),
         4096, 64, true
-      ) AS way,
-      id,
-      osm_id,
-      osm_type,
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      maxspeed,
+      highspeed,
+      ref,
+      standard_label,
+      speed_label,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
       feature,
       ref,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'electrification'
-    ORDER BY rank DESC
+      standard_label,
+      speed_label,
+      maxspeed,
+      highspeed
+    ORDER by
+      rank NULLS LAST,
+      maxspeed NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
 
+-- Function metadata
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION electrification_railway_symbols IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION speed_railway_line_low IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "electrification_railway_symbols",
+        "id": "speed_railway_line_low",
         "fields": {
           "id": "integer",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "highspeed": "boolean",
+          "tunnel": "boolean",
+          "bridge": "boolean",
           "ref": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "standard_label": "string",
+          "maxspeed": "number",
+          "speed_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Signals ---
+
+
+CREATE OR REPLACE FUNCTION signals_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'signals_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      train_protection_rank,
+      train_protection,
+      train_protection_construction_rank,
+      train_protection_construction,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      train_protection_rank,
+      train_protection,
+      train_protection_construction_rank,
+      train_protection_construction
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "train_protection": "string",
+          "train_protection_rank": "integer",
+          "train_protection_construction": "string",
+          "train_protection_construction_rank": "integer"
         }
       }
     ]
@@ -802,7 +981,413 @@ CREATE OR REPLACE VIEW railway_catenary AS
     description
   FROM catenary;
 
+--- Electrification ---
+
+CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'electrification_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      electrification_state,
+      electrification_label,
+      voltage,
+      frequency,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      electrification_state,
+      electrification_label,
+      voltage,
+      frequency
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION electrification_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "electrification_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "electrification_state": "string",
+          "frequency": "number",
+          "voltage": "integer",
+          "future_frequency": "number",
+          "future_voltage": "integer",
+          "electrification_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(
+        way,
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND layer = 'electrification'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION electrification_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "electrification_railway_symbols",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "feature": "string",
+          "ref": "string",
+          "minzoom": "integer",
+          "position": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Gauge ---
+
+CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'gauge_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      gaugeint0,
+      gauge0,
+      gauge_label,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      gauge0,
+      gaugeint0,
+      gauge_label
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION gauge_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "gauge_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "gauge0": "string",
+          "gaugeint0": "number",
+          "gauge_label": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Loading gauge ---
+
+CREATE OR REPLACE FUNCTION loading_gauge_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'loading_gauge_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      loading_gauge,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      loading_gauge
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION loading_gauge_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "loading_gauge_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "loading_gauge": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Track class ---
+
+CREATE OR REPLACE FUNCTION track_class_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'track_class_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      track_class,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      track_class
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION track_class_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "track_class_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "track_class": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Operator ---
+
+CREATE OR REPLACE FUNCTION operator_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      operator,
+      operator_hash,
+      primary_operator,
+      owner,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      operator,
+      operator_hash,
+      primary_operator,
+      owner
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+-- Function metadata
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION operator_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "operator_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "operator": "string",
+          "operator_hash": "number",
+          "primary_operator": "string",
+          "owner": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
