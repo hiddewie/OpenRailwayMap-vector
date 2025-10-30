@@ -49,7 +49,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/electrification_signals,catenary,electrification_railway_symbols
+GET {{base_url}}/electrification_signals,electrification_catenary,electrification_railway_symbols
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json

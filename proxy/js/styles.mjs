@@ -693,42 +693,34 @@ const sources = {
   standard_railway_text_stations_low: {
     type: 'vector',
     url: '/standard_railway_text_stations_low',
-    promoteId: 'id',
   },
   standard_railway_text_stations_med: {
     type: 'vector',
     url: '/standard_railway_text_stations_med',
-    promoteId: 'id',
   },
   high: {
     type: 'vector',
     url: '/railway_line_high,railway_text_km',
-    promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
     url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
-    promoteId: 'id',
   },
   openrailwaymap_speed: {
     type: 'vector',
     url: '/speed_railway_signals',
-    promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: '/signals_railway_signals,signals_signal_boxes',
-    promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: '/electrification_signals,catenary,electrification_railway_symbols',
-    promoteId: 'id',
+    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols',
   },
   openrailwaymap_operator: {
     type: 'vector',
     url: '/operator_railway_symbols',
-    promoteId: 'id',
   },
   openhistoricalmap: {
     type: 'vector',
@@ -3440,7 +3432,7 @@ const layers = {
       type: 'symbol',
       minzoom: 14,
       source: 'openrailwaymap_electrification',
-      'source-layer': 'catenary',
+      'source-layer': 'electrification_catenary',
       filter: ['==', ['get', 'feature'], 'mast'],
       paint: {
         'icon-color': colors.catenary,
@@ -3468,7 +3460,7 @@ const layers = {
       type: 'symbol',
       minzoom: 17,
       source: 'openrailwaymap_electrification',
-      'source-layer': 'catenary',
+      'source-layer': 'electrification_catenary',
       filter: ['all',
         ['==', ['get', 'feature'], 'mast'],
         ['!=', ['get', 'ref'], null],
@@ -3495,7 +3487,7 @@ const layers = {
       type: 'line',
       minzoom: 14,
       source: 'openrailwaymap_electrification',
-      'source-layer': 'catenary',
+      'source-layer': 'electrification_catenary',
       filter: ['==', ['get', 'feature'], 'portal'],
       paint: {
         'line-color': ['case',

@@ -8,13 +8,13 @@ CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way', 'id')
   FROM (
     -- TODO calculate labels in frontend
     SELECT
       id,
       osm_id,
-      way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       way_length,
       feature,
       state,
@@ -71,11 +71,7 @@ RETURN (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(
-          way,
-          ST_TileEnvelope(z, x, y),
-          4096, 64, true
-        ) as way,
+        way,
         way_length,
         feature,
         state,
@@ -174,7 +170,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION railway_line_high IS $tj$' || $$
   {
@@ -327,7 +322,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION standard_railway_line_low IS $tj$' || $$
   {
@@ -403,71 +397,203 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     rank DESC NULLS LAST,
     route_count DESC NULLS LAST;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_low AS
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    feature = 'station'
-    AND state = 'present'
-    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-    AND railway_ref IS NOT NULL
-    AND route_count >= 20;
+    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature = 'station'
+      AND state = 'present'
+      AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND railway_ref IS NOT NULL
+      AND route_count >= 8
+    ORDER BY
+      route_count DESC NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
 
-CREATE OR REPLACE VIEW standard_railway_text_stations_med AS
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations_low",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    feature = 'station'
-    AND state = 'present'
-    AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-    AND railway_ref IS NOT NULL
-    AND route_count >= 8
-  ORDER BY
-    route_count DESC NULLS LAST;
+    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature = 'station'
+      AND state = 'present'
+      AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND railway_ref IS NOT NULL
+      AND route_count >= 20
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations_med IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations_med",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      osm_id,
+      feature
+    FROM turntables
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_turntables",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
   RETURNS bytea
@@ -477,33 +603,29 @@ CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y in
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
+    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way', 'id')
   FROM (
-   SELECT
-     ST_AsMVTGeom(
-       way,
-       ST_TileEnvelope(z, x, y),
-       4096, 64, true
-     ) AS way,
-     id,
-     osm_id,
-     type,
-     name,
-     ref,
-     CASE
-       WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
-       ELSE COALESCE(name, ref)
-       END AS label,
-     wikidata,
-     wikimedia_commons,
-     wikimedia_commons_file,
-     image,
-     mapillary,
-     wikipedia,
-     note,
-     description
-   FROM station_entrances
-   WHERE way && ST_TileEnvelope(z, x, y)
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      type,
+      name,
+      ref,
+      CASE
+        WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
+        ELSE COALESCE(name, ref)
+      END AS label,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM station_entrances
+    WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -535,61 +657,158 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_text_stations AS
+CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    way,
-    id,
-    osm_id,
-    osm_type,
-    feature,
-    state,
-    station,
-    station_size,
-    railway_ref as label,
-    name,
-    count,
-    uic_ref,
-    operator,
-    operator_hash,
-    network,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_text_stations
-  WHERE
-    name IS NOT NULL;
+    ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      state,
+      station,
+      station_size,
+      railway_ref as label,
+      name,
+      count,
+      uic_ref,
+      operator,
+      operator_hash,
+      network,
+      position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_text_stations
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND name IS NOT NULL
+  ) as tile
+  WHERE way IS NOT NULL
+);
 
-CREATE OR REPLACE VIEW standard_railway_grouped_stations AS
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_text_stations IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_text_stations",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "station_size": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "count": "integer",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_railway_grouped_stations(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
-    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
-    buffered as way,
-    feature,
-    state,
-    station,
-    railway_ref as label,
-    name,
-    uic_ref,
-    nullif(array_to_string(operator, U&'\001E'), '') as operator,
-    nullif(array_to_string(network, U&'\001E'), '') as network,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    get_byte(sha256(operator[1]::bytea), 0) as operator_hash,
-    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
-    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
-    nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
-    nullif(array_to_string(image, U&'\001E'), '') as image,
-    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
-    nullif(array_to_string(note, U&'\001E'), '') as note,
-    nullif(array_to_string(description, U&'\001E'), '') as description
-  FROM grouped_stations_with_route_count;
+    ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
+      nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      feature,
+      state,
+      station,
+      railway_ref as label,
+      name,
+      uic_ref,
+      nullif(array_to_string(operator, U&'\001E'), '') as operator,
+      nullif(array_to_string(network, U&'\001E'), '') as network,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      get_byte(sha256(operator[1]::bytea), 0) as operator_hash,
+      nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+      nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+      nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
+      nullif(array_to_string(image, U&'\001E'), '') as image,
+      nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+      nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+      nullif(array_to_string(note, U&'\001E'), '') as note,
+      nullif(array_to_string(description, U&'\001E'), '') as description
+    FROM grouped_stations_with_route_count
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_stations IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_grouped_stations",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "state": "string",
+          "station": "string",
+          "label": "string",
+          "name": "string",
+          "operator": "string",
+          "operator_hash": "string",
+          "network": "string",
+          "position": "string",
+          "uic_ref": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
@@ -599,14 +818,10 @@ CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(
-        way,
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) AS way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       osm_type,
@@ -660,90 +875,284 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_platforms AS
-SELECT
-  id,
-  osm_id,
-  osm_type,
-  way,
-  'platform' as feature,
-  name,
-  nullif(array_to_string(ref, U&'\001E'), '') as ref,
-  height,
-  surface,
-  elevator,
-  shelter,
-  lit,
-  bin,
-  bench,
-  wheelchair,
-  departures_board,
-  tactile_paving
-FROM platforms;
-
-CREATE OR REPLACE VIEW standard_railway_platform_edges AS
+CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    way,
-    'platform_edge' as feature,
-    ref,
-    height,
-    tactile_paving
-  FROM platform_edge;
+    ST_AsMVT(tile, 'standard_railway_platforms', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      osm_type,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      'platform' as feature,
+      name,
+      nullif(array_to_string(ref, U&'\001E'), '') as ref,
+      height,
+      surface,
+      elevator,
+      shelter,
+      lit,
+      bin,
+      bench,
+      wheelchair,
+      departures_board,
+      tactile_paving
+    FROM platforms
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
 
-CREATE OR REPLACE VIEW railway_text_km AS
-  SELECT
-    id,
-    osm_id,
-    way,
-    railway,
-    position_text as pos,
-    position_exact as pos_exact,
-    zero,
-    round(position_numeric) as pos_int,
-    type,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_positions
-  ORDER by zero;
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_platforms IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_platforms",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "osm_type": "string",
+          "feature": "string",
+          "name": "string",
+          "ref": "string",
+          "height": "string",
+          "surface": "boolean",
+          "elevator": "boolean",
+          "shelter": "boolean",
+          "lit": "boolean",
+          "bin": "boolean",
+          "bench": "boolean",
+          "wheelchair": "boolean",
+          "departures_board": "boolean",
+          "tactile_paving": "boolean"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_switch_ref AS
+CREATE OR REPLACE FUNCTION standard_railway_platform_edges(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    id,
-    osm_id,
-    way,
-    railway,
-    ref,
-    type,
-    turnout_side,
-    local_operated,
-    resetting,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM railway_switches
-  ORDER by char_length(ref);
+    ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      'platform_edge' as feature,
+      ref,
+      height,
+      tactile_paving
+    FROM platform_edge
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
 
-CREATE OR REPLACE VIEW standard_railway_grouped_station_areas AS
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_platform_edges IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_platform_edges",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "ref": "string",
+          "height": "string",
+          "tactile_paving": "boolean"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION railway_text_km(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
   SELECT
-    osm_id as id,
-    osm_id as osm_id,
-    'station_area_group' as feature,
-    way
-  FROM stop_area_groups_buffered;
+    ST_AsMVT(tile, 'railway_text_km', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      railway,
+      position_text as pos,
+      position_exact as pos_exact,
+      zero,
+      round(position_numeric) as pos_int,
+      type,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_positions
+    WHERE way && ST_TileEnvelope(z, x, y)
+    ORDER by zero
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_text_km IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_text_km",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "railway": "string",
+          "pos": "string",
+          "pos_exact": "string",
+          "pos_int": "integer",
+          "zero": "boolean",
+          "type": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_railway_switch_ref(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_switch_ref', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      railway,
+      ref,
+      type,
+      turnout_side,
+      local_operated,
+      resetting,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_switches
+    WHERE way && ST_TileEnvelope(z, x, y)
+    ORDER by char_length(ref)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_switch_ref IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_switch_ref",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "railway": "string",
+          "ref": "string",
+          "type": "string",
+          "turnout_side": "string",
+          "local_operated": "boolean",
+          "resetting": "boolean",
+          "position": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+
+CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_grouped_station_areas', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      osm_id as id,
+      osm_id,
+      'station_area_group' as feature,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
+    FROM stop_area_groups_buffered
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_grouped_station_areas IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_grouped_station_areas",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
 
 --- Speed ---
 
@@ -759,11 +1168,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -789,7 +1194,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_line_low IS $tj$' || $$
   {
@@ -830,11 +1234,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -861,7 +1261,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low IS $tj$' || $$
   {
@@ -898,7 +1297,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
+      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way', 'id')
     FROM (
       SELECT
         ST_AsMVTGeom(
@@ -907,7 +1306,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
             ELSE center
           END,
           ST_TileEnvelope(z, x, y),
-          4096, 64, true
+          extent => 4096, buffer => 64, clip_geom => true
         ) AS way,
         id,
         osm_id,
@@ -931,7 +1330,6 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_signal_boxes IS $tj$' || $$
   {
@@ -962,25 +1360,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW railway_catenary AS
-  SELECT
-    id,
-    osm_id,
-    osm_type,
-    way,
-    feature,
-    ref,
-    transition,
-    structure,
-    supporting,
-    attachment,
-    tensioning,
-    insulator,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    note,
-    description
-  FROM catenary;
-
 --- Electrification ---
 
 CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer, y integer)
@@ -995,11 +1374,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1026,7 +1401,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION electrification_railway_line_low IS $tj$' || $$
   {
@@ -1063,14 +1437,10 @@ CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(
-        way,
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) AS way,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
       osm_type,
@@ -1122,6 +1492,66 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'electrification_catenary', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      osm_type,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      feature,
+      ref,
+      transition,
+      structure,
+      supporting,
+      attachment,
+      tensioning,
+      insulator,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      note,
+      description
+    FROM catenary
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION electrification_catenary IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "electrification_catenary",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "osm_type": "string",
+          "ref": "string",
+          "feature": "string",
+          "transition": "boolean",
+          "structure": "string",
+          "supporting": "string",
+          "attachment": "string",
+          "tensioning": "string",
+          "insulator": "string",
+          "position": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Gauge ---
 
 CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)
@@ -1136,11 +1566,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1165,7 +1591,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION gauge_railway_line_low IS $tj$' || $$
   {
@@ -1205,11 +1630,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1230,7 +1651,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION loading_gauge_railway_line_low IS $tj$' || $$
   {
@@ -1268,11 +1688,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1293,7 +1709,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION track_class_railway_line_low IS $tj$' || $$
   {
@@ -1331,11 +1746,7 @@ RETURN (
   FROM (
     SELECT
       min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
@@ -1362,7 +1773,6 @@ RETURN (
   WHERE way IS NOT NULL
 );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION operator_railway_line_low IS $tj$' || $$
   {
@@ -1397,14 +1807,10 @@ CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way', 'id')
   FROM (
          SELECT
-           ST_AsMVTGeom(
-             way,
-             ST_TileEnvelope(z, x, y),
-             4096, 64, true
-           ) AS way,
+           ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
            id,
            osm_id,
            osm_type,
