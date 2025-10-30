@@ -4503,7 +4503,7 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:warning' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-    
+
   - description: Cab Signalling Start Board
     country: GB
     icon: { default: 'gb/cab-entry' }
@@ -4511,7 +4511,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:entry' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start'}
-  
+
   - description: Cab Signalling End Board
     country: GB
     icon: { default: 'gb/cab-exit' }
@@ -4519,7 +4519,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:exit' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
-  
+
   - description: Cab Signalling Directional arrow
     country: GB
     icon:
@@ -4527,6 +4527,7 @@ features:
       cases:
         - { exact: 'GB-NR:left', value: 'gb/cab-arrow-left' }
         - { exact: 'GB-NR:right', value: 'gb/cab-arrow-right' }
+      default: 'gb/cab-arrow-unknown'
     tags:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
@@ -4536,14 +4537,14 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection:block_marker:type', value: 'passable' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-  
+
   - description: Block Marker Non-Passable Plate
     country: GB
     icon: { default: 'gb/block-absolute' }
     tags:
       - { tag: 'railway:signal:train_protection:block_marker:type', value: 'absolute' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-  
+
   - description: ETCS Block Marker
     country: GB
     icon:
@@ -4556,7 +4557,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-  
+
   - description: TVM/CBTC Block Marker
     country: GB
     icon:
@@ -4569,7 +4570,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:TVM-CBTC' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-  
+
   - description: Cab Signalling Shunt Entry Board
     country: GB
     icon:
