@@ -257,12 +257,12 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way')
+      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         direction_both,
         ref,
         caption,
@@ -291,7 +291,6 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
   {
@@ -338,12 +337,12 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way')
+      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         direction_both,
         ref,
         caption,
@@ -382,7 +381,6 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION signals_railway_signals IS $tj$' || $$
   {
@@ -439,12 +437,12 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'electrification_signals', 4096, 'way')
+      ST_AsMVT(tile, 'electrification_signals', 4096, 'way', 'id')
     FROM (
       SELECT
         id,
         osm_id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096) AS way,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         direction_both,
         ref,
         caption,
@@ -470,7 +468,6 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
     WHERE way IS NOT NULL
   );
 
--- Function metadata
 DO $do$ BEGIN
   EXECUTE 'COMMENT ON FUNCTION electrification_signals IS $tj$' || $$
   {

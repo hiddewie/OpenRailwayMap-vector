@@ -21,280 +21,10 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
-  # Associative arrays of table sources
-  tables:
+  # No tables, see function sources below
+  tables: {}
 
-    # --- Shared --- #
-
-    # railway_line_high, see function below
-
-    # --- Standard --- #
-
-    # standard_railway_line_low, see function below
-
-    standard_railway_text_stations_low:
-      schema: public
-      table: standard_railway_text_stations_low
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    standard_railway_text_stations_med:
-      schema: public
-      table: standard_railway_text_stations_med
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    standard_railway_turntables:
-      schema: public
-      table: turntables
-      srid: 3857
-      geometry_column: way
-      geometry_type: POLYGON
-      properties:
-        id: integer
-        osm_id: integer
-        feature: string
-
-    standard_railway_text_stations:
-      schema: public
-      table: standard_railway_text_stations
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      minzoom: 8
-      properties:
-        id: integer
-        osm_id: string
-        osm_type: string
-        feature: string
-        state: string
-        station: string
-        station_size: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        count: integer
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    standard_railway_grouped_stations:
-      schema: public
-      table: standard_railway_grouped_stations
-      srid: 3857
-      geometry_column: way
-      geometry_type: POLYGON
-      properties:
-        id: integer
-        osm_id: string
-        osm_type: string
-        feature: string
-        state: string
-        station: string
-        label: string
-        name: string
-        operator: string
-        operator_hash: string
-        network: string
-        position: string
-        uic_ref: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    standard_railway_grouped_station_areas:
-      schema: public
-      table: standard_railway_grouped_station_areas
-      srid: 3857
-      geometry_column: way
-      geometry_type: POLYGON
-      properties:
-        id: integer
-        osm_id: integer
-        feature: string
-
-    standard_railway_platforms:
-      schema: public
-      table: standard_railway_platforms
-      srid: 3857
-      geometry_column: way
-      geometry_type: GEOMETRY
-      properties:
-        id: integer
-        osm_id: string
-        osm_type: string
-        feature: string
-        name: string
-        ref: string
-        height: string
-        surface: boolean
-        elevator: boolean
-        shelter: boolean
-        lit: boolean
-        bin: boolean
-        bench: boolean
-        wheelchair: boolean
-        departures_board: boolean
-        tactile_paving: boolean
-
-    standard_railway_platform_edges:
-      schema: public
-      table: standard_railway_platform_edges
-      srid: 3857
-      geometry_column: way
-      geometry_type: LINESTRING
-      properties:
-        id: integer
-        osm_id: string
-        feature: string
-        ref: string
-        height: string
-        tactile_paving: boolean
-
-    railway_text_km:
-      schema: public
-      table: railway_text_km
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        pos: string
-        pos_exact: string
-        pos_int: integer
-        zero: boolean
-        type: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    standard_railway_switch_ref:
-      schema: public
-      table: standard_railway_switch_ref
-      srid: 3857
-      geometry_column: way
-      geometry_type: POINT
-      properties:
-        id: integer
-        osm_id: integer
-        railway: string
-        ref: string
-        type: string
-        turnout_side: string
-        local_operated: boolean
-        resetting: boolean
-        position: string
-        wikidata: string
-        wikimedia_commons: string
-        wikimedia_commons_file: string
-        image: string
-        mapillary: string
-        wikipedia: string
-        note: string
-        description: string
-
-    # --- Speed --- #
-
-    # speed_railway_signals, see function below
-
-    # --- Signals --- #
-
-    # signals_signal_boxes, see function below
-    # signals_railway_signals, see function below
-
-    # --- Electrification --- #
-
-    # electrification_signals, see function below
-
-    catenary:
-      schema: public
-      table: railway_catenary
-      srid: 3857
-      geometry_column: way
-      geometry_type: GEOMETRY
-      properties:
-        id: integer
-        osm_id: integer
-        osm_type: string
-        ref: string
-        feature: string
-        transition: boolean
-        structure: string
-        supporting: string
-        attachment: string
-        tensioning: string
-        insulator: string
-        position: string
-        note: string
-        description: string
-
+  # Function sources
   functions:
 
     # --- Shared --- #
@@ -302,7 +32,12 @@ postgres:
     railway_line_high:
       schema: public
       function: railway_line_high
-      maxzoom: 14
+      minzoom: 7
+
+    railway_text_km:
+      schema: public
+      function: railway_text_km
+      minzoom: 10
 
     # --- Standard --- #
 
@@ -310,6 +45,38 @@ postgres:
       schema: public
       function: standard_railway_line_low
       maxzoom: 7
+
+    standard_railway_text_stations_low:
+      schema: public
+      function: standard_railway_text_stations_low
+      minzoom: 4
+      maxzoom: 7
+
+    standard_railway_text_stations_med:
+      schema: public
+      function: standard_railway_text_stations_med
+      minzoom: 7
+      maxzoom: 8
+
+    standard_railway_turntables:
+      schema: public
+      function: standard_railway_turntables
+      minzoom: 10
+
+    standard_railway_text_stations:
+      schema: public
+      function: standard_railway_text_stations
+      minzoom: 8
+
+    standard_railway_grouped_stations:
+      schema: public
+      function: standard_railway_grouped_stations
+      minzoom: 13
+
+    standard_railway_grouped_station_areas:
+      schema: public
+      function: standard_railway_grouped_station_areas
+      minzoom: 13
 
     standard_railway_symbols:
       schema: public
@@ -320,6 +87,21 @@ postgres:
       schema: public
       function: standard_station_entrances
       minzoom: 16
+
+    standard_railway_platforms:
+      schema: public
+      function: standard_railway_platforms
+      minzoom: 15
+
+    standard_railway_platform_edges:
+      schema: public
+      function: standard_railway_platform_edges
+      minzoom: 17
+
+    standard_railway_switch_ref:
+      schema: public
+      function: standard_railway_switch_ref
+      minzoom: 17
 
     # --- Speed --- #
 
@@ -367,6 +149,11 @@ postgres:
       schema: public
       function: electrification_railway_symbols
       minzoom: 13
+
+    electrification_catenary:
+      schema: public
+      function: electrification_catenary
+      minzoom: 14
 
     # --- Gauge --- #
 

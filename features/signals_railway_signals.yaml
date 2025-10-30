@@ -3983,7 +3983,7 @@ features:
       # TODO split on shape
       default: 'fr/C-C'
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main', any: ['FR:C', 'FR:CV', 'FR:CARRE'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Sémaphore
@@ -4224,6 +4224,255 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
       - { tag: 'railway:signal:electricity:form', any: ['sign', 'light'] }
+
+  - description: Cab signalling announcement
+    country: FR
+    icon: { default: 'fr/CAB_E' }
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:CAB_E', 'FR:pancarte_CAB_entrée'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Cab signalling start
+    country: FR
+    icon: { default: 'fr/CAB_R' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:CAB_R' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Cab signalling end
+    country: FR
+    icon: { default: 'fr/CAB_S' }
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:CAB_S', 'FR:pancarte_CAB_sortie'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: TVM block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'fr/REP_TVM-right' }
+        - { exact: 'overhead', value: 'fr/REP_TVM-down' }
+      default: 'fr/REP_TVM-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:REP_TVM', 'FR:repère_arrêt_TVM'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'fr/REP_ETCS-right' }
+        - { exact: 'overhead', value: 'fr/REP_ETCS-down' }
+      default: 'fr/REP_ETCS-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: TVM and ETCS block marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'left', value: 'fr/REP_TVM_ETCS-right' }
+        - { exact: 'overhead', value: 'fr/REP_TVM_ETCS-down' }
+      default: 'fr/REP_TVM_ETCS-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:REP_ETCS;FR:REP_TVM', 'FR:repère_arrêt_ETCS;FR:repère_arrêt_TVM'] }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Shunting marker
+    country: FR
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'right', value: 'fr/JAL_MAN-left' }
+      default: 'fr/JAL_MAN-right'
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['FR:JAL_MAN', 'FR:jalon_de_manoeuvre_TVM'] }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Distant route indicator
+    country: FR
+    icon:
+      match: 'railway:signal:route_distant:states'
+      cases:
+        - { exact: 'right', value: 'fr/TIDD-right' }
+        - { exact: 'left', value: 'fr/TIDD-left' }
+      default: 'fr/TIDD-off'
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'FR:TIDD' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
+
+  - description: Branch line
+    country: FR
+    icon: { default: 'fr/BIF' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'FR:BIF' }
+      - { tag: 'railway:signal:route_distant:form', value: 'sign' }
+
+  - description: Switch junction
+    country: FR
+    icon: { default: 'fr/Y' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'FR:Y' }
+      - { tag: 'railway:signal:route_distant:form', value: 'sign' }
+
+  - description: Route indicator
+    country: FR
+    icon: { default: 'fr/ID' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'FR:ID' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Wrong route (entry)
+    country: FR
+    icon: { default: 'fr/TECS' }
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:TECS' }
+      - { tag: 'railway:signal:wrong_road:form', any: ['sign', 'light'] }
+
+  - description: Wrong route (exit)
+    country: FR
+    icon: { default: 'fr/TSCS' }
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:TSCS' }
+      - { tag: 'railway:signal:wrong_road:form', any: ['sign', 'light'] }
+
+  - description: Distant station
+    country: FR
+    icon: { default: 'fr/GARE' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:GARE' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Distant site
+    country: FR
+    icon: { default: 'fr/APPROCHE_ETS_A' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:APPROCHE_ETS_A' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Distant site
+    country: FR
+    icon: { default: 'fr/APPROCHE_ETS' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:APPROCHE_ETS' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Station boundary
+    country: FR
+    icon: { default: 'fr/LIMITE_ETS' }
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:LIMITE_ETS' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Stop ARRET announcement
+    country: FR
+    icon: { default: 'fr/ARRET_A' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'FR:ARRET_A' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+
+  - description: Stop ARRET
+    country: FR
+    icon: { default: 'fr/ARRET' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop ATC
+    country: FR
+    icon: { default: 'fr/ATC' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ATC' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: STOP announcement
+    country: FR
+    icon: { default: 'fr/STOP_A' }
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'FR:STOP_A' }
+      - { tag: 'railway:signal:stop_distant:form', value: 'sign' }
+
+  - description: STOP
+    country: FR
+    icon: { default: 'fr/STOP' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:STOP' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: STOP
+    country: FR
+    icon: { default: 'fr/JAL_ARRET' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:JAL_ARRET' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position for passenger trains
+    country: FR
+    icon: { default: 'fr/ARRET_TT' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TT' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position front of train
+    country: FR
+    icon: { default: 'fr/ARRET_TTL' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TTL' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position EAS
+    country: FR
+    icon: { default: 'fr/ARRET_TT_EAS' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TT_EAS' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop position for carriages
+    country: FR
+    # TODO match number of carriages
+    icon: { default: 'fr/ARRET_V' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_V' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 1
+    country: FR
+    icon: { default: 'fr/ARRET_TGV1' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV1' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 2
+    country: FR
+    icon: { default: 'fr/ARRET_TGV2' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV2' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop for TGV 1-2
+    country: FR
+    icon: { default: 'fr/ARRET_TGV1-2' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV1-2' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting to garage
+    country: FR
+    icon: { default: 'fr/G' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:G' }
+      - { tag: 'railway:signal:shunting:form', any: ['sign', 'light'] }
+
+  - description: Shunting to depot
+    country: FR
+    icon: { default: 'fr/D' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:D' }
+      - { tag: 'railway:signal:shunting:form', any: ['sign', 'light'] }
 
   # --- GB --- #
 
@@ -4910,32 +5159,38 @@ features:
       - { tag: 'railway:signal:distant', value: 'NL' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: train protection block markers (arrow)
+  - description: block marker light
+    country: NL
+    icon: { default: 'nl/227a' }
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['NL:227', 'NL'] }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+      - { tag: 'railway:signal:shunting:states', all: ['NL:227a', 'NL:227c'] }
+
+  - description: block marker (arrow)
     country: NL
     icon:
-      # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
         - { exact: 'left', value: 'nl/227b-arrow-right' }
         - { exact: 'overhead', value: 'nl/227b-arrow-down' }
       default: 'nl/227b-arrow-left'
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
+      - { tag: 'railway:signal:train_protection', any: ['NL:227b', 'NL:227'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
-      - { tag: 'railway:signal:train_protection:shape', value: 'triangle' }
+      - { tag: 'railway:signal:train_protection:shape', value: 'arrow' }
 
-  - description: train protection block markers (triangle)
+  - description: block marker (triangle)
     country: NL
     icon:
-      # TODO, support lights (227a / 227c)
       match: 'railway:signal:position'
       cases:
         - { exact: 'left', value: 'nl/227b-triangle-right' }
         - { exact: 'overhead', value: 'nl/227b-triangle-down' }
       default: 'nl/227b-triangle-left'
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'NL:227b' }
+      - { tag: 'railway:signal:train_protection', any: ['NL:227b', 'NL:227'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
