@@ -363,15 +363,18 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         features[3] as feature2,
         features[4] as feature3,
         features[5] as feature4,
+        features[6] as feature5,
         deactivated[1] as deactivated0,
         deactivated[2] as deactivated1,
         deactivated[3] as deactivated2,
         deactivated[4] as deactivated3,
         deactivated[5] as deactivated4,
+        deactivated[6] as deactivated5,
         CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
+        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
         type
       FROM signal_features
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -410,15 +413,18 @@ DO $do$ BEGIN
           "feature2": "string",
           "feature3": "string",
           "feature4": "string",
+          "feature5": "string",
           "deactivated0": "boolean",
           "deactivated1": "boolean",
           "deactivated2": "boolean",
           "deactivated3": "boolean",
           "deactivated4": "boolean",
+          "deactivated5": "boolean",
           "offset1": "number",
           "offset2": "number",
           "offset3": "number",
           "offset4": "number",
+          "offset5": "number",
           "type": "string"
         }
       }
