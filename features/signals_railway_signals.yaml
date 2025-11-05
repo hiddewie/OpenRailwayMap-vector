@@ -5227,8 +5227,7 @@ features:
       match: 'railway:signal:distant:states'
       cases:
         - { any: ['(Y)', 'Y'], value: 'it/avviso-s-1v-Y' }
-        - { exact: 'G', value: 'it/avviso-s-1v-G' }
-      default: 'it/avviso-s-1v-Y'
+      default: 'it/avviso-s-1v-G'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:1V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -5241,8 +5240,7 @@ features:
       cases:
         - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/avviso-s-2v-YG' }
         - { any: ['(Y)', 'Y'], value: 'it/avviso-s-2v-Y' }
-        - { exact: 'G', value: 'it/avviso-s-2v-G' }
-      default: 'it/avviso-s-2v-Y'
+      default: 'it/avviso-s-2v-G'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -5254,8 +5252,7 @@ features:
       match: 'railway:signal:distant:states'
       cases:
         - { any: ['(Y)', 'Y'], value: 'it/avviso-1v-Y' }
-        - { exact: 'G', value: 'it/avviso-1v-G' }
-      default: 'it/avviso-1v-Y'
+      default: 'it/avviso-1v-G'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:1V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
