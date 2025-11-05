@@ -4714,7 +4714,7 @@ features:
 
 # it's better to split substitute signal icon from the substituted signal icon.
 # in the following lines i want to invoke substitute signal without reference to substituted signal.
-# According to this scheme the substitute signal can be used, not caring about the primary signal presence. 
+# According to this scheme the substitute signal can be used, not caring about the primary signal presence.
 
 # - description: Luci Avanzamento (substitute signal)
 #     country: IT
@@ -4757,7 +4757,7 @@ features:
         - { exact: 'Y-Y', value: 'it/main-s-2v-AVV-AVA-YY' }
         - { any: ['(Y)','Y'],   value: 'it/main-s-2v-AVV-AVA-Y' }
         - { exact: 'G',   value: 'it/main-s-2v-AVV-AVA-G' }
-      default: 'it/main-s-2v-AVV-AVA-R'        
+      default: 'it/main-s-2v-AVV-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4808,7 +4808,7 @@ features:
         - { exact: 'Y-Y', value: 'it/main-2v-AVV-AVA-YY' }
         - { any: ['(Y)','Y'],   value: 'it/main-2v-AVV-AVA-Y' }
         - { exact: 'G',   value: 'it/main-2v-AVV-AVA-G' }
-      default: 'it/main-2v-AVV-AVA-R'        
+      default: 'it/main-2v-AVV-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4936,6 +4936,7 @@ features:
 
   - description: 1ª categoria quadro (Avvio) (1 light)
     country: IT
+    icon:
       match: 'railway:signal:main:states'
       cases:
         - { any: ['(Y)','Y'], value: 'it/main-s-1v-AVV-Y' }
@@ -4958,7 +4959,7 @@ features:
         - { exact: 'Y-Y', value: 'it/main-s-2v-AVV-YY' }
         - { any: ['(Y)','Y'],   value: 'it/main-s-2v-AVV-Y' }
         - { exact: 'G',   value: 'it/main-s-2v-AVV-G' }
-      default: 'it/main-s-2v-AVV-R' 
+      default: 'it/main-s-2v-AVV-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4987,6 +4988,7 @@ features:
 
   - description: 1ª categoria (Avvio) (1 light)
     country: IT
+    icon:
       match: 'railway:signal:main:states'
       cases:
         - { any: ['(Y)','Y'], value: 'it/main-1v-AVV-Y' }
@@ -5008,7 +5010,7 @@ features:
         - { exact: 'Y-Y', value: 'it/main-2v-AVV-YY' }
         - { any: ['(Y)','Y'],   value: 'it/main-2v-AVV-Y' }
         - { exact: 'G',   value: 'it/main-2v-AVV-G' }
-      default: 'it/main-2v-AVV-R' 
+      default: 'it/main-2v-AVV-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -5094,7 +5096,7 @@ features:
         - { exact: 'Y-Y', value: 'it/main-s-3v-YY' }
         - { any: ['(Y)','Y'], value: 'it/main-s-3v-Y' }
         - { exact: 'G', value: 'it/main-s-3v-G' }
-      default: 'it/main-3v-s-R'
+      default: 'it/main-s-3v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -5144,7 +5146,7 @@ features:
       default: 'it/main-3v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }      
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Segnale accoppiato quadro (1 light)
     country: IT
