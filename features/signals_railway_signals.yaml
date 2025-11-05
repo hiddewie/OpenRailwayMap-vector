@@ -5264,8 +5264,7 @@ features:
       cases:
         - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/avviso-2v-YG' }
         - { any: ['(Y)', 'Y'], value: 'it/avviso-2v-Y' }
-        - { exact: 'G', value: 'it/avviso-2v-G' }
-      default: 'it/avviso-2v-Y'
+      default: 'it/avviso-2v-G'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
