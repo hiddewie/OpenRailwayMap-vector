@@ -42,6 +42,7 @@ tags:
   - { tag: 'railway:signal:distant:distance', title: 'Distant distance' }
   - { tag: 'railway:signal:distant:regime', title: 'Distant regime' }
   - { tag: 'railway:signal:distant:deactivated', title: 'Distant deactivated', type: boolean }
+  - { tag: 'railway:signal:distant:shape', title: 'Distant shape' }
   - { tag: 'railway:signal:electricity', title: 'Electricity' }
   - { tag: 'railway:signal:electricity:type', title: 'Electricity type' }
   - { tag: 'railway:signal:electricity:form', title: 'Electricity form' }
