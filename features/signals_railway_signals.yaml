@@ -4720,13 +4720,13 @@ features:
 #     country: IT
 #     icon: { default: 'it/AVA' }
 #     tags:
-#       - { tag: any: ['railway:signal:main:substitute_signal','railway:signal:combined:substitute_signal','railway:signal:departure:substitute_signal'], exact: 'IT:AVV'}
+#       - { tag: any: ['railway:signal:main:substitute_signal', 'railway:signal:combined:substitute_signal', 'railway:signal:departure:substitute_signal'], exact: 'IT:AVV'}
 
 # - description: Luci Avvio (substitute signal)
 #     country: IT
 #     icon: { default: 'it/AVV' }
 #     tags:
-#       - { tag: any: ['railway:signal:main:substitute_signal','railway:signal:combined:substitute_signal','railway:signal:departure:substitute_signal'], exact: 'IT:AVA'}
+#       - { tag: any: ['railway:signal:main:substitute_signal', 'railway:signal:combined:substitute_signal', 'railway:signal:departure:substitute_signal'], exact: 'IT:AVA'}
 
 # if the previous idea works, the following lines could be deleted:
 #form there...
@@ -4737,7 +4737,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-s-1v-AVV-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-AVV-AVA-Y' }
         - { exact: 'G', value: 'it/main-s-1v-AVV-AVA-G' }
       default: 'it/main-s-1v-AVV-AVA-R'
     tags:
@@ -4751,12 +4751,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-2v-AVV-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-AVV-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-s-2v-AVV-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-2v-AVV-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-AVV-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-2v-AVV-AVA-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-s-2v-AVV-AVA-Y' }
-        - { exact: 'G',   value: 'it/main-s-2v-AVV-AVA-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-AVV-AVA-Y' }
+        - { exact: 'G', value: 'it/main-s-2v-AVV-AVA-G' }
       default: 'it/main-s-2v-AVV-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -4769,13 +4769,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-s-3v-AVV-AVA-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-AVV-AVA-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-s-3v-AVV-AVA-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-3v-AVV-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-AVV-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-s-3v-AVV-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-3v-AVV-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-AVV-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-3v-AVV-AVA-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-s-3v-AVV-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-AVV-AVA-Y' }
         - { exact: 'G', value: 'it/main-s-3v-AVV-AVA-G' }
       default: 'it/main-s-3v-AVV-AVA-R'
     tags:
@@ -4789,7 +4789,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-1v-AVV-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-1v-AVV-AVA-Y' }
         - { exact: 'G', value: 'it/main-1v-AVV-AVA-G' }
       default: 'it/main-1v-AVV-AVA-R'
     tags:
@@ -4802,12 +4802,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-2v-AVV-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-2v-AVV-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-2v-AVV-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-2v-AVV-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-2v-AVV-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-2v-AVV-AVA-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-2v-AVV-AVA-Y' }
-        - { exact: 'G',   value: 'it/main-2v-AVV-AVA-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-2v-AVV-AVA-Y' }
+        - { exact: 'G', value: 'it/main-2v-AVV-AVA-G' }
       default: 'it/main-2v-AVV-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -4819,13 +4819,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-3v-AVV-AVA-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-3v-AVV-AVA-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-3v-AVV-AVA-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-3v-AVV-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-3v-AVV-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-3v-AVV-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-3v-AVV-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-3v-AVV-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-3v-AVV-AVA-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-3v-AVV-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-3v-AVV-AVA-Y' }
         - { exact: 'G', value: 'it/main-3v-AVV-AVA-G' }
       default: 'it/main-3v-AVV-AVA-R'
     tags:
@@ -4838,7 +4838,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-s-1v-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-AVA-Y' }
         - { exact: 'G', value: 'it/main-s-1v-AVA-G' }
       default: 'it/main-s-1v-AVA-R'
     tags:
@@ -4852,12 +4852,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-2v-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-s-2v-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-2v-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-2v-AVA-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-s-2v-AVA-Y' }
-        - { exact: 'G',   value: 'it/main-s-2v-AVA-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-AVA-Y' }
+        - { exact: 'G', value: 'it/main-s-2v-AVA-G' }
       default: 'it/main-s-2v-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -4870,13 +4870,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-s-3v-AVA-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-AVA-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-s-3v-AVA-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-3v-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-s-3v-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-3v-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-3v-AVA-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-s-3v-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-AVA-Y' }
         - { exact: 'G', value: 'it/main-s-3v-AVA-G' }
       default: 'it/main-s-3v-AVA-R'
     tags:
@@ -4890,7 +4890,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-1v-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-1v-AVA-Y' }
         - { exact: 'G', value: 'it/main-1v-AVA-G' }
       default: 'it/main-1v-AVA-R'
     tags:
@@ -4903,12 +4903,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-2v-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-2v-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-2v-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-2v-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-2v-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-2v-AVA-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-2v-AVA-Y' }
-        - { exact: 'G',   value: 'it/main-2v-AVA-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-2v-AVA-Y' }
+        - { exact: 'G', value: 'it/main-2v-AVA-G' }
       default: 'it/main-2v-AVA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -4920,13 +4920,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-3v-AVA-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-3v-AVA-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-3v-AVA-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-3v-AVA-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-3v-AVA-RY' }
         - { exact: 'R-G', value: 'it/main-3v-AVA-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-3v-AVA-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-3v-AVA-YG' }
         - { exact: 'Y-Y', value: 'it/main-3v-AVA-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-3v-AVA-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-3v-AVA-Y' }
         - { exact: 'G', value: 'it/main-3v-AVA-G' }
       default: 'it/main-3v-AVA-R'
     tags:
@@ -4939,7 +4939,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-s-1v-AVV-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-AVV-Y' }
         - { exact: 'G', value: 'it/main-s-1v-AVV-G' }
       default: 'it/main-s-1v-AVV-R'
     tags:
@@ -4953,12 +4953,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-2v-AVV-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-AVV-RY' }
         - { exact: 'R-G', value: 'it/main-s-2v-AVV-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-2v-AVV-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-AVV-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-2v-AVV-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-s-2v-AVV-Y' }
-        - { exact: 'G',   value: 'it/main-s-2v-AVV-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-AVV-Y' }
+        - { exact: 'G', value: 'it/main-s-2v-AVV-G' }
       default: 'it/main-s-2v-AVV-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -4971,13 +4971,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-s-3v-AVV-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-AVV-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-s-3v-AVV-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-3v-AVV-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-AVV-RY' }
         - { exact: 'R-G', value: 'it/main-s-3v-AVV-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-3v-AVV-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-AVV-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-3v-AVV-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-s-3v-AVV-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-AVV-Y' }
         - { exact: 'G', value: 'it/main-s-3v-AVV-G' }
       default: 'it/main-s-3v-AVV-R'
     tags:
@@ -4991,7 +4991,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-1v-AVV-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-1v-AVV-Y' }
         - { exact: 'G', value: 'it/main-1v-AVV-G' }
       default: 'it/main-1v-AVV-R'
     tags:
@@ -5004,12 +5004,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-2v-AVV-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-2v-AVV-RY' }
         - { exact: 'R-G', value: 'it/main-2v-AVV-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-2v-AVV-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-2v-AVV-YG' }
         - { exact: 'Y-Y', value: 'it/main-2v-AVV-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-2v-AVV-Y' }
-        - { exact: 'G',   value: 'it/main-2v-AVV-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-2v-AVV-Y' }
+        - { exact: 'G', value: 'it/main-2v-AVV-G' }
       default: 'it/main-2v-AVV-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -5021,13 +5021,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-3v-AVV-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-3v-AVV-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-3v-AVV-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-3v-AVV-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-3v-AVV-RY' }
         - { exact: 'R-G', value: 'it/main-3v-AVV-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-3v-AVV-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-3v-AVV-YG' }
         - { exact: 'Y-Y', value: 'it/main-3v-AVV-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-3v-AVV-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-3v-AVV-Y' }
         - { exact: 'G', value: 'it/main-3v-AVV-G' }
       default: 'it/main-3v-AVV-R'
     tags:
@@ -5058,7 +5058,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-s-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-Y' }
         - { exact: 'G', value: 'it/main-s-1v-G' }
       default: 'it/main-s-1v-R'
     tags:
@@ -5071,12 +5071,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-2v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-RY' }
         - { exact: 'R-G', value: 'it/main-s-2v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-2v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-2v-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-s-2v-Y' }
-        - { exact: 'G',   value: 'it/main-s-2v-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-Y' }
+        - { exact: 'G', value: 'it/main-s-2v-G' }
       default: 'it/main-s-2v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -5088,13 +5088,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-s-3v-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-s-3v-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-3v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-RY' }
         - { exact: 'R-G', value: 'it/main-s-3v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-3v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-3v-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-s-3v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-Y' }
         - { exact: 'G', value: 'it/main-s-3v-G' }
       default: 'it/main-s-3v-R'
     tags:
@@ -5107,7 +5107,7 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-1v-Y' }
         - { exact: 'G', value: 'it/main-1v-G' }
       default: 'it/main-1v-R'
     tags:
@@ -5119,12 +5119,12 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-2v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-2v-RY' }
         - { exact: 'R-G', value: 'it/main-2v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-2v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-2v-YG' }
         - { exact: 'Y-Y', value: 'it/main-2v-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-2v-Y' }
-        - { exact: 'G',   value: 'it/main-2v-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-2v-Y' }
+        - { exact: 'G', value: 'it/main-2v-G' }
       default: 'it/main-2v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:2V' }
@@ -5135,13 +5135,13 @@ features:
     icon:
       match: 'railway:signal:main:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-3v-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-3v-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-3v-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-3v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-3v-RY' }
         - { exact: 'R-G', value: 'it/main-3v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-3v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-3v-YG' }
         - { exact: 'Y-Y', value: 'it/main-3v-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-3v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-3v-Y' }
         - { exact: 'G', value: 'it/main-3v-G' }
       default: 'it/main-3v-R'
     tags:
@@ -5153,7 +5153,7 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/main-s-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-Y' }
         - { exact: 'G', value: 'it/main-s-1v-G' }
       default: 'it/main-s-1v-R'
     tags:
@@ -5166,12 +5166,12 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-2v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-RY' }
         - { exact: 'R-G', value: 'it/main-s-2v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-2v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-2v-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/main-s-2v-Y' }
-        - { exact: 'G',   value: 'it/main-s-2v-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-Y' }
+        - { exact: 'G', value: 'it/main-s-2v-G' }
       default: 'it/main-s-2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
@@ -5183,13 +5183,13 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/main-s-3v-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-RYG' }
         - { exact: 'R-Y-Y', value: 'it/main-s-3v-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/main-s-3v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-RY' }
         - { exact: 'R-G', value: 'it/main-s-3v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/main-s-3v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-YG' }
         - { exact: 'Y-Y', value: 'it/main-s-3v-YY' }
-        - { any: ['(Y)','Y'], value: 'it/main-s-3v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-Y' }
         - { exact: 'G', value: 'it/main-s-3v-G' }
       default: 'it/main-s-3v-R'
     tags:
@@ -5202,7 +5202,7 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/combined-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/combined-1v-Y' }
         - { exact: 'G', value: 'it/combined-1v-G' }
       default: 'it/combined-1v-R'
     tags:
@@ -5214,12 +5214,12 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-(Y)','R-Y'], value: 'it/combined-2v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/combined-2v-RY' }
         - { exact: 'R-G', value: 'it/combined-2v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/combined-2v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/combined-2v-YG' }
         - { exact: 'Y-Y', value: 'it/combined-2v-YY' }
-        - { any: ['(Y)','Y'],   value: 'it/combined-2v-Y' }
-        - { exact: 'G',   value: 'it/combined-2v-G' }
+        - { any: ['(Y)', 'Y'], value: 'it/combined-2v-Y' }
+        - { exact: 'G', value: 'it/combined-2v-G' }
       default: 'it/combined-2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
@@ -5230,13 +5230,13 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-Y-G','R-(Y-G)','R-(Y)-(G)'], value: 'it/combined-3v-RYG' }
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/combined-3v-RYG' }
         - { exact: 'R-Y-Y', value: 'it/combined-3v-RYY' }
-        - { any: ['R-(Y)','R-Y'], value: 'it/combined-3v-RY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/combined-3v-RY' }
         - { exact: 'R-G', value: 'it/combined-3v-RG' }
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/combined-3v-YG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/combined-3v-YG' }
         - { exact: 'Y-Y', value: 'it/combined-3v-YY' }
-        - { any: ['(Y)','Y'], value: 'it/combined-3v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/combined-3v-Y' }
         - { exact: 'G', value: 'it/combined-3v-G' }
       default: 'it/combined-3v-R'
     tags:
@@ -5248,7 +5248,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/avviso-s-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/avviso-s-1v-Y' }
         - { exact: 'G', value: 'it/avviso-s-1v-G' }
       default: 'it/avviso-s-1v-Y'
     tags:
@@ -5261,9 +5261,9 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/avviso-s-2v-YG' }
-        - { any: ['(Y)','Y'],   value: 'it/avviso-s-2v-Y' }
-        - { exact: 'G',   value: 'it/avviso-s-2v-G' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/avviso-s-2v-YG' }
+        - { any: ['(Y)', 'Y'], value: 'it/avviso-s-2v-Y' }
+        - { exact: 'G', value: 'it/avviso-s-2v-G' }
       default: 'it/avviso-s-2v-Y'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
@@ -5275,7 +5275,7 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { any: ['(Y)','Y'], value: 'it/avviso-1v-Y' }
+        - { any: ['(Y)', 'Y'], value: 'it/avviso-1v-Y' }
         - { exact: 'G', value: 'it/avviso-1v-G' }
       default: 'it/avviso-1v-Y'
     tags:
@@ -5287,9 +5287,9 @@ features:
     icon:
       match: 'railway:signal:distant:states'
       cases:
-        - { any: ['Y-G','(Y-G)','(Y)-(G)'], value: 'it/avviso-2v-YG' }
-        - { any: ['(Y)','Y'],   value: 'it/avviso-2v-Y' }
-        - { exact: 'G',   value: 'it/avviso-2v-G' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/avviso-2v-YG' }
+        - { any: ['(Y)', 'Y'], value: 'it/avviso-2v-Y' }
+        - { exact: 'G', value: 'it/avviso-2v-G' }
       default: 'it/avviso-2v-Y'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
