@@ -5131,9 +5131,9 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['(Y)', 'Y'], value: 'it/main-s-1v-Y' }
-        - { exact: 'G', value: 'it/main-s-1v-G' }
-      default: 'it/main-s-1v-R'
+        - { any: ['(Y)', 'Y'], value: 'it/combined-s-1v-Y' }
+        - { exact: 'G', value: 'it/combined-s-1v-G' }
+      default: 'it/combined-s-1v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:1V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -5144,13 +5144,13 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-2v-RY' }
-        - { exact: 'R-G', value: 'it/main-s-2v-RG' }
-        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-2v-YG' }
-        - { exact: 'Y-Y', value: 'it/main-s-2v-YY' }
-        - { any: ['(Y)', 'Y'], value: 'it/main-s-2v-Y' }
-        - { exact: 'G', value: 'it/main-s-2v-G' }
-      default: 'it/main-s-2v-R'
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/combined-s-2v-RY' }
+        - { exact: 'R-G', value: 'it/combined-s-2v-RG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/combined-s-2v-YG' }
+        - { exact: 'Y-Y', value: 'it/combined-s-2v-YY' }
+        - { any: ['(Y)', 'Y'], value: 'it/combined-s-2v-Y' }
+        - { exact: 'G', value: 'it/combined-s-2v-G' }
+      default: 'it/combined-s-2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -5161,15 +5161,15 @@ features:
     icon:
       match: 'railway:signal:combined:states'
       cases:
-        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/main-s-3v-RYG' }
-        - { exact: 'R-Y-Y', value: 'it/main-s-3v-RYY' }
-        - { any: ['R-(Y)', 'R-Y'], value: 'it/main-s-3v-RY' }
-        - { exact: 'R-G', value: 'it/main-s-3v-RG' }
-        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/main-s-3v-YG' }
-        - { exact: 'Y-Y', value: 'it/main-s-3v-YY' }
-        - { any: ['(Y)', 'Y'], value: 'it/main-s-3v-Y' }
-        - { exact: 'G', value: 'it/main-s-3v-G' }
-      default: 'it/main-s-3v-R'
+        - { any: ['R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)'], value: 'it/combined-s-3v-RYG' }
+        - { exact: 'R-Y-Y', value: 'it/combined-s-3v-RYY' }
+        - { any: ['R-(Y)', 'R-Y'], value: 'it/combined-s-3v-RY' }
+        - { exact: 'R-G', value: 'it/combined-s-3v-RG' }
+        - { any: ['Y-G', '(Y-G)', '(Y)-(G)'], value: 'it/combined-s-3v-YG' }
+        - { exact: 'Y-Y', value: 'it/combined-s-3v-YY' }
+        - { any: ['(Y)', 'Y'], value: 'it/combined-s-3v-Y' }
+        - { exact: 'G', value: 'it/combined-s-3v-G' }
+      default: 'it/combined-s-3v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
