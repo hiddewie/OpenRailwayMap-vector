@@ -2398,6 +2398,10 @@ const layers = {
         'text-halo-width': 1.5,
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'show-stations'], false], 'none',
+          'visible',
+        ],
         'symbol-z-order': 'source',
         'text-field': ['step', ['zoom'],
           ['get', 'name'],
