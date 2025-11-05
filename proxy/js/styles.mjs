@@ -2042,6 +2042,8 @@ const layers = {
           'light_rail', colors.styles.standard.light_rail,
           'subway', colors.styles.standard.subway,
           'funicular', colors.styles.standard.funicular,
+          'monorail', colors.styles.standard.monorail,
+          'miniature', colors.styles.standard.miniature,
           colors.styles.standard.unknown,
         ],
         'circle-stroke-width': 2,
@@ -5043,6 +5045,18 @@ const legendData = {
             legend: 'funicular',
             properties: {
               type: 'funicular',
+            },
+          },
+          {
+            legend: 'monorail',
+            properties: {
+              type: 'monorail',
+            },
+          },
+          {
+            legend: 'miniature',
+            properties: {
+              type: 'miniature',
             },
           },
         ]

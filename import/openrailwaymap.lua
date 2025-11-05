@@ -916,6 +916,12 @@ function stop_position_type(tags)
     return 'light_rail'
   elseif tags.subway == 'yes' then
     return 'subway'
+  elseif tags.funicular == 'yes' then
+    return 'funicular'
+  elseif tags.monorail == 'yes' then
+    return 'monorail'
+  elseif tags.miniature == 'yes' then
+    return 'miniature'
   elseif tags.bus == 'yes' or tags.trolleybus == 'yes' or tags.share_taxi == 'yes' or tags.ferry == 'yes' then
     return nil
   else
