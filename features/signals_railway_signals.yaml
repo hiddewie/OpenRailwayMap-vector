@@ -163,9 +163,11 @@ tags:
   - { tag: 'railway:signal:switch:states', title: 'Switch states', type: array }
   - { tag: 'railway:signal:switch:deactivated', title: 'Switch deactivated', type: boolean }
   - { tag: 'railway:signal:train_protection', title: 'Train protection' }
+  - { tag: 'railway:signal:train_protection:block_marker:type', title: 'Type of block marker' }
   - { tag: 'railway:signal:train_protection:form', title: 'Train protection form' }
   - { tag: 'railway:signal:train_protection:shape', title: 'Train protection shape' }
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
+  - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
   - { tag: 'railway:signal:whistle', title: 'Whistle' }
   - { tag: 'railway:signal:whistle:form', title: 'Whistle form' }
@@ -4494,6 +4496,93 @@ features:
     tags:
       - { tag: 'railway:signal:whistle', value: 'GB-NR:continuous' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Cab Signalling Start Warning Board
+    country: GB
+    icon: { default: 'gb/cab-entry-warning' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:warning' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Cab Signalling Start Board
+    country: GB
+    icon: { default: 'gb/cab-entry' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:entry' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start'}
+
+  - description: Cab Signalling End Board
+    country: GB
+    icon: { default: 'gb/cab-exit' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:exit' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+
+  - description: Cab Signalling Directional arrow
+    country: GB
+    icon:
+      match: 'railway:signal:train_protection:turn_direction'
+      cases:
+        - { exact: 'GB-NR:left', value: 'gb/cab-arrow-left' }
+        - { exact: 'GB-NR:right', value: 'gb/cab-arrow-right' }
+      default: 'gb/cab-arrow-unknown'
+    tags:
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Block Marker Passable Plate
+    country: GB
+    icon: { default: 'gb/block-passable' }
+    tags:
+      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'passable' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Block Marker Non-Passable Plate
+    country: GB
+    icon: { default: 'gb/block-absolute' }
+    tags:
+      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'absolute' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS Block Marker
+    country: GB
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'right', value: 'gb/ETCS-left' }
+        - { exact: 'overhead', value: 'gb/ETCS-overhead' }
+      default: 'gb/ETCS-right'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:ETCS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
+  - description: TVM/CBTC Block Marker
+    country: GB
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'right', value: 'gb/TVM-CBTC-left' }
+        - { exact: 'overhead', value: 'gb/TVM-CBTC-overhead' }
+      default: 'gb/TVM-CBTC-right'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:TVM-CBTC' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
+
+  - description: Cab Signalling Shunt Entry Board
+    country: GB
+    icon:
+      match: 'railway:signal:position'
+      cases:
+        - { exact: 'right', value: 'gb/cab-shunt-left' }
+        - { exact: 'overhead', value: 'gb/cab-shunt-overhead' }
+      default: 'gb/cab-shunt-right'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:shunt-entry' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
   - description: Main (light)
     country: GB
