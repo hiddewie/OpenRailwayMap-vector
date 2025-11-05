@@ -5017,7 +5017,35 @@ const legendData = {
       {
         legend: 'Stop position',
         type: 'point',
-        properties: {},
+        properties: {
+          type: 'train',
+        },
+        variants: [
+          {
+            legend: 'light rail',
+            properties: {
+              type: 'light_rail',
+            },
+          },
+          {
+            legend: 'Tram',
+            properties: {
+              type: 'tram',
+            },
+          },
+          {
+            legend: 'Subway',
+            properties: {
+              type: 'Subway',
+            },
+          },
+          {
+            legend: 'funicular',
+            properties: {
+              type: 'funicular',
+            },
+          },
+        ]
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":
