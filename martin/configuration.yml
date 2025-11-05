@@ -93,14 +93,14 @@ postgres:
       function: standard_railway_platforms
       minzoom: 15
 
-    standard_railway_platform_edges:
-      schema: public
-      function: standard_railway_platform_edges
-      minzoom: 17
-
     standard_railway_stop_positions:
       schema: public
       function: standard_railway_stop_positions
+      minzoom: 16
+
+    standard_railway_platform_edges:
+      schema: public
+      function: standard_railway_platform_edges
       minzoom: 17
 
     standard_railway_switch_ref:

@@ -2028,14 +2028,19 @@ const layers = {
     {
       id: 'railway_stop_positions',
       type: 'circle',
-      minzoom: 17,
+      minzoom: 16,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_stop_positions',
       layout: {
         // 'line-join': 'round',
       },
       paint: {
-        'circle-radius': 3,
+        'circle-radius': ['interpolate', ['linear'], ['zoom'],
+          16, 2,
+          19, 5,
+        ],
+        'circle-stroke-width': 2,
+        'circle-stroke-color': 'white',
         // 'line-width': 3,
         // 'line-color': ['case',
         //   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
