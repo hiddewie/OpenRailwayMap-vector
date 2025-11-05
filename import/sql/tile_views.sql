@@ -997,7 +997,9 @@ RETURN (
       id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      'stop_position' as feature
+      'stop_position' as feature,
+      name,
+      type
     FROM stop_positions
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1013,7 +1015,9 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
-          "feature": "string"
+          "feature": "string",
+          "name": "string",
+          "type": "string"
         }
       }
     ]

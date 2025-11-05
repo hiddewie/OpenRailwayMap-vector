@@ -554,12 +554,17 @@ const features = {
   },
   'openrailwaymap_standard-standard_railway_stop_positions': {
     featureLinks: featureLinks.openstreetmap,
+    labelProperty: 'name',
     features: {
       stop_position: {
         name: 'Stop position',
       },
     },
-    properties: {}
+    properties: {
+      type: {
+        name: 'Type',
+      }
+    }
   },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,

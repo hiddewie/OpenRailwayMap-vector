@@ -278,6 +278,7 @@ local stop_positions = osm2pgsql.define_table({
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point' },
     { column = 'name', type = 'text' },
+    { column = 'type', type = 'text' },
   },
 })
 
@@ -905,6 +906,24 @@ function is_railway_platform(tags)
     )
 end
 
+function stop_position_type(tags)
+  -- Assumption: a stop position is valid for a single transport modality
+  if tags.train == 'yes' then
+    return 'train'
+  elseif tags.tram == 'yes' then
+    return 'tram'
+  elseif tags.light_rail == 'yes' then
+    return 'light_rail'
+  elseif tags.subway == 'yes' then
+    return 'subway'
+  elseif tags.bus == 'yes' or tags.trolleybus == 'yes' or tags.share_taxi == 'yes' or tags.ferry == 'yes' then
+    return nil
+  else
+    -- Default to train
+    return 'train'
+  end
+end
+
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
 local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
@@ -998,10 +1017,14 @@ function osm2pgsql.process_node(object)
   end
 
   if tags.public_transport == 'stop_position' and tags.name then
-    stop_positions:insert({
-      way = object:as_point(),
-      name = tags.name,
-    })
+    local type = stop_position_type(tags)
+    if type then
+      stop_positions:insert({
+        way = object:as_point(),
+        name = tags.name,
+        type = type,
+      })
+    end
   end
 
   if is_railway_platform(tags) then
