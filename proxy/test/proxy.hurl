@@ -34,7 +34,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges
+GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json

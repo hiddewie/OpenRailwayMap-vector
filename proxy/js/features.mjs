@@ -552,6 +552,15 @@ const features = {
       },
     }
   },
+  'openrailwaymap_standard-standard_railway_stop_positions': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      stop_position: {
+        name: 'Stop position',
+      },
+    },
+    properties: {}
+  },
   'openrailwaymap_standard-standard_station_entrances': {
     featureLinks: featureLinks.openstreetmap,
     featureProperty: 'type',

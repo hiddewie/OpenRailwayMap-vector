@@ -704,7 +704,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions',
   },
   openrailwaymap_speed: {
     type: 'vector',
@@ -2024,6 +2024,24 @@ const layers = {
         'line-color': colors.styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       }
+    },
+    {
+      id: 'railway_stop_positions',
+      type: 'circle',
+      minzoom: 17,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_stop_positions',
+      layout: {
+        // 'line-join': 'round',
+      },
+      paint: {
+        'circle-radius': 3,
+        // 'line-width': 3,
+        // 'line-color': ['case',
+        //   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+        //   colors.styles.standard.track.halo,
+        // ],
+      },
     },
     {
       id: `railway_symbols_colored`,
@@ -4985,6 +5003,13 @@ const legendData = {
         properties: {
           ref: 3,
         },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_stop_positions": [
+      {
+        legend: 'Stop position',
+        type: 'point',
+        properties: {},
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":
