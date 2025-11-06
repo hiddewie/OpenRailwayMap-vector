@@ -1682,10 +1682,3 @@ fetch(`${location.origin}/features.json`)
 updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
-
-// When escape is pressed, close all modals
-document.addEventListener('keypress', event => {
-  if (event.key === 'Escape' || event.keyCode === 27) {
-    console.log('escape', event);
-  }
-});
