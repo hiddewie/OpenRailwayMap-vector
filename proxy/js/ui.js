@@ -666,6 +666,86 @@ function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
 
+/**
+ * Based on https://github.com/osm-americana/openstreetmap-americana/blob/1c65cc6/shieldlib/src/screen_gfx.ts
+ */
+async function transposeImageData(context, source) {
+  const imageData = context.createImageData(source.data.width, source.data.height);
+
+  for (let i = 0; i < source.data.data.length; i += 4) {
+    imageData.data[i] = source.data.data[i]; // Red
+    imageData.data[i + 1] = source.data.data[i + 1]; // Green
+    imageData.data[i + 2] = source.data.data[i + 2]; // Blue
+    imageData.data[i + 3] = source.data.data[i + 3]; // Alpha
+  }
+
+  return await createImageBitmap(imageData)
+}
+
+/**
+ * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
+ */
+async function composeImages(imageIds) {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext('2d')
+
+  // Load images
+  const images = imageIds.map(id => ({
+    id,
+    image: map.getImage(id),
+    offset: {
+      x: 0,
+      y: 0,
+    }
+  }));
+
+  canvas.width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
+  canvas.height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
+
+  const imageDatas = await Promise.all(images.map(async image => ({
+    data: await transposeImageData(context, image.image),
+    offset: image.offset,
+  })))
+  for (const {data, offset} of imageDatas) {
+    console.info(data, offset)
+    context.drawImage(data, offset.x, offset.y)
+  }
+
+  const { width, height } = canvas;
+  const bytes = context.getImageData(0, 0, width, height);
+
+  return {
+    width: width,
+    height: height,
+    data: new Uint8Array(bytes.data.buffer),
+    pixelRatio: images[0].image.pixelRatio,
+  };
+}
+
+const generatedImages = {};
+/**
+ * Async function is not actually supported by Maplibre GL.
+ * See https://github.com/mapbox/mapbox-gl-js/issues/9018 and https://maplibre.org/maplibre-gl-js/docs/examples/display-a-remote-svg-symbol/ (displays a warning)
+ */
+async function generateImage(ids) {
+  // Ensure every image is generated only once
+  if (!generatedImages[ids]) {
+    generatedImages[ids] = true;
+
+    const imageIds = ids.split('\x1E')
+    if (!imageIds) {
+      console.warn('ignoring invalid missing image', ids);
+      return;
+    }
+
+    // Compose the images together
+    const {width, height, data, pixelRatio} = await composeImages(imageIds)
+    const image = {width, height, data};
+    const options = {pixelRatio};
+    map.addImage(ids, image, options);
+  }
+}
+
 const defaultConfiguration = {
   backgroundSaturation: 0.0,
   backgroundOpacity: 0.35,
@@ -1536,6 +1616,7 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('styleimagemissing', event => generateImage(event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
