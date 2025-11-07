@@ -689,15 +689,17 @@ async function composeImages(imageIds) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext('2d')
 
+  const sdf = imageIds[0].startsWith('sdf:')
   // Load images
   const images = imageIds.map(id => ({
     id,
-    image: map.getImage(id),
+    image: map.getImage(!sdf || id.startsWith('sdf:') ? id : `sdf:${id}`),
     offset: {
       x: 0,
       y: 0,
     }
   }));
+  console.info(images)
 
   canvas.width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
   canvas.height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
