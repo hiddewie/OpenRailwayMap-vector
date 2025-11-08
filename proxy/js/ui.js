@@ -708,7 +708,6 @@ async function composeImages(imageIds) {
     offset: image.offset,
   })))
   for (const {data, offset} of imageDatas) {
-    console.info(data, offset)
     context.drawImage(data, offset.x, offset.y)
   }
 
