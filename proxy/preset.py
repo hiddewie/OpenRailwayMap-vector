@@ -398,11 +398,10 @@ def preset_items_signals_for_country(features):
       if matches:
         types.append(matches.group('type'))
 
-    # TODO support multiple icons
     with(tag('item',
              type='node',
              name=feature['description'],
-             icon=f'symbols/{feature['icon'][0]['default']}.svg',
+             icon=f'symbols/{feature['exampleIcon'] if 'exampleIcon' in feature else feature['icon'][0]['default']}.svg',
              preset_name_label='true',
              )):
 
