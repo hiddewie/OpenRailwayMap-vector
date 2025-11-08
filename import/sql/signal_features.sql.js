@@ -120,6 +120,10 @@ function stringSql(tag, matchCase) {
   }
 }
 
+function matchFeatureTagsSql(tags) {
+  return tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')
+}
+
 function matchIconCase(tag, iconCase) {
   if (iconCase.regex) {
     return matchTagRegexSql(tag, iconCase.regex)
@@ -129,6 +133,28 @@ function matchIconCase(tag, iconCase) {
     return matchTagAnyValueSql(tag, iconCase.any)
   } else {
     return matchTagValueSql(tag, iconCase.exact);
+  }
+}
+
+function iconCaseSql(iconCase, matchTag, feature, type) {
+  if (iconCase.value.includes('{}')) {
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(matchTag, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`
+  } else {
+    return `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`
+  }
+}
+
+function featureIconSql(feature, type) {
+  // TODO handle all icons
+  const defaultIconSql = `ARRAY['${feature.icon[0].default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon[0].dimensions.height}']`
+
+  if (feature.icon[0].match) {
+    return `CASE ${feature.icon[0].cases.map(iconCase => `
+                WHEN ${matchIconCase(feature.icon[0].match, iconCase)} THEN ${iconCaseSql(iconCase, feature.icon[0].match, feature, type)}`).join('')}
+                ${feature.icon[0].default ? `ELSE ${defaultIconSql}` : ''}
+              END`
+  } else {
+    return defaultIconSql
   }
 }
 
@@ -149,11 +175,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
         WHEN "railway:signal:${type.type}" IS NOT NULL THEN
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-            WHEN ${feature.tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')}
-              THEN ${feature.signalTypes[type.layer] === type.type ? (feature.icon.match ? `CASE ${feature.icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon.match, iconCase)} THEN ${iconCase.value.includes('{}') ? `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(feature.icon.match, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(feature.icon.match, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']` : `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`}`).join('')}
-                ${feature.icon.default ? `ELSE ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon.dimensions.height}']` : ''}
-              END` : `ARRAY['${feature.icon.default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon.dimensions.height}']`) : 'NULL'}
+            WHEN ${matchFeatureTagsSql(feature.tags)}
+              THEN ${feature.signalTypes[type.layer] === type.type ? featureIconSql(feature, type) : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE

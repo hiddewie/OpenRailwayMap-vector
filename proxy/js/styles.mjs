@@ -5761,13 +5761,13 @@ const legendData = {
         legend: `(${feature.country}) ${feature.description}`,
         type: 'point',
         properties: {
-          feature0: feature.icon.default,
+          feature0: feature.icon[0].default,
           type: 'line',
           azimuth: null,
           deactivated0: false,
           direction_both: false,
         },
-        variants: (feature.icon.cases ?? []).map(item => ({
+        variants: (feature.icon[0].cases ?? []).map(item => ({
           legend: item.description,
           properties: {
             feature0: item.example ?? item.value,
@@ -6030,13 +6030,13 @@ const legendData = {
         legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}`,
         type: 'point',
         properties: {
-          feature0: feature.icon.default,
+          feature0: feature.icon[0].default,
           type: 'line',
           azimuth: null,
           deactivated0: false,
           direction_both: false,
         },
-        variants: (feature.icon.cases ?? []).map(item => ({
+        variants: (feature.icon[0].cases ?? []).map(item => ({
           legend: item.description,
           properties: {
             feature0: item.example ?? item.value,
@@ -6333,13 +6333,13 @@ const legendData = {
         legend: `(${feature.country}) ${feature.description}`,
         type: 'point',
         properties: {
-          feature: feature.icon.default,
+          feature: feature.icon[0].default,
           type: 'line',
           azimuth: null,
           deactivated: false,
           direction_both: false,
         },
-        variants: (feature.icon.cases ?? []).map(item => ({
+        variants: (feature.icon[0].cases ?? []).map(item => ({
           legend: item.description,
           properties: {
             feature: item.example ?? item.value,

@@ -44,27 +44,28 @@ const featureLinks = {
 };
 
 const generateSignalFeatures = (features, types) =>
+  // TODO generate signal features, not from icon
   requireUniqueEntries([
     ...features.flatMap(feature => [
       [
-        feature.icon.default,
+        feature.icon[0].default,
         {
           country: feature.country,
           name: feature.description,
         }
       ],
       ...(
-        feature.icon.match
+        feature.icon[0].match
           ? [
             ...[...new Set(
-              feature.icon.cases
+              feature.icon[0].cases
                 .filter(iconCase => !iconCase.description)
                 .map(iconCase => iconCase.value)
             )].map(iconCaseValue => [iconCaseValue, {
               country: feature.country,
               name: feature.description,
             }]),
-            ...feature.icon.cases
+            ...feature.icon[0].cases
               .filter(iconCase => iconCase.description)
               .map(iconCase => [iconCase.value, {
                 country: feature.country,
