@@ -743,12 +743,14 @@ const features = {
     properties: {
       feature0: {
         name: 'Primary signal',
+        split: false,
         format: {
           lookup: 'speed_railway_signals',
         },
       },
       feature1: {
         name: 'Secondary signal',
+        split: false,
         format: {
           lookup: 'speed_railway_signals',
         },
@@ -821,30 +823,35 @@ const features = {
     properties: {
       feature0: {
         name: 'Primary signal',
+        split: false,
         format: {
           lookup: 'signals_railway_signals',
         },
       },
       feature1: {
         name: 'Secondary signal',
+        split: false,
         format: {
           lookup: 'signals_railway_signals',
         },
       },
       feature2: {
         name: 'Tertiary signal',
+        split: false,
         format: {
           lookup: 'signals_railway_signals',
         },
       },
       feature3: {
         name: 'Quaternary signal',
+        split: false,
         format: {
           lookup: 'signals_railway_signals',
         },
       },
       feature4: {
         name: 'Quinary signal',
+        split: false,
         format: {
           lookup: 'signals_railway_signals',
         },
@@ -976,6 +983,7 @@ const features = {
     properties: {
       feature: {
         name: 'Signal',
+        split: false,
         format: {
           lookup: 'electrification_signals',
         },

@@ -1406,9 +1406,8 @@ function popupContent(feature) {
     })
   }
 
-  const formatPropertyValue = (value, format) =>
-    String(value)
-      .split('\u001e')
+  const formatPropertyValue = (value, split, format) =>
+    (split ? String(value).split('\u001e') : [String(value)])
       .map(stringValue => {
         if (!format) {
           return stringValue;
@@ -1444,10 +1443,10 @@ function popupContent(feature) {
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([_, {paragraph}]) => !paragraph)
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, description}]) => ({
+    .map(([property, {name, format, link, paragraph, description, split}]) => ({
       title: name,
       value: properties[property],
-      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
+      body: properties[property] === true ? '' : formatPropertyValue(properties[property], split, format),
       paragraph,
       link,
       tooltip: description,
