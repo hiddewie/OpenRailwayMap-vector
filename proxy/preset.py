@@ -402,7 +402,7 @@ def preset_items_signals_for_country(features):
     with(tag('item',
              type='node',
              name=feature['description'],
-             icon=f'symbols/{feature['icon']['default']}.svg',
+             icon=f'symbols/{feature['icon'][0]['default']}.svg',
              preset_name_label='true',
              )):
 
@@ -453,8 +453,8 @@ def preset_items_signals_for_country(features):
       # TODO better support a combo or multiselect of valid values
 
       # TODO support multiple icons
-      if 'match' in feature['icon']:
-        match = feature['icon']['match']
+      if 'match' in feature['icon'][0]:
+        match = feature['icon']['match'][0]
         text = (tag_descriptions[match] if match in tag_descriptions else match)
 
         if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
