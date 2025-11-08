@@ -699,7 +699,6 @@ async function composeImages(imageIds) {
       y: 0,
     }
   }));
-  console.info(images)
 
   canvas.width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
   canvas.height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
@@ -717,10 +716,11 @@ async function composeImages(imageIds) {
   const bytes = context.getImageData(0, 0, width, height);
 
   return {
-    width: width,
-    height: height,
+    width,
+    height,
     data: new Uint8Array(bytes.data.buffer),
     pixelRatio: images[0].image.pixelRatio,
+    sdf,
   };
 }
 
@@ -741,9 +741,9 @@ async function generateImage(ids) {
     }
 
     // Compose the images together
-    const {width, height, data, pixelRatio} = await composeImages(imageIds)
+    const {width, height, data, pixelRatio, sdf} = await composeImages(imageIds)
     const image = {width, height, data};
-    const options = {pixelRatio};
+    const options = {pixelRatio, sdf};
     map.addImage(ids, image, options);
   }
 }
