@@ -451,21 +451,27 @@ def preset_items_signals_for_country(features):
 
       # TODO better support a combo or multiselect of valid values
 
-      # TODO support multiple icons
-      if 'match' in feature['icon'][0]:
-        match = feature['icon']['match'][0]
-        text = (tag_descriptions[match] if match in tag_descriptions else match)
+      icon_tags = {}
+      for icon in feature['icon']:
+        if 'match' in icon:
+          match = icon['match']
+          if match in icon_tags:
+            continue
+          icon_tags.add(match)
 
-        if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
-          with tag('check',
-                   text=text,
-                   key=match,
-                   ): pass
-        else:
-          with tag('text',
-                   text=text,
-                   key=match,
-                   ): pass
+          text = (tag_descriptions[match] if match in tag_descriptions else match)
+
+          if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
+            with tag('check',
+                     text=text,
+                     key=match,
+                     ): pass
+          else:
+            with tag('text',
+                     text=text,
+                     key=match,
+                     ): pass
+
 
       for ftag in feature['tags']:
         if 'any' in ftag:
