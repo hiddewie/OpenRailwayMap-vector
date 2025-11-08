@@ -451,7 +451,7 @@ def preset_items_signals_for_country(features):
 
       # TODO better support a combo or multiselect of valid values
 
-      icon_tags = {}
+      icon_tags = set()
       for icon in feature['icon']:
         if 'match' in icon:
           match = icon['match']

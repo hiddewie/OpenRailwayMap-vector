@@ -4438,6 +4438,21 @@ const makeStyle = selectedStyle => ({
   },
 });
 
+const signalFeatures = (feature) =>
+  // Generate signal features for each icon variant. For an icon variant, use the default (or last) variant of the other icon cases.
+  feature.icon.map((icon, i) => ({
+    legend: icon.default ? icon.description : icon.cases[0].description,
+    icon: feature.icon.map((otherIcon, j) => i === j
+      ? icon.default ?? icon.cases[0].example ?? icon.cases[0].value
+      : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join('\u001e'),
+    variants: (icon.cases ?? []).slice(icon.default ? 0 : 1).map(item => ({
+      legend: item.description,
+      icon: feature.icon.map((otherIcon, j) => i === j
+        ? item.example ?? item.value
+        : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join('\u001e'),
+    })),
+  }));
+
 const legendData = {
   standard: {
     "standard_railway_line_low-standard_railway_line_low": [
@@ -5756,24 +5771,24 @@ const legendData = {
     ],
     'openrailwaymap_speed-speed_railway_signals': [
       // TODO filter per country polygon
-      // TODO generate all combinations
-      ...speed_railway_signals.map(feature => ({
-        legend: `(${feature.country}) ${feature.description}`,
-        type: 'point',
-        properties: {
-          feature0: feature.icon[0].default,
-          type: 'line',
-          azimuth: null,
-          deactivated0: false,
-          direction_both: false,
-        },
-        variants: (feature.icon[0].cases ?? []).map(item => ({
-          legend: item.description,
+      ...speed_railway_signals.flatMap(feature =>
+        signalFeatures(feature).map(iconFeature => ({
+          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          type: 'point',
           properties: {
-            feature0: item.example ?? item.value,
+            feature0: iconFeature.icon,
+            type: 'line',
+            azimuth: null,
+            deactivated0: false,
+            direction_both: false,
           },
-        })),
-      })),
+          variants: iconFeature.variants.map(variant => ({
+            legend: variant.legend,
+            properties: {
+              feature0: variant.icon,
+            },
+          })),
+        }))),
       {
         legend: 'signal direction',
         type: 'point',
@@ -6025,24 +6040,24 @@ const legendData = {
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [
-      // TODO generate all combinations
-      ...signals_railway_signals.map(feature => ({
-        legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}`,
-        type: 'point',
-        properties: {
-          feature0: feature.icon[0].default,
-          type: 'line',
-          azimuth: null,
-          deactivated0: false,
-          direction_both: false,
-        },
-        variants: (feature.icon[0].cases ?? []).map(item => ({
-          legend: item.description,
+      ...signals_railway_signals.flatMap(feature =>
+        signalFeatures(feature).map(iconFeature => ({
+          legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          type: 'point',
           properties: {
-            feature0: item.example ?? item.value,
+            feature0: iconFeature.icon,
+            type: 'line',
+            azimuth: null,
+            deactivated0: false,
+            direction_both: false,
           },
-        })),
-      })),
+          variants: iconFeature.variants.map(variant => ({
+            legend: variant.legend,
+            properties: {
+              feature0: variant.icon,
+            },
+          })),
+        }))),
       {
         legend: 'signal direction',
         type: 'point',
@@ -6328,24 +6343,24 @@ const legendData = {
       },
     ],
     'openrailwaymap_electrification-electrification_signals': [
-      // TODO generate all combinations
-      ...electrification_signals.map(feature => ({
-        legend: `(${feature.country}) ${feature.description}`,
-        type: 'point',
-        properties: {
-          feature: feature.icon[0].default,
-          type: 'line',
-          azimuth: null,
-          deactivated: false,
-          direction_both: false,
-        },
-        variants: (feature.icon[0].cases ?? []).map(item => ({
-          legend: item.description,
+      ...electrification_signals.flatMap(feature =>
+        signalFeatures(feature).map(iconFeature => ({
+          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          type: 'point',
           properties: {
-            feature: item.example ?? item.value,
+            feature: iconFeature.icon,
+            type: 'line',
+            azimuth: null,
+            deactivated: false,
+            direction_both: false,
           },
-        })),
-      })),
+          variants: iconFeature.variants.map(variant => ({
+            legend: variant.legend,
+            properties: {
+              feature: variant.icon,
+            },
+          })),
+        }))),
       {
         legend: 'signal direction',
         type: 'point',
