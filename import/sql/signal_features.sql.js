@@ -148,37 +148,27 @@ function featureIconSql(icon) {
   const defaultIconSql = icon.default ? `ARRAY['${icon.default}', NULL, '${icon.dimensions.height}']` : 'NULL'
 
   if (icon.match) {
-    // TODO variables
     return `CASE ${icon.cases.map(iconCase => `
-                WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match)}`).join('')}
-                ${icon.default ? `ELSE ${defaultIconSql}` : ''}
-              END`
+                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match)}`).join('')}
+                    ${icon.default ? `ELSE ${defaultIconSql}` : ''}
+                  END`
   } else {
     return defaultIconSql
   }
 }
 
 function featureIconsSql(feature, type) {
-  // TODO nice formatting in SQL output
   // TODO use offset
   // TODO support multiple variables
   return `(
-    SELECT ARRAY[ 
-      string_agg(icon[1], U&'\\001E'),
-      string_agg(icon[2], U&'\\001E'),
-      ${feature.type ? `'${feature.type}'` : 'NULL'}, 
-      "railway:signal:${type.type}:deactivated"::text, 
-      '${type.layer}', 
-      '${feature.rank}', 
-      MAX(icon[3]::numeric)::text
-    ]
-    FROM (
-      ${feature.icon.map(icon => `select ${featureIconSql(icon)} as icon`).join(`
-      UNION ALL
-      `)}
-    ) icons
-    WHERE icon[1] IS NOT NULL
-  )`
+                SELECT ARRAY[string_agg(icon[1], U&'\\001E'), string_agg(icon[2], U&'\\001E'), ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', MAX(icon[3]::numeric)::text]
+                FROM (
+                  ${feature.icon.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
+                  UNION ALL
+                  `)}
+                ) icons
+                WHERE icon[1] IS NOT NULL
+              )`
 }
 
 /**
