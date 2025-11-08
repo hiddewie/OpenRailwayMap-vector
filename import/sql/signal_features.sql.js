@@ -136,26 +136,49 @@ function matchIconCase(tag, iconCase) {
   }
 }
 
-function iconCaseSql(iconCase, matchTag, feature, type) {
+function iconCaseSql(iconCase, matchTag) {
   if (iconCase.value.includes('{}')) {
-    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(matchTag, iconCase)}, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
   } else {
-    return `ARRAY['${iconCase.value}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${iconCase.dimensions.height}']`
+    return `ARRAY['${iconCase.value}', NULL, '${iconCase.dimensions.height}']`
   }
 }
 
-function featureIconSql(feature, type) {
-  // TODO handle all icons
-  const defaultIconSql = `ARRAY['${feature.icon[0].default}', NULL, ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', '${feature.icon[0].dimensions.height}']`
+function featureIconSql(icon) {
+  const defaultIconSql = icon.default ? `ARRAY['${icon.default}', NULL, '${icon.dimensions.height}']` : 'NULL'
 
-  if (feature.icon[0].match) {
-    return `CASE ${feature.icon[0].cases.map(iconCase => `
-                WHEN ${matchIconCase(feature.icon[0].match, iconCase)} THEN ${iconCaseSql(iconCase, feature.icon[0].match, feature, type)}`).join('')}
-                ${feature.icon[0].default ? `ELSE ${defaultIconSql}` : ''}
+  if (icon.match) {
+    // TODO variables
+    return `CASE ${icon.cases.map(iconCase => `
+                WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match)}`).join('')}
+                ${icon.default ? `ELSE ${defaultIconSql}` : ''}
               END`
   } else {
     return defaultIconSql
   }
+}
+
+function featureIconsSql(feature, type) {
+  // TODO nice formatting in SQL output
+  // TODO use offset
+  // TODO support multiple variables
+  return `(
+    SELECT ARRAY[ 
+      string_agg(icon[1], U&'\\001E'),
+      string_agg(icon[2], U&'\\001E'),
+      ${feature.type ? `'${feature.type}'` : 'NULL'}, 
+      "railway:signal:${type.type}:deactivated"::text, 
+      '${type.layer}', 
+      '${feature.rank}', 
+      MAX(icon[3]::numeric)::text
+    ]
+    FROM (
+      ${feature.icon.map(icon => `select ${featureIconSql(icon)} as icon`).join(`
+      UNION ALL
+      `)}
+    ) icons
+    WHERE icon[1] IS NOT NULL
+  )`
 }
 
 /**
@@ -176,7 +199,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalTypes[type.layer] === type.type ? featureIconSql(feature, type) : 'NULL'}
+              THEN ${feature.signalTypes[type.layer] === type.type ? featureIconsSql(feature, type) : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
