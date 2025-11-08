@@ -5756,6 +5756,7 @@ const legendData = {
     ],
     'openrailwaymap_speed-speed_railway_signals': [
       // TODO filter per country polygon
+      // TODO generate all combinations
       ...speed_railway_signals.map(feature => ({
         legend: `(${feature.country}) ${feature.description}`,
         type: 'point',
@@ -6024,6 +6025,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [
+      // TODO generate all combinations
       ...signals_railway_signals.map(feature => ({
         legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}`,
         type: 'point',
@@ -6326,6 +6328,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_electrification-electrification_signals': [
+      // TODO generate all combinations
       ...electrification_signals.map(feature => ({
         legend: `(${feature.country}) ${feature.description}`,
         type: 'point',

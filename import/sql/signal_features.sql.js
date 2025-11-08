@@ -33,16 +33,16 @@ const signalsWithSignalType = await Promise.all(
     .map(async feature => ({
       ...feature,
       feature: feature.feature,
-      icon: {
-        ...feature.icon,
-        cases: feature.icon.cases
-          ? await Promise.all(feature.icon.cases.map(async iconCase => ({
+      icon: await Promise.all(feature.icon.map(async icon => ({
+        ...icon,
+        cases: icon.cases
+          ? await Promise.all(icon.cases.map(async iconCase => ({
               ...iconCase,
               dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
             })))
           : undefined,
-        dimensions: await parseSvgDimensions(feature.icon.default),
-      }
+        dimensions: await parseSvgDimensions(icon.default),
+      }))),
     }))
 );
 
@@ -135,6 +135,7 @@ function matchIconCase(tag, iconCase) {
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
+// TODO add multiple icons
 const sql = `
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS

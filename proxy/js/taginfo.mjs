@@ -95,6 +95,7 @@ for (const tag of signals.tags) {
 }
 for (const signal of signals.features) {
   const region = signal.country ? countryNames.of(signal.country) : 'Worldwide';
+  // TODO support multiple icons
   const icon_url = `${BASE_URL}/symbols/${signal.icon.default}.svg`;
 
   for (const tag of signal.tags) {

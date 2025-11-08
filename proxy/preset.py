@@ -398,6 +398,7 @@ def preset_items_signals_for_country(features):
       if matches:
         types.append(matches.group('type'))
 
+    # TODO support multiple icons
     with(tag('item',
              type='node',
              name=feature['description'],
@@ -451,6 +452,7 @@ def preset_items_signals_for_country(features):
 
       # TODO better support a combo or multiselect of valid values
 
+      # TODO support multiple icons
       if 'match' in feature['icon']:
         match = feature['icon']['match']
         text = (tag_descriptions[match] if match in tag_descriptions else match)
