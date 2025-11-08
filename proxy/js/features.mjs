@@ -56,7 +56,7 @@ function allIconCombinations(feature) {
     combinations.forEach(combination => {
       icons.forEach(icon => {
         newCombinations.push({
-          name: icon.name ? `${combination.name}, ${icon.name}` : combination.name,
+          name: [combination.name, icon.name].filter(it => it).join(', '),
           icon: `${combination.icon}\u001e${icon.icon}`,
         })
       })
