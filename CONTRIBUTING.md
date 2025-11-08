@@ -41,7 +41,7 @@ For example, to match railway signals with tags `railway:signal:shunting=AT-V2:v
 features:
   - description: Verschubhalttafel
     country: AT
-    icon: { default: 'at/verschubhalttafel' }
+    icon: [ default: 'at/verschubhalttafel' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
@@ -53,15 +53,15 @@ features:
   - description: train protection block markers
     country: BE
     icon:
-      match: 'railway:signal:position'
-      cases:
-        - exact: 'left'
-          value: 'be/PRA-arrow-right'
-          description: 'left'
-        - exact: 'overhead'
-          value: 'be/PRA-arrow-down'
-          description: 'overhead'
-      default: 'be/PRA-arrow-left'
+      - match: 'railway:signal:position'
+        cases:
+          - exact: 'left'
+            value: 'be/PRA-arrow-right'
+            description: 'left'
+          - exact: 'overhead'
+            value: 'be/PRA-arrow-down'
+            description: 'overhead'
+        default: 'be/PRA-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -75,10 +75,10 @@ features:
   - description: Signalnachahmer
     country: AT
     icon:
-      match: 'railway:signal:main_repeated:magnet'
-      cases:
-        - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
-      default: 'at/signalnachahmer'
+      - match: 'railway:signal:main_repeated:magnet'
+        cases:
+          - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
+        default: 'at/signalnachahmer'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -96,12 +96,12 @@ features:
 - description: distant (light)
   country: AT
   icon:
-    match: 'railway:signal:distant:states'
-    cases:
-      - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
-      - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
-      - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
-    default: 'at/vorsignal-vorsicht'
+    - match: 'railway:signal:distant:states'
+      cases:
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
+      default: 'at/vorsignal-vorsicht'
   tags:
     - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
     - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -113,11 +113,11 @@ features:
   - description: Semafor kształtowy
     country: PL
     icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
-        - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
-      default: 'pl/sr1'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
+          - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
+        default: 'pl/sr1'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
@@ -129,10 +129,10 @@ features:
   - description: Geschwindigkeitsvoranzeiger (light)
     country: AT
     icon:
-      match: 'railway:signal:speed_limit_distant:speed'
-      cases:
-        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
-      default: 'at/geschwindigkeitsvoranzeiger-empty-light'
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
+        default: 'at/geschwindigkeitsvoranzeiger-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
@@ -143,7 +143,7 @@ If the railway signal uses tags that are not in the list at the top of the file,
 ```yaml
 tags:
   # ...
-  - { tag: 'railway:signal:combined:form' }
+  - { tag: 'railway:signal:combined:form', title: 'Combined form' }
   # ...
 ```
 If the tag has a `yes`/`no` value, add `type: boolean`. If the tag has a semicolon (`;`) separated value, add `type: array`. If the value of the tag should be displayed formatted or with a unit, add `format: { template: ... }` where the value is a template like `%.2d Hz` or `%s V` to format the tag value into a string for display in the popup.
