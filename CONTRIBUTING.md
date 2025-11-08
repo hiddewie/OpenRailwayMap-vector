@@ -139,6 +139,21 @@ features:
 ```
 Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-light-{80}.svg`.
 
+For complex signals, an additional property `exampleIcon` can be specified to designate an icon used for the feature as a whole, for example in the JOSM preset or TagInfo.
+```yaml
+features:
+  - description: Geschwindigkeitsvoranzeiger
+    country: AT
+    icon:
+      - match: ...
+      - match: ...
+      - match: ...
+    exampleIcon: 'at/geschwindigkeitsvoranzeiger-example'
+    tags:
+      - ...
+      - ...
+```
+
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
 tags:
