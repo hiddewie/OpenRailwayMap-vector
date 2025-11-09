@@ -372,8 +372,6 @@ local signals = osm2pgsql.define_table({
   name = 'signals',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = signal_columns,
-  -- The queried table is signal_features
-  cluster = 'no',
 })
 
 local boxes = osm2pgsql.define_table({
