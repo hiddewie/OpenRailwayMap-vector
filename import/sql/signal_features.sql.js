@@ -158,18 +158,22 @@ function featureIconSql(icon) {
   }
 }
 
-function featureIconsSql(feature, type) {
+function featureIconsSql(icons) {
   // TODO use offset
   // TODO support multiple variables
-  return `(
-                SELECT ARRAY[string_agg(icon[1], ','), string_agg(COALESCE(icon[2], ''), ','), ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', MAX(icon[3]::numeric)::text]
+  if (icons.length === 1) {
+    return featureIconSql(icons[0])
+  } else {
+    return `(
+                SELECT ARRAY[string_agg(icon[1], ','), string_agg(COALESCE(icon[2], ''), ','), MAX(icon[3]::numeric)::text]
                 FROM (
-                  ${feature.icon.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
+                  ${icons.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
                   UNION ALL
                   `)}
                 ) icons
                 WHERE icon[1] IS NOT NULL
               )`
+  }
 }
 
 /**
@@ -224,11 +228,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalTypes[type.layer] === type.type ? featureIconsSql(feature, type) : 'NULL'}
+              THEN ${feature.signalTypes[type.layer] === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}'])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, NULL, 'false', '${type.layer}', NULL, '17.1']
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', NULL, 'false', '${type.layer}', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -243,11 +247,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
       signal_id,
       feature_${type.type}[1] as feature,
       feature_${type.type}[2] as feature_variable,
-      feature_${type.type}[3] as type,
-      feature_${type.type}[4]::boolean as deactivated,
-      feature_${type.type}[5]::signal_layer as layer,
-      feature_${type.type}[6]::INT as rank,
-      feature_${type.type}[7]::REAL as icon_height
+      feature_${type.type}[3]::REAL as icon_height,
+      feature_${type.type}[4] as type,
+      feature_${type.type}[5]::boolean as deactivated,
+      feature_${type.type}[6]::signal_layer as layer,
+      feature_${type.type}[7]::INT as rank
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
@@ -258,11 +262,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
       signal_id,
       'general/signal-unknown' as feature,
       NULL as feature_variable,
+      17.1 as icon_height,
       NULL as type,
       false as deactivated,
       'signals' as layer,
-      NULL as rank,
-      17.1 as icon_height
+      NULL as rank
     FROM signals_with_features_0
     WHERE railway = 'signal'
       AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
