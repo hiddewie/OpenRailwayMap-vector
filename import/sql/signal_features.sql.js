@@ -159,6 +159,7 @@ function featureIconSql(icon) {
 
 function featureIconsSql(icons) {
   if (icons.length === 1) {
+    // Avoid complex SQL for the single icon case
     return featureIconSql(icons[0])
   } else {
     return `(
