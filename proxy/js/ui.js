@@ -700,18 +700,47 @@ async function composeImages(imageIds) {
     }
   }));
 
-  canvas.width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
-  canvas.height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
+  // TODO handle negative offsets
+  const width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
+  const height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
 
-  const imageDatas = await Promise.all(images.map(async image => ({
-    data: await transposeImageData(context, image.image),
-    offset: image.offset,
-  })))
-  for (const {data, offset} of imageDatas) {
-    context.drawImage(data, offset.x, offset.y)
+  canvas.width = width;
+  canvas.height = height;
+
+  if (sdf) {
+    const imageData = context.createImageData(width, height)
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const i = 4 * (y * width + x);
+        // Indices 0, 1 and 2 of pixel are unused for SDF images
+
+        let distanceField = 0;
+        for (const image of images) {
+          if (
+            image.offset.x <= x && x < image.offset.x + image.image.data.width &&
+            image.offset.y <= y && y < image.offset.y + image.image.data.height
+          ) {
+            const imageI = 4 * ((y - image.offset.y) * image.image.data.width + (x - image.offset.x))
+            distanceField = Math.max(distanceField, image.image.data.data[imageI + 3])
+          }
+        }
+
+        imageData.data[i + 3] = distanceField;
+      }
+    }
+
+    context.putImageData(imageData, 0, 0)
+  } else {
+    const imageDatas = await Promise.all(images.map(async image => ({
+      data: await transposeImageData(context, image.image),
+      offset: image.offset,
+    })))
+    for (const {data, offset} of imageDatas) {
+      context.drawImage(data, offset.x, offset.y)
+    }
   }
 
-  const { width, height } = canvas;
   const bytes = context.getImageData(0, 0, width, height);
 
   return {
