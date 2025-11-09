@@ -139,6 +139,33 @@ features:
 ```
 Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-light-{80}.svg`.
 
+Signal features can use multiple icons by specifying more than one item for `icon`:
+```yaml
+features:
+  - description: 1ª categoria (1 light)
+    country: IT
+    icon:
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'square', value: 'it/main-s-1v', description: 'quadro' }
+        default: 'it/main-1v'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ '(Y)', 'Y' ], value: "it/1v-Y" }
+          - { exact: 'G', value: "it/1v-G" }
+        default: "it/1v-R"
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        offset: { x: -1, y: 9 }
+    tags:
+      - { tag: 'railway:signal:main', value: 'IT:1V' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+```
+In this example the shape, the states, and the substitute signal each define an (optional) icon to use. The icons are composed together, starting with the first one and layering every following icon on top. The (optional) `default` icon is used if the `match` cases do not match. The icons can have an `offset` with `x` and `y` values to offset the icon in the composed icon.
+
 For complex signals, an additional property `exampleIcon` can be specified to designate an icon used for the feature as a whole, for example in the JOSM preset or TagInfo.
 ```yaml
 features:
