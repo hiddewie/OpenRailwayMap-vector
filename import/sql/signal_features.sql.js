@@ -5,10 +5,8 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
-async function parseSvgDimensions(features) {
-  // TODO handle all icons
+async function parseSvgDimensions(feature) {
   // TODO handle offset
-  const feature = features.split('\u001E')[0]
   const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
   // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
   const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
@@ -164,7 +162,7 @@ function featureIconsSql(feature, type) {
   // TODO use offset
   // TODO support multiple variables
   return `(
-                SELECT ARRAY[string_agg(icon[1], U&'\\001E'), string_agg(icon[2], U&'\\001E'), ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', MAX(icon[3]::numeric)::text]
+                SELECT ARRAY[string_agg(icon[1], ','), string_agg(COALESCE(icon[2], ''), ','), ${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}', MAX(icon[3]::numeric)::text]
                 FROM (
                   ${feature.icon.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
                   UNION ALL

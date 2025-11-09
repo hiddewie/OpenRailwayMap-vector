@@ -773,7 +773,7 @@ async function generateImage(ids) {
   if (!generatedImages[ids]) {
     generatedImages[ids] = true;
 
-    const imageIds = ids.split('\x1E')
+    const imageIds = ids.split(',')
     if (!imageIds) {
       console.warn('ignoring invalid missing image', ids);
       return;
@@ -1448,8 +1448,7 @@ function popupContent(feature) {
   }
 
   const formatPropertyValue = (value, split, format) =>
-    // TODO remove `split`, make icons use , separated values (or other scheme)
-    (split ? String(value).split('\u001e') : [String(value)])
+    String(value).split('\u001e')
       .map(stringValue => {
         if (!format) {
           return stringValue;

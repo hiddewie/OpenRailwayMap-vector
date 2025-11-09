@@ -4444,12 +4444,12 @@ const signalFeatures = (feature) =>
     legend: icon.default ? icon.description : icon.cases[0].description,
     icon: feature.icon.map((otherIcon, j) => i === j
       ? icon.default ?? icon.cases[0].example ?? icon.cases[0].value
-      : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join('\u001e'),
+      : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join(','),
     variants: (icon.cases ?? []).slice(icon.default ? 0 : 1).map(item => ({
       legend: item.description,
       icon: feature.icon.map((otherIcon, j) => i === j
         ? item.example ?? item.value
-        : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join('\u001e'),
+        : otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value).join(','),
     })),
   }));
 
