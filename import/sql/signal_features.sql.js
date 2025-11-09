@@ -6,7 +6,6 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
 async function parseSvgDimensions(feature) {
-  // TODO handle offset
   const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
   // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
   const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
@@ -159,7 +158,6 @@ function featureIconSql(icon) {
 }
 
 function featureIconsSql(icons) {
-  // TODO support multiple variables
   if (icons.length === 1) {
     return featureIconSql(icons[0])
   } else {
