@@ -5081,9 +5081,9 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ '(Y)', 'Y' ], value: "it/main-1v\u001Eit/1v-Y" }
-          - { exact: 'G', value: "it/main-1v\u001Eit/1v-G" }
-        default: "it/main-1v\u001Eit/1v-R"
+          - { any: ['(Y)', 'Y'], value: 'it/main-1v-Y' }
+          - { exact: 'G', value: 'it/main-1v-G' }
+        default: 'it/main-1v-R'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
