@@ -136,6 +136,40 @@ function matchIconCase(tag, iconCase) {
  * Template that builds the SQL view taking the YAML configuration into account
  */
 const sql = `
+CREATE OR REPLACE VIEW signal_direction_view AS
+  SELECT
+    s.id as signal_id,
+    (signal_direction = 'both') as direction_both,
+    degrees(ST_Azimuth(
+      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
+      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
+    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
+  FROM signals s
+  LEFT JOIN LATERAL (
+    SELECT line.way as way
+    FROM railway_line line
+    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature', 'funicular')
+    ORDER BY s.way <-> line.way
+    LIMIT 1
+  ) as sl ON true
+  WHERE
+    (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
+      OR railway IN ('derail', 'vacancy_detection');
+
+-- Use the view directly such that the query in the view can be updated
+CREATE MATERIALIZED VIEW IF NOT EXISTS signal_direction AS
+  SELECT
+    *
+  FROM
+    signal_direction_view;
+
+CREATE INDEX IF NOT EXISTS signal_direction_signal_id_index
+  ON signal_direction
+    USING btree(signal_id);
+
+CLUSTER signal_direction
+  USING signal_direction_signal_id_index;
+    
 -- Table with functional signal features
 CREATE OR REPLACE VIEW signal_features_view AS
   -- For every type of signal, generate the feature and related metadata
@@ -160,6 +194,9 @@ CREATE OR REPLACE VIEW signal_features_view AS
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
+    WHERE
+      (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
+        OR railway IN ('derail', 'vacancy_detection')
   ),
   -- Output a feature row for every feature
   signals_with_features_1 AS (
@@ -191,47 +228,18 @@ CREATE OR REPLACE VIEW signal_features_view AS
     FROM signals_with_features_0
     WHERE railway = 'signal'
       AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
-  ),
-  -- Group features by signal, and aggregate the results
-  signals_with_features AS (
-    SELECT
-      signal_id,
-      any_value(type) as type,
-      layer,
-      array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
-      array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
-      array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
-      MAX(rank) as rank
-    FROM signals_with_features_1 sf
-    GROUP BY signal_id, layer
   )
-  -- Calculate signal-specific details like fields, azimuth and features
+  -- Group features by signal, and aggregate the results
   SELECT
-    s.*,
-    sf.type,
-    sf.layer,
-    sf.features,
-    sf.deactivated,
-    sf.icon_height,
-    sf.rank,
-    (signal_direction = 'both') as direction_both,
-    degrees(ST_Azimuth(
-      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
-      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
-    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
-  FROM signals_with_features sf
-  JOIN signals s
-    ON s.id = sf.signal_id
-  LEFT JOIN LATERAL (
-    SELECT line.way as way
-    FROM railway_line line
-    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature', 'funicular')
-    ORDER BY s.way <-> line.way
-    LIMIT 1
-  ) as sl ON true
-  WHERE
-    (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-      OR railway IN ('derail', 'vacancy_detection');
+    signal_id,
+    any_value(type) as type,
+    layer,
+    array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
+    array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
+    array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
+    MAX(rank) as rank
+  FROM signals_with_features_1 sf
+  GROUP BY signal_id, layer;
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
@@ -240,12 +248,12 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
   FROM
     signal_features_view;
 
-CREATE INDEX IF NOT EXISTS signal_features_way_index
+CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
   ON signal_features
-  USING gist(way);
+    USING btree(signal_id);
 
 CLUSTER signal_features
-  USING signal_features_way_index;
+  USING signal_features_signal_id_index;
 
 --- Speed ---
 
@@ -263,7 +271,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         id,
         osm_id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        direction_both,
+        sd.direction_both,
         ref,
         caption,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
@@ -275,7 +283,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         wikipedia,
         note,
         description,
-        azimuth,${signals_railway_signals.tags.map(tag => `
+        sd.azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature0,
         features[2] as feature1,
@@ -283,7 +291,11 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         deactivated[2] as deactivated1,
         CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
         type
-      FROM signal_features
+      FROM signals s
+      JOIN signal_features sf
+        ON s.id = sf.signal_id
+      JOIN signal_direction sd
+        ON s.id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'speed'
       ORDER BY rank NULLS FIRST
@@ -343,7 +355,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         id,
         osm_id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        direction_both,
+        sd.direction_both,
         ref,
         caption,
         railway,
@@ -356,7 +368,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         wikipedia,
         note,
         description,
-        azimuth,${signals_railway_signals.tags.map(tag => `
+        sd.azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature0,
         features[2] as feature1,
@@ -373,7 +385,11 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
         type
-      FROM signal_features
+      FROM signals s
+      JOIN signal_features sf
+        ON s.id = sf.signal_id
+      JOIN signal_direction sd
+        ON s.id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'signals'
       ORDER BY rank NULLS FIRST
@@ -443,7 +459,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         id,
         osm_id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        direction_both,
+        sd.direction_both,
         ref,
         caption,
         nullif(array_to_string(position, U&'\\001E'), '') as position,
@@ -455,12 +471,16 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         wikipedia,
         note,
         description,
-        azimuth,${signals_railway_signals.tags.map(tag => `
+        sd.azimuth,${signals_railway_signals.tags.map(tag => `
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature,
         deactivated[1] as deactivated,
         type as type
-      FROM signal_features
+      FROM signals s
+      JOIN signal_features sf
+        ON s.id = sf.signal_id
+      JOIN signal_direction sd
+        ON s.id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'electrification'
       ORDER BY rank NULLS FIRST
