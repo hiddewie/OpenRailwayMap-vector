@@ -4709,20 +4709,6 @@ features:
       - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
-  - description: 1ª categoria quadro (Avvio & Avanzamento) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-s-1v-AVV-AVA-Y' }
-          - { exact: 'G', value: 'it/main-s-1v-AVV-AVA-G' }
-        default: 'it/main-s-1v-AVV-AVA-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'square' }
-      - { tag: 'railway:signal:main:substitute_signal', all: [ 'IT:AVA', 'IT:AVV' ] }
-
   - description: 1ª categoria quadro (Avvio & Avanzamento) (2 lights)
     country: IT
     icon:
@@ -4761,19 +4747,6 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'square' }
       - { tag: 'railway:signal:main:substitute_signal', all: [ 'IT:AVA', 'IT:AVV' ] }
 
-  - description: 1ª categoria (Avvio & Avanzamento) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-1v-AVV-AVA-Y' }
-          - { exact: 'G', value: 'it/main-1v-AVV-AVA-G' }
-        default: 'it/main-1v-AVV-AVA-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:substitute_signal', all: [ 'IT:AVA', 'IT:AVV' ] }
-
   - description: 1ª categoria (Avvio & Avanzamento) (2 lights)
     country: IT
     icon:
@@ -4809,20 +4782,6 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:substitute_signal', all: [ 'IT:AVA', 'IT:AVV' ] }
-
-  - description: 1ª categoria quadro (Avanzamento) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-s-1v-AVA-Y' }
-          - { exact: 'G', value: 'it/main-s-1v-AVA-G' }
-        default: 'it/main-s-1v-AVA-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'square' }
-      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVA' }
 
   - description: 1ª categoria quadro (Avanzamento) (2 lights)
     country: IT
@@ -4862,19 +4821,6 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'square' }
       - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVA' }
 
-  - description: 1ª categoria (Avanzamento) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-1v-AVA-Y' }
-          - { exact: 'G', value: 'it/main-1v-AVA-G' }
-        default: 'it/main-1v-AVA-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVA' }
-
   - description: 1ª categoria (Avanzamento) (2 lights)
     country: IT
     icon:
@@ -4910,20 +4856,6 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVA' }
-
-  - description: 1ª categoria quadro (Avvio) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-s-1v-AVV-Y' }
-          - { exact: 'G', value: 'it/main-s-1v-AVV-G' }
-        default: 'it/main-s-1v-AVV-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'square' }
-      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVV' }
 
   - description: 1ª categoria quadro (Avvio) (2 lights)
     country: IT
@@ -4961,19 +4893,6 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'square' }
-      - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVV' }
-
-  - description: 1ª categoria (Avvio) (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-1v-AVV-Y' }
-          - { exact: 'G', value: 'it/main-1v-AVV-G' }
-        default: 'it/main-1v-AVV-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:substitute_signal', value: 'IT:AVV' }
 
   - description: 1ª categoria (Avvio) (2 lights)
@@ -5027,19 +4946,6 @@ features:
       - { tag: 'railway:signal:departure', value: 'IT:PAR' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: 1ª categoria quadro (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/main-s-1v-Y' }
-          - { exact: 'G', value: 'it/main-s-1v-G' }
-        default: 'it/main-s-1v-R'
-    tags:
-      - { tag: 'railway:signal:main', value: 'IT:1V' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'square' }
-
   - description: 1ª categoria quadro (2 lights)
     country: IT
     icon:
@@ -5079,11 +4985,21 @@ features:
   - description: 1ª categoria (1 light)
     country: IT
     icon:
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'square', value: 'it/main-s-1v', description: 'quadro' }
+        default: 'it/main-1v'
       - match: 'railway:signal:main:states'
         cases:
-          - { any: ['(Y)', 'Y'], value: 'it/main-1v-Y' }
-          - { exact: 'G', value: 'it/main-1v-G' }
-        default: 'it/main-1v-R'
+          - { any: [ '(Y)', 'Y' ], value: "it/1v-Y" }
+          - { exact: 'G', value: "it/1v-G" }
+        default: "it/1v-R"
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        offset: { x: -1, y: 10 }
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
