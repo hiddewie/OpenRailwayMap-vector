@@ -1448,6 +1448,7 @@ function popupContent(feature) {
   }
 
   const formatPropertyValue = (value, split, format) =>
+    // TODO remove `split`, make icons use , separated values (or other scheme)
     (split ? String(value).split('\u001e') : [String(value)])
       .map(stringValue => {
         if (!format) {
