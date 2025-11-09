@@ -69,8 +69,8 @@ function allIconCombinations(feature) {
   const combinationsWithName = combinations.filter(combination => combination.name)
 
   return [
-    ...[...new Set(combinationsWithoutName.map(combination => combination.icon.join(',')))].map(icon => [icon, {country: feature.country, name: feature.description}]),
-    ...combinationsWithName.map(combination => [combination.icon.join(','), {country: feature.country, name: `${feature.description} (${combination.name})`}]),
+    ...[...new Set(combinationsWithoutName.map(combination => combination.icon.join('|')))].map(icon => [icon, {country: feature.country, name: feature.description}]),
+    ...combinationsWithName.map(combination => [combination.icon.join('|'), {country: feature.country, name: `${feature.description} (${combination.name})`}]),
   ]
 }
 

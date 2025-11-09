@@ -137,20 +137,20 @@ function matchIconCase(tag, iconCase) {
   }
 }
 
-function iconCaseSql(iconCase, matchTag) {
+function iconCaseSql(iconCase, matchTag, offset) {
   if (iconCase.value.includes('{}')) {
-    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${offset ? `@${offset.x || 0},${offset.y || 0}` : ''}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
   } else {
-    return `ARRAY['${iconCase.value}', NULL, '${iconCase.dimensions.height}']`
+    return `ARRAY['${iconCase.value}${offset ? `@${offset.x || 0},${offset.y || 0}` : ''}', NULL, '${iconCase.dimensions.height}']`
   }
 }
 
 function featureIconSql(icon) {
-  const defaultIconSql = icon.default ? `ARRAY['${icon.default}', NULL, '${icon.dimensions.height}']` : 'NULL'
+  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.offset ? `@${icon.offset.x || 0},${icon.offset.y || 0}` : ''}', NULL, '${icon.dimensions.height}']` : 'NULL'
 
   if (icon.match) {
     return `CASE ${icon.cases.map(iconCase => `
-                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match)}`).join('')}
+                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match, icon.offset)}`).join('')}
                     ${icon.default ? `ELSE ${defaultIconSql}` : ''}
                   END`
   } else {
@@ -159,13 +159,12 @@ function featureIconSql(icon) {
 }
 
 function featureIconsSql(icons) {
-  // TODO use offset
   // TODO support multiple variables
   if (icons.length === 1) {
     return featureIconSql(icons[0])
   } else {
     return `(
-                SELECT ARRAY[string_agg(icon[1], ','), string_agg(COALESCE(icon[2], ''), ','), MAX(icon[3]::numeric)::text]
+                SELECT ARRAY[string_agg(icon[1], '|'), string_agg(COALESCE(icon[2], ''), '|'), MAX(icon[3]::numeric)::text]
                 FROM (
                   ${icons.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
                   UNION ALL
@@ -179,7 +178,6 @@ function featureIconsSql(icons) {
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
-// TODO add multiple icons
 const sql = `
 CREATE OR REPLACE VIEW signal_direction_view AS
   SELECT

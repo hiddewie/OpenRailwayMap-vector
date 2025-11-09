@@ -711,6 +711,7 @@ function transposeSdfImageData(context, images, width, height) {
 /**
  * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
  */
+const imageMatcher = /^(?<id>[^@]+)(@(?<x>-?\d+),(?<y>-?\d+))?$/
 async function composeImages(imageIds) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext('2d')
@@ -718,23 +719,38 @@ async function composeImages(imageIds) {
   const sdf = imageIds[0].startsWith('sdf:')
 
   // Load images
-  const images = imageIds.map(id => ({
-    id,
-    image: map.getImage(!sdf || id.startsWith('sdf:') ? id : `sdf:${id}`),
-    offset: {
-      x: 0,
-      y: 0,
+  const images = imageIds.map(imageId => {
+    const parsed = imageId.match(imageMatcher)
+    if (!parsed) {
+      throw new Error(`Could not parse image ID '${imageId}'`)
     }
-  }));
 
-  // TODO handle negative offsets:
-  // const globalOffset = {
-  //   x: -Math.min(...images.map(image => Math.min(0, image.offset.x))),
-  //   y: -Math.min(...images.map(image => Math.min(0, image.offset.y))),
-  // }
+    const id = parsed.groups.id
+    const offset = {
+      x: parsed.groups.x ? parseInt(parsed.groups.x) : 0,
+      y: parsed.groups.y ? parseInt(parsed.groups.y) : 0,
+    }
+    const loadId = !sdf || id.startsWith('sdf:') ? id : `sdf:${id}`
+    const image = map.getImage(loadId)
+    if (!image) {
+      throw new Error(`Could not load image ${loadId}`)
+    }
 
-  const width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
-  const height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
+    return {
+      id,
+      image,
+      offset,
+    }
+  });
+
+  // Handle negative image offsets
+  const globalOffset = {
+    x: -Math.min(...images.map(image => Math.min(0, image.offset.x))),
+    y: -Math.min(...images.map(image => Math.min(0, image.offset.y))),
+  }
+
+  const width = Math.max(...images.map(image => globalOffset.x + image.offset.x + image.image.data.width));
+  const height = Math.max(...images.map(image => globalOffset.y + image.offset.y + image.image.data.height));
 
   canvas.width = width;
   canvas.height = height;
@@ -748,7 +764,7 @@ async function composeImages(imageIds) {
       offset: image.offset,
     })))
     for (const {data, offset} of imageDatas) {
-      context.drawImage(data, offset.x, offset.y)
+      context.drawImage(data, globalOffset.x + offset.x, globalOffset.y + offset.y)
     }
   }
 
@@ -773,7 +789,7 @@ async function generateImage(ids) {
   if (!generatedImages[ids]) {
     generatedImages[ids] = true;
 
-    const imageIds = ids.split(',')
+    const imageIds = ids.split('|')
     if (!imageIds) {
       console.warn('ignoring invalid missing image', ids);
       return;
