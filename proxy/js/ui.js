@@ -739,6 +739,8 @@ async function generateImage(ids) {
       return;
     }
 
+    console.info(`Generating image for ${ids}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
+
     // Compose the images together
     const {width, height, data, pixelRatio, sdf} = await composeImages(imageIds)
     const image = {width, height, data};
