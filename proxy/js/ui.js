@@ -690,6 +690,7 @@ async function composeImages(imageIds) {
   const context = canvas.getContext('2d')
 
   const sdf = imageIds[0].startsWith('sdf:')
+
   // Load images
   const images = imageIds.map(id => ({
     id,
@@ -700,7 +701,12 @@ async function composeImages(imageIds) {
     }
   }));
 
-  // TODO handle negative offsets
+  // TODO handle negative offsets:
+  // const globalOffset = {
+  //   x: -Math.min(...images.map(image => Math.min(0, image.offset.x))),
+  //   y: -Math.min(...images.map(image => Math.min(0, image.offset.y))),
+  // }
+
   const width = Math.max(...images.map(image => image.offset.x + image.image.data.width));
   const height = Math.max(...images.map(image => image.offset.y + image.image.data.height));
 
