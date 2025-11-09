@@ -6,7 +6,8 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
 async function parseSvgDimensions(features) {
-  // TODO
+  // TODO handle all icons
+  // TODO handle offset
   const feature = features.split('\u001E')[0]
   const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
   // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
@@ -43,7 +44,7 @@ const signalsWithSignalType = await Promise.all(
               dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
             })))
           : undefined,
-        dimensions: await parseSvgDimensions(icon.default),
+        dimensions: icon.default ? await parseSvgDimensions(icon.default) : undefined,
       }))),
     }))
 );
