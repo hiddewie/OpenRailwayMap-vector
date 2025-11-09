@@ -682,6 +682,32 @@ async function transposeImageData(context, source) {
   return await createImageBitmap(imageData)
 }
 
+function transposeSdfImageData(context, images, width, height) {
+  const imageData = context.createImageData(width, height)
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      // Indices 0, 1 and 2 of pixel are unused for SDF images
+
+      let distanceField = 0;
+      for (const image of images) {
+        if (
+          image.offset.x <= x && x < image.offset.x + image.image.data.width &&
+          image.offset.y <= y && y < image.offset.y + image.image.data.height
+        ) {
+          const imageI = 4 * ((y - image.offset.y) * image.image.data.width + (x - image.offset.x))
+          distanceField = Math.max(distanceField, image.image.data.data[imageI + 3])
+        }
+      }
+
+      const i = 4 * (y * width + x);
+      imageData.data[i + 3] = distanceField;
+    }
+  }
+
+  return imageData
+}
+
 /**
  * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
  */
@@ -714,28 +740,7 @@ async function composeImages(imageIds) {
   canvas.height = height;
 
   if (sdf) {
-    const imageData = context.createImageData(width, height)
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const i = 4 * (y * width + x);
-        // Indices 0, 1 and 2 of pixel are unused for SDF images
-
-        let distanceField = 0;
-        for (const image of images) {
-          if (
-            image.offset.x <= x && x < image.offset.x + image.image.data.width &&
-            image.offset.y <= y && y < image.offset.y + image.image.data.height
-          ) {
-            const imageI = 4 * ((y - image.offset.y) * image.image.data.width + (x - image.offset.x))
-            distanceField = Math.max(distanceField, image.image.data.data[imageI + 3])
-          }
-        }
-
-        imageData.data[i + 3] = distanceField;
-      }
-    }
-
+    const imageData = transposeSdfImageData(context, images, width, height)
     context.putImageData(imageData, 0, 0)
   } else {
     const imageDatas = await Promise.all(images.map(async image => ({
