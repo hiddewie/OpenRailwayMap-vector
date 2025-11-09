@@ -45,8 +45,8 @@ const featureLinks = {
 
 function allIconCombinations(feature) {
   const allIcons = feature.icon.map(icon => [
-    ...(icon.default ? [{ name: icon.description, icon: icon.default }] : []),
-    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: iconCase.example ?? iconCase.value}))),
+    {name: icon.description, icon: icon.default ? [icon.default] : []},
+    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: [iconCase.example ?? iconCase.value]}))),
   ])
 
   let combinations = allIcons[0]
@@ -57,7 +57,7 @@ function allIconCombinations(feature) {
       icons.forEach(icon => {
         newCombinations.push({
           name: [combination.name, icon.name].filter(it => it).join(', '),
-          icon: `${combination.icon}\u001e${icon.icon}`,
+          icon: icon.icon ? [...combination.icon, ...icon.icon] : combination.icon,
         })
       })
     })
@@ -69,8 +69,8 @@ function allIconCombinations(feature) {
   const combinationsWithName = combinations.filter(combination => combination.name)
 
   return [
-    ...[...new Set(combinationsWithoutName.map(combination => combination.icon))].map(icon => [icon, {country: feature.country, name: feature.description}]),
-    ...combinationsWithName.map(combination => [combination.icon, {country: feature.country, name: `${feature.description} (${combination.name})`}]),
+    ...[...new Set(combinationsWithoutName.map(combination => combination.icon.join('\u001e')))].map(icon => [icon, {country: feature.country, name: feature.description}]),
+    ...combinationsWithName.map(combination => [combination.icon.join('\u001e'), {country: feature.country, name: `${feature.description} (${combination.name})`}]),
   ]
 }
 
