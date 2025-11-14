@@ -276,11 +276,23 @@ function hideConfiguration() {
   configurationBackdrop.style.display = 'none';
 }
 
+function hideLegend() {
+  legend.style.display = 'none';
+}
+
+function showLegend() {
+  legend.style.display = 'block';
+}
+
+function isLegendShown() {
+  return legend.style.display === 'block';
+}
+
 function toggleLegend() {
-  if (legend.style.display === 'block') {
-    legend.style.display = 'none';
+  if (isLegendShown()) {
+    hideLegend();
   } else {
-    legend.style.display = 'block';
+    showLegend();
   }
 }
 
@@ -362,6 +374,12 @@ document.addEventListener('keydown', (event) => {
     hideSearch();
     hideConfiguration();
     hideNews();
+    hideAbout();
+    hideLegend();
+    if (popup) {
+      popup.remove();
+      popup = null;
+    }
   }
 });
 
@@ -1610,6 +1628,7 @@ function closestPointOnLine(point, line) {
   }
 }
 
+let popup = null;
 map.on('click', event => {
   const features = map.queryRenderedFeatures(event.point);
   if (features.length > 0) {
@@ -1633,7 +1652,12 @@ map.on('click', event => {
       'left': [iconWidth, 0],
       'right': [-iconWidth, 0]
     }
-    new maplibregl.Popup({offset: popupOffsets})
+
+    if (popup) {
+      popup.remove();
+    }
+
+    popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
       .setDOMContent(popupContent(feature))
       .addTo(map);

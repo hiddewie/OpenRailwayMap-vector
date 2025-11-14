@@ -704,7 +704,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions',
   },
   openrailwaymap_speed: {
     type: 'vector',
@@ -1510,7 +1510,7 @@ const layers = {
       },
     })),
     {
-      id: 'railway_platforms',
+      id: 'railway_platforms_polygon',
       type: 'fill',
       minzoom: 15,
       source: 'openrailwaymap_standard',
@@ -1524,7 +1524,7 @@ const layers = {
       },
     },
     {
-      id: 'railway_platforms_outline',
+      id: 'railway_platforms_polygon_outline',
       type: 'line',
       minzoom: 15,
       source: 'openrailwaymap_standard',
@@ -1541,6 +1541,25 @@ const layers = {
         'line-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           colors.styles.standard.platform,
+        ],
+      },
+    },
+    {
+      id: 'railway_platforms_line',
+      type: 'line',
+      minzoom: 15,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['==', ["geometry-type"], 'LineString'],
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.styles.standard.platform,
+        ],
+        'line-width': ['interpolate', ['linear'], ['zoom'],
+          15, 2,
+          18, 6,
+          20, 10,
         ],
       },
     },
@@ -2026,6 +2045,34 @@ const layers = {
       }
     },
     {
+      id: 'railway_stop_positions',
+      type: 'circle',
+      minzoom: 16,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_stop_positions',
+      paint: {
+        'circle-radius': ['interpolate', ['linear'], ['zoom'],
+          16, 2,
+          19, 5,
+        ],
+        'circle-color': ['match', ['get', 'type'],
+          'train', colors.styles.standard.main,
+          'tram', colors.styles.standard.tram,
+          'light_rail', colors.styles.standard.light_rail,
+          'subway', colors.styles.standard.subway,
+          'funicular', colors.styles.standard.funicular,
+          'monorail', colors.styles.standard.monorail,
+          'miniature', colors.styles.standard.miniature,
+          colors.styles.standard.unknown,
+        ],
+        'circle-stroke-width': 2,
+        'circle-stroke-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.halo,
+        ],
+      },
+    },
+    {
       id: `railway_symbols_colored`,
       type: 'symbol',
       minzoom: 12,
@@ -2079,7 +2126,7 @@ const layers = {
       },
     ),
     {
-      id: 'railway_platforms_text',
+      id: 'railway_platforms_polygon_text',
       type: 'symbol',
       minzoom: 17,
       source: 'openrailwaymap_standard',
@@ -2104,6 +2151,29 @@ const layers = {
         'text-font': font.regular,
         'text-size': 11,
         'text-padding': 10,
+      },
+    },
+    {
+      id: 'railway_platforms_line_text',
+      type: 'symbol',
+      minzoom: 17,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_railway_platforms',
+      filter: ['==', ["geometry-type"], 'LineString'],
+      paint: {
+        'text-color': colors.styles.standard.defaultText,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 1.5,
+      },
+      layout: {
+        'text-field': '{name}',
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 10,
+        'symbol-placement': 'line',
       },
     },
     {
@@ -4985,6 +5055,53 @@ const legendData = {
         properties: {
           ref: 3,
         },
+      },
+    ],
+    "openrailwaymap_standard-standard_railway_stop_positions": [
+      {
+        legend: 'Stop position',
+        type: 'point',
+        properties: {
+          type: 'train',
+        },
+        variants: [
+          {
+            legend: 'light rail',
+            properties: {
+              type: 'light_rail',
+            },
+          },
+          {
+            legend: 'Tram',
+            properties: {
+              type: 'tram',
+            },
+          },
+          {
+            legend: 'Subway',
+            properties: {
+              type: 'Subway',
+            },
+          },
+          {
+            legend: 'funicular',
+            properties: {
+              type: 'funicular',
+            },
+          },
+          {
+            legend: 'monorail',
+            properties: {
+              type: 'monorail',
+            },
+          },
+          {
+            legend: 'miniature',
+            properties: {
+              type: 'miniature',
+            },
+          },
+        ]
       },
     ],
     "openrailwaymap_standard-standard_railway_symbols":

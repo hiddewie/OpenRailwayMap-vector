@@ -141,7 +141,23 @@ osm2pgsql.process_way({
   tags = {
     ['public_transport'] = 'platform',
   },
+  is_closed = true,
   as_polygon = function()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platforms = {
+    { bench = false, shelter = false, elevator = false, departures_board = false, bin = false, tactile_paving = false, wheelchair = false, lit = false, way = way },
+  },
+})
+
+osm2pgsql.process_way({
+  tags = {
+    ['public_transport'] = 'platform',
+  },
+  is_closed = false,
+  as_linestring = function()
     return way
   end,
 })

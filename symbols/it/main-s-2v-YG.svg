@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9" height="18" viewBox="0 0 9 18">
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.1 0.1 L 8.9 0.1 L 8.9 8.9 L 0.1 8.9 Z" />
+<path fill-rule="nonzero" fill="rgb(100%, 86.666667%, 0%)" fill-opacity="1" d="M 6.25 4.457031 C 6.25 5.417969 5.464844 6.203125 4.5 6.203125 C 3.535156 6.203125 2.75 5.417969 2.75 4.457031 C 2.75 3.488281 3.535156 2.707031 4.5 2.707031 C 5.464844 2.707031 6.25 3.488281 6.25 4.457031 Z"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="0.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 100%, 100%)" stroke-opacity="1" stroke-miterlimit="4" d="M 0.1 9.1 L 8.9 9.1 L 8.9 17.9 L 0.1 17.9 Z" />
+<path fill-rule="nonzero" fill="rgb(0%, 100%, 0%)" fill-opacity="1" d="M 6.25 13.457031 C 6.25 14.417969 5.464844 15.203125 4.5 15.203125 C 3.535156 15.203125 2.75 14.417969 2.75 13.457031 C 2.75 12.488281 3.535156 11.707031 4.5 11.707031 C 5.464844 11.707031 6.25 12.488281 6.25 13.457031 Z"/>
+</svg>

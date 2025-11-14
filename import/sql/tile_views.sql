@@ -983,6 +983,48 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION standard_railway_stop_positions(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_railway_stop_positions', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      'stop_position' as feature,
+      name,
+      type
+    FROM stop_positions
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_railway_stop_positions IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_railway_stop_positions",
+        "fields": {
+          "id": "integer",
+          "osm_id": "string",
+          "feature": "string",
+          "name": "string",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE FUNCTION railway_text_km(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
