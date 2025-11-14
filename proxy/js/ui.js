@@ -708,28 +708,15 @@ function transposeSdfImageData(context, images, width, height) {
   return imageData
 }
 
-/**
- * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
- */
-const imageMatcher = /^(?<id>[^@]+)(@(?<x>-?\d+),(?<y>-?\d+))?$/
-async function composeImages(imageIds) {
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext('2d')
-
-  const sdf = imageIds[0].startsWith('sdf:')
-
-  // Load images
-  const images = imageIds.map(imageId => {
+function loadImages(imageIds, sdf) {
+  return imageIds.map(imageId => {
     const parsed = imageId.match(imageMatcher)
     if (!parsed) {
       throw new Error(`Could not parse image ID '${imageId}'`)
     }
 
     const id = parsed.groups.id
-    const offset = {
-      x: parsed.groups.x ? parseInt(parsed.groups.x) : 0,
-      y: parsed.groups.y ? parseInt(parsed.groups.y) : 0,
-    }
+    const position = parsed.position ?? 'center'
     const loadId = !sdf || id.startsWith('sdf:') ? id : `sdf:${id}`
     const image = map.getImage(loadId)
     if (!image) {
@@ -739,18 +726,103 @@ async function composeImages(imageIds) {
     return {
       id,
       image,
-      offset,
+      position,
     }
   });
+}
 
-  // Handle negative image offsets
+function layoutImages(images) {
+  let width = images[0].image.data.width
+  let height = images[0].image.data.height
+  // Ignore position of first image
+
+  const offsetImages = images.map(image => ({
+    ...image,
+    offset: {
+      x: 0,
+      y: 0,
+    },
+  }))
+
+  // Offset of the top left corner
   const globalOffset = {
-    x: -Math.min(...images.map(image => Math.min(0, image.offset.x))),
-    y: -Math.min(...images.map(image => Math.min(0, image.offset.y))),
+    x: 0,
+    y: 0,
   }
 
-  const width = Math.max(...images.map(image => globalOffset.x + image.offset.x + image.image.data.width));
-  const height = Math.max(...images.map(image => globalOffset.y + image.offset.y + image.image.data.height));
+  for (const image of images.slice(1)) {
+    switch (image.position) {
+      case 'center':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = Math.max(height, image.image.data.height)
+        break;
+
+      case 'bottom':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
+
+      case 'top':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y - image.image.data.height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
+
+      case 'right':
+        image.offset.x = globalOffset.x + width
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
+
+      case 'left':
+        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
+    }
+  }
+
+  // Get rid of global offset
+  images.forEach(image => {
+    image.offset.x -= globalOffset.x
+    image.offset.y -= globalOffset.y
+  })
+
+  return {
+    width,
+    height,
+    images: offsetImages
+  }
+}
+
+/**
+ * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
+ */
+const imageMatcher = /^(?<id>[^@]+)(@(?<position>center|bottom|top|right|left))?$/
+async function composeImages(imageIds) {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext('2d')
+
+  const sdf = imageIds[0].startsWith('sdf:')
+  const loadedImages = loadImages(imageIds, sdf)
+  const { width, height, images } = layoutImages(loadedImages);
 
   canvas.width = width;
   canvas.height = height;
