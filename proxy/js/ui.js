@@ -750,7 +750,7 @@ function layoutImages(images) {
     y: 0,
   }
 
-  for (const image of images.slice(1)) {
+  for (const image of offsetImages.slice(1)) {
     switch (image.position) {
       case 'center':
         image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
@@ -800,7 +800,7 @@ function layoutImages(images) {
   }
 
   // Get rid of global offset
-  images.forEach(image => {
+  offsetImages.forEach(image => {
     image.offset.x -= globalOffset.x
     image.offset.y -= globalOffset.y
   })
@@ -836,7 +836,7 @@ async function composeImages(imageIds) {
       offset: image.offset,
     })))
     for (const {data, offset} of imageDatas) {
-      context.drawImage(data, globalOffset.x + offset.x, globalOffset.y + offset.y)
+      context.drawImage(data, offset.x, offset.y)
     }
   }
 
