@@ -849,6 +849,12 @@ const features = {
           lookup: 'signals_railway_signals',
         },
       },
+      feature5: {
+        name: 'Senary signal',
+        format: {
+          lookup: 'signals_railway_signals',
+        },
+      },
       ref: {
         name: 'Reference',
       },
