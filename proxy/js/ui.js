@@ -690,16 +690,11 @@ function transposeSdfImageData(context, images, width, height) {
 
       let distanceField = 0;
       for (const image of images) {
-        const sdfImageOffset = {
-          x: Math.floor(image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2),
-          y: Math.floor(image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2),
-        }
-
         if (
-          sdfImageOffset.x <= x && x < sdfImageOffset.x + image.sdfImage.data.width &&
-          sdfImageOffset.y <= y && y < sdfImageOffset.y + image.sdfImage.data.height
+          image.sdfOffset.x <= x && x < image.sdfOffset.x + image.sdfImage.data.width &&
+          image.sdfOffset.y <= y && y < image.sdfOffset.y + image.sdfImage.data.height
         ) {
-          const imageI = 4 * ((y - sdfImageOffset.y) * image.sdfImage.data.width + (x - sdfImageOffset.x))
+          const imageI = 4 * ((y - image.sdfOffset.y) * image.sdfImage.data.width + (x - image.sdfOffset.x))
           distanceField = Math.max(distanceField, image.sdfImage.data.data[imageI + 3])
         }
       }
@@ -759,6 +754,7 @@ function layoutImages(images) {
       x: 0,
       y: 0,
     },
+    sdfOffset: null, // Will be filled in the last step
   }))
 
   // Offset of the top left corner of the composed image
@@ -832,6 +828,14 @@ function layoutImages(images) {
   offsetImages.forEach(image => {
     image.offset.x -= globalOffset.x
     image.offset.y -= globalOffset.y
+  })
+
+  // Store the SDF image offset using the SDF image size
+  offsetImages.forEach(image => {
+    image.sdfOffset = {
+      x: Math.floor(image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2),
+      y: Math.floor(image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2),
+    }
   })
 
   return {
