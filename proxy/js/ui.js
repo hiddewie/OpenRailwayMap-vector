@@ -264,7 +264,7 @@ function showConfiguration() {
 
   const stationLowZoomLabel = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel
   if (stationLowZoomLabel === 'label') {
-    stationLowZoomLabel.checked = true
+    stationLabelReferenceControl.checked = true
   } else if (stationLowZoomLabel === 'name') {
     stationLabelNameControl.checked = true
   }
