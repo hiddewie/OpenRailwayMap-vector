@@ -3973,7 +3973,7 @@ features:
           - { regex: '^([^;]+);[^;]+$', value: 'fi/t-271-top-unknown' }
       - match: 'railway:signal:stop:caption'
         cases:
-          - { regex: '^[^;]+;(1|2|3|4|5)$', value: 'fi/t-271-bottom-{}', example: 'fi/t-271-bottom-{1}' }
+          - { regex: '^[^;]+;(1|2|3|4|5)$', value: 'fi/t-271-bottom-{}', example: 'fi/t-271-bottom-{2}' }
           - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-271-bottom-unknown' }
       - match: 'railway:signal:stop'
         cases:
@@ -3998,13 +3998,13 @@ features:
       - { tag: 'railway:signal:stop', any: ['FI:T-272A', 'FI:T-272B', 'FI:T-272C', 'FI:T-272D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Stopping position (single)
+  - description: Train composition (single)
     country: FI
     icon:
       - default: 'fi/t-273'
       - match: 'railway:signal:stop:caption'
         cases:
-          - { any: ['1', '2', '3', '4', '5'], value: 'fi/t-273-{}', example: 'fi/t-273-{2}' }
+          - { any: ['1', '2', '3', '4'], value: 'fi/t-273-{}', example: 'fi/t-273-{2}' }
         default: 'fi/t-273-unknown'
       - match: 'railway:signal:stop'
         cases:
@@ -4015,17 +4015,17 @@ features:
       - { tag: 'railway:signal:stop', any: ['FI:T-273A', 'FI:T-273B', 'FI:T-273C', 'FI:T-273D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Stopping position (combination)
+  - description: Train composition (combination)
     country: FI
     icon:
       - default: 'fi/t-273'
       - match: 'railway:signal:stop:caption'
         cases:
-          - { regex: '^([1-5]);[^;]+$', value: 'fi/t-274-top-{}', example: 'fi/t-274-top-{1}' }
+          - { regex: '^([1-4]);[^;]+$', value: 'fi/t-274-top-{}', example: 'fi/t-274-top-{2}' }
           - { regex: '^([^;]+);[^;]+$', value: 'fi/t-274-top-unknown' }
       - match: 'railway:signal:stop:caption'
         cases:
-          - { regex: '^[^;]+;(1|2|3|4|5)$', value: 'fi/t-274-bottom-{}', example: 'fi/t-274-bottom-{1}' }
+          - { regex: '^[^;]+;(1|2|3|4)$', value: 'fi/t-274-bottom-{}', example: 'fi/t-274-bottom-{4}' }
           - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-274-bottom-unknown' }
       - match: 'railway:signal:stop'
         cases:
