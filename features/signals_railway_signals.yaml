@@ -5004,20 +5004,24 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Segnale accoppiato quadro (3 lights)
+  - description: Segnale accoppiato (3 lights)
     country: IT
     icon:
+      - match: 'railway:signal:combined:shape'
+        cases:
+          - { exact: 'square', value: 'it/combined-s-3v', description: 'quadro' }
+        default: 'it/combined-3v'
       - match: 'railway:signal:combined:states'
         cases:
-          - { any: [ 'R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)' ], value: 'it/combined-s-3v-RYG' }
-          - { exact: 'R-Y-Y', value: 'it/combined-s-3v-RYY' }
-          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/combined-s-3v-RY' }
-          - { exact: 'R-G', value: 'it/combined-s-3v-RG' }
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/combined-s-3v-YG' }
-          - { exact: 'Y-Y', value: 'it/combined-s-3v-YY' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/combined-s-3v-Y' }
-          - { exact: 'G', value: 'it/combined-s-3v-G' }
-        default: 'it/combined-s-3v-R'
+          - { any: [ 'R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)' ], value: 'it/3v-RYG' }
+          - { exact: 'R-Y-Y', value: 'it/3v-RYY' }
+          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/3v-RY' }
+          - { exact: 'R-G', value: 'it/3v-RG' }
+          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/3v-YG' }
+          - { exact: 'Y-Y', value: 'it/3v-YY' }
+          - { any: [ '(Y)', 'Y' ], value: 'it/3v-Y' }
+          - { exact: 'G', value: 'it/3v-G' }
+        default: 'it/3v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -5057,24 +5061,6 @@ features:
         default: 'it/2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Segnale accoppiato (3 lights)
-    country: IT
-    icon:
-      - match: 'railway:signal:combined:states'
-        cases:
-          - { any: [ 'R-Y-G', 'R-(Y-G)', 'R-(Y)-(G)' ], value: 'it/combined-3v-RYG' }
-          - { exact: 'R-Y-Y', value: 'it/combined-3v-RYY' }
-          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/combined-3v-RY' }
-          - { exact: 'R-G', value: 'it/combined-3v-RG' }
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/combined-3v-YG' }
-          - { exact: 'Y-Y', value: 'it/combined-3v-YY' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/combined-3v-Y' }
-          - { exact: 'G', value: 'it/combined-3v-G' }
-        default: 'it/combined-3v-R'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   - description: Avviso (1 light)
