@@ -113,16 +113,23 @@ tags:
   - { tag: 'railway:signal:route:deactivated', title: 'Route deactivated', type: boolean }
   - { tag: 'railway:signal:route_distant', title: 'Route distant' }
   - { tag: 'railway:signal:route_distant:form', title: 'Route distant form' }
+  - { tag: 'railway:signal:route_distant:shape', title: 'Route distant shape' }
   - { tag: 'railway:signal:route_distant:states', title: 'Route distant states', type: array }
   - { tag: 'railway:signal:route_distant:deactivated', title: 'Route distant deactivated', type: boolean }
   - { tag: 'railway:signal:short_route', title: 'Short route' }
   - { tag: 'railway:signal:short_route:form', title: 'Short route form' }
+  - { tag: 'railway:signal:short_route:shape', title: 'Short route shape' }
   - { tag: 'railway:signal:short_route:deactivated', title: 'Short route deactivated', type: boolean }
   - { tag: 'railway:signal:shunting', title: 'Shunting' }
   - { tag: 'railway:signal:shunting:form', title: 'Shunting form' }
   - { tag: 'railway:signal:shunting:states', title: 'Shunting states', type: array }
+  - { tag: 'railway:signal:shunting:shape', title: 'Shunting shape' }
   - { tag: 'railway:signal:shunting:height', title: 'Shunting height' }
   - { tag: 'railway:signal:shunting:deactivated', title: 'Shunting deactivated', type: boolean }
+  - { tag: 'railway:signal:shunting_route', title: 'Shunting Route' }
+  - { tag: 'railway:signal:shunting_route:form', title: 'Shunting Route form' }
+  - { tag: 'railway:signal:shunting_route:states', title: 'Shunting Route states', type: array }
+  - { tag: 'railway:signal:shunting_route:deactivated', title: 'Shunting Route deactivated', type: boolean }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', title: 'Snowplow type' }
@@ -196,6 +203,7 @@ types:
   - { type: minor_distant, layer: signals }
   - { type: passing, layer: signals }
   - { type: shunting, layer: signals }
+  - { type: shunting_route, layer: signals }
   - { type: radio, layer: signals }
   - { type: stop, layer: signals }
   - { type: stop_distant, layer: signals }
@@ -1217,6 +1225,202 @@ features:
     tags:
       - { tag: 'railway:signal:station_distant', value: 'AU:NSW:YL' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  # --- AU-NSW-signals --- #
+
+  # shunt
+  - description: Shunt Signal
+    country: AU
+    icon:
+      match: 'railway:signal:shunting:shape'
+      cases:
+        - { exact: 'vertical', value: 'au/nsw/signals/shunt_vertical' }
+      default: 'au/nsw/signals/shunt_box'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:NSW:shunt' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Intermediate Shunt Signal Signal
+    country: AU
+    icon:
+      match: 'railway:signal:shunting:shape'
+      cases:
+        - { exact: 'vertical', value: 'au/nsw/signals/shunt_vertical_int' }
+      default: 'au/nsw/signals/shunt_box_int'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:NSW:intermediate' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Facing Points Indicator
+    country: AU
+    icon: { default: 'au/nsw/signals/points_indicator_facing' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:NSW:facing_points' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: Trailing Points Indicator
+    country: AU
+    icon: { default: 'au/nsw/signals/points_indicator_trailing' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:NSW:trailing_points' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  # repeaters
+  - description: LED Repeater
+    country: AU
+    icon: { default: 'au/nsw/signals/LED_repeater' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:NSW:LED_repeater' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  # other
+  - description: End of Track
+    country: AU
+    icon: { default: 'au/nsw/signals/end_of_track_R' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:end_of_track' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+      - { tag: 'railway:signal:stop:states', value: 'R' }
+
+  - description: End of Track
+    country: AU
+    icon: { default: 'au/nsw/signals/end_of_track_WR' }
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:end_of_track' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+      - { tag: 'railway:signal:stop:states', value: 'WR' }
+
+  - description: Guards Indicator
+    country: AU
+    icon: { default: 'au/nsw/signals/guards_indicator' }
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:NSW:guards_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Warning Light
+    country: AU
+    icon: { default: 'au/nsw/signals/warning_light_bulb' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:warning_light' }
+      - { tag: 'railway:signal:train_protection:form', value: 'light' }
+      - { tag: 'railway:signal:train_protection:shape', value: 'bulb' }
+
+  - description: Warning Light
+    country: AU
+    icon: { default: 'au/nsw/signals/warning_light_array' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:warning_light' }
+      - { tag: 'railway:signal:train_protection:form', value: 'light' }
+      - { tag: 'railway:signal:train_protection:shape', value: 'array' }
+
+  # main/distant + subsidiaries
+  - description: Tonnage Light
+    country: AU
+    icon: { default: 'au/nsw/signals/tonnage' }
+    tags:
+      - { tag: 'railway:signal:helper_engine', value: 'AU:NSW:tonnage' }
+      - { tag: 'railway:signal:helper_engine:form', value: 'light' }
+
+  - description: Automatic Light
+    country: AU
+    icon: { default: 'au/nsw/signals/automatic' }
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:A' }
+      - { tag: 'railway:signal:train_protection:form', value: 'light' }
+
+  - description: Dead End Siding (Right)
+    country: AU
+    icon: { default: 'au/nsw/signals/dead_end_right' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:NSW:dead_end' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+      - { tag: 'railway:signal:short_route:shape', value: 'right' }
+
+  - description: Dead End Siding (Left)
+    country: AU
+    icon: { default: 'au/nsw/signals/dead_end_left' }
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:NSW:dead_end' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+      - { tag: 'railway:signal:short_route:shape', value: 'left' }
+
+  - description: Calling-On / Shunt Ahead
+    country: AU
+    icon: { default: 'au/nsw/signals/subsidiary' }
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:NSW:subsidiary' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+
+  - description: Shunt Route Indicator
+    country: AU
+    icon: { default: 'au/nsw/signals/stencil' }
+    tags:
+      - { tag: 'railway:signal:shunting_route', value: 'AU:NSW:stencil' }
+      - { tag: 'railway:signal:shunting_route:form', value: 'light' }
+
+  - description: Close Up
+    country: AU
+    icon: { default: 'au/nsw/signals/close_up' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:NSW:close_up' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Low Speed
+    country: AU
+    icon: { default: 'au/nsw/signals/low_speed' }
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:NSW:low_speed' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Turnout Route
+    country: AU
+    icon:
+      match: 'railway:signal:switch:states'
+      cases:
+        - { all: ['right', 'left'], value: 'au/nsw/signals/turnout_both' }
+        - { exact: 'right', value: 'au/nsw/signals/turnout_right', description: 'right' }
+        - { exact: 'left', value: 'au/nsw/signals/turnout_left', description: 'left' }
+      default: 'au/nsw/signals/turnout_off'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:NSW:turnout_route' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: Mainline Indicator – Turnout
+    country: AU
+    icon:
+      match: 'railway:signal:switch:states'
+      cases:
+        - { all: ['right', 'left'], value: 'au/nsw/signals/MLI/turnout_both' }
+        - { exact: 'right', value: 'au/nsw/signals/MLI/turnout_right', description: 'right' }
+        - { exact: 'left', value: 'au/nsw/signals/MLI/turnout_left', description: 'left' }
+      default: 'au/nsw/signals/MLI/turnout_off'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:NSW:MLI_turnout' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: Mainline Route Indicator
+    country: AU
+    icon: { default: 'au/nsw/signals/route_indicator' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:NSW:theatre_box' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Turnout Repeater
+    country: AU
+    icon: { default: 'au/nsw/signals/route_distant_theatre_box' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
+      - { tag: 'railway:signal:route_distant:shape', value: 'theatre_box' }
+
+  - description: Turnout Repeater (feather-style)
+    country: AU
+    icon: { default: 'au/nsw/signals/route_distant_feather' }
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
+      - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
 
   # --- BE --- #
 
