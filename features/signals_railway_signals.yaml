@@ -3959,6 +3959,7 @@ features:
           - { exact: 'FI:T-270B', value: 'fi/t-270-right' }
           - { exact: 'FI:T-270C', value: 'fi/t-270-left' }
           - { exact: 'FI:T-270D', value: 'fi/t-270-both' }
+    exampleIcon: 'fi/t-270-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-270A', 'FI:T-270B', 'FI:T-270C', 'FI:T-270D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -3980,6 +3981,7 @@ features:
           - { exact: 'FI:T-271B', value: 'fi/t-271-right' }
           - { exact: 'FI:T-271C', value: 'fi/t-271-left' }
           - { exact: 'FI:T-271D', value: 'fi/t-271-both' }
+    exampleIcon: 'fi/t-271-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-271A', 'FI:T-271B', 'FI:T-271C', 'FI:T-271D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -3994,6 +3996,7 @@ features:
           - { exact: 'FI:T-272B', value: 'fi/t-270-right' }
           - { exact: 'FI:T-272C', value: 'fi/t-270-left' }
           - { exact: 'FI:T-272D', value: 'fi/t-270-both' }
+    exampleIcon: 'fi/t-272-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-272A', 'FI:T-272B', 'FI:T-272C', 'FI:T-272D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -4011,6 +4014,7 @@ features:
           - { exact: 'FI:T-273B', value: 'fi/t-273-right' }
           - { exact: 'FI:T-273C', value: 'fi/t-273-left' }
           - { exact: 'FI:T-273D', value: 'fi/t-273-both' }
+    exampleIcon: 'fi/t-273-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-273A', 'FI:T-273B', 'FI:T-273C', 'FI:T-273D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -4032,6 +4036,7 @@ features:
           - { exact: 'FI:T-274B', value: 'fi/t-274-right' }
           - { exact: 'FI:T-274C', value: 'fi/t-274-left' }
           - { exact: 'FI:T-274D', value: 'fi/t-274-both' }
+    exampleIcon: 'fi/t-274-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-274A', 'FI:T-274B', 'FI:T-274C', 'FI:T-274D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -4046,6 +4051,7 @@ features:
           - { exact: 'FI:T-275B', value: 'fi/t-273-right' }
           - { exact: 'FI:T-275C', value: 'fi/t-273-left' }
           - { exact: 'FI:T-275D', value: 'fi/t-273-both' }
+    exampleIcon: 'fi/t-275-example'
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-275A', 'FI:T-275B', 'FI:T-275C', 'FI:T-275D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
