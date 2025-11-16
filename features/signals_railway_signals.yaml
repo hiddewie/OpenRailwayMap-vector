@@ -1592,11 +1592,19 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'BE:SAS' }
 
-  - description: Petit Signal d'Arrêt
+  - description: Petit Signal d'Arrêt (light)
     country: BE
-    icon: [ default: 'be/PSA' ]
+    icon: [ default: 'be/PSA-light' ]
     tags:
       - { tag: 'railway:signal:shunting', any: [ 'BE:PSA', 'BE-SME:small_signal_triangle' ] }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Petit Signal d'Arrêt (sign)
+    country: BE
+    icon: [ default: 'be/PSA-sign' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'BE:PSA' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: (BME) Shunting signal, 2 color
     country: BE
