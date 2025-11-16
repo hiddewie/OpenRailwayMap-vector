@@ -4999,7 +4999,7 @@ features:
           - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
           - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
           - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
-        offset: { x: -1, y: 10 }
+        position: 'bottom'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
