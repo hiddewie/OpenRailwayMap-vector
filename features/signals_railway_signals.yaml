@@ -3977,9 +3977,9 @@ features:
           - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-271-bottom-unknown' }
       - match: 'railway:signal:stop'
         cases:
-          - { exact: 'FI:T-271B', value: 'fi/t-270-right' }
-          - { exact: 'FI:T-271C', value: 'fi/t-270-left' }
-          - { exact: 'FI:T-271D', value: 'fi/t-270-both' }
+          - { exact: 'FI:T-271B', value: 'fi/t-271-right' }
+          - { exact: 'FI:T-271C', value: 'fi/t-271-left' }
+          - { exact: 'FI:T-271D', value: 'fi/t-271-both' }
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-271A', 'FI:T-271B', 'FI:T-271C', 'FI:T-271D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -4029,9 +4029,9 @@ features:
           - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-274-bottom-unknown' }
       - match: 'railway:signal:stop'
         cases:
-          - { exact: 'FI:T-274B', value: 'fi/t-273-right' }
-          - { exact: 'FI:T-274C', value: 'fi/t-273-left' }
-          - { exact: 'FI:T-274D', value: 'fi/t-273-both' }
+          - { exact: 'FI:T-274B', value: 'fi/t-274-right' }
+          - { exact: 'FI:T-274C', value: 'fi/t-274-left' }
+          - { exact: 'FI:T-274D', value: 'fi/t-274-both' }
     tags:
       - { tag: 'railway:signal:stop', any: ['FI:T-274A', 'FI:T-274B', 'FI:T-274C', 'FI:T-274D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
