@@ -687,20 +687,25 @@ function transposeSdfImageData(context, images, width, height) {
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      // Indices 0, 1 and 2 of pixel are unused for SDF images
 
       let distanceField = 0;
       for (const image of images) {
+        const sdfImageOffset = {
+          x: Math.floor(image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2),
+          y: Math.floor(image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2),
+        }
+
         if (
-          image.offset.x <= x && x < image.offset.x + image.sdfImage.data.width &&
-          image.offset.y <= y && y < image.offset.y + image.sdfImage.data.height
+          sdfImageOffset.x <= x && x < sdfImageOffset.x + image.sdfImage.data.width &&
+          sdfImageOffset.y <= y && y < sdfImageOffset.y + image.sdfImage.data.height
         ) {
-          const imageI = 4 * ((y - image.offset.y) * image.sdfImage.data.width + (x - image.offset.x))
+          const imageI = 4 * ((y - sdfImageOffset.y) * image.sdfImage.data.width + (x - sdfImageOffset.x))
           distanceField = Math.max(distanceField, image.sdfImage.data.data[imageI + 3])
         }
       }
 
       const i = 4 * (y * width + x);
+      // Indices 0, 1 and 2 of pixel are unused for SDF images
       imageData.data[i + 3] = distanceField;
     }
   }
@@ -721,17 +726,18 @@ function loadImages(imageIds) {
 
     const image = map.getImage(id)
     if (!image) {
-      throw new Error(`Could not load image ${loadImageId}`)
+      throw new Error(`Could not load image ${id}`)
     }
 
-    const loadSdfImageId = `sdf:${id}`
-    const sdfImage = map.getImage(loadSdfImageId)
+    const sdfId = `sdf:${id}`
+    const sdfImage = map.getImage(sdfId)
     if (!image) {
-      throw new Error(`Could not load SDF image ${loadSdfImageId}`)
+      throw new Error(`Could not load SDF image ${sdfId}`)
     }
 
     return {
       id,
+      sdfId,
       image,
       sdfImage,
       position,
@@ -808,7 +814,6 @@ function layoutImages(images) {
     }
   }
 
-  // TODO: process SDF images
   // Process SDF images which are larger than the normal images due to padding pixels
   offsetImages.forEach(image => {
     width = Math.max(width, image.offset.x - globalOffset.x + image.sdfImage.data.width)
@@ -858,15 +863,12 @@ async function composeImages(imageIds) {
   canvas2.width = width;
   canvas2.height = height;
   const sdfImageData = transposeSdfImageData(context2, images, width, height)
-  context2.putImageData(sdfImageData, 0, 0)
-  const renderedSdfImageData = context2.getImageData(0, 0, width, height);
-  console.info(renderedImageData, renderedSdfImageData)
 
   return {
     width,
     height,
     imageData: new Uint8Array(renderedImageData.data.buffer),
-    sdfImageData: new Uint8Array(renderedSdfImageData.data.buffer),
+    sdfImageData: new Uint8Array(sdfImageData.data.buffer),
     pixelRatio: images[0].image.pixelRatio,
   };
 }
@@ -892,10 +894,10 @@ async function generateImage(ids) {
     console.info(`Generating image for ${rawImageIds}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
 
     // Compose the images together into a normal image and SDF image
-    const {width, height, data, pixelRatio, sdf} = await composeImages(imageIds)
-    const image = {width, height, data};
-    const options = {pixelRatio, sdf};
-    map.addImage(ids, image, options);
+    const {width, height, imageData, sdfImageData, pixelRatio} = await composeImages(imageIds)
+
+    map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
+    map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
   }
 }
 
