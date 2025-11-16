@@ -6046,7 +6046,7 @@ const legendData = {
       },
     ],
     'openrailwaymap_signals-signals_railway_signals': [
-      ...signals_railway_signals.filter(feature => feature.country == 'IT').flatMap(feature =>
+      ...signals_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
           legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
