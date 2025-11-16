@@ -90,10 +90,12 @@ services:
       CLIENT_CACHE_TTL_API_STALE: '0'
       CLIENT_CACHE_TTL_TILES_FRESH: '0'
       CLIENT_CACHE_TTL_TILES_STALE: '0'
+    volumes:
+      - ./proxy/js/ui.js:/etc/nginx/public/js/ui.js
     develop:
       watch:
-        - action: rebuild
-          path: proxy
+#        - action: rebuild
+#          path: proxy
         - action: rebuild
           path: features
 
