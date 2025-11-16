@@ -692,11 +692,11 @@ function transposeSdfImageData(context, images, width, height) {
       let distanceField = 0;
       for (const image of images) {
         if (
-          image.offset.x <= x && x < image.offset.x + image.image.data.width &&
-          image.offset.y <= y && y < image.offset.y + image.image.data.height
+          image.offset.x <= x && x < image.offset.x + image.sdfImage.data.width &&
+          image.offset.y <= y && y < image.offset.y + image.sdfImage.data.height
         ) {
-          const imageI = 4 * ((y - image.offset.y) * image.image.data.width + (x - image.offset.x))
-          distanceField = Math.max(distanceField, image.image.data.data[imageI + 3])
+          const imageI = 4 * ((y - image.offset.y) * image.sdfImage.data.width + (x - image.offset.x))
+          distanceField = Math.max(distanceField, image.sdfImage.data.data[imageI + 3])
         }
       }
 
@@ -708,74 +708,166 @@ function transposeSdfImageData(context, images, width, height) {
   return imageData
 }
 
-/**
- * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
- */
-const imageMatcher = /^(?<id>[^@]+)(@(?<x>-?\d+),(?<y>-?\d+))?$/
-async function composeImages(imageIds) {
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext('2d')
-
-  const sdf = imageIds[0].startsWith('sdf:')
-
-  // Load images
-  const images = imageIds.map(imageId => {
+const imageMatcher = /^(?<id>[^@]+)(@(?<position>center|bottom|top|right|left))?$/
+function loadImages(imageIds) {
+  return imageIds.map(imageId => {
     const parsed = imageId.match(imageMatcher)
     if (!parsed) {
       throw new Error(`Could not parse image ID '${imageId}'`)
     }
 
     const id = parsed.groups.id
-    const offset = {
-      x: parsed.groups.x ? parseInt(parsed.groups.x) : 0,
-      y: parsed.groups.y ? parseInt(parsed.groups.y) : 0,
-    }
-    const loadId = !sdf || id.startsWith('sdf:') ? id : `sdf:${id}`
-    const image = map.getImage(loadId)
+    const position = parsed.groups.position ?? 'center'
+
+    const image = map.getImage(id)
     if (!image) {
-      throw new Error(`Could not load image ${loadId}`)
+      throw new Error(`Could not load image ${loadImageId}`)
+    }
+
+    const loadSdfImageId = `sdf:${id}`
+    const sdfImage = map.getImage(loadSdfImageId)
+    if (!image) {
+      throw new Error(`Could not load SDF image ${loadSdfImageId}`)
     }
 
     return {
       id,
       image,
-      offset,
+      sdfImage,
+      position,
     }
   });
+}
 
-  // Handle negative image offsets
+function layoutImages(images) {
+  // Ignore position of first image
+  let width = images[0].image.data.width
+  let height = images[0].image.data.height
+
+  // Offset: top left corner of the image
+  const offsetImages = images.map(image => ({
+    ...image,
+    offset: {
+      x: 0,
+      y: 0,
+    },
+  }))
+
+  // Offset of the top left corner of the composed image
   const globalOffset = {
-    x: -Math.min(...images.map(image => Math.min(0, image.offset.x))),
-    y: -Math.min(...images.map(image => Math.min(0, image.offset.y))),
+    x: 0,
+    y: 0,
   }
 
-  const width = Math.max(...images.map(image => globalOffset.x + image.offset.x + image.image.data.width));
-  const height = Math.max(...images.map(image => globalOffset.y + image.offset.y + image.image.data.height));
+  for (const image of offsetImages.slice(1)) {
+    switch (image.position) {
+      case 'center':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = Math.max(height, image.image.data.height)
+        break;
 
-  canvas.width = width;
-  canvas.height = height;
+      case 'bottom':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
 
-  if (sdf) {
-    const imageData = transposeSdfImageData(context, images, width, height)
-    context.putImageData(imageData, 0, 0)
-  } else {
-    const imageDatas = await Promise.all(images.map(async image => ({
-      data: await transposeImageData(context, image.image),
-      offset: image.offset,
-    })))
-    for (const {data, offset} of imageDatas) {
-      context.drawImage(data, globalOffset.x + offset.x, globalOffset.y + offset.y)
+      case 'top':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y - image.image.data.height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
+
+      case 'right':
+        image.offset.x = globalOffset.x + width
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
+
+      case 'left':
+        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
     }
   }
 
-  const bytes = context.getImageData(0, 0, width, height);
+  // TODO: process SDF images
+  // Process SDF images which are larger than the normal images due to padding pixels
+  offsetImages.forEach(image => {
+    width = Math.max(width, image.offset.x - globalOffset.x + image.sdfImage.data.width)
+    height = Math.max(height, image.offset.y - globalOffset.y + image.sdfImage.data.height)
+  })
+  offsetImages.forEach(image => {
+    globalOffset.x = Math.min(globalOffset.x, image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2)
+    globalOffset.y = Math.min(globalOffset.y, image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2)
+  })
+
+  // Get rid of global offset
+  offsetImages.forEach(image => {
+    image.offset.x -= globalOffset.x
+    image.offset.y -= globalOffset.y
+  })
 
   return {
     width,
     height,
-    data: new Uint8Array(bytes.data.buffer),
+    images: offsetImages
+  }
+}
+
+/**
+ * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
+ */
+async function composeImages(imageIds) {
+  const loadedImages = loadImages(imageIds)
+  const { width, height, images } = layoutImages(loadedImages);
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext('2d')
+  canvas.width = width;
+  canvas.height = height;
+
+  const imageDatas = await Promise.all(images.map(async image => ({
+    data: await transposeImageData(context, image.image),
+    offset: image.offset,
+  })))
+  for (const {data, offset} of imageDatas) {
+    context.drawImage(data, offset.x, offset.y)
+  }
+  const renderedImageData = context.getImageData(0, 0, width, height);
+
+  const canvas2 = document.createElement("canvas");
+  const context2 = canvas2.getContext('2d')
+  canvas2.width = width;
+  canvas2.height = height;
+  const sdfImageData = transposeSdfImageData(context2, images, width, height)
+  context2.putImageData(sdfImageData, 0, 0)
+  const renderedSdfImageData = context2.getImageData(0, 0, width, height);
+  console.info(renderedImageData, renderedSdfImageData)
+
+  return {
+    width,
+    height,
+    imageData: new Uint8Array(renderedImageData.data.buffer),
+    sdfImageData: new Uint8Array(renderedSdfImageData.data.buffer),
     pixelRatio: images[0].image.pixelRatio,
-    sdf,
   };
 }
 
@@ -785,19 +877,21 @@ const generatedImages = {};
  * See https://github.com/mapbox/mapbox-gl-js/issues/9018 and https://maplibre.org/maplibre-gl-js/docs/examples/display-a-remote-svg-symbol/ (displays a warning)
  */
 async function generateImage(ids) {
-  // Ensure every image is generated only once
-  if (!generatedImages[ids]) {
-    generatedImages[ids] = true;
+  const rawImageIds = ids.startsWith('sdf:') ? ids.substr(4) : ids
 
-    const imageIds = ids.split('|')
+  // Ensure every image is generated only once
+  if (!generatedImages[rawImageIds]) {
+    generatedImages[rawImageIds] = true;
+
+    const imageIds = rawImageIds.split('|')
     if (!imageIds) {
-      console.warn('ignoring invalid missing image', ids);
+      console.warn(`ignoring invalid missing image: ${rawImageIds}`);
       return;
     }
 
-    console.info(`Generating image for ${ids}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
+    console.info(`Generating image for ${rawImageIds}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
 
-    // Compose the images together
+    // Compose the images together into a normal image and SDF image
     const {width, height, data, pixelRatio, sdf} = await composeImages(imageIds)
     const image = {width, height, data};
     const options = {pixelRatio, sdf};
@@ -1463,8 +1557,9 @@ function popupContent(feature) {
     })
   }
 
-  const formatPropertyValue = (value, split, format) =>
-    String(value).split('\u001e')
+  const formatPropertyValue = (value, format) =>
+    String(value)
+      .split('\u001e')
       .map(stringValue => {
         if (!format) {
           return stringValue;
@@ -1500,10 +1595,10 @@ function popupContent(feature) {
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([_, {paragraph}]) => !paragraph)
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, description, split}]) => ({
+    .map(([property, {name, format, link, paragraph, description}]) => ({
       title: name,
       value: properties[property],
-      body: properties[property] === true ? '' : formatPropertyValue(properties[property], split, format),
+      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
       paragraph,
       link,
       tooltip: description,

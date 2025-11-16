@@ -159,12 +159,14 @@ features:
           - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
           - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
           - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
-        offset: { x: -1, y: 9 }
+        position: 'bottom'
     tags:
       - { tag: 'railway:signal:main', value: 'IT:1V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 ```
-In this example the shape, the states, and the substitute signal each define an (optional) icon to use. The icons are composed together, starting with the first one and layering every following icon on top. The (optional) `default` icon is used if the `match` cases do not match. The icons can have an `offset` with `x` and `y` values to offset the icon in the composed icon.
+In this example the shape, the states, and the substitute signal each define an (optional) icon to use. The icons are composed together, starting with the first one and layering every following icon on top. The (optional) `default` icon is used if the `match` cases do not match. 
+
+The icons can have an `position` with a value of `center` (default), `bottom`, `top`, `left` or `right` to determine where the icon will be placed in relation to the previously placed icons. When an icon is placed below, above, left or right of the other icons, the icon is centered along the other axis.
 
 For complex signals, an additional property `exampleIcon` can be specified to designate an icon used for the feature as a whole, for example in the JOSM preset or TagInfo.
 ```yaml

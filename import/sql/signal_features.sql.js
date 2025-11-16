@@ -136,20 +136,20 @@ function matchIconCase(tag, iconCase) {
   }
 }
 
-function iconCaseSql(iconCase, matchTag, offset) {
+function iconCaseSql(iconCase, matchTag, position) {
   if (iconCase.value.includes('{}')) {
-    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${offset ? `@${offset.x || 0},${offset.y || 0}` : ''}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${position ? `@${position}` : ''}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
   } else {
-    return `ARRAY['${iconCase.value}${offset ? `@${offset.x || 0},${offset.y || 0}` : ''}', NULL, '${iconCase.dimensions.height}']`
+    return `ARRAY['${iconCase.value}${position ? `@${position}` : ''}', NULL, '${iconCase.dimensions.height}']`
   }
 }
 
 function featureIconSql(icon) {
-  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.offset ? `@${icon.offset.x || 0},${icon.offset.y || 0}` : ''}', NULL, '${icon.dimensions.height}']` : 'NULL'
+  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.position ? `@${icon.position}` : ''}', NULL, '${icon.dimensions.height}']` : 'NULL'
 
   if (icon.match) {
     return `CASE ${icon.cases.map(iconCase => `
-                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match, icon.offset)}`).join('')}
+                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match, icon.position)}`).join('')}
                     ${icon.default ? `ELSE ${defaultIconSql}` : ''}
                   END`
   } else {
@@ -159,6 +159,7 @@ function featureIconSql(icon) {
 
 function featureIconsSql(icons) {
   if (icons.length === 1) {
+    // Avoid complex SQL for the single icon case
     return featureIconSql(icons[0])
   } else {
     return `(
