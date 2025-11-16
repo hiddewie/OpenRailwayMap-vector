@@ -5130,23 +5130,6 @@ features:
       - { tag: 'railway:signal:main', value: 'IT:3V' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Segnale accoppiato quadro (2 lights)
-    country: IT
-    icon:
-      - match: 'railway:signal:combined:states'
-        cases:
-          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/combined-s-2v-RY' }
-          - { exact: 'R-G', value: 'it/combined-s-2v-RG' }
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/combined-s-2v-YG' }
-          - { exact: 'Y-Y', value: 'it/combined-s-2v-YY' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/combined-s-2v-Y' }
-          - { exact: 'G', value: 'it/combined-s-2v-G' }
-        default: 'it/combined-s-2v-R'
-    tags:
-      - { tag: 'railway:signal:combined', value: 'IT:2V' }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:shape', value: 'square' }
-
   - description: Segnale accoppiato quadro (3 lights)
     country: IT
     icon:
@@ -5185,15 +5168,19 @@ features:
   - description: Segnale accoppiato (2 lights)
     country: IT
     icon:
+      - match: 'railway:signal:combined:shape'
+        cases:
+          - { exact: 'square', value: 'it/combined-s-2v', description: 'quadro' }
+        default: 'it/combined-2v'
       - match: 'railway:signal:combined:states'
         cases:
-          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/combined-2v-RY' }
-          - { exact: 'R-G', value: 'it/combined-2v-RG' }
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/combined-2v-YG' }
-          - { exact: 'Y-Y', value: 'it/combined-2v-YY' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/combined-2v-Y' }
-          - { exact: 'G', value: 'it/combined-2v-G' }
-        default: 'it/combined-2v-R'
+          - { any: [ 'R-(Y)', 'R-Y' ], value: 'it/2v-RY' }
+          - { exact: 'R-G', value: 'it/2v-RG' }
+          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/2v-YG' }
+          - { exact: 'Y-Y', value: 'it/2v-YY' }
+          - { any: [ '(Y)', 'Y' ], value: 'it/2v-Y' }
+          - { exact: 'G', value: 'it/2v-G' }
+        default: 'it/2v-R'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
