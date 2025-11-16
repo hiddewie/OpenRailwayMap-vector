@@ -229,7 +229,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', NULL, 'false', '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.layer}', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
