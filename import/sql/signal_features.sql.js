@@ -138,14 +138,14 @@ function matchIconCase(tag, iconCase) {
 
 function iconCaseSql(iconCase, matchTag, position) {
   if (iconCase.value.includes('{}')) {
-    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${position ? `@${position}` : ''}'), ${stringSql(matchTag, iconCase)}, '${iconCase.dimensions.height}']`
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${position ? `@${position}` : ''}'), ${stringSql(matchTag, iconCase)}, '${(position ?? 'center') === 'center' ? iconCase.dimensions.height : 0}', '${['top', 'bottom'].includes(position) ? iconCase.dimensions.height : 0}', '${['left', 'right'].includes(position) ? iconCase.dimensions.height : 0}']`
   } else {
-    return `ARRAY['${iconCase.value}${position ? `@${position}` : ''}', NULL, '${iconCase.dimensions.height}']`
+    return `ARRAY['${iconCase.value}${position ? `@${position}` : ''}', NULL, '${(position ?? 'center') === 'center' ? iconCase.dimensions.height : 0}', '${['top', 'bottom'].includes(position) ? iconCase.dimensions.height : 0}', '${['left', 'right'].includes(position) ? iconCase.dimensions.height : 0}']`
   }
 }
 
 function featureIconSql(icon) {
-  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.position ? `@${icon.position}` : ''}', NULL, '${icon.dimensions.height}']` : 'NULL'
+  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.position ? `@${icon.position}` : ''}', NULL, '${(icon.position ?? 'center') === 'center' ? icon.dimensions.height : 0}', '${['top', 'bottom'].includes(icon.position) ? icon.dimensions.height : 0}', '${['left', 'right'].includes(icon.position) ? icon.dimensions.height : 0}']` : 'NULL'
 
   if (icon.match) {
     return `CASE ${icon.cases.map(iconCase => `
@@ -163,7 +163,7 @@ function featureIconsSql(icons) {
     return featureIconSql(icons[0])
   } else {
     return `(
-                SELECT ARRAY[string_agg(icon[1], '|'), string_agg(COALESCE(icon[2], ''), '|'), MAX(icon[3]::numeric)::text]
+                SELECT ARRAY[string_agg(icon[1], '|'), string_agg(COALESCE(icon[2], ''), '|'), MAX(icon[3]::numeric)::text, SUM(icon[4]::numeric)::text, MAX(icon[5]::numeric)::text]
                 FROM (
                   ${icons.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
                   UNION ALL
@@ -229,7 +229,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', NULL, 'false', '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.layer}', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -244,11 +244,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
       signal_id,
       feature_${type.type}[1] as feature,
       feature_${type.type}[2] as feature_variable,
-      feature_${type.type}[3]::REAL as icon_height,
-      feature_${type.type}[4] as type,
-      feature_${type.type}[5]::boolean as deactivated,
-      feature_${type.type}[6]::signal_layer as layer,
-      feature_${type.type}[7]::INT as rank
+      GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
+      feature_${type.type}[6] as type,
+      feature_${type.type}[7]::boolean as deactivated,
+      feature_${type.type}[8]::signal_layer as layer,
+      feature_${type.type}[9]::INT as rank
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
