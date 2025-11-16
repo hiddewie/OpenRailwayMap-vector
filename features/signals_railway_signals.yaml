@@ -5328,19 +5328,6 @@ features:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Avviso quadro (2 lights)
-    country: IT
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/avviso-s-2v-YG' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/avviso-s-2v-Y' }
-        default: 'it/avviso-s-2v-G'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'IT:2V' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shape', value: 'square' }
-
   - description: Avviso (1 light)
     country: IT
     icon:
@@ -5361,11 +5348,15 @@ features:
   - description: Avviso (2 lights)
     country: IT
     icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: 'square', value: 'it/avviso-s-2v', description: 'quadro' }
+        default: 'it/avviso-2v'
       - match: 'railway:signal:distant:states'
         cases:
-          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/avviso-2v-YG' }
-          - { any: [ '(Y)', 'Y' ], value: 'it/avviso-2v-Y' }
-        default: 'it/avviso-2v-G'
+          - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/2v-YG' }
+          - { any: [ '(Y)', 'Y' ], value: 'it/2v-Y' }
+        default: 'it/2v-G'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
