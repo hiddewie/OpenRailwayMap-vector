@@ -7259,5 +7259,5 @@ features:
     country: US
     icon: [ default: 'us/distant' ]
     tags:
-      - { tag: 'railway:signal:main', value: 'US:distant' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:distant', value: 'US:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
