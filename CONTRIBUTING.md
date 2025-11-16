@@ -192,7 +192,7 @@ tags:
 ```
 If the tag has a `yes`/`no` value, add `type: boolean`. If the tag has a semicolon (`;`) separated value, add `type: array`. If the value of the tag should be displayed formatted or with a unit, add `format: { template: ... }` where the value is a template like `%.2d Hz` or `%s V` to format the tag value into a string for display in the popup.
 
-Next, ensure the icon exists in the [symbols directory](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/symbols). The icon must be an SVG file, minified and of the correct dimensions (most icons are between 10 and 24 pixels wide / high).
+Next, ensure the icon exists in the [symbols directory](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/symbols). The icon must be an SVG file, minified and of the correct dimensions (most icons are between 10 and 24 pixels wide / high). Icons with an even number of pixels in the width and height give the best visual results.
 
 The icon must not contain text. Using an SVG tool, convert the text to the shape of the text. In Inkscape, use the menu item *Path* > *Object to Path*.
 
