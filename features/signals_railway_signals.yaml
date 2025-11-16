@@ -3998,49 +3998,56 @@ features:
       - { tag: 'railway:signal:stop', any: ['FI:T-272A', 'FI:T-272B', 'FI:T-272C', 'FI:T-272D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-#  - description: Stop position T-270
-#    country: FI
-#    icon:
-#      - default: 'fi/t-270'
-#      - match: 'railway:signal:stop:caption'
-#        cases:
-#          - { exact: 'P', value: 'fi/t-270-P' }
-#          - { any: ['1', '2', '3', '4', '5'], value: 'fi/t-270-{}', example: 'fi/t-270-{2}' }
-#          - { regex: '^[^;]+$', value: 'fi/t-270-unknown' }
-##        default: 'fi/t-270-unknown'
-#      - match: 'railway:signal:stop'
-#        cases:
-#          - { any: ['FI:T-270B', 'FI:T-271B', 'FI:T-272B'], value: 'fi/t-270-right' }
-#          - { any: ['FI:T-270C', 'FI:T-271C', 'FI:T-272C'], value: 'fi/t-270-left' }
-#          - { any: ['FI:T-270D', 'FI:T-271D', 'FI:T-272D'], value: 'fi/t-270-both' }
-#    tags:
-#      - { tag: 'railway:signal:stop', any: ['FI:T-270A', 'FI:T-270B', 'FI:T-270C', 'FI:T-270D', 'FI:T-271A', 'FI:T-271B', 'FI:T-271C', 'FI:T-271D', 'FI:T-272A', 'FI:T-272B', 'FI:T-272C', 'FI:T-272D'] }
-#      - { tag: 'railway:signal:stop:form', value: 'sign' }
-
-  - description: Train composition
+  - description: Stopping position (single)
     country: FI
     icon:
       - default: 'fi/t-273'
-#      - match: 'railway:signal:stop:caption'
-#        cases:
-#          - { exact: 'P', value: 'fi/t-273-P' }
-#          - { any: ['1', '2', '3', '4', '5'], value: 'fi/t-273-{}', example: 'fi/t-273-2' }
-#        default: 'fi/t-273-unknown'
-#      - match: 'railway:signal:stop:caption'
-#        cases:
-#          - { regex: '^([1-5]);[^;]+$', value: 'fi/t-273-top-{}', example: 'fi/t-273-top-1' }
-#          - { regex: '^([^;]+);[^;]+$', value: 'fi/t-273-top-unknown' }
-#      - match: 'railway:signal:stop:caption'
-#        cases:
-#          - { regex: '^[^;]+;(1|2|3|4|5)$', value: 'fi/t-273-bottom-{}', example: 'fi/t-273-bottom-1' }
-#          - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-273-bottom-unknown' }
-#      - match: 'railway:signal:stop'
-#        cases:
-#          - { any: ['FI:T-273B', 'FI:T-274B', 'FI:T-275B'], value: 'fi/t-273-right' }
-#          - { any: ['FI:T-273C', 'FI:T-274C', 'FI:T-275C'], value: 'fi/t-273-left' }
-#          - { any: ['FI:T-273D', 'FI:T-274D', 'FI:T-275D'], value: 'fi/t-273-both' }
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { any: ['1', '2', '3', '4', '5'], value: 'fi/t-273-{}', example: 'fi/t-273-{2}' }
+        default: 'fi/t-273-unknown'
+      - match: 'railway:signal:stop'
+        cases:
+          - { exact: 'FI:T-273B', value: 'fi/t-273-right' }
+          - { exact: 'FI:T-273C', value: 'fi/t-273-left' }
+          - { exact: 'FI:T-273D', value: 'fi/t-273-both' }
     tags:
-      - { tag: 'railway:signal:stop', any: ['FI:T-273A', 'FI:T-273B', 'FI:T-273C', 'FI:T-273D', 'FI:T-274A', 'FI:T-274B', 'FI:T-274C', 'FI:T-274D', 'FI:T-275A', 'FI:T-275B', 'FI:T-275C', 'FI:T-275D'] }
+      - { tag: 'railway:signal:stop', any: ['FI:T-273A', 'FI:T-273B', 'FI:T-273C', 'FI:T-273D'] }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping position (combination)
+    country: FI
+    icon:
+      - default: 'fi/t-273'
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^([1-5]);[^;]+$', value: 'fi/t-274-top-{}', example: 'fi/t-274-top-{1}' }
+          - { regex: '^([^;]+);[^;]+$', value: 'fi/t-274-top-unknown' }
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^[^;]+;(1|2|3|4|5)$', value: 'fi/t-274-bottom-{}', example: 'fi/t-274-bottom-{1}' }
+          - { regex: '^[^;]+;([^;]+)$', value: 'fi/t-274-bottom-unknown' }
+      - match: 'railway:signal:stop'
+        cases:
+          - { exact: 'FI:T-274B', value: 'fi/t-273-right' }
+          - { exact: 'FI:T-274C', value: 'fi/t-273-left' }
+          - { exact: 'FI:T-274D', value: 'fi/t-273-both' }
+    tags:
+      - { tag: 'railway:signal:stop', any: ['FI:T-274A', 'FI:T-274B', 'FI:T-274C', 'FI:T-274D'] }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Train composition point
+    country: FI
+    icon:
+      - default: 'fi/t-273'
+      - default: 'fi/t-275'
+      - match: 'railway:signal:stop'
+        cases:
+          - { exact: 'FI:T-275B', value: 'fi/t-273-right' }
+          - { exact: 'FI:T-275C', value: 'fi/t-273-left' }
+          - { exact: 'FI:T-275D', value: 'fi/t-273-both' }
+    tags:
+      - { tag: 'railway:signal:stop', any: ['FI:T-275A', 'FI:T-275B', 'FI:T-275C', 'FI:T-275D'] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Main repeated light
