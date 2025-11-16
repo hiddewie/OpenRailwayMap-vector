@@ -5328,18 +5328,6 @@ features:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Avviso quadro (1 light)
-    country: IT
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/avviso-s-1v-Y' }
-        default: 'it/avviso-s-1v-G'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'IT:1V' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:shape', value: 'square' }
-
   - description: Avviso quadro (2 lights)
     country: IT
     icon:
@@ -5356,10 +5344,16 @@ features:
   - description: Avviso (1 light)
     country: IT
     icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: 'square', value: 'it/avviso-s-1v', description: 'quadro' }
+        default: 'it/avviso-1v'
       - match: 'railway:signal:distant:states'
         cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/avviso-1v-Y' }
-        default: 'it/avviso-1v-G'
+          - { any: [ '(Y)', 'Y' ], value: 'it/1v-Y' }
+        default: 'it/1v-G'
+      - default: 'it/avviso'
+        position: 'bottom'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:1V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
