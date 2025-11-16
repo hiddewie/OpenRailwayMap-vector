@@ -878,7 +878,7 @@ const generatedImages = {};
  * Async function is not actually supported by Maplibre GL.
  * See https://github.com/mapbox/mapbox-gl-js/issues/9018 and https://maplibre.org/maplibre-gl-js/docs/examples/display-a-remote-svg-symbol/ (displays a warning)
  */
-async function generateImage(ids) {
+async function generateImage(maps, ids) {
   const rawImageIds = ids.startsWith('sdf:') ? ids.substr(4) : ids
 
   // Ensure every image is generated only once
@@ -896,8 +896,10 @@ async function generateImage(ids) {
     // Compose the images together into a normal image and SDF image
     const {width, height, imageData, sdfImageData, pixelRatio} = await composeImages(imageIds)
 
-    map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
-    map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
+    maps.forEach(map => {
+      map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
+      map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
+    })
   }
 }
 
@@ -1513,8 +1515,8 @@ function popupContent(feature) {
   const featureProperty = featureCatalog.featureProperty || 'feature';
 
   const constructCatalogKey = propertyValue => ({
-    // Remove the variable part of the property to get the key
-    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}') : propertyValue,
+    // Remove the variable part of the property, and icon position to get the key
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/, '') : propertyValue,
     // Capture the variable part as well for display
     keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
@@ -1771,7 +1773,8 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styleimagemissing', event => generateImage(event.id));
+map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
+legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
