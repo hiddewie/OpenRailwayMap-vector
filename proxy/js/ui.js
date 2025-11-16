@@ -747,10 +747,12 @@ function loadImages(imageIds) {
 
 function layoutImages(images) {
   // Ignore position of first image
+  // The width and height will grow as more images are composed
   let width = images[0].image.data.width
   let height = images[0].image.data.height
 
   // Offset: top left corner of the image
+  // The offsets of all but the first image will be updated with their layed out position
   const offsetImages = images.map(image => ({
     ...image,
     offset: {
@@ -760,6 +762,8 @@ function layoutImages(images) {
   }))
 
   // Offset of the top left corner of the composed image
+  // Goal: allow expanding the composed image to the top or left without updating the offset of all other images
+  // The global offset will be updated as images are added to the top or left of existing images
   const globalOffset = {
     x: 0,
     y: 0,
