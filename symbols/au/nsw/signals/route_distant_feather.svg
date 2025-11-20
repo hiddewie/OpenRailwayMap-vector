@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 10 8">
+  <path stroke="#000" stroke-width="1.5" stroke-linecap="round" d="M 5 9 L 1 2 M 5 9 L 9 2 M 5 9 L 5 1.5" />
+  <circle cx="1" cy="2" r="0.5" fill="#555" />
+  <circle cx="1.58" cy="3" r="0.5" fill="#555" />
+  <circle cx="2.15" cy="4" r="0.5" fill="#555" />
+  <circle cx="2.7" cy="5" r="0.5" fill="#555" />
+  <circle cx="3.3" cy="6" r="0.5" fill="#555" />
+  <circle cx="3.86" cy="7" r="0.5" fill="#555" />
+
+  <circle cx="5" cy="1.5" r="0.5" fill="#555" />
+  <circle cx="5" cy="2.6" r="0.5" fill="#555" />
+  <circle cx="5" cy="3.7" r="0.5" fill="#555" />
+  <circle cx="5" cy="4.8" r="0.5" fill="#555" />
+  <circle cx="5" cy="5.9" r="0.5" fill="#555" />
+  <circle cx="5" cy="7" r="0.5" fill="#555" />
+
+  <circle cx="9" cy="2" r="0.5" fill="#fff" />
+  <circle cx="8.412" cy="3" r="0.5" fill="#fff" />
+  <circle cx="7.834" cy="4" r="0.5" fill="#fff" />
+  <circle cx="7.3" cy="5" r="0.5" fill="#fff" />
+  <circle cx="6.72" cy="6" r="0.5" fill="#fff" />
+  <circle cx="6.18" cy="7" r="0.5" fill="#fff" />
+</svg>
