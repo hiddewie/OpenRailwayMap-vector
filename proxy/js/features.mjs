@@ -311,6 +311,15 @@ const stationFeatures = {
     position: {
       name: 'Position',
     },
+    yard_size: {
+      name: 'Yard size',
+    },
+    yard_purpose: {
+      name: 'Yard purpose',
+    },
+    yard_hump: {
+      name: 'Yard hump',
+    },
     wikidata: {
       name: 'Wikidata',
       link: links.wikidata,
