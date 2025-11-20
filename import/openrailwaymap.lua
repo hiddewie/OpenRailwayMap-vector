@@ -271,6 +271,15 @@ local stations = osm2pgsql.define_table({
   },
 })
 
+local station_buildings = osm2pgsql.define_table({
+  name = 'station_buildings',
+  ids = { type = 'way', id_column = 'osm_id' },
+  columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'way', type = 'polygon' },
+  },
+})
+
 local stop_positions = osm2pgsql.define_table({
   name = 'stop_positions',
   ids = { type = 'node', id_column = 'osm_id' },
@@ -1271,6 +1280,12 @@ function osm2pgsql.process_way(object)
         description = tags.description,
       })
     end
+  end
+
+  if tags.building == 'train_station' then
+    station_buildings:insert({
+      way = object:as_multipolygon(),
+    })
   end
 
   if is_railway_platform(tags) then

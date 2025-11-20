@@ -15,3 +15,4 @@ r/route=train
 r/route=tram
 r/route=light_rail
 r/route=subway
+w/building=train_station
