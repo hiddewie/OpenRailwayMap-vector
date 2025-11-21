@@ -5230,6 +5230,8 @@ features:
           - { any: [ 'Y-G', '(Y-G)', '(Y)-(G)' ], value: 'it/2v-YG' }
           - { any: [ '(Y)', 'Y' ], value: 'it/2v-Y' }
         default: 'it/2v-G'
+      - default: 'it/avviso'
+        position: 'bottom'
     exampleIcon: 'it/avviso-2v-example'
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
