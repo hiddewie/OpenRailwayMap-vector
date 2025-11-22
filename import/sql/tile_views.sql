@@ -391,7 +391,9 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
     nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
     nullif(array_to_string(note, U&'\001E'), '') as note,
-    nullif(array_to_string(description, U&'\001E'), '') as description
+    nullif(array_to_string(description, U&'\001E'), '') as description,
+    nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
+    yard_hump
   FROM grouped_stations_with_route_count
   ORDER BY
     rank DESC NULLS LAST,
@@ -429,7 +431,9 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -470,7 +474,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]
@@ -510,7 +516,9 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -549,7 +557,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]
@@ -691,7 +701,9 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL
@@ -728,7 +740,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]

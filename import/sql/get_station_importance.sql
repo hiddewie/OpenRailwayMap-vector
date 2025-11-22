@@ -219,6 +219,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_remove(array_agg(DISTINCT s.mapillary ORDER BY s.mapillary), null) as mapillary,
     array_remove(array_agg(DISTINCT s.note ORDER BY s.note), null) as note,
     array_remove(array_agg(DISTINCT s.description ORDER BY s.description), null) as description,
+    array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.yard_purpose, U&'\\001E')), U&'\\001E'), U&'\\001E'), null) as yard_purpose,
+    bool_or(s.yard_hump) as yard_hump,
     -- Aggregated route count columns
     max(sr.route_count) as route_count,
     -- Re-grouped clustered stations columns
