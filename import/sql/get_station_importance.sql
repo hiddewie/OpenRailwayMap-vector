@@ -190,7 +190,11 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_count AS
     -- Yards have no routes but measure track length instead
     SELECT
       s.id,
-      SUM(ST_Length(ST_Intersection(ST_Buffer(s.way, 50), l.way))) AS route_count -- TODO, factor
+      -- The square root and factor are made to align the importance factors of yards
+      --   with stations. A 320 km yard is equivalent to a station with 140 platforms/routes.
+      SQRT(
+        SUM(ST_Length(ST_Intersection(ST_Buffer(s.way, 50), l.way)))
+      ) / 4 AS route_count
     FROM stations s
     JOIN railway_line l
       ON ST_DWithin(s.way, l.way, 50)
