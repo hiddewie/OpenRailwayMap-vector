@@ -432,17 +432,17 @@ RETURN (
       description
     FROM railway_text_stations
     JOIN stations_q
-    ON stations_q.id = railway_text_stations.id
+      ON stations_q.id = railway_text_stations.id
 --       AND stations_q.discr_iso < pow(3.5, 5) * 10 and stations_q.discr_iso < pow(10, 5)
-      AND 100000 < stations_q.discr_iso
-  WHERE way && ST_TileEnvelope(z, x, y)
+      AND 75000 < stations_q.discr_iso
+  WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND railway_ref IS NOT NULL
-      AND route_count >= 8
+      AND railway_text_stations.route_count >= 8
     ORDER BY
-      route_count DESC NULLS LAST
+      railway_text_stations.route_count DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
