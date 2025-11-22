@@ -361,6 +361,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       ELSE 'small'
     END AS station_size,
     name,
+    name_tags,
     CASE
       WHEN state != 'present' THEN 100
       WHEN feature = 'station' AND station = 'light_rail' THEN 450
@@ -667,7 +668,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer, query json)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -688,6 +689,7 @@ RETURN (
       station_size,
       railway_ref as label,
       name,
+      name_tags['name:' || (query->>'lang')::text] as localized_name,
       count,
       uic_ref,
       operator,
@@ -727,6 +729,7 @@ DO $do$ BEGIN
           "station_size": "string",
           "label": "string",
           "name": "string",
+          "localized_name": "string",
           "operator": "string",
           "operator_hash": "string",
           "network": "string",
