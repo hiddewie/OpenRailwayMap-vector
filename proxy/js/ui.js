@@ -965,6 +965,11 @@ const backgroundMap = new maplibregl.Map({
 
 updateBackgroundMapContainer();
 
+let locale = new Intl.Locale(navigator.language);
+// TODO update locale
+window.addEventListener('languagechange', () => {
+  console.info('language change');
+})
 const map = new maplibregl.Map({
   container: 'map',
   hash: 'view',
@@ -975,6 +980,17 @@ const map = new maplibregl.Map({
   attributionControl: false,
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
+  transformRequest: (url, resourceType) => {
+    if (resourceType === 'Tile' && url.includes('standard_railway_text_stations')) {
+      const parsedUrl = new URL(url)
+      parsedUrl.searchParams.set('lang', locale.language)
+      return {
+        url: parsedUrl.href,
+      }
+    } else {
+      return null
+    }
+  }
 });
 
 function selectStyle(style) {
