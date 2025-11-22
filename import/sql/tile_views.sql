@@ -355,6 +355,9 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     feature,
     state,
     station,
+    -- Importance determines the station size.
+    -- For stations, it is made up of the number of routes.
+    -- For yards, it is made up of the (scaled) rail length.
     CASE
       WHEN importance >= 20 THEN 'large'
       WHEN importance >= 8 THEN 'normal'
