@@ -311,9 +311,6 @@ const stationFeatures = {
     position: {
       name: 'Position',
     },
-    yard_size: {
-      name: 'Yard size',
-    },
     yard_purpose: {
       name: 'Yard purpose',
     },
