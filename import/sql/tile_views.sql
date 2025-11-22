@@ -443,7 +443,7 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND railway_ref IS NOT NULL
-      AND importance >= 8
+      AND station_size = 'large'
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
@@ -528,7 +528,7 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND railway_ref IS NOT NULL
-      AND importance >= 20
+      AND station_size IN ('normal', 'large')
   ) as tile
   WHERE way IS NOT NULL
 );
