@@ -10,13 +10,6 @@ local openrailwaymap = require('openrailwaymap')
 local way = {
   length = function () return 1 end,
 }
-local as_linestring_mock = function ()
-  return {
-    centroid = function ()
-      return way
-    end
-  }
-end
 
 -- Stations
 
@@ -160,7 +153,7 @@ osm2pgsql.process_way({
     ['railway:ref'] = 'ref',
     operator = 'operator',
   },
-  as_linestring = as_linestring_mock,
+  as_polygon = function () return way end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
