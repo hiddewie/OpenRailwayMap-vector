@@ -85,6 +85,20 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
 
 osm2pgsql.process_node({
   tags = {
+    ['railway'] = 'yard',
+    ['railway:yard:purpose'] = 'transloading;manifest',
+    ['railway:yard:hump'] = 'yes',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}' },
+  },
+})
+
+osm2pgsql.process_node({
+  tags = {
     ['abandoned:railway'] = 'junction',
   },
   as_point = function () end,
