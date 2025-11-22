@@ -187,6 +187,18 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_count AS
 
     UNION ALL
 
+    -- Yards have no routes but measure track length instead
+    select
+      s.id,
+      sum(st_length(st_intersection(st_buffer(s.way, 50 ), l.way))) as route_count -- TODO, factor
+    from stations s
+     join railway_line l
+       on ST_DWithin(s.way, l.way, 50)
+    where s.feature = 'yard'
+    group by s.id
+
+    UNION ALL
+
     SELECT
       id,
       0 AS route_count

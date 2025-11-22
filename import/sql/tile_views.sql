@@ -355,10 +355,19 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     feature,
     state,
     station,
-    CASE
-      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
-      WHEN route_count >= 8 THEN 'normal'
-      ELSE 'small'
+    CASE feature
+      WHEN 'yard' THEN
+        CASE
+          WHEN route_count >= 7200 THEN 'large'
+          WHEN route_count >= 750 THEN 'normal'
+          ELSE 'small'
+        END
+      ELSE
+        CASE
+          WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
+          WHEN route_count >= 8 THEN 'normal'
+          ELSE 'small'
+        END
     END AS station_size,
     name,
     CASE
