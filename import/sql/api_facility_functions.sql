@@ -52,7 +52,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "description" text[],
   "latitude" double precision,
   "longitude" double precision,
-  "rank" integer
+  "rank" numeric
 ) AS $$
   BEGIN
     -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
