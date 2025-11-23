@@ -1552,7 +1552,8 @@ function popupContent(feature) {
   if (!featureContent) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
-  const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
+  // Unique labels
+  const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
 
   const determineDefaultOsmType = (properties, featureContent) => {
@@ -1641,14 +1642,14 @@ function popupContent(feature) {
   const popupTitle = createDomElement('h5', undefined, popupContainer);
   popupTitle.innerText = featureDescription;
 
-  if (properties.icon || label) {
+  if (properties.icon || labels.length > 0) {
     const popupLabel = createDomElement('h6', undefined, popupContainer);
     if (properties.icon) {
       const popupLabelSpan = createDomElement('span', undefined, popupLabel);
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = label;
+      popupLabel.innerText = labels.join(' / ');
     }
   }
 
