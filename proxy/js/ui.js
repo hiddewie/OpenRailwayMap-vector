@@ -966,9 +966,9 @@ const backgroundMap = new maplibregl.Map({
 updateBackgroundMapContainer();
 
 let locale = new Intl.Locale(navigator.language);
-// TODO update locale
 window.addEventListener('languagechange', () => {
-  console.info('language change');
+  locale = new Intl.Locale(navigator.language);
+  console.info(`Updated language to ${locale.language}`)
 })
 const map = new maplibregl.Map({
   container: 'map',
