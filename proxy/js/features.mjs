@@ -284,7 +284,7 @@ const poiFeatures = layer => ({
 // TODO move tram / metro stops to stations
 const stationFeatures = {
   featureProperty: 'feature',
-  labelProperty: 'name',
+  labelProperty: 'localized_name',
   featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])

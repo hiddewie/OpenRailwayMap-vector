@@ -689,7 +689,7 @@ RETURN (
       station_size,
       railway_ref as label,
       name,
-      name_tags['name:' || (query->>'lang')::text] as localized_name,
+      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       count,
       uic_ref,
       operator,
