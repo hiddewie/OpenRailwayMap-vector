@@ -979,7 +979,6 @@ const map = new maplibregl.Map({
   maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
-  ...(configuration.view || defaultConfiguration.view),
   transformRequest: (url, resourceType) => {
     if (resourceType === 'Tile' && url.includes('standard_railway_text_stations')) {
       const parsedUrl = new URL(url)
@@ -991,6 +990,7 @@ const map = new maplibregl.Map({
       return null
     }
   }
+  ...(configuration.view || defaultConfiguration.view),
 });
 
 function selectStyle(style) {
