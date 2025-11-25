@@ -344,7 +344,7 @@ const present_dasharray = [1];
 const train_protection_construction_dasharray = [2, 8];
 
 const minSpeed = 10
-const maxSpeed = 40
+const maxSpeed = 380
 const startHue = 250
 const endHue = 275;
 
