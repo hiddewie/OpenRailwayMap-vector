@@ -198,7 +198,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_importance AS
     FROM stations s
     JOIN railway_line l
       ON ST_DWithin(s.way, l.way, 50)
-    WHERE s.feature = 'yard'
+--     WHERE s.feature = 'yard'
     GROUP BY s.id
 
     UNION ALL

@@ -142,11 +142,11 @@ process)
     select
       id,
       center as way,
-      route_count,
+      importance,
       0.0::real as discr_iso,
       0::int as irank,
       0::int as dirank
-    from grouped_stations_with_route_count;
+    from grouped_stations_with_importance;
   "
 
   $PSQL -c "CREATE INDEX IF NOT EXISTS stations_q_id_idx

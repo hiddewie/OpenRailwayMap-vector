@@ -1487,6 +1487,6 @@ function osm2pgsql.process_gen()
     dest_table = 'stations_q',
     geom_column = 'way',
     id_column = 'id',
-    importance_column = 'route_count',
+    importance_column = 'importance',
   })
 end

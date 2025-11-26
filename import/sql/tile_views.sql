@@ -440,17 +440,18 @@ RETURN (
     FROM railway_text_stations
     JOIN stations_q
       ON stations_q.id = railway_text_stations.id
---       AND stations_q.discr_iso < pow(3.5, 5) * 10 and stations_q.discr_iso < pow(10, 5)
-      AND stations_q.dirank < pow(3.5, 5) * 10 and stations_q.irank < pow(10, 5)
+        AND 30 * pow(3.5, 5 - (z - 5)) < stations_q.discr_iso
+      -- stations_q.discr_iso < pow(3.5, z) * 10 and
+--       AND stations_q.dirank < pow(3.5, z) * 10 and stations_q.irank < pow(10, z)
 --       AND 75000 < stations_q.discr_iso
   WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size = 'large'
+--       AND railway_ref IS NOT NULL
+--       AND station_size = 'large'
     ORDER BY
-      importance DESC NULLS LAST
+      railway_text_stations.importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -503,8 +504,8 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
+      ST_AsMVTGeom(railway_text_stations.way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      railway_text_stations.id,
       osm_id,
       feature,
       state,
@@ -528,12 +529,17 @@ RETURN (
       yard_purpose,
       yard_hump
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+           JOIN stations_q
+                ON stations_q.id = railway_text_stations.id
+                  AND 30 * pow(3.5, 5 - (z - 5)) < stations_q.discr_iso
+    WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size IN ('normal', 'large')
+--       AND railway_ref IS NOT NULL
+--       AND station_size IN ('normal', 'large')
+    ORDER BY
+      railway_text_stations.importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
