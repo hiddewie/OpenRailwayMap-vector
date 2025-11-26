@@ -41,7 +41,7 @@ For example, to match railway signals with tags `railway:signal:shunting=AT-V2:v
 features:
   - description: Verschubhalttafel
     country: AT
-    icon: { default: 'at/verschubhalttafel' }
+    icon: [ default: 'at/verschubhalttafel' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'AT-V2:verschubhalttafel' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
@@ -53,15 +53,15 @@ features:
   - description: train protection block markers
     country: BE
     icon:
-      match: 'railway:signal:position'
-      cases:
-        - exact: 'left'
-          value: 'be/PRA-arrow-right'
-          description: 'left'
-        - exact: 'overhead'
-          value: 'be/PRA-arrow-down'
-          description: 'overhead'
-      default: 'be/PRA-arrow-left'
+      - match: 'railway:signal:position'
+        cases:
+          - exact: 'left'
+            value: 'be/PRA-arrow-right'
+            description: 'left'
+          - exact: 'overhead'
+            value: 'be/PRA-arrow-down'
+            description: 'overhead'
+        default: 'be/PRA-arrow-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'BE:PRA' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -75,10 +75,10 @@ features:
   - description: Signalnachahmer
     country: AT
     icon:
-      match: 'railway:signal:main_repeated:magnet'
-      cases:
-        - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
-      default: 'at/signalnachahmer'
+      - match: 'railway:signal:main_repeated:magnet'
+        cases:
+          - { value: 'at/signalnachahmer-magnet', description: '1000Hz magnet' }
+        default: 'at/signalnachahmer'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'AT-V2:signalnachahmer' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
@@ -96,12 +96,12 @@ features:
 - description: distant (light)
   country: AT
   icon:
-    match: 'railway:signal:distant:states'
-    cases:
-      - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
-      - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
-      - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
-    default: 'at/vorsignal-vorsicht'
+    - match: 'railway:signal:distant:states'
+      cases:
+        - { exact: 'AT-V2:hauptsignal_frei_mit_60', value: 'at/vorsignal-frei-mit-60', description: '60 km/h' }
+        - { any: ['AT-V2:hauptsignal_frei_mit_40', 'AT-V2:hauptsignal_frei_mit_20'], value: 'at/vorsignal-frei-mit-40', description: '20/40 km/h' }
+        - { exact: 'AT-V2:hauptsignal_frei', value: 'at/vorsignal-frei', description: 'clear' }
+      default: 'at/vorsignal-vorsicht'
   tags:
     - { tag: 'railway:signal:distant', value: 'AT-V2:vorsignal' }
     - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -113,11 +113,11 @@ features:
   - description: Semafor kształtowy
     country: PL
     icon:
-      match: 'railway:signal:main:states'
-      cases:
-        - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
-        - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
-      default: 'pl/sr1'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'PL-PKP:sr3', value: 'pl/sr3' }
+          - { all: ['PL-PKP:sr1', 'PL-PKP:sr2'], value: 'pl/sr2' }
+        default: 'pl/sr1'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
@@ -129,26 +129,70 @@ features:
   - description: Geschwindigkeitsvoranzeiger (light)
     country: AT
     icon:
-      match: 'railway:signal:speed_limit_distant:speed'
-      cases:
-        - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
-      default: 'at/geschwindigkeitsvoranzeiger-empty-light'
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^(1[0-4]|[2-9])0$', value: 'at/geschwindigkeitsvoranzeiger-light-{}', example: 'at/geschwindigkeitsvoranzeiger-light-{140}' }
+        default: 'at/geschwindigkeitsvoranzeiger-empty-light'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'AT-V2:geschwindigkeitsvoranzeiger' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 ```
 Note that the icon files will also contain the `{` and `}` characters, the filename will be for example `at/geschwindigkeitsvoranzeiger-light-{80}.svg`.
 
+Signal features can use multiple icons by specifying more than one item for `icon`:
+```yaml
+features:
+  - description: 1ª categoria (1 light)
+    country: IT
+    icon:
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'square', value: 'it/main-s-1v', description: 'quadro' }
+        default: 'it/main-1v'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ '(Y)', 'Y' ], value: "it/1v-Y" }
+          - { exact: 'G', value: "it/1v-G" }
+        default: "it/1v-R"
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
+    tags:
+      - { tag: 'railway:signal:main', value: 'IT:1V' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+```
+In this example the shape, the states, and the substitute signal each define an (optional) icon to use. The icons are composed together, starting with the first one and layering every following icon on top. The (optional) `default` icon is used if the `match` cases do not match. 
+
+The icons can have an `position` with a value of `center` (default), `bottom`, `top`, `left` or `right` to determine where the icon will be placed in relation to the previously placed icons. When an icon is placed below, above, left or right of the other icons, the icon is centered along the other axis.
+
+For complex signals, an additional property `exampleIcon` can be specified to designate an icon used for the feature as a whole, for example in the JOSM preset or TagInfo.
+```yaml
+features:
+  - description: Geschwindigkeitsvoranzeiger
+    country: AT
+    icon:
+      - match: ...
+      - match: ...
+      - match: ...
+    exampleIcon: 'at/geschwindigkeitsvoranzeiger-example'
+    tags:
+      - ...
+      - ...
+```
+
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
 tags:
   # ...
-  - { tag: 'railway:signal:combined:form' }
+  - { tag: 'railway:signal:combined:form', title: 'Combined form' }
   # ...
 ```
 If the tag has a `yes`/`no` value, add `type: boolean`. If the tag has a semicolon (`;`) separated value, add `type: array`. If the value of the tag should be displayed formatted or with a unit, add `format: { template: ... }` where the value is a template like `%.2d Hz` or `%s V` to format the tag value into a string for display in the popup.
 
-Next, ensure the icon exists in the [symbols directory](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/symbols). The icon must be an SVG file, minified and of the correct dimensions (most icons are between 10 and 24 pixels wide / high).
+Next, ensure the icon exists in the [symbols directory](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/symbols). The icon must be an SVG file, minified and of the correct dimensions (most icons are between 10 and 24 pixels wide / high). Icons with an even number of pixels in the width and height give the best visual results.
 
 The icon must not contain text. Using an SVG tool, convert the text to the shape of the text. In Inkscape, use the menu item *Path* > *Object to Path*.
 

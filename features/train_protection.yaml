@@ -37,6 +37,7 @@ train_protections:
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
+  - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
   - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
@@ -258,6 +259,10 @@ features:
   - train_protection: tbl
     tags:
       - { tag: 'railway:tbl', values: ['yes', '1', '1+', '2'] }
+
+  - train_protection: tmacs
+    tags:
+      - { tag: 'railway:tmacs', value: 'yes' }
 
   - train_protection: tpws
     tags:

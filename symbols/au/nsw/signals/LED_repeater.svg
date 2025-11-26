@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 9 9">
+  <path fill="#000" d="M 9 0 L 9 9 L 0 9 L 0 6 L 6 0 Z" />
+  <circle cx="7.5" cy="1.5" r=".7" fill="#555" />
+  <circle cx="7.5" cy="3" r=".7" fill="#555" />
+  <circle cx="7.5" cy="4.5" r=".7" fill="#555" />
+  <circle cx="7.5" cy="6" r=".7" fill="#555" />
+  <circle cx="7.5" cy="7.5" r=".7" fill="#fff" />
+  <circle cx="6" cy="7.5" r=".7" fill="#fff" />
+  <circle cx="4.5" cy="7.5" r=".7" fill="#fff" />
+  <circle cx="3" cy="7.5" r=".7" fill="#fff" />
+  <circle cx="1.5" cy="7.5" r=".7" fill="#fff" />
+</svg>
+
+
+

@@ -401,7 +401,7 @@ def preset_items_signals_for_country(features):
     with(tag('item',
              type='node',
              name=feature['description'],
-             icon=f'symbols/{feature['icon']['default']}.svg',
+             icon=f'symbols/{feature['exampleIcon'] if 'exampleIcon' in feature else feature['icon'][0]['default']}.svg',
              preset_name_label='true',
              )):
 
@@ -451,20 +451,27 @@ def preset_items_signals_for_country(features):
 
       # TODO better support a combo or multiselect of valid values
 
-      if 'match' in feature['icon']:
-        match = feature['icon']['match']
-        text = (tag_descriptions[match] if match in tag_descriptions else match)
+      icon_tags = set()
+      for icon in feature['icon']:
+        if 'match' in icon:
+          match = icon['match']
+          if match in icon_tags:
+            continue
+          icon_tags.add(match)
 
-        if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
-          with tag('check',
-                   text=text,
-                   key=match,
-                   ): pass
-        else:
-          with tag('text',
-                   text=text,
-                   key=match,
-                   ): pass
+          text = (tag_descriptions[match] if match in tag_descriptions else match)
+
+          if ftag['tag'] in tag_types and tag_types[ftag['tag']] == 'boolean':
+            with tag('check',
+                     text=text,
+                     key=match,
+                     ): pass
+          else:
+            with tag('text',
+                     text=text,
+                     key=match,
+                     ): pass
+
 
       for ftag in feature['tags']:
         if 'any' in ftag:

@@ -43,37 +43,40 @@ const featureLinks = {
   },
 };
 
+function allIconCombinations(feature) {
+  const allIcons = feature.icon.map(icon => [
+    {name: icon.description, icon: icon.default ? [icon.default] : []},
+    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: [iconCase.example ?? iconCase.value]}))),
+  ])
+
+  let combinations = allIcons[0]
+  allIcons.slice(1).forEach(icons => {
+    const newCombinations = []
+
+    combinations.forEach(combination => {
+      icons.forEach(icon => {
+        newCombinations.push({
+          name: [combination.name, icon.name].filter(it => it).join(', '),
+          icon: icon.icon ? [...combination.icon, ...icon.icon] : combination.icon,
+        })
+      })
+    })
+
+    combinations = newCombinations
+  })
+
+  const combinationsWithoutName = combinations.filter(combination => !combination.name)
+  const combinationsWithName = combinations.filter(combination => combination.name)
+
+  return [
+    ...[...new Set(combinationsWithoutName.map(combination => combination.icon.join('|')))].map(icon => [icon, {country: feature.country, name: feature.description}]),
+    ...combinationsWithName.map(combination => [combination.icon.join('|'), {country: feature.country, name: `${feature.description} (${combination.name})`}]),
+  ]
+}
+
 const generateSignalFeatures = (features, types) =>
   requireUniqueEntries([
-    ...features.flatMap(feature => [
-      [
-        feature.icon.default,
-        {
-          country: feature.country,
-          name: feature.description,
-        }
-      ],
-      ...(
-        feature.icon.match
-          ? [
-            ...[...new Set(
-              feature.icon.cases
-                .filter(iconCase => !iconCase.description)
-                .map(iconCase => iconCase.value)
-            )].map(iconCaseValue => [iconCaseValue, {
-              country: feature.country,
-              name: feature.description,
-            }]),
-            ...feature.icon.cases
-              .filter(iconCase => iconCase.description)
-              .map(iconCase => [iconCase.value, {
-                country: feature.country,
-                name: `${feature.description} (${iconCase.description})`,
-              }]),
-          ]
-          : []
-      ),
-    ]),
+    ...features.flatMap(allIconCombinations),
     ...types.map(type => [
       `general/signal-unknown-${type.type}`,
       {
@@ -343,6 +346,14 @@ const stationFeatures = {
 const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_high': railwayLineFeatures,
+  'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
+  'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
+  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
+  'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
+  'gauge_railway_line_low-gauge_railway_line_low': railwayLineFeatures,
+  'loading_gauge_railway_line_low-loading_gauge_railway_line_low': railwayLineFeatures,
+  'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
+  'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperty: 'name',
     featureProperty: 'type',
@@ -542,6 +553,20 @@ const features = {
       tactile_paving: {
         name: 'Tactile paving',
       },
+    }
+  },
+  'openrailwaymap_standard-standard_railway_stop_positions': {
+    featureLinks: featureLinks.openstreetmap,
+    labelProperty: 'name',
+    features: {
+      stop_position: {
+        name: 'Stop position',
+      },
+    },
+    properties: {
+      type: {
+        name: 'Type',
+      }
     }
   },
   'openrailwaymap_standard-standard_station_entrances': {
@@ -820,6 +845,12 @@ const features = {
       },
       feature4: {
         name: 'Quinary signal',
+        format: {
+          lookup: 'signals_railway_signals',
+        },
+      },
+      feature5: {
+        name: 'Senary signal',
         format: {
           lookup: 'signals_railway_signals',
         },
