@@ -355,9 +355,12 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     feature,
     state,
     station,
+    -- Importance determines the station size.
+    -- For stations, it is made up of the number of routes.
+    -- For yards, it is made up of the (scaled) rail length.
     CASE
-      WHEN route_count >= 20 AND railway_ref IS NOT NULL THEN 'large'
-      WHEN route_count >= 8 THEN 'normal'
+      WHEN importance >= 20 THEN 'large'
+      WHEN importance >= 8 THEN 'normal'
       ELSE 'small'
     END AS station_size,
     name,
@@ -378,7 +381,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       ELSE 50
     END AS rank,
     uic_ref,
-    route_count,
+    importance,
     count,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     nullif(array_to_string(network, U&'\001E'), '') as network,
@@ -391,11 +394,13 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
     nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
     nullif(array_to_string(note, U&'\001E'), '') as note,
-    nullif(array_to_string(description, U&'\001E'), '') as description
-  FROM grouped_stations_with_route_count
+    nullif(array_to_string(description, U&'\001E'), '') as description,
+    nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
+    yard_hump
+  FROM grouped_stations_with_importance
   ORDER BY
     rank DESC NULLS LAST,
-    route_count DESC NULLS LAST;
+    importance DESC NULLS LAST;
 
 CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integer, y integer)
   RETURNS bytea
@@ -429,7 +434,9 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     JOIN stations_q
       ON stations_q.id = railway_text_stations.id
@@ -441,9 +448,9 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND railway_ref IS NOT NULL
-      AND railway_text_stations.route_count >= 8
+      AND station_size = 'large'
     ORDER BY
-      railway_text_stations.route_count DESC NULLS LAST
+      importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -475,7 +482,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]
@@ -515,14 +524,16 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND railway_ref IS NOT NULL
-      AND route_count >= 20
+      AND station_size IN ('normal', 'large')
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -554,7 +565,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]
@@ -696,7 +709,9 @@ RETURN (
       mapillary,
       wikipedia,
       note,
-      description
+      description,
+      yard_purpose,
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL
@@ -733,7 +748,9 @@ DO $do$ BEGIN
           "mapillary": "string",
           "wikipedia": "string",
           "note": "string",
-          "description": "string"
+          "description": "string",
+          "yard_purpose": "string",
+          "yard_hump": "boolean"
         }
       }
     ]
@@ -774,7 +791,7 @@ RETURN (
       nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
       nullif(array_to_string(note, U&'\001E'), '') as note,
       nullif(array_to_string(description, U&'\001E'), '') as description
-    FROM grouped_stations_with_route_count
+    FROM grouped_stations_with_importance
     WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL

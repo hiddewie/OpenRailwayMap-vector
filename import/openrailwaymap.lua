@@ -241,7 +241,7 @@ local stations = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'point' },
+    { column = 'way', type = 'geometry' },
     { column = 'feature', type = 'text' },
     { column = 'state', type = 'text' },
     { column = 'name', type = 'text' },
@@ -253,6 +253,8 @@ local stations = osm2pgsql.define_table({
     { column = 'operator', type = 'text' },
     { column = 'network', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
+    { column = 'yard_purpose', sql_type = 'text[]' },
+    { column = 'yard_hump', type = 'boolean' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -263,7 +265,7 @@ local stations = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
-    -- For joining grouped_stations_with_route_count with metadata from this table
+    -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
     { column = 'uic_ref', method = 'btree', where = 'uic_ref IS NOT NULL' },
@@ -985,6 +987,8 @@ function osm2pgsql.process_node(object)
         operator = tags.operator,
         network = tags.network,
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+        yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
+        yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
@@ -1250,7 +1254,7 @@ function osm2pgsql.process_way(object)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
-        way = object:as_linestring():centroid(),
+        way = object:as_polygon(),
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
@@ -1261,6 +1265,8 @@ function osm2pgsql.process_way(object)
         name_tags = name_tags(tags),
         operator = tags.operator,
         network = tags.network,
+        yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
+        yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
