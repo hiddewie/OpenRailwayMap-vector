@@ -1030,6 +1030,102 @@ features:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:PI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Points Indicator
+    country: AU
+    exampleIcon: au/LightRail/signals/PI/straight
+    icon:
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'stop', value: 'au/LightRail/signals/PI/stop' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'stop_red', value: 'au/LightRail/signals/PI/stop_red' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'straight', value: 'au/LightRail/signals/PI/straight' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'right', value: 'au/LightRail/signals/PI/right' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'left', value: 'au/LightRail/signals/PI/left' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:PI' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Signal Operated Points Indicator
+    country: AU
+    exampleIcon: au/LightRail/signals/SPI/straight
+    icon:
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'locked', value: 'au/LightRail/signals/SPI/locked' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'straight', value: 'au/LightRail/signals/SPI/straight' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'right', value: 'au/LightRail/signals/SPI/right' }
+        position: bottom
+
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'left', value: 'au/LightRail/signals/SPI/left' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:LightRail:SPI' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Signal System Lanterns
+    country: AU
+    exampleIcon: au/LightRail/signals/SI/straight
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'stop', value: 'au/LightRail/signals/SI/stop' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'straight', value: 'au/LightRail/signals/SI/straight' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'right', value: 'au/LightRail/signals/SI/right' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'left', value: 'au/LightRail/signals/SI/left' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'error', value: 'au/LightRail/signals/SI/error' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'warning', value: 'au/LightRail/signals/SI/warning' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:LightRail:SI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # --- AU-NSW-signs --- #
 
   - description: Alert
@@ -1173,20 +1269,56 @@ features:
 
   - description: Stop Position
     country: AU
+    exampleIcon: 'au/nsw/signs/stop_position/unknown'
     icon:
       - match: 'railway:signal:stop:states'
         cases:
           - { any: [ 'X', 'XPT', 'XPL' ], value: 'au/nsw/signs/stop_position/X' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '10', value: 'au/nsw/signs/stop_position/10' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '8', value: 'au/nsw/signs/stop_position/8' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '8H', value: 'au/nsw/signs/stop_position/8H' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '8V', value: 'au/nsw/signs/stop_position/8V' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '6', value: 'au/nsw/signs/stop_position/6' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '6V', value: 'au/nsw/signs/stop_position/6V' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '4', value: 'au/nsw/signs/stop_position/4' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { any: ['4H', 'H4'], value: 'au/nsw/signs/stop_position/4H' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '4V', value: 'au/nsw/signs/stop_position/4V' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '2', value: 'au/nsw/signs/stop_position/2' }
-        default: 'au/nsw/signs/stop_position/unknown'
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { any: ['2C', 'C2'], value: 'au/nsw/signs/stop_position/2C' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:stop', value: 'AU:NSW:stop_position' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }

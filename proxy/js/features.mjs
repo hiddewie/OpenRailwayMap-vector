@@ -18,6 +18,7 @@ const electrification_signals = all_signals.features.filter(feature => feature.t
 
 const requireUniqueEntries = array => {
   const count = Object.groupBy(array, it => it[0]);
+  delete count['']; // icons with no name are used for icon composition
   if (Object.values(count).some(it => it.length > 1)) {
     const offendingEntries = Object.entries(count).filter(it => it[1].length > 1).map(it => it[0]).join(', ');
     throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
