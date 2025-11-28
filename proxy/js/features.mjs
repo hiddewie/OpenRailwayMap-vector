@@ -20,7 +20,9 @@ const requireUniqueEntries = array => {
   const count = Object.groupBy(array, it => it[0]);
   if (Object.values(count).some(it => it.length > 1)) {
     const offendingEntries = Object.entries(count).filter(it => it[1].length > 1).map(it => it[0]).join(', ');
-    throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
+    if (offendingEntries) {
+      throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
+    }
   }
   return Object.fromEntries(array);
 }
