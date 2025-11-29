@@ -989,7 +989,7 @@ const map = new maplibregl.Map({
     } else {
       return null
     }
-  }
+  },
   ...(configuration.view || defaultConfiguration.view),
 });
 
