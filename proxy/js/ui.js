@@ -1797,6 +1797,7 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('sourcedata', (e) => console.info(e));
 map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 
