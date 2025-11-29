@@ -1,4 +1,5 @@
 TRUNCATE stations_with_importance;
+
 INSERT INTO stations_with_importance (id, way, importance)
   SELECT
     s.id as id,
