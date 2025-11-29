@@ -9,7 +9,7 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-CREATE OR REPLACE FUNCTION openrailwaymap_name_rank(tsquery_str tsquery, tsvec_col tsvector, route_count INTEGER, feature TEXT, station TEXT) RETURNS INTEGER AS $$
+CREATE OR REPLACE FUNCTION openrailwaymap_name_rank(tsquery_str tsquery, tsvec_col tsvector, importance NUMERIC, feature TEXT, station TEXT) RETURNS NUMERIC AS $$
 DECLARE
   factor FLOAT;
 BEGIN
@@ -21,7 +21,7 @@ BEGIN
   IF tsvec_col @@ tsquery_str THEN
     factor := 2.0;
   END IF;
-  RETURN (factor * COALESCE(route_count, 0))::INTEGER;
+  RETURN (factor * COALESCE(importance, 0))::NUMERIC;
 END;
 $$ LANGUAGE plpgsql
   IMMUTABLE
@@ -52,7 +52,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "description" text[],
   "latitude" double precision,
   "longitude" double precision,
-  "rank" integer
+  "rank" numeric
 ) AS $$
   BEGIN
     -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
@@ -124,7 +124,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.description,
             ST_X(ST_Transform(fs.geom, 4326)) AS latitude,
             ST_Y(ST_Transform(fs.geom, 4326)) AS longitude,
-            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, fs.route_count::INTEGER, fs.feature, fs.station) AS rank
+            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, fs.importance::numeric, fs.feature, fs.station) AS rank
           FROM openrailwaymap_facilities_for_search fs
           WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name)))
         ) AS a

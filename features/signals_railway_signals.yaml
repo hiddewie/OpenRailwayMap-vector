@@ -1779,6 +1779,15 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
 
+  # --- CA --- #
+
+  - description: Main signal
+    country: CA
+    icon: [ default: 'ca/main' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'CA:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # --- CH --- #
 
   - description: Hauptsignal System L
@@ -7000,3 +7009,19 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'SE:Slutpunktstopplykta' }
       - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  # --- US --- #
+
+  - description: Main signal
+    country: US
+    icon: [ default: 'us/main' ]
+    tags:
+      - { tag: 'railway:signal:main', any: ['US:main', 'US-ABS:main', 'US:GCOR:main'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Distant signal
+    country: US
+    icon: [ default: 'us/distant' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'US:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }

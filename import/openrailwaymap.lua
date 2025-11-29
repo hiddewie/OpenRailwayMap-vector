@@ -265,7 +265,7 @@ local stations = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
-    -- For joining grouped_stations_with_route_count with metadata from this table
+    -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
     { column = 'uic_ref', method = 'btree', where = 'uic_ref IS NOT NULL' },

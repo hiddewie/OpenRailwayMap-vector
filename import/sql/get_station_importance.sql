@@ -103,7 +103,7 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   ) sr
   GROUP BY id;
 
--- Clustered stations without route counts
+-- Clustered stations without importance
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
     row_number() over (order by name, station, railway_ref, uic_ref, feature) as id,
@@ -162,14 +162,14 @@ CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
   ON stations_clustered
     USING gin(station_ids);
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_count AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_importance AS
   SELECT
     id,
-    max(route_count) as route_count
+    max(importance) as importance
   FROM (
     SELECT
       id,
-      COUNT(DISTINCT route_id) AS route_count
+      COUNT(DISTINCT route_id) AS importance
     FROM (
       SELECT
         id,
@@ -187,21 +187,37 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_with_route_count AS
 
     UNION ALL
 
+    -- Yards have no routes but measure track length instead
+    SELECT
+      s.id,
+      -- The square root and factor are made to align the importance factors of yards
+      --   with stations. A 320 km yard is equivalent to a station with 140 platforms/routes.
+      SQRT(
+        SUM(ST_Length(ST_Intersection(ST_Buffer(s.way, 50), l.way)))
+      ) / 4 AS importance
+    FROM stations s
+    JOIN railway_line l
+      ON ST_DWithin(s.way, l.way, 50)
+    WHERE s.feature = 'yard'
+    GROUP BY s.id
+
+    UNION ALL
+
     SELECT
       id,
-      0 AS route_count
+      0 AS importance
     FROM stations
-  ) all_stations_with_route_count
+  ) all_stations_with_importance
   GROUP BY id;
 
-CREATE INDEX IF NOT EXISTS stations_with_route_count_idx
-  ON stations_with_route_count
+CREATE INDEX IF NOT EXISTS stations_with_importance_idx
+  ON stations_with_importance
     USING btree(id);
 
 -- Final table with station nodes and the number of route relations
 -- needs about 3 to 4 minutes for whole Germany
 -- or about 20 to 30 minutes for the whole planet
-CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
   SELECT
     -- Aggregated station columns
     array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
@@ -221,8 +237,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
     array_remove(array_agg(DISTINCT s.description ORDER BY s.description), null) as description,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.yard_purpose, U&'\\001E')), U&'\\001E'), U&'\\001E'), null) as yard_purpose,
     bool_or(s.yard_hump) as yard_hump,
-    -- Aggregated route count columns
-    max(sr.route_count) as route_count,
+    -- Aggregated importance
+    max(sr.importance) as importance,
     -- Re-grouped clustered stations columns
     clustered.id as id,
     any_value(clustered.center) as center,
@@ -243,24 +259,24 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_route_count AS
   ) clustered
   JOIN stations s
     ON clustered.station_id = s.id
-  JOIN stations_with_route_count sr
+  JOIN stations_with_importance sr
     ON clustered.station_id = sr.id
   GROUP BY clustered.id;
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_center_index
-  ON grouped_stations_with_route_count
+CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
+  ON grouped_stations_with_importance
     USING GIST(center);
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_buffered_index
-  ON grouped_stations_with_route_count
+CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_buffered_index
+  ON grouped_stations_with_importance
     USING GIST(buffered);
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_route_count_osm_ids_index
-  ON grouped_stations_with_route_count
+CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_osm_ids_index
+  ON grouped_stations_with_importance
     USING GIN(osm_ids);
 
-CLUSTER grouped_stations_with_route_count
-  USING grouped_stations_with_route_count_center_index;
+CLUSTER grouped_stations_with_importance
+  USING grouped_stations_with_importance_center_index;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   SELECT
@@ -278,7 +294,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
       unnest(osm_ids) AS osm_id,
       unnest(osm_types) AS osm_type,
       buffered
-    FROM grouped_stations_with_route_count
+    FROM grouped_stations_with_importance
   ) gs
     ON s.osm_id = gs.osm_id and s.osm_type = gs.osm_type
   GROUP BY sag.osm_id

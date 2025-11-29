@@ -1622,7 +1622,6 @@ function popupContent(feature) {
       .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
-    .filter(([_, {paragraph}]) => !paragraph)
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
     .map(([property, {name, format, link, paragraph, description}]) => ({
       title: name,

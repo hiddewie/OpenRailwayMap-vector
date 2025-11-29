@@ -257,30 +257,19 @@ const speedLegends = [
   80,
   90,
   100,
-  110,
   120,
-  130,
   140,
-  150,
   160,
-  170,
   180,
-  190,
   200,
-  210,
   220,
-  230,
   240,
-  250,
   260,
-  270,
   280,
-  290,
   300,
   320,
   340,
-  360,
-  380
+  360
 ];
 
 const gaugeLegends = [
@@ -356,16 +345,16 @@ const train_protection_construction_dasharray = [2, 8];
 
 const minSpeed = 10
 const maxSpeed = 380
-const startHue = 248
-const endHue = 284;
+const startHue = 250
+const endHue = 275;
 
 const speedColor = ['case',
   ['==', ['get', 'maxspeed'], null], 'gray',
   // Reverse hue order
-  ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed]]], 360], 360], ', 100%, 40%)'],
+  ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['^', ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed], 0.63]]], 360], 360], ', 100%, 42%)'],
 ]
 const speedHoverColor = ['case',
-  ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 260], ['<=', ['get', 'maxspeed'], 300]], colors.hover.alternative,
+  ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 200], ['<=', ['get', 'maxspeed'], 340]], colors.hover.alternative,
   colors.hover.main,
 ]
 
@@ -1970,7 +1959,7 @@ const layers = {
         ],
         'text-halo-width': 1.5,
         'icon-color': colors.styles.standard.stationsText,
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -2008,7 +1997,7 @@ const layers = {
         ],
         'text-halo-width': 1.5,
         'icon-color': colors.styles.standard.stationsText,
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -2416,7 +2405,7 @@ const layers = {
           ],
           colors.styles.standard.defaultText,
         ],
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -4169,7 +4158,7 @@ const layers = {
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -4208,7 +4197,7 @@ const layers = {
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -4288,7 +4277,7 @@ const layers = {
         ],
         'text-halo-width': 1.5,
         'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
-        'icon-halo-width': 1,
+        'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
