@@ -201,7 +201,7 @@ jsonpath "$" count == 3
 jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
 jsonpath "$[0].feature" == "tram_stop"
 jsonpath "$[0].state" == "present"
-jsonpath "$[0].rank" == 32
+jsonpath "$[0].rank" == 34
 jsonpath "$[0].osm_ids" count == 4
 jsonpath "$[0].osm_ids[0]" == 244129991
 jsonpath "$[0].osm_ids[1]" == 271777826
