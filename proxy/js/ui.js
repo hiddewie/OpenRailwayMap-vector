@@ -1657,7 +1657,7 @@ function popupContent(feature) {
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = labels.join(' / ');
+      popupLabel.innerText = labels.join(' • ');
     }
   }
 
