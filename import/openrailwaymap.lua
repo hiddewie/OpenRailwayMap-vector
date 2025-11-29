@@ -1254,7 +1254,7 @@ function osm2pgsql.process_way(object)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
-        way = object:as_polygon(),
+        way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
