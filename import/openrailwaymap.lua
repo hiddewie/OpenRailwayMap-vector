@@ -1379,6 +1379,12 @@ function osm2pgsql.process_way(object)
       tactile_paving = tags.tactile_paving == 'yes',
     })
   end
+
+  if tags.landuse == 'railway' then
+    landuse:insert({
+      way = object:as_polygon(),
+    })
+  end
 end
 
 local route_values = osm2pgsql.make_check_values_func({'train', 'subway', 'tram', 'light_rail'})
