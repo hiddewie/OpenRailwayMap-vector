@@ -1481,10 +1481,10 @@ end
 
 function osm2pgsql.process_gen()
   osm2pgsql.run_gen('discrete-isolation', {
-    name = 'stations',
+    name = 'station_importance',
     debug = true,
-    src_table = 'stations_q',
-    dest_table = 'stations_q',
+    src_table = 'stations_with_importance',
+    dest_table = 'stations_with_importance',
     geom_column = 'way',
     id_column = 'id',
     importance_column = 'importance',

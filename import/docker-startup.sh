@@ -84,6 +84,11 @@ function create_update_functions_views() {
   $PSQL -f sql/api_milestone_functions.sql
   $PSQL -f sql/signal_features.sql
   $PSQL -f sql/get_station_importance.sql
+  $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/stations_clustered.sql
   $PSQL -f sql/tile_views.sql
   $PSQL -f sql/api_facility_views.sql
 }
@@ -92,6 +97,10 @@ function refresh_materialized_views() {
   echo "Updating materialized views"
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/update_stations_clustered.sql
   $PSQL -f sql/update_api_views.sql
 }
 
@@ -134,35 +143,9 @@ filter)
 
   ;;
 
-process)
-
-  $PSQL -c "drop table if exists stations_q;"
-
-  $PSQL -c "create table if not exists stations_q as
-    select
-      id,
-      center as way,
-      importance,
-      0.0::real as discr_iso,
-      0::int as irank,
-      0::int as dirank
-    from grouped_stations_with_importance;
-  "
-
-  $PSQL -c "CREATE INDEX IF NOT EXISTS stations_q_id_idx
-    ON stations_q
-      USING btree(id);
-  "
-
-  osm2pgsql-gen \
-    --database gis \
-    --style openrailwaymap.lua
-
-  ;;
-
 *)
 
-  echo "Invalid argument '$1'. Supported: import, update, refresh, filter, process"
+  echo "Invalid argument '$1'. Supported: import, update, refresh, filter"
   exit 1
 
   ;;

@@ -382,6 +382,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS rank,
     uic_ref,
     importance,
+    discr_iso,
     count,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     nullif(array_to_string(network, U&'\001E'), '') as network,
@@ -438,9 +439,6 @@ RETURN (
       yard_purpose,
       yard_hump
     FROM railway_text_stations
-    JOIN stations_q
-      ON stations_q.id = railway_text_stations.id
-        AND 30 * pow(3.5, 5 - (z - 5)) < stations_q.discr_iso
       -- stations_q.discr_iso < pow(3.5, z) * 10 and
 --       AND stations_q.dirank < pow(3.5, z) * 10 and stations_q.irank < pow(10, z)
 --       AND 75000 < stations_q.discr_iso
@@ -448,6 +446,7 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND 30 * pow(3.5, 5 - (z - 5)) < discr_iso
 --       AND railway_ref IS NOT NULL
 --       AND station_size = 'large'
     ORDER BY
@@ -529,13 +528,11 @@ RETURN (
       yard_purpose,
       yard_hump
     FROM railway_text_stations
-           JOIN stations_q
-                ON stations_q.id = railway_text_stations.id
-                  AND 30 * pow(3.5, 5 - (z - 5)) < stations_q.discr_iso
     WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
+      AND 30 * pow(3.5, 5 - (z - 5)) < discr_iso
 --       AND railway_ref IS NOT NULL
 --       AND station_size IN ('normal', 'large')
     ORDER BY
