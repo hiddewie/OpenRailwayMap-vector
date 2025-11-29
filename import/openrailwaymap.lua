@@ -1480,6 +1480,7 @@ function osm2pgsql.process_relation(object)
 end
 
 function osm2pgsql.process_gen()
+  -- Discrete isolation to assign a "local" importance to each station
   osm2pgsql.run_gen('discrete-isolation', {
     name = 'station_importance',
     debug = true,
