@@ -414,8 +414,8 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(railway_text_stations.way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      railway_text_stations.id as id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id as id,
       osm_id,
       osm_type,
       feature,
@@ -440,18 +440,14 @@ RETURN (
       yard_purpose,
       yard_hump
     FROM railway_text_stations
-      -- stations_q.discr_iso < pow(3.5, z) * 10 and
---       AND stations_q.dirank < pow(3.5, z) * 10 and stations_q.irank < pow(10, z)
---       AND 75000 < stations_q.discr_iso
-  WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
+  WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
       AND (station_size = 'large' OR (z >= 6 AND station_size = 'normal'))
-
     ORDER BY
-      railway_text_stations.importance DESC NULLS LAST
+      importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -505,8 +501,8 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
   FROM (
     SELECT
-      ST_AsMVTGeom(railway_text_stations.way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      railway_text_stations.id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
       osm_id,
       osm_type,
       feature,
@@ -531,13 +527,13 @@ RETURN (
       yard_purpose,
       yard_hump
     FROM railway_text_stations
-    WHERE railway_text_stations.way && ST_TileEnvelope(z, x, y)
+    WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
     ORDER BY
-      railway_text_stations.importance DESC NULLS LAST
+      importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
