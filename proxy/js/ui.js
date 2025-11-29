@@ -39,6 +39,7 @@ const flagEmojiTranslations = {
   ZH: 'CH',
   FA: 'IR',
   UK: 'UA',
+  KA: 'GE',
 }
 function getFlagEmoji(countryCode) {
   const codePoints = (flagEmojiTranslations[countryCode.toUpperCase()] || countryCode.toUpperCase())
