@@ -417,6 +417,7 @@ RETURN (
       ST_AsMVTGeom(railway_text_stations.way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway_text_stations.id as id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
@@ -464,6 +465,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
@@ -506,6 +508,7 @@ RETURN (
       ST_AsMVTGeom(railway_text_stations.way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway_text_stations.id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
@@ -550,6 +553,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
