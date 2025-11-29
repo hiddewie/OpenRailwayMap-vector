@@ -965,11 +965,6 @@ const backgroundMap = new maplibregl.Map({
 
 updateBackgroundMapContainer();
 
-let locale = new Intl.Locale(navigator.language);
-window.addEventListener('languagechange', () => {
-  locale = new Intl.Locale(navigator.language);
-  console.info(`Updated language to ${locale.language}`)
-})
 const map = new maplibregl.Map({
   container: 'map',
   hash: 'view',
@@ -979,17 +974,6 @@ const map = new maplibregl.Map({
   maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
-  transformRequest: (url, resourceType) => {
-    if (resourceType === 'Tile' && url.includes('standard_railway_text_stations')) {
-      const parsedUrl = new URL(url)
-      parsedUrl.searchParams.set('lang', locale.language)
-      return {
-        url: parsedUrl.href,
-      }
-    } else {
-      return null
-    }
-  },
   ...(configuration.view || defaultConfiguration.view),
 });
 
@@ -1043,6 +1027,30 @@ function rewriteStylePathsToOrigin(style) {
     )
 }
 
+// Rewrite source URLs to append the language query parameter
+function addLanguageToSupportedSources(style) {
+  let locale = new Intl.Locale(navigator.language);
+
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => {
+        if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
+          const parsedUrl = new URL(source.url)
+          parsedUrl.searchParams.set('lang', locale.language)
+          return [
+            key,
+            {
+              ...source,
+              url: parsedUrl.href,
+            }
+          ];
+        } else {
+          return [key, source]
+        }
+      })
+  )
+}
+
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
@@ -1078,6 +1086,7 @@ const onStyleChange = () => {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        addLanguageToSupportedSources(next)
         rewriteGlobalStateDefaults(next)
         toggleHillShadeLayer(next)
         return next;
@@ -1797,7 +1806,6 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('sourcedata', (e) => console.info(e));
 map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 
