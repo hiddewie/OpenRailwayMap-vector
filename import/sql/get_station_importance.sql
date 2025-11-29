@@ -106,7 +106,7 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 CREATE OR REPLACE VIEW stations_with_importance_view AS
   SELECT
     id,
-    max(importance) as importance
+    1 + max(importance) as importance
   FROM (
     SELECT
       id,
@@ -132,14 +132,14 @@ CREATE OR REPLACE VIEW stations_with_importance_view AS
     SELECT
       s.id,
       -- The square root and factor are made to align the importance factors of yards
-      --   with stations. A 320 km yard is equivalent to a station with 140 platforms/routes.
+      --   with stations. A 320 km yard is equivalent to a station with 140 routes.
       SQRT(
         SUM(ST_Length(ST_Intersection(ST_Buffer(s.way, 50), l.way)))
       ) / 4 AS importance
     FROM stations s
     JOIN railway_line l
       ON ST_DWithin(s.way, l.way, 50)
---     WHERE s.feature = 'yard'
+    WHERE s.feature = 'yard'
     GROUP BY s.id
 
     UNION ALL

@@ -359,8 +359,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     -- For stations, it is made up of the number of routes.
     -- For yards, it is made up of the (scaled) rail length.
     CASE
-      WHEN importance >= 20 THEN 'large'
-      WHEN importance >= 8 THEN 'normal'
+      WHEN importance >= 21 THEN 'large'
+      WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
     END AS station_size,
     name,
@@ -447,9 +447,9 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND 30 * pow(3.5, 5 - (z - 5)) < discr_iso
---       AND railway_ref IS NOT NULL
---       AND station_size = 'large'
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND (station_size = 'large' OR (z >= 6 AND station_size = 'normal'))
+
     ORDER BY
       railway_text_stations.importance DESC NULLS LAST
   ) as tile
@@ -535,9 +535,7 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND 30 * pow(3.5, 5 - (z - 5)) < discr_iso
---       AND railway_ref IS NOT NULL
---       AND station_size IN ('normal', 'large')
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
     ORDER BY
       railway_text_stations.importance DESC NULLS LAST
   ) as tile
