@@ -77,6 +77,11 @@ function reduce_data() {
   $PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
 }
 
+function transform_data() {
+  # Yard nodes which are contained in a landuse=railway area, assume the landuse area as yard geometry.
+  $PSQL -c "update stations s set way = l.way from landuse l where ST_Within(s.way, l.way) and feature = 'yard' and GeometryType(s.way) = 'POINT' and s.osm_type = 'N';"
+}
+
 function create_update_functions_views() {
   echo "Post processing imported data"
   $PSQL -f sql/tile_functions.sql
@@ -108,6 +113,7 @@ import)
   enable_disable_extensions
   import_db
   reduce_data
+  transform_data
   create_update_functions_views
   print_summary
 
