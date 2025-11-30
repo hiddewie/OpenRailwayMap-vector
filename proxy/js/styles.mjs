@@ -2679,6 +2679,16 @@ const layers = {
             colors.hover.main,
           ],
         },
+        {
+          id: 'railway_line_historical_ferry',
+          minzoom: 5,
+          filter: ['all',
+            ['==', ['get', 'type'], 'ferry'],
+            ['==', ['get', 'railway'], 'ferry'],
+          ],
+          color: colors.styles.standard.ferry,
+          width: 2,
+        },
       ],
     ),
     {
