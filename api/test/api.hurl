@@ -35,6 +35,20 @@ jsonpath "$[17].name" == "Berlin Ostkreuz (Ostbahn)"
 jsonpath "$[18].name" == "Alexanderplatz"
 jsonpath "$[19].name" == "Berlin Alexanderplatz"
 
+# Facility request with language
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Berlin Ostbahnhof
+lang: en
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$" count == 2
+jsonpath "$[0].name" == "Ostbahnhof"
+jsonpath "$[0].localized_name" == "Ostbahnhof"
+jsonpath "$[1].name" == "Berlin Ostbahnhof"
+jsonpath "$[1].localized_name" == "Berlin Ostbahnhof"
+
 # Facility request with limit
 GET {{base_url}}/facility
 [QueryStringParams]
