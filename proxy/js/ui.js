@@ -113,7 +113,7 @@ function searchForFacilities(type, term) {
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
-        label: item.name,
+        label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
