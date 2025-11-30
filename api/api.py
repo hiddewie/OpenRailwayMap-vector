@@ -18,7 +18,6 @@ from openrailwaymap_api.wikidata_api import WikidataAPI
 DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
 }
-print('user agent', DEFAULT_HTTP_HEADERS)
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
