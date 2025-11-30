@@ -1399,6 +1399,20 @@ features:
       - { tag: 'railway:signal:switch', value: 'AU:NSW:MLI_turnout' }
       - { tag: 'railway:signal:switch:form', value: 'light' }
 
+  - description: Distant Signal
+    country: AU
+    icon: [ default: 'au/nsw/signals/distant' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:NSW:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Main Signal
+    country: AU
+    icon: [ default: 'au/nsw/signals/main' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   - description: Mainline Route Indicator
     country: AU
     icon: [ default: 'au/nsw/signals/route_indicator' ]
