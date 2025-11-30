@@ -60,21 +60,21 @@ class FacilityAPI:
             )
 
         sql_query = """
-          SELECT * FROM query_facilities_by_name($1, $2)
+          SELECT * FROM query_facilities_by_name($1, $2, $3)
         """
-        return await self.query_result(sql_query, (q, limit))
+        return await self.query_result(sql_query, (q, language, limit))
 
-    async def _search_by_ref(self, search_function, ref, limit):
+    async def _search_by_ref(self, search_function, ref, language, limit):
         sql_query = f"""
-          SELECT * FROM {search_function}($1, $2)
+          SELECT * FROM {search_function}($1, $2, $3)
         """
-        return await self.query_result(sql_query, (ref, limit))
+        return await self.query_result(sql_query, (ref, language, limit))
 
     async def search_by_ref(self, ref, language, limit):
-        return await self._search_by_ref("query_facilities_by_ref", ref, limit)
+        return await self._search_by_ref("query_facilities_by_ref", ref, language, limit)
 
     async def search_by_uic_ref(self, ref, language, limit):
-        return await self._search_by_ref("query_facilities_by_uic_ref", ref, limit)
+        return await self._search_by_ref("query_facilities_by_uic_ref", ref, language, limit)
 
     async def query_result(self, sql_query, parameters):
         async with self.database.acquire() as connection:
