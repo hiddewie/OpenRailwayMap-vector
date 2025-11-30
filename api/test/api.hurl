@@ -47,7 +47,7 @@ jsonpath "$" count == 2
 jsonpath "$[0].name" == "Ostbahnhof"
 jsonpath "$[0].localized_name" == "Ostbahnhof"
 jsonpath "$[1].name" == "Berlin Ostbahnhof"
-jsonpath "$[1].localized_name" == "Berlin Ostbahnhof"
+jsonpath "$[1].localized_name" == "Berlin Ostbahnhof railway station"
 
 # Facility request with limit
 GET {{base_url}}/facility
