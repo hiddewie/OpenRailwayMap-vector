@@ -153,6 +153,7 @@ osm2pgsql.process_way({
     ['railway:ref'] = 'ref',
     operator = 'operator',
   },
+  is_closed = true,
   as_polygon = function () return way end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {

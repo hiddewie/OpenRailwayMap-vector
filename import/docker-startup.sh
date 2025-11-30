@@ -84,6 +84,11 @@ function create_update_functions_views() {
   $PSQL -f sql/api_milestone_functions.sql
   $PSQL -f sql/signal_features.sql
   $PSQL -f sql/get_station_importance.sql
+  $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/stations_clustered.sql
   $PSQL -f sql/tile_views.sql
   $PSQL -f sql/api_facility_views.sql
 }
@@ -92,6 +97,10 @@ function refresh_materialized_views() {
   echo "Updating materialized views"
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/update_stations_clustered.sql
   $PSQL -f sql/update_api_views.sql
 }
 

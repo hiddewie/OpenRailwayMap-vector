@@ -1254,7 +1254,7 @@ function osm2pgsql.process_way(object)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
-        way = object:as_polygon(),
+        way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
@@ -1477,4 +1477,17 @@ function osm2pgsql.process_relation(object)
       })
     end
   end
+end
+
+function osm2pgsql.process_gen()
+  -- Discrete isolation to assign a "local" importance to each station
+  osm2pgsql.run_gen('discrete-isolation', {
+    name = 'station_importance',
+    debug = true,
+    src_table = 'stations_with_importance',
+    dest_table = 'stations_with_importance',
+    geom_column = 'way',
+    id_column = 'id',
+    importance_column = 'importance',
+  })
 end

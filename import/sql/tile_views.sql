@@ -359,8 +359,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     -- For stations, it is made up of the number of routes.
     -- For yards, it is made up of the (scaled) rail length.
     CASE
-      WHEN importance >= 20 THEN 'large'
-      WHEN importance >= 8 THEN 'normal'
+      WHEN importance >= 21 THEN 'large'
+      WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
     END AS station_size,
     name,
@@ -383,6 +383,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS rank,
     uic_ref,
     importance,
+    discr_iso,
     count,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     nullif(array_to_string(network, U&'\001E'), '') as network,
@@ -415,8 +416,9 @@ RETURN (
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
+      id as id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
@@ -444,8 +446,8 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size = 'large'
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
@@ -461,6 +463,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
@@ -504,6 +507,7 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
@@ -531,8 +535,9 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size IN ('normal', 'large')
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+    ORDER BY
+      importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -546,6 +551,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
