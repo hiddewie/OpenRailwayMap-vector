@@ -1,6 +1,7 @@
 import contextlib
 import os
 from typing import Annotated
+import sys
 
 import asyncpg
 from fastapi import FastAPI
@@ -14,6 +15,10 @@ from openrailwaymap_api.status_api import StatusAPI
 from openrailwaymap_api.replication_api import ReplicationAPI
 from openrailwaymap_api.wikidata_api import WikidataAPI
 
+DEFAULT_HTTP_HEADERS = {
+  'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
+}
+print('user agent', DEFAULT_HTTP_HEADERS)
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
@@ -28,7 +33,7 @@ async def lifespan(app):
         print('Connected to database')
         app.state.database = pool
 
-        async with httpx.AsyncClient(timeout=3.0) as http_client:
+        async with httpx.AsyncClient(timeout=3.0, headers=DEFAULT_HTTP_HEADERS) as http_client:
             print('Created HTTP client')
             app.state.http_client = http_client
 
