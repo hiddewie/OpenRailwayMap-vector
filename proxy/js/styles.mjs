@@ -353,7 +353,7 @@ const speedColor = ['case',
   // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
   // See https://gist.github.com/mikhailov-work/ee72ba4191942acecc03fe6da94fc73f?permalink_comment_id=3708728#gistcomment-3708728
   // See https://github.com/hiddewie/OpenRailwayMap-vector/issues/668
-  ['interpolate', ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed],
+  ['interpolate', ['linear'], ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed],
     0 / 255, 'rgb(48.6272, 18.37056, 59.43552)',
     1 / 255, 'rgb(49.87648, 21.34784, 66.94144)',
     2 / 255, 'rgb(51.08736, 24.31488, 74.30144)',
