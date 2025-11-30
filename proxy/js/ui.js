@@ -50,6 +50,8 @@ function getFlagEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
+const locale = new Intl.Locale(navigator.language);
+
 const icons = {
   railway: {
     station: '<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="16" viewBox="0 0 5120 5120"><path d="M1215 4784c-46-24-63-43-81-90-13-34-14-52-7-81 6-21 113-204 237-408 125-203 228-374 229-378 1-5-29-18-68-31-219-71-376-206-475-411-89-184-85-115-85-1310 0-1138-2-1097 56-1243 98-248 318-434 584-494 88-19 1822-19 1910 0 309 70 537 293 621 607 18 66 19 126 19 1125 0 1200 4 1131-85 1315-56 116-134 213-223 281-70 53-201 119-274 138-26 7-47 17-46 22s105 178 231 384c134 219 233 391 237 412 5 26 1 49-13 80-45 104-170 129-245 50-15-16-60-82-100-148l-73-119H1556l-73 119c-83 136-105 163-150 182-42 18-81 18-118-2zm2145-629c0-2-42-73-93-157l-94-153H1948l-94 153c-52 84-94 155-94 157 0 3 360 5 800 5s800-2 800-5zm-1512-975c48-30 72-75 72-140 0-100-60-160-160-160s-160 60-160 159c0 63 26 113 74 142 43 26 130 26 174-1zm1600 0c48-30 72-75 72-140 0-100-60-160-160-160s-160 60-160 160 60 160 160 160c37 0 66-6 88-20zm28-797c34-11 67-35 110-77 98-98 94-69 94-706s4-608-94-706c-102-101-26-95-1042-92l-879 3-47 23c-60 30-120 90-150 150l-23 47-3 559c-3 654-7 623 92 722 100 99 23 92 1022 93 788 1 875-1 920-16z"/></svg>',
@@ -88,28 +90,36 @@ function registerLastSearchResults(results) {
   map.getSource('search').setData(data);
 }
 
-function facilitySearchQuery(type, term) {
-  const encoded = encodeURIComponent(term)
+function facilitySearchUrl(type, term, language) {
+  const url = new URL(`${location.origin}/api/facility`)
+  url.searchParams.set('lang', language)
 
   switch (type) {
     case 'name':
-      return `name=${encoded}`;
+      url.searchParams.set('name', term)
+      break;
+
     case 'ref':
-      return `ref=${encoded}`;
+      url.searchParams.set('ref', term)
+      break;
+
     case 'uic_ref':
-      return `uic_ref=${encoded}`;
+      url.searchParams.set('uic_ref', term)
+      break;
+
     case 'all':
     default:
-      return `q=${encoded}`;
+      url.searchParams.set('q', term)
   }
+
+  return url
 }
 
-function searchForFacilities(type, term) {
+function searchForFacilities(type, term, language) {
   if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    const queryString = facilitySearchQuery(type, term)
-    fetch(`${location.origin}/api/facility?${queryString}`)
+    fetch(facilitySearchUrl(type, term, language))
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
@@ -351,7 +361,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term)
+  searchForFacilities(data.type, data.term, locale.language)
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -1036,8 +1046,6 @@ function rewriteStylePathsToOrigin(style) {
 
 // Rewrite source URLs to append the language query parameter
 function addLanguageToSupportedSources(style) {
-  let locale = new Intl.Locale(navigator.language);
-
   style.sources = Object.fromEntries(
     Object.entries(style.sources)
       .map(([key, source]) => {
