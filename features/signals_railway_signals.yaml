@@ -5851,7 +5851,37 @@ features:
       - { tag: 'railway:signal:crossing_hint', value: 'NZ:saltire' }
       - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
 
+  # crossing_info
+  - description: Alarms Start Here
+    country: NZ
+    icon: [ default: 'nz/alarms_start_here' ]
+    tags:
+      - { tag: 'railway:signal:crossing_info', value: 'NZ:alarms_start_here' }
+      - { tag: 'railway:signal:crossing_info:form', value: 'sign' }
+
+  # crossing
+  - description: Crossing Indicator
+    country: NZ
+    icon: [ default: 'nz/XI' ]
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'NZ:XI' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
   # stop
+  - description: All Trains Stop
+    country: NZ
+    icon: [ default: 'nz/all_trains_stop' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:all_trains_stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop Block Entry
+    country: NZ
+    icon: [ default: 'nz/stop_block_entry' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_block' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Stop Plate
     country: NZ
     icon: [ default: 'nz/stop_plate' ]
@@ -5865,6 +5895,52 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'NZ:stop_disk' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: EMU Stop Position
+    country: NZ
+    exampleIcon: nz/stop_position/6
+    icon:
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '2', value: 'nz/stop_position/2' }
+        position: bottom
+
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '3', value: 'nz/stop_position/3' }
+        position: bottom
+
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '4', value: 'nz/stop_position/4' }
+        position: bottom
+
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '6', value: 'nz/stop_position/6' }
+        position: bottom
+
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '8', value: 'nz/stop_position/8' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:emu_stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  # switch
+  - description: Arrow Indicator
+    country: NZ
+    icon:
+      - default: 'nz/AI_unknown'
+      - match: 'railway:signal:switch:states'
+        cases:
+          - { exact: 'left', value: 'nz/AI_L' }
+          - { exact: 'right', value: 'nz/AI_R' }
+          - { all: ['left', 'right'], value: 'nz/AI_LR' }
+    tags:
+      - { tag: 'railway:signal:switch', value: 'NZ:AI' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
 
   # main_repeated
   - description: Single Banner Indicator
@@ -5911,6 +5987,78 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'NZ:A' }
       - { tag: 'railway:signal:train_protection:form', value: 'light' }
 
+  - description: Automatic Signaling Begins
+    country: NZ
+    icon: [ default: 'nz/begin_AS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:AS_begins' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Automatic Signaling Ends
+    country: NZ
+    icon: [ default: 'nz/end_AS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:AS_ends' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Centralized Traffic Control Begins
+    country: NZ
+    icon: [ default: 'nz/begin_CTC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:CTC_begins' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Centralized Traffic Control Ends
+    country: NZ
+    icon: [ default: 'nz/end_CTC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:CTC_ends' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Entry to European Train Control System
+    country: NZ
+    icon: [ default: 'nz/begin_ETCS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:ETCS_begins' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Exit from European Train Control System
+    country: NZ
+    icon: [ default: 'nz/end_ETCS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:ETCS_ends' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Track Warrant Control Begins
+    country: NZ
+    icon: [ default: 'nz/begin_TWC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:TWC_begins' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Track Warrant Control Ends
+    country: NZ
+    icon: [ default: 'nz/end_TWC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NZ:TWC_ends' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  # electricity
+  - description: Electric Services Limit
+    country: NZ
+    icon: [ default: 'nz/electric_limit' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'NZ:electric_limit' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  # radio
+  - description: Entering Radio Channel Area
+    country: NZ
+    icon: [ default: 'nz/channel_area' ]
+    tags:
+      - { tag: 'railway:signal:radio', value: 'NZ:channel_area' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
+
   # minor
   - description: Restricted-speed Light
     country: NZ
@@ -5926,48 +6074,186 @@ features:
       - { tag: 'railway:signal:minor', value: 'NZ:low_speed' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
-  # main
-  - description: Double multi-unit
+  - description: TWC Siding
     country: NZ
-    icon: [ default: 'nz/main_MM' ]
+    icon: [ default: 'nz/TWC_siding' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'NZ:TWC_siding' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: TWC Intermediate Board
+    country: NZ
+    icon: [ default: 'nz/TWC_intermediate' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'NZ:TWC_intermediate' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  # station_distant
+  - description: TWC (signalled) Station Warning
+    country: NZ
+    icon: [ default: 'nz/TWC_signalled' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'NZ:TWC_signalled' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: TWC (unsignalled) Station Warning
+    country: NZ
+    icon: [ default: 'nz/TWC_unsignalled' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'NZ:TWC_unsignalled' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  # whistle
+  - description: Whistle
+    country: NZ
+    icon: [ default: 'nz/whistle' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'NZ:whistle' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  # shunting
+  - description: Shunting Limit
+    country: NZ
+    icon: [ default: 'nz/shunting_limit' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'NZ:shunting_limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Shunt Signal (3-position)
+    country: NZ
+    icon: [ default: 'nz/shunt3' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'NZ:shunt' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+      - { tag: 'railway:signal:shunting:states', value: 'RYG' }
+
+  - description: Shunt Signal (2-position)
+    country: NZ
+    icon: [ default: 'nz/shunt2' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'NZ:shunt' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+      - { tag: 'railway:signal:shunting:states', value: 'RY' }
+
+  # main
+  - description: Double multi-unit (permissive)
+    country: NZ
+    icon: [ default: 'nz/main/MM-staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Double multi-unit (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/MM' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_MM' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Multi-unit above Searchlight
+  - description: Multi-unit above Searchlight (permissive)
     country: NZ
-    icon: [ default: 'nz/main_MS' ]
+    icon: [ default: 'nz/main/MS-staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MS' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Multi-unit above Searchlight (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/MS' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_MS' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Multi-unit with marker disk
+  - description: Multi-unit with marker disk (permissive)
     country: NZ
-    icon: [ default: 'nz/main_MD' ]
+    icon: [ default: 'nz/main/MD-staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_MD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Multi-unit with marker disk (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/MD' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_MD' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Searchlight above multi-unit
+  - description: Searchlight above multi-unit (permissive)
     country: NZ
-    icon: [ default: 'nz/main_SM' ]
+    icon: [ default: 'nz/main/SM-staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Searchlight above multi-unit (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/SM' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_SM' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Double Searchlight
+  - description: Double Searchlight (permissive)
     country: NZ
-    icon: [ default: 'nz/main_SS' ]
+    icon: [ default: 'nz/main/SS-staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SS' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Double Searchlight (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/SS' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_SS' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Searchlight with marker disk
+  - description: Searchlight with marker disk (permissive)
     country: NZ
-    icon: [ default: 'nz/main_SD' ]
+    icon: [ default: 'nz/main/SD-staggered' ]
     tags:
       - { tag: 'railway:signal:main', value: 'NZ:main_SD' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: Searchlight with marker disk (absolute)
+    country: NZ
+    icon: [ default: 'nz/main/SD' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:main_SD' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 2-position main signal
+    country: NZ
+    icon: [ default: 'nz/main/M' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:M' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Semaphore main signal
+    country: NZ
+    icon: [ default: 'nz/main/semaphore' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'NZ:M' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  # distant
+  - description: 2-position distant signal
+    country: NZ
+    icon: [ default: 'nz/distant/M' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NZ:M' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Semaphore distant signal
+    country: NZ
+    icon: [ default: 'nz/distant/semaphore' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NZ:M' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
 
   # speed
   - description: Dynamic Speed Indicator

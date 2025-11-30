@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 15" width="10" height="15">
-  <rect x="4" y="0" width="1" height="15" fill="#777"/>
-
-  <rect x="1" y="1" height="7" width="7" fill="#000" ry="0.4"/>
-  <rect x="2" y="4" height="1" width="5" fill="#fff" ry="0.4"/>
-
-  <rect x="2.5" y="10" height="4" width="4" fill="#000" ry="0.4"/>
-  <circle cx="4.5" cy="12" r="1" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 15" width="10.5" height="22.5">
+  <rect x="3" y="0" width="1" height="15" fill="#777"/>
+  <rect x="0" y="1" height="7" width="7" fill="#000" ry="0.4"/>
+  <rect x="1" y="4" height="1" width="5" fill="#fff" ry="0.4"/>
+  <rect x="1.5" y="10" height="4" width="4" fill="#000" ry="0.4"/>
+  <circle cx="3.5" cy="12" r="1" fill="#fff"/>
 </svg>
