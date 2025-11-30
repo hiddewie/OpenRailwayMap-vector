@@ -72,10 +72,11 @@ async def facility(
         name: Annotated[str | None, Query()] = None,
         ref: Annotated[str | None, Query()] = None,
         uic_ref: Annotated[str | None, Query()] = None,
+        lang: Annotated[str | None, Query()] = None,
         limit: Annotated[int, Query(ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_FACILITY_LIMIT,
 ):
     api = FacilityAPI(app.state.database)
-    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit)
+    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit, language=lang)
 
 
 @app.get("/api/milestone")
