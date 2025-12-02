@@ -54,6 +54,21 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+osm2pgsql.process_relation({
+  tags = {
+    ['type'] = 'public_transport',
+    ['public_transport'] = 'stop_area',
+  },
+  members = {
+    { role = 'stop', type = 'n', ref = 1 },
+  },
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stop_areas = {
+    { stop_ref_ids = '{1}', way_ref_ids = '{}', platform_ref_ids = '{}', node_ref_ids = '{}' },
+  },
+})
+
 -- Stop area groups
 
 osm2pgsql.process_relation({
