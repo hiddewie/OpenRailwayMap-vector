@@ -1492,6 +1492,12 @@ function osm2pgsql.process_relation(object)
       })
     end
   end
+
+  if tags.landuse == 'railway' then
+    landuse:insert({
+      way = object:as_multipolygon(),
+    })
+  end
 end
 
 function osm2pgsql.process_gen()
