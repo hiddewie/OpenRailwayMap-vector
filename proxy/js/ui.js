@@ -58,7 +58,11 @@ let locale = new Intl.Locale(navigator.language);
 window.addEventListener('languagechange', () => {
   locale = new Intl.Locale(navigator.language);
   console.info(`Browser language changed to ${locale.language}`);
-  onStyleChange();
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    onStyleChange();
+  }
 })
 
 const icons = {
