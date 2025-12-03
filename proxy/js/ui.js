@@ -670,15 +670,18 @@ function onStationLabelChange(stationlabel) {
 
 function disableLocalization() {
   updateConfiguration('localization', 'disabled');
+  onStyleChange();
 }
 
 function automaticLocalization() {
   updateConfiguration('localization', 'automatic');
+  onStyleChange();
 }
 
 function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
+  onStyleChange();
 }
 
 function configuredLanguage() {
@@ -1090,14 +1093,13 @@ function rewriteStylePathsToOrigin(style) {
 }
 
 // Rewrite source URLs to append the language query parameter
-function addLanguageToSupportedSources(style) {
+function addLanguageToSupportedSources(style, language) {
   style.sources = Object.fromEntries(
     Object.entries(style.sources)
       .map(([key, source]) => {
         if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
           const parsedUrl = new URL(source.url)
 
-          const language = configuredLanguage();
           if (language) {
             parsedUrl.searchParams.set('lang', language)
           }
@@ -1136,22 +1138,25 @@ function toggleHillShadeLayer(style) {
 }
 
 let lastSetMapStyle = null;
-const onStyleChange = () => {
+let lastSetMapLanguage = null;
+function onStyleChange() {
   const supportsDate = knownStyles[selectedStyle].styles.date;
   const dateActive = supportsDate && dateControl.active;
   const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
+  const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle) {
+  if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     lastSetMapStyle = mapStyle;
+    lastSetMapLanguage = language;
 
     // Change styles
     map.setStyle(mapStyles[mapStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
-        addLanguageToSupportedSources(next)
+        addLanguageToSupportedSources(next, language)
         rewriteGlobalStateDefaults(next)
         toggleHillShadeLayer(next)
         return next;
