@@ -93,7 +93,7 @@ const generateSignalFeatures = (features, types) =>
 
 // TODO move icon SVGs to proxy
 const railwayLineFeatures = {
-  labelProperty: 'standard_label',
+  labelProperties: ['standard_label'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     railway_lines.features.map(feature => [
@@ -284,7 +284,7 @@ const poiFeatures = layer => ({
 // TODO move tram / metro stops to stations
 const stationFeatures = {
   featureProperty: 'feature',
-  labelProperty: 'name',
+  labelProperties: ['localized_name', 'name'],
   featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])
@@ -361,7 +361,7 @@ const features = {
   'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
   'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureProperty: 'type',
     featureLinks: featureLinks.openhistoricalmap,
     features: {
@@ -455,7 +455,7 @@ const features = {
   },
   'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureLinks: featureLinks.openhistoricalmap,
     features: {
       station: {
@@ -500,7 +500,7 @@ const features = {
         type: 'polygon',
       },
     },
-    labelProperty: 'name',
+    labelProperties: ['name'],
     properties: {
       ref: {
         name: 'Reference',
@@ -548,7 +548,7 @@ const features = {
         type: 'line',
       },
     },
-    labelProperty: 'ref',
+    labelProperties: ['ref'],
     properties: {
       height: {
         name: 'Height',
@@ -563,7 +563,7 @@ const features = {
   },
   'openrailwaymap_standard-standard_railway_stop_positions': {
     featureLinks: featureLinks.openstreetmap,
-    labelProperty: 'name',
+    labelProperties: ['name'],
     features: {
       stop_position: {
         name: 'Stop position',
@@ -919,7 +919,7 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_signal_boxes': {
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureLinks: featureLinks.openstreetmap,
     features: {
       'signal_box': {
@@ -1089,7 +1089,7 @@ const features = {
   // Search results
 
   search: {
-    labelProperty: 'label',
+    labelProperties: ['label'],
     featureLinks: featureLinks.openstreetmap,
     features: [],
     properties: {

@@ -21,7 +21,7 @@ class FacilityAPI:
 
         return results
 
-    async def __call__(self, *, q, name, ref, uic_ref, limit):
+    async def __call__(self, *, q, name, ref, uic_ref, language, limit):
         # Validate search arguments
         search_args_count = sum(1 for search_arg in [q, name, ref, uic_ref] if search_arg)
 
@@ -39,20 +39,20 @@ class FacilityAPI:
             )
 
         if name:
-            return await self.search_by_name(name, limit)
+            return await self.search_by_name(name, language, limit)
         if ref:
-            return await self.search_by_ref(ref, limit)
+            return await self.search_by_ref(ref, language, limit)
         if uic_ref:
-            return await self.search_by_uic_ref(uic_ref, limit)
+            return await self.search_by_uic_ref(uic_ref, language, limit)
         if q:
-            return self.eliminate_duplicates((await self.search_by_name(q, limit)) + (await self.search_by_ref(q, limit)) + (await self.search_by_uic_ref(q, limit)), limit)
+            return self.eliminate_duplicates((await self.search_by_name(q, language, limit)) + (await self.search_by_ref(q, language, limit)) + (await self.search_by_uic_ref(q, language, limit)), limit)
 
     def query_has_no_wildcards(self, q):
         if '%' in q or '_' in q:
             return False
         return True
 
-    async def search_by_name(self, q, limit):
+    async def search_by_name(self, q, language, limit):
         if not self.query_has_no_wildcards(q):
             raise HTTPException(
                 HTTP_400_BAD_REQUEST,
@@ -60,21 +60,21 @@ class FacilityAPI:
             )
 
         sql_query = """
-          SELECT * FROM query_facilities_by_name($1, $2)
+          SELECT * FROM query_facilities_by_name($1, $2, $3)
         """
-        return await self.query_result(sql_query, (q, limit))
+        return await self.query_result(sql_query, (q, language, limit))
 
-    async def _search_by_ref(self, search_function, ref, limit):
+    async def _search_by_ref(self, search_function, ref, language, limit):
         sql_query = f"""
-          SELECT * FROM {search_function}($1, $2)
+          SELECT * FROM {search_function}($1, $2, $3)
         """
-        return await self.query_result(sql_query, (ref, limit))
+        return await self.query_result(sql_query, (ref, language, limit))
 
-    async def search_by_ref(self, ref, limit):
-        return await self._search_by_ref("query_facilities_by_ref", ref, limit)
+    async def search_by_ref(self, ref, language, limit):
+        return await self._search_by_ref("query_facilities_by_ref", ref, language, limit)
 
-    async def search_by_uic_ref(self, ref, limit):
-        return await self._search_by_ref("query_facilities_by_uic_ref", ref, limit)
+    async def search_by_uic_ref(self, ref, language, limit):
+        return await self._search_by_ref("query_facilities_by_uic_ref", ref, language, limit)
 
     async def query_result(self, sql_query, parameters):
         async with self.database.acquire() as connection:

@@ -100,6 +100,12 @@ paths:
             default: 20
             maximum: 200
           description: maximum number of results
+        - name: lang
+          in: query
+          schema:
+            type: string
+          required: false
+          description: language to use for determining localized name
       responses:
         '200':
           description: Success
@@ -132,6 +138,10 @@ paths:
                     name:
                       type: string
                       nullable: true
+                    localized_name:
+                      type: string
+                      nullable: true
+                      description: The localized name, if the `lang` parameter is given and present, otherwise equal to the name
                     railway:
                       type: string
                       nullable: true

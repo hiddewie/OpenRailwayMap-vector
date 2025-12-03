@@ -30,11 +30,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_name(
   input_name text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -61,6 +63,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         b.osm_ids,
         b.osm_types,
         b.name,
+        b.localized_name,
         b.feature,
         b.state,
         b.railway_ref,
@@ -84,6 +87,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
           a.osm_ids,
           a.osm_types,
           a.name,
+          a.localized_name,
           a.feature,
           a.state,
           a.railway_ref,
@@ -107,6 +111,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.osm_ids,
             fs.osm_types,
             fs.name,
+            COALESCE(fs.name_tags['name:' || input_language], fs.name) as localized_name,
             fs.feature,
             fs.state,
             fs.railway_ref,
@@ -138,11 +143,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   input_ref text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -169,6 +176,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
+        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
         s.feature,
         s.state,
         s.railway_ref,
@@ -196,11 +204,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
   input_uic_ref text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -227,6 +237,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
+        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
         s.feature,
         s.state,
         s.railway_ref,

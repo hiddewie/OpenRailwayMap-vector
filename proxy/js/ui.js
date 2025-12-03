@@ -35,6 +35,13 @@ const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()}
 
 const flagEmojiTranslations = {
   EN: 'GB',
+  JA: 'JP',
+  ZH: 'CH',
+  FA: 'IR',
+  UK: 'UA',
+  KA: 'GE',
+  HY: 'AM',
+  HE: 'IS',
 }
 function getFlagEmoji(countryCode) {
   const codePoints = (flagEmojiTranslations[countryCode.toUpperCase()] || countryCode.toUpperCase())
@@ -42,6 +49,8 @@ function getFlagEmoji(countryCode) {
     .map(char =>  127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
 }
+
+const locale = new Intl.Locale(navigator.language);
 
 const icons = {
   railway: {
@@ -81,32 +90,40 @@ function registerLastSearchResults(results) {
   map.getSource('search').setData(data);
 }
 
-function facilitySearchQuery(type, term) {
-  const encoded = encodeURIComponent(term)
+function facilitySearchUrl(type, term, language) {
+  const url = new URL(`${location.origin}/api/facility`)
+  url.searchParams.set('lang', language)
 
   switch (type) {
     case 'name':
-      return `name=${encoded}`;
+      url.searchParams.set('name', term)
+      break;
+
     case 'ref':
-      return `ref=${encoded}`;
+      url.searchParams.set('ref', term)
+      break;
+
     case 'uic_ref':
-      return `uic_ref=${encoded}`;
+      url.searchParams.set('uic_ref', term)
+      break;
+
     case 'all':
     default:
-      return `q=${encoded}`;
+      url.searchParams.set('q', term)
   }
+
+  return url
 }
 
-function searchForFacilities(type, term) {
+function searchForFacilities(type, term, language) {
   if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    const queryString = facilitySearchQuery(type, term)
-    fetch(`${location.origin}/api/facility?${queryString}`)
+    fetch(facilitySearchUrl(type, term, language))
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
-        label: item.name,
+        label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
@@ -344,7 +361,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term)
+  searchForFacilities(data.type, data.term, locale.language)
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -1027,6 +1044,28 @@ function rewriteStylePathsToOrigin(style) {
     )
 }
 
+// Rewrite source URLs to append the language query parameter
+function addLanguageToSupportedSources(style) {
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => {
+        if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
+          const parsedUrl = new URL(source.url)
+          parsedUrl.searchParams.set('lang', locale.language)
+          return [
+            key,
+            {
+              ...source,
+              url: parsedUrl.href,
+            }
+          ];
+        } else {
+          return [key, source]
+        }
+      })
+  )
+}
+
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
@@ -1062,6 +1101,7 @@ const onStyleChange = () => {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        addLanguageToSupportedSources(next)
         rewriteGlobalStateDefaults(next)
         toggleHillShadeLayer(next)
         return next;
@@ -1536,7 +1576,8 @@ function popupContent(feature) {
   if (!featureContent) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
-  const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
+  // Unique labels
+  const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
 
   const determineDefaultOsmType = (properties, featureContent) => {
@@ -1624,14 +1665,14 @@ function popupContent(feature) {
   const popupTitle = createDomElement('h5', undefined, popupContainer);
   popupTitle.innerText = featureDescription;
 
-  if (properties.icon || label) {
+  if (properties.icon || labels.length > 0) {
     const popupLabel = createDomElement('h6', undefined, popupContainer);
     if (properties.icon) {
       const popupLabelSpan = createDomElement('span', undefined, popupLabel);
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = label;
+      popupLabel.innerText = labels.join(' • ');
     }
   }
 

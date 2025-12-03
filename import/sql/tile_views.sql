@@ -359,11 +359,12 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     -- For stations, it is made up of the number of routes.
     -- For yards, it is made up of the (scaled) rail length.
     CASE
-      WHEN importance >= 20 THEN 'large'
-      WHEN importance >= 8 THEN 'normal'
+      WHEN importance >= 21 THEN 'large'
+      WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
     END AS station_size,
     name,
+    name_tags,
     CASE
       WHEN state != 'present' THEN 100
       WHEN feature = 'station' AND station = 'light_rail' THEN 450
@@ -382,6 +383,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     END AS rank,
     uic_ref,
     importance,
+    discr_iso,
     count,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     nullif(array_to_string(network, U&'\001E'), '') as network,
@@ -402,7 +404,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
 
-CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integer, y integer, query json)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -414,14 +416,16 @@ RETURN (
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
+      id as id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
       station_size,
       railway_ref as label,
       name,
+      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       uic_ref,
       operator,
       operator_hash,
@@ -442,8 +446,8 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size = 'large'
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
@@ -459,12 +463,14 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
           "station_size": "string",
           "label": "string",
           "name": "string",
+          "localized_name": "string",
           "operator": "string",
           "operator_hash": "string",
           "network": "string",
@@ -487,7 +493,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integer, y integer, query json)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -501,12 +507,14 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       osm_id,
+      osm_type,
       feature,
       state,
       station,
       station_size,
       railway_ref as label,
       name,
+      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       uic_ref,
       operator,
       operator_hash,
@@ -527,8 +535,9 @@ RETURN (
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND railway_ref IS NOT NULL
-      AND station_size IN ('normal', 'large')
+      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+    ORDER BY
+      importance DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -542,12 +551,14 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "string",
+          "osm_type": "string",
           "feature": "string",
           "state": "string",
           "station": "string",
           "station_size": "string",
           "label": "string",
           "name": "string",
+          "localized_name": "string",
           "operator": "string",
           "operator_hash": "string",
           "network": "string",
@@ -670,7 +681,7 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, y integer, query json)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -691,6 +702,7 @@ RETURN (
       station_size,
       railway_ref as label,
       name,
+      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       count,
       uic_ref,
       operator,
@@ -730,6 +742,7 @@ DO $do$ BEGIN
           "station_size": "string",
           "label": "string",
           "name": "string",
+          "localized_name": "string",
           "operator": "string",
           "operator_hash": "string",
           "network": "string",
