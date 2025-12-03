@@ -1157,9 +1157,6 @@ function onStyleChange() {
   const language = configuredLanguage();
 
   if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
-    lastSetMapStyle = mapStyle;
-    lastSetMapLanguage = language;
-
     // Change styles
     map.setStyle(mapStyles[mapStyle], {
       validate: false,
@@ -1171,7 +1168,10 @@ function onStyleChange() {
         return next;
       },
     });
+  }
 
+  if (mapStyle !== lastSetMapStyle) {
+    // Change legend styles
     legendMap.setStyle(legendStyles[mapStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
@@ -1190,6 +1190,9 @@ function onStyleChange() {
   } else if (!supportsDate && dateControl.isShown()) {
     dateControl.hide();
   }
+
+  lastSetMapStyle = mapStyle;
+  lastSetMapLanguage = language;
 
   onPageParametersChange();
 }
