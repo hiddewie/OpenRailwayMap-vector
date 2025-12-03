@@ -24,6 +24,10 @@ const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
+const localizationDisabledControl =  document.getElementById('localizationDisabled');
+const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
+const localizationCustomControl =  document.getElementById('localizationCustom');
+const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
 const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
@@ -285,6 +289,19 @@ function showConfiguration() {
   } else if (stationLowZoomLabel === 'name') {
     stationLabelNameControl.checked = true
   }
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    localizationAutomaticControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'disabled') {
+    localizationDisabledControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'custom') {
+    localizationCustomControl.checked = true;
+    localizationCustomLanguageControl.disabled = false;
+  }
+  localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
 
   configurationBackdrop.style.display = 'block';
 }
@@ -937,7 +954,8 @@ const defaultConfiguration = {
   theme: 'system',
   editor: 'id',
   view: {},
-  stationLowZoomLabel: 'label'
+  stationLowZoomLabel: 'label',
+  localization: 'automatic',
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
