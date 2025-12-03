@@ -665,6 +665,30 @@ function onStationLabelChange(stationlabel) {
   }
 }
 
+function disableLocalization() {
+  updateConfiguration('localization', 'disabled');
+}
+
+function automaticLocalization() {
+  updateConfiguration('localization', 'automatic');
+}
+
+function customLocalization(language) {
+  updateConfiguration('localization', 'custom');
+  updateConfiguration('localizationCustomLanguage', language);
+}
+
+function configuredLanguage() {
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    return locale.language;
+  } else if (localization === 'disabled') {
+    return null;
+  } else if (localization === 'custom') {
+    return configuration.localizationCustomLanguage;
+  }
+}
+
 function resolveTheme(configuredTheme) {
   return configuredTheme === 'system'
     ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
