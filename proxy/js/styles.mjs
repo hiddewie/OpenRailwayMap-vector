@@ -345,13 +345,28 @@ const train_protection_construction_dasharray = [2, 8];
 
 const minSpeed = 10
 const maxSpeed = 380
-const startHue = 250
-const endHue = 275;
 
 const speedColor = ['case',
   ['==', ['get', 'maxspeed'], null], 'gray',
-  // Reverse hue order
-  ['concat', 'hsl(', ['%', ['+', ['-', startHue, ['*', startHue + (360 - endHue), ['^', ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed], 0.63]]], 360], 360], ', 100%, 42%)'],
+
+  // Turbo color map
+  // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
+  // See https://gist.github.com/mikhailov-work/ee72ba4191942acecc03fe6da94fc73f?permalink_comment_id=3708728#gistcomment-3708728
+  // See https://github.com/hiddewie/OpenRailwayMap-vector/issues/668
+  ['interpolate-hcl', ['linear'], ['^', ['/', ['-', ['max', minSpeed, ['min', ['get', 'maxspeed'], maxSpeed]], minSpeed], maxSpeed - minSpeed], 0.8],
+    0, 'hsl(285 53.2% 15.1%)',
+    25 / 255, 'hsl(231 57% 53.5%)',
+    50 / 255, 'hsl(212 101.1% 62.7%)',
+    75 / 255, 'hsl(179 78.2% 46.7%)',
+    100 / 255, 'hsl(145 92% 45%)',
+    125 / 255, 'hsl(91 100% 45%)',
+    150 / 255, 'hsl(62 75.5% 55%)',
+    175 / 255, 'hsl(36 99% 60.2%)',
+    200 / 255, 'hsl(21 91.7% 52.5%)',
+    225 / 255, 'hsl(12 96.2% 41.4%)',
+    250 / 255, 'hsl(3 97.2% 27.8%)',
+    255 / 255, 'hsl(1 95.2% 24.7%)',
+  ],
 ]
 const speedHoverColor = ['case',
   ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 200], ['<=', ['get', 'maxspeed'], 340]], colors.hover.alternative,
