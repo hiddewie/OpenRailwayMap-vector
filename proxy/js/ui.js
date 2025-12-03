@@ -96,7 +96,10 @@ function registerLastSearchResults(results) {
 
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
-  url.searchParams.set('lang', language)
+
+  if (language) {
+    url.searchParams.set('lang', language)
+  }
 
   switch (type) {
     case 'name':
@@ -378,7 +381,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term, locale.language)
+  searchForFacilities(data.type, data.term, configuredLanguage())
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -1093,7 +1096,12 @@ function addLanguageToSupportedSources(style) {
       .map(([key, source]) => {
         if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
           const parsedUrl = new URL(source.url)
-          parsedUrl.searchParams.set('lang', locale.language)
+
+          const language = configuredLanguage();
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          }
+
           return [
             key,
             {
