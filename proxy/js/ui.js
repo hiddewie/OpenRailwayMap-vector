@@ -54,7 +54,12 @@ function getFlagEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
-const locale = new Intl.Locale(navigator.language);
+let locale = new Intl.Locale(navigator.language);
+window.addEventListener('languagechange', () => {
+  locale = new Intl.Locale(navigator.language);
+  console.info(`Browser language changed to ${locale.language}`);
+  onStyleChange();
+})
 
 const icons = {
   railway: {
