@@ -1478,6 +1478,7 @@ const layers = {
         'fill-color': ['case',
           ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors.styles.standard.past,
           ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors.styles.standard.future,
+          ['==', ['get', 'feature'], 'yard'], 'hsl(267 100% 83.5%)',
           ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
           ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
           ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
@@ -1508,6 +1509,7 @@ const layers = {
       filter: ['==', ['get', 'state'], state],
       paint: {
         'line-color': ['case',
+          ['==', ['get', 'feature'], 'yard'], 'hsl(267 100% 83.5%)',
           // Use outline color of feature, without taking state into account
           ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
           ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
