@@ -11,6 +11,7 @@ loading_gauges:
   - { value: 'W6A', legend: 'W6A', color: 'hsl(291, 100%, 47%)' }
   - { value: 'W6A*', legend: 'W6A*', color: 'hsl(291, 100%, 47%)' }
   - { value: 'W7', legend: 'W7', color: 'hsl(279, 100%, 44%)' }
+  - { value: 'W7*', legend: 'W7*', color: 'hsl(279, 100%, 44%)' }
   - { value: 'W8', legend: 'W8', color: 'hsl(245, 100%, 44%)' }
   - { value: 'W9', legend: 'W9', color: 'hsl(207, 100%, 44%)' }
   - { value: 'W9Plus', legend: 'W9Plus', color: 'hsl(207, 100%, 44%)' }
