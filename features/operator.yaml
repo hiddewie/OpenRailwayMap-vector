@@ -1,0 +1,22 @@
+operators:
+  - { name: 'Amtrak', color: '#18567D' }
+  - { name: 'Metro-North Railroad', color: '#08179C' }
+  - { name: 'Long Island Rail Road', color: '#08179C' }
+  - { name: 'Staten Island Rapid Transit Operating Authority', color: '#08179C' }
+  - { name: 'Massachusetts Bay Transportation Authority', color: '#82076c' }
+  - { name: 'Consolidated Rail Corporation', color: '#0079c1' }
+  - { name: 'Norfolk Southern Railway', color: '#2b2b2a' }
+  - { name: 'CSX Transportstion', color: '#104f8c' }
+  - { name: 'BNSF', color: '#f85d13' }
+  - { name: 'Union Pacific Railroad', color: '#FFCC00' }
+  - { name: 'Canadian Pacific Kansas City', color: '#C2002F' }
+  - { name: 'Canadian National Railway', color: '#EF3037' }
+  - { name: 'Southeastern Pennsylvania Transportation Authority', color: '#F14728' }
+  - { name: 'South Florida Regional Transportation Authority', color: '#1B6D85' }
+  - { name: 'SunRail', color: '#f9a548' }
+  - { name: 'Brightline Trains Florida LLC', color: '#FFDB00' }
+  - { name: 'New Jersey Transit', color: '#dd0752' }
+  - { name: 'New Jersey Transit Rail Operations', color: '#dd0752' }
+  - { name: 'New Jersey Transit Light Rail Operations', color: '#88b04b' }
+  - { name: 'New Jersey Transit Bus Operations', color: '#c76808' }
+  - { name: 'New York & Atlantic Railway', color: '#38553E' }
