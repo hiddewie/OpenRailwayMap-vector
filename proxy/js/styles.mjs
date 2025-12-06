@@ -7,6 +7,7 @@ const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml',
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
+const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
 
 const poiColored = poi.features
   .flatMap(feature => [feature, ...(feature.variants || []).map(it => ({...it, minzoom: feature.minzoom}))])
@@ -7145,15 +7146,14 @@ const legendData = {
     ],
   },
   operator: {
-    // TODO legend for operators
     'operator_railway_line_low-operator_railway_line_low': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: 'ABC',
-          operator_color: 'hsl(0, 100%, 40%)',
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7161,7 +7161,7 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
@@ -7179,13 +7179,13 @@ const legendData = {
       },
     ],
     'openrailwaymap_low-railway_line_high': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: 'ABC',
-          operator_color: 'hsl(0, 100%, 40%)',
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7193,7 +7193,7 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
@@ -7211,13 +7211,13 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: null,
-          operator_color: 'hsl(0, 100%, 40%)',
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7225,7 +7225,7 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
