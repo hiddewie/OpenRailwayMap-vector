@@ -44,6 +44,7 @@ operators:
 
   - names:
       - 'Canadian Pacific Kansas City'
+      - 'Canadien Pacifique Kansas City' 
     color: '#C2002F'
 
   - names:
