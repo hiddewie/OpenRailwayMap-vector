@@ -7145,6 +7145,7 @@ const legendData = {
     ],
   },
   operator: {
+    // TODO legend for operators
     'operator_railway_line_low-operator_railway_line_low': [
       {
         legend: 'Railway line',
