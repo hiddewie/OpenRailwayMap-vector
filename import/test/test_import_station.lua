@@ -24,7 +24,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', railway_ref = 'ref', operator = 'operator', station = 'train', name_tags = { name = 'name' }, name = 'name' },
+    { feature = 'station', state = 'present', railway_ref = 'ref', operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
   },
 })
 
@@ -158,6 +158,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', railway_ref = 'ref', operator = 'operator', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
+    { feature = 'station', state = 'present', railway_ref = 'ref', operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
   },
 })

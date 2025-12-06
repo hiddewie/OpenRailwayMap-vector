@@ -1,0 +1,89 @@
+# Mapping of known operators to their color and other metadata
+# Unknown operators will get assigned a generated color
+
+operators:
+  - names:
+      - 'Amtrak'
+    color: '#18567D'
+
+  - names:
+      - 'Metro-North Railroad'
+    color: '#08179C'
+
+  - names:
+      - 'Long Island Rail Road'
+    color: '#08179C'
+
+  - names:
+      - 'Staten Island Rapid Transit Operating Authority'
+    color: '#08179C'
+
+  - names:
+      - 'Massachusetts Bay Transportation Authority'
+    color: '#82076c'
+
+  - names:
+      - 'Consolidated Rail Corporation'
+    color: '#0079c1'
+
+  - names:
+      - 'Norfolk Southern Railway'
+    color: '#2b2b2a'
+
+  - names:
+      - 'CSX Transportstion'
+    color: '#104f8c'
+
+  - names:
+      - 'BNSF'
+    color: '#f85d13'
+
+  - names:
+      - 'Union Pacific Railroad'
+    color: '#FFCC00'
+
+  - names:
+      - 'Canadian Pacific Kansas City'
+      - 'Canadien Pacifique Kansas City' 
+    color: '#C2002F'
+
+  - names:
+      - 'Canadian National Railway'
+      - 'Canadien National'
+    color: '#EF3037'
+
+  - names:
+      - 'Southeastern Pennsylvania Transportation Authority'
+    color: '#F14728'
+
+  - names:
+      - 'South Florida Regional Transportation Authority'
+    color: '#1B6D85'
+
+  - names:
+      - 'SunRail'
+    color: '#f9a548'
+
+  - names:
+      - 'Brightline Trains Florida LLC'
+    color: '#FFDB00'
+
+  - names:
+      - 'New Jersey Transit'
+    color: '#dd0752'
+
+  - names:
+      - 'New Jersey Transit Rail Operations'
+    color: '#dd0752'
+
+  - names:
+      - 'New Jersey Transit Light Rail Operations'
+    color: '#88b04b'
+
+  - names:
+      - 'New Jersey Transit Bus Operations'
+    color: '#c76808'
+
+  - names:
+      - 'New York & Atlantic Railway'
+    color: '#38553E'

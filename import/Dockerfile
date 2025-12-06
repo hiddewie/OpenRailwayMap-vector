@@ -23,6 +23,17 @@ RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_fea
   node signal_features.sql.js \
     > /build/signal_features.sql
 
+FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-operators
+
+WORKDIR /build
+
+RUN npm install yaml
+
+RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js \
+  --mount=type=bind,source=features/operators.yaml,target=operators.yaml \
+  node operators.sql.js \
+    > /build/operators.sql
+
 FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb AS test
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
@@ -79,6 +90,9 @@ COPY --from=build-lua \
 
 COPY --from=build-signals \
   /build/signal_features.sql sql/signal_features.sql
+
+COPY --from=build-operators \
+  /build/operators.sql sql/operators.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 
