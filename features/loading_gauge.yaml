@@ -11,19 +11,36 @@ loading_gauges:
   - { value: 'W6A', legend: 'W6A', color: 'hsl(291, 100%, 47%)' }
   - { value: 'W6A*', legend: 'W6A*', color: 'hsl(291, 100%, 47%)' }
   - { value: 'W7', legend: 'W7', color: 'hsl(279, 100%, 44%)' }
+  - { value: 'W7*', legend: 'W7*', color: 'hsl(279, 100%, 44%)' }
+  - { value: 'W8', legend: 'W8', color: 'hsl(245, 100%, 44%)' }
+  - { value: 'W9', legend: 'W9', color: 'hsl(207, 100%, 44%)' }
+  - { value: 'W9Plus', legend: 'W9Plus', color: 'hsl(207, 100%, 44%)' }
+  - { value: 'W10', legend: 'W10', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W10A', legend: 'W10A', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W12', legend: 'W12', color: 'hsl(170, 100%, 34%)' }
+  - { value: 'W5, W6', legend: 'W5, W6', color: 'hsl(303, 100%, 63%)' }
+  - { value: 'W5, W6, W6A', legend: 'W5, W6, W6A', color: 'hsl(291, 100%, 47%)' }
+  - { value: 'W6, W6A', legend: 'W6, W6A', color: 'hsl(291, 100%, 47%)' }
   - { value: 'W6A, W7', legend: 'W6A, W7', color: 'hsl(279, 100%, 44%)' }
   - { value: 'W6A, W7*', legend: 'W6A, W7*', color: 'hsl(279, 100%, 44%)' }
   - { value: 'W6A*, W7*', legend: 'W6A*, W7*', color: 'hsl(279, 100%, 44%)' }
-  - { value: 'W8', legend: 'W8', color: 'hsl(245, 100%, 44%)' }
   - { value: 'W6A, W7, W8', legend: 'W6A, W7, W8', color: 'hsl(245, 100%, 44%)' }
   - { value: 'W6A, W7*, W8*', legend: 'W6A, W7*, W8*', color: 'hsl(245, 100%, 44%)' }
   - { value: 'W6A, W7, W8*', legend: 'W6A, W7, W8*', color: 'hsl(245, 100%, 44%)' }
-  - { value: 'W9', legend: 'W9', color: 'hsl(207, 100%, 44%)' }
   - { value: 'W6A, W7, W8, W9', legend: 'W6A, W7, W8, W9', color: 'hsl(207, 100%, 44%)' }
+  - { value: 'W6A, W7, W8, W9, W9Plus', legend: 'W6A, W7, W8, W9, W9Plus', color: 'hsl(207, 100%, 44%)' }
+  - { value: 'W6A, W7, W10', legend: 'W6A, W7, W10', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W10', legend: 'W6A, W7, W8, W10', color: 'hsl(189, 100%, 34%)' }
   - { value: 'W6A, W7, W8, W9, W10', legend: 'W6A, W7, W8, W9, W10', color: 'hsl(189, 100%, 34%)' }
-  - { value: 'W10', legend: 'W10', color: 'hsl(189, 100%, 34%)' }
-  - { value: 'W12', legend: 'W12', color: 'hsl(170, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W9Plus, W10', legend: 'W6A, W7, W8, W9, W9Plus, W10', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W6A, W7, W10, W10A', legend: 'W6A, W7, W10, W10A', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W10, W10A', legend: 'W6A, W7, W8, W10, W10A', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W10, W10A', legend: 'W6A, W7, W8, W9, W10, W10A', color: 'hsl(189, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W9Plus, W10, W10A', legend: 'W6A, W7, W8, W9, W9Plus, W10, W10A', color: 'hsl(189, 100%, 34%)' }
   - { value: 'W6A, W7, W8, W9, W10, W12', legend: 'W6A, W7, W8, W9, W10, W12', color: 'hsl(170, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W10, W10A, W12', legend: 'W6A, W7, W8, W9, W10, W10A, W12', color: 'hsl(170, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W9Plus, W10, W12', legend: 'W6A, W7, W8, W9, W9Plus, W10, W12', color: 'hsl(170, 100%, 34%)' }
+  - { value: 'W6A, W7, W8, W9, W9Plus, W10, W10A, W12', legend: 'W6A, W7, W8, W9, W9Plus, W10, W10A, W12', color: 'hsl(170, 100%, 34%)' }
   - { value: 'CPb', legend: 'CPb (PTb)', color: 'hsl(279, 100%, 44%)' }
   - { value: 'CPb+', legend: 'CPb+ (PTb+)', color: 'hsl(245, 100%, 44%)' }
   - { value: 'PT c', legend: 'PTc', color: 'hsl(170, 100%, 34%)' }

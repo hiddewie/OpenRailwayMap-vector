@@ -24,6 +24,10 @@ const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
+const localizationDisabledControl =  document.getElementById('localizationDisabled');
+const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
+const localizationCustomControl =  document.getElementById('localizationCustom');
+const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
 const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
@@ -50,7 +54,16 @@ function getFlagEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
-const locale = new Intl.Locale(navigator.language);
+let locale = new Intl.Locale(navigator.language);
+window.addEventListener('languagechange', () => {
+  locale = new Intl.Locale(navigator.language);
+  console.info(`Browser language changed to ${locale.language}`);
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    onStyleChange();
+  }
+})
 
 const icons = {
   railway: {
@@ -92,7 +105,10 @@ function registerLastSearchResults(results) {
 
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
-  url.searchParams.set('lang', language)
+
+  if (language) {
+    url.searchParams.set('lang', language)
+  }
 
   switch (type) {
     case 'name':
@@ -286,6 +302,19 @@ function showConfiguration() {
     stationLabelNameControl.checked = true
   }
 
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    localizationAutomaticControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'disabled') {
+    localizationDisabledControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'custom') {
+    localizationCustomControl.checked = true;
+    localizationCustomLanguageControl.disabled = false;
+  }
+  localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
+
   configurationBackdrop.style.display = 'block';
 }
 
@@ -361,7 +390,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term, locale.language)
+  searchForFacilities(data.type, data.term, configuredLanguage())
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -645,6 +674,33 @@ function onStationLabelChange(stationlabel) {
   }
   if (legendMap.loaded()) {
     legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
+}
+
+function disableLocalization() {
+  updateConfiguration('localization', 'disabled');
+  onStyleChange();
+}
+
+function automaticLocalization() {
+  updateConfiguration('localization', 'automatic');
+  onStyleChange();
+}
+
+function customLocalization(language) {
+  updateConfiguration('localization', 'custom');
+  updateConfiguration('localizationCustomLanguage', language);
+  onStyleChange();
+}
+
+function configuredLanguage() {
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    return locale.language;
+  } else if (localization === 'disabled') {
+    return null;
+  } else if (localization === 'custom') {
+    return configuration.localizationCustomLanguage;
   }
 }
 
@@ -937,7 +993,8 @@ const defaultConfiguration = {
   theme: 'system',
   editor: 'id',
   view: {},
-  stationLowZoomLabel: 'label'
+  stationLowZoomLabel: 'label',
+  localization: 'automatic',
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -1045,13 +1102,17 @@ function rewriteStylePathsToOrigin(style) {
 }
 
 // Rewrite source URLs to append the language query parameter
-function addLanguageToSupportedSources(style) {
+function addLanguageToSupportedSources(style, language) {
   style.sources = Object.fromEntries(
     Object.entries(style.sources)
       .map(([key, source]) => {
         if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
           const parsedUrl = new URL(source.url)
-          parsedUrl.searchParams.set('lang', locale.language)
+
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          }
+
           return [
             key,
             {
@@ -1086,28 +1147,31 @@ function toggleHillShadeLayer(style) {
 }
 
 let lastSetMapStyle = null;
-const onStyleChange = () => {
+let lastSetMapLanguage = null;
+function onStyleChange() {
   const supportsDate = knownStyles[selectedStyle].styles.date;
   const dateActive = supportsDate && dateControl.active;
   const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
+  const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle) {
-    lastSetMapStyle = mapStyle;
-
+  if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
     map.setStyle(mapStyles[mapStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
-        addLanguageToSupportedSources(next)
+        addLanguageToSupportedSources(next, language)
         rewriteGlobalStateDefaults(next)
         toggleHillShadeLayer(next)
         return next;
       },
     });
+  }
 
+  if (mapStyle !== lastSetMapStyle) {
+    // Change legend styles
     legendMap.setStyle(legendStyles[mapStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
@@ -1126,6 +1190,9 @@ const onStyleChange = () => {
   } else if (!supportsDate && dateControl.isShown()) {
     dateControl.hide();
   }
+
+  lastSetMapStyle = mapStyle;
+  lastSetMapLanguage = language;
 
   onPageParametersChange();
 }
