@@ -109,6 +109,7 @@ function create_update_functions_views() {
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
+  $PSQL -f sql/update_operators.sql
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
   osm2pgsql-gen \
