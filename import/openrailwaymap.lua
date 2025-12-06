@@ -528,10 +528,10 @@ local stop_area_groups = osm2pgsql.define_table({
 
 local landuse = osm2pgsql.define_table({
   name = 'landuse',
-  ids = { type = 'way', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'polygon', not_null = true },
+    { column = 'way', type = 'geometry', not_null = true },
   },
 })
 
@@ -1493,6 +1493,12 @@ function osm2pgsql.process_relation(object)
         stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
+  end
+
+  if tags.landuse == 'railway' then
+    landuse:insert({
+      way = object:as_multipolygon(),
+    })
   end
 end
 
