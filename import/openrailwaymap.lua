@@ -528,10 +528,10 @@ local stop_area_groups = osm2pgsql.define_table({
 
 local landuse = osm2pgsql.define_table({
   name = 'landuse',
-  ids = { type = 'way', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'polygon', not_null = true },
+    { column = 'way', type = 'geometry', not_null = true },
   },
 })
 
