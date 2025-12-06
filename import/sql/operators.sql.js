@@ -12,13 +12,12 @@ const operatorsByName = operators.operators
 const sql = `
 CREATE OR REPLACE VIEW railway_operator_view AS
   SELECT
-    row_number() as id,
+    row_number() over () as id,
     name,
     color
-  FROM (VALUES
-    ${operatorsByName.map(({name, color}) => `
+  FROM (VALUES${operatorsByName.map(({name, color}) => `
     ('${name}', '${color}')`).join(',')}
-  ) v (name, color);
+  ) operator_data (name, color);
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS railway_operator AS

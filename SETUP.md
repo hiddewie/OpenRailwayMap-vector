@@ -115,6 +115,9 @@ You can view the generated files:
 docker build --target build-signals --tag build-signals --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-signals /build/signal_features.sql | less
 
+docker build --target build-operators --tag build-operators --file import/Dockerfile . \
+  && docker run --rm --entrypoint cat build-operators /build/operators.sql | less
+
 docker build --target build-lua --tag build-lua --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-lua /build/tags.lua | less
 
