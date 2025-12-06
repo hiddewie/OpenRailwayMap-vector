@@ -30,7 +30,7 @@ WORKDIR /build
 RUN npm install yaml
 
 RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js \
-  --mount=type=bind,source=features/operator.yaml,target=operator.yaml \
+  --mount=type=bind,source=features/operators.yaml,target=operators.yaml \
   node operators.sql.js \
     > /build/operators.sql
 

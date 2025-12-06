@@ -1,7 +1,7 @@
 import fs from 'fs'
 import yaml from 'yaml'
 
-const operators = yaml.parse(fs.readFileSync('operator.yaml', 'utf8'))
+const operators = yaml.parse(fs.readFileSync('operators.yaml', 'utf8'))
 
 const operatorsByName = operators.operators
   .flatMap(({names, color}) => names.map(name => ({name, color})));

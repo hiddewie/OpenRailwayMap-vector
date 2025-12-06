@@ -239,7 +239,7 @@ Open a pull request where you provide details about the new track class. Ensure 
 
 ## I want to add an operator
 
-Edit the file [`features/operator.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/operator.yaml).
+Edit the file [`features/operators.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/operators.yaml).
 
 The file contains a list of operators. A single operator can have multiple names, for example when it operates across multiple countries.
 
