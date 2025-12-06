@@ -12,7 +12,7 @@ RETURN (
   FROM (
     -- TODO calculate labels in frontend
     SELECT
-      id,
+      r.id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       way_length,
@@ -24,8 +24,8 @@ RETURN (
       tunnel,
       bridge,
       CASE
-        WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-        ELSE COALESCE(ref, name)
+        WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
+        ELSE COALESCE(ref, r.name)
       END AS standard_label,
       ref,
       track_ref,
@@ -54,8 +54,10 @@ RETURN (
       gauge_label,
       loading_gauge,
       operator,
-      -- TODO import
-      'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)' as operator_color,
+      COALESCE(
+        ro.color,
+        'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
+      ) as operator_color,
       primary_operator,
       owner,
       traffic_mode,
@@ -163,6 +165,8 @@ RETURN (
             true
         END
     ) AS r
+    LEFT JOIN railway_operator ro
+      ON ro.name = primary_operator
     ORDER by
       layer,
       rank NULLS LAST,
@@ -238,7 +242,7 @@ END $do$;
 -- Reusable view for low railway line tiles, grouped per layer
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
-    id,
+    r.id,
     way,
     feature,
     state,
@@ -246,8 +250,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
     highspeed,
     ref,
     CASE
-      WHEN ref IS NOT NULL AND name IS NOT NULL THEN ref || ' ' || name
-      ELSE COALESCE(ref, name)
+      WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
+      ELSE COALESCE(ref, r.name)
     END AS standard_label,
     speed_label,
     maxspeed,
@@ -265,7 +269,10 @@ CREATE OR REPLACE VIEW railway_line_low AS
     loading_gauge,
     track_class,
     operator,
-    'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)' as operator_color,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
     primary_operator,
     owner,
     rank
@@ -278,6 +285,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
       END AS primary_operator
     from railway_line
   ) as r
+  LEFT JOIN railway_operator ro
+    ON ro.name = primary_operator
   WHERE
     state = 'present'
       AND feature IN ('rail', 'ferry')
@@ -348,7 +357,7 @@ END $do$;
 
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
-    id,
+    gs.id,
     nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
     nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
     center as way,
@@ -364,7 +373,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
     END AS station_size,
-    name,
+    gs.name,
     name_tags,
     CASE
       WHEN state != 'present' THEN 100
@@ -388,7 +397,10 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     count,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     nullif(array_to_string(network, U&'\001E'), '') as network,
-    'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)' as operator_color,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
     nullif(array_to_string(position, U&'\001E'), '') as position,
     nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
     nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
@@ -400,7 +412,9 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(description, U&'\001E'), '') as description,
     nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
     yard_hump
-  FROM grouped_stations_with_importance
+  FROM grouped_stations_with_importance gs
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator[1]
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -778,7 +792,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      gs.id,
       nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
       nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
       ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -786,12 +800,15 @@ RETURN (
       state,
       station,
       railway_ref as label,
-      name,
+      gs.name,
       uic_ref,
       nullif(array_to_string(operator, U&'\001E'), '') as operator,
       nullif(array_to_string(network, U&'\001E'), '') as network,
       nullif(array_to_string(position, U&'\001E'), '') as position,
-      'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)' as operator_color,
+      COALESCE(
+        ro.color,
+        'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
+      ) as operator_color,
       nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
       nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
       nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
@@ -800,7 +817,9 @@ RETURN (
       nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
       nullif(array_to_string(note, U&'\001E'), '') as note,
       nullif(array_to_string(description, U&'\001E'), '') as description
-    FROM grouped_stations_with_importance
+    FROM grouped_stations_with_importance gs
+    LEFT JOIN railway_operator ro
+      ON ro.name = operator[1]
     WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1381,14 +1400,17 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           ST_TileEnvelope(z, x, y),
           extent => 4096, buffer => 64, clip_geom => true
         ) AS way,
-        id,
+        b.id,
         osm_id,
         osm_type,
         feature,
         ref,
-        name,
+        b.name,
         operator,
-        'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)' as operator_color,
+        COALESCE(
+          ro.color,
+          'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+        ) as operator_color,
         nullif(array_to_string(position, U&'\001E'), '') as position,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -1397,7 +1419,9 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         wikipedia,
         note,
         description
-      FROM boxes
+      FROM boxes b
+      LEFT JOIN railway_operator ro
+        ON ro.name = operator
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
     WHERE way IS NOT NULL
