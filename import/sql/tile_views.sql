@@ -268,7 +268,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
     loading_gauge,
     track_class,
-    operator,
+    nullif(array_to_string(operator, U&'\001E'), '') as operator,
     COALESCE(
       ro.color,
       'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
