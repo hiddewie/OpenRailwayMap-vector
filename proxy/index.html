@@ -205,6 +205,29 @@
               Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
             </small>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Localization</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationDisabled" value="label" onchange="disableLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationDisabled">Disabled</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationAutomatic" value="name" checked onchange="automaticLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationAutomatic">Automatic</label>
+              </div>
+              <div class="form-check form-check-inline" style="margin-right: 0.3rem">
+                <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
+                <label class="form-check-label" for="localizationCustom">Custom: </label>
+              </div>
+              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
+                <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
+              </div>
+            </div>
+            <small class="form-text">
+              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+            </small>
+          </div>
         </form>
       </div>
     </div>
