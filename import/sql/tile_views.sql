@@ -108,7 +108,7 @@ RETURN (
         gauges[3] AS gauge2,
         (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
         loading_gauge,
-        array_to_string(operator, U&'\\001E') as operator,
+        array_to_string(operator, U&'\001E') as operator,
         owner,
         CASE
           WHEN ARRAY[owner] <@ operator THEN owner
