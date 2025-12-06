@@ -91,7 +91,7 @@ COPY --from=build-lua \
 COPY --from=build-signals \
   /build/signal_features.sql sql/signal_features.sql
 
-COPY --from=build-signals \
+COPY --from=build-operators \
   /build/operators.sql sql/operators.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
