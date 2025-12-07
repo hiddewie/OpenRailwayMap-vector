@@ -78,7 +78,7 @@ jobs:
 
       - name: Save cache for empty database image
         uses: actions/cache/save@v4
-        if: ${{ github.ref_name == 'one-command-start' }}
+        # if: ${{ github.ref_name == 'one-command-start' }}
         with:
           path: |
             ${{ runner.temp }}/openrailwaymap-db-empty.tar
@@ -103,7 +103,7 @@ jobs:
 
       - name: Save cache for import image
         uses: actions/cache/save@v4
-        if: ${{ github.ref_name == 'one-command-start' }}
+        # if: ${{ github.ref_name == 'one-command-start' }}
         with:
           path: |
             ${{ runner.temp }}/openrailwaymap-import.tar
