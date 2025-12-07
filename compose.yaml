@@ -36,6 +36,11 @@ services:
       dockerfile: import/Dockerfile
       target: test
 
+  data:
+    image: openrailwaymap-data
+    build:
+      context: data
+
   martin:
     build:
       dockerfile: martin.Dockerfile

@@ -27,50 +27,55 @@ jobs:
 
       - name: Pull OSM data
         run: |
-          docker compose pull data
+          docker pull ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest
+          docker tag ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest openrailwaymap-data
+
+      - name: Copy OSM data
+        run: |
           docker compose create data
           docker compose cp data:/data/data.osm.pbf data/filtered/data.osm.pbf
 
-      - name: Build import image
-        run: |
-          docker compose build import
+      - name: Build containers
+        uses: docker/bake-action@v6
+        with:
+          load: true
+          targets: db,import
+          set: |
+            db.cache-from=type=gha,scope=db-${{ runner.arch }}
+            import.cache-from=type=gha,scope=import-${{ runner.arch }}
 
       - name: Update OSM data
         run: |
           docker compose run --no-deps import update
 
-      - name: Build new OSM data image
-        run: |
-          docker compose build data
-
-      - name: Push OSM data
-        run: |
-          docker compose push data
-
-      - name: Build database
-        run: |
-          docker compose build db
+      - name: Push data
+        uses: docker/bake-action@v6
+        with:
+          push: true
+          no-cache: true
+          targets: data
+          set: |
+            data.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest
 
       - name: Start database
         run: |
           docker compose up --wait db
-          docker inspect "$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          # No idea why this is needed, DB should be healthy by now
-          sleep 10
-          docker inspect "$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
 
       - name: Import data
         env:
           OSM2PGSQL_NUMPROC: '8'
         run: |
-          docker compose run import import
+          docker compose run --no-deps import import
 
-      - name: Push data
+      - name: Create database image
         run: |
           docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
           docker commit "$DB_CONTAINER_ID" ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
-          docker compose push db
+
+      - name: Push database image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-import-db:latest
 
   build-martin:
     name: Build tiles container
@@ -90,13 +95,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image
-        run: |
-          docker compose build martin
-
-      - name: Push image
-        run: |
-          docker compose push martin
+      - name: Build containers
+        uses: docker/bake-action@v6
+        with:
+          push: true
+          targets: martin
+          set: |
+            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
+            martin.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-martin:latest
 
   build-proxy:
     name: Build proxy container
@@ -116,13 +122,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image
+      - name: Get Date
+        id: get-date
+        shell: bash
         run: |
-          docker compose build --build-arg "PRESET_VERSION=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" proxy
+          echo "date=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" >> $GITHUB_OUTPUT
 
-      - name: Push image
-        run: |
-          docker compose push proxy
+      - name: Build containers
+        uses: docker/bake-action@v6
+        with:
+          push: true
+          targets: proxy
+          set: |
+            proxy.cache-from=type=gha,scope=proxy-${{ runner.arch }}
+            proxy.args.PRESET_VERSION=${{ steps.get-date.outputs.date }}
+            proxy.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-proxy:latest
 
   build-api:
     name: Build API container
@@ -142,10 +156,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image
-        run: |
-          docker compose build api
-
-      - name: Push image
-        run: |
-          docker compose push api
+      - name: Build containers
+        uses: docker/bake-action@v6
+        with:
+          push: true
+          targets: api
+          set: |
+            api.cache-from=type=gha,scope=api-${{ runner.arch }}
+            proxy.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest
