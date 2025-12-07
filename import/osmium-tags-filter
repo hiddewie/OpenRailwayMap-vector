@@ -10,6 +10,7 @@ n/power=catenary_mast
 nw/museum=railway
 w/power=catenary_portal
 wr/landuse=railway
+w/substation=traction
 r/public_transport=stop_area
 r/public_transport=stop_area_group
 r/route=train
