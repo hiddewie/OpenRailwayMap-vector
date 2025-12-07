@@ -111,7 +111,7 @@ jobs:
       - name: Run proxy tests
         working-directory: proxy
         run: |
-          docker run --rm --net host -v "$PWD/test/proxy.hurl:/hurl/proxy.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:8000 /hurl/proxy.hurl
+          docker compose run --no-build --no-deps martin-proxy-test
 
       - name: Download preset
         if: always()

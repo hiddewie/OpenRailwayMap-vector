@@ -102,7 +102,7 @@ Proxy tests use [*hurl*](https://hurl.dev/docs/installation.html).
 
 Run tests against the proxy:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
+docker compose run --build --no-deps martin-proxy-test
 ```
 
 ## Development
