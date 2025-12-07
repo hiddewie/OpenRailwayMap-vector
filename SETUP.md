@@ -82,7 +82,7 @@ The import tests verify the correctness of the Lua import configuration.
 
 Run the tests with:
 ```shell
-docker build --file import/Dockerfile --target test --tag import-test . && docker run --rm import-test
+docker compose run --rm --build import-test
 ```
 
 If the process exists successfully, the tests have succeeded. If not, the assertion error will be displayed.

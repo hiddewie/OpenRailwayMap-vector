@@ -62,12 +62,14 @@ jobs:
         uses: docker/bake-action@v6
         with:
           load: true
-          targets: db,import,api,martin,martin-proxy
+          targets: db,import,import-test,api,martin,martin-proxy
           set: |
             db.cache-from=type=gha,scope=db-${{ runner.arch }}
             ${{ github.ref_name == 'master' && format('db.cache-to=type=gha,mode=max,scope=db-{}', runner.arch) || '' }}
             import.cache-from=type=gha,scope=import-${{ runner.arch }}
             ${{ github.ref_name == 'master' && format('import.cache-to=type=gha,mode=max,scope=import-{}', runner.arch) || '' }}
+            import-test.cache-from=type=gha,scope=import-test-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('import-test.cache-to=type=gha,mode=max,scope=import-test-{}', runner.arch) || '' }}
             api.cache-from=type=gha,scope=api-${{ runner.arch }}
             ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{}', runner.arch) || '' }}
             martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
@@ -79,13 +81,9 @@ jobs:
         run: |
           docker compose up --no-build --wait db
 
-      - name: Build import image
-        run: |
-          docker build --file import/Dockerfile --target test --tag import-test .
-
       - name: Run import tests
         run: |
-          docker run --rm import-test
+          docker compose run --rm import-test
 
       - name: Import data
         env:
@@ -142,209 +140,7 @@ jobs:
           path: proxy/test/ui/cypress/screenshots
           if-no-files-found: warn
 
-#      - name: Prepare and save database image
-#        run: |
-#          docker compose stop db
-#          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-#          docker commit "$DB_CONTAINER_ID" openrailwaymap-db
-#          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db.tar
-#
-#      - name: Upload database artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: ${{ runner.arch }}-openrailwaymap-db
-#          path: ${{ runner.temp }}/openrailwaymap-db.tar
-
       - name: Print logs
         if: always()
         run: |
           docker compose logs
-
-#  test-import:
-#    name: Test import
-#
-#    strategy:
-#      matrix:
-#        runs-on:
-#          - ubuntu-24.04
-#          - ubuntu-24.04-arm
-#
-#    runs-on: ${{ matrix.runs-on }}
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#  test-api:
-#    name: Test API
-#
-#    strategy:
-#      matrix:
-#        runs-on:
-#          - ubuntu-24.04
-#          - ubuntu-24.04-arm
-#
-#    runs-on: ${{ matrix.runs-on }}
-#
-#    needs:
-#      - import
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Download database artifact
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: ${{ runner.arch }}-openrailwaymap-db
-#          path: ${{ runner.temp }}
-#
-#      - name: Load database image
-#        run: |
-#          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
-#
-#      - name: Build API container
-#        uses: docker/bake-action@v6
-#        with:
-#          load: true
-#          targets: api
-#          set: |
-#
-#      - name: Start database
-#        run: |
-#          docker compose up --no-build --wait --no-deps db
-#
-#  test-proxy:
-#    name: Test proxy
-#
-#    strategy:
-#      matrix:
-#        runs-on:
-#          - ubuntu-24.04
-#          - ubuntu-24.04-arm
-#
-#    runs-on: ${{ matrix.runs-on }}
-#
-#    needs:
-#      - import
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Download database artifact
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: ${{ runner.arch }}-openrailwaymap-db
-#          path: ${{ runner.temp }}
-#
-#      - name: Load database image
-#        run: |
-#          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
-#
-#      - name: Build Martin and proxy containers
-#        uses: docker/bake-action@v6
-#        with:
-#          load: true
-#          targets: martin,martin-proxy
-#          set: |
-#            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
-#            ${{ github.ref_name == 'master' && format('martin.cache-to=type=gha,mode=max,scope=martin-{}', runner.arch) || '' }}
-#            martin-proxy.cache-from=type=gha,scope=martin-proxy-${{ runner.arch }}
-#            ${{ github.ref_name == 'master' && format('martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-{}', runner.arch) || '' }}
-#
-#      - name: Start database
-#        run: |
-#          docker compose up --no-build --wait --no-deps db
-#
-#      - name: Print logs
-#        if: always()
-#        run: |
-#          docker compose logs
-#
-#  test-ui:
-#    name: Test UI
-#
-#    strategy:
-#      matrix:
-#        runs-on:
-#          - ubuntu-24.04
-#          - ubuntu-24.04-arm
-#
-#    runs-on: ${{ matrix.runs-on }}
-#
-#    needs:
-#      - test-proxy
-#      - test-api
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to GitHub Container Registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Download database artifact
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: ${{ runner.arch }}-openrailwaymap-db
-#          path: ${{ runner.temp }}
-#
-#      - name: Load database image
-#        run: |
-#          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
-#
-#      - name: Build API, Martin and proxy containers
-#        uses: docker/bake-action@v6
-#        with:
-#          load: true
-#          targets: api,martin,martin-proxy
-#          set: |
-#            api.cache-from=type=gha,scope=api-${{ runner.arch }}
-#            ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{}', runner.arch) || '' }}
-#
-#      - name: Start database
-#        run: |
-#          docker compose up --no-build --wait --no-deps db
-#
-#      - name: Start tile server
-#        run: |
-#          docker compose up --no-build --detach --no-deps martin
-#
-#      - name: Start web server
-#        run: |
-#          docker compose up --no-build --wait --no-deps martin-proxy
-#
-#      - name: Start API
-#        run: |
-#          docker compose up --wait --no-build --no-deps api
