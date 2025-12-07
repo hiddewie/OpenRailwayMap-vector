@@ -167,11 +167,11 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build --wait db
+          docker compose up --no-build --wait --no-deps db
 
       - name: Start API
         run: |
-          docker compose up --wait --no-build api
+          docker compose up --wait --no-build --no-deps api
 
       - name: Run API tests
         working-directory: api
@@ -234,15 +234,15 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build --wait db
+          docker compose up --no-build --wait --no-deps db
 
       - name: Start tile server
         run: |
-          docker compose up --no-build --detach martin
+          docker compose up --no-build --detach --no-deps martin
 
       - name: Start web server
         run: |
-          docker compose up --no-build --wait martin-proxy
+          docker compose up --no-build --wait --no-deps martin-proxy
 
       - name: Run proxy tests
         working-directory: proxy
@@ -321,19 +321,19 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build --wait db
+          docker compose up --no-build --wait --no-deps db
 
       - name: Start tile server
         run: |
-          docker compose up --no-build --detach martin
+          docker compose up --no-build --detach --no-deps martin
 
       - name: Start web server
         run: |
-          docker compose up --no-build --wait martin-proxy
+          docker compose up --no-build --wait --no-deps martin-proxy
 
       - name: Start API
         run: |
-          docker compose up --wait --no-build api
+          docker compose up --wait --no-build --no-deps api
 
       - name: Run UI tests
         uses: cypress-io/github-action@v6
