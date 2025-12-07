@@ -135,7 +135,8 @@ const colors = {
     direction: themeSwitch('#a8d8bcff', '#a8d8bcff'),
   },
   catenary: themeSwitch('blue', 'blue'),
-  substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 36.3%)'),
+  substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 25%)'),
+  substationText: themeSwitch('hsl(152 100% 20.8%)', 'hsl(152 100% 50%)'),
 };
 
 const font = {
@@ -3825,6 +3826,29 @@ const layers = {
         'text-padding': 15,
         'text-offset': [0, 1.5],
         'text-optional': true,
+      },
+    },
+    {
+      id: 'electrification_substation_text',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      filter: ['!=', ['get', 'name'], null],
+      paint: {
+        'text-color': colors.substationText,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'text-field': '{name}',
+        'text-font': font.bold,
+        'text-size': 11,
+        'text-padding': 6,
+        'text-max-width': 5,
       },
     },
     searchResults,
