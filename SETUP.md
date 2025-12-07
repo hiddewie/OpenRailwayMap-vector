@@ -93,7 +93,7 @@ Tile tests use [*hurl*](https://hurl.dev/docs/installation.html).
 
 Run tests against the API:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:5000/api api/test/api.hurl
+docker compose run --build --no-deps api-test
 ```
 
 ### Proxy tests

@@ -113,3 +113,17 @@ services:
       watch:
         - action: rebuild
           path: api
+
+  api-test:
+    image: ghcr.io/orange-opensource/hurl:6.1.1@sha256:0fafe31238304394bcba7ab49509dcbb4356798b6a99973d41ef722f6cbbb1e9
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./api/test/api.hurl:/hurl/api.hurl
+    command: [
+      '--test',
+      '--verbose',
+      '--variable', 'base_url=http://api:5000/api',
+      '/hurl/api.hurl'
+    ]

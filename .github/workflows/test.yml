@@ -98,7 +98,7 @@ jobs:
       - name: Run API tests
         working-directory: api
         run: |
-          docker run --rm --net host -v "$PWD/test/api.hurl:/hurl/api.hurl" ghcr.io/orange-opensource/hurl:6.1.1 --test --verbose --variable base_url=http://localhost:5000/api /hurl/api.hurl
+          docker compose up --no-build --no-deps api-test
 
       - name: Start tile server
         run: |
