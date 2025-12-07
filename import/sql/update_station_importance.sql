@@ -1,3 +1,5 @@
+BEGIN;
+
 TRUNCATE stations_with_importance;
 
 INSERT INTO stations_with_importance (id, way, importance)
@@ -8,3 +10,5 @@ INSERT INTO stations_with_importance (id, way, importance)
   FROM stations_with_importance_view siv
   JOIN stations s
     ON s.id = siv.id;
+
+COMMIT;

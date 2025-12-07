@@ -7,6 +7,7 @@ const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml',
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
+const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
 
 const poiColored = poi.features
   .flatMap(feature => [feature, ...(feature.variants || []).map(it => ({...it, minzoom: feature.minzoom}))])
@@ -4012,7 +4013,7 @@ const layers = {
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['!=', ['get', 'operator'], null],
       paint: {
-        'fill-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
+        'fill-color': ['get', 'operator_color'],
         'fill-opacity': ['case',
           ['boolean', ['feature-state', 'hover'], false], 0.3,
           0.2,
@@ -4037,7 +4038,7 @@ const layers = {
         ['==', ['get', 'state'], state],
       ],
       paint: {
-        'line-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
+        'line-color': ['get', 'operator_color'],
         'line-opacity': 0.3,
         'line-width': 2 ,
         'line-dasharray': dasharray,
@@ -4059,10 +4060,7 @@ const layers = {
             0, 0.5,
             7, 2,
           ],
-          color: ['case',
-            ['!=', ['get', 'operator_hash'], null], ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
-            'black',
-          ],
+          color: ['coalesce', ['get', 'operator_color'], 'black'],
         },
         {
           id: 'railway_line_med',
@@ -4073,10 +4071,7 @@ const layers = {
             present: undefined,
           },
           width: 2,
-          color: ['case',
-            ['!=', ['get', 'operator_hash'], null], ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
-            'black',
-          ],
+          color: ['coalesce', ['get', 'operator_color'], 'black'],
         },
         {
           id: 'railway_line_high',
@@ -4093,10 +4088,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: ['case',
-            ['!=', ['get', 'operator_hash'], null], ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
-            'black',
-          ],
+          color: ['coalesce', ['get', 'operator_color'], 'black'],
         },
       ],
     ),
@@ -4113,7 +4105,7 @@ const layers = {
       paint: {
         'circle-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-          ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
+          ['get', 'operator_color'],
         ],
         'circle-radius': 4,
         'circle-stroke-color': 'white',
@@ -4136,7 +4128,7 @@ const layers = {
       paint: {
         'fill-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-          ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 40%)'],
+          ['get', 'operator_color'],
         ],
         'fill-outline-color': 'white',
       },
@@ -4168,7 +4160,7 @@ const layers = {
       'source-layer': 'standard_railway_text_stations_low',
       filter: ['!=', ['get', 'operator'], null],
       paint: {
-        'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'icon-color': ['get', 'operator_color'],
         'icon-halo-width': 1,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
@@ -4190,13 +4182,13 @@ const layers = {
       'source-layer': 'standard_railway_text_stations_low',
       filter: ['!=', ['get', 'operator'], null],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
         ],
         'text-halo-width': 1.5,
-        'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'icon-color': ['get', 'operator_color'],
         'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
@@ -4229,13 +4221,13 @@ const layers = {
       'source-layer': 'standard_railway_text_stations_med',
       filter: ['!=', ['get', 'operator'], null],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
         ],
         'text-halo-width': 2,
-        'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'icon-color': ['get', 'operator_color'],
         'icon-halo-width': 2,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
@@ -4312,13 +4304,13 @@ const layers = {
         ],
       ],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
         ],
         'text-halo-width': 1.5,
-        'icon-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'icon-color': ['get', 'operator_color'],
         'icon-halo-width': 1.5,
         'icon-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
@@ -4373,7 +4365,7 @@ const layers = {
       'source-layer': 'standard_railway_text_stations',
       filter: ['!=', ['get', 'operator'], null],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -4434,7 +4426,7 @@ const layers = {
         ['!=', ['get', 'ref'], null],
       ],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -4459,7 +4451,7 @@ const layers = {
         ['!=', ['get', 'name'], null],
       ],
       paint: {
-        'text-color': ['concat', 'hsl(', ['get', 'operator_hash'], ', 100%, 30%)'],
+        'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
           colors.halo,
@@ -7157,13 +7149,13 @@ const legendData = {
   },
   operator: {
     'operator_railway_line_low-operator_railway_line_low': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: 'ABC',
-          operator_hash: 0,
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7171,14 +7163,14 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
         properties: {
           operator: null,
           primary_operator: null,
-          operator_hash: null,
+          operator_color: null,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7189,13 +7181,13 @@ const legendData = {
       },
     ],
     'openrailwaymap_low-railway_line_high': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: 'ABC',
-          operator_hash: 0,
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7203,14 +7195,14 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
         properties: {
           operator: null,
           primary_operator: null,
-          operator_hash: null,
+          operator_color: null,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7221,13 +7213,13 @@ const legendData = {
       },
     ],
     'high-railway_line_high': [
-      {
-        legend: 'Railway line',
+      ...operators.operators.map(operator => ({
+        legend: operator.names.join(', '),
         type: 'line',
         properties: {
-          operator: 'ABC',
-          primary_operator: null,
-          operator_hash: 0,
+          operator: operator.names[0],
+          primary_operator: operator.names[0],
+          operator_color: operator.color,
           feature: 'rail',
           state: 'present',
           usage: 'main',
@@ -7235,14 +7227,14 @@ const legendData = {
           bridge: false,
           tunnel: false,
         },
-      },
+      })),
       {
         legend: '(unknown)',
         type: 'line',
         properties: {
           operator: null,
           primary_operator: null,
-          operator_hash: null,
+          operator_color: null,
           feature: 'rail',
           state: 'present',
           usage: 'main',

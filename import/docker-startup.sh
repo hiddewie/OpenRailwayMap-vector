@@ -84,22 +84,32 @@ function transform_data() {
 
 function create_update_functions_views() {
   echo "Post processing imported data"
+
+  # Functions
   $PSQL -f sql/tile_functions.sql
   $PSQL -f sql/api_facility_functions.sql
   $PSQL -f sql/api_milestone_functions.sql
+
+  # YAML data
   $PSQL -f sql/signal_features.sql
+  $PSQL -f sql/operators.sql
+
+  # Post processing
   $PSQL -f sql/get_station_importance.sql
   $PSQL -f sql/update_station_importance.sql
   osm2pgsql-gen \
     --database gis \
     --style openrailwaymap.lua
   $PSQL -f sql/stations_clustered.sql
+
+  # Tile and API views on processed data
   $PSQL -f sql/tile_views.sql
   $PSQL -f sql/api_facility_views.sql
 }
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
+  $PSQL -f sql/update_operators.sql
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
   osm2pgsql-gen \

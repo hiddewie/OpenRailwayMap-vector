@@ -237,6 +237,27 @@ track_classes:
 
 Open a pull request where you provide details about the new track class. Ensure the pull request contains references to documentation and places on the map where the track class exists.
 
+## I want to add an operator
+
+Edit the file [`features/operators.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/operators.yaml).
+
+The file contains a list of operators. A single operator can have multiple names, for example when it operates across multiple countries.
+
+An operator has a color associated with it, used to display the operator on the map. Colors can use the form `#2d00e3`, `rgb(45, 0, 227)` or `hsl(252, 100%, 44.5%)`. Use the [colorpicker.dev](https://colorpicker.dev/#2d00e3) tool to assist in conversion of color formats.
+
+Add a new entry at a certain place in the list. The value is the `operator` tag value. For example:
+```yaml
+operators:
+  - names:
+      - 'GVB'
+      - 'Gemeentelijk Vervoerbedrijf'
+    color: '#0863b5'
+
+  # ...
+```
+
+Open a pull request where you provide details about the new operator. Ensure the pull request contains references to documentation and places on the map where the operator exists.
+
 ## I want to improve the user interface
 
 The HTML, Javascript and CSS of the user interface are located in the [proxy](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/proxy) directory.

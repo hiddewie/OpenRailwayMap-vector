@@ -250,8 +250,8 @@ local stations = osm2pgsql.define_table({
     { column = 'railway_ref', type = 'text' },
     { column = 'uic_ref', type = 'text' },
     { column = 'name_tags', type = 'hstore' },
-    { column = 'operator', type = 'text' },
-    { column = 'network', type = 'text' },
+    { column = 'operator', sql_type = 'text[]' },
+    { column = 'network', sql_type = 'text[]' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'yard_purpose', sql_type = 'text[]' },
     { column = 'yard_hump', type = 'boolean' },
@@ -528,10 +528,10 @@ local stop_area_groups = osm2pgsql.define_table({
 
 local landuse = osm2pgsql.define_table({
   name = 'landuse',
-  ids = { type = 'way', id_column = 'osm_id' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
-    { column = 'way', type = 'polygon', not_null = true },
+    { column = 'way', type = 'geometry', not_null = true },
   },
 })
 
@@ -993,8 +993,8 @@ function osm2pgsql.process_node(object)
         railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags(tags),
-        operator = tags.operator,
-        network = tags.network,
+        operator = split_semicolon_to_sql_array(tags.operator),
+        network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
@@ -1272,8 +1272,8 @@ function osm2pgsql.process_way(object)
         railway_ref = tags['railway:ref'] or tags['ref:crs'],
         uic_ref = tags['uic_ref'],
         name_tags = name_tags(tags),
-        operator = tags.operator,
-        network = tags.network,
+        operator = split_semicolon_to_sql_array(tags.operator),
+        network = split_semicolon_to_sql_array(tags.network),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
         wikidata = tags.wikidata,
@@ -1493,6 +1493,12 @@ function osm2pgsql.process_relation(object)
         stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
+  end
+
+  if tags.landuse == 'railway' then
+    landuse:insert({
+      way = object:as_multipolygon(),
+    })
   end
 end
 
