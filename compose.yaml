@@ -12,16 +12,6 @@ services:
       # Custom directory so it is not part of a VOLUME
       - PGDATA=/data/postgresql
       - POSTGRES_DB=gis
-    healthcheck:
-      # Ensure Postgres is fully initialized, including extensions
-      test:
-        - CMD-SHELL
-        - |
-          psql -U postgres -d gis -c "SELECT st_buffer(ST_SetSRID('POINT(0 0)'::GEOMETRY, 4326), 1)"
-      interval: 1s
-      timeout: 1s
-      retries: 3
-      start_period: 5m
 
   import:
     build:
