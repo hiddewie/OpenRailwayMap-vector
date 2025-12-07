@@ -39,6 +39,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   substation = {
-    { feature = 'traction', location = 'indoor', voltage = '{400000,225000,63000}', name = 'name', ref = 'ref', operator = 'operator', way = way },
+    { feature = 'traction', location = 'indoor', voltage = '{"400000","225000","63000"}', name = 'name', ref = 'ref', operator = 'operator', way = way },
   },
 })
