@@ -129,6 +129,9 @@ jobs:
 
     runs-on: ${{ matrix.runs-on }}
 
+    needs:
+      - import
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
