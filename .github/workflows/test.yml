@@ -82,14 +82,14 @@ jobs:
         run: |
           docker compose stop db
           DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:latest
-          docker save ghcr.io/hiddewie/openrailwaymap-import-db:latest > ${{ runner.temp }}/openrailwaymap-import-db.tar
+          docker commit "$DB_CONTAINER_ID" openrailwaymap-db
+          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db.tar
 
       - name: Upload database artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}/openrailwaymap-import-db.tar
+          name: ${{ runner.arch }}-openrailwaymap-db
+          path: ${{ runner.temp }}/openrailwaymap-db.tar
 
   test-import:
     name: Test import
@@ -151,7 +151,7 @@ jobs:
 
       - name: Save API image
         run: |
-          docker save ghcr.io/hiddewie/openrailwaymap-api:latest > ${{ runner.temp }}/openrailwaymap-api.tar
+          docker save openrailwaymap-api > ${{ runner.temp }}/openrailwaymap-api.tar
 
       - name: Upload API artifact
         uses: actions/upload-artifact@v4
@@ -190,12 +190,12 @@ jobs:
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-db
           path: ${{ runner.temp }}
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
+          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
@@ -256,12 +256,12 @@ jobs:
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-db
           path: ${{ runner.temp }}
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
+          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
       - name: Start database
         run: |
@@ -333,12 +333,12 @@ jobs:
       - name: Download database artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
+          name: ${{ runner.arch }}-openrailwaymap-db
           path: ${{ runner.temp }}
 
       - name: Load database image
         run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
+          cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
       - name: Download API artifact
         uses: actions/download-artifact@v4
