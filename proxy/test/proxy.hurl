@@ -71,7 +71,7 @@ HTTP 204
 
 # Proxy to API, cannot proxy
 GET {{base_url}}/api/test
-HTTP 502
+HTTP 404
 
 # Proxy to sprites
 GET {{base_url}}/sprite/symbols.json
