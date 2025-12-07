@@ -135,6 +135,7 @@ const colors = {
     direction: themeSwitch('#a8d8bcff', '#a8d8bcff'),
   },
   catenary: themeSwitch('blue', 'blue'),
+  substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 36.3%)'),
 };
 
 const font = {
@@ -3573,11 +3574,28 @@ const layers = {
     {
       id: 'electrification_substation',
       type: 'fill',
-      minzoom: 14,
+      minzoom: 13,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_substation',
       paint: {
-        'fill-color': 'red',
+        'fill-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.substation,
+        ],
+      },
+    },
+    {
+      id: `electrification_substation_outline`,
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'line-width': 2,
       },
     },
     {
