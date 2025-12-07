@@ -6592,14 +6592,31 @@ const legendData = {
           })) : undefined,
         })),
     "openrailwaymap_electrification-electrification_catenary": [
-      // {
-      //
-      // }
-      // mast
-      // portal
+      {
+        legend: 'Catenary mast',
+        type: 'point',
+        properties: {
+          feature: 'mast',
+          transition: false,
+        },
+        variants: [
+          {
+            legend: '(transition)',
+            properties: {
+              transition: true,
+            }
+          }
+        ]
+      },
+      {
+        legend: 'Catenary portal',
+        type: 'line',
+        properties: {
+          feature: 'portal',
+        },
+      },
     ],
     "openrailwaymap_electrification-electrification_substation": [
-      // traction substation
       {
         legend: 'Traction substation',
         type: 'polygon',
