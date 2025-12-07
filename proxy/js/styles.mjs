@@ -730,7 +730,7 @@ const sources = {
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols',
+    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
   },
   openrailwaymap_operator: {
     type: 'vector',
