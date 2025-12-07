@@ -1,6 +1,5 @@
 services:
   db:
-    image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
       context: db
     ports:
@@ -14,18 +13,19 @@ services:
       - PGDATA=/data/postgresql
       - POSTGRES_DB=gis
     healthcheck:
-      test: pg_isready -U postgres -d gis
+      # Ensure Postgres is fully initialized, including extensions
+      test:
+        - CMD-SHELL
+        - |
+          psql -U postgres -d gis -c "SELECT st_buffer(ST_SetSRID('POINT(0 0)'::GEOMETRY, 4326), 1)"
       interval: 1s
       timeout: 1s
       retries: 3
       start_period: 5m
 
   import:
-    image: ghcr.io/hiddewie/openrailwaymap-import:latest
     build:
       dockerfile: import/Dockerfile
-      cache_from:
-        - ghcr.io/hiddewie/openrailwaymap-import:latest
     command:
       - import
     depends_on:
@@ -41,22 +41,14 @@ services:
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
 
-  data:
-    image: ghcr.io/hiddewie/openrailwaymap-data:latest
-    build:
-      context: data
-      dockerfile: Dockerfile
-    command:
-      - sleep
-      - inf
-
   martin:
-    image: ghcr.io/hiddewie/openrailwaymap-martin:latest
     build:
       dockerfile: martin.Dockerfile
     depends_on:
       db:
         condition: service_healthy
+      import:
+        condition: service_completed_successfully
     environment:
       - DATABASE_URL=postgresql://postgres@db:5432/gis
     ulimits:
@@ -72,7 +64,6 @@ services:
           path: symbols
 
   martin-proxy:
-    image: ghcr.io/hiddewie/openrailwaymap-proxy:latest
     build:
       dockerfile: proxy.Dockerfile
     ports:
@@ -98,9 +89,13 @@ services:
           path: features
 
   api:
-    image: ghcr.io/hiddewie/openrailwaymap-api:latest
     build:
       context: api
+    depends_on:
+      db:
+        condition: service_healthy
+      import:
+        condition: service_completed_successfully
     environment:
       - PORT=5000
       - HOST=0.0.0.0
