@@ -79,11 +79,11 @@ jobs:
 
       - name: Start database
         run: |
-          docker compose up --no-build --wait db
+          docker compose up --wait db
 
       - name: Run import tests
         run: |
-          docker compose run --rm --no-build import-test
+          docker compose run --rm import-test
 
       - name: Import data
         env:
@@ -93,23 +93,23 @@ jobs:
 
       - name: Start API
         run: |
-          docker compose up --wait --no-build --no-deps api
+          docker compose up --wait --no-deps api
 
       - name: Run API tests
         run: |
-          docker compose up --no-build --no-deps api-test
+          docker compose up --no-deps api-test
 
       - name: Start tile server
         run: |
-          docker compose up --no-build --detach --no-deps martin
+          docker compose up --detach --no-deps martin
 
       - name: Start proxy
         run: |
-          docker compose up --no-build --wait --no-deps proxy
+          docker compose up --wait --no-deps proxy
 
       - name: Run proxy tests
         run: |
-          docker compose run --no-build --no-deps proxy-test
+          docker compose run --no-deps proxy-test
 
       - name: Download preset
         if: always()
