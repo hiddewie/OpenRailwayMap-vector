@@ -58,25 +58,62 @@ jobs:
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 
-      - name: Start database
-        env:
-          OSM2PGSQL_DATAFILE: berlin.osm.pbf
+      - name: Restore cache for empty database image
+        id: cache-db
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/openrailwaymap-db-empty.tar
+          key: docker-openrailwaymap-db-empty
+
+      - name: Load database image
+        if: ${{ steps.cache-db.outputs.cache-hit == 'true' }}
+        run: |
+          cat openrailwaymap-db-empty.tar | docker load
+
+      - name: Build database
         run: |
           docker compose build db
+          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db-empty.tar
+
+      - name: Save cache for empty database image
+        uses: actions/cache/save@v4
+        if: ${{ github.ref_name == 'one-command-start' }}
+        with:
+          path: |
+            ${{ runner.temp }}/openrailwaymap-db-empty.tar
+          key: docker-openrailwaymap-db-empty
+
+      - name: Start database
+        run: |
           docker compose up --no-build --wait db
+
+      - name: Restore cache for import image
+        id: cache-import
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/openrailwaymap-import.tar
+          key: docker-openrailwaymap-import
 
       - name: Build import image
         run: |
           docker compose build import
-          if [[ "${{ github.ref_name }}" = "master" ]]; then
-            docker compose push import
-          fi
+          docker save openrailwaymap-import > ${{ runner.temp }}/openrailwaymap-import.tar
+
+      - name: Save cache for import image
+        uses: actions/cache/save@v4
+        if: ${{ github.ref_name == 'one-command-start' }}
+        with:
+          path: |
+            ${{ runner.temp }}/openrailwaymap-import.tar
+          key: docker-openrailwaymap-import
 
       - name: Import data
         env:
           OSM2PGSQL_DATAFILE: berlin.osm.pbf
         run: |
-          docker compose run import import
+          docker compose run --rm import import
 
       - name: Prepare and save database image
         run: |
