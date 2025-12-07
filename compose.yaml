@@ -1,5 +1,6 @@
 services:
   db:
+    image: openrailwaymap-db
     build:
       context: db
     ports:
@@ -24,6 +25,7 @@ services:
       start_period: 5m
 
   import:
+    image: openrailwaymap-import
     build:
       dockerfile: import/Dockerfile
     command:
@@ -42,6 +44,7 @@ services:
       - OSM2PGSQL_DATAFILE
 
   martin:
+    image: openrailwaymap-martin
     build:
       dockerfile: martin.Dockerfile
     depends_on:
@@ -64,6 +67,7 @@ services:
           path: symbols
 
   martin-proxy:
+    image: openrailwaymap-martin-proxy
     build:
       dockerfile: proxy.Dockerfile
     ports:
@@ -89,6 +93,7 @@ services:
           path: features
 
   api:
+    image: openrailwaymap-api
     build:
       context: api
     depends_on:
