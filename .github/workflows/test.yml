@@ -65,9 +65,9 @@ jobs:
           targets: db,import
           set: |
             db.cache-from=type=gha,scope=db-${{ runner.arch }}
-            db.cache-to=type=gha,mode=max,scope=db-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('db.cache-to=type=gha,mode=max,scope=db-{}', runner.arch) || '' }}
             import.cache-from=type=gha,scope=import-${{ runner.arch }}
-            import.cache-to=type=gha,mode=max,scope=import-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('import.cache-to=type=gha,mode=max,scope=import-{}', runner.arch) || '' }}
 
       - name: Start database
         run: |
@@ -163,7 +163,7 @@ jobs:
           targets: api
           set: |
             api.cache-from=type=gha,scope=api-${{ runner.arch }}
-            api.cache-to=type=gha,mode=max,scope=api-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{}', runner.arch) || '' }}
 
       - name: Start database
         run: |
@@ -228,9 +228,9 @@ jobs:
           targets: martin,martin-proxy
           set: |
             martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
-            martin.cache-to=type=gha,mode=max,scope=martin-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('martin.cache-to=type=gha,mode=max,scope=martin-{}', runner.arch) || '' }}
             martin-proxy.cache-from=type=gha,scope=martin-proxy-${{ runner.arch }}
-            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-{}', runner.arch) || '' }}
 
       - name: Start database
         run: |
@@ -313,11 +313,11 @@ jobs:
           targets: api,martin,martin-proxy
           set: |
             api.cache-from=type=gha,scope=api-${{ runner.arch }}
-            api.cache-to=type=gha,mode=max,scope=api-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{}', runner.arch) || '' }}
             martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
-            martin.cache-to=type=gha,mode=max,scope=martin-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('martin.cache-to=type=gha,mode=max,scope=martin-{}', runner.arch) || '' }}
             martin-proxy.cache-from=type=gha,scope=martin-proxy-${{ runner.arch }}
-            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-{}', runner.arch) || '' }}
 
       - name: Start database
         run: |
