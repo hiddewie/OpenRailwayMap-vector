@@ -1660,7 +1660,7 @@ RETURN (
     ST_AsMVT(tile, 'electrification_substation', 4096, 'way', 'id')
   FROM (
     SELECT
-      id
+      id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
@@ -1668,7 +1668,7 @@ RETURN (
       name,
       location,
       operator,
-      voltage,
+      nullif(array_to_string(voltage, U&'\001E'), '') as voltage,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,

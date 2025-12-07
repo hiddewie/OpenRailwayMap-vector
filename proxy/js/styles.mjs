@@ -6549,6 +6549,23 @@ const legendData = {
             },
           })) : undefined,
         })),
+    "openrailwaymap_electrification-electrification_catenary": [
+      // {
+      //
+      // }
+      // mast
+      // portal
+    ],
+    "openrailwaymap_electrification-electrification_substation": [
+      // traction substation
+      {
+        legend: 'Traction substation',
+        type: 'polygon',
+        properties: {
+          feature: 'traction',
+        }
+      }
+    ],
   },
   gauge: {
     'gauge_railway_line_low-gauge_railway_line_low': [
