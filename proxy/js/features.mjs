@@ -1084,6 +1084,60 @@ const features = {
       },
     },
   },
+  'openrailwaymap_electrification-electrification_substation': {
+    featureProperty: 'feature',
+    featureLinks: featureLinks.openstreetmap,
+    labelProperties: ['name'],
+    features: {
+      traction: {
+        name: 'Traction substation',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      location: {
+        name: 'Location',
+      },
+      operator: {
+        name: 'Operator',
+      },
+      voltage: {
+        name: 'Voltage',
+        format: {
+          template: '%s V',
+        },
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+        format: {
+          country_prefix: {}
+        },
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
   'openrailwaymap_operator-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
