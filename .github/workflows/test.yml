@@ -57,32 +57,32 @@ jobs:
         if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
-
-      - name: Restore cache for empty database image
-        id: cache-db
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ${{ runner.temp }}/openrailwaymap-db-empty.tar
-          key: docker-openrailwaymap-db-empty
-
-      - name: Load database image
-        if: ${{ steps.cache-db.outputs.cache-hit == 'true' }}
-        run: |
-          cat openrailwaymap-db-empty.tar | docker load
+#
+#      - name: Restore cache for empty database image
+#        id: cache-db
+#        uses: actions/cache/restore@v4
+#        with:
+#          path: |
+#            ${{ runner.temp }}/openrailwaymap-db-empty.tar
+#          key: docker-openrailwaymap-db-empty
+#
+#      - name: Load database image
+#        if: ${{ steps.cache-db.outputs.cache-hit == 'true' }}
+#        run: |
+#          cat openrailwaymap-db-empty.tar | docker load
 
       - name: Build database
         run: |
           docker compose build db
-          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db-empty.tar
+#          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db-empty.tar
 
-      - name: Save cache for empty database image
-        uses: actions/cache/save@v4
-        # if: ${{ github.ref_name == 'one-command-start' }}
-        with:
-          path: |
-            ${{ runner.temp }}/openrailwaymap-db-empty.tar
-          key: docker-openrailwaymap-db-empty
+#      - name: Save cache for empty database image
+#        uses: actions/cache/save@v4
+#        # if: ${{ github.ref_name == 'one-command-start' }}
+#        with:
+#          path: |
+#            ${{ runner.temp }}/openrailwaymap-db-empty.tar
+#          key: docker-openrailwaymap-db-empty
 
       - name: Start database
         run: |
