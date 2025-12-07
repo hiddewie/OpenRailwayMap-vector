@@ -218,18 +218,27 @@ jobs:
         run: |
           cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
+      - name: Build Martin and proxy containers
+        uses: docker/bake-action@v6
+        with:
+          load: true
+          targets: martin,martin-proxy
+          set: |
+            martin.cache-from=type=gha,scope=martin
+            martin.cache-to=type=gha,mode=max,scope=martin
+            martin-proxy.cache-from=type=gha,scope=martin-proxy
+            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy
+
       - name: Start database
         run: |
           docker compose up --no-build --wait db
 
       - name: Start tile server
         run: |
-          docker compose build martin
           docker compose up --no-build --detach martin
 
       - name: Start web server
         run: |
-          docker compose build martin-proxy
           docker compose up --no-build --wait martin-proxy
 
       - name: Run proxy tests
@@ -294,14 +303,18 @@ jobs:
         run: |
           cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
-      - name: Build API container
+      - name: Build API, Martin and proxy containers
         uses: docker/bake-action@v6
         with:
           load: true
-          targets: api
+          targets: api,martin,martin-proxy
           set: |
             api.cache-from=type=gha,scope=api
             api.cache-to=type=gha,mode=max,scope=api
+            martin.cache-from=type=gha,scope=martin
+            martin.cache-to=type=gha,mode=max,scope=martin
+            martin-proxy.cache-from=type=gha,scope=martin-proxy
+            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy
 
       - name: Start database
         run: |
@@ -309,12 +322,10 @@ jobs:
 
       - name: Start tile server
         run: |
-          docker compose build martin
           docker compose up --no-build --detach martin
 
       - name: Start web server
         run: |
-          docker compose build martin-proxy
           docker compose up --no-build --wait martin-proxy
 
       - name: Start API
