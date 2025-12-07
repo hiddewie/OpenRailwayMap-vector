@@ -83,7 +83,7 @@ jobs:
 
       - name: Run import tests
         run: |
-          docker compose run --rm import-test
+          docker compose run --rm --no-build import-test
 
       - name: Import data
         env:
@@ -96,7 +96,6 @@ jobs:
           docker compose up --wait --no-build --no-deps api
 
       - name: Run API tests
-        working-directory: api
         run: |
           docker compose up --no-build --no-deps api-test
 
@@ -104,12 +103,11 @@ jobs:
         run: |
           docker compose up --no-build --detach --no-deps martin
 
-      - name: Start web server
+      - name: Start proxy
         run: |
           docker compose up --no-build --wait --no-deps proxy
 
       - name: Run proxy tests
-        working-directory: proxy
         run: |
           docker compose run --no-build --no-deps proxy-test
 
