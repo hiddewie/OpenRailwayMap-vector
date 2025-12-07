@@ -81,10 +81,10 @@ jobs:
 #        if: ${{ steps.cache-db.outputs.cache-hit == 'true' }}
 #        run: |
 #          cat openrailwaymap-db-empty.tar | docker load
-
-      - name: Build database
-        run: |
-          docker compose build db
+#
+#      - name: Build database
+#        run: |
+#          docker compose build db
 #          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db-empty.tar
 
 #      - name: Save cache for empty database image
@@ -107,9 +107,9 @@ jobs:
 #            ${{ runner.temp }}/openrailwaymap-import.tar
 #          key: docker-openrailwaymap-import
 
-      - name: Build import image
-        run: |
-          docker compose build import
+#      - name: Build import image
+#        run: |
+#          docker compose build import
 #          docker save openrailwaymap-import > ${{ runner.temp }}/openrailwaymap-import.tar
 
 #      - name: Save cache for import image
