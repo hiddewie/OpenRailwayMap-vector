@@ -3571,6 +3571,16 @@ const layers = {
       ],
     ),
     {
+      id: 'electrification_substation',
+      type: 'fill',
+      minzoom: 14,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      paint: {
+        'fill-color': 'red',
+      },
+    },
+    {
       id: 'electrification_catenary_mast',
       type: 'symbol',
       minzoom: 14,
