@@ -3,10 +3,6 @@ services:
     image: openrailwaymap-db
     build:
       context: db
-      cache_from:
-        - type=gha
-      cache_to:
-        - type=gha,mode=max
     ports:
       - '5432:5432'
     shm_size: 1g

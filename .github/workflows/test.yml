@@ -57,6 +57,17 @@ jobs:
         if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
+
+      - name: Build database and image containers
+        uses: docker/bake-action@v6
+        with:
+          load: true
+          targets: db,import
+          set: |
+            db.cache-from=type=gha,scope=db
+            db.cache-to=type=gha,mode=max,scope=db
+            import.cache-from=type=gha,scope=import
+            import.cache-to=type=gha,mode=max,scope=import
 #
 #      - name: Restore cache for empty database image
 #        id: cache-db
@@ -88,26 +99,26 @@ jobs:
         run: |
           docker compose up --no-build --wait db
 
-      - name: Restore cache for import image
-        id: cache-import
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            ${{ runner.temp }}/openrailwaymap-import.tar
-          key: docker-openrailwaymap-import
+#      - name: Restore cache for import image
+#        id: cache-import
+#        uses: actions/cache/restore@v4
+#        with:
+#          path: |
+#            ${{ runner.temp }}/openrailwaymap-import.tar
+#          key: docker-openrailwaymap-import
 
       - name: Build import image
         run: |
           docker compose build import
-          docker save openrailwaymap-import > ${{ runner.temp }}/openrailwaymap-import.tar
+#          docker save openrailwaymap-import > ${{ runner.temp }}/openrailwaymap-import.tar
 
-      - name: Save cache for import image
-        uses: actions/cache/save@v4
-        # if: ${{ github.ref_name == 'one-command-start' }}
-        with:
-          path: |
-            ${{ runner.temp }}/openrailwaymap-import.tar
-          key: docker-openrailwaymap-import
+#      - name: Save cache for import image
+#        uses: actions/cache/save@v4
+#        # if: ${{ github.ref_name == 'one-command-start' }}
+#        with:
+#          path: |
+#            ${{ runner.temp }}/openrailwaymap-import.tar
+#          key: docker-openrailwaymap-import
 
       - name: Import data
         env:
