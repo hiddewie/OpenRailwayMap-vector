@@ -89,7 +89,7 @@ jobs:
         env:
           OSM2PGSQL_DATAFILE: berlin.osm.pbf
         run: |
-          docker compose run --rm import import
+          docker compose run --rm --no-deps import import
 
       - name: Start API
         run: |
