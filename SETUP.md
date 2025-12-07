@@ -8,30 +8,16 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
 
-Import the data:
-```shell
-docker compose run --build import import
+Start the services with:
 ```
-The import process will filter the file before importing it. The filtered file will be stored in the `data/filtered` directory, so future imports of the same data file can reuse the filtered data file.
-
-Start the tile server:
-```shell
-docker compose up --build --watch martin
+docker compose up --build --watch
 ```
 
-Prepare and start the API:
-```shell
-docker compose up --build --watch api
-```
-
-Start the web server:
-```shell
-docker compose up --build --watch martin-proxy
-```
-
-The OpenRailwayMap is now available on http://localhost:8000.
+The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `martin-proxy`). The import can take a few minutes depending on the amount of data to be imported.
 
 Docker Compose will automatically rebuild and restart the `martin` and `martin-proxy` containers if relevant files are modified.
+
+The OpenRailwayMap is now available on http://localhost:8000.
 
 ### Making changes
 
@@ -90,16 +76,31 @@ You can modify the TLS port 443 to port 8443 [in the Compose configuration](./co
 
 ## Tests
 
-Tests use [*hurl*](https://hurl.dev/docs/installation.html).
+### Import tests
+
+The import tests verify the correctness of the Lua import configuration.
+
+Run the tests with:
+```shell
+docker build --file import/Dockerfile --target test --tag import-test . && docker run --rm import-test
+```
+
+If the process exists successfully, the tests have succeeded. If not, the assertion error will be displayed.
+
+### Tile tests
+
+Tile tests use [*hurl*](https://hurl.dev/docs/installation.html).
 
 Run tests against the API:
-
 ```shell
 hurl --test --verbose --variable base_url=http://localhost:5000/api api/test/api.hurl
 ```
 
-Run tests against the proxy:
+### Proxy tests
 
+Proxy tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the proxy:
 ```shell
 hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
 ```
