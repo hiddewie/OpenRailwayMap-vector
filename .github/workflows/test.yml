@@ -64,10 +64,10 @@ jobs:
           load: true
           targets: db,import
           set: |
-            db.cache-from=type=gha,scope=db
-            db.cache-to=type=gha,mode=max,scope=db
-            import.cache-from=type=gha,scope=import
-            import.cache-to=type=gha,mode=max,scope=import
+            db.cache-from=type=gha,scope=db-${{ runner.arch }}
+            db.cache-to=type=gha,mode=max,scope=db-${{ runner.arch }}
+            import.cache-from=type=gha,scope=import-${{ runner.arch }}
+            import.cache-to=type=gha,mode=max,scope=import-${{ runner.arch }}
 
       - name: Start database
         run: |
@@ -162,8 +162,8 @@ jobs:
           load: true
           targets: api
           set: |
-            api.cache-from=type=gha,scope=api
-            api.cache-to=type=gha,mode=max,scope=api
+            api.cache-from=type=gha,scope=api-${{ runner.arch }}
+            api.cache-to=type=gha,mode=max,scope=api-${{ runner.arch }}
 
       - name: Start database
         run: |
@@ -227,10 +227,10 @@ jobs:
           load: true
           targets: martin,martin-proxy
           set: |
-            martin.cache-from=type=gha,scope=martin
-            martin.cache-to=type=gha,mode=max,scope=martin
-            martin-proxy.cache-from=type=gha,scope=martin-proxy
-            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy
+            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
+            martin.cache-to=type=gha,mode=max,scope=martin-${{ runner.arch }}
+            martin-proxy.cache-from=type=gha,scope=martin-proxy-${{ runner.arch }}
+            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-${{ runner.arch }}
 
       - name: Start database
         run: |
@@ -312,12 +312,12 @@ jobs:
           load: true
           targets: api,martin,martin-proxy
           set: |
-            api.cache-from=type=gha,scope=api
-            api.cache-to=type=gha,mode=max,scope=api
-            martin.cache-from=type=gha,scope=martin
-            martin.cache-to=type=gha,mode=max,scope=martin
-            martin-proxy.cache-from=type=gha,scope=martin-proxy
-            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy
+            api.cache-from=type=gha,scope=api-${{ runner.arch }}
+            api.cache-to=type=gha,mode=max,scope=api-${{ runner.arch }}
+            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
+            martin.cache-to=type=gha,mode=max,scope=martin-${{ runner.arch }}
+            martin-proxy.cache-from=type=gha,scope=martin-proxy-${{ runner.arch }}
+            martin-proxy.cache-to=type=gha,mode=max,scope=martin-proxy-${{ runner.arch }}
 
       - name: Start database
         run: |
