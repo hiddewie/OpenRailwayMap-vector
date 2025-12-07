@@ -68,57 +68,10 @@ jobs:
             db.cache-to=type=gha,mode=max,scope=db
             import.cache-from=type=gha,scope=import
             import.cache-to=type=gha,mode=max,scope=import
-#
-#      - name: Restore cache for empty database image
-#        id: cache-db
-#        uses: actions/cache/restore@v4
-#        with:
-#          path: |
-#            ${{ runner.temp }}/openrailwaymap-db-empty.tar
-#          key: docker-openrailwaymap-db-empty
-#
-#      - name: Load database image
-#        if: ${{ steps.cache-db.outputs.cache-hit == 'true' }}
-#        run: |
-#          cat openrailwaymap-db-empty.tar | docker load
-#
-#      - name: Build database
-#        run: |
-#          docker compose build db
-#          docker save openrailwaymap-db > ${{ runner.temp }}/openrailwaymap-db-empty.tar
-
-#      - name: Save cache for empty database image
-#        uses: actions/cache/save@v4
-#        # if: ${{ github.ref_name == 'one-command-start' }}
-#        with:
-#          path: |
-#            ${{ runner.temp }}/openrailwaymap-db-empty.tar
-#          key: docker-openrailwaymap-db-empty
 
       - name: Start database
         run: |
           docker compose up --no-build --wait db
-
-#      - name: Restore cache for import image
-#        id: cache-import
-#        uses: actions/cache/restore@v4
-#        with:
-#          path: |
-#            ${{ runner.temp }}/openrailwaymap-import.tar
-#          key: docker-openrailwaymap-import
-
-#      - name: Build import image
-#        run: |
-#          docker compose build import
-#          docker save openrailwaymap-import > ${{ runner.temp }}/openrailwaymap-import.tar
-
-#      - name: Save cache for import image
-#        uses: actions/cache/save@v4
-#        # if: ${{ github.ref_name == 'one-command-start' }}
-#        with:
-#          path: |
-#            ${{ runner.temp }}/openrailwaymap-import.tar
-#          key: docker-openrailwaymap-import
 
       - name: Import data
         env:
@@ -165,48 +118,6 @@ jobs:
         run: |
           docker run --rm import-test
 
-  build-api:
-    name: Build API
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - import
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build API
-        run: |
-          docker compose build api
-
-      - name: Save API image
-        run: |
-          docker save openrailwaymap-api > ${{ runner.temp }}/openrailwaymap-api.tar
-
-      - name: Upload API artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}/openrailwaymap-api.tar
-
   test-api:
     name: Test API
 
@@ -217,9 +128,6 @@ jobs:
           - ubuntu-24.04-arm
 
     runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - build-api
 
     steps:
       - name: Checkout
@@ -245,15 +153,14 @@ jobs:
         run: |
           cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
-      - name: Download API artifact
-        uses: actions/download-artifact@v4
+      - name: Build API container
+        uses: docker/bake-action@v6
         with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}
-
-      - name: Load API image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
+          load: true
+          targets: api
+          set: |
+            api.cache-from=type=gha,scope=api
+            api.cache-to=type=gha,mode=max,scope=api
 
       - name: Start database
         run: |
@@ -362,7 +269,6 @@ jobs:
     needs:
       - test-proxy
       - test-api
-      - build-api
 
     steps:
       - name: Checkout
@@ -388,15 +294,14 @@ jobs:
         run: |
           cat ${{ runner.temp }}/openrailwaymap-db.tar | docker load
 
-      - name: Download API artifact
-        uses: actions/download-artifact@v4
+      - name: Build API container
+        uses: docker/bake-action@v6
         with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}
-
-      - name: Load API image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
+          load: true
+          targets: api
+          set: |
+            api.cache-from=type=gha,scope=api
+            api.cache-to=type=gha,mode=max,scope=api
 
       - name: Start database
         run: |
