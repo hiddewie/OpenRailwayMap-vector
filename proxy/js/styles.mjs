@@ -1511,6 +1511,7 @@ const layers = {
       filter: ['==', ['get', 'state'], state],
       paint: {
         'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
           ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
           // Use outline color of feature, without taking state into account
           ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
