@@ -160,6 +160,11 @@ postgres:
       function: electrification_catenary
       minzoom: 14
 
+    electrification_substation:
+      schema: public
+      function: electrification_substation
+      minzoom: 14
+
     # --- Gauge --- #
 
     gauge_railway_line_low:
