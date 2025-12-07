@@ -68,7 +68,7 @@ services:
         - action: rebuild
           path: symbols
 
-  martin-proxy:
+  proxy:
     build:
       dockerfile: proxy.Dockerfile
     ports:
@@ -93,17 +93,17 @@ services:
         - action: rebuild
           path: features
 
-  martin-proxy-test:
+  proxy-test:
     image: ghcr.io/orange-opensource/hurl:6.1.1@sha256:0fafe31238304394bcba7ab49509dcbb4356798b6a99973d41ef722f6cbbb1e9
     depends_on:
-      martin-proxy:
+      proxy:
         condition: service_healthy
     volumes:
       - ./proxy/test/proxy.hurl:/hurl/proxy.hurl
     command: [
       '--test',
       '--verbose',
-      '--variable', 'base_url=http://martin-proxy:8000',
+      '--variable', 'base_url=http://proxy:8000',
       '/hurl/proxy.hurl'
     ]
 

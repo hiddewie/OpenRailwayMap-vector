@@ -118,11 +118,11 @@ jobs:
 
       - name: Build image
         run: |
-          docker compose build --build-arg "PRESET_VERSION=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" martin-proxy
+          docker compose build --build-arg "PRESET_VERSION=$(/bin/date -u "+1.%Y%m%d-%Y-%m-%d")" proxy
 
       - name: Push image
         run: |
-          docker compose push martin-proxy
+          docker compose push proxy
 
   build-api:
     name: Build API container

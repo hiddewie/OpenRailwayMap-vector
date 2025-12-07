@@ -147,7 +147,7 @@ Ensure the SSL certificate and key are installed in `/etc/nginx/ssl`.
 Create a file `compose.override.yaml`:
 ```yaml
 services:
-  martin-proxy:
+  proxy:
     volumes:
       - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
       - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'

@@ -13,9 +13,9 @@ Start the services with:
 docker compose up --build --watch
 ```
 
-The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `martin-proxy`). The import can take a few minutes depending on the amount of data to be imported.
+The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `proxy`). The import can take a few minutes depending on the amount of data to be imported.
 
-Docker Compose will automatically rebuild and restart the `martin` and `martin-proxy` containers if relevant files are modified.
+Docker Compose will automatically rebuild and restart the `martin` and `proxy` containers if relevant files are modified.
 
 The OpenRailwayMap is now available on http://localhost:8000.
 
@@ -60,14 +60,14 @@ SSL is supported by generating a trusted certificate, and installing it in the p
 - Create a file `compose.override.yaml` with 
   ```yaml
   services:
-    martin-proxy:
+    proxy:
       volumes:
         - './localhost.pem:/etc/nginx/ssl/certificate.pem'
         - './localhost-key.pem:/etc/nginx/ssl/key.pem'
   ```
 - Restart the proxy with:
   ```shell
-  docker compose up --build --watch martin-proxy
+  docker compose up --build --watch proxy
   ```
 
 The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
@@ -102,7 +102,7 @@ Proxy tests use [*hurl*](https://hurl.dev/docs/installation.html).
 
 Run tests against the proxy:
 ```shell
-docker compose run --build --no-deps martin-proxy-test
+docker compose run --build --no-deps proxy-test
 ```
 
 ## Development
