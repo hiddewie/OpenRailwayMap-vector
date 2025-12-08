@@ -135,6 +135,8 @@ const colors = {
     direction: themeSwitch('#a8d8bcff', '#a8d8bcff'),
   },
   catenary: themeSwitch('blue', 'blue'),
+  substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 25%)'),
+  substationText: themeSwitch('hsl(152 100% 20.8%)', 'hsl(152 100% 50%)'),
 };
 
 const font = {
@@ -730,7 +732,7 @@ const sources = {
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols',
+    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
   },
   openrailwaymap_operator: {
     type: 'vector',
@@ -1475,6 +1477,8 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
+      // Yards only have an outline
+      filter: ['!=', ['get', 'feature'], 'yard'],
       paint: {
         'fill-color': ['case',
           ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors.styles.standard.past,
@@ -1509,6 +1513,8 @@ const layers = {
       filter: ['==', ['get', 'state'], state],
       paint: {
         'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
           // Use outline color of feature, without taking state into account
           ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
           ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
@@ -1518,8 +1524,14 @@ const layers = {
           ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
           colors.styles.standard.main,
         ],
-        'line-opacity': 0.3,
-        'line-width': 2 ,
+        'line-opacity': ['match', ['get', 'feature'],
+          'yard', 0.2,
+          0.3,
+        ],
+        'line-width': ['match', ['get', 'feature'],
+          'yard', 6,
+          2,
+        ],
         'line-dasharray': dasharray,
       },
     })),
@@ -3571,6 +3583,33 @@ const layers = {
       ],
     ),
     {
+      id: 'electrification_substation',
+      type: 'fill',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      paint: {
+        'fill-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.substation,
+        ],
+      },
+    },
+    {
+      id: `electrification_substation_outline`,
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'line-width': 2,
+      },
+    },
+    {
       id: 'electrification_catenary_mast',
       type: 'symbol',
       minzoom: 14,
@@ -3797,6 +3836,29 @@ const layers = {
         'text-padding': 15,
         'text-offset': [0, 1.5],
         'text-optional': true,
+      },
+    },
+    {
+      id: 'electrification_substation_text',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_substation',
+      filter: ['!=', ['get', 'name'], null],
+      paint: {
+        'text-color': colors.substationText,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'text-field': '{name}',
+        'text-font': font.bold,
+        'text-size': 11,
+        'text-padding': 6,
+        'text-max-width': 5,
       },
     },
     searchResults,
@@ -6539,6 +6601,40 @@ const legendData = {
             },
           })) : undefined,
         })),
+    "openrailwaymap_electrification-electrification_catenary": [
+      {
+        legend: 'Catenary mast',
+        type: 'point',
+        properties: {
+          feature: 'mast',
+          transition: false,
+        },
+        variants: [
+          {
+            legend: '(transition)',
+            properties: {
+              transition: true,
+            }
+          }
+        ]
+      },
+      {
+        legend: 'Catenary portal',
+        type: 'line',
+        properties: {
+          feature: 'portal',
+        },
+      },
+    ],
+    "openrailwaymap_electrification-electrification_substation": [
+      {
+        legend: 'Traction substation',
+        type: 'polygon',
+        properties: {
+          feature: 'traction',
+        }
+      }
+    ],
   },
   gauge: {
     'gauge_railway_line_low-gauge_railway_line_low': [

@@ -535,6 +535,29 @@ local landuse = osm2pgsql.define_table({
   },
 })
 
+local substation = osm2pgsql.define_table({
+  name = 'substation',
+  ids = { type = 'way', id_column = 'osm_id' },
+  columns = {
+    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'way', type = 'polygon', not_null = true },
+    { column = 'feature', type = 'text' },
+    { column = 'ref', type = 'text' },
+    { column = 'name', type = 'text' },
+    { column = 'location', type = 'text' },
+    { column = 'operator', type = 'text' },
+    { column = 'voltage', sql_type = 'text[]' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
+  },
+})
+
 local railway_line_states = {}
 -- ordered from lower to higher importance
 local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
@@ -674,10 +697,6 @@ function split_semicolon_to_sql_array(value)
   end
 
   return to_sql_array(items)
-end
-
-function semicolon_to_record_separator(value)
-  return value and value:gsub(";", "\u{001E}") or nil
 end
 
 local railway_state_tags = {
@@ -1392,6 +1411,26 @@ function osm2pgsql.process_way(object)
   if tags.landuse == 'railway' then
     landuse:insert({
       way = object:as_polygon(),
+    })
+  end
+
+  if tags.power == 'substation' and tags.substation == 'traction' then
+    substation:insert({
+      way = object:as_polygon(),
+      feature = 'traction',
+      name = tags.name,
+      ref = tags.ref,
+      location = tags.location,
+      operator = tags.operator,
+      voltage = split_semicolon_to_sql_array(tags.voltage),
+      wikidata = tags.wikidata,
+      wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 end

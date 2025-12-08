@@ -9,8 +9,14 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
     feature,
     state,
     array_agg(facilities.id) as station_ids,
-    ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way)))) as center,
-    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50) as buffered,
+    CASE feature
+      WHEN 'yard' THEN ST_PointOnSurface(ST_RemoveRepeatedPoints(ST_Collect(way)))
+      ELSE ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))))
+    END as center,
+    CASE feature
+      WHEN 'yard' THEN ST_Buffer(ST_RemoveRepeatedPoints(ST_Collect(way)), 10)
+      ELSE ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 50)
+    END as buffered,
     ST_NumGeometries(ST_RemoveRepeatedPoints(ST_Collect(way))) as count
   FROM (
     SELECT

@@ -1649,6 +1649,70 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION electrification_substation(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'electrification_substation', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      feature,
+      ref,
+      name,
+      location,
+      operator,
+      nullif(array_to_string(voltage, U&'\001E'), '') as voltage,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM substation
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION electrification_substation IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "electrification_substation",
+        "fields": {
+          "id": "integer",
+          "osm_id": "integer",
+          "feature": "string",
+          "ref": "string",
+          "name": "string",
+          "location": "string",
+          "operator": "string",
+          "voltage": "string",
+          "wikidata": "string",
+          "wikimedia_commons": "string",
+          "wikimedia_commons_file": "string",
+          "image": "string",
+          "mapillary": "string",
+          "wikipedia": "string",
+          "note": "string",
+          "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Gauge ---
 
 CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)

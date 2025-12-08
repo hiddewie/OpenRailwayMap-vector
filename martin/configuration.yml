@@ -155,6 +155,11 @@ postgres:
       function: electrification_railway_symbols
       minzoom: 13
 
+    electrification_substation:
+      schema: public
+      function: electrification_substation
+      minzoom: 13
+
     electrification_catenary:
       schema: public
       function: electrification_catenary
