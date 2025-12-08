@@ -163,4 +163,4 @@ jobs:
           targets: api
           set: |
             api.cache-from=type=gha,scope=api-${{ runner.arch }}
-            proxy.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest
+            api.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-api:latest
