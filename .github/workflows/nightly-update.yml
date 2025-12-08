@@ -49,13 +49,10 @@ jobs:
           docker compose run --no-deps import update
 
       - name: Push data
-        uses: docker/bake-action@v6
-        with:
-          push: true
-          no-cache: true
-          targets: data
-          set: |
-            data.tags=ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest
+        run: |
+          docker compose build --no-cache data
+          docker tag openrailwaymap-data ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest
+          docker push ghcr.io/${{ github.repository_owner }}/openrailwaymap-data:latest
 
       - name: Start database
         run: |
