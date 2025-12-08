@@ -40,6 +40,9 @@ services:
     image: openrailwaymap-data
     build:
       context: data
+    command:
+      - 'sleep'
+      - 'inf'
 
   martin:
     build:
