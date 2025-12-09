@@ -87,3 +87,59 @@ operators:
   - names:
       - 'New York & Atlantic Railway'
     color: '#38553E'
+
+  # GERMANY
+  - names:
+      - 'DB InfraGO AG'
+      - 'DB InfraGO'
+      - 'DB Netz AG'
+      - 'DB Netz'
+      - 'DB Station&Service AG'
+      - 'DB Station&Service'
+    color: '#f01414'
+
+  - names:
+      - 'Albtal-Verkehrs-Gesellschaft mbH'
+    color: '#008833'
+
+  - names:
+      - 'Berliner Verkehrsbetriebe'
+    color: '#f0d020'
+
+  - names:
+      - 'DB RegioNetz Infrastruktur GmbH'
+    color: '#dd4488'
+
+  - names:
+      - 'Regio Infra Nord-Ost GmbH & Co. KG'
+    color: '#007733'
+
+  - names:
+      - 'Rhein-Neckar-Verkehr'
+    color: '#ee7700'
+
+  - names:
+      - 'Rostocker Straßenbahn AG'
+    color: '#005090'
+
+  - names:
+      - 'SSB AG' # Stuttgarter Straßenbahnen AG
+    color: '#ffcc00'
+
+  - names:
+      - 'SWEG Schienenwege GmbH'
+    color: '#114499'
+
+  - names:
+      - 'Usedomer Bäderbahn GmbH'
+      - 'UBB Polska sp. z o.o.'
+    color: '#114488'
+
+  - names:
+      - 'Verkehrsbetriebe Karlsruhe GmbH'
+    color: '#ffaa33'
+
+  - names:
+      - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
+    color: '#008080'
+
