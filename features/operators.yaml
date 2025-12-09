@@ -37,7 +37,7 @@ operators:
   - names:
       - 'BNSF'
       - 'BNSF Railway'
-    color: '#F85D13'
+    color: '#f85d13'
 
   - names:
       - 'Union Pacific Railroad'
