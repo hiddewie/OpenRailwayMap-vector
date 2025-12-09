@@ -32,11 +32,12 @@ operators:
 
   - names:
       - 'CSX Transportstion'
-    color: '#104f8c'
+    color: '#003462'
 
   - names:
       - 'BNSF'
-    color: '#f85d13'
+      - 'BNSF Railway'
+    color: '#F85D13'
 
   - names:
       - 'Union Pacific Railroad'
@@ -87,3 +88,51 @@ operators:
   - names:
       - 'New York & Atlantic Railway'
     color: '#38553E'
+
+  - names:
+      - 'Metra'
+    color: '#0750A3'
+
+  - names:
+      - 'NICTD'
+    color: '#F08322'
+
+  - names:
+    - 'VIA Rail'
+    color: '#FFCB05'
+
+  - names:
+    - 'GO Transit'
+    color: '#4a7729'
+
+  - names:
+    - Ontario Northland Railway
+    color: '#003366'
+
+  - names:
+    - 'Toronto Transit Commission'
+    color: '#da251dc'
+
+  # --- Genesee & Wyoming subsidiaries --- #
+  - names:
+    - 'Ottawa Valley Railway'
+    color: '#f68b1e'
+
+  - names:
+    - 'Quebec Gatineau Railway'
+    - 'Chemin de fer Québec-Gatineau'
+    color: '#f68b1e'
+
+  - names:
+    - 'St. Lawrence & Atlantic Railroad'
+    - 'St. Lawrence and Atlantic Railroad Co.'
+    - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
+    color: '#f68b1e'
+
+  - names:
+    - 'Huron Central Railway'
+    color: '#f68b1e'
+
+  - names:
+    - 'Goderich-Exeter Railway'
+    color: '#f68b1e'
