@@ -198,6 +198,18 @@ operators:
       - 'ÖBB-Infrastruktur AG'
     color: '#e40428'
 
+  # --- CZ --- #
+
+  - names:
+      - 'cz:SŽDC'
+    color: '#ff5200'
+
+  # --- HU --- #
+
+  - names:
+      - 'MÁV'
+    color: '#2e5ea8'
+
   # --- FR --- #
 
   - names:
@@ -222,3 +234,9 @@ operators:
       - 'ОАО «РЖД»'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
+
+  # --- UA --- #
+
+  - names:
+      - 'Укрзалізниця'
+    color: '#112189'
