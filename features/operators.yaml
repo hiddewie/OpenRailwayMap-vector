@@ -31,7 +31,8 @@ operators:
     color: '#2b2b2a'
 
   - names:
-      - 'CSX Transportstion'
+      - 'CSX'
+      - 'CSX Transportation'
     color: '#003462'
 
   - names:
@@ -98,46 +99,59 @@ operators:
     color: '#F08322'
 
   - names:
-    - 'VIA Rail'
+      - 'VIA Rail'
     color: '#FFCB05'
 
   - names:
-    - 'GO Transit'
+      - 'GO Transit'
     color: '#4a7729'
 
   - names:
-    - Ontario Northland Railway
+      - 'Ontario Northland Railway'
     color: '#003366'
 
   - names:
-    - 'Toronto Transit Commission'
+      - 'Toronto Transit Commission'
     color: '#da251dc'
 
   # --- Genesee & Wyoming subsidiaries --- #
   - names:
-    - 'Ottawa Valley Railway'
+      - 'Ottawa Valley Railway'
     color: '#f68b1e'
 
   - names:
-    - 'Quebec Gatineau Railway'
-    - 'Chemin de fer Québec-Gatineau'
+      - 'Quebec Gatineau Railway'
+      - 'Chemin de fer Québec-Gatineau'
     color: '#f68b1e'
 
   - names:
-    - 'St. Lawrence & Atlantic Railroad'
-    - 'St. Lawrence and Atlantic Railroad Co.'
-    - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
+      - 'St. Lawrence & Atlantic Railroad'
+      - 'St. Lawrence and Atlantic Railroad Co.'
+      - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
 
   - names:
-    - 'Huron Central Railway'
+      - 'Huron Central Railway'
     color: '#f68b1e'
 
   - names:
-    - 'Goderich-Exeter Railway'
+      - 'Goderich-Exeter Railway'
     color: '#f68b1e'
 
-  # GERMANY
+  # --- AT --- #
+
+  - names:
+      - 'ÖBB-Infrastruktur AG'
+    color: '#e40428'
+
+  # --- CZ --- #
+
+  - names:
+      - 'cz:SŽDC'
+    color: '#ff5200'
+
+  # --- DE --- #
+
   - names:
       - 'DB InfraGO AG'
       - 'DB InfraGO'
@@ -191,18 +205,6 @@ operators:
   - names:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
-
-  # --- AT --- #
-
-  - names:
-      - 'ÖBB-Infrastruktur AG'
-    color: '#e40428'
-
-  # --- CZ --- #
-
-  - names:
-      - 'cz:SŽDC'
-    color: '#ff5200'
 
   # --- HU --- #
 
