@@ -87,6 +87,12 @@ operators:
       - 'Željeznice Federacije Bosne i Hercegovine'
     color: 'rgb(247, 148, 30)'
 
+  # --- BY --- #
+
+  - names:
+      - 'БЧ'
+    color: '#2d88e4'
+
   # --- BD --- #
 
   - names:
@@ -146,6 +152,12 @@ operators:
 
   - names:
       - 'cz:SŽDC'
+      - 'cz:Správa Železnic'
+      - 'cz:SŽ'
+      - 'Správa železnic, s. o.'
+      - 'Správa železnic'
+      - 'SŽDC'
+      - 'SŽ'
     color: '#ff5200'
 
   # --- CN --- #
@@ -316,6 +328,16 @@ operators:
   - names:
       - 'Lokaltog'
     color: 'rgb(0, 39, 94)'
+
+  # --- EE --- #
+
+  - names:
+      - 'Edelaraudtee AS'
+    color: '#00a63c'
+
+  - names:
+      - 'AS Eesti Raudtee'
+    color: '#75001f'
 
   # --- FR --- #
 
@@ -488,6 +510,12 @@ operators:
       - 'Македонски Железници'
     color: '#2d2579'
 
+  # --- LT --- #
+
+  - names:
+      - 'LTG Infra'
+    color: '#007749'
+
   # --- MM --- #
 
   - names:
@@ -557,6 +585,10 @@ operators:
       - 'ОАО "РЖД"'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
+
+  - names:
+      - 'Калининградский Железная Дорога'
+    color: '#ff3f72'
 
   # --- RS --- #
 
