@@ -191,3 +191,34 @@ operators:
   - names:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
+
+  # --- AT --- #
+
+  - names:
+      - 'ÖBB-Infrastruktur AG'
+    color: '#e40428'
+
+  # --- FR --- #
+
+  - names:
+      - 'SNCF Gares & Connexions'
+    color: '#6e1e78'
+
+  # --- IT --- #
+
+  - names:
+      - 'RFI'
+    color: '#006a6a'
+
+  # --- PL --- #
+
+  - names:
+      - 'PKP Polskie Linie Kolejowe'
+    color: '#004d84'
+
+  # --- RU --- #
+
+  - names:
+      - 'ОАО «РЖД»'
+      - 'ОАО «Российские железные дороги»'
+    color: '#c50d16'
