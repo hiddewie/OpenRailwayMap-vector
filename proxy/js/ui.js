@@ -40,12 +40,13 @@ const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()}
 const flagEmojiTranslations = {
   EN: 'GB',
   JA: 'JP',
-  ZH: 'CH',
+  ZH: 'CN',
   FA: 'IR',
   UK: 'UA',
   KA: 'GE',
   HY: 'AM',
   HE: 'IS',
+  KO: 'KR',
 }
 function getFlagEmoji(countryCode) {
   const codePoints = (flagEmojiTranslations[countryCode.toUpperCase()] || countryCode.toUpperCase())

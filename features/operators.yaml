@@ -148,6 +148,100 @@ operators:
       - 'cz:SŽDC'
     color: '#ff5200'
 
+  # --- CN --- #
+
+  # See https://en.wikipedia.org/wiki/China_Railway#Companies
+
+  - names:
+      # China Railway Harbin Group
+      - '中国铁路哈尔滨局集团'
+    color: '#168cb4'
+
+  - names:
+      # China Railway Shenyang Group
+      - '中国铁路沈阳局集团'
+    color: '#e30811'
+
+  - names:
+      # China Railway Beijing Group
+      - '中国铁路北京局集团'
+    color: '#1f2288'
+
+  - names:
+      # China Railway Hohhot Group
+      - '中国铁路呼和浩特局集团'
+    color: '#6bb82c'
+
+  - names:
+      # China Railway Taiyuan Group
+      - '中国铁路太原局集团'
+    color: 'rgb(0, 126, 188)'
+
+  - names:
+      # China Railway Jinan Group
+      - '中国铁路济南局集团'
+    color: '#bd541f'
+
+  - names:
+      # China Railway Shanghai Group
+      - '中国铁路上海局集团'
+    color: '#2a3390'
+
+  - names:
+      # China Railway Nanchang Group
+      - '中国铁路南昌局集团'
+    color: '#f85c11'
+
+  - names:
+      # China Railway Guangzhou Group
+      - '中国铁路南昌局集团'
+    color: '#76c5f0'
+
+  - names:
+      # China Railway Nanning Group
+      - '中国铁路南宁局集团'
+    color: '#2c1fbd'
+
+  - names:
+      # China Railway Wuhan Group
+      - '中国铁路武汉局集团'
+    color: '#c5352d'
+
+  - names:
+      # China Railway Zhengzhou Group
+      - '中国铁路郑州局集团'
+    color: '#84b725'
+
+  - names:
+      # China Railway Chengdu Group
+      - '中国铁路成都局集团'
+    color: '#1fbdba'
+
+  - names:
+      # China Railway Kunming Group
+      - '中国铁路昆明局集团'
+    color: '#eb9021'
+
+  - names:
+      # China Railway Qingzang Group
+      - '中国铁路青藏集团'
+    color: '#49af34'
+
+  - names:
+      # China Railway Lanzhou Group
+      - '中国铁路兰州局集团'
+    color: '#bd1f1f'
+
+  - names:
+      # China Railway Ürümqi Group
+      - '中国铁路乌鲁木齐局集团'
+    color: '#de0000'
+
+  - names:
+      # China Railway Xi'an Group
+      - '中国铁路西安局集团'
+    color: '#bd9d1f'
+
   # --- DE --- #
 
   - names:
@@ -341,6 +435,26 @@ operators:
       - 'INFRAKOS'
     color: '#d12614'
 
+  # --- KR --- #
+
+  - names:
+      - '한국철도공사 (Korail)'
+      - '한국철도공사'
+      - 'Korail'
+    color: '#0066b5'
+
+  - names:
+      - '서해철도주식회사'
+    color: '#8cc63f'
+
+  - names:
+      - '주식회사에스알'
+    color: '#4c2f48'
+
+  - names:
+      - '네오트랜스'
+    color: '#fe0000'
+
   # --- MK --- #
 
   - names:
@@ -367,6 +481,12 @@ operators:
       - 'Keretapi Tanah Melayu'
       - 'Keretapi Tanah Melayu Berhad'
     color: '#004e9b'
+
+  # --- NK --- #
+
+  - names:
+      - '조선민주주의인민공화국 철도성'
+    color: '#ed1c27'
 
   # --- NZ --- #
 
@@ -403,6 +523,7 @@ operators:
 
   - names:
       - 'ОАО «РЖД»'
+      - 'ОАО "РЖД"'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
 
@@ -450,6 +571,28 @@ operators:
   - names:
       - 'การรถไฟแห่งประเทศไทย'
     color: '#782325'
+
+  # --- TW --- #
+
+  - names:
+      - '國營臺灣鐵路股份有限公司'
+    color: '#00509c'
+
+  - names:
+      - '台灣高速鐵路股份有限公司'
+    color: '#ca4f0f'
+
+  - names:
+      - '臺北大眾捷運股份有限公司'
+    color: '#4ab846'
+
+  - names:
+      - '桃園大眾捷運股份有限公司'
+    color: '#971985'
+
+  - names:
+      - '新北大眾捷運股份有限公司'
+    color: 'rgb(16, 135, 162)'
 
   # --- UA --- #
 
@@ -550,3 +693,15 @@ operators:
       - 'St. Lawrence and Atlantic Railroad Co.'
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
+
+  # --- US --- #
+
+  - names:
+      - 'VNR'
+      - 'Vietnam Railway (VNR)'
+    color: '#006dae'
+
+  - names:
+      - 'Đường Sắt Việt Nam'
+      - 'Đường sắt Việt Nam'
+    color: 'rgb(47, 164, 231)'
