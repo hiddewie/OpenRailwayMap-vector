@@ -298,11 +298,36 @@ operators:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
 
+  # --- DK --- #
+
+  - names:
+      - 'Banedanmark'
+    color: '#1fbd93'
+
+  - names:
+      - 'DSB'
+      - 'DSB S-tog'
+    color: '#b41730'
+
+  - names:
+      - 'A/S Storebælt'
+    color: '#041639'
+
+  - names:
+      - 'Lokaltog'
+    color: 'rgb(0, 39, 94)'
+
   # --- FR --- #
 
   - names:
       - 'SNCF Gares & Connexions'
     color: '#6e1e78'
+
+  # --- FI --- #
+
+  - names:
+      - 'Väylävirasto'
+    color: '#009bff'
 
   # --- HR --- #
 
@@ -488,6 +513,12 @@ operators:
       - '조선민주주의인민공화국 철도성'
     color: '#ed1c27'
 
+  # --- NO --- #
+
+  - names:
+      - 'Bane NOR'
+    color: 'rgb(30, 40, 105)'
+
   # --- NZ --- #
 
   - names:
@@ -538,6 +569,12 @@ operators:
       - 'Железнице Србије'
       - 'Zeleznice Srbije'
     color: '#ed1c24'
+
+  # --- SE --- #
+
+  - names:
+      - 'Trafikverket'
+    color: 'rgb(215, 0, 0)'
 
   # --- SK --- #
 
