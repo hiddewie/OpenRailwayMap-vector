@@ -157,6 +157,12 @@ operators:
       - 'NSB' # Neusiedler Seebahn
     color: '#1b4679'
 
+  # --- BA --- #
+
+  - names:
+      - 'Željeznice Federacije Bosne i Hercegovine'
+    color: 'rgb(247, 148, 30)'
+
   # --- CZ --- #
 
   - names:
@@ -254,6 +260,24 @@ operators:
       - 'RFI'
     color: '#006a6a'
 
+  # --- KO --- #
+
+  - names:
+      - 'Trainkos'
+    color: '#f46c2e'
+
+  - names:
+      - 'INFRAKOS'
+    color: '#d12614'
+
+  # --- MK --- #
+
+  - names:
+      - 'Makedonski Železnici'
+      - 'Македонски железници'
+      - 'Македонски Железници'
+    color: '#2d2579'
+
   # --- PL --- #
 
   - names:
@@ -266,6 +290,18 @@ operators:
       - 'ОАО «РЖД»'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
+
+  # --- RS --- #
+
+  - names:
+      - 'Željeznice Republike Srpske'
+    color: '#043bd7'
+
+  - names:
+      - 'ЖС'
+      - 'Железнице Србије'
+      - 'Zeleznice Srbije'
+    color: '#ed1c24'
 
   # --- SK --- #
 
