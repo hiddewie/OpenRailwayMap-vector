@@ -4120,7 +4120,7 @@ const layers = {
             0, 0.5,
             7, 2,
           ],
-          color: ['coalesce', ['get', 'operator_color'], 'black'],
+          color: ['coalesce', ['get', 'operator_color'], 'gray'],
         },
         {
           id: 'railway_line_med',
@@ -4131,7 +4131,7 @@ const layers = {
             present: undefined,
           },
           width: 2,
-          color: ['coalesce', ['get', 'operator_color'], 'black'],
+          color: ['coalesce', ['get', 'operator_color'], 'gray'],
         },
         {
           id: 'railway_line_high',
@@ -4148,7 +4148,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: ['coalesce', ['get', 'operator_color'], 'black'],
+          color: ['coalesce', ['get', 'operator_color'], 'gray'],
         },
       ],
     ),
