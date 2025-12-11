@@ -22,6 +22,65 @@ operators:
       - 'NSB' # Neusiedler Seebahn
     color: '#1b4679'
 
+  # --- AU --- #
+
+  - names:
+      - 'Keolis Downer'
+    color: '#94d600'
+
+  - names:
+      - 'Queensland Rail'
+      - 'QueenslandRail'
+    color: '#db1f26'
+
+  - names:
+      - 'NSW Trains'
+      - 'NSW Trainlink'
+      - 'NSW TrainLink'
+    color: '#df4e21'
+
+  - names:
+      - 'CountryLink'
+      - 'Countrylink'
+    color: '#00adc6'
+
+  - names:
+      - 'RailCorp'
+    color: 'rgb(0, 53, 121)'
+
+  - names:
+      - 'ARTC'
+      - 'Australian Rail Track Corporation'
+    color: '#027800' # Official color is gray
+
+  - names:
+      - 'CityRail'
+    color: '#f79239'
+
+  - names:
+      - 'V/Line'
+    color: '#803d99'
+
+  - names:
+      - 'Public Transport Victoria - Metro'
+    color: '#2b008c'
+
+  - names:
+      - 'Adelaide Metro'
+    color: '#ed1c24'
+
+  - names:
+      - 'Transperth'
+    color: '#008635'
+
+  - names:
+      - 'ARC Infrastructure'
+    color: '#003f6b'
+
+  - names:
+      - 'Transwa'
+    color: '#ec4025'
+
   # --- BA --- #
 
   - names:
