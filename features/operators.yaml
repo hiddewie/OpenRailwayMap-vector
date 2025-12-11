@@ -87,6 +87,16 @@ operators:
       - 'Željeznice Federacije Bosne i Hercegovine'
     color: 'rgb(247, 148, 30)'
 
+  # --- BE --- #
+
+  - names:
+      - 'NMBS/SNCB'
+    color: '#004979'
+
+  - names:
+      - 'Infrabel'
+    color: '#02bcf0'
+
   # --- BY --- #
 
   - names:
@@ -400,6 +410,64 @@ operators:
       - 'Väylävirasto'
     color: '#009bff'
 
+  # --- GB --- #
+
+  - names:
+      - 'Network Rail'
+    color: 'rgb(227, 81, 0)'
+
+  - names:
+      - 'South Western Railway'
+    color: 'rgb(0, 146, 203)'
+
+  - names:
+      - 'Great Western Railway'
+    color: '#0a493e'
+
+  - names:
+      - 'Transport for Wales Rail'
+    color: '#900000'
+
+  - names:
+      - 'West Midlands Trains (West Midlands Railway)'
+    color: '#e07709'
+
+  - names:
+      - 'West Midlands Trains (London Northwestern Railway)'
+    color: '#00a862'
+
+  - names:
+      - 'East Midlands Railway'
+    color: '#4c2f48'
+
+  - names:
+      - 'London North Eastern Railway'
+    color: 'rgb(206, 19, 46)'
+
+  - names:
+      - 'Greater Anglia'
+    color: '#84101f'
+
+  - names:
+      - 'Govia Thameslink Railway (Great Northern)'
+    color: '#43165c'
+
+  - names:
+      - 'Govia Thameslink Railway (Thameslink)'
+    color: 'rgb(233, 65, 139)'
+
+  - names:
+      - 'Northern Trains'
+    color: 'rgb(38, 34, 98)'
+
+  - names:
+      - 'ScotRail'
+    color: '#227330' # Logo color is too similar to Northern Trains color
+
+  - names:
+      - 'Translink NI Railways'
+    color: 'rgb(8, 79, 92)'
+
   # --- HR --- #
 
   - names:
@@ -436,10 +504,12 @@ operators:
       - 'KAI'
     color: '#ee6b1e'
 
+  # --- IE --- #
+
   - names:
-      - 'KAI Commuter'
-      - 'PT Kereta Commuter Indonesia'
-    color: '#ee161f'
+      - 'Iarnród Éireann'
+      - 'Irish Rail'
+    color: 'rgb(46, 133, 57)'
 
   # --- IN --- #
 
@@ -487,7 +557,7 @@ operators:
 
   - names:
       - 'SWR'
-      - 'South Western Railway'
+      # South Western Railway is used in GB
     color: '#661db0'
 
   - names:
@@ -589,6 +659,26 @@ operators:
   - names:
       - '조선민주주의인민공화국 철도성'
     color: '#ed1c27'
+
+  # --- NL --- #
+
+  - names:
+      - 'ProRail'
+    color: 'rgb(178, 10, 47)'
+
+  - names:
+      - 'NS'
+      - 'Nederlandse Spoorwegen'
+      - 'NS Groep N.V.'
+    color: '#c29500'
+
+  - names:
+      - 'Infraspeed'
+    color: '#f79138'
+
+  - names:
+      - 'Arriva'
+    color: '#1e8f97'
 
   # --- NO --- #
 
