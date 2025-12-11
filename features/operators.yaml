@@ -339,11 +339,60 @@ operators:
       - 'AS Eesti Raudtee'
     color: '#75001f'
 
+  # --- ES --- #
+
+  - names:
+      - 'Renfe'
+      - 'Renfe Operadora'
+    color: 'rgb(129, 0, 94)'
+
+  - names:
+      - 'Adif'
+      - 'Adif AV'
+      - 'ADIF'
+    color: '#007139'
+
+  - names:
+      - 'Euskal Trenbide Sarea'
+      - 'Eusko Trenbideak – Ferrocarriles Vascos'
+      - 'Eusko Trenbideak – Ferrocarriles Vascos S.A.'
+    color: '#e93637'
+
+  - names:
+      - 'Ferrocarrils de la Generalitat de Catalunya'
+    color: '#75a700'
+
   # --- FR --- #
 
   - names:
+      - 'SNCF'
+      - 'SNCF Réseau'
       - 'SNCF Gares & Connexions'
-    color: '#6e1e78'
+    color: '#781e4e'
+
+  - names:
+      - 'LISEA'
+    color: '#0E2C48'
+
+  - names:
+      - 'TER Nouvelle-Aquitaine'
+    color: 'rgb(179, 45, 56)'
+
+  - names:
+      - 'TER Bourgogne-Franche-Comté'
+    color: 'rgb(245, 197, 0)'
+
+  - names:
+      - 'RATP'
+      - 'RATP Transilien SNCF Ile de France Mobilités'
+      - 'RATP Île de France Mobilités'
+      - 'RATP Ile de France Mobilités'
+      - 'RATP Cap Bièvre'
+    color: '#4caa83'
+
+  - names:
+      - 'Keolis'
+    color: 'rgb(0, 130, 150)'
 
   # --- FI --- #
 
@@ -577,6 +626,20 @@ operators:
   - names:
       - 'PKP Polskie Linie Kolejowe'
     color: '#004d84'
+
+  # --- PT --- #
+
+  - names:
+      - 'Infraestruturas de Portugal, S.A.'
+    color: '#1ba89e'
+
+  - names:
+      - 'Metro do Porto'
+    color: '#00305F'
+
+  - names:
+      - 'STCP'
+    color: 'rgb(0, 92, 185)'
 
   # --- RU --- #
 
