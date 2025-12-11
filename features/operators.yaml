@@ -233,6 +233,24 @@ operators:
       - 'Raaberbahn'
     color: '#00952c'
 
+  # --- ID --- #
+
+  - names:
+      - 'PT Kereta Api Indonesia (Persero)'
+      - 'PT Kereta Api Indonesia'
+      - 'PT Kereta Api Logistik'
+      - 'PT. Kereta Api Indonesia (Persero)'
+      - 'Kereta Api Indonesia'
+      - 'Kereta Api Indonesia (Persero)'
+      - 'PT KAI'
+      - 'KAI'
+    color: '#ee6b1e'
+
+  - names:
+      - 'KAI Commuter'
+      - 'PT Kereta Commuter Indonesia'
+    color: '#ee161f'
+
   # --- IN --- #
 
   # See https://en.wikipedia.org/wiki/Indian_Railways_organisational_structure#Zonal_management
@@ -359,6 +377,12 @@ operators:
   - names:
       - 'Metlink'
     color: '#a3b01d'
+
+  # --- PH --- #
+
+  - names:
+      - 'Philippine National Railways'
+    color: '#c3a002'
 
   # --- PK --- #
 
