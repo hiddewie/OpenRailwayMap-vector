@@ -331,6 +331,25 @@ operators:
       - 'Македонски Железници'
     color: '#2d2579'
 
+  # --- MM --- #
+
+  - names:
+      - 'မြန်မာ့မီးရထားလုပ်ငန်း'
+      - 'Myanma Railways'
+      - 'Myanmar Railway'
+      - 'Myanmar Railways'
+      - 'MR'
+    color: '#00983a'
+
+  # --- MY --- #
+
+  - names:
+      - 'KTMB'
+      - 'KTM'
+      - 'Keretapi Tanah Melayu'
+      - 'Keretapi Tanah Melayu Berhad'
+    color: '#004e9b'
+
   # --- NZ --- #
 
   - names:
@@ -382,6 +401,16 @@ operators:
       - 'Železnice Slovenskej republiky'
     color: '#1b1849'
 
+  # --- SG --- #
+
+  - names:
+      - 'SMRT'
+    color: 'rgb(234, 11, 42)'
+
+  - names:
+      - 'SBS Transit'
+    color: '#781d7e'
+
   # --- SL --- #
 
   - names:
@@ -391,6 +420,12 @@ operators:
   - names:
       - 'SŽ Infrastruktura'
     color: '#eda800'
+
+  # --- TH --- #
+
+  - names:
+      - 'การรถไฟแห่งประเทศไทย'
+    color: '#782325'
 
   # --- UA --- #
 
