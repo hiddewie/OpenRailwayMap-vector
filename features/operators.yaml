@@ -142,7 +142,20 @@ operators:
 
   - names:
       - 'ÖBB-Infrastruktur AG'
+      - 'ÖBB'
     color: '#e40428'
+
+  - names:
+      - 'Wiener Linien'
+    color: '#000050'
+
+  - names:
+      - 'WLB' # Wiener Lokalbahnen
+    color: '#00548C'
+
+  - names:
+      - 'NSB' # Neusiedler Seebahn
+    color: '#1b4679'
 
   # --- CZ --- #
 
@@ -206,17 +219,34 @@ operators:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
 
+  # --- FR --- #
+
+  - names:
+      - 'SNCF Gares & Connexions'
+    color: '#6e1e78'
+
+  # --- HR --- #
+
+  - names:
+      - 'HŽ' # HŽ Putnički prijevoz
+      - 'HŽPP'
+    color: '#0093D0'
+
+  - names:
+      - 'HŽ Infrastruktura'
+    color: '#30639b'
+
   # --- HU --- #
 
   - names:
       - 'MÁV'
     color: '#2e5ea8'
 
-  # --- FR --- #
-
   - names:
-      - 'SNCF Gares & Connexions'
-    color: '#6e1e78'
+      - 'GYSEV'
+      - 'GySEV'
+      - 'Raaberbahn'
+    color: '#00952c'
 
   # --- IT --- #
 
@@ -236,6 +266,23 @@ operators:
       - 'ОАО «РЖД»'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
+
+  # --- SK --- #
+
+  - names:
+      - 'ŽSR'
+      - 'Železnice Slovenskej republiky'
+    color: '#1b1849'
+
+  # --- SL --- #
+
+  - names:
+      - 'Slovenske železnice'
+    color: 'rgb(0, 161, 237)'
+
+  - names:
+      - 'SŽ Infrastruktura'
+    color: '#eda800'
 
   # --- UA --- #
 
