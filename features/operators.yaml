@@ -248,6 +248,16 @@ operators:
       - 'Македонски Железници'
     color: '#2d2579'
 
+  # --- NZ --- #
+
+  - names:
+      - 'KiwiRail'
+    color: '#ed630c' # Official logo is gray
+
+  - names:
+      - 'Metlink'
+    color: '#a3b01d'
+
   # --- PL --- #
 
   - names:
