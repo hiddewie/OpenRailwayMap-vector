@@ -87,6 +87,15 @@ operators:
       - 'Željeznice Federacije Bosne i Hercegovine'
     color: 'rgb(247, 148, 30)'
 
+  # --- BD --- #
+
+  - names:
+      - 'BR'
+      - 'Bangladesh Railway'
+      - 'বাংলাদেশ রেলওয়ে'
+      - 'বাংলাদেশ রেলওয়ে'
+    color: '#da0000'
+
   # --- CA --- #
 
   - names:
@@ -224,6 +233,80 @@ operators:
       - 'Raaberbahn'
     color: '#00952c'
 
+  # --- IN --- #
+
+  # See https://en.wikipedia.org/wiki/Indian_Railways_organisational_structure#Zonal_management
+
+  - names:
+      - 'IR'
+      - 'Indian Railways'
+    color: '#1d38b0'
+
+  - names:
+      - 'WR'
+      - 'Western Railway'
+    color: '#1db072'
+
+  - names:
+      - 'NWR'
+      - 'North Western Railway'
+    color: '#b0441d'
+
+  - names:
+      - 'NER'
+      - 'North Eastern Railway'
+    color: '#b0721d'
+
+  - names:
+      - 'NR'
+      - 'Northern Railway'
+    color: '#b01d66'
+
+  - names:
+      - 'NFR'
+      - 'Northeast Frontier Railway'
+    color: '#1d81b0'
+
+  - names:
+      - 'CR'
+      - 'Central Railway'
+    color: '#b08d1d'
+
+  - names:
+      - 'SR'
+      - 'Southern Railway'
+    color: '#1db04e'
+
+  - names:
+      - 'SWR'
+      - 'South Western Railway'
+    color: '#661db0'
+
+  - names:
+      - 'SCR'
+      - 'South Central Railway'
+    color: '#a11db0'
+
+  - names:
+      - 'SECR'
+      - 'South East Central Railway'
+    color: '#1db046'
+
+  - names:
+      - 'ECoR'
+      - 'East Coast Railway'
+    color: '#b01d6b'
+
+  - names:
+      - 'SER'
+      - 'South Eastern Railway'
+    color: '#b0811d'
+
+  - names:
+      - 'ER'
+      - 'Eastern Railway'
+    color: '#1db050'
+
   # --- IT --- #
 
   - names:
@@ -257,6 +340,15 @@ operators:
   - names:
       - 'Metlink'
     color: '#a3b01d'
+
+  # --- PK --- #
+
+  - names:
+      - 'PR'
+      - 'Pakistan Railways'
+      - 'Pakistan Railway'
+      - 'پاکستان ریلویز'
+    color: '#3f790c'
 
   # --- PL --- #
 
