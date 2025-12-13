@@ -627,6 +627,61 @@ operators:
       - 'RFI'
     color: '#006a6a'
 
+  # --- JP --- #
+
+  - names:
+      - '東日本旅客鉄道'
+    color: '#007903'
+
+  - names:
+      - '西日本旅客鉄道'
+    color: 'rgb(0, 101, 177)'
+
+  - names:
+      - '九州旅客鉄道'
+    color: '#DA2728'
+
+  - names:
+      - '四国旅客鉄道'
+    color: 'rgb(76, 183, 219)'
+
+  - names:
+      - '北海道旅客鉄道'
+    color: '#45B035'
+
+  - names:
+      - '青い森鉄道'
+    color: '#6fc5e9'
+
+  - names:
+      - '秋田内陸縦貫鉄道'
+    color: '#243d5a'
+
+  - names:
+      - '三陸鉄道'
+    color: '#ed6c00'
+
+  - names:
+      - '京浜急行電鉄'
+      - '京浜急行電鉄 (Keikyu Corporation)'
+    color: 'rgb(0, 150, 224)'
+
+  - names:
+      - '東京地下鉄'
+    color: '#00467e'
+
+  - names:
+      - '東急電鉄'
+    color: 'rgb(232, 56, 23)'
+
+  - names:
+      - '西武鉄道'
+    color: '#876016'
+
+  - names:
+      - '小田急電鉄'
+    color: '#876016'
+
   # --- KO --- #
 
   - names:
@@ -870,6 +925,16 @@ operators:
       - 'การรถไฟแห่งประเทศไทย'
     color: '#782325'
 
+  # --- TR--- #
+
+  - names:
+      - 'TCDD'
+    color: '#e30613'
+
+  - names:
+      - 'TCDD Taşımacılık'
+    color: '#16877a'
+
   # --- TW --- #
 
   - names:
@@ -977,6 +1042,10 @@ operators:
   - names:
       - 'New York & Atlantic Railway'
     color: '#38553E'
+
+  - names:
+      - 'New York City Transit Authority'
+    color: '#876716'
 
   - names:
       - 'Metra'
