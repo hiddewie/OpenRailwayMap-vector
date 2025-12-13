@@ -723,6 +723,22 @@ operators:
       - 'PKP Polskie Linie Kolejowe'
     color: '#004d84'
 
+  - names:
+      - 'Tramwaje Warszawskie'
+    color: 'rgb(228, 35, 19)'
+
+  - names:
+      - 'Metro Warszawskie'
+    color: '#a28507'
+
+  - names:
+      - 'Warszawska Kolej Dojazdowa'
+    color: '#00a213'
+
+  - names:
+      - 'Tramwaje Śląskie'
+    color: '#C35817'
+
   # --- PT --- #
 
   - names:
