@@ -23,6 +23,17 @@ operators:
       - 'Armenian Railway'
     color: '#fb7d26'
 
+  # --- AO --- #
+
+  - names:
+      - 'Empresa do Caminho de Ferro de Moçâmedes-E.P.'
+    color: 'rgb(242, 169, 0)'
+
+  - names:
+      - 'Caminho de Ferro de Luanda E.P.'
+      - 'Caminho de Ferro de Luanda'
+    color: 'rgb(171, 23, 36)'
+
   # --- AT --- #
 
   - names:
@@ -211,17 +222,12 @@ operators:
       - 'SZU'
     color: '#e62e25'
 
-  # --- CZ --- #
+  # --- CM --- #
 
   - names:
-      - 'cz:SŽDC'
-      - 'cz:Správa Železnic'
-      - 'cz:SŽ'
-      - 'Správa železnic, s. o.'
-      - 'Správa železnic'
-      - 'SŽDC'
-      - 'SŽ'
-    color: '#ff5200'
+      - 'Camrail'
+      - 'CAMRAIL'
+    color: 'rgb(221, 0, 0)'
 
   # --- CN --- #
 
@@ -317,6 +323,18 @@ operators:
       - '中国铁路西安局集团'
     color: '#bd9d1f'
 
+  # --- CZ --- #
+
+  - names:
+      - 'cz:SŽDC'
+      - 'cz:Správa Železnic'
+      - 'cz:SŽ'
+      - 'Správa železnic, s. o.'
+      - 'Správa železnic'
+      - 'SŽDC'
+      - 'SŽ'
+    color: '#ff5200'
+
   # --- DE --- #
 
   - names:
@@ -410,6 +428,12 @@ operators:
   - names:
       - 'AS Eesti Raudtee'
     color: '#75001f'
+
+  # --- EG --- #
+
+  - names:
+      - 'الهيئة القومية لسكك حديد مصر'
+    color: '#ff0010'
 
   # --- ES --- #
 
@@ -809,6 +833,19 @@ operators:
       - 'Македонски Железници'
     color: '#2d2579'
 
+  # --- MR --- #
+
+  - names:
+      - 'الشركة الوطنية للصناعة والمناجم'
+      - 'SNIM'
+    color: '#0000ff'
+
+  # --- MZ --- #
+
+  - names:
+      - 'Caminhos de Ferro de Moçambique (CFM)'
+    color: '#0f6037'
+
   # --- LT --- #
 
   - names:
@@ -1017,6 +1054,21 @@ operators:
       - 'SŽ Infrastruktura'
     color: '#eda800'
 
+  # --- SN --- #
+
+  - names:
+      - 'SETER'
+    color: '#7D142F'
+
+  - names:
+      - 'Chemins de fer du Sénégal'
+      - 'CFS'
+    color: '#019644'
+
+  - names:
+      - 'Transrail S. A.'
+    color: '#4154a3'
+
   # --- SY --- #
 
   - names:
@@ -1181,7 +1233,7 @@ operators:
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
 
-  # --- US --- #
+  # --- VN --- #
 
   - names:
       - 'VNR'
@@ -1192,3 +1244,23 @@ operators:
       - 'Đường Sắt Việt Nam'
       - 'Đường sắt Việt Nam'
     color: 'rgb(47, 164, 231)'
+
+  # --- ZA --- #
+
+  - names:
+      - 'Metrorail'
+    color: '#b38d03'
+
+  - names:
+      - 'Transnet'
+    color: '#e72528'
+
+  - names:
+      - 'Passenger Rail Agency of South Africa'
+      - 'PRASA'
+      - 'Prasa'
+    color: '#02a9e0'
+
+  - names:
+      - 'Gautrain'
+    color: 'rgb(0, 73, 144)'
