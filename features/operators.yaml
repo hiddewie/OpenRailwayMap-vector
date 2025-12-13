@@ -8,7 +8,7 @@ operators:
   - names:
       - 'ÖBB-Infrastruktur AG'
       - 'ÖBB'
-    color: '#e40428'
+    color: '#e404e4'
 
   - names:
       - 'Wiener Linien'
@@ -731,6 +731,12 @@ operators:
       - 'STCP'
     color: 'rgb(0, 92, 185)'
 
+  # --- RO --- #
+
+  - names:
+      - 'CFR'
+    color: 'rgb(255, 87, 34)'
+
   # --- RU --- #
 
   - names:
@@ -820,7 +826,7 @@ operators:
 
   - names:
       - 'Укрзалізниця'
-    color: '#112189'
+    color: '#118965'
 
   # --- US --- #
 
