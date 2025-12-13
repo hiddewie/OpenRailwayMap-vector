@@ -3,6 +3,12 @@
 
 operators:
 
+  # --- AE --- #
+
+  - names:
+      - 'الاتحاد للقطارات'
+    color: 'rgb(193, 5, 5)'
+
   # --- AL --- #
 
   - names:
@@ -371,6 +377,15 @@ operators:
       - 'Lokaltog'
     color: 'rgb(0, 39, 94)'
 
+  # --- DZ --- #
+
+  - names:
+      - 'الشركة الوطنية للنقل بالسكك الحديدية'
+      - 'Société Nationale des Transports Ferroviaires'
+      - 'Société nationale des transports ferroviaires'
+      - 'SNTF'
+    color: 'rgb(22, 78, 120)'
+
   # --- EE --- #
 
   - names:
@@ -634,11 +649,27 @@ operators:
       - 'Eastern Railway'
     color: '#1db050'
 
+  # --- IQ --- #
+
+  - names:
+      - 'IRR'
+      - 'Iraqi Republic Railways الشركة العامة لسكك الحديد العراقية'
+      - 'الشركة العامة لسكك الحديد العراقية'
+    color: '#1a9d57'
+
   # --- IT --- #
 
   - names:
       - 'RFI'
     color: '#006a6a'
+
+  - names:
+      - 'Gruppo Torinese Trasporti'
+    color: 'rgb(0, 114, 204)'
+
+  - names:
+      - 'Terminali Italia'
+    color: '#e51937'
 
   # --- JP --- #
 
@@ -724,6 +755,20 @@ operators:
   - names:
       - '네오트랜스'
     color: '#fe0000'
+
+  # --- MA --- #
+
+  - names:
+      - 'ONCF'
+      - 'المكتب الوطني للسكك الحديدية'
+      - 'oncf'
+    color: 'rgb(237, 54, 72)'
+
+  # --- MD --- #
+
+  - names:
+      - 'CFM'
+    color: '#1559ae'
 
   # --- ME --- #
 
@@ -886,7 +931,7 @@ operators:
 
   - names:
       - 'STB'
-    color: 'rgba(9, 171, 79)'
+    color: 'rgb(9, 171, 79)'
 
   # --- RU --- #
 
@@ -911,6 +956,12 @@ operators:
       - 'Железнице Србије'
       - 'Zeleznice Srbije'
     color: '#ed1c24'
+
+  # --- SA --- #
+
+  - names:
+      - 'Saudi Arabia Railways'
+    color: 'rgb(0, 119, 139)'
 
   # --- SE --- #
 
@@ -945,13 +996,26 @@ operators:
       - 'SŽ Infrastruktura'
     color: '#eda800'
 
+  # --- SY --- #
+
+  - names:
+      - 'المؤسسة العامة للخطوط الحديدية'
+    color: 'rgb(0, 53, 140)'
+
   # --- TH --- #
 
   - names:
       - 'การรถไฟแห่งประเทศไทย'
     color: '#782325'
 
-  # --- TR--- #
+  # --- TN --- #
+
+  - names:
+      - 'SNCFT'
+      - 'الشركة الوطنية للسكك الحديدية التونسية'
+    color: '#16874b'
+
+  # --- TR --- #
 
   - names:
       - 'TCDD'
@@ -988,6 +1052,15 @@ operators:
   - names:
       - 'Укрзалізниця'
     color: '#118965'
+
+  - names:
+      - 'КП «Одесміськелектротранс»'
+    color: '#bf0525'
+
+  - names:
+      - 'ФГУП «КЖД»'
+      - 'Крымская железная дорога'
+    color: '#16874b'
 
   # --- US --- #
 
