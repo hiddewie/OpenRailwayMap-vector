@@ -158,6 +158,12 @@ operators:
       - 'Goderich-Exeter Railway'
     color: '#f68b1e'
 
+  # --- CH --- #
+
+  - names:
+      - 'SBB'
+    color: '#00a213'
+
   # --- CZ --- #
 
   - names:
