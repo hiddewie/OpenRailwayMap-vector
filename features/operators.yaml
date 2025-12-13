@@ -889,6 +889,12 @@ operators:
       - '小田急電鉄'
     color: '#876016'
 
+  # --- KG --- #
+
+  - names:
+      - 'Кыргыз темир жолу'
+    color: '#0d6efd'
+
   # --- KO --- #
 
   - names:
@@ -918,6 +924,13 @@ operators:
   - names:
       - '네오트랜스'
     color: '#fe0000'
+
+  # --- KZ --- #
+
+  - names:
+      - 'КТЖ'
+      - 'АО «КТЖ»'
+    color: '#009FCB'
 
   # --- LT --- #
 
@@ -1186,6 +1199,10 @@ operators:
       - 'Калининградский Железная Дорога'
     color: '#ff3f72'
 
+  - names:
+      - 'ГУП «Московский метрополитен»'
+    color: '#ac21b6'
+
   # --- RS --- #
 
   - names:
@@ -1416,6 +1433,13 @@ operators:
       - 'St. Lawrence and Atlantic Railroad Co.'
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
+
+  # --- UZ --- #
+
+  - names:
+      - 'O‘zbekiston temir yo‘llari'
+      - 'O‘zbekiston temir yo‘llari'
+    color: 'rgb(176, 140, 86)'
 
   # --- VE --- #
 
