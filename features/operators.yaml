@@ -34,6 +34,28 @@ operators:
       - 'Caminho de Ferro de Luanda'
     color: 'rgb(171, 23, 36)'
 
+  # --- AR --- #
+
+  - names:
+      - 'Ferrocarriles Argentinos S.A. (FASA)'
+      - 'Trenes Argentinos'
+      - 'Trenes Argentinos Operadora Ferroviaria'
+    color: 'rgb(35, 45, 79)'
+
+  - names:
+      - 'FerroExpreso Pampeano S.A. (FEPSA)'
+    color: 'rgb(208, 34, 37)'
+
+  - names:
+      - 'Tren Patagónico S.A.'
+      - 'Tren Patagónico SA'
+      - 'Tren Patagónico'
+    color: '#006B57'
+
+  - names:
+      - 'Ferro Sur Roca S.A.'
+    color: '#059cca'
+
   # --- AT --- #
 
   - names:
@@ -146,6 +168,46 @@ operators:
       - 'BDZ'
     color: '#158246'
 
+  # --- BO --- #
+
+  - names:
+      - 'Ferroviaria Andina'
+      - 'Empresa Ferroviaria Andina SA'
+    color: '#ca8f05'
+
+  - names:
+      - 'Ferroviaria Oriental'
+      - 'FCO'
+      - 'FO'
+    color: '#a74804'
+
+  # --- BR --- #
+
+  - names:
+      - 'RUMO'
+      - 'Rumo S/A'
+      - 'Rumo S.A. Malha Paulista'
+    color: '#037a27'
+
+  - names:
+      - 'MRS'
+      - 'MRS Logística S.A.'
+      - 'MRS Logística'
+    color: '#c6a305'
+
+  - names:
+      - 'SuperVia'
+    color: '#9204a7'
+
+  - names:
+      - 'MetrôRio'
+    color: '#0681c0'
+
+  - names:
+      - 'EFVM'
+      - 'Vale'
+    color: 'rgb(0, 126, 122)'
+
   # --- BY --- #
 
   - names:
@@ -166,6 +228,7 @@ operators:
   - names:
       - 'Canadian Pacific Kansas City'
       - 'Canadien Pacifique Kansas City'
+      - 'CPKC'
     color: '#C2002F'
 
   - names:
@@ -221,6 +284,21 @@ operators:
   - names:
       - 'SZU'
     color: '#e62e25'
+
+  # --- CL --- #
+
+  - names:
+      - 'FCAB'
+    color: '#04598b'
+
+  - names:
+      - 'Ferronor'
+    color: '#c04d4a'
+
+  - names:
+      - 'EFE Sur'
+      - 'FESUR'
+    color: 'rgb(234, 0, 41)'
 
   # --- CM --- #
 
@@ -322,6 +400,21 @@ operators:
       # China Railway Xi'an Group
       - '中国铁路西安局集团'
     color: '#bd9d1f'
+
+  # --- CR --- #
+
+  - names:
+      - 'Incofer'
+      - 'INCOFER'
+    color: 'rgb(29, 39, 88)'
+
+  # --- CU --- #
+
+  - names:
+      - 'Ferrocarriles de Cuba'
+      - 'FFCC'
+      - 'Ferrocarriles de Cuba (FFCC)'
+    color: '#0361b3'
 
   # --- CZ --- #
 
@@ -801,6 +894,12 @@ operators:
       - '네오트랜스'
     color: '#fe0000'
 
+  # --- LT --- #
+
+  - names:
+      - 'LTG Infra'
+    color: '#007749'
+
   # --- MA --- #
 
   - names:
@@ -833,25 +932,6 @@ operators:
       - 'Македонски Железници'
     color: '#2d2579'
 
-  # --- MR --- #
-
-  - names:
-      - 'الشركة الوطنية للصناعة والمناجم'
-      - 'SNIM'
-    color: '#0000ff'
-
-  # --- MZ --- #
-
-  - names:
-      - 'Caminhos de Ferro de Moçambique (CFM)'
-    color: '#0f6037'
-
-  # --- LT --- #
-
-  - names:
-      - 'LTG Infra'
-    color: '#007749'
-
   # --- MM --- #
 
   - names:
@@ -862,6 +942,13 @@ operators:
       - 'MR'
     color: '#00983a'
 
+  # --- MR --- #
+
+  - names:
+      - 'الشركة الوطنية للصناعة والمناجم'
+      - 'SNIM'
+    color: '#0000ff'
+
   # --- MY --- #
 
   - names:
@@ -870,6 +957,38 @@ operators:
       - 'Keretapi Tanah Melayu'
       - 'Keretapi Tanah Melayu Berhad'
     color: '#004e9b'
+
+  # --- MX --- #
+
+  - names:
+      - 'Ferromex'
+    color: '#fa002e'
+
+  - names:
+      - 'Ferrosur'
+    color: '#03897c'
+
+  - names:
+      - 'Ferrovalle'
+    color: '#4ab378'
+
+  - names:
+      - 'Sistema de Transporte Colectivo'
+    color: '#ff5000'
+
+  - names:
+      - 'Ferroistmo'
+    color: '#b48a49'
+
+  - names:
+      - 'Tren Maya'
+    color: 'rgb(59, 120, 97)'
+
+  # --- MZ --- #
+
+  - names:
+      - 'Caminhos de Ferro de Moçambique (CFM)'
+    color: '#0f6037'
 
   # --- NK --- #
 
@@ -925,6 +1044,37 @@ operators:
   - names:
       - 'Metlink'
     color: '#a3b01d'
+
+  # --- PA --- #
+
+  - names:
+      - 'Metro de Panamá S.A.'
+      - 'Metro de Panamá'
+      - 'Panama Metro'
+      - 'El Metro de Panamá'
+    color: '#033e86'
+
+  - names:
+      - 'Panama Canal Authority'
+    color: '#a80011'
+
+  # --- PE --- #
+
+  - names:
+      - 'Ferrocarril Central Andino S.A.'
+    color: '#bb7c24'
+
+  - names:
+      - 'Ferrocarril Transandino S.A.'
+    color: 'rgb(10, 64, 111)'
+
+  - names:
+      - 'Ferrocarril del Sur del Perú'
+    color: '#A09162'
+
+  - names:
+      - 'AATE'
+    color: '#E4002B'
 
   # --- PH --- #
 
@@ -1232,6 +1382,14 @@ operators:
       - 'St. Lawrence and Atlantic Railroad Co.'
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
+
+  # --- VE --- #
+
+  - names:
+      - 'Instituto Ferrocarriles del Estado (IFE)'
+      - 'Instituto Ferrocarriles del Estado IFE'
+      - 'IFE'
+    color: '#AE1E23'
 
   # --- VN --- #
 
