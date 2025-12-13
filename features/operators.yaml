@@ -285,6 +285,10 @@ operators:
       - 'SZU'
     color: '#e62e25'
 
+  - names:
+      - 'BVB'
+    color: '#e6eb00'
+
   # --- CL --- #
 
   - names:
@@ -526,6 +530,12 @@ operators:
       - 'Société nationale des transports ferroviaires'
       - 'SNTF'
     color: 'rgb(22, 78, 120)'
+
+  - names:
+      - 'SETRAM'
+      - 'سيترام'
+      - 'شركة استغلال الترامواي'
+    color: '#1da285'
 
   # --- EE --- #
 
@@ -812,6 +822,14 @@ operators:
       - 'Eastern Railway'
     color: '#1db050'
 
+  - names:
+      - 'Delhi Metro Rail Corporation Limited'
+    color: '#c08828'
+
+  - names:
+      - 'National Capital Region Transport Corporation'
+    color: 'rgb(28, 117, 188)'
+
   # --- IQ --- #
 
   - names:
@@ -833,6 +851,18 @@ operators:
   - names:
       - 'Terminali Italia'
     color: '#e51937'
+
+  - names:
+      - 'ATAC'
+    color: 'rgb(130, 36, 51)'
+
+  - names:
+      - 'ASTRAL'
+    color: '#00263d'
+
+  - names:
+      - 'Ferrovia Vaticana'
+    color: '#c08828'
 
   # --- JP --- #
 
@@ -1203,6 +1233,14 @@ operators:
       - 'ГУП «Московский метрополитен»'
     color: '#ac21b6'
 
+  - names:
+      - 'МП "Маггортранс"'
+    color: '#0000CC'
+
+  - names:
+      - 'ЕТТУ'
+    color: '#164c12'
+
   # --- RS --- #
 
   - names:
@@ -1285,6 +1323,7 @@ operators:
 
   - names:
       - 'SNCFT'
+      - 'Socite Nationale des chemins de fer tunisien'
       - 'الشركة الوطنية للسكك الحديدية التونسية'
     color: '#16874b'
 
