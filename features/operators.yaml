@@ -3,12 +3,65 @@
 
 operators:
 
+  # --- AE --- #
+
+  - names:
+      - 'الاتحاد للقطارات'
+    color: 'rgb(193, 5, 5)'
+
+  # --- AL --- #
+
+  - names:
+      - 'Hekurudha Shqiptare'
+    color: '#d90026'
+
+  # --- AM --- #
+
+  - names:
+      - 'Южно-Кавказская железная дорога'
+      - 'Հարավկովկասյան երկաթուղի'
+      - 'Armenian Railway'
+    color: '#fb7d26'
+
+  # --- AO --- #
+
+  - names:
+      - 'Empresa do Caminho de Ferro de Moçâmedes-E.P.'
+    color: 'rgb(242, 169, 0)'
+
+  - names:
+      - 'Caminho de Ferro de Luanda E.P.'
+      - 'Caminho de Ferro de Luanda'
+    color: 'rgb(171, 23, 36)'
+
+  # --- AR --- #
+
+  - names:
+      - 'Ferrocarriles Argentinos S.A. (FASA)'
+      - 'Trenes Argentinos'
+      - 'Trenes Argentinos Operadora Ferroviaria'
+    color: 'rgb(35, 45, 79)'
+
+  - names:
+      - 'FerroExpreso Pampeano S.A. (FEPSA)'
+    color: 'rgb(208, 34, 37)'
+
+  - names:
+      - 'Tren Patagónico S.A.'
+      - 'Tren Patagónico SA'
+      - 'Tren Patagónico'
+    color: '#006B57'
+
+  - names:
+      - 'Ferro Sur Roca S.A.'
+    color: '#059cca'
+
   # --- AT --- #
 
   - names:
       - 'ÖBB-Infrastruktur AG'
       - 'ÖBB'
-    color: '#e40428'
+    color: '#e404e4'
 
   - names:
       - 'Wiener Linien'
@@ -81,6 +134,13 @@ operators:
       - 'Transwa'
     color: '#ec4025'
 
+  # --- AZ --- #
+
+  - names:
+      - '«Azərbaycan Dəmir Yolları» QSC'
+      - 'Azərbaycan Dövlət Dəmir Yolu'
+    color: '#143b6e'
+
   # --- BA --- #
 
   - names:
@@ -96,6 +156,57 @@ operators:
   - names:
       - 'Infrabel'
     color: '#02bcf0'
+
+  # --- BG --- #
+
+  - names:
+      - 'НКЖИ'
+    color: '#1178bd'
+
+  - names:
+      - 'БДЖ'
+      - 'BDZ'
+    color: '#158246'
+
+  # --- BO --- #
+
+  - names:
+      - 'Ferroviaria Andina'
+      - 'Empresa Ferroviaria Andina SA'
+    color: '#ca8f05'
+
+  - names:
+      - 'Ferroviaria Oriental'
+      - 'FCO'
+      - 'FO'
+    color: '#a74804'
+
+  # --- BR --- #
+
+  - names:
+      - 'RUMO'
+      - 'Rumo S/A'
+      - 'Rumo S.A. Malha Paulista'
+    color: '#037a27'
+
+  - names:
+      - 'MRS'
+      - 'MRS Logística S.A.'
+      - 'MRS Logística'
+    color: '#c6a305'
+
+  - names:
+      - 'SuperVia'
+    color: '#9204a7'
+
+  - names:
+      - 'MetrôRio'
+    color: '#0681c0'
+
+  - names:
+      - 'EFVM'
+      - 'Vale'
+    color: 'rgb(0, 126, 122)'
 
   # --- BY --- #
 
@@ -117,16 +228,19 @@ operators:
   - names:
       - 'Canadian Pacific Kansas City'
       - 'Canadien Pacifique Kansas City'
+      - 'CPKC'
     color: '#C2002F'
 
   - names:
       - 'Canadian National Railway'
       - 'Canadien National'
+      - 'CN'
     color: '#EF3037'
 
   - names:
       - 'VIA Rail'
-    color: '#FFCB05'
+      - 'VIA'
+    color: '#daae00'
 
   - names:
       - 'GO Transit'
@@ -158,17 +272,45 @@ operators:
       - 'Goderich-Exeter Railway'
     color: '#f68b1e'
 
-  # --- CZ --- #
+  # --- CH --- #
 
   - names:
-      - 'cz:SŽDC'
-      - 'cz:Správa Železnic'
-      - 'cz:SŽ'
-      - 'Správa železnic, s. o.'
-      - 'Správa železnic'
-      - 'SŽDC'
-      - 'SŽ'
-    color: '#ff5200'
+      - 'SBB'
+    color: '#00a213'
+
+  - names:
+      - 'VBZ'
+    color: 'rgb(5, 127, 172)'
+
+  - names:
+      - 'SZU'
+    color: '#e62e25'
+
+  - names:
+      - 'BVB'
+    color: '#e6eb00'
+
+  # --- CL --- #
+
+  - names:
+      - 'FCAB'
+    color: '#04598b'
+
+  - names:
+      - 'Ferronor'
+    color: '#c04d4a'
+
+  - names:
+      - 'EFE Sur'
+      - 'FESUR'
+    color: 'rgb(234, 0, 41)'
+
+  # --- CM --- #
+
+  - names:
+      - 'Camrail'
+      - 'CAMRAIL'
+    color: 'rgb(221, 0, 0)'
 
   # --- CN --- #
 
@@ -264,6 +406,33 @@ operators:
       - '中国铁路西安局集团'
     color: '#bd9d1f'
 
+  # --- CR --- #
+
+  - names:
+      - 'Incofer'
+      - 'INCOFER'
+    color: 'rgb(29, 39, 88)'
+
+  # --- CU --- #
+
+  - names:
+      - 'Ferrocarriles de Cuba'
+      - 'FFCC'
+      - 'Ferrocarriles de Cuba (FFCC)'
+    color: '#0361b3'
+
+  # --- CZ --- #
+
+  - names:
+      - 'cz:SŽDC'
+      - 'cz:Správa Železnic'
+      - 'cz:SŽ'
+      - 'Správa železnic, s. o.'
+      - 'Správa železnic'
+      - 'SŽDC'
+      - 'SŽ'
+    color: '#ff5200'
+
   # --- DE --- #
 
   - names:
@@ -273,6 +442,7 @@ operators:
       - 'DB Netz'
       - 'DB Station&Service AG'
       - 'DB Station&Service'
+      - 'Deutsche Bahn'
     color: '#f01414'
 
   - names:
@@ -285,7 +455,7 @@ operators:
 
   - names:
       - 'DB RegioNetz Infrastruktur GmbH'
-    color: '#dd4488'
+    color: '#ac21b6'
 
   - names:
       - 'Regio Infra Nord-Ost GmbH & Co. KG'
@@ -320,6 +490,20 @@ operators:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
 
+  - names:
+      - 'ÜSTRA'
+      - 'Überlandwerke und Straßenbahnen Hannover'
+    color: 'rgb(32, 172, 43)'
+
+  - names:
+      - 'Magdeburger Verkehrsbetriebe GmbH & Co. KG'
+    color: 'rgb(1, 132, 68)'
+
+  - names:
+      - 'Hallesche Verkehrs-AG'
+      - 'HAVAG'
+    color: '#0099d1'
+
   # --- DK --- #
 
   - names:
@@ -339,6 +523,21 @@ operators:
       - 'Lokaltog'
     color: 'rgb(0, 39, 94)'
 
+  # --- DZ --- #
+
+  - names:
+      - 'الشركة الوطنية للنقل بالسكك الحديدية'
+      - 'Société Nationale des Transports Ferroviaires'
+      - 'Société nationale des transports ferroviaires'
+      - 'SNTF'
+    color: 'rgb(22, 78, 120)'
+
+  - names:
+      - 'SETRAM'
+      - 'سيترام'
+      - 'شركة استغلال الترامواي'
+    color: '#1da285'
+
   # --- EE --- #
 
   - names:
@@ -348,6 +547,12 @@ operators:
   - names:
       - 'AS Eesti Raudtee'
     color: '#75001f'
+
+  # --- EG --- #
+
+  - names:
+      - 'الهيئة القومية لسكك حديد مصر'
+    color: '#ff0010'
 
   # --- ES --- #
 
@@ -453,7 +658,9 @@ operators:
     color: '#43165c'
 
   - names:
+      - 'Govia Thameslink Railway'
       - 'Govia Thameslink Railway (Thameslink)'
+      - 'Govia Thameslink Railway (Southern)'
     color: 'rgb(233, 65, 139)'
 
   - names:
@@ -467,6 +674,35 @@ operators:
   - names:
       - 'Translink NI Railways'
     color: 'rgb(8, 79, 92)'
+
+  - names:
+      - 'London Underground'
+      - 'London Overground'
+      - 'Transport for London'
+      - 'TfL'
+    color: '#000099'
+
+  - names:
+      - 'KeolisAmey Docklands Ltd'
+    color: '#00aac3'
+
+  - names:
+      - 'Chiltern Railways'
+    color: '#daae00'
+
+  # --- GE --- #
+
+  - names:
+      - 'სს "საქართველოს რკინიგზა"'
+    color: '#1a9d57'
+
+  # --- GR --- #
+
+  - names:
+      - 'Οργανισμός Σιδηροδρόμων Ελλάδος'
+      - 'ΟΣΕ'
+      - 'Ο.Σ.Ε.'
+    color: '#f27e08'
 
   # --- HR --- #
 
@@ -490,6 +726,10 @@ operators:
       - 'GySEV'
       - 'Raaberbahn'
     color: '#00952c'
+
+  - names:
+      - 'BKV'
+    color: 'rgb(12, 130, 128)'
 
   # --- ID --- #
 
@@ -546,9 +786,24 @@ operators:
     color: '#1d81b0'
 
   - names:
+      - 'NCR'
+      - 'North Central Railway'
+    color: '#b905c6'
+
+  - names:
       - 'CR'
       - 'Central Railway'
     color: '#b08d1d'
+
+  - names:
+      - 'ECR'
+      - 'East Central Railway'
+    color: '#1d53b0'
+
+  - names:
+      - 'WCR'
+      - 'West Central Railway'
+    color: '#c60505'
 
   - names:
       - 'SR'
@@ -585,11 +840,108 @@ operators:
       - 'Eastern Railway'
     color: '#1db050'
 
+  - names:
+      - 'Delhi Metro Rail Corporation Limited'
+    color: '#c08828'
+
+  - names:
+      - 'National Capital Region Transport Corporation'
+    color: 'rgb(28, 117, 188)'
+
+  # --- IQ --- #
+
+  - names:
+      - 'IRR'
+      - 'Iraqi Republic Railways الشركة العامة لسكك الحديد العراقية'
+      - 'الشركة العامة لسكك الحديد العراقية'
+    color: '#1a9d57'
+
   # --- IT --- #
 
   - names:
       - 'RFI'
     color: '#006a6a'
+
+  - names:
+      - 'Gruppo Torinese Trasporti'
+    color: 'rgb(0, 114, 204)'
+
+  - names:
+      - 'Terminali Italia'
+    color: '#e51937'
+
+  - names:
+      - 'ATAC'
+    color: 'rgb(130, 36, 51)'
+
+  - names:
+      - 'ASTRAL'
+    color: '#00263d'
+
+  - names:
+      - 'Ferrovia Vaticana'
+    color: '#c08828'
+
+  # --- JP --- #
+
+  - names:
+      - '東日本旅客鉄道'
+    color: '#007903'
+
+  - names:
+      - '西日本旅客鉄道'
+    color: 'rgb(0, 101, 177)'
+
+  - names:
+      - '九州旅客鉄道'
+    color: '#DA2728'
+
+  - names:
+      - '四国旅客鉄道'
+    color: 'rgb(76, 183, 219)'
+
+  - names:
+      - '北海道旅客鉄道'
+    color: '#45B035'
+
+  - names:
+      - '青い森鉄道'
+    color: '#6fc5e9'
+
+  - names:
+      - '秋田内陸縦貫鉄道'
+    color: '#243d5a'
+
+  - names:
+      - '三陸鉄道'
+    color: '#ed6c00'
+
+  - names:
+      - '京浜急行電鉄'
+      - '京浜急行電鉄 (Keikyu Corporation)'
+    color: 'rgb(0, 150, 224)'
+
+  - names:
+      - '東京地下鉄'
+    color: '#00467e'
+
+  - names:
+      - '東急電鉄'
+    color: 'rgb(232, 56, 23)'
+
+  - names:
+      - '西武鉄道'
+    color: '#876016'
+
+  - names:
+      - '小田急電鉄'
+    color: '#876016'
+
+  # --- KG --- #
+
+  - names:
+      - 'Кыргыз темир жолу'
+    color: '#0d6efd'
 
   # --- KO --- #
 
@@ -621,6 +973,43 @@ operators:
       - '네오트랜스'
     color: '#fe0000'
 
+  # --- KZ --- #
+
+  - names:
+      - 'КТЖ'
+      - 'АО «КТЖ»'
+    color: '#009FCB'
+
+  # --- LT --- #
+
+  - names:
+      - 'LTG Infra'
+    color: '#007749'
+
+  # --- MA --- #
+
+  - names:
+      - 'ONCF'
+      - 'المكتب الوطني للسكك الحديدية'
+      - 'oncf'
+    color: 'rgb(237, 54, 72)'
+
+  # --- MD --- #
+
+  - names:
+      - 'CFM'
+    color: '#1559ae'
+
+  # --- ME --- #
+
+  - names:
+      - 'ŽICG'
+    color: '#e39d02'
+
+  - names:
+      - 'ŽPCG'
+    color: 'rgb(216, 34, 52)'
+
   # --- MK --- #
 
   - names:
@@ -628,12 +1017,6 @@ operators:
       - 'Македонски железници'
       - 'Македонски Железници'
     color: '#2d2579'
-
-  # --- LT --- #
-
-  - names:
-      - 'LTG Infra'
-    color: '#007749'
 
   # --- MM --- #
 
@@ -645,6 +1028,13 @@ operators:
       - 'MR'
     color: '#00983a'
 
+  # --- MR --- #
+
+  - names:
+      - 'الشركة الوطنية للصناعة والمناجم'
+      - 'SNIM'
+    color: '#0000ff'
+
   # --- MY --- #
 
   - names:
@@ -653,6 +1043,38 @@ operators:
       - 'Keretapi Tanah Melayu'
       - 'Keretapi Tanah Melayu Berhad'
     color: '#004e9b'
+
+  # --- MX --- #
+
+  - names:
+      - 'Ferromex'
+    color: '#fa002e'
+
+  - names:
+      - 'Ferrosur'
+    color: '#03897c'
+
+  - names:
+      - 'Ferrovalle'
+    color: '#4ab378'
+
+  - names:
+      - 'Sistema de Transporte Colectivo'
+    color: '#ff5000'
+
+  - names:
+      - 'Ferroistmo'
+    color: '#b48a49'
+
+  - names:
+      - 'Tren Maya'
+    color: 'rgb(59, 120, 97)'
+
+  # --- MZ --- #
+
+  - names:
+      - 'Caminhos de Ferro de Moçambique (CFM)'
+    color: '#0f6037'
 
   # --- NK --- #
 
@@ -680,6 +1102,19 @@ operators:
       - 'Arriva'
     color: '#1e8f97'
 
+  - names:
+      - 'HTM'
+    color: 'rgb(220, 41, 30)'
+
+  - names:
+      - 'RET'
+    color: 'rgb(0, 71, 127)'
+
+  - names:
+      - 'GVB'
+      - 'Gemeentelijk Vervoerbedrijf'
+    color: 'rgb(0, 159, 227)'
+
   # --- NO --- #
 
   - names:
@@ -695,6 +1130,37 @@ operators:
   - names:
       - 'Metlink'
     color: '#a3b01d'
+
+  # --- PA --- #
+
+  - names:
+      - 'Metro de Panamá S.A.'
+      - 'Metro de Panamá'
+      - 'Panama Metro'
+      - 'El Metro de Panamá'
+    color: '#033e86'
+
+  - names:
+      - 'Panama Canal Authority'
+    color: '#a80011'
+
+  # --- PE --- #
+
+  - names:
+      - 'Ferrocarril Central Andino S.A.'
+    color: '#bb7c24'
+
+  - names:
+      - 'Ferrocarril Transandino S.A.'
+    color: 'rgb(10, 64, 111)'
+
+  - names:
+      - 'Ferrocarril del Sur del Perú'
+    color: '#A09162'
+
+  - names:
+      - 'AATE'
+    color: '#E4002B'
 
   # --- PH --- #
 
@@ -717,6 +1183,30 @@ operators:
       - 'PKP Polskie Linie Kolejowe'
     color: '#004d84'
 
+  - names:
+      - 'Tramwaje Warszawskie'
+    color: 'rgb(228, 35, 19)'
+
+  - names:
+      - 'Metro Warszawskie'
+    color: '#a28507'
+
+  - names:
+      - 'Warszawska Kolej Dojazdowa'
+    color: '#00a213'
+
+  - names:
+      - 'Tramwaje Śląskie'
+    color: '#C35817'
+
+  - names:
+      - 'MPK Kraków'
+    color: 'rgb(193, 0, 51)'
+
+  - names:
+      - 'MPK Poznań'
+    color: 'rgb(56, 145, 62)'
+
   # --- PT --- #
 
   - names:
@@ -731,6 +1221,20 @@ operators:
       - 'STCP'
     color: 'rgb(0, 92, 185)'
 
+  # --- RO --- #
+
+  - names:
+      - 'CFR'
+    color: 'rgb(255, 87, 34)'
+
+  - names:
+      - 'Metrorex'
+    color: '#1293ff'
+
+  - names:
+      - 'STB'
+    color: 'rgb(9, 171, 79)'
+
   # --- RU --- #
 
   - names:
@@ -743,6 +1247,18 @@ operators:
       - 'Калининградский Железная Дорога'
     color: '#ff3f72'
 
+  - names:
+      - 'ГУП «Московский метрополитен»'
+    color: '#ac21b6'
+
+  - names:
+      - 'МП "Маггортранс"'
+    color: '#0000CC'
+
+  - names:
+      - 'ЕТТУ'
+    color: '#164c12'
+
   # --- RS --- #
 
   - names:
@@ -754,6 +1270,12 @@ operators:
       - 'Железнице Србије'
       - 'Zeleznice Srbije'
     color: '#ed1c24'
+
+  # --- SA --- #
+
+  - names:
+      - 'Saudi Arabia Railways'
+    color: 'rgb(0, 119, 139)'
 
   # --- SE --- #
 
@@ -788,11 +1310,50 @@ operators:
       - 'SŽ Infrastruktura'
     color: '#eda800'
 
+  # --- SN --- #
+
+  - names:
+      - 'SETER'
+    color: '#7D142F'
+
+  - names:
+      - 'Chemins de fer du Sénégal'
+      - 'CFS'
+    color: '#019644'
+
+  - names:
+      - 'Transrail S. A.'
+    color: '#4154a3'
+
+  # --- SY --- #
+
+  - names:
+      - 'المؤسسة العامة للخطوط الحديدية'
+    color: 'rgb(0, 53, 140)'
+
   # --- TH --- #
 
   - names:
       - 'การรถไฟแห่งประเทศไทย'
     color: '#782325'
+
+  # --- TN --- #
+
+  - names:
+      - 'SNCFT'
+      - 'Socite Nationale des chemins de fer tunisien'
+      - 'الشركة الوطنية للسكك الحديدية التونسية'
+    color: '#16874b'
+
+  # --- TR --- #
+
+  - names:
+      - 'TCDD'
+    color: '#e30613'
+
+  - names:
+      - 'TCDD Taşımacılık'
+    color: '#16877a'
 
   # --- TW --- #
 
@@ -820,7 +1381,16 @@ operators:
 
   - names:
       - 'Укрзалізниця'
-    color: '#112189'
+    color: '#118965'
+
+  - names:
+      - 'КП «Одесміськелектротранс»'
+    color: '#bf0525'
+
+  - names:
+      - 'ФГУП «КЖД»'
+      - 'Крымская железная дорога'
+    color: '#16874b'
 
   # --- US --- #
 
@@ -864,7 +1434,8 @@ operators:
 
   - names:
       - 'Union Pacific Railroad'
-    color: '#FFCC00'
+      - 'UP'
+    color: '#d1a700'
 
   - names:
       - 'Southeastern Pennsylvania Transportation Authority'
@@ -903,6 +1474,10 @@ operators:
     color: '#38553E'
 
   - names:
+      - 'New York City Transit Authority'
+    color: '#876716'
+
+  - names:
       - 'Metra'
     color: '#0750A3'
 
@@ -916,7 +1491,22 @@ operators:
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
 
-  # --- US --- #
+  # --- UZ --- #
+
+  - names:
+      - 'O‘zbekiston temir yo‘llari'
+      - 'O‘zbekiston temir yo‘llari'
+    color: 'rgb(176, 140, 86)'
+
+  # --- VE --- #
+
+  - names:
+      - 'Instituto Ferrocarriles del Estado (IFE)'
+      - 'Instituto Ferrocarriles del Estado IFE'
+      - 'IFE'
+    color: '#AE1E23'
+
+  # --- VN --- #
 
   - names:
       - 'VNR'
@@ -927,3 +1517,23 @@ operators:
       - 'Đường Sắt Việt Nam'
       - 'Đường sắt Việt Nam'
     color: 'rgb(47, 164, 231)'
+
+  # --- ZA --- #
+
+  - names:
+      - 'Metrorail'
+    color: '#b38d03'
+
+  - names:
+      - 'Transnet'
+    color: '#e72528'
+
+  - names:
+      - 'Passenger Rail Agency of South Africa'
+      - 'PRASA'
+      - 'Prasa'
+    color: '#02a9e0'
+
+  - names:
+      - 'Gautrain'
+    color: 'rgb(0, 73, 144)'
