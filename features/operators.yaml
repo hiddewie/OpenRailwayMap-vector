@@ -3,6 +3,12 @@
 
 operators:
 
+  # --- AL --- #
+
+  - names:
+      - 'Hekurudha Shqiptare'
+    color: '#d90026'
+
   # --- AT --- #
 
   - names:
@@ -96,6 +102,17 @@ operators:
   - names:
       - 'Infrabel'
     color: '#02bcf0'
+
+  # --- BG --- #
+
+  - names:
+      - 'НКЖИ'
+    color: '#1178bd'
+
+  - names:
+      - 'БДЖ'
+      - 'BDZ'
+    color: '#158246'
 
   # --- BY --- #
 
@@ -474,6 +491,14 @@ operators:
       - 'Translink NI Railways'
     color: 'rgb(8, 79, 92)'
 
+  # --- GR --- #
+
+  - names:
+      - 'Οργανισμός Σιδηροδρόμων Ελλάδος'
+      - 'ΟΣΕ'
+      - 'Ο.Σ.Ε.'
+    color: '#f27e08'
+
   # --- HR --- #
 
   - names:
@@ -557,6 +582,11 @@ operators:
     color: '#b08d1d'
 
   - names:
+      - 'ECR'
+      - 'East Central Railway'
+    color: '#1d53b0'
+
+  - names:
       - 'SR'
       - 'Southern Railway'
     color: '#1db04e'
@@ -626,6 +656,16 @@ operators:
   - names:
       - '네오트랜스'
     color: '#fe0000'
+
+  # --- ME --- #
+
+  - names:
+      - 'ŽICG'
+    color: '#e39d02'
+
+  - names:
+      - 'ŽPCG'
+    color: 'rgb(216, 34, 52)'
 
   # --- MK --- #
 
@@ -758,6 +798,14 @@ operators:
   - names:
       - 'CFR'
     color: 'rgb(255, 87, 34)'
+
+  - names:
+      - 'Metrorex'
+    color: '#1293ff'
+
+  - names:
+      - 'STB'
+    color: 'rgba(9, 171, 79)'
 
   # --- RU --- #
 
