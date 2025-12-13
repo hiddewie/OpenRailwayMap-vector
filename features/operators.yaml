@@ -239,7 +239,8 @@ operators:
 
   - names:
       - 'VIA Rail'
-    color: '#FFCB05'
+      - 'VIA'
+    color: '#daae00'
 
   - names:
       - 'GO Transit'
@@ -657,7 +658,9 @@ operators:
     color: '#43165c'
 
   - names:
+      - 'Govia Thameslink Railway'
       - 'Govia Thameslink Railway (Thameslink)'
+      - 'Govia Thameslink Railway (Southern)'
     color: 'rgb(233, 65, 139)'
 
   - names:
@@ -671,6 +674,21 @@ operators:
   - names:
       - 'Translink NI Railways'
     color: 'rgb(8, 79, 92)'
+
+  - names:
+      - 'London Underground'
+      - 'London Overground'
+      - 'Transport for London'
+      - 'TfL'
+    color: '#000099'
+
+  - names:
+      - 'KeolisAmey Docklands Ltd'
+    color: '#00aac3'
+
+  - names:
+      - 'Chiltern Railways'
+    color: '#daae00'
 
   # --- GE --- #
 
