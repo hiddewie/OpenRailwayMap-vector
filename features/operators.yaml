@@ -15,6 +15,14 @@ operators:
       - 'Hekurudha Shqiptare'
     color: '#d90026'
 
+  # --- AM --- #
+
+  - names:
+      - 'Южно-Кавказская железная дорога'
+      - 'Հարավկովկասյան երկաթուղի'
+      - 'Armenian Railway'
+    color: '#fb7d26'
+
   # --- AT --- #
 
   - names:
@@ -92,6 +100,13 @@ operators:
   - names:
       - 'Transwa'
     color: '#ec4025'
+
+  # --- AZ --- #
+
+  - names:
+      - '«Azərbaycan Dəmir Yolları» QSC'
+      - 'Azərbaycan Dövlət Dəmir Yolu'
+    color: '#143b6e'
 
   # --- BA --- #
 
@@ -514,6 +529,12 @@ operators:
   - names:
       - 'Translink NI Railways'
     color: 'rgb(8, 79, 92)'
+
+  # --- GE --- #
+
+  - names:
+      - 'სს "საქართველოს რკინიგზა"'
+    color: '#1a9d57'
 
   # --- GR --- #
 
