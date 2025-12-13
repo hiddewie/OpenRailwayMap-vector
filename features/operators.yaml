@@ -437,6 +437,7 @@ operators:
       - 'DB Netz'
       - 'DB Station&Service AG'
       - 'DB Station&Service'
+      - 'Deutsche Bahn'
     color: '#f01414'
 
   - names:
@@ -449,7 +450,7 @@ operators:
 
   - names:
       - 'DB RegioNetz Infrastruktur GmbH'
-    color: '#dd4488'
+    color: '#ac21b6'
 
   - names:
       - 'Regio Infra Nord-Ost GmbH & Co. KG'
@@ -483,6 +484,20 @@ operators:
   - names:
       - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
     color: '#008080'
+
+  - names:
+      - 'ÜSTRA'
+      - 'Überlandwerke und Straßenbahnen Hannover'
+    color: 'rgb(32, 172, 43)'
+
+  - names:
+      - 'Magdeburger Verkehrsbetriebe GmbH & Co. KG'
+    color: 'rgb(1, 132, 68)'
+
+  - names:
+      - 'Hallesche Verkehrs-AG'
+      - 'HAVAG'
+    color: '#0099d1'
 
   # --- DK --- #
 
@@ -743,6 +758,11 @@ operators:
     color: '#1d81b0'
 
   - names:
+      - 'NCR'
+      - 'North Central Railway'
+    color: '#b905c6'
+
+  - names:
       - 'CR'
       - 'Central Railway'
     color: '#b08d1d'
@@ -751,6 +771,11 @@ operators:
       - 'ECR'
       - 'East Central Railway'
     color: '#1d53b0'
+
+  - names:
+      - 'WCR'
+      - 'West Central Railway'
+    color: '#c60505'
 
   - names:
       - 'SR'
@@ -1113,6 +1138,14 @@ operators:
       - 'Tramwaje Śląskie'
     color: '#C35817'
 
+  - names:
+      - 'MPK Kraków'
+    color: 'rgb(193, 0, 51)'
+
+  - names:
+      - 'MPK Poznań'
+    color: 'rgb(56, 145, 62)'
+
   # --- PT --- #
 
   - names:
@@ -1327,7 +1360,8 @@ operators:
 
   - names:
       - 'Union Pacific Railroad'
-    color: '#FFCC00'
+      - 'UP'
+    color: '#d1a700'
 
   - names:
       - 'Southeastern Pennsylvania Transportation Authority'
