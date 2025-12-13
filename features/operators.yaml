@@ -139,6 +139,7 @@ operators:
   - names:
       - 'Canadian National Railway'
       - 'Canadien National'
+      - 'CN'
     color: '#EF3037'
 
   - names:
@@ -180,6 +181,14 @@ operators:
   - names:
       - 'SBB'
     color: '#00a213'
+
+  - names:
+      - 'VBZ'
+    color: 'rgb(5, 127, 172)'
+
+  - names:
+      - 'SZU'
+    color: '#e62e25'
 
   # --- CZ --- #
 
@@ -522,6 +531,10 @@ operators:
       - 'Raaberbahn'
     color: '#00952c'
 
+  - names:
+      - 'BKV'
+    color: 'rgb(12, 130, 128)'
+
   # --- ID --- #
 
   - names:
@@ -780,6 +793,19 @@ operators:
   - names:
       - 'Arriva'
     color: '#1e8f97'
+
+  - names:
+      - 'HTM'
+    color: 'rgb(220, 41, 30)'
+
+  - names:
+      - 'RET'
+    color: 'rgb(0, 71, 127)'
+
+  - names:
+      - 'GVB'
+      - 'Gemeentelijk Vervoerbedrijf'
+    color: 'rgb(0, 159, 227)'
 
   # --- NO --- #
 
