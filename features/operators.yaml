@@ -433,6 +433,14 @@ operators:
       - 'SŽ'
     color: '#ff5200'
 
+  - names:
+      - 'Dopravní podnik Ostrava'
+    color: '#1d61ff'
+
+  - names:
+      - 'cz:Vítkovice Doprava'
+    color: '#00841f'
+
   # --- DE --- #
 
   - names:
@@ -620,6 +628,7 @@ operators:
       - 'RATP Île de France Mobilités'
       - 'RATP Ile de France Mobilités'
       - 'RATP Cap Bièvre'
+      - 'RATP Dev'
     color: '#4caa83'
 
   - names:
@@ -958,6 +967,14 @@ operators:
   - names:
       - '名古屋鉄道'
     color: '#c10024'
+
+  - names:
+      - '東京都交通局'
+    color: '#cc3600'
+
+  - names:
+      - '京王電鉄'
+    color: 'rgb(214, 0, 127)'
 
   # --- KG --- #
 
