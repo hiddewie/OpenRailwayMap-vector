@@ -61,7 +61,7 @@ operators:
   - names:
       - 'ÖBB-Infrastruktur AG'
       - 'ÖBB'
-    color: '#e404e4'
+    color: '#ff0000'
 
   - names:
       - 'Wiener Linien'
@@ -444,7 +444,7 @@ operators:
       - 'DB Station&Service'
       - 'Deutsche Bahn'
       - 'DB'
-    color: '#f01414'
+    color: '#799400'
 
   - names:
       - 'Albtal-Verkehrs-Gesellschaft mbH'
@@ -1087,7 +1087,7 @@ operators:
 
   - names:
       - 'ProRail'
-    color: 'rgb(178, 10, 47)'
+    color: '#ff0000'
 
   - names:
       - 'NS'
