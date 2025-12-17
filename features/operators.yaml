@@ -443,6 +443,7 @@ operators:
       - 'DB Station&Service AG'
       - 'DB Station&Service'
       - 'Deutsche Bahn'
+      - 'DB'
     color: '#f01414'
 
   - names:
