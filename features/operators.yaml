@@ -471,8 +471,10 @@ operators:
     color: '#005090'
 
   - names:
-      - 'SSB AG' # Stuttgarter Straßenbahnen AG
-    color: '#ffcc00'
+      - 'SSB AG'
+      - 'Stuttgarter Straßenbahnen AG'
+      - 'Stuttgarter Straßenbahnen (SSB)'
+    color: '#ae8c00'
 
   - names:
       - 'SWEG Schienenwege GmbH'
@@ -504,6 +506,16 @@ operators:
       - 'Hallesche Verkehrs-AG'
       - 'HAVAG'
     color: '#0099d1'
+
+  - names:
+      - 'Leipziegr Verkehrsbetriebe GmbH'
+      - 'Leipziger Verkehrsbetriebe'
+      - 'LVB'
+    color: '#ae8c00'
+
+  - names:
+      - 'moBiel GmbH'
+    color: '#fa6400'
 
   # --- DK --- #
 
@@ -578,6 +590,10 @@ operators:
       - 'Ferrocarrils de la Generalitat de Catalunya'
     color: '#75a700'
 
+  - names:
+      - 'Metro de Madrid'
+    color: '#ed1c23'
+
   # --- FR --- #
 
   - names:
@@ -608,6 +624,7 @@ operators:
 
   - names:
       - 'Keolis'
+      - 'Keolis Lyon'
     color: 'rgb(0, 130, 150)'
 
   # --- FI --- #
@@ -937,6 +954,10 @@ operators:
   - names:
       - '小田急電鉄'
     color: '#876016'
+
+  - names:
+      - '名古屋鉄道'
+    color: '#c10024'
 
   # --- KG --- #
 
@@ -1272,6 +1293,14 @@ operators:
       - 'Zeleznice Srbije'
     color: '#ed1c24'
 
+  - names:
+      - 'ГСП Београд'
+    color: '#183866'
+
+  - names:
+      - 'Srbija Voz'
+    color: '#0869B6'
+
   # --- SA --- #
 
   - names:
@@ -1283,6 +1312,10 @@ operators:
   - names:
       - 'Trafikverket'
     color: 'rgb(215, 0, 0)'
+
+  - names:
+      - 'Göteborgs Spårvägar'
+    color: 'rgb(0, 51, 103)'
 
   # --- SK --- #
 
@@ -1491,6 +1524,23 @@ operators:
       - 'St. Lawrence and Atlantic Railroad Co.'
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
+
+  - names:
+      - 'Chicago Transit Authority'
+    color: '#0b9444'
+
+  - names:
+      - 'Sonoma-Marin Area Rail Transit District'
+    color: 'rgb(229, 142, 26)'
+
+  - names:
+      - 'BART'
+    color: '#0099d8'
+
+  - names:
+      - 'San Francisco Municipal Railway'
+      - 'San Francisco Municipal Transportation Agency'
+    color: '#cd3545'
 
   # --- UZ --- #
 
