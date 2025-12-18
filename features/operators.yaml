@@ -279,6 +279,18 @@ operators:
     color: '#00a213'
 
   - names:
+      - 'RhB'
+    color: '#ca4140'
+
+  - names:
+      - 'BLS'
+    color: '#ca9e40'
+
+  - names:
+      - 'ZB'
+    color: '#ad2718'
+
+  - names:
       - 'VBZ'
     color: 'rgb(5, 127, 172)'
 
@@ -324,6 +336,7 @@ operators:
   - names:
       # China Railway Shenyang Group
       - '中国铁路沈阳局集团'
+      - '中国铁路沈阳局集团有限公司'
     color: '#e30811'
 
   - names:
@@ -359,11 +372,14 @@ operators:
   - names:
       # China Railway Guangzhou Group
       - '中国铁路南昌局集团'
+      - '中国铁路广州局集团有限公司'
     color: '#76c5f0'
 
   - names:
       # China Railway Nanning Group
       - '中国铁路南宁局集团'
+      - '南宁铁路局'
+      - '中国铁路南宁局集团有限公司'
     color: '#2c1fbd'
 
   - names:
@@ -379,11 +395,13 @@ operators:
   - names:
       # China Railway Chengdu Group
       - '中国铁路成都局集团'
+      - '中国铁路成都局集团有限公司'
     color: '#1fbdba'
 
   - names:
       # China Railway Kunming Group
       - '中国铁路昆明局集团'
+      - '中国铁路昆明局集团有限公司'
     color: '#eb9021'
 
   - names:
@@ -404,6 +422,7 @@ operators:
   - names:
       # China Railway Xi'an Group
       - '中国铁路西安局集团'
+      - '中国铁路西安局集团有限公司'
     color: '#bd9d1f'
 
   # --- CR --- #
@@ -525,6 +544,11 @@ operators:
       - 'moBiel GmbH'
     color: '#fa6400'
 
+  - names:
+      - 'DVB'
+      - 'Dresdner Verkehrsbetriebe AG'
+    color: '#be9200'
+
   # --- DK --- #
 
   - names:
@@ -641,6 +665,11 @@ operators:
   - names:
       - 'Väylävirasto'
     color: '#009bff'
+
+  - names:
+      - 'HKL-Raitioliikenne'
+      - 'HSL'
+    color: '#8c4798'
 
   # --- GB --- #
 
@@ -898,6 +927,10 @@ operators:
     color: '#e51937'
 
   - names:
+      - 'Ferrovienord'
+    color: '#af7b19'
+
+  - names:
       - 'ATAC'
     color: 'rgb(130, 36, 51)'
 
@@ -909,72 +942,114 @@ operators:
       - 'Ferrovia Vaticana'
     color: '#c08828'
 
+  - names:
+      - 'ATM'
+      - 'Azienda Trasporti Milanesi'
+    color: 'rgb(241, 73, 16)'
+
   # --- JP --- #
 
   - names:
+      # East Japan Railway Company
       - '東日本旅客鉄道'
     color: '#007903'
 
   - names:
+      # JR西日本 West Japan Railway Company
       - '西日本旅客鉄道'
     color: 'rgb(0, 101, 177)'
 
   - names:
+      # ＪＲ東海 Central Japan Railway Company
+      - '東海旅客鉄道'
+      - '東海旅客鉄道 (JR Central)'
+    color: 'rgb(248, 123, 34)'
+
+  - names:
+      # Kintetsu railway
+      - '近畿日本鉄道'
+    color: '#9200af'
+
+  - names:
+      # Kyushu Railway Company
       - '九州旅客鉄道'
     color: '#DA2728'
 
   - names:
+      # Shikoku Railway Company
       - '四国旅客鉄道'
     color: 'rgb(76, 183, 219)'
 
   - names:
+      # JR北海道- Hokkaido Railway Company
       - '北海道旅客鉄道'
     color: '#45B035'
 
   - names:
+      # Aoimori Railway Company
       - '青い森鉄道'
     color: '#6fc5e9'
 
   - names:
+      # Akita Nairiku Jukan Tetsudo Railway Co., Ltd.
       - '秋田内陸縦貫鉄道'
     color: '#243d5a'
 
   - names:
+      # Sanriku Railway Company
       - '三陸鉄道'
     color: '#ed6c00'
 
   - names:
+      # Keikyu Corporation
       - '京浜急行電鉄'
       - '京浜急行電鉄 (Keikyu Corporation)'
     color: 'rgb(0, 150, 224)'
 
   - names:
+      # Tokyo Metro Co., Ltd.
       - '東京地下鉄'
     color: '#00467e'
 
   - names:
+      # Tokyu Railways
       - '東急電鉄'
     color: 'rgb(232, 56, 23)'
 
   - names:
+      # Seibu Railway Co.,Ltd.
       - '西武鉄道'
     color: '#876016'
 
   - names:
+      # Odakyu Electric Railway Co., Ltd.
       - '小田急電鉄'
     color: '#876016'
 
   - names:
+      # Nagoya Railroad Co.,Ltd.
       - '名古屋鉄道'
     color: '#c10024'
 
   - names:
+      # Bureau of Transportation Tokyo Metropolitan Government
       - '東京都交通局'
     color: '#cc3600'
 
   - names:
+      # Keio Corporation
       - '京王電鉄'
     color: 'rgb(214, 0, 127)'
+
+  - names:
+      # Hankyu Corporation
+      - '阪急電鉄'
+    color: '#ca0124'
+
+  - names:
+      # Tobu Railway Co., Ltd.
+      - '東武鉄道'
+    color: '#005bae'
 
   # --- KG --- #
 
@@ -1024,6 +1099,12 @@ operators:
   - names:
       - 'LTG Infra'
     color: '#007749'
+
+  # --- LU --- #
+
+  - names:
+      - 'CFL'
+    color: 'rgb(196, 16, 57)'
 
   # --- MA --- #
 
@@ -1279,6 +1360,7 @@ operators:
   - names:
       - 'ОАО «РЖД»'
       - 'ОАО "РЖД"'
+      - 'Свердловская дирекция инфраструктуры АО «РЖД»'
       - 'ОАО «Российские железные дороги»'
     color: '#c50d16'
 
@@ -1497,12 +1579,18 @@ operators:
     color: '#1B6D85'
 
   - names:
+      - 'Florida East Coast Railway'
+      - 'FEC'
+    color: '#af0069'
+
+  - names:
       - 'SunRail'
     color: '#f9a548'
 
   - names:
       - 'Brightline Trains Florida LLC'
-    color: '#FFDB00'
+      - 'Brightline'
+    color: '#b9a000'
 
   - names:
       - 'New Jersey Transit'
