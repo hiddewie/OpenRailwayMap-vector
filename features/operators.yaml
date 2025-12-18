@@ -549,6 +549,11 @@ operators:
       - 'Dresdner Verkehrsbetriebe AG'
     color: '#be9200'
 
+  - names:
+      - 'MVG'
+      - 'Münchner Verkehrsgesellschaft'
+    color: '#0065cc'
+
   # --- DK --- #
 
   - names:
@@ -716,8 +721,15 @@ operators:
   - names:
       - 'Govia Thameslink Railway'
       - 'Govia Thameslink Railway (Thameslink)'
+    color: '#ea3b8b'
+
+  - names:
       - 'Govia Thameslink Railway (Southern)'
-    color: 'rgb(233, 65, 139)'
+    color: '#033f2c'
+
+  - names:
+      - 'Southeastern'
+    color: '#daae00'
 
   - names:
       - 'Northern Trains'
