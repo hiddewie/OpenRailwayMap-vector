@@ -1531,6 +1531,105 @@ features:
       - { tag: 'railway:signal:switch', value: 'AU:NSW:MLI_turnout' }
       - { tag: 'railway:signal:switch:form', value: 'light' }
 
+  - description: Mainline Indicator
+    country: AU
+    icon:
+      - match: 'railway:signal:minor:states'
+        cases:
+          - { exact: 'WYR', value: 'au/nsw/signals/MLI/WYR', description: 'WYR' }
+          - { exact: 'WR', value: 'au/nsw/signals/MLI/WR', description: 'WR' }
+        default: 'au/nsw/signals/MLI/unknown'
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:NSW:MLI' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Distant Signal (searchlight)
+    country: AU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'GYR', value: 'au/nsw/signals/distant/searchlight/GYR', description: 'GYR' }
+          - { exact: 'GR', value: 'au/nsw/signals/distant/searchlight/GR', description: 'GR' }
+          - { exact: 'YR', value: 'au/nsw/signals/distant/searchlight/YR', description: 'YR' }
+          - { exact: 'R', value: 'au/nsw/signals/distant/searchlight/R', description: 'R' }
+          - { exact: 'GYRg', value: 'au/nsw/signals/distant/searchlight/GYRg', description: 'GYRg' }
+          - { exact: 'GRg', value: 'au/nsw/signals/distant/searchlight/GRg', description: 'GRg' }
+          - { exact: 'YRg', value: 'au/nsw/signals/distant/searchlight/YRg', description: 'YRg' }
+        default: 'au/nsw/signals/distant/searchlight/unknown'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:NSW:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shape', value: 'searchlight' }
+
+  - description: Distant Signal
+    country: AU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'GYR', value: 'au/nsw/signals/distant/multi-unit/GYR', description: 'GYR' }
+          - { exact: 'GR', value: 'au/nsw/signals/distant/multi-unit/GR', description: 'GR' }
+          - { exact: 'YR', value: 'au/nsw/signals/distant/multi-unit/YR', description: 'YR' }
+          - { exact: 'R', value: 'au/nsw/signals/distant/multi-unit/R', description: 'R' }
+          - { exact: 'GYRg', value: 'au/nsw/signals/distant/multi-unit/GYRg', description: 'GYRg' }
+          - { exact: 'GRg', value: 'au/nsw/signals/distant/multi-unit/GRg', description: 'GRg' }
+          - { exact: 'YRg', value: 'au/nsw/signals/distant/multi-unit/YRg', description: 'YRg' }
+          - { exact: 'GY', value: 'au/nsw/signals/distant/multi-unit/GY', description: 'GY' }
+        default: 'au/nsw/signals/distant/multi-unit/unknown'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:NSW:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Distant Signal (semaphore)
+    country: AU
+    icon: [ default: 'au/nsw/signals/distant/semaphore/GY' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:NSW:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+
+  - description: Main Signal (searchlight)
+    country: AU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'GYR', value: 'au/nsw/signals/main/searchlight/GYR', description: 'GYR' }
+          - { exact: 'GR', value: 'au/nsw/signals/main/searchlight/GR', description: 'GR' }
+          - { exact: 'YR', value: 'au/nsw/signals/main/searchlight/YR', description: 'YR' }
+          - { exact: 'R', value: 'au/nsw/signals/main/searchlight/R', description: 'R' }
+          - { exact: 'G', value: 'au/nsw/signals/main/searchlight/G', description: 'G' }
+        default: 'au/nsw/signals/main/searchlight/unknown'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'searchlight' }
+
+  - description: Main Signal
+    country: AU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'GYR', value: 'au/nsw/signals/main/multi-unit/GYR', description: 'GYR' }
+          - { exact: 'GR', value: 'au/nsw/signals/main/multi-unit/GR', description: 'GR' }
+          - { exact: 'YR', value: 'au/nsw/signals/main/multi-unit/YR', description: 'YR' }
+          - { exact: 'R', value: 'au/nsw/signals/main/multi-unit/R', description: 'R' }
+          - { exact: 'G', value: 'au/nsw/signals/main/multi-unit/G', description: 'G' }
+        default: 'au/nsw/signals/main/multi-unit/unknown'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Main Signal (semaphore)
+    country: AU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'GYR', value: 'au/nsw/signals/main/semaphore/GYR', description: 'Upper quadrant' }
+          - { exact: 'GR', value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
+        default: 'au/nsw/signals/main/semaphore/unknown'
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
   - description: Mainline Route Indicator
     country: AU
     icon: [ default: 'au/nsw/signals/route_indicator' ]
