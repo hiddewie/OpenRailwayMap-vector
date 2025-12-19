@@ -5223,6 +5223,33 @@ features:
       - { tag: 'railway:signal:shunting', value: 'GB-NR:limit' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
+  - description: Junction signals (feather & theatre)
+    country: GB
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
+          - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
+          - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
+          - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
+          - { all: [ 'position_1', 'position_2', 'position_4' ], value: 'gb/route-feather-124' }
+          - { all: [ 'position_4', 'position_5' ], value: 'gb/route-feather-45' }
+          - { all: [ 'position_1', 'position_4' ], value: 'gb/route-feather-14' }
+          - { all: [ 'position_1', 'position_2' ], value: 'gb/route-feather-12' }
+          - { exact: 'position_4', value: 'gb/route-feather-4' }
+          - { exact: 'position_1', value: 'gb/route-feather-1' }
+        default: 'gb/route-feather-unknown'
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^[CFSU]$', value: 'gb/route-theatre-{}', example: 'gb/route-theatre-{U}' }
+        default: 'gb/route-theatre-unknown'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:route', value: 'GB-NR:junction' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:design', value: 'feather;theatre' }
+
   - description: Junction signals (feather)
     country: GB
     icon:
