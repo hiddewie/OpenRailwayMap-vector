@@ -475,52 +475,35 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    styles: {
-      default: 'standard',
-      date: 'historical',
-    },
+    supportsDate: true,
   },
   speed: {
     name: 'Speed',
-    styles: {
-      default: 'speed',
-    },
+    supportsDate: false,
   },
   signals: {
     name: 'Train protection',
-    styles: {
-      default: 'signals',
-    },
+    supportsDate: false,
   },
   electrification: {
     name: 'Electrification',
-    styles: {
-      default: 'electrification',
-    },
+    supportsDate: false,
   },
   gauge: {
     name: 'Gauge',
-    styles: {
-      default: 'gauge',
-    },
+    supportsDate: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
-    styles: {
-      default: 'loading_gauge',
-    },
+    supportsDate: false,
   },
   track_class: {
     name: 'Track class',
-    styles: {
-      default: 'track_class',
-    },
+    supportsDate: false,
   },
   operator: {
     name: 'Operator',
-    styles: {
-      default: 'operator',
-    },
+    supportsDate: false,
   },
 };
 
@@ -531,12 +514,6 @@ const knownThemes = [
   'light',
   'dark',
 ]
-
-function layerHasDateFilter(layer) {
-  return layer.filter
-    && layer.filter[0] === 'let'
-    && layer.filter[1] === 'date'
-}
 
 function hashToObject(hash) {
   if (!hash) {
@@ -589,7 +566,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].styles.date && dateControl.active ? date : undefined;
+  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -1051,14 +1028,12 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
 const legendStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
@@ -1206,11 +1181,9 @@ let lastSetMapStyle = null;
 let lastSetMapLanguage = null;
 function onStyleChange() {
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  const supportsDate = knownStyles[selectedStyle].styles.date && historicalInfrastructure === 'openhistoricalmap';
+  const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
   const dateActive = supportsDate && dateControl.active;
-  const mapStyle = dateActive
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
+  const mapStyle = selectedStyle
   const language = configuredLanguage();
 
   if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
@@ -1338,12 +1311,12 @@ class DateControl {
     this.allDates = createDomElement('input', '', this._container);
     this.allDates.type = 'checkbox'
     this.allDates.id = 'all-dates'
-    this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;' // TODO
+    this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
 
     this.label = createDomElement('label', '', this._container);
     this.label.innerText = 'All time'
     this.label.htmlFor = 'all-dates'
-    this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;' // TODO
+    this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .5rem;' // TODO
 
     this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
     this.slider.type = 'range'
@@ -1354,7 +1327,7 @@ class DateControl {
     this.slider.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.allDates.value ? null : this.slider.valueAsNumber);
+      this.options.onChange(this.slider.valueAsNumber);//this.allDates.value ? null : this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
       this.detectChanges();
@@ -1378,7 +1351,7 @@ class DateControl {
 
   onExternalDateChange(date) {
     if (date === null) {
-      // TODO
+      this.allDates.checked = true;
     } else {
       if (date && this.slider.valueAsNumber !== date) {
         this.slider.valueAsNumber = date;
@@ -1524,8 +1497,7 @@ class LegendControl {
 
 // Cache for the number of items in the legend, per style and zoom level
 const legendEntriesCount = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(key => [key, {}])
 );
 
@@ -1649,10 +1621,7 @@ const onMapZoom = zoom => {
   // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
   //   stay within the bounds of the earth.
   const legendZoom = Math.max(Math.floor(zoom), 6);
-  const shownStyle = knownStyles[selectedStyle].styles.date && dateControl.active
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
-  const numberOfLegendEntries = legendEntriesCount[shownStyle][legendZoom] ?? 100;
+  const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
     zoom: legendZoom,
