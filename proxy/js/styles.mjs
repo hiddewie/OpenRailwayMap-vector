@@ -781,15 +781,19 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        state === 'razed' ? ['global-state', 'showRazedInfrastructure'] : true,
         ['==', ['get', 'state'], state],
         ['==', ['get', 'tunnel'], true],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                  : true, 'visible',
+          'none',
+        ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
@@ -811,15 +815,19 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        state === 'razed' ? ['global-state', 'showRazedInfrastructure'] : true,
         ['==', ['get', 'state'], state],
         ['==', ['get', 'tunnel'], true],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                  : true, 'visible',
+          'none',
+        ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
@@ -895,16 +903,20 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        state === 'razed' ? ['global-state', 'showRazedInfrastructure'] : true,
         ['==', ['get', 'state'], state],
         ['!=', ['==', ['get', 'bridge'], true], true],
         ['!=', ['get', 'tunnel'], true],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                  : true, 'visible',
+          'none',
+        ],
         'line-join': 'round',
         'line-cap': 'butt',
         'line-sort-key': sort,
@@ -926,16 +938,20 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        state === 'razed' ? ['global-state', 'showRazedInfrastructure'] : true,
         ['==', ['get', 'state'], state],
         ['!=', ['==', ['get', 'bridge'], true], true],
         ['!=', ['get', 'tunnel'], true],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                  : true, 'visible',
+          'none',
+        ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
@@ -1027,15 +1043,19 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        state === 'razed' ? ['global-state', 'showRazedInfrastructure'] : true,
         ['==', ['get', 'state'], state],
         ['==', ['get', 'bridge'], true],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                  : true, 'visible',
+          'none',
+        ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
@@ -1296,7 +1316,7 @@ const historicalRailwayLine = (text, layers) => [
         'line-join': 'round',
         'line-cap': 'butt',
         'line-sort-key': sort,
-        'visibility': ['match',
+        'visibility': ['case',
           ['global-state', 'openHistoricalMap'], 'visible',
           'none',
         ],
@@ -1324,7 +1344,7 @@ const historicalRailwayLine = (text, layers) => [
         'line-join': 'round',
         'line-cap': 'butt',
         'line-sort-key': sort,
-        'visibility': ['match',
+        'visibility': ['case',
           ['global-state', 'openHistoricalMap'], 'visible',
           'none',
         ],
@@ -1768,8 +1788,8 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-           ['!=', ['get', 'feature'], 'yard'], // Yards only have an outline
-['match', ['get', 'state'],
+        ['!=', ['get', 'feature'], 'yard'], // Yards only have an outline
+        ['match', ['get', 'state'],
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
           'abandoned', ['global-state', 'showAbandonedInfrastructure'],
@@ -1831,6 +1851,15 @@ const layers = {
         ],
         'line-dasharray': dasharray,
       },
+      layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : true, 'visible',
+          'none',
+        ],
+      }
     })),
     {
       id: 'railway_platforms_polygon',
@@ -1916,12 +1945,7 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
-      filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
-        ['==', ['get', 'state'], state],
-      ].filter(it => it !== true),
+      filter: ['==', ['get', 'state'], state],
       paint: {
         'line-color': ['case',
           // Use outline color of feature, without taking state into account
@@ -1937,6 +1961,15 @@ const layers = {
         'line-width': 2 ,
         'line-dasharray': dasharray,
       },
+      layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : true, 'visible',
+          'none',
+        ],
+      }
     })),
     ...railwayLine(
       ['step', ['zoom'],
@@ -2990,7 +3023,7 @@ const layers = {
         ],
       },
       layout: {
-        'visibility': ['match',
+        'visibility': ['case',
           ['global-state', 'openHistoricalMap'], 'visible',
           'none',
         ],
@@ -3254,7 +3287,7 @@ const layers = {
         ],
       },
       layout: {
-        'visibility': ['match',
+        'visibility': ['case',
           ['global-state', 'openHistoricalMap'], 'visible',
           'none',
         ],
@@ -4550,18 +4583,24 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        state === 'construction' ? ['global-state', 'showConstructionInfrastructure'] : true,
-        state === 'proposed' ? ['global-state', 'showProposedInfrastructure'] : true,
-        state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure'] : true,
         ['!=', ['get', 'operator'], null],
         ['==', ['get', 'state'], state],
-      ].filter(it => it !== true),
+      ],
       paint: {
         'line-color': ['get', 'operator_color'],
         'line-opacity': 0.3,
         'line-width': 2 ,
         'line-dasharray': dasharray,
       },
+      layout: {
+        'visibility': ['case',
+          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
+            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
+              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
+                : true, 'visible',
+          'none',
+        ],
+    }
     })),
     ...railwayLine(
       ['coalesce', ['get', 'primary_operator'], ''],
