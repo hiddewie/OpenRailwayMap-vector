@@ -95,7 +95,7 @@ for (const tag of signals.tags) {
 }
 for (const signal of signals.features) {
   const region = signal.country ? countryNames.of(signal.country) : 'Worldwide';
-  const icon_url = `${BASE_URL}/symbols/${signal.icon.default}.svg`;
+  const icon_url = `${BASE_URL}/symbols/${signal.exampleIcon ?? signal.icon[0].default}.svg`;
 
   for (const tag of signal.tags) {
     if (tag.tag.endsWith(':form') || tag.tag.endsWith(':type')) continue; // don't include these tags multiple times

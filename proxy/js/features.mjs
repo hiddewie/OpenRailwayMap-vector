@@ -17,7 +17,7 @@ const electrification_signals = all_signals.features.filter(feature => feature.t
 // TODO add links to documentation
 
 const requireUniqueEntries = array => {
-  const count = Object.groupBy(array, it => it[0]);
+  const count = Object.groupBy(array.filter(it => it[0]), it => it[0]);
   if (Object.values(count).some(it => it.length > 1)) {
     const offendingEntries = Object.entries(count).filter(it => it[1].length > 1).map(it => it[0]).join(', ');
     throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
@@ -43,37 +43,40 @@ const featureLinks = {
   },
 };
 
+function allIconCombinations(feature) {
+  const allIcons = feature.icon.map(icon => [
+    {name: icon.description, icon: icon.default ? [icon.default] : []},
+    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: [iconCase.example ?? iconCase.value]}))),
+  ])
+
+  let combinations = allIcons[0]
+  allIcons.slice(1).forEach(icons => {
+    const newCombinations = []
+
+    combinations.forEach(combination => {
+      icons.forEach(icon => {
+        newCombinations.push({
+          name: [combination.name, icon.name].filter(it => it).join(', '),
+          icon: icon.icon ? [...combination.icon, ...icon.icon] : combination.icon,
+        })
+      })
+    })
+
+    combinations = newCombinations
+  })
+
+  const combinationsWithoutName = combinations.filter(combination => !combination.name)
+  const combinationsWithName = combinations.filter(combination => combination.name)
+
+  return [
+    ...[...new Set(combinationsWithoutName.map(combination => combination.icon.join('|')))].map(icon => [icon, {country: feature.country, name: feature.description}]),
+    ...combinationsWithName.map(combination => [combination.icon.join('|'), {country: feature.country, name: `${feature.description} (${combination.name})`}]),
+  ]
+}
+
 const generateSignalFeatures = (features, types) =>
   requireUniqueEntries([
-    ...features.flatMap(feature => [
-      [
-        feature.icon.default,
-        {
-          country: feature.country,
-          name: feature.description,
-        }
-      ],
-      ...(
-        feature.icon.match
-          ? [
-            ...[...new Set(
-              feature.icon.cases
-                .filter(iconCase => !iconCase.description)
-                .map(iconCase => iconCase.value)
-            )].map(iconCaseValue => [iconCaseValue, {
-              country: feature.country,
-              name: feature.description,
-            }]),
-            ...feature.icon.cases
-              .filter(iconCase => iconCase.description)
-              .map(iconCase => [iconCase.value, {
-                country: feature.country,
-                name: `${feature.description} (${iconCase.description})`,
-              }]),
-          ]
-          : []
-      ),
-    ]),
+    ...features.flatMap(allIconCombinations),
     ...types.map(type => [
       `general/signal-unknown-${type.type}`,
       {
@@ -90,7 +93,7 @@ const generateSignalFeatures = (features, types) =>
 
 // TODO move icon SVGs to proxy
 const railwayLineFeatures = {
-  labelProperty: 'standard_label',
+  labelProperties: ['standard_label'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     railway_lines.features.map(feature => [
@@ -281,7 +284,7 @@ const poiFeatures = layer => ({
 // TODO move tram / metro stops to stations
 const stationFeatures = {
   featureProperty: 'feature',
-  labelProperty: 'name',
+  labelProperties: ['localized_name', 'name'],
   featureLinks: featureLinks.openstreetmap,
   features: requireUniqueEntries(
     stations.features.map(feature => [feature.feature, {name: feature.description}])
@@ -304,6 +307,15 @@ const stationFeatures = {
     },
     network: {
       name: 'Network',
+    },
+    position: {
+      name: 'Position',
+    },
+    yard_purpose: {
+      name: 'Yard purpose',
+    },
+    yard_hump: {
+      name: 'Yard hump',
     },
     wikidata: {
       name: 'Wikidata',
@@ -340,8 +352,16 @@ const stationFeatures = {
 const features = {
   'high-railway_line_high': railwayLineFeatures,
   'openrailwaymap_low-railway_line_high': railwayLineFeatures,
+  'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
+  'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
+  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
+  'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
+  'gauge_railway_line_low-gauge_railway_line_low': railwayLineFeatures,
+  'loading_gauge_railway_line_low-loading_gauge_railway_line_low': railwayLineFeatures,
+  'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
+  'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureProperty: 'type',
     featureLinks: featureLinks.openhistoricalmap,
     features: {
@@ -435,7 +455,7 @@ const features = {
   },
   'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureLinks: featureLinks.openhistoricalmap,
     features: {
       station: {
@@ -450,6 +470,15 @@ const features = {
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
+  'openrailwaymap_standard-standard_railway_grouped_station_areas': {
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      station_area_group: {
+        name: 'Station area group',
+        type: 'relation',
+      },
+    },
+  },
   'openrailwaymap_standard-standard_railway_turntables': {
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -471,7 +500,7 @@ const features = {
         type: 'polygon',
       },
     },
-    labelProperty: 'name',
+    labelProperties: ['name'],
     properties: {
       ref: {
         name: 'Reference',
@@ -519,7 +548,7 @@ const features = {
         type: 'line',
       },
     },
-    labelProperty: 'ref',
+    labelProperties: ['ref'],
     properties: {
       height: {
         name: 'Height',
@@ -530,6 +559,20 @@ const features = {
       tactile_paving: {
         name: 'Tactile paving',
       },
+    }
+  },
+  'openrailwaymap_standard-standard_railway_stop_positions': {
+    featureLinks: featureLinks.openstreetmap,
+    labelProperties: ['name'],
+    features: {
+      stop_position: {
+        name: 'Stop position',
+      },
+    },
+    properties: {
+      type: {
+        name: 'Type',
+      }
     }
   },
   'openrailwaymap_standard-standard_station_entrances': {
@@ -687,15 +730,33 @@ const features = {
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
-    featureProperty: 'feature0',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature0: {
+        name: 'Primary signal',
+        format: {
+          lookup: 'speed_railway_signals',
+        },
+      },
       feature1: {
         name: 'Secondary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_speed-speed_railway_signals',
+          lookup: 'speed_railway_signals',
         },
       },
       ref: {
@@ -747,36 +808,57 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
-    featureProperty: 'feature0',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature0: {
+        name: 'Primary signal',
+        format: {
+          lookup: 'signals_railway_signals',
+        },
+      },
       feature1: {
         name: 'Secondary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature2: {
         name: 'Tertiary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature3: {
         name: 'Quaternary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
         },
       },
       feature4: {
         name: 'Quinary signal',
         format: {
-          // Recursive feature lookup
-          lookup: 'openrailwaymap_signals-signals_railway_signals',
+          lookup: 'signals_railway_signals',
+        },
+      },
+      feature5: {
+        name: 'Senary signal',
+        format: {
+          lookup: 'signals_railway_signals',
         },
       },
       ref: {
@@ -837,7 +919,7 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_signal_boxes': {
-    labelProperty: 'name',
+    labelProperties: ['name'],
     featureLinks: featureLinks.openstreetmap,
     features: {
       'signal_box': {
@@ -887,10 +969,29 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_signals': {
-    featureProperty: 'feature',
+    featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
-    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
+    features: {
+      signal: {
+        name: 'Signal',
+      },
+      buffer_stop: {
+        name: 'Buffer stop',
+      },
+      derail: {
+        name: 'Derailer',
+      },
+      vacancy_detection: {
+        name: 'Vacancy detection',
+      },
+    },
     properties: {
+      feature: {
+        name: 'Signal',
+        format: {
+          lookup: 'electrification_signals',
+        },
+      },
       direction_both: {
         name: 'both directions',
       },
@@ -983,12 +1084,66 @@ const features = {
       },
     },
   },
+  'openrailwaymap_electrification-electrification_substation': {
+    featureProperty: 'feature',
+    featureLinks: featureLinks.openstreetmap,
+    labelProperties: ['name'],
+    features: {
+      traction: {
+        name: 'Traction substation',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      location: {
+        name: 'Location',
+      },
+      operator: {
+        name: 'Operator',
+      },
+      voltage: {
+        name: 'Voltage',
+        format: {
+          template: '%s V',
+        },
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+        format: {
+          country_prefix: {}
+        },
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
+  },
   'openrailwaymap_operator-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
 
   search: {
-    labelProperty: 'label',
+    labelProperties: ['label'],
     featureLinks: featureLinks.openstreetmap,
     features: [],
     properties: {
@@ -1018,6 +1173,15 @@ const features = {
         name: feature.legend,
       },
     ])),
+  },
+  speed_railway_signals: {
+    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
+  },
+  signals_railway_signals: {
+    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
+  },
+  electrification_signals: {
+    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
   },
 
   boolean: {

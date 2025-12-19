@@ -1,6 +1,5 @@
 services:
   db:
-    image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
     build:
       context: db
     ports:
@@ -10,21 +9,13 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - PG_WORK_MEM
       - PG_MAINTENANCE_WORK_MEM
-      - PGDATA=/var/lib/postgresql/postgres-data
+      # Custom directory so it is not part of a VOLUME
+      - PGDATA=/data/postgresql
       - POSTGRES_DB=gis
-    healthcheck:
-      test: pg_isready -U postgres -d gis
-      interval: 1s
-      timeout: 1s
-      retries: 3
-      start_period: 5m
 
   import:
-    image: ghcr.io/hiddewie/openrailwaymap-import:latest
     build:
       dockerfile: import/Dockerfile
-      cache_from:
-        - ghcr.io/hiddewie/openrailwaymap-import:latest
     command:
       - import
     depends_on:
@@ -40,22 +31,27 @@ services:
       - OSM2PGSQL_NUMPROC
       - OSM2PGSQL_DATAFILE
 
+  import-test:
+    build:
+      dockerfile: import/Dockerfile
+      target: test
+
   data:
-    image: ghcr.io/hiddewie/openrailwaymap-data:latest
+    image: openrailwaymap-data
     build:
       context: data
-      dockerfile: Dockerfile
     command:
-      - sleep
-      - inf
+      - 'sleep'
+      - 'inf'
 
   martin:
-    image: ghcr.io/hiddewie/openrailwaymap-martin:latest
     build:
       dockerfile: martin.Dockerfile
     depends_on:
       db:
         condition: service_healthy
+      import:
+        condition: service_completed_successfully
     environment:
       - DATABASE_URL=postgresql://postgres@db:5432/gis
     ulimits:
@@ -70,8 +66,7 @@ services:
         - action: rebuild
           path: symbols
 
-  martin-proxy:
-    image: ghcr.io/hiddewie/openrailwaymap-proxy:latest
+  proxy:
     build:
       dockerfile: proxy.Dockerfile
     ports:
@@ -96,10 +91,28 @@ services:
         - action: rebuild
           path: features
 
+  proxy-test:
+    image: ghcr.io/orange-opensource/hurl:6.1.1@sha256:0fafe31238304394bcba7ab49509dcbb4356798b6a99973d41ef722f6cbbb1e9
+    depends_on:
+      proxy:
+        condition: service_healthy
+    volumes:
+      - ./proxy/test/proxy.hurl:/hurl/proxy.hurl
+    command: [
+      '--test',
+      '--verbose',
+      '--variable', 'base_url=http://proxy:8000',
+      '/hurl/proxy.hurl'
+    ]
+
   api:
-    image: ghcr.io/hiddewie/openrailwaymap-api:latest
     build:
       context: api
+    depends_on:
+      db:
+        condition: service_healthy
+      import:
+        condition: service_completed_successfully
     environment:
       - PORT=5000
       - HOST=0.0.0.0
@@ -112,3 +125,17 @@ services:
       watch:
         - action: rebuild
           path: api
+
+  api-test:
+    image: ghcr.io/orange-opensource/hurl:6.1.1@sha256:0fafe31238304394bcba7ab49509dcbb4356798b6a99973d41ef722f6cbbb1e9
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./api/test/api.hurl:/hurl/api.hurl
+    command: [
+      '--test',
+      '--verbose',
+      '--variable', 'base_url=http://api:5000/api',
+      '/hurl/api.hurl'
+    ]

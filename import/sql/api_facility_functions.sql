@@ -9,7 +9,7 @@ $$ LANGUAGE plpgsql
   LEAKPROOF
   PARALLEL SAFE;
 
-CREATE OR REPLACE FUNCTION openrailwaymap_name_rank(tsquery_str tsquery, tsvec_col tsvector, route_count INTEGER, feature TEXT, station TEXT) RETURNS INTEGER AS $$
+CREATE OR REPLACE FUNCTION openrailwaymap_name_rank(tsquery_str tsquery, tsvec_col tsvector, importance NUMERIC, feature TEXT, station TEXT) RETURNS NUMERIC AS $$
 DECLARE
   factor FLOAT;
 BEGIN
@@ -21,7 +21,7 @@ BEGIN
   IF tsvec_col @@ tsquery_str THEN
     factor := 2.0;
   END IF;
-  RETURN (factor * COALESCE(route_count, 0))::INTEGER;
+  RETURN (factor * COALESCE(importance, 0))::NUMERIC;
 END;
 $$ LANGUAGE plpgsql
   IMMUTABLE
@@ -30,11 +30,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_name(
   input_name text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -52,7 +54,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "description" text[],
   "latitude" double precision,
   "longitude" double precision,
-  "rank" integer
+  "rank" numeric
 ) AS $$
   BEGIN
     -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
@@ -61,6 +63,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         b.osm_ids,
         b.osm_types,
         b.name,
+        b.localized_name,
         b.feature,
         b.state,
         b.railway_ref,
@@ -84,6 +87,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
           a.osm_ids,
           a.osm_types,
           a.name,
+          a.localized_name,
           a.feature,
           a.state,
           a.railway_ref,
@@ -107,6 +111,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.osm_ids,
             fs.osm_types,
             fs.name,
+            COALESCE(fs.name_tags['name:' || input_language], fs.name) as localized_name,
             fs.feature,
             fs.state,
             fs.railway_ref,
@@ -124,7 +129,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.description,
             ST_X(ST_Transform(fs.geom, 4326)) AS latitude,
             ST_Y(ST_Transform(fs.geom, 4326)) AS longitude,
-            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, fs.route_count::INTEGER, fs.feature, fs.station) AS rank
+            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, fs.importance::numeric, fs.feature, fs.station) AS rank
           FROM openrailwaymap_facilities_for_search fs
           WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name)))
         ) AS a
@@ -138,11 +143,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   input_ref text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -169,13 +176,14 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
+        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
         s.feature,
         s.state,
         s.railway_ref,
         s.station,
         s.uic_ref,
-        ARRAY[s.operator] AS operator,
-        ARRAY[s.network] AS network,
+        s.operator AS operator,
+        s.network AS network,
         ARRAY[s.wikidata] AS wikidata,
         ARRAY[s.wikimedia_commons] AS wikimedia_commons,
         ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,
@@ -196,11 +204,13 @@ $$ LANGUAGE plpgsql
 
 CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
   input_uic_ref text,
+  input_language text,
   input_limit integer
 ) RETURNS TABLE(
   "osm_ids" bigint[],
   "osm_types" char[],
   "name" text,
+  "localized_name" text,
   "feature" text,
   "state" text,
   "railway_ref" text,
@@ -227,13 +237,14 @@ CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
+        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
         s.feature,
         s.state,
         s.railway_ref,
         s.station,
         s.uic_ref,
-        ARRAY[s.operator] AS operator,
-        ARRAY[s.network] AS network,
+        s.operator AS operator,
+        s.network AS network,
         ARRAY[s.wikidata] AS wikidata,
         ARRAY[s.wikimedia_commons] AS wikimedia_commons,
         ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,

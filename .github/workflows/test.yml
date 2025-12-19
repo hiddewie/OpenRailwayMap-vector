@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: ${{ github.ref_name != 'master' }}
 
 jobs:
-  import:
-    name: Import data
+  test:
+    name: Build and test
 
     strategy:
       matrix:
@@ -58,214 +58,58 @@ jobs:
         run: |
           curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 
-      - name: Start database
-        env:
-          OSM2PGSQL_DATAFILE: berlin.osm.pbf
-        run: |
-          docker compose build db
-          docker compose up --no-build --wait db
+      - name: Build containers
+        uses: docker/bake-action@v6
+        with:
+          load: true
+          targets: db,import,import-test,api,martin,proxy
+          set: |
+            db.cache-from=type=gha,scope=db-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('db.cache-to=type=gha,mode=max,scope=db-{0}', runner.arch) || '' }}
+            import.cache-from=type=gha,scope=import-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('import.cache-to=type=gha,mode=max,scope=import-{0}', runner.arch) || '' }}
+            import-test.cache-from=type=gha,scope=import-test-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('import-test.cache-to=type=gha,mode=max,scope=import-test-{0}', runner.arch) || '' }}
+            api.cache-from=type=gha,scope=api-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{0}', runner.arch) || '' }}
+            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('martin.cache-to=type=gha,mode=max,scope=martin-{0}', runner.arch) || '' }}
+            proxy.cache-from=type=gha,scope=proxy-${{ runner.arch }}
+            ${{ github.ref_name == 'master' && format('proxy.cache-to=type=gha,mode=max,scope=proxy-{0}', runner.arch) || '' }}
 
-      - name: Build import image
+      - name: Start database
         run: |
-          docker compose build import
-          if [[ "${{ github.ref_name }}" = "master" ]]; then
-            docker compose push import
-          fi
+          docker compose up --wait db
+
+      - name: Run import tests
+        run: |
+          docker compose run --rm import-test
 
       - name: Import data
         env:
           OSM2PGSQL_DATAFILE: berlin.osm.pbf
         run: |
-          docker compose run import import
-
-      - name: Prepare and save database image
-        run: |
-          docker compose stop db
-          DB_CONTAINER_ID="$(docker compose ps --all --format json | jq -r 'select(.Service == "db") | .ID')"
-          docker commit "$DB_CONTAINER_ID" ghcr.io/hiddewie/openrailwaymap-import-db:latest
-          docker save ghcr.io/hiddewie/openrailwaymap-import-db:latest > ${{ runner.temp }}/openrailwaymap-import-db.tar
-
-      - name: Upload database artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}/openrailwaymap-import-db.tar
-
-  build-api:
-    name: Build API
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - import
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build API
-        run: |
-          docker compose build api
-
-      - name: Save API image
-        run: |
-          docker save ghcr.io/hiddewie/openrailwaymap-api:latest > ${{ runner.temp }}/openrailwaymap-api.tar
-
-      - name: Upload API artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}/openrailwaymap-api.tar
-
-  test-api:
-    name: Test API
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - build-api
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Hurl
-        env:
-          VERSION: '6.1.1'
-        run: |
-          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
-          sudo apt update
-          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
-
-      - name: Download database artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}
-
-      - name: Load database image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
-
-      - name: Download API artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}
-
-      - name: Load API image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
-
-      - name: Start database
-        run: |
-          docker compose up --no-build --wait db
+          docker compose run --rm --no-deps import import
 
       - name: Start API
         run: |
-          docker compose up --wait --no-build api
+          docker compose up --wait --no-deps api
 
       - name: Run API tests
-        working-directory: api
         run: |
-          hurl --test --verbose --variable base_url=http://localhost:5000/api test/api.hurl
-
-  test-proxy:
-    name: Test proxy
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - import
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Hurl
-        env:
-          VERSION: '6.1.1'
-        run: |
-          curl --location --remote-name "https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl_${VERSION}_$(dpkg --print-architecture).deb"
-          sudo apt update
-          sudo apt install "./hurl_${VERSION}_$(dpkg --print-architecture).deb"
-
-      - name: Download database artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}
-
-      - name: Load database image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
-
-      - name: Start database
-        run: |
-          docker compose up --no-build --wait db
+          docker compose up --no-deps api-test
 
       - name: Start tile server
         run: |
-          docker compose build martin
-          docker compose up --no-build --detach martin
+          docker compose up --detach --no-deps martin
 
-      - name: Start web server
+      - name: Start proxy
         run: |
-          docker compose build martin-proxy
-          docker compose up --no-build --wait martin-proxy
+          docker compose up --wait --no-deps proxy
 
       - name: Run proxy tests
-        working-directory: proxy
         run: |
-          hurl --test --verbose --variable base_url=http://localhost:8000 test/proxy.hurl
+          docker compose run --no-deps proxy-test
 
       - name: Download preset
         if: always()
@@ -280,74 +124,6 @@ jobs:
           path: preset.zip
           if-no-files-found: warn
 
-  test-ui:
-    name: Test UI
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.runs-on }}
-
-    needs:
-      - test-proxy
-      - test-api
-      - build-api
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Download database artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-import-db
-          path: ${{ runner.temp }}
-
-      - name: Load database image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-import-db.tar | docker load
-
-      - name: Download API artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ runner.arch }}-openrailwaymap-api
-          path: ${{ runner.temp }}
-
-      - name: Load API image
-        run: |
-          cat ${{ runner.temp }}/openrailwaymap-api.tar | docker load
-
-      - name: Start database
-        run: |
-          docker compose up --no-build --wait db
-
-      - name: Start tile server
-        run: |
-          docker compose build martin
-          docker compose up --no-build --detach martin
-
-      - name: Start web server
-        run: |
-          docker compose build martin-proxy
-          docker compose up --no-build --wait martin-proxy
-
-      - name: Start API
-        run: |
-          docker compose up --wait --no-build api
-
       - name: Run UI tests
         uses: cypress-io/github-action@v6
         with:
@@ -361,3 +137,8 @@ jobs:
           name: ${{ runner.arch }}-screenshots
           path: proxy/test/ui/cypress/screenshots
           if-no-files-found: warn
+
+      - name: Print logs
+        if: always()
+        run: |
+          docker compose logs

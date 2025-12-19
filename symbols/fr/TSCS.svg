@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="6.211358" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 3.173828 55.536011 L 996.826172 55.536011 L 996.826172 1049.188354 L 3.173828 1049.188354 Z M 3.173828 55.536011 " transform="matrix(0.016, 0, 0, 0.016, 0, -0.837795)"/>
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 0.960938 0.960938 L 15.039062 0.960938 L 15.039062 15.039062 L 0.960938 15.039062 Z M 0.960938 0.960938 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 11 9.617188 L 9.722656 9.617188 L 9.722656 14.417969 L 11 14.417969 Z M 11 9.617188 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 6.03125 1.640625 L 4.753906 1.640625 L 4.753906 6.441406 L 6.03125 6.441406 Z M 6.03125 1.640625 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 11 9.617188 L 6.03125 5.78125 L 4.75 6.441406 L 9.722656 10.273438 Z M 11 9.617188 "/>
+</svg>

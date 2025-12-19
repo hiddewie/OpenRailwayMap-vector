@@ -16,24 +16,38 @@ Content-Type: application/json
 jsonpath "$" count == 20
 jsonpath "$[0].name" == "Berlin Hauptbahnhof (tief)"
 jsonpath "$[1].name" == "S+U Hauptbahnhof"
-jsonpath "$[2].name" == "Berlin Hauptbahnhof"
-jsonpath "$[3].name" == "Hauptbahnhof"
+jsonpath "$[2].name" == "Hauptbahnhof"
+jsonpath "$[3].name" == "Berlin Hauptbahnhof"
 jsonpath "$[4].name" == "Berlin Südkreuz"
 jsonpath "$[5].name" == "Südkreuz (Ringbahn)"
 jsonpath "$[6].name" == "Südkreuz (Nord-Süd)"
-jsonpath "$[7].name" == "Berlin-Spandau"
-jsonpath "$[8].name" == "Spandau"
-jsonpath "$[9].name" == "Berlin Ostbahnhof"
-jsonpath "$[10].name" == "Ostbahnhof"
-jsonpath "$[11].name" == "Berlin Ostkreuz (Ringbahn-F)"
-jsonpath "$[12].name" == "Gesundbrunnen"
-jsonpath "$[13].name" == "Ostkreuz (Ringbahn)"
-jsonpath "$[14].name" == "Berlin Ostkreuz (Stadtbahn-F)"
-jsonpath "$[15].name" == "Ostkreuz"
-jsonpath "$[16].name" == "Berlin Gesundbrunnen"
-jsonpath "$[17].name" == "Berlin Ostkreuz (Ostbahn)"
-jsonpath "$[18].name" == "Alexanderplatz"
-jsonpath "$[19].name" == "Berlin Alexanderplatz"
+jsonpath "$[7].name" == "Berlin Nordost"
+jsonpath "$[8].name" == "Berlin Greifswalder Straße"
+jsonpath "$[9].name" == "Berlin-Grünau"
+jsonpath "$[10].name" == "Berlin-Spandau"
+jsonpath "$[11].name" == "Berlin-Marienfelde Gbf"
+jsonpath "$[12].name" == "Spandau"
+jsonpath "$[13].name" == "Berlin-Tempelhof"
+jsonpath "$[14].name" == "Berlin-Schönholz"
+jsonpath "$[15].name" == "Berlin Ostbahnhof"
+jsonpath "$[16].name" == "Ostbahnhof"
+jsonpath "$[17].name" == "Gesundbrunnen"
+jsonpath "$[18].name" == "Berlin Gesundbrunnen"
+jsonpath "$[19].name" == "Berlin-Neukölln"
+
+# Facility request with language
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Berlin Ostbahnhof
+lang: en
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$" count == 2
+jsonpath "$[0].name" == "Ostbahnhof"
+jsonpath "$[0].localized_name" == "Ostbahnhof"
+jsonpath "$[1].name" == "Berlin Ostbahnhof"
+jsonpath "$[1].localized_name" == "Berlin Ostbahnhof railway station"
 
 # Facility request with limit
 GET {{base_url}}/facility
@@ -80,11 +94,11 @@ HTTP 200
 jsonpath "$" count == 7
 jsonpath "$[0].name" == "Berlin-Spandau"
 jsonpath "$[1].name" == "Spandau"
-jsonpath "$[2].name" == "Berlin-Spandau Gbf"
-jsonpath "$[3].name" == "Berlin-Spandau West"
-jsonpath "$[4].name" == "Berlin-Spandau Mitte"
-jsonpath "$[5].name" == "Berlin-Spandau Ost"
-jsonpath "$[6].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[2].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[3].name" == "Berlin-Spandau Gbf"
+jsonpath "$[4].name" == "Berlin-Spandau West"
+jsonpath "$[5].name" == "Berlin-Spandau Mitte"
+jsonpath "$[6].name" == "Berlin-Spandau Ost"
 
 # Facility request with space
 GET {{base_url}}/facility
@@ -95,11 +109,11 @@ HTTP 200
 jsonpath "$" count == 7
 jsonpath "$[0].name" == "Berlin-Spandau"
 jsonpath "$[1].name" == "Spandau"
-jsonpath "$[2].name" == "Berlin-Spandau Gbf"
-jsonpath "$[3].name" == "Berlin-Spandau West"
-jsonpath "$[4].name" == "Berlin-Spandau Mitte"
-jsonpath "$[5].name" == "Berlin-Spandau Ost"
-jsonpath "$[6].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[2].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[3].name" == "Berlin-Spandau Gbf"
+jsonpath "$[4].name" == "Berlin-Spandau West"
+jsonpath "$[5].name" == "Berlin-Spandau Mitte"
+jsonpath "$[6].name" == "Berlin-Spandau Ost"
 
 # Facility request for Spandau
 GET {{base_url}}/facility
@@ -110,13 +124,13 @@ HTTP 200
 jsonpath "$" count == 9
 jsonpath "$[0].name" == "Berlin-Spandau"
 jsonpath "$[1].name" == "Spandau"
-jsonpath "$[2].name" == "Altstadt Spandau"
-jsonpath "$[3].name" == "Rathaus Spandau"
-jsonpath "$[4].name" == "Berlin-Spandau Gbf"
-jsonpath "$[5].name" == "Berlin-Spandau West"
-jsonpath "$[6].name" == "Berlin-Spandau Mitte"
-jsonpath "$[7].name" == "Berlin-Spandau Ost"
-jsonpath "$[8].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[2].name" == "Berlin-Spandau Johannesstift"
+jsonpath "$[3].name" == "Berlin-Spandau Gbf"
+jsonpath "$[4].name" == "Rathaus Spandau"
+jsonpath "$[5].name" == "Altstadt Spandau"
+jsonpath "$[6].name" == "Berlin-Spandau West"
+jsonpath "$[7].name" == "Berlin-Spandau Mitte"
+jsonpath "$[8].name" == "Berlin-Spandau Ost"
 
 # Facility request with with diacritics
 GET {{base_url}}/facility
@@ -201,7 +215,7 @@ jsonpath "$" count == 3
 jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
 jsonpath "$[0].feature" == "tram_stop"
 jsonpath "$[0].state" == "present"
-jsonpath "$[0].rank" == 32
+jsonpath "$[0].rank" == 34
 jsonpath "$[0].osm_ids" count == 4
 jsonpath "$[0].osm_ids[0]" == 244129991
 jsonpath "$[0].osm_ids[1]" == 271777826

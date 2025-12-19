@@ -1,6 +1,7 @@
 import contextlib
 import os
 from typing import Annotated
+import sys
 
 import asyncpg
 from fastapi import FastAPI
@@ -14,6 +15,9 @@ from openrailwaymap_api.status_api import StatusAPI
 from openrailwaymap_api.replication_api import ReplicationAPI
 from openrailwaymap_api.wikidata_api import WikidataAPI
 
+DEFAULT_HTTP_HEADERS = {
+  'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
+}
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
@@ -28,7 +32,7 @@ async def lifespan(app):
         print('Connected to database')
         app.state.database = pool
 
-        async with httpx.AsyncClient(timeout=3.0) as http_client:
+        async with httpx.AsyncClient(timeout=3.0, headers=DEFAULT_HTTP_HEADERS) as http_client:
             print('Created HTTP client')
             app.state.http_client = http_client
 
@@ -72,10 +76,11 @@ async def facility(
         name: Annotated[str | None, Query()] = None,
         ref: Annotated[str | None, Query()] = None,
         uic_ref: Annotated[str | None, Query()] = None,
+        lang: Annotated[str | None, Query()] = None,
         limit: Annotated[int, Query(ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_FACILITY_LIMIT,
 ):
     api = FacilityAPI(app.state.database)
-    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit)
+    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit, language=lang)
 
 
 @app.get("/api/milestone")

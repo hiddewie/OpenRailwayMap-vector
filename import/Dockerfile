@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build-lua
+FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-lua
 
 WORKDIR /build
 
@@ -11,7 +11,7 @@ RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
   node tags.lua.js \
     > /build/tags.lua
 
-FROM node:22-alpine AS build-signals
+FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-signals
 
 WORKDIR /build
 
@@ -23,7 +23,37 @@ RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_fea
   node signal_features.sql.js \
     > /build/signal_features.sql
 
-FROM debian:trixie-slim
+FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-operators
+
+WORKDIR /build
+
+RUN npm install yaml
+
+RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js \
+  --mount=type=bind,source=features/operators.yaml,target=operators.yaml \
+  node operators.sql.js \
+    > /build/operators.sql
+
+FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb AS test
+
+# https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    lua5.4 \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get clean
+
+COPY --from=build-lua \
+  /build/tags.lua tags.lua
+
+COPY import/openrailwaymap.lua openrailwaymap.lua
+COPY import/test test
+
+CMD ["lua", "test/test_all.lua"]
+
+FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
@@ -60,6 +90,9 @@ COPY --from=build-lua \
 
 COPY --from=build-signals \
   /build/signal_features.sql sql/signal_features.sql
+
+COPY --from=build-operators \
+  /build/operators.sql sql/operators.sql
 
 ENTRYPOINT ["/openrailwaymap/docker-startup.sh"]
 

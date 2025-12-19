@@ -8,30 +8,16 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
 
-Import the data:
-```shell
-docker compose run --build import import
+Start the services with:
 ```
-The import process will filter the file before importing it. The filtered file will be stored in the `data/filtered` directory, so future imports of the same data file can reuse the filtered data file.
-
-Start the tile server:
-```shell
-docker compose up --build --watch martin
+docker compose up --build --watch
 ```
 
-Prepare and start the API:
-```shell
-docker compose up --build --watch api
-```
+The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `proxy`). The import can take a few minutes depending on the amount of data to be imported.
 
-Start the web server:
-```shell
-docker compose up --build --watch martin-proxy
-```
+Docker Compose will automatically rebuild and restart the `martin` and `proxy` containers if relevant files are modified.
 
 The OpenRailwayMap is now available on http://localhost:8000.
-
-Docker Compose will automatically rebuild and restart the `martin` and `martin-proxy` containers if relevant files are modified.
 
 ### Making changes
 
@@ -74,14 +60,14 @@ SSL is supported by generating a trusted certificate, and installing it in the p
 - Create a file `compose.override.yaml` with 
   ```yaml
   services:
-    martin-proxy:
+    proxy:
       volumes:
         - './localhost.pem:/etc/nginx/ssl/certificate.pem'
         - './localhost-key.pem:/etc/nginx/ssl/key.pem'
   ```
 - Restart the proxy with:
   ```shell
-  docker compose up --build --watch martin-proxy
+  docker compose up --build --watch proxy
   ```
 
 The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
@@ -90,18 +76,33 @@ You can modify the TLS port 443 to port 8443 [in the Compose configuration](./co
 
 ## Tests
 
-Tests use [*hurl*](https://hurl.dev/docs/installation.html).
+### Import tests
 
-Run tests against the API:
+The import tests verify the correctness of the Lua import configuration.
 
+Run the tests with:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:5000/api api/test/api.hurl
+docker compose run --rm --build import-test
 ```
 
-Run tests against the proxy:
+If the process exists successfully, the tests have succeeded. If not, the assertion error will be displayed.
 
+### Tile tests
+
+Tile tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the API:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
+docker compose run --build --no-deps api-test
+```
+
+### Proxy tests
+
+Proxy tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the proxy:
+```shell
+docker compose run --build --no-deps proxy-test
 ```
 
 ## Development
@@ -114,6 +115,9 @@ You can view the generated files:
 ```shell
 docker build --target build-signals --tag build-signals --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-signals /build/signal_features.sql | less
+
+docker build --target build-operators --tag build-operators --file import/Dockerfile . \
+  && docker run --rm --entrypoint cat build-operators /build/operators.sql | less
 
 docker build --target build-lua --tag build-lua --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-lua /build/tags.lua | less

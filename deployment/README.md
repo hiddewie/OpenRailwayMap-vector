@@ -147,10 +147,21 @@ Ensure the SSL certificate and key are installed in `/etc/nginx/ssl`.
 Create a file `compose.override.yaml`:
 ```yaml
 services:
-  martin-proxy:
-    volumes:
-      - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
-      - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
+  db:
+    image: ghcr.io/hiddewie/openrailwaymap-import-db:latest
+
+  martin:
+    image: ghcr.io/hiddewie/openrailwaymap-martin:latest
+
+  api:
+    image: ghcr.io/hiddewie/openrailwaymap-api:latest
+
+  proxy:
+    image: ghcr.io/hiddewie/openrailwaymap-proxy:latest
+    build:
+      args:
+        PUBLIC_PROTOCOL: https
+        PUBLIC_HOST: openrailwaymap.app
     environment:
       PUBLIC_PROTOCOL: https
       PUBLIC_HOST: openrailwaymap.app
@@ -161,6 +172,9 @@ services:
       CLIENT_CACHE_TTL_API_STALE: 604800
       CLIENT_CACHE_TTL_TILES_FRESH: 8182
       CLIENT_CACHE_TTL_TILES_STALE: 604800
+    volumes:
+      - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
+      - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'
 ```
 
 ### System service

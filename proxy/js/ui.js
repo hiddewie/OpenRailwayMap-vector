@@ -15,6 +15,10 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
+const backgroundHillShadeDisabledControl = document.getElementById('backgroundHillShadeDisabled');
+const backgroundHillShadeEnabledControl = document.getElementById('backgroundHillShadeEnabled');
+const stationLabelNameControl = document.getElementById('stationLabelName');
+const stationLabelReferenceControl = document.getElementById('stationLabelReference');
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
@@ -26,6 +30,10 @@ const futureInfrastructureConstructionControl = document.getElementById('futureI
 const futureInfrastructureConstructionProposedControl = document.getElementById('futureInfrastructureConstructionProposed');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
+const localizationDisabledControl =  document.getElementById('localizationDisabled');
+const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
+const localizationCustomControl =  document.getElementById('localizationCustom');
+const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
 const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
@@ -35,13 +43,36 @@ const aboutBackdrop = document.getElementById('about-backdrop');
 
 const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_};
 
+const flagEmojiTranslations = {
+  EN: 'GB',
+  JA: 'JP',
+  ZH: 'CN',
+  FA: 'IR',
+  UK: 'UA',
+  KA: 'GE',
+  HY: 'AM',
+  HE: 'IS',
+  KO: 'KR',
+  CS: 'CZ',
+  GL: 'ES',
+}
 function getFlagEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
+  const codePoints = (flagEmojiTranslations[countryCode.toUpperCase()] || countryCode.toUpperCase())
     .split('')
     .map(char =>  127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
 }
+
+let locale = new Intl.Locale(navigator.language);
+window.addEventListener('languagechange', () => {
+  locale = new Intl.Locale(navigator.language);
+  console.info(`Browser language changed to ${locale.language}`);
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    onStyleChange();
+  }
+})
 
 const icons = {
   railway: {
@@ -81,32 +112,43 @@ function registerLastSearchResults(results) {
   map.getSource('search').setData(data);
 }
 
-function facilitySearchQuery(type, term) {
-  const encoded = encodeURIComponent(term)
+function facilitySearchUrl(type, term, language) {
+  const url = new URL(`${location.origin}/api/facility`)
+
+  if (language) {
+    url.searchParams.set('lang', language)
+  }
 
   switch (type) {
     case 'name':
-      return `name=${encoded}`;
+      url.searchParams.set('name', term)
+      break;
+
     case 'ref':
-      return `ref=${encoded}`;
+      url.searchParams.set('ref', term)
+      break;
+
     case 'uic_ref':
-      return `uic_ref=${encoded}`;
+      url.searchParams.set('uic_ref', term)
+      break;
+
     case 'all':
     default:
-      return `q=${encoded}`;
+      url.searchParams.set('q', term)
   }
+
+  return url
 }
 
-function searchForFacilities(type, term) {
+function searchForFacilities(type, term, language) {
   if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    const queryString = facilitySearchQuery(type, term)
-    fetch(`${location.origin}/api/facility?${queryString}`)
+    fetch(facilitySearchUrl(type, term, language))
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
-        label: item.name,
+        label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
       })))
       .then(result => {
@@ -239,6 +281,13 @@ function showConfiguration() {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+
+  if (configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade) {
+    backgroundHillShadeEnabledControl.checked = true
+  } else {
+    backgroundHillShadeDisabledControl.checked = true
+  }
+
   const theme = configuration.theme ?? defaultConfiguration.theme;
   if (theme === 'system') {
     themeSystemControl.checked = true;
@@ -273,6 +322,26 @@ function showConfiguration() {
     editorIDControl.checked = true;
   }
 
+  const stationLowZoomLabel = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel
+  if (stationLowZoomLabel === 'label') {
+    stationLabelReferenceControl.checked = true
+  } else if (stationLowZoomLabel === 'name') {
+    stationLabelNameControl.checked = true
+  }
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    localizationAutomaticControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'disabled') {
+    localizationDisabledControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'custom') {
+    localizationCustomControl.checked = true;
+    localizationCustomLanguageControl.disabled = false;
+  }
+  localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
+
   configurationBackdrop.style.display = 'block';
 }
 
@@ -280,11 +349,23 @@ function hideConfiguration() {
   configurationBackdrop.style.display = 'none';
 }
 
+function hideLegend() {
+  legend.style.display = 'none';
+}
+
+function showLegend() {
+  legend.style.display = 'block';
+}
+
+function isLegendShown() {
+  return legend.style.display === 'block';
+}
+
 function toggleLegend() {
-  if (legend.style.display === 'block') {
-    legend.style.display = 'none';
+  if (isLegendShown()) {
+    hideLegend();
   } else {
-    legend.style.display = 'block';
+    showLegend();
   }
 }
 
@@ -336,7 +417,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term)
+  searchForFacilities(data.type, data.term, configuredLanguage())
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -366,6 +447,12 @@ document.addEventListener('keydown', (event) => {
     hideSearch();
     hideConfiguration();
     hideNews();
+    hideAbout();
+    hideLegend();
+    if (popup) {
+      popup.remove();
+      popup = null;
+    }
   }
 });
 
@@ -591,6 +678,59 @@ function updateBackgroundMapStyle() {
   backgroundMap.setStyle(buildBackgroundMapStyle());
 }
 
+function enableHillShade() {
+  updateConfiguration('backgroundHillShade', false)
+  updateHillShadeOnMap();
+}
+
+function disableHillShade() {
+  updateConfiguration('backgroundHillShade', true)
+  updateHillShadeOnMap();
+}
+
+function updateHillShadeOnMap() {
+  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
+  map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
+}
+
+function onStationLabelChange(stationlabel) {
+  updateConfiguration('stationLowZoomLabel', stationlabel);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
+}
+
+function disableLocalization() {
+  updateConfiguration('localization', 'disabled');
+  onStyleChange();
+}
+
+function automaticLocalization() {
+  updateConfiguration('localization', 'automatic');
+  onStyleChange();
+}
+
+function customLocalization(language) {
+  updateConfiguration('localization', 'custom');
+  updateConfiguration('localizationCustomLanguage', language);
+  onStyleChange();
+}
+
+function configuredLanguage() {
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    return locale.language;
+  } else if (localization === 'disabled') {
+    return null;
+  } else if (localization === 'custom') {
+    return configuration.localizationCustomLanguage;
+  }
+}
+
 function resolveTheme(configuredTheme) {
   return configuredTheme === 'system'
     ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
@@ -643,9 +783,255 @@ function updateBackgroundMapContainer() {
   backgroundMapContainer.style.filter = `saturate(${clamp(configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation, 0.0, 1.0)}) opacity(${clamp(configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity, 0.0, 1.0)})`;
 }
 
+/**
+ * Based on https://github.com/osm-americana/openstreetmap-americana/blob/1c65cc6/shieldlib/src/screen_gfx.ts
+ */
+async function transposeImageData(context, source) {
+  const imageData = context.createImageData(source.data.width, source.data.height);
+
+  for (let i = 0; i < source.data.data.length; i += 4) {
+    imageData.data[i] = source.data.data[i]; // Red
+    imageData.data[i + 1] = source.data.data[i + 1]; // Green
+    imageData.data[i + 2] = source.data.data[i + 2]; // Blue
+    imageData.data[i + 3] = source.data.data[i + 3]; // Alpha
+  }
+
+  return await createImageBitmap(imageData)
+}
+
+function transposeSdfImageData(context, images, width, height) {
+  const imageData = context.createImageData(width, height)
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+
+      let distanceField = 0;
+      for (const image of images) {
+        if (
+          image.sdfOffset.x <= x && x < image.sdfOffset.x + image.sdfImage.data.width &&
+          image.sdfOffset.y <= y && y < image.sdfOffset.y + image.sdfImage.data.height
+        ) {
+          const imageI = 4 * ((y - image.sdfOffset.y) * image.sdfImage.data.width + (x - image.sdfOffset.x))
+          distanceField = Math.max(distanceField, image.sdfImage.data.data[imageI + 3])
+        }
+      }
+
+      const i = 4 * (y * width + x);
+      // Indices 0, 1 and 2 of pixel are unused for SDF images
+      imageData.data[i + 3] = distanceField;
+    }
+  }
+
+  return imageData
+}
+
+const imageMatcher = /^(?<id>[^@]+)(@(?<position>center|bottom|top|right|left))?$/
+function loadImages(imageIds) {
+  return imageIds.map(imageId => {
+    const parsed = imageId.match(imageMatcher)
+    if (!parsed) {
+      throw new Error(`Could not parse image ID '${imageId}'`)
+    }
+
+    const id = parsed.groups.id
+    const position = parsed.groups.position ?? 'center'
+
+    const image = map.getImage(id)
+    if (!image) {
+      throw new Error(`Could not load image ${id}`)
+    }
+
+    const sdfId = `sdf:${id}`
+    const sdfImage = map.getImage(sdfId)
+    if (!image) {
+      throw new Error(`Could not load SDF image ${sdfId}`)
+    }
+
+    return {
+      id,
+      sdfId,
+      image,
+      sdfImage,
+      position,
+    }
+  });
+}
+
+function layoutImages(images) {
+  // Ignore position of first image
+  // The width and height will grow as more images are composed
+  let width = images[0].image.data.width
+  let height = images[0].image.data.height
+
+  // Offset: top left corner of the image
+  // The offsets of all but the first image will be updated with their layed out position
+  const offsetImages = images.map(image => ({
+    ...image,
+    offset: {
+      x: 0,
+      y: 0,
+    },
+    sdfOffset: null, // Will be filled in the last step
+  }))
+
+  // Offset of the top left corner of the composed image
+  // Goal: allow expanding the composed image to the top or left without updating the offset of all other images
+  // The global offset will be updated as images are added to the top or left of existing images
+  const globalOffset = {
+    x: 0,
+    y: 0,
+  }
+
+  for (const image of offsetImages.slice(1)) {
+    switch (image.position) {
+      case 'center':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = Math.max(height, image.image.data.height)
+        break;
+
+      case 'bottom':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
+
+      case 'top':
+        image.offset.x = globalOffset.x + width / 2 - image.image.data.width / 2
+        image.offset.y = globalOffset.y - image.image.data.height
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = Math.max(width, image.image.data.width)
+        height = height + image.image.data.height
+        break;
+
+      case 'right':
+        image.offset.x = globalOffset.x + width
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
+
+      case 'left':
+        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
+        globalOffset.x = Math.min(globalOffset.x, image.offset.x)
+        globalOffset.y = Math.min(globalOffset.y, image.offset.y)
+        width = width + image.image.data.width
+        height = Math.max(height, image.image.data.height)
+        break;
+    }
+  }
+
+  // Process SDF images which are larger than the normal images due to padding pixels
+  offsetImages.forEach(image => {
+    width = Math.max(width, image.offset.x - globalOffset.x + image.sdfImage.data.width)
+    height = Math.max(height, image.offset.y - globalOffset.y + image.sdfImage.data.height)
+  })
+  offsetImages.forEach(image => {
+    globalOffset.x = Math.min(globalOffset.x, image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2)
+    globalOffset.y = Math.min(globalOffset.y, image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2)
+  })
+
+  // Get rid of global offset
+  offsetImages.forEach(image => {
+    image.offset.x -= globalOffset.x
+    image.offset.y -= globalOffset.y
+  })
+
+  // Store the SDF image offset using the SDF image size
+  offsetImages.forEach(image => {
+    image.sdfOffset = {
+      x: Math.floor(image.offset.x + image.image.data.width / 2 - image.sdfImage.data.width / 2),
+      y: Math.floor(image.offset.y + image.image.data.height / 2 - image.sdfImage.data.height / 2),
+    }
+  })
+
+  return {
+    width,
+    height,
+    images: offsetImages
+  }
+}
+
+/**
+ * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
+ */
+async function composeImages(imageIds) {
+  const loadedImages = loadImages(imageIds)
+  const { width, height, images } = layoutImages(loadedImages);
+
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext('2d')
+  canvas.width = width;
+  canvas.height = height;
+
+  const imageDatas = await Promise.all(images.map(async image => ({
+    data: await transposeImageData(context, image.image),
+    offset: image.offset,
+  })))
+  for (const {data, offset} of imageDatas) {
+    context.drawImage(data, offset.x, offset.y)
+  }
+  const renderedImageData = context.getImageData(0, 0, width, height);
+
+  const canvas2 = document.createElement("canvas");
+  const context2 = canvas2.getContext('2d')
+  canvas2.width = width;
+  canvas2.height = height;
+  const sdfImageData = transposeSdfImageData(context2, images, width, height)
+
+  return {
+    width,
+    height,
+    imageData: new Uint8Array(renderedImageData.data.buffer),
+    sdfImageData: new Uint8Array(sdfImageData.data.buffer),
+    pixelRatio: images[0].image.pixelRatio,
+  };
+}
+
+const generatedImages = {};
+/**
+ * Async function is not actually supported by Maplibre GL.
+ * See https://github.com/mapbox/mapbox-gl-js/issues/9018 and https://maplibre.org/maplibre-gl-js/docs/examples/display-a-remote-svg-symbol/ (displays a warning)
+ */
+async function generateImage(maps, ids) {
+  const rawImageIds = ids.startsWith('sdf:') ? ids.substr(4) : ids
+
+  // Ensure every image is generated only once
+  if (!generatedImages[rawImageIds]) {
+    generatedImages[rawImageIds] = true;
+
+    const imageIds = rawImageIds.split('|')
+    if (!imageIds) {
+      console.warn(`ignoring invalid missing image: ${rawImageIds}`);
+      return;
+    }
+
+    console.info(`Generating image for ${rawImageIds}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
+
+    // Compose the images together into a normal image and SDF image
+    const {width, height, imageData, sdfImageData, pixelRatio} = await composeImages(imageIds)
+
+    maps.forEach(map => {
+      map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
+      map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
+    })
+  }
+}
+
 const defaultConfiguration = {
   backgroundSaturation: 0.0,
   backgroundOpacity: 0.35,
+  backgroundHillShade: false,
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
@@ -653,6 +1039,8 @@ const defaultConfiguration = {
   futureInfrastructure: 'construction-proposed',
   editor: 'id',
   view: {},
+  stationLowZoomLabel: 'label',
+  localization: 'automatic',
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -689,6 +1077,7 @@ const backgroundMap = new maplibregl.Map({
   style: buildBackgroundMapStyle(),
   attributionControl: false,
   interactive: false,
+  renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
   // Ensure the background map loads using the hash, but does not update it whenever the map is updated.
   ...determineZoomCenterFromHash(window.location.hash),
@@ -704,6 +1093,7 @@ const map = new maplibregl.Map({
   minPitch: 0,
   maxPitch: 0,
   attributionControl: false,
+  renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
 });
 
@@ -757,11 +1147,39 @@ function rewriteStylePathsToOrigin(style) {
     )
 }
 
+// Rewrite source URLs to append the language query parameter
+function addLanguageToSupportedSources(style, language) {
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => {
+        if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
+          const parsedUrl = new URL(source.url)
+
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          }
+
+          return [
+            key,
+            {
+              ...source,
+              url: parsedUrl.href,
+            }
+          ];
+        } else {
+          return [key, source]
+        }
+      })
+  )
+}
+
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate;
   style.state.theme.default = selectedTheme;
+
+  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
   style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
@@ -773,28 +1191,44 @@ function rewriteGlobalStateDefaults(style) {
   style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
 }
 
+function toggleHillShadeLayer(style) {
+  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
+  const layer = style.layers.find(layer => layer.id === 'hillshade')
+  if (layer) {
+    layer.layout = {
+      ...layer.layout,
+      visibility: hillshadeVisible ? 'visible' : 'none'
+    }
+  }
+}
+
 let lastSetMapStyle = null;
-const onStyleChange = () => {
+let lastSetMapLanguage = null;
+function onStyleChange() {
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
   const supportsDate = knownStyles[selectedStyle].styles.date && historicalInfrastructure === 'openhistoricalmap';
   const dateActive = supportsDate && dateControl.active;
   const mapStyle = dateActive
     ? knownStyles[selectedStyle].styles.date
     : knownStyles[selectedStyle].styles.default
+  const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle) {
-    lastSetMapStyle = mapStyle;
-
+  if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
     map.setStyle(mapStyles[mapStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
+        addLanguageToSupportedSources(next, language)
         rewriteGlobalStateDefaults(next)
+        toggleHillShadeLayer(next)
         return next;
       },
     });
+  }
 
+  if (mapStyle !== lastSetMapStyle) {
+    // Change legend styles
     legendMap.setStyle(legendStyles[mapStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
@@ -813,6 +1247,9 @@ const onStyleChange = () => {
   } else if (!supportsDate && dateControl.isShown()) {
     dateControl.hide();
   }
+
+  lastSetMapStyle = mapStyle;
+  lastSetMapLanguage = language;
 
   onPageParametersChange();
 }
@@ -1267,8 +1704,8 @@ function popupContent(feature) {
   const featureProperty = featureCatalog.featureProperty || 'feature';
 
   const constructCatalogKey = propertyValue => ({
-    // Remove the variable part of the property to get the key
-    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}') : propertyValue,
+    // Remove the variable part of the property, and icon position to get the key
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/, '') : propertyValue,
     // Capture the variable part as well for display
     keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
@@ -1280,7 +1717,8 @@ function popupContent(feature) {
   if (!featureContent) {
     console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
   }
-  const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
+  // Unique labels
+  const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
 
   const determineDefaultOsmType = (properties, featureContent) => {
@@ -1288,7 +1726,7 @@ function popupContent(feature) {
       return properties.osm_type === 'N' ? 'node' : properties.osm_type == 'R' ? 'relation' : 'way';
     } else {
       const featureType = featureContent && featureContent.type || 'point';
-      return featureType === 'point' ? 'node' : 'way';
+      return featureType === 'point' ? 'node' : featureType === 'relation' ? 'relation' : 'way';
     }
   }
 
@@ -1349,7 +1787,6 @@ function popupContent(feature) {
       .join(', ');
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
-    .filter(([_, {paragraph}]) => !paragraph)
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
     .map(([property, {name, format, link, paragraph, description}]) => ({
       title: name,
@@ -1369,14 +1806,14 @@ function popupContent(feature) {
   const popupTitle = createDomElement('h5', undefined, popupContainer);
   popupTitle.innerText = featureDescription;
 
-  if (properties.icon || label) {
+  if (properties.icon || labels.length > 0) {
     const popupLabel = createDomElement('h6', undefined, popupContainer);
     if (properties.icon) {
       const popupLabelSpan = createDomElement('span', undefined, popupLabel);
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = label;
+      popupLabel.innerText = labels.join(' • ');
     }
   }
 
@@ -1525,6 +1962,8 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
+legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
@@ -1617,6 +2056,7 @@ function closestPointOnLine(point, line) {
   }
 }
 
+let popup = null;
 map.on('click', event => {
   const features = map.queryRenderedFeatures(event.point);
   if (features.length > 0) {
@@ -1640,7 +2080,12 @@ map.on('click', event => {
       'left': [iconWidth, 0],
       'right': [-iconWidth, 0]
     }
-    new maplibregl.Popup({offset: popupOffsets})
+
+    if (popup) {
+      popup.remove();
+    }
+
+    popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
       .setDOMContent(popupContent(feature))
       .addTo(map);

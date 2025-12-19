@@ -77,21 +77,45 @@ function reduce_data() {
   $PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
 }
 
+function transform_data() {
+  # Yard nodes which are contained in a landuse=railway area, assume the landuse area as yard geometry.
+  $PSQL -c "update stations s set way = l.way from landuse l where ST_Within(s.way, l.way) and feature = 'yard' and GeometryType(s.way) = 'POINT' and s.osm_type = 'N';"
+}
+
 function create_update_functions_views() {
   echo "Post processing imported data"
+
+  # Functions
   $PSQL -f sql/tile_functions.sql
   $PSQL -f sql/api_facility_functions.sql
   $PSQL -f sql/api_milestone_functions.sql
+
+  # YAML data
   $PSQL -f sql/signal_features.sql
+  $PSQL -f sql/operators.sql
+
+  # Post processing
   $PSQL -f sql/get_station_importance.sql
+  $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/stations_clustered.sql
+
+  # Tile and API views on processed data
   $PSQL -f sql/tile_views.sql
   $PSQL -f sql/api_facility_views.sql
 }
 
 function refresh_materialized_views() {
   echo "Updating materialized views"
+  $PSQL -f sql/update_operators.sql
   $PSQL -f sql/update_signal_features.sql
   $PSQL -f sql/update_station_importance.sql
+  osm2pgsql-gen \
+    --database gis \
+    --style openrailwaymap.lua
+  $PSQL -f sql/update_stations_clustered.sql
   $PSQL -f sql/update_api_views.sql
 }
 
@@ -108,6 +132,7 @@ import)
   enable_disable_extensions
   import_db
   reduce_data
+  transform_data
   create_update_functions_views
   print_summary
 
