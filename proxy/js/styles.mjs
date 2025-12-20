@@ -1659,7 +1659,7 @@ const layers = {
       ],
       paint: {
         'fill-color': ['case',
-          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], colors.styles.standard.past,
+          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], colors.styles.standard.past,
           ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors.styles.standard.future,
           ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
           ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
@@ -3005,7 +3005,7 @@ const layers = {
         ],
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
-          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], 'past',
+          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], 'past',
           ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], 'future',
           ['get', 'station_size'],
         ]]],
@@ -4754,7 +4754,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
-          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved']]], 'past',
+          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], 'past',
           ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], 'future',
           ['get', 'station_size'],
         ]]],
