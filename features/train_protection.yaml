@@ -36,6 +36,7 @@ train_protections:
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
+  - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
@@ -255,6 +256,10 @@ features:
   - train_protection: tasc
     tags:
       - { tag: 'railway:tasc', value: 'yes' }
+
+  - train_protection: ats
+    tags:
+      - { tag: 'railway:ats', values: ['yes', 'B', 'Dx', 'S', 'S1', 'S2', 'S1;S2', 'Sx', 'P', 'Ps'] }
 
   - train_protection: tbl
     tags:
