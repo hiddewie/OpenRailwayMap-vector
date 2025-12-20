@@ -10,7 +10,7 @@ Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://pod
 
 Start the services with:
 ```
-docker compose up --build --watch
+docker compose up --build --watch db import martin proxy api
 ```
 
 The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `proxy`). The import can take a few minutes depending on the amount of data to be imported.
