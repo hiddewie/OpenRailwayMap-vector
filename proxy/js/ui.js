@@ -1259,6 +1259,11 @@ class StyleControl {
         this.options.onStyleChange(style)
       }
 
+      const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
+      layerConfigurationButton.onclick = () => {
+        showConfiguration()
+      }
+
       this.buttons[style] = button;
     });
 
