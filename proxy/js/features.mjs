@@ -162,6 +162,12 @@ const railwayLineFeatures = {
         template: '%d V',
       },
     },
+    maximum_current: {
+      name: 'Maximum current',
+      format: {
+        template: '%d A',
+      },
+    },
     future_frequency: {
       name: 'Future frequency',
       format: {
