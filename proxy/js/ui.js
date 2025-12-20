@@ -534,9 +534,11 @@ function determineParametersFromHash(hash) {
     ? hashObject.style
     : defaultStyle;
 
-  const date = (hashObject.date && !isNaN(parseFloat(hashObject.date)))
-    ? parseFloat(hashObject.date)
-    : defaultDate;
+  const date = hashObject.date === 'all'
+    ? null
+    : (hashObject.date && !isNaN(parseFloat(hashObject.date)))
+      ? parseFloat(hashObject.date)
+      : defaultDate;
 
   return {
     style,
@@ -566,7 +568,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? date : undefined;
+  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? (date === null ? 'all' : (date === defaultDate ? null : date)) : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -1302,32 +1304,44 @@ class DateControl {
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
     this.icon.onclick = () => {
+      this.allDates.classList.toggle('hide-mobile-show-desktop');
+      this.allDates.classList.toggle('show-mobile-hide-desktop');
+      this.label.classList.toggle('hide-mobile-show-desktop');
+      this.label.classList.toggle('show-mobile-hide-desktop');
       this.slider.classList.toggle('hide-mobile-show-desktop');
       this.slider.classList.toggle('show-mobile-hide-desktop');
       this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
       this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
     };
 
-    this.allDates = createDomElement('input', '', this._container);
-    this.allDates.type = 'checkbox'
+    this.allDates = createDomElement('input', 'all-dates hide-mobile-show-desktop', this._container);
     this.allDates.id = 'all-dates'
+    this.allDates.type = 'checkbox'
     this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
+    this.allDates.checked = this.options.initialSelection === null;
+    this.allDates.onchange = () => {
+      this.detectChanges();
+      this.updateDisplay();
+      this.options.onChange(this.allDates.checked ? null : this.slider.valueAsNumber);
+    }
 
-    this.label = createDomElement('label', '', this._container);
+    this.label = createDomElement('label', 'all-dates-label hide-mobile-show-desktop', this._container);
     this.label.innerText = 'All time'
     this.label.htmlFor = 'all-dates'
     this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .5rem;' // TODO
 
     this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
+    this.slider.id = 'range'
     this.slider.type = 'range'
     this.slider.min = 1758
-    this.slider.max = (new Date()).getFullYear()
+    this.slider.max = defaultDate
     this.slider.step = 1
     this.slider.valueAsNumber = this.options.initialSelection ?? defaultDate;
+    this.slider.disabled = this.options.initialSelection === null;
     this.slider.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.slider.valueAsNumber);//this.allDates.value ? null : this.slider.valueAsNumber);
+      this.options.onChange(this.allDates.checked ? null : this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
       this.detectChanges();
@@ -1351,12 +1365,25 @@ class DateControl {
 
   onExternalDateChange(date) {
     if (date === null) {
-      this.allDates.checked = true;
+      if (this.allDates.checked !== true) {
+        this.allDates.checked = true;
+      }
+      // Leave the date slider value alone
+      if (this.slider.disabled !== true) {
+        this.slider.disabled = true;
+      }
     } else {
-      if (date && this.slider.valueAsNumber !== date) {
+      if (this.allDates.checked !== false) {
+        this.allDates.checked = false;
+      }
+      if (this.slider.valueAsNumber !== date) {
         this.slider.valueAsNumber = date;
       }
+      if (this.slider.disabled !== false) {
+        this.slider.disabled = false;
+      }
     }
+
     this.detectChanges();
     this.updateDisplay();
   }
@@ -1375,23 +1402,23 @@ class DateControl {
 
   detectChanges() {
     const previouslyActive = this.active;
-    this.active = this.slider.valueAsNumber !== defaultDate;
+    this.active = this.allDates.checked || this.slider.valueAsNumber !== defaultDate;
 
     if (this.active === true && previouslyActive !== true) {
       this.icon.classList.add('active')
       this.dateDisplay.classList.add('active')
-      this.options.onActivation()
     } else if (this.active === false && previouslyActive !== false) {
       this.icon.classList.remove('active')
       this.dateDisplay.classList.remove('active')
-      this.options.onDeactivation();
     }
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.active
-      ? this.slider.value
-      : 'present'
+    this.dateDisplay.innerText = this.allDates.checked
+      ? 'all'
+      : this.slider.valueAsNumber === defaultDate
+        ? 'present'
+        : this.slider.value;
   }
 }
 
@@ -1567,8 +1594,6 @@ class AboutControl {
 const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
-  onActivation: () => onStyleChange(),
-  onDeactivation: () => onStyleChange(),
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
