@@ -568,7 +568,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? date : undefined;
+  hashObject.date = dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -743,6 +743,10 @@ function onEditorChange(editor) {
 
 function onHistoricalInfrastructureChange(historicalInfrastructure) {
   updateConfiguration('historicalInfrastructure', historicalInfrastructure);
+
+  if (historicalInfrastructure !== 'openhistoricalmap') {
+    selectDate(defaultDate)
+  }
 
   map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
   map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
@@ -1154,7 +1158,7 @@ function addLanguageToSupportedSources(style, language) {
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
-  style.state.allDates.default = selectedDate === 'all' ? true : false;
+  style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
 
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
@@ -1185,7 +1189,6 @@ let lastSetMapLanguage = null;
 function onStyleChange() {
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
   const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
-  const dateActive = supportsDate && dateControl.active;
   const language = configuredLanguage();
 
   if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
@@ -1231,7 +1234,7 @@ function onStyleChange() {
 
 const onDateChange = () => {
   map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
-  map.setGlobalStateProperty('allDates', selectedDate === 'all' ? true : false);
+  map.setGlobalStateProperty('allDates', selectedDate === 'all');
   onPageParametersChange();
 }
 

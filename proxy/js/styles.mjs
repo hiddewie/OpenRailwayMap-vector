@@ -785,7 +785,7 @@ const railwayLine = (text, layers) => [
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
                   : true, 'visible',
           'none',
         ],
@@ -820,7 +820,7 @@ const railwayLine = (text, layers) => [
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
                   : true, 'visible',
           'none',
         ],
@@ -950,7 +950,7 @@ const railwayLine = (text, layers) => [
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
                   : true, 'visible',
           'none',
         ],
@@ -1063,7 +1063,7 @@ const railwayLine = (text, layers) => [
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
                   : true, 'visible',
           'none',
         ],
@@ -1847,6 +1847,7 @@ const layers = {
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
           'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
           true,
         ],
       ],
@@ -1917,7 +1918,8 @@ const layers = {
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : true, 'visible',
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
+                  : true, 'visible',
           'none',
         ],
       }
@@ -3133,6 +3135,7 @@ const layers = {
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
           'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
           true,
         ],
       ],
@@ -3234,6 +3237,7 @@ const layers = {
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
         'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+        'razed', ['global-state', 'showRazedInfrastructure'],
         true,
       ],
       paint: {
@@ -4624,6 +4628,7 @@ const layers = {
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
           'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
           true,
         ],
       ],
@@ -4663,7 +4668,8 @@ const layers = {
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : true, 'visible',
+                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
+                  : true, 'visible',
           'none',
         ],
     }
