@@ -1185,12 +1185,11 @@ function onStyleChange() {
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
   const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
   const dateActive = supportsDate && dateControl.active;
-  const mapStyle = selectedStyle
   const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
+  if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
-    map.setStyle(mapStyles[mapStyle], {
+    map.setStyle(mapStyles[selectedStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
@@ -1202,9 +1201,9 @@ function onStyleChange() {
     });
   }
 
-  if (mapStyle !== lastSetMapStyle) {
+  if (selectedStyle !== lastSetMapStyle) {
     // Change legend styles
-    legendMap.setStyle(legendStyles[mapStyle], {
+    legendMap.setStyle(legendStyles[selectedStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
@@ -1223,7 +1222,7 @@ function onStyleChange() {
     dateControl.hide();
   }
 
-  lastSetMapStyle = mapStyle;
+  lastSetMapStyle = selectedStyle;
   lastSetMapLanguage = language;
 
   onPageParametersChange();
@@ -1458,7 +1457,7 @@ class EditControl {
         const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
         openJOSM(josmUrl)
       } else {
-        const domain = dateControl.active
+        const domain = selectedDate !== null && selectedDate < defaultDate
           ? 'https://www.openhistoricalmap.org'
           : 'https://www.openstreetmap.org';
 
