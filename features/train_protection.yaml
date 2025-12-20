@@ -36,6 +36,9 @@ train_protections:
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
+  - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
+  - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
@@ -255,6 +258,18 @@ features:
   - train_protection: tasc
     tags:
       - { tag: 'railway:tasc', value: 'yes' }
+
+  - train_protection: ats
+    tags:
+      - { tag: 'railway:ats', values: ['yes', 'B', 'Dx', 'S', 'S1', 'S2', 'S1;S2', 'Sx', 'P', 'Ps'] }
+
+  - train_protection: atacs
+    tags:
+      - { tag: 'railway:atacs', value: 'yes' }
+
+  - train_protection: ktcs
+    tags:
+      - { tag: 'railway:ktcs', values: ['yes', '2', '3', 'M'] }
 
   - train_protection: tbl
     tags:
