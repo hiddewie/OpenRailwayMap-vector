@@ -781,7 +781,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -816,7 +816,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -858,7 +858,7 @@ const railwayLine = (text, layers) => [
     ].filter(it => it !== true),
     layout: {
       'visibility': ['case',
-        ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
       'line-join': 'round',
@@ -910,7 +910,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -946,7 +946,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -995,7 +995,7 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+            ['<', ['global-state', 'date'], defaultDate], 'none',
             'visible',
           ],
           'line-join': 'round',
@@ -1029,7 +1029,7 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+            ['<', ['global-state', 'date'], defaultDate], 'none',
             'visible',
           ],
           'line-join': 'round',
@@ -1059,7 +1059,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -1138,7 +1138,7 @@ const railwayLine = (text, layers) => [
     },
     layout: {
       'visibility': ['case',
-        ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
       'symbol-z-order': 'source',
@@ -1167,15 +1167,13 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'date'], null],
+            ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1199,15 +1197,15 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1233,15 +1231,13 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'date'], null],
+            ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1267,15 +1263,15 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1302,15 +1298,16 @@ const historicalRailwayLine = (text, layers) => [
     source: 'openhistoricalmap',
     'source-layer': 'transport_lines',
     filter: ['all',
-      ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-      ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+      ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+      ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
       ['==', ['get', 'tunnel'], 1],
       filter ?? true,
     ].filter(it => it !== true),
     layout: {
       'visibility': ['case',
         ['all',
-          ['!=', ['global-state', 'date'], defaultDate],
+          ['!', ['global-state', 'allDates']],
+          ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
         'none',
@@ -1336,8 +1333,6 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1345,7 +1340,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'date'], null],
+            ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1369,8 +1364,8 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1378,7 +1373,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1404,8 +1399,6 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1413,7 +1406,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'date'], null],
+            ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1439,8 +1432,8 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1448,7 +1441,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1479,15 +1472,23 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['any',
+          ['global-state', 'allDates'],
+          ['all',
+            ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+            ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+          ],
+        ],
         ['==', ['get', 'bridge'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['!=', ['global-state', 'date'], defaultDate],
+            ['any',
+              ['global-state', 'allDates'],
+              ['<', ['global-state', 'date'], defaultDate],
+            ],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1510,15 +1511,23 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['any',
+          ['global-state', 'allDates'],
+          ['all',
+            ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+            ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+          ],
+        ],
         ['==', ['get', 'bridge'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['!=', ['global-state', 'date'], defaultDate],
+            ['any',
+              ['global-state', 'allDates'],
+              ['<', ['global-state', 'date'], defaultDate],
+            ],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1544,15 +1553,13 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'bridge'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'date'], null],
+            ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1578,15 +1585,15 @@ const historicalRailwayLine = (text, layers) => [
       source: 'openhistoricalmap',
       'source-layer': 'transport_lines',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'bridge'], 1],
         filter ?? true,
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
           ['all',
-            ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
           'none',
@@ -1616,8 +1623,13 @@ const historicalRailwayLine = (text, layers) => [
     source: 'openhistoricalmap',
     'source-layer': 'transport_lines',
     filter: ['all',
-      ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-      ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+      ['any',
+        ['global-state', 'allDates'],
+        ['all',
+          ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+          ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ],
+      ],
       filter ?? true,
     ].filter(it => it !== true),
     paint: {
@@ -1631,7 +1643,10 @@ const historicalRailwayLine = (text, layers) => [
     layout: {
       'visibility': ['case',
         ['all',
-          ['!=', ['global-state', 'date'], defaultDate],
+          ['any',
+            ['global-state', 'allDates'],
+            ['<', ['global-state', 'date'], defaultDate],
+          ],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
         'none',
@@ -1669,7 +1684,7 @@ const railwayKmText = {
   },
   layout: {
     'visibility': ['case',
-      ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
       'visible',
     ],
     'symbol-z-order': 'source',
@@ -1703,7 +1718,7 @@ const preferredDirectionLayer = (id, filter, color) => ({
   },
   layout: {
     'visibility': ['case',
-      ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
       'visible',
     ],
     'symbol-placement': 'line',
@@ -1743,7 +1758,7 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     layout: {
       ...(layer.layout || {}),
       'visibility': ['case',
-        ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
       'icon-image': ['image', ['concat', 'sdf:', spriteExpression]],
@@ -1755,7 +1770,7 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     layout: {
       ...(layer.layout || {}),
       'visibility': ['case',
-        ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
       'icon-image': ['image', spriteExpression],
@@ -1796,6 +1811,7 @@ const layers = {
 
   /**
    * Date support:
+   * TODO
    * - A date value of `defaultDate` (present year) means only present
    * - A historical date value means only historical
    * - A null date value means both
@@ -1815,7 +1831,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -1854,7 +1870,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -1898,7 +1914,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
               : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
@@ -2130,7 +2146,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -2147,7 +2163,7 @@ const layers = {
       ],
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'line-join': 'round',
@@ -2180,7 +2196,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -2193,7 +2209,7 @@ const layers = {
       'source-layer': 'standard_railway_platform_edges',
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'line-join': 'round',
@@ -2598,7 +2614,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -2629,7 +2645,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -2671,7 +2687,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -2704,7 +2720,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -2721,7 +2737,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -2755,7 +2771,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
       },
@@ -2789,7 +2805,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -2840,7 +2856,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'text-field': '{name}',
@@ -2866,7 +2882,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'text-field': '{name}',
@@ -2894,7 +2910,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-placement': 'line',
@@ -2933,7 +2949,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -2974,7 +2990,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -3022,7 +3038,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'icon-overlap': 'always',
@@ -3165,7 +3181,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -3244,7 +3260,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           'visible',
         ],
         'symbol-z-order': 'source',
@@ -3295,8 +3311,13 @@ const layers = {
       source: 'openhistoricalmap',
       'source-layer': 'transport_points_centroids',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
-        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['any',
+          ['global-state', 'allDates'],
+          ['all',
+            ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
+            ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+          ],
+        ],
         ['==', ['get', 'class'], 'railway'],
         ['any',
           ['==', ['get', 'type'], 'station'],
@@ -3327,13 +3348,13 @@ const layers = {
         'visibility': ['case',
           ['all',
             ['global-state', 'openHistoricalMap'],
-            ['!=', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate],
+            ['!=', ['global-state', 'date'], defaultDate],
           ], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
         'icon-image': ['case',
-          ['==', ['global-state', 'date'], null], 'sdf:general/station-past',
+          ['global-state', 'allDates'], 'sdf:general/station-past',
           'sdf:general/station-small',
         ],
         'icon-overlap': 'always',
@@ -5145,6 +5166,9 @@ const makeStyle = selectedStyle => ({
   state: {
     date: {
       default: defaultDate,
+    },
+    allDates: {
+      default: false,
     },
     theme: {
       default: 'light',

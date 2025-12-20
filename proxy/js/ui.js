@@ -535,7 +535,7 @@ function determineParametersFromHash(hash) {
     : defaultStyle;
 
   const date = hashObject.date === 'all'
-    ? null
+    ? 'all'
     : (hashObject.date && !isNaN(parseFloat(hashObject.date)))
       ? parseFloat(hashObject.date)
       : defaultDate;
@@ -568,7 +568,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? (date === null ? 'all' : (date === defaultDate ? null : date)) : undefined;
+  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? (date === defaultDate ? undefined : date) : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -1153,7 +1153,8 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
-  style.state.date.default = selectedDate;
+  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
+  style.state.allDates.default = selectedDate === 'all' ? true : false;
   style.state.theme.default = selectedTheme;
 
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
@@ -1229,7 +1230,8 @@ function onStyleChange() {
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate);
+  map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
+  map.setGlobalStateProperty('allDates', selectedDate === 'all' ? true : false);
   onPageParametersChange();
 }
 
@@ -1317,11 +1319,11 @@ class DateControl {
     this.allDates.id = 'all-dates'
     this.allDates.type = 'checkbox'
     this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
-    this.allDates.checked = this.options.initialSelection === null;
+    this.allDates.checked = this.options.initialSelection === 'all';
     this.allDates.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.allDates.checked ? null : this.slider.valueAsNumber);
+      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
     }
 
     this.label = createDomElement('label', 'all-dates-label hide-mobile-show-desktop', this._container);
@@ -1335,12 +1337,12 @@ class DateControl {
     this.slider.min = 1758
     this.slider.max = defaultDate
     this.slider.step = 1
-    this.slider.valueAsNumber = this.options.initialSelection ?? defaultDate;
-    this.slider.disabled = this.options.initialSelection === null;
+    this.slider.valueAsNumber = (this.options.initialSelection === 'all' ? defaultDate : this.options.initialSelection) ?? defaultDate;
+    this.slider.disabled = this.options.initialSelection === 'all';
     this.slider.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.allDates.checked ? null : this.slider.valueAsNumber);
+      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
       this.detectChanges();
@@ -1363,7 +1365,7 @@ class DateControl {
   }
 
   onExternalDateChange(date) {
-    if (date === null) {
+    if (date === 'all') {
       if (this.allDates.checked !== true) {
         this.allDates.checked = true;
       }
@@ -1376,7 +1378,7 @@ class DateControl {
         this.allDates.checked = false;
       }
       if (this.slider.valueAsNumber !== date) {
-        this.slider.valueAsNumber = date;
+        this.slider.valueAsNumber = date ?? defaultDate;
       }
       if (this.slider.disabled !== false) {
         this.slider.disabled = false;
@@ -1457,7 +1459,7 @@ class EditControl {
         const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
         openJOSM(josmUrl)
       } else {
-        const domain = selectedDate !== null && selectedDate < defaultDate
+        const domain = selectedDate !== 'all' && selectedDate < defaultDate
           ? 'https://www.openhistoricalmap.org'
           : 'https://www.openstreetmap.org';
 
