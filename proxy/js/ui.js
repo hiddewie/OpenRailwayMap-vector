@@ -669,7 +669,7 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
+  map.setGlobalStateProperty('hillshade', hillshadeVisible);
 }
 
 function onStationLabelChange(stationlabel) {
@@ -1171,6 +1171,8 @@ function rewriteGlobalStateDefaults(style) {
   const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
   style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
   style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
+
+  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 }
 
 function toggleHillShadeLayer(style) {
@@ -1199,7 +1201,6 @@ function onStyleChange() {
         rewriteStylePathsToOrigin(next)
         addLanguageToSupportedSources(next, language)
         rewriteGlobalStateDefaults(next)
-        toggleHillShadeLayer(next)
         return next;
       },
     });
