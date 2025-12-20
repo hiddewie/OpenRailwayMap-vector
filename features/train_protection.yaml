@@ -38,6 +38,7 @@ train_protections:
   - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
   - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
@@ -265,6 +266,10 @@ features:
   - train_protection: atacs
     tags:
       - { tag: 'railway:atacs', value: 'yes' }
+
+  - train_protection: ktcs
+    tags:
+      - { tag: 'railway:ktcs', values: ['yes', '2', '3', 'M'] }
 
   - train_protection: tbl
     tags:
