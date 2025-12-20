@@ -144,7 +144,11 @@ osm2pgsql.process_node({
   },
   as_point = function () end,
 })
-assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { feature = 'station', state = 'razed', station = 'train', name_tags = {} },
+  },
+})
 
 osm2pgsql.process_way({
   tags = {

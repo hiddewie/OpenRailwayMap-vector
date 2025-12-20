@@ -306,6 +306,8 @@ body {
   vertical-align: middle;
 }
 @media (max-width: 767px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .all-dates.hide-mobile-show-desktop,
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .all-dates-label.hide-mobile-show-desktop,
   .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.hide-mobile-show-desktop {
     display: none;
   }
@@ -314,6 +316,8 @@ body {
   }
 }
 @media (min-width: 768px) {
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .all-dates.show-mobile-hide-desktop,
+  .maplibregl-ctrl-group.maplibregl-ctrl-date .all-dates-label.show-mobile-hide-desktop,
   .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input.show-mobile-hide-desktop {
     display: none;
   }

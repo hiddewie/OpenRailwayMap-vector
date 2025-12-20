@@ -366,51 +366,51 @@ const features = {
     featureLinks: featureLinks.openhistoricalmap,
     features: {
       rail: {
-        name: 'Railway',
+        name: 'Historical railway',
         type: 'line',
       },
       tram: {
-        name: 'Tram',
+        name: 'Historical tram',
         type: 'line',
       },
       light_rail: {
-        name: 'Light rail',
+        name: 'Historical light rail',
         type: 'line',
       },
       subway: {
-        name: 'Subway',
+        name: 'Historical subway',
         type: 'line',
       },
       monorail: {
-        name: 'Monorail',
+        name: 'Historical monorail',
         type: 'line',
       },
       narrow_gauge: {
-        name: 'Narrow gauge railway',
+        name: 'Historical narrow gauge railway',
         type: 'line',
       },
       miniature: {
-        name: 'Miniature railway',
+        name: 'Historical miniature railway',
         type: 'line',
       },
       funicular: {
-        name: 'Funicular',
+        name: 'Historical funicular',
         type: 'line',
       },
       construction: {
-        name: 'Railway under construction',
+        name: 'Historical railway under construction',
         type: 'line',
       },
       proposed: {
-        name: 'Proposed railway',
+        name: 'Historical proposed railway',
         type: 'line',
       },
       disused: {
-        name: 'Disused railway',
+        name: 'Historical disused railway',
         type: 'line',
       },
       abandoned: {
-        name: 'Abandoned railway',
+        name: 'Historical abandoned railway',
         type: 'line',
       },
     },
@@ -459,10 +459,18 @@ const features = {
     featureLinks: featureLinks.openhistoricalmap,
     features: {
       station: {
-        name: 'Station',
+        name: 'Historical station',
       },
       halt: {
-        name: 'Halt',
+        name: 'Historical halt',
+      },
+    },
+    properties: {
+      start_date: {
+        name: 'Since',
+      },
+      end_date: {
+        name: 'Until',
       },
     },
   },

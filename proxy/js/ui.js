@@ -22,6 +22,12 @@ const stationLabelReferenceControl = document.getElementById('stationLabelRefere
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
+const historicalInfrastructureNoneControl = document.getElementById('historicalInfrastructureNone');
+const historicalInfrastructureOpenHistoricalMapControl = document.getElementById('historicalInfrastructureOpenHistoricalMap');
+const historicalInfrastructureOpenStreetMapControl = document.getElementById('historicalInfrastructureOpenStreetMap');
+const futureInfrastructureNoneControl = document.getElementById('futureInfrastructureNone');
+const futureInfrastructureConstructionControl = document.getElementById('futureInfrastructureConstruction');
+const futureInfrastructureConstructionProposedControl = document.getElementById('futureInfrastructureConstructionProposed');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
 const localizationDisabledControl =  document.getElementById('localizationDisabled');
@@ -291,6 +297,24 @@ function showConfiguration() {
     themeLightControl.checked = true;
   }
 
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  if (futureInfrastructure === 'none') {
+    futureInfrastructureNoneControl.checked = true;
+  } else if (futureInfrastructure === 'construction') {
+    futureInfrastructureConstructionControl.checked = true
+  } else if (futureInfrastructure === 'construction-proposed') {
+    futureInfrastructureConstructionProposedControl.checked = true;
+  }
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure;
+  if (historicalInfrastructure === 'none') {
+    historicalInfrastructureNoneControl.checked = true;
+  } else if (historicalInfrastructure === 'openhistoricalmap') {
+    historicalInfrastructureOpenHistoricalMapControl.checked = true
+  } else if (historicalInfrastructure === 'openstreetmap') {
+    historicalInfrastructureOpenStreetMapControl.checked = true;
+  }
+
   const editor = configuration.editor ?? defaultConfiguration.editor;
   if (editor === 'josm') {
     editorJOSMControl.checked = true;
@@ -451,52 +475,35 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    styles: {
-      default: 'standard',
-      date: 'historical',
-    },
+    supportsDate: true,
   },
   speed: {
     name: 'Speed',
-    styles: {
-      default: 'speed',
-    },
+    supportsDate: false,
   },
   signals: {
     name: 'Train protection',
-    styles: {
-      default: 'signals',
-    },
+    supportsDate: false,
   },
   electrification: {
     name: 'Electrification',
-    styles: {
-      default: 'electrification',
-    },
+    supportsDate: false,
   },
   gauge: {
     name: 'Gauge',
-    styles: {
-      default: 'gauge',
-    },
+    supportsDate: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
-    styles: {
-      default: 'loading_gauge',
-    },
+    supportsDate: false,
   },
   track_class: {
     name: 'Track class',
-    styles: {
-      default: 'track_class',
-    },
+    supportsDate: false,
   },
   operator: {
     name: 'Operator',
-    styles: {
-      default: 'operator',
-    },
+    supportsDate: false,
   },
 };
 
@@ -507,12 +514,6 @@ const knownThemes = [
   'light',
   'dark',
 ]
-
-function layerHasDateFilter(layer) {
-  return layer.filter
-    && layer.filter[0] === 'let'
-    && layer.filter[1] === 'date'
-}
 
 function hashToObject(hash) {
   if (!hash) {
@@ -533,9 +534,11 @@ function determineParametersFromHash(hash) {
     ? hashObject.style
     : defaultStyle;
 
-  const date = (hashObject.date && !isNaN(parseFloat(hashObject.date)))
-    ? parseFloat(hashObject.date)
-    : defaultDate;
+  const date = hashObject.date === 'all'
+    ? 'all'
+    : (hashObject.date && !isNaN(parseFloat(hashObject.date)))
+      ? parseFloat(hashObject.date)
+      : defaultDate;
 
   return {
     style,
@@ -565,7 +568,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].styles.date && dateControl.active ? date : undefined;
+  hashObject.date = dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -736,6 +739,27 @@ function updateTheme() {
 
 function onEditorChange(editor) {
   updateConfiguration('editor', editor);
+}
+
+function onHistoricalInfrastructureChange(historicalInfrastructure) {
+  updateConfiguration('historicalInfrastructure', historicalInfrastructure);
+
+  if (historicalInfrastructure !== 'openhistoricalmap') {
+    selectDate(defaultDate)
+  }
+
+  map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
+  map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+
+  onStyleChange();
+}
+
+function onFutureInfrastructureChange(futureInfrastructure) {
+  updateConfiguration('futureInfrastructure', futureInfrastructure);
+
+  map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
+  map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
 }
 
 function updateBackgroundMapContainer() {
@@ -994,6 +1018,8 @@ const defaultConfiguration = {
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
+  historicalInfrastructure: 'openhistoricalmap',
+  futureInfrastructure: 'construction-proposed',
   editor: 'id',
   view: {},
   stationLowZoomLabel: 'label',
@@ -1008,14 +1034,12 @@ const legendPointToMapPoint = (zoom, [x, y]) =>
   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
 const legendStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 );
 
@@ -1133,25 +1157,45 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
-  style.state.date.default = selectedDate;
+  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
+  style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
+
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
+  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
+  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
+
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+}
+
+function toggleHillShadeLayer(style) {
+  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
+  const layer = style.layers.find(layer => layer.id === 'hillshade')
+  if (layer) {
+    layer.layout = {
+      ...layer.layout,
+      visibility: hillshadeVisible ? 'visible' : 'none'
+    }
+  }
 }
 
 let lastSetMapStyle = null;
 let lastSetMapLanguage = null;
 function onStyleChange() {
-  const supportsDate = knownStyles[selectedStyle].styles.date;
-  const dateActive = supportsDate && dateControl.active;
-  const mapStyle = dateActive
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
   const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
+  if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
-    map.setStyle(mapStyles[mapStyle], {
+    map.setStyle(mapStyles[selectedStyle], {
       validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
@@ -1162,9 +1206,9 @@ function onStyleChange() {
     });
   }
 
-  if (mapStyle !== lastSetMapStyle) {
+  if (selectedStyle !== lastSetMapStyle) {
     // Change legend styles
-    legendMap.setStyle(legendStyles[mapStyle], {
+    legendMap.setStyle(legendStyles[selectedStyle], {
       validate: false,
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
       diff: false,
@@ -1183,14 +1227,15 @@ function onStyleChange() {
     dateControl.hide();
   }
 
-  lastSetMapStyle = mapStyle;
+  lastSetMapStyle = selectedStyle;
   lastSetMapLanguage = language;
 
   onPageParametersChange();
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate);
+  map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
+  map.setGlobalStateProperty('allDates', selectedDate === 'all');
   onPageParametersChange();
 }
 
@@ -1264,27 +1309,52 @@ class DateControl {
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
     this.icon.onclick = () => {
+      this.allDates.classList.toggle('hide-mobile-show-desktop');
+      this.allDates.classList.toggle('show-mobile-hide-desktop');
+      this.label.classList.toggle('hide-mobile-show-desktop');
+      this.label.classList.toggle('show-mobile-hide-desktop');
       this.slider.classList.toggle('hide-mobile-show-desktop');
       this.slider.classList.toggle('show-mobile-hide-desktop');
       this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
       this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
     };
+
+    this.allDates = createDomElement('input', 'all-dates hide-mobile-show-desktop', this._container);
+    this.allDates.id = 'all-dates'
+    this.allDates.type = 'checkbox'
+    this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
+    this.allDates.checked = this.options.initialSelection === 'all';
+    this.allDates.onchange = () => {
+      this.detectChanges();
+      this.updateDisplay();
+      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+    }
+
+    this.label = createDomElement('label', 'all-dates-label hide-mobile-show-desktop', this._container);
+    this.label.innerText = 'All time'
+    this.label.htmlFor = 'all-dates'
+    this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .5rem;' // TODO
+
     this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
+    this.slider.id = 'range'
     this.slider.type = 'range'
     this.slider.min = 1758
-    this.slider.max = (new Date()).getFullYear()
+    this.slider.max = defaultDate
     this.slider.step = 1
-    this.slider.valueAsNumber = this.options.initialSelection;
+    this.slider.valueAsNumber = (this.options.initialSelection === 'all' ? defaultDate : this.options.initialSelection) ?? defaultDate;
+    this.slider.disabled = this.options.initialSelection === 'all';
     this.slider.onchange = () => {
       this.detectChanges();
       this.updateDisplay();
-      this.options.onChange(this.slider.valueAsNumber);
+      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
     }
     this.slider.oninput = () => {
       this.detectChanges();
       this.updateDisplay();
     }
+
     this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
+
     this.active = null;
 
     this.detectChanges();
@@ -1299,11 +1369,28 @@ class DateControl {
   }
 
   onExternalDateChange(date) {
-    if (date && this.slider.valueAsNumber !== date) {
-      this.slider.valueAsNumber = date;
-      this.detectChanges();
-      this.updateDisplay();
+    if (date === 'all') {
+      if (this.allDates.checked !== true) {
+        this.allDates.checked = true;
+      }
+      // Leave the date slider value alone
+      if (this.slider.disabled !== true) {
+        this.slider.disabled = true;
+      }
+    } else {
+      if (this.allDates.checked !== false) {
+        this.allDates.checked = false;
+      }
+      if (this.slider.valueAsNumber !== date) {
+        this.slider.valueAsNumber = date ?? defaultDate;
+      }
+      if (this.slider.disabled !== false) {
+        this.slider.disabled = false;
+      }
     }
+
+    this.detectChanges();
+    this.updateDisplay();
   }
 
   isShown() {
@@ -1320,23 +1407,23 @@ class DateControl {
 
   detectChanges() {
     const previouslyActive = this.active;
-    this.active = this.slider.valueAsNumber !== defaultDate;
+    this.active = this.allDates.checked || this.slider.valueAsNumber !== defaultDate;
 
     if (this.active === true && previouslyActive !== true) {
       this.icon.classList.add('active')
       this.dateDisplay.classList.add('active')
-      this.options.onActivation()
     } else if (this.active === false && previouslyActive !== false) {
       this.icon.classList.remove('active')
       this.dateDisplay.classList.remove('active')
-      this.options.onDeactivation();
     }
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.active
-      ? this.slider.value
-      : 'present'
+    this.dateDisplay.innerText = this.allDates.checked
+      ? 'all'
+      : this.slider.valueAsNumber === defaultDate
+        ? 'present'
+        : this.slider.value;
   }
 }
 
@@ -1376,7 +1463,7 @@ class EditControl {
         const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
         openJOSM(josmUrl)
       } else {
-        const domain = dateControl.active
+        const domain = selectedDate !== 'all' && selectedDate < defaultDate
           ? 'https://www.openhistoricalmap.org'
           : 'https://www.openstreetmap.org';
 
@@ -1442,8 +1529,7 @@ class LegendControl {
 
 // Cache for the number of items in the legend, per style and zoom level
 const legendEntriesCount = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(key => [key, {}])
 );
 
@@ -1513,8 +1599,6 @@ class AboutControl {
 const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
-  onActivation: () => onStyleChange(),
-  onDeactivation: () => onStyleChange(),
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
@@ -1567,10 +1651,7 @@ const onMapZoom = zoom => {
   // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
   //   stay within the bounds of the earth.
   const legendZoom = Math.max(Math.floor(zoom), 6);
-  const shownStyle = knownStyles[selectedStyle].styles.date && dateControl.active
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
-  const numberOfLegendEntries = legendEntriesCount[shownStyle][legendZoom] ?? 100;
+  const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
   legendMap.jumpTo({
     zoom: legendZoom,
