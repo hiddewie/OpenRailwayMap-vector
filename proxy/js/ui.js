@@ -568,7 +568,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? (date === defaultDate ? undefined : date) : undefined;
+  hashObject.date = knownStyles[style].supportsDate && dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
