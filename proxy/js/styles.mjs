@@ -1439,6 +1439,12 @@ const hillshade = {
       15, 0.8,
     ],
   },
+  layout: {
+    visibility: ['case',
+      ['global-state', 'hillshade'], 'visible',
+      'none',
+    ],
+  }
 }
 
 /**
@@ -4610,6 +4616,9 @@ const makeStyle = selectedStyle => ({
     stationLowZoomLabel: {
       default: 'label',
     },
+    hillshade: {
+      default: false,
+    }
   },
 });
 

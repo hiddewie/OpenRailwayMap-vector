@@ -666,7 +666,7 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
+  map.setGlobalStateProperty('hillshade', hillshadeVisible);
 }
 
 function onStationLabelChange(stationlabel) {
@@ -1136,17 +1136,7 @@ function rewriteGlobalStateDefaults(style) {
   style.state.date.default = selectedDate;
   style.state.theme.default = selectedTheme;
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
-}
-
-function toggleHillShadeLayer(style) {
-  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  const layer = style.layers.find(layer => layer.id === 'hillshade')
-  if (layer) {
-    layer.layout = {
-      ...layer.layout,
-      visibility: hillshadeVisible ? 'visible' : 'none'
-    }
-  }
+  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 }
 
 let lastSetMapStyle = null;
@@ -1167,7 +1157,6 @@ function onStyleChange() {
         rewriteStylePathsToOrigin(next)
         addLanguageToSupportedSources(next, language)
         rewriteGlobalStateDefaults(next)
-        toggleHillShadeLayer(next)
         return next;
       },
     });
