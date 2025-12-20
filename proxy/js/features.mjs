@@ -465,6 +465,14 @@ const features = {
         name: 'Historical halt',
       },
     },
+    properties: {
+      start_date: {
+        name: 'Since',
+      },
+      end_date: {
+        name: 'Until',
+      },
+    },
   },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,

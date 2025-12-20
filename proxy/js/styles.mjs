@@ -1811,10 +1811,9 @@ const layers = {
 
   /**
    * Date support:
-   * TODO
-   * - A date value of `defaultDate` (present year) means only present
-   * - A historical date value means only historical
-   * - A null date value means both
+   * - When the global state 'allDates' is true, both historical and present data is shown
+   * - When the global state 'allDates' is false, and the global state 'date' is less than the default date, only historical data is shown
+   * - When the global state 'allDates' is false, and the global state 'date' is equal to the default date, only present data is shown
    */
   standard: [
     hillshade,
@@ -1967,6 +1966,7 @@ const layers = {
           color: colors.styles.standard.main,
           dash: construction_dasharray,
           width: 1.5,
+          visibility: ['global-state', 'showConstructionInfrastructure'],
         },
         {
           id: 'railway_line_historical_proposed',
@@ -1975,6 +1975,7 @@ const layers = {
           color: colors.styles.standard.main,
           dash: proposed_dasharray,
           width: 1.5,
+          visibility: ['global-state', 'showProposedInfrastructure'],
         },
         {
           id: 'railway_line_historical_narrow_gauge',
@@ -3319,10 +3320,7 @@ const layers = {
           ],
         ],
         ['==', ['get', 'class'], 'railway'],
-        ['any',
-          ['==', ['get', 'type'], 'station'],
-          ['==', ['get', 'type'], 'halt'],
-        ],
+        ['in', ['get', 'type'], ['literal', ['station', 'halt']]],
       ],
       paint: {
         'text-color': ['case',
@@ -3348,7 +3346,10 @@ const layers = {
         'visibility': ['case',
           ['all',
             ['global-state', 'openHistoricalMap'],
-            ['!=', ['global-state', 'date'], defaultDate],
+            ['any',
+              ['global-state', 'allDates'],
+              ['<', ['global-state', 'date'], defaultDate],
+            ],
           ], 'visible',
           'none',
         ],
