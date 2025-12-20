@@ -2702,7 +2702,7 @@ const layers = {
       paint: {
         'fill-color': colors.styles.standard.turntable.fill,
       },
-      visibility: {
+      layout: {
         'visibility': ['case',
           ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
           'visible',
@@ -2719,7 +2719,7 @@ const layers = {
         'line-color': colors.styles.standard.turntable.casing,
         'line-width': turntable_casing_width,
       },
-      visibility: {
+      layout: {
         'visibility': ['case',
           ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
           'visible',
@@ -2753,7 +2753,7 @@ const layers = {
           colors.halo,
         ],
       },
-      visibility: {
+      layout: {
         'visibility': ['case',
           ['<', ['coalesce', ['global-state', 'date'], defaultDate], defaultDate], 'none',
           'visible',
@@ -3295,13 +3295,13 @@ const layers = {
       source: 'openhistoricalmap',
       'source-layer': 'transport_points_centroids',
       filter: ['all',
-        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['global-state', 'date']],
-        ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
+        ['<=', ['coalesce', ['get', 'start_decdate'], 0.0], ['coalesce', ['global-state', 'date'], 9999.0]],
+        ['<=', ['coalesce', ['global-state', 'date'], 0.0], ['coalesce', ['get', 'end_decdate'], 9999.0]],
         ['==', ['get', 'class'], 'railway'],
         ['any',
           ['==', ['get', 'type'], 'station'],
           ['==', ['get', 'type'], 'halt'],
-        ]
+        ],
       ],
       paint: {
         'text-color': ['case',
