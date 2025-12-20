@@ -266,6 +266,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
     voltage,
     frequency,
+    maximum_current,
     railway_to_int(gauges[1]) AS gaugeint0,
     gauges[1] as gauge0,
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
@@ -1484,6 +1485,7 @@ RETURN (
       electrification_label,
       voltage,
       frequency,
+      maximum_current,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1494,7 +1496,8 @@ RETURN (
       electrification_state,
       electrification_label,
       voltage,
-      frequency
+      frequency,
+      maximum_current
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1519,6 +1522,7 @@ DO $do$ BEGIN
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
+          "maximum_current": "integer",
           "future_frequency": "number",
           "future_voltage": "integer",
           "electrification_label": "string"
