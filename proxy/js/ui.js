@@ -38,6 +38,8 @@ const localizationDisabledControl =  document.getElementById('localizationDisabl
 const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
+const electrificationRailwayLineVoltageFrequencyControl = document.getElementById('electrificationRailwayLineVoltageFrequency')
+const electrificationRailwayLineMaximumCurrentControl = document.getElementById('electrificationRailwayLineMaximumCurrent')
 const backgroundMapContainer = document.getElementById('background-map');
 const legend = document.getElementById('legend');
 const legendMapContainer = document.getElementById('legend-map');
@@ -351,6 +353,13 @@ function showConfiguration(tab) {
     localizationCustomLanguageControl.disabled = false;
   }
   localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
+
+  const electrificationRailwayLine = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
+  if (electrificationRailwayLine === 'voltageFrequency') {
+    electrificationRailwayLineVoltageFrequencyControl.checked = true
+  } else if (electrificationRailwayLine === 'maximumCurrent') {
+    electrificationRailwayLineMaximumCurrentControl.checked = true
+  }
 
   configurationBackdrop.style.display = 'block';
 }
@@ -725,6 +734,17 @@ function customLocalization(language) {
   onStyleChange();
 }
 
+function configureElectrificationRailwayLine(electrification) {
+  updateConfiguration('electrificationRailwayLine', electrification);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('electrificationRailwayLine', electrification);
+  }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('electrificationRailwayLine', electrification);
+  }
+}
+
 function configuredLanguage() {
   const localization = configuration.localization ?? defaultConfiguration.localization;
   if (localization === 'automatic') {
@@ -1050,6 +1070,7 @@ const defaultConfiguration = {
   view: {},
   stationLowZoomLabel: 'label',
   localization: 'automatic',
+  electrificationRailwayLine: 'voltageFrequency'
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -1199,6 +1220,8 @@ function rewriteGlobalStateDefaults(style) {
   style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
 
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+
+  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
 }
 
 function toggleHillShadeLayer(style) {
@@ -1286,9 +1309,7 @@ class StyleControl {
       }
 
       const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-      layerConfigurationButton.onclick = () => {
-        showConfiguration(style)
-      }
+      layerConfigurationButton.onclick = () => showConfiguration(style)
 
       this.buttons[style] = button;
     });

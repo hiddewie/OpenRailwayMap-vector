@@ -5229,7 +5229,10 @@ const makeStyle = selectedStyle => ({
     },
     hillshade: {
       default: false,
-    }
+    },
+    electrificationRailwayLine: {
+      default: 'voltageFrequency',
+    },
   },
 });
 
