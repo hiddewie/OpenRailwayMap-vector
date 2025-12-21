@@ -3432,31 +3432,61 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: tram Fahrsignal mit Anmeldung LSA
-    country: DE
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: [ 'DE-AVG:f5', 'DE-BOStrab:f5' ], value: 'de/bostrab/f5-st9' }
-          - { any: [ 'DE-AVG:f3', 'DE-BOStrab:f3' ], value: 'de/bostrab/f3-st9' }
-          - { any: [ 'DE-AVG:f2', 'DE-BOStrab:f2' ], value: 'de/bostrab/f2-st9' }
-          - { any: [ 'DE-AVG:f1', 'DE-BOStrab:f1' ], value: 'de/bostrab/f1-st9' }
-        default: 'de/bostrab/f0-st9'
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:PT_priority', value: 'requested;off' }
-
   - description: tram Fahrsignal
     country: DE
+    exampleIcon: de/bostrab/f1
     icon:
+      - match: 'railway:signal:main:PT_priority'
+        cases:
+          - { exact: 'requested;off', value: 'de/bostrab/st9' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { 
+              any: [
+              'DE-AVG:f4', 'DE-BOStrab:f4',
+              'DE-AVG:f1', 'DE-BOStrab:f1',
+              'DE-AVG:f2', 'DE-BOStrab:f2',
+              'DE-AVG:f3', 'DE-BOStrab:f3',
+              'DE-AVG:f5', 'DE-BOStrab:f5',
+              ],
+              value: 'de/bostrab/fahrsignal-empty'
+            }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'DE-AVG:f4', 'DE-BOStrab:f4' ], value: 'de/bostrab/f4' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'DE-AVG:f1', 'DE-BOStrab:f1' ], value: 'de/bostrab/f1' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'DE-AVG:f2', 'DE-BOStrab:f2' ], value: 'de/bostrab/f2' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'DE-AVG:f3', 'DE-BOStrab:f3' ], value: 'de/bostrab/f3' }
+        position: bottom
+
       - match: 'railway:signal:main:states'
         cases:
           - { any: [ 'DE-AVG:f5', 'DE-BOStrab:f5' ], value: 'de/bostrab/f5' }
-          - { any: [ 'DE-AVG:f3', 'DE-BOStrab:f3' ], value: 'de/bostrab/f3' }
-          - { any: [ 'DE-AVG:f2', 'DE-BOStrab:f2' ], value: 'de/bostrab/f2' }
-          - { any: [ 'DE-AVG:f1', 'DE-BOStrab:f1' ], value: 'de/bostrab/f1' }
-        default: 'de/bostrab/f0'
+        position: bottom
+
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: tram Fahrsignal (unknown)
+    country: DE
+    icon: [ default: 'de/bostrab/f-unknown' ]
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
