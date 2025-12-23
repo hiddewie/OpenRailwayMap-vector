@@ -11,8 +11,10 @@ const searchMilestoneRefField = document.getElementById('milestone-ref');
 const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const configureGeneralTab = document.getElementById('configure-general');
+const configureStandardTab = document.getElementById('configure-standard');
 const configureElectrificationTab = document.getElementById('configure-electrification');
 const configureGeneralBody = document.getElementById('configure-general-body');
+const configureStandardBody = document.getElementById('configure-standard-body');
 const configureElectrificationBody = document.getElementById('configure-electrification-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
@@ -281,6 +283,8 @@ function viewSearchResultsOnMap(bounds) {
 function showConfiguration(tab) {
   if (tab === 'general') {
     configureGeneral();
+  } else if (tab === 'standard') {
+    configureStandard();
   } else if (tab === 'electrification') {
     configureElectrification();
   }
@@ -370,17 +374,31 @@ function hideConfiguration() {
 
 function configureGeneral() {
   configureGeneralTab.classList.add('active');
+  configureStandardTab.classList.remove('active');
   configureElectrificationTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'block';
+  configureStandardBody.style.display = 'none';
+  configureElectrificationBody.style.display = 'none';
+}
+
+function configureStandard() {
+  configureGeneralTab.classList.remove('active');
+  configureStandardTab.classList.add('active');
+  configureElectrificationTab.classList.remove('active');
+
+  configureGeneralBody.style.display = 'none';
+  configureStandardBody.style.display = 'block';
   configureElectrificationBody.style.display = 'none';
 }
 
 function configureElectrification() {
   configureGeneralTab.classList.remove('active');
+  configureStandardTab.classList.remove('active');
   configureElectrificationTab.classList.add('active');
 
   configureGeneralBody.style.display = 'none';
+  configureStandardBody.style.display = 'none';
   configureElectrificationBody.style.display = 'block';
 }
 
