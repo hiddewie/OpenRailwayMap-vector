@@ -344,8 +344,8 @@ const train_protection_construction_dasharray = [2, 8];
 // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
 // See https://gist.github.com/mikhailov-work/ee72ba4191942acecc03fe6da94fc73f?permalink_comment_id=3708728#gistcomment-3708728
 // See https://github.com/hiddewie/OpenRailwayMap-vector/issues/668
-const turboColorMap = (property, min, max) =>
-  ['interpolate-hcl', ['linear'], ['^', ['/', ['-', ['max', min, ['min', ['get', property], max]], min], max - min], 0.8],
+const turboColorMap = (valueExpression, min, max) =>
+  ['interpolate-hcl', ['linear'], ['^', ['/', ['-', ['max', min, ['min', valueExpression, max]], min], max - min], 0.8],
     0, 'hsl(285 53.2% 15.1%)',
     25 / 255, 'hsl(231 57% 53.5%)',
     50 / 255, 'hsl(212 101.1% 62.7%)',
@@ -362,7 +362,7 @@ const turboColorMap = (property, min, max) =>
 
 const speedColor = ['case',
   ['==', ['get', 'maxspeed'], null], 'gray',
-  turboColorMap('maxspeed', 10, 380),
+  turboColorMap(['get', 'maxspeed'], 10, 380),
 ]
 const speedHoverColor = ['case',
   ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 200], ['<=', ['get', 'maxspeed'], 340]], colors.hover.alternative,
@@ -450,7 +450,7 @@ const electrificationVoltageFrequencyColor = (voltageProperty, frequencyProperty
 const electrificationVoltageMaximumCurrentColor = ['case',
   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
   ['==', ['get', 'maximum_current'], null], 'gray',
-  turboColorMap('maximum_current', 0, 5000),
+  turboColorMap(['get', 'maximum_current'], 0, 5000),
 ];
 
 const gauge_construction_dashes = [3, 3];
@@ -4041,6 +4041,7 @@ const layers = {
     hillshade,
     ...railwayLine(
       ['match', ['global-state', 'electrificationRailwayLine'],
+        'power', '',// ['formatted', ['*', ['get', 'maximum_current'], ['get', 'voltage']]],
         'maximumCurrent', ['get', 'maximum_current'],
         ['get', 'electrification_label'],
       ],
@@ -4102,6 +4103,12 @@ const layers = {
             ],
           ],
           color: ['match', ['global-state', 'electrificationRailwayLine'],
+            'power', ['case',
+              ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+              ['==', ['get', 'maximum_current'], null], 'gray',
+              ['==', ['get', 'voltage'], null], 'gray',
+              turboColorMap(['*', ['get', 'maximum_current'], ['get', 'voltage']], 0, 40000000),
+            ],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor,
             electrificationVoltageFrequencyColor('voltage', 'frequency'),
           ],
