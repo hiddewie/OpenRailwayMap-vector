@@ -511,34 +511,42 @@ const knownStyles = {
   standard: {
     name: 'Infrastructure',
     supportsDate: true,
+    hasConfiguration: false,
   },
   speed: {
     name: 'Speed',
     supportsDate: false,
+    hasConfiguration: false,
   },
   signals: {
     name: 'Train protection',
     supportsDate: false,
+    hasConfiguration: false,
   },
   electrification: {
     name: 'Electrification',
     supportsDate: false,
+    hasConfiguration: true,
   },
   gauge: {
     name: 'Gauge',
     supportsDate: false,
+    hasConfiguration: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
     supportsDate: false,
+    hasConfiguration: false,
   },
   track_class: {
     name: 'Track class',
     supportsDate: false,
+    hasConfiguration: false,
   },
   operator: {
     name: 'Operator',
     supportsDate: false,
+    hasConfiguration: false,
   },
 };
 
@@ -1299,7 +1307,7 @@ class StyleControl {
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
     const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name}]) => {
+    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
       const button = createDomElement('button', '', buttonGroup);
       button.innerText = name
       button.onclick = () => {
@@ -1308,8 +1316,10 @@ class StyleControl {
         this.options.onStyleChange(style)
       }
 
-      const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-      layerConfigurationButton.onclick = () => showConfiguration(style)
+      if (hasConfiguration) {
+        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
+        layerConfigurationButton.onclick = () => showConfiguration(style)
+      }
 
       this.buttons[style] = button;
     });
