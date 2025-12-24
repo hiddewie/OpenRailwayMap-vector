@@ -8165,3 +8165,4 @@ knownStyles.forEach(style => {
   fs.writeFileSync(`${style}.json`, JSON.stringify(makeStyle(style)));
   fs.writeFileSync(`legend-${style}.json`, JSON.stringify(makeLegendStyle(style)));
 });
+fs.writeFileSync('legend.json', JSON.stringify(legendData));
