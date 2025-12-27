@@ -10,6 +10,12 @@ RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/styles.mjs
 
+FROM build-yaml AS build-legend
+
+RUN --mount=type=bind,source=proxy/js/legend.mjs,target=legend.mjs \
+  --mount=type=bind,source=features,target=features \
+  node /build/legend.mjs
+
 FROM build-yaml AS build-taginfo
 
 RUN npm install chroma-js@3.1.2
@@ -62,6 +68,9 @@ COPY proxy/ssl /etc/nginx/ssl
 
 COPY --from=build-styles \
   /build /etc/nginx/public/style
+
+COPY --from=build-legend \
+  /build/legend.json /etc/nginx/public/legend.json
 
 COPY --from=build-taginfo \
   /build/taginfo.json /etc/nginx/public/taginfo.json

@@ -1522,20 +1522,20 @@ class LegendControl {
     button.onclick = () => this.options.onLegendToggle()
 
     // TODO path
-    fetch(`${origin}/style/legend.json`)
+    fetch(`${origin}/legend.json`)
       .then(response => response.json())
       .then(legend => {
         this.legend = legend
         console.info(`Loaded legend`, this.legend);
 
-        this.onMapZoom();
+        this.updateLegend();
       })
       .catch(error => console.error('Error while fetching legend', error));
 
     // this.map.on('load', this.onMapZoom);
     // TODO event handler for global state changes
-    this.map.on('zoomend', () => this.onMapZoom());
-    this.map.on('styledata', () => this.onMapZoom());
+    this.map.on('zoomend', () => this.updateLegend());
+    this.map.on('styledata', () => this.updateLegend());
 
     // Trigger render once
     // this.onMapZoom();
@@ -1544,7 +1544,7 @@ class LegendControl {
   }
 
   // TODO rename
-  onMapZoom() {
+  updateLegend() {
     const zoom = map.getZoom();
     const style = map.getStyle();
     const legendData = this.legend;
@@ -1553,11 +1553,6 @@ class LegendControl {
       console.info('!!!', 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
       return;
     }
-
-    // TODO needed?:
-    // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
-    //   stay within the bounds of the earth.
-    const legendZoom = Math.max(Math.floor(zoom), 6);
 
     // TODO read global state expressions
     const layerVisibleAtZoom = (zoom) =>
@@ -1780,7 +1775,7 @@ class LegendControl {
     });
     legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 
-    console.info('zooming to', legendZoom, legendStyle)
+    console.info('zooming to', zoom, legendStyle)
   }
 
   onRemove() {
