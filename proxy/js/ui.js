@@ -1028,10 +1028,10 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
-
-const legendPointToMapPoint = (zoom, [x, y]) =>
-  [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
+// const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
+//
+// const legendPointToMapPoint = ([x, y]) =>
+//   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
 
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
@@ -1564,28 +1564,23 @@ class LegendControl {
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
 
-    // const sourceStyle = map.getStyle()
-    // console.info('style', sourceStyle)
-    // const layers = style.layers
-    // console.info('layers', layers)
-
-    // TODO clear nicer
     // TODO move HTML element into control instead of global
-    // legend.innerHTML = ''
 
-    function makeLegendStyle(style, legendData, legendZoom) {
+    function makeLegendStyle(style, legendData, zoom) {
       const sourceStyle = style;
       const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'hillshade');
-      const legendZoomLevels = [legendZoom] //  [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
+      // const legendZoomLevels = [legendZoom] //  [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
-      const legendLayers = legendZoomLevels.flatMap(legendZoom => {
+       // = legendZoomLevels.flatMap(legendZoom => {
         const styleZoomLayers = sourceLayers
-          .filter(layerVisibleAtZoom(legendZoom))
+          .filter(layerVisibleAtZoom(zoom))
           .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
           .map(({
                   ['source-layer']: sourceLayer,
                   source,
                   layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
+                  minzoom,
+                  maxzoom,
                   ...rest
                 }) => {
             const resultLayout = {...layoutRest};
@@ -1595,18 +1590,15 @@ class LegendControl {
 
             return {
               ...rest,
-              id: `${rest.id}-z${legendZoom}`,
-              source: `${source}-${sourceLayer}-z${legendZoom}`,
-              // minzoom: legendZoom,
-              // maxzoom: legendZoom + 1,
+              source: `${source}-${sourceLayer}`,
               layout: resultLayout,
             };
           })
 
         const legendZoomLayer = {
           type: 'symbol',
-          id: `legend-z${legendZoom}`,
-          source: `legend-z${legendZoom}`,
+          id: 'legend',
+          source: 'legend',
           // metadata: {
           //   ['legend:zoom']: legendZoom,
           // },
@@ -1633,20 +1625,21 @@ class LegendControl {
           },
         };
 
-        return [...styleZoomLayers, legendZoomLayer];
-      });
+        const legendLayers = [...styleZoomLayers, legendZoomLayer];
+      // });
 
       const usedLegendSources = new Set([...legendLayers.map(layer => layer.source)])
-      const legendSources = Object.fromEntries(
-        legendZoomLevels.flatMap(legendZoom => {
-          const zoomFilter = layerVisibleAtZoom(legendZoom);
+      // const legendSources = Object.fromEntries(
+      //   legendZoomLevels.flatMap(legendZoom => {
+          const zoomFilter = layerVisibleAtZoom(zoom);
 
           let entry = 0;
           let done = new Set();
 
           const featureSourceLayers = sourceLayers.flatMap(layer => {
             const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-            const sourceName = `${legendLayerName}-z${legendZoom}`
+            const sourceName = legendLayerName
+            // TODO filter on source expression using global state
             const applicable = zoomFilter(layer);
             if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
               return [];
@@ -1664,12 +1657,12 @@ class LegendControl {
                       : 'Point',
                     coordinates:
                       subItem.type === 'line' ? [
-                          legendPointToMapPoint(legendZoom, [index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                          legendPointToMapPoint(legendZoom, [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                          [index / subItems.length * 1.5 - 1.5, -entry * 0.6],
+                          [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6],
                         ] :
                         subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                            legendPointToMapPoint(legendZoom, [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                          : legendPointToMapPoint(legendZoom, [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                            [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6])
+                          : [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6],
                   },
                   properties: subItem.properties,
                 }));
@@ -1692,8 +1685,8 @@ class LegendControl {
 
           const legendFeatures = sourceLayers.flatMap(layer => {
             const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-            const sourceName = `${legendLayerName}-z${legendZoom}`
-            const applicable = layerVisibleAtZoom(legendZoom)(layer);
+            const sourceName = legendLayerName
+            const applicable = layerVisibleAtZoom(zoom)(layer);
             if (done.has(sourceName) || !applicable) {
               return [];
             }
@@ -1711,7 +1704,7 @@ class LegendControl {
                   type: 'Feature',
                   geometry: {
                     type: "Point",
-                    coordinates: legendPointToMapPoint(legendZoom, [0.5, -entry * 0.6]),
+                    coordinates: [0.5, -entry * 0.6],
                   },
                   properties: {
                     legend,
@@ -1725,7 +1718,7 @@ class LegendControl {
             return features;
           })
 
-          const legendSourceLayer = [`legend-z${legendZoom}`, {
+          const legendSourceLayer = ['legend', {
             type: 'geojson',
             data: {
               type: 'FeatureCollection',
@@ -1733,9 +1726,10 @@ class LegendControl {
             },
           }]
 
-          return [...featureSourceLayers, legendSourceLayer];
-        })
-      );
+      const legendSources = Object.fromEntries(
+       [...featureSourceLayers, legendSourceLayer]
+        )
+      // );
 
       // legendZoomLevels.forEach(legendZoom => {
       //   const legendLayer = legendLayers.find(layer => layer.id === `legend-z${legendZoom}`);
@@ -1744,6 +1738,7 @@ class LegendControl {
       //   legendLayer.metadata['legend:count'] = legendSource.data.features.length;
       // });
 
+      // TODO: PR: State is not exported from map style
       const state = Object.fromEntries(
         Object.entries(map.getGlobalState())
           .map(([name, value]) => [name, { default: value }]),
@@ -1756,7 +1751,7 @@ class LegendControl {
         sources: legendSources,
         state,
         metadata: {
-          count: legendSources[`legend-z${legendZoom}`].data.features.length,
+          count: legendSources['legend'].data.features.length,
           // name: sourceStyle.name,
         },
       };
@@ -1764,7 +1759,7 @@ class LegendControl {
 
     // TODO difference check for legend content
 
-    const legendStyle = makeLegendStyle(style, legendData[selectedStyle], legendZoom)
+    const legendStyle = makeLegendStyle(style, legendData[selectedStyle], Math.floor(zoom))
     legendMap.setStyle(legendStyle, {
       validate: false, // TODO: revert
       // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
@@ -1780,8 +1775,8 @@ class LegendControl {
     const numberOfLegendEntries = legendStyle.metadata.count// legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
     legendMap.jumpTo({
-      zoom: legendZoom,
-      center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
+      // zoom: legendZoom,
+      center: [1, -((numberOfLegendEntries - 1) / 2) * 0.6],
     });
     legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 
