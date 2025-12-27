@@ -1028,24 +1028,14 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-// const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
-//
-// const legendPointToMapPoint = ([x, y]) =>
-//   [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
-
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
-// const legendStyles = Object.fromEntries(
-//   Object.keys(knownStyles)
-//     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
-// );
-
 const legendMap = new maplibregl.Map({
   container: 'legend-map',
-  zoom: 5,
+  zoom: 16,
   center: [0, 0],
   attributionControl: false,
   interactive: false,
@@ -1491,6 +1481,8 @@ class LegendControl {
     this.options = options;
     console.info('init')
     this.legend = null;
+
+    this.generateLegendEventHandler = () => this.updateLegend();
   }
 
   onAdd(map) {
@@ -1511,18 +1503,18 @@ class LegendControl {
       .then(response => response.json())
       .then(legend => {
         this.legend = legend
-        console.info(`Loaded legend`, this.legend);
+        console.info('Loaded legend');
 
-        this.updateLegend();
+        this.generateLegendEventHandler();
       })
       .catch(error => console.error('Error while fetching legend', error));
 
     // TODO only generate / start legend when popup is open
 
     // TODO event handler for global state changes
-    this.map.on('load', () => this.updateLegend());
-    this.map.on('zoomend', () => this.updateLegend());
-    this.map.on('styledata', () => this.updateLegend());
+    this.map.on('load', this.generateLegendEventHandler);
+    this.map.on('zoomend', this.generateLegendEventHandler);
+    this.map.on('styledata', this.generateLegendEventHandler);
 
     return this._container;
   }
@@ -1539,12 +1531,20 @@ class LegendControl {
       return;
     }
 
+    // TODO only regenerate if inputs are modified
+
     // TODO read global state expressions
+
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
 
     // TODO move HTML element into control instead of global
+
+    const coordinateFactor = Math.pow(2, -11)
+
+    const legendPointToMapPoint = ([x, y]) =>
+      [x * coordinateFactor, y * coordinateFactor]
 
     function makeLegendStyle(style, legendData, state, zoom) {
       const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
@@ -1626,12 +1626,12 @@ class LegendControl {
                   : 'Point',
                 coordinates:
                   subItem.type === 'line' ? [
-                      [index / subItems.length * 1.5 - 1.5, -entry * 0.6],
-                      [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6],
+                      legendPointToMapPoint([index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
                     ] :
                     subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                        [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6])
-                      : [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6],
+                        legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                      : legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
               },
               properties: subItem.properties,
             }));
@@ -1673,7 +1673,7 @@ class LegendControl {
               type: 'Feature',
               geometry: {
                 type: "Point",
-                coordinates: [0.5, -entry * 0.6],
+                coordinates: legendPointToMapPoint([0.5, -entry * 0.6]),
               },
               properties: {
                 legend,
@@ -1731,7 +1731,7 @@ class LegendControl {
     const numberOfLegendEntries = legendStyle.metadata.count;
 
     legendMap.jumpTo({
-      center: [1, -((numberOfLegendEntries - 1) / 2) * 0.6],
+      center: legendPointToMapPoint([1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
     });
     legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 
@@ -1741,7 +1741,9 @@ class LegendControl {
   onRemove() {
     removeDomElement(this._container);
 
-    // TODO remove event handlers
+    this.map.off('load', this.generateLegendEventHandler);
+    this.map.off('zoomend', this.generateLegendEventHandler);
+    this.map.off('styledata', this.generateLegendEventHandler);
 
     this.map = undefined;
   }
