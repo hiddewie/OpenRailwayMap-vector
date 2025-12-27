@@ -656,9 +656,7 @@ function onStationLabelChange(stationlabel) {
   if (map.loaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
-  // if (legendMap.loaded()) {
-  //   legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
-  // }
+  legendControl.updateLegend();
 }
 
 function disableLocalization() {
@@ -710,9 +708,8 @@ function updateTheme() {
   if (map.loaded()) {
     map.setGlobalStateProperty('theme', resolvedTheme);
   }
-  // if (legendMap.loaded()) {
-  //   legendMap.setGlobalStateProperty('theme', resolvedTheme);
-  // }
+
+  legendControl.updateLegend();
 }
 
 function onEditorChange(editor) {
@@ -738,6 +735,8 @@ function onFutureInfrastructureChange(futureInfrastructure) {
 
   map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
   map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+
+  legendControl.updateLegend();
 }
 
 function updateBackgroundMapContainer() {
@@ -1466,6 +1465,8 @@ class LegendControl {
     text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Legend'
 
+    button.onclick = () => this.toggleLegend();
+
     this.legendMapContainer = createDomElement('div', 'legend-map-container', this._container)
     this.legendMapRoot = createDomElement('div', 'legend-map', this.legendMapContainer)
     this.legendMap = new maplibregl.Map({
@@ -1477,11 +1478,7 @@ class LegendControl {
       // See https://github.com/maplibre/maplibre-gl-js/issues/3503
       maxCanvasSize: [Infinity, Infinity],
     });
-
     this.legendMap.on('styleimagemissing', event => generateImage([map, this.legendMap], event.id));
-
-    // TODO move show/hide into control
-    button.onclick = () => this.toggleLegend();
 
     fetch(`${origin}/legend.json`)
       .then(response => response.json())
@@ -1495,7 +1492,6 @@ class LegendControl {
 
     // TODO only generate / start legend when popup is open
 
-    // TODO event handler for global state changes
     this.map.on('load', this.generateLegendEventHandler);
     this.map.on('zoomend', this.generateLegendEventHandler);
     this.map.on('styledata', this.generateLegendEventHandler);
@@ -1509,6 +1505,7 @@ class LegendControl {
 
   showLegend() {
     this.legendMapContainer.style.display = 'block';
+    this.updateLegend();
   }
 
   isLegendShown() {
@@ -1528,10 +1525,8 @@ class LegendControl {
     const style = map.getStyle();
     const legendData = this.legend;
 
-    // TODO validate if shown
-
-    if (!zoom || !style || !legendData) {
-      console.info('!!!', 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
+    if (!this.isLegendShown() || !zoom || !style || !legendData) {
+      console.info('!!!', 'shown', this.isLegendShown(), 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
       return;
     }
 
