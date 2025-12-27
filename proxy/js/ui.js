@@ -426,7 +426,7 @@ document.addEventListener('keydown', (event) => {
     hideConfiguration();
     hideNews();
     hideAbout();
-    hideLegend();
+    legendControl.hideLegend();
     if (popup) {
       popup.remove();
       popup = null;
