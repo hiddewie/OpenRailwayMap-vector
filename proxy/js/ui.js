@@ -1543,6 +1543,7 @@ class LegendControl {
     return this._container;
   }
 
+  // TODO rename
   onMapZoom() {
     const zoom = map.getZoom();
     const style = map.getStyle();
@@ -1565,8 +1566,8 @@ class LegendControl {
 
     // const sourceStyle = map.getStyle()
     // console.info('style', sourceStyle)
-    const layers = style.layers
-    console.info('layers', layers)
+    // const layers = style.layers
+    // console.info('layers', layers)
 
     // TODO clear nicer
     // TODO move HTML element into control instead of global
@@ -1596,8 +1597,8 @@ class LegendControl {
               ...rest,
               id: `${rest.id}-z${legendZoom}`,
               source: `${source}-${sourceLayer}-z${legendZoom}`,
-              minzoom: legendZoom,
-              maxzoom: legendZoom + 1,
+              // minzoom: legendZoom,
+              // maxzoom: legendZoom + 1,
               layout: resultLayout,
             };
           })
@@ -1606,11 +1607,11 @@ class LegendControl {
           type: 'symbol',
           id: `legend-z${legendZoom}`,
           source: `legend-z${legendZoom}`,
-          metadata: {
-            ['legend:zoom']: legendZoom,
-          },
-          minzoom: legendZoom,
-          maxzoom: legendZoom + 1,
+          // metadata: {
+          //   ['legend:zoom']: legendZoom,
+          // },
+          // minzoom: legendZoom,
+          // maxzoom: legendZoom + 1,
           paint: {
             'text-color': ['case',
               ['==', ['global-state', 'theme'], 'light'], 'black',
@@ -1625,6 +1626,7 @@ class LegendControl {
           layout: {
             'text-field': '{legend}',
             'text-size': 11,
+            'text-font': ['Noto Sans Regular'],
             'text-anchor': 'left',
             'text-max-width': 14,
             'text-overlap': 'always',
@@ -1634,14 +1636,7 @@ class LegendControl {
         return [...styleZoomLayers, legendZoomLayer];
       });
 
-      const usedLegendSources = {};
-      legendLayers.forEach(layer => {
-        if (!usedLegendSources[layer.minzoom]) {
-          usedLegendSources[layer.minzoom] = new Set();
-        }
-        usedLegendSources[layer.minzoom].add(layer.source)
-      })
-
+      const usedLegendSources = new Set([...legendLayers.map(layer => layer.source)])
       const legendSources = Object.fromEntries(
         legendZoomLevels.flatMap(legendZoom => {
           const zoomFilter = layerVisibleAtZoom(legendZoom);
@@ -1653,7 +1648,7 @@ class LegendControl {
             const legendLayerName = `${layer.source}-${layer['source-layer']}`;
             const sourceName = `${legendLayerName}-z${legendZoom}`
             const applicable = zoomFilter(layer);
-            if (done.has(sourceName) || !usedLegendSources[legendZoom] || !usedLegendSources[legendZoom].has(sourceName) || !applicable) {
+            if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
               return [];
             }
 
@@ -1742,12 +1737,12 @@ class LegendControl {
         })
       );
 
-      legendZoomLevels.forEach(legendZoom => {
-        const legendLayer = legendLayers.find(layer => layer.id === `legend-z${legendZoom}`);
-        const legendSource = legendSources[`legend-z${legendZoom}`];
-
-        legendLayer.metadata['legend:count'] = legendSource.data.features.length;
-      });
+      // legendZoomLevels.forEach(legendZoom => {
+      //   const legendLayer = legendLayers.find(layer => layer.id === `legend-z${legendZoom}`);
+      //   const legendSource = legendSources[`legend-z${legendZoom}`];
+      //
+      //   legendLayer.metadata['legend:count'] = legendSource.data.features.length;
+      // });
 
       const state = Object.fromEntries(
         Object.entries(map.getGlobalState())
