@@ -708,6 +708,341 @@ const legendData = {
         },
       },
     ],
+    'openhistoricalmap-transport_lines': [
+      {
+        legend: 'Highspeed main line (historical)',
+        type: 'line',
+        minzoom: 5,
+        properties: {
+          type: 'rail',
+          highspeed: 'yes',
+          usage: 'main',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'H1',
+          name: 'H1 Name',
+        },
+      },
+      {
+        legend: 'Main line (historical)',
+        type: 'line',
+        minzoom: 5,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'main',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M1',
+          name: 'M1 Name',
+        },
+        variants: [
+          {
+            legend: 'bridge',
+            properties: {
+              bridge: 1,
+              ref: null,
+              name: null,
+            },
+          },
+          {
+            legend: 'tunnel',
+            properties: {
+              tunnel: 1,
+              ref: null,
+              name: null,
+            },
+          },
+        ],
+      },
+      {
+        legend: 'Branch line (historical)',
+        type: 'line',
+        minzoom: 7,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'branch',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'B1',
+          name: 'B1 Name',
+        }
+      },
+      {
+        legend: 'Industrial line (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'industrial',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'I1',
+          name: 'I1 Name',
+        }
+      },
+      {
+        legend: 'Narrow gauge line (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'narrow_gauge',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'N1',
+          name: 'N1 Name',
+        }
+      },
+      {
+        legend: 'Subway (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'subway',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'S1',
+          name: 'S1 Name',
+        }
+      },
+      {
+        legend: 'Light rail (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'light_rail',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'L1',
+          name: 'L1 Name',
+        }
+      },
+      {
+        legend: 'Tram (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'tram',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'T1',
+          name: 'T1 Name',
+        }
+      },
+      {
+        legend: 'Monorail (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'monorail',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M1',
+          name: 'M1 Name',
+        }
+      },
+      {
+        legend: 'Miniature railway (historical)',
+        type: 'line',
+        minzoom: 12,
+        properties: {
+          type: 'miniature',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M3',
+          name: 'N3 Name',
+        }
+      },
+      {
+        legend: 'Yard (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'yard',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Spur (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'spur',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Siding (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'siding',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Crossover (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: null,
+          service: 'crossover',
+          tunnel: 0,
+          bridge: 0,
+          ref: null,
+          name: null,
+        }
+      },
+      {
+        legend: 'Tourism (preserved) (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'preserved',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'P1',
+          name: 'P1 Name',
+        }
+      },
+      {
+        legend: 'Test railway (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'test',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'T1',
+          name: 'T1 Name',
+        }
+      },
+      {
+        legend: 'Military railway (historical)',
+        type: 'line',
+        minzoom: 9,
+        properties: {
+          type: 'rail',
+          highspeed: 'no',
+          usage: 'military',
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'M2',
+          name: 'M2 Name',
+        }
+      },
+      {
+        legend: 'Under construction (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'construction',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'C1',
+          name: 'C1 Name',
+        }
+      },
+      {
+        legend: 'Proposed railway (historical)',
+        type: 'line',
+        minzoom: 10,
+        properties: {
+          type: 'proposed',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'P1',
+          name: 'P1 Name',
+        }
+      },
+      {
+        legend: 'Disused railway (historical)',
+        type: 'line',
+        minzoom: 11,
+        properties: {
+          type: 'disused',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'D1',
+          name: 'D1 Name',
+        }
+      },
+      {
+        legend: 'Abandoned railway (historical)',
+        type: 'line',
+        minzoom: 11,
+        properties: {
+          type: 'abandoned',
+          highspeed: 'no',
+          usage: null,
+          service: null,
+          tunnel: 0,
+          bridge: 0,
+          ref: 'A1',
+          name: 'A1 Name',
+        }
+      },
+    ],
     'standard_railway_text_stations_low-standard_railway_text_stations_low':
       stations.features
         .filter(feature => feature.feature === 'station')
@@ -767,6 +1102,15 @@ const legendData = {
           mapState: variant.mapState,
         })),
       ]),
+    'openhistoricalmap-transport_points_centroids': [
+      {
+        legend: 'Station (historical)',
+        properties: {
+          class: 'railway',
+          type: 'station',
+        },
+      },
+    ],
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
     "openrailwaymap_standard-standard_railway_grouped_station_areas": [],
     "openrailwaymap_standard-standard_railway_turntables": [
@@ -1067,353 +1411,6 @@ const legendData = {
     ],
   },
 
-  // TODO
-  historical: {
-    'openhistoricalmap-transport_lines': [
-      {
-        legend: 'Highspeed main line',
-        type: 'line',
-        minzoom: 5,
-        properties: {
-          type: 'rail',
-          highspeed: 'yes',
-          usage: 'main',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'H1',
-          name: 'H1 Name',
-        },
-      },
-      {
-        legend: 'Main line',
-        type: 'line',
-        minzoom: 5,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: 'main',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'M1',
-          name: 'M1 Name',
-        },
-        variants: [
-          {
-            legend: 'bridge',
-            properties: {
-              bridge: 1,
-              ref: null,
-              name: null,
-            },
-          },
-          {
-            legend: 'tunnel',
-            properties: {
-              tunnel: 1,
-              ref: null,
-              name: null,
-            },
-          },
-        ],
-      },
-      {
-        legend: 'Branch line',
-        type: 'line',
-        minzoom: 7,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: 'branch',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'B1',
-          name: 'B1 Name',
-        }
-      },
-      {
-        legend: 'Industrial line',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: 'industrial',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'I1',
-          name: 'I1 Name',
-        }
-      },
-      {
-        legend: 'Narrow gauge line',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'narrow_gauge',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'N1',
-          name: 'N1 Name',
-        }
-      },
-      {
-        legend: 'Subway',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'subway',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'S1',
-          name: 'S1 Name',
-        }
-      },
-      {
-        legend: 'Light rail',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'light_rail',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'L1',
-          name: 'L1 Name',
-        }
-      },
-      {
-        legend: 'Tram',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'tram',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'T1',
-          name: 'T1 Name',
-        }
-      },
-      {
-        legend: 'Monorail',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'monorail',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'M1',
-          name: 'M1 Name',
-        }
-      },
-      {
-        legend: 'Miniature railway',
-        type: 'line',
-        minzoom: 12,
-        properties: {
-          type: 'miniature',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'M3',
-          name: 'N3 Name',
-        }
-      },
-      {
-        legend: 'Yard',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: null,
-          service: 'yard',
-          tunnel: 0,
-          bridge: 0,
-          ref: null,
-          name: null,
-        }
-      },
-      {
-        legend: 'Spur',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: null,
-          service: 'spur',
-          tunnel: 0,
-          bridge: 0,
-          ref: null,
-          name: null,
-        }
-      },
-      {
-        legend: 'Siding',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: null,
-          service: 'siding',
-          tunnel: 0,
-          bridge: 0,
-          ref: null,
-          name: null,
-        }
-      },
-      {
-        legend: 'Crossover',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: null,
-          service: 'crossover',
-          tunnel: 0,
-          bridge: 0,
-          ref: null,
-          name: null,
-        }
-      },
-      {
-        legend: 'Tourism (preserved)',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'preserved',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'P1',
-          name: 'P1 Name',
-        }
-      },
-      {
-        legend: 'Test railway',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: 'test',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'T1',
-          name: 'T1 Name',
-        }
-      },
-      {
-        legend: 'Military railway',
-        type: 'line',
-        minzoom: 9,
-        properties: {
-          type: 'rail',
-          highspeed: 'no',
-          usage: 'military',
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'M2',
-          name: 'M2 Name',
-        }
-      },
-      {
-        legend: 'Under construction',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'construction',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'C1',
-          name: 'C1 Name',
-        }
-      },
-      {
-        legend: 'Proposed railway',
-        type: 'line',
-        minzoom: 10,
-        properties: {
-          type: 'proposed',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'P1',
-          name: 'P1 Name',
-        }
-      },
-      {
-        legend: 'Disused railway',
-        type: 'line',
-        minzoom: 11,
-        properties: {
-          type: 'disused',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'D1',
-          name: 'D1 Name',
-        }
-      },
-      {
-        legend: 'Abandoned railway',
-        type: 'line',
-        minzoom: 11,
-        properties: {
-          type: 'abandoned',
-          highspeed: 'no',
-          usage: null,
-          service: null,
-          tunnel: 0,
-          bridge: 0,
-          ref: 'A1',
-          name: 'A1 Name',
-        }
-      },
-    ],
-    'openhistoricalmap-transport_points_centroids': [
-      {
-        legend: 'Station',
-        properties: {
-          class: 'railway',
-          type: 'station',
-        },
-      },
-    ],
-  },
   speed: {
     'speed_railway_line_low-speed_railway_line_low': [
       ...speedLegends.map(speed => ({
