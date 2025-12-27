@@ -1445,7 +1445,6 @@ class ConfigurationControl {
 
 class LegendControl {
   constructor() {
-    console.info('init')
     this.map = null;
     this._container = null;
     this.legend = null;
@@ -1529,7 +1528,6 @@ class LegendControl {
     const legendData = this.legend;
 
     if (!this.isLegendShown() || !zoom || !style || !legendData) {
-      console.info('!!!', 'shown', this.isLegendShown(), 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
       return;
     }
 
@@ -1562,8 +1560,6 @@ class LegendControl {
       center: this.legendPointToMapPoint([1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
     });
     this.legendMapRoot.style.height = `${numberOfLegendEntries * 27.5}px`;
-
-    console.info('zooming to', zoom, legendStyle)
   }
 
   onRemove() {
