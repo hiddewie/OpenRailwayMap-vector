@@ -678,9 +678,9 @@ function onStationLabelChange(stationlabel) {
   if (map.loaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
-  // if (legendMap.loaded()) {
-  //   legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
-  // }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  }
 }
 
 function disableLocalization() {
@@ -732,9 +732,9 @@ function updateTheme() {
   if (map.loaded()) {
     map.setGlobalStateProperty('theme', resolvedTheme);
   }
-  // if (legendMap.loaded()) {
-  //   legendMap.setGlobalStateProperty('theme', resolvedTheme);
-  // }
+  if (legendMap.loaded()) {
+    legendMap.setGlobalStateProperty('theme', resolvedTheme);
+  }
 }
 
 function onEditorChange(editor) {
@@ -1043,15 +1043,15 @@ const mapStyles = Object.fromEntries(
 //     .map(style => [style, `${location.origin}/style/legend-${style}.json`])
 // );
 
-// const legendMap = new maplibregl.Map({
-//   container: 'legend-map',
-//   zoom: 5,
-//   center: [0, 0],
-//   attributionControl: false,
-//   interactive: false,
-//   // See https://github.com/maplibre/maplibre-gl-js/issues/3503
-//   maxCanvasSize: [Infinity, Infinity],
-// });
+const legendMap = new maplibregl.Map({
+  container: 'legend-map',
+  zoom: 5,
+  center: [0, 0],
+  attributionControl: false,
+  interactive: false,
+  // See https://github.com/maplibre/maplibre-gl-js/issues/3503
+  maxCanvasSize: [Infinity, Infinity],
+});
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
@@ -1157,22 +1157,22 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
-  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
-  style.state.allDates.default = selectedDate === 'all';
-  style.state.theme.default = selectedTheme;
-
-  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
-
-  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
-  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-
-  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
-  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
-  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
-
-  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+  // style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
+  // style.state.allDates.default = selectedDate === 'all';
+  // style.state.theme.default = selectedTheme;
+  //
+  // style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
+  //
+  // const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  // style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
+  // style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  // style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  //
+  // const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  // style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
+  // style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
+  //
+  // style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 }
 
 function toggleHillShadeLayer(style) {
@@ -1503,6 +1503,7 @@ class ConfigurationControl {
 class LegendControl {
   constructor(options) {
     this.options = options;
+    console.info('init')
     this.legend = null;
   }
 
@@ -1532,8 +1533,9 @@ class LegendControl {
       .catch(error => console.error('Error while fetching legend', error));
 
     // this.map.on('load', this.onMapZoom);
-    this.map.on('zoomend', this.onMapZoom);
-    this.map.on('styledata', this.onMapZoom);
+    // TODO event handler for global state changes
+    this.map.on('zoomend', () => this.onMapZoom());
+    this.map.on('styledata', () => this.onMapZoom());
 
     // Trigger render once
     // this.onMapZoom();
@@ -1547,6 +1549,7 @@ class LegendControl {
     const legendData = this.legend;
 
     if (!zoom || !style || !legendData) {
+      console.info('!!!', 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
       return;
     }
 
@@ -1554,8 +1557,8 @@ class LegendControl {
     // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
     //   stay within the bounds of the earth.
     const legendZoom = Math.max(Math.floor(zoom), 6);
-    // const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
 
+    // TODO read global state expressions
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1566,18 +1569,12 @@ class LegendControl {
     console.info('layers', layers)
 
     // TODO clear nicer
-    legend.innerHTML = ''
-
-    const table = createDomElement('table', '', legend);
-    const row = createDomElement('tr', '', table)
-    const td1 = createDomElement('td', '', table)
-    td1.innerText = 'test'
-    const td2 = createDomElement('td', '', table)
-    td2.innerText = `Legend zoom ${legendZoom}`
+    // TODO move HTML element into control instead of global
+    // legend.innerHTML = ''
 
     function makeLegendStyle(style, legendData, legendZoom) {
       const sourceStyle = style;
-      const sourceLayers = sourceStyle.layers;
+      const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'hillshade');
       const legendZoomLevels = [legendZoom] //  [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
 
       const legendLayers = legendZoomLevels.flatMap(legendZoom => {
@@ -1615,13 +1612,18 @@ class LegendControl {
           minzoom: legendZoom,
           maxzoom: legendZoom + 1,
           paint: {
-            'text-color': 'black', // colors.text.main,
-            'text-halo-color': 'white', // colors.halo,
+            'text-color': ['case',
+              ['==', ['global-state', 'theme'], 'light'], 'black',
+              'white'
+            ],
+            'text-halo-color': ['case',
+              ['==', ['global-state', 'theme'], 'light'], 'white',
+              '#333'
+            ],
             'text-halo-width': 1,
           },
           layout: {
             'text-field': '{legend}',
-            // 'text-font': font.regular,
             'text-size': 11,
             'text-anchor': 'left',
             'text-max-width': 14,
@@ -1747,43 +1749,64 @@ class LegendControl {
         legendLayer.metadata['legend:count'] = legendSource.data.features.length;
       });
 
+      const state = Object.fromEntries(
+        Object.entries(map.getGlobalState())
+          .map(([name, value]) => [name, { default: value }]),
+      )
+
       return {
         ...sourceStyle,
         name: `${sourceStyle.name} legend`,
         layers: legendLayers,
         sources: legendSources,
+        state,
         metadata: {
-          name: style,
-        }
+          count: legendSources[`legend-z${legendZoom}`].data.features.length,
+          // name: sourceStyle.name,
+        },
       };
     }
 
     // TODO difference check for legend content
 
-    // legendMap.jumpTo({
-    //   zoom: legendZoom,
-    //   center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
-    // });
-    // legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
+    const legendStyle = makeLegendStyle(style, legendData[selectedStyle], legendZoom)
+    legendMap.setStyle(legendStyle, {
+      validate: false, // TODO: revert
+      // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
+      diff: false, // TODO: needed?
+      transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
+        // rewriteGlobalStateDefaults(next)
+        // onStylesheetChange(next);
+        return next;
+      },
+    });
 
-    console.info('zooming to', legendZoom, makeLegendStyle(style, legendData[selectedStyle], legendZoom))
+    const numberOfLegendEntries = legendStyle.metadata.count// legendEntriesCount[selectedStyle][legendZoom] ?? 100;
+
+    legendMap.jumpTo({
+      zoom: legendZoom,
+      center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
+    });
+    legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
+
+    console.info('zooming to', legendZoom, legendStyle)
   }
 
   onRemove() {
     removeDomElement(this._container);
 
-    this.map.off('load', this.onMapZoom)
-    this.map.off('zoomend', this.onMapZoom)
+    // TODO remove event handlers
 
     this.map = undefined;
   }
 }
 
 // Cache for the number of items in the legend, per style and zoom level
-const legendEntriesCount = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(key => [key, {}])
-);
+// const legendEntriesCount = Object.fromEntries(
+//   Object.keys(knownStyles)
+//     .map(key => [key, {}])
+// );
 
 class AboutControl {
   constructor(options) {
@@ -1909,15 +1932,16 @@ const onMapRotate = bearing => {
   }
 }
 
-const onStylesheetChange = styleSheet => {
-  const styleName = styleSheet.metadata.name;
-  styleSheet.layers.forEach(layer => {
-    if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
-      legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
-    }
-  })
-  onMapZoom(map.getZoom());
-}
+// const onStylesheetChange = styleSheet => {
+//   const styleName = styleSheet.metadata.name;
+//   styleSheet.layers.forEach(layer => {
+//     if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
+//       console.info(`style ${styleName} has count ${layer.metadata['legend:count']} for zoom ${layer.metadata['legend:zoom']}`)
+//       legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
+//     }
+//   })
+//   onMapZoom(map.getZoom());
+// }
 
 function openJOSM(josmUrl, osmType, osmId) {
   const selectString = (osmType && osmId) ? `&select=${osmType}${osmId}` : '';
@@ -2201,8 +2225,8 @@ map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.ge
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styleimagemissing', event => generateImage([map], event.id)); // legendMap
-// legendMap.on('styleimagemissing', event => generateImage([map], event.id)); // legendMap
+map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
+legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
