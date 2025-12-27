@@ -304,7 +304,7 @@ const legendData = {
               standard_label: null,
               ref: null,
               track_ref: null,
-              way_length: 1.0,
+              way_length: 100000,
             },
           },
           {

@@ -1157,22 +1157,22 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style) {
-  // style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
-  // style.state.allDates.default = selectedDate === 'all';
-  // style.state.theme.default = selectedTheme;
-  //
-  // style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
-  //
-  // const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  // style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
-  // style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-  // style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-  //
-  // const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
-  // style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
-  // style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
-  //
-  // style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
+  style.state.allDates.default = selectedDate === 'all';
+  style.state.theme.default = selectedTheme;
+
+  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
+  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
+  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
+
+  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 }
 
 function toggleHillShadeLayer(style) {
@@ -1206,21 +1206,6 @@ function onStyleChange() {
     });
   }
 
-  // if (selectedStyle !== lastSetMapStyle) {
-  //   // Change legend styles
-  //   legendMap.setStyle(legendStyles[selectedStyle], {
-  //     validate: false,
-  //     // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
-  //     diff: false,
-  //     transformStyle: (previous, next) => {
-  //       rewriteStylePathsToOrigin(next)
-  //       rewriteGlobalStateDefaults(next)
-  //       onStylesheetChange(next);
-  //       return next;
-  //     },
-  //   });
-  // }
-
   if (supportsDate && !dateControl.isShown()) {
     dateControl.show();
   } else if (!supportsDate && dateControl.isShown()) {
@@ -1230,6 +1215,7 @@ function onStyleChange() {
   lastSetMapStyle = selectedStyle;
   lastSetMapLanguage = language;
 
+  legendControl.updateLegend()
   onPageParametersChange();
 }
 
@@ -1521,7 +1507,6 @@ class LegendControl {
     // TODO move show/hide into control
     button.onclick = () => this.options.onLegendToggle()
 
-    // TODO path
     fetch(`${origin}/legend.json`)
       .then(response => response.json())
       .then(legend => {
@@ -1532,22 +1517,22 @@ class LegendControl {
       })
       .catch(error => console.error('Error while fetching legend', error));
 
-    // this.map.on('load', this.onMapZoom);
+    // TODO only generate / start legend when popup is open
+
     // TODO event handler for global state changes
+    this.map.on('load', () => this.updateLegend());
     this.map.on('zoomend', () => this.updateLegend());
     this.map.on('styledata', () => this.updateLegend());
-
-    // Trigger render once
-    // this.onMapZoom();
 
     return this._container;
   }
 
-  // TODO rename
   updateLegend() {
     const zoom = map.getZoom();
     const style = map.getStyle();
     const legendData = this.legend;
+
+    // TODO validate if shown
 
     if (!zoom || !style || !legendData) {
       console.info('!!!', 'zoom', !!zoom, 'style', !!style, 'legend data', !!legendData)
@@ -1561,221 +1546,196 @@ class LegendControl {
 
     // TODO move HTML element into control instead of global
 
-    function makeLegendStyle(style, legendData, zoom) {
-      const sourceStyle = style;
-      const sourceLayers = sourceStyle.layers.filter(layer => layer.type !== 'hillshade');
-      // const legendZoomLevels = [legendZoom] //  [...Array(globalMaxZoom - globalMinZoom + 1).keys()].map(zoom => globalMinZoom + zoom);
+    function makeLegendStyle(style, legendData, state, zoom) {
+      const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
 
-       // = legendZoomLevels.flatMap(legendZoom => {
-        const styleZoomLayers = sourceLayers
-          .filter(layerVisibleAtZoom(zoom))
-          .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
-          .map(({
-                  ['source-layer']: sourceLayer,
-                  source,
-                  layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
-                  minzoom,
-                  maxzoom,
-                  ...rest
-                }) => {
-            const resultLayout = {...layoutRest};
-            if (symbolPlacement === 'line') {
-              resultLayout['symbol-placement'] = 'line-center';
-            }
+      const styleZoomLayers = sourceLayers
+        .filter(layerVisibleAtZoom(zoom))
+        .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
+        .map(({
+                ['source-layer']: sourceLayer,
+                source,
+                layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
+                minzoom,
+                maxzoom,
+                ...rest
+              }) => {
+          const resultLayout = {...layoutRest};
+          if (symbolPlacement === 'line') {
+            resultLayout['symbol-placement'] = 'line-center';
+          }
 
-            return {
-              ...rest,
-              source: `${source}-${sourceLayer}`,
-              layout: resultLayout,
-            };
-          })
+          return {
+            ...rest,
+            source: `${source}-${sourceLayer}`,
+            layout: resultLayout,
+          };
+        })
 
-        const legendZoomLayer = {
-          type: 'symbol',
-          id: 'legend',
-          source: 'legend',
-          // metadata: {
-          //   ['legend:zoom']: legendZoom,
-          // },
-          // minzoom: legendZoom,
-          // maxzoom: legendZoom + 1,
-          paint: {
-            'text-color': ['case',
-              ['==', ['global-state', 'theme'], 'light'], 'black',
-              'white'
-            ],
-            'text-halo-color': ['case',
-              ['==', ['global-state', 'theme'], 'light'], 'white',
-              '#333'
-            ],
-            'text-halo-width': 1,
-          },
-          layout: {
-            'text-field': '{legend}',
-            'text-size': 11,
-            'text-font': ['Noto Sans Regular'],
-            'text-anchor': 'left',
-            'text-max-width': 14,
-            'text-overlap': 'always',
-          },
-        };
+      const legendZoomLayer = {
+        type: 'symbol',
+        id: 'legend',
+        source: 'legend',
+        paint: {
+          'text-color': ['case',
+            ['==', ['global-state', 'theme'], 'light'], 'black',
+            'white'
+          ],
+          'text-halo-color': ['case',
+            ['==', ['global-state', 'theme'], 'light'], 'white',
+            '#333'
+          ],
+          'text-halo-width': 1,
+        },
+        layout: {
+          'text-field': '{legend}',
+          'text-size': 11,
+          'text-font': ['Noto Sans Regular'],
+          'text-anchor': 'left',
+          'text-max-width': 14,
+          'text-overlap': 'always',
+        },
+      };
 
-        const legendLayers = [...styleZoomLayers, legendZoomLayer];
-      // });
+      const legendLayers = [...styleZoomLayers, legendZoomLayer];
 
       const usedLegendSources = new Set([...legendLayers.map(layer => layer.source)])
-      // const legendSources = Object.fromEntries(
-      //   legendZoomLevels.flatMap(legendZoom => {
-          const zoomFilter = layerVisibleAtZoom(zoom);
+      const zoomFilter = layerVisibleAtZoom(zoom);
 
-          let entry = 0;
-          let done = new Set();
+      let entry = 0;
+      let done = new Set();
 
-          const featureSourceLayers = sourceLayers.flatMap(layer => {
-            const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-            const sourceName = legendLayerName
-            // TODO filter on source expression using global state
-            const applicable = zoomFilter(layer);
-            if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
-              return [];
-            }
+      const featureSourceLayers = sourceLayers.flatMap(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = legendLayerName
+        // TODO filter on source expression using global state
+        const applicable = zoomFilter(layer);
+        if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
+          return [];
+        }
 
-            const data = applicable ? (legendData[legendLayerName] ?? []) : [];
-            const features = data
-              .filter(zoomFilter)
-              .flatMap(item => {
-                const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
-                  type: 'Feature',
-                  geometry: {
-                    type: subItem.type === 'line' || subItem.type === 'polygon'
-                      ? 'LineString'
-                      : 'Point',
-                    coordinates:
-                      subItem.type === 'line' ? [
-                          [index / subItems.length * 1.5 - 1.5, -entry * 0.6],
-                          [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6],
-                        ] :
-                        subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                            [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6])
-                          : [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6],
-                  },
-                  properties: subItem.properties,
-                }));
-                entry++;
-                return itemFeatures;
-              });
-            done.add(sourceName);
-
-            return [[sourceName, {
-              type: 'geojson',
-              data: {
-                type: 'FeatureCollection',
-                features,
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data
+          .filter(zoomFilter)
+          .flatMap(item => {
+            const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
+              type: 'Feature',
+              geometry: {
+                type: subItem.type === 'line' || subItem.type === 'polygon'
+                  ? 'LineString'
+                  : 'Point',
+                coordinates:
+                  subItem.type === 'line' ? [
+                      [index / subItems.length * 1.5 - 1.5, -entry * 0.6],
+                      [(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6],
+                    ] :
+                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                        [Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6])
+                      : [(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6],
               },
-            }]];
+              properties: subItem.properties,
+            }));
+            entry++;
+            return itemFeatures;
           });
+        done.add(sourceName);
 
-          entry = 0;
-          done = new Set();
+        return [[sourceName, {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features,
+          },
+        }]];
+      });
 
-          const legendFeatures = sourceLayers.flatMap(layer => {
-            const legendLayerName = `${layer.source}-${layer['source-layer']}`;
-            const sourceName = legendLayerName
-            const applicable = layerVisibleAtZoom(zoom)(layer);
-            if (done.has(sourceName) || !applicable) {
-              return [];
-            }
+      entry = 0;
+      done = new Set();
 
-            const data = applicable ? (legendData[legendLayerName] ?? []) : [];
-            const features = data
-              .filter(zoomFilter)
-              .map(item => {
-                const legend = [item.legend, ...(item.variants ?? [])
-                  .filter(variant => variant.legend)
-                  .map(variant => variant.legend)]
-                  .join(', ');
+      const legendFeatures = sourceLayers.flatMap(layer => {
+        const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+        const sourceName = legendLayerName
+        const applicable = layerVisibleAtZoom(zoom)(layer);
+        if (done.has(sourceName) || !applicable) {
+          return [];
+        }
 
-                const feature = {
-                  type: 'Feature',
-                  geometry: {
-                    type: "Point",
-                    coordinates: [0.5, -entry * 0.6],
-                  },
-                  properties: {
-                    legend,
-                  },
-                };
-                entry++;
-                return feature;
-              });
-            done.add(sourceName);
+        const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+        const features = data
+          .filter(zoomFilter)
+          .map(item => {
+            const legend = [item.legend, ...(item.variants ?? [])
+              .filter(variant => variant.legend)
+              .map(variant => variant.legend)]
+              .join(', ');
 
-            return features;
-          })
+            const feature = {
+              type: 'Feature',
+              geometry: {
+                type: "Point",
+                coordinates: [0.5, -entry * 0.6],
+              },
+              properties: {
+                legend,
+              },
+            };
+            entry++;
+            return feature;
+          });
+        done.add(sourceName);
 
-          const legendSourceLayer = ['legend', {
-            type: 'geojson',
-            data: {
-              type: 'FeatureCollection',
-              features: legendFeatures,
-            },
-          }]
+        return features;
+      })
+
+      const legendSourceLayer = ['legend', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: legendFeatures,
+        },
+      }]
 
       const legendSources = Object.fromEntries(
        [...featureSourceLayers, legendSourceLayer]
         )
-      // );
-
-      // legendZoomLevels.forEach(legendZoom => {
-      //   const legendLayer = legendLayers.find(layer => layer.id === `legend-z${legendZoom}`);
-      //   const legendSource = legendSources[`legend-z${legendZoom}`];
-      //
-      //   legendLayer.metadata['legend:count'] = legendSource.data.features.length;
-      // });
 
       // TODO: PR: State is not exported from map style
-      const state = Object.fromEntries(
-        Object.entries(map.getGlobalState())
+      const stateWithDefaults = Object.fromEntries(
+        Object.entries(state)
           .map(([name, value]) => [name, { default: value }]),
       )
 
       return {
-        ...sourceStyle,
-        name: `${sourceStyle.name} legend`,
+        ...style,
+        name: `${style.name} legend`,
         layers: legendLayers,
         sources: legendSources,
-        state,
+        state: stateWithDefaults,
         metadata: {
           count: legendSources['legend'].data.features.length,
-          // name: sourceStyle.name,
         },
       };
     }
 
     // TODO difference check for legend content
 
-    const legendStyle = makeLegendStyle(style, legendData[selectedStyle], Math.floor(zoom))
+    const legendStyle = makeLegendStyle(style, legendData[selectedStyle], map.getGlobalState(), Math.floor(zoom))
     legendMap.setStyle(legendStyle, {
-      validate: false, // TODO: revert
-      // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
-      diff: false, // TODO: needed?
+      validate: false,
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
-        // rewriteGlobalStateDefaults(next)
-        // onStylesheetChange(next);
         return next;
       },
     });
 
-    const numberOfLegendEntries = legendStyle.metadata.count// legendEntriesCount[selectedStyle][legendZoom] ?? 100;
+    const numberOfLegendEntries = legendStyle.metadata.count;
 
     legendMap.jumpTo({
-      // zoom: legendZoom,
       center: [1, -((numberOfLegendEntries - 1) / 2) * 0.6],
     });
     legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
 
-    console.info('zooming to', zoom, legendStyle)
+    console.info('zooming to', Math.floor(zoom), legendStyle)
   }
 
   onRemove() {
@@ -1786,12 +1746,6 @@ class LegendControl {
     this.map = undefined;
   }
 }
-
-// Cache for the number of items in the legend, per style and zoom level
-// const legendEntriesCount = Object.fromEntries(
-//   Object.keys(knownStyles)
-//     .map(key => [key, {}])
-// );
 
 class AboutControl {
   constructor(options) {
@@ -1903,9 +1857,10 @@ const aboutControl = new AboutControl({
 });
 map.addControl(aboutControl, 'bottom-right');
 
-map.addControl(new LegendControl({
+const legendControl = new LegendControl({
   onLegendToggle: toggleLegend,
-}), 'bottom-left');
+});
+map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
   const rotated = Math.abs(bearing) >= 1;
@@ -1916,17 +1871,6 @@ const onMapRotate = bearing => {
     navigationControl._compassIcon.classList.remove('rotated');
   }
 }
-
-// const onStylesheetChange = styleSheet => {
-//   const styleName = styleSheet.metadata.name;
-//   styleSheet.layers.forEach(layer => {
-//     if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
-//       console.info(`style ${styleName} has count ${layer.metadata['legend:count']} for zoom ${layer.metadata['legend:zoom']}`)
-//       legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
-//     }
-//   })
-//   onMapZoom(map.getZoom());
-// }
 
 function openJOSM(josmUrl, osmType, osmId) {
   const selectString = (osmType && osmId) ? `&select=${osmType}${osmId}` : '';
