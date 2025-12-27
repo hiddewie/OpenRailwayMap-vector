@@ -621,7 +621,10 @@ const legendData = {
           standard_label: null,
           track_ref: null,
           way_length: 1.0,
-        }
+        },
+        mapState: {
+          showConstructionInfrastructure: true,
+        },
       },
       {
         legend: 'Proposed railway',
@@ -639,7 +642,10 @@ const legendData = {
           standard_label: null,
           track_ref: null,
           way_length: 1.0,
-        }
+        },
+        mapState: {
+          showProposedInfrastructure: true,
+        },
       },
       {
         legend: 'Disused railway',
@@ -657,7 +663,49 @@ const legendData = {
           standard_label: null,
           track_ref: null,
           way_length: 1.0,
-        }
+        },
+      },
+      {
+        legend: 'Abandoned railway',
+        type: 'line',
+        minzoom: 12,
+        properties: {
+          highspeed: false,
+          state: 'abandoned',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        },
+        mapState: {
+          showAbandonedInfrastructure: true,
+        },
+      },
+      {
+        legend: 'Razed railway',
+        type: 'line',
+        minzoom: 12,
+        properties: {
+          highspeed: false,
+          state: 'razed',
+          feature: 'rail',
+          usage: 'main',
+          service: null,
+          tunnel: false,
+          bridge: false,
+          ref: null,
+          standard_label: null,
+          track_ref: null,
+          way_length: 1.0,
+        },
+        mapState: {
+          showRazedInfrastructure: true,
+        },
       },
     ],
     'standard_railway_text_stations_low-standard_railway_text_stations_low':
@@ -674,7 +722,9 @@ const legendData = {
           variants: (feature.variants || []).map(variant => ({
             legend: variant.description,
             properties: variant.example,
+            mapState: variant.mapState,
           })),
+          mapState: feature.mapState,
         })),
     "standard_railway_text_stations_med-standard_railway_text_stations_med":
       stations.features
@@ -690,7 +740,9 @@ const legendData = {
           variants: (feature.variants || []).map(variant => ({
             legend: variant.description,
             properties: variant.example,
+            mapState: variant.mapState,
           })),
+          mapState: feature.mapState,
         })),
     "openrailwaymap_standard-standard_railway_text_stations":
       stations.features.flatMap(feature => [
@@ -702,6 +754,7 @@ const legendData = {
             ...feature.example,
             railway: feature.feature,
           },
+          mapState: feature.mapState,
         },
         ...(feature.variants || []).map(variant => ({
           legend: `${feature.description}: ${variant.description}`,
@@ -711,6 +764,7 @@ const legendData = {
             ...feature.example,
             ...variant.example,
           },
+          mapState: variant.mapState,
         })),
       ]),
     "openrailwaymap_standard-standard_railway_grouped_stations": [],

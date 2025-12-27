@@ -1535,15 +1535,13 @@ class LegendControl {
 
     // Verify if legend changed
     if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
-        return;
+      return;
     }
     this.legendState = {
       zoom,
       style: style.name,
-      mapGlobalState,
+      mapGlobalState:{...mapGlobalState},
     };
-
-    // TODO read global state expressions
 
     const legendStyle = this.makeLegendStyle(style, legendData[selectedStyle], mapGlobalState, zoom)
     this.legendMap.setStyle(legendStyle, {
@@ -1583,7 +1581,6 @@ class LegendControl {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
-
 
     const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
 
@@ -1646,7 +1643,6 @@ class LegendControl {
     const featureSourceLayers = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = legendLayerName
-      // TODO filter on source expression using global state
       const applicable = zoomFilter(layer);
       if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
         return [];
@@ -1655,24 +1651,27 @@ class LegendControl {
       const data = applicable ? (legendData[legendLayerName] ?? []) : [];
       const features = data
         .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
         .flatMap(item => {
-          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))].flatMap((subItem, index, subItems) => ({
-            type: 'Feature',
-            geometry: {
-              type: subItem.type === 'line' || subItem.type === 'polygon'
-                ? 'LineString'
-                : 'Point',
-              coordinates:
-                subItem.type === 'line' ? [
-                    this.legendPointToMapPoint([index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                    this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                  ] :
-                  subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                      this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                    : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-            },
-            properties: subItem.properties,
-          }));
+          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+            .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+            .flatMap((subItem, index, subItems) => ({
+              type: 'Feature',
+              geometry: {
+                type: subItem.type === 'line' || subItem.type === 'polygon'
+                  ? 'LineString'
+                  : 'Point',
+                coordinates:
+                  subItem.type === 'line' ? [
+                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    ] :
+                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+              },
+              properties: subItem.properties,
+            }));
           entry++;
           return itemFeatures;
         });
@@ -1701,9 +1700,11 @@ class LegendControl {
       const data = applicable ? (legendData[legendLayerName] ?? []) : [];
       const features = data
         .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
         .map(item => {
           const legend = [item.legend, ...(item.variants ?? [])
             .filter(variant => variant.legend)
+            .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
             .map(variant => variant.legend)]
             .join(', ');
 
