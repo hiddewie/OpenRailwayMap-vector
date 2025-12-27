@@ -1450,6 +1450,11 @@ class LegendControl {
     this._container = null;
     this.legend = null;
     this.legendMapContainer = null;
+    this.legendState = {
+      zoom: null,
+      style: null,
+      mapGlobalState: {},
+    };
 
     this.generateLegendEventHandler = () => this.updateLegend();
   }
@@ -1490,8 +1495,6 @@ class LegendControl {
       })
       .catch(error => console.error('Error while fetching legend', error));
 
-    // TODO only generate / start legend when popup is open
-
     this.map.on('load', this.generateLegendEventHandler);
     this.map.on('zoomend', this.generateLegendEventHandler);
     this.map.on('styledata', this.generateLegendEventHandler);
@@ -1521,7 +1524,7 @@ class LegendControl {
   }
 
   updateLegend() {
-    const zoom = map.getZoom();
+    const zoom = Math.floor(map.getZoom());
     const style = map.getStyle();
     const legendData = this.legend;
 
@@ -1530,12 +1533,21 @@ class LegendControl {
       return;
     }
 
-    // TODO only regenerate if inputs are modified
-    // TODO difference check for legend content
+    const mapGlobalState = map.getGlobalState();
+
+    // Verify if legend changed
+    if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
+        return;
+    }
+    this.legendState = {
+      zoom,
+      style: style.name,
+      mapGlobalState,
+    };
 
     // TODO read global state expressions
 
-    const legendStyle = this.makeLegendStyle(style, legendData[selectedStyle], map.getGlobalState(), Math.floor(zoom))
+    const legendStyle = this.makeLegendStyle(style, legendData[selectedStyle], mapGlobalState, zoom)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1551,7 +1563,7 @@ class LegendControl {
     });
     this.legendMapRoot.style.height = `${numberOfLegendEntries * 27.5}px`;
 
-    console.info('zooming to', Math.floor(zoom), legendStyle)
+    console.info('zooming to', zoom, legendStyle)
   }
 
   onRemove() {
