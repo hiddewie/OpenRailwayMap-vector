@@ -149,7 +149,7 @@
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundUrl" class="form-label">Background hill shade</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
@@ -186,66 +186,6 @@
             </small>
           </div>
           <div class="mb-4">
-            <label class="form-label">Editor</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="editor" id="editorID" value="id" checked onchange="onEditorChange('id');">
-                <label class="form-check-label" for="editorID">iD</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="editor" id="editorJOSM" value="josm" onchange="onEditorChange('josm');">
-                <label class="form-check-label" for="editorJOSM">JOSM</label>
-              </div>
-            </div>
-            <small class="form-text">
-              <a href="https://ideditor.com/" target="_blank">iD</a> is an in-browser application used as default editor at <a href="https://openstreetmap.org" target="_blank">openstreetmap.org</a>.<br>
-              <a href="https://josm.openstreetmap.de/" target="_blank">JOSM</a> is a local desktop application. Ensure that the option <a href="https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl" target="_blank">Remote control</a> is enabled. The JOSM integration also works with compatible remote-controllable apps like <a href="https://merkaartor.be/" target="_blank">Merkaartor</a>.
-            </small>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Localization</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="localization" id="localizationDisabled" value="label" onchange="disableLocalization(); localizationCustomLanguageControl.disabled = true">
-                <label class="form-check-label" for="localizationDisabled">Disabled</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="localization" id="localizationAutomatic" value="name" checked onchange="automaticLocalization(); localizationCustomLanguageControl.disabled = true">
-                <label class="form-check-label" for="localizationAutomatic">Automatic</label>
-              </div>
-              <div class="form-check form-check-inline" style="margin-right: 0.3rem">
-                <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
-                <label class="form-check-label" for="localizationCustom">Custom: </label>
-              </div>
-              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
-                <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
-              </div>
-            </div>
-            <small class="form-text">
-              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
-            </small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-body" id="configure-standard-body">
-        <form>
-          <div class="mb-4">
-            <div class="mb-3">
-              <label class="form-label">Station labels</label>
-              <div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="station-label" id="stationLabelReference" value="label" checked onchange="onStationLabelChange('label');">
-                  <label class="form-check-label" for="stationLabelReference">Reference</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="station-label" id="stationLabelName" value="name" onchange="onStationLabelChange('name');">
-                  <label class="form-check-label" for="stationLabelName">Name</label>
-                </div>
-              </div>
-              <small class="form-text">
-                Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
-              </small>
-            </div>
             <label class="form-label">Future railway infrastructure</label>
             <div>
               <div class="form-check form-check-inline">
@@ -284,6 +224,66 @@
             <small class="form-text">
               Control how historical railway infrastructure should be shown on the map.<br>
               <b>Note:</b> Tagging non-existing features in OpenStreetMap like demolished railways is <a target="_blank" href="https://wiki.openstreetmap.org/wiki/Demolished_railways">discouraged</a>. It is encouraged instead to use <a href="https://www.openhistoricalmap.org/" target="_blank">the OpenHistoricalMap</a> to create and maintain historical data.
+            </small>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Editor</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="editor" id="editorID" value="id" checked onchange="onEditorChange('id');">
+                <label class="form-check-label" for="editorID">iD</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="editor" id="editorJOSM" value="josm" onchange="onEditorChange('josm');">
+                <label class="form-check-label" for="editorJOSM">JOSM</label>
+              </div>
+            </div>
+            <small class="form-text">
+              <a href="https://ideditor.com/" target="_blank">iD</a> is an in-browser application used as default editor at <a href="https://openstreetmap.org" target="_blank">openstreetmap.org</a>.<br>
+              <a href="https://josm.openstreetmap.de/" target="_blank">JOSM</a> is a local desktop application. Ensure that the option <a href="https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl" target="_blank">Remote control</a> is enabled. The JOSM integration also works with compatible remote-controllable apps like <a href="https://merkaartor.be/" target="_blank">Merkaartor</a>.
+            </small>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Localization</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationDisabled" value="label" onchange="disableLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationDisabled">Disabled</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationAutomatic" value="name" checked onchange="automaticLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationAutomatic">Automatic</label>
+              </div>
+              <div class="form-check form-check-inline" style="margin-right: 0.3rem">
+                <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
+                <label class="form-check-label" for="localizationCustom">Custom: </label>
+              </div>
+              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
+                <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
+              </div>
+            </div>
+            <small class="form-text">
+              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-standard-body">
+        <form>
+          <div class="mb-4">
+            <label class="form-label">Station labels</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelReference" value="label" checked onchange="onStationLabelChange('label');">
+                <label class="form-check-label" for="stationLabelReference">Reference</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelName" value="name" onchange="onStationLabelChange('name');">
+                <label class="form-check-label" for="stationLabelName">Name</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
             </small>
           </div>
         </form>
