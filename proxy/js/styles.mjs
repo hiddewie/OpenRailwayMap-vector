@@ -230,8 +230,8 @@ const train_protection_construction_dasharray = [2, 8];
 // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
 // See https://gist.github.com/mikhailov-work/ee72ba4191942acecc03fe6da94fc73f?permalink_comment_id=3708728#gistcomment-3708728
 // See https://github.com/hiddewie/OpenRailwayMap-vector/issues/668
-const turboColorMap = (property, min, max, power) =>
-  ['interpolate-hcl', ['linear'], ['^', ['/', ['-', ['max', min, ['min', ['get', property], max]], min], max - min], power],
+const turboColorMap = (valueExpression, min, max, power) =>
+  ['interpolate-hcl', ['linear'], ['^', ['/', ['-', ['max', min, ['min', valueExpression, max]], min], max - min], power],
     0, 'hsl(285 53.2% 15.1%)',
     25 / 255, 'hsl(231 57% 53.5%)',
     50 / 255, 'hsl(212 101.1% 62.7%)',
@@ -248,7 +248,7 @@ const turboColorMap = (property, min, max, power) =>
 
 const speedColor = ['case',
   ['==', ['get', 'maxspeed'], null], 'gray',
-  turboColorMap('maxspeed', 10, 380, 0.8),
+  turboColorMap(['get', 'maxspeed'], 10, 380, 0.8),
 ]
 const speedHoverColor = ['case',
   ['all', ['!=', ['get', 'maxspeed'], null], ['>=', ['get', 'maxspeed'], 200], ['<=', ['get', 'maxspeed'], 340]], colors.hover.alternative,
@@ -335,7 +335,25 @@ const electrificationVoltageFrequencyColor = (voltageProperty, frequencyProperty
 
 const electrificationVoltageMaximumCurrentColor = (maximumCurrentProperty) => ['case',
   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-  ['!=', ['get', maximumCurrentProperty], null], turboColorMap(maximumCurrentProperty, 300, 4400, 0.9),
+  ['!=', ['get', maximumCurrentProperty], null], turboColorMap(['get', maximumCurrentProperty], 300, 4400, 0.9),
+  ['any',
+    ['==', ['get', 'electrification_state'], 'deelectrified'],
+    ['==', ['get', 'electrification_state'], 'abandoned'],
+  ], color_delectrified,
+  ['any',
+    ['==', ['get', 'electrification_state'], 'no'],
+    ['==', ['get', 'electrification_state'], 'construction'],
+    ['==', ['get', 'electrification_state'], 'proposed'],
+  ], color_no,
+  'gray',
+];
+
+const electrificationPowerColor = (voltageProperty, maximumCurrentProperty) => ['case',
+  ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+  ['all',
+    ['!=', ['get', voltageProperty], null],
+    ['!=', ['get', maximumCurrentProperty], null],
+  ], turboColorMap(['*', ['get', voltageProperty], ['get', maximumCurrentProperty]], 1_500_000, 45_000_000, 0.3),
   ['any',
     ['==', ['get', 'electrification_state'], 'deelectrified'],
     ['==', ['get', 'electrification_state'], 'abandoned'],
@@ -3936,7 +3954,17 @@ const layers = {
     hillshade,
     ...railwayLine(
       ['match', ['global-state', 'electrificationRailwayLine'],
-        'maximumCurrent', ['get', 'maximum_current'],
+        'maximumCurrent', ['case',
+          ['!=', ['get', 'maximum_current'], null], ['concat', ['number-format', ['get', 'maximum_current'], {}], ' A'],
+          '',
+        ],
+        'power', ['case',
+          ['all',
+            ['!=', ['get', 'voltage'], null],
+            ['!=', ['get', 'maximum_current'], null],
+          ], ['concat', ['number-format', ['*', ['get', 'voltage'], ['get', 'maximum_current'], 0.000001], {'max-fraction-digits': 1}], ' MW'],
+          '',
+        ],
         ['get', 'electrification_label'],
       ],
       [
@@ -3956,6 +3984,7 @@ const layers = {
           ],
           color: ['match', ['global-state', 'electrificationRailwayLine'],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor('maximum_current'),
+            'power', electrificationPowerColor('voltage', 'maximum_current'),
             electrificationVoltageFrequencyColor('voltage', 'frequency'),
           ],
         },
@@ -3971,6 +4000,7 @@ const layers = {
           width: 2,
           color: ['match', ['global-state', 'electrificationRailwayLine'],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor('maximum_current'),
+            'power', electrificationPowerColor('voltage', 'maximum_current'),
             electrificationVoltageFrequencyColor('voltage', 'frequency'),
           ],
         },
@@ -3998,6 +4028,7 @@ const layers = {
           ],
           color: ['match', ['global-state', 'electrificationRailwayLine'],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor('maximum_current'),
+            'power', electrificationPowerColor('voltage', 'maximum_current'),
             electrificationVoltageFrequencyColor('voltage', 'frequency'),
           ],
         },
@@ -4028,6 +4059,7 @@ const layers = {
           ],
           color: ['match', ['global-state', 'electrificationRailwayLine'],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor('future_maximum_current'),
+            'power', electrificationPowerColor('future_voltage', 'future_maximum_current'),
             electrificationVoltageFrequencyColor('future_voltage', 'future_frequency'),
           ],
         },
@@ -4052,6 +4084,7 @@ const layers = {
           ],
           color: ['match', ['global-state', 'electrificationRailwayLine'],
             'maximumCurrent', electrificationVoltageMaximumCurrentColor('future_maximum_current'),
+            'power', electrificationPowerColor('future_voltage', 'future_maximum_current'),
             electrificationVoltageFrequencyColor('future_voltage', 'future_frequency'),
           ],
         },

@@ -77,6 +77,15 @@ const electrificationLegends = {
     { maximumCurrent: 3200 },
     { maximumCurrent: 4000 },
   ],
+  power: [
+    { legend: '2 MW', voltage: 750, maximumCurrent: 2600 },
+    { legend: '4.8 MW', voltage: 3000, maximumCurrent: 1600 },
+    { legend: '6 MW', voltage: 3000, maximumCurrent: 2000 },
+    { legend: '7.2 MW', voltage: 3000, maximumCurrent: 2400 },
+    { legend: '9 MW', voltage: 15000, maximumCurrent: 600 },
+    { legend: '12 MW', voltage: 3000, maximumCurrent: 4000 },
+    { legend: '37.5 MW', voltage: 25000, maximumCurrent: 1500 },
+  ],
 };
 
 const gaugeLegends = [
@@ -1889,6 +1898,24 @@ const legendData = {
           electrificationRailwayLine: 'maximumCurrent',
         },
       })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
+        },
+      })),
       {
         legend: 'Not electrified',
         type: 'line',
@@ -1969,6 +1996,24 @@ const legendData = {
         },
         mapState: {
           electrificationRailwayLine: 'maximumCurrent',
+        },
+      })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
         },
       })),
       {
@@ -2053,6 +2098,24 @@ const legendData = {
           electrificationRailwayLine: 'maximumCurrent',
         },
       })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
+        },
+      })),
       {
         legend: 'Proposed electrification',
         type: 'line',
@@ -2066,9 +2129,9 @@ const legendData = {
           electrification_state: 'proposed',
           voltage: null,
           frequency: null,
-          future_voltage: 25000,
-          future_frequency: 60,
-          future_maximum_current: 1800,
+          future_voltage: 1500,
+          future_frequency: 0,
+          future_maximum_current: 1600,
           electrification_label: '',
         },
       },
@@ -2085,9 +2148,9 @@ const legendData = {
           electrification_state: 'construction',
           voltage: null,
           frequency: null,
-          future_voltage: 25000,
-          future_frequency: 60,
-          future_maximum_current: 1800,
+          future_voltage: 1500,
+          future_frequency: 0,
+          future_maximum_current: 1600,
           electrification_label: '',
         },
       },

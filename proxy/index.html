@@ -301,9 +301,13 @@
                 <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
                 <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
               </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLinePower" value="power" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLinePower">Maximum power</label>
+              </div>
             </div>
             <small class="form-text">
-              Control how the railway lines are rendered: either using the voltage and frequency combination, or using the maximum current.
+              Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
             </small>
           </div>
         </form>
