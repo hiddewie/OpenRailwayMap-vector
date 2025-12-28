@@ -35,8 +35,6 @@ const localizationAutomaticControl =  document.getElementById('localizationAutom
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
 const backgroundMapContainer = document.getElementById('background-map');
-const legend = document.getElementById('legend');
-const legendMapContainer = document.getElementById('legend-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
 const aboutBackdrop = document.getElementById('about-backdrop');
@@ -349,26 +347,6 @@ function hideConfiguration() {
   configurationBackdrop.style.display = 'none';
 }
 
-function hideLegend() {
-  legend.style.display = 'none';
-}
-
-function showLegend() {
-  legend.style.display = 'block';
-}
-
-function isLegendShown() {
-  return legend.style.display === 'block';
-}
-
-function toggleLegend() {
-  if (isLegendShown()) {
-    hideLegend();
-  } else {
-    showLegend();
-  }
-}
-
 function toggleNews() {
   if (newsBackdrop.style.display === 'block') {
     hideNews();
@@ -448,7 +426,7 @@ document.addEventListener('keydown', (event) => {
     hideConfiguration();
     hideNews();
     hideAbout();
-    hideLegend();
+    legendControl.hideLegend();
     if (popup) {
       popup.remove();
       popup = null;
@@ -678,9 +656,7 @@ function onStationLabelChange(stationlabel) {
   if (map.loaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
-  if (legendMap.loaded()) {
-    legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
-  }
+  legendControl.updateLegend();
 }
 
 function disableLocalization() {
@@ -732,9 +708,8 @@ function updateTheme() {
   if (map.loaded()) {
     map.setGlobalStateProperty('theme', resolvedTheme);
   }
-  if (legendMap.loaded()) {
-    legendMap.setGlobalStateProperty('theme', resolvedTheme);
-  }
+
+  legendControl.updateLegend();
 }
 
 function onEditorChange(editor) {
@@ -760,6 +735,8 @@ function onFutureInfrastructureChange(futureInfrastructure) {
 
   map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
   map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+
+  legendControl.updateLegend();
 }
 
 function updateBackgroundMapContainer() {
@@ -1028,30 +1005,10 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
-
-const legendPointToMapPoint = (zoom, [x, y]) =>
-  [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
-
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
-
-const legendStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
-);
-
-const legendMap = new maplibregl.Map({
-  container: 'legend-map',
-  zoom: 5,
-  center: [0, 0],
-  attributionControl: false,
-  interactive: false,
-  // See https://github.com/maplibre/maplibre-gl-js/issues/3503
-  maxCanvasSize: [Infinity, Infinity],
-});
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
@@ -1206,21 +1163,6 @@ function onStyleChange() {
     });
   }
 
-  if (selectedStyle !== lastSetMapStyle) {
-    // Change legend styles
-    legendMap.setStyle(legendStyles[selectedStyle], {
-      validate: false,
-      // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
-      diff: false,
-      transformStyle: (previous, next) => {
-        rewriteStylePathsToOrigin(next)
-        rewriteGlobalStateDefaults(next)
-        onStylesheetChange(next);
-        return next;
-      },
-    });
-  }
-
   if (supportsDate && !dateControl.isShown()) {
     dateControl.show();
   } else if (!supportsDate && dateControl.isShown()) {
@@ -1230,6 +1172,7 @@ function onStyleChange() {
   lastSetMapStyle = selectedStyle;
   lastSetMapLanguage = language;
 
+  legendControl.updateLegend()
   onPageParametersChange();
 }
 
@@ -1501,12 +1444,22 @@ class ConfigurationControl {
 }
 
 class LegendControl {
-  constructor(options) {
-    this.options = options;
+  constructor() {
+    this.map = null;
+    this._container = null;
+    this.legend = null;
+    this.legendMapContainer = null;
+    this.legendState = {
+      zoom: null,
+      style: null,
+      mapGlobalState: {},
+    };
+
+    this.generateLegendEventHandler = () => this.updateLegend();
   }
 
   onAdd(map) {
-    this._map = map;
+    this.map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
     const button = createDomElement('button', 'maplibregl-ctrl-legend', this._container);
     button.type = 'button';
@@ -1516,22 +1469,297 @@ class LegendControl {
     text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
     text.innerText = 'Legend'
 
-    button.onclick = () => this.options.onLegendToggle()
+    button.onclick = () => this.toggleLegend();
+
+    this.legendMapContainer = createDomElement('div', 'legend-map-container', this._container)
+    this.legendMapRoot = createDomElement('div', 'legend-map', this.legendMapContainer)
+    this.legendMap = new maplibregl.Map({
+      container: this.legendMapRoot,
+      zoom: 16,
+      center: [0, 0],
+      attributionControl: false,
+      interactive: false,
+      // See https://github.com/maplibre/maplibre-gl-js/issues/3503
+      maxCanvasSize: [Infinity, Infinity],
+    });
+    this.legendMap.on('styleimagemissing', event => generateImage([map, this.legendMap], event.id));
+
+    fetch(`${origin}/legend.json`)
+      .then(response => response.json())
+      .then(legend => {
+        this.legend = legend
+        console.info('Loaded legend');
+
+        this.generateLegendEventHandler();
+      })
+      .catch(error => console.error('Error while fetching legend', error));
+
+    this.map.on('load', this.generateLegendEventHandler);
+    this.map.on('zoomend', this.generateLegendEventHandler);
+    this.map.on('styledata', this.generateLegendEventHandler);
 
     return this._container;
   }
 
+  hideLegend() {
+    this.legendMapContainer.style.display = 'none';
+  }
+
+  showLegend() {
+    this.legendMapContainer.style.display = 'block';
+    this.updateLegend();
+  }
+
+  isLegendShown() {
+    return this.legendMapContainer.style.display === 'block';
+  }
+
+  toggleLegend() {
+    if (this.isLegendShown()) {
+      this.hideLegend();
+    } else {
+      this.showLegend();
+    }
+  }
+
+  updateLegend() {
+    const zoom = Math.floor(this.map.getZoom());
+    const style = this.map.getStyle();
+    const legendData = this.legend;
+
+    // Ignore legend updates when data is not ready
+    if (!this.isLegendShown() || !zoom || !style || !legendData) {
+      return;
+    }
+    const mapGlobalState = this.map.getGlobalState();
+
+    // Verify if legend changed
+    if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
+      return;
+    }
+    this.legendState = {
+      zoom,
+      style: style.name,
+      mapGlobalState: {...mapGlobalState},
+    };
+
+    const layersOrder = this.map.getLayersOrder()
+    const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
+
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom)
+    this.legendMap.setStyle(legendStyle, {
+      validate: false,
+      transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
+        return next;
+      },
+    });
+
+    const numberOfLegendEntries = legendStyle.metadata.count;
+
+    this.legendMap.jumpTo({
+      center: this.legendPointToMapPoint([1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
+    });
+    this.legendMapRoot.style.height = `${numberOfLegendEntries * 27.5}px`;
+  }
+
   onRemove() {
-    removeDomElement(this._container);
-    this._map = undefined;
+    if (this._container) {
+      removeDomElement(this._container);
+      this._container = null;
+    }
+
+    this.map.off('load', this.generateLegendEventHandler);
+    this.map.off('zoomend', this.generateLegendEventHandler);
+    this.map.off('styledata', this.generateLegendEventHandler);
+
+    this.map = undefined;
+  }
+
+  legendPointToMapPoint([x, y]) {
+    return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
+  }
+
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom) {
+    const layerVisibleAtZoom = (zoom) =>
+      layer =>
+        ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
+
+    const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
+
+    const styleZoomLayers = sourceLayers
+      .filter(layer => visibleLayers.has(layer.id))
+      .filter(layerVisibleAtZoom(zoom))
+      .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
+      .map(({
+              ['source-layer']: sourceLayer,
+              source,
+              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
+              minzoom,
+              maxzoom,
+              ...rest
+            }) => {
+        const resultLayout = {...layoutRest};
+        if (symbolPlacement === 'line') {
+          resultLayout['symbol-placement'] = 'line-center';
+        }
+
+        return {
+          ...rest,
+          source: `${source}-${sourceLayer}`,
+          layout: resultLayout,
+        };
+      })
+
+    const legendZoomLayer = {
+      type: 'symbol',
+      id: 'legend',
+      source: 'legend',
+      paint: {
+        'text-color': ['case',
+          ['==', ['global-state', 'theme'], 'light'], 'black',
+          'white'
+        ],
+        'text-halo-color': ['case',
+          ['==', ['global-state', 'theme'], 'light'], 'white',
+          '#333'
+        ],
+        'text-halo-width': 1,
+      },
+      layout: {
+        'text-field': '{legend}',
+        'text-size': 11,
+        'text-font': ['Noto Sans Regular'],
+        'text-anchor': 'left',
+        'text-max-width': 14,
+        'text-overlap': 'always',
+      },
+    };
+
+    const legendLayers = [...styleZoomLayers, legendZoomLayer];
+
+    const usedLegendSources = new Set([...legendLayers.map(layer => layer.source)])
+    const zoomFilter = layerVisibleAtZoom(zoom);
+
+    let entry = 0;
+    let done = new Set();
+
+    const featureSourceLayers = sourceLayers.flatMap(layer => {
+      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+      const sourceName = legendLayerName
+      const applicable = zoomFilter(layer) && visibleLayers.has(layer.id);
+      if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
+        return [];
+      }
+
+      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const features = data
+        .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .flatMap(item => {
+          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+            .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+            .flatMap((subItem, index, subItems) => ({
+              type: 'Feature',
+              geometry: {
+                type: subItem.type === 'line' || subItem.type === 'polygon'
+                  ? 'LineString'
+                  : 'Point',
+                coordinates:
+                  subItem.type === 'line' ? [
+                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                    ] :
+                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+              },
+              properties: subItem.properties,
+            }));
+          entry++;
+          return itemFeatures;
+        });
+      done.add(sourceName);
+
+      return [[sourceName, {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features,
+        },
+      }]];
+    });
+
+    entry = 0;
+    done = new Set();
+
+    const legendFeatures = sourceLayers.flatMap(layer => {
+      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+      const sourceName = legendLayerName
+      const applicable = layerVisibleAtZoom(zoom)(layer) && visibleLayers.has(layer.id);
+      if (done.has(sourceName) || !applicable) {
+        return [];
+      }
+
+      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const features = data
+        .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .map(item => {
+          const legend = [item.legend, ...(item.variants ?? [])
+            .filter(variant => variant.legend)
+            .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
+            .map(variant => variant.legend)]
+            .join(', ');
+
+          const feature = {
+            type: 'Feature',
+            geometry: {
+              type: "Point",
+              coordinates: this.legendPointToMapPoint([0.5, -entry * 0.6]),
+            },
+            properties: {
+              legend,
+            },
+          };
+          entry++;
+          return feature;
+        });
+      done.add(sourceName);
+
+      return features;
+    })
+
+    const legendSourceLayer = ['legend', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: legendFeatures,
+      },
+    }]
+
+    const legendSources = Object.fromEntries(
+      [...featureSourceLayers, legendSourceLayer]
+    )
+
+    // Maplibre Style does not serialize the state with defaults
+    const stateWithDefaults = Object.fromEntries(
+      Object.entries(state)
+        .map(([name, value]) => [name, { default: value }]),
+    )
+
+    return {
+      ...style,
+      name: `${style.name} legend`,
+      layers: legendLayers,
+      sources: legendSources,
+      state: stateWithDefaults,
+      metadata: {
+        count: legendSources['legend'].data.features.length,
+      },
+    };
   }
 }
-
-// Cache for the number of items in the legend, per style and zoom level
-const legendEntriesCount = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(key => [key, {}])
-);
 
 class AboutControl {
   constructor(options) {
@@ -1643,22 +1871,9 @@ const aboutControl = new AboutControl({
 });
 map.addControl(aboutControl, 'bottom-right');
 
-map.addControl(new LegendControl({
-  onLegendToggle: toggleLegend,
-}), 'bottom-left');
+const legendControl = new LegendControl();
+map.addControl(legendControl, 'bottom-left');
 
-const onMapZoom = zoom => {
-  // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
-  //   stay within the bounds of the earth.
-  const legendZoom = Math.max(Math.floor(zoom), 6);
-  const numberOfLegendEntries = legendEntriesCount[selectedStyle][legendZoom] ?? 100;
-
-  legendMap.jumpTo({
-    zoom: legendZoom,
-    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
-  });
-  legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
-}
 const onMapRotate = bearing => {
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
@@ -1667,16 +1882,6 @@ const onMapRotate = bearing => {
   } else if (!rotated && rotatedShownOnIcon) {
     navigationControl._compassIcon.classList.remove('rotated');
   }
-}
-
-const onStylesheetChange = styleSheet => {
-  const styleName = styleSheet.metadata.name;
-  styleSheet.layers.forEach(layer => {
-    if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
-      legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
-    }
-  })
-  onMapZoom(map.getZoom());
 }
 
 function openJOSM(josmUrl, osmType, osmId) {
@@ -1954,15 +2159,12 @@ function popupContent(feature) {
   return popupContainer
 }
 
-map.on('load', () => onMapZoom(map.getZoom()));
-map.on('zoomend', () => onMapZoom(map.getZoom()));
 map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
-legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
+map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
