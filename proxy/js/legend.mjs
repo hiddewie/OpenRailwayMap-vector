@@ -2329,8 +2329,8 @@ const legendData = {
       }
     ],
   },
-  gauge: {
-    'gauge_railway_line_low-gauge_railway_line_low': [
+  track: {
+    'track_railway_line_low-track_railway_line_low': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
         type: 'line',
@@ -2736,6 +2736,7 @@ const legendData = {
       },
     ],
   },
+  // TODO merge with track legend
   loading_gauge: {
     'loading_gauge_railway_line_low-loading_gauge_railway_line_low': [
       ...loading_gauges.loading_gauges.map(loading_gauge => ({
@@ -2835,6 +2836,7 @@ const legendData = {
       },
     ],
   },
+  // TODO merge with track legend
   track_class: {
     'track_class_railway_line_low-track_class_railway_line_low': [
       ...track_classes.track_classes.map(track_class => ({

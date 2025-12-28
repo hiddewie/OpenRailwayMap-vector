@@ -589,7 +589,7 @@ const sources = {
   },
   track_railway_line_low: {
     type: 'vector',
-    url: '/gauge_railway_line_low',
+    url: '/track_railway_line_low',
   },
   operator_railway_line_low: {
     type: 'vector',
@@ -4362,7 +4362,7 @@ const layers = {
     searchResults,
   ],
 
-  gauge: [
+  track: [
     hillshade,
     ...railwayLine(
       ['coalesce', ['get', 'gauge_label'], ''],
@@ -4371,8 +4371,8 @@ const layers = {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
-          source: 'gauge_railway_line_low',
-          sourceLayer: 'gauge_railway_line_low',
+          source: 'track_railway_line_low',
+          sourceLayer: 'track_railway_line_low',
           states: {
             present: undefined,
           },
@@ -4453,6 +4453,7 @@ const layers = {
     searchResults,
   ],
 
+  // TODO merge with track
   loading_gauge: [
     hillshade,
     ...railwayLine(
@@ -4506,6 +4507,7 @@ const layers = {
     searchResults,
   ],
 
+  // TODO merge with track
   track_class: [
     hillshade,
     ...railwayLine(
