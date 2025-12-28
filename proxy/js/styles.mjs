@@ -587,17 +587,9 @@ const sources = {
     type: 'vector',
     url: '/electrification_railway_line_low',
   },
-  gauge_railway_line_low: {
+  track_railway_line_low: {
     type: 'vector',
     url: '/gauge_railway_line_low',
-  },
-  loading_gauge_railway_line_low: {
-    type: 'vector',
-    url: '/loading_gauge_railway_line_low',
-  },
-  track_class_railway_line_low: {
-    type: 'vector',
-    url: '/track_class_railway_line_low',
   },
   operator_railway_line_low: {
     type: 'vector',
