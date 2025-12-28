@@ -83,6 +83,12 @@ server {
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
+  location /legend.json {
+    root /etc/nginx/public;
+    expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
+  }
+
   location = /features.json {
     root /etc/nginx/public;
     expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
