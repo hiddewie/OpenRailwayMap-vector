@@ -1523,15 +1523,15 @@ class LegendControl {
   }
 
   updateLegend() {
-    const zoom = Math.floor(map.getZoom());
-    const style = map.getStyle();
+    const zoom = Math.floor(this.map.getZoom());
+    const style = this.map.getStyle();
     const legendData = this.legend;
 
+    // Ignore legend updates when data is not ready
     if (!this.isLegendShown() || !zoom || !style || !legendData) {
       return;
     }
-
-    const mapGlobalState = map.getGlobalState();
+    const mapGlobalState = this.map.getGlobalState();
 
     // Verify if legend changed
     if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
@@ -1540,10 +1540,13 @@ class LegendControl {
     this.legendState = {
       zoom,
       style: style.name,
-      mapGlobalState:{...mapGlobalState},
+      mapGlobalState: {...mapGlobalState},
     };
 
-    const legendStyle = this.makeLegendStyle(style, legendData[selectedStyle], mapGlobalState, zoom)
+    const layersOrder = this.map.getLayersOrder()
+    const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
+
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1577,7 +1580,7 @@ class LegendControl {
     return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
   }
 
-  makeLegendStyle(style, legendData, state, zoom) {
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom) {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1585,6 +1588,7 @@ class LegendControl {
     const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
 
     const styleZoomLayers = sourceLayers
+      .filter(layer => visibleLayers.has(layer.id))
       .filter(layerVisibleAtZoom(zoom))
       .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
       .map(({
@@ -1643,7 +1647,7 @@ class LegendControl {
     const featureSourceLayers = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = legendLayerName
-      const applicable = zoomFilter(layer);
+      const applicable = zoomFilter(layer) && visibleLayers.has(layer.id);
       if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
         return [];
       }
@@ -1692,7 +1696,7 @@ class LegendControl {
     const legendFeatures = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = legendLayerName
-      const applicable = layerVisibleAtZoom(zoom)(layer);
+      const applicable = layerVisibleAtZoom(zoom)(layer) && visibleLayers.has(layer.id);
       if (done.has(sourceName) || !applicable) {
         return [];
       }
@@ -1738,6 +1742,7 @@ class LegendControl {
       [...featureSourceLayers, legendSourceLayer]
     )
 
+    // Maplibre Style does not serialize the state with defaults
     const stateWithDefaults = Object.fromEntries(
       Object.entries(state)
         .map(([name, value]) => [name, { default: value }]),
