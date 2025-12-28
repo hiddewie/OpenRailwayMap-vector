@@ -252,7 +252,7 @@ operators:
 
   - names:
       - 'Toronto Transit Commission'
-    color: '#da251dc'
+    color: '#da251d'
 
   # --- CA: Genesee & Wyoming subsidiaries --- #
   - names:
