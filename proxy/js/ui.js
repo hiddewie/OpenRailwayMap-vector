@@ -523,7 +523,7 @@ const knownStyles = {
   standard: {
     name: 'Infrastructure',
     supportsDate: true,
-    hasConfiguration: false,
+    hasConfiguration: true,
   },
   speed: {
     name: 'Speed',
