@@ -595,21 +595,46 @@ function hashToObject(hash) {
 
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
-
-  const style = (hashObject.style && hashObject.style in knownStyles)
-    ? hashObject.style
-    : defaultStyle;
-
-  const date = hashObject.date === 'all'
-    ? 'all'
-    : (hashObject.date && !isNaN(parseFloat(hashObject.date)))
-      ? parseFloat(hashObject.date)
-      : defaultDate;
-
   return {
-    style,
-    date,
+    style: updateStyleParameter(hashObject.style),
+    date: determineDateParameter(hashObject.date),
   }
+}
+
+/**
+ * Backwards conpatibility for existing links
+ */
+function updateStyleParameter(hashStyle) {
+  switch (hashStyle) {
+    case 'gauge':
+      updateConfiguration('trackRailwayLine', 'gauge');
+      console.info('Updated hash parameters for gauge style to track style, and updated user configuration');
+      return 'track'
+
+    case 'loading_gauge':
+      updateConfiguration('trackRailwayLine', 'loadingGauge');
+      console.info('Updated hash parameters for gauge style to loading gauge style, and updated user configuration');
+      return 'track'
+
+    case 'track_class':
+      updateConfiguration('trackRailwayLine', 'trackClass');
+      console.info('Updated hash parameters for gauge style to track class style, and updated user configuration');
+      return 'track'
+  }
+
+  if (hashStyle && hashStyle in knownStyles) {
+    return hashStyle;
+  } else {
+    return defaultStyle;
+  }
+}
+
+function determineDateParameter(hashDate) {
+  return hashDate === 'all'
+    ? 'all'
+    : (hashDate && !isNaN(parseFloat(hashDate)))
+      ? parseFloat(hashDate)
+      : defaultDate;
 }
 
 function determineZoomCenterFromHash(hash) {
@@ -637,8 +662,6 @@ function putParametersInHash(hash, style, date) {
   hashObject.date = dateControl.active ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
-
-let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 // Configuration //
 
@@ -1113,6 +1136,8 @@ const defaultConfiguration = {
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
+
+let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
