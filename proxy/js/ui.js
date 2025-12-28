@@ -400,22 +400,6 @@ function configureElectrification() {
   configureElectrificationBody.style.display = 'block';
 }
 
-function configureGeneral() {
-  configureGeneralTab.classList.add('active');
-  configureElectrificationTab.classList.remove('active');
-
-  configureGeneralBody.style.display = 'block';
-  configureElectrificationBody.style.display = 'none';
-}
-
-function configureElectrification() {
-  configureGeneralTab.classList.remove('active');
-  configureElectrificationTab.classList.add('active');
-
-  configureGeneralBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'block';
-}
-
 function toggleNews() {
   if (newsBackdrop.style.display === 'block') {
     hideNews();

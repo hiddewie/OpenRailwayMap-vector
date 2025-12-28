@@ -348,12 +348,6 @@ const electrificationVoltageMaximumCurrentColor = (maximumCurrentProperty) => ['
   'gray',
 ];
 
-const electrificationVoltageMaximumCurrentColor = ['case',
-  ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-  ['==', ['get', 'maximum_current'], null], 'gray',
-  turboColorMap('maximum_current', 0, 5000),
-];
-
 const gauge_construction_dashes = [3, 3];
 const dual_construction_dashes = [1.5, 4.5];
 const multi_construction_dashes = [0, 1, 1, 4];
