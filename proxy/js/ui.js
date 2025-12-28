@@ -524,18 +524,8 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: true,
   },
-  gauge: {
-    name: 'Gauge',
-    supportsDate: false,
-    hasConfiguration: false,
-  },
-  loading_gauge: {
-    name: 'Loading gauge',
-    supportsDate: false,
-    hasConfiguration: false,
-  },
-  track_class: {
-    name: 'Track class',
+  track: {
+    name: 'Track',
     supportsDate: false,
     hasConfiguration: false,
   },

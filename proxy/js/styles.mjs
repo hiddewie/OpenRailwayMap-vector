@@ -10,9 +10,7 @@ const knownStyles = [
   'speed',
   'signals',
   'electrification',
-  'gauge',
-  'loading_gauge',
-  'track_class',
+  'track',
   'operator',
 ];
 
