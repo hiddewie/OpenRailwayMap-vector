@@ -46,6 +46,7 @@ RETURN (
       electrification_label,
       future_voltage,
       future_frequency,
+      future_maximum_current,
       railway_to_int(gauge0) AS gaugeint0,
       gauge0,
       railway_to_int(gauge1) AS gaugeint1,
@@ -105,6 +106,7 @@ RETURN (
         railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
         future_voltage,
         future_frequency,
+        future_maximum_current,
         gauges[1] AS gauge0,
         gauges[2] AS gauge1,
         gauges[3] AS gauge2,
@@ -210,6 +212,7 @@ DO $do$ BEGIN
           "maximum_current": "integer",
           "future_frequency": "number",
           "future_voltage": "integer",
+          "future_maximum_current": "integer",
           "electrification_label": "string",
           "gauge0": "string",
           "gaugeint0": "number",
@@ -1525,6 +1528,7 @@ DO $do$ BEGIN
           "maximum_current": "integer",
           "future_frequency": "number",
           "future_voltage": "integer",
+          "future_maximum_current": "integer",
           "electrification_label": "string"
         }
       }

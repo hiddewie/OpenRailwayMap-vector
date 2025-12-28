@@ -190,6 +190,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'electrification_state', type = 'text' },
     { column = 'future_frequency', type = 'real' },
     { column = 'future_voltage', type = 'integer' },
+    { column = 'future_maximum_current', type = 'integer' },
     { column = 'gauges', sql_type = 'text[]' },
     { column = 'loading_gauge', type = 'text' },
     { column = 'track_class', type = 'text' },
@@ -638,26 +639,27 @@ function electrification_state(tags)
   local electrified = tags['electrified']
 
   if electrification_values(electrified) then
-    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency']), nil, nil
+    return 'present', tonumber(tags['voltage']), tonumber(tags['frequency']), tonumber(tags['railway:maximum_current']), nil, nil, nil
   end
   if electrification_values(tags['construction:electrified']) then
-    return 'construction', nil, nil, tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency'])
+    return 'construction', nil, nil, nil, tonumber(tags['construction:voltage']), tonumber(tags['construction:frequency']), tonumber(tags['construction:railway:maximum_current'])
   end
   if electrification_values(tags['proposed:electrified']) then
-    return 'proposed', nil, nil, tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency'])
+    return 'proposed', nil, nil, nil, tonumber(tags['proposed:voltage']), tonumber(tags['proposed:frequency']), tonumber(tags['proposed:railway:maximum_current'])
   end
-    if electrified == 'no' then
-        if electrification_values(tags['deelectrified']) then
-            return 'deelectrified', nil, nil, nil, nil
-        end
-        if electrification_values(tags['abandoned:electrified']) then
-            return 'abandoned', nil, nil, nil, nil
-        end
 
-        return 'no', nil, nil, nil, nil
+  if electrified == 'no' then
+    if electrification_values(tags['deelectrified']) then
+        return 'deelectrified', nil, nil, nil, nil, nil, nil
+    end
+    if electrification_values(tags['abandoned:electrified']) then
+        return 'abandoned', nil, nil, nil, nil, nil, nil
     end
 
-    return nil, nil, nil
+    return 'no', nil, nil, nil, nil, nil, nil
+  end
+
+  return nil, nil, nil, nil, nil
 end
 
 function to_sql_array(items)
@@ -1212,7 +1214,7 @@ function osm2pgsql.process_way(object)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags, '')
     local train_protection_construction, train_protection_construction_rank = tag_functions.train_protection(tags, 'construction:')
 
-    local current_electrification_state, voltage, frequency, future_voltage, future_frequency = electrification_state(tags)
+    local current_electrification_state, voltage, frequency, maximum_current, future_voltage, future_frequency, future_maximum_current = electrification_state(tags)
 
     local tunnel = tags['tunnel'] and tags['tunnel'] ~= 'no' or false
     local bridge = tags['bridge'] and tags['bridge'] ~= 'no' or false
@@ -1253,9 +1255,10 @@ function osm2pgsql.process_way(object)
         electrification_state = current_electrification_state,
         frequency = frequency,
         voltage = voltage,
-        maximum_current = tags['railway:maximum_current'],
+        maximum_current = maximum_current,
         future_frequency = future_frequency,
         future_voltage = future_voltage,
+        future_maximum_current = future_maximum_current,
         gauges = split_semicolon_to_sql_array(gauge),
         loading_gauge = tags['loading_gauge'],
         track_class = tags['railway:track_class'],
