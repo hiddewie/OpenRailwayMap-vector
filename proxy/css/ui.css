@@ -28,11 +28,11 @@ body {
   display: none;
 }
 
-#legend {
+.legend-map-container {
   position: absolute;
   display: none;
-  left: 10px;
-  bottom: 40px;
+  left: 0;
+  bottom: 30px;
   z-index: 10;
 
   height: 400px;
@@ -42,7 +42,7 @@ body {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
   overflow-y: auto;
 }
-#legend-map {
+.legend-map {
   width: 100%;
   height: 1400px;
 }

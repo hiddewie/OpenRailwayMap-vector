@@ -554,6 +554,14 @@ operators:
       - 'Münchner Verkehrsgesellschaft'
     color: '#0065cc'
 
+  - names:
+      - 'VAG Verkehrs-Aktiengesellschaft Nürnberg'
+    color: '#b80012'
+
+  - names:
+      - 'Ruhrbahn'
+    color: '#CFA730'
+
   # --- DK --- #
 
   - names:

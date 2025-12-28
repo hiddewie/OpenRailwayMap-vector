@@ -308,6 +308,26 @@
           </div>
         </form>
       </div>
+      <div class="modal-body" id="configure-electrification-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Railway lines</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineVoltageFrequency" value="voltageFrequency" checked onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineVoltageFrequency">Voltage and frequency</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how the railway lines are rendered: either using the voltage and frequency combination, or using the maximum current.
+            </small>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -348,9 +368,6 @@
       <div class="modal-body" id="news-content"></div>
     </div>
   </div>
-</div>
-<div id="legend">
-  <div id="legend-map"></div>
 </div>
 <div id="map-container">
   <div id="background-map"></div>
