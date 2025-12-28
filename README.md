@@ -1,6 +1,3 @@
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/hiddewie?logo=github)](https://github.com/sponsors/hiddewie)
-[![Buy Me a Coffee Supporters](https://img.shields.io/badge/dynamic/regex?label=supporters&color=gold&url=https://buymeacoffee.com/hiddewie&search=(%3F%3Camount%3E.%5C*%3F)%20supporters&replace=%24%3Camount%3E&logo=buymeacoffee)](https://buymeacoffee.com/hiddewie)
-
 # OpenRailwayMap Vector Map Styles
 
 This repository contains the visualization of railway infrastructure, speed limits, train protection, electrification and railway gauges using vector-based tiles and a web-based user interface. 
@@ -54,6 +51,7 @@ There are multiple ways to contribute to this project:
 - Providing icons for visualizing features on the map.
 - Providing user interface improvements.
 - Providing technical or user documentation.
+- Support OpenRailwayMap financially, through [*Github Sponsors*](https://github.com/sponsors/hiddewie) or [*Buy Me a Coffee*](https://buymeacoffee.com/hiddewie).
 
 View the [contribution documentation](CONTRIBUTING.md) for details.
 
