@@ -674,7 +674,7 @@ const railwayLine = (text, layers) => [
 
   // Tunnels
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_casing_${state}`,
       type: 'line',
@@ -689,6 +689,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
@@ -709,7 +710,7 @@ const railwayLine = (text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_fill_${state}`,
       type: 'line',
@@ -724,6 +725,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
@@ -746,7 +748,7 @@ const railwayLine = (text, layers) => [
       },
     })),
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
@@ -766,6 +768,7 @@ const railwayLine = (text, layers) => [
     ].filter(it => it !== true),
     layout: {
       'visibility': ['case',
+        visibility ? ['==', visibility, false] : false, 'none',
         ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
@@ -778,7 +781,7 @@ const railwayLine = (text, layers) => [
       'line-width': width,
     },
   })),
-  ...layers.flatMap(({id, filter, color, states}) =>
+  ...layers.flatMap(({id, visibility, filter, color, states}) =>
     preferredDirectionLayer(`${id}_tunnel_preferred_direction`,
       ['all',
         ['==', ['get', 'tunnel'], true],
@@ -797,12 +800,13 @@ const railwayLine = (text, layers) => [
         filter ?? true,
       ].filter(it => it !== true),
       color,
+      visibility,
     ),
   ),
 
   // Ground
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_casing_${state}`,
       type: 'line',
@@ -818,6 +822,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
@@ -838,7 +843,7 @@ const railwayLine = (text, layers) => [
       },
     }))
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_fill_${state}`,
       type: 'line',
@@ -854,6 +859,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
@@ -881,7 +887,7 @@ const railwayLine = (text, layers) => [
 
   ...layers
     .filter(({states}) => 'present' in states)
-    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, sort}) => [
+    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, sort}) => [
       {
         id: `${id}_bridge_railing`,
         type: 'line',
@@ -903,6 +909,7 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
+            visibility ? ['==', visibility, false] : false, 'none',
             ['<', ['global-state', 'date'], defaultDate], 'none',
             'visible',
           ],
@@ -937,6 +944,7 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
+            visibility ? ['==', visibility, false] : false, 'none',
             ['<', ['global-state', 'date'], defaultDate], 'none',
             'visible',
           ],
@@ -952,7 +960,7 @@ const railwayLine = (text, layers) => [
       },
     ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_bridge_fill_${state}`,
       type: 'line',
@@ -967,6 +975,7 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
           state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
             : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
@@ -992,7 +1001,7 @@ const railwayLine = (text, layers) => [
 
   // Preferred direction
 
-  ...layers.flatMap(({id, filter, color, states}) =>
+  ...layers.flatMap(({id, visibility, filter, color, states}) =>
     preferredDirectionLayer(
       `${id}_preferred_direction`,
       ['all',
@@ -1012,6 +1021,7 @@ const railwayLine = (text, layers) => [
         filter ?? true,
       ].filter(it => it !== true),
       color,
+      visibility,
     ),
   ),
 
@@ -1019,7 +1029,7 @@ const railwayLine = (text, layers) => [
 
   railwayKmText,
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, filter, states}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, states}) => ({
     id: `${id}_text`,
     type: 'symbol',
     minzoom,
@@ -1046,6 +1056,7 @@ const railwayLine = (text, layers) => [
     },
     layout: {
       'visibility': ['case',
+        visibility ? ['==', visibility, false] : false, 'none',
         ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
       ],
@@ -1606,7 +1617,7 @@ const railwayKmText = {
   },
 };
 
-const preferredDirectionLayer = (id, filter, color) => ({
+const preferredDirectionLayer = (id, filter, color, visibility) => ({
   id,
   type: 'symbol',
   minzoom: 15,
@@ -1626,6 +1637,7 @@ const preferredDirectionLayer = (id, filter, color) => ({
   },
   layout: {
     'visibility': ['case',
+      visibility ? ['==', visibility, false] : false, 'none',
       ['<', ['global-state', 'date'], defaultDate], 'none',
       'visible',
     ],
@@ -4365,7 +4377,12 @@ const layers = {
   track: [
     hillshade,
     ...railwayLine(
-      ['coalesce', ['get', 'gauge_label'], ''],
+      ['match', ['global-state', 'trackRailwayLine'],
+        'gauge', ['coalesce', ['get', 'gauge_label'], ''],
+        'loadingGauge', ['coalesce', ['get', 'loading_gauge'], ''],
+        'trackClass', ['coalesce', ['get', 'track_class'], ''],
+        '',
+      ],
       [
         {
           id: 'railway_line_low',
@@ -4381,7 +4398,11 @@ const layers = {
             0, 0.5,
             7, 2,
           ],
-          color: gaugeColor('gauge0', 'gaugeint0'),
+          color: ['match', ['global-state', 'trackRailwayLine'],
+            'loadingGauge', loadingGaugeFillColor,
+            'trackClass', trackClassFillColor,
+            gaugeColor('gauge0', 'gaugeint0'),
+          ],
         },
         {
           id: 'railway_line_med',
@@ -4393,10 +4414,14 @@ const layers = {
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           width: 2,
-          color: gaugeColor('gauge0', 'gaugeint0'),
+          color: ['match', ['global-state', 'trackRailwayLine'],
+            'loadingGauge', loadingGaugeFillColor,
+            'trackClass', trackClassFillColor,
+            gaugeColor('gauge0', 'gaugeint0'),
+          ],
         },
         {
-          id: 'railway_line_high',
+          id: 'railway_line_high_gauge',
           minzoom: 8,
           source: 'high',
           states: {
@@ -4411,9 +4436,10 @@ const layers = {
             16, 3,
           ],
           color: gaugeColor('gauge0', 'gaugeint0'),
+          visibility: ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
         },
         {
-          id: 'railway_line_high_dual',
+          id: 'railway_line_high_dual_gauge',
           minzoom: 8,
           source: 'high',
           states: {
@@ -4429,9 +4455,10 @@ const layers = {
             16, 3,
           ],
           color: gaugeColor('gauge1', 'gaugeint1'),
+          visibility: ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
         },
         {
-          id: 'railway_line_high_multi',
+          id: 'railway_line_high_multi_gauge',
           minzoom: 8,
           source: 'high',
           states: {
@@ -4447,43 +4474,7 @@ const layers = {
             16, 3,
           ],
           color: gaugeColor('gauge2', 'gaugeint2'),
-        },
-      ],
-    ),
-    searchResults,
-  ],
-
-  // TODO merge with track
-  loading_gauge: [
-    hillshade,
-    ...railwayLine(
-      ['coalesce', ['get', 'loading_gauge'], ''],
-      [
-        {
-          id: 'railway_line_low',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'loading_gauge_railway_line_low',
-          sourceLayer: 'loading_gauge_railway_line_low',
-          states: {
-            present: undefined,
-          },
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
-          color: loadingGaugeFillColor,
-        },
-        {
-          id: 'railway_line_med',
-          minzoom: 7,
-          maxzoom: 8,
-          source: 'openrailwaymap_low',
-          states: {
-            present: undefined,
-          },
-          width: 2,
-          color: loadingGaugeFillColor,
+          visibility: ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
         },
         {
           id: 'railway_line_high',
@@ -4500,69 +4491,18 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: loadingGaugeFillColor,
+          color: ['match', ['global-state', 'trackRailwayLine'],
+            'loadingGauge', loadingGaugeFillColor,
+            'trackClass', trackClassFillColor,
+            'gray',
+          ],
+          visibility: ['!=', ['global-state', 'trackRailwayLine'], 'gauge'],
         },
       ],
     ),
     searchResults,
   ],
 
-  // TODO merge with track
-  track_class: [
-    hillshade,
-    ...railwayLine(
-      ['coalesce', ['get', 'track_class'], ''],
-      [
-        {
-          id: 'railway_line_low',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'track_class_railway_line_low',
-          sourceLayer: 'track_class_railway_line_low',
-          states: {
-            present: undefined,
-          },
-          filter: ['!=', ['get', 'feature'], 'ferry'],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
-          color: trackClassFillColor,
-        },
-        {
-          id: 'railway_line_med',
-          minzoom: 7,
-          maxzoom: 8,
-          source: 'openrailwaymap_low',
-          states: {
-            present: undefined,
-          },
-          filter: ['!=', ['get', 'feature'], 'ferry'],
-          width: 2,
-          color: trackClassFillColor,
-        },
-        {
-          id: 'railway_line_high',
-          minzoom: 8,
-          source: 'high',
-          states: {
-            present: undefined,
-            construction: construction_dasharray,
-            proposed: proposed_dasharray,
-            disused: disused_dasharray,
-            preserved: disused_dasharray,
-          },
-          filter: ['!=', ['get', 'feature'], 'ferry'],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            14, 2,
-            16, 3,
-          ],
-          color: trackClassFillColor,
-        },
-      ],
-    ),
-    searchResults,
-  ],
   operator: [
     hillshade,
     {
@@ -5162,6 +5102,9 @@ const makeStyle = selectedStyle => ({
     },
     electrificationRailwayLine: {
       default: 'voltageFrequency',
+    },
+    trackRailwayLine: {
+      default: 'gauge',
     },
   },
 });
