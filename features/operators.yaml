@@ -252,7 +252,7 @@ operators:
 
   - names:
       - 'Toronto Transit Commission'
-    color: '#da251dc'
+    color: '#da251d'
 
   # --- CA: Genesee & Wyoming subsidiaries --- #
   - names:
@@ -553,6 +553,14 @@ operators:
       - 'MVG'
       - 'Münchner Verkehrsgesellschaft'
     color: '#0065cc'
+
+  - names:
+      - 'VAG Verkehrs-Aktiengesellschaft Nürnberg'
+    color: '#b80012'
+
+  - names:
+      - 'Ruhrbahn'
+    color: '#CFA730'
 
   # --- DK --- #
 

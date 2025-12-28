@@ -101,7 +101,20 @@
         <h5 class="modal-title">Map configuration</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hideConfiguration()"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-header">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a id="configure-general" class="nav-link active" href="javascript:configureGeneral()">General</a>
+          </li>
+          <li class="nav-item">
+            <a id="configure-standard" class="nav-link" href="javascript:configureStandard()">Infrastructure</a>
+          </li>
+          <li class="nav-item">
+            <a id="configure-electrification" class="nav-link" href="javascript:configureElectrification()">Electrification</a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-body" id="configure-general-body">
         <form>
           <div class="mb-4">
             <label for="backgroundSaturation" class="form-label">Background map saturation</label>
@@ -136,7 +149,7 @@
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundUrl" class="form-label">Background hill shade</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
@@ -230,23 +243,7 @@
               <a href="https://josm.openstreetmap.de/" target="_blank">JOSM</a> is a local desktop application. Ensure that the option <a href="https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl" target="_blank">Remote control</a> is enabled. The JOSM integration also works with compatible remote-controllable apps like <a href="https://merkaartor.be/" target="_blank">Merkaartor</a>.
             </small>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Station labels</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="station-label" id="stationLabelReference" value="label" checked onchange="onStationLabelChange('label');">
-                <label class="form-check-label" for="stationLabelReference">Reference</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="station-label" id="stationLabelName" value="name" onchange="onStationLabelChange('name');">
-                <label class="form-check-label" for="stationLabelName">Name</label>
-              </div>
-            </div>
-            <small class="form-text">
-              Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
-            </small>
-          </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Localization</label>
             <div>
               <div class="form-check form-check-inline">
@@ -267,6 +264,50 @@
             </div>
             <small class="form-text">
               Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-standard-body">
+        <form>
+          <div class="mb-4">
+            <label class="form-label">Station labels</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelReference" value="label" checked onchange="onStationLabelChange('label');">
+                <label class="form-check-label" for="stationLabelReference">Reference</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="station-label" id="stationLabelName" value="name" onchange="onStationLabelChange('name');">
+                <label class="form-check-label" for="stationLabelName">Name</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-electrification-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Railway lines</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineVoltageFrequency" value="voltageFrequency" checked onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineVoltageFrequency">Voltage and frequency</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLinePower" value="power" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLinePower">Maximum power</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
             </small>
           </div>
         </form>
@@ -311,9 +352,6 @@
       <div class="modal-body" id="news-content"></div>
     </div>
   </div>
-</div>
-<div id="legend">
-  <div id="legend-map"></div>
 </div>
 <div id="map-container">
   <div id="background-map"></div>

@@ -25,12 +25,22 @@ features:
           name: "جرسيف"
           station_size: small
           state: disused
-      - description: construction, proposed
+      - description: construction
         minzoom: 10
         example:
           name: "هدية"
           station_size: small
           state: construction
+        mapState:
+          showConstructionInfrastructure: true
+      - description: proposed
+        minzoom: 10
+        example:
+          name: "სამგორი"
+          station_size: small
+          state: proposed
+        mapState:
+          showProposedInfrastructure: true
 
   - description: Halt
     feature: halt
