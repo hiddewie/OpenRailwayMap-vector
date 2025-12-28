@@ -180,6 +180,12 @@ const railwayLineFeatures = {
         template: '%d V',
       },
     },
+    future_maximum_current: {
+      name: 'Future maximum current',
+      format: {
+        template: '%d A',
+      },
+    },
     gauge_label: {
       name: 'Gauge',
     },

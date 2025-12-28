@@ -10,6 +10,10 @@ const searchFacilityTermField = document.getElementById('facility-term');
 const searchMilestoneRefField = document.getElementById('milestone-ref');
 const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
+const configureGeneralTab = document.getElementById('configure-general');
+const configureElectrificationTab = document.getElementById('configure-electrification');
+const configureGeneralBody = document.getElementById('configure-general-body');
+const configureElectrificationBody = document.getElementById('configure-electrification-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
@@ -34,6 +38,8 @@ const localizationDisabledControl =  document.getElementById('localizationDisabl
 const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
+const electrificationRailwayLineVoltageFrequencyControl = document.getElementById('electrificationRailwayLineVoltageFrequency')
+const electrificationRailwayLineMaximumCurrentControl = document.getElementById('electrificationRailwayLineMaximumCurrent')
 const backgroundMapContainer = document.getElementById('background-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
@@ -270,7 +276,13 @@ function viewSearchResultsOnMap(bounds) {
   });
 }
 
-function showConfiguration() {
+function showConfiguration(tab) {
+  if (tab === 'general') {
+    configureGeneral();
+  } else if (tab === 'electrification') {
+    configureElectrification();
+  }
+
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
   backgroundOpacityControl.value = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
   if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
@@ -340,11 +352,34 @@ function showConfiguration() {
   }
   localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
 
+  const electrificationRailwayLine = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
+  if (electrificationRailwayLine === 'voltageFrequency') {
+    electrificationRailwayLineVoltageFrequencyControl.checked = true
+  } else if (electrificationRailwayLine === 'maximumCurrent') {
+    electrificationRailwayLineMaximumCurrentControl.checked = true
+  }
+
   configurationBackdrop.style.display = 'block';
 }
 
 function hideConfiguration() {
   configurationBackdrop.style.display = 'none';
+}
+
+function configureGeneral() {
+  configureGeneralTab.classList.add('active');
+  configureElectrificationTab.classList.remove('active');
+
+  configureGeneralBody.style.display = 'block';
+  configureElectrificationBody.style.display = 'none';
+}
+
+function configureElectrification() {
+  configureGeneralTab.classList.remove('active');
+  configureElectrificationTab.classList.add('active');
+
+  configureGeneralBody.style.display = 'none';
+  configureElectrificationBody.style.display = 'block';
 }
 
 function toggleNews() {
@@ -454,34 +489,42 @@ const knownStyles = {
   standard: {
     name: 'Infrastructure',
     supportsDate: true,
+    hasConfiguration: false,
   },
   speed: {
     name: 'Speed',
     supportsDate: false,
+    hasConfiguration: false,
   },
   signals: {
     name: 'Train protection',
     supportsDate: false,
+    hasConfiguration: false,
   },
   electrification: {
     name: 'Electrification',
     supportsDate: false,
+    hasConfiguration: true,
   },
   gauge: {
     name: 'Gauge',
     supportsDate: false,
+    hasConfiguration: false,
   },
   loading_gauge: {
     name: 'Loading gauge',
     supportsDate: false,
+    hasConfiguration: false,
   },
   track_class: {
     name: 'Track class',
     supportsDate: false,
+    hasConfiguration: false,
   },
   operator: {
     name: 'Operator',
     supportsDate: false,
+    hasConfiguration: false,
   },
 };
 
@@ -673,6 +716,16 @@ function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
   onStyleChange();
+}
+
+function configureElectrificationRailwayLine(electrification) {
+  updateConfiguration('electrificationRailwayLine', electrification);
+
+  if (map.loaded()) {
+    map.setGlobalStateProperty('electrificationRailwayLine', electrification);
+  }
+
+  legendControl.updateLegend()
 }
 
 function configuredLanguage() {
@@ -1001,6 +1054,7 @@ const defaultConfiguration = {
   view: {},
   stationLowZoomLabel: 'label',
   localization: 'automatic',
+  electrificationRailwayLine: 'voltageFrequency'
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -1130,6 +1184,8 @@ function rewriteGlobalStateDefaults(style) {
   style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
 
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+
+  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
 }
 
 function toggleHillShadeLayer(style) {
@@ -1193,13 +1249,18 @@ class StyleControl {
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
     const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name}]) => {
+    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
       const button = createDomElement('button', '', buttonGroup);
       button.innerText = name
       button.onclick = () => {
         buttonGroup.classList.remove('active')
         this.activateStyle(style);
         this.options.onStyleChange(style)
+      }
+
+      if (hasConfiguration) {
+        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
+        layerConfigurationButton.onclick = () => showConfiguration(style)
       }
 
       this.buttons[style] = button;
@@ -1431,7 +1492,7 @@ class ConfigurationControl {
     const button = createDomElement('button', 'maplibregl-ctrl-configuration', this._container);
     button.type = 'button';
     button.title = 'Configure the map'
-    button.onclick = _ => showConfiguration();
+    button.onclick = _ => showConfiguration('general')
     createDomElement('span', 'maplibregl-ctrl-icon', button);
 
     return this._container;
