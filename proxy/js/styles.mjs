@@ -772,6 +772,13 @@ const railwayLine = (text, layers) => [
           : ['==', ['get', 'state'], state])
       ],
       ['==', ['get', 'tunnel'], true],
+      ['>=',
+        ['get', 'way_length'],
+        ['interpolate', ["exponential", .5], ['zoom'],
+          8, 1500,
+          16, 0
+        ],
+      ],
       filter ?? true,
     ].filter(it => it !== true),
     layout: {
