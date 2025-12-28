@@ -77,6 +77,9 @@ const electrificationLegends = {
     { maximumCurrent: 3200 },
     { maximumCurrent: 4000 },
   ],
+  power: [
+    { legend: '900 kW', voltage: 1500, maximumCurrent: 600 },
+  ],
 };
 
 const gaugeLegends = [
@@ -1889,6 +1892,24 @@ const legendData = {
           electrificationRailwayLine: 'maximumCurrent',
         },
       })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
+        },
+      })),
       {
         legend: 'Not electrified',
         type: 'line',
@@ -1971,6 +1992,24 @@ const legendData = {
           electrificationRailwayLine: 'maximumCurrent',
         },
       })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
+        },
+      })),
       {
         legend: 'Not electrified',
         type: 'line',
@@ -2051,6 +2090,24 @@ const legendData = {
         },
         mapState: {
           electrificationRailwayLine: 'maximumCurrent',
+        },
+      })),
+      ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
+        legend,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          electrification_state: 'present',
+          voltage: voltage,
+          maximum_current: maximumCurrent,
+        },
+        mapState: {
+          electrificationRailwayLine: 'power',
         },
       })),
       {
