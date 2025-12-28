@@ -78,9 +78,9 @@ const electrificationLegends = {
     { maximumCurrent: 4000 },
   ],
   power: [
-    { legend: '2.0 MW', voltage: 750, maximumCurrent: 2600 },
+    { legend: '2 MW', voltage: 750, maximumCurrent: 2600 },
     { legend: '4.8 MW', voltage: 3000, maximumCurrent: 1600 },
-    { legend: '6.0 MW', voltage: 3000, maximumCurrent: 2000 },
+    { legend: '6 MW', voltage: 3000, maximumCurrent: 2000 },
     { legend: '7.2 MW', voltage: 3000, maximumCurrent: 2400 },
     { legend: '9 MW', voltage: 15000, maximumCurrent: 600 },
     { legend: '12 MW', voltage: 3000, maximumCurrent: 4000 },
