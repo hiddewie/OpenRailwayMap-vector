@@ -775,7 +775,7 @@ const railwayLine = (text, layers) => [
       ['>=',
         ['get', 'way_length'],
         ['interpolate', ["exponential", .5], ['zoom'],
-          8, 2000,
+          8, 1500,
           16, 0
         ],
       ],
