@@ -1241,7 +1241,8 @@ function rewriteGlobalStateDefaults(style) {
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 
   style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
-  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
+
+  style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
 }
 
 function toggleHillShadeLayer(style) {
