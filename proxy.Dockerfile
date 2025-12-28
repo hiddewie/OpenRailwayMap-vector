@@ -14,7 +14,8 @@ FROM build-yaml AS build-legend
 
 RUN --mount=type=bind,source=proxy/js/legend.mjs,target=legend.mjs \
   --mount=type=bind,source=features,target=features \
-  node /build/legend.mjs
+  node /build/legend.mjs \
+    > /build/legend.json
 
 FROM build-yaml AS build-taginfo
 

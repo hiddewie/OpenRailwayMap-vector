@@ -2926,4 +2926,4 @@ const legendData = {
   },
 }
 
-fs.writeFileSync('legend.json', JSON.stringify(legendData));
+console.log(JSON.stringify(legendData));
