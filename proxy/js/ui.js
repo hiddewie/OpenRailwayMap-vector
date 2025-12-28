@@ -724,9 +724,8 @@ function configureElectrificationRailwayLine(electrification) {
   if (map.loaded()) {
     map.setGlobalStateProperty('electrificationRailwayLine', electrification);
   }
-  if (legendMap.loaded()) {
-    legendMap.setGlobalStateProperty('electrificationRailwayLine', electrification);
-  }
+
+  legendControl.updateLegend()
 }
 
 function configuredLanguage() {
