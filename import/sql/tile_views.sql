@@ -1724,9 +1724,9 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
---- Gauge ---
+--- Track ---
 
-CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION track_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -1734,7 +1734,7 @@ CREATE OR REPLACE FUNCTION gauge_railway_line_low(z integer, x integer, y intege
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'gauge_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'track_railway_line_low', 4096, 'way', 'id')
   FROM (
     SELECT
       min(id) as id,
@@ -1747,6 +1747,8 @@ RETURN (
       gaugeint0,
       gauge0,
       gauge_label,
+      track_class,
+      loading_gauge,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1756,7 +1758,9 @@ RETURN (
       standard_label,
       gauge0,
       gaugeint0,
-      gauge_label
+      gauge_label,
+      track_class,
+      loading_gauge
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1764,11 +1768,11 @@ RETURN (
 );
 
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION gauge_railway_line_low IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION track_railway_line_low IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "gauge_railway_line_low",
+        "id": "track_railway_line_low",
         "fields": {
           "id": "integer",
           "feature": "string",
@@ -1781,122 +1785,6 @@ DO $do$ BEGIN
           "gauge0": "string",
           "gaugeint0": "number",
           "gauge_label": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
---- Loading gauge ---
-
-CREATE OR REPLACE FUNCTION loading_gauge_railway_line_low(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'loading_gauge_railway_line_low', 4096, 'way', 'id')
-  FROM (
-    SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      ref,
-      standard_label,
-      loading_gauge,
-      max(rank) as rank
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      standard_label,
-      loading_gauge
-    ORDER by
-      rank NULLS LAST
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION loading_gauge_railway_line_low IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "loading_gauge_railway_line_low",
-        "fields": {
-          "id": "integer",
-          "feature": "string",
-          "state": "string",
-          "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
-          "ref": "string",
-          "standard_label": "string",
-          "loading_gauge": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
---- Track class ---
-
-CREATE OR REPLACE FUNCTION track_class_railway_line_low(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'track_class_railway_line_low', 4096, 'way', 'id')
-  FROM (
-    SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      ref,
-      standard_label,
-      track_class,
-      max(rank) as rank
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      standard_label,
-      track_class
-    ORDER by
-      rank NULLS LAST
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION track_class_railway_line_low IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "track_class_railway_line_low",
-        "fields": {
-          "id": "integer",
-          "feature": "string",
-          "state": "string",
-          "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
-          "ref": "string",
-          "standard_label": "string",
-          "track_class": "string"
         }
       }
     ]

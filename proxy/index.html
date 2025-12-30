@@ -112,6 +112,9 @@
           <li class="nav-item">
             <a id="configure-electrification" class="nav-link" href="javascript:configureElectrification()">Electrification</a>
           </li>
+          <li class="nav-item">
+            <a id="configure-track" class="nav-link" href="javascript:configureTrack()">Track</a>
+          </li>
         </ul>
       </div>
       <div class="modal-body" id="configure-general-body">
@@ -308,6 +311,30 @@
             </div>
             <small class="form-text">
               Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-track-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Railway lines</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineGauge" value="gauge" checked onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineGauge">Gauge</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineLoadingGauge" value="loadingGauge" onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineLoadingGauge">Loading gauge</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineTrackClass" value="trackClass" onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineTrackClass">Track class</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how the railway lines are rendered: either using the gauge, the loading gauge or the track class.
             </small>
           </div>
         </form>

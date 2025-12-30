@@ -136,26 +136,12 @@ Content-Type: application/json
 jsonpath "$.version" == 8
 jsonpath "$.name" == "OpenRailwayMap electrification"
 
-GET {{base_url}}/style/gauge.json
+GET {{base_url}}/style/track.json
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap gauge"
-
-GET {{base_url}}/style/loading_gauge.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap loading_gauge"
-
-GET {{base_url}}/style/track_class.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap track_class"
+jsonpath "$.name" == "OpenRailwayMap track"
 
 GET {{base_url}}/style/operator.json
 HTTP 200
