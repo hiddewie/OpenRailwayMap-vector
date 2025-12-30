@@ -494,12 +494,22 @@ local routes = osm2pgsql.define_table({
     { column = 'type', type = 'text', not_null = true },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
-    { column = 'line_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
-    { column = 'line_ref_ids', method = 'gin' },
+  },
+})
+
+local route_line = osm2pgsql.define_table({
+  name = 'route_line',
+  ids = { type = 'relation', id_column = 'route_id' },
+  columns = {
+    { column = 'line_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'route_id', method = 'btree' },
+    { column = 'line_id', method = 'btree' },
   },
 })
 
@@ -1471,7 +1481,6 @@ function osm2pgsql.process_relation(object)
     local has_members = false
     local stop_members = {}
     local platform_members = {}
-    local way_members = {}
     for _, member in ipairs(object.members) do
       if route_stop_relation_roles(member.role) then
         table.insert(stop_members, member.ref)
@@ -1480,7 +1489,9 @@ function osm2pgsql.process_relation(object)
         table.insert(platform_members, member.ref)
         has_members = true
       elseif (member.role == nil or member.role == '') and member.type == 'w' then
-        table.insert(way_members, member.ref)
+        route_line:insert({
+          line_id = member.ref,
+        })
         has_members = true
       end
     end
@@ -1490,7 +1501,6 @@ function osm2pgsql.process_relation(object)
         type = tags.route,
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
-        line_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
       })
     end
   end
