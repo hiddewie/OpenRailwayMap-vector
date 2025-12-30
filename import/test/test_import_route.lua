@@ -61,6 +61,7 @@ osm2pgsql.process_relation({
 
     -- ways
     { ref = 20, type = 'w' },
+    { role = '', ref = 21, type = 'w' },
 
     -- other, ignored
     { role = 'other', ref = 30, type = 'n' },
@@ -72,7 +73,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { stop_ref_ids = '{1,2,3,4,5,6,7,8,9,10}', platform_ref_ids = '{11,12,13,14,15}', line_ref_ids = '{20}' },
+    { type = 'train', stop_ref_ids = '{1,2,3,4,5,6,7,8,9,10}', platform_ref_ids = '{11,12,13,14,15}', line_ref_ids = '{20,21}' },
   },
 })
 
@@ -87,7 +88,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
+    { type = 'subway', stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
   },
 })
 
@@ -102,7 +103,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
+    { type = 'tram', stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
   },
 })
 
@@ -117,6 +118,6 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
+    { type = 'light_rail', stop_ref_ids = '{1}', platform_ref_ids = '{}', line_ref_ids = '{}' },
   },
 })

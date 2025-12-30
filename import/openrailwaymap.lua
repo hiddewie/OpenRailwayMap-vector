@@ -491,6 +491,7 @@ local routes = osm2pgsql.define_table({
   name = 'routes',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'type', type = 'text', not_null = true },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'line_ref_ids', sql_type = 'int8[]' },
@@ -498,6 +499,7 @@ local routes = osm2pgsql.define_table({
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
+    { column = 'line_ref_ids', method = 'gin' },
   },
 })
 
@@ -1477,7 +1479,7 @@ function osm2pgsql.process_relation(object)
       elseif route_platform_relation_roles(member.role) then
         table.insert(platform_members, member.ref)
         has_members = true
-      elseif member.role == nil and member.type == 'w' then
+      elseif (member.role == nil or member.role == '') and member.type == 'w' then
         table.insert(way_members, member.ref)
         has_members = true
       end
@@ -1485,6 +1487,7 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       routes:insert({
+        type = tags.route,
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         line_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
