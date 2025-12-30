@@ -38,6 +38,13 @@ osm2pgsql.process_relation({
   tags = {
     ['type'] = 'route',
     ['route'] = 'train',
+    ['from'] = 'Driebergen-Zeist',
+    ['to'] = 'Uitgeest',
+    ['name'] = '7400: Driebergen-Zeist - Uitgeest',
+    ['ref'] = '7400',
+    ['colour'] = 'orange',
+    ['operator'] = 'Nederlandse Spoorwegen',
+    ['brand'] = 'Sprinter',
   },
   members = {
     -- stops
@@ -73,7 +80,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { type = 'train', stop_ref_ids = '{1,2,3,4,5,6,7,8,9,10}', platform_ref_ids = '{11,12,13,14,15}' },
+    { type = 'train', from = 'Driebergen-Zeist', to = 'Uitgeest', name = '7400: Driebergen-Zeist - Uitgeest', ref = '7400', color = 'orange', operator = 'Nederlandse Spoorwegen', brand = 'Sprinter', stop_ref_ids = '{1,2,3,4,5,6,7,8,9,10}', platform_ref_ids = '{11,12,13,14,15}' },
   },
   route_line = {
     { line_id = 20 },
