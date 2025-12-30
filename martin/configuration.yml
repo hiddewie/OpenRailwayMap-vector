@@ -165,25 +165,11 @@ postgres:
       function: electrification_catenary
       minzoom: 14
 
-    # --- Gauge --- #
+    # --- Track --- #
 
-    gauge_railway_line_low:
+    track_railway_line_low:
       schema: public
-      function: gauge_railway_line_low
-      maxzoom: 7
-
-    # --- Loading gauge --- #
-
-    loading_gauge_railway_line_low:
-      schema: public
-      function: loading_gauge_railway_line_low
-      maxzoom: 7
-
-    # --- Track class --- #
-
-    track_class_railway_line_low:
-      schema: public
-      function: track_class_railway_line_low
+      function: track_railway_line_low
       maxzoom: 7
 
     # --- Operator --- #

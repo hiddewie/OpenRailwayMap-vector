@@ -368,9 +368,7 @@ const features = {
   'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
   'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
   'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
-  'gauge_railway_line_low-gauge_railway_line_low': railwayLineFeatures,
-  'loading_gauge_railway_line_low-loading_gauge_railway_line_low': railwayLineFeatures,
-  'track_class_railway_line_low-track_class_railway_line_low': railwayLineFeatures,
+  'track_railway_line_low-track_railway_line_low': railwayLineFeatures,
   'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperties: ['name'],
@@ -475,6 +473,24 @@ const features = {
       },
       halt: {
         name: 'Historical halt',
+      },
+    },
+    properties: {
+      start_date: {
+        name: 'Since',
+      },
+      end_date: {
+        name: 'Until',
+      },
+    },
+  },
+  'openhistoricalmap-landuse_areas': {
+    featureProperty: 'class',
+    labelProperties: ['name'],
+    featureLinks: featureLinks.openhistoricalmap,
+    features: {
+      landuse: {
+        name: 'Historical railway landuse',
       },
     },
     properties: {

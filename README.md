@@ -51,6 +51,7 @@ There are multiple ways to contribute to this project:
 - Providing icons for visualizing features on the map.
 - Providing user interface improvements.
 - Providing technical or user documentation.
+- Support OpenRailwayMap financially, through [*Github Sponsors*](https://github.com/sponsors/hiddewie) or [*Buy Me a Coffee*](https://buymeacoffee.com/hiddewie).
 
 View the [contribution documentation](CONTRIBUTING.md) for details.
 
