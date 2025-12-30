@@ -75,6 +75,9 @@ function update_datafile() {
 function reduce_data() {
   # Remove platforms which are not near any railway line, and also not part of any railway route
   $PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
+
+  # Remove route <-> line references which reference a non-existing railway line
+  $PSQL -c "delete from route_line where line_id not in (select osm_id from railway_line);"
 }
 
 function transform_data() {
