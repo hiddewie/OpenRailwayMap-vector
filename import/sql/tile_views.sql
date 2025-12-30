@@ -121,7 +121,7 @@ RETURN (
         END AS primary_operator,
         traffic_mode,
         radio,
-        (select nullif(array_to_string(array_agg(r.osm_id || '|' || r.name), U&'\001E'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
+        (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
         wikidata,
         wikimedia_commons,
         wikimedia_commons_file,

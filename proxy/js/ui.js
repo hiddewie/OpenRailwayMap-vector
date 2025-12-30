@@ -2135,11 +2135,12 @@ function popupContent(feature) {
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, description}]) => ({
+    .map(([property, {name, format, link, paragraph, list, description}]) => ({
       title: name,
       value: properties[property],
       body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
       paragraph,
+      list,
       link,
       tooltip: description,
     }));
@@ -2249,10 +2250,10 @@ function popupContent(feature) {
     }
   }
 
-  if (propertyValues.some(it => !it.paragraph)) {
+  if (propertyValues.some(it => !it.paragraph && !it.list)) {
     const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
     propertyValues
-      .filter(it => !it.paragraph)
+      .filter(it => !it.paragraph && !it.list)
       .forEach(({title, body, value, link, tooltip}) => {
         const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
         if (tooltip) {
@@ -2296,6 +2297,44 @@ function popupContent(feature) {
           const popupValueBody = createDomElement('span', undefined, popupParagraph);
           popupValueBody.innerText = `: ${body}`;
         }
+      })
+  }
+
+  if (propertyValues.some(it => it.list)) {
+    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+    propertyValues
+      .filter(it => it.list)
+      .forEach(({title, value, list}) => {
+        const groups = value.split('\u001d')
+          .map(group => {
+            const split = group.split('\u001e');
+            return Object.fromEntries(
+              list.properties.map((property, index) => [property, split[index] || null])
+            );
+          });
+
+        const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
+        popupListHeader.innerText = `${title} (${groups.length}):`;
+        const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
+
+        groups.forEach(group => {
+          const popupListItem = createDomElement('li', 'popup-content-list-item', popupList);
+
+          const color = group[list.colorProperty]
+          const label = group[list.labelProperty]
+          const routeId = group[list.routeIdProperty]
+
+          if (color) {
+            const itemColor = createDomElement('span', 'color-marker', popupListItem);
+            itemColor.style.backgroundColor = color;
+          }
+          if (label) {
+            const itemLabel = createDomElement('span', undefined, popupListItem);
+            itemLabel.innerHTML = label;
+
+            // TODO link route
+          }
+        });
       })
   }
 
