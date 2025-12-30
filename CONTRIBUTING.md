@@ -267,3 +267,7 @@ Open a pull request where you provide details about the new train protection sys
 ## I want to provide translations for a new language 
 
 At this moment the user interface and legend are solely available in English. This might change in the future.
+
+## I want to support OpenRailwayMap financially
+
+To support the operational costs of the OpenRailwayMap, financial support can be provided through [*Github Sponsors*](https://github.com/sponsors/hiddewie) or [*Buy Me a Coffee*](https://buymeacoffee.com/hiddewie).
