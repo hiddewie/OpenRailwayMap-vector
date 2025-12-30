@@ -37,17 +37,14 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
-    cy.url().should('include', 'style=gauge')
+    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
-    cy.url().should('include', 'style=loading_gauge')
-
-    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
-    cy.url().should('include', 'style=track_class')
+    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
     cy.screenshot()
@@ -94,17 +91,14 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
-    cy.url().should('include', 'style=gauge')
+    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
-    cy.url().should('include', 'style=loading_gauge')
-
-    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
-    cy.url().should('include', 'style=track_class')
+    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
     cy.screenshot()
