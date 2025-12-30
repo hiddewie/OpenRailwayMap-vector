@@ -1134,6 +1134,16 @@ const legendData = {
         },
       },
     ],
+    'openhistoricalmap-landuse_areas': [
+      {
+        legend: 'Railway landuse',
+        type: 'polygon',
+        properties: {
+          class: 'landuse',
+          type: 'railway',
+        },
+      },
+    ],
     "openrailwaymap_standard-standard_railway_grouped_stations": [],
     "openrailwaymap_standard-standard_railway_grouped_station_areas": [],
     "openrailwaymap_standard-standard_railway_turntables": [

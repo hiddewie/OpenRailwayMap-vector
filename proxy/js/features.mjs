@@ -484,6 +484,24 @@ const features = {
       },
     },
   },
+  'openhistoricalmap-landuse_areas': {
+    featureProperty: 'class',
+    labelProperties: ['name'],
+    featureLinks: featureLinks.openhistoricalmap,
+    features: {
+      landuse: {
+        name: 'Historical railway landuse',
+      },
+    },
+    properties: {
+      start_date: {
+        name: 'Since',
+      },
+      end_date: {
+        name: 'Until',
+      },
+    },
+  },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
