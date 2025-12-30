@@ -64,6 +64,7 @@ RETURN (
       owner,
       traffic_mode,
       radio,
+      line_routes,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
@@ -120,6 +121,7 @@ RETURN (
         END AS primary_operator,
         traffic_mode,
         radio,
+        (select nullif(array_to_string(array_agg(r.osm_id || '|' || r.name), U&'\001E'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
         wikidata,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -128,7 +130,7 @@ RETURN (
         wikipedia,
         note,
         description
-      FROM railway_line
+      FROM railway_line l
       WHERE
         way && ST_TileEnvelope(z, x, y)
         -- conditionally include features based on zoom level
@@ -230,6 +232,7 @@ DO $do$ BEGIN
           "owner": "string",
           "traffic_mode": "string",
           "radio": "string",
+          "line_routes": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "wikimedia_commons_file": "string",

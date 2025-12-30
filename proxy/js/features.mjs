@@ -213,6 +213,9 @@ const railwayLineFeatures = {
     radio: {
       name: 'Radio',
     },
+    line_routes: {
+      name: 'Routes',
+    },
     wikidata: {
       name: 'Wikidata',
       link: links.wikidata,
