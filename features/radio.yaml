@@ -1,0 +1,4 @@
+radio_types:
+  - { value: 'gsm-r', color: 'hsl(248, 100%, 40%)' }
+  - { value: 'p-gsm-r', color: 'hsl(120, 100%, 40%)' }
+  - { value: 'analogue', color: 'hsl(320, 100%, 40%)' }

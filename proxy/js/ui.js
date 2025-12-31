@@ -571,6 +571,12 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
   },
+  radio: {
+    name: 'Radio',
+    styles: {
+      default: 'radio',
+    },
+  },
 };
 
 const defaultStyle = Object.keys(knownStyles)[0];

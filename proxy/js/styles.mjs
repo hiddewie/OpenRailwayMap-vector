@@ -4,6 +4,7 @@ import yaml from 'yaml'
 const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
 const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const radios = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const knownStyles = [
   'standard',
@@ -12,6 +13,7 @@ const knownStyles = [
   'electrification',
   'track',
   'operator',
+  'radio',
 ];
 
 const defaultDate = (new Date()).getFullYear();
@@ -562,6 +564,12 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   ),
   'gray',
 ];
+const radioFillColor = ['match', ['get', 'radio'],
+  ...radios.radio_types.flatMap(radio =>
+    [radio.value, radio.color]
+  ),
+  'gray',
+];
 
 const sources = {
   search: {
@@ -594,6 +602,10 @@ const sources = {
   operator_railway_line_low: {
     type: 'vector',
     url: '/operator_railway_line_low',
+  },
+  radio_railway_line_low: {
+    type: 'vector',
+    url: '/radio_railway_line_low',
   },
   openrailwaymap_low: {
     type: 'vector',
@@ -5123,6 +5135,61 @@ const layers = {
           'icon-overlap': 'always',
         },
       },
+    ),
+    searchResults,
+  ],
+  radio: [
+    hillshade,
+    ...railwayLine(
+      ['coalesce', ['get', 'radio'], ''],
+      [
+        {
+          id: 'railway_line_low',
+          minzoom: 0,
+          maxzoom: 7,
+          source: 'radio_railway_line_low',
+          sourceLayer: 'radio_railway_line_low',
+          states: {
+            present: undefined,
+          },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            0, 0.5,
+            7, 2,
+          ],
+          color: radioFillColor,
+        },
+        {
+          id: 'railway_line_med',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_low',
+          states: {
+            present: undefined,
+          },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
+          width: 2,
+          color: radioFillColor,
+        },
+        {
+          id: 'railway_line_high',
+          minzoom: 8,
+          source: 'high',
+          states: {
+            present: undefined,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
+          },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            14, 2,
+            16, 3,
+          ],
+          color: radioFillColor,
+        },
+      ],
     ),
     searchResults,
   ],

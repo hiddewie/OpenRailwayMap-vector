@@ -282,7 +282,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
     ) as operator_color,
     primary_operator,
     owner,
-    rank
+    rank,
+    radio
   FROM (
     SELECT
       *,
@@ -1915,6 +1916,64 @@ DO $do$ BEGIN
           "wikipedia": "string",
           "note": "string",
           "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Radio Type ---
+
+CREATE OR REPLACE FUNCTION radio_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'radio_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      ref,
+      standard_label,
+      radio,
+      max(rank) as rank
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      feature,
+      ref,
+      standard_label,
+      radio
+    ORDER by
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION radio_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "radio_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "tunnel": "boolean",
+          "bridge": "boolean",
+          "ref": "string",
+          "standard_label": "string",
+          "radio": "string"
         }
       }
     ]

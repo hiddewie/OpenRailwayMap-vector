@@ -370,6 +370,7 @@ const features = {
   'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
   'track_railway_line_low-track_railway_line_low': railwayLineFeatures,
   'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
+  'radio_railway_line_low-radio_railway_line_low': railwayLineFeatures,
   'openhistoricalmap-transport_lines': {
     labelProperties: ['name'],
     featureProperty: 'type',

@@ -46,6 +46,9 @@ describe('home page', () => {
     cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
     cy.url().should('include', 'style=operator')
 
+    cy.contains('.maplibregl-ctrl-style button', 'Radio Type').click()
+    cy.url().should('include', 'style=radio')
+
     cy.wait(3000)
     cy.screenshot()
   })

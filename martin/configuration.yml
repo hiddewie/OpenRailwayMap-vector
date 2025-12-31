@@ -184,5 +184,12 @@ postgres:
       function: operator_railway_symbols
       minzoom: 13
 
+    # --- Radio --- #
+
+    radio_railway_line_low:
+      schema: public
+      function: radio_railway_line_low
+      maxzoom: 7
+
 fonts:
   - /config/fonts
