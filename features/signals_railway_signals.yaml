@@ -5297,6 +5297,13 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
+  
+  - description: Stop board
+    country: GB
+    icon: [ default: 'gb/stop-board' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Crossing
     country: GB
