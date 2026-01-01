@@ -2052,7 +2052,7 @@ function popupContent(feature) {
 
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property, and icon position to get the key
-    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/, '') : propertyValue,
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : propertyValue,
     // Capture the variable part as well for display
     keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
@@ -2115,7 +2115,7 @@ function popupContent(feature) {
             const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
             const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
             if (!lookedUpValue) {
-              console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
+              console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
               return stringValue;
             } else {
               return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
