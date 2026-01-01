@@ -435,3 +435,46 @@ paths:
         '307':
           description: |
             Location of the Wikikdata thumbnail image
+
+  /api/route/{osm_id}:
+    get:
+      operationId: route
+      summary: Fetch a route
+      description: |
+        The route API returns the geometry and metadata of railway, tram, subway and lightrail OpenStreetMap route relations.
+      tags:
+        - route
+      parameters:
+        - name: osm_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 324092
+          description: |
+            The OpenStreetMap route relation ID
+      responses:
+        '200':
+          description: Success
+          content:
+            application/geo+json:
+              schema:
+                type: object
+                description: |
+                  A single GeoJSON feature containing the geometry and features of the route
+                example:
+                  id: 324092
+                  type: Feature
+                  geometry:
+                    csr:
+                      type: name
+                      properties:
+                        name: 'EPSG:3857'
+                    type: 'MultiLineString'
+                    coordinates: [[[656832.484575086, 6797445.094791033], [656839.653550294, 6797443.359562764]]]
+                  properties:
+                    type: train
+                    osm_id: 324092
+        '404':
+          description: |
+            The route could not be found

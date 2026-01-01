@@ -4,8 +4,7 @@ from typing import Annotated
 import sys
 
 import asyncpg
-from fastapi import FastAPI
-from fastapi import Query
+from fastapi import FastAPI, Query, Response
 
 import httpx
 
@@ -14,6 +13,7 @@ from openrailwaymap_api.milestone_api import MilestoneAPI
 from openrailwaymap_api.status_api import StatusAPI
 from openrailwaymap_api.replication_api import ReplicationAPI
 from openrailwaymap_api.wikidata_api import WikidataAPI
+from openrailwaymap_api.route_api import RouteAPI
 
 DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
@@ -99,3 +99,15 @@ async def wikidata(
 ):
     api = WikidataAPI(app.state.http_client)
     return await api(id=id)
+
+
+@app.get("/api/route/{osm_id}")
+async def wikidata(
+        osm_id: int
+):
+    api = RouteAPI(app.state.database)
+    response = await api(osm_id=osm_id)
+    if response is None:
+        return JSONResponse(content={"message": "Here's your interdimensional portal."})
+    else:
+        return Response(content=response, media_type="application/geo+json")
