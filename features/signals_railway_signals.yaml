@@ -1779,7 +1779,7 @@ features:
         default: 'be/SAI-opposite-V'
     tags:
       - { tag: 'railway:signal:distant', value: 'BE:SAI' }
-      - { tag: 'railway:signal:distant:regime', value: 'opposite' }
+      - { tag: 'railway:signal:regime', value: 'opposite' }
 
   - description: Distant signal (normal regime)
     country: BE
