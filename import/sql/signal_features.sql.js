@@ -328,6 +328,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         features[2] as feature1,
         deactivated[1] as deactivated0,
         deactivated[2] as deactivated1,
+        CEIL(icon_height[1] / 2) as offset0,
         CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
         type
       FROM signals s
@@ -369,6 +370,7 @@ DO $do$ BEGIN
           "feature1": "string",
           "deactivated0": "boolean",
           "deactivated1": "boolean",
+          "offset0": "number",
           "offset1": "number",
           "type": "string"
         }
@@ -421,6 +423,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         deactivated[4] as deactivated3,
         deactivated[5] as deactivated4,
         deactivated[6] as deactivated5,
+        CEIL(icon_height[1] / 2) as offset0,
         CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
         CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
@@ -475,6 +478,7 @@ DO $do$ BEGIN
           "deactivated3": "boolean",
           "deactivated4": "boolean",
           "deactivated5": "boolean",
+          "offset0": "number",
           "offset1": "number",
           "offset2": "number",
           "offset3": "number",
@@ -520,6 +524,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
         features[1] as feature,
         deactivated[1] as deactivated,
+        CEIL(icon_height[1] / 2) as offset,
         type as type
       FROM signals s
       JOIN signal_features sf
@@ -559,7 +564,8 @@ DO $do$ BEGIN
           "description": "string",${signals_railway_signals.tags.map(tag => `
           "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature": "string",
-          "deactivated": "boolean"
+          "deactivated": "boolean",
+          "offset": "number"
         }
       }
     ]
