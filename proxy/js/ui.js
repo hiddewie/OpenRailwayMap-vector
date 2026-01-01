@@ -2318,11 +2318,11 @@ function popupContent(feature) {
 
         const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
         groups.forEach(group => {
-          const popupListItem = createDomElement('li', 'popup-content-list-item', popupList);
-
           const color = group[list.colorProperty]
           const label = group[list.labelProperty]
           const routeId = group[list.routeIdProperty]
+
+          const popupListItem = createDomElement('li', routeId ? 'link-item' : '', popupList);
 
           if (color) {
             const itemColor = createDomElement('span', 'color-marker', popupListItem);
@@ -2331,8 +2331,10 @@ function popupContent(feature) {
           if (label) {
             const itemLabel = createDomElement('span', undefined, popupListItem);
             itemLabel.innerHTML = label;
+          }
 
-            // TODO link route
+          if (routeId) {
+            popupListItem.onclick = () => console.info(`clicked ${routeId}`)
           }
         });
       })

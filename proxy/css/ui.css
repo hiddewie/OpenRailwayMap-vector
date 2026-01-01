@@ -68,9 +68,12 @@ body {
   max-height: 120px;
   overflow-y: auto;
 }
-
 .maplibregl-popup-content .popup-content-list > li {
   padding: 0 10px 5px 10px;
+}
+.maplibregl-popup-content .popup-content-list > li.link-item:hover {
+  cursor: pointer;
+  background-color: var(--bs-secondary-bg-subtle);
 }
 
 .maplibregl-popup-content .color-marker {
