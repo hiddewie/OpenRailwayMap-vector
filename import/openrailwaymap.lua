@@ -491,7 +491,7 @@ local routes = osm2pgsql.define_table({
   name = 'routes',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
-    { column = 'type', type = 'text', not_null = true },
+    { column = 'type', sql_type = 'route_type', not_null = true },
     { column = 'from', type = 'text' },
     { column = 'to', type = 'text' },
     { column = 'name', type = 'text' },
