@@ -284,6 +284,13 @@ function viewSearchResultsOnMap(bounds) {
   });
 }
 
+function showRouteOnMap(routeId) {
+  const routeSource = map.getSource('route')
+  if (routeSource) {
+    routeSource.setData(`${location.origin}/api/route/${routeId}`)
+  }
+}
+
 function showConfiguration(tab) {
   if (tab === 'general') {
     configureGeneral();
@@ -2049,10 +2056,11 @@ function popupContent(feature) {
   }
 
   const featureProperty = featureCatalog.featureProperty || 'feature';
+  const colorProperty = featureCatalog.colorProperty || 'color';
 
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property, and icon position to get the key
-    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/, '') : propertyValue,
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : propertyValue,
     // Capture the variable part as well for display
     keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
@@ -2067,6 +2075,7 @@ function popupContent(feature) {
   // Unique labels
   const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
+  const color = properties[colorProperty];
 
   const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
@@ -2115,7 +2124,7 @@ function popupContent(feature) {
             const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
             const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
             if (!lookedUpValue) {
-              console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
+              console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
               return stringValue;
             } else {
               return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
@@ -2135,11 +2144,12 @@ function popupContent(feature) {
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, description}]) => ({
+    .map(([property, {name, format, link, paragraph, list, description}]) => ({
       title: name,
       value: properties[property],
       body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
       paragraph,
+      list,
       link,
       tooltip: description,
     }));
@@ -2153,14 +2163,21 @@ function popupContent(feature) {
   const popupTitle = createDomElement('h5', undefined, popupContainer);
   popupTitle.innerText = featureDescription;
 
-  if (properties.icon || labels.length > 0) {
+  if (properties.icon || labels.length > 0 || color) {
     const popupLabel = createDomElement('h6', undefined, popupContainer);
     if (properties.icon) {
       const popupLabelSpan = createDomElement('span', undefined, popupLabel);
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = labels.join(' • ');
+      if (color) {
+        const itemColor = createDomElement('span', 'color-marker', popupLabel);
+        itemColor.style.backgroundColor = color;
+      }
+      if (labels.length > 0) {
+        const popupLabelLabel = createDomElement('span', undefined, popupLabel);
+        popupLabelLabel.innerText = labels.join(' • ');
+      }
     }
   }
 
@@ -2249,10 +2266,10 @@ function popupContent(feature) {
     }
   }
 
-  if (propertyValues.some(it => !it.paragraph)) {
+  if (propertyValues.some(it => !it.paragraph && !it.list)) {
     const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
     propertyValues
-      .filter(it => !it.paragraph)
+      .filter(it => !it.paragraph && !it.list)
       .forEach(({title, body, value, link, tooltip}) => {
         const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
         if (tooltip) {
@@ -2296,6 +2313,46 @@ function popupContent(feature) {
           const popupValueBody = createDomElement('span', undefined, popupParagraph);
           popupValueBody.innerText = `: ${body}`;
         }
+      })
+  }
+
+  if (propertyValues.some(it => it.list)) {
+    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+    propertyValues
+      .filter(it => it.list)
+      .forEach(({title, value, list}) => {
+        const groups = value.split('\u001d')
+          .map(group => {
+            const split = group.split('\u001e');
+            return Object.fromEntries(
+              list.properties.map((property, index) => [property, split[index] || null])
+            );
+          });
+
+        const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
+        popupListHeader.innerText = `${title} (${groups.length}):`;
+
+        const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
+        groups.forEach(group => {
+          const color = group[list.colorProperty]
+          const label = group[list.labelProperty]
+          const routeId = group[list.routeIdProperty]
+
+          const popupListItem = createDomElement('li', routeId ? 'link-item' : '', popupList);
+
+          if (color) {
+            const itemColor = createDomElement('span', 'color-marker', popupListItem);
+            itemColor.style.backgroundColor = color;
+          }
+          if (label) {
+            const itemLabel = createDomElement('span', undefined, popupListItem);
+            itemLabel.innerHTML = label;
+          }
+
+          if (routeId) {
+            popupListItem.onclick = () => showRouteOnMap(routeId)
+          }
+        });
       })
   }
 

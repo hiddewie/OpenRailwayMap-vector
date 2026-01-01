@@ -5194,6 +5194,13 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+  
+  - description: Distant (board)
+    country: GB
+    icon: [ default: 'gb/distant-board' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Repeated (banner)
     country: GB
@@ -5290,6 +5297,13 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
+  
+  - description: Stop board
+    country: GB
+    icon: [ default: 'gb/stop-board' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Crossing
     country: GB
