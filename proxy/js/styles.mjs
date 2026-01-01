@@ -3587,7 +3587,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset0'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     searchResults,
@@ -3977,7 +3982,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset0'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     {
@@ -4384,7 +4394,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     {
