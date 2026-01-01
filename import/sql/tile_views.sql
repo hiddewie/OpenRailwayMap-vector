@@ -1059,8 +1059,9 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'stop_position' as feature,
       name,
-      type
-    FROM stop_positions
+      type,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.stop_ref_ids @> Array[sp.osm_id]) as stop_position_routes
+    FROM stop_positions sp
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1077,7 +1078,8 @@ DO $do$ BEGIN
           "osm_id": "string",
           "feature": "string",
           "name": "string",
-          "type": "string"
+          "type": "string",
+          "stop_position_routes": "string"
         }
       }
     ]

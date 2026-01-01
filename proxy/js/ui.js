@@ -2315,8 +2315,8 @@ function popupContent(feature) {
 
         const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
         popupListHeader.innerText = `${title} (${groups.length}):`;
-        const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
 
+        const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
         groups.forEach(group => {
           const popupListItem = createDomElement('li', 'popup-content-list-item', popupList);
 

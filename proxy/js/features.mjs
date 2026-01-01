@@ -621,7 +621,20 @@ const features = {
     properties: {
       type: {
         name: 'Type',
-      }
+      },
+      stop_position_routes: {
+        name: 'Routes',
+        list: {
+          routeIdProperty: 'route_id',
+          colorProperty: 'color',
+          labelProperty: 'label',
+          properties: [
+            'route_id',
+            'color',
+            'label',
+          ],
+        },
+      },
     }
   },
   'openrailwaymap_standard-standard_station_entrances': {
