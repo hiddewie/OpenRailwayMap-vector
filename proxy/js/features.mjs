@@ -587,6 +587,19 @@ const features = {
       tactile_paving: {
         name: 'Tactile paving',
       },
+      platform_routes: {
+        name: 'Routes',
+        list: {
+          routeIdProperty: 'route_id',
+          colorProperty: 'color',
+          labelProperty: 'label',
+          properties: [
+            'route_id',
+            'color',
+            'label',
+          ],
+        },
+      },
     }
   },
   'openrailwaymap_standard-standard_railway_platform_edges': {

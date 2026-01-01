@@ -962,8 +962,9 @@ RETURN (
       bench,
       wheelchair,
       departures_board,
-      tactile_paving
-    FROM platforms
+      tactile_paving,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
+    FROM platforms p
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
