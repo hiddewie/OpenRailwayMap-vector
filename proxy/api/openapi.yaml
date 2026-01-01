@@ -463,14 +463,21 @@ paths:
                 description: |
                   A single GeoJSON feature containing the geometry and features of the route
                 example:
-                  id: 324092
+                  id: 64050
                   type: Feature
                   geometry:
                     type: 'MultiLineString'
                     coordinates: [[[5.9004266, 51.985173599], [5.900491, 51.985163999]]]
                   properties:
-                    type: train
-                    osm_id: 324092
+                    to: 'S Spindlersfeld'
+                    ref: 'S47'
+                    from: 'S Hermannstraße'
+                    name: 'S47: S Hermannstraße => S Spindlersfeld'
+                    type: 'light_rail'
+                    brand: null
+                    color: '#BA8A4D'
+                    osm_id: 64050
+                    operator: 'S-Bahn Berlin GmbH'
         '404':
           description: |
             The route could not be found

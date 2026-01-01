@@ -4,7 +4,7 @@ from typing import Annotated
 import sys
 
 import asyncpg
-from fastapi import FastAPI, Query, Response
+from fastapi import FastAPI, Query, Response, HTTPException
 
 import httpx
 
@@ -108,6 +108,6 @@ async def wikidata(
     api = RouteAPI(app.state.database)
     response = await api(osm_id=osm_id)
     if response is None:
-        return JSONResponse(content={"message": "Here's your interdimensional portal."})
-    else:
-        return Response(content=response, media_type="application/geo+json")
+        raise HTTPException(status_code=404, detail="Route not found")
+
+    return Response(content=response, media_type="application/geo+json")
