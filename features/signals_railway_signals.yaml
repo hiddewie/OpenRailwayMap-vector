@@ -5194,6 +5194,13 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+  
+  - description: Distant (board)
+    country: GB
+    icon: [ default: 'gb/distant-board' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   - description: Repeated (banner)
     country: GB
