@@ -2056,6 +2056,7 @@ function popupContent(feature) {
   }
 
   const featureProperty = featureCatalog.featureProperty || 'feature';
+  const colorProperty = featureCatalog.colorProperty || 'color';
 
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property, and icon position to get the key
@@ -2074,6 +2075,7 @@ function popupContent(feature) {
   // Unique labels
   const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
   const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
+  const color = properties[colorProperty];
 
   const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
@@ -2161,14 +2163,21 @@ function popupContent(feature) {
   const popupTitle = createDomElement('h5', undefined, popupContainer);
   popupTitle.innerText = featureDescription;
 
-  if (properties.icon || labels.length > 0) {
+  if (properties.icon || labels.length > 0 || color) {
     const popupLabel = createDomElement('h6', undefined, popupContainer);
     if (properties.icon) {
       const popupLabelSpan = createDomElement('span', undefined, popupLabel);
       popupLabelSpan.title = properties.railway;
       popupLabelSpan.innerText = properties.icon;
     } else {
-      popupLabel.innerText = labels.join(' • ');
+      if (color) {
+        const itemColor = createDomElement('span', 'color-marker', popupLabel);
+        itemColor.style.backgroundColor = color;
+      }
+      if (labels.length > 0) {
+        const popupLabelLabel = createDomElement('span', undefined, popupLabel);
+        popupLabelLabel.innerText = labels.join(' • ');
+      }
     }
   }
 

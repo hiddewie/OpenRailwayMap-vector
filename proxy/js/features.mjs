@@ -1249,7 +1249,6 @@ const features = {
     labelProperties: ['name'],
     featureProperty: 'type',
     featureLinks: featureLinks.openstreetmap,
-    // TODO color
     features: {
       train: {
         name: 'Train route',
