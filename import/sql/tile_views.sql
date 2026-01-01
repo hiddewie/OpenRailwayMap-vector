@@ -421,7 +421,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(note, U&'\001E'), '') as note,
     nullif(array_to_string(description, U&'\001E'), '') as description,
     nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
-    yard_hump
+    yard_hump,
+    (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes
   FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
@@ -465,7 +466,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -510,7 +512,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -554,7 +557,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -598,7 +602,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -743,7 +748,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL
@@ -783,7 +789,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -819,6 +826,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
       ) as operator_color,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes,
       nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
       nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
       nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
@@ -855,6 +863,7 @@ DO $do$ BEGIN
           "network": "string",
           "position": "string",
           "uic_ref": "string",
+          "station_routes": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "wikimedia_commons_file": "string",

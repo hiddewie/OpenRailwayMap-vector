@@ -369,6 +369,19 @@ const stationFeatures = {
       name: 'Description',
       paragraph: true,
     },
+    station_routes: {
+      name: 'Routes',
+      list: {
+        routeIdProperty: 'route_id',
+        colorProperty: 'color',
+        labelProperty: 'label',
+        properties: [
+          'route_id',
+          'color',
+          'label',
+        ],
+      },
+    },
   },
 }
 
