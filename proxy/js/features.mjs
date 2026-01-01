@@ -1252,15 +1252,19 @@ const features = {
     features: {
       train: {
         name: 'Train route',
+        type: 'relation',
       },
       tram: {
         name: 'Tram route',
+        type: 'relation',
       },
       subway: {
         name: 'Subway route',
+        type: 'relation',
       },
       light_rail: {
         name: 'Light rail route',
+        type: 'relation',
       },
     },
     properties: {
