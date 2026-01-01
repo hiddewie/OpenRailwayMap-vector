@@ -1,4 +1,5 @@
 train_protections:
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'hsl(214, 100%, 70%)' }
   - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
   - { train_protection: 'etcs_2', legend: 'European Train Control System (ETCS) level 2', color: 'hsl(214, 100%, 40%)' }
@@ -38,7 +39,6 @@ train_protections:
   - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
   - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
-  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
@@ -89,7 +89,7 @@ features:
 
   - train_protection: cbtc
     tags:
-      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
+      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto', 'RF', 'IL'] }
 
   - train_protection: ptc
     tags:
