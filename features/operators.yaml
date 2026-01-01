@@ -478,10 +478,6 @@ operators:
     color: '#008833'
 
   - names:
-      - 'Berliner Verkehrsbetriebe'
-    color: '#f0d020'
-
-  - names:
       - 'DB RegioNetz Infrastruktur GmbH'
     color: '#ac21b6'
 
@@ -490,8 +486,43 @@ operators:
     color: '#007733'
 
   - names:
+      - 'Deutsche Regionaleisenbahn'
+      - 'Deutsche Regionaleisenbahn GmbH'
+      - 'Bayerische Regionaleisenbahn'
+      - 'Bayerische Regionaleisenbahn GmbH'
+    color: '#e60073'
+
+  - names:
+      - 'Thüringer Eisenbahn GmbH'
+      - 'ThE'
+    color: '#014601'
+
+  - names:
+      - 'Schieneninfrastruktur Ost-Niedersachsen GmbH'
+    color: '#bd0040'
+
+  - names:
+      - 'AKN Eisenbahn'
+      - 'AKN Eisenbahn GmbH'
+      - 'AKN'
+    color: '#0072bc'
+
+  - names:
+      - 'SWEG Schienenwege GmbH'
+    color: '#114499'
+
+  - names:
+      - 'Usedomer Bäderbahn GmbH'
+      - 'UBB Polska sp. z o.o.'
+    color: '#114488'
+
+  - names:
       - 'Rhein-Neckar-Verkehr'
     color: '#ee7700'
+
+  - names:
+      - 'Berliner Verkehrsbetriebe'
+    color: '#f0d020'
 
   - names:
       - 'Rostocker Straßenbahn AG'
@@ -502,15 +533,6 @@ operators:
       - 'Stuttgarter Straßenbahnen AG'
       - 'Stuttgarter Straßenbahnen (SSB)'
     color: '#ae8c00'
-
-  - names:
-      - 'SWEG Schienenwege GmbH'
-    color: '#114499'
-
-  - names:
-      - 'Usedomer Bäderbahn GmbH'
-      - 'UBB Polska sp. z o.o.'
-    color: '#114488'
 
   - names:
       - 'Verkehrsbetriebe Karlsruhe GmbH'
