@@ -61,6 +61,34 @@ body {
   margin-left: .5rem;
 }
 
+.maplibregl-popup-content .popup-content-list {
+  margin: 0 -10px;
+  padding: 0;
+  list-style: none;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.maplibregl-popup-content .popup-content-list > li {
+  padding: 0 10px 5px 10px;
+}
+.maplibregl-popup-content .popup-content-list > li.link-item:hover {
+  cursor: pointer;
+  background-color: var(--bs-secondary-bg-subtle);
+}
+
+.maplibregl-popup-content .color-marker {
+  display: inline-block;
+  width: .6rem;
+  height: .6rem;
+  border-radius: .6rem;
+  vertical-align: baseline;
+  margin-right: 0.4rem;
+  box-shadow: 0 0 1px 1px #333;
+  line-height: 1rem;
+  box-sizing: border-box;
+  /* background color is set dynamically */
+}
+
 /** Patch Maplibre GL to respect the page theme */
 #map-container .maplibregl-ctrl-group,
 .maplibregl-ctrl-attrib.maplibregl-compact,

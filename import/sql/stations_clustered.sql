@@ -86,9 +86,11 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     array_remove(array_agg(DISTINCT s.description ORDER BY s.description), null) as description,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.yard_purpose, U&'\001E')), U&'\001E'), U&'\001E'), null) as yard_purpose,
     bool_or(s.yard_hump) as yard_hump,
+    -- Routes
+    array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(sr.route_ids, U&'\001E')), U&'\001E'), U&'\001E'), null)::bigint[] as route_ids,
     -- Aggregated importance
-    max(sr.importance) as importance,
-    max(sr.discr_iso) as discr_iso,
+    max(si.importance) as importance,
+    max(si.discr_iso) as discr_iso,
     -- Re-grouped clustered stations columns
     clustered.id as id,
     any_value(clustered.center) as center,
@@ -109,7 +111,27 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
   ) clustered
   JOIN stations s
     ON clustered.station_id = s.id
-  JOIN stations_with_importance sr
+  JOIN stations_with_importance si
+    ON clustered.station_id = si.id
+  LEFT JOIN (
+    SELECT
+      id,
+      array_agg(DISTINCT route_id ORDER BY route_id) as route_ids
+    FROM (
+      select
+        id,
+        unnest(route_ids) as route_id
+      from station_nodes_platforms_rel_count
+
+      UNION
+
+      select
+        id,
+        unnest(route_ids) as route_id
+      from station_nodes_stop_positions_rel_count
+    ) station_routes_multiple
+    GROUP BY id
+  ) sr
     ON clustered.station_id = sr.id
   GROUP BY clustered.id;
 
