@@ -466,12 +466,8 @@ paths:
                   id: 324092
                   type: Feature
                   geometry:
-                    csr:
-                      type: name
-                      properties:
-                        name: 'EPSG:3857'
                     type: 'MultiLineString'
-                    coordinates: [[[656832.484575086, 6797445.094791033], [656839.653550294, 6797443.359562764]]]
+                    coordinates: [[[5.9004266, 51.985173599], [5.900491, 51.985163999]]]
                   properties:
                     type: train
                     osm_id: 324092

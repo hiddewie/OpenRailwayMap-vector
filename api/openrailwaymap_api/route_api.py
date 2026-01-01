@@ -7,7 +7,7 @@ class RouteAPI:
             SELECT jsonb_build_object(
                 'type', 'Feature',
                 'id', osm_id,
-                'geometry', ST_AsGeoJSON(way)::jsonb,
+                'geometry', ST_AsGeoJSON(ST_Transform(way, 4326))::jsonb,
                 'properties', to_jsonb(row) - 'gid' - 'geom'
             ) as data
             FROM (
