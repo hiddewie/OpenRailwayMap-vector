@@ -1737,7 +1737,6 @@ const hillshade = {
 const route = {
   id: 'route',
   type: 'line',
-  minzoom: 8,
   source: 'route',
   layout: {
     'visibility': ['case',
@@ -1755,6 +1754,33 @@ const route = {
     'line-width': 5,
   },
 };
+const routeText = {
+  id: 'route_text',
+  type: 'symbol',
+  source: 'route',
+  paint: {
+    'text-color': colors.railwayLine.text,
+    'text-halo-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+      colors.halo,
+    ],
+    'text-halo-width': 2,
+  },
+  layout: {
+    'visibility': ['case',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
+      'visible',
+    ],
+    'symbol-z-order': 'source',
+    'symbol-placement': 'line',
+    'text-field': ['coalesce', ['get', 'name'], ['get', 'ref'], ''],
+    'text-font': font.bold,
+    'text-size': 11,
+    'text-padding': 10,
+    'text-max-width': 5,
+    'symbol-spacing': 200,
+  },
+}
 
 /**
  * Strategy for displaying railway lines
@@ -2636,6 +2662,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     {
       id: 'railway_text_stations_low1',
       type: 'symbol',
@@ -3470,6 +3497,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
@@ -3745,6 +3773,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     {
       id: 'signal_boxes_point',
       type: 'circle',
@@ -4205,6 +4234,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     {
       id: 'electrification_substation',
       type: 'fill',
@@ -4614,6 +4644,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     searchResults,
   ],
 
@@ -4736,6 +4767,7 @@ const layers = {
       ],
     ),
     route,
+    routeText,
     {
       id: 'signal_boxes_point',
       type: 'circle',

@@ -1244,6 +1244,45 @@ const features = {
     },
   },
 
+  // Routes
+  route: {
+    labelProperties: ['name'],
+    featureProperty: 'type',
+    featureLinks: featureLinks.openstreetmap,
+    // TODO color
+    features: {
+      train: {
+        name: 'Train route',
+      },
+      tram: {
+        name: 'Tram route',
+      },
+      subway: {
+        name: 'Subway route',
+      },
+      light_rail: {
+        name: 'Light rail route',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      from: {
+        name: 'From',
+      },
+      to: {
+        name: 'To',
+      },
+      operator: {
+        name: 'Operator',
+      },
+      brand: {
+        name: 'Brand',
+      },
+    },
+  },
+
   // Features not part of a data source but for lookups
 
   train_protection: {

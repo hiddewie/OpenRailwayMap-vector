@@ -14,7 +14,14 @@ class RouteAPI:
                 SELECT
                     r.osm_id as osm_id,
                     st_collect(l.way) as way,
-                    any_value(r.type) as type
+                    any_value(r.type) as type,
+                    any_value(r.name) as name,
+                    any_value(r.ref) as ref,
+                    any_value(r.from) as from,
+                    any_value(r.to) as to,
+                    any_value(r.operator) as operator,
+                    any_value(r.brand) as brand,
+                    any_value(r.color) as color
                 from routes r
                 join route_line rl
                     on rl.route_id = r.osm_id
