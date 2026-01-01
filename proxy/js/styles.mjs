@@ -574,7 +574,11 @@ const sources = {
   },
   route: {
     type: 'geojson',
-    data: '/api/route/324092',
+    // Data will be updated with URL of route GeoJSON
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    }
   },
   standard_railway_line_low: {
     type: 'vector',

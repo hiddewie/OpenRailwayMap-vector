@@ -284,6 +284,13 @@ function viewSearchResultsOnMap(bounds) {
   });
 }
 
+function showRouteOnMap(routeId) {
+  const routeSource = map.getSource('route')
+  if (routeSource) {
+    routeSource.setData(`${location.origin}/api/route/${routeId}`)
+  }
+}
+
 function showConfiguration(tab) {
   if (tab === 'general') {
     configureGeneral();
@@ -2334,7 +2341,7 @@ function popupContent(feature) {
           }
 
           if (routeId) {
-            popupListItem.onclick = () => console.info(`clicked ${routeId}`)
+            popupListItem.onclick = () => showRouteOnMap(routeId)
           }
         });
       })
