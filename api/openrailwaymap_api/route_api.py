@@ -8,12 +8,12 @@ class RouteAPI:
                 'type', 'Feature',
                 'id', osm_id,
                 'geometry', ST_AsGeoJSON(ST_Transform(way, 4326))::jsonb,
-                'properties', to_jsonb(row) - 'gid' - 'geom'
+                'properties', to_jsonb(row) - 'osm_id' - 'way'
             ) as data
             FROM (
                 SELECT
                     r.osm_id as osm_id,
-                    st_collect(l.way) as way,
+                    ST_LineMerge(st_collect(l.way)) as way,
                     any_value(r.type) as type,
                     any_value(r.name) as name,
                     any_value(r.ref) as ref,
