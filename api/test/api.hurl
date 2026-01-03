@@ -350,25 +350,3 @@ HTTP 422
 [Asserts]
 jsonpath "$.detail" count == 1
 jsonpath "$.detail[0].msg" == "Input should be a valid integer, unable to parse string as an integer"
-
-# Route
-GET {{base_url}}/route/64050
-HTTP 200
-Content-Type: application/geo+json
-[Asserts]
-jsonpath "$.id" == 64050
-jsonpath "$.type" == "Feature"
-jsonpath "$.properties.to" == "S Spindlersfeld"
-jsonpath "$.properties.ref" == "S47"
-jsonpath "$.properties.from" == "S Hermannstraße"
-jsonpath "$.properties.name" == "S47: S Hermannstraße => S Spindlersfeld"
-jsonpath "$.properties.type" == "light_rail"
-jsonpath "$.properties.color" == "#BA8A4D"
-jsonpath "$.properties.osm_id" == 64050
-jsonpath "$.properties.operator" == "S-Bahn Berlin GmbH"
-jsonpath "$.geometry.type" == "LineString"
-jsonpath "$.geometry.coordinates" count > 0
-
-# Non existing route
-GET {{base_url}}/route/404
-HTTP 404

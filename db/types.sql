@@ -3,10 +3,3 @@ CREATE TYPE signal_layer AS ENUM (
   'electrification',
   'signals'
 );
-
-CREATE TYPE route_type AS ENUM (
-  'train',
-  'subway',
-  'tram',
-  'light_rail'
-);
