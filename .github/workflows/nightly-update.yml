@@ -34,6 +34,7 @@ jobs:
         run: |
           docker compose create data
           docker compose cp data:/data/data.osm.pbf data/filtered/data.osm.pbf
+          docker compose rm data
 
       - name: Build containers
         uses: docker/bake-action@v6
@@ -63,6 +64,7 @@ jobs:
           OSM2PGSQL_NUMPROC: '8'
         run: |
           docker compose run --no-deps import import
+          rm -f data/filtered/data.osm.pbf
 
       - name: Create database image
         run: |
