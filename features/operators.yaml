@@ -968,43 +968,190 @@ operators:
     color: 'rgb(241, 73, 16)'
 
   # --- JP --- #
-
+  # JR Companies
   - names:
       # East Japan Railway Company
       - '東日本旅客鉄道'
+      - '東日本旅客鉃道'
+      - '東日本旅客鉄道株式会社'
+      - '東日本旅客鉄道 (East Japan Railway)'
     color: '#007903'
 
   - names:
       # JR西日本 West Japan Railway Company
       - '西日本旅客鉄道'
+      - '西日本旅客鉄道株式会社'
+      - 'JR西日本'
     color: 'rgb(0, 101, 177)'
-
-  - names:
-      # ＪＲ東海 Central Japan Railway Company
-      - '東海旅客鉄道'
-      - '東海旅客鉄道 (JR Central)'
-    color: 'rgb(248, 123, 34)'
-
-  - names:
-      # Kintetsu railway
-      - '近畿日本鉄道'
-    color: '#9200af'
-
-  - names:
-      # Kyushu Railway Company
-      - '九州旅客鉄道'
-    color: '#DA2728'
 
   - names:
       # Shikoku Railway Company
       - '四国旅客鉄道'
-    color: 'rgb(76, 183, 219)'
+      - 'JR四国'
+      - '四国旅客鉄道株式会社'
+    color: '#1cadca'
 
   - names:
       # JR北海道- Hokkaido Railway Company
       - '北海道旅客鉄道'
     color: '#45B035'
 
+  - names:
+      # ＪＲ東海 Central Japan Railway Company
+      - '東海旅客鉄道'
+      - '東海旅客鉄道 (JR Central)'
+      - '東海旅客鉄道株式会社'
+    color: 'rgb(248, 123, 34)'
+
+  - names:
+      # Japan Freight Railway Company
+      - '日本貨物鉄道'
+      - 'JR貨物'
+    color: '#477897'
+
+  - names:
+      # Kyushu Railway Company
+      - '九州旅客鉄道'
+      - 'JR Kyushu'
+      - 'JR九州'
+    color: '#DA2728'
+
+  # Kansai Region
+  - names:
+      # Kintetsu railway
+      - '近畿日本鉄道'
+    color: '#0068b3'
+
+  - names:
+      # Osaka Metro
+      - '大阪市高速電気軌道'
+      - '大阪メトロ'
+    color: '#1d2088'
+
+  - names:
+      # HAPI-LINE Fukui railway
+      - 'ハピラインふくい'
+    color: '#e6378d'
+
+  - names:
+      # Kyoto Tango Railway
+      - '京都丹後鉄道'
+    color: '#ec75a2'
+
+  - names:
+      # Nankai Electric railway
+      - '南海電気鉄道'
+      - '南海鉄道'
+    color: '#ff9900'
+
+  - names:
+      # Keihan Electric Railway Co., Ltd.
+      - '京阪電気鉄道'
+    color: '#011961'
+
+  - names:
+      # Hankyu Corporation
+      - '阪急電鉄'
+    color: '#ca0124'
+
+  - names:
+      # Hanshin Electric Railway
+      - '阪神電気鉄道'
+    color: '#007ca5'
+
+  - names:
+      # Sanyo Electric Railway
+      - '山陽電気鉄道'
+    color: '#e42926'
+
+  - names:
+      # Chizu Express Co., Ltd.
+      - '智頭急行'
+    color: '#021499'
+
+  - names:
+      # Ibara Railway
+      - '井原鉄道'
+    color: '#2f62a1'
+
+  - names:
+      # Kita-Osaka Kyuko Railway
+      - '北大阪急行電鉄'
+      - '北大阪急行電鉄株式会社'
+    color: '#9b0040'
+
+  - names:
+      # Hankai Tramway Co., Ltd.
+      - '阪堺電気軌道'
+      - '阪堺電気軌道 (Hankai denki kidō)'
+    color: '#24997c'
+
+  # Chubu Region
+  - names:
+      # Nagoya Railroad Co.,Ltd.
+      - '名古屋鉄道'
+    color: '#c10024'
+
+  - names:
+      # Transportation Bureau City of Nagoya
+      - '名古屋市交通局'
+      - '名古屋市'
+    color: '#1e569b'
+
+  - names:
+      # Echigo Tokimeki Railway Company
+      - 'えちごトキめき鉄道'
+    color: '#ee1528'
+
+  - names:
+      # Toyama Chihou Tetsudo Inc.
+      - '富山地方鉄道'
+    color: '#a71e41'
+
+  - names:
+      # Hokuetsu Express Corporation
+      - '北越急行'
+    color: '#073190'
+
+  # Hokkaido Region
+  - names:
+      # Sapporo City Transportation Bureau
+      - '札幌市交通局'
+    color: '#2b75c0'
+
+  # Kyushu Region
+  - names:
+      # Nishi-Nippon Railroad Co.,Ltd.
+      - '西日本鉄道'
+    color: '#004ea1'
+
+  - names:
+      # Fukuoka City Transportation Bureau
+      - '福岡市交通局'
+    color: '#0074bf'
+
+  # Shikoku Region
+  - names:
+      # Iyo Railway Co.,Ltd.
+      - '伊予鉄道'
+    color: '#eb6100'
+
+  - names:
+      # Iyo Railway Co.,Ltd.
+      - '伊予鉄道'
+    color: '#eb6100'
+
+  - names:
+      # Tosa Kuroshio Tetsudo Co.,Ltd.
+      - '土佐くろしお鉄道'
+    color: '#00a0e9'
+
+  - names:
+      # Takamatsu-Kotohira Electric Railroad Co.,Ltd.
+      - '高松琴平電気鉄道'
+    color: '#39227c'
+
+  # Kanto Region　(except Tokyo)
   - names:
       # Aoimori Railway Company
       - '青い森鉄道'
@@ -1021,6 +1168,23 @@ operators:
     color: '#ed6c00'
 
   - names:
+      # Kominato Railway Company
+      - '小湊鉄道'
+      - '小湊鐵道 (Kominato Railway)'
+    color: '#ff3700'
+
+  - names:
+      # IGR Iwate Galaxy Railway Company
+      - 'アイジーアールいわて銀河鉄道'
+    color: '#264697'
+
+  - names:
+      # Konan Railway Corporation
+      - '弘南鉄道'
+    color: '#e47d49'
+
+  # Tokyo Metropolitan
+  - names:
       # Keikyu Corporation
       - '京浜急行電鉄'
       - '京浜急行電鉄 (Keikyu Corporation)'
@@ -1032,44 +1196,98 @@ operators:
     color: '#00467e'
 
   - names:
-      # Tokyu Railways
-      - '東急電鉄'
-    color: 'rgb(232, 56, 23)'
-
-  - names:
-      # Seibu Railway Co.,Ltd.
-      - '西武鉄道'
-    color: '#876016'
-
-  - names:
-      # Odakyu Electric Railway Co., Ltd.
-      - '小田急電鉄'
-    color: '#876016'
-
-  - names:
-      # Nagoya Railroad Co.,Ltd.
-      - '名古屋鉄道'
-    color: '#c10024'
-
-  - names:
       # Bureau of Transportation Tokyo Metropolitan Government
       - '東京都交通局'
-    color: '#cc3600'
-
-  - names:
-      # Keio Corporation
-      - '京王電鉄'
-    color: 'rgb(214, 0, 127)'
-
-  - names:
-      # Hankyu Corporation
-      - '阪急電鉄'
-    color: '#ca0124'
+      - '東京都交通局 (Tokyo Metropolitan Bureau of Transportation)'
+    color: '#1c1d1f'
 
   - names:
       # Tobu Railway Co., Ltd.
       - '東武鉄道'
+      - '東武鉄道 (Tobu Railway)'
     color: '#005bae'
+
+  - names:
+      # Seibu Railway Co.,Ltd.
+      - '西武鉄道'
+      - '西武鉄道株式会社'
+      - '西武鉄道 (Seibu Railway)'
+    color: '#3366cc'
+
+  - names:
+      # Chichibu Railway Co.,Ltd.
+      - '秩父鉄道'
+    color: '#01479d'
+
+  - names:
+      # Tokyu Railways
+      - '東急電鉄'
+      - '東京急行電鉄'
+    color: '#ee0011'
+
+  - names:
+      # Odakyu Electric Railway Co., Ltd.
+      - '小田急電鉄'
+    color: '#1155cc'
+
+  - names:
+      # Keio Railway
+      - '京王電鉄'
+      - '京王電鉄 (Keio railway)'
+    color: 'rgb(214, 0, 127)'
+
+  - names:
+      # Sagami Railway Co., Ltd.
+      - '相模鉄道'
+    color: '#0c0c34'
+
+  - names:
+      # Hokuso Railway Co., Ltd.
+      - '北総鉄道'
+    color: '#12284d'
+
+  - names:
+      # Keisei Electric Railway Co., Ltd.
+      - '京成電鉄'
+      - '京成電鉄株式会社'
+    color: '#0a3788'
+
+  - names:
+      # Saitama Railway Co., Ltd.
+      - '埼玉高速鉄道'
+    color: '#2351a5'
+
+  - names:
+      # Tokyo Tama Intercity Monorail Co., Ltd.
+      - '多摩都市モノレール'
+    color: '#2351a5'
+
+  - names:
+      # Tokyo Monorail Co., Ltd.
+      - '東京モノレール'
+      - '東京モノレール株式会社'
+    color: '#005075'
+
+  - names:
+      # Transportation Bureau, City of Yokohama
+      - '横浜市交通局'
+      - '横浜市'
+    color: '#006bad'
+
+  - names:
+      # Enoshima Electric Railway Co., Ltd.
+      - '江ノ島電鉄'
+    color: '#388a0a'
+
+  - names:
+      # Tokyo Waterfront Area Rapid Transit Inc.
+      - '東京臨海高速鉄道'
+    color: '#00418e'
+
+  - names:
+      # Metropolitan Intercity Railway Company
+      - '首都圏新都市鉄道'
+    color: '#003b83'
 
   # --- KG --- #
 
@@ -1090,22 +1308,73 @@ operators:
   # --- KR --- #
 
   - names:
-      - '한국철도공사 (Korail)'
+      # Korea Railroad Corporation
       - '한국철도공사'
       - 'Korail'
-    color: '#0066b5'
+    color: '#005bac'
+
+  - names:
+      # SR is already used in IN
+      - '에스알'
+    color: '#4b2f48'
+
+  - names:
+      - '서울교통공사'
+      - 'Seoul Metro'
+    color: '#293896'
+
+  - names:
+      - '공항철도주식회사'
+    color: '#0090d2'
+
+  - names:
+      - '인천교통공사'
+    color: '#009ddc'
 
   - names:
       - '서해철도주식회사'
-    color: '#8cc63f'
+    color: '#8fc31f'
 
   - names:
-      - '주식회사에스알'
-    color: '#4c2f48'
+      - '네오트랜스주식회사'
+    color: '#d20f46'
 
   - names:
-      - '네오트랜스'
-    color: '#fe0000'
+      - '지티엑스에이운영주식회사'
+    color: '#ae283a'
+
+  - names:
+      - '로템SRS'
+      - '우진메트로'
+    color: '#ad0003'
+
+  - names:
+      - '우이신설경전철운영(주)'
+    color: '#95296f'
+
+  - names:
+      - '김포골드라인SRS'
+    color: '#ad8605'
+
+  - names:
+      - '용인에버라인운영(주)'
+    color: '#363995'
+
+  - names:
+      - '부산교통공사'
+    color: '#2a5caa'
+
+  - names:
+      - '부산·김해경전철주식회사'
+    color: '#324eb3'
+
+  - names:
+      - '대구교통공사'
+    color: '#004ea2'
+
+  - names:
+      - '대전교통공사'
+    color: '#00b74f'
 
   # --- KZ --- #
 
