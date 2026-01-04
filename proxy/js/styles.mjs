@@ -40,6 +40,7 @@ const colors = {
   railwayLine: {
     text: themeSwitch('#585858', '#ccc'),
   },
+  route: themeSwitch('hsla(312, 100%, 50%, 0.6)', 'hsla(312, 100%, 50%, 0.6)'),
   styles: {
     standard: {
       main: themeSwitch('#ff8100', '#ff8100'),
@@ -570,6 +571,14 @@ const sources = {
       type: 'FeatureCollection',
       features: [],
     },
+  },
+  route: {
+    type: 'geojson',
+    // Data will be updated with URL of route GeoJSON
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    }
   },
   standard_railway_line_low: {
     type: 'vector',
@@ -1725,6 +1734,54 @@ const hillshade = {
   }
 }
 
+const route = {
+  id: 'route',
+  type: 'line',
+  source: 'route',
+  layout: {
+    'visibility': ['case',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
+      'visible',
+    ],
+    'line-join': 'round',
+    'line-cap': 'round',
+  },
+  paint: {
+    'line-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+      colors.route,
+    ],
+    'line-width': 5,
+  },
+};
+const routeText = {
+  id: 'route_text',
+  type: 'symbol',
+  source: 'route',
+  paint: {
+    'text-color': colors.railwayLine.text,
+    'text-halo-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+      colors.halo,
+    ],
+    'text-halo-width': 2,
+  },
+  layout: {
+    'visibility': ['case',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
+      'visible',
+    ],
+    'symbol-z-order': 'source',
+    'symbol-placement': 'line',
+    'text-field': ['coalesce', ['get', 'name'], ['get', 'ref'], ''],
+    'text-font': font.bold,
+    'text-size': 11,
+    'text-padding': 10,
+    'text-max-width': 5,
+    'symbol-spacing': 200,
+  },
+}
+
 /**
  * Strategy for displaying railway lines
  *
@@ -2604,6 +2661,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     {
       id: 'railway_text_stations_low1',
       type: 'symbol',
@@ -3437,6 +3496,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
@@ -3587,7 +3648,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset0'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     searchResults,
@@ -3711,6 +3777,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     {
       id: 'signal_boxes_point',
       type: 'circle',
@@ -3977,7 +4045,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset0'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     {
@@ -4170,6 +4243,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     {
       id: 'electrification_substation',
       type: 'fill',
@@ -4384,7 +4459,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': 'top',
-        'text-offset': [0, 1.5],
+        'text-offset': ['interpolate', ['linear'],
+          // 2 pixel spacing under icon
+          ['/', ['+', ['get', 'offset'], 2], 9],
+          0, ['literal', [0, 0]],
+          20, ['literal', [0, 20]],
+        ],
       },
     },
     {
@@ -4578,6 +4658,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     searchResults,
   ],
 
@@ -4699,6 +4781,8 @@ const layers = {
         },
       ],
     ),
+    route,
+    routeText,
     {
       id: 'signal_boxes_point',
       type: 'circle',

@@ -491,12 +491,32 @@ local routes = osm2pgsql.define_table({
   name = 'routes',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'type', sql_type = 'route_type', not_null = true },
+    { column = 'from', type = 'text' },
+    { column = 'to', type = 'text' },
+    { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
+    { column = 'operator', type = 'text' },
+    { column = 'brand', type = 'text' },
+    { column = 'color', type = 'text' },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
+  },
+})
+
+local route_line = osm2pgsql.define_table({
+  name = 'route_line',
+  ids = { type = 'relation', id_column = 'route_id' },
+  columns = {
+    { column = 'line_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'route_id', method = 'btree' },
+    { column = 'line_id', method = 'btree' },
   },
 })
 
@@ -1472,16 +1492,27 @@ function osm2pgsql.process_relation(object)
       if route_stop_relation_roles(member.role) then
         table.insert(stop_members, member.ref)
         has_members = true
-      end
-
-      if route_platform_relation_roles(member.role) then
+      elseif route_platform_relation_roles(member.role) then
         table.insert(platform_members, member.ref)
+        has_members = true
+      elseif (member.role == nil or member.role == '') and member.type == 'w' then
+        route_line:insert({
+          line_id = member.ref,
+        })
         has_members = true
       end
     end
 
     if has_members then
       routes:insert({
+        type = tags.route,
+        from = tags.from,
+        to = tags.to,
+        name = tags.name,
+        ref = tags.ref,
+        operator = tags.operator,
+        brand = tags.brand,
+        color = tags.colour,
         stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
       })

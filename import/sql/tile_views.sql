@@ -64,6 +64,7 @@ RETURN (
       owner,
       traffic_mode,
       radio,
+      line_routes,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
@@ -120,6 +121,7 @@ RETURN (
         END AS primary_operator,
         traffic_mode,
         radio,
+        (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
         wikidata,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -128,7 +130,7 @@ RETURN (
         wikipedia,
         note,
         description
-      FROM railway_line
+      FROM railway_line l
       WHERE
         way && ST_TileEnvelope(z, x, y)
         -- conditionally include features based on zoom level
@@ -230,6 +232,7 @@ DO $do$ BEGIN
           "owner": "string",
           "traffic_mode": "string",
           "radio": "string",
+          "line_routes": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "wikimedia_commons_file": "string",
@@ -418,7 +421,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     nullif(array_to_string(note, U&'\001E'), '') as note,
     nullif(array_to_string(description, U&'\001E'), '') as description,
     nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
-    yard_hump
+    yard_hump,
+    (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes
   FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
@@ -462,7 +466,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -507,7 +512,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -551,7 +557,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -595,7 +602,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -740,7 +748,8 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump
+      yard_hump,
+      station_routes
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL
@@ -780,7 +789,8 @@ DO $do$ BEGIN
           "note": "string",
           "description": "string",
           "yard_purpose": "string",
-          "yard_hump": "boolean"
+          "yard_hump": "boolean",
+          "station_routes": "string"
         }
       }
     ]
@@ -816,6 +826,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
       ) as operator_color,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes,
       nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
       nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
       nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
@@ -852,6 +863,7 @@ DO $do$ BEGIN
           "network": "string",
           "position": "string",
           "uic_ref": "string",
+          "station_routes": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "wikimedia_commons_file": "string",
@@ -959,8 +971,9 @@ RETURN (
       bench,
       wheelchair,
       departures_board,
-      tactile_paving
-    FROM platforms
+      tactile_paving,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
+    FROM platforms p
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1056,8 +1069,9 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'stop_position' as feature,
       name,
-      type
-    FROM stop_positions
+      type,
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.stop_ref_ids @> Array[sp.osm_id]) as stop_position_routes
+    FROM stop_positions sp
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1074,7 +1088,8 @@ DO $do$ BEGIN
           "osm_id": "string",
           "feature": "string",
           "name": "string",
-          "type": "string"
+          "type": "string",
+          "stop_position_routes": "string"
         }
       }
     ]
