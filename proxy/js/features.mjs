@@ -240,6 +240,19 @@ const railwayLineFeatures = {
       name: 'Description',
       paragraph: true,
     },
+    line_routes: {
+      name: 'Routes',
+      list: {
+        routeIdProperty: 'route_id',
+        colorProperty: 'color',
+        labelProperty: 'label',
+        properties: [
+          'route_id',
+          'color',
+          'label',
+        ],
+      },
+    },
   },
 };
 
@@ -355,6 +368,19 @@ const stationFeatures = {
     description: {
       name: 'Description',
       paragraph: true,
+    },
+    station_routes: {
+      name: 'Routes',
+      list: {
+        routeIdProperty: 'route_id',
+        colorProperty: 'color',
+        labelProperty: 'label',
+        properties: [
+          'route_id',
+          'color',
+          'label',
+        ],
+      },
     },
   },
 }
@@ -574,6 +600,19 @@ const features = {
       tactile_paving: {
         name: 'Tactile paving',
       },
+      platform_routes: {
+        name: 'Routes',
+        list: {
+          routeIdProperty: 'route_id',
+          colorProperty: 'color',
+          labelProperty: 'label',
+          properties: [
+            'route_id',
+            'color',
+            'label',
+          ],
+        },
+      },
     }
   },
   'openrailwaymap_standard-standard_railway_platform_edges': {
@@ -608,7 +647,20 @@ const features = {
     properties: {
       type: {
         name: 'Type',
-      }
+      },
+      stop_position_routes: {
+        name: 'Routes',
+        list: {
+          routeIdProperty: 'route_id',
+          colorProperty: 'color',
+          labelProperty: 'label',
+          properties: [
+            'route_id',
+            'color',
+            'label',
+          ],
+        },
+      },
     }
   },
   'openrailwaymap_standard-standard_station_entrances': {
@@ -1188,6 +1240,48 @@ const features = {
       },
       railway: {
         name: 'Railway',
+      },
+    },
+  },
+
+  // Routes
+  route: {
+    labelProperties: ['name'],
+    featureProperty: 'type',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      train: {
+        name: 'Train route',
+        type: 'relation',
+      },
+      tram: {
+        name: 'Tram route',
+        type: 'relation',
+      },
+      subway: {
+        name: 'Subway route',
+        type: 'relation',
+      },
+      light_rail: {
+        name: 'Light rail route',
+        type: 'relation',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      from: {
+        name: 'From',
+      },
+      to: {
+        name: 'To',
+      },
+      operator: {
+        name: 'Operator',
+      },
+      brand: {
+        name: 'Brand',
       },
     },
   },
