@@ -1158,11 +1158,6 @@ operators:
     color: '#eb6100'
 
   - names:
-      # Iyo Railway Co.,Ltd.
-      - '伊予鉄道'
-    color: '#eb6100'
-
-  - names:
       # Tosa Kuroshio Tetsudo Co.,Ltd.
       - '土佐くろしお鉄道'
     color: '#00a0e9'
