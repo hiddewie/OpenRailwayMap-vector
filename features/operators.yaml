@@ -994,7 +994,6 @@ operators:
   - names:
       # East Japan Railway Company
       - '東日本旅客鉄道'
-      - '東日本旅客鉃道'
       - '東日本旅客鉄道株式会社'
       - '東日本旅客鉄道 (East Japan Railway)'
     color: '#007903'
