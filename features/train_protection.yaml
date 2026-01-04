@@ -36,7 +36,6 @@ train_protections:
   - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
-  - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
   - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
@@ -97,7 +96,7 @@ features:
 
   - train_protection: atc
     tags:
-      - { tag: 'railway:atc', value: 'yes' }
+      - { tag: 'railway:atc', values: ['yes', 'CS', 'new-CS', 'D', 'DS', 'keio', 'KS', 'NS', 'P', 'TD', 'WS'] }
 
   - train_protection: asfa
     tags:
@@ -254,10 +253,6 @@ features:
   - train_protection: ssc
     tags:
       - { tag: 'railway:ssc', value: 'yes' }
-
-  - train_protection: tasc
-    tags:
-      - { tag: 'railway:tasc', value: 'yes' }
 
   - train_protection: ats
     tags:
