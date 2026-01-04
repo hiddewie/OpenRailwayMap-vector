@@ -1252,7 +1252,7 @@ operators:
     color: '#1155cc'
 
   - names:
-      # Keio Railway
+      # Keio Corporation
       - '京王電鉄'
       - '京王電鉄 (Keio railway)'
     color: 'rgb(214, 0, 127)'
