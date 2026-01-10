@@ -264,7 +264,7 @@ features:
 
   - train_protection: ktcs
     tags:
-      - { tag: 'railway:ktcs', values: ['yes', '2', '3', 'M'] }
+      - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
 
   - train_protection: tbl
     tags:
