@@ -2696,6 +2696,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'DE-ESO:ne5' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: local operated area
+    country: DE
+    icon: [ default: 'de/ortsstellbereich' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-DB:beginn_ortsstellbereich' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
   - description: train length stopping marker
     country: DE
     icon: [ default: 'de/zuglaenge' ]
