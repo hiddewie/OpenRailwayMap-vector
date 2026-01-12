@@ -1,9 +1,9 @@
 train_protections:
-  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'hsl(214, 100%, 70%)' }
   - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
   - { train_protection: 'etcs_2', legend: 'European Train Control System (ETCS) level 2', color: 'hsl(214, 100%, 40%)' }
   - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#c54800' }
   - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
@@ -49,6 +49,10 @@ train_protections:
   - { train_protection: 'none', legend: 'No train protection', color: 'black' }
 
 features:
+
+  - train_protection: ktcs
+    tags:
+      - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
 
   - train_protection: etcs
     tags:
@@ -261,10 +265,6 @@ features:
   - train_protection: atacs
     tags:
       - { tag: 'railway:atacs', value: 'yes' }
-
-  - train_protection: ktcs
-    tags:
-      - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
 
   - train_protection: tbl
     tags:
