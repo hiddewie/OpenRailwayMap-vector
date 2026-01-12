@@ -3,6 +3,7 @@ train_protections:
   - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
   - { train_protection: 'etcs_2', legend: 'European Train Control System (ETCS) level 2', color: 'hsl(214, 100%, 40%)' }
   - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#c54800' }
   - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
@@ -35,10 +36,8 @@ train_protections:
   - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
-  - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
   - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
-  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
@@ -50,6 +49,10 @@ train_protections:
   - { train_protection: 'none', legend: 'No train protection', color: 'black' }
 
 features:
+
+  - train_protection: ktcs
+    tags:
+      - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
 
   - train_protection: etcs
     tags:
@@ -89,7 +92,7 @@ features:
 
   - train_protection: cbtc
     tags:
-      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
+      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto', 'RF', 'IL'] }
 
   - train_protection: ptc
     tags:
@@ -97,7 +100,7 @@ features:
 
   - train_protection: atc
     tags:
-      - { tag: 'railway:atc', value: 'yes' }
+      - { tag: 'railway:atc', values: ['yes', 'CS', 'new-CS', 'D', 'DS', 'keio', 'KS', 'NS', 'P', 'TD', 'WS'] }
 
   - train_protection: asfa
     tags:
@@ -255,10 +258,6 @@ features:
     tags:
       - { tag: 'railway:ssc', value: 'yes' }
 
-  - train_protection: tasc
-    tags:
-      - { tag: 'railway:tasc', value: 'yes' }
-
   - train_protection: ats
     tags:
       - { tag: 'railway:ats', values: ['yes', 'B', 'Dx', 'S', 'S1', 'S2', 'S1;S2', 'Sx', 'P', 'Ps'] }
@@ -266,10 +265,6 @@ features:
   - train_protection: atacs
     tags:
       - { tag: 'railway:atacs', value: 'yes' }
-
-  - train_protection: ktcs
-    tags:
-      - { tag: 'railway:ktcs', values: ['yes', '2', '3', 'M'] }
 
   - train_protection: tbl
     tags:
