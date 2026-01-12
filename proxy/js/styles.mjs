@@ -1604,11 +1604,6 @@ const railwayKmText = {
   minzoom: 10,
   source: 'high',
   'source-layer': 'railway_text_km',
-  filter: ['step', ['zoom'],
-    ['get', 'zero'],
-    13,
-    true,
-  ],
   paint: {
     'text-color': colors.km.text,
     'text-halo-color': ['case',

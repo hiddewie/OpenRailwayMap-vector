@@ -212,6 +212,11 @@ local railway_line = osm2pgsql.define_table({
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
   },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    -- For querying routes with railway lines
+    { column = 'osm_id', method = 'btree' },
+  },
 })
 
 local pois = osm2pgsql.define_table({
