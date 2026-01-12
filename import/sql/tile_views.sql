@@ -1127,6 +1127,7 @@ RETURN (
       description
     FROM railway_positions
     WHERE way && ST_TileEnvelope(z, x, y)
+      AND (z >= 13 OR (z >= 10 AND zero))
     ORDER by zero
   ) as tile
   WHERE way IS NOT NULL
