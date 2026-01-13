@@ -108,6 +108,7 @@ async def wikidata(
 ):
     api = RouteAPI(app.state.database)
     response = await api(osm_id=osm_id)
+
     if response is None:
         raise HTTPException(status_code=404, detail="Route not found")
 
@@ -120,6 +121,7 @@ async def wikidata(
 ):
     api = RouteStopsAPI(app.state.database)
     response = await api(osm_id=osm_id)
+
     if response is None:
         raise HTTPException(status_code=404, detail="Route stops not found")
 
