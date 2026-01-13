@@ -286,8 +286,10 @@ local stop_positions = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point', not_null = true },
-    { column = 'name', type = 'text' },
     { column = 'type', type = 'text' },
+    { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
+    { column = 'local_ref', type = 'text' },
   },
   indexes = {
     { column = 'way', method = 'gist' },
