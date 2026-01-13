@@ -64,7 +64,11 @@ jobs:
           OSM2PGSQL_NUMPROC: '8'
         run: |
           docker compose run --no-deps import import
+
+      - name: Clear disk space
+        run: |
           rm -f data/filtered/data.osm.pbf
+          docker system prune -af
 
       - name: Create database image
         run: |
