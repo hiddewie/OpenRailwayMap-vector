@@ -1517,7 +1517,7 @@ function osm2pgsql.process_relation(object)
       if route_stop_relation_roles(member.role) then
         route_stop:insert({
           stop_id = member.ref,
-          role = route_stop_values(member.role),
+          role = route_stop_values(member.role) or nil,
         })
         has_members = true
       elseif route_platform_relation_roles(member.role) then

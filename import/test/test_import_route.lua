@@ -89,8 +89,8 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   route_stop = {
     { stop_id = 1 },
     { stop_id = 2 },
-    { stop_id = 3 },
-    { stop_id = 4 },
+    { stop_id = 3, role = 'stop_exit_only' },
+    { stop_id = 4, role = 'stop_entry_only' },
     { stop_id = 5 },
     { stop_id = 6 },
     { stop_id = 7 },
