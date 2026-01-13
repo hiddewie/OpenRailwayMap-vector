@@ -1085,8 +1085,10 @@ function osm2pgsql.process_node(object)
     if type then
       stop_positions:insert({
         way = object:as_point(),
-        name = tags.name,
         type = type,
+        name = tags.name,
+        ref = tags.ref,
+        local_ref = tags.local_ref,
       })
     end
   end

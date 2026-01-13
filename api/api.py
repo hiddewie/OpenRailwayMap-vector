@@ -14,6 +14,7 @@ from openrailwaymap_api.status_api import StatusAPI
 from openrailwaymap_api.replication_api import ReplicationAPI
 from openrailwaymap_api.wikidata_api import WikidataAPI
 from openrailwaymap_api.route_api import RouteAPI
+from openrailwaymap_api.route_stops_api import RouteStopsAPI
 
 DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
@@ -109,5 +110,17 @@ async def wikidata(
     response = await api(osm_id=osm_id)
     if response is None:
         raise HTTPException(status_code=404, detail="Route not found")
+
+    return Response(content=response, media_type="application/geo+json")
+
+
+@app.get("/api/route/stops/{osm_id}")
+async def wikidata(
+        osm_id: int
+):
+    api = RouteStopsAPI(app.state.database)
+    response = await api(osm_id=osm_id)
+    if response is None:
+        raise HTTPException(status_code=404, detail="Route stops not found")
 
     return Response(content=response, media_type="application/geo+json")
