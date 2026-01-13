@@ -1245,6 +1245,7 @@ const features = {
   },
 
   // Routes
+
   route: {
     labelProperties: ['name'],
     featureProperty: 'type',
@@ -1282,6 +1283,34 @@ const features = {
       },
       brand: {
         name: 'Brand',
+      },
+    },
+  },
+
+  route_stops: {
+    labelProperties: ['name'],
+    featureProperty: 'type',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      train: {
+        name: 'Train stop',
+      },
+      tram: {
+        name: 'Tram stop',
+      },
+      subway: {
+        name: 'Subway stop',
+      },
+      light_rail: {
+        name: 'Light rail stop',
+      },
+    },
+    properties: {
+      entry_only: {
+        name: 'Entry only'
+      },
+      exit_only: {
+        name: 'Exit only'
       },
     },
   },
