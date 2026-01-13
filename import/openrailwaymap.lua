@@ -505,11 +505,11 @@ local routes = osm2pgsql.define_table({
     { column = 'brand', type = 'text' },
     { column = 'color', type = 'text' },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
-    { column = 'stop_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
-    { column = 'stop_ref_ids', method = 'gin' },
+    -- For querying routes with railway lines
+    { column = 'osm_id', method = 'btree' },
   },
 })
 
@@ -522,6 +522,18 @@ local route_line = osm2pgsql.define_table({
   indexes = {
     { column = 'route_id', method = 'btree' },
     { column = 'line_id', method = 'btree' },
+  },
+})
+
+local route_stop = osm2pgsql.define_table({
+  name = 'route_stop',
+  ids = { type = 'relation', id_column = 'route_id' },
+  columns = {
+    { column = 'stop_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'route_id', method = 'btree' },
+    { column = 'stop_id', method = 'btree' },
   },
 })
 
@@ -1493,11 +1505,12 @@ function osm2pgsql.process_relation(object)
 
   if tags.type == 'route' and route_values(tags.route) then
     local has_members = false
-    local stop_members = {}
     local platform_members = {}
     for _, member in ipairs(object.members) do
       if route_stop_relation_roles(member.role) then
-        table.insert(stop_members, member.ref)
+        route_stop:insert({
+          stop_id = member.ref,
+        })
         has_members = true
       elseif route_platform_relation_roles(member.role) then
         table.insert(platform_members, member.ref)
@@ -1520,7 +1533,6 @@ function osm2pgsql.process_relation(object)
         operator = tags.operator,
         brand = tags.brand,
         color = tags.colour,
-        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
       })
     end

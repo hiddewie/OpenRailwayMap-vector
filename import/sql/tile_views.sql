@@ -1070,7 +1070,7 @@ RETURN (
       'stop_position' as feature,
       name,
       type,
-      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.stop_ref_ids @> Array[sp.osm_id]) as stop_position_routes
+      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_stop rs join routes r on rs.route_id = r.osm_id where rs.stop_id = sp.osm_id) as stop_position_routes
     FROM stop_positions sp
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
