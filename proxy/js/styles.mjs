@@ -1787,29 +1787,16 @@ const routeText = {
 const routeStops = {
   id: 'route_stops',
   type: 'circle',
-  source: 'route-stops',
-  // paint: {
-  //   'text-color': colors.railwayLine.text,
-  //   'text-halo-color': ['case',
-  //     ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-  //     colors.halo,
-  //   ],
-  //   'text-halo-width': 2,
-  // },
-  // layout: {
-  //   'visibility': ['case',
-  //     ['<', ['global-state', 'date'], defaultDate], 'none',
-  //     'visible',
-  //   ],
-  //   'symbol-z-order': 'source',
-  //   'symbol-placement': 'line',
-  //   'text-field': ['coalesce', ['get', 'name'], ['get', 'ref'], ''],
-  //   'text-font': font.bold,
-  //   'text-size': 11,
-  //   'text-padding': 10,
-  //   'text-max-width': 5,
-  //   'symbol-spacing': 200,
-  // },
+  source: 'route_stops',
+  paint: {
+    'circle-color': 'white',
+    'circle-radius': 3,
+    'circle-stroke-width': 2,
+    'circle-stroke-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+      colors.route,
+    ],
+  },
 }
 
 /**
@@ -3465,6 +3452,7 @@ const layers = {
         'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
       },
     },
+    routeStops,
     searchResults,
   ],
 
