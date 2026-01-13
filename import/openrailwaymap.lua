@@ -289,6 +289,11 @@ local stop_positions = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'type', type = 'text' },
   },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    -- For querying stop positions for routes
+    { column = 'osm_id', method = 'btree', unique = true },
+  },
 })
 
 local platforms = osm2pgsql.define_table({
