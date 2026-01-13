@@ -10,3 +10,8 @@ CREATE TYPE route_type AS ENUM (
   'tram',
   'light_rail'
 );
+
+CREATE TYPE route_stop_type AS ENUM (
+  'stop_exit_only',
+  'stop_entry_only'
+);

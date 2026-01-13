@@ -535,6 +535,7 @@ local route_stop = osm2pgsql.define_table({
   ids = { type = 'relation', id_column = 'route_id' },
   columns = {
     { column = 'stop_id', sql_type = 'int8', not_null = true },
+    { column = 'role', sql_type = 'route_stop_type' },
   },
   indexes = {
     { column = 'route_id', method = 'btree' },
@@ -1486,6 +1487,7 @@ end
 
 local route_values = osm2pgsql.make_check_values_func({'train', 'subway', 'tram', 'light_rail'})
 local route_stop_relation_roles = osm2pgsql.make_check_values_func({'stop', 'station', 'stop_exit_only', 'stop_entry_only', 'forward_stop', 'backward_stop', 'forward:stop', 'backward:stop', 'stop_position', 'halt'})
+local route_stop_values = osm2pgsql.make_check_values_func({'stop_exit_only', 'stop_entry_only'}) -- Values from route_stop_relation_roles indicating special stop positions
 local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platform', 'platform_exit_only', 'platform_entry_only', 'forward:platform', 'backward:platform'})
 function osm2pgsql.process_relation(object)
   local tags = object.tags
@@ -1515,6 +1517,7 @@ function osm2pgsql.process_relation(object)
       if route_stop_relation_roles(member.role) then
         route_stop:insert({
           stop_id = member.ref,
+          role = route_stop_values(member.role),
         })
         has_members = true
       elseif route_platform_relation_roles(member.role) then
