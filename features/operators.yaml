@@ -1834,7 +1834,7 @@ operators:
 
   - names:
       - 'Amtrak'
-    color: '#18567D'
+    color: '#004c6e'
 
   - names:
       - 'Metro-North Railroad'
@@ -1877,16 +1877,17 @@ operators:
 
   - names:
       - 'Southeastern Pennsylvania Transportation Authority'
+      - 'SEPTA"
     color: '#F14728'
 
   - names:
       - 'South Florida Regional Transportation Authority'
-    color: '#1B6D85'
+    color: '#15718a'
 
   - names:
       - 'Florida East Coast Railway'
       - 'FEC'
-    color: '#af0069'
+    color: '#00f0ff'
 
   - names:
       - 'SunRail'
@@ -1895,7 +1896,7 @@ operators:
   - names:
       - 'Brightline Trains Florida LLC'
       - 'Brightline'
-    color: '#b9a000'
+    color: '#ffdb00'
 
   - names:
       - 'New Jersey Transit'
@@ -1919,7 +1920,7 @@ operators:
 
   - names:
       - 'New York City Transit Authority'
-    color: '#876716'
+    color: '#0062cf'
 
   - names:
       - 'Metra'
@@ -1952,6 +1953,236 @@ operators:
       - 'San Francisco Municipal Transportation Agency'
     color: '#cd3545'
 
+- names:
+      - 'Berkshire & Eastern Railroad'
+    color: '#f68b1e'
+    
+ - names:
+      - 'New England Central Railroad'
+    color: '#f68b1e'
+    
+ - names:
+      - 'Providence and Worcester Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Connecticut Southern Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Chicago, Fort Wayne and Eastern Railroad'
+    color: '#f68b1e'
+    
+- names:
+      - 'Columbus and Ohio River Railroad'
+    color: '#f68b1e'
+    
+- names:
+      - 'Ohio Southern Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Ohio Central Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'First Coast Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Mahoning Valley Railway'
+    color: '#f68b1e'
+
+- names:
+      - 'Buffalo and Pittsburgh Railroad'
+    color: '#f68b1e'
+    
+- names:
+      - 'Rochester and Southern Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Marquette Rail'
+    color: '#f68b1e'
+
+- names:
+      - 'Michigan Shore Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Wellsboro and Corning Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Mid-Michigan Railroad'
+    color: '#f68b1e'
+
+- names:
+      - 'Lake State Railway'
+    color: '#142e69'
+
+- names:
+      - 'Ann Arbor Railroad'
+    color: '#fcb900'
+- names:
+      - 'Great Lakes Central Railroad'
+    color: '#fcb900'
+    
+- names:
+      - 'Grand Elk Railroad'
+    color: '#fcb900'
+
+- names:
+      - 'Watco'
+    color: '#fcb900'
+
+- names:
+      - 'Ithaca Central Railroad'
+    color: '#fcb900'
+
+- names:
+      - 'Kanawha River Railroad'
+    color: '#fcb900'
+
+- names:
+      - 'Wheeling and Lake Erie Railway'
+    color: '#ff6900'
+
+- names:
+      - 'R.J. Corman Railroad Group'
+    color: '#ff0000'
+
+- names:
+      - 'New York, Susquehanna and Western Railway'
+    color: '#ffde21'
+
+- names:
+      - 'Central New York Railroad'
+    color: '#ffde21'
+
+- names:
+      - 'Massachusetts Coastal Railroad'
+    color: '#dca342'
+
+- names:
+      - 'Housatonic Railroad'
+    color: '#4e6e19'
+    
+- names:
+      - 'Raritan Central Railway'
+    color: '#510007'
+
+- names:
+      - 'Black River and Western Railroad'
+    color: '#202a44'
+    
+- names:
+      - 'Belvidere and Delaware River Railway'
+    color: '#202a44'
+
+- names:
+      - 'Dover and Delaware River Railroad'
+    color: '#202a44' 
+
+- names:
+      - 'Dover and Rockaway River Railroad'
+    color: '#202a44' 
+
+- names:
+      - 'Delaware and Raritan River Railroad'
+    color: '#202a44'
+
+- names:
+      - 'Cape May Seashore Lines'
+    color: '#99262d'
+
+- names:
+      - 'Winchester and Western Railroad'
+    color: '#c60751'
+
+- names:
+      - 'Middletown and New Jersey Railroad'
+    color: '#efb635' 
+
+- names:
+      - 'East Penn Railroad'
+    color: '#efb635'
+
+- names:
+      - 'Florida Central Railroad'
+    color: '#efb635'
+
+- names:
+      - 'Florida Northern Railroad'
+    color: '#efb635'
+
+- names:
+      - 'Florida Midland Railroad'
+    color: '#efb635'
+
+- names:
+      - 'Port Manatee Railroad'
+    color: '#efb635'
+
+- names:
+      - 'Reading Blue Mountain and Northern Railroad'
+    color: '#1c4c3c'
+
+- names:
+      - 'Florida Gulf and Atlantic Railroad'
+      - 'Florida Gulf & Atlantic Railroad'
+    color: '#a5373a'
+
+- names:
+      - 'South Central Florida Express'
+      - 'U.S. Sugar Railroad'
+    color: '#005942'
+
+- names:
+      - 'Delmarva Central Railroad'
+    color: '#831536'
+
+ - names:
+      - 'Maryland Transit Administration'
+      - 'MARC'
+    color: '#a4032f'
+
+- names:
+      - 'Western New York and Pennsylvania Railroad'
+    color: '#f5a919'
+
+- names:
+      - 'Virginia Railway Express'
+    color: '#ef3c40'
+
+- names:
+      - 'Central New England Railroad'
+    color: '#32634e'
+
+ - names:
+      - 'Port Authority Trans-Hudson'
+    color: '#0096d4'
+
+- names:
+      - 'Naugatuck Railroad'
+    color: '#f0522e'
+
+- names:
+      - 'Morristown and Erie Railway'
+    color: '#eb000f'
+
+- names:
+      - 'Shore Line East'
+    color: '#f03c40'
+
+- names:
+      - 'Indiana Harbor Belt Railroad'
+    color: '#f47406'
+
+- names:
+      - 'Belt Railway of Chicago'
+    color: '#ffad09'
+    
   # --- UZ --- #
 
   - names:
