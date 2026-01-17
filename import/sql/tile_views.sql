@@ -1965,6 +1965,7 @@ RETURN (
       standard_label,
       highspeed
     ORDER by
+      route_count NULLS FIRST,
       rank NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
