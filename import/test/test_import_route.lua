@@ -132,3 +132,48 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { type = 'light_rail', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
   },
 })
+
+osm2pgsql.process_relation({
+  tags = {
+    ['type'] = 'route',
+    ['route'] = 'monorail',
+  },
+  members = {
+    { role = 'stop', ref = 1 },
+  },
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  routes = {
+    { type = 'monorail', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+  },
+})
+
+osm2pgsql.process_relation({
+  tags = {
+    ['type'] = 'route',
+    ['route'] = 'funicular',
+  },
+  members = {
+    { role = 'stop', ref = 1 },
+  },
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  routes = {
+    { type = 'funicular', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+  },
+})
+
+osm2pgsql.process_relation({
+  tags = {
+    ['type'] = 'route',
+    ['route'] = 'miniature',
+  },
+  members = {
+    { role = 'stop', ref = 1 },
+  },
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  routes = {
+    { type = 'miniature', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+  },
+})
