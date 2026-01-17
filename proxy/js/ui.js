@@ -286,8 +286,11 @@ function viewSearchResultsOnMap(bounds) {
 
 function showRouteOnMap(routeId) {
   const routeSource = map.getSource('route')
-  if (routeSource) {
+  const routeStopsSource = map.getSource('route_stops')
+
+  if (routeSource && routeStopsSource) {
     routeSource.setData(`${location.origin}/api/route/${routeId}`)
+    routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
   }
 }
 
