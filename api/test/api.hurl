@@ -395,4 +395,4 @@ HTTP 200
 Content-Type: application/geo+json
 [Asserts]
 jsonpath "$.type" == "FeatureCollection"
-jsonpath "$.features" == null
+jsonpath "$.features" count == 0

@@ -6,7 +6,7 @@ class RouteStopsAPI:
         sql_query = """
             SELECT jsonb_build_object(
                 'type',  'FeatureCollection',
-                'features', jsonb_agg(features.feature)
+                'features', coalesce(jsonb_agg(features.feature), '[]')
             ) as data
             FROM (
                 SELECT jsonb_build_object(
