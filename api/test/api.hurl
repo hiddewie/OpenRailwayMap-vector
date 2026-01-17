@@ -391,4 +391,8 @@ jsonpath "$.features[0].properties.osm_id" == 4946539230
 
 # Non existing route
 GET {{base_url}}/route/stops/404
-HTTP 404
+HTTP 200
+Content-Type: application/geo+json
+[Asserts]
+jsonpath "$.type" == "FeatureCollection"
+jsonpath "$.features" == null

@@ -121,8 +121,4 @@ async def wikidata(
 ):
     api = RouteStopsAPI(app.state.database)
     response = await api(osm_id=osm_id)
-
-    if response is None:
-        raise HTTPException(status_code=404, detail="Route stops not found")
-
     return Response(content=response, media_type="application/geo+json")
