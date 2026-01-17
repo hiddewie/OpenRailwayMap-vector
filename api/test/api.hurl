@@ -360,8 +360,8 @@ jsonpath "$.id" == 64050
 jsonpath "$.type" == "Feature"
 jsonpath "$.properties.to" == "S Spindlersfeld"
 jsonpath "$.properties.ref" == "S47"
-jsonpath "$.properties.from" == "S Hermannstraße"
-jsonpath "$.properties.name" == "S47: S Hermannstraße => S Spindlersfeld"
+jsonpath "$.properties.from" == "S Südkreuz"
+jsonpath "$.properties.name" == "S47: S Südkreuz => S Spindlersfeld"
 jsonpath "$.properties.type" == "light_rail"
 jsonpath "$.properties.color" == "#BA8A4D"
 jsonpath "$.properties.osm_id" == 64050
@@ -372,3 +372,27 @@ jsonpath "$.geometry.coordinates" count > 0
 # Non existing route
 GET {{base_url}}/route/404
 HTTP 404
+
+# Route stops
+GET {{base_url}}/route/stops/64050
+HTTP 200
+Content-Type: application/geo+json
+[Asserts]
+jsonpath "$.type" == "FeatureCollection"
+jsonpath "$.features" count == 9
+jsonpath "$.features[0].id" == 4946539230
+jsonpath "$.features[0].type" == "Feature"
+jsonpath "$.features[0].geometry.type" == "Point"
+jsonpath "$.features[0].geometry.coordinates[0]" == 13.3654535
+jsonpath "$.features[0].geometry.coordinates[1]" == 52.475174499
+jsonpath "$.features[0].properties.name" == "Südkreuz"
+jsonpath "$.features[0].properties.type" == "train"
+jsonpath "$.features[0].properties.osm_id" == 4946539230
+
+# Non existing route
+GET {{base_url}}/route/stops/404
+HTTP 200
+Content-Type: application/geo+json
+[Asserts]
+jsonpath "$.type" == "FeatureCollection"
+jsonpath "$.features" count == 0

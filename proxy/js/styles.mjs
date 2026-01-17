@@ -580,6 +580,14 @@ const sources = {
       features: [],
     }
   },
+  route_stops: {
+    type: 'geojson',
+    // Data will be updated with URL of route GeoJSON
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    }
+  },
   standard_railway_line_low: {
     type: 'vector',
     url: '/standard_railway_line_low',
@@ -1774,6 +1782,20 @@ const routeText = {
     'text-padding': 10,
     'text-max-width': 5,
     'symbol-spacing': 200,
+  },
+}
+const routeStops = {
+  id: 'route_stops',
+  type: 'circle',
+  source: 'route_stops',
+  paint: {
+    'circle-color': 'white',
+    'circle-radius': 3,
+    'circle-stroke-width': 2,
+    'circle-stroke-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+      colors.route,
+    ],
   },
 }
 
@@ -3430,6 +3452,7 @@ const layers = {
         'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
       },
     },
+    routeStops,
     searchResults,
   ],
 
