@@ -581,6 +581,11 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
   },
+  route: {
+    name: 'Routes',
+    supportsDate: false,
+    hasConfiguration: false,
+  },
 };
 
 const defaultStyle = Object.keys(knownStyles)[0];
