@@ -165,7 +165,10 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { type = 'monorail', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+    { type = 'monorail', platform_ref_ids = '{}' },
+  },
+  route_stop = {
+    { stop_id = 1 },
   },
 })
 
@@ -180,7 +183,10 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { type = 'funicular', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+    { type = 'funicular', platform_ref_ids = '{}' },
+  },
+  route_stop = {
+    { stop_id = 1 },
   },
 })
 
@@ -195,6 +201,9 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   routes = {
-    { type = 'miniature', stop_ref_ids = '{1}', platform_ref_ids = '{}' },
+    { type = 'miniature', platform_ref_ids = '{}' },
+  },
+  route_stop = {
+    { stop_id = 1 },
   },
 })
