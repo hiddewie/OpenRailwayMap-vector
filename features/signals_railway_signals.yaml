@@ -5791,7 +5791,15 @@ features:
 
   - description: main light
     country: NL
-    icon: [ default: 'nl/main_light' ]
+    icon:
+      - default: 'nl/main_light'
+      - match: 'railway:signal:traversable:type'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
       - { tag: 'railway:signal:main:form', value: 'light' }
