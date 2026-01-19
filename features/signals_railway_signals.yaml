@@ -5794,6 +5794,7 @@ features:
       - match: 'railway:signal:traversable:type'
         cases:
           - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
       - match: 'railway:signal:danger'
         cases:
           - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
