@@ -257,7 +257,7 @@ operators:
   # --- CA: Genesee & Wyoming subsidiaries --- #
   - names:
       - 'Cape Breton and Central Nova Scotia Railway'
-    color: '#f68b1e 
+    color: '#f68b1e'
 
   - names:
       - 'Huron Central Railway'
@@ -2374,7 +2374,7 @@ operators:
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
 
-   - names:
+  - names:
       - 'San Diego and Imperial Valley Railroad'
     color: '#f68b1e'
 
