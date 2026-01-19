@@ -639,14 +639,27 @@ const features = {
   'openrailwaymap_standard-standard_railway_stop_positions': {
     featureLinks: featureLinks.openstreetmap,
     labelProperties: ['name'],
+    featureProperty: 'type',
     features: {
-      stop_position: {
-        name: 'Stop position',
+      train: {
+        name: 'Train stop',
+      },
+      tram: {
+        name: 'Tram stop',
+      },
+      subway: {
+        name: 'Subway stop',
+      },
+      light_rail: {
+        name: 'Light rail stop',
       },
     },
     properties: {
-      type: {
-        name: 'Type',
+      ref: {
+        name: 'Reference',
+      },
+      local_ref: {
+        name: 'Local reference',
       },
       stop_position_routes: {
         name: 'Routes',
@@ -1245,6 +1258,7 @@ const features = {
   },
 
   // Routes
+
   route: {
     labelProperties: ['name'],
     featureProperty: 'type',
@@ -1282,6 +1296,40 @@ const features = {
       },
       brand: {
         name: 'Brand',
+      },
+    },
+  },
+
+  route_stops: {
+    labelProperties: ['name'],
+    featureProperty: 'type',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      train: {
+        name: 'Train stop',
+      },
+      tram: {
+        name: 'Tram stop',
+      },
+      subway: {
+        name: 'Subway stop',
+      },
+      light_rail: {
+        name: 'Light rail stop',
+      },
+    },
+    properties: {
+      ref: {
+        name: 'Reference',
+      },
+      local_ref: {
+        name: 'Local reference',
+      },
+      entry_only: {
+        name: 'Entry only'
+      },
+      exit_only: {
+        name: 'Exit only'
       },
     },
   },

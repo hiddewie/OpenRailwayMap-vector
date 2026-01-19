@@ -16,24 +16,24 @@ Content-Type: application/json
 jsonpath "$" count == 20
 jsonpath "$[0].name" == "Berlin Hauptbahnhof (tief)"
 jsonpath "$[1].name" == "S+U Hauptbahnhof"
-jsonpath "$[2].name" == "Hauptbahnhof"
-jsonpath "$[3].name" == "Berlin Hauptbahnhof"
-jsonpath "$[4].name" == "Berlin Südkreuz"
-jsonpath "$[5].name" == "Südkreuz (Ringbahn)"
-jsonpath "$[6].name" == "Südkreuz (Nord-Süd)"
-jsonpath "$[7].name" == "Berlin Nordost"
-jsonpath "$[8].name" == "Berlin Greifswalder Straße"
-jsonpath "$[9].name" == "Berlin-Grünau"
-jsonpath "$[10].name" == "Berlin-Spandau"
-jsonpath "$[11].name" == "Berlin-Marienfelde Gbf"
-jsonpath "$[12].name" == "Spandau"
-jsonpath "$[13].name" == "Berlin-Tempelhof"
-jsonpath "$[14].name" == "Berlin-Schönholz"
-jsonpath "$[15].name" == "Berlin Ostbahnhof"
-jsonpath "$[16].name" == "Ostbahnhof"
-jsonpath "$[17].name" == "Gesundbrunnen"
-jsonpath "$[18].name" == "Berlin Gesundbrunnen"
-jsonpath "$[19].name" == "Berlin-Neukölln"
+jsonpath "$[2].name" == "Berlin Hauptbahnhof"
+jsonpath "$[3].name" == "Hauptbahnhof"
+jsonpath "$[4].name" == "Berlin Hamburger und Lehrter Bahnhof"
+jsonpath "$[5].name" == "Berlin-Moabit"
+jsonpath "$[6].name" == "Berlin Südkreuz"
+jsonpath "$[7].name" == "Südkreuz (Ringbahn)"
+jsonpath "$[8].name" == "Südkreuz (Nord-Süd)"
+jsonpath "$[9].name" == "Berlin Nordost"
+jsonpath "$[10].name" == "Berlin-Ruhleben"
+jsonpath "$[11].name" == "Berlin Greifswalder Straße"
+jsonpath "$[12].name" == "Berlin-Grünau"
+jsonpath "$[13].name" == "Berlin-Marienfelde Gbf"
+jsonpath "$[14].name" == "Berlin-Spandau"
+jsonpath "$[15].name" == "Spandau"
+jsonpath "$[16].name" == "Berlin-Tempelhof"
+jsonpath "$[17].name" == "Berlin-Schönholz"
+jsonpath "$[18].name" == "Ostbahnhof"
+jsonpath "$[19].name" == "Berlin Ostbahnhof"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -360,8 +360,8 @@ jsonpath "$.id" == 64050
 jsonpath "$.type" == "Feature"
 jsonpath "$.properties.to" == "S Spindlersfeld"
 jsonpath "$.properties.ref" == "S47"
-jsonpath "$.properties.from" == "S Hermannstraße"
-jsonpath "$.properties.name" == "S47: S Hermannstraße => S Spindlersfeld"
+jsonpath "$.properties.from" == "S Südkreuz"
+jsonpath "$.properties.name" == "S47: S Südkreuz => S Spindlersfeld"
 jsonpath "$.properties.type" == "light_rail"
 jsonpath "$.properties.color" == "#BA8A4D"
 jsonpath "$.properties.osm_id" == 64050
@@ -372,3 +372,27 @@ jsonpath "$.geometry.coordinates" count > 0
 # Non existing route
 GET {{base_url}}/route/404
 HTTP 404
+
+# Route stops
+GET {{base_url}}/route/stops/64050
+HTTP 200
+Content-Type: application/geo+json
+[Asserts]
+jsonpath "$.type" == "FeatureCollection"
+jsonpath "$.features" count == 9
+jsonpath "$.features[0].id" == 4946539230
+jsonpath "$.features[0].type" == "Feature"
+jsonpath "$.features[0].geometry.type" == "Point"
+jsonpath "$.features[0].geometry.coordinates[0]" == 13.3654535
+jsonpath "$.features[0].geometry.coordinates[1]" == 52.475174499
+jsonpath "$.features[0].properties.name" == "Südkreuz"
+jsonpath "$.features[0].properties.type" == "train"
+jsonpath "$.features[0].properties.osm_id" == 4946539230
+
+# Non existing route
+GET {{base_url}}/route/stops/404
+HTTP 200
+Content-Type: application/geo+json
+[Asserts]
+jsonpath "$.type" == "FeatureCollection"
+jsonpath "$.features" count == 0
