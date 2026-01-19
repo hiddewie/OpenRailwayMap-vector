@@ -65,6 +65,7 @@ RETURN (
       traffic_mode,
       radio,
       line_routes,
+      route_count,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
