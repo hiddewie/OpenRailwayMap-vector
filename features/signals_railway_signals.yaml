@@ -32,6 +32,8 @@ tags:
   - { tag: 'railway:signal:departure:states', title: 'Departure states', type: array }
   - { tag: 'railway:signal:departure:substitute_signal', title: 'Departure substitute signal', type: array }
   - { tag: 'railway:signal:departure:deactivated', title: 'Departure deactivated', type: boolean }
+  - { tag: 'railway:signal:danger', title: 'Danger' }
+  - { tag: 'railway:signal:danger:deactivated', title: 'Danger deactivated' }
   - { tag: 'railway:signal:distant', title: 'Distant' }
   - { tag: 'railway:signal:distant:form', title: 'Distant form' }
   - { tag: 'railway:signal:distant:repeated', title: 'Distant repeated', type: boolean }
@@ -177,6 +179,9 @@ tags:
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
   - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
+  - { tag: 'railway:signal:traversable', title: 'Traversable', type: boolean }
+  - { tag: 'railway:signal:traversable:type', title: 'Traversable type', type: boolean }
+  - { tag: 'railway:signal:traversable:deactivated', title: 'Traversable deactivated', type: boolean }
   - { tag: 'railway:signal:whistle', title: 'Whistle' }
   - { tag: 'railway:signal:whistle:form', title: 'Whistle form' }
   - { tag: 'railway:signal:whistle:only_transit', title: 'Whistle only transit', type: boolean }
@@ -231,6 +236,8 @@ types:
   - { type: steam_locomotive, layer: signals }
   - { type: fouling_point, layer: signals }
   - { type: preheating, layer: signals }
+  - { type: traversable, layer: signals }
+  - { type: danger, layer: signals }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
@@ -3450,7 +3457,7 @@ features:
 
       - match: 'railway:signal:main:states'
         cases:
-          - { 
+          - {
               any: [
               'DE-AVG:f4', 'DE-BOStrab:f4',
               'DE-AVG:f1', 'DE-BOStrab:f1',
@@ -5231,7 +5238,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-  
+
   - description: Distant (board)
     country: GB
     icon: [ default: 'gb/distant-board' ]
@@ -5334,7 +5341,7 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
-  
+
   - description: Stop board
     country: GB
     icon: [ default: 'gb/stop-board' ]
