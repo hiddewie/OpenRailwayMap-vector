@@ -269,24 +269,24 @@ operators:
 
   - names:
       - 'Knob Lake and Timmins Railway'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Ottawa Valley Railway'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Quebec Gatineau Railway'
       - 'Chemin de fer Québec-Gatineau'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Red Deer Railway'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Western Labrador Rail Services'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   # --- CH --- #
 
@@ -1851,7 +1851,7 @@ operators:
   - names:
       - 'Amtrak'
     color: '#004c6e'
-    
+
   - names:
       - 'Metro-North Railroad'
     color: '#08179C'
@@ -1963,11 +1963,11 @@ operators:
       - 'San Francisco Municipal Railway'
       - 'San Francisco Municipal Transportation Agency'
     color: '#cd3545'
-    
+
   - names:
       - 'Wheeling and Lake Erie Railway'
     color: '#ff6900'
-    
+
   - names:
       - 'R.J. Corman Railroad Group'
     color: '#ff0000'
@@ -1991,7 +1991,7 @@ operators:
   - names:
       - 'Raritan Central Railway'
     color: '#510007'
-    
+
   - names:
       - 'Cape May Seashore Lines'
     color: '#99262d'
@@ -2061,8 +2061,8 @@ operators:
 
   - names:
       - 'Belt Railway of Chicago'
-    color: '#ffad09'   
-    
+    color: '#ffad09'
+
   # --- US: Genesee & Wyoming subsidiaries --- #
   - names:
       - 'Alabama and Gulf Coast Railway'
@@ -2107,11 +2107,11 @@ operators:
   - names:
       - 'Berkshire & Eastern Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Buffalo and Pittsburgh Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'California Northern Railroad'
     color: '#f68b1e'
@@ -2119,7 +2119,7 @@ operators:
   - names:
       - 'Carolina Piedmont Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Cascade and Columbia River Railroad'
     color: '#f68b1e'
@@ -2155,23 +2155,23 @@ operators:
   - names:
       - 'Chesapeake and Albemarle Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Chicago, Fort Wayne and Eastern Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Columbus and Chattahoochee Railroad'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Columbus and Greenville Railway'
     color: '#f68b1e'
-    
+
   - names:
       - 'Columbus & Ohio River Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Commonwealth Railway'
     color: '#f68b1e'
@@ -2179,7 +2179,7 @@ operators:
   - names:
       - 'Conecuh Valley Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Connecticut Southern Railroad'
     color: '#f68b1e'
@@ -2187,7 +2187,7 @@ operators:
   - names:
       - 'Corpus Christi Terminal Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Dallas, Garland and Northeastern Railroad'
     color: '#f68b1e'
@@ -2259,7 +2259,7 @@ operators:
   - names:
       - 'Kiamichi Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'KWT Railway'
     color: '#f68b1e'
@@ -2283,11 +2283,11 @@ operators:
   - names:
       - 'Mahoning Valley Railway'
     color: '#f68b1e'
-  
+
   - names:
       - 'Marquette Rail'
     color: '#f68b1e'
-  
+
   - names:
       - 'Maryland Midland Railway'
     color: '#f68b1e'
@@ -2302,7 +2302,7 @@ operators:
 
   - names:
       - 'Mid-Michigan Railroad'
-    color: '#f68b1e' 
+    color: '#f68b1e'
 
   - names:
       - 'Missouri and Northern Arkansas Railroad'
@@ -2314,8 +2314,8 @@ operators:
 
   - names:
       - 'North Carolina and Virginia Railroad'
-    color: '#f68b1e'  
-    
+    color: '#f68b1e'
+
   - names:
       - 'Ohio Central Railroad'
     color: '#f68b1e'
@@ -2351,7 +2351,7 @@ operators:
   - names:
       - 'Providence and Worcester Railroad'
     color: '#f68b1e'
-    
+
   - names:
       - 'Puget Sound and Pacific Railroad'
     color: '#f68b1e'
@@ -2362,11 +2362,11 @@ operators:
 
   - names:
       - 'Riceboro Southern Railway'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Rochester and Southern Railroad'
-    color: '#f68b1e' 
+    color: '#f68b1e'
 
   - names:
       - 'St. Lawrence & Atlantic Railroad'
@@ -2428,7 +2428,7 @@ operators:
 
   - names:
       - 'Warren and Trumbull Railroad'
-    color: '#f68b1e'  
+    color: '#f68b1e'
 
   - names:
       - 'Wellsboro and Corning Railroad'
@@ -2440,15 +2440,15 @@ operators:
 
   - names:
       - 'Wiregrass Central Railroad'
-    color: '#f68b1e' 
+    color: '#f68b1e'
 
   - names:
       - 'York Railway'
-    color: '#f68b1e' 
+    color: '#f68b1e'
 
   - names:
       - 'Youngstown and Austintown Railroad'
-    color: '#f68b1e' 
+    color: '#f68b1e'
 
   - names:
       - 'Youngstown Belt Railroad'
@@ -2458,11 +2458,11 @@ operators:
   - names:
       - 'Watco'
     color: '#fcb900'
-    
+
   - names:
       - 'Ann Arbor Railroad'
     color: '#fcb900'
-    
+
   - names:
       - 'Great Lakes Central Railroad'
     color: '#fcb900'
@@ -2478,20 +2478,20 @@ operators:
   - names:
       - 'Kanawha River Railroad'
     color: '#fcb900'
-    
+
   # --- US: Chesapeake & Delaware subsidiaries --- #
   - names:
       - 'Belvidere and Delaware River Railway'
     color: '#202a44'
-    
+
   - names:
       - 'Black River and Western Railroad'
-    color: '#202a44'   
-    
+    color: '#202a44'
+
   - names:
       - 'Delaware and Raritan River Railroad'
     color: '#202a44'
-    
+
   - names:
       - 'Dover and Delaware River Railroad'
     color: '#202a44'
@@ -2511,12 +2511,12 @@ operators:
 
   - names:
       - 'Florida Midland Railroad'
-    color: '#efb635' 
-    
+    color: '#efb635'
+
   - names:
       - 'Florida Northern Railroad'
     color: '#efb635'
-    
+
   - names:
       - 'Middletown and New Jersey Railroad'
     color: '#efb635'
