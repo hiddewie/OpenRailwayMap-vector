@@ -8,5 +8,8 @@ CREATE TYPE route_type AS ENUM (
   'train',
   'subway',
   'tram',
-  'light_rail'
+  'light_rail',
+  'funicular',
+  'monorail',
+  'miniature'
 );
