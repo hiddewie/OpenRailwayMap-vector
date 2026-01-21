@@ -5791,7 +5791,7 @@ features:
     country: NL
     icon:
       - default: 'nl/main_light'
-      - match: 'railway:signal:traversable:type'
+      - match: 'railway:signal:traversable'
         cases:
           - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
         position: bottom
