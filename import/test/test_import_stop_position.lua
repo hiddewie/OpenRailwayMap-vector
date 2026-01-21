@@ -13,12 +13,14 @@ osm2pgsql.process_node({
   tags = {
     ['public_transport'] = 'stop_position',
     ['name'] = 'name',
+    ['ref'] = 'ref',
+    ['local_ref'] = 'local',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stop_positions = {
-    { name = 'name', type = 'train' },
+    { name = 'name', type = 'train', ref = 'ref', local_ref = 'local' },
   },
 })
 

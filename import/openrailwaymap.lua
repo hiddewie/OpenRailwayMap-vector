@@ -286,8 +286,15 @@ local stop_positions = osm2pgsql.define_table({
   columns = {
     { column = 'id', sql_type = 'serial', create_only = true },
     { column = 'way', type = 'point', not_null = true },
-    { column = 'name', type = 'text' },
     { column = 'type', type = 'text' },
+    { column = 'name', type = 'text' },
+    { column = 'ref', type = 'text' },
+    { column = 'local_ref', type = 'text' },
+  },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    -- For querying stop positions for routes
+    { column = 'osm_id', method = 'btree', unique = true },
   },
 })
 
@@ -505,11 +512,11 @@ local routes = osm2pgsql.define_table({
     { column = 'brand', type = 'text' },
     { column = 'color', type = 'text' },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
-    { column = 'stop_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
-    { column = 'stop_ref_ids', method = 'gin' },
+    -- For querying routes with railway lines
+    { column = 'osm_id', method = 'btree' },
   },
 })
 
@@ -522,6 +529,19 @@ local route_line = osm2pgsql.define_table({
   indexes = {
     { column = 'route_id', method = 'btree' },
     { column = 'line_id', method = 'btree' },
+  },
+})
+
+local route_stop = osm2pgsql.define_table({
+  name = 'route_stop',
+  ids = { type = 'relation', id_column = 'route_id' },
+  columns = {
+    { column = 'stop_id', sql_type = 'int8', not_null = true },
+    { column = 'role', sql_type = 'route_stop_type' },
+  },
+  indexes = {
+    { column = 'route_id', method = 'btree' },
+    { column = 'stop_id', method = 'btree' },
   },
 })
 
@@ -1085,8 +1105,10 @@ function osm2pgsql.process_node(object)
     if type then
       stop_positions:insert({
         way = object:as_point(),
-        name = tags.name,
         type = type,
+        name = tags.name,
+        ref = tags.ref,
+        local_ref = tags.local_ref,
       })
     end
   end
@@ -1465,8 +1487,9 @@ function osm2pgsql.process_way(object)
   end
 end
 
-local route_values = osm2pgsql.make_check_values_func({'train', 'subway', 'tram', 'light_rail'})
+local route_values = osm2pgsql.make_check_values_func(vehicles)
 local route_stop_relation_roles = osm2pgsql.make_check_values_func({'stop', 'station', 'stop_exit_only', 'stop_entry_only', 'forward_stop', 'backward_stop', 'forward:stop', 'backward:stop', 'stop_position', 'halt'})
+local route_stop_values = osm2pgsql.make_check_values_func({'stop_exit_only', 'stop_entry_only'}) -- Values from route_stop_relation_roles indicating special stop positions
 local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platform', 'platform_exit_only', 'platform_entry_only', 'forward:platform', 'backward:platform'})
 function osm2pgsql.process_relation(object)
   local tags = object.tags
@@ -1491,11 +1514,13 @@ function osm2pgsql.process_relation(object)
 
   if tags.type == 'route' and route_values(tags.route) then
     local has_members = false
-    local stop_members = {}
     local platform_members = {}
     for _, member in ipairs(object.members) do
       if route_stop_relation_roles(member.role) then
-        table.insert(stop_members, member.ref)
+        route_stop:insert({
+          stop_id = member.ref,
+          role = route_stop_values(member.role) or nil,
+        })
         has_members = true
       elseif route_platform_relation_roles(member.role) then
         table.insert(platform_members, member.ref)
@@ -1518,7 +1543,6 @@ function osm2pgsql.process_relation(object)
         operator = tags.operator,
         brand = tags.brand,
         color = tags.colour,
-        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
       })
     end

@@ -10,8 +10,10 @@ CREATE OR REPLACE VIEW stops_and_route_relations AS
     sp.name AS stop_name,
     sp.way AS geom
   FROM stop_positions AS sp
-  JOIN routes AS r
-    ON r.stop_ref_ids @> Array[sp.osm_id];
+  JOIN route_stop rs
+    ON rs.stop_id = sp.osm_id
+  JOIN routes r
+    ON r.osm_id = rs.route_id;
 
 -- Get OSM IDs of route relations referencing a platform (all except nodes)
 CREATE OR REPLACE VIEW platforms_route_relations AS
@@ -65,13 +67,13 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
 
     SELECT
       s.id as id,
-      r.osm_id as route_id
+      rs.route_id as route_id
     FROM stations s
     JOIN stop_areas sa
       ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
         OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
-    JOIN routes r
-      ON sa.stop_ref_ids && r.stop_ref_ids
+    JOIN route_stop rs
+      ON ARRAY[rs.stop_id] <@ sa.stop_ref_ids
   ) sr
   GROUP BY id;
 
