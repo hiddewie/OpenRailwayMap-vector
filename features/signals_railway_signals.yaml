@@ -6746,6 +6746,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
+      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1' }
 
   - description: Tarcza zaporowa kształtowa (Tz, ruchoma)
     country: PL
@@ -6753,6 +6754,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
+      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1;PL-PKP:z2' }
 
   - description: Tarcza zaporowa świetlna (Tz)
     country: PL
@@ -7234,10 +7236,10 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4' }
-          - { exact: 'PL-PKP:s6', value: 'pl/s6-4' }
-          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-4' }
-          - { exact: 'PL-PKP:s10', value: 'pl/s10-4' }
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4-main' }
+          - { exact: 'PL-PKP:s6', value: 'pl/s6-4-main' }
+          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-4-main' }
+          - { exact: 'PL-PKP:s10', value: 'pl/s10-4-main' }
         default: 'pl/s2-3'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -7249,10 +7251,10 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3' }
-          - { exact: 'PL-PKP:s6', value: 'pl/s6-3' }
-          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-3' }
-          - { exact: 'PL-PKP:s10', value: 'pl/s10-3' }
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3-main' }
+          - { exact: 'PL-PKP:s6', value: 'pl/s6-3-main' }
+          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-3-main' }
+          - { exact: 'PL-PKP:s10', value: 'pl/s10-3-main' }
         default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
@@ -7312,7 +7314,7 @@ features:
           - { exact: 'PL-PKP:s9', value: 'pl/s9-4' }
           - { exact: 'PL-PKP:s13a', value: 'pl/s13a-4' }
           - { exact: 'PL-PKP:s13', value: 'pl/s13-4' }
-          - { any: [ 'PL-PKP:s2', 'PL-PKP:s3' ], value: 'pl/s2-3' }
+          - { any: [ 'PL-PKP:s2', 'PL-PKP:s3' ], value: 'pl/s1-4' }
         default: 'pl/s5-3'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
