@@ -105,6 +105,22 @@ Run tests against the proxy:
 docker compose run --build --no-deps proxy-test
 ```
 
+### UI tests
+
+UI tests use [*Cypress*](https://docs.cypress.io).
+
+Run the UI tests:
+```shell
+cd proxy/test/ui
+npm ci
+npx cypress run
+```
+
+Run the tests in interactive mode with:
+```shell
+npx cypress open
+```
+
 ## Development
 
 ### Code generation
