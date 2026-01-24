@@ -130,7 +130,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Run UI tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           working-directory: proxy/test/ui
           browser: ${{ runner.arch == 'X64' && 'chrome' || 'firefox' }}
