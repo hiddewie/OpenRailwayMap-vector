@@ -1487,7 +1487,7 @@ function osm2pgsql.process_way(object)
   end
 end
 
-local route_values = osm2pgsql.make_check_values_func({'train', 'subway', 'tram', 'light_rail'})
+local route_values = osm2pgsql.make_check_values_func(vehicles)
 local route_stop_relation_roles = osm2pgsql.make_check_values_func({'stop', 'station', 'stop_exit_only', 'stop_entry_only', 'forward_stop', 'backward_stop', 'forward:stop', 'backward:stop', 'stop_position', 'halt'})
 local route_stop_values = osm2pgsql.make_check_values_func({'stop_exit_only', 'stop_entry_only'}) -- Values from route_stop_relation_roles indicating special stop positions
 local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platform', 'platform_exit_only', 'platform_entry_only', 'forward:platform', 'backward:platform'})
