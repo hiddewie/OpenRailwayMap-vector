@@ -133,7 +133,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           working-directory: proxy/test/ui
-          browser: ${{ runner.arch == 'X64' && 'chrome' || 'firefox' }}
+          browser: firefox
 
       - name: Store screenshots
         uses: actions/upload-artifact@v6
