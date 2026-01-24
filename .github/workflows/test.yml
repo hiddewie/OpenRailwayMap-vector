@@ -20,6 +20,7 @@ jobs:
         runs-on:
           - ubuntu-24.04
           - ubuntu-24.04-arm
+      fail-fast: false
 
     runs-on: ${{ matrix.runs-on }}
 
