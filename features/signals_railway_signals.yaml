@@ -5257,6 +5257,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+  
+  - description: Preliminary Route Indicator
+    country: GB
+    icon: [ default: 'gb/repeated-route-PRI' ]
+    tags:
+      - { tag: 'railway:signal:route_repeated', value: 'GB-NR:PRI' }
+      - { tag: 'railway:signal:route_repeated:form', value: 'light' }
 
   - description: Shunting
     country: GB
