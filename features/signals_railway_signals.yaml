@@ -5260,10 +5260,10 @@ features:
   
   - description: Preliminary Route Indicator
     country: GB
-    icon: [ default: 'gb/repeated-route-PRI' ]
+    icon: [ default: 'gb/preliminary-route-indicator' ]
     tags:
-      - { tag: 'railway:signal:route_repeated', value: 'GB-NR:PRI' }
-      - { tag: 'railway:signal:route_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:route_distant', value: 'GB-NR:PRI' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
 
   - description: Shunting
     country: GB
