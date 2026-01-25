@@ -5,6 +5,15 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 
 const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
 
+async function promiseResultsOrErrors(promises) {
+  const results = await Promise.allSettled(promises);
+  if (results.every(it => it.status === 'fulfilled')) {
+    return results.map(it => it.value)
+  } else {
+    throw new Error(`Failed to resolve promises: ${results.filter(it => it.status === 'rejected').map(it => it.reason).join(', ')}`) 
+  }
+}
+
 async function parseSvgDimensions(feature) {
   const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
   // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
@@ -18,7 +27,7 @@ async function parseSvgDimensions(feature) {
   }
 }
 
-const signalsWithSignalType = await Promise.all(
+const signalsWithSignalType = await promiseResultsOrErrors(
   signals_railway_signals.features
     // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
     .map(feature => ({
@@ -33,10 +42,10 @@ const signalsWithSignalType = await Promise.all(
     .map(async feature => ({
       ...feature,
       feature: feature.feature,
-      icon: await Promise.all(feature.icon.map(async icon => ({
+      icon: await promiseResultsOrErrors(feature.icon.map(async icon => ({
         ...icon,
         cases: icon.cases
-          ? await Promise.all(icon.cases.map(async iconCase => ({
+          ? await promiseResultsOrErrors(icon.cases.map(async iconCase => ({
               ...iconCase,
               dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
             })))
