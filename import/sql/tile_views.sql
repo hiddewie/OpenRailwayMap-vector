@@ -853,7 +853,7 @@ RETURN (
     FROM (
       SELECT
         *,
-        UNNEST(route_ids`) as route_id
+        UNNEST(route_ids) as route_id
       FROM grouped_stations_with_importance
 
       UNION ALL
