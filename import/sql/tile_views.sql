@@ -428,6 +428,13 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       *,
       UNNEST(route_ids) as route_id
     FROM grouped_stations_with_importance
+
+    UNION ALL
+
+    SELECT
+      *,
+      NULL as route_id
+    FROM grouped_stations_with_importance
   ) gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
@@ -847,6 +854,13 @@ RETURN (
       SELECT
         *,
         UNNEST(route_ids) as route_id
+      FROM grouped_stations_with_importance
+
+      UNION ALL
+
+      SELECT
+        *,
+        NULL as route_id
       FROM grouped_stations_with_importance
     ) gs
     LEFT JOIN railway_operator ro
