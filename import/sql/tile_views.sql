@@ -371,24 +371,24 @@ END $do$;
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     gs.id,
-    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
-    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
+    nullif(array_to_string(any_value(osm_ids), U&'\001E'), '') as osm_id,
+    nullif(array_to_string(any_value(osm_types), U&'\001E'), '') as osm_type,
     center as way,
-    railway_ref,
-    feature,
-    state,
-    station,
+    any_value(railway_ref) as railway_ref,
+    any_value(feature) as feature,
+    any_value(state) as state,
+    any_value(station) as station,
     -- Importance determines the station size.
     -- For stations, it is made up of the number of routes.
     -- For yards, it is made up of the (scaled) rail length.
-    CASE
+    any_value(CASE
       WHEN importance >= 21 THEN 'large'
       WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
-    END AS station_size,
-    gs.name,
-    name_tags,
-    CASE
+    END) AS station_size,
+    any_value(gs.name) as name,
+    any_value(name_tags) as name_tags,
+    any_value(CASE
       WHEN state != 'present' THEN 100
       WHEN feature = 'station' AND station = 'light_rail' THEN 450
       WHEN feature = 'station' AND station = 'subway' THEN 400
@@ -403,32 +403,47 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       WHEN feature = 'site' THEN 600
       WHEN feature = 'crossover' THEN 700
       ELSE 50
-    END AS rank,
-    uic_ref,
-    importance,
-    discr_iso,
-    count,
-    nullif(array_to_string(operator, U&'\001E'), '') as operator,
-    nullif(array_to_string(network, U&'\001E'), '') as network,
-    COALESCE(
+    END) AS rank,
+    any_value(uic_ref) as uic_ref,
+    any_value(gs.importance) as importance,
+    any_value(discr_iso) as discr_iso,
+    any_value(count) as count,
+    nullif(array_to_string(any_value(gs.operator), U&'\001E'), '') as operator,
+    nullif(array_to_string(any_value(network), U&'\001E'), '') as network,
+    any_value(COALESCE(
       ro.color,
-      'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
-    ) as operator_color,
-    nullif(array_to_string(position, U&'\001E'), '') as position,
-    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
-    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
-    nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
-    nullif(array_to_string(image, U&'\001E'), '') as image,
-    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
-    nullif(array_to_string(note, U&'\001E'), '') as note,
-    nullif(array_to_string(description, U&'\001E'), '') as description,
-    nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
-    yard_hump,
-    (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes
-  FROM grouped_stations_with_importance gs
+      'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
+    )) as operator_color,
+    nullif(array_to_string(any_value(position), U&'\001E'), '') as position,
+    nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
+    nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(any_value(wikimedia_commons_file), U&'\001E'), '') as wikimedia_commons_file,
+    nullif(array_to_string(any_value(image), U&'\001E'), '') as image,
+    nullif(array_to_string(any_value(mapillary), U&'\001E'), '') as mapillary,
+    nullif(array_to_string(any_value(wikipedia), U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(any_value(note), U&'\001E'), '') as note,
+    nullif(array_to_string(any_value(description), U&'\001E'), '') as description,
+    nullif(array_to_string(any_value(yard_purpose), U&'\001E'), '') as yard_purpose,
+    any_value(yard_hump) as yard_hump,
+    nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') as station_routes
+  FROM (
+    SELECT
+      *,
+      UNNEST(route_ids) as route_id
+    FROM grouped_stations_with_importance
+
+    UNION ALL
+
+    SELECT
+      *,
+      NULL as route_id
+    FROM grouped_stations_with_importance
+  ) gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
+  LEFT JOIN routes r
+    ON r.osm_id = gs.route_id
+  GROUP BY gs.id, center
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -813,35 +828,50 @@ RETURN (
   FROM (
     SELECT
       gs.id,
-      nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
-      nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
+      nullif(array_to_string(any_value(osm_ids), U&'\001E'), '') as osm_id,
+      nullif(array_to_string(any_value(osm_types), U&'\001E'), '') as osm_type,
       ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature,
-      state,
-      station,
-      railway_ref as label,
-      gs.name,
-      uic_ref,
-      nullif(array_to_string(operator, U&'\001E'), '') as operator,
-      nullif(array_to_string(network, U&'\001E'), '') as network,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      COALESCE(
+      any_value(feature) as feature,
+      any_value(state) as state,
+      any_value(station) as station,
+      any_value(railway_ref) as label,
+      any_value(gs.name) as name,
+      any_value(uic_ref) as uic_ref,
+      nullif(array_to_string(any_value(gs.operator), U&'\001E'), '') as operator,
+      nullif(array_to_string(any_value(network), U&'\001E'), '') as network,
+      nullif(array_to_string(any_value(position), U&'\001E'), '') as position,
+      any_value(COALESCE(
         ro.color,
-        'hsl(' || get_byte(sha256(operator[1]::bytea), 0) || ', 100%, 30%)'
-      ) as operator_color,
-      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes,
-      nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
-      nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
-      nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
-      nullif(array_to_string(image, U&'\001E'), '') as image,
-      nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
-      nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
-      nullif(array_to_string(note, U&'\001E'), '') as note,
-      nullif(array_to_string(description, U&'\001E'), '') as description
-    FROM grouped_stations_with_importance gs
+        'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
+      )) as operator_color,
+      nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') as station_routes,
+      nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
+      nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
+      nullif(array_to_string(any_value(wikimedia_commons_file), U&'\001E'), '') as wikimedia_commons_file,
+      nullif(array_to_string(any_value(image), U&'\001E'), '') as image,
+      nullif(array_to_string(any_value(mapillary), U&'\001E'), '') as mapillary,
+      nullif(array_to_string(any_value(wikipedia), U&'\001E'), '') as wikipedia,
+      nullif(array_to_string(any_value(note), U&'\001E'), '') as note,
+      nullif(array_to_string(any_value(description), U&'\001E'), '') as description
+    FROM (
+      SELECT
+        *,
+        UNNEST(route_ids) as route_id
+      FROM grouped_stations_with_importance
+
+      UNION ALL
+
+      SELECT
+        *,
+        NULL as route_id
+      FROM grouped_stations_with_importance
+    ) gs
     LEFT JOIN railway_operator ro
       ON ro.name = operator[1]
+    LEFT JOIN routes r
+      ON r.osm_id = gs.route_id
     WHERE buffered && ST_TileEnvelope(z, x, y)
+    GROUP BY gs.id, buffered
   ) as tile
   WHERE way IS NOT NULL
 );

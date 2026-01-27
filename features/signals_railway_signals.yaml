@@ -32,6 +32,8 @@ tags:
   - { tag: 'railway:signal:departure:states', title: 'Departure states', type: array }
   - { tag: 'railway:signal:departure:substitute_signal', title: 'Departure substitute signal', type: array }
   - { tag: 'railway:signal:departure:deactivated', title: 'Departure deactivated', type: boolean }
+  - { tag: 'railway:signal:danger', title: 'Danger' }
+  - { tag: 'railway:signal:danger:form', title: 'Danger form' }
   - { tag: 'railway:signal:distant', title: 'Distant' }
   - { tag: 'railway:signal:distant:form', title: 'Distant form' }
   - { tag: 'railway:signal:distant:repeated', title: 'Distant repeated', type: boolean }
@@ -177,6 +179,9 @@ tags:
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
   - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
+  - { tag: 'railway:signal:traversable', title: 'Traversable' }
+  - { tag: 'railway:signal:traversable:form', title: 'Traversable form' }
+  - { tag: 'railway:signal:traversable:type', title: 'Traversable type' }
   - { tag: 'railway:signal:whistle', title: 'Whistle' }
   - { tag: 'railway:signal:whistle:form', title: 'Whistle form' }
   - { tag: 'railway:signal:whistle:only_transit', title: 'Whistle only transit', type: boolean }
@@ -3450,7 +3455,7 @@ features:
 
       - match: 'railway:signal:main:states'
         cases:
-          - { 
+          - {
               any: [
               'DE-AVG:f4', 'DE-BOStrab:f4',
               'DE-AVG:f1', 'DE-BOStrab:f1',
@@ -5231,7 +5236,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'GB-NR:distant' }
       - { tag: 'railway:signal:distant:form', value: 'semaphore' }
-  
+
   - description: Distant (board)
     country: GB
     icon: [ default: 'gb/distant-board' ]
@@ -5252,6 +5257,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+  
+  - description: Preliminary Route Indicator
+    country: GB
+    icon: [ default: 'gb/preliminary-route-indicator' ]
+    tags:
+      - { tag: 'railway:signal:route_distant', value: 'GB-NR:PRI' }
+      - { tag: 'railway:signal:route_distant:form', value: 'light' }
 
   - description: Shunting
     country: GB
@@ -5334,7 +5346,7 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'GB-NR:RA' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
-  
+
   - description: Stop board
     country: GB
     icon: [ default: 'gb/stop-board' ]
@@ -5784,7 +5796,16 @@ features:
 
   - description: main light
     country: NL
-    icon: [ default: 'nl/main_light' ]
+    icon:
+      - default: 'nl/main_light'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -6732,6 +6753,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
+      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1' }
 
   - description: Tarcza zaporowa kształtowa (Tz, ruchoma)
     country: PL
@@ -6739,6 +6761,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'semaphore' }
+      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1;PL-PKP:z2' }
 
   - description: Tarcza zaporowa świetlna (Tz)
     country: PL
@@ -6767,7 +6790,7 @@ features:
         default: 'pl/os1-1'
     tags:
       - { tag: 'railway:signal:distant', value: 'PL-PKP:os' }
-      - { tag: 'railway:signal:distant:form', any: [ 'light', 'semaphore' ] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Tarcze ostrzegawcze przejazdowe (ToP)
     country: PL
@@ -6778,10 +6801,14 @@ features:
 
   - description: Tarcza manewrowa kształtowa (Tm)
     country: PL
-    icon: [ default: 'pl/m-semaphore' ]
+    icon: 
+      - match: 'railway:signal:shunting:form'
+        cases:
+          - { exact: 'semaphore', value: 'pl/m-semaphore' }
+        default: 'pl/m-sign'
     tags:
       - { tag: 'railway:signal:shunting', value: 'PL-PKP:m' }
-      - { tag: 'railway:signal:shunting:form', value: 'semaphore' }
+      - { tag: 'railway:signal:shunting:form', any: [ 'semaphore', 'sign' ] }
 
   - description: Tarcza manewrowa świetlna (Tm)
     country: PL
@@ -6804,6 +6831,7 @@ features:
         default: 'pl/on'
     tags:
       - { tag: 'railway:signal:distant', any: [ 'PL-PKP:on', 'PL-PKP:od', 'PL-PKP:ot' ] }
+      - { tag: 'railway:signal:distant:form', any: [ 'sign', 'semaphore' ] }
 
   - description: Tarcze rozrządowe (Tr, kształtowa i świetlna)
     country: PL
@@ -6814,6 +6842,7 @@ features:
         default: 'pl/rt3-semaphore'
     tags:
       - { tag: 'railway:signal:humping', value: 'PL-PKP:rt' }
+      - { tag: 'railway:signal:humping:form', any: [ 'light', 'semaphore' ] }
 
   - description: Tarcza zatrzymania (D1)
     country: PL
@@ -6827,12 +6856,14 @@ features:
     icon: [ default: 'pl/w22' ]
     tags:
       - { tag: 'railway:signal:passing', value: 'PL-PKP:w22' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
 
   - description: Wskaźnik SBL (W18)
     country: PL
     icon: [ default: 'pl/w18' ]
     tags:
       - { tag: 'railway:signal:station_distant', value: 'PL-PKP:w18' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Wskaźniki kierunku jazdy (W2, W26a,  W26b)
     country: PL
@@ -6840,7 +6871,7 @@ features:
       - match: 'railway:signal:route:states'
         cases:
           - { regex: '^[A-ZŁ]$', value: 'pl/w2-{}', example: 'pl/w2-{K}' }
-        default: 'pl/w2-{W}'
+        default: 'pl/w2-{K}'
     tags:
       - { tag: 'railway:signal:route', any: [ 'PL-PKP:w2', 'PL-PKP:w26a', 'PL-PKP:w26b' ] }
       - { tag: 'railway:signal:route:form', value: 'light' }
@@ -6939,12 +6970,14 @@ features:
         default: 'pl/w19'
     tags:
       - { tag: 'railway:signal:short_route', any: [ 'PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20' ] }
+      - { tag: 'railway:signal:short_route:form', any: [ 'sign', 'light' ] }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
     country: PL
     icon: [ default: 'pl/w24' ]
     tags:
       - { tag: 'railway:signal:wrong_road', value: 'PL-PKP:w24' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: Wskaźnik ogrzewania (W25)
     country: PL
@@ -7205,41 +7238,36 @@ features:
       - { tag: 'railway:signal:main', value: 'PL-PKP:sr' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
-  - description: Semafory półsamoczynne
+  - description: Semafor świetlny (główny)
     country: PL
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s4' ], value: 'pl/s1-4' }
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s4' ], value: 'pl/s1-4' }
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s5' ], value: 'pl/s1-4' }
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s5' ], value: 'pl/s1-4' }
-          - { all: [ 'PL-PKP:s1', 'PL-PKP:s4' ], value: 'pl/s5-3' }
-          - { all: [ 'PL-PKP:s1', 'PL-PKP:s5' ], value: 'pl/s5-3' }
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4-main' }
+          - { exact: 'PL-PKP:s6', value: 'pl/s6-4-main' }
+          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-4-main' }
+          - { exact: 'PL-PKP:s10', value: 'pl/s10-4-main' }
         default: 'pl/s2-3'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:substitute_signal', value: 'PL-PKP:sz' }
 
-  - description: Semafory SBL i półsamoczynne
+  - description: Semafor świetlny (główny, bez Sz)
     country: PL
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s4' ], value: 'pl/s1-3' }
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s4' ], value: 'pl/s1-3' }
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s5' ], value: 'pl/s1-3' }
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s5' ], value: 'pl/s1-3' }
-          - { all: [ 'PL-PKP:s1', 'PL-PKP:s4' ], value: 'pl/s1-2' }
-          - { all: [ 'PL-PKP:s1', 'PL-PKP:s5' ], value: 'pl/s1-2' }
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3-main' }
+          - { exact: 'PL-PKP:s6', value: 'pl/s6-3-main' }
+          - { exact: 'PL-PKP:s10a', value: 'pl/s10a-3-main' }
+          - { exact: 'PL-PKP:s10', value: 'pl/s10-3-main' }
         default: 'pl/s2-2'
     tags:
       - { tag: 'railway:signal:main', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Semafory półsamoczynne (dwukolumnowe, 6-komorowe)
+  - description: Semafor świetlny (dwukolumnowy, 6-komorowy)
     country: PL
     icon:
       - match: 'railway:signal:combined:states'
@@ -7263,55 +7291,77 @@ features:
       - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
       - { tag: 'railway:signal:combined:shape', value: 'two_column' }
 
-  - description: Semafory półsamoczynne (4- i 5-komorowe)
+  - description: Semafor świetlny (kombinowany)
     country: PL
     icon:
       - match: 'railway:signal:combined:states'
         cases:
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s12a' ], value: 'pl/s6-10a-5' }
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s12a' ], value: 'pl/s6-10a-5' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-5' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-5' }
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s8' ], value: 'pl/s6-5' }
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s8' ], value: 'pl/s6-5' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-5' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-5' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s9' ], value: 'pl/s6-5' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s9' ], value: 'pl/s6-5' }
-          - { all: [ 'PL-PKP:s10a', 'PL-PKP:s12a' ], value: 'pl/s10a-5' }
-          - { all: [ 'PL-PKP:s11a', 'PL-PKP:s12a' ], value: 'pl/s10a-5' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9' ], value: 'pl/s9-5' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9' ], value: 'pl/s9-5' }
           - { all: [ 'PL-PKP:s10a', 'PL-PKP:s13a' ], value: 'pl/s10a-5' }
           - { all: [ 'PL-PKP:s11a', 'PL-PKP:s13a' ], value: 'pl/s10a-5' }
-          - { all: [ 'PL-PKP:s10', 'PL-PKP:s12' ], value: 'pl/s10-5' }
-          - { all: [ 'PL-PKP:s11', 'PL-PKP:s12' ], value: 'pl/s10-5' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13a' ], value: 'pl/s13a-5' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13a' ], value: 'pl/s13a-5' }
           - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-5' }
           - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-5' }
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4' }
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4' }
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s11a' ], value: 'pl/s6-10a-4' }
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s11a' ], value: 'pl/s6-10a-4' }
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s12' ], value: 'pl/s13-5' }
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s12' ], value: 'pl/s13-5' }
           - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-5' }
           - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-5' }
-          - { any: [ 'PL-PKP:s6', 'PL-PKP:s7' ], value: 'pl/s6-4' }
-          - { any: [ 'PL-PKP:s8', 'PL-PKP:s9' ], value: 'pl/s9-4' }
-          - { any: [ 'PL-PKP:s10a', 'PL-PKP:s11a' ], value: 'pl/s10a-4' }
-          - { any: [ 'PL-PKP:s12a', 'PL-PKP:s13a' ], value: 'pl/s13a-4' }
-          - { any: [ 'PL-PKP:s10', 'PL-PKP:s11' ], value: 'pl/s10-4' }
-        default: 'pl/s13-4'
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-4' }
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s11a' ], value: 'pl/s6-10a-4' }
+          - { any: [ 'PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-4' }
+          - { any: [ 'PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-4' }
+          - { any: [ 'PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-4' }
+          - { all: [ 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4' }
+          - { exact: 'PL-PKP:s9', value: 'pl/s9-4' }
+          - { exact: 'PL-PKP:s13a', value: 'pl/s13a-4' }
+          - { exact: 'PL-PKP:s13', value: 'pl/s13-4' }
+          - { any: [ 'PL-PKP:s2', 'PL-PKP:s3' ], value: 'pl/s1-4' }
+        default: 'pl/s5-3'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
       - { tag: 'railway:signal:combined:substitute_signal', value: 'PL-PKP:sz' }
 
-  - description: Semafory półsamoczynne (3-komorowe)
+  - description: Semafor świetlny (kombinowany, bez Sz)
     country: PL
     icon:
       - match: 'railway:signal:combined:states'
         cases:
-          - { any: [ 'PL-PKP:s10a', 'PL-PKP:s11a' ], value: 'pl/s10a-3' }
-          - { any: [ 'PL-PKP:s12a', 'PL-PKP:s13a' ], value: 'pl/s13a-3' }
-          - { any: [ 'PL-PKP:s10', 'PL-PKP:s11' ], value: 'pl/s10-3' }
-        default: 'pl/s13-3'
+          - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9' ], value: 'pl/s9-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9' ], value: 'pl/s9-4-sz' }
+          - { all: [ 'PL-PKP:s10a', 'PL-PKP:s13a' ], value: 'pl/s10a-4-sz' }
+          - { all: [ 'PL-PKP:s11a', 'PL-PKP:s13a' ], value: 'pl/s10a-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
+          - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
+          - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3' }
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s11a' ], value: 'pl/s6-10a-3' }
+          - { any: [ 'PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-3' }
+          - { any: [ 'PL-PKP:s10a', 'PL-PKP:s11a'], value: 'pl/s10a-3' }
+          - { any: [ 'PL-PKP:s10', 'PL-PKP:s11'], value: 'pl/s10-3' }
+          - { all: [ 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-3' }
+          - { exact: 'PL-PKP:s9', value: 'pl/s9-3' }
+          - { exact: 'PL-PKP:s13a', value: 'pl/s13a-3' }
+          - { exact: 'PL-PKP:s13', value: 'pl/s13-3' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s5' ], value: 'pl/s1-3' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s5' ], value: 'pl/s1-3' }
+        default: 'pl/s5-2'
     tags:
       - { tag: 'railway:signal:combined', value: 'PL-PKP:s' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
