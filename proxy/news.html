@@ -49,13 +49,16 @@
     <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/747" target="_blank">
       <div class="github-icon"></div>
     </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/690" target="_blank">
+      <div class="github-icon"></div>
+    </a>
   </small>
 </h5>
 <a href="javascript:hideNews();showConfiguration('general')">
   <img src="image/news/528881034-ab6a5a84-0ce1-430f-a1ad-1ac8a9e6f158.png" alt="Historical and future configuration screen" loading="lazy" />
 </a>
 <p>
-  The configuration screen can be used to control which historical and future features are shown on the map. By default, <a href="https://www.openhistoricalmap.org/" target="_blank">OpenHistoricalMap is used</a>, but OpenStreetMap can also be used to show abandoned infrastructure. Additionally, historical landuse is shown on the map when OpenHistoricalMap is used.
+  The configuration screen can be used to control which historical and future features are shown on the map. By default, <a href="https://www.openhistoricalmap.org/" target="_blank">OpenHistoricalMap is used</a>, but OpenStreetMap can also be used to show abandoned infrastructure. Additionally, historical landuse and ferries are shown on the map when OpenHistoricalMap is used.
 </p>
 
 <h5>
@@ -130,50 +133,204 @@
   The layers gauge, loading gauge and track class have been merged into a single layer <b>track</b>. The configuration screen can be used to choose which of the visualizations should be shown on the map for the railway lines. Existing links to the gauge, loading gauge or track class layers will keep working.
 </p>
 
-Localization (Nov):
-- search https://github.com/hiddewie/OpenRailwayMap-vector/pull/691
-- map names: https://github.com/hiddewie/OpenRailwayMap-vector/pull/680
-- configurable: https://github.com/hiddewie/OpenRailwayMap-vector/pull/702
+<h5>
+  Localization of names<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/680" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/691" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/702" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('standard', 12.26, 35.68191, 139.75498)">
+  <img src="image/news/520415452-2475cace-8885-4bf6-99cb-f49ddf9755f3.png" alt="Localized names on the Map in Tokyo" loading="lazy" />
+</a>
+<p>
+  Station names and search results are localized, using the translated names available in the OpenStreetMap database. The localization can be automatic (using the browser language), disabled (only the default names) or customized (provide a language code). Configure the localization <a href="javascript:hideNews();showConfiguration('general')">in the configuration</a>.
+</p>
 
-Historical (Nov):
-- ferries: https://github.com/hiddewie/OpenRailwayMap-vector/pull/690
+<h5>
+  US and Canadian signals<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/673" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 14.3, 41.89746, -87.92877)">
+  <img src="image/news/514918079-afffbc16-86b7-4891-a45d-fc85028ea20a.png" alt="United states signals around Chicago" loading="lazy" />
+</a>
+<p>
+  A preliminary implementation for the signals in the United States and Canada is done and are shown on the map.
+</p>
 
-CA/US main signals (Nov):
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/673
+<h5>
+  Station distribution<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/633" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/679" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('standard', 5, 50.88, 12.49)">
+  <img src="image/news/6a124a30-c960-4468-b317-85b3ca796617.png" alt="Station distribution in Europe" loading="lazy" />
+</a>
+<p>
+  The station distribution on low zooms has improved. The <a href="https://link.springer.com/article/10.1007/s42489-021-00079-y">discrete isolation algorithm</a> is used to assign an importance to a station, in relation to stations near it. Stations are ranked by the amount of routes that pass through the station. Yards are also ranked, but by the (scaled) number of length of rail within the yard. The result is more distributed stations and yards over the map, showing locally instead of globally important stations and yards.
+</p>
 
-Station distributions (Nov):
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/633
+<h5>
+  Finnish stop position markers<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/672" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 15.94, 61.498645, 23.774113)">
+  <img src="image/news/514911524-275faf5c-9530-45dd-a719-0f9c30898cfb.png" alt="Finnish station stop positions" loading="lazy" />
+</a>
+<p>
+  Finnish station stop position markers are shown on the map.
+</p>
 
-FI signalling (Nov):
-- stop positions: https://github.com/hiddewie/OpenRailwayMap-vector/pull/672
+<h5>
+  Yards and yard areas<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/675" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/688" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/706" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/679" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/678" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('standard', 13.56, 31.18775, -82.38084)">
+  <img src="image/news/020a3188-b355-4b2f-a8e6-d3c320d9520f.png" alt="Yard areas" loading="lazy" />
+</a>
+<p>
+  Yards show the purpose and if a hump is present in the popup. The outline of the yard area is included on the map, based on the railway landuse if there is overlap with the yard. Multi-polygons are supported. The yard area is used for ranking the yard importance using the length of rail within the yard.
+</p>
 
-Yard (nov):
-- fields hump and purpose: https://github.com/hiddewie/OpenRailwayMap-vector/pull/675
-- use Yard landuse for area: https://github.com/hiddewie/OpenRailwayMap-vector/pull/688
-- improve rendering of yard areas to reduse clutter: https://github.com/hiddewie/OpenRailwayMap-vector/pull/706
-- importance uses total rail length in yard area: https://github.com/hiddewie/OpenRailwayMap-vector/pull/679
-- support for multipolygons: https://github.com/hiddewie/OpenRailwayMap-vector/pull/679
-- Polygon stations are imported as well: https://github.com/hiddewie/OpenRailwayMap-vector/pull/678
+<h5>
+  Polish main signals<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/676" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 18.02, 52.230155, 21.010072)">
+  <img src="image/news/3d3fd3f0-e2bd-446b-81fa-163d860eaeb2.png" alt="Finnish station stop positions" loading="lazy" />
+</a>
+<p>
+  Polish main signals with 5 lights and a green-yellow-red-yellow-white configuration are now shown on the map.
+</p>
 
-PL signalling (Nov):
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/676
+<h5>
+  Stop positions<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/652" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('standard', 16.89, 52.520229, 13.38747)">
+  <img src="image/news/510327843-4b1561ee-d52e-4f58-88ee-7c5fa1cb024f.png" alt="Stop positions" loading="lazy" />
+</a>
+<p>
+  The stop positions in a station are shown. The color of the stop position icon is determined by the vehicle stopping at the station.
+</p>
 
-Stop positions (nov):
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/652
+<h5>
+  Train protection systems TMACS, ATS, ATACS, KTCS, CBTC<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/643" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/728" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/762" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 7.7, 36.232, 128.025)">
+  <img src="image/news/534796538-2c46b98f-d320-4c5c-835a-76fc6905738b.png" alt="Train protection systems in Korea" loading="lazy" />
+</a>
+<p>
+  The train protection systems TMACS, ATS, ATACS, KTCS and more variants of CBTC are shown on the map.
+</p>
 
-Train protection systems (Nov):
-- AU, TMACS https://github.com/hiddewie/OpenRailwayMap-vector/pull/643
-- ATS, ATACs, KTCS: https://github.com/hiddewie/OpenRailwayMap-vector/pull/728
-- CBTC, KTCS: https://github.com/hiddewie/OpenRailwayMap-vector/pull/762
+<h5>
+  Italian main, combined and distant signals<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/677" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/639" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/613" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/658" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 18.96, 45.5404914, 11.574011)">
+  <img src="image/news/514897467-e0e43b6e-71ab-4a4f-b4fa-e1916c223434.png" alt="Italian main, combined and distant signals in normal and square form" loading="lazy" />
+</a>
+<p>
+  Italian main, combined and distant signals support the square variants and combinations with Avvio and Avanzamento lights.
+</p>
 
-IT signals (Nov):
-- distant signals https://github.com/hiddewie/OpenRailwayMap-vector/pull/677
-- main/distant square icons https://github.com/hiddewie/OpenRailwayMap-vector/pull/639
-- distant stop signs: https://github.com/hiddewie/OpenRailwayMap-vector/pull/613
-BE signals (Nov):
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/671
-- https://github.com/hiddewie/OpenRailwayMap-vector/pull/616
-- opposite regime, distant: https://github.com/hiddewie/OpenRailwayMap-vector/pull/734
+<h5>
+  Belgian signals<br>
+  <small class="text-body-tertiary d-flex">
+    <em class="flex-fill">November 2025</em>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/671" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+    <a href="https://github.com/hiddewie/OpenRailwayMap-vector/pull/616" target="_blank">
+      <div class="github-icon"></div>
+    </a>
+  </small>
+</h5>
+<a href="javascript:newsLink('signals', 19.33, 50.4629604, 4.6709142)">
+  <img src="image/news/514902845-af484136-3610-469e-9b57-79582bf6f430.png" alt="Belgian signs for Petit Signal d'Arrêt" loading="lazy" />
+</a>
+<p>
+  The Belgian sign for Petit Signal d'Arrêt, and carwash speed limits are shown on the map.
+</p>
 
 GB (Oct):
 - cab signalling: https://github.com/hiddewie/OpenRailwayMap-vector/pull/640
