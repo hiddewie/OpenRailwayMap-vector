@@ -1192,6 +1192,7 @@ const features = {
     features: {
       traction: {
         name: 'Traction substation',
+        type: 'polygon',
       },
     },
     properties: {
