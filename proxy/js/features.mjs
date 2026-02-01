@@ -257,6 +257,7 @@ const railwayLineFeatures = {
 };
 
 const poiFeatures = layer => ({
+  labelProperties: ['name'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     poi.features
