@@ -1,7 +1,6 @@
 features:
   - description: Border crossing
     feature: 'general/border'
-    colored_icon: true
     layer: operator
     minzoom: 10
     tags:
@@ -9,7 +8,6 @@ features:
 
   - description: Owner change
     feature: 'general/owner-change'
-    colored_icon: true
     layer: operator
     minzoom: 12
     tags:
@@ -259,7 +257,6 @@ features:
 
   - description: Crossing
     feature: 'general/crossing'
-    colored_icon: true
     layer: standard
     minzoom: 15
     tags:
@@ -267,7 +264,6 @@ features:
     variants:
       - description: Level crossing with lights and barrier
         feature: 'general/level-crossing-light-barrier'
-        colored_icon: true
         tags:
           - { tag: 'railway', value: 'level_crossing' }
           - { tag: 'crossing:light', values: ['yes', 'traffic_signals', 'traffic_lights', 'traffic_signal'] }
@@ -275,21 +271,18 @@ features:
 
       - description: Level crossing with barrier
         feature: 'general/level-crossing-barrier'
-        colored_icon: true
         tags:
           - { tag: 'railway', value: 'level_crossing' }
           - { tag: 'crossing:barrier', values: ['half', 'full', 'double_half', 'yes', 'gate', 'separate', 'lift_gate', 'gates', 'chain', 'closed'] }
 
       - description: Level crossing with lights
         feature: 'general/level-crossing-light'
-        colored_icon: true
         tags:
           - { tag: 'railway', value: 'level_crossing' }
           - { tag: 'crossing:light', values: ['yes', 'traffic_signals', 'traffic_lights', 'traffic_signal'] }
 
       - description: Level crossing
         feature: 'general/level-crossing'
-        colored_icon: true
         tags:
           - { tag: 'railway', value: 'level_crossing' }
 
