@@ -1901,6 +1901,7 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_station_areas',
+      filter: ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction']]]], // Sites and junctions show an icon
       paint: {
         'line-color': colors.styles.standard.stationAreaGroup,
         'line-width': 2,
@@ -1920,7 +1921,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['!=', ['get', 'feature'], 'yard'], // Yards only have an outline
+        ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction']]]], // Yards only have an outline, sites and junctions show an icon
         ['match', ['get', 'state'],
           'construction', ['global-state', 'showConstructionInfrastructure'],
           'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -1966,7 +1967,10 @@ const layers = {
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
-      filter: ['==', ['get', 'state'], state],
+      filter: ['all',
+        ['==', ['get', 'state'], state],
+        ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction']]]], // Sites and junctions show an icon
+      ],
       paint: {
         'line-color': ['case',
           ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
