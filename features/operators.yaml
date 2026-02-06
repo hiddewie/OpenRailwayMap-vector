@@ -677,6 +677,11 @@ operators:
       - 'Metro de Madrid'
     color: '#ed1c23'
 
+  - names:
+      - 'TMB'
+      - 'Transports Metropolitans de Barcelona'
+    color: '#cc0018'
+
   # --- FR --- #
 
   - names:
@@ -1361,7 +1366,7 @@ operators:
 
   - names:
       - '인천교통공사'
-    color: '#009ddc'
+    color: '#ff671f'
 
   - names:
       - '서해철도주식회사'
@@ -1377,10 +1382,11 @@ operators:
 
   - names:
       - '로템SRS'
-      - '(주)우진메트로'
     color: '#ad0003'
 
   - names:
+      - '(주)우진메트로'
+      - '우진메트로양산'
       - '우이신설경전철운영(주)'
     color: '#95296f'
 

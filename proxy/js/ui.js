@@ -1147,7 +1147,8 @@ const defaultConfiguration = {
   view: {},
   stationLowZoomLabel: 'label',
   localization: 'automatic',
-  electrificationRailwayLine: 'voltageFrequency'
+  electrificationRailwayLine: 'voltageFrequency',
+  trackRailwayLine: 'gauge',
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
