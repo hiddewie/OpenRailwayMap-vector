@@ -1961,7 +1961,6 @@ END $do$;
 
 --- Route ---
 
-
 CREATE OR REPLACE FUNCTION route_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
