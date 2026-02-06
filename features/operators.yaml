@@ -677,6 +677,11 @@ operators:
       - 'Metro de Madrid'
     color: '#ed1c23'
 
+  - names:
+      - 'TMB'
+      - 'Transports Metropolitans de Barcelona'
+    color: '#cc0018'
+
   # --- FR --- #
 
   - names:
