@@ -132,6 +132,10 @@ tags:
   - { tag: 'railway:signal:shunting_route:form', title: 'Shunting Route form' }
   - { tag: 'railway:signal:shunting_route:states', title: 'Shunting Route states', type: array }
   - { tag: 'railway:signal:shunting_route:deactivated', title: 'Shunting Route deactivated', type: boolean }
+  - { tag: 'railway:signal:slope', title: 'Slope' }
+  - { tag: 'railway:signal:slope:form', title: 'Slope form' }
+  - { tag: 'railway:signal:slope:type', title: 'Slope type' }
+  - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', title: 'Snowplow type' }
@@ -236,6 +240,7 @@ types:
   - { type: steam_locomotive, layer: signals }
   - { type: fouling_point, layer: signals }
   - { type: preheating, layer: signals }
+  - { type: slope, layer: signals }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
@@ -5257,7 +5262,7 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-  
+
   - description: Preliminary Route Indicator
     country: GB
     icon: [ default: 'gb/preliminary-route-indicator' ]
@@ -6801,7 +6806,7 @@ features:
 
   - description: Tarcza manewrowa kształtowa (Tm)
     country: PL
-    icon: 
+    icon:
       - match: 'railway:signal:shunting:form'
         cases:
           - { exact: 'semaphore', value: 'pl/m-semaphore' }
@@ -7334,10 +7339,10 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' }
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
           - { all: [ 'PL-PKP:s2', 'PL-PKP:s9' ], value: 'pl/s9-4-sz' }
@@ -7346,10 +7351,10 @@ features:
           - { all: [ 'PL-PKP:s11a', 'PL-PKP:s13a' ], value: 'pl/s10a-4-sz' }
           - { all: [ 'PL-PKP:s2', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
           - { all: [ 'PL-PKP:s3', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
-          - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
-          - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
+          - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' }
+          - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s11a' ], value: 'pl/s6-10a-3' }
           - { any: [ 'PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-3' }
