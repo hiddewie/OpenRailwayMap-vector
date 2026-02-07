@@ -65,6 +65,7 @@ RETURN (
       traffic_mode,
       radio,
       line_routes,
+      route_count,
       wikidata,
       wikimedia_commons,
       wikimedia_commons_file,
@@ -122,6 +123,7 @@ RETURN (
         traffic_mode,
         radio,
         (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
+        (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
         wikidata,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -233,6 +235,7 @@ DO $do$ BEGIN
           "traffic_mode": "string",
           "radio": "string",
           "line_routes": "string",
+          "route_count": "integer",
           "wikidata": "string",
           "wikimedia_commons": "string",
           "wikimedia_commons_file": "string",
@@ -252,6 +255,7 @@ END $do$;
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
     r.id,
+    osm_id,
     way,
     feature,
     state,
@@ -329,9 +333,10 @@ RETURN (
       ref,
       standard_label,
       max(rank) as rank
-    FROM railway_line_low
+    FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
+      osm_id,
       feature,
       ref,
       standard_label,
@@ -354,8 +359,6 @@ DO $do$ BEGIN
           "state": "string",
           "usage": "string",
           "highspeed": "boolean",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string"
         }
@@ -1319,7 +1322,6 @@ RETURN (
       any_value(state) as state,
       any_value(usage) as usage,
       maxspeed,
-      highspeed,
       ref,
       standard_label,
       speed_label,
@@ -1331,8 +1333,7 @@ RETURN (
       ref,
       standard_label,
       speed_label,
-      maxspeed,
-      highspeed
+      maxspeed
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1351,9 +1352,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string",
           "maxspeed": "number",
@@ -1418,8 +1416,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string",
           "train_protection": "string",
@@ -1565,8 +1561,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string",
           "electrification_state": "string",
@@ -1825,8 +1819,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string",
           "gauge0": "string",
@@ -1891,8 +1883,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "tunnel": "boolean",
-          "bridge": "boolean",
           "ref": "string",
           "standard_label": "string",
           "operator": "string",
@@ -1962,6 +1952,69 @@ DO $do$ BEGIN
           "wikipedia": "string",
           "note": "string",
           "description": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+--- Route ---
+
+CREATE OR REPLACE FUNCTION route_railway_line_low(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'route_railway_line_low', 4096, 'way', 'id')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(
+        st_simplify(st_collect(way), 100000),
+        ST_TileEnvelope(z, x, y),
+        4096, 64, true
+      ) as way,
+      feature,
+      any_value(state) as state,
+      any_value(usage) as usage,
+      highspeed,
+      (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
+      ref,
+      standard_label,
+      max(rank) as rank
+    FROM railway_line_low l
+    WHERE way && ST_TileEnvelope(z, x, y)
+    GROUP BY
+      osm_id,
+      feature,
+      ref,
+      standard_label,
+      highspeed
+    ORDER by
+      route_count NULLS FIRST,
+      rank NULLS LAST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION route_railway_line_low IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "route_railway_line_low",
+        "fields": {
+          "id": "integer",
+          "feature": "string",
+          "state": "string",
+          "usage": "string",
+          "route_count": "integer",
+          "ref": "string",
+          "standard_label": "string"
         }
       }
     ]
