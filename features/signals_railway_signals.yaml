@@ -1665,6 +1665,20 @@ features:
 
   # --- BE --- #
 
+  - description: Gradient >=12‰ <18‰
+    country: BE
+    icon: [ default: 'be/i12' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'BE:i12' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Gradient >=18‰
+    country: BE
+    icon: [ default: 'be/i18' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'BE:i18' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   - description: Speed limit light (part of main signal)
     country: BE
     icon:
