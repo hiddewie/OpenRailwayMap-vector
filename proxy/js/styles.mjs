@@ -5244,7 +5244,6 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['!=', ['get', 'operator'], null],
         ['!=', ['get', 'feature'], 'yard'], // Yards only have an outline
         ['match', ['get', 'state'],
           'construction', ['global-state', 'showConstructionInfrastructure'],
@@ -5276,7 +5275,6 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['!=', ['get', 'operator'], null],
         ['==', ['get', 'state'], state],
       ],
       paint: {
