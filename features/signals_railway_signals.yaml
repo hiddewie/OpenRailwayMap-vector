@@ -7093,6 +7093,20 @@ features:
       - { tag: 'railway:signal:crossing_hint', value: 'PL-tram:at-2' }
       - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
 
+  - description: Niebezpieczny zjazd (AT-3)
+    country: PL
+    icon: [ default: 'pl/tram/at-3' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'PL-tram:at-3' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Stromy podjazd (AT-4)
+    country: PL
+    icon: [ default: 'pl/tram/at-4' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'PL-tram:at-4' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   # TODO AT-3 and AT-4
 
   - description: Ruch kolizyjny (AT-5)
