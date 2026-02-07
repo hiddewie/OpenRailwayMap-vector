@@ -4043,6 +4043,55 @@ features:
 
   # --- ES --- #
 
+  - description: flecha ascendente
+    country: ES
+    icon: [ default: 'es/FI14A' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11A' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: línea horizontal
+    country: ES
+    icon: [ default: 'es/FI14B' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11B' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: flecha descendente
+    country: ES
+    icon: [ default: 'es/FI14C' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11C' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media ascendente entre 9 y 15 mm/m
+    country: ES
+    icon: [ default: 'es/FI12A' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12A' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media ascendente entre 16 y 25 mm/m
+    country: ES
+    icon: [ default: 'es/FI12B' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12B' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media descendente entre 9 y 15 mm/m
+    country: ES
+    icon: [ default: 'es/FI12C' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12C' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media descendente entre 16 y 25 mm/m
+    country: ES
+    icon: [ default: 'es/FI12D' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12D' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   - description: end of catenary
     country: ES
     # TODO add turn direction
