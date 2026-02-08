@@ -143,6 +143,7 @@ tags:
   - { tag: 'railway:signal:speed_limit:states', title: 'Speed limit states', type: array }
   - { tag: 'railway:signal:speed_limit:pointing', title: 'Speed limit pointing' }
   - { tag: 'railway:signal:speed_limit:deactivated', title: 'Speed limit deactivated', type: boolean }
+  - { tag: 'railway:signal:speed_limit:turn_direction', title: 'Speed limit diverging direction', type: array }
   - { tag: 'railway:signal:speed_limit_distant', title: 'Speed limit distant' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
   - { tag: 'railway:signal:speed_limit_distant:speed', title: 'Speed limit distant speed', type: array }
