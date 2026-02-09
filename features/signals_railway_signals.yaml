@@ -132,6 +132,10 @@ tags:
   - { tag: 'railway:signal:shunting_route:form', title: 'Shunting Route form' }
   - { tag: 'railway:signal:shunting_route:states', title: 'Shunting Route states', type: array }
   - { tag: 'railway:signal:shunting_route:deactivated', title: 'Shunting Route deactivated', type: boolean }
+  - { tag: 'railway:signal:slope', title: 'Slope' }
+  - { tag: 'railway:signal:slope:form', title: 'Slope form' }
+  - { tag: 'railway:signal:slope:type', title: 'Slope type' }
+  - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', title: 'Snowplow type' }
@@ -236,6 +240,7 @@ types:
   - { type: steam_locomotive, layer: signals }
   - { type: fouling_point, layer: signals }
   - { type: preheating, layer: signals }
+  - { type: slope, layer: signals }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
@@ -1659,6 +1664,20 @@ features:
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
 
   # --- BE --- #
+
+  - description: Gradient >=12‰ <18‰
+    country: BE
+    icon: [ default: 'be/i12' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'BE:i12' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Gradient >=18‰
+    country: BE
+    icon: [ default: 'be/i18' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'BE:i18' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: Speed limit light (part of main signal)
     country: BE
@@ -4024,6 +4043,55 @@ features:
 
   # --- ES --- #
 
+  - description: flecha ascendente
+    country: ES
+    icon: [ default: 'es/FI14A' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11A' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: línea horizontal
+    country: ES
+    icon: [ default: 'es/FI14B' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11B' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: flecha descendente
+    country: ES
+    icon: [ default: 'es/FI14C' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11C' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media ascendente entre 9 y 15 mm/m
+    country: ES
+    icon: [ default: 'es/FI12A' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12A' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media ascendente entre 16 y 25 mm/m
+    country: ES
+    icon: [ default: 'es/FI12B' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12B' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media descendente entre 9 y 15 mm/m
+    country: ES
+    icon: [ default: 'es/FI12C' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12C' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: rampa media descendente entre 16 y 25 mm/m
+    country: ES
+    icon: [ default: 'es/FI12D' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12D' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   - description: end of catenary
     country: ES
     # TODO add turn direction
@@ -5257,7 +5325,7 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:off' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-  
+
   - description: Preliminary Route Indicator
     country: GB
     icon: [ default: 'gb/preliminary-route-indicator' ]
@@ -6801,7 +6869,7 @@ features:
 
   - description: Tarcza manewrowa kształtowa (Tm)
     country: PL
-    icon: 
+    icon:
       - match: 'railway:signal:shunting:form'
         cases:
           - { exact: 'semaphore', value: 'pl/m-semaphore' }
@@ -7074,6 +7142,20 @@ features:
       - { tag: 'railway:signal:crossing_hint', value: 'PL-tram:at-2' }
       - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
 
+  - description: Niebezpieczny zjazd (AT-3)
+    country: PL
+    icon: [ default: 'pl/tram/at-3' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'PL-tram:at-3' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Stromy podjazd (AT-4)
+    country: PL
+    icon: [ default: 'pl/tram/at-4' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'PL-tram:at-4' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   # TODO AT-3 and AT-4
 
   - description: Ruch kolizyjny (AT-5)
@@ -7334,10 +7416,10 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { exact: 'PL-PKP:s1a', value: 'pl/s1a-4' }
-          - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
-          - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' } 
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' } 
+          - { all: [ 'PL-PKP:s6', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' }
+          - { all: [ 'PL-PKP:s7', 'PL-PKP:s13a' ], value: 'pl/s6-10a-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s9', 'PL-PKP:s13a' ], value: 'pl/s9-13a-4-sz' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s9' ], value: 'pl/s6-4-sz' }
           - { all: [ 'PL-PKP:s2', 'PL-PKP:s9' ], value: 'pl/s9-4-sz' }
@@ -7346,10 +7428,10 @@ features:
           - { all: [ 'PL-PKP:s11a', 'PL-PKP:s13a' ], value: 'pl/s10a-4-sz' }
           - { all: [ 'PL-PKP:s2', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
           - { all: [ 'PL-PKP:s3', 'PL-PKP:s13a' ], value: 'pl/s13a-4-sz' }
-          - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
-          - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' } 
-          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
-          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' } 
+          - { all: [ 'PL-PKP:s10', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' }
+          - { all: [ 'PL-PKP:s11', 'PL-PKP:s13' ], value: 'pl/s10-4-sz' }
+          - { all: [ 'PL-PKP:s2', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' }
+          - { all: [ 'PL-PKP:s3', 'PL-PKP:s13' ], value: 'pl/s13-4-sz' }
           - { all: [ 'PL-PKP:s6', 'PL-PKP:s10a' ], value: 'pl/s6-10a-3' }
           - { all: [ 'PL-PKP:s7', 'PL-PKP:s11a' ], value: 'pl/s6-10a-3' }
           - { any: [ 'PL-PKP:s6', 'PL-PKP:s7'], value: 'pl/s6-3' }
