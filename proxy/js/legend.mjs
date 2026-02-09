@@ -1539,11 +1539,11 @@ const legendData = {
       },
     ],
     'openrailwaymap_speed-speed_railway_signals': [
-      // TODO filter per country polygon
       ...speed_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
           legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature0: iconFeature.icon,
             type: 'line',
@@ -1813,6 +1813,7 @@ const legendData = {
         signalFeatures(feature).map(iconFeature => ({
           legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature0: iconFeature.icon,
             type: 'line',
@@ -2231,6 +2232,7 @@ const legendData = {
         signalFeatures(feature).map(iconFeature => ({
           legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature: iconFeature.icon,
             type: 'line',
