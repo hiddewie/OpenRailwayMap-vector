@@ -1630,7 +1630,10 @@ class LegendControl {
 
     button.onclick = () => this.toggleLegend();
 
-    this.legendMapContainer = createDomElement('div', 'legend-map-container', this._container)
+    this.legendContainer = createDomElement('div', 'legend-container', this._container)
+    this.legendMapConfiguration = createDomElement('div', 'legend-map-configuration', this.legendContainer)
+    this.legendMapConfiguration.innerText='test'
+    this.legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
     this.legendMapRoot = createDomElement('div', 'legend-map', this.legendMapContainer)
     this.legendMap = new maplibregl.Map({
       container: this.legendMapRoot,
@@ -1661,16 +1664,16 @@ class LegendControl {
   }
 
   hideLegend() {
-    this.legendMapContainer.style.display = 'none';
+    this.legendContainer.style.display = 'none';
   }
 
   showLegend() {
-    this.legendMapContainer.style.display = 'block';
+    this.legendContainer.style.display = 'block';
     this.updateLegend();
   }
 
   isLegendShown() {
-    return this.legendMapContainer.style.display === 'block';
+    return this.legendContainer.style.display === 'block';
   }
 
   toggleLegend() {
