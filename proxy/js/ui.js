@@ -1705,7 +1705,7 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom)
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, configuration.legendCountry)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1739,7 +1739,7 @@ class LegendControl {
     return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
   }
 
-  makeLegendStyle(style, visibleLayers, legendData, state, zoom) {
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country) {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1815,6 +1815,7 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => !country || !item.country || item.country === country)
         .flatMap(item => {
           const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
             .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
@@ -1864,6 +1865,7 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => !country || !item.country || item.country === country)
         .map(item => {
           const legend = [item.legend, ...(item.variants ?? [])
             .filter(variant => variant.legend)
