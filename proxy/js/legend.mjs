@@ -1562,7 +1562,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature0: '',
+          feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -1832,7 +1832,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature0: '',
+          feature0: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -2250,7 +2250,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature: '',
+          feature: 'does-not-exist',
           type: 'line',
           azimuth: 135.5,
           deactivated: false,
