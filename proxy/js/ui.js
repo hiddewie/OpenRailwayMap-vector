@@ -1676,7 +1676,8 @@ class LegendControl {
 
     const legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
 
-    const countries = ['AT', 'BE', 'DE'] // TODO
+    // TODO update from legend layer countries
+    const countries = ['AT', 'BE', 'DE']
     countries.forEach(country => {
       const option = createDomElement('option', undefined, legendCountrySelection)
       option.value = country

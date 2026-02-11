@@ -162,6 +162,8 @@ const signalFeatures = (feature) =>
 
 const legendData = {
   standard: {
+    countries: [],
+
     "standard_railway_line_low-standard_railway_line_low": [
       {
         legend: 'Highspeed main line',
@@ -1445,6 +1447,8 @@ const legendData = {
   },
 
   speed: {
+    countries: [...new Set(speed_railway_signals.map(feature => feature.country))].toSorted(),
+
     'speed_railway_line_low-speed_railway_line_low': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
@@ -1601,7 +1605,10 @@ const legendData = {
       })),
     ],
   },
+
   signals: {
+    countries: [...new Set(signals_railway_signals.map(feature => feature.country))].toSorted(),
+
     'signals_railway_line_low-signals_railway_line_low': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
@@ -1871,7 +1878,10 @@ const legendData = {
       })),
     ],
   },
+
   electrification: {
+    countries: [...new Set(electrification_signals.map(feature => feature.country))].toSorted(),
+
     'electrification_railway_line_low-electrification_railway_line_low': [
       ...electrificationLegends.voltageFrequency.map(({legend, voltage, frequency}) => ({
         legend,
@@ -2340,7 +2350,10 @@ const legendData = {
       }
     ],
   },
+
   track: {
+    countries: [],
+
     'track_railway_line_low-track_railway_line_low': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
@@ -2914,6 +2927,9 @@ const legendData = {
   },
 
   operator: {
+    // TODO operator countries
+    countries: [],
+
     'operator_railway_line_low-operator_railway_line_low': [
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
@@ -3041,6 +3057,8 @@ const legendData = {
           })) : undefined,
         })),
   },
+
+  route: {},
 }
 
 console.log(JSON.stringify(legendData));
