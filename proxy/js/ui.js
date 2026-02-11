@@ -1607,7 +1607,6 @@ class ConfigurationControl {
 class LegendControl {
   constructor(options) {
     this.options = options;
-    console.info(this.options)
     this.map = null;
     this._container = null;
     this.legend = null;
@@ -1616,6 +1615,8 @@ class LegendControl {
       zoom: null,
       style: null,
       mapGlobalState: {},
+      legendConfiguration: this.options.initialLegendConfiguration,
+      legendCountry: this.options.initialLegendCountry,
     };
 
     this.generateLegendEventHandler = () => this.updateLegend();
@@ -1690,19 +1691,23 @@ class LegendControl {
       legendCountrySelection.value = null
       legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('all', null)
+      this.generateLegendEventHandler()
     }
     legendInViewControl.onchange = () => {
       legendCountrySelection.value = null
       legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('inView', null)
+      this.generateLegendEventHandler()
     }
     legendCountryControl.onchange = () => {
       legendCountrySelection.value = countries[0]
       legendCountrySelection.disabled = null
       this.options.onLegendConfigurationChange('country', legendCountrySelection.value)
+      this.generateLegendEventHandler()
     }
     legendCountrySelection.onchange = () => {
       this.options.onLegendConfigurationChange('country', legendCountrySelection.value)
+      this.generateLegendEventHandler()
     }
 
     const legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
@@ -1767,19 +1772,30 @@ class LegendControl {
     }
     const mapGlobalState = this.map.getGlobalState();
 
+    const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
+    const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
+
     // Verify if legend changed
-    if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
+    if (this.legendState.zoom === zoom
+      && this.legendState.style === style.name
+      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
+      && this.legendState.legendConfiguration === legendConfiguration
+      && this.legendState.legendCountry === legendCountry
+    ) {
       return;
     }
     this.legendState = {
       zoom,
       style: style.name,
       mapGlobalState: {...mapGlobalState},
+      legendConfiguration,
+      legendCountry,
     };
 
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
+    // TODO filter in view
     const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, configuration.legendCountry)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
