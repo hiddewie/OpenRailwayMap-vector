@@ -1631,10 +1631,52 @@ class LegendControl {
     button.onclick = () => this.toggleLegend();
 
     this.legendContainer = createDomElement('div', 'legend-container', this._container)
-    this.legendMapConfiguration = createDomElement('div', 'legend-map-configuration', this.legendContainer)
-    this.legendMapConfiguration.innerText='test'
-    this.legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
-    this.legendMapRoot = createDomElement('div', 'legend-map', this.legendMapContainer)
+    const legendMapConfiguration = createDomElement('form', 'legend-map-configuration', this.legendContainer)
+
+    const legendTitle = createDomElement('span', undefined, legendMapConfiguration)
+    legendTitle.innerText = 'Show'
+
+    const legendAll = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendAllControl = createDomElement('input', 'form-check-input', legendAll)
+    legendAllControl.type = 'radio'
+    legendAllControl.name = 'legendContent'
+    legendAllControl.value = 'all'
+    legendAllControl.id = 'legendContentAll'
+    const legendAllLabel = createDomElement('label', 'form-check-label', legendAll)
+    legendAllLabel.htmlFor = 'legendContentAll'
+    legendAllLabel.innerText = 'all'
+
+    const legendInView = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendInViewControl = createDomElement('input', 'form-check-input', legendInView)
+    legendInViewControl.type = 'radio'
+    legendInViewControl.name = 'legendContent'
+    legendInViewControl.value = 'inView'
+    legendInViewControl.id = 'legendContentInView'
+    const legendInViewLabel = createDomElement('label', 'form-check-label', legendInView)
+    legendInViewLabel.innerText = 'in view'
+    legendInViewLabel.htmlFor = 'legendContentInView'
+
+    const legendCountry = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendCountryControl = createDomElement('input', 'form-check-input', legendCountry)
+    legendCountryControl.type = 'radio'
+    legendCountryControl.name = 'legendContent'
+    legendCountryControl.value = 'country'
+    legendCountryControl.id = 'legendContentCountry'
+    const legendCountryLabel = createDomElement('label', 'form-check-label', legendCountry)
+    legendCountryLabel.innerText = 'country: '
+    legendCountryLabel.htmlFor = 'legendContentCountry'
+
+    const legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
+
+    const countries = ['AT', 'BE', 'DE'] // TODO
+    countries.forEach(country => {
+      const option = createDomElement('option', undefined, legendCountrySelection)
+      option.value = country
+      option.innerText = country
+    })
+
+    const legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
+    this.legendMapRoot = createDomElement('div', 'legend-map', legendMapContainer)
     this.legendMap = new maplibregl.Map({
       container: this.legendMapRoot,
       zoom: 16,

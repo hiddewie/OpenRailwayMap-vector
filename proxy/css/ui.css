@@ -39,9 +39,22 @@ body {
   border-radius: 4px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
 }
+.legend-map-configuration {
+  padding: 10px;
+  border-bottom: 1px solid rgb(204, 204, 204);
+  font-size: .9rem;
+}
+.legend-map-configuration .country-select {
+  display: inline-block;
+  width: auto;
+}
+.legend-map-configuration .form-check-inline {
+  margin-right: .3rem;
+  margin-left: .6rem;
+}
 .legend-map-container {
   height: 400px;
-  width: 300px;
+  width: 360px;
   overflow-y: auto;
 }
 .legend-map {
