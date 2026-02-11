@@ -1942,7 +1942,8 @@ class LegendControl {
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
         .filter(item => !country || !item.country || item.country === country)
         .map(item => {
-          const legend = [item.legend, ...(item.variants ?? [])
+          const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
+          const legend = [itemLegend, ...(item.variants ?? [])
             .filter(variant => variant.legend)
             .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
             .map(variant => variant.legend)]

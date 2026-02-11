@@ -1541,8 +1541,7 @@ const legendData = {
     'openrailwaymap_speed-speed_railway_signals': [
       ...speed_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          // TODO move country to legend generation
-          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
           properties: {
@@ -1563,7 +1562,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature0: 'does-not-exist',
+          feature0: '',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -1812,8 +1811,7 @@ const legendData = {
     'openrailwaymap_signals-signals_railway_signals': [
       ...signals_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          // TODO move country to legend generation
-          legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
           properties: {
@@ -1834,7 +1832,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature0: 'does-not-exist',
+          feature0: '',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -2231,8 +2229,7 @@ const legendData = {
     'openrailwaymap_electrification-electrification_signals': [
       ...electrification_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          // TODO move country to legend generation
-          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
           properties: {
@@ -2253,7 +2250,7 @@ const legendData = {
         legend: 'signal direction',
         type: 'point',
         properties: {
-          feature: 'does-not-exist',
+          feature: '',
           type: 'line',
           azimuth: 135.5,
           deactivated: false,
