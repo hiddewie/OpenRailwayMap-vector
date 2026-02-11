@@ -1541,6 +1541,7 @@ const legendData = {
     'openrailwaymap_speed-speed_railway_signals': [
       ...speed_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
+          // TODO move country to legend generation
           legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
@@ -1811,6 +1812,7 @@ const legendData = {
     'openrailwaymap_signals-signals_railway_signals': [
       ...signals_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
+          // TODO move country to legend generation
           legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
@@ -1847,7 +1849,6 @@ const legendData = {
           },
         ],
       },
-      // TODO country specific railway signals
       {
         legend: '(deactivated)',
         type: 'point',
@@ -2230,6 +2231,7 @@ const legendData = {
     'openrailwaymap_electrification-electrification_signals': [
       ...electrification_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
+          // TODO move country to legend generation
           legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
           country: feature.country,
