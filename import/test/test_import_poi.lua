@@ -633,6 +633,7 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
       ["railway:signal:main_repeated:magnet"] = false,
       ["railway:signal:main:deactivated"] = false,
       ["railway:signal:shunting_route:deactivated"] = false,
+      ["railway:signal:slope:deactivated"] = false,
     },
   },
 })
@@ -697,6 +698,7 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
       ["railway:signal:main_repeated:magnet"] = false,
       ["railway:signal:main:deactivated"] = false,
       ["railway:signal:shunting_route:deactivated"] = false,
+      ["railway:signal:slope:deactivated"] = false,
     },
   },
 })
