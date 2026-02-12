@@ -46,7 +46,7 @@ const featureLinks = {
 function allIconCombinations(feature) {
   const allIcons = feature.icon.map(icon => [
     {name: icon.description, icon: icon.default ? [icon.default] : []},
-    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: [iconCase.example ?? iconCase.value]}))),
+    ...((icon.cases ?? []).map(iconCase => ({ name: iconCase.description ?? icon.description, icon: [iconCase.value]}))),
   ])
 
   let combinations = allIcons[0]
