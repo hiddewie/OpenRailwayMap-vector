@@ -4648,60 +4648,103 @@ features:
 
   # --- FR --- #
 
+  # Icon filename format: Signal_Shape-State.svg
+
+  # The signal target shape (A, C, F, H) is derived from the
+  # supported states. The rendered icon reflects the signal's
+  # most restrictive possible state (C, Cv, S, D, A), regardless
+  # of the target type or additional supported states.
+
   - description: Carré
     country: FR
     icon:
+# TODO using shape tag instead of states
+#      - match: 'railway:signal:main:shape'
+#        cases:
+#          - { exact: 'FR:H', value: 'fr/C_H-C' }
+#          - { exact: 'FR:F', value: 'fr/C_F-C' }
+#        default: 'fr/C_C-C'
+
+      # File name format: Signal_Shape-State.svg
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:Cv', value: 'fr/C-Cv' }
-          - { any: [ 'FR:M', 'FR:Mr' ], value: 'fr/C-M' }
-          - { any: [ 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C-RR-A' }
-          - { any: [ 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C-R-A' }
-          - { any: [ 'FR:RR', 'FR:RRc' ], value: 'fr/C-RR' }
-          - { any: [ 'FR:R', 'FR:Rc' ], value: 'fr/C-R' }
-          - { any: [ 'FR:A', 'FR:Ac' ], value: 'fr/C-A' }
-          - { any: [ 'FR:VL', 'FR:VLc' ], value: 'fr/C-VL' }
-          - { any: [ 'FR:S', 'FR:Sc' ], value: 'fr/C-S' }
-        # TODO split on shape
-        default: 'fr/C-C'
+          # H target
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/C_H-C' }
+          # F target
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/C_F-C' }
+          # C target
+        default: 'fr/C_C-C'
     tags:
-      - { tag: 'railway:signal:main', any: [ 'FR:C', 'FR:CV', 'FR:CARRE' ] }
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Carré violet
+    country: FR
+    icon:
+# TODO using shape tag instead of states
+#      - match: 'railway:signal:main:shape'
+#        cases:
+#          - { exact: 'FR:H', value: 'fr/Cv_H-Cv' }
+#          - { exact: 'FR:F', value: 'fr/Cv_F-Cv' }
+#          - { exact: 'FR:C', value: 'fr/Cv_C-Cv' }
+#        default: 'fr/Cv_A-Cv'
+
+      - match: 'railway:signal:main:states'
+        cases:
+          # H target
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/Cv_H-Cv' }
+          # F target
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/Cv_F-Cv' }
+          # C target
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:A', 'FR:(A)', 'FR:VL', 'FR:(VL)' ], value: 'fr/Cv_C-Cv' }
+          # A target
+        default: 'fr/Cv_A-Cv'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Sémaphore
     country: FR
     icon:
+# TODO using shape
+#      - match: 'railway:signal:main:shape'
+#        cases:
+#          - { exact: 'FR:H', value: 'fr/S_H-S' }
+#          - { exact: 'FR:F', value: 'fr/S_F-S' }
+#          - { exact: 'FR:C', value: 'fr/S_C-S' }
+#        default: 'fr/S_A-S'
+
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/S-R-A' }
-          - { any: [ 'FR:R', 'FR:Rc' ], value: 'fr/S-R' }
-          - { any: [ 'FR:A', 'FR:Ac' ], value: 'fr/S-A' }
-          - { any: [ 'FR:VL', 'FR:VLc' ], value: 'fr/S-VL' }
-        # TODO split on shape
-        default: 'fr/S-S'
+          # H target
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/S_H-S' }
+          # F target
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/S_F-S' }
+          # TODO Could be a C target with some hidden positions
+          # but only 'railway:signal:main:shape' can tell.
+          # A target (BAL)
+        default: 'fr/S_A-S'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Avertissement
     country: FR
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'FR:R', value: 'fr/A-R' }
-          - { exact: 'FR:A', value: 'fr/A-A' }
-        default: 'fr/A-VL'
+    # R target (implicit)
+    icon: [ default: 'fr/A-A' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Disque
     country: FR
+    # R target (implicit)
     icon: [ default: 'fr/D-D' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+    # TODO mapped as discrete nodes because of "ref".
   - description: Pancarte Z & TIV-D
     country: FR
     icon:
@@ -4715,6 +4758,7 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
+    # TODO mapped as discrete nodes because of "ref".
   - description: Pancarte Z & TIV-D (B)
     country: FR
     icon:
@@ -4940,7 +4984,7 @@ features:
       - { tag: 'railway:signal:train_protection', any: [ 'FR:REP_TVM', 'FR:repère_arrêt_TVM' ] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: ETCS block marker
+  - description: ETCS stop marker
     country: FR
     icon:
       - match: 'railway:signal:position'
@@ -4952,6 +4996,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+    # TODO mapped as discrete nodes because of "ref".
   - description: TVM and ETCS block marker
     country: FR
     icon:
@@ -5003,7 +5048,13 @@ features:
 
   - description: Route indicator
     country: FR
-    icon: [ default: 'fr/ID' ]
+    icon: 
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'FR:ID5', value: 'fr/ID5' }
+          - { exact: 'FR:ID4', value: 'fr/ID4' }
+          - { exact: 'FR:ID2', value: 'fr/ID2' }
+        default: 'fr/ID3'
     tags:
       - { tag: 'railway:signal:route', value: 'FR:ID' }
       - { tag: 'railway:signal:route:form', value: 'light' }
