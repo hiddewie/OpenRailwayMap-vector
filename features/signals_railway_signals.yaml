@@ -136,6 +136,9 @@ tags:
   - { tag: 'railway:signal:slope:form', title: 'Slope form' }
   - { tag: 'railway:signal:slope:type', title: 'Slope type' }
   - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
+  - { tag: 'railway:signal:slope:incline', title: 'Slope incline' }
+  - { tag: 'railway:signal:slope:length', title: 'Slope length' }
+  - { tag: 'railway:signal:slope:distance', title: 'Slope distance' }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', title: 'Snowplow type' }
