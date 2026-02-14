@@ -1797,43 +1797,12 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    // TODO move to legend
-    const featureKeys = {
-      signals: {
-        // 'signals_railway_line_low-signals_railway_line_low': {
-        //   key: [
-        //     'feature0',
-        //     'deactivated0',
-        //   ],
-        // },
-        // 'openrailwaymap_low-railway_line_high': {
-        //   key: [],
-        // },
-        // 'high-railway_line_high': {
-        //   key: [],
-        // },
-        // 'openrailwaymap_signals-signals_signal_boxes': {
-        //   key: [],
-        // },
-        // 'high-railway_text_km': {
-        //   key: [],
-        // },
-        'openrailwaymap_signals-signals_railway_signals': {
-          key: [
-            'feature0',
-            'deactivated0',
-          ],
-        },
-      }
-    }
-
     const featuresInView = this.map.queryRenderedFeatures();
     const keyedFeaturesInView = featuresInView.map(feature => {
       const layer = feature.layer
       const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
-      const featureKeySource = featureKeys[selectedStyle][sourceLayer]
-      const featureKey = featureKeySource ? featureKeys[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e') : null;
+      const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e');
 
       return {
         sourceLayer,
@@ -1850,8 +1819,11 @@ class LegendControl {
       inView: (source, item) => {
         const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
 
-        const featureKeySource = featureKeys[selectedStyle][source]
-        const itemFeatureKeys = itemFeatures.map(itemFeature => featureKeySource ? featureKeys[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart]).join('\u001e') : null);
+        const itemFeatureKeys = itemFeatures.map(itemFeature => legendData[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart]).join('\u001e'));
+
+        if (keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))) {
+          console.info(item, itemFeatureKeys)
+        }
 
         return keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))
       },
@@ -1965,7 +1937,7 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
@@ -2015,7 +1987,7 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))

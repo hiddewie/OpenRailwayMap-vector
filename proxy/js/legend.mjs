@@ -1609,274 +1609,310 @@ const legendData = {
   signals: {
     countries: [...new Set(signals_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
 
-    'signals_railway_line_low-signals_railway_line_low': [
-      ...signals_railway_line.train_protections.map(train_protection => ({
-        legend: train_protection.legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: train_protection.train_protection,
-          train_protection_rank: 1,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-        variants: [
-          {
-            properties: {
-              train_protection: null,
-              train_protection_rank: 0,
-              train_protection_construction: train_protection.train_protection,
-              train_protection_construction_rank: 1,
-            }
-          }
-        ],
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: null,
-          train_protection_rank: 0,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-      },
-    ],
-    'openrailwaymap_low-railway_line_high': [
-      ...signals_railway_line.train_protections.map(train_protection => ({
-        legend: train_protection.legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: train_protection.train_protection,
-          train_protection_rank: 1,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-        variants: [
-          {
-            properties: {
-              train_protection: null,
-              train_protection_rank: 0,
-              train_protection_construction: train_protection.train_protection,
-              train_protection_construction_rank: 1,
-            }
-          }
-        ],
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: null,
-          train_protection_rank: 0,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-      },
-    ],
-    'high-railway_line_high': [
-      ...signals_railway_line.train_protections.map(train_protection => ({
-        legend: train_protection.legend,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: train_protection.train_protection,
-          train_protection_rank: 1,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-        variants: [
-          {
-            properties: {
-              train_protection: null,
-              train_protection_rank: 0,
-              train_protection_construction: train_protection.train_protection,
-              train_protection_construction_rank: 1,
-            }
-          }
-        ],
-      })),
-      {
-        legend: '(unknown)',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: null,
-          train_protection_rank: 0,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-      },
-      {
-        legend: 'Under construction',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'construction',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: 'etcs',
-          train_protection_rank: 1,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-      },
-      {
-        legend: 'Proposed',
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'proposed',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          train_protection: 'etcs',
-          train_protection_rank: 1,
-          train_protection_construction: null,
-          train_protection_construction_rank: 0,
-        },
-      },
-    ],
-    'openrailwaymap_signals-signals_signal_boxes': [
-      {
-        legend: 'Signal box',
-        type: 'point',
-        properties: {
-          ref: 'Rtd',
-          name: 'Rotterdam',
-          feature: 'signal_box',
-        },
-        variants: [
-          {
-            legend: 'crossing box',
-            properties: {
-              ref: 'Crs',
-              name: 'Cross',
-              feature: 'crossing_box',
-            },
-          },
-          {
-            legend: 'block post',
-            properties: {
-              ref: 'Blk',
-              name: 'KM 47',
-              feature: 'blockpost',
-            },
-          },
-        ],
-      },
-    ],
-    "high-railway_text_km": [
-      {
-        legend: 'Milestone',
-        type: 'point',
-        properties: {
-          zero: true,
-          pos_int: '47',
-          pos: '47.0',
-          pos_exact: '47.012',
-          type: 'km',
-        },
-      },
-    ],
-    'openrailwaymap_signals-signals_railway_signals': [
-      ...signals_railway_signals.flatMap(feature =>
-        signalFeatures(feature).map(iconFeature => ({
-          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
-          type: 'point',
-          country: feature.country,
+    'signals_railway_line_low-signals_railway_line_low': {
+      key: [
+        'feature',
+        'state',
+        'train_protection',
+      ],
+      features: [
+        ...signals_railway_line.train_protections.map(train_protection => ({
+          legend: train_protection.legend,
+          type: 'line',
           properties: {
-            feature0: iconFeature.icon,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: train_protection.train_protection,
+            train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+          variants: [
+            {
+              properties: {
+                train_protection: null,
+                train_protection_rank: 0,
+                train_protection_construction: train_protection.train_protection,
+                train_protection_construction_rank: 1,
+              }
+            }
+          ],
+        })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: null,
+            train_protection_rank: 0,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+        },
+      ]
+    },
+    'openrailwaymap_low-railway_line_high': {
+      key: [
+        'feature',
+        'state',
+        'train_protection',
+      ],
+      features: [
+        ...signals_railway_line.train_protections.map(train_protection => ({
+          legend: train_protection.legend,
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: train_protection.train_protection,
+            train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+          variants: [
+            {
+              properties: {
+                train_protection: null,
+                train_protection_rank: 0,
+                train_protection_construction: train_protection.train_protection,
+                train_protection_construction_rank: 1,
+              }
+            }
+          ],
+        })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: null,
+            train_protection_rank: 0,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+        },
+      ],
+    },
+    'high-railway_line_high': {
+      key: [
+        'feature',
+        'state',
+        'train_protection',
+      ],
+      features: [
+        ...signals_railway_line.train_protections.map(train_protection => ({
+          legend: train_protection.legend,
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: train_protection.train_protection,
+            train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+          variants: [
+            {
+              properties: {
+                train_protection: null,
+                train_protection_rank: 0,
+                train_protection_construction: train_protection.train_protection,
+                train_protection_construction_rank: 1,
+              }
+            }
+          ],
+        })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: null,
+            train_protection_rank: 0,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+        },
+        {
+          legend: 'Under construction',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'construction',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: 'etcs',
+            train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+        },
+        {
+          legend: 'Proposed',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'proposed',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            train_protection: 'etcs',
+            train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
+          },
+        },
+      ],
+    },
+    'openrailwaymap_signals-signals_signal_boxes': {
+      key: [
+        'feature',
+      ],
+      features: [
+        {
+          legend: 'Signal box',
+          type: 'point',
+          properties: {
+            ref: 'Rtd',
+            name: 'Rotterdam',
+            feature: 'signal_box',
+          },
+          variants: [
+            {
+              legend: 'crossing box',
+              properties: {
+                ref: 'Crs',
+                name: 'Cross',
+                feature: 'crossing_box',
+              },
+            },
+            {
+              legend: 'block post',
+              properties: {
+                ref: 'Blk',
+                name: 'KM 47',
+                feature: 'blockpost',
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "high-railway_text_km": {
+      key: [],
+      features: [
+        {
+          legend: 'Milestone',
+          type: 'point',
+          properties: {
+            zero: true,
+            pos_int: '47',
+            pos: '47.0',
+            pos_exact: '47.012',
+            type: 'km',
+          },
+        },
+      ],
+    },
+    'openrailwaymap_signals-signals_railway_signals': {
+      // TODO keys for feature1, feature2, etc.
+      key: [
+        'feature0',
+        'deactivated0',
+      ],
+      features: [
+        ...signals_railway_signals.flatMap(feature =>
+          signalFeatures(feature).map(iconFeature => ({
+            legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+            type: 'point',
+            country: feature.country,
+            properties: {
+              feature0: iconFeature.icon,
+              type: 'line',
+              azimuth: null,
+              deactivated0: false,
+              direction_both: false,
+            },
+            variants: iconFeature.variants.map(variant => ({
+              legend: variant.legend,
+              properties: {
+                feature0: variant.icon,
+              },
+            })),
+          }))),
+        {
+          legend: 'signal direction',
+          type: 'point',
+          properties: {
+            feature0: 'does-not-exist',
+            type: 'line',
+            azimuth: 135.5,
+            deactivated0: false,
+            direction_both: false,
+          },
+          variants: [
+            {
+              legend: '(both)',
+              properties: {
+                direction_both: true,
+              },
+            },
+          ],
+        },
+        {
+          legend: '(deactivated)',
+          type: 'point',
+          properties: {
+            feature0: 'de/ks-combined',
+            type: 'line',
+            azimuth: null,
+            deactivated0: true,
+            direction_both: false,
+          },
+        },
+        ...signal_types.filter(type => type.layer === 'signals').map(type => ({
+          legend: `unknown signal (${type.type})`,
+          type: 'point',
+          properties: {
+            feature0: `general/signal-unknown-${type.type}`,
             type: 'line',
             azimuth: null,
             deactivated0: false,
             direction_both: false,
           },
-          variants: iconFeature.variants.map(variant => ({
-            legend: variant.legend,
-            properties: {
-              feature0: variant.icon,
-            },
-          })),
-        }))),
-      {
-        legend: 'signal direction',
-        type: 'point',
-        properties: {
-          feature0: 'does-not-exist',
-          type: 'line',
-          azimuth: 135.5,
-          deactivated0: false,
-          direction_both: false,
-        },
-        variants: [
-          {
-            legend: '(both)',
-            properties: {
-              direction_both: true,
-            },
-          },
-        ],
-      },
-      {
-        legend: '(deactivated)',
-        type: 'point',
-        properties: {
-          feature0: 'de/ks-combined',
-          type: 'line',
-          azimuth: null,
-          deactivated0: true,
-          direction_both: false,
-        },
-      },
-      ...signal_types.filter(type => type.layer === 'signals').map(type => ({
-        legend: `unknown signal (${type.type})`,
-        type: 'point',
-        properties: {
-          feature0: `general/signal-unknown-${type.type}`,
-          type: 'line',
-          azimuth: null,
-          deactivated0: false,
-          direction_both: false,
-        },
-      })),
-    ],
+        })),
+      ],
+    },
   },
 
   electrification: {
