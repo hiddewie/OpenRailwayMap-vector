@@ -1766,6 +1766,8 @@ class LegendControl {
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
 
+    // TODO generate legend when in view mode and map pans/zooms
+
     // Verify if legend changed
     if (this.legendState.zoom === zoom
       && this.legendState.style === style.name
@@ -1795,6 +1797,7 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
+    // TODO move to legend
     const featureKeys = {
       signals: {
         // 'signals_railway_line_low-signals_railway_line_low': {
