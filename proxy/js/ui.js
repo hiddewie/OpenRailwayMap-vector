@@ -1795,8 +1795,27 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    // TODO filter in view
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry)
+    const featuresInView = this.map.queryRenderedFeatures();
+    const shownLayers = new Set(
+      featuresInView.map(feature => {
+        const layer = feature.layer
+        return `${layer.source}-${layer['source-layer']}`
+      })
+    );
+
+    const legendFeatureFilters = {
+      // TODO filter features:
+      // features, determine layer/source key
+      // per layer/source, determine set of shown keys
+      inView: (source, _) => {
+        console.info(source)
+        return shownLayers.has(source)
+      },
+      country: legendCountry ? (() => true) : (_, item) => !item.country || item.country === legendCountry,
+    }
+    const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
+
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry, legendFeatureFilter)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1830,7 +1849,7 @@ class LegendControl {
     return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
   }
 
-  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country) {
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country, featureFilter) {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1906,7 +1925,7 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => !country || !item.country || item.country === country)
+        .filter(item => featureFilter(sourceName, item))
         .flatMap(item => {
           const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
             .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
@@ -1956,7 +1975,7 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => !country || !item.country || item.country === country)
+        .filter(item => featureFilter(sourceName, item))
         .map(item => {
           const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
           const legend = [itemLegend, ...(item.variants ?? [])
