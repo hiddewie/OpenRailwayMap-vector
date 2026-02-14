@@ -1847,15 +1847,13 @@ class LegendControl {
     console.info(keyedSourcesAndFeaturesInView)
 
     const legendFeatureFilters = {
-      // TODO filter features:
-      // features, determine layer/source key
-      // per layer/source, determine set of shown keys
       inView: (source, item) => {
+        const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+
         const featureKeySource = featureKeys[selectedStyle][source]
-        const featureKey = featureKeySource ? featureKeys[selectedStyle][source].key.map(keyPart => item.properties[keyPart]).join('\u001e') : null;
-        console.info(item, featureKey, keyedSourcesAndFeaturesInView[source], keyedSourcesAndFeaturesInView[source] && (!featureKey || keyedSourcesAndFeaturesInView[source].has(featureKey)))
-        // TODO variants
-        return keyedSourcesAndFeaturesInView[source] && (!featureKey || keyedSourcesAndFeaturesInView[source].has(featureKey))
+        const itemFeatureKeys = itemFeatures.map(itemFeature => featureKeySource ? featureKeys[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart]).join('\u001e') : null);
+
+        return keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))
       },
       country: legendCountry ? (() => true) : (_, item) => !item.country || item.country === legendCountry,
     }
