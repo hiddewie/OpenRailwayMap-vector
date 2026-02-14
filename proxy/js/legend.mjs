@@ -1614,6 +1614,7 @@ const legendData = {
         'feature',
         'state',
         'train_protection',
+        'train_protection_construction',
       ],
       features: [
         ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1665,6 +1666,7 @@ const legendData = {
         'feature',
         'state',
         'train_protection',
+        'train_protection_construction',
       ],
       features: [
         ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1716,6 +1718,7 @@ const legendData = {
         'feature',
         'state',
         'train_protection',
+        'train_protection_construction',
       ],
       features: [
         ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1845,10 +1848,27 @@ const legendData = {
       ],
     },
     'openrailwaymap_signals-signals_railway_signals': {
-      // TODO keys for feature1, feature2, etc.
       key: [
         'feature0',
         'deactivated0',
+      ],
+      matchKeys: [
+        [
+          'feature1',
+          'deactivated1',
+        ],
+        [
+          'feature2',
+          'deactivated2',
+        ],
+        [
+          'feature3',
+          'deactivated3',
+        ],
+        [
+          'feature4',
+          'deactivated4',
+        ],
       ],
       features: [
         ...signals_railway_signals.flatMap(feature =>

@@ -1798,16 +1798,21 @@ class LegendControl {
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     const featuresInView = this.map.queryRenderedFeatures();
-    const keyedFeaturesInView = featuresInView.map(feature => {
+    const keyedFeaturesInView = featuresInView.flatMap(feature => {
       const layer = feature.layer
       const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
       const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e');
+      const matchKeys = (legendData[selectedStyle][sourceLayer].matchKeys ?? [])
+        .map(matchKey => matchKey.map(keyPart => feature.properties[keyPart]).join('\u001e'))
 
-      return {
-        sourceLayer,
-        featureKey,
-      }
+      return [
+        {
+          sourceLayer,
+          featureKey,
+        },
+        ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
+      ]
     });
 
     const keyedSourcesAndFeaturesInView = Object.fromEntries(
@@ -1818,7 +1823,6 @@ class LegendControl {
     const legendFeatureFilters = {
       inView: (source, item) => {
         const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
-
         const itemFeatureKeys = itemFeatures.map(itemFeature => legendData[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart]).join('\u001e'));
 
         if (keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))) {
