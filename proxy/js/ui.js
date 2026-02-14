@@ -1795,21 +1795,67 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
+    const featureKeys = {
+      signals: {
+        // 'signals_railway_line_low-signals_railway_line_low': {
+        //   key: [
+        //     'feature0',
+        //     'deactivated0',
+        //   ],
+        // },
+        // 'openrailwaymap_low-railway_line_high': {
+        //   key: [],
+        // },
+        // 'high-railway_line_high': {
+        //   key: [],
+        // },
+        // 'openrailwaymap_signals-signals_signal_boxes': {
+        //   key: [],
+        // },
+        // 'high-railway_text_km': {
+        //   key: [],
+        // },
+        'openrailwaymap_signals-signals_railway_signals': {
+          key: [
+            'feature0',
+            'deactivated0',
+          ],
+        },
+      }
+    }
+
     const featuresInView = this.map.queryRenderedFeatures();
-    const shownLayers = new Set(
-      featuresInView.map(feature => {
-        const layer = feature.layer
-        return `${layer.source}-${layer['source-layer']}`
-      })
+    const keyedFeaturesInView = featuresInView.map(feature => {
+      const layer = feature.layer
+      const sourceLayer = `${layer.source}-${layer['source-layer']}`
+
+      const featureKeySource = featureKeys[selectedStyle][sourceLayer]
+      const featureKey = featureKeySource ? featureKeys[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e') : null;
+      // console.info(feature, sourceLayer, featureKeys[selectedStyle][sourceLayer], featureKeySource, featureKey)
+
+      return {
+        sourceLayer,
+        featureKey,
+      }
+    });
+    console.info(keyedFeaturesInView)
+
+    const keyedSourcesAndFeaturesInView = Object.fromEntries(
+      Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
+        .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
     );
+    console.info(keyedSourcesAndFeaturesInView)
 
     const legendFeatureFilters = {
       // TODO filter features:
       // features, determine layer/source key
       // per layer/source, determine set of shown keys
-      inView: (source, _) => {
-        console.info(source)
-        return shownLayers.has(source)
+      inView: (source, item) => {
+        const featureKeySource = featureKeys[selectedStyle][source]
+        const featureKey = featureKeySource ? featureKeys[selectedStyle][source].key.map(keyPart => item.properties[keyPart]).join('\u001e') : null;
+        console.info(item, featureKey, keyedSourcesAndFeaturesInView[source], keyedSourcesAndFeaturesInView[source] && (!featureKey || keyedSourcesAndFeaturesInView[source].has(featureKey)))
+        // TODO variants
+        return keyedSourcesAndFeaturesInView[source] && (!featureKey || keyedSourcesAndFeaturesInView[source].has(featureKey))
       },
       country: legendCountry ? (() => true) : (_, item) => !item.country || item.country === legendCountry,
     }
