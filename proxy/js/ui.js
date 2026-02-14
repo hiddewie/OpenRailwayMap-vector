@@ -1652,17 +1652,6 @@ class LegendControl {
     legendAllLabel.htmlFor = 'legendContentAll'
     legendAllLabel.innerText = 'all'
 
-    const legendInView = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
-    const legendInViewControl = createDomElement('input', 'form-check-input', legendInView)
-    legendInViewControl.type = 'radio'
-    legendInViewControl.name = 'legendContent'
-    legendInViewControl.value = 'inView'
-    legendInViewControl.id = 'legendContentInView'
-    legendInViewControl.checked = this.options.initialLegendConfiguration === 'inView'
-    const legendInViewLabel = createDomElement('label', 'form-check-label', legendInView)
-    legendInViewLabel.innerText = 'in view'
-    legendInViewLabel.htmlFor = 'legendContentInView'
-
     const legendCountry = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
     const legendCountryControl = createDomElement('input', 'form-check-input', legendCountry)
     legendCountryControl.type = 'radio'
@@ -1681,12 +1670,6 @@ class LegendControl {
       this.legendCountrySelection.value = null
       this.legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('all', null)
-      this.generateLegendEventHandler()
-    }
-    legendInViewControl.onchange = () => {
-      this.legendCountrySelection.value = null
-      this.legendCountrySelection.disabled = 'disabled'
-      this.options.onLegendConfigurationChange('inView', null)
       this.generateLegendEventHandler()
     }
     legendCountryControl.onchange = () => {
@@ -1795,7 +1778,6 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    // TODO filter in view
     const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
