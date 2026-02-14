@@ -1823,6 +1823,7 @@ const legendData = {
           country: feature.country,
           properties: {
             feature0: iconFeature.icon,
+            railway: 'signal',
             type: 'line',
             azimuth: null,
             deactivated0: false,
@@ -1840,6 +1841,7 @@ const legendData = {
         type: 'point',
         properties: {
           feature0: 'does-not-exist',
+          railway: 'signal',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -1859,6 +1861,7 @@ const legendData = {
         type: 'point',
         properties: {
           feature0: 'de/ks-combined',
+          railway: 'signal',
           type: 'line',
           azimuth: null,
           deactivated0: true,
@@ -1870,6 +1873,7 @@ const legendData = {
         type: 'point',
         properties: {
           feature0: `general/signal-unknown-${type.type}`,
+          railway: 'signal',
           type: 'line',
           azimuth: null,
           deactivated0: false,
