@@ -1447,7 +1447,7 @@ const legendData = {
   },
 
   speed: {
-    countries: [...new Set(speed_railway_signals.map(feature => feature.country))].toSorted(),
+    countries: [...new Set(speed_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
 
     'speed_railway_line_low-speed_railway_line_low': [
       ...speedLegends.map(speed => ({
@@ -1607,7 +1607,7 @@ const legendData = {
   },
 
   signals: {
-    countries: [...new Set(signals_railway_signals.map(feature => feature.country))].toSorted(),
+    countries: [...new Set(signals_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
 
     'signals_railway_line_low-signals_railway_line_low': [
       ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1880,7 +1880,7 @@ const legendData = {
   },
 
   electrification: {
-    countries: [...new Set(electrification_signals.map(feature => feature.country))].toSorted(),
+    countries: [...new Set(electrification_signals.map(feature => feature.country).filter(it => it))].toSorted(),
 
     'electrification_railway_line_low-electrification_railway_line_low': [
       ...electrificationLegends.voltageFrequency.map(({legend, voltage, frequency}) => ({
@@ -3058,7 +3058,9 @@ const legendData = {
         })),
   },
 
-  route: {},
+  route: {
+    countries: [],
+  },
 }
 
 console.log(JSON.stringify(legendData));

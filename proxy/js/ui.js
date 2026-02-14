@@ -1674,40 +1674,30 @@ class LegendControl {
     legendCountryLabel.innerText = 'country: '
     legendCountryLabel.htmlFor = 'legendContentCountry'
 
-    const legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
-
-    // TODO update from legend layer countries
-    const countries = ['AT', 'BE', 'DE']
-    countries.forEach(country => {
-      const option = createDomElement('option', undefined, legendCountrySelection)
-      option.value = country
-      option.innerText = `${getFlagEmoji(country)} ${country}`
-    })
-
-    legendCountrySelection.value = this.options.initialLegendConfiguration === 'country'
-      ? this.options.initialLegendCountry
-      : null;
+    this.legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
+    this.legendCountrySelection.disabled = this.options.initialLegendConfiguration !== 'country';
 
     legendAllControl.onchange = () => {
-      legendCountrySelection.value = null
-      legendCountrySelection.disabled = 'disabled'
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('all', null)
       this.generateLegendEventHandler()
     }
     legendInViewControl.onchange = () => {
-      legendCountrySelection.value = null
-      legendCountrySelection.disabled = 'disabled'
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('inView', null)
       this.generateLegendEventHandler()
     }
     legendCountryControl.onchange = () => {
-      legendCountrySelection.value = countries[0]
-      legendCountrySelection.disabled = null
-      this.options.onLegendConfigurationChange('country', legendCountrySelection.value)
+      const firstCountryOption = this.legendCountrySelection.firstElementChild;
+      this.legendCountrySelection.value = firstCountryOption ? firstCountryOption.value : null;
+      this.legendCountrySelection.disabled = null
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
       this.generateLegendEventHandler()
     }
-    legendCountrySelection.onchange = () => {
-      this.options.onLegendConfigurationChange('country', legendCountrySelection.value)
+    this.legendCountrySelection.onchange = () => {
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
       this.generateLegendEventHandler()
     }
 
@@ -1793,11 +1783,20 @@ class LegendControl {
       legendCountry,
     };
 
+    const countries = legendData[selectedStyle].countries;
+    this.legendCountrySelection.replaceChildren([]);
+    countries.forEach(country => {
+      const option = createDomElement('option', undefined, this.legendCountrySelection)
+      option.value = country
+      option.innerText = `${getFlagEmoji(country)} ${country}`
+    })
+    this.legendCountrySelection.value = legendCountry;
+
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     // TODO filter in view
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, configuration.legendCountry)
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
