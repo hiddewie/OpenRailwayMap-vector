@@ -2931,13 +2931,13 @@ const legendData = {
   },
 
   operator: {
-    // TODO operator countries
-    countries: [],
+    countries: [...new Set(operators.operators.map(operator => operator.country).filter(it => it))].toSorted(),
 
     'operator_railway_line_low-operator_railway_line_low': [
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -2970,6 +2970,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -3002,6 +3003,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
