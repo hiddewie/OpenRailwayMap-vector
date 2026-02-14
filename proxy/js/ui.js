@@ -1617,6 +1617,7 @@ class LegendControl {
       mapGlobalState: {},
       legendConfiguration: this.options.initialLegendConfiguration,
       legendCountry: this.options.initialLegendCountry,
+      keyedSourcesAndFeaturesInView: {},
     };
 
     this.generateLegendEventHandler = () => this.updateLegend();
@@ -1726,6 +1727,7 @@ class LegendControl {
 
     this.map.on('load', this.generateLegendEventHandler);
     this.map.on('zoomend', this.generateLegendEventHandler);
+    this.map.on('moveend', this.generateLegendEventHandler);
     this.map.on('styledata', this.generateLegendEventHandler);
 
     return this._container;
@@ -1766,37 +1768,6 @@ class LegendControl {
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
 
-    // TODO generate legend when in view mode and map pans/zooms
-
-    // Verify if legend changed
-    if (this.legendState.zoom === zoom
-      && this.legendState.style === style.name
-      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
-      && this.legendState.legendConfiguration === legendConfiguration
-      && this.legendState.legendCountry === legendCountry
-    ) {
-      return;
-    }
-    this.legendState = {
-      zoom,
-      style: style.name,
-      mapGlobalState: {...mapGlobalState},
-      legendConfiguration,
-      legendCountry,
-    };
-
-    const countries = legendData[selectedStyle].countries;
-    this.legendCountrySelection.replaceChildren([]);
-    countries.forEach(country => {
-      const option = createDomElement('option', undefined, this.legendCountrySelection)
-      option.value = country
-      option.innerText = `${getFlagEmoji(country)} ${country}`
-    })
-    this.legendCountrySelection.value = legendCountry;
-
-    const layersOrder = this.map.getLayersOrder()
-    const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
-
     const featuresInView = this.map.queryRenderedFeatures();
     const keyedFeaturesInView = featuresInView.flatMap(feature => {
       const layer = feature.layer
@@ -1819,6 +1790,38 @@ class LegendControl {
       Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
         .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
     );
+
+    // Verify if legend changed
+    if (this.legendState.zoom === zoom
+      && this.legendState.style === style.name
+      && this.legendState.legendConfiguration === legendConfiguration
+      && this.legendState.legendCountry === legendCountry
+      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
+        && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
+    ) {
+      return;
+    }
+    this.legendState = {
+      zoom,
+      style: style.name,
+      mapGlobalState: {...mapGlobalState},
+      legendConfiguration,
+      legendCountry,
+      keyedSourcesAndFeaturesInView,
+    };
+
+    const countries = legendData[selectedStyle].countries;
+    this.legendCountrySelection.replaceChildren([]);
+    countries.forEach(country => {
+      const option = createDomElement('option', undefined, this.legendCountrySelection)
+      option.value = country
+      option.innerText = `${getFlagEmoji(country)} ${country}`
+    })
+    this.legendCountrySelection.value = legendCountry;
+
+    const layersOrder = this.map.getLayersOrder()
+    const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     const legendFeatureFilters = {
       inView: (source, item) => {
@@ -1855,6 +1858,7 @@ class LegendControl {
 
     this.map.off('load', this.generateLegendEventHandler);
     this.map.off('zoomend', this.generateLegendEventHandler);
+    this.map.off('moveend', this.generateLegendEventHandler);
     this.map.off('styledata', this.generateLegendEventHandler);
 
     this.map = undefined;
