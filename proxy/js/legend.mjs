@@ -1849,23 +1849,28 @@ const legendData = {
     },
     'openrailwaymap_signals-signals_railway_signals': {
       key: [
+        'railway',
         'feature0',
         'deactivated0',
       ],
       matchKeys: [
         [
+          'railway',
           'feature1',
           'deactivated1',
         ],
         [
+          'railway',
           'feature2',
           'deactivated2',
         ],
         [
+          'railway',
           'feature3',
           'deactivated3',
         ],
         [
+          'railway',
           'feature4',
           'deactivated4',
         ],
@@ -1878,6 +1883,7 @@ const legendData = {
             country: feature.country,
             properties: {
               feature0: iconFeature.icon,
+              railway: 'signal',
               type: 'line',
               azimuth: null,
               deactivated0: false,
@@ -1895,6 +1901,7 @@ const legendData = {
           type: 'point',
           properties: {
             feature0: 'does-not-exist',
+            railway: 'signal',
             type: 'line',
             azimuth: 135.5,
             deactivated0: false,
@@ -1914,6 +1921,7 @@ const legendData = {
           type: 'point',
           properties: {
             feature0: 'de/ks-combined',
+            railway: 'signal',
             type: 'line',
             azimuth: null,
             deactivated0: true,
@@ -1925,6 +1933,7 @@ const legendData = {
           type: 'point',
           properties: {
             feature0: `general/signal-unknown-${type.type}`,
+            railway: 'signal',
             type: 'line',
             azimuth: null,
             deactivated0: false,

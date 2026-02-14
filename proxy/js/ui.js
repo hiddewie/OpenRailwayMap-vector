@@ -1824,11 +1824,6 @@ class LegendControl {
       inView: (source, item) => {
         const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
         const itemFeatureKeys = itemFeatures.map(itemFeature => legendData[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart]).join('\u001e'));
-
-        if (keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))) {
-          console.info(item, itemFeatureKeys)
-        }
-
         return keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))
       },
       country: legendCountry ? (() => true) : (_, item) => !item.country || item.country === legendCountry,
