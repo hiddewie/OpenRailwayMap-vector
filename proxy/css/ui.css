@@ -28,18 +28,33 @@ body {
   display: none;
 }
 
-.legend-map-container {
+.legend-container {
   position: absolute;
   display: none;
   left: 0;
   bottom: 30px;
   z-index: 10;
 
-  height: 400px;
-  width: 300px;
   background-color: rgba(var(--bs-body-bg-rgb), .9);
   border-radius: 4px;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
+}
+.legend-map-configuration {
+  padding: 10px;
+  border-bottom: 1px solid rgb(204, 204, 204);
+  font-size: .9rem;
+}
+.legend-map-configuration .country-select {
+  display: inline-block;
+  width: auto;
+}
+.legend-map-configuration .form-check-inline {
+  margin-right: .3rem;
+  margin-left: .6rem;
+}
+.legend-map-container {
+  height: 400px;
+  width: 380px;
   overflow-y: auto;
 }
 .legend-map {
