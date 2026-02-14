@@ -1831,20 +1831,17 @@ class LegendControl {
 
       const featureKeySource = featureKeys[selectedStyle][sourceLayer]
       const featureKey = featureKeySource ? featureKeys[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e') : null;
-      // console.info(feature, sourceLayer, featureKeys[selectedStyle][sourceLayer], featureKeySource, featureKey)
 
       return {
         sourceLayer,
         featureKey,
       }
     });
-    console.info(keyedFeaturesInView)
 
     const keyedSourcesAndFeaturesInView = Object.fromEntries(
       Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
         .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
     );
-    console.info(keyedSourcesAndFeaturesInView)
 
     const legendFeatureFilters = {
       inView: (source, item) => {
