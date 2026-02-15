@@ -1768,31 +1768,33 @@ class LegendControl {
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
 
-    // TODO only when legend is `inView` configuration
-    const featuresInView = this.map.queryRenderedFeatures();
-    const keyedFeaturesInView = featuresInView.flatMap(feature => {
-      const layer = feature.layer
-      const sourceLayer = `${layer.source}-${layer['source-layer']}`
+    let keyedSourcesAndFeaturesInView = []
+    if (legendConfiguration === 'inView') {
+      const featuresInView = this.map.queryRenderedFeatures();
+      const keyedFeaturesInView = featuresInView.flatMap(feature => {
+        const layer = feature.layer
+        const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
-      // TODO handle signals variables
-      // TODO handle composite signals
-      const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e');
-      const matchKeys = (legendData[selectedStyle][sourceLayer].matchKeys ?? [])
-        .map(matchKey => matchKey.map(keyPart => feature.properties[keyPart]).join('\u001e'))
+        // TODO handle signals variables
+        // TODO handle composite signals
+        const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e');
+        const matchKeys = (legendData[selectedStyle][sourceLayer].matchKeys ?? [])
+          .map(matchKey => matchKey.map(keyPart => feature.properties[keyPart]).join('\u001e'))
 
-      return [
-        {
-          sourceLayer,
-          featureKey,
-        },
-        ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
-      ]
-    });
+        return [
+          {
+            sourceLayer,
+            featureKey,
+          },
+          ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
+        ]
+      });
 
-    const keyedSourcesAndFeaturesInView = Object.fromEntries(
-      Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
-        .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
-    );
+      keyedSourcesAndFeaturesInView = Object.fromEntries(
+        Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
+          .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
+      );
+    }
 
     // Verify if legend changed
     if (this.legendState.zoom === zoom
