@@ -160,6 +160,7 @@ const signalFeatures = (feature) =>
     })),
   }));
 
+// TODO move source layers to own property
 const legendData = {
   standard: {
     countries: [],
@@ -3312,4 +3313,26 @@ const legendData = {
   },
 }
 
-console.log(JSON.stringify(legendData));
+// Generate legend keys
+const legendDataWithKeys = Object.fromEntries(
+  Object.entries(legendData)
+    .map(([style, {countries, ...rest}]) => [style, {
+      countries,
+      ...Object.fromEntries(
+        Object.entries(rest)
+          .map(([sourceLayer, {key, features}]) => [sourceLayer, {
+            key,
+            features: features.map(item => {
+              const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+              const itemFeatureKeys = itemFeatures.map(itemFeature => key.map(keyPart => String(itemFeature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'));
+              return {
+                ...item,
+                keys: itemFeatureKeys.toSorted(),
+              }
+            }),
+          }])
+      ),
+    }])
+)
+
+console.log(JSON.stringify(legendDataWithKeys));

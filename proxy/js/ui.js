@@ -1775,10 +1775,10 @@ class LegendControl {
         const layer = feature.layer
         const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
-        // TODO legendData[selectedStyle][sourceLayer] missing on style change
-        const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart] ? feature.properties[keyPart].replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : '').join('\u001e');
-        const matchKeys = (legendData[selectedStyle][sourceLayer].matchKeys ?? [])
-          .map(matchKey => matchKey.map(keyPart => feature.properties[keyPart] ? feature.properties[keyPart].replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : '').join('\u001e'))
+        const sourceLayerData = legendData[selectedStyle][sourceLayer] ?? {key: []}
+        const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
+        const matchKeys = (sourceLayerData.matchKeys ?? [])
+          .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
 
         return [
           {
@@ -1806,6 +1806,7 @@ class LegendControl {
     ) {
       return;
     }
+    console.info('legend updated', legendConfiguration, legendCountry)
     this.legendState = {
       zoom,
       style: style.name,
@@ -1829,13 +1830,9 @@ class LegendControl {
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     const legendFeatureFilters = {
-      inView: (source, item) => {
-        // TODO generate key at build time
-        const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
-        const itemFeatureKeys = itemFeatures.map(itemFeature => legendData[selectedStyle][source].key.map(keyPart => itemFeature.properties[keyPart] ? itemFeature.properties[keyPart].replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : '').join('\u001e'));
-        return keyedSourcesAndFeaturesInView[source] && (itemFeatureKeys.length === 0 || itemFeatureKeys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey)))
-      },
-      country: legendCountry ? (() => true) : (_, item) => !item.country || item.country === legendCountry,
+      inView: (source, item) =>
+        keyedSourcesAndFeaturesInView[source] && (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey))),
+      country: legendCountry ? (_, item) => !item.country || item.country === legendCountry : (() => true),
     }
     const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
 
