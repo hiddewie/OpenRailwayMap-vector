@@ -162,6 +162,8 @@ const signalFeatures = (feature) =>
 
 const legendData = {
   standard: {
+    countries: [],
+
     "standard_railway_line_low-standard_railway_line_low": [
       {
         legend: 'Highspeed main line',
@@ -1445,6 +1447,8 @@ const legendData = {
   },
 
   speed: {
+    countries: [...new Set(speed_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
+
     'speed_railway_line_low-speed_railway_line_low': [
       ...speedLegends.map(speed => ({
         legend: `${speed} km/h`,
@@ -1539,11 +1543,11 @@ const legendData = {
       },
     ],
     'openrailwaymap_speed-speed_railway_signals': [
-      // TODO filter per country polygon
       ...speed_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature0: iconFeature.icon,
             type: 'line',
@@ -1601,7 +1605,10 @@ const legendData = {
       })),
     ],
   },
+
   signals: {
+    countries: [...new Set(signals_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
+
     'signals_railway_line_low-signals_railway_line_low': [
       ...signals_railway_line.train_protections.map(train_protection => ({
         legend: train_protection.legend,
@@ -1811,10 +1818,12 @@ const legendData = {
     'openrailwaymap_signals-signals_railway_signals': [
       ...signals_railway_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          legend: `${feature.country ? `(${feature.country}) ` : ''}${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature0: iconFeature.icon,
+            railway: 'signal',
             type: 'line',
             azimuth: null,
             deactivated0: false,
@@ -1832,6 +1841,7 @@ const legendData = {
         type: 'point',
         properties: {
           feature0: 'does-not-exist',
+          railway: 'signal',
           type: 'line',
           azimuth: 135.5,
           deactivated0: false,
@@ -1846,12 +1856,12 @@ const legendData = {
           },
         ],
       },
-      // TODO country specific railway signals
       {
         legend: '(deactivated)',
         type: 'point',
         properties: {
           feature0: 'de/ks-combined',
+          railway: 'signal',
           type: 'line',
           azimuth: null,
           deactivated0: true,
@@ -1863,6 +1873,7 @@ const legendData = {
         type: 'point',
         properties: {
           feature0: `general/signal-unknown-${type.type}`,
+          railway: 'signal',
           type: 'line',
           azimuth: null,
           deactivated0: false,
@@ -1871,7 +1882,10 @@ const legendData = {
       })),
     ],
   },
+
   electrification: {
+    countries: [...new Set(electrification_signals.map(feature => feature.country).filter(it => it))].toSorted(),
+
     'electrification_railway_line_low-electrification_railway_line_low': [
       ...electrificationLegends.voltageFrequency.map(({legend, voltage, frequency}) => ({
         legend,
@@ -2229,8 +2243,9 @@ const legendData = {
     'openrailwaymap_electrification-electrification_signals': [
       ...electrification_signals.flatMap(feature =>
         signalFeatures(feature).map(iconFeature => ({
-          legend: `(${feature.country}) ${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+          legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
           type: 'point',
+          country: feature.country,
           properties: {
             feature: iconFeature.icon,
             type: 'line',
@@ -2339,7 +2354,10 @@ const legendData = {
       }
     ],
   },
+
   track: {
+    countries: [],
+
     'track_railway_line_low-track_railway_line_low': [
       ...gaugeLegends.map(({min, legend}) => ({
         legend,
@@ -2913,10 +2931,13 @@ const legendData = {
   },
 
   operator: {
+    countries: [...new Set(operators.operators.map(operator => operator.country).filter(it => it))].toSorted(),
+
     'operator_railway_line_low-operator_railway_line_low': [
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -2949,6 +2970,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -2981,6 +3003,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -3039,6 +3062,10 @@ const legendData = {
             },
           })) : undefined,
         })),
+  },
+
+  route: {
+    countries: [],
   },
 }
 

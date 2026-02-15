@@ -1149,6 +1149,8 @@ const defaultConfiguration = {
   localization: 'automatic',
   electrificationRailwayLine: 'voltageFrequency',
   trackRailwayLine: 'gauge',
+  legendConfiguration: 'all',
+  legendCountry: null,
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
@@ -1603,7 +1605,8 @@ class ConfigurationControl {
 }
 
 class LegendControl {
-  constructor() {
+  constructor(options) {
+    this.options = options;
     this.map = null;
     this._container = null;
     this.legend = null;
@@ -1612,6 +1615,8 @@ class LegendControl {
       zoom: null,
       style: null,
       mapGlobalState: {},
+      legendConfiguration: this.options.initialLegendConfiguration,
+      legendCountry: this.options.initialLegendCountry,
     };
 
     this.generateLegendEventHandler = () => this.updateLegend();
@@ -1630,8 +1635,57 @@ class LegendControl {
 
     button.onclick = () => this.toggleLegend();
 
-    this.legendMapContainer = createDomElement('div', 'legend-map-container', this._container)
-    this.legendMapRoot = createDomElement('div', 'legend-map', this.legendMapContainer)
+    this.legendContainer = createDomElement('div', 'legend-container', this._container)
+    const legendMapConfiguration = createDomElement('form', 'legend-map-configuration', this.legendContainer)
+
+    const legendTitle = createDomElement('span', undefined, legendMapConfiguration)
+    legendTitle.innerText = 'Show'
+
+    const legendAll = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendAllControl = createDomElement('input', 'form-check-input', legendAll)
+    legendAllControl.type = 'radio'
+    legendAllControl.name = 'legendContent'
+    legendAllControl.value = 'all'
+    legendAllControl.id = 'legendContentAll'
+    legendAllControl.checked = this.options.initialLegendConfiguration === 'all'
+    const legendAllLabel = createDomElement('label', 'form-check-label', legendAll)
+    legendAllLabel.htmlFor = 'legendContentAll'
+    legendAllLabel.innerText = 'all'
+
+    const legendCountry = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendCountryControl = createDomElement('input', 'form-check-input', legendCountry)
+    legendCountryControl.type = 'radio'
+    legendCountryControl.name = 'legendContent'
+    legendCountryControl.value = 'country'
+    legendCountryControl.id = 'legendContentCountry'
+    legendCountryControl.checked = this.options.initialLegendConfiguration === 'country'
+    const legendCountryLabel = createDomElement('label', 'form-check-label', legendCountry)
+    legendCountryLabel.innerText = 'country: '
+    legendCountryLabel.htmlFor = 'legendContentCountry'
+
+    this.legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
+    this.legendCountrySelection.disabled = this.options.initialLegendConfiguration !== 'country';
+
+    legendAllControl.onchange = () => {
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
+      this.options.onLegendConfigurationChange('all', null)
+      this.generateLegendEventHandler()
+    }
+    legendCountryControl.onchange = () => {
+      const firstCountryOption = this.legendCountrySelection.firstElementChild;
+      this.legendCountrySelection.value = firstCountryOption ? firstCountryOption.value : null;
+      this.legendCountrySelection.disabled = null
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
+      this.generateLegendEventHandler()
+    }
+    this.legendCountrySelection.onchange = () => {
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
+      this.generateLegendEventHandler()
+    }
+
+    const legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
+    this.legendMapRoot = createDomElement('div', 'legend-map', legendMapContainer)
     this.legendMap = new maplibregl.Map({
       container: this.legendMapRoot,
       zoom: 16,
@@ -1661,16 +1715,16 @@ class LegendControl {
   }
 
   hideLegend() {
-    this.legendMapContainer.style.display = 'none';
+    this.legendContainer.style.display = 'none';
   }
 
   showLegend() {
-    this.legendMapContainer.style.display = 'block';
+    this.legendContainer.style.display = 'block';
     this.updateLegend();
   }
 
   isLegendShown() {
-    return this.legendMapContainer.style.display === 'block';
+    return this.legendContainer.style.display === 'block';
   }
 
   toggleLegend() {
@@ -1692,20 +1746,40 @@ class LegendControl {
     }
     const mapGlobalState = this.map.getGlobalState();
 
+    const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
+    const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
+
     // Verify if legend changed
-    if (this.legendState.zoom === zoom && this.legendState.style === style.name && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)) {
+    if (this.legendState.zoom === zoom
+      && this.legendState.style === style.name
+      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
+      && this.legendState.legendConfiguration === legendConfiguration
+      && this.legendState.legendCountry === legendCountry
+    ) {
       return;
     }
     this.legendState = {
       zoom,
       style: style.name,
       mapGlobalState: {...mapGlobalState},
+      legendConfiguration,
+      legendCountry,
     };
+
+    const countries = legendData[selectedStyle].countries;
+    this.legendCountrySelection.replaceChildren([]);
+    countries.forEach(country => {
+      const option = createDomElement('option', undefined, this.legendCountrySelection)
+      option.value = country
+      option.innerText = `${country} ${getFlagEmoji(country)}`
+    })
+    this.legendCountrySelection.value = legendCountry;
+    this.legendCountrySelection.disabled = !(legendConfiguration === 'country' && countries.length > 0);
 
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom)
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1739,7 +1813,7 @@ class LegendControl {
     return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
   }
 
-  makeLegendStyle(style, visibleLayers, legendData, state, zoom) {
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country) {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1790,7 +1864,7 @@ class LegendControl {
         'text-size': 11,
         'text-font': ['Noto Sans Regular'],
         'text-anchor': 'left',
-        'text-max-width': 14,
+        'text-max-width': 22,
         'text-overlap': 'always',
       },
     };
@@ -1815,6 +1889,7 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => !country || !item.country || item.country === country)
         .flatMap(item => {
           const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
             .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
@@ -1826,12 +1901,12 @@ class LegendControl {
                   : 'Point',
                 coordinates:
                   subItem.type === 'line' ? [
-                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 1.5, -entry * 0.6]),
-                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
                     ] :
                     subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 1.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 1.5, -entry * 0.6]),
+                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
               },
               properties: subItem.properties,
             }));
@@ -1864,8 +1939,10 @@ class LegendControl {
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => !country || !item.country || item.country === country)
         .map(item => {
-          const legend = [item.legend, ...(item.variants ?? [])
+          const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
+          const legend = [itemLegend, ...(item.variants ?? [])
             .filter(variant => variant.legend)
             .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
             .map(variant => variant.legend)]
@@ -1875,7 +1952,7 @@ class LegendControl {
             type: 'Feature',
             geometry: {
               type: "Point",
-              coordinates: this.legendPointToMapPoint([0.5, -entry * 0.6]),
+              coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
             },
             properties: {
               legend,
@@ -2030,7 +2107,14 @@ const aboutControl = new AboutControl({
 });
 map.addControl(aboutControl, 'bottom-right');
 
-const legendControl = new LegendControl();
+const legendControl = new LegendControl({
+  initialLegendConfiguration: configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration,
+  initialLegendCountry: configuration.legendCountry ?? defaultConfiguration.legendCountry,
+  onLegendConfigurationChange: (legendConfiguration, legendCountry) => {
+    updateConfiguration('legendConfiguration', legendConfiguration)
+    updateConfiguration('legendCountry', legendCountry)
+  }
+});
 map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
