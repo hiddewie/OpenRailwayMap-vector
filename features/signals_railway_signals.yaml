@@ -4650,30 +4650,35 @@ features:
 
   # Icon filename format: Signal_Shape-State.svg
 
-  # The signal target shape (A, C, F, H) is derived from the
-  # supported states. The rendered icon reflects the signal's
-  # most restrictive possible state (C, Cv, S, D, A), regardless
-  # of the target type or additional supported states.
+  # The rendered icon reflects the signal's most
+  # restrictive possible state (C, Cv, S, D, or A).
 
   - description: Carré
     country: FR
     icon:
-# TODO using shape tag instead of states
-#      - match: 'railway:signal:main:shape'
-#        cases:
-#          - { exact: 'FR:H', value: 'fr/C_H-C' }
-#          - { exact: 'FR:F', value: 'fr/C_F-C' }
-#        default: 'fr/C_C-C'
-
-      # File name format: Signal_Shape-State.svg
-      - match: 'railway:signal:main:states'
+      # Check low-profile shape first
+      - match: 'railway:signal:main:height'
         cases:
-          # H target
-          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/C_H-C' }
-          # F target
-          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/C_F-C' }
-          # C target
-        default: 'fr/C_C-C'
+          - { exact: 'dwarf', value: 'fr/C_small-C' }
+        default:
+          # Retrieve signal head type from shape tag (if present)
+          - match: 'railway:signal:main:shape'
+            cases:
+              - { exact: 'FR:A', value: 'fr/C_A-C' }
+              - { exact: 'FR:C', value: 'fr/C_C-C' }
+              - { exact: 'FR:F', value: 'fr/C_F-C' }
+              - { exact: 'FR:H', value: 'fr/C_H-C' }
+              - { exact: 'FR:K', value: 'fr/C_K-C' }       
+            # Fallback
+            default:
+              match: 'railway:signal:main:states'
+              cases:
+                # H-type head
+                - { exact: 'FR:RR', value: 'fr/C_H-C' }
+                # F-type head
+                - { exact: 'FR:R', value: 'fr/C_F-C' }
+              # C-type head
+              default: 'fr/C_C-C'
     tags:
       - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4681,24 +4686,31 @@ features:
   - description: Carré violet
     country: FR
     icon:
-# TODO using shape tag instead of states
-#      - match: 'railway:signal:main:shape'
-#        cases:
-#          - { exact: 'FR:H', value: 'fr/Cv_H-Cv' }
-#          - { exact: 'FR:F', value: 'fr/Cv_F-Cv' }
-#          - { exact: 'FR:C', value: 'fr/Cv_C-Cv' }
-#        default: 'fr/Cv_A-Cv'
-
-      - match: 'railway:signal:main:states'
+      # Check ground installation first
+      - match: 'railway:signal:location'
         cases:
-          # H target
-          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/Cv_H-Cv' }
-          # F target
-          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/Cv_F-Cv' }
-          # C target
-          - { any: [ 'FR:S', 'FR:(S)', 'FR:A', 'FR:(A)', 'FR:VL', 'FR:(VL)' ], value: 'fr/Cv_C-Cv' }
-          # A target
-        default: 'fr/Cv_A-Cv'
+          - { exact: 'ground', value: 'fr/Cv_ground-Cv' }
+        default:
+          # Retrieve signal head type from shape tag (if present)
+          match: 'railway:signal:main:shape'
+          cases:
+            - { exact: 'FR:A', value: 'fr/Cv_A-Cv' }
+            - { exact: 'FR:C', value: 'fr/Cv_C-Cv' }
+            - { exact: 'FR:F', value: 'fr/Cv_F-Cv' }
+            - { exact: 'FR:H', value: 'fr/Cv_H-Cv' }
+            - { exact: 'FR:K', value: 'fr/Cv_K-Cv' }       
+          # Fallback
+          default:
+            match: 'railway:signal:main:states'
+            cases:
+              # H-type head
+              - { exact: 'FR:RR', value: 'fr/Cv_H-Cv' }
+              # F-type head
+              - { exact: 'FR:R', value: 'fr/Cv_F-Cv' }
+              # Could be A-type, C-type or K-type heads but
+              # only 'railway:signal:main:shape' can tell.
+            # A-type head
+            default: 'fr/Cv_A-Cv'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:CV' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4706,31 +4718,31 @@ features:
   - description: Sémaphore
     country: FR
     icon:
-# TODO using shape
-#      - match: 'railway:signal:main:shape'
-#        cases:
-#          - { exact: 'FR:H', value: 'fr/S_H-S' }
-#          - { exact: 'FR:F', value: 'fr/S_F-S' }
-#          - { exact: 'FR:C', value: 'fr/S_C-S' }
-#        default: 'fr/S_A-S'
-
-      - match: 'railway:signal:main:states'
+      # Retrieve signal head type from shape tag (if present)
+      - match: 'railway:signal:main:shape'
         cases:
-          # H target
-          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR', 'FR:(RR)' ], value: 'fr/S_H-S' }
-          # F target
-          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R', 'FR:(R)' ], value: 'fr/S_F-S' }
-          # TODO Could be a C target with some hidden positions
-          # but only 'railway:signal:main:shape' can tell.
-          # A target (BAL)
-        default: 'fr/S_A-S'
+          - { exact: 'FR:A', value: 'fr/S_A-S' }
+          - { exact: 'FR:C', value: 'fr/S_C-S' }
+          - { exact: 'FR:F', value: 'fr/S_F-S' }
+          - { exact: 'FR:H', value: 'fr/S_H-S' }
+          - { exact: 'FR:K', value: 'fr/S_K-S' }       
+        # Fallback
+        default:
+          match: 'railway:signal:main:states'
+          cases:
+            - { exact: 'FR:RR', value: 'fr/S_H-S' }
+            - { exact: 'FR:R', value: 'fr/S_F-S' }
+            # Could be A-type, C-type or K-type heads but
+            # only 'railway:signal:main:shape' can tell.
+          # A-type head
+          default: 'fr/S_A-S'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Avertissement
     country: FR
-    # R target (implicit)
+    # R-type head (implicit)
     icon: [ default: 'fr/A-A' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
@@ -4738,7 +4750,7 @@ features:
 
   - description: Disque
     country: FR
-    # R target (implicit)
+    # R-type head (implicit)
     icon: [ default: 'fr/D-D' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
@@ -5053,6 +5065,7 @@ features:
         cases:
           - { exact: 'FR:ID5', value: 'fr/ID5' }
           - { exact: 'FR:ID4', value: 'fr/ID4' }
+          - { exact: 'FR:ID3', value: 'fr/ID3' }
           - { exact: 'FR:ID2', value: 'fr/ID2' }
         default: 'fr/ID3'
     tags:
