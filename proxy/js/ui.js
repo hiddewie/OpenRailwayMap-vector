@@ -1774,6 +1774,7 @@ class LegendControl {
       option.innerText = `${country} ${getFlagEmoji(country)}`
     })
     this.legendCountrySelection.value = legendCountry;
+    this.legendCountrySelection.disabled = !(legendConfiguration === 'country' && countries.length > 0);
 
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
