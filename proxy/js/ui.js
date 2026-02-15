@@ -1806,7 +1806,6 @@ class LegendControl {
     ) {
       return;
     }
-    console.info('legend updated', legendConfiguration, legendCountry)
     this.legendState = {
       zoom,
       style: style.name,
