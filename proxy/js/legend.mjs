@@ -1662,7 +1662,6 @@ const legendData = {
         ],
         matchKeys: [
           [
-            'railway',
             'feature1',
           ],
         ],
