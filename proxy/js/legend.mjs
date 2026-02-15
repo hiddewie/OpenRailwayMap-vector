@@ -1900,7 +1900,7 @@ const legendData = {
           legend: 'signal direction',
           type: 'point',
           properties: {
-            feature0: 'does-not-exist',
+            feature0: 'does-not-exist',railway: 'signal',
             railway: 'signal',
             type: 'line',
             azimuth: 135.5,
@@ -1920,7 +1920,7 @@ const legendData = {
           legend: '(deactivated)',
           type: 'point',
           properties: {
-            feature0: 'de/ks-combined',
+            feature0: 'de/ks-combined',railway: 'signal',
             railway: 'signal',
             type: 'line',
             azimuth: null,
@@ -1932,7 +1932,7 @@ const legendData = {
           legend: `unknown signal (${type.type})`,
           type: 'point',
           properties: {
-            feature0: `general/signal-unknown-${type.type}`,
+            feature0: `general/signal-unknown-${type.type}`,railway: 'signal',
             railway: 'signal',
             type: 'line',
             azimuth: null,
@@ -2992,13 +2992,13 @@ const legendData = {
   },
 
   operator: {
-    // TODO operator countries
-    countries: [],
+    countries: [...new Set(operators.operators.map(operator => operator.country).filter(it => it))].toSorted(),
 
     'operator_railway_line_low-operator_railway_line_low': [
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -3031,6 +3031,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],
@@ -3063,6 +3064,7 @@ const legendData = {
       ...operators.operators.map(operator => ({
         legend: operator.names.join(', '),
         type: 'line',
+        country: operator.country,
         properties: {
           operator: operator.names[0],
           primary_operator: operator.names[0],

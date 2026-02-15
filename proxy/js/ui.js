@@ -1816,9 +1816,10 @@ class LegendControl {
     countries.forEach(country => {
       const option = createDomElement('option', undefined, this.legendCountrySelection)
       option.value = country
-      option.innerText = `${getFlagEmoji(country)} ${country}`
+      option.innerText = `${country} ${getFlagEmoji(country)}`
     })
     this.legendCountrySelection.value = legendCountry;
+    this.legendCountrySelection.disabled = !(legendConfiguration === 'country' && countries.length > 0);
 
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
