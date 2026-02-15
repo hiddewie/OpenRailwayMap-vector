@@ -1768,11 +1768,14 @@ class LegendControl {
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
 
+    // TODO only when legend is `inView` configuration
     const featuresInView = this.map.queryRenderedFeatures();
     const keyedFeaturesInView = featuresInView.flatMap(feature => {
       const layer = feature.layer
       const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
+      // TODO handle signals variables
+      // TODO handle composite signals
       const featureKey = legendData[selectedStyle][sourceLayer].key.map(keyPart => feature.properties[keyPart]).join('\u001e');
       const matchKeys = (legendData[selectedStyle][sourceLayer].matchKeys ?? [])
         .map(matchKey => matchKey.map(keyPart => feature.properties[keyPart]).join('\u001e'))
@@ -1798,7 +1801,7 @@ class LegendControl {
       && this.legendState.legendCountry === legendCountry
       && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
       && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
-        && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
     ) {
       return;
     }

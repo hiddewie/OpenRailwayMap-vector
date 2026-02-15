@@ -165,7 +165,13 @@ const legendData = {
     countries: [],
 
     "standard_railway_line_low-standard_railway_line_low": {
-      key: [],
+      key: [
+        'highspeed',
+        'feature',
+        'state',
+        'usage',
+        'service',
+      ],
       features: [
         {
           legend: 'Highspeed main line',
@@ -221,7 +227,13 @@ const legendData = {
       ],
     },
     "openrailwaymap_low-railway_line_high": {
-      key: [],
+      key: [
+        'highspeed',
+        'feature',
+        'state',
+        'usage',
+        'service',
+      ],
       features: [
         {
           legend: 'Highspeed main line',
@@ -294,7 +306,13 @@ const legendData = {
       ],
     },
     "high-railway_line_high": {
-      key: [],
+      key: [
+        'highspeed',
+        'feature',
+        'state',
+        'usage',
+        'service',
+      ],
       features: [
         {
           legend: 'Highspeed main line',
@@ -743,7 +761,13 @@ const legendData = {
       ],
     },
     'openhistoricalmap-transport_lines': {
-      key: [],
+      key: [
+        'highspeed',
+        'type',
+        'state',
+        'usage',
+        'service',
+      ],
       features: [
         {
           legend: 'Highspeed main line (historical)',
@@ -1081,7 +1105,10 @@ const legendData = {
       ],
     },
     'standard_railway_text_stations_low-standard_railway_text_stations_low': {
-      key: [],
+      key: [
+        'railway',
+        'state',
+      ],
       features: stations.features
         .filter(feature => feature.feature === 'station')
         .map(feature => ({
@@ -1101,7 +1128,10 @@ const legendData = {
         })),
     },
     "standard_railway_text_stations_med-standard_railway_text_stations_med": {
-      key: [],
+      key: [
+        'railway',
+        'state',
+      ],
       features: stations.features
         .filter(feature => feature.feature === 'station')
         .map(feature => ({
@@ -1121,7 +1151,10 @@ const legendData = {
         })),
     },
     "openrailwaymap_standard-standard_railway_text_stations": {
-      key: [],
+      key: [
+        'railway',
+        'state',
+      ],
       features: stations.features.flatMap(feature => [
         {
           legend: feature.description,
@@ -1146,7 +1179,9 @@ const legendData = {
       ]),
     },
     'openhistoricalmap-transport_points_centroids': {
-      key: [],
+      key: [
+        'type',
+      ],
       features: [
         {
           legend: 'Station (historical)',
@@ -1158,7 +1193,9 @@ const legendData = {
       ],
     },
     'openhistoricalmap-landuse_areas': {
-      key: [],
+      key: [
+        'type',
+      ],
       features: [
         {
           legend: 'Railway landuse',
@@ -1179,7 +1216,9 @@ const legendData = {
       features: [],
     },
     "openrailwaymap_standard-standard_railway_turntables": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: [
         {
           legend: 'Turntable',
@@ -1232,7 +1271,9 @@ const legendData = {
       ],
     },
     "openrailwaymap_standard-standard_railway_stop_positions": {
-      key: [],
+      key: [
+        'type',
+      ],
       features: [
         {
           legend: 'Stop position',
@@ -1282,7 +1323,9 @@ const legendData = {
       ],
     },
     "openrailwaymap_standard-standard_railway_symbols": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: poi.features
         .filter(feature => feature.layer === 'standard')
         .map(feature => ({
@@ -1317,7 +1360,10 @@ const legendData = {
       ],
     },
     "openrailwaymap_standard-standard_railway_switch_ref": {
-      key: [],
+      key: [
+        'railway',
+        'type',
+      ],
       features: [
         {
           legend: 'Switch',
@@ -1608,7 +1654,15 @@ const legendData = {
       ],
     },
     'openrailwaymap_speed-speed_railway_signals': {
-      key: [],
+      key: [
+        'feature0',
+      ],
+      matchKeys: [
+        [
+          'railway',
+          'feature1',
+        ],
+      ],
       features: [
         ...speed_railway_signals.flatMap(feature =>
           signalFeatures(feature).map(iconFeature => ({
@@ -1919,28 +1973,23 @@ const legendData = {
       key: [
         'railway',
         'feature0',
-        'deactivated0',
       ],
       matchKeys: [
         [
           'railway',
           'feature1',
-          'deactivated1',
         ],
         [
           'railway',
           'feature2',
-          'deactivated2',
         ],
         [
           'railway',
           'feature3',
-          'deactivated3',
         ],
         [
           'railway',
           'feature4',
-          'deactivated4',
         ],
       ],
       features: [
@@ -2382,7 +2431,9 @@ const legendData = {
       ],
     },
     'openrailwaymap_electrification-electrification_signals': {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: [
         ...electrification_signals.flatMap(feature =>
           signalFeatures(feature).map(iconFeature => ({
@@ -2447,7 +2498,9 @@ const legendData = {
       ],
     },
     "openrailwaymap_electrification-electrification_railway_symbols": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: poi.features
         .filter(feature => feature.layer === 'electrification')
         .map(feature => ({
@@ -2466,7 +2519,9 @@ const legendData = {
         })),
     },
     "openrailwaymap_electrification-electrification_catenary": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: [
         {
           legend: 'Catenary mast',
@@ -2494,7 +2549,9 @@ const legendData = {
       ],
     },
     "openrailwaymap_electrification-electrification_substation": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: [
         {
           legend: 'Traction substation',
@@ -3098,7 +3155,9 @@ const legendData = {
     countries: [...new Set(operators.operators.map(operator => operator.country).filter(it => it))].toSorted(),
 
     'operator_railway_line_low-operator_railway_line_low': {
-      key: [],
+      key: [
+        'operator',
+      ],
       features: [
         ...operators.operators.map(operator => ({
           legend: operator.names.join(', '),
@@ -3134,7 +3193,9 @@ const legendData = {
       ],
     },
     'openrailwaymap_low-railway_line_high': {
-      key: [],
+      key: [
+        'operator',
+      ],
       features: [
         ...operators.operators.map(operator => ({
           legend: operator.names.join(', '),
@@ -3170,7 +3231,9 @@ const legendData = {
       ],
     },
     'high-railway_line_high': {
-      key: [],
+      key: [
+        'operator',
+      ],
       features: [
         ...operators.operators.map(operator => ({
           legend: operator.names.join(', '),
@@ -3222,7 +3285,9 @@ const legendData = {
       ],
     },
     "openrailwaymap_operator-operator_railway_symbols": {
-      key: [],
+      key: [
+        'feature',
+      ],
       features: poi.features
         .filter(feature => feature.layer === 'operator')
         .map(feature => ({
