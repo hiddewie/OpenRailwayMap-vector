@@ -1771,7 +1771,7 @@ class LegendControl {
     countries.forEach(country => {
       const option = createDomElement('option', undefined, this.legendCountrySelection)
       option.value = country
-      option.innerText = `${getFlagEmoji(country)} ${country}`
+      option.innerText = `${country} ${getFlagEmoji(country)}`
     })
     this.legendCountrySelection.value = legendCountry;
 
