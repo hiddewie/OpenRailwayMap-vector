@@ -1775,7 +1775,7 @@ class LegendControl {
         const layer = feature.layer
         const sourceLayer = `${layer.source}-${layer['source-layer']}`
 
-        const sourceLayerData = legendData[selectedStyle][sourceLayer] ?? {key: []}
+        const sourceLayerData = legendData[selectedStyle].sourceLayers[sourceLayer] ?? {key: []}
         const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
         const matchKeys = (sourceLayerData.matchKeys ?? [])
           .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
@@ -1835,7 +1835,7 @@ class LegendControl {
     }
     const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
 
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry, legendFeatureFilter)
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle].sourceLayers, mapGlobalState, zoom, legendCountry, legendFeatureFilter)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
