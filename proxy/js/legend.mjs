@@ -160,7 +160,6 @@ const signalFeatures = (feature) =>
     })),
   }));
 
-// TODO move source layers to own property
 const legendData = {
   standard: {
     countries: [],
