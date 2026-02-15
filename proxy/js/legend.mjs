@@ -1731,10 +1731,12 @@ const legendData = {
         ],
       },
     },
+  },
 
-    signals: {
-      countries: [...new Set(signals_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
+  signals: {
+    countries: [...new Set(signals_railway_signals.map(feature => feature.country).filter(it => it))].toSorted(),
 
+    sourceLayers: {
       'signals_railway_line_low-signals_railway_line_low': {
         key: [
           'feature',
