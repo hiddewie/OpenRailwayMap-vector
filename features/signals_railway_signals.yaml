@@ -1778,6 +1778,11 @@ features:
           - { exact: 'BE:VJH', value: 'be/GSA-opposite-VJH' }
           - { exact: 'BE:V', value: 'be/GSA-opposite-V' }
         default: 'be/GSA-opposite-R'
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:OF', value: 'be/OF' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
       - { tag: 'railway:signal:regime', value: 'opposite' }
@@ -1792,6 +1797,11 @@ features:
           - { exact: 'BE:VJV', value: 'be/GSA-VJV' }
           - { exact: 'BE:VJH', value: 'be/GSA-VJH' }
           - { exact: 'BE:V', value: 'be/GSA-V' }
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:OF', value: 'be/OF' }
+        position: bottom
         default: 'be/GSA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
