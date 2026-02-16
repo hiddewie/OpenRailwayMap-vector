@@ -1617,6 +1617,7 @@ class LegendControl {
       mapGlobalState: {},
       legendConfiguration: this.options.initialLegendConfiguration,
       legendCountry: this.options.initialLegendCountry,
+      keyedSourcesAndFeaturesInView: {},
     };
 
     this.generateLegendEventHandler = () => this.updateLegend();
@@ -1652,6 +1653,17 @@ class LegendControl {
     legendAllLabel.htmlFor = 'legendContentAll'
     legendAllLabel.innerText = 'all'
 
+    const legendInView = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendInViewControl = createDomElement('input', 'form-check-input', legendInView)
+    legendInViewControl.type = 'radio'
+    legendInViewControl.name = 'legendContent'
+    legendInViewControl.value = 'inView'
+    legendInViewControl.id = 'legendContentInView'
+    legendInViewControl.checked = this.options.initialLegendConfiguration === 'inView'
+    const legendInViewLabel = createDomElement('label', 'form-check-label', legendInView)
+    legendInViewLabel.innerText = 'in view'
+    legendInViewLabel.htmlFor = 'legendContentInView'
+
     const legendCountry = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
     const legendCountryControl = createDomElement('input', 'form-check-input', legendCountry)
     legendCountryControl.type = 'radio'
@@ -1670,6 +1682,12 @@ class LegendControl {
       this.legendCountrySelection.value = null
       this.legendCountrySelection.disabled = 'disabled'
       this.options.onLegendConfigurationChange('all', null)
+      this.generateLegendEventHandler()
+    }
+    legendInViewControl.onchange = () => {
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
+      this.options.onLegendConfigurationChange('inView', null)
       this.generateLegendEventHandler()
     }
     legendCountryControl.onchange = () => {
@@ -1709,6 +1727,7 @@ class LegendControl {
 
     this.map.on('load', this.generateLegendEventHandler);
     this.map.on('zoomend', this.generateLegendEventHandler);
+    this.map.on('moveend', this.generateLegendEventHandler);
     this.map.on('styledata', this.generateLegendEventHandler);
 
     return this._container;
@@ -1749,12 +1768,41 @@ class LegendControl {
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
 
+    let keyedSourcesAndFeaturesInView = []
+    if (legendConfiguration === 'inView') {
+      const featuresInView = this.map.queryRenderedFeatures();
+      const keyedFeaturesInView = featuresInView.flatMap(feature => {
+        const layer = feature.layer
+        const sourceLayer = `${layer.source}-${layer['source-layer']}`
+
+        const sourceLayerData = legendData[selectedStyle].sourceLayers[sourceLayer] ?? {key: []}
+        const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
+        const matchKeys = (sourceLayerData.matchKeys ?? [])
+          .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+
+        return [
+          {
+            sourceLayer,
+            featureKey,
+          },
+          ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
+        ]
+      });
+
+      keyedSourcesAndFeaturesInView = Object.fromEntries(
+        Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
+          .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
+      );
+    }
+
     // Verify if legend changed
     if (this.legendState.zoom === zoom
       && this.legendState.style === style.name
-      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
       && this.legendState.legendConfiguration === legendConfiguration
       && this.legendState.legendCountry === legendCountry
+      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
     ) {
       return;
     }
@@ -1764,6 +1812,7 @@ class LegendControl {
       mapGlobalState: {...mapGlobalState},
       legendConfiguration,
       legendCountry,
+      keyedSourcesAndFeaturesInView,
     };
 
     const countries = legendData[selectedStyle].countries;
@@ -1779,7 +1828,14 @@ class LegendControl {
     const layersOrder = this.map.getLayersOrder()
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle], mapGlobalState, zoom, legendCountry)
+    const legendFeatureFilters = {
+      inView: (source, item) =>
+        keyedSourcesAndFeaturesInView[source] && (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey))),
+      country: legendCountry ? (_, item) => !item.country || item.country === legendCountry : (() => true),
+    }
+    const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
+
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle].sourceLayers, mapGlobalState, zoom, legendCountry, legendFeatureFilter)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -1804,6 +1860,7 @@ class LegendControl {
 
     this.map.off('load', this.generateLegendEventHandler);
     this.map.off('zoomend', this.generateLegendEventHandler);
+    this.map.off('moveend', this.generateLegendEventHandler);
     this.map.off('styledata', this.generateLegendEventHandler);
 
     this.map = undefined;
@@ -1813,7 +1870,7 @@ class LegendControl {
     return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
   }
 
-  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country) {
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country, featureFilter) {
     const layerVisibleAtZoom = (zoom) =>
       layer =>
         ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
@@ -1885,11 +1942,11 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => !country || !item.country || item.country === country)
+        .filter(item => featureFilter(sourceName, item))
         .flatMap(item => {
           const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
             .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
@@ -1935,11 +1992,11 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? (legendData[legendLayerName] ?? []) : [];
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
       const features = data
         .filter(zoomFilter)
         .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => !country || !item.country || item.country === country)
+        .filter(item => featureFilter(sourceName, item))
         .map(item => {
           const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
           const legend = [itemLegend, ...(item.variants ?? [])
