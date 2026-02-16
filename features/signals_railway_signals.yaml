@@ -1769,6 +1769,7 @@ features:
 
   - description: Grand Signal d'Arrêt (opposite regime)
     country: BE
+    exampleIcon: be/GSA-opposite-VJH
     icon:
       - match: 'railway:signal:main:states'
         cases:
@@ -1781,7 +1782,7 @@ features:
       - match: 'railway:signal:main:substitute_signal'
         cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/OF' }
+          - { exact: 'BE:OF', value: 'be/ŒF' }
         position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
@@ -1789,6 +1790,7 @@ features:
 
   - description: Grand Signal d'Arrêt (normal regime)
     country: BE
+    exampleIcon: be/GSA-VJH
     icon:
       - match: 'railway:signal:main:states'
         cases:
@@ -1800,7 +1802,7 @@ features:
       - match: 'railway:signal:main:substitute_signal'
         cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/OF' }
+          - { exact: 'BE:OF', value: 'be/ŒF' }
         position: bottom
         default: 'be/GSA-R'
     tags:
