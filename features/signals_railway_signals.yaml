@@ -136,6 +136,9 @@ tags:
   - { tag: 'railway:signal:slope:form', title: 'Slope form' }
   - { tag: 'railway:signal:slope:type', title: 'Slope type' }
   - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
+  - { tag: 'railway:signal:slope:incline', title: 'Slope incline' }
+  - { tag: 'railway:signal:slope:length', title: 'Slope length' }
+  - { tag: 'railway:signal:slope:distance', title: 'Slope distance' }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
   - { tag: 'railway:signal:snowplow:type', title: 'Snowplow type' }
@@ -147,6 +150,7 @@ tags:
   - { tag: 'railway:signal:speed_limit:states', title: 'Speed limit states', type: array }
   - { tag: 'railway:signal:speed_limit:pointing', title: 'Speed limit pointing' }
   - { tag: 'railway:signal:speed_limit:deactivated', title: 'Speed limit deactivated', type: boolean }
+  - { tag: 'railway:signal:speed_limit:turn_direction', title: 'Speed limit diverging direction', type: array }
   - { tag: 'railway:signal:speed_limit_distant', title: 'Speed limit distant' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
   - { tag: 'railway:signal:speed_limit_distant:speed', title: 'Speed limit distant speed', type: array }
@@ -2369,6 +2373,27 @@ features:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:718.1' }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
       - { tag: 'railway:signal:electricity:type', value: 'system_change_end' }
+
+  - description: Beginn oder Änderung der Steigung
+    country: CH
+    icon: [ default: 'ch/fdv-269' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'CH-FDV:269' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Beginn oder Änderung des Gefälles
+    country: CH
+    icon: [ default: 'ch/fdv-270' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'CH-FDV:270' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Beginn der Horizontalen
+    country: CH
+    icon: [ default: 'ch/fdv-271' ]
+    tags:
+      - { tag: 'railway:signal:slope', value: 'CH-FDV:271' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   # --- CZ --- #
 
@@ -5492,6 +5517,25 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'GB-NR:crossing' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  - description: Permissible speed indicator
+    country: GB
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^((5|[1-9][05]|1[0-2][05])( mph)?|1[3-9][05]|200)$', value: 'gb/speed-limit-{}', example: 'gb/speed-limit-{50 mph}' }
+        default: 'gb/speed-limit-empty'
+      - match: 'railway:signal:speed_limit:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/directional-arrow-speed-limit-left', description: 'left' }
+          - { exact: 'right', value: 'gb/directional-arrow-speed-limit-right', description: 'right' }
+          - { all: ['left', 'right'], value: 'gb/directional-arrow-speed-limit-left-right', description: 'both directions' }
+        position: 'top'
+    exampleIcon: 'gb/speed-limit-{50 mph}'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'GB-NR:speed_limit' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   # --- IT --- #
 

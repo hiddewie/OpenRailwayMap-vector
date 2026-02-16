@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build-yaml
+FROM node:22-alpine@sha256:e4bf2a82ad0a4037d28035ae71529873c069b13eb0455466ae0bc13363826e34 AS build-yaml
 
 WORKDIR /build
 
@@ -33,7 +33,7 @@ RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
   node /build/features.mjs \
     > /build/features.json
 
-FROM python:3-alpine AS build-preset
+FROM python:3-alpine@sha256:faee120f7885a06fcc9677922331391fa690d911c020abb9e8025ff3d908e510 AS build-preset
 
 RUN apk add --no-cache zip
 
@@ -54,7 +54,7 @@ RUN --mount=type=bind,source=symbols,target=symbols \
     symbols \
     preset.xml
 
-FROM nginx:1-alpine
+FROM nginx:1-alpine@sha256:1d13701a5f9f3fb01aaa88cef2344d65b6b5bf6b7d9fa4cf0dca557a8d7702ba
 
 COPY proxy/script/with-news-hash.sh /with-news-hash.sh
 COPY proxy/proxy.conf.template /etc/nginx/templates/proxy.conf.template
