@@ -4653,110 +4653,217 @@ features:
   # The rendered icon reflects the signal's most
   # restrictive possible state (C, Cv, S, D, or A).
 
+  # Carré #
+
+  # Low-profile shape
+  - description: Carré
+    country: FR
+    icon: [ default: 'fr/C_small-C' ]
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  # H-type head
+  - description: Carré
+    country: FR
+    icon: [ default: 'fr/C_H-C' ]
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # F-type head
+  - description: Carré
+    country: FR
+    icon: [ default: 'fr/C_F-C' ]
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # C-type head
+  - description: Carré
+    country: FR
+    icon: [ default: 'fr/C_C-C' ]
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # Fallback: infer shape from supported states
   - description: Carré
     country: FR
     icon:
-      # Check low-profile shape first
-      - match: 'railway:signal:main:height'
+      - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'dwarf', value: 'fr/C_small-C' }
-        default:
-          # Retrieve signal head type from shape tag (if present)
-          - match: 'railway:signal:main:shape'
-            cases:
-              - { exact: 'FR:A', value: 'fr/C_A-C' }
-              - { exact: 'FR:C', value: 'fr/C_C-C' }
-              - { exact: 'FR:F', value: 'fr/C_F-C' }
-              - { exact: 'FR:H', value: 'fr/C_H-C' }
-              - { exact: 'FR:K', value: 'fr/C_K-C' }       
-            # Fallback
-            default:
-              match: 'railway:signal:main:states'
-              cases:
-                # H-type head
-                - { exact: 'FR:RR', value: 'fr/C_H-C' }
-                # F-type head
-                - { exact: 'FR:R', value: 'fr/C_F-C' }
-              # C-type head
-              default: 'fr/C_C-C'
+          # H-type head
+          - { exact: 'FR:RR', value: 'fr/C_H-C' }
+          # F-type head
+          - { exact: 'FR:R', value: 'fr/C_F-C' }
+        # C-type head
+        default: 'fr/C_C-C'
     tags:
       - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # Carré violet #
+
+  # Ground installation
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_ground-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:location', value: 'ground' }
+
+  # A-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_A-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:A' }
+
+  # C-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_C-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # F-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_F-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # H-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_H-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # K-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_K-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:K' }
+
+  # Fallback: infer shape from supported states
   - description: Carré violet
     country: FR
     icon:
-      # Check ground installation first
-      - match: 'railway:signal:location'
+      - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'ground', value: 'fr/Cv_ground-Cv' }
-        default:
-          # Retrieve signal head type from shape tag (if present)
-          match: 'railway:signal:main:shape'
-          cases:
-            - { exact: 'FR:A', value: 'fr/Cv_A-Cv' }
-            - { exact: 'FR:C', value: 'fr/Cv_C-Cv' }
-            - { exact: 'FR:F', value: 'fr/Cv_F-Cv' }
-            - { exact: 'FR:H', value: 'fr/Cv_H-Cv' }
-            - { exact: 'FR:K', value: 'fr/Cv_K-Cv' }       
-          # Fallback
-          default:
-            match: 'railway:signal:main:states'
-            cases:
-              # H-type head
-              - { exact: 'FR:RR', value: 'fr/Cv_H-Cv' }
-              # F-type head
-              - { exact: 'FR:R', value: 'fr/Cv_F-Cv' }
-              # Could be A-type, C-type or K-type heads but
-              # only 'railway:signal:main:shape' can tell.
-            # A-type head
-            default: 'fr/Cv_A-Cv'
+          # H-type head
+          - { exact: 'FR:RR', value: 'fr/Cv_H-Cv' }
+          # F-type head
+          - { exact: 'FR:R', value: 'fr/Cv_F-Cv' }
+          # Could be A-type, C-type or K-type heads but
+          # only 'railway:signal:main:shape' can tell.
+        # Assume C-type head
+        default: 'fr/Cv_C-Cv'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:CV' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # Sémaphore #
+
+  # A-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_A-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:A' }
+
+  # C-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_C-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # F-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_F-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # H-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_H-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # K-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_K-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:K' }
+
+  # Fallback: infer shape from supported states
   - description: Sémaphore
     country: FR
     icon:
-      # Retrieve signal head type from shape tag (if present)
-      - match: 'railway:signal:main:shape'
+      - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:A', value: 'fr/S_A-S' }
-          - { exact: 'FR:C', value: 'fr/S_C-S' }
-          - { exact: 'FR:F', value: 'fr/S_F-S' }
-          - { exact: 'FR:H', value: 'fr/S_H-S' }
-          - { exact: 'FR:K', value: 'fr/S_K-S' }       
-        # Fallback
-        default:
-          match: 'railway:signal:main:states'
-          cases:
-            - { exact: 'FR:RR', value: 'fr/S_H-S' }
-            - { exact: 'FR:R', value: 'fr/S_F-S' }
-            # Could be A-type, C-type or K-type heads but
-            # only 'railway:signal:main:shape' can tell.
-          # A-type head
-          default: 'fr/S_A-S'
+          - { exact: 'FR:RR', value: 'fr/S_H-S' }
+          - { exact: 'FR:R', value: 'fr/S_F-S' }
+          # Could be A-type, C-type or K-type heads but
+          # only 'railway:signal:main:shape' can tell.
+        # Assume C-type head
+        default: 'fr/S_C-S'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # Avertissement #
+
+  # R-type head (implicit for distant signals)
   - description: Avertissement
     country: FR
-    # R-type head (implicit)
     icon: [ default: 'fr/A-A' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  # Disque #
+
+  # R-type head (implicit for distant signals)
   - description: Disque
     country: FR
-    # R-type head (implicit)
     icon: [ default: 'fr/D-D' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-    # TODO mapped as discrete nodes because of "ref".
   - description: Pancarte Z & TIV-D
     country: FR
     icon:
@@ -4770,7 +4877,6 @@ features:
       - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-    # TODO mapped as discrete nodes because of "ref".
   - description: Pancarte Z & TIV-D (B)
     country: FR
     icon:
@@ -5008,7 +5114,6 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-    # TODO mapped as discrete nodes because of "ref".
   - description: TVM and ETCS block marker
     country: FR
     icon:
