@@ -10,7 +10,7 @@ async function promiseResultsOrErrors(promises) {
   if (results.every(it => it.status === 'fulfilled')) {
     return results.map(it => it.value)
   } else {
-    throw new Error(`Failed to resolve promises: ${results.filter(it => it.status === 'rejected').map(it => it.reason).join(', ')}`) 
+    throw new Error(`Failed to resolve promises: ${results.filter(it => it.status === 'rejected').map(it => it.reason).join(', ')}`)
   }
 }
 
@@ -318,6 +318,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
       SELECT
         id,
         osm_id,
+        railway,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         sd.direction_both,
         ref,
@@ -361,6 +362,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "integer",
+          "railway": "string",
           "ref": "string",
           "caption": "string",
           "azimuth": "number",
@@ -516,6 +518,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
       SELECT
         id,
         osm_id,
+        railway,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         sd.direction_both,
         ref,
@@ -556,6 +559,7 @@ DO $do$ BEGIN
         "fields": {
           "id": "integer",
           "osm_id": "integer",
+          "railway": "string",
           "azimuth": "number",
           "direction_both": "boolean",
           "ref": "string",
