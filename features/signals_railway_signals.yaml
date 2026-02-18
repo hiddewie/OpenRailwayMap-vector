@@ -10,6 +10,7 @@ tags:
   - { tag: 'railway:signal:combined:shortened', title: 'Combined shortened', type: boolean }
   - { tag: 'railway:signal:combined:substitute_signal', title: 'Combined substitute signal', type: array }
   - { tag: 'railway:signal:combined:height', title: 'Combined height' }
+  - { tag: 'railway:signal:combined:function', title: 'Combined function' }
   - { tag: 'railway:signal:combined:deactivated', title: 'Combined deactivated', type: boolean }
   - { tag: 'railway:signal:crossing', title: 'Crossing' }
   - { tag: 'railway:signal:crossing:form', title: 'Crossing form' }
@@ -70,6 +71,7 @@ tags:
   - { tag: 'railway:signal:main:states', title: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', title: 'Main substitute signal', type: array }
   - { tag: 'railway:signal:main:PT_priority', title: 'Main PT priority' }
+  - { tag: 'railway:signal:main:function', title: 'Main function' }
   - { tag: 'railway:signal:main:deactivated', title: 'Main PT priority', type: boolean }
   - { tag: 'railway:signal:main_repeated', title: 'Main repeated' }
   - { tag: 'railway:signal:main_repeated:form', title: 'Main repeated form' }
@@ -81,12 +83,13 @@ tags:
   - { tag: 'railway:signal:minor:form', title: 'Minor form' }
   - { tag: 'railway:signal:minor:states', title: 'Minor states', type: array }
   - { tag: 'railway:signal:minor:height', title: 'Minor height' }
+  - { tag: 'railway:signal:minor:substitute_signal', title: 'Minor substitute signal', type: array }
+  - { tag: 'railway:signal:minor:function', title: 'Minor function' }
+  - { tag: 'railway:signal:minor:deactivated', title: 'Minor deactivated', type: boolean }
   - { tag: 'railway:signal:minor_distant', title: 'Minor distant' }
   - { tag: 'railway:signal:minor_distant:form', title: 'Minor distant form' }
   - { tag: 'railway:signal:minor_distant:states', title: 'Minor distant states', type: array }
   - { tag: 'railway:signal:minor_distant:deactivated', title: 'Minor distant deactivated', type: boolean }
-  - { tag: 'railway:signal:minor:substitute_signal', title: 'Minor substitute signal', type: array }
-  - { tag: 'railway:signal:minor:deactivated', title: 'Minor deactivated', type: boolean }
   - { tag: 'railway:signal:passing', title: 'Passing' }
   - { tag: 'railway:signal:passing:form', title: 'Passing form' }
   - { tag: 'railway:signal:passing:type', title: 'Passing type' }
