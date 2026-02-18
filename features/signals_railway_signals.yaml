@@ -2434,6 +2434,32 @@ features:
       - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:posun_zakazan' ] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
+  - description: Hranice obvodu nákladiště nebo vlečky
+    country: CZ
+    icon: [ default: 'cz/hranice_obvodu_nakladiste_nebo_vlecky' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:hranice_obvodu_nakladiste_nebo_vlecky' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  # TODO: CZ-D1:seradovaci_navestidlo
+#  - description: Seřaďovací návěstidlo
+#    country: CZ
+#    icon:
+#      - match: 'railway:signal:shunting:repeated'
+#        cases:
+#          - { value: 'cz/seradovaci_navestidlo-opakovací', description: 'opakovací' }
+#        default: 'cz/seradovaci_navestidlo'
+#    tags:
+#      - { tag: 'railway:signal:shunting', value: 'CZ-D1:seradovaci_navestidlo' }
+#      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Návěstidlo výkolejky
+    country: CZ
+    icon: [ default: 'cz/navestidlo_vykolejky' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:navestidlo_vykolejky' }
+      - { tag: 'railway:signal:shunting:form', value: 'semaphore' }
+
   - description: Distant (light)
     country: CZ
     icon: [ default: 'cz/distant' ]
