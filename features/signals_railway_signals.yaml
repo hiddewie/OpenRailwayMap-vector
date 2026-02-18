@@ -93,6 +93,7 @@ tags:
   - { tag: 'railway:signal:passing:deactivated', title: 'Passing deactivated', type: boolean }
   - { tag: 'railway:signal:resetting_switch', title: 'Resetting switch' }
   - { tag: 'railway:signal:resetting_switch:form', title: 'Resetting switch form' }
+  - { tag: 'railway:signal:resetting_switch:states', title: 'Resetting switch states', type: array }
   - { tag: 'railway:signal:resetting_switch:deactivated', title: 'Resetting deactivated', type: boolean }
   - { tag: 'railway:signal:resetting_switch_distant', title: 'Resetting switch distant' }
   - { tag: 'railway:signal:resetting_switch_distant:form', title: 'Resetting switch distant form' }
@@ -2609,6 +2610,17 @@ features:
     tags:
       - { tag: 'railway:signal:whistle', value: 'CZ-D1:piskejte' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Návěstidlo výhybky se samovratným přestavníkem
+    country: CZ
+    icon:
+      - match: 'railway:signal:resetting_switch:startes'
+        cases:
+          - { exact: 'CZ-D1:jizda_nezajistena', value: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem-jizda_nezajistena' }
+        default: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem'
+    tags:
+      - { tag: 'railway:signal:resetting_switch', value: 'CZ-D1:navestidlo_vyhybky_se_samovratnym_prestavnikem' }
+      - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
 
   # --- DE --- #
 
