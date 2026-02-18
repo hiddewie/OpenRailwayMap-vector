@@ -2578,14 +2578,14 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_posledniho_oddiloveho_navestidla' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
-  - description: Stanoviště posledního oddílového návěstidla
+  - description: Konec nástupiště
     country: CZ
     icon: [ default: 'cz/konec_nastupiste' ]
     tags:
       - { tag: 'railway:signal:stop', value: 'CZ-D1:konec_nastupiste' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Stanoviště posledního oddílového návěstidla
+  - description: Místo zastavení
     country: CZ
     icon:
       - match: 'railway:signal:stop:caption'
@@ -2596,12 +2596,19 @@ features:
       - { tag: 'railway:signal:stop', value: 'CZ-D1:misto_zastaveni' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
-  - description: Stanoviště posledního oddílového návěstidla
+  - description: Lichoběžníková tabulka
     country: CZ
     icon: [ default: 'cz/lichobeznikova_tabulka' ]
     tags:
       - { tag: 'railway:signal:stop', value: 'CZ-D1:lichobeznikova_tabulka' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Pískejte
+    country: CZ
+    icon: [ default: 'cz/piskejte' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'CZ-D1:piskejte' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   # --- DE --- #
 
