@@ -2614,13 +2614,27 @@ features:
   - description: Návěstidlo výhybky se samovratným přestavníkem
     country: CZ
     icon:
-      - match: 'railway:signal:resetting_switch:startes'
+      - match: 'railway:signal:resetting_switch:states'
         cases:
           - { exact: 'CZ-D1:jizda_nezajistena', value: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem-jizda_nezajistena' }
         default: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem'
     tags:
       - { tag: 'railway:signal:resetting_switch', value: 'CZ-D1:navestidlo_vyhybky_se_samovratnym_prestavnikem' }
       - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
+
+  - description: Kmenový přejezdník (sign)
+    country: CZ
+    icon: [ default: 'cz/prejezdnik-sign' ]
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'CZ-D1:prejezdnik' }
+      - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Kmenový přejezdník (light)
+    country: CZ
+    icon: [ default: 'cz/prejezdnik-light' ]
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'CZ-D1:prejezdnik' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
 
   # --- DE --- #
 
