@@ -2550,6 +2550,34 @@ features:
 
   # TODO electricity signals, blue and orange
 
+  - description: Vlak se blíží k zastávce (shortened)
+    country: CZ
+    icon: [ default: 'cz/vlak_se_blizi_k_zastavce-shortened' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Vlak se blíží k zastávce
+    country: CZ
+    icon: [ default: 'cz/vlak_se_blizi_k_zastavce' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Hlavní návěstidlo sloučeno s předvěstí
+    country: CZ
+    icon: [ default: 'cz/hlavni_navestidlo_slouceno_s_predvesti' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:hlavni_navestidlo_slouceno_s_predvesti' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Stanoviště posledního oddílového návěstidla
+    country: CZ
+    icon: [ default: 'cz/stanoviste_posledniho_oddiloveho_navestidla' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_posledniho_oddiloveho_navestidla' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   # --- DE --- #
 
   - description: shunting stop sign Ra 10
