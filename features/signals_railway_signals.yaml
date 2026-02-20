@@ -2596,6 +2596,8 @@ features:
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
+      - default: 'cz/main-marker'
+        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2608,6 +2610,8 @@ features:
         cases:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
         default: 'cz/main-protection-GR'
+      - default: 'cz/main-marker'
+        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2616,7 +2620,12 @@ features:
   - description: Main intermediate
     country: CZ
     icon:
-      - default: 'cz/main-intermediate-RWB'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen'], value: 'cz/main-intermediate-RWB' }
+        default: 'cz/main-intermediate-R'
+      - default: 'cz/main-marker'
+        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2628,8 +2637,10 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'CZ-D1:vystraha', value: 'cz/main-entry-YGRWY-Y' }
+          - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/main-entry-YGRWY-Y' }
         default: 'cz/main-entry-YGRWY-G'
+      - default: 'cz/main-marker'
+        position: right
       - match: 'railway:signal:main:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2651,6 +2662,8 @@ features:
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-RW' }
           - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj'], value: 'cz/main-entry-YR' }
         default: 'cz/main-entry-GR'
+      - default: 'cz/main-marker'
+        position: right
       - match: 'railway:signal:main:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2664,8 +2677,10 @@ features:
     icon:
       - match: 'railway:signal:combined:states'
         cases:
-          - { exact: 'CZ-D1:vystraha', value: 'cz/combined-YGRWY-Y' }
+          - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/combined-YGRWY-Y' }
         default: 'cz/combined-YGRWY-G'
+      - default: 'cz/combined-marker'
+        position: right
       - match: 'railway:signal:combined:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2680,11 +2695,13 @@ features:
     icon:
       - match: 'railway:signal:combined:states'
         cases:
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-YGRW' }
-          - { all: ['CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-GRW' }
+          - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-YGRW' }
+          - { all: ['CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-GRW' }
           - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-YRW' }
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-RW' }
         default: 'cz/combined-R'
+      - default: 'cz/combined-marker'
+        position: right
       - match: 'railway:signal:combined:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2712,6 +2729,8 @@ features:
   # TODO entry / exit signal markers
 
   # TODO electricity signals, blue and orange
+
+  # TODO route signals: green for track, white for direction
 
   - description: Konec nástupiště
     country: CZ
