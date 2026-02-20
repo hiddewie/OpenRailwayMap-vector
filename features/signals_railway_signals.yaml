@@ -2500,9 +2500,11 @@ features:
         default: 'cz/distant'
       - match: 'railway:signal:distant:shortened'
         cases:
+          # TODO handle distant block (upright cross) or distant entry (diagonal cross)
           - { value: 'cz/shortened', description: 'shortened' }
-      # TODO handle distant block (upright cross) or distant entry (diagonal cross)
+        position: bottom
       - default: 'cz/distant-block'
+        position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
