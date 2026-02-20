@@ -2465,7 +2465,16 @@ features:
 
   - description: Distant (light)
     country: CZ
-    icon: [ default: 'cz/distant' ]
+    icon:
+      - match: 'railway:signal:distant:repeated'
+        cases:
+          - { value: 'cz/distant-repeated', description: 'repeated' }
+        default: 'cz/distant'
+      - match: 'railway:signal:distant:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+      # TODO handle distant block (upright cross) or distant entry (diagonal cross)
+      - default: 'cz/distant-block'
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
