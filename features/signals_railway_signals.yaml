@@ -7,6 +7,7 @@ tags:
   - { tag: 'railway:signal:combined:form', title: 'Combined form' }
   - { tag: 'railway:signal:combined:states', title: 'Combined states', type: array }
   - { tag: 'railway:signal:combined:shape', title: 'Combined shape' }
+  - { tag: 'railway:signal:combined:type', title: 'Combined type' }
   - { tag: 'railway:signal:combined:shortened', title: 'Combined shortened', type: boolean }
   - { tag: 'railway:signal:combined:substitute_signal', title: 'Combined substitute signal', type: array }
   - { tag: 'railway:signal:combined:height', title: 'Combined height' }
@@ -72,7 +73,8 @@ tags:
   - { tag: 'railway:signal:main:substitute_signal', title: 'Main substitute signal', type: array }
   - { tag: 'railway:signal:main:PT_priority', title: 'Main PT priority' }
   - { tag: 'railway:signal:main:function', title: 'Main function' }
-  - { tag: 'railway:signal:main:deactivated', title: 'Main PT priority', type: boolean }
+  - { tag: 'railway:signal:main:shortened', title: 'Main shortened', type: boolean }
+  - { tag: 'railway:signal:main:deactivated', title: 'Main deactivated', type: boolean }
   - { tag: 'railway:signal:main_repeated', title: 'Main repeated' }
   - { tag: 'railway:signal:main_repeated:form', title: 'Main repeated form' }
   - { tag: 'railway:signal:main_repeated:magnet', title: 'Main repeated magnet', type: boolean }
@@ -2500,9 +2502,9 @@ features:
         default: 'cz/distant'
       - match: 'railway:signal:distant:shortened'
         cases:
-          # TODO handle distant block (upright cross) or distant entry (diagonal cross)
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
+      # TODO handle distant block (upright cross) or distant entry (diagonal cross)
       - default: 'cz/distant-block'
         position: bottom
     tags:
@@ -2582,19 +2584,92 @@ features:
       - { tag: 'railway:signal:main', value: 'CZ-D1:stuj' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
-  # TODO handle railway:signal:main:substitute_signal=CZ-D1:privolavaci_navest (white light)
-  - description: Main (light)
+  - description: Main block
     country: CZ
-    # TODO differentiate main signal forms
-    icon: [ default: 'cz/main-clear' ]
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'], value: 'cz/main-block-YGRW' }
+          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-block-YGR' }
+        default: 'cz/main-block-GR'
+      - match: 'railway:signal:main:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:function', value: 'block' }
+
+  - description: Main protection
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
+        default: 'cz/main-protection-GR'
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:function', value: 'protection' }
+
+  - description: Main intermediate
+    country: CZ
+    icon:
+      - default: 'cz/main-intermediate-RWB'
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:function', value: 'intermediate' }
+
+  # Entry, exit and rest
+  - description: Main signal with speed limit
+    country: CZ
+    icon:
+      # TODO match speed states
+      - default: 'cz/main-entry-YGRWY'
+      - match: 'railway:signal:main:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+
+  # Entry, exit and rest
+  - description: Main signal
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-YGRW' }
+          - { all: ['CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-GRW' }
+          - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-YRW' }
+          - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-RW' }
+          - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj'], value: 'cz/main-entry-YR' }
+        default: 'cz/main-entry-GR'
+      - match: 'railway:signal:main:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # TODO shortened: https://wiki.openstreetmap.org/wiki/Cs:Tag:railway%3Dsignal#railway:signal:*:shortened
   - description: Combined (light)
     country: CZ
-    # TODO differentiate combined signal forms
-    icon: [ default: 'cz/combined-clear' ]
+    icon:
+      - #match: 'railway:signal:combined:states'
+        #cases:
+          # CZ-D1:stuj,CZ-D1:vystraha,CZ-D1:volno -> 3 light
+          # CZ-D1:stuj,CZ-D1:vystraha,CZ-D1:volno,CZ-D1:posun_dovolen -> 4 light
+          # CZ-D1:stuj,CZ-D1:vystraha,CZ-D1:opakovani_vystraha,CZ-D1:volno,CZ-D1:posun_dovolen -> 4 light
+          # CZ-D1:stuj,CZ-D1:vystraha,
+
+        #  - { all: [], value: '' } # CZ-D1:stuj,CZ-D1:vystraha,CZ-D1:volno default
+        default: 'cz/combined-clear'
     tags:
       - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
