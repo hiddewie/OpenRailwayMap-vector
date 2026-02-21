@@ -2608,7 +2608,7 @@ features:
           - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
         default: 'cz/hlavni_navestidlo-light-unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   # TODO semaphore distant signal (orange disk)
@@ -2628,7 +2628,9 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'], value: 'cz/main-block-YGRW' }
+          - { all: ['stop', 'approach', 'clear', 'shunting_enabled'], value: 'cz/main-block-YGRW' }
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-block-YGR' }
+          - { all: ['stop', 'approach', 'clear'], value: 'cz/main-block-YGR' }
         default: 'cz/main-block-GR'
       - match: 'railway:signal:main:shortened'
         cases:
@@ -2637,7 +2639,7 @@ features:
       - default: 'cz/main-marker'
         position: right
     tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:function', value: 'block' }
 
@@ -2647,11 +2649,12 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
+          - { all: ['stop', 'approach', 'clear'], value: 'cz/main-protection-YGR' }
         default: 'cz/main-protection-GR'
       - default: 'cz/main-marker'
         position: right
     tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:function', value: 'protection' }
 
@@ -2661,11 +2664,12 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { any: ['CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen'], value: 'cz/main-intermediate-RWB' }
+          - { any: ['driving_permited', 'shunting_enabled'], value: 'cz/main-intermediate-RWB' }
         default: 'cz/main-intermediate-R'
       - default: 'cz/main-marker'
         position: right
     tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:function', value: 'intermediate' }
 
@@ -2676,6 +2680,7 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/main-entry-YGRWY-Y' }
+          - { exact: 'approach', value: 'cz/main-entry-YGRWY-Y' }
         default: 'cz/main-entry-YGRWY-G'
       - match: 'railway:signal:speed_limit:states'
         cases:
@@ -2692,9 +2697,9 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:main', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
 
   # Entry, exit and rest
   - description: Main signal
@@ -2715,7 +2720,7 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Combined with speed limit
@@ -2724,6 +2729,7 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/combined-YGRWY-Y' }
+          - { any: ['approach'], value: 'cz/combined-YGRWY-Y' }
         default: 'cz/combined-YGRWY-G'
       - match: 'railway:signal:speed_limit:states'
         cases:
@@ -2740,9 +2746,9 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:combined', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:combined', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo'] }
+      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
 
   - description: Combined signal
     country: CZ
@@ -2750,9 +2756,13 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-YGRW' }
+          - { all: ['approach', 'clear', 'stop'], value: 'cz/combined-YGRW' }
           - { all: ['CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-GRW' }
+          - { all: ['clear', 'stop'], value: 'cz/combined-GRW' }
           - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-YRW' }
+          - { all: ['approach', 'stop', 'shunting_enabled'], value: 'cz/combined-YRW' }
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-RW' }
+          - { all: ['stop', 'shunting_enabled'], value: 'cz/combined-RW' }
         default: 'cz/combined-R'
       - default: 'cz/combined-marker'
         position: right
@@ -2761,7 +2771,7 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
   # TODO: distant signal without home signal (different display form)
@@ -2773,7 +2783,7 @@ features:
           - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
         default: 'cz/hlavni_navestidlo-distant-light-unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest' ] }
+      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
   # TODO: Skupinové návěstidlo -- Group signal
