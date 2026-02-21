@@ -2561,12 +2561,38 @@ features:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Speed limit main/combined (sign)
+    country: CZ
+    icon:
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30-sign' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50-sign' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50'] }
+
+  - description: Speed limit main/combined (light)
+    country: CZ
+    icon:
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50', 'CZ-D1:rychlost_60', 'CZ-D1:rychlost_80', 'CZ-D1:rychlost_100'] }
+
   - description: Speed limit (light)
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          # TODO differentiate for 30 km/h with |3| form (yellow)
           - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
         default: 'cz/hlavni_navestidlo-light-unknown'
     tags:
@@ -2639,6 +2665,14 @@ features:
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/main-entry-YGRWY-Y' }
         default: 'cz/main-entry-YGRWY-G'
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+        position: bottom
       - default: 'cz/main-marker'
         position: right
       - match: 'railway:signal:main:shortened'
@@ -2679,6 +2713,14 @@ features:
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/combined-YGRWY-Y' }
         default: 'cz/combined-YGRWY-G'
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+        position: bottom
       - default: 'cz/combined-marker'
         position: right
       - match: 'railway:signal:combined:shortened'
