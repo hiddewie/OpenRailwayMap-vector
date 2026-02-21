@@ -2505,6 +2505,17 @@ features:
       - { tag: 'railway:signal:shunting', value: 'CZ-D1:navestidlo_vykolejky' }
       - { tag: 'railway:signal:shunting:form', value: 'semaphore' }
 
+  - description: Distant (sign)
+    country: CZ
+    icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: 'circle', value: 'cz/distant-sign-circle' }
+        default: 'cz/distant-sign-triangle'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CZ-D1:vystraha' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
   - description: Distant (light)
     country: CZ
     icon:
@@ -2522,8 +2533,6 @@ features:
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  # TODO speed limit "5" or "3" on main/combined signal
 
   # TODO route signal for departure (green number) below main/combined signal
   # TODO route signal (white letter) below main/combined signal
@@ -2617,7 +2626,11 @@ features:
 
   - description: Main stop (sign)
     country: CZ
-    icon: [ default: 'cz/main-sign-stop' ]
+    icon:
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'circle', value: 'cz/main-sign-stop-circle' }
+        default: 'cz/main-sign-stop-rectangle'
     tags:
       - { tag: 'railway:signal:main', value: 'CZ-D1:stuj' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
