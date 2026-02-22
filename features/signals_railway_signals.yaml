@@ -200,6 +200,7 @@ tags:
   - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
+  - { tag: 'railway:signal:location', title: 'Location' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
