@@ -679,6 +679,7 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
       ["railway:signal:stop_demand:deactivated"] = false,
       ["railway:signal:crossing:deactivated"] = false,
       ["railway:signal:minor_distant:deactivated"] = false,
+      ["railway:signal:station_distant:deactivated"] = false,
       ["railway:signal:station_distant:shortened"] = false,
       ["railway:signal:resetting_switch_distant:deactivated"] = false,
       ["railway:signal:stop:deactivated"] = false,
