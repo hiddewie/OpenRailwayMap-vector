@@ -4735,11 +4735,11 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           # H-type head
-          - { exact: 'FR:RR', value: 'fr/C_H-C' }
+          - { exact: 'FR:RR', value: 'fr/C_H-C-1' }
           # F-type head
-          - { exact: 'FR:R', value: 'fr/C_F-C' }
+          - { exact: 'FR:R', value: 'fr/C_F-C-1' }
         # C-type head
-        default: 'fr/C_C-C'
+        default: 'fr/C_C-C-1'
     tags:
       - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4807,13 +4807,13 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           # H-type head
-          - { exact: 'FR:RR', value: 'fr/Cv_H-Cv' }
+          - { exact: 'FR:RR', value: 'fr/Cv_H-Cv-1' }
           # F-type head
-          - { exact: 'FR:R', value: 'fr/Cv_F-Cv' }
+          - { exact: 'FR:R', value: 'fr/Cv_F-Cv-1' }
           # Could be A-type, C-type or K-type heads but
           # only 'railway:signal:main:shape' can tell.
         # Assume C-type head
-        default: 'fr/Cv_C-Cv'
+        default: 'fr/Cv_C-Cv-1'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:CV' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4871,12 +4871,12 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:RR', value: 'fr/S_H-S' }
-          - { exact: 'FR:R', value: 'fr/S_F-S' }
+          - { exact: 'FR:RR', value: 'fr/S_H-S-1' }
+          - { exact: 'FR:R', value: 'fr/S_F-S-1' }
           # Could be A-type, C-type or K-type heads but
           # only 'railway:signal:main:shape' can tell.
         # Assume C-type head
-        default: 'fr/S_C-S'
+        default: 'fr/S_C-S-1'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -5202,7 +5202,7 @@ features:
 
   - description: Route indicator
     country: FR
-    icon: 
+    icon:
       - match: 'railway:signal:main:states'
         cases:
           - { exact: 'FR:ID5', value: 'fr/ID5' }
