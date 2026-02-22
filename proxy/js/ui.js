@@ -289,9 +289,6 @@ function viewSearchResultsOnMap(bounds) {
   });
 }
 
-function showRouteOnMap(routeId) {
-}
-
 function showConfiguration(tab) {
   if (tab === 'general') {
     configureGeneral();
