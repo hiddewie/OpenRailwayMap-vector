@@ -142,6 +142,7 @@ body {
 }
 
 .maplibregl-ctrl-group button.maplibregl-ctrl-search,
+.maplibregl-ctrl-group button.maplibregl-ctrl-search-hide,
 .maplibregl-ctrl-group button.maplibregl-ctrl-route,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend,
 .maplibregl-ctrl-group button.maplibregl-ctrl-news,
@@ -174,11 +175,18 @@ body {
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style {
   box-shadow: 0 0 0 2px rgba(var(--bs-success-rgb), .5);
 }
+.maplibregl-ctrl-group.maplibregl-ctrl-group-search {
+  display: flex;
+}
+.maplibregl-ctrl-group.maplibregl-ctrl-group-search.has-results {
+  box-shadow: 0 0 0 2px rgba(156, 217, 0, 0.7);
+}
 .maplibregl-ctrl-group.maplibregl-ctrl-group-route {
   box-shadow: 0 0 0 2px hsla(312, 100%, 50%, 0.4);
 }
 
 .maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group button.maplibregl-ctrl-search-hide .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-route .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon,
 .maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon,
@@ -215,7 +223,9 @@ body {
   mask-image: url("data:image/svg+xml,%3Csvg width='800px' height='800px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z' stroke='%23000000' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   width: 1.5rem;
   height: 1.4rem;
-}.maplibregl-ctrl-group button.maplibregl-ctrl-route .maplibregl-ctrl-icon {
+}
+.maplibregl-ctrl-group button.maplibregl-ctrl-search-hide .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group button.maplibregl-ctrl-route .maplibregl-ctrl-icon {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-slash-circle' viewBox='0 0 16 16'%3E%3Cpath d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16'/%3E%3Cpath d='M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708'/%3E%3C/svg%3E");
   width: 1.2rem;
   height: 1.2rem;
@@ -293,6 +303,7 @@ body {
 }
 
 .maplibregl-ctrl-group button.maplibregl-ctrl-search .maplibregl-ctrl-icon-text,
+.maplibregl-ctrl-group button.maplibregl-ctrl-search-hide .maplibregl-ctrl-icon-text,
 .maplibregl-ctrl-group button.maplibregl-ctrl-route .maplibregl-ctrl-icon-text,
 .maplibregl-ctrl-group button.maplibregl-ctrl-legend .maplibregl-ctrl-icon-text,
 .maplibregl-ctrl-group button.maplibregl-ctrl-news .maplibregl-ctrl-icon-text {
@@ -367,6 +378,14 @@ body {
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style > button.active > button.layer-configuration:hover {
   background-color: yellow;
+}
+
+.maplibregl-ctrl-group .maplibregl-ctrl-search-hide {
+  border-top: none;
+  border-left: 1px solid #ddd;
+}
+.maplibregl-ctrl-group.has-results .maplibregl-ctrl-search-hide {
+  border-left: 1px solid rgba(156, 217, 0, 1);
 }
 
 .maplibregl-ctrl-group.maplibregl-ctrl-date {

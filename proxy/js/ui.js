@@ -114,21 +114,6 @@ const icons = {
   }
 }
 
-function registerLastSearchResults(results) {
-  const data = {
-    type: 'FeatureCollection',
-    features: results.map(result => ({
-      type: 'Feature',
-      properties: result,
-      geometry: {
-        type: 'Point',
-        coordinates: [result.latitude, result.longitude],
-      },
-    })),
-  };
-  map.getSource('search').setData(data);
-}
-
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -202,7 +187,7 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results) {
-  registerLastSearchResults(results);
+  searchControl.registerLastSearchResults(results);
 
   const bounds = results.length > 0
     ? JSON.stringify(results.reduce(
@@ -244,7 +229,7 @@ function showSearchResults(results) {
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
-  registerLastSearchResults([]);
+  searchControl.registerLastSearchResults([]);
 }
 
 function showSearch() {
@@ -531,8 +516,14 @@ document.addEventListener('keydown', (event) => {
 
 function createDomElement(tagName, className, container) {
   const el = window.document.createElement(tagName);
-  if (className !== undefined) el.className = className;
-  if (container) container.appendChild(el);
+
+  if (className !== undefined) {
+    el.className = className;
+  }
+  if (container) {
+    container.appendChild(el);
+  }
+
   return el;
 }
 
@@ -1529,17 +1520,48 @@ class DateControl {
 class SearchControl {
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-search');
     const button = createDomElement('button', 'maplibregl-ctrl-search', this._container);
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Search'
 
+    this.hideResultsButton = createDomElement('button', 'maplibregl-ctrl-search-hide d-none', this._container);
+    this.hideResultsButton.type = 'button';
+    this.hideResultsButton.title = 'Hide search results from the map'
+    this.hideResultsButton.onclick = _ => hideSearchResults();
+    createDomElement('span', 'maplibregl-ctrl-icon', this.hideResultsButton);
+    const hideResultsButtonText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', this.hideResultsButton);
+    hideResultsButtonText.innerText = 'Hide search reults'
+
     return this._container;
+  }
+
+  registerLastSearchResults(results) {
+    const data = {
+      type: 'FeatureCollection',
+      features: results.map(result => ({
+        type: 'Feature',
+        properties: result,
+        geometry: {
+          type: 'Point',
+          coordinates: [result.latitude, result.longitude],
+        },
+      })),
+    };
+
+    this._map.getSource('search').setData(data);
+
+    if (results.length > 0) {
+      this._container.classList.add('has-results')
+      this.hideResultsButton.classList.remove('d-none')
+    } else {
+      this._container.classList.remove('has-results')
+      this.hideResultsButton.classList.add('d-none')
+    }
   }
 
   onRemove() {
@@ -1557,8 +1579,7 @@ class RouteControl {
     button.title = 'Hide the route on the map'
     button.onclick = _ => this.clearRoute();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Hide route'
 
     return this._container;
@@ -1670,8 +1691,7 @@ class LegendControl {
     button.type = 'button';
     button.title = 'Show/hide map legend';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Legend'
 
     button.onclick = () => this.toggleLegend();
@@ -2108,8 +2128,7 @@ class AboutControl {
     button.type = 'button';
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', undefined, button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
@@ -2122,8 +2141,7 @@ class AboutControl {
     aboutButton.type = 'button';
     aboutButton.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
-    const aboutText = createDomElement('span', undefined, aboutButton);
-    aboutText.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const aboutText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', aboutButton);
     aboutText.innerText = 'About'
 
     aboutButton.onclick = () => this.options.onAboutToggle();
@@ -2185,7 +2203,8 @@ map.addControl(
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
-map.addControl(new SearchControl(), 'top-left');
+const searchControl = new SearchControl()
+map.addControl(searchControl, 'top-left');
 const routeControl = new RouteControl()
 map.addControl(routeControl, 'top-left');
 
