@@ -35,6 +35,6 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   railway_switches = {
-    { railway = 'railway_crossing' , ref = '22', resetting = false, local_operated = false },
+    { railway = 'railway_crossing' , ref = '22' },
   },
 })
