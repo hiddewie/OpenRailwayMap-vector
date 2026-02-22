@@ -1336,6 +1336,25 @@ const features = {
     },
   },
 
+  realtime: {
+    labelProperties: ['trip'],
+    featureProperty: 'mode',
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      TRAIN: {
+        name: 'From',
+      },
+    },
+    properties: {
+      from: {
+        name: 'From',
+      },
+      to: {
+        name: 'To',
+      },
+    },
+  },
+
   // Features not part of a data source but for lookups
 
   train_protection: {

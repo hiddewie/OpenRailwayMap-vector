@@ -2722,3 +2722,180 @@ fetch(`${location.origin}/features.json`)
 updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
+
+// https://github.com/googlemaps/js-polyline-codec/blob/d0b4f42f6409d7e4d68f317578cf23c61c5ed939/src/index.ts
+const decode = function (
+  encodedPath,
+  precision = 5
+) {
+  const factor = Math.pow(10, precision);
+
+  const len = encodedPath.length;
+
+  // For speed we preallocate to an upper bound on the final length, then
+  // truncate the array before returning.
+  const path = new Array(Math.floor(encodedPath.length / 2));
+  let index = 0;
+  let lat = 0;
+  let lng = 0;
+  let pointIndex = 0;
+
+  // This code has been profiled and optimized, so don't modify it without
+  // measuring its performance.
+  for (; index < len; ++pointIndex) {
+    // Fully unrolling the following loops speeds things up about 5%.
+    let result = 1;
+    let shift = 0;
+    let b;
+    do {
+      // Invariant: "result" is current partial result plus (1 << shift).
+      // The following line effectively clears this bit by decrementing "b".
+      b = encodedPath.charCodeAt(index++) - 63 - 1;
+      result += b << shift;
+      shift += 5;
+    } while (b >= 0x1f); // See note above.
+    lat += result & 1 ? ~(result >> 1) : result >> 1;
+
+    result = 1;
+    shift = 0;
+    do {
+      b = encodedPath.charCodeAt(index++) - 63 - 1;
+      result += b << shift;
+      shift += 5;
+    } while (b >= 0x1f);
+    lng += result & 1 ? ~(result >> 1) : result >> 1;
+
+    path[pointIndex] = [lat / factor, lng / factor];
+  }
+  // truncate array
+  path.length = pointIndex;
+
+  return path;
+};
+
+// const modes = new Set(["WALK", "BIKE", "RENTAL", "CAR", "CAR_PARKING", "CAR_DROPOFF", "ODM", "RIDE_SHARING", "FLEX", "TRANSIT", "TRAM", "SUBWAY", "FERRY", "AIRPLANE", "BUS", "COACH", "RAIL", "HIGHSPEED_RAIL", "LONG_DISTANCE", "NIGHT_RAIL", "REGIONAL_FAST_RAIL", "REGIONAL_RAIL", "SUBURBAN", "FUNICULAR", "AERIAL_LIFT", "OTHER", "AREAL_LIFT", "METRO", "CABLE_CAR"]);
+// See https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/motis-project/motis/refs/tags/v2.8.3/openapi.yaml#tag/map/operation/trips
+const modes = new Set(["TRANSIT", "TRAM", "SUBWAY", "RAIL", "HIGHSPEED_RAIL", "LONG_DISTANCE", "NIGHT_RAIL", "REGIONAL_FAST_RAIL", "REGIONAL_RAIL", "SUBURBAN", "FUNICULAR", "METRO"]);
+
+function renderRealTimeTrains() {
+  const source = map.getSource('realtime');
+  const source2 = map.getSource('realtime_route');
+  if (!source || !source2) {
+    return;
+  }
+
+  const zoom = Math.floor(map.getZoom());
+
+  const bounds = map.getBounds()
+  const southWest = bounds.getSouthWest();
+  const northEast = bounds.getNorthEast();
+
+  if (zoom >= 11) {
+    const now = new Date();
+
+    // TODO pass language
+    fetch(`https://api.transitous.org/api/v5/map/trips?zoom=${zoom}&min=${southWest.lat},${southWest.lng}&max=${northEast.lat},${northEast.lng}&startTime=${now.toISOString()}&endTime=${now.toISOString()}`)
+      .then(result => result.json())
+      .then(data => {
+        console.info(data)
+
+        const parsedData = data
+          .filter(it => it.mode )
+          .filter(it => modes.has(it.mode))
+          .map(result => {
+            const now = new Date();
+            const departure = new Date(result.departure)
+            const arrival = new Date(result.arrival)
+
+            // TODO make strict, check sign
+            const progress = (now - departure) / (arrival - departure)
+            const decoded = decode(result.polyline, 5)
+
+            // console.info(result.mode, result.trips[0].displayName, result.from.name, '→', result.to.name, progress, decoded)
+
+            const distances = []
+            let total = 0
+            for (let i = 0; i < decoded.length - 1; i++) {
+              const distance = Math.sqrt((decoded[i][0] - decoded[i+1][0])**2 + (decoded[i][1] - decoded[i+1][1])**2)
+              distances.push(distance)
+              total += distance
+            }
+
+            let lineProgress = 0
+            let position = null
+            for (let i = 0; i < decoded.length - 1; i++) {
+              const distance = distances[i] // from i to i+1
+              if (lineProgress <= progress && progress <= lineProgress + (distance / total)) {
+                // interpolate points i and i+1
+                const alpha = (progress - lineProgress) / (distance / total)
+                // TODO direction
+                position = [
+                  decoded[i][0] + alpha * (decoded[i+1][0] - decoded[i][0]),
+                  decoded[i][1] + alpha * (decoded[i+1][1] - decoded[i][1]),
+                ]
+                break;
+              } else {
+                lineProgress += distance / total
+              }
+            }
+
+            return {
+              mode: result.mode,
+              trip: result.trips[0].displayName,
+              from: result.from.name,
+              to: result.to.name,
+              position,
+              route: decoded,
+            }
+          })
+          .filter(it => it.position !== null);
+
+        const geoJson = {
+          type: 'FeatureCollection',
+          features: parsedData
+            .map(({position, route, ...result}) => ({
+              type: 'Feature',
+              properties: result,
+              geometry: {
+                type: 'Point',
+                coordinates: [position[1], position[0]],
+              },
+            })),
+        };
+
+        const routeGeoJson = {
+          type: 'FeatureCollection',
+          features: parsedData
+            .map(({position, route, ...result}) => ({
+              type: 'Feature',
+              properties: result,
+              geometry: {
+                type: 'LineString',
+                coordinates: route.map(position => [position[1], position[0]]),
+              },
+            })),
+        }
+
+        source.setData(geoJson)
+        source2.setData(routeGeoJson)
+      })
+      // .then(result => result.map(item => ({
+      //   ...item,
+      //   label: [...new Set([item.localized_name, item.name])].join(' • '),
+      //   icon: icons.railway[item.railway] ?? null,
+      // })))
+      // .then(result => {
+      //   showSearchResults(result)
+      // })
+      .catch(error => {
+        // hideSearchResults();
+        // hideSearch();
+        console.error('Error during realtime data fetch', error);
+      });
+  } else {
+
+  }
+}
+
+map.on('zoomend', () => renderRealTimeTrains());
+map.on('moveend', () => renderRealTimeTrains());

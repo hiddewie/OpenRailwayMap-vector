@@ -589,7 +589,23 @@ const sources = {
   },
   route_stops: {
     type: 'geojson',
-    // Data will be updated with URL of route GeoJSON
+    // Data will be updated with URL of route stops GeoJSON
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    }
+  },
+  realtime: {
+    type: 'geojson',
+    // Data will be updated with realtime GeoJSON
+    data: {
+      type: 'FeatureCollection',
+      features: [],
+    }
+  },
+  realtime_route: {
+    type: 'geojson',
+    // Data will be updated with realtime GeoJSON
     data: {
       type: 'FeatureCollection',
       features: [],
@@ -1807,6 +1823,42 @@ const routeStops = {
       ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
       colors.route,
     ],
+  },
+}
+
+const realtime = {
+  id: 'realtime',
+  type: 'circle',
+  source: 'realtime',
+  paint: {
+    'circle-color': 'white',
+    'circle-radius': 3,
+    'circle-stroke-width': 2,
+    'circle-stroke-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+      'blue',
+    ],
+  },
+}
+
+const realtimeRoute = {
+  id: 'realtime_route',
+  type: 'line',
+  source: 'realtime_route',
+  layout: {
+    'visibility': ['case',
+      ['<', ['global-state', 'date'], defaultDate], 'none',
+      'visible',
+    ],
+    'line-join': 'round',
+    'line-cap': 'round',
+  },
+  paint: {
+    'line-color': ['case',
+      ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+      'rgba(50, 50, 250, .3)',
+    ],
+    'line-width': 5,
   },
 }
 
@@ -3559,6 +3611,8 @@ const layers = {
       },
     },
     routeStops,
+    realtime,
+    realtimeRoute,
     searchResults,
   ],
 
