@@ -166,6 +166,7 @@ tags:
   - { tag: 'railway:signal:station_distant', title: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', title: 'Station distant form' }
   - { tag: 'railway:signal:station_distant:deactivated', title: 'Station distant deactivated', type: boolean }
+  - { tag: 'railway:signal:station_distant:shortened', title: 'Station distant shortened', type: boolean }
   - { tag: 'railway:signal:steam_locomotive', title: 'Steam locomotive' }
   - { tag: 'railway:signal:steam_locomotive:form', title: 'Steam locomotive form' }
   - { tag: 'railway:signal:steam_locomotive:deactivated', title: 'Steam locomotive deactivated', type: boolean }
@@ -2415,16 +2416,14 @@ features:
 
   # --- CZ --- #
 
-  - description: Vlak se blíží k zastávce (shortened)
-    country: CZ
-    icon: [ default: 'cz/vlak_se_blizi_k_zastavce-shortened' ]
-    tags:
-      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
-      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
-
   - description: Vlak se blíží k zastávce
     country: CZ
-    icon: [ default: 'cz/vlak_se_blizi_k_zastavce' ]
+    icon:
+      - default: 'cz/vlak_se_blizi_k_zastavce'
+      - match: 'railway:signal:station_distant:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: top
     tags:
       - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
