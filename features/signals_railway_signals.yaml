@@ -2571,6 +2571,7 @@ features:
 
   - description: Speed limit main/combined (sign)
     country: CZ
+    exampleIcon: 'cz/rychlost_30-sign'
     icon:
       - match: 'railway:signal:speed_limit:states'
         cases:
@@ -2583,6 +2584,7 @@ features:
 
   - description: Speed limit main/combined (light)
     country: CZ
+    exampleIcon: 'CZ-D1:rychlost_60'
     icon:
       - match: 'railway:signal:speed_limit:states'
         cases:
