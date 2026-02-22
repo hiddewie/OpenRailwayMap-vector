@@ -75,6 +75,11 @@ function getFlagEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
+const emptyGeoJsonData = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 let locale = new Intl.Locale(navigator.language);
 window.addEventListener('languagechange', () => {
   locale = new Intl.Locale(navigator.language);
@@ -107,21 +112,6 @@ const icons = {
     way: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiI+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDEwMCUsIDEwMCUsIDEwMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMS44MjgxMjUgMC4zMjgxMjUgTCAxMC4xNzE4NzUgMC4zMjgxMjUgQyAxMSAwLjMyODEyNSAxMS42NzE4NzUgMSAxMS42NzE4NzUgMS44MjgxMjUgTCAxMS42NzE4NzUgMTAuMTcxODc1IEMgMTEuNjcxODc1IDExIDExIDExLjY3MTg3NSAxMC4xNzE4NzUgMTEuNjcxODc1IEwgMS44MjgxMjUgMTEuNjcxODc1IEMgMSAxMS42NzE4NzUgMC4zMjgxMjUgMTEgMC4zMjgxMjUgMTAuMTcxODc1IEwgMC4zMjgxMjUgMS44MjgxMjUgQyAwLjMyODEyNSAxIDEgMC4zMjgxMjUgMS44MjgxMjUgMC4zMjgxMjUgWiBNIDEuODI4MTI1IDAuMzI4MTI1ICIvPgo8cGF0aCBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlPSJyZ2IoODAlLCA4MCUsIDgwJSkiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAxNjkgNTggTCA1NyAxNDUgTCAxOTUgMTk5ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8cGF0aCBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9InJnYigwJSwgMCUsIDAlKSIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNIDkuMDQ2ODc1IDIuNzE4NzUgQyA5LjA0Njg3NSAzLjMzOTg0NCA4LjU0Mjk2OSAzLjg0Mzc1IDcuOTIxODc1IDMuODQzNzUgQyA3LjMwMDc4MSAzLjg0Mzc1IDYuNzk2ODc1IDMuMzM5ODQ0IDYuNzk2ODc1IDIuNzE4NzUgQyA2Ljc5Njg3NSAyLjA5NzY1NiA3LjMwMDc4MSAxLjU5Mzc1IDcuOTIxODc1IDEuNTkzNzUgQyA4LjU0Mjk2OSAxLjU5Mzc1IDkuMDQ2ODc1IDIuMDk3NjU2IDkuMDQ2ODc1IDIuNzE4NzUgWiBNIDkuMDQ2ODc1IDIuNzE4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMy43OTY4NzUgNi43OTY4NzUgQyAzLjc5Njg3NSA3LjQxNzk2OSAzLjI5Mjk2OSA3LjkyMTg3NSAyLjY3MTg3NSA3LjkyMTg3NSBDIDIuMDUwNzgxIDcuOTIxODc1IDEuNTQ2ODc1IDcuNDE3OTY5IDEuNTQ2ODc1IDYuNzk2ODc1IEMgMS41NDY4NzUgNi4xNzU3ODEgMi4wNTA3ODEgNS42NzE4NzUgMi42NzE4NzUgNS42NzE4NzUgQyAzLjI5Mjk2OSA1LjY3MTg3NSAzLjc5Njg3NSA2LjE3NTc4MSAzLjc5Njg3NSA2Ljc5Njg3NSBaIE0gMy43OTY4NzUgNi43OTY4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMTAuMjY1NjI1IDkuMzI4MTI1IEMgMTAuMjY1NjI1IDkuOTQ5MjE5IDkuNzYxNzE5IDEwLjQ1MzEyNSA5LjE0MDYyNSAxMC40NTMxMjUgQyA4LjUxOTUzMSAxMC40NTMxMjUgOC4wMTU2MjUgOS45NDkyMTkgOC4wMTU2MjUgOS4zMjgxMjUgQyA4LjAxNTYyNSA4LjcwNzAzMSA4LjUxOTUzMSA4LjIwMzEyNSA5LjE0MDYyNSA4LjIwMzEyNSBDIDkuNzYxNzE5IDguMjAzMTI1IDEwLjI2NTYyNSA4LjcwNzAzMSAxMC4yNjU2MjUgOS4zMjgxMjUgWiBNIDEwLjI2NTYyNSA5LjMyODEyNSAiLz4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZT0icmdiKDAlLCAwJSwgMCUpIiBzdHJva2Utb3BhY2l0eT0iMSIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGQ9Ik0gMzkgNyBMIDIxNyA3IEMgMjM0LjY2NjY2NyA3IDI0OSAyMS4zMzMzMzMgMjQ5IDM5IEwgMjQ5IDIxNyBDIDI0OSAyMzQuNjY2NjY3IDIzNC42NjY2NjcgMjQ5IDIxNyAyNDkgTCAzOSAyNDkgQyAyMS4zMzMzMzMgMjQ5IDcgMjM0LjY2NjY2NyA3IDIxNyBMIDcgMzkgQyA3IDIxLjMzMzMzMyAyMS4zMzMzMzMgNyAzOSA3IFogTSAzOSA3ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8L3N2Zz4K',
     relation: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgdmVyc2lvbj0iMS4wIiBoZWlnaHQ9IjI1NiIgd2lkdGg9IjI1NiI+PHRpdGxlPk9wZW5TdHJlZXRNYXAgcmVsYXRpb24gZWxlbWVudCBpY29uPC90aXRsZT48bWV0YWRhdGE+PHJkZjpSREY+PGNjOldvcmsgcmRmOmFib3V0PSIiPjxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PjxkYzp0eXBlIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiLz48ZGM6dGl0bGU+T3BlblN0cmVldE1hcCByZWxhdGlvbiBlbGVtZW50IGljb248L2RjOnRpdGxlPjxjYzpsaWNlbnNlIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbGljZW5zZXMvYnkvMy4wLyIvPjxkYzpkYXRlPjIwMTQtMDMtMTA8L2RjOmRhdGU+PGRjOmNyZWF0b3I+PGNjOkFnZW50PjxkYzp0aXRsZT5odHRwczovL3dpa2kub3BlbnN0cmVldG1hcC5vcmcvd2lraS9Vc2VyOk1vcmVzYnk8L2RjOnRpdGxlPjwvY2M6QWdlbnQ+PC9kYzpjcmVhdG9yPjwvY2M6V29yaz48Y2M6TGljZW5zZSByZGY6YWJvdXQ9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC8iPjxjYzpwZXJtaXRzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjUmVwcm9kdWN0aW9uIi8+PGNjOnBlcm1pdHMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNEaXN0cmlidXRpb24iLz48Y2M6cmVxdWlyZXMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNOb3RpY2UiLz48Y2M6cmVxdWlyZXMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNBdHRyaWJ1dGlvbiIvPjxjYzpwZXJtaXRzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjRGVyaXZhdGl2ZVdvcmtzIi8+PGNjOnJlcXVpcmVzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjU2hhcmVBbGlrZSIvPjwvY2M6TGljZW5zZT48L3JkZjpSREY+PC9tZXRhZGF0YT48Zz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjI0MiIgc3Ryb2tlPSJub25lIiBmaWxsPSJ3aGl0ZSIgcnk9IjMyIiB4PSI3IiB5PSI3Ii8+PGc+PHBhdGggZD0iTSAwNjggMDY4IEwgMTk2IDA2MiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PHBhdGggZD0iTSAwNjggMDY4IEwgMTk2IDE0MiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PHBhdGggZD0iTSAwNjggMDY4IEwgMDYyIDE5NiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PGNpcmNsZSBjeD0iMTk2IiBjeT0iMDYyIiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iMTk2IiBjeT0iMTQyIiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iMDYyIiBjeT0iMTk2IiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PC9nPjxnPjxwYXRoIGQ9Ik0gMDY4IDA2OCBMIDE0MiAxOTYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZT0iI2NjYyIvPjxjaXJjbGUgY3g9IjE0MiIgY3k9IjE5NiIgcj0iMDI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjA3MiIgY3k9IjA3MiIgcj0iMDMyIiBmaWxsPSIjYmVlNmJlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjgiLz48L2c+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyNDIiIHN0cm9rZT0iYmxhY2siIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMTIiIHJ5PSIzMiIgeD0iNyIgeT0iNyIvPjwvZz48L3N2Zz4K',
   }
-}
-
-function registerLastSearchResults(results) {
-  const data = {
-    type: 'FeatureCollection',
-    features: results.map(result => ({
-      type: 'Feature',
-      properties: result,
-      geometry: {
-        type: 'Point',
-        coordinates: [result.latitude, result.longitude],
-      },
-    })),
-  };
-  map.getSource('search').setData(data);
 }
 
 function facilitySearchUrl(type, term, language) {
@@ -197,7 +187,7 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results) {
-  registerLastSearchResults(results);
+  searchControl.registerLastSearchResults(results);
 
   const bounds = results.length > 0
     ? JSON.stringify(results.reduce(
@@ -239,7 +229,7 @@ function showSearchResults(results) {
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
-  registerLastSearchResults([]);
+  searchControl.registerLastSearchResults([]);
 }
 
 function showSearch() {
@@ -282,16 +272,6 @@ function viewSearchResultsOnMap(bounds) {
   map.fitBounds(bounds, {
     padding: 40,
   });
-}
-
-function showRouteOnMap(routeId) {
-  const routeSource = map.getSource('route')
-  const routeStopsSource = map.getSource('route_stops')
-
-  if (routeSource && routeStopsSource) {
-    routeSource.setData(`${location.origin}/api/route/${routeId}`)
-    routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
-  }
 }
 
 function showConfiguration(tab) {
@@ -536,8 +516,14 @@ document.addEventListener('keydown', (event) => {
 
 function createDomElement(tagName, className, container) {
   const el = window.document.createElement(tagName);
-  if (className !== undefined) el.className = className;
-  if (container) container.appendChild(el);
+
+  if (className !== undefined) {
+    el.className = className;
+  }
+  if (container) {
+    container.appendChild(el);
+  }
+
   return el;
 }
 
@@ -1534,17 +1520,92 @@ class DateControl {
 class SearchControl {
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-search');
     const button = createDomElement('button', 'maplibregl-ctrl-search', this._container);
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Search'
 
+    this.hideResultsButton = createDomElement('button', 'maplibregl-ctrl-search-hide d-none', this._container);
+    this.hideResultsButton.type = 'button';
+    this.hideResultsButton.title = 'Hide search results from the map'
+    this.hideResultsButton.onclick = _ => hideSearchResults();
+    createDomElement('span', 'maplibregl-ctrl-icon', this.hideResultsButton);
+    const hideResultsButtonText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', this.hideResultsButton);
+    hideResultsButtonText.innerText = 'Hide search reults'
+
     return this._container;
+  }
+
+  registerLastSearchResults(results) {
+    const data = {
+      type: 'FeatureCollection',
+      features: results.map(result => ({
+        type: 'Feature',
+        properties: result,
+        geometry: {
+          type: 'Point',
+          coordinates: [result.latitude, result.longitude],
+        },
+      })),
+    };
+
+    this._map.getSource('search').setData(data);
+
+    if (results.length > 0) {
+      this._container.classList.add('has-results')
+      this.hideResultsButton.classList.remove('d-none')
+    } else {
+      this._container.classList.remove('has-results')
+      this.hideResultsButton.classList.add('d-none')
+    }
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+}
+
+class RouteControl {
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-route d-none');
+    const button = createDomElement('button', 'maplibregl-ctrl-route', this._container);
+    button.type = 'button';
+    button.title = 'Hide the route on the map'
+    button.onclick = _ => this.clearRoute();
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
+    text.innerText = 'Hide route'
+
+    return this._container;
+  }
+
+  showRoute(routeId) {
+    const routeSource = this._map.getSource('route')
+    const routeStopsSource = this._map.getSource('route_stops')
+
+    if (routeSource && routeStopsSource) {
+      if (routeId) {
+        routeSource.setData(`${location.origin}/api/route/${routeId}`)
+        routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
+
+        this._container.classList.remove('d-none');
+      } else {
+        routeSource.setData(emptyGeoJsonData);
+        routeStopsSource.setData(emptyGeoJsonData);
+
+        this._container.classList.add('d-none');
+      }
+    }
+  }
+
+  clearRoute() {
+    this.showRoute(null)
   }
 
   onRemove() {
@@ -1630,8 +1691,7 @@ class LegendControl {
     button.type = 'button';
     button.title = 'Show/hide map legend';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Legend'
 
     button.onclick = () => this.toggleLegend();
@@ -2068,8 +2128,7 @@ class AboutControl {
     button.type = 'button';
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', undefined, button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
@@ -2082,8 +2141,7 @@ class AboutControl {
     aboutButton.type = 'button';
     aboutButton.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
-    const aboutText = createDomElement('span', undefined, aboutButton);
-    aboutText.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const aboutText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', aboutButton);
     aboutText.innerText = 'About'
 
     aboutButton.onclick = () => this.options.onAboutToggle();
@@ -2145,7 +2203,10 @@ map.addControl(
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
-map.addControl(new SearchControl(), 'top-left');
+const searchControl = new SearchControl()
+map.addControl(searchControl, 'top-left');
+const routeControl = new RouteControl()
+map.addControl(routeControl, 'top-left');
 
 const attributionOptions = {
   compact: true,
@@ -2500,7 +2561,7 @@ function popupContent(feature) {
           }
 
           if (routeId) {
-            popupListItem.onclick = () => showRouteOnMap(routeId)
+            popupListItem.onclick = () => routeControl.showRoute(routeId)
           }
         });
       })
