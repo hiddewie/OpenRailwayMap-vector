@@ -44,9 +44,9 @@ tags:
   - { tag: 'railway:signal:distant:height', title: 'Distant height' }
   - { tag: 'railway:signal:distant:type', title: 'Distant type' }
   - { tag: 'railway:signal:distant:distance', title: 'Distant distance' }
-  - { tag: 'railway:signal:distant:regime', title: 'Distant regime' }
   - { tag: 'railway:signal:distant:deactivated', title: 'Distant deactivated', type: boolean }
   - { tag: 'railway:signal:distant:shape', title: 'Distant shape' }
+  - { tag: 'railway:signal:distant:function', title: 'Distant function' }
   - { tag: 'railway:signal:electricity', title: 'Electricity' }
   - { tag: 'railway:signal:electricity:type', title: 'Electricity type' }
   - { tag: 'railway:signal:electricity:form', title: 'Electricity form' }
@@ -2503,19 +2503,26 @@ features:
       - { tag: 'railway:signal:distant', value: 'CZ-D1:vystraha' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  - description: Distant repeated (light)
+    country: CZ
+    icon: [ default: cz/distant-repeated ]
+    tags:
+      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated' }
+
   - description: Distant (light)
     country: CZ
     icon:
-      - match: 'railway:signal:distant:repeated'
-        cases:
-          - { value: 'cz/distant-repeated', description: 'repeated' }
-        default: 'cz/distant'
+      - default: cz/distant
       - match: 'railway:signal:distant:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
-      # TODO handle distant block (upright cross) or distant entry (diagonal cross)
-      - default: 'cz/distant-block'
+      - match: 'railway:signal:distant:function'
+        cases:
+          - { value: 'cz/distant-entry', description: 'entry' }
+        default: 'cz/distant-block'
         position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
@@ -2638,8 +2645,6 @@ features:
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
         position: bottom
-      - default: 'cz/main-marker'
-        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2653,8 +2658,6 @@ features:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
           - { all: ['stop', 'approach', 'clear'], value: 'cz/main-protection-YGR' }
         default: 'cz/main-protection-GR'
-      - default: 'cz/main-marker'
-        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2668,8 +2671,6 @@ features:
           - { any: ['CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen'], value: 'cz/main-intermediate-RWB' }
           - { any: ['driving_permited', 'shunting_enabled'], value: 'cz/main-intermediate-RWB' }
         default: 'cz/main-intermediate-R'
-      - default: 'cz/main-marker'
-        position: right
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -2692,8 +2693,6 @@ features:
           - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
           - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
         position: bottom
-      - default: 'cz/main-marker'
-        position: right
       - match: 'railway:signal:main:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2715,8 +2714,6 @@ features:
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-RW' }
           - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj'], value: 'cz/main-entry-YR' }
         default: 'cz/main-entry-GR'
-      - default: 'cz/main-marker'
-        position: right
       - match: 'railway:signal:main:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2741,8 +2738,6 @@ features:
           - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
           - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
         position: bottom
-      - default: 'cz/combined-marker'
-        position: right
       - match: 'railway:signal:combined:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
@@ -2766,8 +2761,6 @@ features:
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-RW' }
           - { all: ['stop', 'shunting_enabled'], value: 'cz/combined-RW' }
         default: 'cz/combined-R'
-      - default: 'cz/combined-marker'
-        position: right
       - match: 'railway:signal:combined:shortened'
         cases:
           - { value: 'cz/shortened', description: 'shortened' }
