@@ -75,6 +75,11 @@ function getFlagEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
+const emptyGeoJsonData = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 let locale = new Intl.Locale(navigator.language);
 window.addEventListener('languagechange', () => {
   locale = new Intl.Locale(navigator.language);
@@ -285,13 +290,6 @@ function viewSearchResultsOnMap(bounds) {
 }
 
 function showRouteOnMap(routeId) {
-  const routeSource = map.getSource('route')
-  const routeStopsSource = map.getSource('route_stops')
-
-  if (routeSource && routeStopsSource) {
-    routeSource.setData(`${location.origin}/api/route/${routeId}`)
-    routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
-  }
 }
 
 function showConfiguration(tab) {
@@ -1553,6 +1551,51 @@ class SearchControl {
   }
 }
 
+class RouteControl {
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-route d-none');
+    const button = createDomElement('button', 'maplibregl-ctrl-route', this._container);
+    button.type = 'button';
+    button.title = 'Hide the route on the map'
+    button.onclick = _ => this.clearRoute();
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', '', button);
+    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    text.innerText = 'Hide route'
+
+    return this._container;
+  }
+
+  showRoute(routeId) {
+    const routeSource = this._map.getSource('route')
+    const routeStopsSource = this._map.getSource('route_stops')
+
+    if (routeSource && routeStopsSource) {
+      if (routeId) {
+        routeSource.setData(`${location.origin}/api/route/${routeId}`)
+        routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
+
+        this._container.classList.remove('d-none');
+      } else {
+        routeSource.setData(emptyGeoJsonData);
+        routeStopsSource.setData(emptyGeoJsonData);
+
+        this._container.classList.add('d-none');
+      }
+    }
+  }
+
+  clearRoute() {
+    this.showRoute(null)
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+}
+
 class EditControl {
   onAdd(map) {
     this._map = map;
@@ -2146,6 +2189,8 @@ map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
 map.addControl(new SearchControl(), 'top-left');
+const routeControl = new RouteControl()
+map.addControl(routeControl, 'top-left');
 
 const attributionOptions = {
   compact: true,
@@ -2500,7 +2545,7 @@ function popupContent(feature) {
           }
 
           if (routeId) {
-            popupListItem.onclick = () => showRouteOnMap(routeId)
+            popupListItem.onclick = () => routeControl.showRoute(routeId)
           }
         });
       })
