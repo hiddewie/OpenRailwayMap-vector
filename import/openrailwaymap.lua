@@ -1121,14 +1121,14 @@ function osm2pgsql.process_node(object)
       ref = split_semicolon_to_sql_array(tags.ref),
       height = tags.height,
       surface = tags.surface,
-      elevator = tags.elevator == 'yes',
-      shelter = tags.shelter == 'yes',
-      lit = tags.lit == 'yes',
-      bin = tags.bin == 'yes',
-      bench = tags.bench == 'yes',
-      wheelchair = tags.wheelchair == 'yes',
-      departures_board = tags.departures_board == 'yes',
-      tactile_paving = tags.tactile_paving == 'yes',
+      elevator = tags.elevator == 'yes' or nil,
+      shelter = tags.shelter == 'yes' or nil,
+      lit = tags.lit == 'yes' or nil,
+      bin = tags.bin == 'yes' or nil,
+      bench = tags.bench == 'yes' or nil,
+      wheelchair = tags.wheelchair == 'yes' or nil,
+      departures_board = tags.departures_board == 'yes' or nil,
+      tactile_paving = tags.tactile_paving == 'yes' or nil,
     })
   end
 
@@ -1169,7 +1169,7 @@ function osm2pgsql.process_node(object)
 
     for _, tag in ipairs(tag_functions.signal_tags) do
       if tag.type == 'boolean' then
-        signal[tag.tag] = tags[tag.tag] == 'yes'
+        signal[tag.tag] = tags[tag.tag] == 'yes' or nil
       elseif tag.type == 'array' then
         signal[tag.tag] = split_semicolon_to_sql_array(tags[tag.tag])
       else
@@ -1218,8 +1218,8 @@ function osm2pgsql.process_node(object)
       ref = tags.ref,
       type = tags['railway:switch'],
       turnout_side = tags['railway:turnout_side'],
-      local_operated = tags['railway:local_operated'] == 'yes',
-      resetting = tags['railway:switch:resetting'] == 'yes',
+      local_operated = tags['railway:local_operated'] == 'yes' or nil,
+      resetting = tags['railway:switch:resetting'] == 'yes' or nil,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -1237,7 +1237,7 @@ function osm2pgsql.process_node(object)
       way = object:as_point(),
       ref = tags.ref,
       feature = 'mast',
-      transition = tags['location:transition'] == 'yes',
+      transition = tags['location:transition'] == 'yes' or nil,
       structure = tags.structure,
       supporting = tags['catenary_mast:supporting'],
       attachment = tags['catenary_mast:attachment'],
@@ -1367,14 +1367,14 @@ function osm2pgsql.process_way(object)
       ref = split_semicolon_to_sql_array(tags.ref),
       height = tags.height,
       surface = tags.surface,
-      elevator = tags.elevator == 'yes',
-      shelter = tags.shelter == 'yes',
-      lit = tags.lit == 'yes',
-      bin = tags.bin == 'yes',
-      bench = tags.bench == 'yes',
-      wheelchair = tags.wheelchair == 'yes',
-      departures_board = tags.departures_board == 'yes',
-      tactile_paving = tags.tactile_paving == 'yes',
+      elevator = tags.elevator == 'yes' or nil,
+      shelter = tags.shelter == 'yes' or nil,
+      lit = tags.lit == 'yes' or nil,
+      bin = tags.bin == 'yes' or nil,
+      bench = tags.bench == 'yes' or nil,
+      wheelchair = tags.wheelchair == 'yes' or nil,
+      departures_board = tags.departures_board == 'yes' or nil,
+      tactile_paving = tags.tactile_paving == 'yes' or nil,
     })
   end
 
@@ -1440,7 +1440,7 @@ function osm2pgsql.process_way(object)
       way = object:as_linestring(),
       ref = tags.ref,
       feature = 'portal',
-      transition = tags['location:transition'] == 'yes',
+      transition = tags['location:transition'] == 'yes' or nil,
       structure = tags.structure,
       supporting = nil,
       attachment = nil,
@@ -1457,7 +1457,7 @@ function osm2pgsql.process_way(object)
       way = object:as_linestring(),
       ref = tags.ref,
       height = tags.height,
-      tactile_paving = tags.tactile_paving == 'yes',
+      tactile_paving = tags.tactile_paving == 'yes' or nil,
     })
   end
 
@@ -1502,14 +1502,14 @@ function osm2pgsql.process_relation(object)
       ref = split_semicolon_to_sql_array(tags.ref),
       height = tags.height,
       surface = tags.surface,
-      elevator = tags.elevator == 'yes',
-      shelter = tags.shelter == 'yes',
-      lit = tags.lit == 'yes',
-      bin = tags.bin == 'yes',
-      bench = tags.bench == 'yes',
-      wheelchair = tags.wheelchair == 'yes',
-      departures_board = tags.departures_board == 'yes',
-      tactile_paving = tags.tactile_paving == 'yes',
+      elevator = tags.elevator == 'yes' or nil,
+      shelter = tags.shelter == 'yes' or nil,
+      lit = tags.lit == 'yes' or nil,
+      bin = tags.bin == 'yes' or nil,
+      bench = tags.bench == 'yes' or nil,
+      wheelchair = tags.wheelchair == 'yes' or nil,
+      departures_board = tags.departures_board == 'yes' or nil,
+      tactile_paving = tags.tactile_paving == 'yes' or nil,
     })
   end
 
