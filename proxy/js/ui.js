@@ -2343,7 +2343,7 @@ function popupContent(feature) {
           }
         } else if (format.country_prefix) {
           if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
-            return `${getFlagEmoji(stringValue.substr(0, 2))} ${stringValue.substr(3)}`;
+            return stringValue.substr(3);
           } else {
             return stringValue;
           }
