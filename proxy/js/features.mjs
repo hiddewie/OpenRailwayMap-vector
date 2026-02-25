@@ -1140,7 +1140,7 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_railway_symbols': poiFeatures('electrification'),
-  'openrailwaymap_electrification-catenary': {
+  'openrailwaymap_electrification-electrification_catenary': {
     featureProperty: 'feature',
     featureLinks: featureLinks.openstreetmap,
     features: {
