@@ -4082,51 +4082,51 @@ features:
 
   - description: flecha ascendente
     country: ES
-    icon: [ default: 'es/FI14A' ]
+    icon: [ default: 'es/FI11A' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11A' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: línea horizontal
     country: ES
-    icon: [ default: 'es/FI14B' ]
+    icon: [ default: 'es/FI11B' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11B' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: flecha descendente
     country: ES
-    icon: [ default: 'es/FI14C' ]
+    icon: [ default: 'es/FI11C' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11C' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media ascendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12A' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12A' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media ascendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12B' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12B' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media descendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12C' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12C' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media descendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12D' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12D' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12D' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: end of catenary
@@ -4134,7 +4134,7 @@ features:
     # TODO add turn direction
     icon: [ default: 'es/FI14A' ]
     tags:
-      - { tag: 'railway:signal:electricity', any: [ 'ES:FI14A', 'ES:FI14B' ] }
+      - { tag: 'railway:signal:electricity', any: [ 'ES-RCF:FI14A', 'ES-RCF:FI14B' ] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
 
@@ -4142,7 +4142,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14C' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14C' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14C' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
@@ -4150,7 +4150,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14D' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14D' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14D' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
@@ -4158,7 +4158,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14E' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14E' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14E' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
@@ -4166,7 +4166,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14F' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14F' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14F' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -4174,7 +4174,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14G' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14G' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14G' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
@@ -4182,7 +4182,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14H' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14H' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14H' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
@@ -4190,7 +4190,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14I' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14I' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14I' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -4198,7 +4198,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14J' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14J' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14J' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
