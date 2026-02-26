@@ -200,6 +200,7 @@ tags:
   - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
+  - { tag: 'railway:signal:location', title: 'Location' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
@@ -1769,6 +1770,7 @@ features:
 
   - description: Grand Signal d'Arrêt (opposite regime)
     country: BE
+    exampleIcon: be/GSA-opposite-VJH
     icon:
       - match: 'railway:signal:main:states'
         cases:
@@ -1778,12 +1780,18 @@ features:
           - { exact: 'BE:VJH', value: 'be/GSA-opposite-VJH' }
           - { exact: 'BE:V', value: 'be/GSA-opposite-V' }
         default: 'be/GSA-opposite-R'
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:OF', value: 'be/ŒF' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
       - { tag: 'railway:signal:regime', value: 'opposite' }
 
   - description: Grand Signal d'Arrêt (normal regime)
     country: BE
+    exampleIcon: be/GSA-VJH
     icon:
       - match: 'railway:signal:main:states'
         cases:
@@ -1792,6 +1800,11 @@ features:
           - { exact: 'BE:VJV', value: 'be/GSA-VJV' }
           - { exact: 'BE:VJH', value: 'be/GSA-VJH' }
           - { exact: 'BE:V', value: 'be/GSA-V' }
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:OF', value: 'be/ŒF' }
+        position: bottom
         default: 'be/GSA-R'
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
@@ -4723,11 +4736,11 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           # H-type head
-          - { exact: 'FR:RR', value: 'fr/C_H-C' }
+          - { exact: 'FR:RR', value: 'fr/C_H-C-1' }
           # F-type head
-          - { exact: 'FR:R', value: 'fr/C_F-C' }
+          - { exact: 'FR:R', value: 'fr/C_F-C-1' }
         # C-type head
-        default: 'fr/C_C-C'
+        default: 'fr/C_C-C-1'
     tags:
       - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4795,13 +4808,13 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           # H-type head
-          - { exact: 'FR:RR', value: 'fr/Cv_H-Cv' }
+          - { exact: 'FR:RR', value: 'fr/Cv_H-Cv-1' }
           # F-type head
-          - { exact: 'FR:R', value: 'fr/Cv_F-Cv' }
+          - { exact: 'FR:R', value: 'fr/Cv_F-Cv-1' }
           # Could be A-type, C-type or K-type heads but
           # only 'railway:signal:main:shape' can tell.
         # Assume C-type head
-        default: 'fr/Cv_C-Cv'
+        default: 'fr/Cv_C-Cv-1'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:CV' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4859,12 +4872,12 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:RR', value: 'fr/S_H-S' }
-          - { exact: 'FR:R', value: 'fr/S_F-S' }
+          - { exact: 'FR:RR', value: 'fr/S_H-S-1' }
+          - { exact: 'FR:R', value: 'fr/S_F-S-1' }
           # Could be A-type, C-type or K-type heads but
           # only 'railway:signal:main:shape' can tell.
         # Assume C-type head
-        default: 'fr/S_C-S'
+        default: 'fr/S_C-S-1'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -5190,7 +5203,7 @@ features:
 
   - description: Route indicator
     country: FR
-    icon: 
+    icon:
       - match: 'railway:signal:main:states'
         cases:
           - { exact: 'FR:ID5', value: 'fr/ID5' }
