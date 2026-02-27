@@ -2592,7 +2592,7 @@ fetch(`${origin}/api/replication_timestamp`)
       const importTimespan = new Date().getTime() - importTimestamp.getTime();
       const replicationTimespan = new Date().getTime() - replicationTimestamp.getTime();
 
-      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data imported <abbr title="${importTimestamp}">${formatTimespan(importTimespan)} ago</abbr> &mdash; data updated <abbr title="${replicationTimestamp}">${formatTimespan(replicationTimespan)} ago</abbr>`
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data imported <abbr title="${importTimestamp}">${formatTimespan(importTimespan)} ago</abbr>, updated <abbr title="${replicationTimestamp}">${formatTimespan(replicationTimespan)} ago</abbr>`
 
       // Forcefully update the control, even if the map does not fire events.
       attributionControl._updateAttributions();
