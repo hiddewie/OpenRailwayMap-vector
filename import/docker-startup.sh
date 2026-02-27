@@ -51,7 +51,7 @@ function import_db() {
   if [[ -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
     import_timestamp="$(cat "$OSM2PGSQL_TIMESTAMP_FILE")"
     echo "Setting import timestamp to $import_timestamp"
-    $PSQL -c "update osm2pgsql_properties set \\"value\\"='$import_timestamp' where property='import_timestamp';"
+    $PSQL -c "update osm2pgsql_properties set \"value\"='$import_timestamp' where property='import_timestamp';"
   fi
 }
 
