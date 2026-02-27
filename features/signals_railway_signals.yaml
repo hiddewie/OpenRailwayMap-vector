@@ -2637,9 +2637,7 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'], value: 'cz/main-block-YGRW' }
-          - { all: ['stop', 'approach', 'clear', 'shunting_enabled'], value: 'cz/main-block-YGRW' }
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-block-YGR' }
-          - { all: ['stop', 'approach', 'clear'], value: 'cz/main-block-YGR' }
         default: 'cz/main-block-GR'
       - match: 'railway:signal:main:shortened'
         cases:
@@ -2656,7 +2654,6 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
-          - { all: ['stop', 'approach', 'clear'], value: 'cz/main-protection-YGR' }
         default: 'cz/main-protection-GR'
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
@@ -2669,7 +2666,6 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { any: ['CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen'], value: 'cz/main-intermediate-RWB' }
-          - { any: ['driving_permited', 'shunting_enabled'], value: 'cz/main-intermediate-RWB' }
         default: 'cz/main-intermediate-R'
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
@@ -2683,7 +2679,6 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/main-entry-YGRWY-Y' }
-          - { exact: 'approach', value: 'cz/main-entry-YGRWY-Y' }
         default: 'cz/main-entry-YGRWY-G'
       - match: 'railway:signal:speed_limit:states'
         cases:
@@ -2728,7 +2723,6 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/combined-YGRWY-Y' }
-          - { any: ['approach'], value: 'cz/combined-YGRWY-Y' }
         default: 'cz/combined-YGRWY-G'
       - match: 'railway:signal:speed_limit:states'
         cases:
@@ -2753,13 +2747,9 @@ features:
       - match: 'railway:signal:combined:states'
         cases:
           - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-YGRW' }
-          - { all: ['approach', 'clear', 'stop'], value: 'cz/combined-YGRW' }
           - { all: ['CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-GRW' }
-          - { all: ['clear', 'stop'], value: 'cz/combined-GRW' }
           - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-YRW' }
-          - { all: ['approach', 'stop', 'shunting_enabled'], value: 'cz/combined-YRW' }
           - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-RW' }
-          - { all: ['stop', 'shunting_enabled'], value: 'cz/combined-RW' }
         default: 'cz/combined-R'
       - match: 'railway:signal:combined:shortened'
         cases:
