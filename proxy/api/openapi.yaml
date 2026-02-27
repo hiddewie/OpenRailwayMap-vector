@@ -50,7 +50,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  initial_import_timestamp:
+                  import_timestamp:
                     type: string
                     format: date-time
                     example: '2026-01-01T00:00:00Z'

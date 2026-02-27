@@ -2585,8 +2585,8 @@ function formatTimespan(timespan) {
 fetch(`${origin}/api/replication_timestamp`)
   .then(response => response.json())
   .then(source => {
-    if (source.initial_import_timestamp && source.replication_timestamp) {
-      const importTimestamp = new Date(source.initial_import_timestamp)
+    if (source.import_timestamp && source.replication_timestamp) {
+      const importTimestamp = new Date(source.import_timestamp)
       const replicationTimestamp = new Date(source.replication_timestamp)
 
       const importTimespan = new Date().getTime() - importTimestamp.getTime();
