@@ -1333,6 +1333,8 @@ function osm2pgsql.process_way(object)
 
   local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
+    local position, position_exact, line_positions = find_position_tags(tags)
+
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object.is_closed and object:as_polygon() or object:as_linestring(),
@@ -1346,6 +1348,7 @@ function osm2pgsql.process_way(object)
         name_tags = name_tags(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
         network = split_semicolon_to_sql_array(tags.network),
+        position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
         wikidata = tags.wikidata,
