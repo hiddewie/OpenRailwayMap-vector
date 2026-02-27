@@ -207,6 +207,7 @@ tags:
   - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
+  - { tag: 'railway:signal:location', title: 'Location' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
@@ -4358,51 +4359,51 @@ features:
 
   - description: flecha ascendente
     country: ES
-    icon: [ default: 'es/FI14A' ]
+    icon: [ default: 'es/FI11A' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11A' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: línea horizontal
     country: ES
-    icon: [ default: 'es/FI14B' ]
+    icon: [ default: 'es/FI11B' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11B' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: flecha descendente
     country: ES
-    icon: [ default: 'es/FI14C' ]
+    icon: [ default: 'es/FI11C' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F11C' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media ascendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12A' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12A' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media ascendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12B' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12B' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media descendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12C' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12C' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: rampa media descendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12D' ]
     tags:
-      - { tag: 'railway:signal:slope', value: 'ES-RCF:F12D' }
+      - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12D' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   - description: end of catenary
@@ -4410,7 +4411,7 @@ features:
     # TODO add turn direction
     icon: [ default: 'es/FI14A' ]
     tags:
-      - { tag: 'railway:signal:electricity', any: [ 'ES:FI14A', 'ES:FI14B' ] }
+      - { tag: 'railway:signal:electricity', any: [ 'ES-RCF:FI14A', 'ES-RCF:FI14B' ] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
 
@@ -4418,7 +4419,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14C' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14C' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14C' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
@@ -4426,7 +4427,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14D' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14D' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14D' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
@@ -4434,7 +4435,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14E' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14E' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14E' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
@@ -4442,7 +4443,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14F' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14F' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14F' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
@@ -4450,7 +4451,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14G' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14G' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14G' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
@@ -4458,7 +4459,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14H' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14H' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14H' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
@@ -4466,7 +4467,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14I' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14I' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14I' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
@@ -4474,7 +4475,7 @@ features:
     country: ES
     icon: [ default: 'es/FI14J' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'ES:FI14J' }
+      - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14J' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
@@ -4961,59 +4962,342 @@ features:
 
   # --- FR --- #
 
+  # Icon filename format: Signal_Shape-State.svg
+
+  # Filenames starting with the letter "C" represent both Carré
+  # and Carré violet. This avoids creating redundant icons for
+  # identical shapes and aspects under different prefixes
+  # (e.g. C_* vs Cv_*).
+  # Likewise, filenames starting with the letter "D" represent
+  # both Disque and Avertissement.
+  # Aspects are evaluated from most restrictive to least restrictive
+  # (but for the S aspect).
+
+  # Carré #
+
+  # C is the most restrictive aspect for a Carré signal.
+  # The Cv aspect must only appear on Cv signals (otherwise,
+  # it indicates a mapping error).
+
+  # Low-profile shape
+  - description: Carré
+    country: FR
+    icon: [ default: 'fr/C_small-C' ]
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  # C-type head
   - description: Carré
     country: FR
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:Cv', value: 'fr/C-Cv' }
-          - { any: [ 'FR:M', 'FR:Mr' ], value: 'fr/C-M' }
-          - { any: [ 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C-RR-A' }
-          - { any: [ 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C-R-A' }
-          - { any: [ 'FR:RR', 'FR:RRc' ], value: 'fr/C-RR' }
-          - { any: [ 'FR:R', 'FR:Rc' ], value: 'fr/C-R' }
-          - { any: [ 'FR:A', 'FR:Ac' ], value: 'fr/C-A' }
-          - { any: [ 'FR:VL', 'FR:VLc' ], value: 'fr/C-VL' }
-          - { any: [ 'FR:S', 'FR:Sc' ], value: 'fr/C-S' }
-        # TODO split on shape
-        default: 'fr/C-C'
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_C-M' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_C-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_C-VL' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_C-S' }
+        default: 'fr/C_C-C'
     tags:
-      - { tag: 'railway:signal:main', any: [ 'FR:C', 'FR:CV', 'FR:CARRE' ] }
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # F-type head
+  - description: Carré
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_F-M' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_F-A' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_F-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_F-R' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_F-VL' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_F-S' }
+        default: 'fr/C_F-C'
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # H-type head
+  - description: Carré
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_H-M' }
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C_H-RR-A' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/C_H-RR' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_H-A' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_H-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_H-R' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_H-VL' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_H-S' }
+        default: 'fr/C_H-C'
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # Fallback: infer shape from supported states
+  - description: Carré
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          # H-type head
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C_H-RR-A-2' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/C_H-RR-2' }
+          # F-type head
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_F-R-A-2' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_F-R-2' }
+        # C-type head
+        default: 'fr/C_C-C-2'
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # Carré violet #
+
+  # Cv is the most restrictive aspect for a Carré violet signal.
+  # The C aspect must only appear on Carré signals (otherwise,
+  # it indicates a mapping error).
+
+  # Ground installation
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_ground-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:position', value: 'ground' }
+
+  # A-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_A-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:A' }
+
+  # C-type head
+  - description: Carré violet
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_C-M-1' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_C-A-1' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_C-VL-1' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_C-S-1' }
+        default: 'fr/C_C-Cv'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # F-type head
+  - description: Carré violet
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_F-M-1' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_F-A-1' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_F-R-A-1' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_F-R-1' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_F-VL-1' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_F-S-1' }
+        default: 'fr/C_F-Cv'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # H-type head
+  - description: Carré violet
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:M', 'FR:(M)', 'FR:Mr' ], value: 'fr/C_H-M-1' }
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C_H-RR-A-1' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/C_H-RR-1' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/C_H-A-1' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_H-R-A-1' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_H-R-1' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/C_H-VL-1' }
+          - { any: [ 'FR:S', 'FR:(S)', 'FR:Sc' ], value: 'fr/C_H-S-1' }
+        default: 'fr/C_H-Cv'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # K-type head
+  - description: Carré violet
+    country: FR
+    icon: [ default: 'fr/Cv_K-Cv' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:K' }
+
+  # Fallback: infer shape from supported states
+  - description: Carré violet
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          # H-type head
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/C_H-RR-A-3' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/C_H-RR-3' }
+          # F-type head
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/C_F-R-A-3' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/C_F-R-3' }
+          # Could be A-type, C-type or K-type heads but
+          # only 'railway:signal:main:shape' can tell.
+        # Assume C-type head
+        default: 'fr/C_C-Cv-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  # Sémaphore #
+
+  # S is the most restrictive aspect for a Sémaphore signal.
+  # The C and Cv aspects must not appear on S signals.
+  # (otherwise, it indicates a mapping error).
+
+  # A-type head
   - description: Sémaphore
     country: FR
     icon:
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/S-R-A' }
-          - { any: [ 'FR:R', 'FR:Rc' ], value: 'fr/S-R' }
-          - { any: [ 'FR:A', 'FR:Ac' ], value: 'fr/S-A' }
-          - { any: [ 'FR:VL', 'FR:VLc' ], value: 'fr/S-VL' }
-        # TODO split on shape
-        default: 'fr/S-S'
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/S_A-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/S_A-VL' }
+        default: 'fr/S_A-S'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:A' }
+
+  # C-type head
+  - description: Sémaphore
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/S_C-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/S_C-VL' }
+        default: 'fr/S_C-S'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
+
+  # F-type head
+  - description: Sémaphore
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/S_F-A' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/S_F-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/S_F-R' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/S_F-VL' }
+        default: 'fr/S_F-S'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:F' }
+
+  # H-type head
+  - description: Sémaphore
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/S_H-RR-A' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/S_H-RR' }
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/S_H-A' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/S_H-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/S_H-R' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/S_H-VL' }
+        default: 'fr/S_H-S'
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # K-type head
+  - description: Sémaphore
+    country: FR
+    icon: [ default: 'fr/S_K-S' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'FR:K' }
+
+  # Fallback: infer shape from supported states
+  - description: Sémaphore
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          # H-type head
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/S_H-RR-A-1' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/S_H-RR-1' }
+          # F-type head
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/S_F-R-A-1' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/S_F-R-1' }
+          # Could be A-type, C-type or K-type heads but
+          # only 'railway:signal:main:shape' can tell.
+        # Assume C-type head
+        default: 'fr/S_C-S-1'
     tags:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  # Avertissement #
+
+  # R-type head (implicit for distant signals)
   - description: Avertissement
     country: FR
     icon:
-      - match: 'railway:signal:distant:states'
+      - match: 'railway:signal:main:states'
         cases:
-          - { exact: 'FR:R', value: 'fr/A-R' }
-          - { exact: 'FR:A', value: 'fr/A-A' }
-        default: 'fr/A-VL'
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/D-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/D-R' }
+          - { any: [ 'FR:VL', 'FR:(VL)','FR:VLc' ], value: 'fr/D-VL' }
+        default: 'fr/D-A'
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
+  # Disque #
+
+  # R-type head (implicit for distant signals)
   - description: Disque
     country: FR
-    icon: [ default: 'fr/D-D' ]
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:A', 'FR:(A)', 'FR:Ac' ], value: 'fr/D-A-1' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/D-R-A-1' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/D-R-1' }
+          - { any: [ 'FR:VL', 'FR:(VL)', 'FR:VLc' ], value: 'fr/D-VL-1' }
+        default: 'fr/D-D'
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  # Boards and signs #
 
   - description: Pancarte Z & TIV-D
     country: FR
@@ -5253,7 +5537,7 @@ features:
       - { tag: 'railway:signal:train_protection', any: [ 'FR:REP_TVM', 'FR:repère_arrêt_TVM' ] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: ETCS block marker
+  - description: ETCS stop marker
     country: FR
     icon:
       - match: 'railway:signal:position'
@@ -5316,7 +5600,14 @@ features:
 
   - description: Route indicator
     country: FR
-    icon: [ default: 'fr/ID' ]
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'FR:ID5', value: 'fr/ID5' }
+          - { exact: 'FR:ID4', value: 'fr/ID4' }
+          - { exact: 'FR:ID3', value: 'fr/ID3' }
+          - { exact: 'FR:ID2', value: 'fr/ID2' }
+        default: 'fr/ID3'
     tags:
       - { tag: 'railway:signal:route', value: 'FR:ID' }
       - { tag: 'railway:signal:route:form', value: 'light' }
