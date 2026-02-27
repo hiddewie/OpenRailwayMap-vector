@@ -1,3 +1,3 @@
 FROM scratch
 COPY filtered/data.osm.pbf /data/data.osm.pbf
-COPY import-date import-date
+COPY initial-import-timestamp initial-import-timestamp
