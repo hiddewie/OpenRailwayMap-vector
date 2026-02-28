@@ -4,6 +4,7 @@ import yaml from 'yaml'
 const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml', 'utf8'))
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 const pois = yaml.parse(fs.readFileSync('poi.yaml', 'utf8'))
+const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).references
 
 /**
  * Template that builds Lua functions used in the Osm2Psql Lua import, and taking the YAML configuration into account
@@ -29,11 +30,16 @@ function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []
   return nil, 0, 100
 end
 
+local station_references = {${station_references.map(ref => `
+  { description = '${ref.description}'${ref.country ? `, country = '${ref.country}'` : ''}, tags = {${ref.tags.map(tag => `'${tag}'`).join(', ')}} },`).join('')}
+}
+
 return {
   train_protection = train_protection,
   signal_tags = signal_tags,
   poi_railway_values = poi_railway_values,
   poi = poi,
+  station_references = station_references,
 }
 `;
 
