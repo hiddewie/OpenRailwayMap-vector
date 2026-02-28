@@ -116,3 +116,121 @@ features:
       station_size: small
       feature: crossover
       state: present
+
+references:
+  - description: Railway reference
+    tags: [ 'railway:ref' ]
+
+  - description: UIC
+    tags: [ 'uic_ref' ]
+
+  - description: IBNR
+    tags:
+      - 'ref:ibnr'
+      - 'ref:IBNR'
+
+  - description: IFOPT
+    tags: [ 'ref:IFOPT' ]
+
+  - description: PLC
+    country: EU
+    tags: [ 'ref:EU:PLC' ]
+
+  - description: SNCF RESARAIL
+    country: FR
+    tags: [ 'ref:FR:sncf:resarail' ]
+
+  - description: STIF
+    country: FR
+    tags: [ 'ref:FR:STIF' ]
+
+  - description: UIC8
+    country: FR
+    tags: [ 'ref:FR:uic8' ]
+
+  - description: RATP
+    country: FR
+    tags: [ 'ref:FR:RATP' ]
+
+  - description: FANTOIR
+    country: FR
+    tags: [ 'ref:FR:FANTOIR' ]
+
+  - description: CRS
+    country: GB
+    tags: [ 'ref:crs' ]
+
+  - description: TIPLOC
+    country: GB
+    tags: [ 'ref:tiploc' ]
+
+  - description: MAV
+    country: HU
+    tags:
+      - 'ref:mav'
+      - 'ref:MAV'
+
+  - description: BKK
+    country: HU
+    tags:
+      - 'ref:bkk'
+
+  - description: DB
+    country: DE
+    tags: [ 'railway:ref:DB' ]
+
+  - description: BVG
+    country: DE
+    tags: [ 'ref:BVG' ]
+
+  - description: VRS
+    country: DE
+    tags:
+      - 'ref:VRS'
+      - 'VRS:ref'
+
+  - description: MVB
+    country: DE
+    tags: [ 'ref:mvb' ]
+
+  - description: RNV RBL
+    country: DE
+    tags: [ 'ref:RNV:RBL' ]
+
+  - description: PID
+    country: CZ
+    tags: [ 'ref:PID' ]
+
+  - description: CIF
+    country: US
+    tags: [ 'ref:US:CIF' ]
+
+  - description: Meta
+    country: US
+    tags: [ 'ref:metra' ]
+
+  - description: ProRail
+    country: NL
+    tags: [ 'ref:ProRailID' ]
+
+  - description: ZTM
+    country: PL
+    tags: [ 'ref:ztm' ]
+
+  - description: Reference
+    tags: [ 'ref' ]
+
+  - description: Local
+    tags: [ 'local_ref' ]
+
+  - description: Old
+    tags: [ 'old_ref' ]
+
+  - description: National
+    tags: [ 'nat_ref' ]
+
+  - description: Station
+    tags: [ 'ref:station' ]
+
+  - description: Parent
+    tags: [ 'railway:ref:parent' ]
