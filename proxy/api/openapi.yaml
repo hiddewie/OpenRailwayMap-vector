@@ -50,8 +50,14 @@ paths:
               schema:
                 type: object
                 properties:
+                  import_timestamp:
+                    type: string
+                    format: date-time
+                    example: '2026-01-01T00:00:00Z'
                   replication_timestamp:
                     type: string
+                    format: date-time
+                    example: '2026-02-05T21:21:38Z'
 
   /api/facility:
     get:

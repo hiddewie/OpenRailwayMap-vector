@@ -34,6 +34,7 @@ jobs:
         run: |
           docker compose create data
           docker compose cp data:/data/data.osm.pbf data/filtered/data.osm.pbf
+          docker compose cp data:/data/data.osm.pbf.timestamp data/filtered/data.osm.pbf.timestamp
           docker compose rm data
 
       - name: Build containers

@@ -7,6 +7,7 @@ set -o pipefail
 # Store the filtered data for future use in the data directory
 OSM2PGSQL_INPUT_FILE="/data/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
 OSM2PGSQL_FILTERED_FILE="/data/filtered/${OSM2PGSQL_DATAFILE:-data.osm.pbf}"
+OSM2PGSQL_TIMESTAMP_FILE="${OSM2PGSQL_FILTERED_FILE}.timestamp"
 
 # For debugging, add --echo-queries
 PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
@@ -21,6 +22,15 @@ function filter_data() {
       "$OSM2PGSQL_INPUT_FILE" \
       --output "$OSM2PGSQL_FILTERED_FILE" \
       --expressions osmium-tags-filter
+  fi
+
+  if [[ ! -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
+    echo "Outputting OpenStreetMap data timestamp into $OSM2PGSQL_TIMESTAMP_FILE"
+
+    osmium fileinfo \
+      --get header.option.timestamp \
+      "$OSM2PGSQL_INPUT_FILE" \
+      > "$OSM2PGSQL_TIMESTAMP_FILE"
   fi
 }
 
@@ -46,6 +56,12 @@ function import_db() {
     --style openrailwaymap.lua \
     --number-processes "${OSM2PGSQL_NUMPROC:-4}" \
     "$OSM2PGSQL_FILTERED_FILE"
+
+  if [[ -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
+    import_timestamp="$(cat "$OSM2PGSQL_TIMESTAMP_FILE")"
+    echo "Setting import timestamp to $import_timestamp"
+    $PSQL -c "update osm2pgsql_properties set \"value\"='$import_timestamp' where property='import_timestamp';"
+  fi
 }
 
 function update_datafile() {

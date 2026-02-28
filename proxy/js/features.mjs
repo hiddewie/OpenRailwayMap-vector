@@ -19,8 +19,15 @@ const electrification_signals = all_signals.features.filter(feature => feature.t
 const requireUniqueEntries = array => {
   const count = Object.groupBy(array.filter(it => it[0]), it => it[0]);
   if (Object.values(count).some(it => it.length > 1)) {
-    const offendingEntries = Object.entries(count).filter(it => it[1].length > 1).map(it => it[0]).join(', ');
-    throw new Error(`entries must be unique, offending entries: ${offendingEntries}`);
+    // Check if entries actually have different content
+    const offendingEntries = Object.entries(count)
+      .filter(it => it[1].length > 1)
+      .filter(it => new Set(it[1].map(item => JSON.stringify(item))).size > 1)
+      .map(it => ` - ${it[0]}`).join('\n');
+
+    if (offendingEntries.length > 0) {
+      throw new Error(`entries must be unique, offending entries:\n${offendingEntries}`);
+    }
   }
   return Object.fromEntries(array);
 }

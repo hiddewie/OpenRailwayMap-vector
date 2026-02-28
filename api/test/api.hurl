@@ -5,6 +5,9 @@ HTTP 200
 # Replication timestamp
 GET {{base_url}}/replication_timestamp
 HTTP 200
+[Asserts]
+jsonpath "$.replication_timestamp" != null
+jsonpath "$.import_timestamp" != null
 
 # Facility request
 GET {{base_url}}/facility
