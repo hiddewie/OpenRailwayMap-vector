@@ -261,6 +261,27 @@ operators:
 
 Open a pull request where you provide details about the new operator. Ensure the pull request contains references to documentation and places on the map where the operator exists.
 
+## I want to display an additional station reference
+
+Edit the file [`features/stations.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/stations.yaml).
+
+The file contains a section `references`, with a list of references and their description. Every reference has a description, and a list of tags containing values for that reference. If a reference is country-specific, add the country.
+
+Add a new entry at a certain place in the list. For example:
+```yaml
+references:
+  - description: 'IBNR'
+    tags:
+      - 'ref:IBNR'
+      - 'ref:ibnr'
+
+  - description: 'SNCF RESARAIL'
+    country: FR
+    tags: [ 'ref:FR:sncf:resarail' ]
+```
+
+Open a pull request where you provide details about the new reference. Ensure the pull request contains references to documentation and places on the map where the reference is used.
+
 ## I want to improve the user interface
 
 The HTML, Javascript and CSS of the user interface are located in the [proxy](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/proxy) directory.
