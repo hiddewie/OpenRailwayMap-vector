@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="9" height="15" viewBox="0 0 9 15">
+<rect x="-0.9" y="-1.5" width="10.8" height="18" fill="rgb(0%, 0%, 0%)" fill-opacity="1"/>
+<path fill-rule="nonzero" fill="rgb(100%, 26.666667%, 26.666667%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 7 4.5 C 7 5.878906 5.878906 7 4.5 7 C 3.121094 7 2 5.878906 2 4.5 C 2 3.121094 3.121094 2 4.5 2 C 5.878906 2 7 3.121094 7 4.5 Z M 7 4.5 "/>
+</svg>
