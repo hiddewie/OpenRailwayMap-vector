@@ -2585,11 +2585,14 @@ function formatTimespan(timespan) {
 fetch(`${origin}/api/replication_timestamp`)
   .then(response => response.json())
   .then(source => {
-    if (source.replication_timestamp) {
-      const timestamp = new Date(source.replication_timestamp)
-      const timespan = new Date().getTime() - timestamp.getTime();
+    if (source.import_timestamp && source.replication_timestamp) {
+      const importTimestamp = new Date(source.import_timestamp)
+      const replicationTimestamp = new Date(source.replication_timestamp)
 
-      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated <abbr title="${timestamp}">${formatTimespan(timespan)} ago</abbr>`
+      const importTimespan = new Date().getTime() - importTimestamp.getTime();
+      const replicationTimespan = new Date().getTime() - replicationTimestamp.getTime();
+
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data imported <abbr title="${importTimestamp}">${formatTimespan(importTimespan)} ago</abbr>, updated <abbr title="${replicationTimestamp}">${formatTimespan(replicationTimespan)} ago</abbr>`
 
       // Forcefully update the control, even if the map does not fire events.
       attributionControl._updateAttributions();
