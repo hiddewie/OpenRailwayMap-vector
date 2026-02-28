@@ -23,6 +23,15 @@ function filter_data() {
       --output "$OSM2PGSQL_FILTERED_FILE" \
       --expressions osmium-tags-filter
   fi
+
+  if [[ ! -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
+    echo "Outputting OpenStreetMap data timestamp into $OSM2PGSQL_TIMESTAMP_FILE"
+
+    osmium fileinfo \
+      --get header.option.timestamp \
+      "$OSM2PGSQL_INPUT_FILE" \
+      > "$OSM2PGSQL_TIMESTAMP_FILE"
+  fi
 }
 
 function enable_disable_extensions() {
