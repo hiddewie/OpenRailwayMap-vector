@@ -3012,6 +3012,13 @@ features:
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'no_passing' }
 
+  - description: DVB tram passing prohibited, give way to oncoming trams (So 5a)
+    country: DE
+    icon: [ default: 'de/dvb/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-DVB:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
   - description: tram passing prohibited end sign So 6
     country: DE
     icon: [ default: 'de/bostrab/so6' ]
@@ -3997,6 +4004,14 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: DVB end of increased speed limit (G 3a)
+    country: DE
+    type: tram
+    icon: [ default: 'de/dvb/g3a' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3a' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: German tram speed limit signals as signs (G 4)
     country: DE
     type: tram
@@ -4007,6 +4022,18 @@ features:
         default: 'de/bostrab/g4-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: DVB short speed restriction (G 5)
+    country: DE
+    type: tram
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-5]0$', value: 'de/dvb/g5-{}', example: 'de/dvb/g5-{20}' }
+        default: 'de/dvb/g5-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Hannover tram speed limit G5
