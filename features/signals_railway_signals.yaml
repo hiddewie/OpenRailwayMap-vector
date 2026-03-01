@@ -3299,13 +3299,18 @@ features:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: tram departure signals
+  - description: tram departure signal
     country: DE
+    exampleIcon: de/bostrab/a1
     icon:
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2' }
-        default: 'de/bostrab/a1'
+          - { exact: 'DE-BOStrab:a1', value: 'de/bostrab/a1', description: 'close doors (A 1)' }
+        position: bottom
+      - match: 'railway:signal:departure:states'
+        cases:
+          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2', description: 'depart (A 2)' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
