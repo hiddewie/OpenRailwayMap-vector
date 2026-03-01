@@ -816,23 +816,15 @@ function name_tags(tags)
   return found_name_tags
 end
 
-local known_station_references = {
-  ref = 'ref',
-  railway_ref = 'railway:ref',
-  uic = 'uic_ref',
-  crs = 'ref:crs',
-  ibnr = 'ref:ibnr',
-  iata = 'iata',
-  ifopt = 'ref:IFOPT',
-  eva = 'ref:eva',
-  plc = 'ref:PLC',
-}
 function station_references(tags)
   local found_references = {}
 
-  for key, tag in pairs(known_station_references) do
-    if tags[tag] then
-      found_references[key] = tags[tag]
+  for _, reference in ipairs(tag_functions.station_references) do
+    for _, tag in ipairs(reference.tags) do
+      if tags[tag] then
+        found_references[reference.description] = tags[tag]
+        break
+      end
     end
   end
 
