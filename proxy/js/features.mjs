@@ -329,11 +329,8 @@ const stationFeatures = {
     state: {
       name: 'State',
     },
-    label: {
-      name: 'Reference',
-    },
-    uic_ref: {
-      name: 'UIC reference',
+    references: {
+      name: 'References',
     },
     operator: {
       name: 'Operator',
