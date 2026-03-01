@@ -85,6 +85,7 @@ tags:
   - { tag: 'railway:signal:minor:form', title: 'Minor form' }
   - { tag: 'railway:signal:minor:states', title: 'Minor states', type: array }
   - { tag: 'railway:signal:minor:height', title: 'Minor height' }
+  - { tag: 'railway:signal:minor:shape', title: 'Minor shape' }
   - { tag: 'railway:signal:minor:substitute_signal', title: 'Minor substitute signal', type: array }
   - { tag: 'railway:signal:minor:function', title: 'Minor function' }
   - { tag: 'railway:signal:minor:deactivated', title: 'Minor deactivated', type: boolean }
@@ -4338,19 +4339,23 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
-  - description: RSAG Vorfahrt gewähren (So 11)
+  - description: give way to other traffic
     country: DE
-    icon: [ default: 'de/rsag/so11' ]
+    icon: [ default: 'de/bostrab/st23' ]
     tags:
       - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so11' }
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st23' }
 
-  - description: RSAG Vorfahrt (So 12)
+  - description: priority over other traffic
     country: DE
-    icon: [ default: 'de/rsag/so12' ]
+    icon:
+      - match: 'railway:signal:minor:shape'
+        cases:
+          - { value: 'tram', value: 'de/bostrab/st24-tram' }
+        default: 'de/bostrab/st24'
     tags:
       - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so12' }
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st24' }
 
   - description: RSAG Halt bei Überflutung (So 13)
     country: DE
