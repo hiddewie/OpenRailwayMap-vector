@@ -267,6 +267,8 @@ Edit the file [`features/stations.yaml`](https://github.com/hiddewie/OpenRailway
 
 The file contains a section `references`, with a list of references and their description. Every reference has a description, and a list of tags containing values for that reference. If a reference is country-specific, add the country.
 
+To show the station reference on the map as identifier for stations that do not have the `railway:ref` tag, add `map: true`.
+
 Add a new entry at a certain place in the list. For example:
 ```yaml
 references:

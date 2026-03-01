@@ -30,6 +30,10 @@ function poi(tags)${pois.features.flatMap(feature => [...(feature.variants || []
   return nil, 0, 100
 end
 
+function map_station_reference(tags)
+  return ${station_references.filter(ref => ref.map).flatMap(tag => tag.tags).map(tag => `tags['${tag}']`).join(` or
+    `)}
+end
 local station_references = {${station_references.map(ref => `
   { description = '${ref.description}'${ref.country ? `, country = '${ref.country}'` : ''}, tags = {${ref.tags.map(tag => `'${tag}'`).join(', ')}} },`).join('')}
 }
@@ -40,6 +44,7 @@ return {
   poi_railway_values = poi_railway_values,
   poi = poi,
   station_references = station_references,
+  map_station_reference = map_station_reference,
 }
 `;
 

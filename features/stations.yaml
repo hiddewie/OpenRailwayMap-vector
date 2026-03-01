@@ -119,6 +119,7 @@ features:
 
 references:
   - description: Railway reference
+    map: true
     tags: [ 'railway:ref' ]
 
   - description: UIC
@@ -157,6 +158,7 @@ references:
     tags: [ 'ref:FR:FANTOIR' ]
 
   - description: CRS
+    map: true
     country: GB
     tags: [ 'ref:crs' ]
 
