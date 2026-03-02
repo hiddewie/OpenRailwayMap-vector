@@ -13,7 +13,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     feature,
     state,
     station,
-    map_reference,
+    map_reference as railway_ref,
     uic_ref,
     "references",
     importance,

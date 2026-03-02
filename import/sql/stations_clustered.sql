@@ -28,7 +28,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         name,
         station,
         map_reference,
-        "references"->'uic_ref' as uic_ref,
+        "references"->'UIC' as uic_ref,
         feature,
         state,
         id

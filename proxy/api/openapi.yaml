@@ -64,11 +64,13 @@ paths:
       operationId: searchFacilities
       summary: Facility search
       description: |
-        The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
+        The facility endpoint returns detail of a facility (station, junction, yard, …) by its name or reference.
         
-        The parameters q, name, ref and uic_ref are mutually exclusive.
+        The parameters q, name and ref are mutually exclusive.
         
-        It takes the first keyword of (name,uicref,ref) and the optional the operator to search for the data.
+        Reference is one of the supported facility reference tags, such as `railway:ref`, `uic_ref`, `ref:ibnr`, `ref:IFOPT`, `ref:EU:PLC` and others. See https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/stations.yaml for the full list.
+        
+        It takes the first keyword of (name, ref) and the optional the operator to search for the data.
       tags:
         - search
       parameters:
@@ -78,7 +80,7 @@ paths:
             type: string
             example: Karlsruhe
           description: |
-            search term (will be looked up in all `name=*` tags, `railway:ref=*` and `uic_ref=*`)
+            search term (will be looked up in all `name=*` tags, `railway:ref=*`, `uic_ref=*`, `ref:ibnr`, `ref:IFOPT`, `ref:EU:PLC`, etc.)
         - name: name
           in: query
           schema:
@@ -93,12 +95,6 @@ paths:
             example: Gd
           description: |
             search by official facility reference number/code only
-        - name: uic_ref
-          in: query
-          schema:
-            type: string
-          description: |
-            search by UIC reference number of a station (uses OSM tag `uic_ref=*`)
         - name: limit
           in: query
           schema:
@@ -160,6 +156,9 @@ paths:
                     uic_ref:
                       type: string
                       nullable: true
+                    references:
+                      type: object
+                      nullable: true
                     operator:
                       type: array
                       items:
@@ -202,57 +201,81 @@ paths:
                         an importance rank calculated by taking the public transport route relations into account using this station/halt
                 example:
                   - osm_ids:
-                      - 271777826
                       - 244129991
-                      - 1787945074
+                      - 271777826
                       - 1679221136
-                    osm_types: [N, N, N, N]
+                      - 1787945074
+                    osm_types:
+                      - "N"
+                      - "N"
+                      - "N"
+                      - "N"
                     name: Landsberger Allee/Petersburger Straße
-                    railway: tram_stop
+                    localized_name: Landsberger Allee/Petersburger Straße
+                    feature: tram_stop
+                    state: present
+                    station: tram
                     railway_ref:
-                    station:
                     uic_ref:
+                    references:
+                      BVG: '309156'
                     operator: [ ]
                     network: [ ]
                     wikidata: [ ]
                     wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
                     image: [ ]
                     mapillary: [ ]
                     wikipedia: [ ]
                     note: [ ]
                     description: [ ]
-                    latitude: 13.446564275
-                    longitude: 52.52637340222645
-                    rank: 32
+                    latitude: 13.446601625615415
+                    longitude: 52.52640242059869
+                    rank: 34
                   - osm_ids:
-                      - 1860777038
                       - 98878581
-                    osm_types: [N, N]
+                      - 1860777038
+                    osm_types:
+                      - "N"
+                      - "N"
                     name: S Landsberger Allee
-                    railway: tram_stop
+                    localized_name: S Landsberger Allee
+                    feature: tram_stop
+                    state: present
+                    station: tram
                     railway_ref:
-                    station:
                     uic_ref:
+                    references:
+                      BVG: '309157'
                     operator: [ ]
                     network: [ ]
                     wikidata: [ ]
                     wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
                     image: [ ]
                     mapillary: [ ]
                     wikipedia: [ ]
                     note: [ ]
                     description: [ ]
-                    latitude: 13.4564517
-                    longitude: 52.528652549251355
-                    rank: 28
+                    latitude: 13.456316877905476
+                    longitude: 52.52862061612046
+                    rank: 30
                   - osm_ids:
                       - 3872632789
-                    osm_types: [N]
+                    osm_types:
+                      - "N"
                     name: Landsberger Allee
-                    railway: station
-                    railway_ref: BLST
+                    localized_name: Landsberger Allee
+                    feature: station
+                    state: present
                     station: light_rail
+                    railway_ref: BLST
                     uic_ref: '8089020'
+                    references:
+                      UIC: '8089020'
+                      Parent: BGSS
+                      Station: '3511'
+                      Railway reference: BLST
                     operator:
                       - DB InfraGO AG
                     network:
@@ -260,15 +283,16 @@ paths:
                     wikidata:
                       - Q800507
                     wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
                     image: [ ]
                     mapillary: [ ]
                     wikipedia:
                       - de:Bahnhof Berlin Landsberger Allee
                     note: [ ]
                     description: [ ]
-                    latitude: 13.454780299999998
-                    longitude: 52.52948199908725
-                    rank: 16
+                    latitude: 13.45471508295655
+                    longitude: 52.529550935636045
+                    rank: 18
         '400':
           description: |
             Bad request: invalid parameter values

@@ -40,7 +40,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "feature" text,
   "state" text,
   "station" text,
-  "map_reference" text,
+  "railway_ref" text,
   "uic_ref" text,
   "references" hstore,
   "operator" text[],
@@ -68,7 +68,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         b.feature,
         b.state,
         b.station,
-        b.map_reference,
+        b.railway_ref,
         b.uic_ref,
         b."references",
         b.operator,
@@ -93,7 +93,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
           a.feature,
           a.state,
           a.station,
-          a.map_reference,
+          a.railway_ref,
           a.uic_ref,
           a."references",
           a.operator,
@@ -118,7 +118,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.feature,
             fs.state,
             fs.station,
-            fs.map_reference,
+            fs.railway_ref,
             fs.uic_ref,
             fs."references",
             fs.operator,
@@ -157,6 +157,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   "feature" text,
   "state" text,
   "station" text,
+  "railway_ref" text,
+  "uic_ref" text,
   "references" hstore,
   "operator" text[],
   "network" text[],
@@ -169,13 +171,13 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   "note" text[],
   "description" text[],
   "latitude" double precision,
-  "longitude" double precision
+  "longitude" double precision,
+  "rank" numeric
 ) AS $$
   BEGIN
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (s.osm_id)
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
@@ -183,6 +185,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         s.feature,
         s.state,
         s.station,
+        s.map_reference as railway_ref,
+        s."references"->'UIC' as uic_ref,
         s."references",
         s.operator AS operator,
         s.network AS network,
@@ -195,9 +199,18 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         ARRAY[s.note] AS note,
         ARRAY[s.description] AS description,
         ST_X(ST_Transform(s.way, 4326)) AS latitude,
-        ST_Y(ST_Transform(s.way, 4326)) AS longitude
+        ST_Y(ST_Transform(s.way, 4326)) AS longitude,
+        (CASE
+          WHEN input_ref = s."references"->'Railway reference' THEN 100
+          WHEN input_ref = s."references"->'UIC' THEN 90
+          WHEN input_ref = s."references"->'IBNR' THEN 80
+          WHEN input_ref = s."references"->'IFOPT' THEN 70
+          WHEN input_ref = s."references"->'PLC' THEN 60
+          ELSE 0
+        END)::numeric as rank
       FROM stations s
       WHERE ARRAY[input_ref] <@ avals(s."references")
+      ORDER BY rank DESC
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
