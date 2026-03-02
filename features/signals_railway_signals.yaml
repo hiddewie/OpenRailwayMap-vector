@@ -4343,8 +4343,8 @@ features:
     country: DE
     icon: [ default: 'de/bostrab/st23' ]
     tags:
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st23' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: priority over other traffic
     country: DE
@@ -4354,8 +4354,15 @@ features:
           - { value: 'tram', value: 'de/bostrab/st24-tram' }
         default: 'de/bostrab/st24'
     tags:
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st24' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: DVB curve lubrication system ahead (So 11)
+    country: DE
+    icon: [ default: 'de/dvb/so11' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-DVB:so11' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: RSAG Halt bei Überflutung (So 13)
     country: DE
