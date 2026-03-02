@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_ENTITY
 
-QUERY_PARAMETERS = ['q', 'name', 'ref', 'uic_ref']
+QUERY_PARAMETERS = ['q', 'name', 'ref']
 
 class FacilityAPI:
     def __init__(self, database):
@@ -21,9 +21,9 @@ class FacilityAPI:
 
         return results
 
-    async def __call__(self, *, q, name, ref, uic_ref, language, limit):
+    async def __call__(self, *, q, name, ref, language, limit):
         # Validate search arguments
-        search_args_count = sum(1 for search_arg in [q, name, ref, uic_ref] if search_arg)
+        search_args_count = sum(1 for search_arg in [q, name, ref] if search_arg)
 
         if search_args_count > 1:
             args = ', '.join(QUERY_PARAMETERS)
@@ -42,10 +42,8 @@ class FacilityAPI:
             return await self.search_by_name(name, language, limit)
         if ref:
             return await self.search_by_ref(ref, language, limit)
-        if uic_ref:
-            return await self.search_by_uic_ref(uic_ref, language, limit)
         if q:
-            return self.eliminate_duplicates((await self.search_by_name(q, language, limit)) + (await self.search_by_ref(q, language, limit)) + (await self.search_by_uic_ref(q, language, limit)), limit)
+            return self.eliminate_duplicates((await self.search_by_name(q, language, limit)) + (await self.search_by_ref(q, language, limit)), limit)
 
     def query_has_no_wildcards(self, q):
         if '%' in q or '_' in q:
@@ -72,9 +70,6 @@ class FacilityAPI:
 
     async def search_by_ref(self, ref, language, limit):
         return await self._search_by_ref("query_facilities_by_ref", ref, language, limit)
-
-    async def search_by_uic_ref(self, ref, language, limit):
-        return await self._search_by_ref("query_facilities_by_uic_ref", ref, language, limit)
 
     async def query_result(self, sql_query, parameters):
         async with self.database.acquire() as connection:

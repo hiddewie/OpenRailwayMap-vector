@@ -20,6 +20,9 @@ DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
 }
 
+async def set_connection_codecs(conn):
+    await conn.set_builtin_type_codec('hstore', codec_name='pg_contrib.hstore')
+
 @contextlib.asynccontextmanager
 async def lifespan(app):
     async with asyncpg.create_pool(
@@ -29,6 +32,7 @@ async def lifespan(app):
             command_timeout=10,
             min_size=1,
             max_size=20,
+            init=set_connection_codecs,
     ) as pool:
         print('Connected to database')
         app.state.database = pool
@@ -76,12 +80,11 @@ async def facility(
         q: Annotated[str | None, Query()] = None,
         name: Annotated[str | None, Query()] = None,
         ref: Annotated[str | None, Query()] = None,
-        uic_ref: Annotated[str | None, Query()] = None,
         lang: Annotated[str | None, Query()] = None,
         limit: Annotated[int, Query(ge=MIN_LIMIT, le=MAX_LIMIT)] = DEFAULT_FACILITY_LIMIT,
 ):
     api = FacilityAPI(app.state.database)
-    return await api(q=q, name=name, ref=ref, uic_ref=uic_ref, limit=limit, language=lang)
+    return await api(q=q, name=name, ref=ref, limit=limit, language=lang)
 
 
 @app.get("/api/milestone")
