@@ -4010,7 +4010,7 @@ features:
     type: tram
     icon: [ default: 'de/dvb/g3a' ]
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3a' }
+      - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g3a' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: German tram speed limit signals as signs (G 4)
@@ -4351,7 +4351,7 @@ features:
     icon:
       - match: 'railway:signal:minor:shape'
         cases:
-          - { value: 'tram', value: 'de/bostrab/st24-tram' }
+          - { exact: 'tram', value: 'de/bostrab/st24-tram' }
         default: 'de/bostrab/st24'
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st24' }
