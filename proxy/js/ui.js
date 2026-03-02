@@ -117,10 +117,6 @@ function facilitySearchUrl(type, term, language) {
       url.searchParams.set('ref', term)
       break;
 
-    case 'uic_ref':
-      url.searchParams.set('uic_ref', term)
-      break;
-
     case 'all':
     default:
       url.searchParams.set('q', term)
