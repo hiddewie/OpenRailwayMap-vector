@@ -135,6 +135,7 @@ function searchForFacilities(type, term, language) {
         ...item,
         label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
+        references: item.references || {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -157,6 +158,7 @@ function searchForMilestones(ref, position) {
         ...item,
         label: `Line ${item.line_ref} @ ${item.position}`,
         icon: icons.railway[item.railway] ?? null,
+        references: {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -203,6 +205,7 @@ function showSearchResults(results) {
       `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${result.icon ? `${result.icon}` : ''}
             ${result.label}
+            ${Object.entries(result.references).map(([key, ref]) => `<span class="badge bg-secondary rounded-pill small">${key}: ${ref}</span>`).join(' ')}
           </a>`
     ).join('')}
       </div>
