@@ -24,7 +24,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', references = { railway_ref = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
+    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['Railway reference'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
   },
 })
 
@@ -160,14 +160,14 @@ osm2pgsql.process_node({
     ['ref:ibnr'] = 'ref:ibnr',
     ['iata'] = 'iata',
     ['ref:IFOPT'] = 'ref:IFOPT',
-    ['ref:eva'] = 'ref:eva',
-    ['ref:PLC'] = 'ref:PLC',
+    ['ref:EU:PLC'] = 'ref:EU:PLC',
+    ['ref:FR:sncf:resarail'] = 'ref:FR:sncf:resarail',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', station = 'train', name_tags = {}, references = {ref = 'ref', railway_ref = 'railway_ref', uic = 'uic_ref', crs = 'ref:crs', ibnr = 'ref:ibnr', iata = 'iata', ifopt = 'ref:IFOPT', eva = 'ref:eva', plc = 'ref:PLC' } },
+    { feature = 'station', state = 'present', station = 'train', name_tags = {}, map_reference = 'railway_ref', references = {['Reference'] = 'ref', ['Railway reference'] = 'railway_ref', ['UIC'] = 'uic_ref', ['CRS'] = 'ref:crs', ['IBNR'] = 'ref:ibnr', ['IATA'] = 'iata', ['IFOPT'] = 'ref:IFOPT', ['PLC'] = 'ref:EU:PLC', ['SNCF RESARAIL'] = 'ref:FR:sncf:resarail' } },
   },
 })
 
@@ -183,6 +183,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', references = { railway_ref = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
+    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['Railway reference'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
   },
 })

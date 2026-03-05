@@ -133,6 +133,9 @@ references:
   - description: IFOPT
     tags: [ 'ref:IFOPT' ]
 
+  - description: IATA
+    tags: [ 'iata' ]
+
   - description: PLC
     country: EU
     tags: [ 'ref:EU:PLC' ]
