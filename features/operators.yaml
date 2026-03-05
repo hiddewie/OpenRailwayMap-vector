@@ -348,6 +348,9 @@ operators:
   - country: CH
     names:
       - 'SBB'
+      - 'CFF'
+      - 'FFS'
+      - 'SBB CFF FFS'
     color: '#00a213'
 
   - country: CH
