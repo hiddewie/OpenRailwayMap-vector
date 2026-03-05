@@ -2248,6 +2248,7 @@ operators:
   - country: US
     names:
       - 'CSX Transportation'
+      - 'CSX'
       - 'CSXT'
     color: '#003462'
 
@@ -2860,7 +2861,7 @@ operators:
 
   - country: US
     names:
-      - 'St. Lawrence and Atlantic Railroad'
+      - 'St. Lawrence & Atlantic Railroad'
       - 'St. Lawrence and Atlantic Railroad Co.'
       - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
     color: '#f68b1e'
