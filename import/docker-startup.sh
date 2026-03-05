@@ -34,17 +34,6 @@ function filter_data() {
   fi
 }
 
-function enable_disable_extensions() {
-  echo "Enabling and disabling Postgres extensions"
-
-  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
-  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS hstore;'
-  $PSQL -c 'CREATE EXTENSION IF NOT EXISTS unaccent;'
-  $PSQL -c 'DROP EXTENSION IF EXISTS postgis_topology;'
-  $PSQL -c 'DROP EXTENSION IF EXISTS postgis_tiger_geocoder;'
-  $PSQL -c 'DROP EXTENSION IF EXISTS fuzzystrmatch;'
-}
-
 function import_db() {
   echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
   # Importing data to a database
@@ -145,7 +134,6 @@ case "$1" in
 import)
 
   filter_data
-  enable_disable_extensions
   import_db
   reduce_data
   transform_data
