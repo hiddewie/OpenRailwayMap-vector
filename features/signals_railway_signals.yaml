@@ -3299,13 +3299,18 @@ features:
       - { tag: 'railway:signal:departure', value: 'DE-ESO:zp' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
-  - description: tram departure signals
+  - description: tram departure signal
     country: DE
+    exampleIcon: de/bostrab/a1
     icon:
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2' }
-        default: 'de/bostrab/a1'
+          - { exact: 'DE-BOStrab:a1', value: 'de/bostrab/a1', description: 'close doors (A 1)' }
+        position: bottom
+      - match: 'railway:signal:departure:states'
+        cases:
+          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2', description: 'depart (A 2)' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
@@ -3779,7 +3784,7 @@ features:
 
   - description: tram Fahrsignal
     country: DE
-    exampleIcon: de/bostrab/f1
+    exampleIcon: de/bostrab/f1-old
     icon:
       - match: 'railway:signal:main:PT_priority'
         cases:
@@ -3788,50 +3793,47 @@ features:
 
       - match: 'railway:signal:main:states'
         cases:
-          - {
-              any: [
-              'DE-AVG:f4', 'DE-BOStrab:f4',
-              'DE-AVG:f1', 'DE-BOStrab:f1',
-              'DE-AVG:f2', 'DE-BOStrab:f2',
-              'DE-AVG:f3', 'DE-BOStrab:f3',
-              'DE-AVG:f5', 'DE-BOStrab:f5',
-              ],
-              value: 'de/bostrab/fahrsignal-empty'
-            }
+          - { any: [ 'DE-AVG:f0', 'DE-BOStrab:f0' ], value: 'de/bostrab/f0', description: 'F 0' }
         position: bottom
 
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'DE-AVG:f4', 'DE-BOStrab:f4' ], value: 'de/bostrab/f4' }
+          - { any: [ 'DE-AVG:f4', 'DE-BOStrab:f4' ], value: 'de/bostrab/f4', description: 'F 4' }
         position: bottom
 
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'DE-AVG:f1', 'DE-BOStrab:f1' ], value: 'de/bostrab/f1' }
+          - { any: [ 'DE-AVG:f1', 'DE-BOStrab:f1' ], value: 'de/bostrab/f1', description: 'F 1' }
         position: bottom
 
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'DE-AVG:f2', 'DE-BOStrab:f2' ], value: 'de/bostrab/f2' }
+          - { any: [ 'DE-AVG:f2', 'DE-BOStrab:f2' ], value: 'de/bostrab/f2', description: 'F 2' }
         position: bottom
 
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'DE-AVG:f3', 'DE-BOStrab:f3' ], value: 'de/bostrab/f3' }
+          - { any: [ 'DE-AVG:f3', 'DE-BOStrab:f3' ], value: 'de/bostrab/f3', description: 'F 3' }
         position: bottom
 
       - match: 'railway:signal:main:states'
         cases:
-          - { any: [ 'DE-AVG:f5', 'DE-BOStrab:f5' ], value: 'de/bostrab/f5' }
+          - { any: [ 'DE-AVG:f5', 'DE-BOStrab:f5' ], value: 'de/bostrab/f5', description: 'F 5' }
+        position: bottom
+
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: '?', value: 'de/bostrab/fahrsignal-empty', description: 'further, unidentified aspects' }
         position: bottom
 
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', any: [ 'DE-BOStrab:f0', 'DE-BOStrab:f1', 'DE-BOStrab:f2', 'DE-BOStrab:f3', 'DE-BOStrab:f4', 'DE-BOStrab:f5', 'DE-AVG:f0', 'DE-AVG:f1', 'DE-AVG:f2', 'DE-AVG:f3', 'DE-AVG:f4', 'DE-AVG:f5' ] }
 
-  - description: tram Fahrsignal (unknown)
+  - description: tram Fahrsignal (aspects unknown)
     country: DE
-    icon: [ default: 'de/bostrab/f-unknown' ]
+    icon: [ default: 'de/bostrab/f0-old' ]
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
