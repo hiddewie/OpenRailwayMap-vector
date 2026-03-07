@@ -275,8 +275,6 @@ local stations = osm2pgsql.define_table({
     -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
-    -- Search by name
-    -- TODO
     -- Search by reference
     { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
