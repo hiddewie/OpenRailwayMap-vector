@@ -200,6 +200,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         ARRAY[s.description] AS description,
         ST_X(ST_Transform(s.way, 4326)) AS latitude,
         ST_Y(ST_Transform(s.way, 4326)) AS longitude,
+        -- Determine rank by common facility reference IDs
         (CASE
           WHEN input_ref = s."references"->'railway-ref' THEN 100
           WHEN input_ref = s."references"->'uic' THEN 90
