@@ -29,7 +29,8 @@ const requireUniqueEntries = array => {
       throw new Error(`entries must be unique, offending entries:\n${offendingEntries}`);
     }
   }
-  return Object.fromEntries(array);
+  const indexedArray = array.map(([key, value], index) => [key, {...value, index}])
+  return Object.fromEntries(indexedArray);
 }
 
 const links = {
@@ -1353,18 +1354,20 @@ const features = {
   // Features not part of a data source but for lookups
 
   train_protection: {
-    features: Object.fromEntries(signals_railway_line.train_protections.map(feature => [
+    features: Object.fromEntries(signals_railway_line.train_protections.map((feature, index) => [
       feature.train_protection,
       {
         name: feature.legend,
+        index,
       },
     ])),
   },
   loading_gauge: {
-    features: Object.fromEntries(loading_gauges.loading_gauges.map(feature => [
+    features: Object.fromEntries(loading_gauges.loading_gauges.map((feature, index) => [
       feature.value,
       {
         name: feature.legend,
+        index,
       },
     ])),
   },
@@ -1380,8 +1383,8 @@ const features = {
   station_references: {
     features: Object.fromEntries(
       stations.references
-        .map(({id, description}) =>
-          [id, {name: description}]
+        .map(({id, description}, index) =>
+          [id, {name: description, index}]
         )
     ),
   },
@@ -1390,9 +1393,11 @@ const features = {
     features: {
       0: {
         name: 'no',
+        index: 0,
       },
       1: {
         name: 'yes',
+        index: 1,
       },
     },
   },

@@ -2306,11 +2306,25 @@ function popupContent(feature) {
 
   const formatPropertyValue = (value, format) => {
     if (format && format.map) {
+      let sortKey = value => value;
+      if (format.map.key.format && format.map.key.format.lookup && features && features[format.map.key.format.lookup]) {
+        const catalog = features[format.map.key.format.lookup].features ?? {}
+        sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+      }
+
       return String(value)
         .split('\u001d')
         .map(item => item.split('\u001e'))
         .map(([key, value]) =>
-          [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
+          [sortKey(key), formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
+        .toSorted((a, b) =>
+          (a[0] < b[0])
+            ? -1
+            : (a[0] > b[0])
+              ? 1
+              : 0
+        )
+        .map(([_, key, value]) => [key, value])
     } else {
       return String(value)
         .split('\u001e')
