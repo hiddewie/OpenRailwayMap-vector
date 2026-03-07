@@ -24,7 +24,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['Railway reference'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
+    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['railway-ref'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
   },
 })
 
@@ -167,7 +167,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', station = 'train', name_tags = {}, map_reference = 'railway_ref', references = {['Reference'] = 'ref', ['Railway reference'] = 'railway_ref', ['UIC'] = 'uic_ref', ['CRS'] = 'ref:crs', ['IBNR'] = 'ref:ibnr', ['IATA'] = 'iata', ['IFOPT'] = 'ref:IFOPT', ['PLC'] = 'ref:EU:PLC', ['SNCF RESARAIL'] = 'ref:FR:sncf:resarail' } },
+    { feature = 'station', state = 'present', station = 'train', name_tags = {}, map_reference = 'railway_ref', references = {['ref'] = 'ref', ['railway-ref'] = 'railway_ref', ['uic'] = 'uic_ref', ['gb-crs'] = 'ref:crs', ['ibnr'] = 'ref:ibnr', ['iata'] = 'iata', ['ifopt'] = 'ref:IFOPT', ['eu-plc'] = 'ref:EU:PLC', ['fr-sncf-resarail'] = 'ref:FR:sncf:resarail' } },
   },
 })
 
@@ -183,6 +183,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['Railway reference'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
+    { feature = 'station', state = 'present', map_reference = 'ref', references = { ['railway-ref'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
   },
 })
