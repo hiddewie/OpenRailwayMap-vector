@@ -186,7 +186,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         s.state,
         s.station,
         s.map_reference as railway_ref,
-        s."references"->'UIC' as uic_ref,
+        s."references"->'uic' as uic_ref,
         s."references",
         s.operator AS operator,
         s.network AS network,
@@ -201,11 +201,11 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         ST_X(ST_Transform(s.way, 4326)) AS latitude,
         ST_Y(ST_Transform(s.way, 4326)) AS longitude,
         (CASE
-          WHEN input_ref = s."references"->'Railway reference' THEN 100
-          WHEN input_ref = s."references"->'UIC' THEN 90
-          WHEN input_ref = s."references"->'IBNR' THEN 80
-          WHEN input_ref = s."references"->'IFOPT' THEN 70
-          WHEN input_ref = s."references"->'PLC' THEN 60
+          WHEN input_ref = s."references"->'railway-ref' THEN 100
+          WHEN input_ref = s."references"->'uic' THEN 90
+          WHEN input_ref = s."references"->'ibnr' THEN 80
+          WHEN input_ref = s."references"->'ifopt' THEN 70
+          WHEN input_ref = s."references"->'plc' THEN 60
           ELSE 0
         END)::numeric as rank
       FROM stations s
