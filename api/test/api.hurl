@@ -169,23 +169,36 @@ jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
 # Facility search for UIC reference
 GET {{base_url}}/facility
 [QueryStringParams]
-uic_ref: 8089028
+ref: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz"
-jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[1].name" == "Ostkreuz"
 
-# Facility search for name, reference or UIC reference
+# Facility search for BVG reference
+GET {{base_url}}/facility
+[QueryStringParams]
+ref: 309771
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Virchowstraße"
+jsonpath "$[0].references.BVG" == "309771"
+
+# Facility search for name or reference
 GET {{base_url}}/facility
 [QueryStringParams]
 q: BOK
 HTTP 200
 [Asserts]
-jsonpath "$" count == 1
+jsonpath "$" count == 4
 jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[1].name" == "Rummelsburg"
+jsonpath "$[2].name" == "Frankfurter Allee"
+jsonpath "$[3].name" == "Treptower Park"
 
-# Facility search for name, reference or UIC reference
+# Facility search for name or reference
 GET {{base_url}}/facility
 [QueryStringParams]
 q: Berlin Ostkreuz
@@ -198,17 +211,17 @@ jsonpath "$[2].name" == "Berlin Ostkreuz (Ringbahn-F)"
 jsonpath "$[3].name" == "Berlin Ostkreuz (Ostbahn)"
 jsonpath "$[4].name" == "Ostkreuz (Ringbahn)"
 
-# Facility search for name, reference or UIC reference
+# Facility search for name or reference
 GET {{base_url}}/facility
 [QueryStringParams]
 q: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz"
-jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
+jsonpath "$[1].name" == "Ostkreuz"
 
-# Facility search for name, reference or UIC reference for grouped station
+# Facility search for name or reference for grouped station
 GET {{base_url}}/facility
 [QueryStringParams]
 q: Landsberger Allee
@@ -238,7 +251,7 @@ GET {{base_url}}/facility
 HTTP 422
 [Asserts]
 jsonpath "$.detail.error" == "No argument with a search term provided."
-jsonpath "$.detail.detail" == "Provide one of the following query parameters: q, name, ref, uic_ref"
+jsonpath "$.detail.detail" == "Provide one of the following query parameters: q, name, ref"
 
 # Facility request duplicated search parameters (1)
 GET {{base_url}}/facility
@@ -248,39 +261,28 @@ ref: test
 HTTP 422
 [Asserts]
 jsonpath "$.detail.error" == "More than one argument with a search term provided."
-jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref"
 
 # Facility request duplicated search parameters (2)
 GET {{base_url}}/facility
 [QueryStringParams]
 q: 8089028
-uic_ref: test
+ref: test
 HTTP 422
 [Asserts]
 jsonpath "$.detail.error" == "More than one argument with a search term provided."
-jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref"
 
 # Facility request duplicated search parameters (3)
-GET {{base_url}}/facility
-[QueryStringParams]
-name: 8089028
-uic_ref: test
-HTTP 422
-[Asserts]
-jsonpath "$.detail.error" == "More than one argument with a search term provided."
-jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
-
-# Facility request duplicated search parameters (4)
 GET {{base_url}}/facility
 [QueryStringParams]
 q: test
 name: test
 ref: test
-uic_ref: test
 HTTP 422
 [Asserts]
 jsonpath "$.detail.error" == "More than one argument with a search term provided."
-jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref, uic_ref"
+jsonpath "$.detail.detail" == "Provide only one of the following query parameters: q, name, ref"
 
 # Facility request limit is not numeric
 GET {{base_url}}/facility

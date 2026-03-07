@@ -116,3 +116,157 @@ features:
       station_size: small
       feature: crossover
       state: present
+
+references:
+  - id: railway-ref
+    description: Railway reference
+    map: true
+    tags: [ 'railway:ref' ]
+
+  - id: uic
+    description: UIC
+    tags: [ 'uic_ref' ]
+
+  - id: ibnr
+    description: IBNR
+    tags:
+      - 'ref:ibnr'
+      - 'ref:IBNR'
+
+  - id: ifopt
+    description: IFOPT
+    tags: [ 'ref:IFOPT' ]
+
+  - id: iata
+    description: IATA
+    tags: [ 'iata' ]
+
+  - id: eu-plc
+    description: PLC
+    country: EU
+    tags: [ 'ref:EU:PLC' ]
+
+  - id: fr-sncf-resarail
+    description: SNCF RESARAIL
+    country: FR
+    tags: [ 'ref:FR:sncf:resarail' ]
+
+  - id: fr-stif
+    description: STIF
+    country: FR
+    tags: [ 'ref:FR:STIF' ]
+
+  - id: fr-uic8
+    description: UIC8
+    country: FR
+    tags: [ 'ref:FR:uic8' ]
+
+  - id: fr-ratp
+    description: RATP
+    country: FR
+    tags: [ 'ref:FR:RATP' ]
+
+  - id: fr-fantoir
+    description: FANTOIR
+    country: FR
+    tags: [ 'ref:FR:FANTOIR' ]
+
+  - id: gb-crs
+    description: CRS
+    map: true
+    country: GB
+    tags: [ 'ref:crs' ]
+
+  - id: gb-tiploc
+    description: TIPLOC
+    country: GB
+    tags: [ 'ref:tiploc' ]
+
+  - id: hu-mav
+    description: MAV
+    country: HU
+    tags:
+      - 'ref:mav'
+      - 'ref:MAV'
+
+  - id: hu-bkk
+    description: BKK
+    country: HU
+    tags:
+      - 'ref:bkk'
+
+  - id: db-de
+    description: DB
+    country: DE
+    tags: [ 'railway:ref:DB' ]
+
+  - id: de-bvg
+    description: BVG
+    country: DE
+    tags: [ 'ref:BVG' ]
+
+  - id: de-vrs
+    description: VRS
+    country: DE
+    tags:
+      - 'ref:VRS'
+      - 'VRS:ref'
+
+  - id: de-mbv
+    description: MVB
+    country: DE
+    tags: [ 'ref:mvb' ]
+
+  - id: de-rnv-rbl
+    description: RNV RBL
+    country: DE
+    tags: [ 'ref:RNV:RBL' ]
+
+  - id: cz-pid
+    description: PID
+    country: CZ
+    tags: [ 'ref:PID' ]
+
+  - id: us-cif
+    description: CIF
+    country: US
+    tags: [ 'ref:US:CIF' ]
+
+  - id: us-meta
+    description: Meta
+    country: US
+    tags: [ 'ref:metra' ]
+
+  - id: nl-prorail
+    description: ProRail
+    country: NL
+    tags: [ 'ref:ProRailID' ]
+
+  - id: pl-ztm
+    description: ZTM
+    country: PL
+    tags: [ 'ref:ztm' ]
+
+  - id: ref
+    description: Reference
+    tags: [ 'ref' ]
+
+  - id: local
+    description: Local
+    tags: [ 'local_ref' ]
+
+  - id: old
+    description: Old
+    tags: [ 'old_ref' ]
+
+  - id: nat
+    description: National
+    tags: [ 'nat_ref' ]
+
+  - id: station
+    description: Station
+    tags: [ 'ref:station' ]
+
+  - id: parent
+    description: Parent
+    tags: [ 'railway:ref:parent' ]

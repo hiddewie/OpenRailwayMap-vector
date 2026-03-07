@@ -39,9 +39,10 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "localized_name" text,
   "feature" text,
   "state" text,
-  "railway_ref" text,
   "station" text,
+  "railway_ref" text,
   "uic_ref" text,
+  "references" hstore,
   "operator" text[],
   "network" text[],
   "wikidata" text[],
@@ -66,9 +67,10 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         b.localized_name,
         b.feature,
         b.state,
-        b.railway_ref,
         b.station,
+        b.railway_ref,
         b.uic_ref,
+        b."references",
         b.operator,
         b.network,
         b.wikidata,
@@ -90,9 +92,10 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
           a.localized_name,
           a.feature,
           a.state,
-          a.railway_ref,
           a.station,
+          a.railway_ref,
           a.uic_ref,
+          a."references",
           a.operator,
           a.network,
           a.wikidata,
@@ -114,9 +117,10 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             COALESCE(fs.name_tags['name:' || input_language], fs.name) as localized_name,
             fs.feature,
             fs.state,
-            fs.railway_ref,
             fs.station,
+            fs.railway_ref,
             fs.uic_ref,
+            fs."references",
             fs.operator,
             fs.network,
             fs.wikidata,
@@ -152,9 +156,10 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   "localized_name" text,
   "feature" text,
   "state" text,
-  "railway_ref" text,
   "station" text,
+  "railway_ref" text,
   "uic_ref" text,
+  "references" hstore,
   "operator" text[],
   "network" text[],
   "wikidata" text[],
@@ -166,97 +171,47 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   "note" text[],
   "description" text[],
   "latitude" double precision,
-  "longitude" double precision
+  "longitude" double precision,
+  "rank" numeric
 ) AS $$
   BEGIN
     RETURN QUERY
       -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
-        DISTINCT ON (s.osm_id)
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
         s.name,
         COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
         s.feature,
         s.state,
-        s.railway_ref,
         s.station,
-        s.uic_ref,
+        s.map_reference as railway_ref,
+        s."references"->'uic' as uic_ref,
+        s."references",
         s.operator AS operator,
         s.network AS network,
-        ARRAY[s.wikidata] AS wikidata,
-        ARRAY[s.wikimedia_commons] AS wikimedia_commons,
-        ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,
-        ARRAY[s.image] AS image,
-        ARRAY[s.mapillary] AS mapillary,
-        ARRAY[s.wikipedia] AS wikipedia,
-        ARRAY[s.note] AS note,
-        ARRAY[s.description] AS description,
+        array_remove(ARRAY[s.wikidata], null) AS wikidata,
+        array_remove(ARRAY[s.wikimedia_commons], null) AS wikimedia_commons,
+        array_remove(ARRAY[s.wikimedia_commons_file], null) AS wikimedia_commons_file,
+        array_remove(ARRAY[s.image], null) AS image,
+        array_remove(ARRAY[s.mapillary], null) AS mapillary,
+        array_remove(ARRAY[s.wikipedia], null) AS wikipedia,
+        array_remove(ARRAY[s.note], null) AS note,
+        array_remove(ARRAY[s.description], null) AS description,
         ST_X(ST_Transform(s.way, 4326)) AS latitude,
-        ST_Y(ST_Transform(s.way, 4326)) AS longitude
+        ST_Y(ST_Transform(s.way, 4326)) AS longitude,
+        -- Determine rank by common facility reference IDs
+        (CASE
+          WHEN input_ref = s."references"->'railway-ref' THEN 100
+          WHEN input_ref = s."references"->'uic' THEN 90
+          WHEN input_ref = s."references"->'ibnr' THEN 80
+          WHEN input_ref = s."references"->'ifopt' THEN 70
+          WHEN input_ref = s."references"->'plc' THEN 60
+          ELSE 0
+        END)::numeric as rank
       FROM stations s
-      WHERE s.railway_ref = input_ref
-      LIMIT input_limit;
-  END
-$$ LANGUAGE plpgsql
-  LEAKPROOF
-  PARALLEL SAFE;
-
-CREATE OR REPLACE FUNCTION query_facilities_by_uic_ref(
-  input_uic_ref text,
-  input_language text,
-  input_limit integer
-) RETURNS TABLE(
-  "osm_ids" bigint[],
-  "osm_types" char[],
-  "name" text,
-  "localized_name" text,
-  "feature" text,
-  "state" text,
-  "railway_ref" text,
-  "station" text,
-  "uic_ref" text,
-  "operator" text[],
-  "network" text[],
-  "wikidata" text[],
-  "wikimedia_commons" text[],
-  "wikimedia_commons_file" text[],
-  "image" text[],
-  "mapillary" text[],
-  "wikipedia" text[],
-  "note" text[],
-  "description" text[],
-  "latitude" double precision,
-  "longitude" double precision
-) AS $$
-  BEGIN
-    RETURN QUERY
-      -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
-      SELECT
-        DISTINCT ON (s.osm_id)
-        ARRAY[s.osm_id] as osm_ids,
-        ARRAY[s.osm_type] as osm_types,
-        s.name,
-        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
-        s.feature,
-        s.state,
-        s.railway_ref,
-        s.station,
-        s.uic_ref,
-        s.operator AS operator,
-        s.network AS network,
-        ARRAY[s.wikidata] AS wikidata,
-        ARRAY[s.wikimedia_commons] AS wikimedia_commons,
-        ARRAY[s.wikimedia_commons_file] AS wikimedia_commons_file,
-        ARRAY[s.image] AS image,
-        ARRAY[s.mapillary] AS mapillary,
-        ARRAY[s.wikipedia] AS wikipedia,
-        ARRAY[s.note] AS note,
-        ARRAY[s.description] AS description,
-        ST_X(ST_Transform(s.way, 4326)) AS latitude,
-        ST_Y(ST_Transform(s.way, 4326)) AS longitude
-      FROM stations s
-      WHERE s.uic_ref = input_uic_ref
+      WHERE ARRAY[input_ref] <@ avals(s."references")
+      ORDER BY rank DESC
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql

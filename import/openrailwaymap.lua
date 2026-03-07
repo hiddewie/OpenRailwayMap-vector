@@ -253,11 +253,10 @@ local stations = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'state', type = 'text' },
     { column = 'name', type = 'text' },
-    { column = 'ref', type = 'text' },
     { column = 'station', type = 'text' },
-    { column = 'railway_ref', type = 'text' },
-    { column = 'uic_ref', type = 'text' },
     { column = 'name_tags', type = 'hstore' },
+    { column = 'map_reference', type = 'text' },
+    { column = 'references', type = 'hstore' },
     { column = 'operator', sql_type = 'text[]' },
     { column = 'network', sql_type = 'text[]' },
     { column = 'position', sql_type = 'text[]' },
@@ -276,8 +275,8 @@ local stations = osm2pgsql.define_table({
     -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
-    { column = 'uic_ref', method = 'btree', where = 'uic_ref IS NOT NULL' },
-    { column = 'railway_ref', method = 'btree', where = 'railway_ref IS NOT NULL' },
+    -- Search by reference
+    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
 })
 
@@ -816,6 +815,21 @@ function name_tags(tags)
   return found_name_tags
 end
 
+function station_references(tags)
+  local found_references = {}
+
+  for _, reference in ipairs(tag_functions.station_references) do
+    for _, tag in ipairs(reference.tags) do
+      if tags[tag] then
+        found_references[reference.id] = tags[tag]
+        break
+      end
+    end
+  end
+
+  return found_references
+end
+
 function position_is_zero(position)
   if position:find('^%-?%d+$') or position:find('^%-?%d*[,/.]0*$') then
     return true
@@ -1056,11 +1070,10 @@ function osm2pgsql.process_node(object)
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
-        ref = tags.ref,
         station = station,
-        railway_ref = tags['railway:ref'] or tags['ref:crs'],
-        uic_ref = tags['uic_ref'],
         name_tags = name_tags(tags),
+        map_reference = map_station_reference(tags),
+        references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
@@ -1333,19 +1346,21 @@ function osm2pgsql.process_way(object)
 
   local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
+    local position, position_exact, line_positions = find_position_tags(tags)
+
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
         name = tags.name or tags.short_name,
-        ref = tags.ref,
         station = station,
-        railway_ref = tags['railway:ref'] or tags['ref:crs'],
-        uic_ref = tags['uic_ref'],
         name_tags = name_tags(tags),
+        map_reference = map_station_reference(tags),
+        references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
         network = split_semicolon_to_sql_array(tags.network),
+        position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
         wikidata = tags.wikidata,

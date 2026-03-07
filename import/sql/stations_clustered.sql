@@ -1,10 +1,10 @@
 -- Clustered stations without importance
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
-    row_number() over (order by name, station, railway_ref, uic_ref, feature) as id,
+    row_number() over (order by name, station, map_reference, uic_ref, feature) as id,
     name,
     station,
-    railway_ref,
+    map_reference,
     uic_ref,
     feature,
     state,
@@ -21,14 +21,14 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   FROM (
     SELECT
       *,
-      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, railway_ref, uic_ref, feature, state) AS cluster_id
+      ST_ClusterDBSCAN(way, 400, 1) OVER (PARTITION BY name, station, map_reference, uic_ref, feature, state) AS cluster_id
     FROM (
       SELECT
         st_collect(any_value(s.way), st_collect(distinct q.way)) as way,
         name,
         station,
-        railway_ref,
-        uic_ref,
+        map_reference,
+        "references"->'uic' as uic_ref,
         feature,
         state,
         id
@@ -54,10 +54,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         join platforms pl
           on array[pl.osm_id] <@ sa.platform_ref_ids
       ) q on q.stop_area_id = sa.osm_id
-      group by name, station, railway_ref, uic_ref, feature, state, id
+      group by name, station, map_reference, uic_ref, feature, state, id
     ) stations_with_entrances
   ) AS facilities
-  GROUP BY cluster_id, name, station, railway_ref, uic_ref, feature, state;
+  GROUP BY cluster_id, name, station, map_reference, uic_ref, feature, state;
 
 CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
   ON stations_clustered
@@ -71,6 +71,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     -- Aggregated station columns
     array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
     hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
+    hstore(string_agg(nullif("references"::text, ''), ',')) as "references",
     array_agg(osm_id ORDER BY osm_id) as osm_ids,
     array_agg(osm_type ORDER BY osm_id) as osm_types,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.operator, U&'\001E')), U&'\001E'), U&'\001E'), null) as operator,
@@ -97,7 +98,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     any_value(clustered.buffered) as buffered,
     any_value(clustered.name) as name,
     any_value(clustered.station) as station,
-    any_value(clustered.railway_ref) as railway_ref,
+    any_value(clustered.map_reference) as map_reference,
     any_value(clustered.uic_ref) as uic_ref,
     any_value(clustered.feature) as feature,
     any_value(clustered.state) as state,
@@ -106,7 +107,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     SELECT
       id,
       UNNEST(sc.station_ids) as station_id,
-      name, station, railway_ref, uic_ref, feature, state, station_ids, center, buffered, count
+      name, station, map_reference, uic_ref, feature, state, station_ids, center, buffered, count
     FROM stations_clustered sc
   ) clustered
   JOIN stations s
