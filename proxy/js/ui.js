@@ -2394,7 +2394,6 @@ function popupContent(feature) {
         link,
         tooltip: description,
       };
-      // return arrayValue.map(([title, body]) => ())
     })
 
   const osmFeatures = determineOsmFeatures(properties, featureContent);
