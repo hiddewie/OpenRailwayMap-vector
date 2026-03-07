@@ -101,6 +101,14 @@ const icons = {
   }
 }
 
+function naturalSort(a, b) {
+  return (a < b)
+    ? -1
+    : (a > b)
+      ? 1
+      : 0;
+}
+
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -182,6 +190,7 @@ function showSearchResults(results) {
     ).toArray())
     : null;
 
+
   searchResults.innerHTML = results.length === 0
     ? `
       <div class="mb-1 d-flex align-items-center">
@@ -201,13 +210,22 @@ function showSearchResults(results) {
         </button>
       </div>
       <div class="list-group">
-        ${results.map(result =>
-      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+        ${results.map(result => {
+          const catalog = (features ?? {}).station_references ?? {}
+          const sortKey = value => (catalog.features[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+          const references = Object.entries(result.references)
+            .toSorted(([keyA, _a], [keyB, _b]) => 
+              naturalSort(sortKey(keyA), sortKey(keyB)))
+            .map(([key, ref]) => 
+              `<span class="badge bg-secondary small">${(catalog.features[key] ?? {}).name ?? key}: ${ref}</span>`)
+            .join(' ')
+
+          return `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${result.icon ? `${result.icon}` : ''}
             ${result.label}
-            ${Object.entries(result.references).map(([key, ref]) => `<span class="badge bg-secondary rounded-pill small">${key}: ${ref}</span>`).join(' ')}
+            ${references}
           </a>`
-    ).join('')}
+        }).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
@@ -2315,16 +2333,10 @@ function popupContent(feature) {
       return String(value)
         .split('\u001d')
         .map(item => item.split('\u001e'))
+        .toSorted(([keyA, _a], [keyB, _b]) =>
+          naturalSort(sortKey(keyA), sortKey(keyB)))
         .map(([key, value]) =>
-          [sortKey(key), formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
-        .toSorted((a, b) =>
-          (a[0] < b[0])
-            ? -1
-            : (a[0] > b[0])
-              ? 1
-              : 0
-        )
-        .map(([_, key, value]) => [key, value])
+          [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
     } else {
       return String(value)
         .split('\u001e')
