@@ -201,98 +201,140 @@ paths:
                         an importance rank calculated by taking the public transport route relations into account using this station/halt
                 example:
                   - osm_ids:
-                      - 244129991
-                      - 271777826
-                      - 1679221136
-                      - 1787945074
+                    - 5284961126
                     osm_types:
                       - "N"
-                      - "N"
-                      - "N"
-                      - "N"
-                    name: Landsberger Allee/Petersburger Straße
-                    localized_name: Landsberger Allee/Petersburger Straße
-                    feature: tram_stop
-                    state: present
-                    station: tram
-                    railway_ref:
-                    uic_ref:
-                    references:
-                      BVG: '309156'
-                    operator: [ ]
-                    network: [ ]
-                    wikidata: [ ]
-                    wikimedia_commons: [ ]
-                    wikimedia_commons_file: [ ]
-                    image: [ ]
-                    mapillary: [ ]
-                    wikipedia: [ ]
-                    note: [ ]
-                    description: [ ]
-                    latitude: 13.446601625615415
-                    longitude: 52.52640242059869
-                    rank: 34
-                  - osm_ids:
-                      - 98878581
-                      - 1860777038
-                    osm_types:
-                      - "N"
-                      - "N"
-                    name: S Landsberger Allee
-                    localized_name: S Landsberger Allee
-                    feature: tram_stop
-                    state: present
-                    station: tram
-                    railway_ref:
-                    uic_ref:
-                    references:
-                      BVG: '309157'
-                    operator: [ ]
-                    network: [ ]
-                    wikidata: [ ]
-                    wikimedia_commons: [ ]
-                    wikimedia_commons_file: [ ]
-                    image: [ ]
-                    mapillary: [ ]
-                    wikipedia: [ ]
-                    note: [ ]
-                    description: [ ]
-                    latitude: 13.456316877905476
-                    longitude: 52.52862061612046
-                    rank: 30
-                  - osm_ids:
-                      - 3872632789
-                    osm_types:
-                      - "N"
-                    name: Landsberger Allee
-                    localized_name: Landsberger Allee
+                    name: Ostkreuz (Ringbahn)
+                    localized_name: Ostkreuz (Ringbahn)
                     feature: station
                     state: present
                     station: light_rail
-                    railway_ref: BLST
-                    uic_ref: '8089020'
+                    railway_ref: BOK
+                    uic_ref: '8089028'
                     references:
-                      UIC: '8089020'
-                      Parent: BGSS
-                      Station: '3511'
-                      Railway reference: BLST
+                      uic: '8089028'
+                      station: '4809'
+                      railway-ref: BOK
                     operator:
                       - DB InfraGO AG
                     network:
                       - Verkehrsverbund Berlin-Brandenburg
                     wikidata:
-                      - Q800507
+                      - Q660045
                     wikimedia_commons: [ ]
                     wikimedia_commons_file: [ ]
                     image: [ ]
                     mapillary: [ ]
                     wikipedia:
-                      - de:Bahnhof Berlin Landsberger Allee
+                      - de:Bahnhof Berlin Ostkreuz
+                    note:
+                      - Bitte die 5 Nodes mit uic_ref in Bezug auf das Eisenbahn-Tagging so lassen und
+                        auch die Position nicht verändern. Die beiden Stadtbahn-Nodes BOKS und BOKR werden
+                        gerendert.
+                    description: [ ]
+                    latitude: 13.469119499999998
+                    longitude: 52.50298119908801
+                    rank: 100
+                  - osm_ids:
+                      - 29803428
+                    osm_types:
+                      - "N"
+                    name: Rummelsburg
+                    localized_name: Rummelsburg
+                    feature: station
+                    state: present
+                    station: light_rail
+                    railway_ref: BRH
+                    uic_ref: '8089084'
+                    references:
+                      uic: '8089084'
+                      parent: BOK
+                      railway-ref: BRH
+                    operator:
+                      - DB Netz AG
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q15107132
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin-Rummelsburg (S-Bahn)
                     note: [ ]
                     description: [ ]
-                    latitude: 13.45471508295655
-                    longitude: 52.529550935636045
-                    rank: 18
+                    latitude: 13.478366999999999
+                    longitude: 52.501287999088085
+                    rank: 0
+                  - osm_ids:
+                      - 257981401
+                    osm_types:
+                      - "N"
+                    name: Frankfurter Allee
+                    localized_name: Frankfurter Allee
+                    feature: halt
+                    state: present
+                    station: light_rail
+                    railway_ref: BFA
+                    uic_ref: '8089013'
+                    references:
+                      uic: '8089013'
+                      parent: BOK
+                      station: '526'
+                      railway-ref: BFA
+                    operator:
+                      - DB InfraGO AG
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q552872
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin Frankfurter Allee
+                    note:
+                      - Die S-Bahn-Station hat keine Weichen und ist daher ein Haltepunkt.
+                    description: [ ]
+                    latitude: 13.4745707
+                    longitude: 52.51493749908766
+                    rank: 0
+                  - osm_ids:
+                      - 261941954
+                    osm_types:
+                      - "N"
+                    name: Treptower Park
+                    localized_name: Treptower Park
+                    feature: station
+                    state: present
+                    station: light_rail
+                    railway_ref: BTP
+                    uic_ref:
+                    references:
+                      ibnr: '8089043'
+                      parent: BOK
+                      station: '6251'
+                      railway-ref: BTP
+                    operator:
+                      - DB InfraGO
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q559274
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin Treptower Park
+                    note: [ ]
+                    description: [ ]
+                    latitude: 13.461829599999998
+                    longitude: 52.49384909908831
+                    rank: 0
+
         '400':
           description: |
             Bad request: invalid parameter values
