@@ -2504,7 +2504,7 @@ function popupContent(feature) {
               first = false;
             } else {
               const popupValueKey = createDomElement('span', undefined, popupValue);
-              popupValueKey.innerText = ' | ';
+              popupValueKey.innerText = ' • ';
             }
 
             if (key) {
@@ -2544,7 +2544,7 @@ function popupContent(feature) {
               first = false;
             } else {
               const popupValueKey = createDomElement('span', undefined, popupParagraph);
-              popupValueKey.innerText = ' | ';
+              popupValueKey.innerText = ' • ';
             }
 
             if (key) {
