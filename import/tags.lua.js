@@ -35,7 +35,7 @@ function map_station_reference(tags)
     `)}
 end
 local station_references = {${station_references.map(ref => `
-  { description = '${ref.description}'${ref.country ? `, country = '${ref.country}'` : ''}, tags = {${ref.tags.map(tag => `'${tag}'`).join(', ')}} },`).join('')}
+  { id = '${ref.id}', description = '${ref.description}'${ref.country ? `, country = '${ref.country}'` : ''}, tags = {${ref.tags.map(tag => `'${tag}'`).join(', ')}} },`).join('')}
 }
 
 return {

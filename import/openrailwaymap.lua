@@ -823,7 +823,7 @@ function station_references(tags)
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
-        found_references[reference.description] = tags[tag]
+        found_references[reference.id] = tags[tag]
         break
       end
     end

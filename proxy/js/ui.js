@@ -2304,52 +2304,72 @@ function popupContent(feature) {
     })
   }
 
-  const formatPropertyValue = (value, format) =>
-    String(value)
-      .split('\u001e')
-      .map(stringValue => {
-        if (!format) {
-          return stringValue;
-        } else if (format.template) {
-          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
-        } else if (format.lookup) {
-          const lookupCatalog = features && features[format.lookup];
-          if (!lookupCatalog) {
-            console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
+  const formatPropertyValue = (value, format) => {
+    if (format && format.map) {
+      return String(value)
+        .split('\u001d')
+        .map(item => item.split('\u001e'))
+        .map(([key, value]) =>
+          [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
+    } else {
+      return String(value)
+        .split('\u001e')
+        .map(stringValue => {
+          if (!format) {
             return stringValue;
-          } else {
-            const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
-            const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
-            if (!lookedUpValue) {
-              console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
+          } else if (format.template) {
+            return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
+          } else if (format.lookup) {
+            const lookupCatalog = features && features[format.lookup];
+            if (!lookupCatalog) {
+              console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
               return stringValue;
             } else {
-              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
+              const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
+              if (!lookedUpValue) {
+                console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
+                return stringValue;
+              } else {
+                return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              }
             }
-          }
-        } else if (format.country_prefix) {
-          if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
-            return stringValue.substr(3);
+          } else if (format.country_prefix) {
+            if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
+              return stringValue.substr(3);
+            } else {
+              return stringValue;
+            }
           } else {
             return stringValue;
           }
-        } else {
-          return stringValue;
-        }
-      })
-      .join(', ');
+        })
+        .join(', ');
+    }
+  }
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, list, description}]) => ({
-      title: name,
-      value: properties[property],
-      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
-      paragraph,
-      list,
-      link,
-      tooltip: description,
-    }));
+    .map(([property, {name, format, link, paragraph, list, description}]) => {
+      const value = properties[property] === true
+        ? ''
+        : formatPropertyValue(properties[property], format)
+
+      const body = Array.isArray(value)
+        ? value
+        : [[null, value]]
+
+      return {
+        title: name,
+        value: properties[property],
+        body,
+        paragraph,
+        list,
+        link,
+        tooltip: description,
+      };
+      // return arrayValue.map(([title, body]) => ())
+    })
 
   const osmFeatures = determineOsmFeatures(properties, featureContent);
 
@@ -2468,30 +2488,42 @@ function popupContent(feature) {
     propertyValues
       .filter(it => !it.paragraph && !it.list)
       .forEach(({title, body, value, link, tooltip}) => {
-        const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
+        const popupValue = createDomElement('span', 'badge fw-normal text-bg-light', popupValuesContainer);
         if (tooltip) {
           popupValue.title = tooltip;
           popupValue.style.cursor = 'help';
         }
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
-        popupValueTitle.innerText = title;
+        popupValueTitle.innerText = `${title}: `;
 
-        if (body) {
-          if (link) {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            const popupValueColon = createDomElement('span', undefined, popupValueBody);
-            popupValueColon.innerText = ': ';
-            const popupValueLink = createDomElement('a', undefined, popupValueBody);
-            popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
-            popupValueLink.target = '_blank'
-            const popupValueText = createDomElement('span', undefined, popupValueLink);
-            popupValueText.innerText = body;
-          } else {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            popupValueBody.innerText = `: ${body}`;
+        let first = true
+        body.forEach(([key, value]) => {
+          if (value) {
+            if (first) {
+              first = false;
+            } else {
+              const popupValueKey = createDomElement('span', undefined, popupValue);
+              popupValueKey.innerText = ' | ';
+            }
+
+            if (key) {
+              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+              popupValueKey.innerText = `${key} `;
+            }
+            if (link) {
+              const popupValueBody = createDomElement('span', undefined, popupValue);
+              const popupValueLink = createDomElement('a', undefined, popupValueBody);
+              popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
+              popupValueLink.target = '_blank'
+              const popupValueText = createDomElement('span', undefined, popupValueLink);
+              popupValueText.innerText = value;
+            } else {
+              const popupValueBody = createDomElement('span', undefined, popupValue);
+              popupValueBody.innerText = value;
+            }
           }
-        }
+        })
       })
   }
 
@@ -2503,13 +2535,29 @@ function popupContent(feature) {
         const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
-        popupValueTitle.innerText = title;
+        popupValueTitle.innerText = `${title}: `;
 
-        if (body) {
-          // Paragraph bodies do not support links
-          const popupValueBody = createDomElement('span', undefined, popupParagraph);
-          popupValueBody.innerText = `: ${body}`;
-        }
+        let first = true
+        body.forEach(([key, value]) => {
+          if (value) {
+            if (first) {
+              first = false;
+            } else {
+              const popupValueKey = createDomElement('span', undefined, popupParagraph);
+              popupValueKey.innerText = ' | ';
+            }
+
+            if (key) {
+              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+              popupValueKey.innerText = `${key} `;
+            }
+            if (value) {
+              // Paragraph bodies do not support links
+              const popupValueBody = createDomElement('span', undefined, popupParagraph);
+              popupValueBody.innerText = value;
+            }
+          }
+        });
       })
   }
 

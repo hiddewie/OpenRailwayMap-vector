@@ -331,6 +331,16 @@ const stationFeatures = {
     },
     references: {
       name: 'References',
+      format: {
+        map: {
+          key: {
+            format: {
+              lookup: 'station_references',
+            },
+          },
+          value: {}
+        },
+      },
     },
     operator: {
       name: 'Operator',
@@ -1366,6 +1376,14 @@ const features = {
   },
   electrification_signals: {
     features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
+  },
+  station_references: {
+    features: Object.fromEntries(
+      stations.references
+        .map(({id, description}) =>
+          [id, {name: description}]
+        )
+    ),
   },
 
   boolean: {

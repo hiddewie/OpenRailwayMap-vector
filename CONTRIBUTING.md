@@ -269,15 +269,19 @@ The file contains a section `references`, with a list of references and their de
 
 To show the station reference on the map as identifier for stations that do not have the `railway:ref` tag, add `map: true`.
 
+Every reference has an `id` field that is used to technically identify the reference in the database, map popup and legend. The value is not important, as long as it is stable over time.
+
 Add a new entry at a certain place in the list. For example:
 ```yaml
 references:
-  - description: 'IBNR'
+  - id: ibnr
+    description: 'IBNR'
     tags:
       - 'ref:IBNR'
       - 'ref:ibnr'
 
-  - description: 'SNCF RESARAIL'
+  - id: fr-sncf-resarail 
+    description: 'SNCF RESARAIL'
     country: FR
     tags: [ 'ref:FR:sncf:resarail' ]
 ```
