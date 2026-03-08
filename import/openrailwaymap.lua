@@ -1594,6 +1594,7 @@ function osm2pgsql.process_relation(object)
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
         way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
+        references = station_references(tags),
       })
     end
   end
