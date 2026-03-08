@@ -560,6 +560,8 @@ local stop_areas = osm2pgsql.define_table({
     { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
     { column = 'way_ref_ids', method = 'gin' },
+    -- Search by reference
+    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
 })
 
