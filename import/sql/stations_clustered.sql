@@ -28,7 +28,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         name,
         station,
         map_reference,
-        "references"->'uic' as uic_ref,
+        s."references"->'uic' as uic_ref,
         feature,
         state,
         id
@@ -70,10 +70,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
   SELECT
     -- Aggregated station columns
     array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
-    hstore(string_agg(nullif(name_tags::text, ''), ',')) as name_tags,
-    hstore(string_agg(nullif("references"::text, ''), ',')) as "references",
-    array_agg(osm_id ORDER BY osm_id) as osm_ids,
-    array_agg(osm_type ORDER BY osm_id) as osm_types,
+    hstore_agg(name_tags) as name_tags,
+    hs_concat(hstore_agg(sa."references"), hstore_agg(s."references")) as "references",
+    array_agg(s.osm_id ORDER BY s.osm_id) as osm_ids,
+    array_agg(osm_type ORDER BY s.osm_id) as osm_types,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.operator, U&'\001E')), U&'\001E'), U&'\001E'), null) as operator,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.network, U&'\001E')), U&'\001E'), U&'\001E'), null) as network,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.position, U&'\001E')), U&'\001E'), U&'\001E'), null) as position,
@@ -134,6 +134,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     GROUP BY id
   ) sr
     ON clustered.station_id = sr.id
+  LEFT JOIN stop_areas sa
+    ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
+      OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
   GROUP BY clustered.id;
 
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index

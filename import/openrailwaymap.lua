@@ -553,6 +553,7 @@ local stop_areas = osm2pgsql.define_table({
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
+    { column = 'references', type = 'hstore' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
