@@ -128,6 +128,14 @@ for (const station of stations.features) {
     icon_url: `${BASE_URL}/symbols/general/${station.feature}.svg`,
   });
 }
+for (const reference of stations.references) {
+  reference.tags.forEach(tag => {
+    taginfo.tags.push({
+      key: tag,
+      description: `[Station reference] "${reference.description}"`,
+    });
+  })
+}
 
 // loading_gauge
 const { track_classes } = await readYamlFile('track_class.yaml');
