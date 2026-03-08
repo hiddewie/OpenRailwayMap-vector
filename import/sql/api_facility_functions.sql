@@ -220,7 +220,6 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         JOIN stations s
           ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
             OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
-            OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
         WHERE ARRAY[input_ref] <@ avals(sa."references")
       ) station_ids
       JOIN stations s
@@ -228,7 +227,6 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
       LEFT JOIN stop_areas sa
         ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
           OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
-          OR (ARRAY[s.osm_id] <@ sa.stop_ref_ids AND s.osm_type = 'N')
       ORDER BY rank DESC
       LIMIT input_limit;
   END
