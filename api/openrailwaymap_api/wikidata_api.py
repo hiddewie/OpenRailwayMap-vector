@@ -7,14 +7,14 @@ class WikidataAPI:
         self.http_client = http_client
 
     async def __call__(self, *, id):
-        url = "https://www.wikidata.org/w/api.php"
+        url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/" + id + "/statements"
         params = {
-          'action': 'wbgetclaims',
           'property': 'P18',
-          'format': 'json',
-          'entity': id,
         }
-        response = await self.http_client.get(url, params=params)
+        headers = {
+          'accept': 'application/json',
+        }
+        response = await self.http_client.get(url, params=params, headers=headers)
         if not response:
             return Response(content='No response from Wikidata API', status_code=404, media_type='text/plain')
         if response.status_code != 200:
@@ -24,15 +24,13 @@ class WikidataAPI:
         if not data:
             return Response(content='No response body from Wikidata API', status_code=404, media_type='text/plain')
 
-        if not data['claims'] \
-            or not data['claims']['P18'] \
-            or not data['claims']['P18'][0] \
-            or not data['claims']['P18'][0]['mainsnak'] \
-            or not data['claims']['P18'][0]['mainsnak']['datavalue'] \
-            or not data['claims']['P18'][0]['mainsnak']['datavalue']['value']:
-            return Response(content='Image claims (P18) not found in Wikidata response', status_code=404, media_type='text/plain')
+        if not data['P18'] \
+            or not data['P18'][0] \
+            or not data['P18'][0]['value'] \
+            or not data['P18'][0]['value']['content']:
+            return Response(content='Image statements (P18) not found in Wikidata response', status_code=404, media_type='text/plain')
 
-        name = data['claims']['P18'][0]['mainsnak']['datavalue']['value']
+        name = data['P18'][0]['value']['content']
         sanitized_name = name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
