@@ -101,6 +101,14 @@ const icons = {
   }
 }
 
+function naturalSort(a, b) {
+  return (a < b)
+    ? -1
+    : (a > b)
+      ? 1
+      : 0;
+}
+
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -115,10 +123,6 @@ function facilitySearchUrl(type, term, language) {
 
     case 'ref':
       url.searchParams.set('ref', term)
-      break;
-
-    case 'uic_ref':
-      url.searchParams.set('uic_ref', term)
       break;
 
     case 'all':
@@ -139,6 +143,7 @@ function searchForFacilities(type, term, language) {
         ...item,
         label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
+        references: item.references || {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -161,6 +166,7 @@ function searchForMilestones(ref, position) {
         ...item,
         label: `Line ${item.line_ref} @ ${item.position}`,
         icon: icons.railway[item.railway] ?? null,
+        references: {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -184,6 +190,7 @@ function showSearchResults(results) {
     ).toArray())
     : null;
 
+
   searchResults.innerHTML = results.length === 0
     ? `
       <div class="mb-1 d-flex align-items-center">
@@ -203,12 +210,22 @@ function showSearchResults(results) {
         </button>
       </div>
       <div class="list-group">
-        ${results.map(result =>
-      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+        ${results.map(result => {
+          const catalog = (features ?? {}).station_references ?? {}
+          const sortKey = value => (catalog.features[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+          const references = Object.entries(result.references)
+            .toSorted(([keyA, _a], [keyB, _b]) => 
+              naturalSort(sortKey(keyA), sortKey(keyB)))
+            .map(([key, ref]) => 
+              `<span class="badge bg-secondary small">${(catalog.features[key] ?? {}).name ?? key}: ${ref}</span>`)
+            .join(' ')
+
+          return `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${result.icon ? `${result.icon}` : ''}
             ${result.label}
+            ${references}
           </a>`
-    ).join('')}
+        }).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
@@ -2305,52 +2322,79 @@ function popupContent(feature) {
     })
   }
 
-  const formatPropertyValue = (value, format) =>
-    String(value)
-      .split('\u001e')
-      .map(stringValue => {
-        if (!format) {
-          return stringValue;
-        } else if (format.template) {
-          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
-        } else if (format.lookup) {
-          const lookupCatalog = features && features[format.lookup];
-          if (!lookupCatalog) {
-            console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
+  const formatPropertyValue = (value, format) => {
+    if (format && format.map) {
+      let sortKey = value => value;
+      if (format.map.key.format && format.map.key.format.lookup && features && features[format.map.key.format.lookup]) {
+        const catalog = features[format.map.key.format.lookup].features ?? {}
+        sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+      }
+
+      return String(value)
+        .split('\u001d')
+        .map(item => item.split('\u001e'))
+        .toSorted(([keyA, _a], [keyB, _b]) =>
+          naturalSort(sortKey(keyA), sortKey(keyB)))
+        .map(([key, value]) =>
+          [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
+    } else {
+      return String(value)
+        .split('\u001e')
+        .map(stringValue => {
+          if (!format) {
             return stringValue;
-          } else {
-            const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
-            const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
-            if (!lookedUpValue) {
-              console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
+          } else if (format.template) {
+            return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
+          } else if (format.lookup) {
+            const lookupCatalog = features && features[format.lookup];
+            if (!lookupCatalog) {
+              console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
               return stringValue;
             } else {
-              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
+              const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
+              if (!lookedUpValue) {
+                console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
+                return stringValue;
+              } else {
+                return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              }
             }
-          }
-        } else if (format.country_prefix) {
-          if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
-            return stringValue.substr(3);
+          } else if (format.country_prefix) {
+            if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
+              return stringValue.substr(3);
+            } else {
+              return stringValue;
+            }
           } else {
             return stringValue;
           }
-        } else {
-          return stringValue;
-        }
-      })
-      .join(', ');
+        })
+        .join(', ');
+    }
+  }
 
   const propertyValues = Object.entries(featureCatalog.properties || {})
     .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, list, description}]) => ({
-      title: name,
-      value: properties[property],
-      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
-      paragraph,
-      list,
-      link,
-      tooltip: description,
-    }));
+    .map(([property, {name, format, link, paragraph, list, description}]) => {
+      const value = properties[property] === true
+        ? ''
+        : formatPropertyValue(properties[property], format)
+
+      const body = Array.isArray(value)
+        ? value
+        : [[null, value]]
+
+      return {
+        title: name,
+        value: properties[property],
+        body,
+        paragraph,
+        list,
+        link,
+        tooltip: description,
+      };
+    })
 
   const osmFeatures = determineOsmFeatures(properties, featureContent);
 
@@ -2469,30 +2513,42 @@ function popupContent(feature) {
     propertyValues
       .filter(it => !it.paragraph && !it.list)
       .forEach(({title, body, value, link, tooltip}) => {
-        const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
+        const popupValue = createDomElement('span', 'badge fw-normal text-bg-light', popupValuesContainer);
         if (tooltip) {
           popupValue.title = tooltip;
           popupValue.style.cursor = 'help';
         }
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
-        popupValueTitle.innerText = title;
+        popupValueTitle.innerText = `${title}: `;
 
-        if (body) {
-          if (link) {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            const popupValueColon = createDomElement('span', undefined, popupValueBody);
-            popupValueColon.innerText = ': ';
-            const popupValueLink = createDomElement('a', undefined, popupValueBody);
-            popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
-            popupValueLink.target = '_blank'
-            const popupValueText = createDomElement('span', undefined, popupValueLink);
-            popupValueText.innerText = body;
-          } else {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            popupValueBody.innerText = `: ${body}`;
+        let first = true
+        body.forEach(([key, value]) => {
+          if (value) {
+            if (first) {
+              first = false;
+            } else {
+              const popupValueKey = createDomElement('span', undefined, popupValue);
+              popupValueKey.innerText = ' • ';
+            }
+
+            if (key) {
+              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+              popupValueKey.innerText = `${key} `;
+            }
+            if (link) {
+              const popupValueBody = createDomElement('span', undefined, popupValue);
+              const popupValueLink = createDomElement('a', undefined, popupValueBody);
+              popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
+              popupValueLink.target = '_blank'
+              const popupValueText = createDomElement('span', undefined, popupValueLink);
+              popupValueText.innerText = value;
+            } else {
+              const popupValueBody = createDomElement('span', undefined, popupValue);
+              popupValueBody.innerText = value;
+            }
           }
-        }
+        })
       })
   }
 
@@ -2504,13 +2560,29 @@ function popupContent(feature) {
         const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
 
         const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
-        popupValueTitle.innerText = title;
+        popupValueTitle.innerText = `${title}: `;
 
-        if (body) {
-          // Paragraph bodies do not support links
-          const popupValueBody = createDomElement('span', undefined, popupParagraph);
-          popupValueBody.innerText = `: ${body}`;
-        }
+        let first = true
+        body.forEach(([key, value]) => {
+          if (value) {
+            if (first) {
+              first = false;
+            } else {
+              const popupValueKey = createDomElement('span', undefined, popupParagraph);
+              popupValueKey.innerText = ' • ';
+            }
+
+            if (key) {
+              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+              popupValueKey.innerText = `${key} `;
+            }
+            if (value) {
+              // Paragraph bodies do not support links
+              const popupValueBody = createDomElement('span', undefined, popupParagraph);
+              popupValueBody.innerText = value;
+            }
+          }
+        });
       })
   }
 

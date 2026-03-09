@@ -64,11 +64,13 @@ paths:
       operationId: searchFacilities
       summary: Facility search
       description: |
-        The facility endpoint returns detail of a facility (station, junction, yard, …) by its name, UIC reference or reference.
+        The facility endpoint returns detail of a facility (station, junction, yard, …) by its name or reference.
         
-        The parameters q, name, ref and uic_ref are mutually exclusive.
+        The parameters q, name and ref are mutually exclusive.
         
-        It takes the first keyword of (name,uicref,ref) and the optional the operator to search for the data.
+        Reference is one of the supported facility reference tags, such as `railway:ref`, `uic_ref`, `ref:ibnr`, `ref:IFOPT`, `ref:EU:PLC` and others. See https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/stations.yaml for the full list.
+        
+        It takes the first keyword of (name, ref) and the optional the operator to search for the data.
       tags:
         - search
       parameters:
@@ -78,7 +80,7 @@ paths:
             type: string
             example: Karlsruhe
           description: |
-            search term (will be looked up in all `name=*` tags, `railway:ref=*` and `uic_ref=*`)
+            search term (will be looked up in all `name=*` tags, `railway:ref=*`, `uic_ref=*`, `ref:ibnr`, `ref:IFOPT`, `ref:EU:PLC`, etc.)
         - name: name
           in: query
           schema:
@@ -93,12 +95,6 @@ paths:
             example: Gd
           description: |
             search by official facility reference number/code only
-        - name: uic_ref
-          in: query
-          schema:
-            type: string
-          description: |
-            search by UIC reference number of a station (uses OSM tag `uic_ref=*`)
         - name: limit
           in: query
           schema:
@@ -160,6 +156,9 @@ paths:
                     uic_ref:
                       type: string
                       nullable: true
+                    references:
+                      type: object
+                      nullable: true
                     operator:
                       type: array
                       items:
@@ -202,73 +201,140 @@ paths:
                         an importance rank calculated by taking the public transport route relations into account using this station/halt
                 example:
                   - osm_ids:
-                      - 271777826
-                      - 244129991
-                      - 1787945074
-                      - 1679221136
-                    osm_types: [N, N, N, N]
-                    name: Landsberger Allee/Petersburger Straße
-                    railway: tram_stop
-                    railway_ref:
-                    station:
-                    uic_ref:
-                    operator: [ ]
-                    network: [ ]
-                    wikidata: [ ]
-                    wikimedia_commons: [ ]
-                    image: [ ]
-                    mapillary: [ ]
-                    wikipedia: [ ]
-                    note: [ ]
-                    description: [ ]
-                    latitude: 13.446564275
-                    longitude: 52.52637340222645
-                    rank: 32
-                  - osm_ids:
-                      - 1860777038
-                      - 98878581
-                    osm_types: [N, N]
-                    name: S Landsberger Allee
-                    railway: tram_stop
-                    railway_ref:
-                    station:
-                    uic_ref:
-                    operator: [ ]
-                    network: [ ]
-                    wikidata: [ ]
-                    wikimedia_commons: [ ]
-                    image: [ ]
-                    mapillary: [ ]
-                    wikipedia: [ ]
-                    note: [ ]
-                    description: [ ]
-                    latitude: 13.4564517
-                    longitude: 52.528652549251355
-                    rank: 28
-                  - osm_ids:
-                      - 3872632789
-                    osm_types: [N]
-                    name: Landsberger Allee
-                    railway: station
-                    railway_ref: BLST
+                    - 5284961126
+                    osm_types:
+                      - "N"
+                    name: Ostkreuz (Ringbahn)
+                    localized_name: Ostkreuz (Ringbahn)
+                    feature: station
+                    state: present
                     station: light_rail
-                    uic_ref: '8089020'
+                    railway_ref: BOK
+                    uic_ref: '8089028'
+                    references:
+                      uic: '8089028'
+                      station: '4809'
+                      railway-ref: BOK
                     operator:
                       - DB InfraGO AG
                     network:
                       - Verkehrsverbund Berlin-Brandenburg
                     wikidata:
-                      - Q800507
+                      - Q660045
                     wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
                     image: [ ]
                     mapillary: [ ]
                     wikipedia:
-                      - de:Bahnhof Berlin Landsberger Allee
+                      - de:Bahnhof Berlin Ostkreuz
+                    note:
+                      - Bitte die 5 Nodes mit uic_ref in Bezug auf das Eisenbahn-Tagging so lassen und
+                        auch die Position nicht verändern. Die beiden Stadtbahn-Nodes BOKS und BOKR werden
+                        gerendert.
+                    description: [ ]
+                    latitude: 13.469119499999998
+                    longitude: 52.50298119908801
+                    rank: 100
+                  - osm_ids:
+                      - 29803428
+                    osm_types:
+                      - "N"
+                    name: Rummelsburg
+                    localized_name: Rummelsburg
+                    feature: station
+                    state: present
+                    station: light_rail
+                    railway_ref: BRH
+                    uic_ref: '8089084'
+                    references:
+                      uic: '8089084'
+                      parent: BOK
+                      railway-ref: BRH
+                    operator:
+                      - DB Netz AG
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q15107132
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin-Rummelsburg (S-Bahn)
                     note: [ ]
                     description: [ ]
-                    latitude: 13.454780299999998
-                    longitude: 52.52948199908725
-                    rank: 16
+                    latitude: 13.478366999999999
+                    longitude: 52.501287999088085
+                    rank: 0
+                  - osm_ids:
+                      - 257981401
+                    osm_types:
+                      - "N"
+                    name: Frankfurter Allee
+                    localized_name: Frankfurter Allee
+                    feature: halt
+                    state: present
+                    station: light_rail
+                    railway_ref: BFA
+                    uic_ref: '8089013'
+                    references:
+                      uic: '8089013'
+                      parent: BOK
+                      station: '526'
+                      railway-ref: BFA
+                    operator:
+                      - DB InfraGO AG
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q552872
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin Frankfurter Allee
+                    note:
+                      - Die S-Bahn-Station hat keine Weichen und ist daher ein Haltepunkt.
+                    description: [ ]
+                    latitude: 13.4745707
+                    longitude: 52.51493749908766
+                    rank: 0
+                  - osm_ids:
+                      - 261941954
+                    osm_types:
+                      - "N"
+                    name: Treptower Park
+                    localized_name: Treptower Park
+                    feature: station
+                    state: present
+                    station: light_rail
+                    railway_ref: BTP
+                    uic_ref:
+                    references:
+                      ibnr: '8089043'
+                      parent: BOK
+                      station: '6251'
+                      railway-ref: BTP
+                    operator:
+                      - DB InfraGO
+                    network:
+                      - Verkehrsverbund Berlin-Brandenburg
+                    wikidata:
+                      - Q559274
+                    wikimedia_commons: [ ]
+                    wikimedia_commons_file: [ ]
+                    image: [ ]
+                    mapillary: [ ]
+                    wikipedia:
+                      - de:Bahnhof Berlin Treptower Park
+                    note: [ ]
+                    description: [ ]
+                    latitude: 13.461829599999998
+                    longitude: 52.49384909908831
+                    rank: 0
+
         '400':
           description: |
             Bad request: invalid parameter values

@@ -13,8 +13,9 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     feature,
     state,
     station,
-    railway_ref,
+    map_reference as railway_ref,
     uic_ref,
+    "references",
     importance,
     operator,
     network,
@@ -28,7 +29,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     description,
     geom
   FROM (
-    SELECT DISTINCT ON (osm_ids, key, value, name, feature, state, station, railway_ref, uic_ref, importance, geom)
+    SELECT DISTINCT ON (osm_ids, key, value, name, feature, state, station, map_reference, uic_ref, importance, geom)
       id,
       osm_ids,
       osm_types,
@@ -39,7 +40,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
       feature,
       state,
       station,
-      railway_ref,
+      map_reference,
+      "references",
       uic_ref,
       importance,
       operator,
