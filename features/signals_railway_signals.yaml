@@ -3834,6 +3834,11 @@ features:
           - { exact: '?', value: 'de/bostrab/fahrsignal-empty', description: 'further, unidentified aspects' }
         position: bottom
 
+      - match: 'railway:signal:crossing'
+        cases:
+          - { exact: 'DE-DVB:so25', value: 'de/dvb/so25', description: 'So 25' }
+        position: center
+
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
