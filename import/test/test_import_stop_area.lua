@@ -50,7 +50,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stop_areas = {
-    { stop_ref_ids = '{1}', way_ref_ids = '{6}', platform_ref_ids = '{2,3,4}', node_ref_ids = '{5}', references = {} },
+    { stop_ref_ids = '{1}', way_ref_ids = '{6}', platform_ref_ids = '{2,3,4}', node_ref_ids = '{5}' },
   },
 })
 

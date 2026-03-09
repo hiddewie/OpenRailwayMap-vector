@@ -36,7 +36,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'halt', state = 'present', station = 'train', name_tags = {}, references = {} },
+    { feature = 'halt', state = 'present', station = 'train', name_tags = {} },
   },
 })
 
@@ -48,7 +48,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {}, references = {} },
+    { feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {} },
   },
 })
 
@@ -60,7 +60,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'service_station', state = 'present', station = 'train', name_tags = {}, references = {} },
+    { feature = 'service_station', state = 'present', station = 'train', name_tags = {} },
   },
 })
 
@@ -72,7 +72,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'preserved', station = 'train', name_tags = {}, references = {} },
+    { feature = 'yard', state = 'preserved', station = 'train', name_tags = {} },
   },
 })
 
@@ -86,7 +86,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}', references = {} },
+    { feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}' },
   },
 })
 
@@ -98,7 +98,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'junction', state = 'abandoned', station = 'train', name_tags = {}, references = {} },
+    { feature = 'junction', state = 'abandoned', station = 'train', name_tags = {} },
   },
 })
 
@@ -110,7 +110,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {}, references = {} },
+    { feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {} },
   },
 })
 
@@ -122,7 +122,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'crossover', state = 'proposed', station = 'train', name_tags = {}, references = {} },
+    { feature = 'crossover', state = 'proposed', station = 'train', name_tags = {} },
   },
 })
 
@@ -134,7 +134,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'site', state = 'construction', station = 'train', name_tags = {}, references = {} },
+    { feature = 'site', state = 'construction', station = 'train', name_tags = {} },
   },
 })
 
@@ -146,7 +146,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'razed', station = 'train', name_tags = {}, references = {} },
+    { feature = 'station', state = 'razed', station = 'train', name_tags = {} },
   },
 })
 
