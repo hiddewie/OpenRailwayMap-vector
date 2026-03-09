@@ -161,8 +161,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   JOIN stop_areas sa
     ON ARRAY[sa.osm_id] <@ sag.stop_area_ref_ids
   JOIN stations s
-    ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-      OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+    ON (s.osm_id = ANY(sa.node_ref_ids) AND s.osm_type = 'N')
+      OR (s.osm_id = ANY(sa.way_ref_ids) AND s.osm_type = 'W')
   JOIN (
     SELECT
       unnest(osm_ids) AS osm_id,

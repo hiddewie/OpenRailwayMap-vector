@@ -218,8 +218,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         SELECT s.id
         FROM stop_areas sa
         JOIN stations s
-          ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-            OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+          ON (s.osm_id = ANY(sa.node_ref_ids) AND s.osm_type = 'N')
+            OR (s.osm_id = ANY(sa.way_ref_ids) AND s.osm_type = 'W')
         WHERE ARRAY[input_ref] <@ avals(sa."references")
       ) station_ids
       JOIN stations s
