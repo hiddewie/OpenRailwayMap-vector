@@ -8,6 +8,7 @@ RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/poi.yaml,target=poi.yaml \
+  --mount=type=bind,source=features/stations.yaml,target=stations.yaml \
   node tags.lua.js \
     > /build/tags.lua
 

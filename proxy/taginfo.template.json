@@ -19,11 +19,9 @@
     { "key": "name" },
     { "key": "official_name" },
     { "key": "old_name" },
-    { "key": "ref:crs" },
     { "key": "ref" },
     { "key": "short_name" },
     { "key": "uic_name" },
-    { "key": "uic_ref" },
 
     { "key": "abandoned:electrified" },
     { "key": "abandoned:railway" },
@@ -139,7 +137,6 @@
 
     { "key": "public_transport" },
     { "key": "railway:radio" },
-    { "key": "railway:ref" },
     { "key": "railway:vacancy_detection" },
     { "key": "railway", "value": "blockpost" },
     { "key": "railway", "value": "milestone" },
