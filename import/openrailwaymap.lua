@@ -807,17 +807,23 @@ local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'officia
 function name_tags(tags)
   -- Gather name tags for searching
   local found_name_tags = {}
+  local has_name_tags = false
 
   for key, value in pairs(tags) do
     for _, name_tag in ipairs(known_name_tags) do
       if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
         found_name_tags[key] = value
+        has_name_tags = true
         break
       end
     end
   end
 
-  return found_name_tags
+  if has_name_tags then
+    return found_name_tags
+  else
+    return nil
+  end
 end
 
 function station_references(tags)
