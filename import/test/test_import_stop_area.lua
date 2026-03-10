@@ -58,7 +58,6 @@ osm2pgsql.process_relation({
   tags = {
     ['type'] = 'public_transport',
     ['public_transport'] = 'stop_area',
-    ['ref:SE:rikshållplats'] = 'rikshållplats'
   },
   members = {
     { role = 'stop', type = 'n', ref = 1 },
@@ -66,7 +65,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stop_areas = {
-    { stop_ref_ids = '{1}', way_ref_ids = '{}', platform_ref_ids = '{}', node_ref_ids = '{}', references = {['se-rikshållplats'] = 'rikshållplats'} },
+    { stop_ref_ids = '{1}', way_ref_ids = '{}', platform_ref_ids = '{}', node_ref_ids = '{}' },
   },
 })
 

@@ -272,11 +272,9 @@ local stations = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
-    { column = 'way', method = 'gist' },
     -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
-    -- For joining stations to stop areas
-    { column = 'osm_id', method = 'btree' },
+    { column = 'way', method = 'gist' },
     -- Search by reference
     { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
@@ -555,15 +553,12 @@ local stop_areas = osm2pgsql.define_table({
     { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
-    { column = 'references', type = 'hstore' },
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
     { column = 'stop_ref_ids', method = 'gin' },
     { column = 'node_ref_ids', method = 'gin' },
     { column = 'way_ref_ids', method = 'gin' },
-    -- Search by reference
-    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
 })
 
@@ -807,44 +802,32 @@ local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'officia
 function name_tags(tags)
   -- Gather name tags for searching
   local found_name_tags = {}
-  local has_name_tags = false
 
   for key, value in pairs(tags) do
     for _, name_tag in ipairs(known_name_tags) do
       if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
         found_name_tags[key] = value
-        has_name_tags = true
         break
       end
     end
   end
 
-  if has_name_tags then
-    return found_name_tags
-  else
-    return nil
-  end
+  return found_name_tags
 end
 
 function station_references(tags)
   local found_references = {}
-  local has_references = false
 
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
         found_references[reference.id] = tags[tag]
-        has_references = true
         break
       end
     end
   end
 
-  if has_references then
-    return found_references
-  else
-    return nil
-  end
+  return found_references
 end
 
 function position_is_zero(position)
@@ -1611,7 +1594,6 @@ function osm2pgsql.process_relation(object)
         platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
         way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
-        references = station_references(tags),
       })
     end
   end
