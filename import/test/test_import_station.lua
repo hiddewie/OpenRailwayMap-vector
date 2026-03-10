@@ -36,7 +36,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'halt', state = 'present', station = 'train' },
+    { feature = 'halt', state = 'present', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -48,7 +48,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'tram_stop', state = 'present', station = 'tram' },
+    { feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {}, references = {} },
   },
 })
 
@@ -60,7 +60,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'service_station', state = 'present', station = 'train' },
+    { feature = 'service_station', state = 'present', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -72,7 +72,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'preserved', station = 'train' },
+    { feature = 'yard', state = 'preserved', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -86,7 +86,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'present', station = 'train', yard_hump = true, yard_purpose = '{"transloading","manifest"}' },
+    { feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}', references = {} },
   },
 })
 
@@ -98,7 +98,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'junction', state = 'abandoned', station = 'train' },
+    { feature = 'junction', state = 'abandoned', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -110,7 +110,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'spur_junction', state = 'disused', station = 'train' },
+    { feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -122,7 +122,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'crossover', state = 'proposed', station = 'train' },
+    { feature = 'crossover', state = 'proposed', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -134,7 +134,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'site', state = 'construction', station = 'train' },
+    { feature = 'site', state = 'construction', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -146,7 +146,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'razed', station = 'train' },
+    { feature = 'station', state = 'razed', station = 'train', name_tags = {}, references = {} },
   },
 })
 
@@ -167,7 +167,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', station = 'train', map_reference = 'railway_ref', references = {['ref'] = 'ref', ['railway-ref'] = 'railway_ref', ['uic'] = 'uic_ref', ['gb-crs'] = 'ref:crs', ['ibnr'] = 'ref:ibnr', ['iata'] = 'iata', ['ifopt'] = 'ref:IFOPT', ['eu-plc'] = 'ref:EU:PLC', ['fr-sncf-resarail'] = 'ref:FR:sncf:resarail' } },
+    { feature = 'station', state = 'present', station = 'train', name_tags = {}, map_reference = 'railway_ref', references = {['ref'] = 'ref', ['railway-ref'] = 'railway_ref', ['uic'] = 'uic_ref', ['gb-crs'] = 'ref:crs', ['ibnr'] = 'ref:ibnr', ['iata'] = 'iata', ['ifopt'] = 'ref:IFOPT', ['eu-plc'] = 'ref:EU:PLC', ['fr-sncf-resarail'] = 'ref:FR:sncf:resarail' } },
   },
 })
 

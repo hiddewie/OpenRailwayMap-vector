@@ -247,11 +247,6 @@ references:
     country: PL
     tags: [ 'ref:ztm' ]
 
-  - id: se-rikshållplats
-    description: Rikshållplats
-    country: SE
-    tags: [ 'ref:SE:rikshållplats' ]
-
   - id: ref
     description: Reference
     tags: [ 'ref' ]
