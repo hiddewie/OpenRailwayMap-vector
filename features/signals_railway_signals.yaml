@@ -7450,7 +7450,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', any: [ 'semaphore', 'sign' ] }
-      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:z1', 'PL-PKP:z1;PL-PKP:z2' ] }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:z1', 'PL-PKP:z2' ] }
 
   - description: Tarcza zaporowa świetlna (Tz)
     country: PL
@@ -7462,7 +7462,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
-      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:s1', 'PL-PKP:s1;PL-PKP:ms2' ] }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:s1', 'PL-PKP:ms2' ] }
 
   - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
@@ -7659,7 +7659,7 @@ features:
           - { exact: 'PL-PKP:w19;PL-PKP:w20', value: 'pl/w19-20' }
         default: 'pl/w19'
     tags:
-      - { tag: 'railway:signal:short_route', any: [ 'PL-PKP:w19', 'PL-PKP:w20', 'PL-PKP:w19;PL-PKP:w20' ] }
+      - { tag: 'railway:signal:short_route', any: [ 'PL-PKP:w19', 'PL-PKP:w20'] }
       - { tag: 'railway:signal:short_route:form', any: [ 'sign', 'light' ] }
 
   - description: Wskaźnik kierunku przeciwnego (W24)
