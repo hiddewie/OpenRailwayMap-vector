@@ -6054,6 +6054,17 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'GB-NR:speed_limit' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Gradient post
+    country: GB
+    icon:
+      - match: 'railway:signal:slope:shape'
+        cases:
+          - { exact: 'board', value: 'gb/gradient-board' }
+        default: 'gb/gradient-arms'
+    tags:
+      - { tag: 'railway:signal:slope', value: 'GB-NR:gradient' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   # --- IT --- #
 
   - description: Route
