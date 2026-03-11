@@ -28,20 +28,17 @@ class WikidataAPI:
             or not data['P18'][0]:
             return Response(content='Image statements (P18) not found in Wikidata response', status_code=404, media_type='text/plain')
         
-        best_name = ''
-        best_rank = ''
         for statement in data['P18']:
             if not statement \
                 or not statement['rank'] \
                 or not statement['value'] \
                 or not statement['value']['content']:
                 return Response(content='Invalid image statement (P18) in Wikidata response', status_code=404, media_type='text/plain')
-            # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
-            if statement['rank'] > best_rank:
-                best_rank = statement['rank']
-                best_name = statement['value']['content']
+            
+        # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
+        best_statement = max(data['P18'], key=lambda statement: statement['rank'])
 
-        sanitized_name = best_name.replace(' ', '_')
+        sanitized_name = best_statement['value']['content'].replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
         resource_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
