@@ -14,7 +14,7 @@ PSQL="psql --dbname gis --variable ON_ERROR_STOP=on --pset pager=off"
 
 function filter_data() {
   if [[ ! -f "$OSM2PGSQL_FILTERED_FILE" ]]; then
-    echo "Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE"
+    echo " == Filtering data from $OSM2PGSQL_INPUT_FILE to $OSM2PGSQL_FILTERED_FILE == "
 
     mkdir -p "$(dirname "$OSM2PGSQL_FILTERED_FILE")"
 
@@ -25,7 +25,7 @@ function filter_data() {
   fi
 
   if [[ ! -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
-    echo "Outputting OpenStreetMap data timestamp into $OSM2PGSQL_TIMESTAMP_FILE"
+    echo " - Outputting OpenStreetMap data timestamp into $OSM2PGSQL_TIMESTAMP_FILE - "
 
     osmium fileinfo \
       --get header.option.timestamp \
@@ -35,7 +35,7 @@ function filter_data() {
 }
 
 function import_db() {
-  echo "Importing data (${OSM2PGSQL_NUMPROC:-4} processes)"
+  echo " == Importing data (${OSM2PGSQL_NUMPROC:-4} processes) == "
   # Importing data to a database
   osm2pgsql \
     --create \
@@ -48,7 +48,7 @@ function import_db() {
 
   if [[ -f "$OSM2PGSQL_TIMESTAMP_FILE" ]]; then
     import_timestamp="$(cat "$OSM2PGSQL_TIMESTAMP_FILE")"
-    echo "Setting import timestamp to $import_timestamp"
+    echo " - Setting import timestamp to $import_timestamp - "
     $PSQL -c "update osm2pgsql_properties set \"value\"='$import_timestamp' where property='import_timestamp';"
   fi
 }
@@ -88,46 +88,63 @@ function transform_data() {
 }
 
 function create_update_functions_views() {
-  echo "Post processing imported data"
+  echo " == Post processing imported data == "
 
   # Functions
+  echo " - Tile functions - "
   $PSQL -f sql/tile_functions.sql
+  echo " - API facility functions - "
   $PSQL -f sql/api_facility_functions.sql
+  echo " - API milestone functions - "
   $PSQL -f sql/api_milestone_functions.sql
 
   # YAML data
+  echo " - Signal features - "
   $PSQL -f sql/signal_features.sql
+  echo " - Operators - "
   $PSQL -f sql/operators.sql
 
   # Post processing
+  echo " - Linking views - "
   $PSQL -f sql/linking_views.sql
+  echo " - Station importance - "
   $PSQL -f sql/get_station_importance.sql
+  echo " - Update station importance - "
   $PSQL -f sql/update_station_importance.sql
   osm2pgsql-gen \
     --database gis \
     --style openrailwaymap.lua
+  echo " - Clustered stations - "
   $PSQL -f sql/stations_clustered.sql
 
   # Tile and API views on processed data
+  echo " - Tile views - "
   $PSQL -f sql/tile_views.sql
+  echo " - API facility views - "
   $PSQL -f sql/api_facility_views.sql
 }
 
 function refresh_materialized_views() {
-  echo "Updating materialized views"
+  echo " == Updating materialized views == "
+  echo " - Operators - "
   $PSQL -f sql/update_operators.sql
+  echo " - Signal features - "
   $PSQL -f sql/update_signal_features.sql
+  echo " - Linking views - "
   $PSQL -f sql/update_linking_views.sql
+  echo " - Update station importance - "
   $PSQL -f sql/update_station_importance.sql
   osm2pgsql-gen \
     --database gis \
     --style openrailwaymap.lua
+  echo " - Clustered stations - "
   $PSQL -f sql/update_stations_clustered.sql
+  echo " - API facility views - "
   $PSQL -f sql/update_api_views.sql
 }
 
 function print_summary() {
-  echo "Database summary"
+  echo " == Database summary == "
   $PSQL -c "select concat(relname, ' (', relkind ,')') as name, pg_size_pretty(pg_table_size(oid)) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%' order by pg_table_size(oid) desc;"
   $PSQL -c "select pg_size_pretty(SUM(pg_table_size(oid))) as size from pg_class where relkind in ('m', 'r', 'i') and relname not like 'pg_%';"
 }
