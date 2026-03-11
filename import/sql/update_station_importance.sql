@@ -1,7 +1,5 @@
 BEGIN;
 
-REFRESH MATERIALIZED VIEW stations_stop_areas;
-
 TRUNCATE stations_with_importance;
 
 INSERT INTO stations_with_importance (id, way, importance)

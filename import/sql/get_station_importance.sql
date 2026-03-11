@@ -2,23 +2,6 @@
 
 -- Relevant objects referenced by route relations: railway=station, railway=halt, public_transport=stop_position, public_transport=platform, railway=platform
 
-CREATE MATERIALIZED VIEW stations_stop_areas AS
-  SELECT
-    s.id as station_id,
-    sa.osm_id as stop_area_osm_id
-  FROM stations s
-  JOIN stop_areas sa
-    ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-      OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W');
-
-CREATE INDEX IF NOT EXISTS stations_stop_areas_station_id
-  ON stations_stop_areas
-    USING btree(station_id);
-
-CREATE INDEX IF NOT EXISTS stations_stop_areas_station_id
-  ON stations_stop_areas
-    USING btree(stop_area_osm_id);
-
 -- Get OSM IDs route relations referencing a stop position or a station/halt node
 CREATE OR REPLACE VIEW stops_and_route_relations AS
   SELECT
@@ -90,8 +73,10 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
       ON ssa.station_id = s.id
     JOIN stop_areas sa
       ON ssa.stop_area_osm_id = sa.osm_id
+    JOIN stop_area_route_stops sars
+      ON sa.osm_id = sars.stop_area_id
     JOIN route_stop rs
-      ON ARRAY[rs.stop_id] <@ sa.stop_ref_ids
+      ON rs.stop_id = sars.route_stop_id
   ) sr
   GROUP BY id;
 

@@ -42,8 +42,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
           sa.osm_id as stop_area_id,
           se.way
         from stop_areas sa
+        join stop_area_entrances sae
+          on sae.stop_area_osm_id = sa.osm_id
         join station_entrances se
-          on array[se.osm_id] <@ sa.node_ref_ids
+          on se.osm_id = sae.entrance_osm_id
 
         union all
 
@@ -51,8 +53,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
           sa.osm_id as stop_area_id,
           pl.way
         from stop_areas sa
+        join stop_area_platforms sap
+          on sap.stop_area_id = sa.osm_id
         join platforms pl
-          on array[pl.osm_id] <@ sa.platform_ref_ids
+          on pl.osm_id = sap.platform_id
       ) q on q.stop_area_id = sa.osm_id
       group by name, station, map_reference, uic_ref, feature, state, id
     ) stations_with_entrances
