@@ -7,7 +7,7 @@ class WikidataAPI:
         self.http_client = http_client
 
     async def __call__(self, *, id):
-        url = "https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/" + id + "/statements"
+        url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{id}/statements"
         params = {
           'property': 'P18',
         }
@@ -27,14 +27,14 @@ class WikidataAPI:
         if not data['P18'] \
             or not data['P18'][0]:
             return Response(content='Image statements (P18) not found in Wikidata response', status_code=404, media_type='text/plain')
-        
+
         for statement in data['P18']:
             if not statement \
                 or not statement['rank'] \
                 or not statement['value'] \
                 or not statement['value']['content']:
                 return Response(content='Invalid image statement (P18) in Wikidata response', status_code=404, media_type='text/plain')
-            
+
         # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
         best_statement = max(data['P18'], key=lambda statement: statement['rank'])
 
