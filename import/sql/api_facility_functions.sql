@@ -176,7 +176,6 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
 ) AS $$
   BEGIN
     RETURN QUERY
-      -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
       SELECT
         ARRAY[s.osm_id] as osm_ids,
         ARRAY[s.osm_type] as osm_types,
@@ -187,7 +186,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         s.station,
         s.map_reference as railway_ref,
         s."references"->'uic' as uic_ref,
-        s."references",
+        hs_concat(coalesce(sa."references", ''::hstore), coalesce(s."references", ''::hstore)) as "references",
         s.operator AS operator,
         s.network AS network,
         array_remove(ARRAY[s.wikidata], null) AS wikidata,
@@ -209,8 +208,27 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
           WHEN input_ref = s."references"->'plc' THEN 60
           ELSE 0
         END)::numeric as rank
-      FROM stations s
-      WHERE ARRAY[input_ref] <@ avals(s."references")
+      FROM (
+        SELECT s.id
+        FROM stations s
+        WHERE ARRAY[input_ref] <@ avals(s."references")
+
+        UNION
+
+        SELECT s.id
+        FROM stop_areas sa
+        JOIN stations_stop_areas ssa
+          ON ssa.stop_area_osm_id = sa.osm_id
+        JOIN stations s
+          ON ssa.station_id = s.id
+        WHERE ARRAY[input_ref] <@ avals(sa."references")
+      ) station_ids
+      JOIN stations s
+        ON station_ids.id = s.id
+      LEFT JOIN stations_stop_areas ssa
+        ON ssa.station_id = s.id
+      LEFT JOIN stop_areas sa
+        ON ssa.stop_area_osm_id = sa.osm_id
       ORDER BY rank DESC
       LIMIT input_limit;
   END
