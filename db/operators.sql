@@ -25,3 +25,9 @@ CREATE OPERATOR ~!@# (
   leftarg = text,
   rightarg = text
 );
+
+-- Taken from https://stackoverflow.com/a/42939388/711129
+create aggregate hstore_agg(hstore) (
+  sfunc = hs_concat(hstore, hstore),
+  stype = hstore
+);

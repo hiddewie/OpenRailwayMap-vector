@@ -144,6 +144,7 @@ tags:
   - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
   - { tag: 'railway:signal:slope:incline', title: 'Slope incline' }
   - { tag: 'railway:signal:slope:length', title: 'Slope length' }
+  - { tag: 'railway:signal:slope:shape', title: 'Slope shape' }
   - { tag: 'railway:signal:slope:distance', title: 'Slope distance' }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
@@ -6066,6 +6067,17 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'GB-NR:speed_limit' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Gradient post
+    country: GB
+    icon:
+      - match: 'railway:signal:slope:shape'
+        cases:
+          - { exact: 'board', value: 'gb/gradient-board' }
+        default: 'gb/gradient-arms'
+    tags:
+      - { tag: 'railway:signal:slope', value: 'GB-NR:gradient' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
+
   # --- IT --- #
 
   - description: Route
@@ -7452,21 +7464,17 @@ features:
 
   # TODO Tarcze rozrządowe https://www.transportszynowy.pl/Kolej/tarczerozrzadowe
 
-  - description: Tarcza zaporowa kształtowa (Tz, nieruchoma)
+  - description: Tarcza zaporowa kształtowa (Tz, ruchoma, nieruchoma)
     country: PL
-    icon: [ default: 'pl/z-sign' ]
+    icon:
+      - match: 'railway:signal:minor:form'
+        cases:
+          - { exact: 'semaphore', value: 'pl/z-semaphore' }
+        default: 'pl/z-sign'
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1' }
-
-  - description: Tarcza zaporowa kształtowa (Tz, ruchoma)
-    country: PL
-    icon: [ default: 'pl/z-semaphore' ]
-    tags:
-      - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
-      - { tag: 'railway:signal:minor:form', value: 'semaphore' }
-      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1;PL-PKP:z2' }
+      - { tag: 'railway:signal:minor:form', any: [ 'semaphore', 'sign' ] }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:z1', 'PL-PKP:z2' ] }
 
   - description: Tarcza zaporowa świetlna (Tz)
     country: PL
@@ -7478,6 +7486,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:s1', 'PL-PKP:ms2' ] }
 
   - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
