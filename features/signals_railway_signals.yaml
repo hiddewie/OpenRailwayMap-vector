@@ -169,6 +169,7 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:distance', title: 'Speed limit distant distance' }
   - { tag: 'railway:signal:station_distant', title: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', title: 'Station distant form' }
+  - { tag: 'railway:signal:station_distant:type', title: 'Station distant type' }
   - { tag: 'railway:signal:station_distant:deactivated', title: 'Station distant deactivated', type: boolean }
   - { tag: 'railway:signal:station_distant:shortened', title: 'Station distant shortened', type: boolean }
   - { tag: 'railway:signal:steam_locomotive', title: 'Steam locomotive' }
@@ -2672,10 +2673,11 @@ features:
         - { all: [ 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/samostatna_predvest/YG-Y' }
         - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
         default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
-      - match: 'railway:signal:distant:function' # TODO TO BE REPLACED BY station_distant
+      - match: 'railway:signal:station_distant:type'
         cases:
-          - { value: 'cz/distant-entry' }
-        default: 'cz/distant-block'
+          - { exact: 'station', value: 'cz/stanoviste_samostatne_predvesti/station', description: 'Vjezdové, cestové, odjezdové' }
+          - { exact: 'block_or_protection', value: 'cz/stanoviste_samostatne_predvesti/block_or_protection', description: 'Oddílové, krycí' }
+        default: 'cz/stanoviste_samostatne_predvesti/fallback'  # FALLBACK
         position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
@@ -2875,7 +2877,7 @@ features:
     country: CZ
     icon:
       - default: 'cz/HaPe-CZ/distant'
-      - default: 'cz/distant-entry'
+      - default: 'cz/stanoviste_samostatne_predvesti/station'
         position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
