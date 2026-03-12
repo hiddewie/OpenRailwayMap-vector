@@ -1791,7 +1791,7 @@ features:
       - match: 'railway:signal:main:substitute_signal'
         cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
       - match: 'railway:signal:traversable'
         cases:
@@ -1818,7 +1818,7 @@ features:
       - match: 'railway:signal:main:substitute_signal'
         cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
       - match: 'railway:signal:traversable'
         cases:
