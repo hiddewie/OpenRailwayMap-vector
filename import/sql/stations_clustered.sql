@@ -75,7 +75,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     -- Aggregated station columns
     array_agg(DISTINCT clustered.station_id ORDER BY clustered.station_id) as station_ids,
     hstore_agg(name_tags) as name_tags,
-    hs_concat(hstore_agg(sa."references"), hstore_agg(s."references")) as "references",
+    hs_concat(coalesce(hstore_agg(sa."references"), ''::hstore), coalesce(hstore_agg(s."references"), ''::hstore)) as "references",
     array_agg(s.osm_id ORDER BY s.osm_id) as osm_ids,
     array_agg(osm_type ORDER BY s.osm_id) as osm_types,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.operator, U&'\001E')), U&'\001E'), U&'\001E'), null) as operator,

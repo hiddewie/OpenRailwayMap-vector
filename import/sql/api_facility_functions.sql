@@ -186,7 +186,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         s.station,
         s.map_reference as railway_ref,
         s."references"->'uic' as uic_ref,
-        hs_concat(sa."references", s."references") as "references",
+        hs_concat(coalesce(sa."references", ''::hstore), coalesce(s."references", ''::hstore)) as "references",
         s.operator AS operator,
         s.network AS network,
         array_remove(ARRAY[s.wikidata], null) AS wikidata,
