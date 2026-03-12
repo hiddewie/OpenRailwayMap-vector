@@ -1790,7 +1790,6 @@ features:
         default: 'be/GSA-opposite-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
-          - { exact: 'BE:CF', value: 'be/CF' }
           - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
       - match: 'railway:signal:traversable'
@@ -1817,7 +1816,6 @@ features:
         default: 'be/GSA-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
-          - { exact: 'BE:CF', value: 'be/CF' }
           - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
       - match: 'railway:signal:traversable'
