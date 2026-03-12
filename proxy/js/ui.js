@@ -2523,8 +2523,8 @@ function popupContent(feature) {
         popupValueTitle.innerText = `${title}: `;
 
         let first = true
-        body.forEach(([key, value]) => {
-          if (value) {
+        body.forEach(([key, bodyValue]) => {
+          if (bodyValue) {
             if (first) {
               first = false;
             } else {
@@ -2542,10 +2542,10 @@ function popupContent(feature) {
               popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
               popupValueLink.target = '_blank'
               const popupValueText = createDomElement('span', undefined, popupValueLink);
-              popupValueText.innerText = value;
+              popupValueText.innerText = bodyValue;
             } else {
               const popupValueBody = createDomElement('span', undefined, popupValue);
-              popupValueBody.innerText = value;
+              popupValueBody.innerText = bodyValue;
             }
           }
         })
