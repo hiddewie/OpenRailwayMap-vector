@@ -2877,7 +2877,7 @@ features:
     country: CZ
     icon:
       - default: 'cz/HaPe-CZ/distant'
-      - default: 'cz/stanoviste_samostatne_predvesti/station'
+      - default: 'cz/stanoviste_samostatne_predvesti/fallback'
         position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
@@ -2901,7 +2901,7 @@ features:
     country: CZ
     icon: [ default: 'cz/HaPe-CZ/shunting' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Se', 'Cs-D1:Se_' ] }
+      - { tag: 'railway:signal:shunting', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Se', 'Cs-D1:Se_', 'Cs-D1:Se _' ] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
 
