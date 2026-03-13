@@ -2488,7 +2488,7 @@ features:
     country: CZ
     icon: [ default: 'cz/seradovaci_navestidlo/WB-B' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:seradovaci_navestidlo', 'CZ-D1:serazovaci_navestidlo' ] }
+      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:seradovaci_navestidlo' ] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Hranice obvodu nákladiště nebo vlečky
