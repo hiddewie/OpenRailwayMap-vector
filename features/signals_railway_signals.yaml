@@ -2576,12 +2576,12 @@ features:
 
   #  - description: Speed limit main/combined (sign)
   #    country: CZ
-  #    exampleIcon: 'cz/rychlost_30-sign'
+  #    exampleIcon: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign'
   #    icon:
   #      - match: 'railway:signal:speed_limit:states'
   #        cases:
-  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30-sign' }
-  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50-sign' }
+  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
   #    tags:
   #      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
   #      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
@@ -2593,11 +2593,11 @@ features:
   #    icon:
   #      - match: 'railway:signal:speed_limit:states'
   #        cases:
-  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
-  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
-  #          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-  #          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-  #          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30' }
+  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50' }
+  #          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+  #          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+  #          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
   #    tags:
   #      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
   #      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
@@ -2696,11 +2696,11 @@ features:
         default: 'cz/hlavni_navestidlo/GRWY-GY' # FALLBACK
       - match: 'railway:signal:speed_limit:states'
         cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30-sign' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50-sign' }
-          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
         position: bottom
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
@@ -2762,11 +2762,11 @@ features:
         default: 'cz/hlavni_navestidlo/YGRWY-YY' # FALLBACK
       - match: 'railway:signal:speed_limit:states'
         cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30-sign' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50-sign' }
-          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
         position: bottom
     tags:
       - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
