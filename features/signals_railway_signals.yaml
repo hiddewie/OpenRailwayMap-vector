@@ -56,6 +56,7 @@ tags:
   - { tag: 'railway:signal:electricity:frequency', title: 'Electricity frequency', format: { template: '%.2d Hz' } }
   - { tag: 'railway:signal:electricity:deactivated', title: 'Electricity deactivated', type: boolean }
   - { tag: 'railway:signal:fouling_point', title: 'Fouling point' }
+  - { tag: 'railway:signal:fouling_point:form', title: 'Fouling point form' }
   - { tag: 'railway:signal:fouling_point:deactivated', title: 'Fouling point deactivated', type: boolean }
   - { tag: 'railway:signal:helper_engine', title: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', title: 'Helper engine form' }
