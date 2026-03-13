@@ -272,9 +272,11 @@ local stations = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
+    { column = 'way', method = 'gist' },
     -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
-    { column = 'way', method = 'gist' },
+    -- For building linking table between stations and stop areas
+    { column = 'osm_type', method = 'btree' },
     -- Search by reference
     { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
@@ -348,6 +350,11 @@ local station_entrances = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
+  },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    -- For joining clustered station areas with entrances
+    { column = 'osm_id', method = 'btree' },
   },
 })
 
@@ -550,15 +557,37 @@ local stop_areas = osm2pgsql.define_table({
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
-    { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
+    { column = 'references', type = 'hstore' },
   },
   indexes = {
+    { column = 'osm_id', method = 'btree' },
     { column = 'platform_ref_ids', method = 'gin' },
-    { column = 'stop_ref_ids', method = 'gin' },
-    { column = 'node_ref_ids', method = 'gin' },
-    { column = 'way_ref_ids', method = 'gin' },
+    -- Search by reference
+    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
+  },
+})
+
+local stop_area_route_stops = osm2pgsql.define_table({
+  name = 'stop_area_route_stops',
+  ids = { type = 'relation', id_column = 'stop_area_id' },
+  columns = {
+    { column = 'route_stop_id', sql_type = 'int8' },
+  },
+  indexes = {
+    { column = 'stop_area_id', method = 'btree' },
+  },
+})
+
+local stop_area_platforms = osm2pgsql.define_table({
+  name = 'stop_area_platforms',
+  ids = { type = 'relation', id_column = 'stop_area_id' },
+  columns = {
+    { column = 'platform_id', sql_type = 'int8' },
+  },
+  indexes = {
+    { column = 'stop_area_id', method = 'btree' },
   },
 })
 
@@ -1567,15 +1596,18 @@ function osm2pgsql.process_relation(object)
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
     local has_members = false
     local stop_members = {}
-    local platform_members = {}
     local node_members = {}
     local way_members = {}
     for _, member in ipairs(object.members) do
       if member.role == 'stop' and member.type == 'n' then
-        table.insert(stop_members, member.ref)
+        stop_area_route_stops:insert({
+          route_stop_id = member.ref,
+        })
         has_members = true
       elseif member.role == 'platform' then
-        table.insert(platform_members, member.ref)
+        stop_area_platforms:insert({
+          platform_id = member.ref,
+        })
         has_members = true
       elseif member.type == 'n' then
         -- Station has no role defined
@@ -1590,10 +1622,9 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       stop_areas:insert({
-        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
-        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
         way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
+        references = station_references(tags),
       })
     end
   end
