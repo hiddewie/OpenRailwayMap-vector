@@ -6036,6 +6036,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'GB-NR:engineer-stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Rear Clear marker
+    country: GB
+    icon: [ default: 'gb/rear-clear' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'GB-NR:rear_clear' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
   - description: Crossing
     country: GB
     icon: [ default: 'gb/crossing' ]
