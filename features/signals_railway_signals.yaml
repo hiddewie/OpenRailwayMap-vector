@@ -154,7 +154,6 @@ tags:
   - { tag: 'railway:signal:speed_limit', title: 'Speed limit' }
   - { tag: 'railway:signal:speed_limit:caption', title: 'Speed limit caption' }
   - { tag: 'railway:signal:speed_limit:form', title: 'Speed limit form' }
-  - { tag: 'railway:signal:speed_limit:shortened', title: 'Speed limit shortened', type: boolean }
   - { tag: 'railway:signal:speed_limit:speed', title: 'Speed limit speed', type: array }
   - { tag: 'railway:signal:speed_limit:states', title: 'Speed limit states', type: array }
   - { tag: 'railway:signal:speed_limit:pointing', title: 'Speed limit pointing' }
