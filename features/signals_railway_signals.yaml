@@ -56,6 +56,7 @@ tags:
   - { tag: 'railway:signal:electricity:frequency', title: 'Electricity frequency', format: { template: '%.2d Hz' } }
   - { tag: 'railway:signal:electricity:deactivated', title: 'Electricity deactivated', type: boolean }
   - { tag: 'railway:signal:fouling_point', title: 'Fouling point' }
+  - { tag: 'railway:signal:fouling_point:form', title: 'Fouling point form' }
   - { tag: 'railway:signal:fouling_point:deactivated', title: 'Fouling point deactivated', type: boolean }
   - { tag: 'railway:signal:helper_engine', title: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', title: 'Helper engine form' }
@@ -6038,6 +6039,20 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
+  
+  - description: Engineering Stop board
+    country: GB
+    icon: [ default: 'gb/stop-octagon' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'GB-NR:engineer-stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Rear Clear marker
+    country: GB
+    icon: [ default: 'gb/rear-clear' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'GB-NR:rear_clear' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
 
   - description: Crossing
     country: GB
