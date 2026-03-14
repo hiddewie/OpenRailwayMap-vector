@@ -2447,6 +2447,19 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_posledniho_oddiloveho_navestidla' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
+  - description: Stanoviště samostatné předvěsti
+    country: CZ
+    icon:
+      - match: 'railway:signal:station_distant:type'
+        cases:
+          - { exact: 'station', value: 'cz/stanoviste_samostatne_predvesti/station', description: 'Vjezdové, cestové, odjezdové' }
+          - { exact: 'block_or_protection', value: 'cz/stanoviste_samostatne_predvesti/block_or_protection', description: 'Oddílové, krycí' }
+        default: 'cz/stanoviste_samostatne_predvesti/fallback'  # FALLBACK
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_samostatne_predvesti' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   - description: Označník
     country: CZ
     icon: [ default: 'cz/oznacnik' ]
@@ -2672,16 +2685,9 @@ features:
         - { all: [ 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/samostatna_predvest/YG-Y' }
         - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
         default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
-      - match: 'railway:signal:station_distant:type'
-        cases:
-          - { exact: 'station', value: 'cz/stanoviste_samostatne_predvesti/station', description: 'Vjezdové, cestové, odjezdové' }
-          - { exact: 'block_or_protection', value: 'cz/stanoviste_samostatne_predvesti/block_or_protection', description: 'Oddílové, krycí' }
-        default: 'cz/stanoviste_samostatne_predvesti/fallback'  # FALLBACK
-        position: bottom
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-
 
   # Main singnals
   # TODO semaphore main signals (red / yellow arms)
