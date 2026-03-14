@@ -2258,7 +2258,7 @@ function openJOSM(josmUrl, osmType, osmId) {
     })
   }
 
-function popupContent(feature) {
+function popupContent(feature, abortController) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
   const properties = feature.properties;
@@ -2469,9 +2469,24 @@ function popupContent(feature) {
       popupImageLink.alt = `Wikidata: ${properties.wikidata}`
 
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
-      popupImage.title = properties.wikidata
-      popupImage.alt = `Wikidata: ${properties.wikidata}`
+      fetch(`/api/wikidata/${encodeURIComponent(properties.wikidata)}`, {
+        signal: abortController.signal,
+      })
+        .then(response => response.json())
+        .then(data => {
+          const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}`
+
+          popupImage.src = data.thumbnail_url
+          popupImage.title = description
+          popupImage.alt = description
+        })
+        .catch(err => {
+          // Ignore aborted request errors
+          if (!abortController.signal.aborted) {
+            console.error('Error while fetching popup image', err);
+          }
+        });
+
       popupImage.style.display = 'none' // Do not display images that cannot load
       popupImage.onload = () => popupImage.style.display = 'block'
     }
@@ -2759,10 +2774,15 @@ map.on('click', event => {
       popup.remove();
     }
 
+    const abortController = new AbortController();
     popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setDOMContent(popupContent(feature))
+      .setDOMContent(popupContent(feature, abortController))
       .addTo(map);
+
+    popup.on('close', () => {
+      abortController.abort('Popup closed')
+    })
   }
 });
 
