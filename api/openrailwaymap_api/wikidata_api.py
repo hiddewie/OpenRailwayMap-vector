@@ -38,8 +38,40 @@ class WikidataAPI:
         # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
         best_statement = max(data['P18'], key=lambda statement: statement['rank'])
 
-        sanitized_name = best_statement['value']['content'].replace(' ', '_')
+        file_name = best_statement['value']['content']
+        sanitized_name = file_name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
-        resource_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
-        return RedirectResponse(resource_url)
+        thumbnail_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
+        view_url = f"https://www.wikidata.org/wiki/{id}#/media/File:{sanitized_name}"
+        file_attribution = await self.wikimedia_file_attribution(file_name)
+        return {
+            'file_name': sanitized_name,
+            'view_url': view_url,
+            'thumbnail_url': thumbnail_url,
+            'file_attribution': file_attribution,
+        }
+
+    async def wikimedia_file_attribution(self, file_name):
+        url = "https://www.wikidata.org/w/api.php"
+        params = {
+            'action': 'query',
+            'prop': 'imageinfo',
+            'iiprop': 'extmetadata',
+            'titles': f'File:{file_name}',
+            'format': 'json',
+        }
+        response = await self.http_client.get(url, params=params)
+        if not response:
+            return Response(content='No response from Wikidata API', status_code=404, media_type='text/plain')
+        if response.status_code != 200:
+            return Response(content=f"Response from Wikidata API had status {response.status_code}", status_code=404, media_type='text/plain')
+
+        data = response.json()
+        print(data)
+        metadata = data['query']['pages']['-1']['imageinfo'][0]['extmetadata']
+        return {
+            'attribution': metadata['Attribution']['value'],
+            'license': metadata['LicenseShortName']['value'],
+            'license_url': metadata['LicenseUrl']['value'],
+        }
