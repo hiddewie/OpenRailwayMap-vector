@@ -61,17 +61,33 @@ class WikidataAPI:
             'titles': f'File:{file_name}',
             'format': 'json',
         }
+
         response = await self.http_client.get(url, params=params)
         if not response:
-            return Response(content='No response from Wikidata API', status_code=404, media_type='text/plain')
+            return None
         if response.status_code != 200:
-            return Response(content=f"Response from Wikidata API had status {response.status_code}", status_code=404, media_type='text/plain')
+            return None
 
         data = response.json()
-        print(data)
+        if not data:
+            return None
+
+        if not data['query'] \
+            or not data['query']['pages'] \
+            or not data['query']['pages']['-1'] \
+            or not data['query']['pages']['-1']['imageinfo'] \
+            or len(data['query']['pages']['-1']['imageinfo']) == 0 \
+            or not data['query']['pages']['-1']['imageinfo'][0]['extmetadata']:
+            return None
+
         metadata = data['query']['pages']['-1']['imageinfo'][0]['extmetadata']
+
+        attribution = metadata['Attribution'] and metadata['Attribution']['value'] or None
+        license = metadata['LicenseShortName'] and metadata['LicenseShortName']['value'] or None
+        license_url = metadata['LicenseUrl'] and metadata['LicenseUrl']['value'] or None
+
         return {
-            'attribution': metadata['Attribution']['value'],
-            'license': metadata['LicenseShortName']['value'],
-            'license_url': metadata['LicenseUrl']['value'],
+            'attribution': attribution,
+            'license': license,
+            'license_url': license_url,
         }
