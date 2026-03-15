@@ -454,10 +454,21 @@ body {
   padding-right: 5px;
   font-size: .7rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 3px;
+}
+.maplibregl-popup-content .popup-image-attribution:hover {
+  background: black;
+}
+.maplibregl-popup-content .popup-image-attribution .popup-image-attribution-copyright {
+  font-weight: bold;
+  font-size: 1rem;
 }
 .maplibregl-popup-content .popup-image-attribution a {
   color: white;
+}
+.maplibregl-popup-content .popup-image-attribution.collapsed .hide-collapsed {
+  display: none;
 }
 
 input[type=url] {

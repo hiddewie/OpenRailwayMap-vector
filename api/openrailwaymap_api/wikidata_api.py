@@ -44,12 +44,15 @@ class WikidataAPI:
 
         thumbnail_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
         view_url = f"https://www.wikidata.org/wiki/{id}#/media/File:{sanitized_name}"
-        file_attribution = await self.wikimedia_file_attribution(file_name)
+        attribution, license, license_url, image_description = await self.wikimedia_file_attribution(file_name)
         return {
             'file_name': sanitized_name,
+            'description': image_description,
             'view_url': view_url,
             'thumbnail_url': thumbnail_url,
-            'file_attribution': file_attribution,
+            'attribution': attribution,
+            'license': license,
+            'license_url': license_url,
         }
 
     async def wikimedia_file_attribution(self, file_name):
@@ -85,9 +88,6 @@ class WikidataAPI:
         attribution = metadata['Attribution'] and metadata['Attribution']['value'] or None
         license = metadata['LicenseShortName'] and metadata['LicenseShortName']['value'] or None
         license_url = metadata['LicenseUrl'] and metadata['LicenseUrl']['value'] or None
+        image_description = metadata['ImageDescription'] and metadata['ImageDescription']['value'] or None
 
-        return {
-            'attribution': attribution,
-            'license': license,
-            'license_url': license_url,
-        }
+        return attribution, license, license_url, image_description
