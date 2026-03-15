@@ -4509,7 +4509,7 @@ features:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'left', value: 'etcs/stop_marker-right' }
-          - { exact: 'overhead', value: 'etcs/stop_marker-down' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
         default: 'etcs/stop_marker-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
@@ -4521,7 +4521,7 @@ features:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'left', value: 'etcs/location_marker-right' }
-          - { exact: 'overhead', value: 'etcs/location_marker-down' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
         default: 'etcs/location_marker-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
