@@ -110,7 +110,7 @@ async def wikidata(
         file_name: str
 ):
     api = WikidataAPI(app.state.http_client)
-    return await api.wikimedia_commons_image(file_name=file_name)
+    return await api.wikimedia_commons_file(file_name=file_name)
 
 
 @app.get("/api/route/{osm_id}")

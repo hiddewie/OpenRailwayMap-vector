@@ -2,6 +2,7 @@ import hashlib
 
 from fastapi import Response
 from fastapi.responses import RedirectResponse
+from urllib.parse import quote
 
 
 class WikidataAPI:
@@ -12,15 +13,18 @@ class WikidataAPI:
         file_name, error = await self.wikidata_image_file(id)
         if error:
             return Response(content=error, status_code=404, media_type='text/plain')
-        return await self.wikimedia_commons_image(file_name=file_name)
+        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://www.wikidata.org/wiki/{id}')
 
-    async def wikimedia_commons_image(self, *, file_name):
+    async def wikimedia_commons_file(self, *, file_name):
+        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}')
+
+    async def wikimedia_commons_image(self, *, file_name, base_view_url):
         sanitized_name = file_name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
         thumbnail_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
 
-        view_url = f"https://www.wikidata.org/wiki/{id}#/media/File:{sanitized_name}"
+        view_url = f"{base_view_url}#/media/File:{sanitized_name}"
         attribution, license, license_url, image_description = await self.wikimedia_file_attribution(file_name)
         return {
             'file_name': sanitized_name,
