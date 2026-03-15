@@ -51,15 +51,15 @@ class WikidataAPI:
         if not data:
             return None, 'No response body from Wikidata API'
 
-        if not data['P18'] \
-            or not data['P18'][0]:
+        image_statements = self.dig(data, ['P18', 0])
+        if not image_statements:
             return None, 'Image statements (P18) not found in Wikidata response'
 
         for statement in data['P18']:
-            if not statement \
-                or not statement['rank'] \
-                or not statement['value'] \
-                or not statement['value']['content']:
+            statement_rank = self.dig(statement, ['rank'])
+            statement_content = self.dig(statement, ['value', 'content'])
+
+            if not statement_rank or not statement_content:
                 return None, 'Invalid image statement (P18) in Wikidata response'
 
         # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
@@ -79,27 +79,37 @@ class WikidataAPI:
 
         response = await self.http_client.get(url, params=params)
         if not response:
-            return None
+            return None, None, None, None
         if response.status_code != 200:
-            return None
+            return None, None, None, None
 
         data = response.json()
-        if not data:
+
+        metadata = self.dig(data, ['query', 'pages', '-1', 'imageinfo', 0, 'extmetadata'])
+        if not metadata:
+            return None, None, None, None
+
+        return \
+            self.dig(metadata, ['Attribution', 'value']), \
+                self.dig(metadata, ['LicenseShortName', 'value']), \
+                self.dig(metadata, ['LicenseUrl', 'value']), \
+                self.dig(metadata, ['ImageDescription', 'value'])
+
+    def dig(self, item, path):
+        print(item, path, type(item))
+        if not item:
             return None
-
-        if not data['query'] \
-            or not data['query']['pages'] \
-            or not data['query']['pages']['-1'] \
-            or not data['query']['pages']['-1']['imageinfo'] \
-            or len(data['query']['pages']['-1']['imageinfo']) == 0 \
-            or not data['query']['pages']['-1']['imageinfo'][0]['extmetadata']:
+        if len(path) == 0:
+            return item
+        if type(item) == dict:
+            if path[0] in item:
+                return self.dig(item[path[0]], path[1:])
+            else:
+                return None
+        if type(item) == list and type(path[0]) == int:
+            if len(item) > path[0]:
+                return self.dig(item[path[0]], path[1:])
+            else:
+                return None
+        else:
             return None
-
-        metadata = data['query']['pages']['-1']['imageinfo'][0]['extmetadata']
-
-        attribution = metadata['Attribution']['value'] if 'Attribution' in metadata and 'value' in metadata['Attribution'] else None
-        license = metadata['LicenseShortName']['value'] if 'LicenseShortName' in metadata and 'value' in metadata['LicenseShortName'] else None
-        license_url = metadata['LicenseUrl']['value'] if 'LicenseUrl' in metadata and 'value' in metadata['LicenseUrl'] else None
-        image_description = metadata['ImageDescription']['value'] if 'ImageDescription' in metadata and 'value' in metadata['ImageDescription'] else None
-
-        return attribution, license, license_url, image_description
