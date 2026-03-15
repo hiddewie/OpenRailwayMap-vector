@@ -346,6 +346,9 @@ const stationFeatures = {
     operator: {
       name: 'Operator',
     },
+    owner: {
+      name: 'Owner',
+    },
     network: {
       name: 'Network',
     },
