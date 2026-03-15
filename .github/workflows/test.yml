@@ -102,7 +102,7 @@ jobs:
 
       - name: Run API tests
         run: |
-          docker compose up --no-deps api-test
+          docker compose run --no-deps api-test
 
       - name: Start tile server
         run: |

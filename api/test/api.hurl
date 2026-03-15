@@ -19,13 +19,13 @@ Content-Type: application/json
 jsonpath "$" count == 20
 jsonpath "$[0].name" == "Berlin Hauptbahnhof (tief)"
 jsonpath "$[1].name" == "S+U Hauptbahnhof"
-jsonpath "$[2].name" == "Berlin Hauptbahnhof"
-jsonpath "$[3].name" == "Hauptbahnhof"
+jsonpath "$[2].name" == "Hauptbahnhof"
+jsonpath "$[3].name" == "Berlin Hauptbahnhof"
 jsonpath "$[4].name" == "Berlin Hamburger und Lehrter Bahnhof"
 jsonpath "$[5].name" == "Berlin-Moabit"
 jsonpath "$[6].name" == "Berlin Südkreuz"
-jsonpath "$[7].name" == "Südkreuz (Ringbahn)"
-jsonpath "$[8].name" == "Südkreuz (Nord-Süd)"
+jsonpath "$[7].name" == "Südkreuz (Nord-Süd)"
+jsonpath "$[8].name" == "Südkreuz (Ringbahn)"
 jsonpath "$[9].name" == "Berlin Nordost"
 jsonpath "$[10].name" == "Berlin-Ruhleben"
 jsonpath "$[11].name" == "Berlin Greifswalder Straße"
@@ -35,8 +35,8 @@ jsonpath "$[14].name" == "Berlin-Spandau"
 jsonpath "$[15].name" == "Spandau"
 jsonpath "$[16].name" == "Berlin-Tempelhof"
 jsonpath "$[17].name" == "Berlin-Schönholz"
-jsonpath "$[18].name" == "Ostbahnhof"
-jsonpath "$[19].name" == "Berlin Ostbahnhof"
+jsonpath "$[18].name" == "Berlin Ostbahnhof"
+jsonpath "$[19].name" == "Ostbahnhof"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -184,7 +184,7 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Virchowstraße"
-jsonpath "$[0].references.BVG" == "309771"
+jsonpath "$[0].references.de-bvg" == "309771"
 
 # Facility search for name or reference
 GET {{base_url}}/facility
@@ -401,3 +401,36 @@ Content-Type: application/geo+json
 [Asserts]
 jsonpath "$.type" == "FeatureCollection"
 jsonpath "$.features" count == 0
+
+# Non existing WikiData image
+GET {{base_url}}/wikidata/Q0
+HTTP 404
+Content-Type: text/plain; charset=utf-8
+[Asserts]
+body == "Response from Wikidata API had status 400"
+
+# WikiData image with metadata
+GET {{base_url}}/wikidata/Q660045
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.file_name" == "2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.description" == "Berlin, <a href=\"https://en.wikipedia.org/wiki/Ostkreuz\" class=\"extiw\" title=\"en:Ostkreuz\">Ostkreuz</a>"
+jsonpath "$.view_url" == "https://www.wikidata.org/wiki/Q660045#/media/File:2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg/330px-2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.attribution" == "Wo st 01 / Wikimedia Commons"
+jsonpath "$.license" == "CC BY-SA 3.0 de"
+jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+
+# WikiMedia image with metadata
+GET {{base_url}}/wikimedia/U-Bahnhof%20Wuhletal.jpg
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.file_name" == "U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.description" == "U-Bahnhof Wuhletal (station du métro de Berlin, Allemagne)"
+jsonpath "$.view_url" == "https://commons.wikimedia.org/wiki/File:U-Bahnhof%20Wuhletal.jpg#/media/File:U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/U-Bahnhof_Wuhletal.jpg/330px-U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.attribution" == "Molgreen, Own work"
+jsonpath "$.license" == "CC BY-SA 4.0"
+jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
