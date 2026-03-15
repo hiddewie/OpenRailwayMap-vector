@@ -1,6 +1,8 @@
+import hashlib
+
 from fastapi import Response
 from fastapi.responses import RedirectResponse
-import hashlib
+
 
 class WikidataAPI:
     def __init__(self, http_client):
@@ -9,10 +11,10 @@ class WikidataAPI:
     async def __call__(self, *, id):
         url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{id}/statements"
         params = {
-          'property': 'P18',
+            'property': 'P18',
         }
         headers = {
-          'accept': 'application/json',
+            'accept': 'application/json',
         }
         response = await self.http_client.get(url, params=params, headers=headers)
         if not response:
@@ -85,9 +87,9 @@ class WikidataAPI:
 
         metadata = data['query']['pages']['-1']['imageinfo'][0]['extmetadata']
 
-        attribution = metadata['Attribution'] and metadata['Attribution']['value'] or None
-        license = metadata['LicenseShortName'] and metadata['LicenseShortName']['value'] or None
-        license_url = metadata['LicenseUrl'] and metadata['LicenseUrl']['value'] or None
-        image_description = metadata['ImageDescription'] and metadata['ImageDescription']['value'] or None
+        attribution = metadata['Attribution']['value'] if 'Attribution' in metadata and 'value' in metadata['Attribution'] else None
+        license = metadata['LicenseShortName']['value'] if 'LicenseShortName' in metadata and 'value' in metadata['LicenseShortName'] else None
+        license_url = metadata['LicenseUrl']['value'] if 'LicenseUrl' in metadata and 'value' in metadata['LicenseUrl'] else None
+        image_description = metadata['ImageDescription']['value'] if 'ImageDescription' in metadata and 'value' in metadata['ImageDescription'] else None
 
         return attribution, license, license_url, image_description

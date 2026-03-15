@@ -461,6 +461,10 @@ body {
   background: black;
 }
 .maplibregl-popup-content .popup-image-attribution .popup-image-attribution-copyright {
+  padding-right: 3px;
+  padding-left: 3px;
+  margin-right: -3px;
+  margin-left: -3px;
   font-weight: bold;
   font-size: 1rem;
 }
