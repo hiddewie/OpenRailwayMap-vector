@@ -100,7 +100,7 @@ class WikidataAPI:
         credit = self.dig(metadata, ['Credit', 'value'])
 
         # Attribution overrides artist + credit
-        resolved_attribution = attribution or ' — '.join(item for item in [artist, credit] if item)
+        resolved_attribution = attribution or ', '.join(item for item in [artist, credit] if item)
 
         return \
             strip_tags(resolved_attribution), \
