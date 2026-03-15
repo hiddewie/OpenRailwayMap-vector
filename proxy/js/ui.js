@@ -2462,12 +2462,13 @@ function popupContent(feature, abortController) {
   if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
     const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
-    if (properties.wikidata) {
-      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-      popupImageLink.target = '_blank'
-
+    // Reused for both WikiData and WikiMedia Commons images
+    const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      fetch(`/api/wikidata/${encodeURIComponent(properties.wikidata)}`, {
+      popupImage.style.display = 'none' // Do not display images that cannot load
+      popupImage.onload = () => popupImage.style.display = 'block'
+
+      fetch(imageMetadataUrl, {
         signal: abortController.signal,
       })
         .then(response => response.json())
@@ -2512,33 +2513,27 @@ function popupContent(feature, abortController) {
             // Ignore aborted request errors
           }
         });
+    }
 
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
+    if (properties.wikidata) {
+      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+      popupImageLink.target = '_blank'
+
+      fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
     }
 
     if (properties.wikimedia_commons_file) {
-      const sanitizedName = properties.wikimedia_commons_file.replaceAll(' ', '_');
-      const nameHash = MD5(sanitizedName)
-      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(properties.wikimedia_commons_file)}#/media/File:${encodeURIComponent(properties.wikimedia_commons_file)}`
+      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
 
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = wikimediaUrl
-      popupImage.title = properties.wikimedia_commons_file
-      popupImage.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
+      fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
     }
 
     if (properties.image) {
       const popupImageLink = createDomElement('a', undefined, popupImageContainer);
       popupImageLink.href = properties.image
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Image: ${properties.image}`
+      popupImageLink.title = `Image: ${properties.image}`
 
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = properties.image

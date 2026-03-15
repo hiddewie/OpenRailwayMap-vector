@@ -8,43 +8,18 @@ class WikidataAPI:
     def __init__(self, http_client):
         self.http_client = http_client
 
-    async def __call__(self, *, id):
-        url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{id}/statements"
-        params = {
-            'property': 'P18',
-        }
-        headers = {
-            'accept': 'application/json',
-        }
-        response = await self.http_client.get(url, params=params, headers=headers)
-        if not response:
-            return Response(content='No response from Wikidata API', status_code=404, media_type='text/plain')
-        if response.status_code != 200:
-            return Response(content=f"Response from Wikidata API had status {response.status_code}", status_code=404, media_type='text/plain')
+    async def wikidata_image(self, *, id):
+        file_name, error = await self.wikidata_image_file(id)
+        if error:
+            return Response(content=error, status_code=404, media_type='text/plain')
+        return await self.wikimedia_commons_image(file_name=file_name)
 
-        data = response.json()
-        if not data:
-            return Response(content='No response body from Wikidata API', status_code=404, media_type='text/plain')
-
-        if not data['P18'] \
-            or not data['P18'][0]:
-            return Response(content='Image statements (P18) not found in Wikidata response', status_code=404, media_type='text/plain')
-
-        for statement in data['P18']:
-            if not statement \
-                or not statement['rank'] \
-                or not statement['value'] \
-                or not statement['value']['content']:
-                return Response(content='Invalid image statement (P18) in Wikidata response', status_code=404, media_type='text/plain')
-
-        # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
-        best_statement = max(data['P18'], key=lambda statement: statement['rank'])
-
-        file_name = best_statement['value']['content']
+    async def wikimedia_commons_image(self, *, file_name):
         sanitized_name = file_name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
         thumbnail_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
+
         view_url = f"https://www.wikidata.org/wiki/{id}#/media/File:{sanitized_name}"
         attribution, license, license_url, image_description = await self.wikimedia_file_attribution(file_name)
         return {
@@ -56,6 +31,41 @@ class WikidataAPI:
             'license': license,
             'license_url': license_url,
         }
+
+    async def wikidata_image_file(self, id):
+        url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{id}/statements"
+        params = {
+            'property': 'P18',
+        }
+        headers = {
+            'accept': 'application/json',
+        }
+        response = await self.http_client.get(url, params=params, headers=headers)
+        if not response:
+            return None, 'No response from Wikidata API'
+
+        if response.status_code != 200:
+            return None, f"Response from Wikidata API had status {response.status_code}"
+
+        data = response.json()
+        if not data:
+            return None, 'No response body from Wikidata API'
+
+        if not data['P18'] \
+            or not data['P18'][0]:
+            return None, 'Image statements (P18) not found in Wikidata response'
+
+        for statement in data['P18']:
+            if not statement \
+                or not statement['rank'] \
+                or not statement['value'] \
+                or not statement['value']['content']:
+                return None, 'Invalid image statement (P18) in Wikidata response'
+
+        # 'preferred' > 'normal' > 'deprecated' both as strings and as ranks
+        best_statement = max(data['P18'], key=lambda statement: statement['rank'])
+
+        return best_statement['value']['content'], None
 
     async def wikimedia_file_attribution(self, file_name):
         url = "https://www.wikidata.org/w/api.php"
