@@ -434,10 +434,30 @@ body {
   width: 1.4rem;
   margin-right: 0.5rem;
 }
+.maplibregl-popup-content a.popup-image-link {
+  position: relative;
+  display: block;
+}
 .maplibregl-popup-content img.popup-image {
   margin: 0 -10px;
   width: calc(100% + 20px);
   height: auto;
+}
+.maplibregl-popup-content .popup-image-attribution {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0 -10px;
+  background: rgba(0,0,0,.5);
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: .7rem;
+  display: flex;
+  gap: 3px;
+}
+.maplibregl-popup-content .popup-image-attribution a {
+  color: white;
 }
 
 input[type=url] {

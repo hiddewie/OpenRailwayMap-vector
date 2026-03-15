@@ -2463,10 +2463,8 @@ function popupContent(feature, abortController) {
     const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
     if (properties.wikidata) {
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://www.wikidata.org/wiki/${encodeURIComponent(properties.wikidata)}`
+      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikidata: ${properties.wikidata}`
 
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       fetch(`/api/wikidata/${encodeURIComponent(properties.wikidata)}`, {
@@ -2474,16 +2472,31 @@ function popupContent(feature, abortController) {
       })
         .then(response => response.json())
         .then(data => {
+          // TODO ImageDescription
           const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}`
 
           popupImage.src = data.thumbnail_url
           popupImage.title = description
           popupImage.alt = description
+
+          popupImageLink.href = data.view_url
+          popupImageLink.title = description
+
+          const popupImageAttribution = createDomElement('span', 'popup-image-attribution', popupImageLink);
+          const popupImageAttributionCopyRight = createDomElement('span', undefined, popupImageAttribution);
+          popupImageAttributionCopyRight.innerText = '©';
+          const popupImageAttributionLicense = createDomElement('a', undefined, popupImageAttribution);
+          popupImageAttributionLicense.href = data.file_attribution.license_url;
+          popupImageAttributionLicense.target = '_blank';
+          popupImageAttributionLicense.innerText = data.file_attribution.license;
+          const popupImageAttributionAttribution = createDomElement('span', undefined, popupImageAttribution);
+          popupImageAttributionAttribution.innerText = data.file_attribution.attribution;
         })
         .catch(err => {
-          // Ignore aborted request errors
           if (!abortController.signal.aborted) {
             console.error('Error while fetching popup image', err);
+          } else {
+            // Ignore aborted request errors
           }
         });
 
