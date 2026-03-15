@@ -96,7 +96,6 @@ class WikidataAPI:
                 self.dig(metadata, ['ImageDescription', 'value'])
 
     def dig(self, item, path):
-        print(item, path, type(item))
         if not item:
             return None
         if len(path) == 0:
