@@ -93,8 +93,15 @@ class WikidataAPI:
         if not metadata:
             return None, None, None, None
 
+        attribution = self.dig(metadata, ['Attribution', 'value'])
+        artist = self.dig(metadata, ['Artist', 'value'])
+        credit = self.dig(metadata, ['Credit', 'value'])
+
+        # Attribution overrides artist + credit
+        resolved_attribution = attribution or ' — '.join(item for item in [artist, credit] if item)
+
         return \
-            self.dig(metadata, ['Attribution', 'value']), \
+            resolved_attribution, \
                 self.dig(metadata, ['LicenseShortName', 'value']), \
                 self.dig(metadata, ['LicenseUrl', 'value']), \
                 self.dig(metadata, ['ImageDescription', 'value'])
