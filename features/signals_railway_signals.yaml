@@ -4493,6 +4493,66 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
+  # --- ETCS --- #
+
+  # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
+
+  - description: Distant begin of neutral section
+    icon: [ default: 'etcs/power_off_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Begin of neutral section
+    icon: [ default: 'etcs/power_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: End of Neutral section
+    icon: [ default: 'etcs/power_on' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Distant Lower pantograph
+    icon: [ default: 'etcs/pantograph_down_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Lower pantograph
+    icon: [ default: 'etcs/pantograph_down' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Raise pantograph
+    icon: [ default: 'etcs/pantograph_up' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Distant end of catenary
+    icon: [ default: 'etcs/end_of_catenary_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary_advance' }
+
+  - description: End of catenary
+    icon: [ default: 'etcs/end_of_catenary' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
   # --- FI --- #
 
   - description: Balise
@@ -6039,7 +6099,7 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
-  
+
   - description: Engineering Stop board
     country: GB
     icon: [ default: 'gb/stop-octagon' ]
