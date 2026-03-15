@@ -1,8 +1,10 @@
 import hashlib
+from html.parser import HTMLParser
+from io import StringIO
+from urllib.parse import quote
 
 from fastapi import Response
 from fastapi.responses import RedirectResponse
-from urllib.parse import quote
 
 
 class WikidataAPI:
@@ -101,7 +103,7 @@ class WikidataAPI:
         resolved_attribution = attribution or ' — '.join(item for item in [artist, credit] if item)
 
         return \
-            resolved_attribution, \
+            strip_tags(resolved_attribution), \
                 self.dig(metadata, ['LicenseShortName', 'value']), \
                 self.dig(metadata, ['LicenseUrl', 'value']), \
                 self.dig(metadata, ['ImageDescription', 'value'])
@@ -123,3 +125,28 @@ class WikidataAPI:
                 return None
         else:
             return None
+
+
+# Taken from https://stackoverflow.com/a/925630/711129
+class MLStripper(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.strict = False
+        self.convert_charrefs = True
+        self.text = StringIO()
+
+    def handle_data(self, d):
+        self.text.write(d)
+
+    def get_data(self):
+        return self.text.getvalue()
+
+
+def strip_tags(html):
+    if not html:
+        return None
+
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()
