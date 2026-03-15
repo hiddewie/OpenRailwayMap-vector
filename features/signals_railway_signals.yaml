@@ -4505,14 +4505,24 @@ features:
       - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
 
   - description: ETCS stop marker
-    icon: [ default: 'etcs/stop_marker' ]
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { exact: 'overhead', value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
       - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
       - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
 
   - description: ETCS location marker
-    icon: [ default: 'etcs/location_marker' ]
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/location_marker-right' }
+          - { exact: 'overhead', value: 'etcs/location_marker-down' }
+        default: 'etcs/location_marker-left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
       - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
