@@ -158,6 +158,8 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:train_protection:main:caption']
+    or tags['railway:signal:train_protection:system_change:caption']
     or tags['railway:signal:slope:caption']
     or tags['railway:signal:radio:frequency']
 end
