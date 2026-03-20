@@ -115,7 +115,7 @@ const colors = {
   signals: {
     direction: themeSwitch('#a8d8bcff', '#a8d8bcff'),
   },
-  catenary: themeSwitch('blue', 'blue'),
+  catenary: themeSwitch('blue', '#a7c6fc'),
   substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 25%)'),
   substationText: themeSwitch('hsl(152 100% 20.8%)', 'hsl(152 100% 50%)'),
 };
