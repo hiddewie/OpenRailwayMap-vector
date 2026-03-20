@@ -158,6 +158,8 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:train_protection:main:caption']
+    or tags['railway:signal:train_protection:system_change:caption']
     or tags['railway:signal:slope:caption']
     or tags['railway:signal:radio:frequency']
 end
@@ -258,6 +260,7 @@ local stations = osm2pgsql.define_table({
     { column = 'map_reference', type = 'text' },
     { column = 'references', type = 'hstore' },
     { column = 'operator', sql_type = 'text[]' },
+    { column = 'owner', type = 'text' },
     { column = 'network', sql_type = 'text[]' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'yard_purpose', sql_type = 'text[]' },
@@ -1104,6 +1107,7 @@ function osm2pgsql.process_node(object)
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
@@ -1388,6 +1392,7 @@ function osm2pgsql.process_way(object)
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),

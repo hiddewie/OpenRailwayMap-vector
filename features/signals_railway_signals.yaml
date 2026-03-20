@@ -196,6 +196,10 @@ tags:
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
   - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
+  - { tag: 'railway:signal:train_protection:main', title: 'Train protection main' }
+  - { tag: 'railway:signal:train_protection:main:form', title: 'Train protection main form' }
+  - { tag: 'railway:signal:train_protection:system_change', title: 'Train protection system change' }
+  - { tag: 'railway:signal:train_protection:system_change:form', title: 'Train protection system change form' }
   - { tag: 'railway:signal:traversable', title: 'Traversable' }
   - { tag: 'railway:signal:traversable:form', title: 'Traversable form' }
   - { tag: 'railway:signal:traversable:type', title: 'Traversable type' }
@@ -4493,6 +4497,97 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
+  # --- ETCS --- #
+
+  # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
+
+  - description: ETCS transition marker
+    icon: [ default: 'etcs/level_transition' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: ETCS stop marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS location marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/location_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
+        default: 'etcs/location_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: Distant begin of neutral section
+    icon: [ default: 'etcs/power_off_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Begin of neutral section
+    icon: [ default: 'etcs/power_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: End of Neutral section
+    icon: [ default: 'etcs/power_on' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Distant Lower pantograph
+    icon: [ default: 'etcs/pantograph_down_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Lower pantograph
+    icon: [ default: 'etcs/pantograph_down' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Raise pantograph
+    icon: [ default: 'etcs/pantograph_up' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Distant end of catenary
+    icon: [ default: 'etcs/end_of_catenary_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary_advance' }
+
+  - description: End of catenary
+    icon: [ default: 'etcs/end_of_catenary' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
   # --- FI --- #
 
   - description: Balise
@@ -6039,7 +6134,7 @@ features:
     tags:
       - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
-  
+
   - description: Engineering Stop board
     country: GB
     icon: [ default: 'gb/stop-octagon' ]
