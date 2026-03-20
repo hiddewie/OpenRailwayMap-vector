@@ -216,7 +216,7 @@ features:
 
   - train_protection: ctcs
     tags:
-      - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3', '4'] }
+      - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3', '3D', '4'] }
 
   - train_protection: ebicab
     tags:
