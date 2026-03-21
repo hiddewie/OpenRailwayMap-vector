@@ -8015,6 +8015,18 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
       - { tag: 'railway:signal:speed_limit:form', any: [ 'light', 'sign' ] }
 
+  - description: Wskaźnik W21wg
+    country: PL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([58]|15)$', value: 'pl/w21wg-{}', example: 'pl/w21wg-{5}' }
+        default: 'pl/w21wg-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21wg' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
   - description: Wskaźnik zmiany prędkości (W27a)
     country: PL
     type: line
