@@ -44,6 +44,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "uic_ref" text,
   "references" hstore,
   "operator" text[],
+  "owner" text[],
   "network" text[],
   "wikidata" text[],
   "wikimedia_commons" text[],
@@ -72,6 +73,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         b.uic_ref,
         b."references",
         b.operator,
+        b.owner,
         b.network,
         b.wikidata,
         b.wikimedia_commons,
@@ -97,6 +99,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
           a.uic_ref,
           a."references",
           a.operator,
+          a.owner,
           a.network,
           a.wikidata,
           a.wikimedia_commons,
@@ -122,6 +125,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.uic_ref,
             fs."references",
             fs.operator,
+            fs.owner,
             fs.network,
             fs.wikidata,
             fs.wikimedia_commons,
@@ -161,6 +165,7 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
   "uic_ref" text,
   "references" hstore,
   "operator" text[],
+  "owner" text[],
   "network" text[],
   "wikidata" text[],
   "wikimedia_commons" text[],
@@ -186,8 +191,9 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         s.station,
         s.map_reference as railway_ref,
         s."references"->'uic' as uic_ref,
-        hs_concat(sa."references", s."references") as "references",
+        hs_concat(coalesce(sa."references", ''::hstore), coalesce(s."references", ''::hstore)) as "references",
         s.operator AS operator,
+        array_remove(ARRAY[s.owner], null) AS owner,
         s.network AS network,
         array_remove(ARRAY[s.wikidata], null) AS wikidata,
         array_remove(ARRAY[s.wikimedia_commons], null) AS wikimedia_commons,
@@ -217,16 +223,18 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
 
         SELECT s.id
         FROM stop_areas sa
+        JOIN stations_stop_areas ssa
+          ON ssa.stop_area_osm_id = sa.osm_id
         JOIN stations s
-          ON (s.osm_id = ANY(sa.node_ref_ids) AND s.osm_type = 'N')
-            OR (s.osm_id = ANY(sa.way_ref_ids) AND s.osm_type = 'W')
+          ON ssa.station_id = s.id
         WHERE ARRAY[input_ref] <@ avals(sa."references")
       ) station_ids
       JOIN stations s
         ON station_ids.id = s.id
+      LEFT JOIN stations_stop_areas ssa
+        ON ssa.station_id = s.id
       LEFT JOIN stop_areas sa
-        ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-          OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+        ON ssa.stop_area_osm_id = sa.osm_id
       ORDER BY rank DESC
       LIMIT input_limit;
   END

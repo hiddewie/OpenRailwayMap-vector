@@ -33,16 +33,19 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         state,
         id
       FROM stations s
-      left join stop_areas sa
-        ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-          OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      LEFT JOIN stations_stop_areas ssa
+        ON ssa.station_id = s.id
+      LEFT JOIN stop_areas sa
+        ON ssa.stop_area_osm_id = sa.osm_id
       left join (
         select
           sa.osm_id as stop_area_id,
           se.way
         from stop_areas sa
+        join stop_area_entrances sae
+          on sae.stop_area_osm_id = sa.osm_id
         join station_entrances se
-          on array[se.osm_id] <@ sa.node_ref_ids
+          on se.osm_id = sae.entrance_osm_id
 
         union all
 
@@ -50,8 +53,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
           sa.osm_id as stop_area_id,
           pl.way
         from stop_areas sa
+        join stop_area_platforms sap
+          on sap.stop_area_id = sa.osm_id
         join platforms pl
-          on array[pl.osm_id] <@ sa.platform_ref_ids
+          on pl.osm_id = sap.platform_id
       ) q on q.stop_area_id = sa.osm_id
       group by name, station, map_reference, uic_ref, feature, state, id
     ) stations_with_entrances
@@ -68,12 +73,13 @@ CREATE INDEX IF NOT EXISTS stations_clustered_station_ids
 CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
   SELECT
     -- Aggregated station columns
-    array_agg(DISTINCT station_id ORDER BY station_id) as station_ids,
+    array_agg(DISTINCT clustered.station_id ORDER BY clustered.station_id) as station_ids,
     hstore_agg(name_tags) as name_tags,
-    hs_concat(hstore_agg(sa."references"), hstore_agg(s."references")) as "references",
+    hs_concat(coalesce(hstore_agg(sa."references"), ''::hstore), coalesce(hstore_agg(s."references"), ''::hstore)) as "references",
     array_agg(s.osm_id ORDER BY s.osm_id) as osm_ids,
     array_agg(osm_type ORDER BY s.osm_id) as osm_types,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.operator, U&'\001E')), U&'\001E'), U&'\001E'), null) as operator,
+    array_agg(DISTINCT s.owner) as owner,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.network, U&'\001E')), U&'\001E'), U&'\001E'), null) as network,
     array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(s.position, U&'\001E')), U&'\001E'), U&'\001E'), null) as position,
     array_remove(array_agg(DISTINCT s.wikidata ORDER BY s.wikidata), null) as wikidata,
@@ -133,9 +139,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     GROUP BY id
   ) sr
     ON clustered.station_id = sr.id
+  LEFT JOIN stations_stop_areas ssa
+    ON ssa.station_id = s.id
   LEFT JOIN stop_areas sa
-    ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-      OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+    ON ssa.stop_area_osm_id = sa.osm_id
   GROUP BY clustered.id;
 
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
@@ -160,9 +167,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   FROM stop_area_groups sag
   JOIN stop_areas sa
     ON ARRAY[sa.osm_id] <@ sag.stop_area_ref_ids
+  JOIN stations_stop_areas ssa
+     ON ssa.stop_area_osm_id = sa.osm_id
   JOIN stations s
-    ON (s.osm_id = ANY(sa.node_ref_ids) AND s.osm_type = 'N')
-      OR (s.osm_id = ANY(sa.way_ref_ids) AND s.osm_type = 'W')
+    ON ssa.station_id = s.id
   JOIN (
     SELECT
       unnest(osm_ids) AS osm_id,

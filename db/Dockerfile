@@ -1,4 +1,4 @@
-FROM imresamu/postgis:18-3.6-alpine@sha256:93e9dbe9fb7d35b2cabed8e819d385d5b5f1acb516351f5d2c5a240783b75e4f
+FROM imresamu/postgis:18-3.6-alpine@sha256:1bb65bfdeaed8609b93f1d3bc8e2b2ec2d7d7e0fa54770f9f56db0c6c1fc982b
 
 COPY tune-postgis.sh /docker-entrypoint-initdb.d/tune-postgis.sh
 COPY operators.sql /docker-entrypoint-initdb.d/operators.sql

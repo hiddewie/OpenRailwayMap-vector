@@ -1789,7 +1789,6 @@ const legendData = {
       },
       'openrailwaymap_low-railway_line_high': {
         key: [
-          'feature',
           'state',
           'train_protection',
           'train_protection_construction',
@@ -1841,7 +1840,6 @@ const legendData = {
       },
       'high-railway_line_high': {
         key: [
-          'feature',
           'state',
           'train_protection',
           'train_protection_construction',

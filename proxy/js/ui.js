@@ -2258,7 +2258,7 @@ function openJOSM(josmUrl, osmType, osmId) {
     })
   }
 
-function popupContent(feature) {
+function popupContent(feature, abortController) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
   const properties = feature.properties;
@@ -2462,42 +2462,78 @@ function popupContent(feature) {
   if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
     const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
-    if (properties.wikidata) {
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://www.wikidata.org/wiki/${encodeURIComponent(properties.wikidata)}`
-      popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikidata: ${properties.wikidata}`
-
+    // Reused for both WikiData and WikiMedia Commons images
+    const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
-      popupImage.title = properties.wikidata
-      popupImage.alt = `Wikidata: ${properties.wikidata}`
       popupImage.style.display = 'none' // Do not display images that cannot load
       popupImage.onload = () => popupImage.style.display = 'block'
+
+      fetch(imageMetadataUrl, {
+        signal: abortController.signal,
+      })
+        .then(response => response.json())
+        .then(data => {
+          const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
+
+          popupImage.src = data.thumbnail_url
+          popupImage.title = description
+          popupImage.alt = description
+
+          popupImageLink.href = data.view_url
+          popupImageLink.title = description
+
+          if (data.license || data.attribution) {
+            const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
+            const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
+            popupImageAttributionCopyright.innerText = '©';
+            popupImageAttributionCopyright.onclick = e => {
+              e.preventDefault();
+              e.stopPropagation();
+              popupImageAttribution.classList.toggle('collapsed');
+            }
+
+            if (data.license) {
+              const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
+              if (data.license_url) {
+                popupImageAttributionLicense.href = data.license_url;
+                popupImageAttributionLicense.target = '_blank';
+              }
+              popupImageAttributionLicense.innerText = data.license;
+            }
+            if (data.attribution) {
+              const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
+              popupImageAttributionAttribution.innerText = data.attribution;
+            }
+          }
+        })
+        .catch(err => {
+          if (!abortController.signal.aborted) {
+            console.error('Error while fetching popup image', err);
+          } else {
+            // Ignore aborted request errors
+          }
+        });
+    }
+
+    if (properties.wikidata) {
+      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+      popupImageLink.target = '_blank'
+
+      fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
     }
 
     if (properties.wikimedia_commons_file) {
-      const sanitizedName = properties.wikimedia_commons_file.replaceAll(' ', '_');
-      const nameHash = MD5(sanitizedName)
-      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(properties.wikimedia_commons_file)}#/media/File:${encodeURIComponent(properties.wikimedia_commons_file)}`
+      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
 
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = wikimediaUrl
-      popupImage.title = properties.wikimedia_commons_file
-      popupImage.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
+      fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
     }
 
     if (properties.image) {
       const popupImageLink = createDomElement('a', undefined, popupImageContainer);
       popupImageLink.href = properties.image
       popupImageLink.target = '_blank'
-      popupImageLink.alt = `Image: ${properties.image}`
+      popupImageLink.title = `Image: ${properties.image}`
 
       const popupImage = createDomElement('img', 'popup-image', popupImageLink);
       popupImage.src = properties.image
@@ -2523,8 +2559,8 @@ function popupContent(feature) {
         popupValueTitle.innerText = `${title}: `;
 
         let first = true
-        body.forEach(([key, value]) => {
-          if (value) {
+        body.forEach(([key, bodyValue]) => {
+          if (bodyValue) {
             if (first) {
               first = false;
             } else {
@@ -2542,10 +2578,10 @@ function popupContent(feature) {
               popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
               popupValueLink.target = '_blank'
               const popupValueText = createDomElement('span', undefined, popupValueLink);
-              popupValueText.innerText = value;
+              popupValueText.innerText = bodyValue;
             } else {
               const popupValueBody = createDomElement('span', undefined, popupValue);
-              popupValueBody.innerText = value;
+              popupValueBody.innerText = bodyValue;
             }
           }
         })
@@ -2759,10 +2795,15 @@ map.on('click', event => {
       popup.remove();
     }
 
+    const abortController = new AbortController();
     popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setDOMContent(popupContent(feature))
+      .setDOMContent(popupContent(feature, abortController))
       .addTo(map);
+
+    popup.on('close', () => {
+      abortController.abort('Popup closed')
+    })
   }
 });
 
