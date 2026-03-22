@@ -6,13 +6,61 @@ const operators = yaml.parse(fs.readFileSync('operators.yaml', 'utf8'))
 const operatorsByName = operators.operators
   .flatMap(({names, color}) => names.map(name => ({name, color})));
 
+// #ab4
 const rgb = /^#[0-9a-fA-F]{3}/
+// #abcd45
 const rrggbb = /^#[0-9a-fA-F]{6}/
+// rgb(123, 0,255)
 const rgbf = /^rgb\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\)/
+// hsl(123, 0%, 34%)
 const hslf = /^hsl\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|100)%, *([0-9]|[1-9][0-9]|100)%\)/
 
+// Taken from https://stackoverflow.com/a/3943023/711129
+function rgbLuminance(r, g, b) {
+  function coefficient(value) {
+    const c = value / 255.0
+    if (c <= 0.04045) {
+      return c / 12.92
+    } else {
+      return ((c + 0.055) / 1.055) ^ 2.4
+    }
+  }
+
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
+function isBright(luminance) {
+  return luminance >= 0.179
+}
+
 function brightColor(color) {
-  return true;
+  if (color.match(rgb)) {
+    const red = parseInt(color[1] + color[1], 16)
+    const green = parseInt(color[2] + color[2], 16)
+    const blue = parseInt(color[3] + color[3], 16)
+
+    return isBright(rgbLuminance(red, green, blue))
+  } else if (color.match(rrggbb)) {
+    const red = parseInt(color.substring(1, 3), 16)
+    const green = parseInt(color.substring(3, 5), 16)
+    const blue = parseInt(color.substring(5, 7), 16)
+
+    return isBright(rgbLuminance(red, green, blue))
+  } else if (color.match(rgbf)) {
+    const matches = color.match(rgbf);
+    const red = parseInt(matches[1])
+    const green = parseInt(matches[2])
+    const blue = parseInt(matches[3])
+
+    return isBright(rgbLuminance(red, green, blue))
+  } else if (color.match(hslf)) {
+    const matches = color.match(hslf);
+    const luminance = parseInt(matches[3])
+
+    return isBright(luminance)
+  } else {
+    throw new Error(`Could not match color '${color}' against known color patterns`)
+  }
 }
 
 /**
@@ -27,7 +75,7 @@ CREATE OR REPLACE VIEW railway_operator_view AS
     bright
   FROM (VALUES${operatorsByName.map(({name, color}) => `
     ('${name}', '${color}', ${brightColor(color)})`).join(',')}
-  ) operator_data (name, color);
+  ) operator_data (name, color, bright);
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS railway_operator AS
