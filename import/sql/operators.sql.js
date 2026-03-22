@@ -22,11 +22,11 @@ function rgbLuminance(r, g, b) {
     if (c <= 0.04045) {
       return c / 12.92
     } else {
-      return ((c + 0.055) / 1.055) ^ 2.4
+      return Math.pow((c + 0.055) / 1.055, 2.4)
     }
   }
 
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+  return 0.2126 * coefficient(r) + 0.7152 * coefficient(g) + 0.0722 * coefficient(b)
 }
 
 function isBright(luminance) {
