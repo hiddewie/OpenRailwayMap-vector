@@ -60,6 +60,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
       ) as operator_color,
+      coalesce(ro.bright, true) as operator_bright,
       primary_operator,
       owner,
       traffic_mode,
@@ -230,6 +231,7 @@ DO $do$ BEGIN
           "reporting_marks": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
           "traffic_mode": "string",
@@ -287,6 +289,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
       ro.color,
       'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
+    coalesce(ro.bright, true) as operator_bright,
     primary_operator,
     owner,
     rank
@@ -415,6 +418,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       ro.color,
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
     )) as operator_color,
+    any_value(coalesce(ro.bright, true)) as operator_bright,
     nullif(array_to_string(any_value(position), U&'\001E'), '') as position,
     nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
     nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
@@ -474,6 +478,7 @@ RETURN (
       COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       operator,
       operator_color,
+      operator_bright,
       owner,
       network,
       position,
@@ -521,6 +526,7 @@ DO $do$ BEGIN
           "references": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "owner": "string",
           "network": "string",
           "position": "string",
@@ -567,6 +573,7 @@ RETURN (
       COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       operator,
       operator_color,
+      operator_bright,
       owner,
       network,
       position,
@@ -613,6 +620,7 @@ DO $do$ BEGIN
           "references": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "owner": "string",
           "network": "string",
           "position": "string",
@@ -760,6 +768,7 @@ RETURN (
       count,
       operator,
       operator_color,
+      operator_bright,
       owner,
       network,
       position,
@@ -801,6 +810,7 @@ DO $do$ BEGIN
           "references": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "owner": "string",
           "network": "string",
           "position": "string",
@@ -853,6 +863,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
       )) as operator_color,
+      any_value(coalesce(ro.bright, true)) as operator_bright,
       nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') as station_routes,
       nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
       nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
@@ -903,6 +914,7 @@ DO $do$ BEGIN
           "references": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "network": "string",
           "position": "string",
           "station_routes": "string",
@@ -1470,6 +1482,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           ro.color,
           'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
         ) as operator_color,
+        coalesce(ro.bright, true) as operator_bright,
         nullif(array_to_string(position, U&'\001E'), '') as position,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -1501,6 +1514,7 @@ DO $do$ BEGIN
           "name": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "position": "string",
           "wikidata": "string",
           "wikimedia_commons": "string",
@@ -1861,7 +1875,8 @@ RETURN (
       ref,
       standard_label,
       operator,
-      operator_color,
+      any_value(operator_color),
+      any_value(operator_bright),
       primary_operator,
       owner,
       max(rank) as rank
@@ -1872,7 +1887,6 @@ RETURN (
       ref,
       standard_label,
       operator,
-      operator_color,
       primary_operator,
       owner
     ORDER by
@@ -1896,6 +1910,7 @@ DO $do$ BEGIN
           "standard_label": "string",
           "operator": "string",
           "operator_color": "string",
+          "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string"
         }
