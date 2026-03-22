@@ -29,9 +29,9 @@ const colors = {
     halo: themeSwitch('white', 'black'),
   },
   halo: themeSwitch('white', '#333'),
-  haloInverted: themeSwitch('white', '#999'),
+  haloInverted: themeSwitch('white', '#888'),
   iconHalo: themeSwitch('white', '#ccc'),
-  casing: themeSwitch('white', '#555'),
+  casing: themeSwitch('white', '#333'),
   hover: {
     main: themeSwitch('#ff0000', '#ff0000'),
     // High speed lines and 25kV are the hover color by default
