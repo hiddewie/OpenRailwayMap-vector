@@ -7,19 +7,19 @@ const operatorsByName = operators.operators
   .flatMap(({names, color}) => names.map(name => ({name, color})));
 
 // #ab4
-const rgb = /^#[0-9a-fA-F]{3}/
+const rgb = /^#[0-9a-fA-F]{3}$/
 // #abcd45
-const rrggbb = /^#[0-9a-fA-F]{6}/
+const rrggbb = /^#[0-9a-fA-F]{6}$/
 // rgb(123, 0,255)
-const rgbf = /^rgb\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\)/
+const rgbf = /^rgb\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\)$/
 // hsl(123, 0%, 34%)
-const hslf = /^hsl\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|100)%, *([0-9]|[1-9][0-9]|100)%\)/
+const hslf = /^hsl\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|100)%, *([0-9]|[1-9][0-9]|100)%\)$/
 
 // Taken from https://stackoverflow.com/a/3943023/711129
 function rgbLuminance(r, g, b) {
   function coefficient(value) {
     const c = value / 255.0
-    if (c <= 0.04045) {
+    if (c <= 0.03928) {
       return c / 12.92
     } else {
       return Math.pow((c + 0.055) / 1.055, 2.4)
@@ -33,7 +33,7 @@ function isBright(luminance) {
   return luminance >= 0.179
 }
 
-function brightColor(color) {
+function brightColor(name, color) {
   if (color.match(rgb)) {
     const red = parseInt(color[1] + color[1], 16)
     const green = parseInt(color[2] + color[2], 16)
@@ -74,7 +74,7 @@ CREATE OR REPLACE VIEW railway_operator_view AS
     color,
     bright
   FROM (VALUES${operatorsByName.map(({name, color}) => `
-    ('${name}', '${color}', ${brightColor(color)})`).join(',')}
+    ('${name}', '${color}', ${brightColor(name, color)})`).join(',')}
   ) operator_data (name, color, bright);
 
 -- Use the view directly such that the query in the view can be updated
