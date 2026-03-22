@@ -15,7 +15,7 @@ const rgbf = /^rgb\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1
 // hsl(123, 0%, 34%)
 const hslf = /^hsl\(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]), *([0-9]|[1-9][0-9]|100)%, *([0-9]|[1-9][0-9]|100)%\)$/
 
-// Taken from https://stackoverflow.com/a/3943023/711129
+// See https://www.w3.org/WAI/GL/wiki/Relative_luminance and https://beta.stackoverflow.com/q/3942878#3943023
 function rgbLuminance(r, g, b) {
   function coefficient(value) {
     const c = value / 255.0
