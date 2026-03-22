@@ -60,7 +60,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
       ) as operator_color,
-      coalesce(ro.bright, true) as operator_bright,
+      coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
       primary_operator,
       owner,
       traffic_mode,
@@ -289,7 +289,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
       ro.color,
       'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
-    coalesce(ro.bright, true) as operator_bright,
+    coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
     primary_operator,
     owner,
     rank
@@ -418,7 +418,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       ro.color,
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
     )) as operator_color,
-    any_value(coalesce(ro.bright, true)) as operator_bright,
+    any_value(coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189)) as operator_bright,
     nullif(array_to_string(any_value(position), U&'\001E'), '') as position,
     nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
     nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
@@ -863,7 +863,7 @@ RETURN (
         ro.color,
         'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
       )) as operator_color,
-      any_value(coalesce(ro.bright, true)) as operator_bright,
+      any_value(coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189)) as operator_bright,
       nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') as station_routes,
       nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
       nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
@@ -1482,7 +1482,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           ro.color,
           'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
         ) as operator_color,
-        coalesce(ro.bright, true) as operator_bright,
+        coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
         nullif(array_to_string(position, U&'\001E'), '') as position,
         wikimedia_commons,
         wikimedia_commons_file,
