@@ -1875,8 +1875,8 @@ RETURN (
       ref,
       standard_label,
       operator,
-      any_value(operator_color),
-      any_value(operator_bright),
+      any_value(operator_color) as operator_color,
+      any_value(operator_bright) as operator_bright,
       primary_operator,
       owner,
       max(rank) as rank
