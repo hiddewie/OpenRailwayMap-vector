@@ -38,6 +38,7 @@ const links = {
   wikipedia: 'https://wikipedia.org/wiki/%s',
   wikidata: 'https://www.wikidata.org/wiki/%s',
   mapillary: 'https://www.mapillary.com/app/?pKey=%s',
+  telephone: 'tel:%s',
 };
 
 const featureLinks = {
@@ -293,6 +294,10 @@ const poiFeatures = layer => ({
       format: {
         lookup: 'radio',
       },
+    },
+    emergency_phone: {
+      name: 'Emergency phone',
+      link: links.telephone,
     },
     wikidata: {
       name: 'Wikidata',
