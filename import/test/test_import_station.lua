@@ -117,24 +117,26 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
 osm2pgsql.process_node({
   tags = {
     ['proposed:railway'] = 'crossover',
+    ['proposed:name'] = 'name',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'crossover', state = 'proposed', station = 'train', name_tags = {}, references = {} },
+    { feature = 'crossover', state = 'proposed', station = 'train', name = 'name', name_tags = { ['proposed:name'] = 'name' }, references = {} },
   },
 })
 
 osm2pgsql.process_node({
   tags = {
     ['construction:railway'] = 'site',
+    ['construction:name'] = 'name',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'site', state = 'construction', station = 'train', name_tags = {}, references = {} },
+    { feature = 'site', state = 'construction', station = 'train', name = 'name', name_tags = { ['construction:name'] = 'name' }, references = {} },
   },
 })
 
