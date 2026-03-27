@@ -6555,7 +6555,7 @@ features:
 
   - description: Repeated signal
     country: JP
-    icon: [ default: 'jp/main-repeated' ]
+    icon: [ default: 'jp/main_repeated' ]
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'JP:中継信号機' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
