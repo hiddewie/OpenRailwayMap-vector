@@ -9,7 +9,7 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
 
 Start the services with:
-```
+```shell
 docker compose up --build --watch db import martin proxy api
 ```
 

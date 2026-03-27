@@ -1170,6 +1170,13 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Begin CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/begin_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: Begin Single Light Indication
     country: AU
     icon: [ default: 'au/nsw/signs/begin_single_light' ]
@@ -1219,11 +1226,25 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: End CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/end_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: End Signalled Authority
     country: AU
     icon: [ default: 'au/nsw/signs/end_signalled_authority' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_signalled_authority' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Network Control Limit
+    country: AU
+    icon: [ default: 'au/nsw/signs/network_control' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:network_control' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: End Single Light Indication
@@ -1305,11 +1326,19 @@ features:
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
+          - { exact: 'DD', value: 'au/nsw/signs/stop_position/DD' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '10', value: 'au/nsw/signs/stop_position/10' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
           - { exact: '8', value: 'au/nsw/signs/stop_position/8' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '8D', value: 'au/nsw/signs/stop_position/8D' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
@@ -1347,8 +1376,19 @@ features:
         cases:
           - { any: ['2C', 'C2'], value: 'au/nsw/signs/stop_position/2C' }
         position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { any: ['2E', 'E2'], value: 'au/nsw/signs/stop_position/2E' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:stop', value: 'AU:NSW:stop_position' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Safety Runoff Area
+    country: AU
+    icon: [ default: 'au/nsw/signs/safety_overrun' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:safety_overrun' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Stop
@@ -7035,6 +7075,13 @@ features:
     icon: [ default: 'nz/stop_block_entry' ]
     tags:
       - { tag: 'railway:signal:stop', value: 'NZ:stop_block' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop Station Entry
+    country: NZ
+    icon: [ default: 'nz/stop_station_entry' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_station' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Stop Plate
