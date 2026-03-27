@@ -1307,6 +1307,9 @@ function onStyleChange() {
         return next;
       },
     });
+
+    hideSearchResults();
+    routeControl.clearRoute();
   }
 
   if (supportsDate && !dateControl.isShown()) {
