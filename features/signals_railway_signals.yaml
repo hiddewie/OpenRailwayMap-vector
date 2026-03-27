@@ -6556,6 +6556,50 @@ features:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
 
+  # --- JP --- #
+
+  - description: Departure signal
+    country: JP
+    icon: [ default: 'jp/main-departure' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:出発信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Block signal
+    country: JP
+    icon: [ default: 'jp/main-block' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:閉塞信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Station signal
+    country: JP
+    icon: [ default: 'jp/main-station' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:場内信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Shunting signal
+    country: JP
+    icon: [ default: 'jp/shunting' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'JP:入換信号機' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Distant signal
+    country: JP
+    icon: [ default: 'jp/distant' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'JP:遠方信号機' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Repeated signal
+    country: JP
+    icon: [ default: 'jp/main_repeated' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'JP:中継信号機' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
   # --- LU --- #
 
   - description: ESFA
