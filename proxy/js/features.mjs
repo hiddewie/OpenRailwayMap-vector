@@ -288,6 +288,12 @@ const poiFeatures = layer => ({
     position: {
       name: 'Position',
     },
+    radio: {
+      name: 'Radio',
+      format: {
+        lookup: 'radio',
+      },
+    },
     wikidata: {
       name: 'Wikidata',
       link: links.wikidata,
