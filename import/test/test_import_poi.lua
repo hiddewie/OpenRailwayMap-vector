@@ -650,12 +650,13 @@ osm2pgsql.process_way({
   tags = {
     ['railway'] = 'radio',
     ['man_made'] = 'antenna',
+    ['railway:radio'] = 'lte-r',
   },
   as_polygon = as_polygon_mock,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12, way = polygon_way },
+    { feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12, way = polygon_way, radio = 'lte-r' },
   },
 })
 

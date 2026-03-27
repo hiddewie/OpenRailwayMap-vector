@@ -220,6 +220,9 @@ const railwayLineFeatures = {
     },
     radio: {
       name: 'Radio',
+      format: {
+        lookup: 'radio',
+      },
     },
     wikidata: {
       name: 'Wikidata',
@@ -284,6 +287,12 @@ const poiFeatures = layer => ({
     },
     position: {
       name: 'Position',
+    },
+    radio: {
+      name: 'Radio',
+      format: {
+        lookup: 'radio',
+      },
     },
     wikidata: {
       name: 'Wikidata',
@@ -1390,6 +1399,25 @@ const features = {
           [id, {name: description, index}]
         )
     ),
+  },
+  radio: {
+    features: {
+      'gsm-r': {
+        name: 'GSM-R',
+      },
+      'analogue': {
+        name: 'Analogue',
+      },
+      'lte-r': {
+        name: 'LTE-R',
+      },
+      'virve': {
+        name: 'VIRVE',
+      },
+      'trs': {
+        name: 'TRS',
+      },
+    },
   },
 
   boolean: {
