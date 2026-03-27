@@ -1560,7 +1560,10 @@ class SearchControl {
       })),
     };
 
-    this._map.getSource('search').setData(data);
+    const searchSource = this._map && this._map.getSource('search');
+    if (searchSource) {
+      searchSource.setData(data);
+    }
 
     if (results.length > 0) {
       this._container.classList.add('has-results')
