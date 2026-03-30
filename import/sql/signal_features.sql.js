@@ -240,7 +240,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
             ELSE
               ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.layer}', NULL]
         END
-      END as feature_${type.type}`).join(',')}
+      END as feature_${type.type.replaceAll(':', '_')}`).join(',')}
     FROM signals s
     WHERE
       (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
@@ -248,19 +248,22 @@ CREATE OR REPLACE VIEW signal_features_view AS
   ),
   -- Output a feature row for every feature
   signals_with_features_1 AS (
-    ${signals_railway_signals.types.map(type => `
+    ${signals_railway_signals.types.map(type => {
+      const featureType = type.type.replaceAll(':', '_');
+      return `
     SELECT
       signal_id,
-      feature_${type.type}[1] as feature,
-      feature_${type.type}[2] as feature_variable,
-      GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
-      feature_${type.type}[6] as type,
-      feature_${type.type}[7]::boolean as deactivated,
-      feature_${type.type}[8]::signal_layer as layer,
-      feature_${type.type}[9]::INT as rank
+      feature_${featureType}[1] as feature,
+      feature_${featureType}[2] as feature_variable,
+      GREATEST(feature_${featureType}[3]::REAL + feature_${featureType}[4]::REAL, feature_${featureType}[5]::REAL) as icon_height,
+      feature_${featureType}[6] as type,
+      feature_${featureType}[7]::boolean as deactivated,
+      feature_${featureType}[8]::signal_layer as layer,
+      feature_${featureType}[9]::INT as rank
     FROM signals_with_features_0
-    WHERE feature_${type.type} IS NOT NULL
-  `).join(`
+    WHERE feature_${featureType} IS NOT NULL
+  `
+  }).join(`
     UNION ALL
   `)}
     UNION ALL
@@ -275,7 +278,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       NULL as rank
     FROM signals_with_features_0
     WHERE railway = 'signal'
-      AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
+      AND ${signals_railway_signals.types.map(type => `feature_${type.type.replaceAll(':', '_')} IS NULL`).join(' AND ')}
   )
   -- Group features by signal, and aggregate the results
   SELECT
