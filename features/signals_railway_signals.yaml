@@ -1721,6 +1721,53 @@ features:
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
 
+  # --- AU-VIC-signs --- #
+  # --- AU-VIC-signals --- #
+  - description: 3-position main signal (multi-unit over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: 3-position main signal (multi-unit over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'staggered' }
+
+  - description: 3-position main signal (single-light over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main_11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # --- BE --- #
 
   - description: Gradient >=12‰ <18‰
