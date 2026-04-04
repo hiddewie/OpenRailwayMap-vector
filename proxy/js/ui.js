@@ -1450,19 +1450,27 @@ class DateControl {
     this.dateDisplay.max = defaultDate
     this.dateDisplay.step = 1
     this.dateDisplay.onchange = () => {
-      const value = Math.min(
-        this.dateDisplay.max,
-        Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
-      );
-      this.onExternalDateChange(this.allDates.checked ? 'all' : value);
-      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
+      if (this.dateDisplay.type === 'number') {
+        const value = Math.min(
+          this.dateDisplay.max,
+          Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
+        );
+        this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+        this.options.onChange(this.showAllDates ? 'all' : this.showDate);
+      } else {
+        const value = this.dateDisplay.value;
+        if (value === 'present') {
+          this.onExternalDateChange(this.allDates.checked ? 'all' : defaultDate);
+          this.options.onChange(this.showAllDates ? 'all' : defaultDate);
+        }
+      }
     }
     this.dateDisplay.oninput = () => {
-      const value = Math.min(
-        this.dateDisplay.max,
-        Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
-      );
-      this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+      const value = this.dateDisplay.valueAsNumber;
+      if (this.dateDisplay.min <= value && value <= this.dateDisplay.max) {
+        this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+        this.options.onChange(this.allDates.checked ? 'all' : value);
+      }
     }
 
     this.onExternalDateChange(this.options.initialSelection);
@@ -1478,6 +1486,7 @@ class DateControl {
   onExternalDateChange(date) {
     this.showAllDates = date === 'all';
     this.showDate = (date === 'all' ? defaultDate : date) ?? defaultDate;
+    console.info(date, this.showAllDates, this.showDate)
 
     this.updateDisplay();
   }
