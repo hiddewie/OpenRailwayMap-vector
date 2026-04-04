@@ -986,7 +986,7 @@ features:
     country: AU
     icon: [ default: 'au/LightRail/signs/set_route_ACT' ]
     tags:
-      - { tag: 'railway:signal:route', value: 'AU:LightRail:ACT:set_route' }
+      - { tag: 'railway:signal:route', any: ['AU:LightRail:ACT:set_route', 'AU:LightRail:QLD:set_route'] }
       - { tag: 'railway:signal:route:form', value: 'sign' }
 
   - description: Set Route
@@ -1023,6 +1023,147 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:SZ' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  # --- AU-LightRail-signs-VIC --- #
+  - description: Cut Off
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/cut_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:cut_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 5th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_5' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_5' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 4th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_4' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_4' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 3rd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_3' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_3' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 2nd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_2' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_2' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 1st Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_1' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_1' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 50/50
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/5050' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:50/50' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Fouling Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:single_yellow' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Compulsory Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Optional Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_dashed' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_dashed' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Check Point Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_chevron' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_chevron' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (A/Z/W)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:single_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (B/C1/D1)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (C2/D2/E)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/triple_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:triple_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_square' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_square' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs (Long Trams)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_diamond' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_diamond' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Provisional Stop
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/provisional_stop' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:provisional' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: 2nd Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_2' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_2' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud (Signal Operated Points)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1SPI' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1SPI' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
 
   # --- AU-LightRail-Signals --- #
 
