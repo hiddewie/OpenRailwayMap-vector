@@ -1486,7 +1486,6 @@ class DateControl {
   onExternalDateChange(date) {
     this.showAllDates = date === 'all';
     this.showDate = (date === 'all' ? defaultDate : date) ?? defaultDate;
-    console.info(date, this.showAllDates, this.showDate)
 
     this.updateDisplay();
   }
