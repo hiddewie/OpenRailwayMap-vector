@@ -664,7 +664,7 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = dateControl.active ? date : undefined;
+  hashObject.date = dateControl.isActive() ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -1420,11 +1420,9 @@ class DateControl {
     this.allDates.id = 'all-dates'
     this.allDates.type = 'checkbox'
     this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
-    this.allDates.checked = this.options.initialSelection === 'all';
     this.allDates.onchange = () => {
-      this.detectChanges();
-      this.updateDisplay();
-      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
     }
 
     this.label = createDomElement('label', 'all-dates-label hide-mobile-show-desktop', this._container);
@@ -1438,24 +1436,36 @@ class DateControl {
     this.slider.min = 1758
     this.slider.max = defaultDate
     this.slider.step = 1
-    this.slider.valueAsNumber = (this.options.initialSelection === 'all' ? defaultDate : this.options.initialSelection) ?? defaultDate;
-    this.slider.disabled = this.options.initialSelection === 'all';
     this.slider.onchange = () => {
-      this.detectChanges();
-      this.updateDisplay();
-      this.options.onChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
     }
     this.slider.oninput = () => {
-      this.detectChanges();
-      this.updateDisplay();
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
     }
 
-    this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
+    this.dateDisplay = createDomElement('input', 'date-display hide-mobile-show-desktop', this._container);
+    this.dateDisplay.type = 'number'
+    this.dateDisplay.min = 1758
+    this.dateDisplay.max = defaultDate
+    this.dateDisplay.step = 1
+    this.dateDisplay.onchange = () => {
+      const value = Math.min(
+        this.dateDisplay.max,
+        Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
+      );
+      this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
+    }
+    this.dateDisplay.oninput = () => {
+      const value = Math.min(
+        this.dateDisplay.max,
+        Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
+      );
+      this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+    }
 
-    this.active = null;
-
-    this.detectChanges();
-    this.updateDisplay();
+    this.onExternalDateChange(this.options.initialSelection);
 
     return this._container;
   }
@@ -1466,27 +1476,9 @@ class DateControl {
   }
 
   onExternalDateChange(date) {
-    if (date === 'all') {
-      if (this.allDates.checked !== true) {
-        this.allDates.checked = true;
-      }
-      // Leave the date slider value alone
-      if (this.slider.disabled !== true) {
-        this.slider.disabled = true;
-      }
-    } else {
-      if (this.allDates.checked !== false) {
-        this.allDates.checked = false;
-      }
-      if (this.slider.valueAsNumber !== date) {
-        this.slider.valueAsNumber = date ?? defaultDate;
-      }
-      if (this.slider.disabled !== false) {
-        this.slider.disabled = false;
-      }
-    }
+    this.showAllDates = date === 'all';
+    this.showDate = (date === 'all' ? defaultDate : date) ?? defaultDate;
 
-    this.detectChanges();
     this.updateDisplay();
   }
 
@@ -1502,25 +1494,45 @@ class DateControl {
     this._container.style.visibility = 'hidden'
   }
 
-  detectChanges() {
-    const previouslyActive = this.active;
-    this.active = this.allDates.checked || this.slider.valueAsNumber !== defaultDate;
-
-    if (this.active === true && previouslyActive !== true) {
-      this.icon.classList.add('active')
-      this.dateDisplay.classList.add('active')
-    } else if (this.active === false && previouslyActive !== false) {
-      this.icon.classList.remove('active')
-      this.dateDisplay.classList.remove('active')
-    }
+  isActive() {
+    return this.showAllDates || (this.showDate ?? defaultDate) !== defaultDate;
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.allDates.checked
-      ? 'all'
-      : this.slider.valueAsNumber === defaultDate
-        ? 'present'
-        : this.slider.value;
+    if (this.isActive()) {
+      this.icon.classList.add('active')
+      this.dateDisplay.classList.add('active')
+    } else {
+      this.icon.classList.remove('active')
+      this.dateDisplay.classList.remove('active')
+    }
+
+    if (this.showAllDates) {
+      this.allDates.checked = true;
+      this.slider.disabled = true;
+      // Leave the date slider value alone
+      this.dateDisplay.disabled = true;
+    } else {
+      this.allDates.checked = false;
+      this.slider.disabled = false;
+      this.slider.valueAsNumber = this.showDate ?? defaultDate;
+      this.slider.disabled = false;
+      this.dateDisplay.disabled = false;
+    }
+
+    if (this.showAllDates) {
+      this.dateDisplay.type = 'text'
+      this.dateDisplay.value = 'all';
+      this.dateDisplay.disabled = true;
+    } else if (this.showDate === defaultDate) {
+      this.dateDisplay.type = 'text'
+      this.dateDisplay.value = 'present';
+      this.dateDisplay.disabled = true;
+    } else {
+      this.dateDisplay.type = 'number'
+      this.dateDisplay.value = this.showDate;
+      this.dateDisplay.disabled = false;
+    }
   }
 }
 
