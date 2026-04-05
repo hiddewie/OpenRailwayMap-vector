@@ -5,6 +5,7 @@ import sys
 
 import asyncpg
 from fastapi import FastAPI, Query, Response, HTTPException
+from fastapi.staticfiles import StaticFiles
 
 import httpx
 
@@ -57,12 +58,12 @@ app = FastAPI(
     title="OpenRailwayMap API",
     lifespan=lifespan,
 )
+app.mount("/api/features", StaticFiles(directory="static"), name="static")
 
 DEFAULT_FACILITY_LIMIT = 20
 DEFAULT_MILESTONE_LIMIT = 2
 MIN_LIMIT = 1
 MAX_LIMIT = 200
-
 
 @app.get("/api/status")
 async def status():

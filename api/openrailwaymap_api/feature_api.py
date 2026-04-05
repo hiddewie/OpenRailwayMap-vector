@@ -1,47 +1,23 @@
+import json
+
+with open('static/features.json', 'r') as features_file:
+    features = json.load(features_file)
+
 class FeatureAPI:
     def __init__(self, database):
         self.database = database
 
     async def __call__(self, *, source, layer, id):
+        # TODO make this work for all sources and layers
         if source == 'openrailwaymap_signals':
             if layer == 'signals_railway_signals':
                 return await self.signal_data(id)
         return None
 
-    # TODO merge this query and metadata with the features.json file
     async def signal_data(self, id):
-        # TODO:
-        #   ${signals_railway_signals.tags.map(tag => `
-        #       ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-        sql_query = """
-            SELECT
-                osm_id,
-                direction_both,
-                ref,
-                caption,
-                railway,
-                position,
-                wikidata,
-                wikimedia_commons,
-                wikimedia_commons_file,
-                image,
-                mapillary,
-                wikipedia,
-                note,
-                description,
-                feature0,
-                feature1,
-                feature2,
-                feature3,
-                feature4,
-                feature5,
-                deactivated0,
-                deactivated1,
-                deactivated2,
-                deactivated3,
-                deactivated4,
-                deactivated5,
-                type
+        properties = features['openrailwaymap_signals-signals_railway_signals']['properties'].keys()
+        sql_query = f"""
+            SELECT {', '.join(f'"{property}"' for property in properties)}
             FROM signals_railway_signals_view 
             WHERE id = $1::numeric 
         """

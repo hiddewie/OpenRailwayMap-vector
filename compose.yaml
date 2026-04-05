@@ -107,7 +107,7 @@ services:
 
   api:
     build:
-      context: api
+      dockerfile: api.Dockerfile
     depends_on:
       db:
         condition: service_healthy
