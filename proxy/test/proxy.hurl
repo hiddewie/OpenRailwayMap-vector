@@ -86,11 +86,6 @@ GET {{base_url}}/sdf_sprite/symbols.json
 HTTP 200
 Content-Type: application/json
 
-# Features
-GET {{base_url}}/features.json
-HTTP 200
-Content-Type: application/json
-
 # JOSM preset
 GET {{base_url}}/preset.zip
 HTTP 200

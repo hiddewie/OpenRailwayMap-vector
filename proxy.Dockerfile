@@ -26,13 +26,6 @@ RUN --mount=type=bind,source=proxy,target=proxy \
   node proxy/js/taginfo.mjs \
     > /build/taginfo.json
 
-FROM build-yaml AS build-features
-
-RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
-  --mount=type=bind,source=features,target=features \
-  node /build/features.mjs \
-    > /build/features.json
-
 FROM python:3-alpine@sha256:faee120f7885a06fcc9677922331391fa690d911c020abb9e8025ff3d908e510 AS build-preset
 
 RUN apk add --no-cache zip
@@ -78,9 +71,6 @@ COPY --from=build-taginfo \
 
 COPY --from=build-preset \
   /build/preset.zip /etc/nginx/public/preset.zip
-
-COPY --from=build-features \
-  /build/features.json /etc/nginx/public/features.json
 
 ENTRYPOINT ["/with-news-hash.sh"]
 CMD ["nginx", "-g", "daemon off;"]
