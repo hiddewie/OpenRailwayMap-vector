@@ -8,17 +8,24 @@ class FeatureAPI:
         self.database = database
 
     async def __call__(self, *, source, layer, id):
-        # TODO make this work for all sources and layers
-        if source == 'openrailwaymap_signals':
-            if layer == 'signals_railway_signals':
-                return await self.signal_data(id)
-        return None
+        return await self.feature_catalog_data(f'{source}-{layer}', id)
 
-    async def signal_data(self, id):
-        properties = features['openrailwaymap_signals-signals_railway_signals']['properties'].keys()
+    async def feature_catalog_data(self, catalog_key, id):
+        if catalog_key not in features:
+            return None
+        catalog = features[catalog_key]
+
+        if 'view' not in catalog:
+            return None
+        view = catalog['view']
+
+        if 'properties' not in catalog:
+            return None
+        properties = catalog['properties'].keys()
+
         sql_query = f"""
             SELECT {', '.join(f'"{property}"' for property in properties)}
-            FROM signals_railway_signals_view 
+            FROM "{view}" 
             WHERE id = $1::numeric 
         """
 

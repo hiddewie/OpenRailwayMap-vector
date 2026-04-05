@@ -942,6 +942,7 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
+    view: 'signals_railway_signals_view',
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
