@@ -422,8 +422,8 @@ const stationFeatures = {
 // TODO move examples here
 // TODO add icon
 const features = {
-  'high-railway_line_high': railwayLineFeatures(undefined),
-  'openrailwaymap_low-railway_line_high': railwayLineFeatures(undefined),
+  'high-railway_line_high': railwayLineFeatures('railway_line_low'),
+  'openrailwaymap_low-railway_line_high': railwayLineFeatures('railway_line_low'),
   'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures('railway_line_low'),
   'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures('railway_line_low'),
   'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures('railway_line_low'),
