@@ -434,3 +434,8 @@ jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/th
 jsonpath "$.attribution" == "Molgreen, Own work"
 jsonpath "$.license" == "CC BY-SA 4.0"
 jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
+
+# Features
+GET {{base_url}}/api/features/features.json
+HTTP 200
+Content-Type: application/json
