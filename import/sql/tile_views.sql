@@ -256,20 +256,29 @@ END $do$;
 -- Reusable view for low railway line tiles, grouped per layer
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
-    r.id,
+    l.id,
     osm_id,
     way,
+    way_length,
     feature,
     state,
     usage,
+    service,
     highspeed,
-    ref,
+    tunnel,
+    bridge,
     CASE
-      WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
-      ELSE COALESCE(ref, r.name)
-    END AS standard_label,
-    speed_label,
+      WHEN ref IS NOT NULL AND l.name IS NOT NULL THEN ref || ' ' || l.name
+      ELSE COALESCE(ref, l.name)
+      END AS standard_label,
+    ref,
+    track_ref,
+    track_class,
+    array_to_string(reporting_marks, ', ') as reporting_marks,
+    preferred_direction,
+    rank,
     maxspeed,
+    speed_label,
     train_protection_rank,
     train_protection,
     train_protection_construction_rank,
@@ -279,11 +288,13 @@ CREATE OR REPLACE VIEW railway_line_low AS
     voltage,
     frequency,
     maximum_current,
+    future_voltage,
+    future_frequency,
+    future_maximum_current,
     railway_to_int(gauges[1]) AS gaugeint0,
     gauges[1] as gauge0,
     (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
     loading_gauge,
-    track_class,
     nullif(array_to_string(operator, U&'\001E'), '') as operator,
     COALESCE(
       ro.color,
@@ -292,7 +303,18 @@ CREATE OR REPLACE VIEW railway_line_low AS
     coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
     primary_operator,
     owner,
-    rank
+    traffic_mode,
+    radio,
+    (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
+    (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM (
     SELECT
       *,
@@ -301,7 +323,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
         ELSE operator[1]
       END AS primary_operator
     from railway_line
-  ) as r
+  ) as l
   LEFT JOIN railway_operator ro
     ON ro.name = primary_operator
   WHERE

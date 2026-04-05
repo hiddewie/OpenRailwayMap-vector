@@ -101,7 +101,8 @@ const generateSignalFeatures = (features, types) =>
   ]);
 
 // TODO move icon SVGs to proxy
-const railwayLineFeatures = {
+const railwayLineFeatures = view => ({
+  view,
   labelProperties: ['standard_label'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
@@ -266,7 +267,7 @@ const railwayLineFeatures = {
       },
     },
   },
-};
+});
 
 const poiFeatures = layer => ({
   labelProperties: ['name'],
@@ -421,14 +422,14 @@ const stationFeatures = {
 // TODO move examples here
 // TODO add icon
 const features = {
-  'high-railway_line_high': railwayLineFeatures,
-  'openrailwaymap_low-railway_line_high': railwayLineFeatures,
-  'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
-  'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
-  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
-  'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
-  'track_railway_line_low-track_railway_line_low': railwayLineFeatures,
-  'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
+  'high-railway_line_high': railwayLineFeatures(undefined),
+  'openrailwaymap_low-railway_line_high': railwayLineFeatures(undefined),
+  'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures('railway_line_low'),
+  'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures('railway_line_low'),
+  'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures('railway_line_low'),
+  'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures('railway_line_low'),
+  'track_railway_line_low-track_railway_line_low': railwayLineFeatures('railway_line_low'),
+  'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures('railway_line_low'),
   'openhistoricalmap-transport_lines': {
     labelProperties: ['name'],
     featureProperty: 'type',
