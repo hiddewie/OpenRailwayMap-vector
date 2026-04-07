@@ -461,7 +461,7 @@ RETURN (
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id as id,
+      id,
       osm_id,
       osm_type,
       feature,
@@ -487,8 +487,7 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump,
-      station_routes
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -582,8 +581,7 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump,
-      station_routes
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -777,8 +775,7 @@ RETURN (
       note,
       description,
       yard_purpose,
-      yard_hump,
-      station_routes
+      yard_hump
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL

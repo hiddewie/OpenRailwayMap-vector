@@ -2290,6 +2290,7 @@ function popupContent(feature, abortController) {
   const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
+  // TODO make optional, see openhistoricalmap source
   fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
     signal: abortController.signal,
   })
