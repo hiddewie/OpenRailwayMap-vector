@@ -566,7 +566,7 @@ const features = {
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures('railway_text_stations'),
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures('railway_text_stations'),
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures('railway_text_stations'),
-  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures(undefined),
+  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures('railway_text_stations'),
   'openrailwaymap_standard-standard_railway_grouped_station_areas': {
     featureLinks: featureLinks.openstreetmap,
     features: {
