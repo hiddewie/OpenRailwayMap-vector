@@ -13,7 +13,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
-    cy.get('.date-display').should('include.text', '1947')
+    cy.get('.date-display').should('have.value', '1947')
     cy.url().should('include', 'date=1947')
 
     cy.wait(3000)
@@ -67,7 +67,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
-    cy.get('.date-display').should('include.text', '1947')
+    cy.get('.date-display').should('have.value', '1947')
     cy.url().should('include', 'date=1947')
 
     cy.wait(3000)

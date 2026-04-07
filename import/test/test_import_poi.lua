@@ -488,12 +488,13 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
 osm2pgsql.process_node({
   tags = {
     ['railway'] = 'level_crossing',
+    ['emergency:phone'] = '041/785302',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15 },
+    { feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15, emergency_phone = '041/785302' },
   },
 })
 
@@ -650,12 +651,13 @@ osm2pgsql.process_way({
   tags = {
     ['railway'] = 'radio',
     ['man_made'] = 'antenna',
+    ['railway:radio'] = 'lte-r',
   },
   as_polygon = as_polygon_mock,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12, way = polygon_way },
+    { feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12, way = polygon_way, radio = 'lte-r' },
   },
 })
 

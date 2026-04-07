@@ -1,0 +1,13 @@
+<svg width="16" height="15.99" version="1.1" viewBox="0 0 4.233 4.232" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.9333 0 0 .9996 -53.45 -53.42)">
+  <rect x="57.26" y="53.45" width="4.536" height="4.233" stroke-miterlimit="5" stroke-width=".4032"/>
+ </g>
+ <g transform="scale(.7068)">
+  <path d="m2.219 3.772c0 0.4294-0.3481 0.7774-0.7774 0.7774-0.4294 0-0.7774-0.3481-0.7774-0.7774v-1.555c-2e-7 -0.4294 0.3481-0.7774 0.7774-0.7774 0.4294 0 0.7774 0.3481 0.7774 0.7774z" fill="none" stroke="#fff" stroke-width=".5183"/>
+  <path d="m2.733 4.284v1.048l0.5238-0.5242v-0.5242z" fill="#fff" stroke-miterlimit="5" stroke-width=".2939"/>
+  <g transform="matrix(.01037 0 0 .01037 -.1141 .559)" fill="none" stroke="#fff" stroke-linecap="square" stroke-width="50">
+   <ellipse cx="450" cy="160" rx="75" ry="75"/>
+   <ellipse cx="450" cy="310" rx="75" ry="75"/>
+  </g>
+ </g>
+</svg>

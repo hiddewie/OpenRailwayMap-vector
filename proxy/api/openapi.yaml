@@ -163,6 +163,10 @@ paths:
                       type: array
                       items:
                         type: string
+                    owner:
+                      type: array
+                      items:
+                        type: string
                     network:
                       type: array
                       items:
@@ -217,6 +221,7 @@ paths:
                       railway-ref: BOK
                     operator:
                       - DB InfraGO AG
+                    owner: []
                     network:
                       - Verkehrsverbund Berlin-Brandenburg
                     wikidata:
@@ -252,6 +257,7 @@ paths:
                       railway-ref: BRH
                     operator:
                       - DB Netz AG
+                    owner: []
                     network:
                       - Verkehrsverbund Berlin-Brandenburg
                     wikidata:
@@ -285,6 +291,7 @@ paths:
                       railway-ref: BFA
                     operator:
                       - DB InfraGO AG
+                    owner: []
                     network:
                       - Verkehrsverbund Berlin-Brandenburg
                     wikidata:

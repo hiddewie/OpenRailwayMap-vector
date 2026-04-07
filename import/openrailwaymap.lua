@@ -158,6 +158,8 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:train_protection:main:caption']
+    or tags['railway:signal:train_protection:system_change:caption']
     or tags['railway:signal:slope:caption']
     or tags['railway:signal:radio:frequency']
 end
@@ -233,6 +235,8 @@ local pois = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
+    { column = 'radio', type = 'text' },
+    { column = 'emergency_phone', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -258,6 +262,7 @@ local stations = osm2pgsql.define_table({
     { column = 'map_reference', type = 'text' },
     { column = 'references', type = 'hstore' },
     { column = 'operator', sql_type = 'text[]' },
+    { column = 'owner', type = 'text' },
     { column = 'network', sql_type = 'text[]' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'yard_purpose', sql_type = 'text[]' },
@@ -777,23 +782,29 @@ function split_semicolon_to_sql_array(value)
 end
 
 local railway_state_tags = {
-  present = 'railway',
-  construction = 'construction:railway',
-  proposed = 'proposed:railway',
-  disused = 'disused:railway',
-  abandoned = 'abandoned:railway',
-  preserved = 'preserved:railway',
-  razed = 'razed:railway',
+  present = {
+    railway = 'railway',
+    name = nil,
+  },
 }
+-- ordered from higher to lower importance
+local states = {'construction', 'proposed', 'disused', 'abandoned', 'preserved', 'razed'}
+for index, state in ipairs(states) do
+  railway_state_tags[state] = {
+    railway = state .. ':railway',
+    name = state .. ':name',
+  }
+end
+
 function railway_feature_and_state(tags, railway_value_func)
-  for state, railway_tag in pairs(railway_state_tags) do
-    local feature = railway_value_func(tags[railway_tag])
+  for state, state_tags in pairs(railway_state_tags) do
+    local feature = railway_value_func(tags[state_tags.railway])
     if feature then
-      return feature, state
+      return feature, state, (state_tags.name and tags[state_tags.name]) or tags.name or tags.short_name
     end
   end
 
-  return nil, nil
+  return nil, nil, tags.name or tags.short_name
 end
 
 local vehicles = {'train', 'subway', 'light_rail', 'tram', 'monorail', 'funicular', 'miniature'}
@@ -827,7 +838,7 @@ function station_type(tags)
   return feature_stations
 end
 
-local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
+local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name', 'construction:name', 'proposed:name', 'abandoned:name', 'disused:name', 'preserved:name'}
 function name_tags(tags)
   -- Gather name tags for searching
   local found_name_tags = {}
@@ -1091,19 +1102,20 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
+  local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object:as_point(),
         feature = station_feature,
         state = station_state,
-        name = tags.name or tags.short_name,
+        name = name,
         station = station,
         name_tags = name_tags(tags),
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
@@ -1132,6 +1144,8 @@ function osm2pgsql.process_node(object)
       name = tags.name,
       ref = tags.ref,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+      radio = tags['railway:radio'],
+      emergency_phone = tags['emergency:phone'],
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
@@ -1373,7 +1387,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
+  local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     local position, position_exact, line_positions = find_position_tags(tags)
 
@@ -1382,12 +1396,13 @@ function osm2pgsql.process_way(object)
         way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
-        name = tags.name or tags.short_name,
+        name = name,
         station = station,
         name_tags = name_tags(tags),
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
@@ -1466,6 +1481,8 @@ function osm2pgsql.process_way(object)
       name = tags.name,
       ref = tags.ref,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+      radio = tags['railway:radio'],
+      emergency_phone = tags['emergency:phone'],
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,

@@ -56,6 +56,7 @@ tags:
   - { tag: 'railway:signal:electricity:frequency', title: 'Electricity frequency', format: { template: '%.2d Hz' } }
   - { tag: 'railway:signal:electricity:deactivated', title: 'Electricity deactivated', type: boolean }
   - { tag: 'railway:signal:fouling_point', title: 'Fouling point' }
+  - { tag: 'railway:signal:fouling_point:form', title: 'Fouling point form' }
   - { tag: 'railway:signal:fouling_point:deactivated', title: 'Fouling point deactivated', type: boolean }
   - { tag: 'railway:signal:helper_engine', title: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', title: 'Helper engine form' }
@@ -198,6 +199,10 @@ tags:
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
   - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
+  - { tag: 'railway:signal:train_protection:main', title: 'Train protection main' }
+  - { tag: 'railway:signal:train_protection:main:form', title: 'Train protection main form' }
+  - { tag: 'railway:signal:train_protection:system_change', title: 'Train protection system change' }
+  - { tag: 'railway:signal:train_protection:system_change:form', title: 'Train protection system change form' }
   - { tag: 'railway:signal:traversable', title: 'Traversable' }
   - { tag: 'railway:signal:traversable:form', title: 'Traversable form' }
   - { tag: 'railway:signal:traversable:type', title: 'Traversable type' }
@@ -984,7 +989,7 @@ features:
     country: AU
     icon: [ default: 'au/LightRail/signs/set_route_ACT' ]
     tags:
-      - { tag: 'railway:signal:route', value: 'AU:LightRail:ACT:set_route' }
+      - { tag: 'railway:signal:route', any: ['AU:LightRail:ACT:set_route', 'AU:LightRail:QLD:set_route'] }
       - { tag: 'railway:signal:route:form', value: 'sign' }
 
   - description: Set Route
@@ -1021,6 +1026,147 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:SZ' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  # --- AU-LightRail-signs-VIC --- #
+  - description: Cut Off
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/cut_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:cut_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 5th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_5' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_5' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 4th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_4' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_4' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 3rd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_3' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_3' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 2nd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_2' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_2' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 1st Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_1' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_1' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 50/50
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/5050' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:50/50' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Fouling Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:single_yellow' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Compulsory Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Optional Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_dashed' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_dashed' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Check Point Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_chevron' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_chevron' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (A/Z/W)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:single_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (B/C1/D1)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (C2/D2/E)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/triple_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:triple_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_square' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_square' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs (Long Trams)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_diamond' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_diamond' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Provisional Stop
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/provisional_stop' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:provisional' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: 2nd Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_2' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_2' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud (Signal Operated Points)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1SPI' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1SPI' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
 
   # --- AU-LightRail-Signals --- #
 
@@ -1168,6 +1314,13 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Begin CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/begin_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: Begin Single Light Indication
     country: AU
     icon: [ default: 'au/nsw/signs/begin_single_light' ]
@@ -1217,11 +1370,25 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: End CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/end_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: End Signalled Authority
     country: AU
     icon: [ default: 'au/nsw/signs/end_signalled_authority' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_signalled_authority' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Network Control Limit
+    country: AU
+    icon: [ default: 'au/nsw/signs/network_control' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:network_control' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: End Single Light Indication
@@ -1303,11 +1470,19 @@ features:
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
+          - { exact: 'DD', value: 'au/nsw/signs/stop_position/DD' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '10', value: 'au/nsw/signs/stop_position/10' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
           - { exact: '8', value: 'au/nsw/signs/stop_position/8' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '8D', value: 'au/nsw/signs/stop_position/8D' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
@@ -1345,8 +1520,19 @@ features:
         cases:
           - { any: ['2C', 'C2'], value: 'au/nsw/signs/stop_position/2C' }
         position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { any: ['2E', 'E2'], value: 'au/nsw/signs/stop_position/2E' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:stop', value: 'AU:NSW:stop_position' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Safety Runoff Area
+    country: AU
+    icon: [ default: 'au/nsw/signs/safety_overrun' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:safety_overrun' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Stop
@@ -1793,8 +1979,13 @@ features:
         default: 'be/GSA-opposite-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
+          - { exact: 'BE:OF', value: 'be/OEF' }
+        position: bottom
+      - match: 'railway:signal:traversable'
+        cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:DBR', value: 'be/DBR' }
+          - { exact: 'BE:TR', value: 'be/TR' }
         position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
@@ -1811,12 +2002,17 @@ features:
           - { exact: 'BE:VJV', value: 'be/GSA-VJV' }
           - { exact: 'BE:VJH', value: 'be/GSA-VJH' }
           - { exact: 'BE:V', value: 'be/GSA-V' }
+        default: 'be/GSA-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
-          - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
-        default: 'be/GSA-R'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:DBR', value: 'be/DBR' }
+          - { exact: 'BE:TR', value: 'be/TR' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
 
@@ -4552,6 +4748,97 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
+  # --- ETCS --- #
+
+  # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
+
+  - description: ETCS transition marker
+    icon: [ default: 'etcs/level_transition' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: ETCS stop marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS location marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/location_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
+        default: 'etcs/location_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: Distant begin of neutral section
+    icon: [ default: 'etcs/power_off_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Begin of neutral section
+    icon: [ default: 'etcs/power_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: End of Neutral section
+    icon: [ default: 'etcs/power_on' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Distant Lower pantograph
+    icon: [ default: 'etcs/pantograph_down_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Lower pantograph
+    icon: [ default: 'etcs/pantograph_down' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Raise pantograph
+    icon: [ default: 'etcs/pantograph_up' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Distant end of catenary
+    icon: [ default: 'etcs/end_of_catenary_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary_advance' }
+
+  - description: End of catenary
+    icon: [ default: 'etcs/end_of_catenary' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
   # --- FI --- #
 
   - description: Balise
@@ -6099,6 +6386,20 @@ features:
       - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Engineering Stop board
+    country: GB
+    icon: [ default: 'gb/stop-octagon' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'GB-NR:engineer-stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Rear Clear marker
+    country: GB
+    icon: [ default: 'gb/rear-clear' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'GB-NR:rear_clear' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
   - description: Crossing
     country: GB
     icon: [ default: 'gb/crossing' ]
@@ -6465,6 +6766,50 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  # --- JP --- #
+
+  - description: Departure signal
+    country: JP
+    icon: [ default: 'jp/main-departure' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:出発信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Block signal
+    country: JP
+    icon: [ default: 'jp/main-block' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:閉塞信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Station signal
+    country: JP
+    icon: [ default: 'jp/main-station' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:場内信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Shunting signal
+    country: JP
+    icon: [ default: 'jp/shunting' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'JP:入換信号機' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Distant signal
+    country: JP
+    icon: [ default: 'jp/distant' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'JP:遠方信号機' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Repeated signal
+    country: JP
+    icon: [ default: 'jp/main_repeated' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'JP:中継信号機' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   # --- LU --- #
 
@@ -6985,6 +7330,13 @@ features:
     icon: [ default: 'nz/stop_block_entry' ]
     tags:
       - { tag: 'railway:signal:stop', value: 'NZ:stop_block' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stop Station Entry
+    country: NZ
+    icon: [ default: 'nz/stop_station_entry' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_station' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Stop Plate
@@ -7964,6 +8316,18 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
       - { tag: 'railway:signal:speed_limit:form', any: [ 'light', 'sign' ] }
+
+  - description: Wskaźnik W21wg
+    country: PL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([58]|15)$', value: 'pl/w21wg-{}', example: 'pl/w21wg-{5}' }
+        default: 'pl/w21wg-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21wg' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: Wskaźnik zmiany prędkości (W27a)
     country: PL
