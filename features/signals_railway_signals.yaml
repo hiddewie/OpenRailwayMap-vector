@@ -2878,8 +2878,12 @@ features:
     icon:
       - match: 'railway:signal:distant:states'
         cases:
-        - { all: [ 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/samostatna_predvest/YG-Y' }
-        - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
+          # Differentiation of CZ-D1 tagged signals
+          - { all: [ 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/samostatna_predvest/YG-Y' }
+          - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
+          # Differentiation of Cs-D1 tagged signals
+          - { all: [ 'approach', 'clear' ], value: 'cz/samostatna_predvest/YG-Y' }
+          - { all: [ 'approach' ], value: 'cz/samostatna_predvest/Y-Y' }
         default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
     tags:
       - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
@@ -2927,11 +2931,33 @@ features:
     icon:
       - match: 'railway:signal:main:states'
         cases:
+          # Differentiation of CZ-D1 tagged signals
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/GRW-G' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/GR-G' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/RBW-B' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/RW-R' }
           - { all: [ 'CZ-D1:stuj' ], value: 'cz/hlavni_navestidlo/R-R' }
+          # Differentiation of Cs-D1 tagged signals
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRY-YY' }
+          - { all: [ 'stop', 'approach', 'clear' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
+          - { all: [ 'stop', 'approach', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'call_signal' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRY-YY' }
+          - { all: [ 'stop', 'approach' ], value: 'cz/hlavni_navestidlo/YR-Y' }
+          - { all: [ 'stop', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRY-GY' }
+          - { all: [ 'stop', 'clear' ], value: 'cz/hlavni_navestidlo/GR-G' }
+          - { all: [ 'stop', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/RW-R' }
+          - { all: [ 'stop' ], value: 'cz/hlavni_navestidlo/R-R' }
         default: 'cz/hlavni_navestidlo/GR-G' # FALLBACK
     tags:
       - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
@@ -2994,6 +3020,7 @@ features:
     icon:
       - match: 'railway:signal:combined:states'
         cases:
+          # Differentiation of CZ-D1 tagged signals
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGRW-YW' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha' ], value: 'cz/hlavni_navestidlo/YRW-YW' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'  ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
@@ -3001,6 +3028,27 @@ features:
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha' ], value: 'cz/hlavni_navestidlo/YR-Y' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:odjezdove_navestidlo_dovoluje_jizdu' ], value: 'cz/hlavni_navestidlo/RWB-RB' } # Vložená návěstidla
+          # Differentiation of Cs-D1 tagged signals
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRY-YY' }
+          - { all: [ 'stop', 'approach', 'clear' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
+          - { all: [ 'stop', 'approach', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'call_signal' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRY-YY' }
+          - { all: [ 'stop', 'approach' ], value: 'cz/hlavni_navestidlo/YR-Y' }
+          - { all: [ 'stop', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRY-GY' }
+          - { all: [ 'stop', 'clear' ], value: 'cz/hlavni_navestidlo/GR-G' }
+          - { all: [ 'stop', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/RW-R' }
+          - { all: [ 'stop' ], value: 'cz/hlavni_navestidlo/R-R' }
         default: 'cz/hlavni_navestidlo/YGR-Y' # FALLBACK
     tags:
       - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
