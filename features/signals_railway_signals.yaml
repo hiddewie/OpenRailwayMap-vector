@@ -2626,7 +2626,7 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: top
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
+      - { tag: 'railway:signal:station_distant', any: [ 'CZ-D1:vlak_se_blizi_k_zastavce', 'Cs-D1' ] }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Hlavní návěstidlo sloučeno s předvěstí
@@ -2667,7 +2667,8 @@ features:
     country: CZ
     icon: [ default: 'cz/posun_zakazan' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'CZ-D1:posun_zakazan', 'CZ', 'Cs-D1' ] }
+      # Cs-D1 sign shunting signals fallback (no way to differentiate them from Označník)
+      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:posun_zakazan', 'Cs-D1' ] }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: Vyčkávací návěstidlo (neproměnné)
@@ -2754,7 +2755,8 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: top
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n' ] }
+      # Default for Cs-D1 speed_limit_distant signals, differentiation of types sometimes possible using shape
+      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: Rychlostník NS
@@ -2769,7 +2771,7 @@ features:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_ns' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Speed limit N (sign)
+  - description: Rychlostník N
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit:speed'
@@ -2777,7 +2779,9 @@ features:
           - { regex: '^[1-9]0|1[0-36]0|[1678]5|1[02]5$', value: 'cz/rychlostnik/N/{}', example: 'cz/rychlostnik/N/{80}' }
         default: 'cz/rychlostnik/N/unknown'
     tags:
-      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:rychlostnik_n_s_pruhy', 'CZ-D1:horni_rychlostnik_n' ] }
+      # Default for Cs-D1 speed_limit signals, differentiation of types sometimes possible using shape
+      # Note that in some older (at least per recent usage) Cs-D1 tagging, this might mistakenly include the 5 sign on main signals
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:rychlostnik_n_s_pruhy', 'CZ-D1:horni_rychlostnik_n', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   # TODO: Future overhaul of tagging
@@ -2944,6 +2948,8 @@ features:
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/RW-R' }
           - { all: [ 'CZ-D1:stuj' ], value: 'cz/hlavni_navestidlo/R-R' }
           # Differentiation of Cs-D1 tagged signals
+          # This describes only the most used variant of Cs-D1 tagging
+          # This does not detect speed_limit based on signal:minor tags nor handle alternative names like call_signal=summon=call_on
           - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
           - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
           - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
@@ -3035,6 +3041,8 @@ features:
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha' ], value: 'cz/hlavni_navestidlo/YR-Y' }
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:odjezdove_navestidlo_dovoluje_jizdu' ], value: 'cz/hlavni_navestidlo/RWB-RB' } # Vložená návěstidla
           # Differentiation of Cs-D1 tagged signals
+          # This describes only the most used variant of Cs-D1 tagging
+          # This does not detect speed_limit based on signal:minor tags nor handle alternative names like call_signal=summon=call_on
           - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
           - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
           - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
@@ -3071,7 +3079,8 @@ features:
     country: CZ
     icon: [ default: 'cz/konec_nastupiste' ]
     tags:
-      - { tag: 'railway:signal:stop', value: 'CZ-D1:konec_nastupiste' }
+      # Default for Cs-D1 stop signals, differentiation possible based on railway:signal:stop:carriages
+      - { tag: 'railway:signal:stop', any: [ 'CZ-D1:konec_nastupiste', 'Cs-D1' ] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Místo zastavení
@@ -3096,7 +3105,7 @@ features:
     country: CZ
     icon: [ default: 'cz/piskejte' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'CZ-D1:piskejte' }
+      - { tag: 'railway:signal:whistle', any: [ 'CZ-D1:piskejte', 'Cs-D1' ] }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Návěstidlo výhybky se samovratným přestavníkem
