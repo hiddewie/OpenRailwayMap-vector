@@ -166,6 +166,15 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
 
+# Facility search by reference for yard (area)
+GET {{base_url}}/facility
+[QueryStringParams]
+ref: BNO
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Berlin Nordost"
+
 # Facility search for UIC reference
 GET {{base_url}}/facility
 [QueryStringParams]
