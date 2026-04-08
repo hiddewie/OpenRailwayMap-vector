@@ -2885,8 +2885,14 @@ features:
           - { all: [ 'approach', 'clear' ], value: 'cz/samostatna_predvest/YG-Y' }
           - { all: [ 'approach' ], value: 'cz/samostatna_predvest/Y-Y' }
         default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
+      # Cs-D1 uses signal:minor to tag variants of stanoviste_samostatne_predvesti, but we cannot parse that
+      # This fallback always add one of the variants when we encounter a Cs-D1 signal
+      - match: 'railway:signal:distant'
+        cases:
+          - { any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Př', 'Cs-D1:Př_', 'Cs-D1:Př _' ], value: 'cz/stanoviste_samostatne_predvesti/fallback'  }
+        position: bottom
     tags:
-      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
+      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Př', 'Cs-D1:Př_', 'Cs-D1:Př _' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
   # Main singnals
