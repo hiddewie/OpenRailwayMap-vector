@@ -2667,7 +2667,7 @@ features:
     country: CZ
     icon: [ default: 'cz/posun_zakazan' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:posun_zakazan' ] }
+      - { tag: 'railway:signal:shunting', any: [ 'CZ-D1:posun_zakazan', 'CZ', 'Cs-D1' ] }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
   - description: Vyčkávací návěstidlo (neproměnné)
@@ -2696,7 +2696,7 @@ features:
     country: CZ
     icon: [ default: 'cz/seradovaci_navestidlo/WB-B' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:seradovaci_navestidlo' ] }
+      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:seradovaci_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Se', 'Cs-D1:Se_', 'Cs-D1:Se _' ] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Hranice obvodu nákladiště nebo vlečky
@@ -2882,7 +2882,7 @@ features:
         - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
         default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
     tags:
-      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
+      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
   # Main singnals
@@ -2934,7 +2934,7 @@ features:
           - { all: [ 'CZ-D1:stuj' ], value: 'cz/hlavni_navestidlo/R-R' }
         default: 'cz/hlavni_navestidlo/GR-G' # FALLBACK
     tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   # Combined signals
@@ -3003,7 +3003,7 @@ features:
           - { all: [ 'CZ-D1:stuj', 'CZ-D1:odjezdove_navestidlo_dovoluje_jizdu' ], value: 'cz/hlavni_navestidlo/RWB-RB' } # Vložená návěstidla
         default: 'cz/hlavni_navestidlo/YGR-Y' # FALLBACK
     tags:
-      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
 
@@ -3069,42 +3069,6 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'CZ-D1:prejezdnik' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
-
-
-
-  # HaPe-CZs signals:
-
-  - description: Distant signal
-    country: CZ
-    icon:
-      - default: 'cz/HaPe-CZ/distant'
-      - default: 'cz/stanoviste_samostatne_predvesti/fallback'
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:distant', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Main signal
-    country: CZ
-    icon: [ default: 'cz/HaPe-CZ/main' ]
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Combined signal
-    country: CZ
-    icon: [ default: 'cz/HaPe-CZ/combined' ]
-    tags:
-      - { tag: 'railway:signal:combined', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Shunting signal
-    country: CZ
-    icon: [ default: 'cz/HaPe-CZ/shunting' ]
-    tags:
-      - { tag: 'railway:signal:shunting', any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Se', 'Cs-D1:Se_', 'Cs-D1:Se _' ] }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
 
   # --- DE --- #
 
