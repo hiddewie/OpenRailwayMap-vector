@@ -6204,20 +6204,6 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: Block Marker Passable Plate
-    country: GB
-    icon: [ default: 'gb/block-passable' ]
-    tags:
-      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'passable' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Block Marker Non-Passable Plate
-    country: GB
-    icon: [ default: 'gb/block-absolute' ]
-    tags:
-      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'absolute' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
   - description: ETCS Block Marker
     country: GB
     icon:
@@ -6226,6 +6212,10 @@ features:
           - { exact: 'right', value: 'gb/ETCS-left' }
           - { exact: 'overhead', value: 'gb/ETCS-overhead' }
         default: 'gb/ETCS-right'
+      - match: 'railway:signal:train_protection:block_marker:type'
+        cases:
+          - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
+          - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -6239,6 +6229,10 @@ features:
           - { exact: 'right', value: 'gb/TVM-CBTC-left' }
           - { exact: 'overhead', value: 'gb/TVM-CBTC-overhead' }
         default: 'gb/TVM-CBTC-right'
+      - match: 'railway:signal:train_protection:block_marker:type'
+        cases:
+          - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
+          - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:TVM-CBTC' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
