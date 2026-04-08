@@ -6172,14 +6172,26 @@ features:
 
   - description: Cab Signalling Start Warning Board
     country: GB
-    icon: [ default: 'gb/cab-entry-warning' ]
+    icon:
+      - default: 'gb/cab-entry-warning'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:warning' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Cab Signalling Start Board
     country: GB
-    icon: [ default: 'gb/cab-entry' ]
+    icon:
+      - default: 'gb/cab-entry'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:entry' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -6187,22 +6199,17 @@ features:
 
   - description: Cab Signalling End Board
     country: GB
-    icon: [ default: 'gb/cab-exit' ]
+    icon:
+      - default: 'gb/cab-exit'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:exit' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
-
-  - description: Cab Signalling Directional arrow
-    country: GB
-    icon:
-      - match: 'railway:signal:train_protection:turn_direction'
-        cases:
-          - { exact: 'GB-NR:left', value: 'gb/cab-arrow-left' }
-          - { exact: 'GB-NR:right', value: 'gb/cab-arrow-right' }
-        default: 'gb/cab-arrow-unknown'
-    tags:
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETCS Block Marker
     country: GB
@@ -6216,6 +6223,7 @@ features:
         cases:
           - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
           - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -6233,6 +6241,7 @@ features:
         cases:
           - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
           - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:TVM-CBTC' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
