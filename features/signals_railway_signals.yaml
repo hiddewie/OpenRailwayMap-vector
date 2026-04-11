@@ -1,3 +1,5 @@
+"$schema": ./schema/signals_railway_signals.yaml
+
 tags:
   # railway tag is included by default
   - { tag: 'railway:signal:brake_test', title: 'Brake test' }
