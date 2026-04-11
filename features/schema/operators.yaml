@@ -1,0 +1,20 @@
+"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  operators:
+    type: array
+    items:
+      type: object
+      properties:
+        country:
+          type: string
+        names:
+          type: array
+          items: string
+        color:
+          type: string
+      additionalProperties: false
+  $schema:
+    type: string
+additionalProperties: false
