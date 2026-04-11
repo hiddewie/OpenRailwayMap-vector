@@ -4,15 +4,19 @@ type: object
 properties:
   loading_gauges:
     type: array
+    description: Defines the loading gauges on the map
     items:
       type: object
       properties:
         value:
           type: string
+          description: The value in the loading gauge tag
         legend:
           type: string
+          description: The description shown in the legend
         color:
           type: string
+          description: The color used to show this loading gauge on the map
       additionalProperties: false
   $schema:
     type: string

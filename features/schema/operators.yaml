@@ -4,17 +4,22 @@ type: object
 properties:
   operators:
     type: array
+    description: Defines the list of known operators
     items:
       type: object
       properties:
         country:
           type: string
+          description: The country this operator primarily operates in
         names:
           type: array
+          description: The names that the operator is known by. Multiple names may be used, for example when the operator operates in a multilingual country.
           items:
             type: string
+            description: A name that the operator operates by
         color:
           type: string
+          description: The color used to show the operator on the map
       additionalProperties: false
   $schema:
     type: string

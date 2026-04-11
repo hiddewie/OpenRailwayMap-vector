@@ -4,13 +4,16 @@ type: object
 properties:
   features:
     type: array
+    description: Defines the railway line features on the map
     items:
       type: object
       properties:
         type:
           type: string
+          description: The type of the railway line
         description:
           type: string
+          description: The description that will be used in the legend
       additionalProperties: false
   $schema:
     type: string

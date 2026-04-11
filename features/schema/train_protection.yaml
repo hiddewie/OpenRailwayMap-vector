@@ -4,15 +4,19 @@ type: object
 properties:
   train_protections:
     type: array
+    description: The train protection systems
     items:
       type: object
       properties:
         train_protection:
           type: string
+          description: The identifier of the train protection
         legend:
           type: string
+          description: The description used in the legend and popup
         color:
           type: string
+          description: The color used to display the train protection on the map
       additionalProperties: false
   features:
     type: array
@@ -21,19 +25,25 @@ properties:
       properties:
         train_protection:
           type: string
+          description: The identifier of the train protection
         tags:
           type: array
+          description: The tags used to tag this train protection system
           items:
             type: object
             properties:
               tag:
                 type: string
+                description: The tag
               value:
                 type: string
+                description: The tag value
               values:
                 type: array
+                description: Multiple tag values
                 items:
                   type: string
+                  description: A tag value
             additionalProperties: false
       additionalProperties: false
   $schema:
