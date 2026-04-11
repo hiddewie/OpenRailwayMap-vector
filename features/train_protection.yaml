@@ -1,3 +1,5 @@
+$schema: ./schema/train_protection.yaml
+
 train_protections:
   - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'hsl(214, 100%, 70%)' }
   - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
