@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-set -eof pipefail
+set -eo pipefail
 
-ajv validate --spec draft2020 --strict true --all-errors -s schema/signals_railway_signals.yaml signals_railway_signals.yaml
+for file in *.yaml
+do
+  ajv validate --spec draft2020 --strict true --all-errors -s "schema/$file" "$file"
+done

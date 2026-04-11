@@ -11,7 +11,8 @@ properties:
           type: string
         names:
           type: array
-          items: string
+          items:
+            type: string
         color:
           type: string
       additionalProperties: false
