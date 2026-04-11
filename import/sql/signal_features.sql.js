@@ -72,6 +72,16 @@ function matchTagValueSql(tag, value) {
   }
 }
 
+function matchTagValuesSql(tag, values) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      const sqlArray = `ARRAY[${values.map(value => `'${value}'`).join(', ')}]`
+      return `${sqlArray} <@ "${tag}" AND ${sqlArray} @> "${tag}"`
+    default:
+      throw new Error(`values matching cannot be used for non-array tag '${tag}' ('${values}')`)
+  }
+}
+
 function matchTagAllValuesSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
@@ -130,7 +140,12 @@ function stringSql(tag, matchCase) {
 }
 
 function matchFeatureTagsSql(tags) {
-  return tags.map(tag => tag.value ? matchTagValueSql(tag.tag, tag.value) : tag.all ? matchTagAllValuesSql(tag.tag, tag.all) : matchTagAnyValueSql(tag.tag, tag.any)).join(' AND ')
+  return tags.map(tag =>
+    tag.value ? matchTagValueSql(tag.tag, tag.value)
+      : tag.all ? matchTagAllValuesSql(tag.tag, tag.all)
+        : tag.any ? matchTagAnyValueSql(tag.tag, tag.any)
+          : matchTagValuesSql(tag.tag, tag.values)
+  ).join(' AND ')
 }
 
 function matchIconCase(tag, iconCase) {

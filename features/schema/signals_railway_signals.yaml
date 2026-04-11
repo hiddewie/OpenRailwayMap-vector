@@ -136,6 +136,11 @@ properties:
               value:
                 type: string
                 description: Match against the value
+              values:
+                type: array
+                items:
+                  type: string
+                description: Match against the exact values
               any:
                 type: array
                 description: Match against any of the values
