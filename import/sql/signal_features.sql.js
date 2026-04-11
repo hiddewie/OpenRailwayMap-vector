@@ -143,8 +143,8 @@ function matchFeatureTagsSql(tags) {
   return tags.map(tag =>
     tag.value ? matchTagValueSql(tag.tag, tag.value)
       : tag.all ? matchTagAllValuesSql(tag.tag, tag.all)
-        : tag.any ? matchTagAnyValueSql(tag.tag, tag.any)
-          : matchTagValuesSql(tag.tag, tag.values)
+        : tag.values ? matchTagValuesSql(tag.tag, tag.values)
+          : matchTagAnyValueSql(tag.tag, tag.any)
   ).join(' AND ')
 }
 
