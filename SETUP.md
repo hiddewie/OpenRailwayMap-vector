@@ -121,6 +121,15 @@ Run the tests in interactive mode with:
 npx cypress open
 ```
 
+### Feature tests
+
+The feature tests validate the contents of the `features` directory, by matching the files against the JSON schema specification.
+
+Run the feature tests with:
+```shell
+docker compose run --rm --build feature-test
+```
+
 ## Development
 
 ### Code generation

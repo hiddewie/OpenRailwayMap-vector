@@ -1,0 +1,120 @@
+"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  tags:
+    type: array
+    items:
+      type: object
+      properties:
+        tag:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+          enum:
+            - array
+            - boolean
+        format:
+          type: object
+          properties:
+            template:
+              type: string
+        description:
+          type: string
+      additionalProperties: false
+  types:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+        layer:
+          type: string
+          enum:
+            - signals
+            - speed
+            - electrification
+      additionalProperties: false
+  features:
+    type: array
+    items:
+      type: object
+      properties:
+        description:
+          type: string
+        country:
+          type: string
+        type:
+          type: string
+          enum:
+            - line
+            - tram
+        exampleIcon:
+          type: string
+        icon:
+          type: array
+          items:
+            type: object
+            properties:
+              default:
+                type: string
+              match:
+                type: string
+              cases:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    regex:
+                      type: string
+                    value:
+                      type: string
+                    example:
+                      type: string
+                    exact:
+                      type: string
+                    any:
+                      type: array
+                      items:
+                        type: string
+                    all:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                  additionalProperties: false
+              position:
+                type: string
+                enum:
+                  - top
+                  - bottom
+                  - left
+                  - right
+                  - center
+            additionalProperties: false
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              tag:
+                type: string
+              value:
+                type: string
+              any:
+                type: array
+                items:
+                  type: string
+              all:
+                type: array
+                items:
+                  type: string
+            additionalProperties: false
+      additionalProperties: false
+  $schema:
+    type: string
+additionalProperties: false
