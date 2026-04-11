@@ -1,0 +1,61 @@
+"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  features:
+    type: array
+    items:
+      type: object
+      properties:
+        description:
+          type: string
+        feature:
+          type: string
+        example:
+          type: object
+        minzoom:
+          type: number
+          minimum: 1
+          maximum: 20
+        mapState:
+          type: object
+        variants:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              feature:
+                type: string
+              example:
+                type: object
+              minzoom:
+                type: number
+                minimum: 1
+                maximum: 20
+              mapState:
+                type: object
+            additionalProperties: false
+      additionalProperties: false
+  references:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        country:
+          type: string
+        map:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+  $schema:
+    type: string
+additionalProperties: false
