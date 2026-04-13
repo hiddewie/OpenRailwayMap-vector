@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.999863" height="18" viewBox="0 0 17.999863 18">
-<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="4.96818" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(7.843137%, 7.843137%, 7.843137%)" stroke-opacity="1" stroke-miterlimit="4" d="M 63.568783 3.787411 L 258.535626 3.787411 L 258.535626 198.752686 L 63.568783 198.752686 Z M 63.568783 3.787411 " transform="matrix(0.0899993, 0, 0, 0.09, -5.494582, -0.114304)"/>
-<path fill="none" stroke-width="1.88295" stroke-linecap="butt" stroke-linejoin="bevel" stroke="rgb(100%, 68.627451%, 0%)" stroke-opacity="1" stroke-dasharray="1.88295 3.76591" stroke-miterlimit="4" d="M 68.592791 97.303161 L 252.416868 97.253949 " transform="matrix(0.0881447, 0, 0, 0.079375, -5.147656, 1.050003)"/>
-<path fill="none" stroke-width="1.88295" stroke-linecap="butt" stroke-linejoin="bevel" stroke="rgb(100%, 68.627451%, 0%)" stroke-opacity="1" stroke-dasharray="1.88295 3.7659" stroke-miterlimit="4" d="M 68.592791 103.011825 L 252.416868 103.011825 " transform="matrix(0.0881447, 0, 0, 0.079375, -5.147656, 1.050003)"/>
-<path fill-rule="evenodd" fill="rgb(100%, 68.627451%, 0%)" fill-opacity="0.496314" d="M 0.898438 8.550781 L 17.101562 8.550781 L 17.101562 9.449219 L 0.898438 9.449219 Z M 0.898438 8.550781 "/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18.000137" viewBox="0 0 18 18.000137">
+<path fill-rule="evenodd" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="4.96818" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(7.843137%, 7.843137%, 7.843137%)" stroke-opacity="1" stroke-miterlimit="4" d="M 63.568747 3.787386 L 258.534047 3.787386 L 258.534047 198.751169 L 63.568747 198.751169 Z M 63.568747 3.787386 " transform="matrix(0.09, 0, 0, 0.0900007, -5.494624, -0.114305)"/>
+<path fill-rule="evenodd" fill="rgb(100%, 68.627451%, 0%)" fill-opacity="1" d="M 0.898438 8.550781 L 17.101562 8.550781 L 17.101562 9.449219 L 0.898438 9.449219 Z M 0.898438 8.550781 "/>
 </svg>
