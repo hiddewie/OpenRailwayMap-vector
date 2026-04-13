@@ -1975,6 +1975,8 @@ features:
         cases:
           - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
+      - default: 'be/TR'
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
       - { tag: 'railway:signal:regime', value: 'opposite' }
@@ -1988,6 +1990,8 @@ features:
       - match: 'railway:signal:main:substitute_signal'
         cases:
           - { exact: 'BE:OF', value: 'be/OEF' }
+        position: bottom
+      - default: 'be/TR'
         position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
