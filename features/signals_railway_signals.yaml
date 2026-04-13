@@ -2748,7 +2748,7 @@ features:
       - match: 'railway:signal:speed_limit_distant:speed'
         cases:
           - { exact: 'none', value: 'cz/predvestnik/NS/end' }
-          - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/predvestnik/NS/{}', example: 'cz/predvestnik/NS/{80}' }
+          - { regex: '^[1-9]0|1[0-6]0$', value: 'cz/predvestnik/NS/{}', example: 'cz/predvestnik/NS/{80}' }
         default: 'cz/predvestnik/NS/unknown'
       - match: 'railway:signal:speed_limit_distant:shortened'
         cases:
@@ -2763,7 +2763,7 @@ features:
     icon:
       - match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/predvestnik/N/{}', example: 'cz/predvestnik/N/{80}' }
+          - { regex: '^[1-9]0|1[0-6]0$', value: 'cz/predvestnik/N/{}', example: 'cz/predvestnik/N/{80}' }
         default: 'cz/predvestnik/N/unknown'
       - match: 'railway:signal:speed_limit_distant:shortened'
         cases:
@@ -2780,7 +2780,7 @@ features:
       - match: 'railway:signal:speed_limit:speed'
         cases:
           - { exact: 'none', value: 'cz/rychlostnik/NS/end' }
-          - { regex: '^[3-9]0|1[0-356]0|95|135$', value: 'cz/rychlostnik/NS/{}', example: 'cz/rychlostnik/NS/{80}' }
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/NS/{}', example: 'cz/rychlostnik/NS/{80}' }
         default: 'cz/rychlostnik/NS/unknown'
     tags:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_ns' ] }
@@ -2791,12 +2791,25 @@ features:
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-36]0|[1678]5|1[02]5$', value: 'cz/rychlostnik/N/{}', example: 'cz/rychlostnik/N/{80}' }
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N/{}', example: 'cz/rychlostnik/N/{80}' }
         default: 'cz/rychlostnik/N/unknown'
     tags:
       # Default for Cs-D1 speed_limit signals, differentiation of types sometimes possible using shape
       # Note that in some older (at least per recent usage) Cs-D1 tagging, this might mistakenly include the 5 sign on main signals
-      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:rychlostnik_n_s_pruhy', 'CZ-D1:horni_rychlostnik_n', 'Cs-D1' ] }
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n', 'Cs-D1' ] }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Rychlostník N s pruhy
+    country: CZ
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N_s_pruhy/{}', example: 'cz/rychlostnik/N_s_pruhy/{80}' }
+        default: 'cz/rychlostnik/N_s_pruhy/unknown'
+    tags:
+      # Default for Cs-D1 speed_limit signals, differentiation of types sometimes possible using shape
+      # Note that in some older (at least per recent usage) Cs-D1 tagging, this might mistakenly include the 5 sign on main signals
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_n_s_pruhy' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   # TODO: Future overhaul of tagging
