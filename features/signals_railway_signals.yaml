@@ -162,6 +162,7 @@ tags:
   - { tag: 'railway:signal:speed_limit:pointing', title: 'Speed limit pointing' }
   - { tag: 'railway:signal:speed_limit:deactivated', title: 'Speed limit deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:turn_direction', title: 'Speed limit diverging direction', type: array }
+  - { tag: 'railway:signal:speed_limit:type', title: 'Speed limit type' }
   - { tag: 'railway:signal:speed_limit_distant', title: 'Speed limit distant' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
   - { tag: 'railway:signal:speed_limit_distant:shortened', title: 'Speed limit distant shortened', type: boolean }
@@ -2782,6 +2783,10 @@ features:
           - { exact: 'none', value: 'cz/rychlostnik/NS/end' }
           - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/NS/{}', example: 'cz/rychlostnik/NS/{80}' }
         default: 'cz/rychlostnik/NS/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_ns' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
@@ -2793,6 +2798,10 @@ features:
         cases:
           - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N/{}', example: 'cz/rychlostnik/N/{80}' }
         default: 'cz/rychlostnik/N/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
       # Default for Cs-D1 speed_limit signals, differentiation of types sometimes possible using shape
       # Note that in some older (at least per recent usage) Cs-D1 tagging, this might mistakenly include the 5 sign on main signals
@@ -2806,6 +2815,10 @@ features:
         cases:
           - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N_s_pruhy/{}', example: 'cz/rychlostnik/N_s_pruhy/{80}' }
         default: 'cz/rychlostnik/N_s_pruhy/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_n_s_pruhy' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
