@@ -141,24 +141,28 @@ const gaugeLegends = [
 
 const signalFeatures = (feature) =>
   // Generate signal features for each icon variant. For an icon variant, use the default (or last) variant of the other icon cases.
-  feature.icon.map((icon, i) => ({
-    legend: icon.default ? icon.description : icon.cases[0].description,
-    icon: feature.icon
-      .map((otherIcon, j) => i === j
-        ? `${icon.default ?? icon.cases[0].example ?? icon.cases[0].value}${icon.position ? `@${icon.position}` : ''}`
-        : `${otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value}${otherIcon.position ? `@${otherIcon.position}` : ''}`
-      )
-      .join('|'),
-    variants: (icon.cases ?? []).slice(icon.default ? 0 : 1).map(item => ({
-      legend: item.description,
+  feature.icon
+    .filter((icon, i) => i === 0 || icon.cases)
+    .map((icon, i) => ({
+      legend: icon.default ? icon.description : icon.cases[0].description,
       icon: feature.icon
         .map((otherIcon, j) => i === j
-          ? `${item.example ?? item.value}${icon.position ? `@${icon.position}` : ''}`
-          : `${otherIcon.default ?? otherIcon.cases[otherIcon.cases.length - 1].example ?? otherIcon.cases[otherIcon.cases.length - 1].value}${otherIcon.position ? `@${otherIcon.position}` : ''}`
+          ? `${icon.default ?? icon.cases[0].example ?? icon.cases[0].value}${icon.position ? `@${icon.position}` : ''}`
+          : (otherIcon.default ? `${otherIcon.default}${otherIcon.position ? `@${otherIcon.position}` : ''}` : null)
         )
+        .filter(it => it)
         .join('|'),
-    })),
-  }));
+      variants: (icon.cases ?? []).slice(icon.default ? 0 : 1).map(item => ({
+        legend: item.description,
+        icon: feature.icon
+          .map((otherIcon, j) => i === j
+            ? `${item.example ?? item.value}${icon.position ? `@${icon.position}` : ''}`
+            : (otherIcon.default ? `${otherIcon.default}${otherIcon.position ? `@${otherIcon.position}` : ''}` : null)
+          )
+          .filter(it => it)
+          .join('|'),
+      })),
+    }));
 
 const legendData = {
   standard: {
