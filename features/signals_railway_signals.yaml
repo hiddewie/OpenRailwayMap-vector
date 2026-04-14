@@ -84,6 +84,7 @@ tags:
   - { tag: 'railway:signal:main_repeated:magnet', title: 'Main repeated magnet', type: boolean }
   - { tag: 'railway:signal:main_repeated:states', title: 'Main repeated states', type: array }
   - { tag: 'railway:signal:main_repeated:substitute_signal', title: 'Main repeated substitute signal', type: array }
+  - { tag: 'railway:signal:main_repeated:shape', title: 'Main repeated shape' }
   - { tag: 'railway:signal:main_repeated:deactivated', title: 'Main repeated deactivated', type: boolean }
   - { tag: 'railway:signal:minor', title: 'Minor' }
   - { tag: 'railway:signal:minor:form', title: 'Minor form' }
@@ -876,13 +877,6 @@ features:
       - { tag: 'railway:signal:main', value: 'AU:MNWSW:points_indiciator' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Route Indicator
-    country: AU
-    icon: [ default: 'au/nsw/metro/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:MNWSW:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Fixed Red
     country: AU
     icon: [ default: 'au/nsw/metro/fixed_red' ]
@@ -1184,13 +1178,6 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:ground' }
       - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Route Indicator
-    country: AU
-    icon: [ default: 'au/LightRail/signals/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:LightRail:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Signal
     country: AU
@@ -1840,18 +1827,11 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { exact: 'GYR', value: 'au/nsw/signals/main/semaphore/GYR', description: 'Upper quadrant' }
-          - { exact: 'GR', value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
+          - { any: ['GR', 'G', 'R'], value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
         default: 'au/nsw/signals/main/semaphore/unknown'
     tags:
       - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: Mainline Route Indicator
-    country: AU
-    icon: [ default: 'au/nsw/signals/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:NSW:theatre_box' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Turnout Repeater
     country: AU
@@ -1871,6 +1851,97 @@ features:
 
   # --- AU-VIC-signs --- #
   # --- AU-VIC-signals --- #
+  - description: Banner Indicator (theatre box)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/theatre_box' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'theatre_box' }
+
+  - description: Banner Indicator (compact)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/compact' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'compact' }
+
+  - description: Banner Indicator (dwarf)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/dwarf' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'dwarf' }
+
+  - description: Banner Indicator (single)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/single' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'single' }
+
+  - description: End of Track
+    country: AU
+    icon: [ default: 'au/vic/signals/end_of_track' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:VIC:end_of_track' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  - description: Gauge Indicator
+    country: AU
+    icon: [ default: 'au/vic/signals/route/gauge' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:VIC:gauge_indicator' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: Route Indicator (Illuminated Arrows)
+    country: AU
+    exampleIcon: au/vic/signals/route/arrows/left
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'left', value: 'au/vic/signals/route/arrows/left' }
+        position: right
+
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'straight', value: 'au/vic/signals/route/arrows/straight' }
+        position: right
+
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'right', value: 'au/vic/signals/route/arrows/right' }
+        position: right
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:points_direction' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Route Indicator (Painted Arrows)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/arrow_LR' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:painted_arrow' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+      - { tag: 'railway:signal:route:states', value: 'LR' }
+
+  - description: Route Indicator (Painted Arrows)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/arrow_RL' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:painted_arrow' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+      - { tag: 'railway:signal:route:states', value: 'RL' }
+
+  - description: Route Indicator (Stencil Light)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/stencil' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:stencil' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: Automatic Indicator
     country: AU
     icon: [ default: 'au/vic/signals/automatic' ]
@@ -2050,6 +2121,17 @@ features:
     tags:
       - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunt_3' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Route Indicator
+    country: AU
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^([A-Z1-4])$', value: 'au/route_indicator/{}', example: 'au/route_indicator/{A}' }
+        default: 'au/route_indicator/unknown'
+    tags:
+      - { tag: 'railway:signal:route', any: ['AU:MNWSW:route_indicator', 'AU:NSW:theatre_box', 'AU:VIC:theatre_box', 'AU:VIC:lamp','AU:VIC:sign', 'AU:LightRail:route_indicator', 'NZ:route_indicator'] }
+      - { tag: 'railway:signal:route:form', any: ['light', 'sign'] }
 
   # --- BE --- #
 
@@ -7676,13 +7758,6 @@ features:
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   # route
-  - description: Route Indicator
-    country: NZ
-    icon: [ default: 'nz/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'NZ:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Loop Light
     country: NZ
     icon: [ default: 'nz/L' ]
@@ -7978,7 +8053,7 @@ features:
     country: NZ
     icon: [ default: 'nz/speed_indicator' ]
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NZ:speed_indicator' }
+      - { tag: 'railway:signal:speed_limit', any: ['NZ:speed_indicator', 'AU:VIC:medium'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   # --- PL --- #
