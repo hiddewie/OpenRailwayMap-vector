@@ -4794,36 +4794,45 @@ features:
 
   # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
 
-  - description: ETCS transition marker
-    icon: [ default: 'etcs/level_transition' ]
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
-      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
-      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
-
-  - description: ETCS stop marker
+  - description: ETCS marker
     icon:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'left', value: 'etcs/stop_marker-right' }
           - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
         default: 'etcs/stop_marker-left'
+      - match: 'railway:signal:train_protection:system_change'
+        cases:
+          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
       - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
       - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
 
-  - description: ETCS location marker
+  - description: ETCS marker
     icon:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'left', value: 'etcs/location_marker-right' }
           - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
         default: 'etcs/location_marker-left'
+      - match: 'railway:signal:train_protection:system_change'
+        cases:
+          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
       - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
       - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS marker
+    icon:
+      - default: 'etcs/level_transition'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
 
   - description: Distant begin of neutral section
     icon: [ default: 'etcs/power_off_advance' ]
