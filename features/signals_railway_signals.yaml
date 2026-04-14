@@ -75,6 +75,7 @@ tags:
   - { tag: 'railway:signal:main:states', title: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', title: 'Main substitute signal', type: array }
   - { tag: 'railway:signal:main:PT_priority', title: 'Main PT priority' }
+  - { tag: 'railway:signal:main:type', title: 'Main type' }
   - { tag: 'railway:signal:main:function', title: 'Main function' }
   - { tag: 'railway:signal:main:shortened', title: 'Main shortened', type: boolean }
   - { tag: 'railway:signal:main:deactivated', title: 'Main deactivated', type: boolean }
@@ -1866,6 +1867,188 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
+
+  # --- AU-VIC-signs --- #
+  # --- AU-VIC-signals --- #
+  - description: Automatic Indicator
+    country: AU
+    icon: [ default: 'au/vic/signals/automatic' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:VIC:A' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Low Speed
+    country: AU
+    icon: [ default: 'au/vic/signals/low_speed_dwarf' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:VIC:low_speed' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  - description: Low Speed
+    country: AU
+    icon: [ default: 'au/vic/signals/low_speed' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:VIC:low_speed' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: 3-position main signal (dwarf-height, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_dwarf_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (dwarf-height, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_dwarf' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_32_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '32' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_32' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '32' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_22_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '22' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_22' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '22' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_13_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '13' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_13' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '13' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over 2-aspect multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_12_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '12' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over 2-aspect multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_12' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '12' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 2-position main signal
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_2' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 2-position shunt signal
+    country: AU
+    icon: [ default: 'au/vic/signals/shunt2' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunt_2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: 3-position shunt signal
+    country: AU
+    icon: [ default: 'au/vic/signals/shunt3' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunt_3' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   # --- BE --- #
 
