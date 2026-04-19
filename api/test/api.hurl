@@ -135,7 +135,7 @@ jsonpath "$[6].name" == "Berlin-Spandau West"
 jsonpath "$[7].name" == "Berlin-Spandau Mitte"
 jsonpath "$[8].name" == "Berlin-Spandau Ost"
 
-# Facility request with with diacritics
+# Facility request with diacritics
 GET {{base_url}}/facility
 [QueryStringParams]
 name: Karl-Marx-Straße
@@ -143,6 +143,15 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Karl-Marx-Straße"
+
+# Facility request with name containing /
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Königsheideweg
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Sterndamm/Königsheideweg"
 
 # Facility search for reference
 GET {{base_url}}/facility
