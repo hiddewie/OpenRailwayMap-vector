@@ -8,8 +8,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space(value))) AS terms,
     name,
     name_tags,
-    key AS name_key,
-    value AS name_value,
     feature,
     state,
     station,
@@ -30,11 +28,10 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     description,
     geom
   FROM (
-    SELECT DISTINCT ON (osm_ids, key, value, name, feature, state, station, map_reference, uic_ref, importance, geom)
+    SELECT DISTINCT ON (osm_ids, value, name, feature, state, station, map_reference, uic_ref, importance, geom)
       id,
       osm_ids,
       osm_types,
-      (each(name_tags)).key AS key,
       (each(name_tags)).value AS value,
       name,
       name_tags,
