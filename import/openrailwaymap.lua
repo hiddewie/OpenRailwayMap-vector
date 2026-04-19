@@ -1022,6 +1022,7 @@ function is_railway_platform(tags)
   return tags.railway == 'platform'
     or (
       tags.public_transport == 'platform'
+      and tags.railway ~= 'platform_edge'
       and (
         tags.train == 'yes'
         or tags.tram == 'yes'
