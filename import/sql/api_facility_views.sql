@@ -5,7 +5,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_search AS
     id,
     osm_ids,
     osm_types,
-    to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space(value))) AS terms,
+    to_tsvector('simple', unaccent(openrailwaymap_hyphen_slash_to_space(value))) AS terms,
     name,
     name_tags,
     key AS name_key,
