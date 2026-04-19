@@ -245,7 +245,7 @@ GET {{base_url}}/facility
 q: Landsberger Allee
 HTTP 200
 [Asserts]
-jsonpath "$" count == 3
+jsonpath "$" count == 6
 jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
 jsonpath "$[0].feature" == "tram_stop"
 jsonpath "$[0].state" == "present"
@@ -256,13 +256,13 @@ jsonpath "$[0].osm_ids[1]" == 271777826
 jsonpath "$[0].osm_ids[2]" == 1679221136
 jsonpath "$[0].osm_ids[3]" == 1787945074
 jsonpath "$[0].osm_types" count == 4
-jsonpath "$[2].railway_ref" == "BLST"
-jsonpath "$[2].station" == "light_rail"
-jsonpath "$[2].uic_ref" == "8089020"
-jsonpath "$[2].operator[0]" == "DB InfraGO AG"
-jsonpath "$[2].network[0]" == "Verkehrsverbund Berlin-Brandenburg"
-jsonpath "$[2].wikidata[0]" == "Q800507"
-jsonpath "$[2].wikipedia[0]" == "de:Bahnhof Berlin Landsberger Allee"
+jsonpath "$[3].railway_ref" == "BLST"
+jsonpath "$[3].station" == "light_rail"
+jsonpath "$[3].uic_ref" == "8089020"
+jsonpath "$[3].operator[0]" == "DB InfraGO AG"
+jsonpath "$[3].network[0]" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$[3].wikidata[0]" == "Q800507"
+jsonpath "$[3].wikipedia[0]" == "de:Bahnhof Berlin Landsberger Allee"
 
 # Facility request missing required parameter
 GET {{base_url}}/facility
