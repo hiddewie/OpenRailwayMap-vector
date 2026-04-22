@@ -153,9 +153,9 @@ CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_buffered_index
   ON grouped_stations_with_importance
     USING GIST(buffered);
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_osm_ids_index
+CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_station_index
   ON grouped_stations_with_importance
-    USING GIN(osm_ids);
+    USING GIN(station_ids);
 
 CLUSTER grouped_stations_with_importance
   USING grouped_stations_with_importance_center_index;
@@ -171,14 +171,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
      ON ssa.stop_area_osm_id = sa.osm_id
   JOIN stations s
     ON ssa.station_id = s.id
-  JOIN (
-    SELECT
-      unnest(osm_ids) AS osm_id,
-      unnest(osm_types) AS osm_type,
-      buffered
-    FROM grouped_stations_with_importance
-  ) gs
-    ON s.osm_id = gs.osm_id and s.osm_type = gs.osm_type
+  JOIN grouped_stations_with_importance gs
+    ON ARRAY[s.id] <@ gs.station_ids
   GROUP BY sag.osm_id
   -- Only use station area groups that have more than one station area
   HAVING COUNT(distinct sa.osm_id) > 1;
