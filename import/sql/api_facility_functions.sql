@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_to_space(str TEXT) RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_slash_to_space(str TEXT) RETURNS TEXT AS $$
 BEGIN
-  RETURN regexp_replace(str, '(\w)-(\w)', '\1 \2', 'g');
+  RETURN regexp_replace(str, '(\w)[-/](\w)', '\1 \2', 'g');
 END;
 $$ LANGUAGE plpgsql
   IMMUTABLE
@@ -84,11 +84,11 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
         gs.description,
         ST_X(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS latitude,
         ST_Y(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS longitude,
-        openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, gs.importance::numeric, gs.feature, gs.station) AS rank
+        openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name))), fs.terms, gs.importance::numeric, gs.feature, gs.station) AS rank
       FROM openrailwaymap_facilities_for_name_search fs
       JOIN grouped_stations_with_importance gs
         ON fs.station_ids = gs.station_ids
-      WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name)))
+      WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name)))
       ORDER BY rank DESC NULLS LAST
       LIMIT input_limit;
   END

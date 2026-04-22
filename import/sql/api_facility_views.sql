@@ -8,7 +8,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS openrailwaymap_facilities_for_name_search
   FROM (
     SELECT
       s.id,
-      to_tsvector('simple', unaccent(openrailwaymap_hyphen_to_space((each(s.name_tags)).value))) as name
+      to_tsvector('simple', unaccent(openrailwaymap_hyphen_slash_to_space((each(s.name_tags)).value))) as name
     FROM stations s
     WHERE s.name_tags IS NOT NULL
   ) found_stations
