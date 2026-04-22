@@ -857,19 +857,17 @@ end
 
 function station_references(tags)
   local found_references = {}
-  local found_search_references = {}
 
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
         found_references[reference.id] = tags[tag]
-        found_search_references[reference.id] = tags[tag]:lower()
         break
       end
     end
   end
 
-  return found_references, found_search_references
+  return found_references
 end
 
 function position_is_zero(position)
@@ -1108,7 +1106,6 @@ function osm2pgsql.process_node(object)
   local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
-      references, search_references = station_references(tags)
       stations:insert({
         way = object:as_point(),
         feature = station_feature,
@@ -1117,7 +1114,6 @@ function osm2pgsql.process_node(object)
         station = station,
         name_tags = name_tags(tags),
         map_reference = map_station_reference(tags),
-        references = station_references(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
         owner = tags.owner,
