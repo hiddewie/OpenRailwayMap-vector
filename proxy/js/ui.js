@@ -2598,8 +2598,9 @@ function popupContent(feature, abortController) {
           popupValue.style.cursor = 'help';
         }
 
+        const containsAnyBodyValue = body.some(([_, bodyValue]) => bodyValue);
         const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
-        popupValueTitle.innerText = `${title}: `;
+        popupValueTitle.innerText = `${title}${containsAnyBodyValue ? ': ' : ''}`;
 
         let first = true
         body.forEach(([key, bodyValue]) => {

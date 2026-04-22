@@ -199,3 +199,19 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { ref = '4', height = '0.4', tactile_paving = true, way = way },
   },
 })
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'platform_edge',
+    ['public_transport'] = 'platform',
+  },
+  as_linestring = function ()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  platform_edge = {
+    { way = way },
+  },
+  -- Not imported as platform
+})

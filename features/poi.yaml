@@ -1,3 +1,5 @@
+$schema: ./schema/poi.yaml
+
 features:
   - description: Border crossing
     feature: 'general/border'

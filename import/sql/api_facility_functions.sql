@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: GPL-2.0-or-later
 
-CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_to_space(str TEXT) RETURNS TEXT AS $$
+CREATE OR REPLACE FUNCTION openrailwaymap_hyphen_slash_to_space(str TEXT) RETURNS TEXT AS $$
 BEGIN
-  RETURN regexp_replace(str, '(\w)-(\w)', '\1 \2', 'g');
+  RETURN regexp_replace(str, '(\w)[-/](\w)', '\1 \2', 'g');
 END;
 $$ LANGUAGE plpgsql
   IMMUTABLE
@@ -135,11 +135,11 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
             fs.wikipedia,
             fs.note,
             fs.description,
-            ST_X(ST_Transform(fs.geom, 4326)) AS latitude,
-            ST_Y(ST_Transform(fs.geom, 4326)) AS longitude,
-            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name))), fs.terms, fs.importance::numeric, fs.feature, fs.station) AS rank
+            ST_X(ST_Transform(ST_PointOnSurface(fs.geom), 4326)) AS latitude,
+            ST_Y(ST_Transform(ST_PointOnSurface(fs.geom), 4326)) AS longitude,
+            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name))), fs.terms, fs.importance::numeric, fs.feature, fs.station) AS rank
           FROM openrailwaymap_facilities_for_search fs
-          WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_to_space(input_name)))
+          WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name)))
         ) AS a
       ) AS b
       ORDER BY b.rank DESC NULLS LAST
@@ -203,8 +203,8 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
         array_remove(ARRAY[s.wikipedia], null) AS wikipedia,
         array_remove(ARRAY[s.note], null) AS note,
         array_remove(ARRAY[s.description], null) AS description,
-        ST_X(ST_Transform(s.way, 4326)) AS latitude,
-        ST_Y(ST_Transform(s.way, 4326)) AS longitude,
+        ST_X(ST_Transform(ST_PointOnSurface(s.way), 4326)) AS latitude,
+        ST_Y(ST_Transform(ST_PointOnSurface(s.way), 4326)) AS longitude,
         -- Determine rank by common facility reference IDs
         (CASE
           WHEN input_ref = s."references"->'railway-ref' THEN 100

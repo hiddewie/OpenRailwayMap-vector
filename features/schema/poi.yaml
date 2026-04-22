@@ -1,0 +1,84 @@
+"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  features:
+    type: array
+    description: Defines the places of interest on the map
+    items:
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description used in the legend
+        feature:
+          type: string
+          description: The icon used to show the place of interest
+        layer:
+          type: string
+          description: The layer that the place of interest will be shown in
+          enum:
+            - standard
+            - electrification
+            - operator
+        minzoom:
+          type: number
+          minimum: 1
+          maximum: 20
+          description: The minimum zoom that this place of interest will be shown from
+        tags:
+          type: array
+          description: The tags to match for determining the place of interest
+          items:
+            type: object
+            properties:
+              tag:
+                type: string
+                description: The tag
+              value:
+                type: string
+                description: The tag value
+              values:
+                type: array
+                description: Multiple tag values
+                items:
+                  type: string
+        variants:
+          type: array
+          description: Other variants of the same feature
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: The description used in the legend
+              feature:
+                type: string
+                description: The icon used to show the place of interest
+              minzoom:
+                type: number
+                minimum: 1
+                maximum: 20
+                description: The minimum zoom that this place of interest will be shown from
+              tags:
+                type: array
+                description: The tags to match for determining the place of interest
+                items:
+                  type: object
+                  properties:
+                    tag:
+                      type: string
+                      description: The tag
+                    value:
+                      type: string
+                      description: The tag value
+                    values:
+                      type: array
+                      description: Multiple tag values
+                      items:
+                        type: string
+            additionalProperties: false
+      additionalProperties: false
+  $schema:
+    type: string
+additionalProperties: false

@@ -1,0 +1,158 @@
+"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
+"$schema": "https://json-schema.org/draft/2020-12/schema"
+type: object
+properties:
+  tags:
+    type: array
+    description: The imported tags used to identify signal features
+    items:
+      type: object
+      properties:
+        tag:
+          type: string
+          description: The tag
+        title:
+          type: string
+          description: The description used in the popup to label the tag value
+        type:
+          type: string
+          description: Determines how the tag should be imported. Strings are imported as the tag value. Booleans are imported as false if the tag value is `no` or empty, otherwise true. Arrays are imported by splitting the tag value on `;`.
+          default: string
+          enum:
+            - string
+            - array
+            - boolean
+        format:
+          type: object
+          description: The formatting used to display the value in the popup
+          properties:
+            template:
+              type: string
+        description:
+          type: string
+          description: A tooltip to show in the popup
+      additionalProperties: false
+  types:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The type of tag, sometimes named category
+        layer:
+          type: string
+          description: The layer that features using this type are shown in.
+          enum:
+            - signals
+            - speed
+            - electrification
+      additionalProperties: false
+  features:
+    type: array
+    description: The signal features shown on the map
+    items:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Used in the legend for the feature
+        country:
+          type: string
+          description: The country where this signal is used
+        type:
+          type: string
+          description: The type of signal. Line signals are used only on main/branch lines, and tram signals are used for tram lines.
+          enum:
+            - line
+            - tram
+        exampleIcon:
+          type: string
+          description: Used when a complex icon is used, to show a representative example of this feature using a single icon.
+        icon:
+          type: array
+          description: Determines the icon used to show the feature on the map
+          items:
+            type: object
+            properties:
+              default:
+                type: string
+                description: Used when no matching is present, or no case is matched
+              match:
+                type: string
+                description: The tag used for matching the icon cases against
+              cases:
+                type: array
+                description: Defines cases to match the match tag against in order
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: Match against a simple value
+                    regex:
+                      type: string
+                      description: Match against a regular expression
+                    exact:
+                      type: string
+                      description: Match against the exact value
+                    any:
+                      type: array
+                      description: Match against any of the values
+                      items:
+                        type: string
+                    all:
+                      type: array
+                      description: Match against all of the values
+                      items:
+                        type: string
+                    example:
+                      type: string
+                      description: An icon that can be used in the legend when regular expression matching is used
+                    description:
+                      type: string
+                      description: The legend description
+                  additionalProperties: false
+              position:
+                type: string
+                enum:
+                  - top
+                  - bottom
+                  - left
+                  - right
+                  - center
+                default: center
+                description: Determines where the icon component is placed, in relation to the previous icon components
+            additionalProperties: false
+        tags:
+          type: array
+          description: Tags that determine the feature
+          items:
+            type: object
+            properties:
+              tag:
+                type: string
+                description: The tag to match against
+              value:
+                type: string
+                description: Match against the value
+              values:
+                type: array
+                items:
+                  type: string
+                description: Match against the exact values
+              any:
+                type: array
+                description: Match against any of the values
+                items:
+                  type: string
+              all:
+                type: array
+                description: Match against all of the values
+                items:
+                  type: string
+            additionalProperties: false
+      additionalProperties: false
+  $schema:
+    type: string
+additionalProperties: false

@@ -147,3 +147,18 @@ jobs:
         if: always()
         run: |
           docker compose logs
+
+  feature-test:
+    name: Feature test
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run feature tests
+        run: |
+          docker compose run --rm --build feature-test

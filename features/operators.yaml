@@ -1,6 +1,8 @@
 # Mapping of known operators to their color and other metadata
 # Unknown operators will get assigned a generated color
 
+$schema: ./schema/operators.yaml
+
 operators:
 
   # --- AE --- #
