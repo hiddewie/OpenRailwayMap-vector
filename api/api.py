@@ -5,6 +5,7 @@ import sys
 
 import asyncpg
 from fastapi import FastAPI, Query, Response, HTTPException
+from fastapi.staticfiles import StaticFiles
 
 import httpx
 
@@ -56,12 +57,12 @@ app = FastAPI(
     title="OpenRailwayMap API",
     lifespan=lifespan,
 )
+app.mount("/api/features", StaticFiles(directory="static"), name="static")
 
 DEFAULT_FACILITY_LIMIT = 20
 DEFAULT_MILESTONE_LIMIT = 2
 MIN_LIMIT = 1
 MAX_LIMIT = 200
-
 
 @app.get("/api/status")
 async def status():
@@ -106,7 +107,7 @@ async def wikidata(
 
 
 @app.get("/api/wikimedia/{file_name}")
-async def wikidata(
+async def wikimedia(
         file_name: str
 ):
     api = WikidataAPI(app.state.http_client)
@@ -114,7 +115,7 @@ async def wikidata(
 
 
 @app.get("/api/route/{osm_id}")
-async def wikidata(
+async def route(
         osm_id: int
 ):
     api = RouteAPI(app.state.database)
@@ -127,7 +128,7 @@ async def wikidata(
 
 
 @app.get("/api/route/stops/{osm_id}")
-async def wikidata(
+async def route_stops(
         osm_id: int
 ):
     api = RouteStopsAPI(app.state.database)

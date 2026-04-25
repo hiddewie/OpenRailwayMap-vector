@@ -2835,7 +2835,7 @@ map.on('click', event => {
 });
 
 let features = null;
-fetch(`${location.origin}/features.json`)
+fetch(`${location.origin}/api/features/features.json`)
   .then(result => {
     if (result.status === 200) {
       return result.json()
