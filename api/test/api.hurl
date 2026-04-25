@@ -19,13 +19,13 @@ Content-Type: application/json
 jsonpath "$" count == 20
 jsonpath "$[0].name" == "Berlin Hauptbahnhof (tief)"
 jsonpath "$[1].name" == "S+U Hauptbahnhof"
-jsonpath "$[2].name" == "Hauptbahnhof"
-jsonpath "$[3].name" == "Berlin Hauptbahnhof"
-jsonpath "$[4].name" == "Berlin Hamburger und Lehrter Bahnhof"
-jsonpath "$[5].name" == "Berlin-Moabit"
+jsonpath "$[2].name" == "Berlin Hauptbahnhof"
+jsonpath "$[3].name" == "Hauptbahnhof"
+jsonpath "$[4].name" == "Berlin-Moabit"
+jsonpath "$[5].name" == "Berlin Hamburger und Lehrter Bahnhof"
 jsonpath "$[6].name" == "Berlin Südkreuz"
-jsonpath "$[7].name" == "Südkreuz (Nord-Süd)"
-jsonpath "$[8].name" == "Südkreuz (Ringbahn)"
+jsonpath "$[7].name" == "Südkreuz (Ringbahn)"
+jsonpath "$[8].name" == "Südkreuz (Nord-Süd)"
 jsonpath "$[9].name" == "Berlin Nordost"
 jsonpath "$[10].name" == "Berlin-Ruhleben"
 jsonpath "$[11].name" == "Berlin Greifswalder Straße"
@@ -35,8 +35,8 @@ jsonpath "$[14].name" == "Berlin-Spandau"
 jsonpath "$[15].name" == "Spandau"
 jsonpath "$[16].name" == "Berlin-Tempelhof"
 jsonpath "$[17].name" == "Berlin-Schönholz"
-jsonpath "$[18].name" == "Berlin Ostbahnhof"
-jsonpath "$[19].name" == "Ostbahnhof"
+jsonpath "$[18].name" == "Ostbahnhof"
+jsonpath "$[19].name" == "Berlin Ostbahnhof"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -191,8 +191,8 @@ ref: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
-jsonpath "$[1].name" == "Ostkreuz"
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
 # Facility search for BVG reference
 GET {{base_url}}/facility
@@ -202,7 +202,7 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Virchowstraße"
-jsonpath "$[0].references.de-bvg" == "309771"
+jsonpath "$[0].references.de-bvg" == "309770"
 
 # Facility search for name or reference
 GET {{base_url}}/facility
@@ -236,8 +236,8 @@ q: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
-jsonpath "$[1].name" == "Ostkreuz"
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
 # Facility search for name or reference for grouped station
 GET {{base_url}}/facility

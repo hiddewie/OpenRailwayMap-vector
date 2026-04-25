@@ -59,90 +59,37 @@ CREATE OR REPLACE FUNCTION query_facilities_by_name(
   "rank" numeric
 ) AS $$
   BEGIN
-    -- We do not sort the result, although we use DISTINCT ON because osm_ids is sufficient to sort out duplicates.
     RETURN QUERY
-      SELECT
-        b.osm_ids,
-        b.osm_types,
-        b.name,
-        b.localized_name,
-        b.feature,
-        b.state,
-        b.station,
-        b.railway_ref,
-        b.uic_ref,
-        b."references",
-        b.operator,
-        b.owner,
-        b.network,
-        b.wikidata,
-        b.wikimedia_commons,
-        b.wikimedia_commons_file,
-        b.image,
-        b.mapillary,
-        b.wikipedia,
-        b.note,
-        b.description,
-        b.latitude,
-        b.longitude,
-        b.rank
-      FROM (
-        SELECT DISTINCT ON (a.osm_ids)
-          a.osm_ids,
-          a.osm_types,
-          a.name,
-          a.localized_name,
-          a.feature,
-          a.state,
-          a.station,
-          a.railway_ref,
-          a.uic_ref,
-          a."references",
-          a.operator,
-          a.owner,
-          a.network,
-          a.wikidata,
-          a.wikimedia_commons,
-          a.wikimedia_commons_file,
-          a.image,
-          a.mapillary,
-          a.wikipedia,
-          a.note,
-          a.description,
-          a.latitude,
-          a.longitude,
-          a.rank
-        FROM (
-          SELECT
-            fs.osm_ids,
-            fs.osm_types,
-            fs.name,
-            COALESCE(fs.name_tags['name:' || input_language], fs.name) as localized_name,
-            fs.feature,
-            fs.state,
-            fs.station,
-            fs.railway_ref,
-            fs.uic_ref,
-            fs."references",
-            fs.operator,
-            fs.owner,
-            fs.network,
-            fs.wikidata,
-            fs.wikimedia_commons,
-            fs.wikimedia_commons_file,
-            fs.image,
-            fs.mapillary,
-            fs.wikipedia,
-            fs.note,
-            fs.description,
-            ST_X(ST_Transform(ST_PointOnSurface(fs.geom), 4326)) AS latitude,
-            ST_Y(ST_Transform(ST_PointOnSurface(fs.geom), 4326)) AS longitude,
-            openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name))), fs.terms, fs.importance::numeric, fs.feature, fs.station) AS rank
-          FROM openrailwaymap_facilities_for_search fs
-          WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name)))
-        ) AS a
-      ) AS b
-      ORDER BY b.rank DESC NULLS LAST
+      SELECT DISTINCT ON (rank, gs.osm_ids)
+        gs.osm_ids,
+        gs.osm_types,
+        gs.name,
+        COALESCE(gs.name_tags['name:' || input_language], gs.name) as localized_name,
+        gs.feature,
+        gs.state,
+        gs.station,
+        gs.map_reference as railway_ref,
+        gs.uic_ref,
+        gs."references",
+        gs.operator,
+        gs.owner,
+        gs.network,
+        gs.wikidata,
+        gs.wikimedia_commons,
+        gs.wikimedia_commons_file,
+        gs.image,
+        gs.mapillary,
+        gs.wikipedia,
+        gs.note,
+        gs.description,
+        ST_X(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS latitude,
+        ST_Y(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS longitude,
+        openrailwaymap_name_rank(phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name))), fs.terms, gs.importance::numeric, gs.feature, gs.station) AS rank
+      FROM openrailwaymap_facilities_for_name_search fs
+      JOIN grouped_stations_with_importance gs
+        ON fs.station_ids = gs.station_ids
+      WHERE fs.terms @@ phraseto_tsquery('simple', unaccent(openrailwaymap_hyphen_slash_to_space(input_name)))
+      ORDER BY rank DESC NULLS LAST
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
@@ -181,61 +128,44 @@ CREATE OR REPLACE FUNCTION query_facilities_by_ref(
 ) AS $$
   BEGIN
     RETURN QUERY
-      SELECT
-        ARRAY[s.osm_id] as osm_ids,
-        ARRAY[s.osm_type] as osm_types,
-        s.name,
-        COALESCE(name_tags['name:' || input_language], s.name) as localized_name,
-        s.feature,
-        s.state,
-        s.station,
-        s.map_reference as railway_ref,
-        s."references"->'uic' as uic_ref,
-        hs_concat(coalesce(sa."references", ''::hstore), coalesce(s."references", ''::hstore)) as "references",
-        s.operator AS operator,
-        array_remove(ARRAY[s.owner], null) AS owner,
-        s.network AS network,
-        array_remove(ARRAY[s.wikidata], null) AS wikidata,
-        array_remove(ARRAY[s.wikimedia_commons], null) AS wikimedia_commons,
-        array_remove(ARRAY[s.wikimedia_commons_file], null) AS wikimedia_commons_file,
-        array_remove(ARRAY[s.image], null) AS image,
-        array_remove(ARRAY[s.mapillary], null) AS mapillary,
-        array_remove(ARRAY[s.wikipedia], null) AS wikipedia,
-        array_remove(ARRAY[s.note], null) AS note,
-        array_remove(ARRAY[s.description], null) AS description,
-        ST_X(ST_Transform(ST_PointOnSurface(s.way), 4326)) AS latitude,
-        ST_Y(ST_Transform(ST_PointOnSurface(s.way), 4326)) AS longitude,
+      SELECT DISTINCT ON (rank, gs.osm_ids)
+        gs.osm_ids,
+        gs.osm_types,
+        gs.name,
+        COALESCE(gs.name_tags['name:' || input_language], gs.name) as localized_name,
+        gs.feature,
+        gs.state,
+        gs.station,
+        gs.map_reference as railway_ref,
+        gs.uic_ref,
+        gs."references",
+        gs.operator,
+        gs.owner,
+        gs.network,
+        gs.wikidata,
+        gs.wikimedia_commons,
+        gs.wikimedia_commons_file,
+        gs.image,
+        gs.mapillary,
+        gs.wikipedia,
+        gs.note,
+        gs.description,
+        ST_X(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS latitude,
+        ST_Y(ST_Transform(ST_PointOnSurface(gs.center), 4326)) AS longitude,
         -- Determine rank by common facility reference IDs
         (CASE
-          WHEN input_ref = s."references"->'railway-ref' THEN 100
-          WHEN input_ref = s."references"->'uic' THEN 90
-          WHEN input_ref = s."references"->'ibnr' THEN 80
-          WHEN input_ref = s."references"->'ifopt' THEN 70
-          WHEN input_ref = s."references"->'plc' THEN 60
+          WHEN lower(input_ref) = lower(gs."references"->'railway-ref') THEN 100
+          WHEN lower(input_ref) = lower(gs."references"->'uic') THEN 90
+          WHEN lower(input_ref) = lower(gs."references"->'ibnr') THEN 80
+          WHEN lower(input_ref) = lower(gs."references"->'ifopt') THEN 70
+          WHEN lower(input_ref) = lower(gs."references"->'plc') THEN 60
           ELSE 0
         END)::numeric as rank
-      FROM (
-        SELECT s.id
-        FROM stations s
-        WHERE ARRAY[input_ref] <@ avals(s."references")
-
-        UNION
-
-        SELECT s.id
-        FROM stop_areas sa
-        JOIN stations_stop_areas ssa
-          ON ssa.stop_area_osm_id = sa.osm_id
-        JOIN stations s
-          ON ssa.station_id = s.id
-        WHERE ARRAY[input_ref] <@ avals(sa."references")
-      ) station_ids
-      JOIN stations s
-        ON station_ids.id = s.id
-      LEFT JOIN stations_stop_areas ssa
-        ON ssa.station_id = s.id
-      LEFT JOIN stop_areas sa
-        ON ssa.stop_area_osm_id = sa.osm_id
-      ORDER BY rank DESC
+      FROM openrailwaymap_facilities_for_ref_search fs
+      JOIN grouped_stations_with_importance gs
+        ON fs.station_ids = gs.station_ids
+      WHERE ARRAY[lower(input_ref)] <@ fs.terms
+      ORDER BY rank DESC NULLS LAST
       LIMIT input_limit;
   END
 $$ LANGUAGE plpgsql
