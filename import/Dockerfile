@@ -35,7 +35,7 @@ RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js
   node operators.sql.js \
     > /build/operators.sql
 
-FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb AS test
+FROM debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a AS test
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
@@ -54,7 +54,7 @@ COPY import/test test
 
 CMD ["lua", "test/test_all.lua"]
 
-FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb
+FROM debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
