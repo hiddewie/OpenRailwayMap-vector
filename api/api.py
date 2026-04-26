@@ -16,6 +16,7 @@ from openrailwaymap_api.replication_api import ReplicationAPI
 from openrailwaymap_api.wikidata_api import WikidataAPI
 from openrailwaymap_api.route_api import RouteAPI
 from openrailwaymap_api.route_stops_api import RouteStopsAPI
+from openrailwaymap_api.feature_api import FeatureAPI
 
 DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
@@ -134,3 +135,18 @@ async def route_stops(
     api = RouteStopsAPI(app.state.database)
     response = await api(osm_id=osm_id)
     return Response(content=response, media_type="application/geo+json")
+
+
+@app.get("/api/feature/{source}/{layer}/{id}")
+async def feature_source_layer(
+        source: str,
+        layer: str,
+        id: int,
+):
+    api = FeatureAPI(app.state.database)
+    response = await api(source=source, layer=layer, id=id)
+
+    if response is None:
+        raise HTTPException(status_code=404, detail="Feature not found")
+
+    return response
