@@ -162,4 +162,7 @@ docker build --target build-styles --tag build-styles --file proxy.Dockerfile . 
 
 docker build --target build-styles --tag build-styles --file proxy.Dockerfile . \
   && docker run --rm --entrypoint cat build-styles standard.json | jq . | less
+
+docker build --target build-features --tag build-features --file api.Dockerfile . \
+  && docker run --rm --entrypoint cat build-features features.json | jq . | less
 ```
