@@ -2289,12 +2289,11 @@ function popupContent(feature, abortController) {
   const editor = configuration.editor ?? defaultConfiguration.editor;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  function fetchFeatureProperties() {
-    return fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
+  const fetchFeatureProperties = () =>
+    fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
       signal: abortController.signal,
     })
       .then(response => response.json());
-  }
 
   // Build HTML content dynamically to avoid cross site scripting
   const constructCatalogKey = propertyValue => ({
