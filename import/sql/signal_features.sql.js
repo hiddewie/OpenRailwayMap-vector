@@ -412,6 +412,7 @@ CREATE OR REPLACE VIEW signals_railway_signals_view AS
   SELECT
     id,
     osm_id,
+    'N' as osm_type,
     way,
     sd.direction_both as direction_both,
     ref,

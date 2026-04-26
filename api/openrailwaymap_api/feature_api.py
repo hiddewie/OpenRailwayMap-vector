@@ -3,6 +3,7 @@ import json
 with open('static/features.json', 'r') as features_file:
     features = json.load(features_file)
 
+
 class FeatureAPI:
     def __init__(self, database):
         self.database = database
@@ -21,10 +22,17 @@ class FeatureAPI:
 
         if 'properties' not in catalog:
             return None
-        properties = catalog['properties'].keys()
+
+        # Combine all property references in the catalog for the view query
+        properties = (
+            {'osm_id', 'osm_type'} |
+            catalog['properties'].keys() |
+            {catalog['featureProperty'] if 'featureProperty' in catalog else None} |
+            set(catalog['labelProperties'] if 'labelProperties' in catalog else [])
+        )
 
         sql_query = f"""
-            SELECT {', '.join(f'"{property}"' for property in properties)}
+            SELECT {', '.join(f'"{property}"' for property in properties if property)}
             FROM "{view}" 
             WHERE id = $1::numeric 
         """

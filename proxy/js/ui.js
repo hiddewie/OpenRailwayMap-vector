@@ -2287,35 +2287,16 @@ function openJOSM(josmUrl, osmType, osmId) {
 function popupContent(feature, abortController) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
-  const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  // TODO make optional, see openhistoricalmap source
-  fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
-    signal: abortController.signal,
-  })
-    .then(response => response.json())
-    .then(data => {
-      // TODO await and process data instead of `properties`
-      console.info('feature data', feature, data)
+  function fetchFeatureProperties() {
+    return fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
+      signal: abortController.signal,
     })
-    .catch(err => {
-      if (!abortController.signal.aborted) {
-        console.error('Error while fetching popup feature properties', err);
-      } else {
-        // Ignore aborted request errors
-      }
-    });
-
-  const featureCatalog = features && features[layerSource];
-  if (!featureCatalog) {
-    console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
-    return;
+      .then(response => response.json());
   }
 
-  const featureProperty = featureCatalog.featureProperty || 'feature';
-  const colorProperty = featureCatalog.colorProperty || 'color';
-
+  // Build HTML content dynamically to avoid cross site scripting
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property, and icon position to get the key
     catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : propertyValue,
@@ -2324,16 +2305,6 @@ function popupContent(feature, abortController) {
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
       : null
   });
-  const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
-
-  const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
-  if (!featureContent) {
-    console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
-  }
-  // Unique labels
-  const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
-  const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
-  const color = properties[colorProperty];
 
   const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
@@ -2417,294 +2388,329 @@ function popupContent(feature, abortController) {
     }
   }
 
-  const propertyValues = Object.entries(featureCatalog.properties || {})
-    .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, list, description}]) => {
-      const value = properties[property] === true
-        ? ''
-        : formatPropertyValue(properties[property], format)
+  const featureCatalog = features && features[layerSource];
+  if (!featureCatalog) {
+    console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
+    return;
+  }
 
-      const body = Array.isArray(value)
-        ? value
-        : [[null, value]]
+  const featureProperty = featureCatalog.featureProperty || 'feature';
+  const colorProperty = featureCatalog.colorProperty || 'color';
 
-      return {
-        title: name,
-        value: properties[property],
-        body,
-        paragraph,
-        list,
-        link,
-        tooltip: description,
-      };
-    })
-
-  const osmFeatures = determineOsmFeatures(properties, featureContent);
-
-  // Build HTML content dynamically to avoid cross site scripting
+  const propertiesFromView = featureCatalog.view;
+  const properties$ = propertiesFromView
+    ? fetchFeatureProperties()
+    : Promise.resolve(feature.properties);
 
   const popupContainer = createDomElement('div');
 
-  const popupTitle = createDomElement('h5', undefined, popupContainer);
-  popupTitle.innerText = featureDescription;
+  properties$
+    .then(properties => {
+      const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
-  if (properties.icon || labels.length > 0 || color) {
-    const popupLabel = createDomElement('h6', undefined, popupContainer);
-    if (properties.icon) {
-      const popupLabelSpan = createDomElement('span', undefined, popupLabel);
-      popupLabelSpan.title = properties.railway;
-      popupLabelSpan.innerText = properties.icon;
-    } else {
-      if (color) {
-        const itemColor = createDomElement('span', 'color-marker', popupLabel);
-        itemColor.style.backgroundColor = color;
+      const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
+      if (!featureContent) {
+        console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
       }
-      if (labels.length > 0) {
-        const popupLabelLabel = createDomElement('span', undefined, popupLabel);
-        popupLabelLabel.innerText = labels.join(' • ');
-      }
-    }
-  }
+      // Unique labels
+      const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
+      const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
+      const color = properties[colorProperty];
 
-  const popupOsmIds = createDomElement('h6', undefined, popupContainer);
-  osmFeatures.forEach(({id, type}) => {
-    const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
+      const propertyValues = Object.entries(featureCatalog.properties || {})
+        .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
+        .map(([property, {name, format, link, paragraph, list, description}]) => {
+          const value = properties[property] === true
+            ? ''
+            : formatPropertyValue(properties[property], format)
 
-    const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
-    osmIdButton.type = 'button'
-    osmIdButton.disabled = 'disabled';
+          const body = Array.isArray(value)
+            ? value
+            : [[null, value]]
 
-    const osmTypeContent = createDomElement('img', 'osm-type-icon', osmIdButton);
-    osmTypeContent.src = icons.osm[type];
-    osmTypeContent.alt = type;
-
-    const osmIdContent = createDomElement('code', undefined, osmIdButton);
-    osmIdContent.innerText = id;
-
-    const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
-    osmIdLink.title = 'View source'
-    osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
-    osmIdLink.target = '_blank'
-    osmIdLink.innerText = 'View'
-
-    if (editor === 'josm') {
-      const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
-      editButton.title = 'Edit Source'
-      editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
-      editButton.innerText = 'Edit'
-    } else {
-      const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
-      editButton.title = 'Edit Source'
-      editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
-      editButton.target = '_blank'
-      editButton.innerText = 'Edit'
-    }
-  })
-
-  // Images are not output as properties
-  if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
-    const popupImageContainer = createDomElement('p', undefined, popupContainer);
-
-    // Reused for both WikiData and WikiMedia Commons images
-    const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
-
-      fetch(imageMetadataUrl, {
-        signal: abortController.signal,
-      })
-        .then(response => response.json())
-        .then(data => {
-          const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
-
-          popupImage.src = data.thumbnail_url
-          popupImage.title = description
-          popupImage.alt = description
-
-          popupImageLink.href = data.view_url
-          popupImageLink.title = description
-
-          if (data.license || data.attribution) {
-            const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
-            const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
-            popupImageAttributionCopyright.innerText = '©';
-            popupImageAttributionCopyright.onclick = e => {
-              e.preventDefault();
-              e.stopPropagation();
-              popupImageAttribution.classList.toggle('collapsed');
-            }
-
-            if (data.license) {
-              const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
-              if (data.license_url) {
-                popupImageAttributionLicense.href = data.license_url;
-                popupImageAttributionLicense.target = '_blank';
-              }
-              popupImageAttributionLicense.innerText = data.license;
-            }
-            if (data.attribution) {
-              const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
-              popupImageAttributionAttribution.innerText = data.attribution;
-            }
-          }
+          return {
+            title: name,
+            value: properties[property],
+            body,
+            paragraph,
+            list,
+            link,
+            tooltip: description,
+          };
         })
-        .catch(err => {
-          if (!abortController.signal.aborted) {
-            console.error('Error while fetching popup image', err);
-          } else {
-            // Ignore aborted request errors
-          }
-        });
-    }
 
-    if (properties.wikidata) {
-      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-      popupImageLink.target = '_blank'
+      const osmFeatures = determineOsmFeatures(properties, featureContent);
 
-      fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
-    }
+      // Build HTML content dynamically to avoid cross site scripting
 
-    if (properties.wikimedia_commons_file) {
-      const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-      popupImageLink.target = '_blank'
+      const popupTitle = createDomElement('h5', undefined, popupContainer);
+      popupTitle.innerText = featureDescription;
 
-      fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
-    }
-
-    if (properties.image) {
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer);
-      popupImageLink.href = properties.image
-      popupImageLink.target = '_blank'
-      popupImageLink.title = `Image: ${properties.image}`
-
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = properties.image
-      popupImage.title = properties.image
-      popupImage.alt = `Image: ${properties.image}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
-    }
-  }
-
-  if (propertyValues.some(it => !it.paragraph && !it.list)) {
-    const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
-    propertyValues
-      .filter(it => !it.paragraph && !it.list)
-      .forEach(({title, body, value, link, tooltip}) => {
-        const popupValue = createDomElement('span', 'badge fw-normal text-bg-light', popupValuesContainer);
-        if (tooltip) {
-          popupValue.title = tooltip;
-          popupValue.style.cursor = 'help';
-        }
-
-        const containsAnyBodyValue = body.some(([_, bodyValue]) => bodyValue);
-        const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
-        popupValueTitle.innerText = `${title}${containsAnyBodyValue ? ': ' : ''}`;
-
-        let first = true
-        body.forEach(([key, bodyValue]) => {
-          if (bodyValue) {
-            if (first) {
-              first = false;
-            } else {
-              const popupValueKey = createDomElement('span', undefined, popupValue);
-              popupValueKey.innerText = ' • ';
-            }
-
-            if (key) {
-              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
-              popupValueKey.innerText = `${key} `;
-            }
-            if (link) {
-              const popupValueBody = createDomElement('span', undefined, popupValue);
-              const popupValueLink = createDomElement('a', undefined, popupValueBody);
-              popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
-              popupValueLink.target = '_blank'
-              const popupValueText = createDomElement('span', undefined, popupValueLink);
-              popupValueText.innerText = bodyValue;
-            } else {
-              const popupValueBody = createDomElement('span', undefined, popupValue);
-              popupValueBody.innerText = bodyValue;
-            }
-          }
-        })
-      })
-  }
-
-  if (propertyValues.some(it => it.paragraph)) {
-    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
-    propertyValues
-      .filter(it => it.paragraph)
-      .forEach(({title, body}) => {
-        const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
-
-        const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
-        popupValueTitle.innerText = `${title}: `;
-
-        let first = true
-        body.forEach(([key, value]) => {
-          if (value) {
-            if (first) {
-              first = false;
-            } else {
-              const popupValueKey = createDomElement('span', undefined, popupParagraph);
-              popupValueKey.innerText = ' • ';
-            }
-
-            if (key) {
-              const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
-              popupValueKey.innerText = `${key} `;
-            }
-            if (value) {
-              // Paragraph bodies do not support links
-              const popupValueBody = createDomElement('span', undefined, popupParagraph);
-              popupValueBody.innerText = value;
-            }
-          }
-        });
-      })
-  }
-
-  if (propertyValues.some(it => it.list)) {
-    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
-    propertyValues
-      .filter(it => it.list)
-      .forEach(({title, value, list}) => {
-        const groups = value.split('\u001d')
-          .map(group => {
-            const split = group.split('\u001e');
-            return Object.fromEntries(
-              list.properties.map((property, index) => [property, split[index] || null])
-            );
-          });
-
-        const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
-        popupListHeader.innerText = `${title} (${groups.length}):`;
-
-        const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
-        groups.forEach(group => {
-          const color = group[list.colorProperty]
-          const label = group[list.labelProperty]
-          const routeId = group[list.routeIdProperty]
-
-          const popupListItem = createDomElement('li', routeId ? 'link-item' : '', popupList);
-
+      if (properties.icon || labels.length > 0 || color) {
+        const popupLabel = createDomElement('h6', undefined, popupContainer);
+        if (properties.icon) {
+          const popupLabelSpan = createDomElement('span', undefined, popupLabel);
+          popupLabelSpan.title = properties.railway;
+          popupLabelSpan.innerText = properties.icon;
+        } else {
           if (color) {
-            const itemColor = createDomElement('span', 'color-marker', popupListItem);
+            const itemColor = createDomElement('span', 'color-marker', popupLabel);
             itemColor.style.backgroundColor = color;
           }
-          if (label) {
-            const itemLabel = createDomElement('span', undefined, popupListItem);
-            itemLabel.innerHTML = label;
+          if (labels.length > 0) {
+            const popupLabelLabel = createDomElement('span', undefined, popupLabel);
+            popupLabelLabel.innerText = labels.join(' • ');
           }
+        }
+      }
 
-          if (routeId) {
-            popupListItem.onclick = () => routeControl.showRoute(routeId)
-          }
-        });
+      const popupOsmIds = createDomElement('h6', undefined, popupContainer);
+      osmFeatures.forEach(({id, type}) => {
+        const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
+
+        const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
+        osmIdButton.type = 'button'
+        osmIdButton.disabled = 'disabled';
+
+        const osmTypeContent = createDomElement('img', 'osm-type-icon', osmIdButton);
+        osmTypeContent.src = icons.osm[type];
+        osmTypeContent.alt = type;
+
+        const osmIdContent = createDomElement('code', undefined, osmIdButton);
+        osmIdContent.innerText = id;
+
+        const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+        osmIdLink.title = 'View source'
+        osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+        osmIdLink.target = '_blank'
+        osmIdLink.innerText = 'View'
+
+        if (editor === 'josm') {
+          const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
+          editButton.title = 'Edit Source'
+          editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
+          editButton.innerText = 'Edit'
+        } else {
+          const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+          editButton.title = 'Edit Source'
+          editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+          editButton.target = '_blank'
+          editButton.innerText = 'Edit'
+        }
       })
-  }
+
+      // Images are not output as properties
+      if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
+        const popupImageContainer = createDomElement('p', undefined, popupContainer);
+
+        // Reused for both WikiData and WikiMedia Commons images
+        const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
+          const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+          popupImage.style.display = 'none' // Do not display images that cannot load
+          popupImage.onload = () => popupImage.style.display = 'block'
+
+          fetch(imageMetadataUrl, {
+            signal: abortController.signal,
+          })
+            .then(response => response.json())
+            .then(data => {
+              const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
+
+              popupImage.src = data.thumbnail_url
+              popupImage.title = description
+              popupImage.alt = description
+
+              popupImageLink.href = data.view_url
+              popupImageLink.title = description
+
+              if (data.license || data.attribution) {
+                const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
+                const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
+                popupImageAttributionCopyright.innerText = '©';
+                popupImageAttributionCopyright.onclick = e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  popupImageAttribution.classList.toggle('collapsed');
+                }
+
+                if (data.license) {
+                  const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
+                  if (data.license_url) {
+                    popupImageAttributionLicense.href = data.license_url;
+                    popupImageAttributionLicense.target = '_blank';
+                  }
+                  popupImageAttributionLicense.innerText = data.license;
+                }
+                if (data.attribution) {
+                  const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
+                  popupImageAttributionAttribution.innerText = data.attribution;
+                }
+              }
+            })
+            .catch(err => {
+              if (!abortController.signal.aborted) {
+                console.error('Error while fetching popup image', err);
+              } else {
+                // Ignore aborted request errors
+              }
+            });
+        }
+
+        if (properties.wikidata) {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
+          fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
+        }
+
+        if (properties.wikimedia_commons_file) {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
+          fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
+        }
+
+        if (properties.image) {
+          const popupImageLink = createDomElement('a', undefined, popupImageContainer);
+          popupImageLink.href = properties.image
+          popupImageLink.target = '_blank'
+          popupImageLink.title = `Image: ${properties.image}`
+
+          const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+          popupImage.src = properties.image
+          popupImage.title = properties.image
+          popupImage.alt = `Image: ${properties.image}`
+          popupImage.style.display = 'none' // Do not display images that cannot load
+          popupImage.onload = () => popupImage.style.display = 'block'
+        }
+      }
+
+      if (propertyValues.some(it => !it.paragraph && !it.list)) {
+        const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
+        propertyValues
+          .filter(it => !it.paragraph && !it.list)
+          .forEach(({title, body, value, link, tooltip}) => {
+            const popupValue = createDomElement('span', 'badge fw-normal text-bg-light', popupValuesContainer);
+            if (tooltip) {
+              popupValue.title = tooltip;
+              popupValue.style.cursor = 'help';
+            }
+
+            const containsAnyBodyValue = body.some(([_, bodyValue]) => bodyValue);
+            const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
+            popupValueTitle.innerText = `${title}${containsAnyBodyValue ? ': ' : ''}`;
+
+            let first = true
+            body.forEach(([key, bodyValue]) => {
+              if (bodyValue) {
+                if (first) {
+                  first = false;
+                } else {
+                  const popupValueKey = createDomElement('span', undefined, popupValue);
+                  popupValueKey.innerText = ' • ';
+                }
+
+                if (key) {
+                  const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+                  popupValueKey.innerText = `${key} `;
+                }
+                if (link) {
+                  const popupValueBody = createDomElement('span', undefined, popupValue);
+                  const popupValueLink = createDomElement('a', undefined, popupValueBody);
+                  popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
+                  popupValueLink.target = '_blank'
+                  const popupValueText = createDomElement('span', undefined, popupValueLink);
+                  popupValueText.innerText = bodyValue;
+                } else {
+                  const popupValueBody = createDomElement('span', undefined, popupValue);
+                  popupValueBody.innerText = bodyValue;
+                }
+              }
+            })
+          })
+      }
+
+      if (propertyValues.some(it => it.paragraph)) {
+        const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+        propertyValues
+          .filter(it => it.paragraph)
+          .forEach(({title, body}) => {
+            const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
+
+            const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
+            popupValueTitle.innerText = `${title}: `;
+
+            let first = true
+            body.forEach(([key, value]) => {
+              if (value) {
+                if (first) {
+                  first = false;
+                } else {
+                  const popupValueKey = createDomElement('span', undefined, popupParagraph);
+                  popupValueKey.innerText = ' • ';
+                }
+
+                if (key) {
+                  const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+                  popupValueKey.innerText = `${key} `;
+                }
+                if (value) {
+                  // Paragraph bodies do not support links
+                  const popupValueBody = createDomElement('span', undefined, popupParagraph);
+                  popupValueBody.innerText = value;
+                }
+              }
+            });
+          })
+      }
+
+      if (propertyValues.some(it => it.list)) {
+        const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+        propertyValues
+          .filter(it => it.list)
+          .forEach(({title, value, list}) => {
+            const groups = value.split('\u001d')
+              .map(group => {
+                const split = group.split('\u001e');
+                return Object.fromEntries(
+                  list.properties.map((property, index) => [property, split[index] || null])
+                );
+              });
+
+            const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
+            popupListHeader.innerText = `${title} (${groups.length}):`;
+
+            const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
+            groups.forEach(group => {
+              const color = group[list.colorProperty]
+              const label = group[list.labelProperty]
+              const routeId = group[list.routeIdProperty]
+
+              const popupListItem = createDomElement('li', routeId ? 'link-item' : '', popupList);
+
+              if (color) {
+                const itemColor = createDomElement('span', 'color-marker', popupListItem);
+                itemColor.style.backgroundColor = color;
+              }
+              if (label) {
+                const itemLabel = createDomElement('span', undefined, popupListItem);
+                itemLabel.innerHTML = label;
+              }
+
+              if (routeId) {
+                popupListItem.onclick = () => routeControl.showRoute(routeId)
+              }
+            });
+          })
+      }
+    })
+    .catch(err => {
+      if (!abortController.signal.aborted) {
+        console.error('Error while fetching popup feature properties', err);
+      } else {
+        // Ignore aborted request errors
+      }
+    });
 
   return popupContainer
 }
