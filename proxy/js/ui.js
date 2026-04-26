@@ -2290,23 +2290,6 @@ function popupContent(feature, abortController) {
   const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  // TODO make optional, see openhistoricalmap source
-  fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
-    signal: abortController.signal,
-  })
-    .then(response => response.json())
-    .then(data => {
-      // TODO await and process data instead of `properties`
-      console.info('feature data', feature, data)
-    })
-    .catch(err => {
-      if (!abortController.signal.aborted) {
-        console.error('Error while fetching popup feature properties', err);
-      } else {
-        // Ignore aborted request errors
-      }
-    });
-
   const featureCatalog = features && features[layerSource];
   if (!featureCatalog) {
     console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
