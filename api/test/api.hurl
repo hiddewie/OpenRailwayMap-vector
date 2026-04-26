@@ -457,3 +457,7 @@ jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
 GET {{base_url}}/features/features.json
 HTTP 200
 Content-Type: application/json
+
+# Feature does not exist
+GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
+HTTP 404

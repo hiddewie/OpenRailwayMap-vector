@@ -560,3 +560,77 @@ paths:
         '404':
           description: |
             The route could not be found
+
+  /api/feature/{source}/{layer}/{id}:
+    get:
+      operationId: featureInformation
+      summary: Fetch information about a map feature
+      description: The feature information returns the properties of a map feature
+      tags:
+        - feature
+      parameters:
+        - name: source
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The source that the feature can be found in
+        - name: layer
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The layer in the source that the feature can be found in
+        - name: id
+          in: path
+          schema:
+            type: number
+          required: true
+          description: The ID of the feature
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The properties of the feature. The properties are defined in the source and layer feature definition.
+                example:
+                  # Railway line
+                  bridge: false
+                  description:
+                  electrification_state: present
+                  frequency: 0
+                  future_frequency:
+                  future_maximum_current:
+                  future_voltage:
+                  gauge_label: '1435'
+                  highspeed: false
+                  line_routes: "9678583\x1E#BE1622\x1EDulwich Hill to Central"
+                  loading_gauge:
+                  mapillary:
+                  maximum_current:
+                  note:
+                  operator: Transdev Sydney Light Rail
+                  owner:
+                  preferred_direction: forward
+                  radio:
+                  ref:
+                  reporting_marks:
+                  service:
+                  speed_label: '60'
+                  state: present
+                  track_class:
+                  track_ref:
+                  traffic_mode:
+                  train_protection: atc
+                  train_protection_construction:
+                  tunnel: false
+                  usage:
+                  voltage: 750
+                  wikidata: Q14543324
+                  wikimedia_commons:
+                  wikipedia:
+        '404':
+          description: |
+            The source, layer or feature could not be found
