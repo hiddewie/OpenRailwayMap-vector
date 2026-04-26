@@ -560,3 +560,52 @@ paths:
         '404':
           description: |
             The route could not be found
+
+  /api/feature/{source}/{layer}/{id}:
+    get:
+      operationId: featureInformation
+      summary: Fetch information about a map feature
+      description: The feature information returns the properties of a map feature
+      tags:
+        - feature
+      parameters:
+        - name: source
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The source that the feature can be found in
+        - name: layer
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The layer in the source that the feature can be found in
+        - name: id
+          in: path
+          schema:
+            type: number
+          required: true
+          description: The ID of the feature
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                description: The properties of the feature. The properties are defined in the source and layer feature definition.
+                example:
+                  id: 64050
+                  to: 'S Spindlersfeld'
+                  ref: 'S47'
+                  from: 'S Hermannstraße'
+                  name: 'S47: S Hermannstraße => S Spindlersfeld'
+                  type: 'light_rail'
+                  brand: null
+                  color: '#BA8A4D'
+                  osm_id: 64050
+                  operator: 'S-Bahn Berlin GmbH'
+        '404':
+          description: |
+            The source, layer or feature could not be found
