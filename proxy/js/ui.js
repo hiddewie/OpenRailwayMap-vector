@@ -2009,7 +2009,7 @@ class LegendControl {
       layout: {
         'text-field': '{legend}',
         'text-size': 11,
-        'text-font': ['Noto Sans Regular'],
+        'text-font': ['OpenRailwayMap-Regular'],
         'text-anchor': 'left',
         'text-max-width': 22,
         'text-overlap': 'always',
