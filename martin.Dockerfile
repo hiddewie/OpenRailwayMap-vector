@@ -1,4 +1,4 @@
-FROM ghcr.io/maplibre/martin:latest@sha256:077329dbde8d791f030b9eab63f4681772480be2f6ceebab0108cb79cebb4aa3
+FROM ghcr.io/maplibre/martin:main@sha256:5668210f16293b1769f72671ea5aed9dee16cf7bfdb039798f7cd88415704749
 
 COPY martin /config
 COPY symbols /symbols
