@@ -5949,7 +5949,7 @@ const layers = {
 const makeStyle = selectedStyle => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
-  glyphs: '/font/{fontstack}/{range}',
+  glyphs: '/font/{fontstack}/{range}.pbf',
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,
