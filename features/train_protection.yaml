@@ -25,6 +25,7 @@ train_protections:
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
+  - { train_protection: 'aws&tpws', legend: 'Automatic Warning System (AWS) & Train Protection & Warning System (TPWS)', color: 'pink' }
   - { train_protection: 'caws', legend: 'Continuous Automatic Warning System (CAWS)', color: 'hsl(60, 100%, 40%)' }
   - { train_protection: 'tcb', legend: 'Track Circuit Block (TCB)', color: 'hsl(147, 100%, 40%)' }
   - { train_protection: 'cbtc', legend: 'Communications Based Train Control (CBTC)', color: 'hsl(336, 100%, 40%)' }
@@ -205,6 +206,11 @@ features:
   - train_protection: atp
     tags:
       - { tag: 'railway:atp', value: 'yes' }
+
+- train_protection: aws&tpws
+    tags:
+      - { tag: 'railway:aws', value: 'yes' }
+      - { tag: 'railway:tpws', value: 'yes' }
 
   - train_protection: aws
     tags:
