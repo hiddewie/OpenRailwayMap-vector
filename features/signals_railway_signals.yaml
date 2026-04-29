@@ -4356,12 +4356,12 @@ features:
   - description: priority over other traffic
     country: DE
     icon:
-      - match: 'railway:signal:minor:shape'
+      - match: 'railway:signal:minor'
         cases:
-          - { exact: 'tram', value: 'de/bostrab/st24-tram' }
+          - { exact: 'DE-BOStrab:st24a', value: 'de/bostrab/st24a' }
         default: 'de/bostrab/st24'
     tags:
-      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st24' }
+      - { tag: 'railway:signal:minor', any: ['DE-BOStrab:st24', 'DE-BOStrab:st24a'] }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: DVB curve lubrication system ahead (So 11)
