@@ -1,0 +1,4 @@
+**
+!*.yaml
+!schema/*.yaml
+!test/test.sh

@@ -1,3 +1,5 @@
+"$schema": ./schema/signals_railway_signals.yaml
+
 tags:
   # railway tag is included by default
   - { tag: 'railway:signal:brake_test', title: 'Brake test' }
@@ -56,6 +58,7 @@ tags:
   - { tag: 'railway:signal:electricity:frequency', title: 'Electricity frequency', format: { template: '%.2d Hz' } }
   - { tag: 'railway:signal:electricity:deactivated', title: 'Electricity deactivated', type: boolean }
   - { tag: 'railway:signal:fouling_point', title: 'Fouling point' }
+  - { tag: 'railway:signal:fouling_point:form', title: 'Fouling point form' }
   - { tag: 'railway:signal:fouling_point:deactivated', title: 'Fouling point deactivated', type: boolean }
   - { tag: 'railway:signal:helper_engine', title: 'Helper engine' }
   - { tag: 'railway:signal:helper_engine:form', title: 'Helper engine form' }
@@ -72,6 +75,7 @@ tags:
   - { tag: 'railway:signal:main:states', title: 'Main states', type: array }
   - { tag: 'railway:signal:main:substitute_signal', title: 'Main substitute signal', type: array }
   - { tag: 'railway:signal:main:PT_priority', title: 'Main PT priority' }
+  - { tag: 'railway:signal:main:type', title: 'Main type' }
   - { tag: 'railway:signal:main:function', title: 'Main function' }
   - { tag: 'railway:signal:main:shortened', title: 'Main shortened', type: boolean }
   - { tag: 'railway:signal:main:deactivated', title: 'Main deactivated', type: boolean }
@@ -80,6 +84,7 @@ tags:
   - { tag: 'railway:signal:main_repeated:magnet', title: 'Main repeated magnet', type: boolean }
   - { tag: 'railway:signal:main_repeated:states', title: 'Main repeated states', type: array }
   - { tag: 'railway:signal:main_repeated:substitute_signal', title: 'Main repeated substitute signal', type: array }
+  - { tag: 'railway:signal:main_repeated:shape', title: 'Main repeated shape' }
   - { tag: 'railway:signal:main_repeated:deactivated', title: 'Main repeated deactivated', type: boolean }
   - { tag: 'railway:signal:minor', title: 'Minor' }
   - { tag: 'railway:signal:minor:form', title: 'Minor form' }
@@ -135,6 +140,7 @@ tags:
   - { tag: 'railway:signal:shunting:shape', title: 'Shunting shape' }
   - { tag: 'railway:signal:shunting:height', title: 'Shunting height' }
   - { tag: 'railway:signal:shunting:deactivated', title: 'Shunting deactivated', type: boolean }
+  - { tag: 'railway:signal:shunting:repeated', title: 'Shunting repeated', type: boolean }
   - { tag: 'railway:signal:shunting_route', title: 'Shunting Route' }
   - { tag: 'railway:signal:shunting_route:form', title: 'Shunting Route form' }
   - { tag: 'railway:signal:shunting_route:states', title: 'Shunting Route states', type: array }
@@ -145,6 +151,7 @@ tags:
   - { tag: 'railway:signal:slope:deactivated', title: 'Slope deactivated', type: boolean }
   - { tag: 'railway:signal:slope:incline', title: 'Slope incline' }
   - { tag: 'railway:signal:slope:length', title: 'Slope length' }
+  - { tag: 'railway:signal:slope:shape', title: 'Slope shape' }
   - { tag: 'railway:signal:slope:distance', title: 'Slope distance' }
   - { tag: 'railway:signal:snowplow', title: 'Snowplow' }
   - { tag: 'railway:signal:snowplow:form', title: 'Snowplow form' }
@@ -158,14 +165,17 @@ tags:
   - { tag: 'railway:signal:speed_limit:pointing', title: 'Speed limit pointing' }
   - { tag: 'railway:signal:speed_limit:deactivated', title: 'Speed limit deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:turn_direction', title: 'Speed limit diverging direction', type: array }
+  - { tag: 'railway:signal:speed_limit:type', title: 'Speed limit type' }
   - { tag: 'railway:signal:speed_limit_distant', title: 'Speed limit distant' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
+  - { tag: 'railway:signal:speed_limit_distant:shortened', title: 'Speed limit distant shortened', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:speed', title: 'Speed limit distant speed', type: array }
   - { tag: 'railway:signal:speed_limit_distant:mobile', title: 'Speed limit distant mobile', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:deactivated', title: 'Speed limit distant deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:distance', title: 'Speed limit distant distance' }
   - { tag: 'railway:signal:station_distant', title: 'Station distant' }
   - { tag: 'railway:signal:station_distant:form', title: 'Station distant form' }
+  - { tag: 'railway:signal:station_distant:type', title: 'Station distant type' }
   - { tag: 'railway:signal:station_distant:deactivated', title: 'Station distant deactivated', type: boolean }
   - { tag: 'railway:signal:station_distant:shortened', title: 'Station distant shortened', type: boolean }
   - { tag: 'railway:signal:steam_locomotive', title: 'Steam locomotive' }
@@ -195,6 +205,10 @@ tags:
   - { tag: 'railway:signal:train_protection:type', title: 'Train protection type' }
   - { tag: 'railway:signal:train_protection:turn_direction', title: 'Train protection diverging direction' }
   - { tag: 'railway:signal:train_protection:deactivated', title: 'Train protection deactivated', type: boolean }
+  - { tag: 'railway:signal:train_protection:main', title: 'Train protection main' }
+  - { tag: 'railway:signal:train_protection:main:form', title: 'Train protection main form' }
+  - { tag: 'railway:signal:train_protection:system_change', title: 'Train protection system change' }
+  - { tag: 'railway:signal:train_protection:system_change:form', title: 'Train protection system change form' }
   - { tag: 'railway:signal:traversable', title: 'Traversable' }
   - { tag: 'railway:signal:traversable:form', title: 'Traversable form' }
   - { tag: 'railway:signal:traversable:type', title: 'Traversable type' }
@@ -864,13 +878,6 @@ features:
       - { tag: 'railway:signal:main', value: 'AU:MNWSW:points_indiciator' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Route Indicator
-    country: AU
-    icon: [ default: 'au/nsw/metro/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:MNWSW:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Fixed Red
     country: AU
     icon: [ default: 'au/nsw/metro/fixed_red' ]
@@ -981,7 +988,7 @@ features:
     country: AU
     icon: [ default: 'au/LightRail/signs/set_route_ACT' ]
     tags:
-      - { tag: 'railway:signal:route', value: 'AU:LightRail:ACT:set_route' }
+      - { tag: 'railway:signal:route', any: ['AU:LightRail:ACT:set_route', 'AU:LightRail:QLD:set_route'] }
       - { tag: 'railway:signal:route:form', value: 'sign' }
 
   - description: Set Route
@@ -1019,6 +1026,147 @@ features:
       - { tag: 'railway:signal:shunting', value: 'AU:LightRail:NSW:SZ' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
+  # --- AU-LightRail-signs-VIC --- #
+  - description: Cut Off
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/cut_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:cut_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 5th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_5' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_5' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 4th Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_4' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_4' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 3rd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_3' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_3' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 2nd Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_2' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_2' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 1st Isolate Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/isolate_1' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'AU:LightRail:VIC:isolate_1' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: 50/50
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/5050' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:50/50' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Fouling Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:LightRail:VIC:single_yellow' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Compulsory Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Optional Stop Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_dashed' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_dashed' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Check Point Mark
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_chevron' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_chevron' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (A/Z/W)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/single_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:single_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (B/C1/D1)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/double_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:double_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Shunting Stop Mark (C2/D2/E)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/triple_yellow_half' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:triple_yellow_half' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_square' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_square' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Stopping Place Studs (Long Trams)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/stop_studs_diamond' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:stop_studs_diamond' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Provisional Stop
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/provisional_stop' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:LightRail:VIC:provisional' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: 2nd Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_2' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_2' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
+  - description: 1st Command Stud (Signal Operated Points)
+    country: AU
+    icon: [ default: 'au/LightRail/signs/vic/command_stud_1SPI' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:LightRail:VIC:command_stud_1SPI' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+
   # --- AU-LightRail-Signals --- #
 
   - description: Ground Signal
@@ -1031,13 +1179,6 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:NSW:ground' }
       - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Route Indicator
-    country: AU
-    icon: [ default: 'au/LightRail/signals/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:LightRail:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Signal
     country: AU
@@ -1165,6 +1306,13 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: Begin CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/begin_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: Begin Single Light Indication
     country: AU
     icon: [ default: 'au/nsw/signs/begin_single_light' ]
@@ -1214,11 +1362,25 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
+  - description: End CAB
+    country: AU
+    icon: [ default: 'au/nsw/signs/end_CAB' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_CAB' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   - description: End Signalled Authority
     country: AU
     icon: [ default: 'au/nsw/signs/end_signalled_authority' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_signalled_authority' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Network Control Limit
+    country: AU
+    icon: [ default: 'au/nsw/signs/network_control' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:network_control' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: End Single Light Indication
@@ -1300,11 +1462,19 @@ features:
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
+          - { exact: 'DD', value: 'au/nsw/signs/stop_position/DD' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
           - { exact: '10', value: 'au/nsw/signs/stop_position/10' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
           - { exact: '8', value: 'au/nsw/signs/stop_position/8' }
+        position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { exact: '8D', value: 'au/nsw/signs/stop_position/8D' }
         position: bottom
       - match: 'railway:signal:stop:states'
         cases:
@@ -1342,8 +1512,19 @@ features:
         cases:
           - { any: ['2C', 'C2'], value: 'au/nsw/signs/stop_position/2C' }
         position: bottom
+      - match: 'railway:signal:stop:states'
+        cases:
+          - { any: ['2E', 'E2'], value: 'au/nsw/signs/stop_position/2E' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:stop', value: 'AU:NSW:stop_position' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Safety Runoff Area
+    country: AU
+    icon: [ default: 'au/nsw/signs/safety_overrun' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:NSW:safety_overrun' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Stop
@@ -1647,18 +1828,11 @@ features:
       - match: 'railway:signal:main:states'
         cases:
           - { exact: 'GYR', value: 'au/nsw/signals/main/semaphore/GYR', description: 'Upper quadrant' }
-          - { exact: 'GR', value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
+          - { any: ['GR', 'G', 'R'], value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
         default: 'au/nsw/signals/main/semaphore/unknown'
     tags:
       - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
-
-  - description: Mainline Route Indicator
-    country: AU
-    icon: [ default: 'au/nsw/signals/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'AU:NSW:theatre_box' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
 
   - description: Turnout Repeater
     country: AU
@@ -1675,6 +1849,290 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
+
+  # --- AU-VIC-signs --- #
+  # --- AU-VIC-signals --- #
+  - description: Banner Indicator (theatre box)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/theatre_box' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'theatre_box' }
+
+  - description: Banner Indicator (compact)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/compact' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'compact' }
+
+  - description: Banner Indicator (dwarf)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/dwarf' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'dwarf' }
+
+  - description: Banner Indicator (single)
+    country: AU
+    icon: [ default: 'au/vic/signals/banner_indicator/single' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'AU:VIC:banner_indicator' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:shape', value: 'single' }
+
+  - description: End of Track
+    country: AU
+    icon: [ default: 'au/vic/signals/end_of_track' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:VIC:end_of_track' }
+      - { tag: 'railway:signal:stop:form', value: 'light' }
+
+  - description: Gauge Indicator
+    country: AU
+    icon: [ default: 'au/vic/signals/route/gauge' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:VIC:gauge_indicator' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+
+  - description: Route Indicator (Illuminated Arrows)
+    country: AU
+    exampleIcon: au/vic/signals/route/arrows/left
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'left', value: 'au/vic/signals/route/arrows/left' }
+        position: right
+
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'straight', value: 'au/vic/signals/route/arrows/straight' }
+        position: right
+
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'right', value: 'au/vic/signals/route/arrows/right' }
+        position: right
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:points_direction' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Route Indicator (Painted Arrows)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/arrow_LR' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:painted_arrow' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+      - { tag: 'railway:signal:route:states', value: 'LR' }
+
+  - description: Route Indicator (Painted Arrows)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/arrow_RL' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:painted_arrow' }
+      - { tag: 'railway:signal:route:form', value: 'sign' }
+      - { tag: 'railway:signal:route:states', value: 'RL' }
+
+  - description: Route Indicator (Stencil Light)
+    country: AU
+    icon: [ default: 'au/vic/signals/route/stencil' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'AU:VIC:stencil' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Automatic Indicator
+    country: AU
+    icon: [ default: 'au/vic/signals/automatic' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:VIC:A' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Low Speed
+    country: AU
+    icon: [ default: 'au/vic/signals/low_speed_dwarf' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:VIC:low_speed' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  - description: Low Speed
+    country: AU
+    icon: [ default: 'au/vic/signals/low_speed' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:VIC:low_speed' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: 3-position main signal (dwarf-height, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_dwarf_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (dwarf-height, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_dwarf' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_33' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '33' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_32_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '32' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_32' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '32' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_31' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '31' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (multi-unit over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_22_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '22' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (multi-unit over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_22' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '22' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_13_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '13' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_13' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '13' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over 2-aspect multi-unit, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_12_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '12' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over 2-aspect multi-unit, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_12' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '12' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 3-position main signal (single-light over single-light, permissive)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11_staggered' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'auto' }
+
+  - description: 3-position main signal (single-light over single-light, absolute)
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_11' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '11' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 2-position main signal
+    country: AU
+    icon: [ default: 'au/vic/signals/main/main_2' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'AU:VIC:main' }
+      - { tag: 'railway:signal:main:type', value: '2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: 2-position shunt signal
+    country: AU
+    icon: [ default: 'au/vic/signals/shunt2' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunt_2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: 3-position shunt signal
+    country: AU
+    icon: [ default: 'au/vic/signals/shunt3' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunt_3' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Route Indicator
+    country: AU
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^([A-Z1-4])$', value: 'au/route_indicator/{}', example: 'au/route_indicator/{A}' }
+        default: 'au/route_indicator/unknown'
+    tags:
+      - { tag: 'railway:signal:route', any: ['AU:MNWSW:route_indicator', 'AU:NSW:theatre_box', 'AU:VIC:theatre_box', 'AU:VIC:lamp','AU:VIC:sign', 'AU:LightRail:route_indicator', 'NZ:route_indicator'] }
+      - { tag: 'railway:signal:route:form', any: ['light', 'sign'] }
 
   # --- BE --- #
 
@@ -1776,22 +2234,55 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'BE:SSC' }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
+  - description: Grand Signal d'Arrêt (opposite regime and only for shunting)
+    country: BE
+    icon:
+      - default: 'be/GSA-opposite-RB'
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:OF', value: 'be/OEF' }
+        position: bottom
+      - default: 'be/TR'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE:GSA' }
+      - { tag: 'railway:signal:regime', value: 'opposite' }
+      - { tag: 'railway:signal:main:states', values: ['BE:RB', 'BE:R'] }
+      - { tag: 'railway:signal:traversable', value: 'BE:TR' }
+
+  - description: Grand Signal d'Arrêt (normal regime and only for shunting)
+    country: BE
+    icon:
+      - default: 'be/GSA-RB'
+      - match: 'railway:signal:main:substitute_signal'
+        cases:
+          - { exact: 'BE:OF', value: 'be/OEF' }
+        position: bottom
+      - default: 'be/TR'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'BE:GSA' }
+      - { tag: 'railway:signal:main:states', values: ['BE:RB', 'BE:R'] }
+      - { tag: 'railway:signal:traversable', value: 'BE:TR' }
+
   - description: Grand Signal d'Arrêt (opposite regime)
     country: BE
-    exampleIcon: be/GSA-opposite-VJH
     icon:
-      - match: 'railway:signal:main:states'
+      - match: 'railway:signal:traversable'
         cases:
-          - { exact: 'BE:RB', value: 'be/GSA-opposite-RB' }
-          - { exact: 'BE:2J', value: 'be/GSA-opposite-2J' }
-          - { exact: 'BE:VJV', value: 'be/GSA-opposite-VJV' }
-          - { exact: 'BE:VJH', value: 'be/GSA-opposite-VJH' }
-          - { exact: 'BE:V', value: 'be/GSA-opposite-V' }
+          - { exact: 'BE:TR', value: 'be/GSA-opposite-R' }
+          - { exact: 'BE:DBR', value: 'be/GSA-opposite-V' }
+          - { exact: 'BE:CF', value: 'be/GSA-opposite-V' }
         default: 'be/GSA-opposite-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
+          - { exact: 'BE:OF', value: 'be/OEF' }
+        position: bottom
+      - match: 'railway:signal:traversable'
+        cases:
           - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:DBR', value: 'be/DBR' }
+          - { exact: 'BE:TR', value: 'be/TR' }
         position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
@@ -1799,46 +2290,36 @@ features:
 
   - description: Grand Signal d'Arrêt (normal regime)
     country: BE
-    exampleIcon: be/GSA-VJH
     icon:
-      - match: 'railway:signal:main:states'
+      - match: 'railway:signal:traversable'
         cases:
-          - { exact: 'BE:RB', value: 'be/GSA-RB' }
-          - { exact: 'BE:2J', value: 'be/GSA-2J' }
-          - { exact: 'BE:VJV', value: 'be/GSA-VJV' }
-          - { exact: 'BE:VJH', value: 'be/GSA-VJH' }
-          - { exact: 'BE:V', value: 'be/GSA-V' }
+          - { exact: 'BE:TR', value: 'be/GSA-R' }
+          - { exact: 'BE:DBR', value: 'be/GSA-V' }
+          - { exact: 'BE:CF', value: 'be/GSA-V' }
+        default: 'be/GSA-R'
       - match: 'railway:signal:main:substitute_signal'
         cases:
-          - { exact: 'BE:CF', value: 'be/CF' }
-          - { exact: 'BE:OF', value: 'be/ŒF' }
+          - { exact: 'BE:OF', value: 'be/OEF' }
         position: bottom
-        default: 'be/GSA-R'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'BE:CF', value: 'be/CF' }
+          - { exact: 'BE:DBR', value: 'be/DBR' }
+          - { exact: 'BE:TR', value: 'be/TR' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'BE:GSA' }
 
   - description: Distant signal (opposite regime)
     country: BE
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'BE:2J', value: 'be/SAI-opposite-2J' }
-          - { exact: 'BE:VJV', value: 'be/SAI-opposite-VJV' }
-          - { exact: 'BE:VJH', value: 'be/SAI-opposite-VJH' }
-        default: 'be/SAI-opposite-V'
+    icon: [ default: 'be/SAI-opposite-2J' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'BE:SAI' }
       - { tag: 'railway:signal:regime', value: 'opposite' }
 
   - description: Distant signal (normal regime)
     country: BE
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'BE:2J', value: 'be/SAI-2J' }
-          - { exact: 'BE:VJV', value: 'be/SAI-VJV' }
-          - { exact: 'BE:VJH', value: 'be/SAI-VJH' }
-        default: 'be/SAI-V'
+    icon: [ default: 'be/SAI-2J' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'BE:SAI' }
 
@@ -2427,7 +2908,7 @@ features:
           - { value: 'cz/shortened', description: 'shortened' }
         position: top
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:vlak_se_blizi_k_zastavce' }
+      - { tag: 'railway:signal:station_distant', any: [ 'CZ-D1:vlak_se_blizi_k_zastavce', 'Cs-D1' ] }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Hlavní návěstidlo sloučeno s předvěstí
@@ -2444,40 +2925,61 @@ features:
       - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_posledniho_oddiloveho_navestidla' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
-  - description: End of shunting marker
+  - description: Stanoviště samostatné předvěsti
     country: CZ
-    icon: [ default: 'cz/shunting-end' ]
+    icon:
+      - match: 'railway:signal:station_distant:type'
+        cases:
+          - { exact: 'station', value: 'cz/stanoviste_samostatne_predvesti/station', description: 'Vjezdové, cestové, odjezdové' }
+          - { exact: 'block_or_protection', value: 'cz/stanoviste_samostatne_predvesti/block_or_protection', description: 'Oddílové, krycí' }
+        default: 'cz/stanoviste_samostatne_predvesti/fallback'  # FALLBACK
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CZ-D1:stanoviste_samostatne_predvesti' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Označník
+    country: CZ
+    icon: [ default: 'cz/oznacnik' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'CZ-D1:oznacnik' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: Shunting stop
+  - description: Posun zakázán
     country: CZ
-    icon: [ default: 'cz/shunting-stop' ]
+    icon: [ default: 'cz/posun_zakazan' ]
     tags:
-      - { tag: 'railway:signal:shunting', value: 'CZ-D1:posun_zakazan' }
+      # Cs-D1 sign shunting signals fallback (no way to differentiate them from Označník)
+      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:posun_zakazan', 'Cs-D1' ] }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: Shunting wait (sign)
+  - description: Vyčkávací návěstidlo (neproměnné)
     country: CZ
-    icon: [ default: 'cz/shunting-wait-sign' ]
+    icon: [ default: 'cz/vyckavaci_navestidlo/sign' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'CZ-D1:vyckavaci_navestidlo' }
       - { tag: 'railway:signal:shunting:form', value: 'sign' }
 
-  - description: Shunting wait (light)
+  - description: Vyčkávací návěstidlo (světelné)
     country: CZ
-    # TODO shunting group signal (group marker)
-    icon: [ default: 'cz/shunting-wait-light' ]
+    icon: [ default: 'cz/vyckavaci_navestidlo/light' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'CZ-D1:vyckavaci_navestidlo' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-  - description: Shunting (light)
+  - description: Opakovací seřaďovací návěstidlo
     country: CZ
-    icon: [ default: 'cz/shunting' ]
+    icon: [ default: 'cz/seradovaci_navestidlo/W-X' ]
     tags:
-      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:serazovaci_navestidlo', 'CZ-D1:seradovaci_navestidlo', 'CZ-D1:posun_zakazan' ] }
+      - { tag: 'railway:signal:shunting', value: 'CZ-D1:seradovaci_navestidlo' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+      - { tag: 'railway:signal:shunting:repeated' }
+
+  - description: Seřaďovací návěstidlo
+    country: CZ
+    icon: [ default: 'cz/seradovaci_navestidlo/WB-B' ]
+    tags:
+      - { tag: 'railway:signal:shunting', any: [ 'CZ', 'CZ-D1:seradovaci_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Se', 'Cs-D1:Se_', 'Cs-D1:Se _' ] }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Hranice obvodu nákladiště nebo vlečky
@@ -2494,300 +2996,396 @@ features:
       - { tag: 'railway:signal:shunting', value: 'CZ-D1:navestidlo_vykolejky' }
       - { tag: 'railway:signal:shunting:form', value: 'semaphore' }
 
-  - description: Distant (sign)
+  - description: Tabulka s křížem
     country: CZ
-    icon:
-      - match: 'railway:signal:distant:shape'
-        cases:
-          - { exact: 'circle', value: 'cz/distant-sign-circle' }
-        default: 'cz/distant-sign-triangle'
+    icon: [ default: 'cz/tabulka_s_krizem' ]
     tags:
-      - { tag: 'railway:signal:distant', value: 'CZ-D1:vystraha' }
+      - { tag: 'railway:signal:distant', value: 'CZ-D1:tabulka_s_krizem' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
-
-  - description: Distant repeated (light)
-    country: CZ
-    icon: [ default: cz/distant-repeated ]
-    tags:
-      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:repeated' }
-
-  - description: Distant (light)
-    country: CZ
-    icon:
-      - default: cz/distant
-      - match: 'railway:signal:distant:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-      - match: 'railway:signal:distant:function'
-        cases:
-          - { value: 'cz/distant-entry', description: 'entry' }
-        default: 'cz/distant-block'
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   # TODO route signal for departure (green number) below main/combined signal
   # TODO route signal (white letter) below main/combined signal
 
-  - description: Distant speed limit NS (sign)
+  # speed_limit and speed_limit_distant signs
+  # TODO handle two speed limits on one sign, speed switch (black || with white dots)
+
+  - description: Předvěstník NS
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-NS-distant-{}', example: 'cz/speed-NS-distant-{80}' }
-        default: 'cz/speed-NS-distant-empty'
+          - { exact: 'none', value: 'cz/predvestnik/NS/end' }
+          - { regex: '^[1-9]0|1[0-6]0$', value: 'cz/predvestnik/NS/{}', example: 'cz/predvestnik/NS/{80}' }
+        default: 'cz/predvestnik/NS/unknown'
+      - match: 'railway:signal:speed_limit_distant:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: top
     tags:
       - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ-D1:predvestnik_ns' ] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Distant speed limit N (sign)
+  - description: Předvěstník N
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-4]0$', value: 'cz/speed-distant-{}', example: 'cz/speed-distant-{80}' }
-        default: 'cz/speed-distant-empty'
+          - { regex: '^[1-9]0|1[0-6]0$', value: 'cz/predvestnik/N/{}', example: 'cz/predvestnik/N/{80}' }
+        default: 'cz/predvestnik/N/unknown'
+      - match: 'railway:signal:speed_limit_distant:shortened'
+        cases:
+          - { value: 'cz/shortened', description: 'shortened' }
+        position: top
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n' ] }
+      # Default for Cs-D1 speed_limit_distant signals, differentiation of types sometimes possible using shape
+      - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:predvestnik_n', 'CZ-D1:horni_predvestnik_n', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
-  - description: Speed limit NS (sign)
+  - description: Rychlostník NS
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[3-9]0|1[0-356]0|95|135$', value: 'cz/speed-NS-sign-{}', example: 'cz/speed-NS-sign-{80}' }
-        default: 'cz/speed-NS-sign-empty'
+          - { exact: 'none', value: 'cz/rychlostnik/NS/end' }
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/NS/{}', example: 'cz/rychlostnik/NS/{80}' }
+        default: 'cz/rychlostnik/NS/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_ns' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Speed limit N (sign)
+  - description: Rychlostník N
     country: CZ
-    # TODO handle two speed limits on one sign, speed switch (black || with white dots)
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-36]0|[1678]5|1[02]5$', value: 'cz/speed-N-sign-{}', example: 'cz/speed-N-sign-{80}' }
-        default: 'cz/speed-N-sign-empty'
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N/{}', example: 'cz/rychlostnik/N/{80}' }
+        default: 'cz/rychlostnik/N/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
-      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n' ] }
+      # Default for Cs-D1 speed_limit signals, differentiation of types sometimes possible using shape
+      # Note that in some older (at least per recent usage) Cs-D1 tagging, this might mistakenly include the 5 sign on main signals
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:rychlostnik_n', 'CZ-D1:horni_rychlostnik_n', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Speed limit main/combined (sign)
+  - description: Rychlostník N s pruhy
     country: CZ
-    exampleIcon: 'cz/rychlost_30-sign'
     icon:
-      - match: 'railway:signal:speed_limit:states'
+      - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30-sign' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50-sign' }
+          - { regex: '^[1-9][05]|1[0-5][05]|160$', value: 'cz/rychlostnik/N_s_pruhy/{}', example: 'cz/rychlostnik/N_s_pruhy/{80}' }
+        default: 'cz/rychlostnik/N_s_pruhy/unknown'
+      - match: 'railway:signal:speed_limit:type'
+        cases:
+          - { exact: 'immediate', value: 'cz/rychlostnik/immediate' }
+        position: top
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ-D1:rychlostnik_n_s_pruhy' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50'] }
 
-  - description: Speed limit main/combined (light)
-    country: CZ
-    exampleIcon: 'CZ-D1:rychlost_60'
-    icon:
-      - match: 'railway:signal:speed_limit:states'
-        cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
-          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50', 'CZ-D1:rychlost_60', 'CZ-D1:rychlost_80', 'CZ-D1:rychlost_100'] }
+  # TODO: Future overhaul of tagging
+
+  #  - description: Speed limit main/combined (sign)
+  #    country: CZ
+  #    exampleIcon: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign'
+  #    icon:
+  #      - match: 'railway:signal:speed_limit:states'
+  #        cases:
+  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
+  #    tags:
+  #      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+  #      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+  #      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50'] }
+
+  #  - description: Speed limit main/combined (light)
+  #    country: CZ
+  #    exampleIcon: 'CZ-D1:rychlost_60'
+  #    icon:
+  #      - match: 'railway:signal:speed_limit:states'
+  #        cases:
+  #          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30' }
+  #          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50' }
+  #          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+  #          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+  #          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
+  #    tags:
+  #      - { tag: 'railway:signal:speed_limit', value: 'CZ-D1:hlavni_navestidlo' }
+  #      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+  #      - { tag: 'railway:signal:speed_limit:states', any: ['CZ-D1:rychlost_30', 'CZ-D1:rychlost_50', 'CZ-D1:rychlost_60', 'CZ-D1:rychlost_80', 'CZ-D1:rychlost_100'] }
 
   - description: Speed limit (light)
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-light-{60}' }
-        default: 'cz/hlavni_navestidlo-light-unknown'
+          - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-light-{}', example: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-light-{60}' }
+        default: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-light-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  # TODO semaphore distant signal (orange disk)
-
-  # TODO semaphore main signals (red / yellow arms)
-
-  - description: Main stop (sign)
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:shape'
-        cases:
-          - { exact: 'circle', value: 'cz/main-sign-stop-circle' }
-        default: 'cz/main-sign-stop-rectangle'
-    tags:
-      - { tag: 'railway:signal:main', value: 'CZ-D1:stuj' }
-      - { tag: 'railway:signal:main:form', value: 'sign' }
-
-  - description: Main block
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'], value: 'cz/main-block-YGRW' }
-          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-block-YGR' }
-        default: 'cz/main-block-GR'
-      - match: 'railway:signal:main:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:function', value: 'block' }
-
-  - description: Main protection
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { all: ['CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno'], value: 'cz/main-protection-YGR' }
-        default: 'cz/main-protection-GR'
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:function', value: 'protection' }
-
-  - description: Main intermediate
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: ['CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen'], value: 'cz/main-intermediate-RWB' }
-        default: 'cz/main-intermediate-R'
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:function', value: 'intermediate' }
-
-  # Entry, exit and rest
-  - description: Main signal with speed limit
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/main-entry-YGRWY-Y' }
-        default: 'cz/main-entry-YGRWY-G'
-      - match: 'railway:signal:speed_limit:states'
-        cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
-          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
-        position: bottom
-      - match: 'railway:signal:main:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
-
-  # Entry, exit and rest
-  - description: Main signal
-    country: CZ
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-YGRW' }
-          - { all: ['CZ-D1:volno', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-GRW' }
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-YRW' }
-          - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/main-entry-RW' }
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj'], value: 'cz/main-entry-YR' }
-        default: 'cz/main-entry-GR'
-      - match: 'railway:signal:main:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Combined with speed limit
-    country: CZ
-    icon:
-      - match: 'railway:signal:combined:states'
-        cases:
-          - { any: ['CZ-D1:vystraha', 'CZ-D1:opakovani_vystraha'], value: 'cz/combined-YGRWY-Y' }
-        default: 'cz/combined-YGRWY-G'
-      - match: 'railway:signal:speed_limit:states'
-        cases:
-          - { exact: 'CZ-D1:rychlost_30', value: 'cz/rychlost_30' }
-          - { exact: 'CZ-D1:rychlost_50', value: 'cz/rychlost_50' }
-          - { exact: 'CZ-D1:rychlost_60', value: 'cz/rychlost_60' }
-          - { exact: 'CZ-D1:rychlost_80', value: 'cz/rychlost_80' }
-          - { exact: 'CZ-D1:rychlost_100', value: 'cz/rychlost_100' }
-        position: bottom
-      - match: 'railway:signal:combined:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:combined', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', any: ['CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1'] }
-
-  - description: Combined signal
-    country: CZ
-    icon:
-      - match: 'railway:signal:combined:states'
-        cases:
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-YGRW' }
-          - { all: ['CZ-D1:volno', 'CZ-D1:stuj'], value: 'cz/combined-GRW' }
-          - { all: ['CZ-D1:vystraha', 'CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-YRW' }
-          - { all: ['CZ-D1:stuj', 'CZ-D1:posun_dovolen'], value: 'cz/combined-RW' }
-        default: 'cz/combined-R'
-      - match: 'railway:signal:combined:shortened'
-        cases:
-          - { value: 'cz/shortened', description: 'shortened' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1' ] }
-      - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  # TODO: distant signal without home signal (different display form)
   - description: Distant speed limit (light)
     country: CZ
     icon:
       - match: 'railway:signal:speed_limit_distant:speed'
         cases:
-          - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-distant-light-{60}' }
-        default: 'cz/hlavni_navestidlo-distant-light-unknown'
+          - { regex: '^(1[0-6]|[1-9]|20)0$', value: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-distant-light-{}', example: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-distant-light-{60}' }
+        default: 'cz/hlavni_navestidlo-speeds/hlavni_navestidlo-distant-light-unknown'
     tags:
       - { tag: 'railway:signal:speed_limit_distant', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'CZ-D1:samostatna_predvest', 'Cs-D1' ] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
 
+
+  - description: Návěst stůj
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'circle', value: 'cz/stuj/circle' }
+        default: 'cz/stuj/rectangle'
+    tags:
+      - { tag: 'railway:signal:main', value: 'CZ-D1:stuj' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Návěst výstraha
+    country: CZ
+    icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: 'circle', value: 'cz/vystraha/circle' }
+        default: 'cz/vystraha/triangle'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CZ-D1:vystraha' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+
+  # Distant signals
+  # TODO semaphore distant signal (orange disk)
+
+  - description: Samostatná opakovací předvěst
+    country: CZ
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { all: [ 'CZ-D1:opakovani_vystraha', 'CZ-D1:opakovani_volno' ], value: 'cz/samostatna_predvest/YGXW-YW' }
+          - { all: [ 'CZ-D1:opakovani_vystraha' ], value: 'cz/samostatna_predvest/YXW-YW' }
+        default: 'cz/samostatna_predvest/YGXW-YW' # FALLBACK
+    tags:
+      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest' ] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated' }
+
+  - description: Samostatná předvěst
+    country: CZ
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          # Differentiation of CZ-D1 tagged signals
+          - { all: [ 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/samostatna_predvest/YG-Y' }
+          - { all: [ 'CZ-D1:vystraha' ], value: 'cz/samostatna_predvest/Y-Y' }
+          # Differentiation of Cs-D1 tagged signals
+          - { all: [ 'approach', 'clear' ], value: 'cz/samostatna_predvest/YG-Y' }
+          - { all: [ 'approach' ], value: 'cz/samostatna_predvest/Y-Y' }
+        default: 'cz/samostatna_predvest/YG-Y' # FALLBACK
+      # Cs-D1 uses signal:minor to tag variants of stanoviste_samostatne_predvesti, but we cannot parse that
+      # This fallback always add one of the variants when we encounter a Cs-D1 signal
+      - match: 'railway:signal:distant'
+        cases:
+          - { any: [ 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Př', 'Cs-D1:Př_', 'Cs-D1:Př _' ], value: 'cz/stanoviste_samostatne_predvesti/fallback'  }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:distant', any: [ 'CZ', 'CZ-D1:samostatna_predvest', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_', 'Cs-D1:Př', 'Cs-D1:Př_', 'Cs-D1:Př _' ] }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  # Main singnals
+  # TODO semaphore main signals (red / yellow arms)
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+        default: 'cz/hlavni_navestidlo/GRWY-GY' # FALLBACK
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:jizda_vlaku_dovolena' ], value: 'cz/hlavni_navestidlo/RBW-B' }
+          - { all: [ 'CZ-D1:stuj' ], value: 'cz/hlavni_navestidlo/RW-R' }
+        default: 'cz/hlavni_navestidlo/GRW-G' # FALLBACK
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:substitute_signal', any: [ 'yes', 'CZ-D1:privolavaci_navest' ] }
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          # Differentiation of CZ-D1 tagged signals
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/GR-G' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:jizda_vlaku_dovolena', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/RBW-B' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/RW-R' }
+          - { all: [ 'CZ-D1:stuj' ], value: 'cz/hlavni_navestidlo/R-R' }
+          # Differentiation of Cs-D1 tagged signals
+          # This describes only the most used variant of Cs-D1 tagging
+          # This does not detect speed_limit based on signal:minor tags nor handle alternative names like call_signal=summon=call_on
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRY-YY' }
+          - { all: [ 'stop', 'approach', 'clear' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
+          - { all: [ 'stop', 'approach', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'call_signal' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRY-YY' }
+          - { all: [ 'stop', 'approach' ], value: 'cz/hlavni_navestidlo/YR-Y' }
+          - { all: [ 'stop', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRY-GY' }
+          - { all: [ 'stop', 'clear' ], value: 'cz/hlavni_navestidlo/GR-G' }
+          - { all: [ 'stop', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/RW-R' }
+          - { all: [ 'stop' ], value: 'cz/hlavni_navestidlo/R-R' }
+        default: 'cz/hlavni_navestidlo/GR-G' # FALLBACK
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  # Combined signals
+
+  - description: Hlavní návěstidlo # Special case for 'Autoblok'
+    country: CZ
+    icon:
+      - match: 'railway:signal:station_distant'
+        cases:
+          - { exact: 'CZ-D1:hlavni_navestidlo_slouceno_s_predvesti', value: 'cz/hlavni_navestidlo/YGR-Y' }
+        default: 'cz/hlavni_navestidlo/YGR-G'
+    tags:
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:function', value: 'block' }
+      - { tag: 'railway:signal:combined:states', all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno' ] }
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:combined:states'
+        cases:
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha', ], value: 'cz/hlavni_navestidlo/YGWRY-YWY' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+        default: 'cz/hlavni_navestidlo/YGRWY-YY' # FALLBACK
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { exact: 'CZ-D1:rychlost_30', value: 'cz/hlavni_navestidlo-speeds/rychlost_30-sign' }
+          - { exact: 'CZ-D1:rychlost_50', value: 'cz/hlavni_navestidlo-speeds/rychlost_50-sign' }
+          - { exact: 'CZ-D1:rychlost_60', value: 'cz/hlavni_navestidlo-speeds/rychlost_60' }
+          - { exact: 'CZ-D1:rychlost_80', value: 'cz/hlavni_navestidlo-speeds/rychlost_80' }
+          - { exact: 'CZ-D1:rychlost_100', value: 'cz/hlavni_navestidlo-speeds/rychlost_100' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:combined:states'
+        cases:
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGRW-YW' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha' ], value: 'cz/hlavni_navestidlo/YRW-YW' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+        default: 'cz/hlavni_navestidlo/YGRW-Y' # FALLBACK
+    tags:
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo' ] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+      - { tag: 'railway:signal:combined:substitute_signal', any: [ 'yes', 'CZ-D1:privolavaci_navest' ] }
+
+  - description: Hlavní návěstidlo
+    country: CZ
+    icon:
+      - match: 'railway:signal:combined:states'
+        cases:
+          # Differentiation of CZ-D1 tagged signals
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGRW-YW' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:opakovani_vystraha' ], value: 'cz/hlavni_navestidlo/YRW-YW' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno', 'CZ-D1:posun_dovolen'  ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:posun_dovolen' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha', 'CZ-D1:volno' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:vystraha' ], value: 'cz/hlavni_navestidlo/YR-Y' }
+          - { all: [ 'CZ-D1:stuj', 'CZ-D1:odjezdove_navestidlo_dovoluje_jizdu' ], value: 'cz/hlavni_navestidlo/RWB-RB' } # Vložená návěstidla
+          # Differentiation of Cs-D1 tagged signals
+          # This describes only the most used variant of Cs-D1 tagging
+          # This does not detect speed_limit based on signal:minor tags nor handle alternative names like call_signal=summon=call_on
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRWY-YY' }
+          - { all: [ 'stop', 'approach', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YGRW-Y' }
+          - { all: [ 'stop', 'approach', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YGRY-YY' }
+          - { all: [ 'stop', 'approach', 'clear' ], value: 'cz/hlavni_navestidlo/YGR-Y' }
+          - { all: [ 'stop', 'approach', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'call_signal' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRWY-YY' }
+          - { all: [ 'stop', 'approach', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/YRW-Y' }
+          - { all: [ 'stop', 'approach', 'speed_limit' ], value: 'cz/hlavni_navestidlo/YRY-YY' }
+          - { all: [ 'stop', 'approach' ], value: 'cz/hlavni_navestidlo/YR-Y' }
+          - { all: [ 'stop', 'clear', 'call_signal', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'call_signal' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRWY-GY' }
+          - { all: [ 'stop', 'clear', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/GRW-G' }
+          - { all: [ 'stop', 'clear', 'speed_limit' ], value: 'cz/hlavni_navestidlo/GRY-GY' }
+          - { all: [ 'stop', 'clear' ], value: 'cz/hlavni_navestidlo/GR-G' }
+          - { all: [ 'stop', 'shunting_enabled' ], value: 'cz/hlavni_navestidlo/RW-R' }
+          - { all: [ 'stop' ], value: 'cz/hlavni_navestidlo/R-R' }
+        default: 'cz/hlavni_navestidlo/YGR-Y' # FALLBACK
+    tags:
+      - { tag: 'railway:signal:combined', any: [ 'CZ', 'CZ-D1:hlavni_navestidlo', 'Cs-D1', 'Cs-D1:', 'Cs-D1:_' ] }
+      - { tag: 'railway:signal:combined:form', value: 'light' }
+
+
   # TODO: Skupinové návěstidlo -- Group signal
-
-  # TODO Zkrácená vzdálenost -- reduced distanace marker
-
   # TODO entry / exit signal markers
-
   # TODO electricity signals, blue and orange
-
   # TODO route signals: green for track, white for direction
+
 
   - description: Konec nástupiště
     country: CZ
     icon: [ default: 'cz/konec_nastupiste' ]
     tags:
-      - { tag: 'railway:signal:stop', value: 'CZ-D1:konec_nastupiste' }
+      # Default for Cs-D1 stop signals, differentiation possible based on railway:signal:stop:carriages
+      - { tag: 'railway:signal:stop', any: [ 'CZ-D1:konec_nastupiste', 'Cs-D1' ] }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Místo zastavení
@@ -2795,8 +3393,8 @@ features:
     icon:
       - match: 'railway:signal:stop:caption'
         cases:
-          - { exact: 'Os', value: 'cz/misto_zastaveni-os' }
-        default: 'cz/misto_zastaveni'
+          - { exact: 'Os', value: 'cz/misto_zastaveni/os' }
+        default: 'cz/misto_zastaveni/blank'
     tags:
       - { tag: 'railway:signal:stop', value: 'CZ-D1:misto_zastaveni' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
@@ -2812,7 +3410,7 @@ features:
     country: CZ
     icon: [ default: 'cz/piskejte' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'CZ-D1:piskejte' }
+      - { tag: 'railway:signal:whistle', any: [ 'CZ-D1:piskejte', 'Cs-D1' ] }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Návěstidlo výhybky se samovratným přestavníkem
@@ -2820,22 +3418,22 @@ features:
     icon:
       - match: 'railway:signal:resetting_switch:states'
         cases:
-          - { exact: 'CZ-D1:jizda_nezajistena', value: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem-jizda_nezajistena' }
-        default: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem'
+          - { exact: 'CZ-D1:jizda_nezajistena', value: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem/RW-W' }
+        default: 'cz/navestidlo_vyhybky_se_samovratnym_prestavnikem/W-W'
     tags:
       - { tag: 'railway:signal:resetting_switch', value: 'CZ-D1:navestidlo_vyhybky_se_samovratnym_prestavnikem' }
       - { tag: 'railway:signal:resetting_switch:form', value: 'light' }
 
-  - description: Kmenový přejezdník (sign)
+  - description: Přejezdník (neproměnný)
     country: CZ
-    icon: [ default: 'cz/prejezdnik-sign' ]
+    icon: [ default: 'cz/prejezdnik/sign' ]
     tags:
       - { tag: 'railway:signal:crossing', value: 'CZ-D1:prejezdnik' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
 
-  - description: Kmenový přejezdník (light)
+  - description: Přejezdník (světelný)
     country: CZ
-    icon: [ default: 'cz/prejezdnik-light' ]
+    icon: [ default: 'cz/prejezdnik/light' ]
     tags:
       - { tag: 'railway:signal:crossing', value: 'CZ-D1:prejezdnik' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
@@ -4525,6 +5123,106 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
+  # --- ETCS --- #
+
+  # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
+
+  - description: ETCS marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
+      - match: 'railway:signal:train_protection:system_change'
+        cases:
+          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/location_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
+        default: 'etcs/location_marker-left'
+      - match: 'railway:signal:train_protection:system_change'
+        cases:
+          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS marker
+    icon:
+      - default: 'etcs/level_transition'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Distant begin of neutral section
+    icon: [ default: 'etcs/power_off_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
+
+  - description: Begin of neutral section
+    icon: [ default: 'etcs/power_off' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_off' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+
+  - description: End of Neutral section
+    icon: [ default: 'etcs/power_on' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:power_on' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Distant Lower pantograph
+    icon: [ default: 'etcs/pantograph_down_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
+
+  - description: Lower pantograph
+    icon: [ default: 'etcs/pantograph_down' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_down' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
+
+  - description: Raise pantograph
+    icon: [ default: 'etcs/pantograph_up' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:pantograph_up' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
+
+  - description: Distant end of catenary
+    icon: [ default: 'etcs/end_of_catenary_advance' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary_advance' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary_advance' }
+
+  - description: End of catenary
+    icon: [ default: 'etcs/end_of_catenary' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'ETCS:end_of_catenary' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+      - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
+
   # --- FI --- #
 
   - description: Balise
@@ -5831,14 +6529,26 @@ features:
 
   - description: Cab Signalling Start Warning Board
     country: GB
-    icon: [ default: 'gb/cab-entry-warning' ]
+    icon:
+      - default: 'gb/cab-entry-warning'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:warning' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Cab Signalling Start Board
     country: GB
-    icon: [ default: 'gb/cab-entry' ]
+    icon:
+      - default: 'gb/cab-entry'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:entry' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -5846,36 +6556,17 @@ features:
 
   - description: Cab Signalling End Board
     country: GB
-    icon: [ default: 'gb/cab-exit' ]
+    icon:
+      - default: 'gb/cab-exit'
+      - match: 'railway:signal:train_protection:turn_direction'
+        cases:
+          - { exact: 'left', value: 'gb/cab-arrow-left' }
+          - { exact: 'right', value: 'gb/cab-arrow-right' }
+        position: top
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:exit' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
-
-  - description: Cab Signalling Directional arrow
-    country: GB
-    icon:
-      - match: 'railway:signal:train_protection:turn_direction'
-        cases:
-          - { exact: 'GB-NR:left', value: 'gb/cab-arrow-left' }
-          - { exact: 'GB-NR:right', value: 'gb/cab-arrow-right' }
-        default: 'gb/cab-arrow-unknown'
-    tags:
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Block Marker Passable Plate
-    country: GB
-    icon: [ default: 'gb/block-passable' ]
-    tags:
-      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'passable' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-
-  - description: Block Marker Non-Passable Plate
-    country: GB
-    icon: [ default: 'gb/block-absolute' ]
-    tags:
-      - { tag: 'railway:signal:train_protection:block_marker:type', value: 'absolute' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETCS Block Marker
     country: GB
@@ -5885,6 +6576,11 @@ features:
           - { exact: 'right', value: 'gb/ETCS-left' }
           - { exact: 'overhead', value: 'gb/ETCS-overhead' }
         default: 'gb/ETCS-right'
+      - match: 'railway:signal:train_protection:block_marker:type'
+        cases:
+          - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
+          - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -5898,6 +6594,11 @@ features:
           - { exact: 'right', value: 'gb/TVM-CBTC-left' }
           - { exact: 'overhead', value: 'gb/TVM-CBTC-overhead' }
         default: 'gb/TVM-CBTC-right'
+      - match: 'railway:signal:train_protection:block_marker:type'
+        cases:
+          - { exact: 'passable', value: 'gb/block-passable', description: 'passable' }
+          - { exact: 'absolute', value: 'gb/block-absolute', description: 'non-passable' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:TVM-CBTC' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
@@ -6072,6 +6773,20 @@ features:
       - { tag: 'railway:signal:stop', value: 'GB-NR:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Engineering Stop board
+    country: GB
+    icon: [ default: 'gb/stop-octagon' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'GB-NR:engineer-stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Rear Clear marker
+    country: GB
+    icon: [ default: 'gb/rear-clear' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'GB-NR:rear_clear' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
   - description: Crossing
     country: GB
     icon: [ default: 'gb/crossing' ]
@@ -6097,6 +6812,17 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'GB-NR:speed_limit' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Gradient post
+    country: GB
+    icon:
+      - match: 'railway:signal:slope:shape'
+        cases:
+          - { exact: 'board', value: 'gb/gradient-board' }
+        default: 'gb/gradient-arms'
+    tags:
+      - { tag: 'railway:signal:slope', value: 'GB-NR:gradient' }
+      - { tag: 'railway:signal:slope:form', value: 'sign' }
 
   # --- IT --- #
 
@@ -6427,6 +7153,50 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  # --- JP --- #
+
+  - description: Departure signal
+    country: JP
+    icon: [ default: 'jp/main-departure' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:出発信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Block signal
+    country: JP
+    icon: [ default: 'jp/main-block' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:閉塞信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Station signal
+    country: JP
+    icon: [ default: 'jp/main-station' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'JP:場内信号機' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Shunting signal
+    country: JP
+    icon: [ default: 'jp/shunting' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'JP:入換信号機' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Distant signal
+    country: JP
+    icon: [ default: 'jp/distant' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'JP:遠方信号機' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Repeated signal
+    country: JP
+    icon: [ default: 'jp/main_repeated' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'JP:中継信号機' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   # --- LU --- #
 
@@ -6949,6 +7719,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'NZ:stop_block' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Stop Station Entry
+    country: NZ
+    icon: [ default: 'nz/stop_station_entry' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'NZ:stop_station' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Stop Plate
     country: NZ
     icon: [ default: 'nz/stop_plate' ]
@@ -7025,13 +7802,6 @@ features:
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
 
   # route
-  - description: Route Indicator
-    country: NZ
-    icon: [ default: 'nz/route_indicator' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'NZ:route_indicator' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Loop Light
     country: NZ
     icon: [ default: 'nz/L' ]
@@ -7327,7 +8097,7 @@ features:
     country: NZ
     icon: [ default: 'nz/speed_indicator' ]
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NZ:speed_indicator' }
+      - { tag: 'railway:signal:speed_limit', any: ['NZ:speed_indicator', 'AU:VIC:medium'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   # --- PL --- #
@@ -7484,21 +8254,17 @@ features:
 
   # TODO Tarcze rozrządowe https://www.transportszynowy.pl/Kolej/tarczerozrzadowe
 
-  - description: Tarcza zaporowa kształtowa (Tz, nieruchoma)
+  - description: Tarcza zaporowa kształtowa (Tz, ruchoma, nieruchoma)
     country: PL
-    icon: [ default: 'pl/z-sign' ]
+    icon:
+      - match: 'railway:signal:minor:form'
+        cases:
+          - { exact: 'semaphore', value: 'pl/z-semaphore' }
+        default: 'pl/z-sign'
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1' }
-
-  - description: Tarcza zaporowa kształtowa (Tz, ruchoma)
-    country: PL
-    icon: [ default: 'pl/z-semaphore' ]
-    tags:
-      - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
-      - { tag: 'railway:signal:minor:form', value: 'semaphore' }
-      - { tag: 'railway:signal:minor:states', value: 'PL-PKP:z1;PL-PKP:z2' }
+      - { tag: 'railway:signal:minor:form', any: [ 'semaphore', 'sign' ] }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:z1', 'PL-PKP:z2' ] }
 
   - description: Tarcza zaporowa świetlna (Tz)
     country: PL
@@ -7510,6 +8276,7 @@ features:
     tags:
       - { tag: 'railway:signal:minor', value: 'PL-PKP:z' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:minor:states', any: [ 'PL-PKP:s1', 'PL-PKP:ms2' ] }
 
   - description: Tarcza ostrzegawcza nieruchoma (DO)
     country: PL
@@ -7929,6 +8696,18 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21' }
       - { tag: 'railway:signal:speed_limit:form', any: [ 'light', 'sign' ] }
+
+  - description: Wskaźnik W21wg
+    country: PL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([58]|15)$', value: 'pl/w21wg-{}', example: 'pl/w21wg-{5}' }
+        default: 'pl/w21wg-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'PL-PKP:w21wg' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: Wskaźnik zmiany prędkości (W27a)
     country: PL

@@ -1,4 +1,4 @@
-FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-lua
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-lua
 
 WORKDIR /build
 
@@ -12,7 +12,7 @@ RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
   node tags.lua.js \
     > /build/tags.lua
 
-FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-signals
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-signals
 
 WORKDIR /build
 
@@ -24,7 +24,7 @@ RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_fea
   node signal_features.sql.js \
     > /build/signal_features.sql
 
-FROM node:22-alpine@sha256:dbcedd8aeab47fbc0f4dd4bffa55b7c3c729a707875968d467aaaea42d6225af AS build-operators
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-operators
 
 WORKDIR /build
 
@@ -35,7 +35,7 @@ RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js
   node operators.sql.js \
     > /build/operators.sql
 
-FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb AS test
+FROM debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a AS test
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive
@@ -54,7 +54,7 @@ COPY import/test test
 
 CMD ["lua", "test/test_all.lua"]
 
-FROM debian:trixy-slim@sha256:1caf1c703c8f7e15dcf2e7769b35000c764e6f50e4d7401c355fb0248f3ddfdb
+FROM debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a
 
 # https://serverfault.com/questions/949991/how-to-install-tzdata-on-a-ubuntu-docker-image
 ARG DEBIAN_FRONTEND=noninteractive

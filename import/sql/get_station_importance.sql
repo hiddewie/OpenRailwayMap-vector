@@ -69,11 +69,14 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
       s.id as id,
       rs.route_id as route_id
     FROM stations s
+    JOIN stations_stop_areas ssa
+      ON ssa.station_id = s.id
     JOIN stop_areas sa
-      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      ON ssa.stop_area_osm_id = sa.osm_id
+    JOIN stop_area_route_stops sars
+      ON sa.osm_id = sars.stop_area_id
     JOIN route_stop rs
-      ON ARRAY[rs.stop_id] <@ sa.stop_ref_ids
+      ON rs.stop_id = sars.route_stop_id
   ) sr
   GROUP BY id;
 
@@ -97,9 +100,10 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
       s.id as id,
       r.osm_id as route_id
     FROM stations s
+    JOIN stations_stop_areas ssa
+      ON ssa.station_id = s.id
     JOIN stop_areas sa
-      ON (ARRAY[s.osm_id] <@ sa.node_ref_ids AND s.osm_type = 'N')
-        OR (ARRAY[s.osm_id] <@ sa.way_ref_ids AND s.osm_type = 'W')
+      ON ssa.stop_area_osm_id = sa.osm_id
     JOIN routes r
       ON sa.platform_ref_ids && r.platform_ref_ids
   ) sr

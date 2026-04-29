@@ -158,6 +158,8 @@ function signal_caption(tags)
     or tags['railway:signal:route:caption']
     or tags['railway:signal:dual_mode:caption']
     or tags['railway:signal:train_protection:caption']
+    or tags['railway:signal:train_protection:main:caption']
+    or tags['railway:signal:train_protection:system_change:caption']
     or tags['railway:signal:slope:caption']
     or tags['railway:signal:radio:frequency']
 end
@@ -233,6 +235,8 @@ local pois = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
+    { column = 'radio', type = 'text' },
+    { column = 'emergency_phone', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -258,6 +262,7 @@ local stations = osm2pgsql.define_table({
     { column = 'map_reference', type = 'text' },
     { column = 'references', type = 'hstore' },
     { column = 'operator', sql_type = 'text[]' },
+    { column = 'owner', type = 'text' },
     { column = 'network', sql_type = 'text[]' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'yard_purpose', sql_type = 'text[]' },
@@ -275,8 +280,8 @@ local stations = osm2pgsql.define_table({
     { column = 'way', method = 'gist' },
     -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
-    -- For joining stations to stop areas
-    { column = 'osm_id', method = 'btree' },
+    -- For building linking table between stations and stop areas
+    { column = 'osm_type', method = 'btree' },
     -- Search by reference
     { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
@@ -350,6 +355,11 @@ local station_entrances = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
+  },
+  indexes = {
+    { column = 'way', method = 'gist' },
+    -- For joining clustered station areas with entrances
+    { column = 'osm_id', method = 'btree' },
   },
 })
 
@@ -552,18 +562,37 @@ local stop_areas = osm2pgsql.define_table({
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
-    { column = 'stop_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
     { column = 'references', type = 'hstore' },
   },
   indexes = {
+    { column = 'osm_id', method = 'btree' },
     { column = 'platform_ref_ids', method = 'gin' },
-    { column = 'stop_ref_ids', method = 'gin' },
-    { column = 'node_ref_ids', method = 'gin' },
-    { column = 'way_ref_ids', method = 'gin' },
     -- Search by reference
     { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
+  },
+})
+
+local stop_area_route_stops = osm2pgsql.define_table({
+  name = 'stop_area_route_stops',
+  ids = { type = 'relation', id_column = 'stop_area_id' },
+  columns = {
+    { column = 'route_stop_id', sql_type = 'int8' },
+  },
+  indexes = {
+    { column = 'stop_area_id', method = 'btree' },
+  },
+})
+
+local stop_area_platforms = osm2pgsql.define_table({
+  name = 'stop_area_platforms',
+  ids = { type = 'relation', id_column = 'stop_area_id' },
+  columns = {
+    { column = 'platform_id', sql_type = 'int8' },
+  },
+  indexes = {
+    { column = 'stop_area_id', method = 'btree' },
   },
 })
 
@@ -753,23 +782,29 @@ function split_semicolon_to_sql_array(value)
 end
 
 local railway_state_tags = {
-  present = 'railway',
-  construction = 'construction:railway',
-  proposed = 'proposed:railway',
-  disused = 'disused:railway',
-  abandoned = 'abandoned:railway',
-  preserved = 'preserved:railway',
-  razed = 'razed:railway',
+  present = {
+    railway = 'railway',
+    name = nil,
+  },
 }
+-- ordered from higher to lower importance
+local states = {'construction', 'proposed', 'disused', 'abandoned', 'preserved', 'razed'}
+for index, state in ipairs(states) do
+  railway_state_tags[state] = {
+    railway = state .. ':railway',
+    name = state .. ':name',
+  }
+end
+
 function railway_feature_and_state(tags, railway_value_func)
-  for state, railway_tag in pairs(railway_state_tags) do
-    local feature = railway_value_func(tags[railway_tag])
+  for state, state_tags in pairs(railway_state_tags) do
+    local feature = railway_value_func(tags[state_tags.railway])
     if feature then
-      return feature, state
+      return feature, state, (state_tags.name and tags[state_tags.name]) or tags.name or tags.short_name
     end
   end
 
-  return nil, nil
+  return nil, nil, tags.name or tags.short_name
 end
 
 local vehicles = {'train', 'subway', 'light_rail', 'tram', 'monorail', 'funicular', 'miniature'}
@@ -803,48 +838,36 @@ function station_type(tags)
   return feature_stations
 end
 
-local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name'}
+local known_name_tags = {'name', 'alt_name', 'short_name', 'long_name', 'official_name', 'old_name', 'uic_name', 'construction:name', 'proposed:name', 'abandoned:name', 'disused:name', 'preserved:name'}
 function name_tags(tags)
   -- Gather name tags for searching
   local found_name_tags = {}
-  local has_name_tags = false
 
   for key, value in pairs(tags) do
     for _, name_tag in ipairs(known_name_tags) do
       if key == name_tag or (key:find('^' .. name_tag .. ':') ~= nil) then
         found_name_tags[key] = value
-        has_name_tags = true
         break
       end
     end
   end
 
-  if has_name_tags then
-    return found_name_tags
-  else
-    return nil
-  end
+  return found_name_tags
 end
 
 function station_references(tags)
   local found_references = {}
-  local has_references = false
 
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
         found_references[reference.id] = tags[tag]
-        has_references = true
         break
       end
     end
   end
 
-  if has_references then
-    return found_references
-  else
-    return nil
-  end
+  return found_references
 end
 
 function position_is_zero(position)
@@ -999,6 +1022,7 @@ function is_railway_platform(tags)
   return tags.railway == 'platform'
     or (
       tags.public_transport == 'platform'
+      and tags.railway ~= 'platform_edge'
       and (
         tags.train == 'yes'
         or tags.tram == 'yes'
@@ -1079,19 +1103,20 @@ function osm2pgsql.process_node(object)
     })
   end
 
-  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
+  local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
         way = object:as_point(),
         feature = station_feature,
         state = station_state,
-        name = tags.name or tags.short_name,
+        name = name,
         station = station,
         name_tags = name_tags(tags),
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
@@ -1120,6 +1145,8 @@ function osm2pgsql.process_node(object)
       name = tags.name,
       ref = tags.ref,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+      radio = tags['railway:radio'],
+      emergency_phone = tags['emergency:phone'],
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
@@ -1361,7 +1388,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  local station_feature, station_state = railway_feature_and_state(tags, railway_station_values)
+  local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
   if station_feature then
     local position, position_exact, line_positions = find_position_tags(tags)
 
@@ -1370,12 +1397,13 @@ function osm2pgsql.process_way(object)
         way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
-        name = tags.name or tags.short_name,
+        name = name,
         station = station,
         name_tags = name_tags(tags),
         map_reference = map_station_reference(tags),
         references = station_references(tags),
         operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
         network = split_semicolon_to_sql_array(tags.network),
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
@@ -1454,6 +1482,8 @@ function osm2pgsql.process_way(object)
       name = tags.name,
       ref = tags.ref,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+      radio = tags['railway:radio'],
+      emergency_phone = tags['emergency:phone'],
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
@@ -1584,15 +1614,18 @@ function osm2pgsql.process_relation(object)
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
     local has_members = false
     local stop_members = {}
-    local platform_members = {}
     local node_members = {}
     local way_members = {}
     for _, member in ipairs(object.members) do
       if member.role == 'stop' and member.type == 'n' then
-        table.insert(stop_members, member.ref)
+        stop_area_route_stops:insert({
+          route_stop_id = member.ref,
+        })
         has_members = true
       elseif member.role == 'platform' then
-        table.insert(platform_members, member.ref)
+        stop_area_platforms:insert({
+          platform_id = member.ref,
+        })
         has_members = true
       elseif member.type == 'n' then
         -- Station has no role defined
@@ -1607,8 +1640,6 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       stop_areas:insert({
-        stop_ref_ids = '{' .. table.concat(stop_members, ',') .. '}',
-        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
         way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
         references = station_references(tags),

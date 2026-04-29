@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="12" viewBox="0 0 20 12">
+<path stroke="#000000" stroke-width="3.4" stroke-linecap="square" fill="none" d="M 1.7,6 L 10,6 L 17.5,2.5"/>
+<path stroke="#FFFFFF" stroke-width="3" stroke-linecap="square" fill="none" d="M 1.7,6 L 10,6 L 17.5,2.5"/>
+<path fill="#FFFFFF" stroke="#000000" stroke-width="0.2" d="m 9,13 V 2 l 1,-1 l 1,1 V 13 z"/>
+</svg>

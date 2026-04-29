@@ -1,4 +1,4 @@
-FROM node:22-alpine@sha256:e4bf2a82ad0a4037d28035ae71529873c069b13eb0455466ae0bc13363826e34 AS build-yaml
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-yaml
 
 WORKDIR /build
 
@@ -26,14 +26,7 @@ RUN --mount=type=bind,source=proxy,target=proxy \
   node proxy/js/taginfo.mjs \
     > /build/taginfo.json
 
-FROM build-yaml AS build-features
-
-RUN --mount=type=bind,source=proxy/js/features.mjs,target=features.mjs \
-  --mount=type=bind,source=features,target=features \
-  node /build/features.mjs \
-    > /build/features.json
-
-FROM python:3-alpine@sha256:faee120f7885a06fcc9677922331391fa690d911c020abb9e8025ff3d908e510 AS build-preset
+FROM python:3-alpine@sha256:dd4d2bd5b53d9b25a51da13addf2be586beebd5387e289e798e4083d94ca837a AS build-preset
 
 RUN apk add --no-cache zip
 
@@ -78,9 +71,6 @@ COPY --from=build-taginfo \
 
 COPY --from=build-preset \
   /build/preset.zip /etc/nginx/public/preset.zip
-
-COPY --from=build-features \
-  /build/features.json /etc/nginx/public/features.json
 
 ENTRYPOINT ["/with-news-hash.sh"]
 CMD ["nginx", "-g", "daemon off;"]

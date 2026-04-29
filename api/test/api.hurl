@@ -21,8 +21,8 @@ jsonpath "$[0].name" == "Berlin Hauptbahnhof (tief)"
 jsonpath "$[1].name" == "S+U Hauptbahnhof"
 jsonpath "$[2].name" == "Berlin Hauptbahnhof"
 jsonpath "$[3].name" == "Hauptbahnhof"
-jsonpath "$[4].name" == "Berlin Hamburger und Lehrter Bahnhof"
-jsonpath "$[5].name" == "Berlin-Moabit"
+jsonpath "$[4].name" == "Berlin-Moabit"
+jsonpath "$[5].name" == "Berlin Hamburger und Lehrter Bahnhof"
 jsonpath "$[6].name" == "Berlin Südkreuz"
 jsonpath "$[7].name" == "Südkreuz (Ringbahn)"
 jsonpath "$[8].name" == "Südkreuz (Nord-Süd)"
@@ -135,7 +135,7 @@ jsonpath "$[6].name" == "Berlin-Spandau West"
 jsonpath "$[7].name" == "Berlin-Spandau Mitte"
 jsonpath "$[8].name" == "Berlin-Spandau Ost"
 
-# Facility request with with diacritics
+# Facility request with diacritics
 GET {{base_url}}/facility
 [QueryStringParams]
 name: Karl-Marx-Straße
@@ -143,6 +143,15 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Karl-Marx-Straße"
+
+# Facility request with name containing /
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Königsheideweg
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Sterndamm/Königsheideweg"
 
 # Facility search for reference
 GET {{base_url}}/facility
@@ -166,6 +175,15 @@ HTTP 200
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Berlin Ostkreuz (Ringbahn-F)"
 
+# Facility search by reference for yard (area)
+GET {{base_url}}/facility
+[QueryStringParams]
+ref: BNO
+HTTP 200
+[Asserts]
+jsonpath "$" count == 1
+jsonpath "$[0].name" == "Berlin Nordost"
+
 # Facility search for UIC reference
 GET {{base_url}}/facility
 [QueryStringParams]
@@ -173,8 +191,8 @@ ref: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
-jsonpath "$[1].name" == "Ostkreuz"
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
 # Facility search for BVG reference
 GET {{base_url}}/facility
@@ -184,7 +202,7 @@ HTTP 200
 [Asserts]
 jsonpath "$" count == 1
 jsonpath "$[0].name" == "Virchowstraße"
-jsonpath "$[0].references.BVG" == "309771"
+jsonpath "$[0].references.de-bvg" == "309770"
 
 # Facility search for name or reference
 GET {{base_url}}/facility
@@ -218,8 +236,8 @@ q: 8089028
 HTTP 200
 [Asserts]
 jsonpath "$" count == 2
-jsonpath "$[0].name" == "Ostkreuz (Ringbahn)"
-jsonpath "$[1].name" == "Ostkreuz"
+jsonpath "$[0].name" == "Ostkreuz"
+jsonpath "$[1].name" == "Ostkreuz (Ringbahn)"
 
 # Facility search for name or reference for grouped station
 GET {{base_url}}/facility
@@ -227,7 +245,7 @@ GET {{base_url}}/facility
 q: Landsberger Allee
 HTTP 200
 [Asserts]
-jsonpath "$" count == 3
+jsonpath "$" count == 6
 jsonpath "$[0].name" == "Landsberger Allee/Petersburger Straße"
 jsonpath "$[0].feature" == "tram_stop"
 jsonpath "$[0].state" == "present"
@@ -238,13 +256,13 @@ jsonpath "$[0].osm_ids[1]" == 271777826
 jsonpath "$[0].osm_ids[2]" == 1679221136
 jsonpath "$[0].osm_ids[3]" == 1787945074
 jsonpath "$[0].osm_types" count == 4
-jsonpath "$[2].railway_ref" == "BLST"
-jsonpath "$[2].station" == "light_rail"
-jsonpath "$[2].uic_ref" == "8089020"
-jsonpath "$[2].operator[0]" == "DB InfraGO AG"
-jsonpath "$[2].network[0]" == "Verkehrsverbund Berlin-Brandenburg"
-jsonpath "$[2].wikidata[0]" == "Q800507"
-jsonpath "$[2].wikipedia[0]" == "de:Bahnhof Berlin Landsberger Allee"
+jsonpath "$[3].railway_ref" == "BLST"
+jsonpath "$[3].station" == "light_rail"
+jsonpath "$[3].uic_ref" == "8089020"
+jsonpath "$[3].operator[0]" == "DB InfraGO AG"
+jsonpath "$[3].network[0]" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$[3].wikidata[0]" == "Q800507"
+jsonpath "$[3].wikipedia[0]" == "de:Bahnhof Berlin Landsberger Allee"
 
 # Facility request missing required parameter
 GET {{base_url}}/facility
@@ -401,3 +419,45 @@ Content-Type: application/geo+json
 [Asserts]
 jsonpath "$.type" == "FeatureCollection"
 jsonpath "$.features" count == 0
+
+# Non existing WikiData image
+GET {{base_url}}/wikidata/Q0
+HTTP 404
+Content-Type: text/plain; charset=utf-8
+[Asserts]
+body == "Response from Wikidata API had status 400"
+
+# WikiData image with metadata
+GET {{base_url}}/wikidata/Q660045
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.file_name" == "2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.description" == "Berlin, <a href=\"https://en.wikipedia.org/wiki/Ostkreuz\" class=\"extiw\" title=\"en:Ostkreuz\">Ostkreuz</a>"
+jsonpath "$.view_url" == "https://www.wikidata.org/wiki/Q660045#/media/File:2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg/330px-2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
+jsonpath "$.attribution" == "Wo st 01 / Wikimedia Commons"
+jsonpath "$.license" == "CC BY-SA 3.0 de"
+jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+
+# WikiMedia image with metadata
+GET {{base_url}}/wikimedia/U-Bahnhof%20Wuhletal.jpg
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.file_name" == "U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.description" == "U-Bahnhof Wuhletal (station du métro de Berlin, Allemagne)"
+jsonpath "$.view_url" == "https://commons.wikimedia.org/wiki/File:U-Bahnhof%20Wuhletal.jpg#/media/File:U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/U-Bahnhof_Wuhletal.jpg/330px-U-Bahnhof_Wuhletal.jpg"
+jsonpath "$.attribution" == "Molgreen, Own work"
+jsonpath "$.license" == "CC BY-SA 4.0"
+jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
+
+# Features
+GET {{base_url}}/features/features.json
+HTTP 200
+Content-Type: application/json
+
+# Feature does not exist
+GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
+HTTP 404

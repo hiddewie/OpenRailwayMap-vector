@@ -6,10 +6,10 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 ## Development
 
-Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
+Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, see the Podman specific instructions below.
 
 Start the services with:
-```
+```shell
 docker compose up --build --watch db import martin proxy api
 ```
 
@@ -23,20 +23,20 @@ The OpenRailwayMap is now available on http://localhost:8000.
 
 If changes are made to features, the materialized views in the database have to be refreshed:
 ```shell
-docker compose run --build import refresh
+docker compose run --no-deps --build --remove-orphans import refresh
 ```
 
 ### Updating the OSM data
 
 The OSM data file can be updated with:
 ```shell
-docker compose run --build import update
+docker compose run --no-deps --build --remove-orphans import update
 ```
 This command will request all updates in the region and process them into the OSM data file.
 
 After updating the data, run a new import:
 ```shell
-docker compose run --build import import
+docker compose run --no-deps --build --remove-orphans import import
 ```
 
 ### JOSM preset
@@ -73,6 +73,16 @@ SSL is supported by generating a trusted certificate, and installing it in the p
 The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
 
 You can modify the TLS port 443 to port 8443 [in the Compose configuration](./compose.yaml), if you want the container to start without privileges, for example using Podman.
+
+### Podman
+
+Create a Docker context that uses Podman for building and running containers:
+```shell
+docker context create podman --docker host=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+docker context use podman
+```
+
+This will let Docker (Compose) use the Podman daemon to build and run containers, rootless.
 
 ## Tests
 
@@ -121,6 +131,15 @@ Run the tests in interactive mode with:
 npx cypress open
 ```
 
+### Feature tests
+
+The feature tests validate the contents of the `features` directory, by matching the files against the JSON schema specification.
+
+Run the feature tests with:
+```shell
+docker compose run --rm --build feature-test
+```
+
 ## Development
 
 ### Code generation
@@ -143,4 +162,7 @@ docker build --target build-styles --tag build-styles --file proxy.Dockerfile . 
 
 docker build --target build-styles --tag build-styles --file proxy.Dockerfile . \
   && docker run --rm --entrypoint cat build-styles standard.json | jq . | less
+
+docker build --target build-features --tag build-features --file api.Dockerfile . \
+  && docker run --rm --entrypoint cat build-features features.json | jq . | less
 ```
