@@ -90,6 +90,7 @@ tags:
   - { tag: 'railway:signal:minor:form', title: 'Minor form' }
   - { tag: 'railway:signal:minor:states', title: 'Minor states', type: array }
   - { tag: 'railway:signal:minor:height', title: 'Minor height' }
+  - { tag: 'railway:signal:minor:shape', title: 'Minor shape' }
   - { tag: 'railway:signal:minor:substitute_signal', title: 'Minor substitute signal', type: array }
   - { tag: 'railway:signal:minor:function', title: 'Minor function' }
   - { tag: 'railway:signal:minor:deactivated', title: 'Minor deactivated', type: boolean }
@@ -3751,6 +3752,13 @@ features:
       - { tag: 'railway:signal:passing:form', value: 'sign' }
       - { tag: 'railway:signal:passing:type', value: 'no_passing' }
 
+  - description: DVB tram passing prohibited, give way to oncoming trams (So 5a)
+    country: DE
+    icon: [ default: 'de/dvb/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-DVB:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
   - description: tram passing prohibited end sign So 6
     country: DE
     icon: [ default: 'de/bostrab/so6' ]
@@ -4565,6 +4573,11 @@ features:
           - { exact: '?', value: 'de/bostrab/fahrsignal-empty', description: 'further, unidentified aspects' }
         position: bottom
 
+      - match: 'railway:signal:crossing'
+        cases:
+          - { exact: 'DE-DVB:so25', value: 'de/dvb/so25', description: 'So 25' }
+        position: center
+
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4738,6 +4751,14 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g3' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: DVB end of increased speed limit (G 3a)
+    country: DE
+    type: tram
+    icon: [ default: 'de/dvb/g3a' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g3a' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   - description: German tram speed limit signals as signs (G 4)
     country: DE
     type: tram
@@ -4748,6 +4769,18 @@ features:
         default: 'de/bostrab/g4-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'DE-BOStrab:g4' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: DVB short speed restriction (G 5)
+    country: DE
+    type: tram
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-5]0$', value: 'de/dvb/g5-{}', example: 'de/dvb/g5-{20}' }
+        default: 'de/dvb/g5-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Hannover tram speed limit G5
@@ -5052,19 +5085,30 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
-  - description: RSAG Vorfahrt gewähren (So 11)
+  - description: give way to other traffic
     country: DE
-    icon: [ default: 'de/rsag/so11' ]
+    icon: [ default: 'de/bostrab/st23' ]
     tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st23' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so11' }
 
-  - description: RSAG Vorfahrt (So 12)
+  - description: priority over other traffic
     country: DE
-    icon: [ default: 'de/rsag/so12' ]
+    icon:
+      - match: 'railway:signal:minor'
+        cases:
+          - { exact: 'DE-BOStrab:st24a', value: 'de/bostrab/st24a' }
+        default: 'de/bostrab/st24'
     tags:
+      - { tag: 'railway:signal:minor', any: ['DE-BOStrab:st24', 'DE-BOStrab:st24a'] }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
-      - { tag: 'railway:signal:minor', value: 'DE-RSAG:so12' }
+
+  - description: DVB curve lubrication system ahead (So 11)
+    country: DE
+    icon: [ default: 'de/dvb/so11' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-DVB:so11' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: RSAG Halt bei Überflutung (So 13)
     country: DE
