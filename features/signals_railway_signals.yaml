@@ -4911,6 +4911,13 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
+  - description: apply brakes
+    country: DE
+    icon: [ default: 'de/bostrab/st25' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st25' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: RSAG Vorfahrt gewähren (So 11)
     country: DE
     icon: [ default: 'de/rsag/so11' ]
