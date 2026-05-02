@@ -227,7 +227,7 @@ local pois = osm2pgsql.define_table({
   name = 'pois',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'point', not_null = true },
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
@@ -246,6 +246,10 @@ local pois = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1138,6 +1142,7 @@ function osm2pgsql.process_node(object)
     local feature, rank, minzoom, layer = tag_functions.poi(tags)
 
     pois:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_point(),
       feature = feature,
       rank = rank,
@@ -1479,6 +1484,7 @@ function osm2pgsql.process_way(object)
     local position, position_exact, line_positions = find_position_tags(tags)
 
     pois:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_polygon():centroid(),
       feature = feature,
       rank = rank,
