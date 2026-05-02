@@ -314,7 +314,7 @@ local platforms = osm2pgsql.define_table({
   name = 'platforms',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'geometry', not_null = true },
     { column = 'name', type = 'text' },
     { column = 'ref', sql_type = 'text[]' },
@@ -328,6 +328,10 @@ local platforms = osm2pgsql.define_table({
     { column = 'wheelchair', type = 'boolean' },
     { column = 'departures_board', type = 'boolean' },
     { column = 'tactile_paving', type = 'boolean' },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1181,6 +1185,7 @@ function osm2pgsql.process_node(object)
 
   if is_railway_platform(tags) then
     platforms:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_point(),
       name = tags.name,
       ref = split_semicolon_to_sql_array(tags.ref),
@@ -1435,6 +1440,7 @@ function osm2pgsql.process_way(object)
 
   if is_railway_platform(tags) then
     platforms:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object.is_closed and object:as_polygon() or object:as_linestring(),
       name = tags.name,
       ref = split_semicolon_to_sql_array(tags.ref),
@@ -1573,6 +1579,7 @@ function osm2pgsql.process_relation(object)
 
   if is_railway_platform(tags) then
     platforms:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_multipolygon(),
       name = tags.name,
       ref = split_semicolon_to_sql_array(tags.ref),
