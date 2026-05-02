@@ -666,7 +666,7 @@ local substation = osm2pgsql.define_table({
   name = 'substation',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'polygon', not_null = true },
     { column = 'feature', type = 'text' },
     { column = 'ref', type = 'text' },
@@ -682,6 +682,10 @@ local substation = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1599,6 +1603,7 @@ function osm2pgsql.process_way(object)
 
   if tags.power == 'substation' and tags.substation == 'traction' then
     substation:insert({
+      id = string.format("%d", object.id),
       way = object:as_polygon(),
       feature = 'traction',
       name = tags.name,
