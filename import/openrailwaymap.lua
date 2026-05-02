@@ -164,6 +164,13 @@ function signal_caption(tags)
     or tags['railway:signal:radio:frequency']
 end
 
+-- Table definitions --
+
+-- Note on primary keys:
+-- Some tables import a single row per table per OSM object, and only of a single type. In those cases the OSM id is the primary key, and the OSM type is implicit.
+-- Some tables import more than a single row per table per OSM object, or of multiple OSM types. In those cases the the OSM ID and type are imported in `osm_id` and `osm_type` columns, and the column `id` is the primary key.
+-- See https://osm2pgsql.org/doc/manual.html#unique-ids
+
 local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
