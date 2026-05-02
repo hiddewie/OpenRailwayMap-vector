@@ -14,6 +14,8 @@ local way = {
 -- Landuse
 
 osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
   tags = {
     landuse = 'railway',
   },
@@ -21,11 +23,13 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   landuse = {
-    { way = way },
+    { id = 'way-123', way = way },
   },
 })
 
 osm2pgsql.process_relation({
+  id = 123,
+  type = 'relation',
   tags = {
     landuse = 'railway',
   },
@@ -33,6 +37,6 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   landuse = {
-    { way = way },
+    { id = 'relation-123', way = way },
   },
 })
