@@ -466,7 +466,7 @@ local railway_positions = osm2pgsql.define_table({
   name = 'railway_positions',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'point', not_null = true },
     { column = 'railway', type = 'text' },
     { column = 'position_numeric', type = 'real' },
@@ -488,8 +488,10 @@ local railway_positions = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
-    { column = 'position_numeric', method = 'btree', where = 'position_numeric IS NOT NULL' },
+    { column = 'position_numeric', method = 'btree', where = 'position_numeric IS NOT NULL'
+   },
   },
 })
 
@@ -1276,8 +1278,9 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_position_values(tags.railway) and (position or position_exact) then
-    for _, position in ipairs(parse_railway_positions(position, position_exact, line_positions)) do
+    for position_index, position in ipairs(parse_railway_positions(position, position_exact, line_positions)) do
       railway_positions:insert({
+        id = string.format("%d-%d", object.id, position_index),
         way = object:as_point(),
         railway = tags.railway,
         position_numeric = position.numeric,
