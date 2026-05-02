@@ -523,7 +523,7 @@ local railway_switches = osm2pgsql.define_table({
   name = 'railway_switches',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'point', not_null = true },
     { column = 'railway', type = 'text' },
     { column = 'ref', type = 'text' },
@@ -541,6 +541,10 @@ local railway_switches = osm2pgsql.define_table({
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
   },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
+   },
 })
 
 local routes = osm2pgsql.define_table({
@@ -1310,6 +1314,7 @@ function osm2pgsql.process_node(object)
 
   if railway_switch_values(tags.railway) then
     railway_switches:insert({
+      id = string.format("%d", object.id),
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
