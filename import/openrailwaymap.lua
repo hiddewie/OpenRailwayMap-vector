@@ -168,7 +168,7 @@ local railway_line = osm2pgsql.define_table({
   name = 'railway_line',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'linestring', not_null = true },
     { column = 'way_length', type = 'real' },
     { column = 'feature', type = 'text' },
@@ -216,6 +216,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
     -- For querying routes with railway lines
     { column = 'osm_id', method = 'btree' },
@@ -1336,8 +1337,10 @@ function osm2pgsql.process_way(object)
     local dominant_speed, speed_label = dominant_speed_label(state, preferred_direction, tags['maxspeed'], tags['maxspeed:forward'], tags['maxspeed:backward'])
 
     -- Segmentize linestring to optimize tile queries
+    local way_index = 0
     for way in object:as_linestring():transform(3857):segmentize(max_segment_length):geometries() do
       railway_line:insert({
+        id = string.format("%d-%d", object.id, way_index),
         way = way,
         way_length = way:length(),
         feature = feature,
@@ -1385,6 +1388,8 @@ function osm2pgsql.process_way(object)
         note = tags.note,
         description = tags.description,
       })
+
+      way_index = way_index + 1
     end
   end
 
