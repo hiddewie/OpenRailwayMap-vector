@@ -551,6 +551,7 @@ local routes = osm2pgsql.define_table({
   name = 'routes',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'type', sql_type = 'route_type', not_null = true },
     { column = 'from', type = 'text' },
     { column = 'to', type = 'text' },
@@ -562,6 +563,7 @@ local routes = osm2pgsql.define_table({
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'platform_ref_ids', method = 'gin' },
     -- For querying routes with railway lines
     { column = 'osm_id', method = 'btree' },
@@ -1656,6 +1658,7 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       routes:insert({
+        id = string.format("%d", object.id),
         type = tags.route,
         from = tags.from,
         to = tags.to,
