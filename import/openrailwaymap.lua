@@ -640,9 +640,11 @@ local stop_area_groups = osm2pgsql.define_table({
   name = 'stop_area_groups',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'stop_area_ref_ids', sql_type = 'int8[]' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'stop_area_ref_ids', method = 'gin' },
   },
 })
@@ -1723,6 +1725,7 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       stop_area_groups:insert({
+        id = string.format("%d", object.id),
         stop_area_ref_ids = '{' .. table.concat(stop_area_members, ',') .. '}',
       })
     end
