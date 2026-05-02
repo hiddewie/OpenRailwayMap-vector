@@ -653,8 +653,12 @@ local landuse = osm2pgsql.define_table({
   name = 'landuse',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'geometry', not_null = true },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1588,6 +1592,7 @@ function osm2pgsql.process_way(object)
 
   if tags.landuse == 'railway' then
     landuse:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_polygon(),
     })
   end
@@ -1733,6 +1738,7 @@ function osm2pgsql.process_relation(object)
 
   if tags.landuse == 'railway' then
     landuse:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = object:as_multipolygon(),
     })
   end
