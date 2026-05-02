@@ -1,4 +1,4 @@
-FROM node:22-alpine@sha256:e4bf2a82ad0a4037d28035ae71529873c069b13eb0455466ae0bc13363826e34 AS build-yaml
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-yaml
 
 WORKDIR /build
 
@@ -58,6 +58,7 @@ COPY proxy/api /etc/nginx/public/api
 COPY proxy/js /etc/nginx/public/js
 COPY proxy/css /etc/nginx/public/css
 COPY proxy/image /etc/nginx/public/image
+COPY proxy/font /etc/nginx/public/font
 COPY proxy/ssl /etc/nginx/ssl
 
 COPY --from=build-styles \
