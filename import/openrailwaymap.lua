@@ -424,7 +424,7 @@ local boxes = osm2pgsql.define_table({
   name = 'boxes',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'geometry', not_null = true },
     { column = 'center', type = 'geometry', not_null = true },
     { column = 'way_area', type = 'real' },
@@ -441,6 +441,10 @@ local boxes = osm2pgsql.define_table({
     { column = 'wikipedia', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1103,6 +1107,7 @@ function osm2pgsql.process_node(object)
   if railway_box_values(tags.railway) then
     local point = object:as_point()
     boxes:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = point,
       center = point,
       way_area = 0,
@@ -1480,6 +1485,7 @@ function osm2pgsql.process_way(object)
     local position, position_exact, line_positions = find_position_tags(tags)
 
     boxes:insert({
+      id = string.format("%s-%d", object.type, object.id),
       way = polygon,
       center = polygon:centroid(),
       way_area = polygon:area(),
