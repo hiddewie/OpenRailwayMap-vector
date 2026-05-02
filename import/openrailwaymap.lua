@@ -377,7 +377,6 @@ local station_entrances = osm2pgsql.define_table({
 })
 
 local signal_columns = {
-  { column = 'id', type = 'text', not_null = true },
   { column = 'way', type = 'point', not_null = true },
   { column = 'railway', type = 'text' },
   { column = 'ref', type = 'text' },
@@ -411,12 +410,8 @@ for _, tag in ipairs(tag_functions.signal_tags) do
 end
 local signals = osm2pgsql.define_table({
   name = 'signals',
-  ids = { type = 'node', id_column = 'osm_id' },
+  ids = { type = 'node', id_column = 'osm_id', create_index = 'primary_key' },
   columns = signal_columns,
-  indexes = {
-    { column = 'id', method = 'btree', unique = true },
-    { column = 'way', method = 'gist' },
-  },
 })
 
 local boxes = osm2pgsql.define_table({
@@ -1261,7 +1256,6 @@ function osm2pgsql.process_node(object)
 
   if railway_signal_values(tags.railway) then
     local signal = {
-      id = string.format("%d", object.id),
       way = object:as_point(),
       railway = tags.railway,
       ref = tags.ref,
