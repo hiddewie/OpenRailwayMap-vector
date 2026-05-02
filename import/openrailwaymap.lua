@@ -340,17 +340,12 @@ local platforms = osm2pgsql.define_table({
 
 local platform_edge = osm2pgsql.define_table({
   name = 'platform_edge',
-  ids = { type = 'way', id_column = 'osm_id' },
+  ids = { type = 'way', id_column = 'osm_id', create_index = 'primary_key' },
   columns = {
-    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'linestring', not_null = true },
     { column = 'ref', sql_type = 'text' },
     { column = 'height', type = 'real' },
     { column = 'tactile_paving', type = 'boolean' },
-  },
-  indexes = {
-    { column = 'id', method = 'btree', unique = true },
-    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1565,7 +1560,6 @@ function osm2pgsql.process_way(object)
 
   if tags.railway == 'platform_edge' then
     platform_edge:insert({
-      id = string.format("%d", object.id),
       way = object:as_linestring(),
       ref = tags.ref,
       height = tags.height,
