@@ -1323,7 +1323,7 @@ features:
     country: AU
     icon: [ default: 'au/nsw/signs/begin_TOW' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:begin_TOW' }
+      - { tag: 'railway:signal:train_protection', any: ['AU:NSW:begin_TOW', 'AU:VIC:start_TOW'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Block Join
@@ -1393,7 +1393,7 @@ features:
     country: AU
     icon: [ default: 'au/nsw/signs/end_TOW' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'AU:NSW:end_TOW' }
+      - { tag: 'railway:signal:train_protection', any: ['AU:NSW:end_TOW', 'AU:VIC:end_TOW'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: End Yard Limit
@@ -1421,7 +1421,7 @@ features:
     country: AU
     icon: [ default: 'au/nsw/signs/location' ]
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'AU:NSW:location' }
+      - { tag: 'railway:signal:station_distant', any: ['AU:NSW:location', 'AU:VIC:location'] }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: No Whistle
@@ -1850,6 +1850,147 @@ features:
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
 
   # --- AU-VIC-signs --- #
+  - description: Conventional Block Marker
+    country: AU
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'right', value: 'au/vic/signs/block_marker/STD-left' }
+          - { exact: 'overhead', value: 'au/vic/signs/block_marker/STD-overhead' }
+        default: 'au/vic/signs/block_marker/STD-right'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:main', value: 'AU:VIC:block_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: CBTC Block Marker
+    country: AU
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'right', value: 'au/vic/signs/block_marker/CBTC-left' }
+          - { exact: 'overhead', value: 'au/vic/signs/block_marker/CBTC-overhead' }
+        default: 'au/vic/signs/block_marker/CBTC-right'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:main', value: 'AU:VIC:CBTC_block_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: Start CBTC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/start_CBTC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:start_CBTC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End CBTC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/end_CBTC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:end_CBTC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Start AXC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/start_AXC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:start_AXC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End AXC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/end_AXC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:end_AXC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Start CHC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/start_CHC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:start_CHC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End CHC
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/end_CHC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:end_CHC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Start RFR
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/start_RFR' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:start_RFR' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End RFR
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/end_RFR' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:end_RFR' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Start TPWS
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/start_TPWS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:start_TPWS' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End TPWS
+    country: AU
+    icon: [ default: 'au/vic/signs/system_change/end_TPWS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:VIC:end_TPWS' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Limit of Shunt
+    country: AU
+    icon: [ default: 'au/vic/signs/shunting_limit' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:VIC:shunting_limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Whistle Post
+    country: AU
+    icon: [ default: 'au/vic/signs/whistle' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'AU:VIC:whistle' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Landmark
+    country: AU
+    icon: [ default: 'au/vic/signs/landmark' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'AU:VIC:landmark' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Station Approach
+    country: AU
+    icon: [ default: 'au/vic/signs/station' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:VIC:station' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Baulks
+    country: AU
+    icon: [ default: 'au/vic/signs/baulks' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'AU:VIC:baulks' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   # --- AU-VIC-signals --- #
   - description: Banner Indicator (theatre box)
     country: AU
@@ -4911,6 +5052,13 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity', value: 'DE-VGF:st9;DE-VGF:st10' }
 
+  - description: apply brakes
+    country: DE
+    icon: [ default: 'de/bostrab/st25' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st25' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: RSAG Vorfahrt gewähren (So 11)
     country: DE
     icon: [ default: 'de/rsag/so11' ]
@@ -7798,14 +7946,14 @@ features:
     country: NZ
     icon: [ default: 'nz/begin_CTC' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'NZ:CTC_begins' }
+      - { tag: 'railway:signal:train_protection', any: ['NZ:CTC_begins', 'AU:VIC:start_CTC'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Centralized Traffic Control Ends
     country: NZ
     icon: [ default: 'nz/end_CTC' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'NZ:CTC_ends' }
+      - { tag: 'railway:signal:train_protection', any: ['NZ:CTC_ends', 'AU:VIC:end_CTC'] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Entry to European Train Control System
