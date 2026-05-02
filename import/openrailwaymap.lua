@@ -257,7 +257,7 @@ local stations = osm2pgsql.define_table({
   name = 'stations',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'geometry', not_null = true },
     { column = 'feature', type = 'text' },
     { column = 'state', type = 'text' },
@@ -282,9 +282,8 @@ local stations = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
-    { column = 'way', method = 'gist' },
-    -- For joining grouped_stations_with_importance with metadata from this table
     { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
     -- For building linking table between stations and stop areas
     { column = 'osm_type', method = 'btree' },
     -- Search by reference
@@ -1112,6 +1111,7 @@ function osm2pgsql.process_node(object)
   if station_feature then
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
+        id = string.format("%s-%d-%s", object.type, object.id, station),
         way = object:as_point(),
         feature = station_feature,
         state = station_state,
@@ -1404,6 +1404,7 @@ function osm2pgsql.process_way(object)
 
     for station, _ in pairs(station_type(tags)) do
       stations:insert({
+        id = string.format("%s-%d-%s", object.type, object.id, station),
         way = object.is_closed and object:as_polygon() or object:as_linestring(),
         feature = station_feature,
         state = station_state,
