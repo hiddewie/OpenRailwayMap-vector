@@ -124,16 +124,13 @@ const colors = {
 
 const font = {
   regular: [
-    // 'OpenRailwayMap-Regular',
-    'OpenHistorical',
+    'OpenRailwayMap-Regular',
   ],
   bold: [
-    // 'OpenRailwayMap-Bold',
-    'OpenHistorical Bold',
+    'OpenRailwayMap-Bold',
   ],
   italic: [
-    // 'OpenRailwayMap-Italic',
-    'OpenHistorical Italic',
+    'OpenRailwayMap-Italic',
   ],
 }
 
