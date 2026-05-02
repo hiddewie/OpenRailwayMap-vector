@@ -599,12 +599,14 @@ local stop_areas = osm2pgsql.define_table({
   name = 'stop_areas',
   ids = { type = 'relation', id_column = 'osm_id' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
     { column = 'references', type = 'hstore' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'osm_id', method = 'btree' },
     { column = 'platform_ref_ids', method = 'gin' },
     -- Search by reference
@@ -1701,6 +1703,7 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       stop_areas:insert({
+        id = string.format("%d", object.id),
         node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
         way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
         references = station_references(tags),
