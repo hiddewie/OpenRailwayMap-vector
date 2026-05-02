@@ -353,9 +353,9 @@ local platform_edge = osm2pgsql.define_table({
 
 local station_entrances = osm2pgsql.define_table({
   name = 'station_entrances',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  ids = { type = 'node', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'point', not_null = true },
     { column = 'name', type = 'text' },
     { column = 'type', type = 'text' },
@@ -370,6 +370,7 @@ local station_entrances = osm2pgsql.define_table({
     { column = 'description', type = 'text' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
     -- For joining clustered station areas with entrances
     { column = 'osm_id', method = 'btree' },
@@ -1208,6 +1209,7 @@ function osm2pgsql.process_node(object)
 
   if railway_entrances_values(tags.railway) then
     station_entrances:insert({
+      id = string.format("%d", object.id),
       way = object:as_point(),
       type = entrance_types[tags.railway],
       ref = tags.ref,
