@@ -295,7 +295,7 @@ local stop_positions = osm2pgsql.define_table({
   name = 'stop_positions',
   ids = { type = 'node', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'point', not_null = true },
     { column = 'type', type = 'text' },
     { column = 'name', type = 'text' },
@@ -303,6 +303,7 @@ local stop_positions = osm2pgsql.define_table({
     { column = 'local_ref', type = 'text' },
   },
   indexes = {
+    { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
     -- For querying stop positions for routes
     { column = 'osm_id', method = 'btree', unique = true },
@@ -1168,6 +1169,7 @@ function osm2pgsql.process_node(object)
     local type = stop_position_type(tags)
     if type then
       stop_positions:insert({
+        id = string.format("%d", object.id),
         way = object:as_point(),
         type = type,
         name = tags.name,
