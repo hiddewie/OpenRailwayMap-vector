@@ -452,9 +452,13 @@ local turntables = osm2pgsql.define_table({
   name = 'turntables',
   ids = { type = 'way', id_column = 'osm_id' },
   columns = {
-    { column = 'id', sql_type = 'serial', create_only = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'way', type = 'polygon', not_null = true },
     { column = 'feature', type = 'text' },
+  },
+  indexes = {
+    { column = 'id', method = 'btree', unique = true },
+    { column = 'way', method = 'gist' },
   },
 })
 
@@ -1475,6 +1479,7 @@ function osm2pgsql.process_way(object)
 
   if railway_turntable_values(tags.railway) then
     turntables:insert({
+      id = string.format("%d", object.id),
       way = object:as_polygon(),
       feature = tags.railway,
     })
