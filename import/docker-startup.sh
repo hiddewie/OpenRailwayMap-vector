@@ -154,10 +154,10 @@ import)
 
   filter_data
   import_db
-#  reduce_data
-#  transform_data
-#  create_update_functions_views
-#  print_summary
+  reduce_data
+  transform_data
+  create_update_functions_views
+  print_summary
 
   ;;
 
