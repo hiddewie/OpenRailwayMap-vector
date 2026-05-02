@@ -190,6 +190,3 @@ postgres:
       schema: public
       function: route_railway_line_low
       maxzoom: 7
-
-fonts:
-  - /config/fonts
