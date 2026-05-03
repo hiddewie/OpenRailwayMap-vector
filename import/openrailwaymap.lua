@@ -293,8 +293,6 @@ local stations = osm2pgsql.define_table({
     { column = 'way', method = 'gist' },
     -- For building linking table between stations and stop areas
     { column = 'osm_type', method = 'btree' },
-    -- Search by reference
-    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
 })
 
@@ -581,8 +579,6 @@ local stop_areas = osm2pgsql.define_table({
   },
   indexes = {
     { column = 'platform_ref_ids', method = 'gin' },
-    -- Search by reference
-    { expression = 'avals("references")', method = 'gin', where = '"references" IS NOT NULL' },
   },
 })
 
