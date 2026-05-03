@@ -553,4 +553,7 @@ jsonpath "$.type" == "tram"
 jsonpath "$.local_ref" == "14"
 jsonpath "$.ref" == null
 jsonpath "$.name" == "S+U Alexanderplatz/Dircksenstraße"
-jsonpath "$.stop_position_routes" == "28270#33FF33Tram M2: S+U Alexanderplatz => Heinersdorf1981931#33FF33Tram M2: Am Steinberg => S+U Alexanderplatz1981932#33FF33Tram M2: Heinersdorf => S+U Alexanderplatz1981933#33FF33Tram M2: S+U Alexanderplatz => Am Steinberg"
+jsonpath "$.stop_position_routes" count == 4
+jsonpath "$.stop_position_routes[0].name" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.stop_position_routes[0].color" == "#33FF33"
+jsonpath "$.stop_position_routes[0].osm_id" == "28270"
