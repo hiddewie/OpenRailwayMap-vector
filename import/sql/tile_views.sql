@@ -1218,6 +1218,29 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_switch_view AS
+  SELECT
+    osm_id as id,
+    osm_id,
+    'N' as osm_type,
+    way,
+    railway,
+    ref,
+    type,
+    turnout_side,
+    local_operated,
+    resetting,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM railway_switches;
+
 CREATE OR REPLACE FUNCTION standard_railway_switch_ref(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1230,24 +1253,14 @@ RETURN (
   FROM (
     SELECT
       osm_id as id,
-      osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway,
       ref,
       type,
       turnout_side,
       local_operated,
-      resetting,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM railway_switches
+      resetting
+    FROM standard_railway_switch_view
     WHERE way && ST_TileEnvelope(z, x, y)
     ORDER by char_length(ref)
   ) as tile
