@@ -1456,6 +1456,35 @@ END $do$;
 
 --- Signals ---
 
+CREATE OR REPLACE VIEW signal_boxes_view AS
+  SELECT
+    b.id,
+    way,
+    center,
+    osm_id,
+    osm_type,
+    feature,
+    ref,
+    b.name,
+    operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    position,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    wikidata,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM boxes b
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator;
+
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1475,18 +1504,15 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           ST_TileEnvelope(z, x, y),
           extent => 4096, buffer => 64, clip_geom => true
         ) AS way,
-        b.id,
+        id,
         osm_id,
         osm_type,
         feature,
         ref,
-        b.name,
+        name,
         operator,
-        COALESCE(
-          ro.color,
-          'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
-        ) as operator_color,
-        coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+        operator_color,
+        operator_bright,
         nullif(array_to_string(position, U&'\001E'), '') as position,
         wikimedia_commons,
         wikimedia_commons_file,
@@ -1495,9 +1521,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         wikipedia,
         note,
         description
-      FROM boxes b
-      LEFT JOIN railway_operator ro
-        ON ro.name = operator
+      FROM signal_boxes_view b
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
     WHERE way IS NOT NULL
