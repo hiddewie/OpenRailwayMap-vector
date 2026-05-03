@@ -1111,6 +1111,19 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_stop_positions_view AS
+  SELECT
+    osm_id as id,
+    osm_id,
+    'N' as osm_type,
+    way,
+    name,
+    type,
+    ref,
+    local_ref,
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]])) from route_stop rs join routes r on rs.route_id = r.osm_id where rs.stop_id = sp.osm_id) as stop_position_routes
+  FROM stop_positions sp;
+
 CREATE OR REPLACE FUNCTION standard_railway_stop_positions(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1122,15 +1135,10 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_stop_positions', 4096, 'way')
   FROM (
     SELECT
-      osm_id as id,
-      osm_id,
+      id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      name,
-      type,
-      ref,
-      local_ref,
-      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_stop rs join routes r on rs.route_id = r.osm_id where rs.stop_id = sp.osm_id) as stop_position_routes
-    FROM stop_positions sp
+      type
+    FROM standard_railway_stop_positions_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1144,11 +1152,7 @@ DO $do$ BEGIN
         "id": "standard_railway_stop_positions",
         "fields": {
           "id": "integer",
-          "osm_id": "string",
-          "feature": "string",
-          "name": "string",
-          "type": "string",
-          "stop_position_routes": "string"
+          "type": "string"
         }
       }
     ]
