@@ -1121,7 +1121,7 @@ CREATE OR REPLACE VIEW standard_railway_stop_positions_view AS
     type,
     ref,
     local_ref,
-    (select array_agg(hstore(ARRAY[ARRAY['osm_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['name', coalesce(r.name, '')]])) from route_stop rs join routes r on rs.route_id = r.osm_id where rs.stop_id = sp.osm_id) as stop_position_routes
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]])) from route_stop rs join routes r on rs.route_id = r.osm_id where rs.stop_id = sp.osm_id) as stop_position_routes
   FROM stop_positions sp;
 
 CREATE OR REPLACE FUNCTION standard_railway_stop_positions(z integer, x integer, y integer)
