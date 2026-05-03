@@ -528,38 +528,47 @@ const sources = {
   standard_railway_line_low: {
     type: 'vector',
     url: '/standard_railway_line_low',
+    promoteId: 'id',
   },
   speed_railway_line_low: {
     type: 'vector',
     url: '/speed_railway_line_low',
+    promoteId: 'id',
   },
   signals_railway_line_low: {
     type: 'vector',
     url: '/signals_railway_line_low',
+    promoteId: 'id',
   },
   electrification_railway_line_low: {
     type: 'vector',
     url: '/electrification_railway_line_low',
+    promoteId: 'id',
   },
   track_railway_line_low: {
     type: 'vector',
     url: '/track_railway_line_low',
+    promoteId: 'id',
   },
   operator_railway_line_low: {
     type: 'vector',
     url: '/operator_railway_line_low',
+    promoteId: 'id',
   },
   route_railway_line_low: {
     type: 'vector',
     url: '/route_railway_line_low',
+    promoteId: 'id',
   },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
+    promoteId: 'id',
   },
   standard_railway_text_stations_low: {
     type: 'vector',
     url: '/standard_railway_text_stations_low',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -567,6 +576,7 @@ const sources = {
   standard_railway_text_stations_med: {
     type: 'vector',
     url: '/standard_railway_text_stations_med',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -574,10 +584,12 @@ const sources = {
   high: {
     type: 'vector',
     url: '/railway_line_high,railway_text_km',
+    promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
     url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -585,18 +597,22 @@ const sources = {
   openrailwaymap_speed: {
     type: 'vector',
     url: '/speed_railway_signals',
+    promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: '/signals_railway_signals,signals_signal_boxes',
+    promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
     url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
+    promoteId: 'id',
   },
   openrailwaymap_operator: {
     type: 'vector',
     url: '/operator_railway_symbols',
+    promoteId: 'id',
   },
   openhistoricalmap: {
     type: 'vector',

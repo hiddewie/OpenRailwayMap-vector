@@ -14,6 +14,8 @@ local way = {
 -- Platforms
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'platform',
     ['name'] = 'name',
@@ -33,11 +35,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    { name = 'name', bench = true, shelter = true, elevator = true, departures_board = true, surface = 'concrete', height = '0.3', bin = true, ref = '{"1","2"}', tactile_paving = true, wheelchair = true, lit = true },
+    { id = 'node-123', name = 'name', bench = true, shelter = true, elevator = true, departures_board = true, surface = 'concrete', height = '0.3', bin = true, ref = '{"1","2"}', tactile_paving = true, wheelchair = true, lit = true },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['train'] = 'yes',
@@ -46,11 +50,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    {},
+    { id = 'node-123' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['tram'] = 'yes',
@@ -59,11 +65,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    {},
+    { id = 'node-123' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['subway'] = 'yes',
@@ -72,11 +80,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    {},
+    { id = 'node-123' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['light_rail'] = 'yes',
@@ -85,11 +95,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    {},
+    { id = 'node-123' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
   },
@@ -97,11 +109,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    {},
+    { id = 'node-123' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['bus'] = 'yes',
@@ -111,6 +125,8 @@ osm2pgsql.process_node({
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['trolleybus'] = 'yes',
@@ -120,6 +136,8 @@ osm2pgsql.process_node({
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['share_taxi'] = 'yes',
@@ -129,6 +147,8 @@ osm2pgsql.process_node({
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['public_transport'] = 'platform',
     ['ferry'] = 'yes',
@@ -138,6 +158,8 @@ osm2pgsql.process_node({
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
 
 osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
   tags = {
     ['public_transport'] = 'platform',
   },
@@ -148,11 +170,13 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    { way = way },
+    { id = 'way-123', way = way },
   },
 })
 
 osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
   tags = {
     ['public_transport'] = 'platform',
   },
@@ -163,11 +187,13 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    { way = way },
+    { id = 'way-123', way = way },
   },
 })
 
 osm2pgsql.process_relation({
+  id = 123,
+  type = 'relation',
   tags = {
     ['public_transport'] = 'platform',
   },
@@ -177,7 +203,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platforms = {
-    { way = way },
+    { id = 'relation-123', way = way },
   },
 })
 
