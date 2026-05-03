@@ -1505,22 +1505,11 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
           extent => 4096, buffer => 64, clip_geom => true
         ) AS way,
         id,
-        osm_id,
-        osm_type,
         feature,
         ref,
         name,
-        operator,
         operator_color,
-        operator_bright,
-        nullif(array_to_string(position, U&'\001E'), '') as position,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description
+        operator_bright
       FROM signal_boxes_view b
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -1535,22 +1524,11 @@ DO $do$ BEGIN
         "id": "signals_signal_boxes",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
           "ref": "string",
           "name": "string",
-          "operator": "string",
           "operator_color": "string",
-          "operator_bright": "string",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "operator_bright": "string"
         }
       }
     ]
