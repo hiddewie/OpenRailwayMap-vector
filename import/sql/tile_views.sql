@@ -1281,16 +1281,7 @@ DO $do$ BEGIN
           "type": "string",
           "turnout_side": "string",
           "local_operated": "boolean",
-          "resetting": "boolean",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "resetting": "boolean"
         }
       }
     ]
