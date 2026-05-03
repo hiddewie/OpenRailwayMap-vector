@@ -31,10 +31,11 @@ class FeatureAPI:
             set(catalog['labelProperties'] if 'labelProperties' in catalog else [])
         )
 
+        # TODO filter between numeric and text ID
         sql_query = f"""
             SELECT {', '.join(f'"{property}"' for property in properties if property)}
             FROM "{view}" 
-            WHERE id = $1::numeric 
+            WHERE id = $1::text 
         """
 
         async with self.database.acquire() as connection:

@@ -141,7 +141,7 @@ async def route_stops(
 async def feature_source_layer(
         source: str,
         layer: str,
-        id: int,
+        id: str,
 ):
     api = FeatureAPI(app.state.database)
     response = await api(source=source, layer=layer, id=id)
