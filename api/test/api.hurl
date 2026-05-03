@@ -515,12 +515,16 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.railway" == "railway_crossing"
 
 # Switch
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2614563600
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.note" == null
 jsonpath "$.description" == null
-jsonpath "$.osm_id" == 2101295628
+jsonpath "$.osm_id" == 2614563600
 jsonpath "$.osm_type" == "N"
-jsonpath "$.railway" == "railway_crossing"
+jsonpath "$.railway" == "switch"
+jsonpath "$.ref" == "W3"
+jsonpath "$.resetting" == true
+jsonpath "$.local_operated" == true
+jsonpath "$.type" == "default"
