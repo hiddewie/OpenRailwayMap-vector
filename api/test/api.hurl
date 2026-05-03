@@ -541,3 +541,16 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.pos" == "3.2"
 jsonpath "$.pos_exact" == "3.256"
 jsonpath "$.railway" == "crossing"
+
+# Stop position
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_stop_positions/1615531689
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 1615531689
+jsonpath "$.osm_type" == "N"
+jsonpath "$.type" == "tram"
+jsonpath "$.local_ref" == "14"
+jsonpath "$.ref" == null
+jsonpath "$.name" == "S+U Alexanderplatz/Dircksenstraße"
+jsonpath "$.stop_position_routes" == "28270#33FF33Tram M2: S+U Alexanderplatz => Heinersdorf1981931#33FF33Tram M2: Am Steinberg => S+U Alexanderplatz1981932#33FF33Tram M2: Heinersdorf => S+U Alexanderplatz1981933#33FF33Tram M2: S+U Alexanderplatz => Am Steinberg"
