@@ -502,3 +502,25 @@ jsonpath "$.osm_type" == "W"
 jsonpath "$.voltage" count == 2
 jsonpath "$.voltage[0]" == "30000"
 jsonpath "$.voltage[1]" == "750"
+
+# Railway crossing
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 2101295628
+jsonpath "$.osm_type" == "N"
+jsonpath "$.railway" == "railway_crossing"
+
+# Switch
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 2101295628
+jsonpath "$.osm_type" == "N"
+jsonpath "$.railway" == "railway_crossing"

@@ -808,6 +808,10 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
+    view: {
+      name: 'standard_railway_switch_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
