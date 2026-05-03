@@ -1227,6 +1227,10 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_substation': {
+    view: {
+      name: 'electrification_substation_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'feature',
     featureLinks: featureLinks.openstreetmap,
     labelProperties: ['name'],
