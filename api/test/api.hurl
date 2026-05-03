@@ -474,3 +474,14 @@ jsonpath "$.feature" == "signal_box"
 jsonpath "$.name" == "Biesdorfer Kreuz ESTW-A"
 jsonpath "$.operator" == "DB InfraGO"
 jsonpath "$.ref" == "BBIK"
+
+# Catenary mast
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12477020465-mast
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 12477020465
+jsonpath "$.osm_type" == "N"
+jsonpath "$.feature" == "mast"
