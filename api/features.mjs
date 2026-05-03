@@ -812,6 +812,7 @@ const features = {
       name: 'standard_railway_switch_view',
       id_type: 'numeric',
     },
+    labelProperties: ['ref'],
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -823,9 +824,6 @@ const features = {
       }
     },
     properties: {
-      ref: {
-        name: 'Reference',
-      },
       type: {
         name: 'Type',
       },
