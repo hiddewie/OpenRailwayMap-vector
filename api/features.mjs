@@ -1053,6 +1053,7 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_signal_boxes': {
+    view: 'signal_boxes_view',
     labelProperties: ['name'],
     featureLinks: featureLinks.openstreetmap,
     features: {
