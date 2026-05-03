@@ -670,6 +670,10 @@ const features = {
     }
   },
   'openrailwaymap_standard-standard_railway_stop_positions': {
+    view: {
+      name: 'standard_railway_stop_positions_view',
+      id_type: 'numeric',
+    },
     featureLinks: featureLinks.openstreetmap,
     labelProperties: ['name'],
     featureProperty: 'type',
