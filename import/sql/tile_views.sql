@@ -653,7 +653,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      osm_id as id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       osm_id,
       feature
@@ -692,7 +692,7 @@ RETURN (
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
+      osm_id as id,
       osm_id,
       type,
       name,
@@ -1078,7 +1078,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      osm_id as id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform_edge' as feature,
@@ -1122,7 +1122,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_stop_positions', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      osm_id as id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       name,
@@ -1233,7 +1233,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_switch_ref', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      osm_id as id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       railway,
@@ -1739,7 +1739,7 @@ RETURN (
     ST_AsMVT(tile, 'electrification_substation', 4096, 'way', 'id')
   FROM (
     SELECT
-      id,
+      osm_id as id,
       osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
