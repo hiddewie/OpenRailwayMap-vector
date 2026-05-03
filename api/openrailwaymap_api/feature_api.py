@@ -27,7 +27,8 @@ class FeatureAPI:
         properties = (
             {'osm_id', 'osm_type'} |
             catalog['properties'].keys() |
-            {catalog['featureProperty'] if 'featureProperty' in catalog else None} |
+            {catalog['featureProperty'] if 'featureProperty' in catalog else 'feature'} |
+            {catalog['colorProperty'] if 'colorProperty' in catalog else None} |
             set(catalog['labelProperties'] if 'labelProperties' in catalog else [])
         )
 
