@@ -755,6 +755,10 @@ const features = {
   },
   'openrailwaymap_standard-standard_railway_symbols': poiFeatures('standard'),
   "high-railway_text_km": {
+    view: {
+      name: 'railway_text_km_view',
+      id_type: 'text',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
