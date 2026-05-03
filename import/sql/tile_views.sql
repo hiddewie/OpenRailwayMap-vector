@@ -191,7 +191,7 @@ DO $do$ BEGIN
       {
         "id": "railway_line_high",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "way_length": "number",
           "feature": "string",
@@ -357,7 +357,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -465,7 +465,7 @@ RETURN (
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id as id,
+      id,
       osm_id,
       osm_type,
       feature,
@@ -513,7 +513,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_text_stations_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "string",
           "osm_type": "string",
           "feature": "string",
@@ -607,7 +607,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_text_stations_med",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "string",
           "osm_type": "string",
           "feature": "string",
@@ -797,7 +797,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_text_stations",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "string",
           "osm_type": "string",
           "feature": "string",
@@ -903,7 +903,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_grouped_stations",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "string",
           "osm_type": "string",
           "feature": "string",
@@ -978,7 +978,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_symbols",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "osm_type": "string",
           "feature": "string",
@@ -1044,7 +1044,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_platforms",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "string",
           "osm_type": "string",
           "feature": "string",
@@ -1199,7 +1199,7 @@ DO $do$ BEGIN
       {
         "id": "railway_text_km",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "railway": "string",
           "pos": "string",
@@ -1373,7 +1373,7 @@ DO $do$ BEGIN
       {
         "id": "speed_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -1437,7 +1437,7 @@ DO $do$ BEGIN
       {
         "id": "signals_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -1510,7 +1510,7 @@ DO $do$ BEGIN
       {
         "id": "signals_signal_boxes",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "osm_type": "string",
           "feature": "string",
@@ -1584,7 +1584,7 @@ DO $do$ BEGIN
       {
         "id": "electrification_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -1647,7 +1647,7 @@ DO $do$ BEGIN
       {
         "id": "electrification_railway_symbols",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "osm_type": "string",
           "feature": "string",
@@ -1707,7 +1707,7 @@ DO $do$ BEGIN
       {
         "id": "electrification_catenary",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "osm_type": "string",
           "ref": "string",
@@ -1842,7 +1842,7 @@ DO $do$ BEGIN
       {
         "id": "track_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -1906,7 +1906,7 @@ DO $do$ BEGIN
       {
         "id": "operator_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
@@ -1934,28 +1934,28 @@ RETURN (
   SELECT
     ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way', 'id')
   FROM (
-         SELECT
-           ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-           id,
-           osm_id,
-           osm_type,
-           feature,
-           ref,
-           nullif(array_to_string(position, U&'\001E'), '') as position,
-           wikidata,
-           wikimedia_commons,
-           wikimedia_commons_file,
-           image,
-           mapillary,
-           wikipedia,
-           note,
-           description
-         FROM pois
-         WHERE way && ST_TileEnvelope(z, x, y)
-           AND z >= minzoom
-           AND layer = 'operator'
-         ORDER BY rank DESC
-       ) as tile
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      osm_id,
+      osm_type,
+      feature,
+      ref,
+      nullif(array_to_string(position, U&'\001E'), '') as position,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM pois
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND layer = 'operator'
+    ORDER BY rank DESC
+  ) as tile
   WHERE way IS NOT NULL
 );
 
@@ -1966,7 +1966,7 @@ DO $do$ BEGIN
       {
         "id": "operator_railway_symbols",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "osm_id": "integer",
           "osm_type": "string",
           "feature": "string",
@@ -2036,7 +2036,7 @@ DO $do$ BEGIN
       {
         "id": "route_railway_line_low",
         "fields": {
-          "id": "integer",
+          "id": "string",
           "feature": "string",
           "state": "string",
           "usage": "string",
