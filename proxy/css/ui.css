@@ -76,6 +76,16 @@ body {
   margin-left: .5rem;
 }
 
+.maplibregl-popup-content .loading {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='10.360739' height='22' viewBox='0 0 10.360739 22'%3E%3Cpath fill-rule='nonzero' fill='rgb(14.901961%25, 14.901961%25, 14.901961%25)' fill-opacity='1' d='M 0 5.125 L 10.359375 5.125 L 10.359375 17.167969 L 0 17.167969 Z M 0 5.125 '/%3E%3Cpath fill-rule='nonzero' fill='rgb(14.901961%25, 14.901961%25, 14.901961%25)' fill-opacity='1' d='M 10.359375 16.875 C 10.359375 19.707031 8.039062 22 5.183594 22 C 2.320312 22 0 19.707031 0 16.875 C 0 14.042969 2.320312 11.746094 5.183594 11.746094 C 8.039062 11.746094 10.359375 14.042969 10.359375 16.875 Z M 10.359375 16.875 '/%3E%3Cpath fill-rule='nonzero' fill='rgb(14.901961%25, 14.901961%25, 14.901961%25)' fill-opacity='1' d='M 10.359375 5.125 C 10.359375 7.957031 8.039062 10.253906 5.183594 10.253906 C 2.320312 10.253906 0 7.957031 0 5.125 C 0 2.292969 2.320312 0 5.183594 0 C 8.039062 0 10.359375 2.292969 10.359375 5.125 Z M 10.359375 5.125 '/%3E%3Cpath fill-rule='nonzero' fill='rgb(0%25, 69.01961%25, 31.37255%25)' fill-opacity='1' d='M 7.214844 4.976562 C 7.214844 6.113281 6.304688 7.035156 5.183594 7.035156 C 4.054688 7.035156 3.148438 6.113281 3.148438 4.976562 C 3.148438 3.839844 4.054688 2.921875 5.183594 2.921875 C 6.304688 2.921875 7.214844 3.839844 7.214844 4.976562 Z M 7.214844 4.976562 '%3E%3Canimate attributeName='fill' begin='0s' values='rgb(0%25, 69.01961%25, 31.37255%25);rgb(20%25, 20%25, 20%25);rgb(20%25, 20%25, 20%25);rgb(0%25, 69.01961%25, 31.37255%25)' dur='1s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill-rule='nonzero' fill='rgb(20%25, 20%25, 20%25)' fill-opacity='1' d='M 7.214844 10.925781 C 7.214844 12.0625 6.304688 12.980469 5.183594 12.980469 C 4.054688 12.980469 3.148438 12.0625 3.148438 10.925781 C 3.148438 9.789062 4.054688 8.867188 5.183594 8.867188 C 6.304688 8.867188 7.214844 9.789062 7.214844 10.925781 Z M 7.214844 10.925781 '%3E%3Canimate attributeName='fill' begin='0s' values='rgb(20%25, 20%25, 20%25);rgb(20%25, 20%25, 20%25);%23C68516;rgb(20%25, 20%25, 20%25)' dur='1s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath fill-rule='nonzero' fill='rgb(20%25, 20%25, 20%25)' fill-opacity='1' d='M 7.1875 16.875 C 7.1875 18.007812 6.277344 18.933594 5.152344 18.933594 C 4.03125 18.933594 3.121094 18.007812 3.121094 16.875 C 3.121094 15.738281 4.03125 14.820312 5.152344 14.820312 C 6.277344 14.820312 7.1875 15.738281 7.1875 16.875 Z M 7.1875 16.875 '%3E%3Canimate attributeName='fill' begin='0s' values='rgb(20%25, 20%25, 20%25);rgb(90%25, 0%25, 0%25);rgb(20%25, 20%25, 20%25);rgb(20%25, 20%25, 20%25)' dur='1s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E%0A");
+  width: 240px;
+  height: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .maplibregl-popup-content .popup-content-list {
   margin: 0 -10px;
   padding: 0;
