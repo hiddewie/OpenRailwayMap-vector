@@ -1168,6 +1168,7 @@ CREATE OR REPLACE VIEW railway_text_km_view AS
     zero,
     round(position_numeric) as pos_int,
     type,
+    operator,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
