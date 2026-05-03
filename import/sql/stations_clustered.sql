@@ -1,7 +1,7 @@
 -- Clustered stations without importance
 CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
   SELECT
-    row_number() over (order by name, station, map_reference, uic_ref, feature) as id,
+    (MIN(facilities.id)::TEXT || '-' || station || '-' || feature) as id,
     name,
     station,
     map_reference,
@@ -118,7 +118,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
   JOIN stations s
     ON clustered.station_id = s.id
   JOIN stations_with_importance si
-    ON clustered.station_id = si.id
+    ON clustered.station_id = si.station_id
   LEFT JOIN (
     SELECT
       id,
