@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_line_high', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
   FROM (
     -- TODO calculate labels in frontend
     SELECT
@@ -320,7 +320,7 @@ CREATE OR REPLACE FUNCTION standard_railway_line_low(z integer, x integer, y int
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -461,7 +461,7 @@ CREATE OR REPLACE FUNCTION standard_railway_text_stations_low(z integer, x integ
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -556,7 +556,7 @@ CREATE OR REPLACE FUNCTION standard_railway_text_stations_med(z integer, x integ
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -650,7 +650,7 @@ CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y i
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -688,7 +688,7 @@ CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y in
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -750,7 +750,7 @@ CREATE OR REPLACE FUNCTION standard_railway_text_stations(z integer, x integer, 
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -841,7 +841,7 @@ CREATE OR REPLACE FUNCTION standard_railway_grouped_stations(z integer, x intege
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way')
   FROM (
     SELECT
       gs.id,
@@ -941,7 +941,7 @@ CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -1010,7 +1010,7 @@ CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y in
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_platforms', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_platforms', 4096, 'way')
   FROM (
     SELECT
       id,
@@ -1075,7 +1075,7 @@ CREATE OR REPLACE FUNCTION standard_railway_platform_edges(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -1119,7 +1119,7 @@ CREATE OR REPLACE FUNCTION standard_railway_stop_positions(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_stop_positions', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_stop_positions', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -1164,7 +1164,7 @@ CREATE OR REPLACE FUNCTION railway_text_km(z integer, x integer, y integer)
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'railway_text_km', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'railway_text_km', 4096, 'way')
   FROM (
     SELECT
       id,
@@ -1230,7 +1230,7 @@ CREATE OR REPLACE FUNCTION standard_railway_switch_ref(z integer, x integer, y i
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_switch_ref', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_switch_ref', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -1298,7 +1298,7 @@ CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x i
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_grouped_station_areas', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'standard_railway_grouped_station_areas', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -1338,7 +1338,7 @@ CREATE OR REPLACE FUNCTION speed_railway_line_low(z integer, x integer, y intege
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'speed_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'speed_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -1399,7 +1399,7 @@ CREATE OR REPLACE FUNCTION signals_railway_line_low(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'signals_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'signals_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -1464,7 +1464,7 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way', 'id')
+      ST_AsMVT(tile, 'signals_signal_boxes', 4096, 'way')
     FROM (
       SELECT
         ST_AsMVTGeom(
@@ -1544,7 +1544,7 @@ CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'electrification_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -1613,7 +1613,7 @@ CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer,
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -1676,7 +1676,7 @@ CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_catenary', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'electrification_catenary', 4096, 'way')
   FROM (
     SELECT
       id,
@@ -1736,7 +1736,7 @@ CREATE OR REPLACE FUNCTION electrification_substation(z integer, x integer, y in
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'electrification_substation', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'electrification_substation', 4096, 'way')
   FROM (
     SELECT
       osm_id as id,
@@ -1802,7 +1802,7 @@ CREATE OR REPLACE FUNCTION track_railway_line_low(z integer, x integer, y intege
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'track_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'track_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -1868,7 +1868,7 @@ CREATE OR REPLACE FUNCTION operator_railway_line_low(z integer, x integer, y int
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
@@ -1932,7 +1932,7 @@ CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -1997,7 +1997,7 @@ CREATE OR REPLACE FUNCTION route_railway_line_low(z integer, x integer, y intege
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'route_railway_line_low', 4096, 'way', 'id')
+    ST_AsMVT(tile, 'route_railway_line_low', 4096, 'way')
   FROM (
     SELECT
       min(id) as id,
