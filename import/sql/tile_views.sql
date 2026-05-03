@@ -1670,6 +1670,25 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW electrification_catenary_view AS
+  SELECT
+    id,
+    osm_id,
+    osm_type,
+    way,
+    feature,
+    ref,
+    transition,
+    structure,
+    supporting,
+    attachment,
+    tensioning,
+    insulator,
+    position,
+    note,
+    description
+  FROM catenary;
+
 CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1682,21 +1701,11 @@ RETURN (
   FROM (
     SELECT
       id,
-      osm_id,
-      osm_type,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       ref,
-      transition,
-      structure,
-      supporting,
-      attachment,
-      tensioning,
-      insulator,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      note,
-      description
-    FROM catenary
+      transition
+    FROM electrification_catenary_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1710,19 +1719,9 @@ DO $do$ BEGIN
         "id": "electrification_catenary",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "ref": "string",
           "feature": "string",
-          "transition": "boolean",
-          "structure": "string",
-          "supporting": "string",
-          "attachment": "string",
-          "tensioning": "string",
-          "insulator": "string",
-          "position": "string",
-          "note": "string",
-          "description": "string"
+          "transition": "boolean"
         }
       }
     ]
