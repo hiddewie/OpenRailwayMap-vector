@@ -1156,6 +1156,28 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW railway_text_km_view AS
+  SELECT
+    id,
+    osm_id,
+    'N' as osm_type,
+    way,
+    railway,
+    position_text as pos,
+    position_exact as pos_exact,
+    zero,
+    round(position_numeric) as pos_int,
+    type,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM railway_positions;
+
 CREATE OR REPLACE FUNCTION railway_text_km(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1168,23 +1190,10 @@ RETURN (
   FROM (
     SELECT
       id,
-      osm_id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      railway,
-      position_text as pos,
-      position_exact as pos_exact,
-      zero,
-      round(position_numeric) as pos_int,
-      type,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM railway_positions
+      pos,
+      pos_int
+    FROM railway_text_km_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND (z >= 13 OR (z >= 10 AND zero))
     ORDER by zero
@@ -1200,21 +1209,8 @@ DO $do$ BEGIN
         "id": "railway_text_km",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "railway": "string",
           "pos": "string",
-          "pos_exact": "string",
-          "pos_int": "integer",
-          "zero": "boolean",
-          "type": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "pos_int": "integer"
         }
       }
     ]
