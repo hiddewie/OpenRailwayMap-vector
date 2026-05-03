@@ -461,3 +461,16 @@ Content-Type: application/json
 # Feature does not exist
 GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
 HTTP 404
+
+# Signal box
+GET {{base_url}}/feature/openrailwaymap_signals/signals_signal_boxes/way-485364317
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 485364317
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "signal_box"
+jsonpath "$.name" == "Biesdorfer Kreuz ESTW-A"
+jsonpath "$.operator" == "DB InfraGO"
+jsonpath "$.ref" == "BBIK"
