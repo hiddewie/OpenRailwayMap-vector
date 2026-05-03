@@ -2351,8 +2351,7 @@ function popupContent(feature, abortController) {
         .map(([key, value]) =>
           [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
     } else {
-      return String(value)
-        .split('\u001e')
+      return (Array.isArray(value) ? value.map(String) : String(value).split('\u001e'))
         .map(stringValue => {
           if (!format) {
             return stringValue;
