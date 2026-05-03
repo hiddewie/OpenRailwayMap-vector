@@ -489,3 +489,16 @@ jsonpath "$.supporting" == "cantilever"
 jsonpath "$.position" count == 1
 jsonpath "$.position[0]" == "11.6 (km)"
 jsonpath "$.structure" == "lattice"
+
+# Substation
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 320522867
+jsonpath "$.osm_type" == "W"
+jsonpath "$.voltage" count == 2
+jsonpath "$.voltage[0]" == "30000"
+jsonpath "$.voltage[1]" == "750"
