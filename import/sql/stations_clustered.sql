@@ -157,6 +157,10 @@ CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_station_index
   ON grouped_stations_with_importance
     USING GIN(station_ids);
 
+CREATE UNIQUE INDEX IF NOT EXISTS grouped_stations_with_importance_id
+  ON grouped_stations_with_importance
+    USING BTREE(id);
+
 CLUSTER grouped_stations_with_importance
   USING grouped_stations_with_importance_center_index;
 
