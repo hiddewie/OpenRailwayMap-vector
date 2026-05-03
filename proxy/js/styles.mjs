@@ -1572,7 +1572,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['Fira Code Bold'],
+    'text-font': ['FiraCode-Bold'],
     'text-size': 11,
   },
 };
