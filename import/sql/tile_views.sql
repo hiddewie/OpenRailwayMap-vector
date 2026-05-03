@@ -1168,6 +1168,7 @@ CREATE OR REPLACE VIEW railway_text_km_view AS
     zero,
     round(position_numeric) as pos_int,
     type,
+    operator,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -1281,16 +1282,7 @@ DO $do$ BEGIN
           "type": "string",
           "turnout_side": "string",
           "local_operated": "boolean",
-          "resetting": "boolean",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "resetting": "boolean"
         }
       }
     ]

@@ -528,3 +528,16 @@ jsonpath "$.ref" == "W3"
 jsonpath "$.resetting" == true
 jsonpath "$.local_operated" == true
 jsonpath "$.type" == "default"
+
+# Railway position
+GET {{base_url}}/feature/high/railway_text_km/260827078-1
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == "Bei den DB-Open-Data nicht genau erkennbar welcher von beiden der 3.255 und welcher der 3.256 ist, daher beide 3.256"
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 260827078
+jsonpath "$.osm_type" == "N"
+jsonpath "$.pos" == "3.2"
+jsonpath "$.pos_exact" == "3.256"
+jsonpath "$.railway" == "crossing"
