@@ -476,12 +476,16 @@ jsonpath "$.operator" == "DB InfraGO"
 jsonpath "$.ref" == "BBIK"
 
 # Catenary mast
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12477020465-mast
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12329861010-mast
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.note" == null
 jsonpath "$.description" == null
-jsonpath "$.osm_id" == 12477020465
+jsonpath "$.osm_id" == 12329861010
 jsonpath "$.osm_type" == "N"
 jsonpath "$.feature" == "mast"
+jsonpath "$.supporting" == "cantilever"
+jsonpath "$.position" count == 1
+jsonpath "$.position[0]" == "11.6 (km)"
+jsonpath "$.structure" == "lattice"
