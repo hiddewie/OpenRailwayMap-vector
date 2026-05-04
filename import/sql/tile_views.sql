@@ -504,33 +504,12 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
-      feature,
-      state,
-      station,
-      station_size,
       map_reference as label,
-      "references",
       name,
       COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
-      operator,
+      station_size,
       operator_color,
-      operator_bright,
-      owner,
-      network,
-      position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description,
-      yard_purpose,
-      yard_hump,
-      station_routes
+      operator_bright
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -551,33 +530,12 @@ DO $do$ BEGIN
         "id": "standard_railway_text_stations_med",
         "fields": {
           "id": "string",
-          "osm_id": "string",
-          "osm_type": "string",
-          "feature": "string",
-          "state": "string",
-          "station": "string",
-          "station_size": "string",
           "label": "string",
           "name": "string",
           "localized_name": "string",
-          "references": "string",
-          "operator": "string",
+          "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string",
-          "owner": "string",
-          "network": "string",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string",
-          "yard_purpose": "string",
-          "yard_hump": "boolean",
-          "station_routes": "string"
+          "operator_bright": "string"
         }
       }
     ]
