@@ -374,25 +374,25 @@ END $do$;
 CREATE OR REPLACE VIEW railway_text_stations AS
   SELECT
     gs.id,
-    nullif(array_to_string(any_value(osm_ids), U&'\001E'), '') as osm_id,
-    nullif(array_to_string(any_value(osm_types), U&'\001E'), '') as osm_type,
+    nullif(array_to_string(osm_ids, U&'\001E'), '') as osm_id,
+    nullif(array_to_string(osm_types, U&'\001E'), '') as osm_type,
     center as way,
-    any_value(map_reference) as map_reference,
+    map_reference,
     (select nullif(string_agg(entry[1] || U&'\001E' || entry[2], U&'\001D'), '') from unnest_nd_1d(hstore_to_matrix((select any_value("references")))) as entry) as "references",
-    any_value(feature) as feature,
-    any_value(state) as state,
-    any_value(station) as station,
+    feature,
+    state,
+    station,
     -- Importance determines the station size.
     -- For stations, it is made up of the number of routes.
     -- For yards, it is made up of the (scaled) rail length.
-    any_value(CASE
+    CASE
       WHEN importance >= 21 THEN 'large'
       WHEN importance >= 9 THEN 'normal'
       ELSE 'small'
-    END) AS station_size,
-    any_value(gs.name) as name,
-    any_value(name_tags) as name_tags,
-    any_value(CASE
+    END AS station_size,
+    gs.name as name,
+    name_tags,
+    CASE
       WHEN state != 'present' THEN 100
       WHEN feature = 'station' AND station = 'light_rail' THEN 450
       WHEN feature = 'station' AND station = 'subway' THEN 400
@@ -407,48 +407,33 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       WHEN feature = 'site' THEN 600
       WHEN feature = 'crossover' THEN 700
       ELSE 50
-    END) AS rank,
-    any_value(gs.importance) as importance,
-    any_value(discr_iso) as discr_iso,
-    any_value(count) as count,
-    nullif(array_to_string(any_value(gs.operator), U&'\001E'), '') as operator,
-    nullif(array_to_string(any_value(owner), U&'\001E'), '') as owner,
-    nullif(array_to_string(any_value(network), U&'\001E'), '') as network,
-    any_value(COALESCE(
+    END AS rank,
+    importance,
+    discr_iso,
+    count,
+    nullif(array_to_string(gs.operator, U&'\001E'), '') as operator,
+    nullif(array_to_string(owner, U&'\001E'), '') as owner,
+    nullif(array_to_string(network, U&'\001E'), '') as network,
+    COALESCE(
       ro.color,
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
-    )) as operator_color,
-    any_value(coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189)) as operator_bright,
-    nullif(array_to_string(any_value(position), U&'\001E'), '') as position,
-    nullif(array_to_string(any_value(wikidata), U&'\001E'), '') as wikidata,
-    nullif(array_to_string(any_value(wikimedia_commons), U&'\001E'), '') as wikimedia_commons,
-    nullif(array_to_string(any_value(wikimedia_commons_file), U&'\001E'), '') as wikimedia_commons_file,
-    nullif(array_to_string(any_value(image), U&'\001E'), '') as image,
-    nullif(array_to_string(any_value(mapillary), U&'\001E'), '') as mapillary,
-    nullif(array_to_string(any_value(wikipedia), U&'\001E'), '') as wikipedia,
-    nullif(array_to_string(any_value(note), U&'\001E'), '') as note,
-    nullif(array_to_string(any_value(description), U&'\001E'), '') as description,
-    nullif(array_to_string(any_value(yard_purpose), U&'\001E'), '') as yard_purpose,
-    any_value(yard_hump) as yard_hump,
-    nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') as station_routes
-  FROM (
-    SELECT
-      *,
-      UNNEST(route_ids) as route_id
-    FROM grouped_stations_with_importance
-
-    UNION ALL
-
-    SELECT
-      *,
-      NULL as route_id
-    FROM grouped_stations_with_importance
-  ) gs
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189) as operator_bright,
+    nullif(array_to_string(position, U&'\001E'), '') as position,
+    nullif(array_to_string(wikidata, U&'\001E'), '') as wikidata,
+    nullif(array_to_string(wikimedia_commons, U&'\001E'), '') as wikimedia_commons,
+    nullif(array_to_string(wikimedia_commons_file, U&'\001E'), '') as wikimedia_commons_file,
+    nullif(array_to_string(image, U&'\001E'), '') as image,
+    nullif(array_to_string(mapillary, U&'\001E'), '') as mapillary,
+    nullif(array_to_string(wikipedia, U&'\001E'), '') as wikipedia,
+    nullif(array_to_string(note, U&'\001E'), '') as note,
+    nullif(array_to_string(description, U&'\001E'), '') as description,
+    nullif(array_to_string(yard_purpose, U&'\001E'), '') as yard_purpose,
+    yard_hump,
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r where ARRAY[r.osm_id] <@ gs.route_ids) as station_routes
+  FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
-  LEFT JOIN routes r
-    ON r.osm_id = gs.route_id
-  GROUP BY gs.id, center
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
