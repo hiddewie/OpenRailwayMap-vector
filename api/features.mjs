@@ -331,6 +331,17 @@ const poiFeatures = layer => ({
 
 // TODO move tram / metro stops to stations
 const stationFeatures = {
+  view: {
+    name: 'railway_text_stations',
+    id_type: 'text',
+    localizedFields: {
+      localized_name: {
+        field: 'name_tags',
+        key: 'name:{lang}',
+        default: 'name',
+      },
+    },
+  },
   featureProperty: 'feature',
   labelProperties: ['localized_name', 'name'],
   featureLinks: featureLinks.openstreetmap,
@@ -408,11 +419,6 @@ const stationFeatures = {
         routeIdProperty: 'route_id',
         colorProperty: 'color',
         labelProperty: 'label',
-        properties: [
-          'route_id',
-          'color',
-          'label',
-        ],
       },
     },
   },

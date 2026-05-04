@@ -142,9 +142,10 @@ async def feature_source_layer(
         source: str,
         layer: str,
         id: str,
+        lang: Annotated[str | None, Query()] = None,
 ):
     api = FeatureAPI(app.state.database)
-    response = await api(source=source, layer=layer, id=id)
+    response = await api(source=source, layer=layer, id=id, lang=lang)
 
     if response is None:
         raise HTTPException(status_code=404, detail="Feature not found")
