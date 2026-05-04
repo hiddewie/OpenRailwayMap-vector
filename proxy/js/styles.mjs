@@ -4752,7 +4752,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['!=', ['get', 'operator'], null],
+        ['!=', ['get', 'operator_color'], null],
         ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction']]]], // Yards only have an outline and sites and junctions show an icon
         ['match', ['get', 'state'],
           'construction', ['global-state', 'showConstructionInfrastructure'],
@@ -4784,7 +4784,7 @@ const layers = {
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['!=', ['get', 'operator'], null],
+        ['!=', ['get', 'operator_color'], null],
         ['==', ['get', 'state'], state],
         ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
       ],
