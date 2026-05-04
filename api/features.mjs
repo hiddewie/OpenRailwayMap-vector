@@ -419,11 +419,6 @@ const stationFeatures = {
         routeIdProperty: 'route_id',
         colorProperty: 'color',
         labelProperty: 'label',
-        properties: [
-          'route_id',
-          'color',
-          'label',
-        ],
       },
     },
   },
