@@ -2289,11 +2289,19 @@ function popupContent(feature, abortController) {
   const editor = configuration.editor ?? defaultConfiguration.editor;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  const fetchFeatureProperties = () =>
-    fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
+  const fetchFeatureProperties = (view) => {
+    const supportsLocalization = view.localizedFields
+    const language = configuredLanguage()
+    const url = new URL(`${location.origin}/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`)
+    if (supportsLocalization && language) {
+      url.searchParams.set('lang', language)
+    }
+
+    return fetch(url, {
       signal: abortController.signal,
     })
       .then(response => response.json());
+  }
 
   // Build HTML content dynamically to avoid cross site scripting
   const constructCatalogKey = propertyValue => ({
@@ -2397,7 +2405,7 @@ function popupContent(feature, abortController) {
 
   const propertiesFromView = featureCatalog.view;
   const properties$ = propertiesFromView
-    ? fetchFeatureProperties()
+    ? fetchFeatureProperties(propertiesFromView)
     : Promise.resolve(feature.properties);
 
   const popupContainer = createDomElement('div', 'loading');

@@ -566,7 +566,9 @@ jsonpath "$.position" == null
 jsonpath "$.operator" == "DB InfraGO AG"
 
 # Station with localized name
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt?lang=ja
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+[QueryStringParams]
+lang: ja
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -574,7 +576,9 @@ jsonpath "$.name" == "Berlin Alexanderplatz"
 jsonpath "$.localized_name" == "ベルリン・アレクサンダー広場"
 
 # Station with not defined localization
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt?lang=nf
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+[QueryStringParams]
+lang: nf
 HTTP 200
 Content-Type: application/json
 [Asserts]
