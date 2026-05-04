@@ -2324,11 +2324,11 @@ function popupContent(feature, abortController) {
 
   const determineOsmFeatures = (properties, featureContent) => {
     const osmIds = properties.osm_id
-      ? (Arrays.isArray(properties.osm_id) ? properties.osm_id : String(properties.osm_id).split('\u001e'))
+      ? (Array.isArray(properties.osm_id) ? properties.osm_id : String(properties.osm_id).split('\u001e'))
       : [];
     const defaultOsmType = determineDefaultOsmType(properties, featureContent);
     const osmTypes = properties.osm_type
-      ? (Arrays.isArray(properties.osm_type) ? properties.osm_type : String(properties.osm_type).split('\u001e'))
+      ? (Array.isArray(properties.osm_type) ? properties.osm_type : String(properties.osm_type).split('\u001e'))
       : [];
 
     return osmIds.map((osm_id, index) => {
@@ -2351,9 +2351,7 @@ function popupContent(feature, abortController) {
         sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
       }
 
-      return String(value)
-        .split('\u001d')
-        .map(item => item.split('\u001e'))
+      return (typeof value == 'object' ? Object.entries(value) : String(value).split('\u001d').map(item => item.split('\u001e')))
         .toSorted(([keyA, _a], [keyB, _b]) =>
           naturalSort(sortKey(keyA), sortKey(keyB)))
         .map(([key, value]) =>

@@ -565,7 +565,7 @@ Content-Type: application/json
 [Asserts]
 jsonpath "$.note" count == 1
 jsonpath "$.note[0]" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
-jsonpath "$.description" count == 0
+jsonpath "$.description" == null
 jsonpath "$.station" == "train"
 jsonpath "$.name" == "Berlin Alexanderplatz"
 jsonpath "$.localized_name" == "Berlin Alexanderplatz"
@@ -578,13 +578,18 @@ jsonpath "$.osm_id" count == 1
 jsonpath "$.osm_id[0]" == 30217208
 jsonpath "$.osm_type" count == 1
 jsonpath "$.osm_type[0]" == "N"
-# jsonpath "$.references" == "uic\u001e8089001\u001dstation\u001e53\u001drailway-ref\u001eBALE" # TODO
+jsonpath "$.references.uic" == "8089001"
+jsonpath "$.references.station" == "53"
+jsonpath "$.references.railway-ref" == "BALE"
 jsonpath "$.wikipedia" count == 1
 jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
 jsonpath "$.state" == "present"
 jsonpath "$.feature" == "halt"
-# jsonpath "$.station_routes" == "halt"
-jsonpath "$.position" count == 0
+jsonpath "$.station_routes" count == 36
+jsonpath "$.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.station_routes[0].color" == "#33FF33"
+jsonpath "$.station_routes[0].route_id" == "28270"
+jsonpath "$.position" == null
 jsonpath "$.operator" count == 1
 jsonpath "$.operator[0]" == "DB InfraGO AG"
 
