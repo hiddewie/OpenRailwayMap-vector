@@ -14,8 +14,6 @@ def localize_fields(fields, localized_fields, lang):
             if key in value:
                 loc[field] = value[key]
 
-    print(lang, loc)
-
     return fields | loc
 
 

@@ -710,11 +710,11 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_grouped_stations', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
       state,
-      station
+      station,
       operator_color,
       operator_bright
     FROM railway_text_stations
