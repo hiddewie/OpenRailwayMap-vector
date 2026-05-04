@@ -656,34 +656,16 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
-      feature,
       state,
+      feature,
       station,
       station_size,
       map_reference as label,
-      "references",
       name,
       COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
       count,
-      operator,
       operator_color,
-      operator_bright,
-      owner,
-      network,
-      position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description,
-      yard_purpose,
-      yard_hump,
-      station_routes
+      operator_bright
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
       AND name IS NOT NULL
