@@ -330,11 +330,11 @@ const poiFeatures = layer => ({
 })
 
 // TODO move tram / metro stops to stations
-const stationFeatures = view => ({
-  view: view ? {
-    name: view,
+const stationFeatures = {
+  view: {
+    name: 'railway_text_stations',
     id_type: 'text',
-  } : view,
+  },
   featureProperty: 'feature',
   labelProperties: ['localized_name', 'name'],
   featureLinks: featureLinks.openstreetmap,
@@ -420,7 +420,7 @@ const stationFeatures = view => ({
       },
     },
   },
-})
+}
 
 // TODO move examples here
 // TODO add icon
@@ -565,10 +565,10 @@ const features = {
       },
     },
   },
-  'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures(undefined),
-  'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures(undefined),
-  'openrailwaymap_standard-standard_railway_text_stations': stationFeatures(undefined),
-  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures(undefined),
+  'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
+  'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
+  'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
+  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_station_areas': {
     featureLinks: featureLinks.openstreetmap,
     features: {
