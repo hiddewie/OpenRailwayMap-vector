@@ -2669,13 +2669,15 @@ function popupContent(feature, abortController) {
         propertyValues
           .filter(it => it.list)
           .forEach(({title, value, list}) => {
-            const groups = value.split('\u001d')
-              .map(group => {
-                const split = group.split('\u001e');
-                return Object.fromEntries(
-                  list.properties.map((property, index) => [property, split[index] || null])
-                );
-              });
+            const groups = Array.isArray(value)
+              ? value
+              : value.split('\u001d')
+                .map(group => {
+                  const split = group.split('\u001e');
+                  return Object.fromEntries(
+                    list.properties.map((property, index) => [property, split[index] || null])
+                  );
+                });
 
             const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
             popupListHeader.innerText = `${title} (${groups.length}):`;
