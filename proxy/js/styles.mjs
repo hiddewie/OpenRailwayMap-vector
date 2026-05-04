@@ -4930,7 +4930,7 @@ const layers = {
       maxzoom: 5,
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
-      filter: ['!=', ['get', 'operator'], null],
+      filter: ['!=', ['get', 'operator_color'], null],
       paint: {
         'icon-color': ['get', 'operator_color'],
         'icon-halo-width': 1,
@@ -4956,7 +4956,7 @@ const layers = {
       maxzoom: 7,
       source: 'standard_railway_text_stations_low',
       'source-layer': 'standard_railway_text_stations_low',
-      filter: ['!=', ['get', 'operator'], null],
+      filter: ['!=', ['get', 'operator_color'], null],
       paint: {
         'text-color': ['get', 'operator_color'],
         'text-halo-color': ['case',
