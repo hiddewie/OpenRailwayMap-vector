@@ -159,7 +159,8 @@ CREATE OR REPLACE VIEW stations_with_importance_view AS
 
 -- Not a materialized view because the Osm2Pgsql scripts update the discrete isolation values
 CREATE TABLE IF NOT EXISTS stations_with_importance (
-  id BIGINT NOT NULL PRIMARY KEY,
+  id SERIAL NOT NULL PRIMARY KEY,
+  station_id TEXT NOT NULL,
   way GEOMETRY NOT NULL,
   importance NUMERIC NOT NULL DEFAULT 0,
   discr_iso REAL NOT NULL DEFAULT 0.0, -- Column name is fixed

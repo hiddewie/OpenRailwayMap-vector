@@ -755,6 +755,10 @@ const features = {
   },
   'openrailwaymap_standard-standard_railway_symbols': poiFeatures('standard'),
   "high-railway_text_km": {
+    view: {
+      name: 'railway_text_km_view',
+      id_type: 'text',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -808,6 +812,11 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_switch_ref': {
+    view: {
+      name: 'standard_railway_switch_view',
+      id_type: 'numeric',
+    },
+    labelProperties: ['ref'],
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -819,9 +828,6 @@ const features = {
       }
     },
     properties: {
-      ref: {
-        name: 'Reference',
-      },
       type: {
         name: 'Type',
       },
@@ -1053,6 +1059,10 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_signal_boxes': {
+    view: {
+      name: 'signal_boxes_view',
+      id_type: 'text',
+    },
     labelProperties: ['name'],
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -1173,6 +1183,10 @@ const features = {
   },
   'openrailwaymap_electrification-electrification_railway_symbols': poiFeatures('electrification'),
   'openrailwaymap_electrification-electrification_catenary': {
+    view: {
+      name: 'electrification_catenary_view',
+      id_type: 'text',
+    },
     featureProperty: 'feature',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -1219,6 +1233,10 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_substation': {
+    view: {
+      name: 'electrification_substation_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'feature',
     featureLinks: featureLinks.openstreetmap,
     labelProperties: ['name'],

@@ -461,3 +461,83 @@ Content-Type: application/json
 # Feature does not exist
 GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
 HTTP 404
+
+# Signal box
+GET {{base_url}}/feature/openrailwaymap_signals/signals_signal_boxes/way-485364317
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 485364317
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "signal_box"
+jsonpath "$.name" == "Biesdorfer Kreuz ESTW-A"
+jsonpath "$.operator" == "DB InfraGO"
+jsonpath "$.ref" == "BBIK"
+
+# Catenary mast
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12329861010-mast
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 12329861010
+jsonpath "$.osm_type" == "N"
+jsonpath "$.feature" == "mast"
+jsonpath "$.supporting" == "cantilever"
+jsonpath "$.position" count == 1
+jsonpath "$.position[0]" == "11.6 (km)"
+jsonpath "$.structure" == "lattice"
+
+# Substation
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 320522867
+jsonpath "$.osm_type" == "W"
+jsonpath "$.voltage" count == 2
+jsonpath "$.voltage[0]" == "30000"
+jsonpath "$.voltage[1]" == "750"
+
+# Railway crossing
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 2101295628
+jsonpath "$.osm_type" == "N"
+jsonpath "$.railway" == "railway_crossing"
+
+# Switch
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2614563600
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 2614563600
+jsonpath "$.osm_type" == "N"
+jsonpath "$.railway" == "switch"
+jsonpath "$.ref" == "W3"
+jsonpath "$.resetting" == true
+jsonpath "$.local_operated" == true
+jsonpath "$.type" == "default"
+
+# Railway position
+GET {{base_url}}/feature/high/railway_text_km/260827078-1
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == "Bei den DB-Open-Data nicht genau erkennbar welcher von beiden der 3.255 und welcher der 3.256 ist, daher beide 3.256"
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 260827078
+jsonpath "$.osm_type" == "N"
+jsonpath "$.pos" == "3.2"
+jsonpath "$.pos_exact" == "3.256"
+jsonpath "$.railway" == "crossing"

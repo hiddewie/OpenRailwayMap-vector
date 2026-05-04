@@ -204,7 +204,7 @@ function featureIconsSql(icons) {
 const sql = `
 CREATE OR REPLACE VIEW signal_direction_view AS
   SELECT
-    s.id as signal_id,
+    s.osm_id as signal_id,
     (signal_direction = 'both') as direction_both,
     degrees(ST_Azimuth(
       st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
@@ -241,7 +241,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
   -- For every type of signal, generate the feature and related metadata
   WITH signals_with_features_0 AS (
     SELECT
-      id as signal_id,
+      osm_id as signal_id,
       railway,
       ${signals_railway_signals.types.map(type => `
       CASE 
@@ -331,7 +331,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
       ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
-        id,
+        osm_id as id,
         osm_id,
         railway,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -358,9 +358,9 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         type
       FROM signals s
       JOIN signal_features sf
-        ON s.id = sf.signal_id
+        ON s.osm_id = sf.signal_id
       JOIN signal_direction sd
-        ON s.id = sd.signal_id
+        ON s.osm_id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'speed'
       ORDER BY rank NULLS FIRST
@@ -419,7 +419,7 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
       ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way', 'id')
     FROM (
       SELECT
-        id,
+        osm_id as id,
         osm_id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         sd.direction_both,
@@ -458,9 +458,9 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
         type
       FROM signals s
       JOIN signal_features sf
-        ON s.id = sf.signal_id
+        ON s.osm_id = sf.signal_id
       JOIN signal_direction sd
-        ON s.id = sd.signal_id
+        ON s.osm_id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'signals'
       ORDER BY rank NULLS FIRST
@@ -531,7 +531,7 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
       ST_AsMVT(tile, 'electrification_signals', 4096, 'way', 'id')
     FROM (
       SELECT
-        id,
+        osm_id as id,
         osm_id,
         railway,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
@@ -555,9 +555,9 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
         type as type
       FROM signals s
       JOIN signal_features sf
-        ON s.id = sf.signal_id
+        ON s.osm_id = sf.signal_id
       JOIN signal_direction sd
-        ON s.id = sd.signal_id
+        ON s.osm_id = sd.signal_id
       WHERE way && ST_TileEnvelope(z, x, y)
         AND layer = 'electrification'
       ORDER BY rank NULLS FIRST

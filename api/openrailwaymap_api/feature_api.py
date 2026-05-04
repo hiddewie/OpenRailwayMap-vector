@@ -18,7 +18,8 @@ class FeatureAPI:
 
         if 'view' not in catalog:
             return None
-        view = catalog['view']
+        view_name = catalog['view']['name']
+        view_id_type = catalog['view']['id_type']
 
         if 'properties' not in catalog:
             return None
@@ -27,14 +28,15 @@ class FeatureAPI:
         properties = (
             {'osm_id', 'osm_type'} |
             catalog['properties'].keys() |
-            {catalog['featureProperty'] if 'featureProperty' in catalog else None} |
+            {catalog['featureProperty'] if 'featureProperty' in catalog else 'feature'} |
+            {catalog['colorProperty'] if 'colorProperty' in catalog else None} |
             set(catalog['labelProperties'] if 'labelProperties' in catalog else [])
         )
 
         sql_query = f"""
             SELECT {', '.join(f'"{property}"' for property in properties if property)}
-            FROM "{view}" 
-            WHERE id = $1::numeric 
+            FROM "{view_name}" 
+            WHERE id = $1::{view_id_type} 
         """
 
         async with self.database.acquire() as connection:

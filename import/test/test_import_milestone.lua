@@ -10,6 +10,8 @@ local openrailwaymap = require('openrailwaymap')
 -- Milestones
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'milestone',
     ['railway:position'] = '1.2',
@@ -19,6 +21,6 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   railway_positions = {
-    { railway = 'milestone', position_text = '1.2', position_exact = '1.2345', zero = false, type = 'km', position_numeric = 1.2345 },
+    { id = '123-1', railway = 'milestone', position_text = '1.2', position_exact = '1.2345', zero = false, type = 'km', position_numeric = 1.2345 },
   },
 })

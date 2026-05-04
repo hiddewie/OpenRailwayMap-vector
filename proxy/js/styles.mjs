@@ -124,85 +124,13 @@ const colors = {
 
 const font = {
   regular: [
-    'Noto Sans Regular',
-    'Noto Naskh Arabic Regular',
-    'Noto Sans Armenian Regular',
-    'Noto Sans Balinese Regular',
-    'Noto Sans Bengali Regular',
-    'Noto Sans Devanagari Regular',
-    'Noto Sans Ethiopic Regular',
-    'Noto Sans Georgian Regular',
-    'Noto Sans Gujarati Regular',
-    'Noto Sans Gurmukhi Regular',
-    'Noto Sans Hebrew Regular',
-    'Noto Sans Javanese Regular',
-    'Noto Sans Kannada Regular',
-    'Noto Sans Khmer Regular',
-    'Noto Sans Lao Regular',
-    'Noto Sans Mongolian Regular',
-    'Noto Sans Myanmar Regular',
-    'Noto Sans Oriya Regular',
-    'Noto Sans Sinhala Regular',
-    'Noto Sans Symbols Regular',
-    'Noto Sans Tamil Regular',
-    'Noto Sans Thai Regular',
-    'Noto Sans Tibetan Regular',
-    'Noto Sans Tifinagh Regular',
+    'OpenRailwayMap-Regular',
   ],
   bold: [
-    'Noto Sans Bold',
-    'Noto Naskh Arabic Bold',
-    'Noto Sans Armenian Bold',
-    'Noto Sans Bengali Bold',
-    'Noto Sans Devanagari Bold',
-    'Noto Sans Ethiopic Bold',
-    'Noto Sans Georgian Bold',
-    'Noto Sans Gujarati Bold',
-    'Noto Sans Gurmukhi Bold',
-    'Noto Sans Hebrew Bold',
-    'Noto Sans Kannada Bold',
-    'Noto Sans Khmer Bold',
-    'Noto Sans Lao Bold',
-    'Noto Sans Myanmar Bold',
-    'Noto Sans Oriya Bold',
-    'Noto Sans Sinhala Bold',
-    'Noto Sans Symbols Bold',
-    'Noto Sans Tamil Bold',
-    'Noto Sans Thai Bold',
-    'Noto Sans Tibetan Bold',
-    // Fallback to regular fonts
-    'Noto Sans Balinese Regular',
-    'Noto Sans Javanese Regular',
-    'Noto Sans Mongolian Regular',
-    'Noto Sans Tifinagh Regular',
+    'OpenRailwayMap-Bold',
   ],
   italic: [
-    'Noto Sans Italic',
-    // Fallback to regular fonts
-    'Noto Naskh Arabic Regular',
-    'Noto Sans Armenian Regular',
-    'Noto Sans Balinese Regular',
-    'Noto Sans Bengali Regular',
-    'Noto Sans Devanagari Regular',
-    'Noto Sans Ethiopic Regular',
-    'Noto Sans Georgian Regular',
-    'Noto Sans Gujarati Regular',
-    'Noto Sans Gurmukhi Regular',
-    'Noto Sans Hebrew Regular',
-    'Noto Sans Javanese Regular',
-    'Noto Sans Kannada Regular',
-    'Noto Sans Khmer Regular',
-    'Noto Sans Lao Regular',
-    'Noto Sans Mongolian Regular',
-    'Noto Sans Myanmar Regular',
-    'Noto Sans Oriya Regular',
-    'Noto Sans Sinhala Regular',
-    'Noto Sans Symbols Regular',
-    'Noto Sans Tamil Regular',
-    'Noto Sans Thai Regular',
-    'Noto Sans Tibetan Regular',
-    'Noto Sans Tifinagh Regular',
-    'Noto Sans Regular',
+    'OpenRailwayMap-Italic',
   ],
 }
 
@@ -600,38 +528,47 @@ const sources = {
   standard_railway_line_low: {
     type: 'vector',
     url: '/standard_railway_line_low',
+    promoteId: 'id',
   },
   speed_railway_line_low: {
     type: 'vector',
     url: '/speed_railway_line_low',
+    promoteId: 'id',
   },
   signals_railway_line_low: {
     type: 'vector',
     url: '/signals_railway_line_low',
+    promoteId: 'id',
   },
   electrification_railway_line_low: {
     type: 'vector',
     url: '/electrification_railway_line_low',
+    promoteId: 'id',
   },
   track_railway_line_low: {
     type: 'vector',
     url: '/track_railway_line_low',
+    promoteId: 'id',
   },
   operator_railway_line_low: {
     type: 'vector',
     url: '/operator_railway_line_low',
+    promoteId: 'id',
   },
   route_railway_line_low: {
     type: 'vector',
     url: '/route_railway_line_low',
+    promoteId: 'id',
   },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
+    promoteId: 'id',
   },
   standard_railway_text_stations_low: {
     type: 'vector',
     url: '/standard_railway_text_stations_low',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -639,6 +576,7 @@ const sources = {
   standard_railway_text_stations_med: {
     type: 'vector',
     url: '/standard_railway_text_stations_med',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -646,10 +584,12 @@ const sources = {
   high: {
     type: 'vector',
     url: '/railway_line_high,railway_text_km',
+    promoteId: 'id',
   },
   openrailwaymap_standard: {
     type: 'vector',
     url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions',
+    promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
@@ -657,18 +597,22 @@ const sources = {
   openrailwaymap_speed: {
     type: 'vector',
     url: '/speed_railway_signals',
+    promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: '/signals_railway_signals,signals_signal_boxes',
+    promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
     url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
+    promoteId: 'id',
   },
   openrailwaymap_operator: {
     type: 'vector',
     url: '/operator_railway_symbols',
+    promoteId: 'id',
   },
   openhistoricalmap: {
     type: 'vector',
@@ -1644,7 +1588,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['Fira Code Bold'],
+    'text-font': ['FiraCode-Bold'],
     'text-size': 11,
   },
 };
@@ -4927,7 +4871,7 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       filter: ['all',
-        ['!=', ["get", 'operator'], null],
+        ['!=', ["get", 'operator_color'], null],
         ['==', ["geometry-type"], 'Point'],
       ],
       paint: {
@@ -4947,7 +4891,7 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       filter: ['all',
-        ['!=', ["get", 'operator'], null],
+        ['!=', ["get", 'operator_color'], null],
         ['any',
           ['==', ["geometry-type"], 'Polygon'],
           ['==', ["geometry-type"], 'MultiPolygon'],
@@ -4968,7 +4912,7 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       filter: ['all',
-        ['!=', ["get", 'operator'], null],
+        ['!=', ["get", 'operator_color'], null],
         ['any',
           ['==', ["geometry-type"], 'Polygon'],
           ['==', ["geometry-type"], 'MultiPolygon'],
@@ -5374,7 +5318,7 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       filter: ['all',
-        ['!=', ["get", 'operator'], null],
+        ['!=', ["get", 'operator_color'], null],
         ['!=', ['get', 'ref'], null],
       ],
       paint: {
@@ -5403,7 +5347,7 @@ const layers = {
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_signal_boxes',
       filter: ['all',
-        ['!=', ["get", 'operator'], null],
+        ['!=', ["get", 'operator_color'], null],
         ['!=', ['get', 'name'], null],
       ],
       paint: {
@@ -6021,7 +5965,7 @@ const layers = {
 const makeStyle = selectedStyle => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
-  glyphs: '/font/{fontstack}/{range}',
+  glyphs: '/font/{fontstack}/{range}.pbf',
   metadata: {},
   name: `OpenRailwayMap ${selectedStyle}`,
   sources,

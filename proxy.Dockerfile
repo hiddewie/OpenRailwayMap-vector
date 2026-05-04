@@ -58,6 +58,7 @@ COPY proxy/api /etc/nginx/public/api
 COPY proxy/js /etc/nginx/public/js
 COPY proxy/css /etc/nginx/public/css
 COPY proxy/image /etc/nginx/public/image
+COPY proxy/font /etc/nginx/public/font
 COPY proxy/ssl /etc/nginx/ssl
 
 COPY --from=build-styles \
