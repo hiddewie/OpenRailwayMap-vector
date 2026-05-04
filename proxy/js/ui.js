@@ -2324,11 +2324,11 @@ function popupContent(feature, abortController) {
 
   const determineOsmFeatures = (properties, featureContent) => {
     const osmIds = properties.osm_id
-      ? String(properties.osm_id).split('\u001e')
+      ? (Arrays.isArray(properties.osm_id) ? properties.osm_id : String(properties.osm_id).split('\u001e'))
       : [];
     const defaultOsmType = determineDefaultOsmType(properties, featureContent);
     const osmTypes = properties.osm_type
-      ? String(properties.osm_type).split('\u001e')
+      ? (Arrays.isArray(properties.osm_type) ? properties.osm_type : String(properties.osm_type).split('\u001e'))
       : [];
 
     return osmIds.map((osm_id, index) => {

@@ -563,23 +563,30 @@ GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
-jsonpath "$.description" == null
+jsonpath "$.note" count == 1
+jsonpath "$.note[0]" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
+jsonpath "$.description" count == 0
 jsonpath "$.station" == "train"
 jsonpath "$.name" == "Berlin Alexanderplatz"
 jsonpath "$.localized_name" == "Berlin Alexanderplatz"
 jsonpath "$.yard_hump" == null
-jsonpath "$.wikidata" == "Q698497"
-jsonpath "$.network" == "Verkehrsverbund Berlin-Brandenburg"
-jsonpath "$.osm_id" == "30217208"
-jsonpath "$.osm_type" == "N"
+jsonpath "$.wikidata" count == 1
+jsonpath "$.wikidata[0]" == "Q698497"
+jsonpath "$.network" count == 1
+jsonpath "$.network[0]" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$.osm_id" count == 1
+jsonpath "$.osm_id[0]" == 30217208
+jsonpath "$.osm_type" count == 1
+jsonpath "$.osm_type[0]" == "N"
 # jsonpath "$.references" == "uic\u001e8089001\u001dstation\u001e53\u001drailway-ref\u001eBALE" # TODO
-jsonpath "$.wikipedia" == "de:Bahnhof Berlin Alexanderplatz"
+jsonpath "$.wikipedia" count == 1
+jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
 jsonpath "$.state" == "present"
 jsonpath "$.feature" == "halt"
 # jsonpath "$.station_routes" == "halt"
-jsonpath "$.position" == null
-jsonpath "$.operator" == "DB InfraGO AG"
+jsonpath "$.position" count == 0
+jsonpath "$.operator" count == 1
+jsonpath "$.operator[0]" == "DB InfraGO AG"
 
 # Station with localized name
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
