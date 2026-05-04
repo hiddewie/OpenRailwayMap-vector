@@ -541,3 +541,42 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.pos" == "3.2"
 jsonpath "$.pos_exact" == "3.256"
 jsonpath "$.railway" == "crossing"
+
+# Station
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
+jsonpath "$.description" == null
+jsonpath "$.station" == "train"
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "Berlin Alexanderplatz"
+jsonpath "$.yard_hump" == null
+jsonpath "$.wikidata" == "Q698497"
+jsonpath "$.network" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$.osm_id" == "30217208"
+jsonpath "$.osm_type" == "N"
+# jsonpath "$.references" == "uic\u001e8089001\u001dstation\u001e53\u001drailway-ref\u001eBALE" # TODO
+jsonpath "$.wikipedia" == "de:Bahnhof Berlin Alexanderplatz"
+jsonpath "$.state" == "present"
+jsonpath "$.feature" == "halt"
+# jsonpath "$.station_routes" == "halt"
+jsonpath "$.position" == null
+jsonpath "$.operator" == "DB InfraGO AG"
+
+# Station with localized name
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt?lang=ja
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "ベルリン・アレクサンダー広場"
+
+# Station with not defined localization
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt?lang=nf
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "Berlin Alexanderplatz"

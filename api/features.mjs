@@ -334,6 +334,13 @@ const stationFeatures = {
   view: {
     name: 'railway_text_stations',
     id_type: 'text',
+    localizedFields: {
+      localized_name: {
+        field: 'name_tags',
+        key: 'name:{lang}',
+        default: 'name',
+      },
+    },
   },
   featureProperty: 'feature',
   labelProperties: ['localized_name', 'name'],
