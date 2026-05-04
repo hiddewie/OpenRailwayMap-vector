@@ -612,3 +612,29 @@ Content-Type: application/json
 [Asserts]
 jsonpath "$.name" == "Berlin Alexanderplatz"
 jsonpath "$.localized_name" == "Berlin Alexanderplatz"
+
+# Platform
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platforms/relation-3637413
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.ref" count == 2
+jsonpath "$.ref[0]" == "1"
+jsonpath "$.ref[1]" == "2"
+jsonpath "$.surface" == "paving_stones"
+jsonpath "$.wheelchair" == true
+jsonpath "$.lit" == true
+jsonpath "$.shelter" == null
+jsonpath "$.bin" == true
+jsonpath "$.bench" == true
+jsonpath "$.departures_board" == null
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.platform_routes" count == 8
+jsonpath "$.platform_routes[0].label" == "RE2: Cottbus => Nauen"
+jsonpath "$.platform_routes[0].color" == "#FFE600"
+jsonpath "$.platform_routes[0].route_id" == "156479"
+jsonpath "$.feature" == "platform"
+jsonpath "$.height" == null
+jsonpath "$.tactile_paving" == true
+jsonpath "$.osm_id" == 3637413
+jsonpath "$.osm_type" == "R"

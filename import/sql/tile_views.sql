@@ -812,6 +812,28 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_platforms_view AS
+  SELECT
+    id,
+    osm_id,
+    osm_type,
+    way,
+    'platform' as feature,
+    name,
+    ref,
+    height,
+    surface,
+    elevator,
+    shelter,
+    lit,
+    bin,
+    bench,
+    wheelchair,
+    departures_board,
+    tactile_paving,
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
+  FROM platforms p;
+
 CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -824,24 +846,10 @@ RETURN (
   FROM (
     SELECT
       id,
-      osm_id,
-      osm_type,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform' as feature,
-      name,
-      nullif(array_to_string(ref, U&'\001E'), '') as ref,
-      height,
-      surface,
-      elevator,
-      shelter,
-      lit,
-      bin,
-      bench,
-      wheelchair,
-      departures_board,
-      tactile_paving,
-      (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
-    FROM platforms p
+      name
+    FROM standard_railway_platforms_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -855,21 +863,7 @@ DO $do$ BEGIN
         "id": "standard_railway_platforms",
         "fields": {
           "id": "string",
-          "osm_id": "string",
-          "osm_type": "string",
-          "feature": "string",
-          "name": "string",
-          "ref": "string",
-          "height": "string",
-          "surface": "boolean",
-          "elevator": "boolean",
-          "shelter": "boolean",
-          "lit": "boolean",
-          "bin": "boolean",
-          "bench": "boolean",
-          "wheelchair": "boolean",
-          "departures_board": "boolean",
-          "tactile_paving": "boolean"
+          "name": "string"
         }
       }
     ]
