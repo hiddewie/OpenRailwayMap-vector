@@ -4431,7 +4431,7 @@ const layers = {
       'source-layer': 'electrification_signals',
       filter: ['all',
         ['!=', ['get', 'azimuth'], null],
-        ['!=', ['get', 'feature'], ''],
+        ['!=', ['get', 'feature0'], ''],
       ],
       paint: {
         'icon-color': colors.signals.direction,
@@ -4469,7 +4469,7 @@ const layers = {
     },
     ...imageLayerWithOutline(
       'electrification_signals',
-      ['get', 'feature'],
+      ['get', 'feature0'],
       {
         type: 'symbol',
         minzoom: 13,
@@ -4502,7 +4502,7 @@ const layers = {
       minzoom: 15,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
-      filter: ['==', ['get', 'deactivated'], true],
+      filter: ['==', ['get', 'deactivated0'], true],
       layout: {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
@@ -4539,7 +4539,7 @@ const layers = {
         'text-anchor': 'top',
         'text-offset': ['interpolate', ['linear'],
           // 2 pixel spacing under icon
-          ['/', ['+', ['get', 'offset'], 2], 9],
+          ['/', ['+', ['get', 'offset0'], 2], 9],
           0, ['literal', [0, 0]],
           20, ['literal', [0, 20]],
         ],
@@ -4575,7 +4575,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
-        'icon-image': ['concat', 'sdf:', ['get', 'feature']],
+        'icon-image': ['concat', 'sdf:', ['get', 'feature0']],
         'text-field': ['coalesce', ['get', 'ref'], ''],
         'text-font': font.regular,
         'text-size': 11,

@@ -878,6 +878,10 @@ const features = {
     },
   },
   'openrailwaymap_speed-speed_railway_signals': {
+    view: {
+      name: 'speed_railway_signals_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -923,7 +927,7 @@ const features = {
         name: 'Secondary deactivated',
       },
       direction_both: {
-        name: 'both directions',
+        name: 'Both directions',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
       position: {
@@ -956,6 +960,10 @@ const features = {
     },
   },
   'openrailwaymap_signals-signals_railway_signals': {
+    view: {
+      name: 'signals_railway_signals_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -1034,7 +1042,7 @@ const features = {
         name: 'Quinary deactivated',
       },
       direction_both: {
-        name: 'both directions',
+        name: 'Both directions',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
       position: {
@@ -1121,6 +1129,10 @@ const features = {
     },
   },
   'openrailwaymap_electrification-electrification_signals': {
+    view: {
+      name: 'electrification_signals_view',
+      id_type: 'numeric',
+    },
     featureProperty: 'railway',
     featureLinks: featureLinks.openstreetmap,
     features: {
@@ -1138,14 +1150,14 @@ const features = {
       },
     },
     properties: {
-      feature: {
+      feature0: {
         name: 'Signal',
         format: {
           lookup: 'electrification_signals',
         },
       },
       direction_both: {
-        name: 'both directions',
+        name: 'Both directions',
       },
       ref: {
         name: 'Reference',
@@ -1156,7 +1168,7 @@ const features = {
       type: {
         name: 'Type',
       },
-      deactivated: {
+      deactivated0: {
         name: 'Deactivated',
       },
       ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),

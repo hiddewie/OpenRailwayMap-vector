@@ -661,3 +661,80 @@ jsonpath "$.osm_type" == "W"
 jsonpath "$.feature" == "general/defect_detector"
 jsonpath "$.name" == "ULM"
 jsonpath "$.ref" == null
+
+# Speed signal
+GET {{base_url}}/feature/openrailwaymap_speed/speed_railway_signals/10719824502
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 10719824502
+jsonpath "$.osm_type" == "N"
+jsonpath "$.ref" == "08ZV819"
+jsonpath "$.direction_both" == false
+jsonpath "$.railway" == "signal"
+jsonpath "$.feature0" == "de/zs3-sign-up-{40}"
+jsonpath "$['railway:signal:position']" == "right"
+jsonpath "$['railway:signal:speed_limit']" == "DE-ESO:zs3"
+jsonpath "$['railway:signal:speed_limit:form']" == "sign"
+jsonpath "$['railway:signal:speed_limit:speed']" count == 1
+jsonpath "$['railway:signal:speed_limit:speed'][0]" == "40"
+jsonpath "$['railway:signal:combined']" == "DE-ESO:ks"
+jsonpath "$['railway:signal:combined:form']" == "light"
+jsonpath "$['railway:signal:combined:height']" == "normal"
+jsonpath "$['railway:signal:combined:function']" == "intermediate"
+jsonpath "$['railway:signal:minor']" == "DE-ESO:sh1"
+jsonpath "$['railway:signal:minor:form']" == "light"
+jsonpath "$['railway:signal:traversable']" == "DE-ESO:mastschild_rot-weiss"
+jsonpath "$['railway:signal:traversable:type']" == "written_default_speed;dictated_default_speed"
+
+# Electrification signal
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_signals/10720881143
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 10720881143
+jsonpath "$.osm_type" == "N"
+jsonpath "$.ref" == null
+jsonpath "$.direction_both" == false
+jsonpath "$.railway" == "signal"
+jsonpath "$.feature0" == "de/el6-left"
+jsonpath "$['railway:signal:position']" == "right"
+jsonpath "$['railway:signal:electricity']" == "DE-ESO:el6"
+jsonpath "$['railway:signal:electricity:type']" == "end_of_catenary"
+jsonpath "$['railway:signal:electricity:form']" == "sign"
+jsonpath "$['railway:signal:electricity:turn_direction']" == "left"
+
+# Distant signal
+GET {{base_url}}/feature/openrailwaymap_signals/signals_railway_signals/9351388537
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 9351388537
+jsonpath "$.osm_type" == "N"
+jsonpath "$.ref" == null
+jsonpath "$.direction_both" == false
+jsonpath "$.railway" == "signal"
+jsonpath "$.feature0" == "de/zs2v-{T}"
+jsonpath "$['railway:signal:distant']" == "DE-ESO:ks"
+jsonpath "$['railway:signal:distant:form']" == "light"
+jsonpath "$['railway:signal:distant:height']" == "normal"
+jsonpath "$['railway:signal:distant:repeated']" == true
+jsonpath "$['railway:signal:distant:states']" count == 2
+jsonpath "$['railway:signal:distant:states'][0]" == "DE-ESO:ks1"
+jsonpath "$['railway:signal:distant:states'][1]" == "DE-ESO:ks2"
+jsonpath "$['railway:signal:position']" == "right"
+jsonpath "$['railway:signal:route_distant']" == "DE-ESO:zs2v"
+jsonpath "$['railway:signal:route_distant:form']" == "light"
+jsonpath "$['railway:signal:route_distant:states']" count == 4
+jsonpath "$['railway:signal:route_distant:states'][0]" == "R"
+jsonpath "$['railway:signal:route_distant:states'][1]" == "S"
+jsonpath "$['railway:signal:route_distant:states'][2]" == "T"
+jsonpath "$['railway:signal:route_distant:states'][3]" == "off"
+jsonpath "$['railway:signal:speed_limit_distant']" == "DE-ESO:zs3v"
+jsonpath "$['railway:signal:speed_limit_distant:form']" == "light"
+jsonpath "$['railway:signal:speed_limit_distant:speed']" count == 2
+jsonpath "$['railway:signal:speed_limit_distant:speed'][0]" == "?"
+jsonpath "$['railway:signal:speed_limit_distant:speed'][1]" == "off"
