@@ -650,6 +650,18 @@ jsonpath "$.tactile_paving" == true
 jsonpath "$.osm_id" == 3637413
 jsonpath "$.osm_type" == "R"
 
+# Platform edge
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platform_edges/859918234
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.ref" == "2"
+jsonpath "$.feature" == "platform_edge"
+jsonpath "$.tactile_paving" == null
+jsonpath "$.height" == null
+jsonpath "$.osm_id" == 859918234
+jsonpath "$.osm_type" == "W"
+
 # POI (operator)
 GET {{base_url}}/feature/openrailwaymap_operator/operator_railway_symbols/node-560099842
 HTTP 200
@@ -749,3 +761,12 @@ jsonpath "$['railway:signal:speed_limit_distant:form']" == "light"
 jsonpath "$['railway:signal:speed_limit_distant:speed']" count == 2
 jsonpath "$['railway:signal:speed_limit_distant:speed'][0]" == "?"
 jsonpath "$['railway:signal:speed_limit_distant:speed'][1]" == "off"
+
+# Turntable
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109012
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 16109012
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "turntable"
