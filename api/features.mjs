@@ -594,6 +594,10 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_platforms': {
+    view: {
+      name: 'standard_railway_platforms_view',
+      id_type: 'text',
+    },
     featureLinks: featureLinks.openstreetmap,
     features: {
       platform: {
@@ -645,11 +649,6 @@ const features = {
           routeIdProperty: 'route_id',
           colorProperty: 'color',
           labelProperty: 'label',
-          properties: [
-            'route_id',
-            'color',
-            'label',
-          ],
         },
       },
     }
