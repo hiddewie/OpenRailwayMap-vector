@@ -1095,6 +1095,14 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_grouped_station_areas_view AS
+  SELECT
+    osm_id as id,
+    osm_id,
+    'R' as osm_type,
+    'station_area_group' as feature,
+    way
+  FROM stop_area_groups_buffered;
 
 CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x integer, y integer)
   RETURNS bytea
@@ -1107,11 +1115,9 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_grouped_station_areas', 4096, 'way')
   FROM (
     SELECT
-      osm_id as id,
-      osm_id,
-      'station_area_group' as feature,
+      id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
-    FROM stop_area_groups_buffered
+    FROM standard_railway_grouped_station_areas_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1124,9 +1130,7 @@ DO $do$ BEGIN
       {
         "id": "standard_railway_grouped_station_areas",
         "fields": {
-          "id": "integer",
-          "osm_id": "integer",
-          "feature": "string"
+          "id": "integer"
         }
       }
     ]
