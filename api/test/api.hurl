@@ -541,3 +541,100 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.pos" == "3.2"
 jsonpath "$.pos_exact" == "3.256"
 jsonpath "$.railway" == "crossing"
+
+# Stop position
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_stop_positions/1615531689
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 1615531689
+jsonpath "$.osm_type" == "N"
+jsonpath "$.type" == "tram"
+jsonpath "$.local_ref" == "14"
+jsonpath "$.ref" == null
+jsonpath "$.name" == "S+U Alexanderplatz/Dircksenstraße"
+jsonpath "$.stop_position_routes" count == 4
+jsonpath "$.stop_position_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.stop_position_routes[0].color" == "#33FF33"
+jsonpath "$.stop_position_routes[0].route_id" == "28270"
+
+# Station
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" count == 1
+jsonpath "$.note[0]" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
+jsonpath "$.description" == null
+jsonpath "$.station" == "train"
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "Berlin Alexanderplatz"
+jsonpath "$.yard_hump" == null
+jsonpath "$.wikidata" count == 1
+jsonpath "$.wikidata[0]" == "Q698497"
+jsonpath "$.network" count == 1
+jsonpath "$.network[0]" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$.osm_id" count == 1
+jsonpath "$.osm_id[0]" == 30217208
+jsonpath "$.osm_type" count == 1
+jsonpath "$.osm_type[0]" == "N"
+jsonpath "$.references.uic" == "8089001"
+jsonpath "$.references.station" == "53"
+jsonpath "$.references.railway-ref" == "BALE"
+jsonpath "$.wikipedia" count == 1
+jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
+jsonpath "$.state" == "present"
+jsonpath "$.feature" == "halt"
+jsonpath "$.station_routes" count == 36
+jsonpath "$.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.station_routes[0].color" == "#33FF33"
+jsonpath "$.station_routes[0].route_id" == "28270"
+jsonpath "$.position" == null
+jsonpath "$.operator" count == 1
+jsonpath "$.operator[0]" == "DB InfraGO AG"
+
+# Station with localized name
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+[QueryStringParams]
+lang: ja
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "ベルリン・アレクサンダー広場"
+
+# Station with not defined localization
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+[QueryStringParams]
+lang: nf
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.localized_name" == "Berlin Alexanderplatz"
+
+# Platform
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platforms/relation-3637413
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.ref" count == 2
+jsonpath "$.ref[0]" == "1"
+jsonpath "$.ref[1]" == "2"
+jsonpath "$.surface" == "paving_stones"
+jsonpath "$.wheelchair" == true
+jsonpath "$.lit" == true
+jsonpath "$.shelter" == null
+jsonpath "$.bin" == true
+jsonpath "$.bench" == true
+jsonpath "$.departures_board" == null
+jsonpath "$.name" == "Berlin Alexanderplatz"
+jsonpath "$.platform_routes" count == 8
+jsonpath "$.platform_routes[0].label" == "RE2: Cottbus => Nauen"
+jsonpath "$.platform_routes[0].color" == "#FFE600"
+jsonpath "$.platform_routes[0].route_id" == "156479"
+jsonpath "$.feature" == "platform"
+jsonpath "$.height" == null
+jsonpath "$.tactile_paving" == true
+jsonpath "$.osm_id" == 3637413
+jsonpath "$.osm_type" == "R"

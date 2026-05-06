@@ -2289,11 +2289,19 @@ function popupContent(feature, abortController) {
   const editor = configuration.editor ?? defaultConfiguration.editor;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  const fetchFeatureProperties = () =>
-    fetch(`/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`, {
+  const fetchFeatureProperties = (view) => {
+    const supportsLocalization = view.localizedFields
+    const language = configuredLanguage()
+    const url = new URL(`${location.origin}/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`)
+    if (supportsLocalization && language) {
+      url.searchParams.set('lang', language)
+    }
+
+    return fetch(url, {
       signal: abortController.signal,
     })
       .then(response => response.json());
+  }
 
   // Build HTML content dynamically to avoid cross site scripting
   const constructCatalogKey = propertyValue => ({
@@ -2316,11 +2324,11 @@ function popupContent(feature, abortController) {
 
   const determineOsmFeatures = (properties, featureContent) => {
     const osmIds = properties.osm_id
-      ? String(properties.osm_id).split('\u001e')
+      ? (Array.isArray(properties.osm_id) ? properties.osm_id : String(properties.osm_id).split('\u001e'))
       : [];
     const defaultOsmType = determineDefaultOsmType(properties, featureContent);
     const osmTypes = properties.osm_type
-      ? String(properties.osm_type).split('\u001e')
+      ? (Array.isArray(properties.osm_type) ? properties.osm_type : String(properties.osm_type).split('\u001e'))
       : [];
 
     return osmIds.map((osm_id, index) => {
@@ -2343,9 +2351,7 @@ function popupContent(feature, abortController) {
         sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
       }
 
-      return String(value)
-        .split('\u001d')
-        .map(item => item.split('\u001e'))
+      return (typeof value == 'object' ? Object.entries(value) : String(value).split('\u001d').map(item => item.split('\u001e')))
         .toSorted(([keyA, _a], [keyB, _b]) =>
           naturalSort(sortKey(keyA), sortKey(keyB)))
         .map(([key, value]) =>
@@ -2397,7 +2403,7 @@ function popupContent(feature, abortController) {
 
   const propertiesFromView = featureCatalog.view;
   const properties$ = propertiesFromView
-    ? fetchFeatureProperties()
+    ? fetchFeatureProperties(propertiesFromView)
     : Promise.resolve(feature.properties);
 
   const popupContainer = createDomElement('div', 'loading');
@@ -2669,13 +2675,15 @@ function popupContent(feature, abortController) {
         propertyValues
           .filter(it => it.list)
           .forEach(({title, value, list}) => {
-            const groups = value.split('\u001d')
-              .map(group => {
-                const split = group.split('\u001e');
-                return Object.fromEntries(
-                  list.properties.map((property, index) => [property, split[index] || null])
-                );
-              });
+            const groups = Array.isArray(value)
+              ? value
+              : value.split('\u001d')
+                .map(group => {
+                  const split = group.split('\u001e');
+                  return Object.fromEntries(
+                    list.properties.map((property, index) => [property, split[index] || null])
+                  );
+                });
 
             const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
             popupListHeader.innerText = `${title} (${groups.length}):`;
