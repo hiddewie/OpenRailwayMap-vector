@@ -732,6 +732,10 @@ const features = {
     }
   },
   'openrailwaymap_standard-standard_station_entrances': {
+    view: {
+      name: 'standard_station_entrances_view',
+      id_type: 'numeric',
+    },
     featureLinks: featureLinks.openstreetmap,
     featureProperty: 'type',
     features: {

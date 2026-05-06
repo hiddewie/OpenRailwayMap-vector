@@ -770,3 +770,14 @@ Content-Type: application/json
 jsonpath "$.osm_id" == 16109012
 jsonpath "$.osm_type" == "W"
 jsonpath "$.feature" == "turntable"
+
+# Entrance
+GET {{base_url}}/feature/openrailwaymap_standard/standard_station_entrances/623932074
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 623932074
+jsonpath "$.osm_type" == "N"
+jsonpath "$.type" == "subway"
+jsonpath "$.name" == "Yorckstraße"
+jsonpath "$.ref" == "E"
