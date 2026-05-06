@@ -26,19 +26,16 @@ class FeatureAPI:
 
     async def feature_catalog_data(self, catalog_key, id, lang = None):
         if catalog_key not in features:
-            print(1, catalog_key)
             return None
         catalog = features[catalog_key]
 
         if 'view' not in catalog:
-            print(2)
             return None
         view_name = catalog['view']['name']
         view_id_type = catalog['view']['id_type']
         localized_fields = catalog['view']['localizedFields'] if 'localizedFields' in catalog['view'] else {}
 
         if 'properties' not in catalog:
-            print(3)
             return None
 
         # Combine all property references in the catalog for the view query
@@ -65,5 +62,4 @@ class FeatureAPI:
                 async for record in statement.cursor(id):
                     return localize_fields(dict(record), localized_fields, lang)
                 else:
-                    print(4)
                     return None
