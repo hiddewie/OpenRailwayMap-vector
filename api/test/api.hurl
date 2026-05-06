@@ -613,6 +613,17 @@ Content-Type: application/json
 jsonpath "$.name" == "Berlin Alexanderplatz"
 jsonpath "$.localized_name" == "Berlin Alexanderplatz"
 
+# Stop area group
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_grouped_station_areas/7721002
+[QueryStringParams]
+lang: nf
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 7721002
+jsonpath "$.osm_type" == "R"
+jsonpath "$.feature" == "station_area_group"
+
 # Platform
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platforms/relation-3637413
 HTTP 200
