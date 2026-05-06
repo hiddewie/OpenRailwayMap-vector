@@ -800,22 +800,8 @@ DO $do$ BEGIN
         "id": "standard_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "name": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "radio": "string",
-          "emergency_phone": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
@@ -1459,19 +1445,8 @@ DO $do$ BEGIN
         "id": "electrification_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
@@ -1760,19 +1735,8 @@ DO $do$ BEGIN
         "id": "operator_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
