@@ -589,6 +589,29 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_station_entrances_view AS
+  SELECT
+    osm_id as id,
+    osm_id,
+    'N' as osm_type,
+    way,
+    type,
+    name,
+    ref,
+    CASE
+      WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
+      ELSE COALESCE(name, ref)
+    END AS label,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM station_entrances;
+
 CREATE OR REPLACE FUNCTION standard_station_entrances(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -600,25 +623,10 @@ RETURN (
     ST_AsMVT(tile, 'standard_station_entrances', 4096, 'way')
   FROM (
     SELECT
+      id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      osm_id as id,
-      osm_id,
-      type,
-      name,
-      ref,
-      CASE
-        WHEN name IS NOT NULL AND ref IS NOT NULL THEN CONCAT(name, ' (', ref, ')')
-        ELSE COALESCE(name, ref)
-      END AS label,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM station_entrances
+      label
+    FROM standard_station_entrances_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -632,18 +640,7 @@ DO $do$ BEGIN
         "id": "standard_station_entrances",
         "fields": {
           "id": "integer",
-          "osm_id": "integer",
-          "type": "string",
-          "name": "string",
-          "ref": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "label": "string"
         }
       }
     ]
@@ -1105,7 +1102,6 @@ DO $do$ BEGIN
   }
   $$::json || '$tj$';
 END $do$;
-
 
 CREATE OR REPLACE FUNCTION standard_railway_grouped_station_areas(z integer, x integer, y integer)
   RETURNS bytea
