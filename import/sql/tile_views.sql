@@ -743,6 +743,31 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW poi_view AS
+  SELECT
+    way,
+    id,
+    osm_id,
+    osm_type,
+    feature,
+    ref,
+    name,
+    minzoom,
+    layer,
+    rank,
+    position,
+    radio,
+    emergency_phone,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM pois;
+
 CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -756,23 +781,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      name,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      radio,
-      emergency_phone,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'standard'
@@ -789,22 +800,8 @@ DO $do$ BEGIN
         "id": "standard_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "name": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "radio": "string",
-          "emergency_phone": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
@@ -1429,20 +1426,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'electrification'
@@ -1459,19 +1445,8 @@ DO $do$ BEGIN
         "id": "electrification_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
@@ -1741,20 +1716,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'operator'
@@ -1771,19 +1735,8 @@ DO $do$ BEGIN
         "id": "operator_railway_symbols",
         "fields": {
           "id": "string",
-          "osm_id": "integer",
-          "osm_type": "string",
           "feature": "string",
-          "ref": "string",
-          "minzoom": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "ref": "string"
         }
       }
     ]
