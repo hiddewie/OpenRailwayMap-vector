@@ -1,5 +1,177 @@
 --- Shared ---
 
+CREATE OR REPLACE VIEW railway_line_high_view AS
+  SELECT
+    ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
+  FROM (
+    -- TODO calculate labels in frontend
+    SELECT
+      r.id,
+      osm_id,
+      'W' as osm_type,
+      way,
+      way_length,
+      feature,
+      state,
+      usage,
+      service,
+      highspeed,
+      tunnel,
+      bridge,
+      CASE
+        WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
+        ELSE COALESCE(ref, r.name)
+      END AS standard_label,
+      ref,
+      track_ref,
+      track_class,
+      array_to_string(reporting_marks, ', ') as reporting_marks,
+      preferred_direction,
+      rank,
+      maxspeed,
+      speed_label,
+      train_protection_rank,
+      train_protection,
+      train_protection_construction_rank,
+      train_protection_construction,
+      electrification_state,
+      voltage,
+      frequency,
+      maximum_current,
+      electrification_label,
+      future_voltage,
+      future_frequency,
+      future_maximum_current,
+      railway_to_int(gauge0) AS gaugeint0,
+      gauge0,
+      railway_to_int(gauge1) AS gaugeint1,
+      gauge1,
+      railway_to_int(gauge2) AS gaugeint2,
+      gauge2,
+      gauge_label,
+      loading_gauge,
+      operator,
+      COALESCE(
+        ro.color,
+        'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
+      ) as operator_color,
+      coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
+      primary_operator,
+      owner,
+      traffic_mode,
+      radio,
+      line_routes,
+      route_count,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM (
+      SELECT
+        id,
+        osm_id,
+        way,
+        way_length,
+        feature,
+        state,
+        usage,
+        service,
+        rank,
+        highspeed,
+        reporting_marks,
+        layer,
+        bridge,
+        tunnel,
+        track_ref,
+        track_class,
+        ref,
+        name,
+        preferred_direction,
+        maxspeed,
+        speed_label,
+        train_protection_rank,
+        train_protection,
+        train_protection_construction_rank,
+        train_protection_construction,
+        electrification_state,
+        voltage,
+        frequency,
+        maximum_current,
+        railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+        future_voltage,
+        future_frequency,
+        future_maximum_current,
+        gauges[1] AS gauge0,
+        gauges[2] AS gauge1,
+        gauges[3] AS gauge2,
+        (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+        loading_gauge,
+        array_to_string(operator, U&'\001E') as operator,
+        owner,
+        CASE
+          WHEN ARRAY[owner] <@ operator THEN owner
+          ELSE operator[1]
+        END AS primary_operator,
+        traffic_mode,
+        radio,
+        (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
+        (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
+        wikidata,
+        wikimedia_commons,
+        wikimedia_commons_file,
+        image,
+        mapillary,
+        wikipedia,
+        note,
+        description
+      FROM railway_line l
+      WHERE
+        way && ST_TileEnvelope(z, x, y)
+        -- conditionally include features based on zoom level
+        AND CASE
+          -- Zooms < 7 are handled in the low zoom tiles
+          WHEN z < 8 THEN
+            state = 'present'
+              AND service IS NULL
+              AND (
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
+              )
+          WHEN z < 9 THEN
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
+              )
+          WHEN z < 10 THEN
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch', 'industrial')
+                  OR (feature = 'light_rail' AND usage IN ('main', 'branch'))
+              )
+          WHEN z < 11 THEN
+            state IN ('present', 'construction', 'proposed')
+              AND service IS NULL
+              AND (
+                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
+              )
+          WHEN z < 12 THEN
+            (service IS NULL OR service IN ('spur', 'yard'))
+              AND (
+                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
+                  OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
+              )
+          ELSE
+            true
+        END
+    ) AS r
+    LEFT JOIN railway_operator ro
+      ON ro.name = primary_operator;
+
 CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL

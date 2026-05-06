@@ -102,6 +102,10 @@ const generateSignalFeatures = (features, types) =>
 
 // TODO move icon SVGs to proxy
 const railwayLineFeatures = {
+  view: {
+    name: 'railway_line_high_view',
+    id_type: 'text',
+  },
   labelProperties: ['standard_label'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
