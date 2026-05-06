@@ -158,7 +158,6 @@ RETURN (
       ref,
       track_ref,
       track_class,
-      reporting_marks,
       preferred_direction,
       rank,
       maxspeed,
@@ -189,18 +188,7 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
-      traffic_mode,
-      radio,
-      line_routes,
-      route_count,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
+      route_count
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -293,24 +281,12 @@ DO $do$ BEGIN
           "gauge_label": "string",
           "loading_gauge": "string",
           "track_class": "string",
-          "reporting_marks": "string",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
-          "traffic_mode": "string",
-          "radio": "string",
-          "line_routes": "string",
-          "route_count": "integer",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "route_count": "integer"
         }
       }
     ]

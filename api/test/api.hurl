@@ -781,3 +781,31 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.type" == "subway"
 jsonpath "$.name" == "Yorckstraße"
 jsonpath "$.ref" == "E"
+
+# Railway line
+GET {{base_url}}/feature/high/railway_line_high/9933821-0
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.electrification_state" == "present"
+jsonpath "$.feature" == "rail"
+jsonpath "$.frequency" == 16.700000762939453
+jsonpath "$.gauge_label" == "1435"
+jsonpath "$.highspeed" == true
+jsonpath "$.line_routes" count == 13
+jsonpath "$.line_routes[0].color" == "#80004D"
+jsonpath "$.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
+jsonpath "$.line_routes[0].route_id" == "373229"
+jsonpath "$.operator" count == 1
+jsonpath "$.operator[0]" == "DB InfraGO AG"
+jsonpath "$.osm_id" == 9933821
+jsonpath "$.osm_type" == "W"
+jsonpath "$.ref" == "6185"
+jsonpath "$.speed_label" == "140"
+jsonpath "$.standard_label" == "6185 Schnellfahrstrecke Oebisfelde–Spandau"
+jsonpath "$.state" == "present"
+jsonpath "$.train_protection" == "lzb"
+jsonpath "$.usage" == "main"
+jsonpath "$.voltage" == 15000
+jsonpath "$.note" == null
+jsonpath "$.description" == null
