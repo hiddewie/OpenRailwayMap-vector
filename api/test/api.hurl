@@ -738,3 +738,12 @@ jsonpath "$['railway:signal:speed_limit_distant:form']" == "light"
 jsonpath "$['railway:signal:speed_limit_distant:speed']" count == 2
 jsonpath "$['railway:signal:speed_limit_distant:speed'][0]" == "?"
 jsonpath "$['railway:signal:speed_limit_distant:speed'][1]" == "off"
+
+# Turntable
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109012
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.osm_id" == 16109012
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "turntable"

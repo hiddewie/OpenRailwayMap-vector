@@ -585,6 +585,10 @@ const features = {
     },
   },
   'openrailwaymap_standard-standard_railway_turntables': {
+    view: {
+      name: 'standard_railway_turntables_view',
+      id_type: 'numeric',
+    },
     featureLinks: featureLinks.openstreetmap,
     features: {
       turntable: {
@@ -596,6 +600,7 @@ const features = {
         type: 'polygon',
       },
     },
+    properties: {}
   },
   'openrailwaymap_standard-standard_railway_platforms': {
     view: {
