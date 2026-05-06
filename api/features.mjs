@@ -576,6 +576,10 @@ const features = {
   'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
   'openrailwaymap_standard-standard_railway_grouped_station_areas': {
+    view: {
+      name: 'standard_railway_grouped_station_areas_view',
+      id_type: 'numeric',
+    },
     featureLinks: featureLinks.openstreetmap,
     features: {
       station_area_group: {
@@ -583,6 +587,7 @@ const features = {
         type: 'relation',
       },
     },
+    properties: {}
   },
   'openrailwaymap_standard-standard_railway_turntables': {
     view: {
