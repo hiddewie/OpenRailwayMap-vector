@@ -868,6 +868,18 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_railway_platform_edges_view AS
+  SELECT
+    osm_id as id,
+    osm_id,
+    'W' as osm_type,
+    way,
+    'platform_edge' as feature,
+    ref,
+    height,
+    tactile_paving
+  FROM platform_edge;
+
 CREATE OR REPLACE FUNCTION standard_railway_platform_edges(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -879,14 +891,10 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_platform_edges', 4096, 'way')
   FROM (
     SELECT
-      osm_id as id,
-      osm_id,
+      id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      'platform_edge' as feature,
-      ref,
-      height,
-      tactile_paving
-    FROM platform_edge
+      ref
+    FROM standard_railway_platform_edges_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -900,11 +908,7 @@ DO $do$ BEGIN
         "id": "standard_railway_platform_edges",
         "fields": {
           "id": "integer",
-          "osm_id": "string",
-          "feature": "string",
-          "ref": "string",
-          "height": "string",
-          "tactile_paving": "boolean"
+          "ref": "string"
         }
       }
     ]

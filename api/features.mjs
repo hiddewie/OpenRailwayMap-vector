@@ -658,6 +658,10 @@ const features = {
     }
   },
   'openrailwaymap_standard-standard_railway_platform_edges': {
+    view: {
+      name: 'standard_railway_platform_edges_view',
+      id_type: 'numeric',
+    },
     featureLinks: featureLinks.openstreetmap,
     features: {
       platform_edge: {
