@@ -269,6 +269,10 @@ const railwayLineFeatures = {
 };
 
 const poiFeatures = layer => ({
+  view: {
+    name: 'poi_view',
+    id_type: 'text',
+  },
   labelProperties: ['name'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(

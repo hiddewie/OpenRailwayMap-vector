@@ -638,3 +638,26 @@ jsonpath "$.height" == null
 jsonpath "$.tactile_paving" == true
 jsonpath "$.osm_id" == 3637413
 jsonpath "$.osm_type" == "R"
+
+# POI (operator)
+GET {{base_url}}/feature/openrailwaymap_operator/operator_railway_symbols/node-560099842
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.osm_id" == 560099842
+jsonpath "$.osm_type" == "N"
+jsonpath "$.feature" == "general/owner-change"
+
+# POI (infrastructure)
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-1317749799
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == "Ultraschall-, Lichtprofil- und Messbalken-Prüfung (ULM)"
+jsonpath "$.osm_id" == 1317749799
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "general/defect_detector"
+jsonpath "$.name" == "ULM"
+jsonpath "$.ref" == null

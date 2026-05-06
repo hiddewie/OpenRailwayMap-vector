@@ -743,6 +743,31 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW poi_view AS
+  SELECT
+    way,
+    id,
+    osm_id,
+    osm_type,
+    feature,
+    ref,
+    name,
+    minzoom,
+    layer,
+    rank,
+    position,
+    radio,
+    emergency_phone,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM pois;
+
 CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -756,23 +781,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      name,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      radio,
-      emergency_phone,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'standard'
@@ -1429,20 +1440,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'electrification'
@@ -1741,20 +1741,9 @@ RETURN (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
-      osm_id,
-      osm_type,
       feature,
-      ref,
-      nullif(array_to_string(position, U&'\001E'), '') as position,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM pois
+      ref
+    FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
       AND layer = 'operator'
