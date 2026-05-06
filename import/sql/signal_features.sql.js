@@ -317,6 +317,150 @@ CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
 
 CLUSTER signal_features
   USING signal_features_signal_id_index;
+  
+CREATE OR REPLACE VIEW signals_railway_signals_view AS
+  SELECT
+    osm_id as id,
+    way,
+    osm_id,
+    'N' as osm_type,
+    rank,
+    railway,
+    sd.direction_both,
+    ref,
+    caption,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    sd.azimuth,${signals_railway_signals.tags.map(tag => `
+    "${tag.tag}",`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    features[6] as feature5,
+    deactivated[1] as deactivated0,
+    deactivated[2] as deactivated1,
+    deactivated[3] as deactivated2,
+    deactivated[4] as deactivated3,
+    deactivated[5] as deactivated4,
+    deactivated[6] as deactivated5,
+    CEIL(icon_height[1] / 2) as offset0,
+    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
+    type
+  FROM signals s
+  JOIN signal_features sf
+    ON s.osm_id = sf.signal_id
+  JOIN signal_direction sd
+    ON s.osm_id = sd.signal_id
+  WHERE layer = 'signals';
+  
+CREATE OR REPLACE VIEW speed_railway_signals_view AS
+  SELECT
+    osm_id as id,
+    way,
+    osm_id,
+    'N' as osm_type,
+    rank,
+    railway,
+    sd.direction_both,
+    ref,
+    caption,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    sd.azimuth,${signals_railway_signals.tags.map(tag => `
+    "${tag.tag}",`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    features[6] as feature5,
+    deactivated[1] as deactivated0,
+    deactivated[2] as deactivated1,
+    deactivated[3] as deactivated2,
+    deactivated[4] as deactivated3,
+    deactivated[5] as deactivated4,
+    deactivated[6] as deactivated5,
+    CEIL(icon_height[1] / 2) as offset0,
+    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
+    type
+  FROM signals s
+  JOIN signal_features sf
+    ON s.osm_id = sf.signal_id
+  JOIN signal_direction sd
+    ON s.osm_id = sd.signal_id
+  WHERE layer = 'speed';
+  
+CREATE OR REPLACE VIEW electrification_signals_view AS
+  SELECT
+    osm_id as id,
+    way,
+    osm_id,
+    'N' as osm_type,
+    rank,
+    railway,
+    sd.direction_both,
+    ref,
+    caption,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    sd.azimuth,${signals_railway_signals.tags.map(tag => `
+    "${tag.tag}",`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    features[6] as feature5,
+    deactivated[1] as deactivated0,
+    deactivated[2] as deactivated1,
+    deactivated[3] as deactivated2,
+    deactivated[4] as deactivated3,
+    deactivated[5] as deactivated4,
+    deactivated[6] as deactivated5,
+    CEIL(icon_height[1] / 2) as offset0,
+    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
+    type
+  FROM signals s
+  JOIN signal_features sf
+    ON s.osm_id = sf.signal_id
+  JOIN signal_direction sd
+    ON s.osm_id = sd.signal_id
+  WHERE layer = 'electrification';
 
 --- Speed ---
 
@@ -328,41 +472,25 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way', 'id')
+      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way')
     FROM (
       SELECT
-        osm_id as id,
-        osm_id,
-        railway,
+        id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        sd.direction_both,
+        railway,
         ref,
         caption,
-        nullif(array_to_string(position, U&'\\001E'), '') as position,
-        wikidata,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description,
-        sd.azimuth,${signals_railway_signals.tags.map(tag => `
-        ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-        features[1] as feature0,
-        features[2] as feature1,
-        deactivated[1] as deactivated0,
-        deactivated[2] as deactivated1,
-        CEIL(icon_height[1] / 2) as offset0,
-        CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+        azimuth,
+        direction_both,
+        feature0,
+        feature1,
+        deactivated0,
+        deactivated1,
+        offset0,
+        offset1,
         type
-      FROM signals s
-      JOIN signal_features sf
-        ON s.osm_id = sf.signal_id
-      JOIN signal_direction sd
-        ON s.osm_id = sd.signal_id
+      FROM speed_railway_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
-        AND layer = 'speed'
       ORDER BY rank NULLS FIRST
     ) as tile
     WHERE way IS NOT NULL
@@ -376,22 +504,11 @@ DO $do$ BEGIN
         "id": "speed_railway_signals",
         "fields": {
           "id": "integer",
-          "osm_id": "integer",
           "railway": "string",
           "ref": "string",
           "caption": "string",
           "azimuth": "number",
           "direction_both": "boolean",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string",${signals_railway_signals.tags.map(tag => `
-          "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature0": "string",
           "feature1": "string",
           "deactivated0": "boolean",
@@ -416,53 +533,37 @@ CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way', 'id')
+      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way')
     FROM (
       SELECT
-        osm_id as id,
-        osm_id,
+        id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        sd.direction_both,
+        railway,
         ref,
         caption,
-        railway,
-        nullif(array_to_string(position, U&'\\001E'), '') as position,
-        wikidata,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description,
-        sd.azimuth,${signals_railway_signals.tags.map(tag => `
-        ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-        features[1] as feature0,
-        features[2] as feature1,
-        features[3] as feature2,
-        features[4] as feature3,
-        features[5] as feature4,
-        features[6] as feature5,
-        deactivated[1] as deactivated0,
-        deactivated[2] as deactivated1,
-        deactivated[3] as deactivated2,
-        deactivated[4] as deactivated3,
-        deactivated[5] as deactivated4,
-        deactivated[6] as deactivated5,
-        CEIL(icon_height[1] / 2) as offset0,
-        CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
-        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
-        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
-        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
-        CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
+        azimuth,
+        direction_both,
+        feature0,
+        feature1,
+        feature2,
+        feature3,
+        feature4,
+        feature5,
+        deactivated0,
+        deactivated1,
+        deactivated2,
+        deactivated3,
+        deactivated4,
+        deactivated5,
+        offset0,
+        offset1,
+        offset2,
+        offset3,
+        offset4,
+        offset5,
         type
-      FROM signals s
-      JOIN signal_features sf
-        ON s.osm_id = sf.signal_id
-      JOIN signal_direction sd
-        ON s.osm_id = sd.signal_id
+      FROM signals_railway_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
-        AND layer = 'signals'
       ORDER BY rank NULLS FIRST
     ) as tile
     WHERE way IS NOT NULL
@@ -476,22 +577,11 @@ DO $do$ BEGIN
         "id": "signals_railway_signals",
         "fields": {
           "id": "integer",
-          "osm_id": "integer",
           "railway": "string",
           "ref": "string",
           "caption": "string",
           "azimuth": "number",
           "direction_both": "boolean",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string",${signals_railway_signals.tags.map(tag => `
-          "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature0": "string",
           "feature1": "string",
           "feature2": "string",
@@ -528,38 +618,22 @@ CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integ
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'electrification_signals', 4096, 'way', 'id')
+      ST_AsMVT(tile, 'electrification_signals', 4096, 'way')
     FROM (
       SELECT
-        osm_id as id,
-        osm_id,
-        railway,
+        id,
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        sd.direction_both,
+        railway,
+        azimuth,
+        direction_both,
         ref,
         caption,
-        nullif(array_to_string(position, U&'\\001E'), '') as position,
-        wikidata,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description,
-        sd.azimuth,${signals_railway_signals.tags.map(tag => `
-        ${tag.type === 'array' ? `array_to_string("${tag.tag}", U&'\\001E') as "${tag.tag}"` : `"${tag.tag}"`},`).join('')}
-        features[1] as feature,
-        deactivated[1] as deactivated,
-        CEIL(icon_height[1] / 2) as offset,
-        type as type
-      FROM signals s
-      JOIN signal_features sf
-        ON s.osm_id = sf.signal_id
-      JOIN signal_direction sd
-        ON s.osm_id = sd.signal_id
+        feature0,
+        deactivated0,
+        offset0,
+        type
+      FROM electrification_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
-        AND layer = 'electrification'
       ORDER BY rank NULLS FIRST
     ) as tile
     WHERE way IS NOT NULL
@@ -573,27 +647,15 @@ DO $do$ BEGIN
         "id": "electrification_signals",
         "fields": {
           "id": "integer",
-          "osm_id": "integer",
           "railway": "string",
           "azimuth": "number",
           "direction_both": "boolean",
           "ref": "string",
           "caption": "string",
-          "frequency": "number",
-          "voltage": "integer",
-          "position": "string",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string",${signals_railway_signals.tags.map(tag => `
-          "${tag.tag}": "${tag.type === 'boolean' ? `boolean` : `string`}",`).join('')}
           "feature": "string",
           "deactivated": "boolean",
-          "offset": "number"
+          "offset": "number",
+          "type": "stirng"
         }
       }
     ]
