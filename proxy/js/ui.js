@@ -2324,11 +2324,11 @@ function popupContent(feature, abortController) {
 
   const determineOsmFeatures = (properties, featureContent) => {
     const osmIds = properties.osm_id
-      ? (Array.isArray(properties.osm_id) ? properties.osm_id : String(properties.osm_id).split('\u001e'))
+      ? (Array.isArray(properties.osm_id) ? properties.osm_id : [String(properties.osm_id)])
       : [];
     const defaultOsmType = determineDefaultOsmType(properties, featureContent);
     const osmTypes = properties.osm_type
-      ? (Array.isArray(properties.osm_type) ? properties.osm_type : String(properties.osm_type).split('\u001e'))
+      ? (Array.isArray(properties.osm_type) ? properties.osm_type : [String(properties.osm_type)])
       : [];
 
     return osmIds.map((osm_id, index) => {
@@ -2351,13 +2351,14 @@ function popupContent(feature, abortController) {
         sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
       }
 
-      return (typeof value == 'object' ? Object.entries(value) : String(value).split('\u001d').map(item => item.split('\u001e')))
+      return Object.entries(value)
         .toSorted(([keyA, _a], [keyB, _b]) =>
           naturalSort(sortKey(keyA), sortKey(keyB)))
         .map(([key, value]) =>
           [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
     } else {
-      return (Array.isArray(value) ? value.map(String) : String(value).split('\u001e'))
+      return (Array.isArray(value) ? value : [value])
+        .map(String)
         .map(stringValue => {
           if (!format) {
             return stringValue;
@@ -2402,13 +2403,13 @@ function popupContent(feature, abortController) {
   const colorProperty = featureCatalog.colorProperty || 'color';
 
   const propertiesFromView = featureCatalog.view;
-  const properties$ = propertiesFromView
-    ? fetchFeatureProperties(propertiesFromView)
-    : Promise.resolve(feature.properties);
-
+  if (!propertiesFromView) {
+    console.warn(`Feature catalog "${layerSource}" does not contain view information to fetch feature properties`, feature);
+    return;
+  }
   const popupContainer = createDomElement('div', 'loading');
 
-  properties$
+  fetchFeatureProperties(propertiesFromView)
     .then(properties => {
       const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
@@ -2675,21 +2676,11 @@ function popupContent(feature, abortController) {
         propertyValues
           .filter(it => it.list)
           .forEach(({title, value, list}) => {
-            const groups = Array.isArray(value)
-              ? value
-              : value.split('\u001d')
-                .map(group => {
-                  const split = group.split('\u001e');
-                  return Object.fromEntries(
-                    list.properties.map((property, index) => [property, split[index] || null])
-                  );
-                });
-
             const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
-            popupListHeader.innerText = `${title} (${groups.length}):`;
+            popupListHeader.innerText = `${title} (${value.length}):`;
 
             const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
-            groups.forEach(group => {
+            value.forEach(group => {
               const color = group[list.colorProperty]
               const label = group[list.labelProperty]
               const routeId = group[list.routeIdProperty]
