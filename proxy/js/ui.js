@@ -109,6 +109,125 @@ function naturalSort(a, b) {
       : 0;
 }
 
+function updateSignalVisibilityWhilePitchedandTurned() {
+  const bearing = map.getBearing();
+  const pitch = map.getPitch();
+
+  const indexedLayerTypes = [
+    'railway_signals_medium',
+    'railway_signals_high',
+    'speed_railway_signals'
+  ];
+
+  [0, 1].forEach(featureIndex => {
+    indexedLayerTypes.forEach(type => {
+      const layerId = `${type}_${featureIndex}_image`;
+
+      if (map.getLayer(layerId)) {
+        if (pitch < 30) { //This pitch must be identical to the pitch in map.on('pitch', () => {
+          map.setFilter(layerId, [
+            '!=', ['get', `feature${featureIndex}`], null
+          ]);
+        } else {
+          map.setFilter(layerId, [
+            'all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            ['has', 'azimuth'],
+            ['!=', ['get', 'azimuth'], null],
+            ['let', 'diff',
+              ['%',
+                ['+',
+                  ['-', ['get', 'azimuth'], bearing],
+                  540
+                ],
+                360
+              ],
+              ['all',
+                ['>=', ['var', 'diff'], 90],
+                ['<=', ['var', 'diff'], 270]
+              ]
+            ]
+          ]);
+        }
+      }
+    });
+  });
+
+  // Handle railway_signals_high_text separately - preserve its original filters
+  if (map.getLayer('railway_signals_high_text')) {
+    if (pitch < 30) {  //This pitch must be identical to the pitch in map.on('pitch', () => {
+      map.setFilter('railway_signals_high_text', [
+        'all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
+        ['!=', ['get', 'feature0'], null],
+      ]);
+    } else {
+      map.setFilter('railway_signals_high_text', [
+        'all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
+        ['!=', ['get', 'feature0'], null],
+        ['has', 'azimuth'],
+        ['!=', ['get', 'azimuth'], null],
+        ['let', 'diff',
+          ['%',
+            ['+',
+              ['-', ['get', 'azimuth'], bearing],
+              540
+            ],
+            360
+          ],
+          ['all',
+            ['>=', ['var', 'diff'], 90],
+            ['<=', ['var', 'diff'], 270]
+          ]
+        ]
+      ]);
+    }
+  }
+
+  // Handle direction icons
+  ['speed_railway_signal_direction', 'railway_signals_direction'].forEach(layerId => {
+    if (map.getLayer(layerId)) {
+      if (pitch < 30) { //This pitch must be identical to the pitch in map.on('pitch', () => {
+        map.setFilter(layerId, ['has', 'azimuth']);
+      } else {
+        map.setFilter(layerId, [
+          'all',
+          ['has', 'azimuth'],
+          ['!=', ['get', 'azimuth'], null],
+          ['let', 'diff',
+            ['%',
+              ['+',
+                ['-', ['get', 'azimuth'], bearing],
+                540
+              ],
+              360
+            ],
+            ['all',
+              ['>=', ['var', 'diff'], 90],
+              ['<=', ['var', 'diff'], 270]
+            ]
+          ]
+        ]);
+      }
+    }
+  });
+}
+
+function naturalSort(a, b) {
+  return (a < b)
+    ? -1
+    : (a > b)
+      ? 1
+      : 0;
+}
+
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -1170,8 +1289,8 @@ const map = new maplibregl.Map({
   hash: 'view',
   minZoom: globalMinZoom,
   maxZoom: globalMaxZoom,
-  minPitch: 0,
-  maxPitch: 0,
+  // minPitch: 0,
+  // maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
@@ -2714,13 +2833,66 @@ function popupContent(feature, abortController) {
   return popupContainer
 }
 
-map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+
+
+
+map.on('move', () => {
+  backgroundMap.jumpTo({
+    center: map.getCenter(),
+    zoom: map.getZoom(),
+    bearing: map.getBearing(),
+    pitch: map.getPitch(),
+  });
+  updateSignalVisibilityWhilePitchedandTurned()
+});
+
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('moveend', () => {
+  updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
+  updateSignalVisibilityWhilePitchedandTurned();
+});
+map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 map.on('rotate', () => onMapRotate(map.getBearing()));
 map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 
+// Raise signal height when map is pitched so they are heigher above the map
+// if pitch is > 30, tonen seinen niet volgens aanrij richting maar gewoon  rechtop zoals de snelheidsseinen
+map.on('pitch', () => {
+  const pitch = map.getPitch();
+  const alignment = pitch > 30 ? 'viewport' : 'map';
+
+  // Scale height offset linearly from 0 at 0° to max at 60°
+  const heightOffset = (pitch / 60) * -8;
+
+  const indexedLayerTypes = [
+    'railway_signals_medium',
+    'railway_signals_high',
+  ];
+
+  indexedLayerTypes.forEach(type => {
+    for (let i = 0; i < 6; i++) {
+      const layerId = `${type}_${i}_image`;
+      if (map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, 'icon-rotation-alignment', alignment);
+        map.setLayoutProperty(layerId, 'icon-rotate',
+          alignment === 'viewport' ? 0 : ['coalesce', ['get', 'azimuth'], 0] );
+
+        // Update icon-offset based on feature index
+        if (i === 0) {
+          map.setLayoutProperty(layerId, 'icon-offset', ['literal', [0, heightOffset]]);
+        } else {
+          map.setLayoutProperty(layerId, 'icon-offset', [
+            'interpolate', ['linear'],
+            ['+', ['get', `offset${i}`], 2 * i],
+            0, ['literal', [0, heightOffset]],
+            1000, ['literal', [0, heightOffset - 1000]],
+          ]);
+        }
+      }
+    }
+  });
+});
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
     return '< 1 minute'
