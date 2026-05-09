@@ -17,6 +17,36 @@ const knownStyles = [
 
 const defaultDate = (new Date()).getFullYear();
 
+/**
+ * Pitch limit after which direction-dependent features will be hidden, in degrees.
+ */
+const pitchRotationLimit = 30;
+/**
+ * Maximum view angle for which a feature will be shown on the map using a pitched view, in degrees.
+ */
+const pitchedVisibleAngle = 75;
+
+const filterPitchedFeatures = (azimuthProperty) =>
+  ['any',
+    ['<', ['global-state', 'pitch'], pitchRotationLimit],
+    ['all',
+      ['!=', ['get', azimuthProperty], null],
+      ['let', 'diff',
+        ['%',
+          ['+',
+            ['-', ['get', azimuthProperty], ['global-state', 'bearing']],
+            540
+          ],
+          360
+        ],
+        ['all',
+          ['>=', ['var', 'diff'], 180 - pitchedVisibleAngle],
+          ['<=', ['var', 'diff'], 180 + pitchedVisibleAngle]
+        ]
+      ]
+    ],
+  ]
+
 const themeSwitch = (light, dark) =>
   ['case',
     ['==', ['global-state', 'theme'], 'light'], light,
@@ -3911,11 +3941,13 @@ const layers = {
           ['==', ['get', 'railway'], 'signal'],
           ['!=', ['get', 'azimuth'], null],
           ['!=', ['get', 'feature0'], ''],
+          filterPitchedFeatures('azimuth'),
         ],
         13,
         ['all',
           ['!=', ['get', 'azimuth'], null],
           ['!=', ['get', 'feature0'], ''],
+          filterPitchedFeatures('azimuth'),
         ],
       ],
       paint: {
@@ -3966,6 +3998,7 @@ const layers = {
           filter: ['all',
             ['==', ['get', 'railway'], 'signal'],
             ['!=', ['get', `feature${featureIndex}`], null],
+            filterPitchedFeatures('azimuth'),
           ],
           layout: {
             'symbol-z-order': 'source',
@@ -3988,7 +4021,10 @@ const layers = {
         maxzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -4041,7 +4077,10 @@ const layers = {
           minzoom: 16,
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
-          filter: ['!=', ['get', `feature${featureIndex}`], null],
+          filter: ['all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            filterPitchedFeatures('azimuth'),
+          ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
@@ -4068,7 +4107,10 @@ const layers = {
         minzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -4096,6 +4138,7 @@ const layers = {
           ['!=', ['get', 'caption'], null],
         ],
         ['!=', ['get', 'feature0'], null],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
@@ -5990,6 +6033,12 @@ const makeStyle = selectedStyle => ({
     },
     theme: {
       default: 'light',
+    },
+    bearing: {
+      default: null,
+    },
+    pitch: {
+      default: null,
     },
     stationLowZoomLabel: {
       default: 'label',
