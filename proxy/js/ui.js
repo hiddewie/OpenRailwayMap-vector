@@ -2384,6 +2384,43 @@ const onMapRotate = bearing => {
   }
 }
 
+const onMapPitch = pitch => {
+  // Raise signal height when map is pitched so they are heigher above the map
+  // if pitch is > 30, tonen seinen niet volgens aanrij richting maar gewoon  rechtop zoals de snelheidsseinenconst pitch = map.getPitch();
+  const alignment = pitch > 30 ? 'viewport' : 'map';
+
+  // Scale height offset linearly from 0 at 0° to max at 60°
+  const heightOffset = (pitch / 60) * -8;
+
+  const indexedLayerTypes = [
+    'railway_signals_medium',
+    'railway_signals_high',
+  ];
+
+  indexedLayerTypes.forEach(type => {
+    for (let i = 0; i < 6; i++) {
+      const layerId = `${type}_${i}_image`;
+      if (map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, 'icon-rotation-alignment', alignment);
+        map.setLayoutProperty(layerId, 'icon-rotate',
+          alignment === 'viewport' ? 0 : ['coalesce', ['get', 'azimuth'], 0]);
+
+        // Update icon-offset based on feature index
+        if (i === 0) {
+          map.setLayoutProperty(layerId, 'icon-offset', ['literal', [0, heightOffset]]);
+        } else {
+          map.setLayoutProperty(layerId, 'icon-offset', [
+            'interpolate', ['linear'],
+            ['+', ['get', `offset${i}`], 2 * i],
+            0, ['literal', [0, heightOffset]],
+            1000, ['literal', [0, heightOffset - 1000]],
+          ]);
+        }
+      }
+    }
+  });
+}
+
 function openJOSM(josmUrl, osmType, osmId) {
   const selectString = (osmType && osmId) ? `&select=${osmType}${osmId}` : '';
 
@@ -2844,45 +2881,8 @@ map.on('moveend', () => {
 });
 map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
+map.on('pitch', () => onMapPitch(map.getPitch()));
 
-// Raise signal height when map is pitched so they are heigher above the map
-// if pitch is > 30, tonen seinen niet volgens aanrij richting maar gewoon  rechtop zoals de snelheidsseinen
-map.on('pitch', () => {
-  const pitch = map.getPitch();
-  const alignment = pitch > 30 ? 'viewport' : 'map';
-
-  // Scale height offset linearly from 0 at 0° to max at 60°
-  const heightOffset = (pitch / 60) * -8;
-
-  const indexedLayerTypes = [
-    'railway_signals_medium',
-    'railway_signals_high',
-  ];
-
-  indexedLayerTypes.forEach(type => {
-    for (let i = 0; i < 6; i++) {
-      const layerId = `${type}_${i}_image`;
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, 'icon-rotation-alignment', alignment);
-        map.setLayoutProperty(layerId, 'icon-rotate',
-          alignment === 'viewport' ? 0 : ['coalesce', ['get', 'azimuth'], 0] );
-
-        // Update icon-offset based on feature index
-        if (i === 0) {
-          map.setLayoutProperty(layerId, 'icon-offset', ['literal', [0, heightOffset]]);
-        } else {
-          map.setLayoutProperty(layerId, 'icon-offset', [
-            'interpolate', ['linear'],
-            ['+', ['get', `offset${i}`], 2 * i],
-            0, ['literal', [0, heightOffset]],
-            1000, ['literal', [0, heightOffset - 1000]],
-          ]);
-        }
-      }
-    }
-  });
-});
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
     return '< 1 minute'
@@ -3036,3 +3036,4 @@ fetch(`${location.origin}/api/features/features.json`)
 updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
+onMapPitch(map.getPitch());
