@@ -4513,7 +4513,8 @@ const layers = {
           16, 0.7,
         ],
       },
-      layout: {'visibility': ['case',
+      layout: {
+        'visibility': ['case',
           ['<', ['global-state', 'pitch'], pitchRotationLimit], 'visible',
           'none',
         ],
