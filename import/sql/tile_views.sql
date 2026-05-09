@@ -1,5 +1,138 @@
 --- Shared ---
 
+-- TODO calculate labels in frontend
+CREATE OR REPLACE VIEW railway_line_view AS
+  SELECT
+    r.id,
+    osm_id,
+    'W' as osm_type,
+    way,
+    way_length,
+    layer,
+    feature,
+    state,
+    usage,
+    service,
+    highspeed,
+    tunnel,
+    bridge,
+    CASE
+      WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
+      ELSE COALESCE(ref, r.name)
+    END AS standard_label,
+    ref,
+    track_ref,
+    track_class,
+    reporting_marks,
+    preferred_direction,
+    rank,
+    maxspeed,
+    speed_label,
+    train_protection_rank,
+    train_protection,
+    train_protection_construction_rank,
+    train_protection_construction,
+    electrification_state,
+    voltage,
+    frequency,
+    maximum_current,
+    electrification_label,
+    future_voltage,
+    future_frequency,
+    future_maximum_current,
+    gauges,
+    railway_to_int(gauge0) AS gaugeint0,
+    gauge0,
+    railway_to_int(gauge1) AS gaugeint1,
+    gauge1,
+    railway_to_int(gauge2) AS gaugeint2,
+    gauge2,
+    gauge_label,
+    loading_gauge,
+    operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
+    primary_operator,
+    owner,
+    traffic_mode,
+    radio,
+    line_routes,
+    route_count,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM (
+    SELECT
+      id,
+      osm_id,
+      way,
+      way_length,
+      feature,
+      state,
+      usage,
+      service,
+      rank,
+      highspeed,
+      reporting_marks,
+      layer,
+      bridge,
+      tunnel,
+      track_ref,
+      track_class,
+      ref,
+      name,
+      preferred_direction,
+      maxspeed,
+      speed_label,
+      train_protection_rank,
+      train_protection,
+      train_protection_construction_rank,
+      train_protection_construction,
+      electrification_state,
+      voltage,
+      frequency,
+      maximum_current,
+      railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+      future_voltage,
+      future_frequency,
+      future_maximum_current,
+      gauges,
+      gauges[1] AS gauge0,
+      gauges[2] AS gauge1,
+      gauges[3] AS gauge2,
+      (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+      loading_gauge,
+      operator,
+      owner,
+      CASE
+        WHEN ARRAY[owner] <@ operator THEN owner
+        ELSE operator[1]
+      END AS primary_operator,
+      traffic_mode,
+      radio,
+      (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
+      (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
+      wikidata,
+      wikimedia_commons,
+      wikimedia_commons_file,
+      image,
+      mapillary,
+      wikipedia,
+      note,
+      description
+    FROM railway_line l
+  ) AS r
+  LEFT JOIN railway_operator ro
+    ON ro.name = primary_operator;
+
 CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -10,10 +143,8 @@ RETURN (
   SELECT
     ST_AsMVT(tile, 'railway_line_high', 4096, 'way')
   FROM (
-    -- TODO calculate labels in frontend
     SELECT
-      r.id,
-      osm_id,
+      id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       way_length,
       feature,
@@ -23,14 +154,10 @@ RETURN (
       highspeed,
       tunnel,
       bridge,
-      CASE
-        WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
-        ELSE COALESCE(ref, r.name)
-      END AS standard_label,
+      standard_label,
       ref,
       track_ref,
       track_class,
-      array_to_string(reporting_marks, ', ') as reporting_marks,
       preferred_direction,
       rank,
       maxspeed,
@@ -47,135 +174,61 @@ RETURN (
       future_voltage,
       future_frequency,
       future_maximum_current,
-      railway_to_int(gauge0) AS gaugeint0,
+      gauges,
+      gaugeint0,
       gauge0,
-      railway_to_int(gauge1) AS gaugeint1,
+      gaugeint1,
       gauge1,
-      railway_to_int(gauge2) AS gaugeint2,
+      gaugeint2,
       gauge2,
       gauge_label,
       loading_gauge,
       operator,
-      COALESCE(
-        ro.color,
-        'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
-      ) as operator_color,
-      coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
+      operator_color,
+      operator_bright,
       primary_operator,
       owner,
-      traffic_mode,
-      radio,
-      line_routes,
-      route_count,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM (
-      SELECT
-        id,
-        osm_id,
-        way,
-        way_length,
-        feature,
-        state,
-        usage,
-        service,
-        rank,
-        highspeed,
-        reporting_marks,
-        layer,
-        bridge,
-        tunnel,
-        track_ref,
-        track_class,
-        ref,
-        name,
-        preferred_direction,
-        maxspeed,
-        speed_label,
-        train_protection_rank,
-        train_protection,
-        train_protection_construction_rank,
-        train_protection_construction,
-        electrification_state,
-        voltage,
-        frequency,
-        maximum_current,
-        railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
-        future_voltage,
-        future_frequency,
-        future_maximum_current,
-        gauges[1] AS gauge0,
-        gauges[2] AS gauge1,
-        gauges[3] AS gauge2,
-        (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
-        loading_gauge,
-        array_to_string(operator, U&'\001E') as operator,
-        owner,
-        CASE
-          WHEN ARRAY[owner] <@ operator THEN owner
-          ELSE operator[1]
-        END AS primary_operator,
-        traffic_mode,
-        radio,
-        (select nullif(array_to_string(array_agg(r.osm_id || U&'\001E' || coalesce(r.color, '') || U&'\001E' || coalesce(r.name, '')), U&'\001D'), '') from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
-        (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-        wikidata,
-        wikimedia_commons,
-        wikimedia_commons_file,
-        image,
-        mapillary,
-        wikipedia,
-        note,
-        description
-      FROM railway_line l
-      WHERE
-        way && ST_TileEnvelope(z, x, y)
-        -- conditionally include features based on zoom level
-        AND CASE
-          -- Zooms < 7 are handled in the low zoom tiles
-          WHEN z < 8 THEN
-            state = 'present'
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
-              )
-          WHEN z < 9 THEN
-            state IN ('present', 'construction', 'proposed')
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
-              )
-          WHEN z < 10 THEN
-            state IN ('present', 'construction', 'proposed')
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry') AND usage IN ('main', 'branch', 'industrial')
-                  OR (feature = 'light_rail' AND usage IN ('main', 'branch'))
-              )
-          WHEN z < 11 THEN
-            state IN ('present', 'construction', 'proposed')
-              AND service IS NULL
-              AND (
-                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
-              )
-          WHEN z < 12 THEN
-            (service IS NULL OR service IN ('spur', 'yard'))
-              AND (
-                feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
-                  OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
-              )
-          ELSE
-            true
-        END
-    ) AS r
-    LEFT JOIN railway_operator ro
-      ON ro.name = primary_operator
+      route_count
+    FROM railway_line_view
+    WHERE
+      way && ST_TileEnvelope(z, x, y)
+      -- conditionally include features based on zoom level
+      AND CASE
+        -- Zooms < 7 are handled in the low zoom tiles
+        WHEN z < 8 THEN
+          state = 'present'
+            AND service IS NULL
+            AND (
+              feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
+            )
+        WHEN z < 9 THEN
+          state IN ('present', 'construction', 'proposed')
+            AND service IS NULL
+            AND (
+              feature IN ('rail', 'ferry') AND usage IN ('main', 'branch')
+            )
+        WHEN z < 10 THEN
+          state IN ('present', 'construction', 'proposed')
+            AND service IS NULL
+            AND (
+              feature IN ('rail', 'ferry') AND usage IN ('main', 'branch', 'industrial')
+                OR (feature = 'light_rail' AND usage IN ('main', 'branch'))
+            )
+        WHEN z < 11 THEN
+          state IN ('present', 'construction', 'proposed')
+            AND service IS NULL
+            AND (
+              feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
+            )
+        WHEN z < 12 THEN
+          (service IS NULL OR service IN ('spur', 'yard'))
+            AND (
+              feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
+                OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
+            )
+        ELSE
+          true
+      END
     ORDER by
       layer,
       rank NULLS LAST,
@@ -228,24 +281,12 @@ DO $do$ BEGIN
           "gauge_label": "string",
           "loading_gauge": "string",
           "track_class": "string",
-          "reporting_marks": "string",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
-          "traffic_mode": "string",
-          "radio": "string",
-          "line_routes": "string",
-          "route_count": "integer",
-          "wikidata": "string",
-          "wikimedia_commons": "string",
-          "wikimedia_commons_file": "string",
-          "image": "string",
-          "mapillary": "string",
-          "wikipedia": "string",
-          "note": "string",
-          "description": "string"
+          "route_count": "integer"
         }
       }
     ]
@@ -256,7 +297,7 @@ END $do$;
 -- Reusable view for low railway line tiles, grouped per layer
 CREATE OR REPLACE VIEW railway_line_low AS
   SELECT
-    r.id,
+    id,
     osm_id,
     way,
     feature,
@@ -264,10 +305,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     usage,
     highspeed,
     ref,
-    CASE
-      WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
-      ELSE COALESCE(ref, r.name)
-    END AS standard_label,
+    standard_label,
     speed_label,
     maxspeed,
     train_protection_rank,
@@ -275,35 +313,22 @@ CREATE OR REPLACE VIEW railway_line_low AS
     train_protection_construction_rank,
     train_protection_construction,
     electrification_state,
-    railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
+    electrification_label,
     voltage,
     frequency,
     maximum_current,
-    railway_to_int(gauges[1]) AS gaugeint0,
-    gauges[1] as gauge0,
-    (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
+    gaugeint0,
+    gauge0,
+    gauge_label,
     loading_gauge,
     track_class,
-    nullif(array_to_string(operator, U&'\001E'), '') as operator,
-    COALESCE(
-      ro.color,
-      'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
-    ) as operator_color,
-    coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
+    operator,
+    operator_color,
+    operator_bright,
     primary_operator,
     owner,
     rank
-  FROM (
-    SELECT
-      *,
-      CASE
-        WHEN ARRAY[owner] <@ operator THEN owner
-        ELSE operator[1]
-      END AS primary_operator
-    from railway_line
-  ) as r
-  LEFT JOIN railway_operator ro
-    ON ro.name = primary_operator
+  FROM railway_line_view
   WHERE
     state = 'present'
       AND feature IN ('rail', 'ferry')
