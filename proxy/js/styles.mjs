@@ -3609,6 +3609,7 @@ const layers = {
           ['!=', ['get', 'feature0'], null],
           ['!=', ['get', 'azimuth'], null],
           ['==', ['get', 'type'], 'line'],
+          filterPitchedFeatures('azimuth'),
         ],
         14,
         ['all',
@@ -3617,12 +3618,14 @@ const layers = {
           ['any',
             ['==', ['get', 'type'], 'line'],
             ['==', ['get', 'type'], 'tram'],
-          ]
+          ],
+          filterPitchedFeatures('azimuth'),
         ],
         16,
         ['all',
           ['!=', ['get', 'feature0'], null],
           ['!=', ['get', 'azimuth'], null],
+          filterPitchedFeatures('azimuth'),
         ],
       ],
       paint: {
@@ -3672,6 +3675,7 @@ const layers = {
             ['all',
               ['!=', ['get', `feature${featureIndex}`], null],
               ['==', ['get', 'type'], 'line'],
+              filterPitchedFeatures('azimuth'),
             ],
             14,
             ['all',
@@ -3679,10 +3683,14 @@ const layers = {
               ['any',
                 ['==', ['get', 'type'], 'line'],
                 ['==', ['get', 'type'], 'tram'],
-              ]
+              ],
+              filterPitchedFeatures('azimuth'),
             ],
             16,
-            ['!=', ['get', `feature${featureIndex}`], null],
+            ['all',
+              ['!=', ['get', `feature${featureIndex}`], null],
+              filterPitchedFeatures('azimuth'),
+            ]
           ],
           layout: {
             'symbol-z-order': 'source',
@@ -3704,7 +3712,10 @@ const layers = {
         minzoom: 13,
         source: 'openrailwaymap_speed',
         'source-layer': 'speed_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
@@ -3729,6 +3740,7 @@ const layers = {
       filter: ['any',
         ['!=', ['get', 'ref'], null],
         ['!=', ['get', 'caption'], null],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
@@ -4475,6 +4487,7 @@ const layers = {
       filter: ['all',
         ['!=', ['get', 'azimuth'], null],
         ['!=', ['get', 'feature0'], ''],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'icon-color': colors.signals.direction,
@@ -4518,6 +4531,7 @@ const layers = {
         minzoom: 13,
         source: 'openrailwaymap_electrification',
         'source-layer': 'electrification_signals',
+        filter: filterPitchedFeatures('azimuth'),
         paint: {
           'text-color': colors.text.main,
           'text-halo-color': ['case',
@@ -4545,7 +4559,10 @@ const layers = {
       minzoom: 15,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
-      filter: ['==', ['get', 'deactivated0'], true],
+      filter: ['all',
+        ['==', ['get', 'deactivated0'], true],
+        filterPitchedFeatures('azimuth'),
+      ],
       layout: {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
@@ -4561,6 +4578,7 @@ const layers = {
       filter: ['any',
         ['!=', ['get', 'ref'], null],
         ['!=', ['get', 'caption'], null],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
