@@ -35,17 +35,24 @@ const filterPitchedFeatures = (azimuthProperty) =>
         ['%',
           ['+',
             ['-', ['get', azimuthProperty], ['global-state', 'bearing']],
-            540
+            540,
           ],
-          360
+          360,
         ],
-        ['all',
-          ['>=', ['var', 'diff'], 180 - pitchedVisibleAngle],
-          ['<=', ['var', 'diff'], 180 + pitchedVisibleAngle]
-        ]
-      ]
+        ['any',
+          ['all',
+            ['>=', ['var', 'diff'], 180 - pitchedVisibleAngle],
+            ['<=', ['var', 'diff'], 180 + pitchedVisibleAngle],
+          ],
+          ['all',
+            ['coalesce', ['get', 'direction_both'], false],
+            ['>=', ['%', ['+', ['var', 'diff'], 180], 360], 180 - pitchedVisibleAngle],
+            ['<=', ['%', ['+', ['var', 'diff'], 180], 360], 180 + pitchedVisibleAngle],
+          ],
+        ],
+      ],
     ],
-  ]
+  ];
 
 const themeSwitch = (light, dark) =>
   ['case',
