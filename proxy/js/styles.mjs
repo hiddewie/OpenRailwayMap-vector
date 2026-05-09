@@ -3690,7 +3690,7 @@ const layers = {
             ['all',
               ['!=', ['get', `feature${featureIndex}`], null],
               filterPitchedFeatures('azimuth'),
-            ]
+            ],
           ],
           layout: {
             'symbol-z-order': 'source',
@@ -3737,9 +3737,11 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_speed',
       'source-layer': 'speed_railway_signals',
-      filter: ['any',
-        ['!=', ['get', 'ref'], null],
-        ['!=', ['get', 'caption'], null],
+      filter: ['all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
         filterPitchedFeatures('azimuth'),
       ],
       paint: {
@@ -4575,9 +4577,11 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
-      filter: ['any',
-        ['!=', ['get', 'ref'], null],
-        ['!=', ['get', 'caption'], null],
+      filter: ['all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
         filterPitchedFeatures('azimuth'),
       ],
       paint: {
