@@ -1862,7 +1862,13 @@ class LegendControl {
     if (!this.isLegendShown() || !zoom || !style || !legendData) {
       return;
     }
-    const mapGlobalState = this.map.getGlobalState();
+
+    // Do not include bearing and pitch in legend map state
+    const mapGlobalState = {
+      ...this.map.getGlobalState(),
+      bearing: 0.0,
+      pitch: 0.0,
+    };
 
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
