@@ -109,117 +109,6 @@ function naturalSort(a, b) {
       : 0;
 }
 
-function updateSignalVisibilityWhilePitchedandTurned() {
-  const bearing = map.getBearing();
-  const pitch = map.getPitch();
-
-  const indexedLayerTypes = [
-    'railway_signals_medium',
-    'railway_signals_high',
-    'speed_railway_signals'
-  ];
-
-  [0, 1].forEach(featureIndex => {
-    indexedLayerTypes.forEach(type => {
-      const layerId = `${type}_${featureIndex}_image`;
-
-      if (map.getLayer(layerId)) {
-        if (pitch < 30) { //This pitch must be identical to the pitch in map.on('pitch', () => {
-          map.setFilter(layerId, [
-            '!=', ['get', `feature${featureIndex}`], null
-          ]);
-        } else {
-          map.setFilter(layerId, [
-            'all',
-            ['!=', ['get', `feature${featureIndex}`], null],
-            ['has', 'azimuth'],
-            ['!=', ['get', 'azimuth'], null],
-            ['let', 'diff',
-              ['%',
-                ['+',
-                  ['-', ['get', 'azimuth'], bearing],
-                  540
-                ],
-                360
-              ],
-              ['all',
-                ['>=', ['var', 'diff'], 90],
-                ['<=', ['var', 'diff'], 270]
-              ]
-            ]
-          ]);
-        }
-      }
-    });
-  });
-
-  // Handle railway_signals_high_text separately - preserve its original filters
-  if (map.getLayer('railway_signals_high_text')) {
-    if (pitch < 30) {  //This pitch must be identical to the pitch in map.on('pitch', () => {
-      map.setFilter('railway_signals_high_text', [
-        'all',
-        ['any',
-          ['!=', ['get', 'ref'], null],
-          ['!=', ['get', 'caption'], null],
-        ],
-        ['!=', ['get', 'feature0'], null],
-      ]);
-    } else {
-      map.setFilter('railway_signals_high_text', [
-        'all',
-        ['any',
-          ['!=', ['get', 'ref'], null],
-          ['!=', ['get', 'caption'], null],
-        ],
-        ['!=', ['get', 'feature0'], null],
-        ['has', 'azimuth'],
-        ['!=', ['get', 'azimuth'], null],
-        ['let', 'diff',
-          ['%',
-            ['+',
-              ['-', ['get', 'azimuth'], bearing],
-              540
-            ],
-            360
-          ],
-          ['all',
-            ['>=', ['var', 'diff'], 90],
-            ['<=', ['var', 'diff'], 270]
-          ]
-        ]
-      ]);
-    }
-  }
-
-  // Handle direction icons
-  ['speed_railway_signal_direction', 'railway_signals_direction'].forEach(layerId => {
-    if (map.getLayer(layerId)) {
-      if (pitch < 30) { //This pitch must be identical to the pitch in map.on('pitch', () => {
-        map.setFilter(layerId, ['has', 'azimuth']);
-      } else {
-        map.setFilter(layerId, [
-          'all',
-          ['has', 'azimuth'],
-          ['!=', ['get', 'azimuth'], null],
-          ['let', 'diff',
-            ['%',
-              ['+',
-                ['-', ['get', 'azimuth'], bearing],
-                540
-              ],
-              360
-            ],
-            ['all',
-              ['>=', ['var', 'diff'], 90],
-              ['<=', ['var', 'diff'], 270]
-            ]
-          ]
-        ]);
-      }
-    }
-  });
-}
-
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -756,13 +645,14 @@ function determineDateParameter(hashDate) {
 function determineZoomCenterFromHash(hash) {
   const hashObject = hashToObject(hash);
   if ('view' in hashObject && typeof hashObject.view === 'string') {
-    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?$/);
+    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?(?:\/(?<pitch>-?[\d.]+))?$/);
     if (matches) {
       const groups = matches.groups
       return {
         center: [parseFloat(groups.longitude), parseFloat(groups.latitude)],
         zoom: parseFloat(groups.zoom),
         bearing: groups.bearing ?? 0.0,
+        pitch: groups.pitch ?? 0.0,
       }
     } else {
       return {};
@@ -880,7 +770,7 @@ function updateHillShadeOnMap() {
 function onStationLabelChange(stationlabel) {
   updateConfiguration('stationLowZoomLabel', stationlabel);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
   legendControl.updateLegend();
@@ -905,7 +795,7 @@ function customLocalization(language) {
 function configureElectrificationRailwayLine(electrification) {
   updateConfiguration('electrificationRailwayLine', electrification);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('electrificationRailwayLine', electrification);
   }
 
@@ -915,7 +805,7 @@ function configureElectrificationRailwayLine(electrification) {
 function configureTrackRailwayLine(track) {
   updateConfiguration('trackRailwayLine', track);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('trackRailwayLine', track);
   }
 
@@ -970,9 +860,11 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
     selectDate(defaultDate)
   }
 
-  map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
-  map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
-  map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
+    map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
+    map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  }
 
   onStyleChange();
 }
@@ -980,8 +872,10 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
 function onFutureInfrastructureChange(futureInfrastructure) {
   updateConfiguration('futureInfrastructure', futureInfrastructure);
 
-  map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
-  map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
+    map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+  }
 
   legendControl.updateLegend();
 }
@@ -1364,10 +1258,13 @@ function addLanguageToSupportedSources(style, language) {
 
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
-function rewriteGlobalStateDefaults(style) {
+function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
+
+  style.state.bearing.default = bearing ?? 0;
+  style.state.pitch.default = pitch ?? 0;
 
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 
@@ -1412,7 +1309,7 @@ function onStyleChange() {
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
         addLanguageToSupportedSources(next, language)
-        rewriteGlobalStateDefaults(next)
+        rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
         return next;
       },
     });
@@ -1435,8 +1332,11 @@ function onStyleChange() {
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
-  map.setGlobalStateProperty('allDates', selectedDate === 'all');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
+    map.setGlobalStateProperty('allDates', selectedDate === 'all');
+  }
+
   onPageParametersChange();
 }
 
@@ -2375,6 +2275,10 @@ const legendControl = new LegendControl({
 map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('bearing', bearing ?? 0);
+  }
+
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
   if (rotated && !rotatedShownOnIcon) {
@@ -2385,40 +2289,9 @@ const onMapRotate = bearing => {
 }
 
 const onMapPitch = pitch => {
-  // Raise signal height when map is pitched so they are heigher above the map
-  // if pitch is > 30, tonen seinen niet volgens aanrij richting maar gewoon  rechtop zoals de snelheidsseinenconst pitch = map.getPitch();
-  const alignment = pitch > 30 ? 'viewport' : 'map';
-
-  // Scale height offset linearly from 0 at 0° to max at 60°
-  const heightOffset = (pitch / 60) * -8;
-
-  const indexedLayerTypes = [
-    'railway_signals_medium',
-    'railway_signals_high',
-  ];
-
-  indexedLayerTypes.forEach(type => {
-    for (let i = 0; i < 6; i++) {
-      const layerId = `${type}_${i}_image`;
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, 'icon-rotation-alignment', alignment);
-        map.setLayoutProperty(layerId, 'icon-rotate',
-          alignment === 'viewport' ? 0 : ['coalesce', ['get', 'azimuth'], 0]);
-
-        // Update icon-offset based on feature index
-        if (i === 0) {
-          map.setLayoutProperty(layerId, 'icon-offset', ['literal', [0, heightOffset]]);
-        } else {
-          map.setLayoutProperty(layerId, 'icon-offset', [
-            'interpolate', ['linear'],
-            ['+', ['get', `offset${i}`], 2 * i],
-            0, ['literal', [0, heightOffset]],
-            1000, ['literal', [0, heightOffset - 1000]],
-          ]);
-        }
-      }
-    }
-  });
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('pitch', pitch ?? 0);
+  }
 }
 
 function openJOSM(josmUrl, osmType, osmId) {
@@ -2860,25 +2733,10 @@ function popupContent(feature, abortController) {
   return popupContainer
 }
 
-
-
-
-map.on('move', () => {
-  backgroundMap.jumpTo({
-    center: map.getCenter(),
-    zoom: map.getZoom(),
-    bearing: map.getBearing(),
-    pitch: map.getPitch(),
-  });
-  updateSignalVisibilityWhilePitchedandTurned()
-});
-
-map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('moveend', () => {
-  updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()});
-  updateSignalVisibilityWhilePitchedandTurned();
-});
+map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 map.on('rotate', () => onMapRotate(map.getBearing()));
 map.on('pitch', () => onMapPitch(map.getPitch()));
