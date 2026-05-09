@@ -3943,7 +3943,7 @@ const layers = {
           ['!=', ['get', 'feature0'], ''],
           filterPitchedFeatures('azimuth'),
         ],
-        13,
+        16,
         ['all',
           ['!=', ['get', 'azimuth'], null],
           ['!=', ['get', 'feature0'], ''],
