@@ -2734,12 +2734,14 @@ function popupContent(feature, abortController) {
 }
 
 map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
 map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
-map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
-map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('rotateend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('pitch', () => onMapPitch(map.getPitch()));
+map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
