@@ -1289,8 +1289,6 @@ const map = new maplibregl.Map({
   hash: 'view',
   minZoom: globalMinZoom,
   maxZoom: globalMaxZoom,
-  // minPitch: 0,
-  // maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
@@ -2334,7 +2332,7 @@ const styleControl = new StyleControl({
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
-  visualizePitch: false,
+  visualizePitch: true,
 })
 map.addControl(dateControl);
 map.addControl(styleControl);
