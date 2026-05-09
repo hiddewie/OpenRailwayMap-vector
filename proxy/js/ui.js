@@ -220,14 +220,6 @@ function updateSignalVisibilityWhilePitchedandTurned() {
   });
 }
 
-function naturalSort(a, b) {
-  return (a < b)
-    ? -1
-    : (a > b)
-      ? 1
-      : 0;
-}
-
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
