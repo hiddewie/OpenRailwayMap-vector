@@ -16,11 +16,6 @@ const knownStyles = [
 ];
 
 const defaultDate = (new Date()).getFullYear();
-
-/**
- * Pitch limit after which direction-dependent features will be hidden, in degrees.
- */
-const pitchRotationLimit = 30;
 /**
  * Maximum view angle for which a feature will be shown on the map using a pitched view, in degrees.
  */
@@ -28,7 +23,7 @@ const pitchedVisibleAngle = 75;
 
 const filterPitchedFeatures = (azimuthProperty) =>
   ['any',
-    ['<', ['global-state', 'pitch'], pitchRotationLimit],
+    ['==', ['global-state', 'pitched'], true],
     ['all',
       ['!=', ['get', azimuthProperty], null],
       ['let', 'diff',
@@ -3638,7 +3633,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'none',
+          ['==', ['global-state', 'pitched'], true], 'none',
           'visible',
         ],
       },
@@ -3685,7 +3680,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'visible',
+          ['==', ['global-state', 'pitched'], true], 'visible',
           'none',
         ],
         'icon-overlap': 'always',
@@ -3747,7 +3742,7 @@ const layers = {
                   featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                   2 * featureIndex, // Gap of 2 pixels for halo and spacing
                   ['case',
-                    ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                    ['==', ['global-state', 'pitched'], true], 0,
                     ['+',
                       ['get', 'offset0'], // Icon is shown above anchor in pitched view
                       4, // Signal anchor
@@ -3763,7 +3758,7 @@ const layers = {
                   featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                   2 * featureIndex, // Gap of 2 pixels for halo and spacing
                   ['case',
-                    ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                    ['==', ['global-state', 'pitched'], true], 0,
                     ['+',
                       ['get', 'offset0'], // Icon is shown above anchor in pitched view
                       4, // Signal anchor
@@ -3799,7 +3794,7 @@ const layers = {
                 featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                 2 * featureIndex, // Gap of 2 pixels for halo and spacing
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['==', ['global-state', 'pitched'], true], 0,
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
                     4, // Signal anchor
@@ -3815,7 +3810,7 @@ const layers = {
                 featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                 2 * featureIndex, // Gap of 2 pixels for halo and spacing
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['==', ['global-state', 'pitched'], true], 0,
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
                     4, // Signal anchor
@@ -3862,12 +3857,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'top',
+          ['==', ['global-state', 'pitched'], true], 'top',
           'bottom',
         ],
         'text-offset': ['interpolate', ['linear'],
           ['case',
-            ['<', ['global-state', 'pitch'], pitchRotationLimit], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            ['==', ['global-state', 'pitched'], true], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
             -1,
           ],
           -20 * 9, ['literal', [0, -20]],
@@ -4070,7 +4065,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'none',
+          ['==', ['global-state', 'pitched'], true], 'none',
           'visible',
         ],
       },
@@ -4108,7 +4103,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'visible',
+          ['==', ['global-state', 'pitched'], true], 'visible',
           'none',
         ],
         'icon-overlap': 'always',
@@ -4155,7 +4150,7 @@ const layers = {
                 featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                 2 * featureIndex, // Gap of 2 pixels for halo and spacing
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['==', ['global-state', 'pitched'], true], 0,
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
                     4, // Signal anchor
@@ -4188,7 +4183,7 @@ const layers = {
               featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
               2 * featureIndex, // Gap of 2 pixels for halo and spacing
               ['case',
-                ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                ['==', ['global-state', 'pitched'], true], 0,
                 ['+',
                   ['get', 'offset0'], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
@@ -4251,7 +4246,7 @@ const layers = {
                 featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
                 2 * featureIndex, // Gap of 2 pixels for halo and spacing
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit],
+                  ['==', ['global-state', 'pitched'], true],
                   ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
@@ -4286,7 +4281,7 @@ const layers = {
               featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
               2 * featureIndex, // Gap of 2 pixels for halo and spacing
               ['case',
-                ['<', ['global-state', 'pitch'], pitchRotationLimit],
+                ['==', ['global-state', 'pitched'], true],
                 ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
                 ['+',
                   ['get', 'offset0'], // Icon is shown above anchor in pitched view
@@ -4335,12 +4330,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'top',
+          ['==', ['global-state', 'pitched'], true], 'top',
           'bottom',
         ],
         'text-offset': ['interpolate', ['linear'],
           ['case',
-            ['<', ['global-state', 'pitch'], pitchRotationLimit], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            ['==', ['global-state', 'pitched'], true], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
             -1,
           ],
           -20 * 9, ['literal', [0, -20]],
@@ -4665,7 +4660,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'none',
+          ['==', ['global-state', 'pitched'], true], 'none',
           'visible',
         ],
       },
@@ -4695,7 +4690,7 @@ const layers = {
       },
       layout: {
         'visibility': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'visible',
+          ['==', ['global-state', 'pitched'], true], 'visible',
           'none',
         ],
         'icon-overlap': 'always',
@@ -4743,7 +4738,7 @@ const layers = {
             ['interpolate', ['linear'],
               ['+',
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['==', ['global-state', 'pitched'], true], 0,
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
                     4, // Signal anchor
@@ -4757,7 +4752,7 @@ const layers = {
             ['interpolate', ['linear'],
               ['+',
                 ['case',
-                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['==', ['global-state', 'pitched'], true], 0,
                   ['+',
                     ['get', 'offset0'], // Icon is shown above anchor in pitched view
                     4, // Signal anchor
@@ -4791,7 +4786,7 @@ const layers = {
           ['interpolate', ['linear'],
             ['+',
               ['case',
-                ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                ['==', ['global-state', 'pitched'], true], 0,
                 ['+',
                   ['get', 'offset0'], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
@@ -4805,7 +4800,7 @@ const layers = {
           ['interpolate', ['linear'],
             ['+',
               ['case',
-                ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                ['==', ['global-state', 'pitched'], true], 0,
                 ['+',
                   ['get', 'offset0'], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
@@ -4851,12 +4846,12 @@ const layers = {
         'text-font': font.regular,
         'text-size': 9,
         'text-anchor': ['case',
-          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'top',
+          ['==', ['global-state', 'pitched'], true], 'top',
           'bottom',
         ],
         'text-offset': ['interpolate', ['linear'],
           ['case',
-            ['<', ['global-state', 'pitch'], pitchRotationLimit], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            ['==', ['global-state', 'pitched'], true], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
             -1,
           ],
           -20 * 9, ['literal', [0, -20]],
@@ -6313,8 +6308,8 @@ const makeStyle = selectedStyle => ({
     bearing: {
       default: null,
     },
-    pitch: {
-      default: null,
+    pitched: {
+      default: false,
     },
     stationLowZoomLabel: {
       default: 'label',

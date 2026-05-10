@@ -109,6 +109,14 @@ function naturalSort(a, b) {
       : 0;
 }
 
+/**
+ * Pitch limit after which direction-dependent features will be hidden, in degrees.
+ */
+const pitchRotationLimit = 30;
+
+const pitchedView = (pitch) =>
+  pitch ?? 0 > pitchRotationLimit;
+
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -1264,7 +1272,7 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.theme.default = selectedTheme;
 
   style.state.bearing.default = bearing ?? 0;
-  style.state.pitch.default = pitch ?? 0;
+  style.state.pitched.default = pitchedView(pitch);
 
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 
@@ -2295,8 +2303,10 @@ const onMapRotate = bearing => {
 }
 
 const onMapPitch = pitch => {
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('pitch', pitch ?? 0);
+  const pitched = pitchedView(pitch)
+  const pitchedState = (map.getGlobalState() ?? {}).pitched
+  if (pitched !== pitchedState && map.isStyleLoaded()) {
+    map.setGlobalStateProperty('pitch', pitched);
   }
 }
 
