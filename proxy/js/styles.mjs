@@ -3606,6 +3606,44 @@ const layers = {
     route,
     routeText,
     {
+      id: 'speed_railway_signal_anchor',
+      type: 'circle',
+      minzoom: 13,
+      source: 'openrailwaymap_speed',
+      'source-layer': 'speed_railway_signals',
+      filter: ['step', ['zoom'],
+        ['all',
+          ['==', ['get', 'type'], 'line'],
+          filterPitchedFeatures('azimuth'),
+        ],
+        14,
+        ['all',
+          ['any',
+            ['==', ['get', 'type'], 'line'],
+            ['==', ['get', 'type'], 'tram'],
+          ],
+          filterPitchedFeatures('azimuth'),
+        ],
+        16,
+        filterPitchedFeatures('azimuth'),
+      ],
+      paint: {
+        'circle-radius': 2,
+        'circle-color': colors.text.main,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
+        ],
+      },
+      layout: {
+        'visibility': ['case',
+          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'none',
+          'visible',
+        ],
+      },
+    },
+    {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
       minzoom: 13,
@@ -3703,14 +3741,41 @@ const layers = {
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex === 0
-              ? ['literal', [0, 0]]
-              : ['interpolate', ['linear'],
-                // Gap of 2 pixels for halo and spacing
-                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+            'icon-offset': ['step', ['zoom'],
+              ['interpolate', ['linear'],
+                ['+',
+                  featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                  2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                  ['case',
+                    ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                    ['+',
+                      ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                      4, // Signal anchor
+                    ],
+                  ],
+                ],
                 0, ['literal', [0, 0]],
                 1000, ['literal', [0, -1000]],
               ],
+              16,
+              ['interpolate', ['linear'],
+                ['+',
+                  featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                  2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                  ['case',
+                    ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                    ['+',
+                      ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                      4, // Signal anchor
+                      ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                      ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                    ],
+                  ],
+                ],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
+            ],
           },
         },
       ),
@@ -3728,14 +3793,41 @@ const layers = {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex === 0
-            ? ['literal', [0, 0]]
-            : ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
-              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+          'icon-offset': ['step', ['zoom'],
+            ['interpolate', ['linear'],
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                ['case',
+                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                  ],
+                ],
+              ],
               0, ['literal', [0, 0]],
               1000, ['literal', [0, -1000]],
             ],
+            16,
+            ['interpolate', ['linear'],
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                ['case',
+                  ['<', ['global-state', 'pitch'], pitchRotationLimit], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                    ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                    ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                  ],
+                ],
+              ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+          ],
         }
       },
     ]),
@@ -3769,12 +3861,17 @@ const layers = {
         ],
         'text-font': font.regular,
         'text-size': 9,
-        'text-anchor': 'top',
+        'text-anchor': ['case',
+          ['<', ['global-state', 'pitch'], pitchRotationLimit], 'top',
+          'bottom',
+        ],
         'text-offset': ['interpolate', ['linear'],
-          // 2 pixel spacing under icon
-          ['/', ['+', ['get', 'offset0'], 2], 9],
-          0, ['literal', [0, 0]],
-          20, ['literal', [0, 20]],
+          ['case',
+            ['<', ['global-state', 'pitch'], pitchRotationLimit], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            -1,
+          ],
+          -20 * 9, ['literal', [0, -20]],
+          20 * 9, ['literal', [0, 20]],
         ],
       },
     },
