@@ -2403,13 +2403,13 @@ function popupContent(feature, abortController) {
   const colorProperty = featureCatalog.colorProperty || 'color';
 
   const propertiesFromView = featureCatalog.view;
-  if (!propertiesFromView) {
-    console.warn(`Feature catalog "${layerSource}" does not contain view information to fetch feature properties`, feature);
-    return;
-  }
+  const properties$ = propertiesFromView
+    ? fetchFeatureProperties(propertiesFromView)
+    : Promise.resolve(feature.properties);
+
   const popupContainer = createDomElement('div', 'loading');
 
-  fetchFeatureProperties(propertiesFromView)
+  properties$
     .then(properties => {
       const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
