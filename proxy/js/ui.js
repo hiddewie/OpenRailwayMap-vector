@@ -1875,7 +1875,7 @@ class LegendControl {
     const mapGlobalState = {
       ...this.map.getGlobalState(),
       bearing: 0.0,
-      pitch: 0.0,
+      pitched: 0.0,
     };
 
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
