@@ -115,7 +115,7 @@ function naturalSort(a, b) {
 const pitchRotationLimit = 30;
 
 const pitchedView = (pitch) =>
-  pitch ?? 0 > pitchRotationLimit;
+  (pitch ?? 0) > pitchRotationLimit;
 
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
@@ -2306,7 +2306,7 @@ const onMapPitch = pitch => {
   const pitched = pitchedView(pitch)
   const pitchedState = (map.getGlobalState() ?? {}).pitched
   if (pitched !== pitchedState && map.isStyleLoaded()) {
-    map.setGlobalStateProperty('pitch', pitched);
+    map.setGlobalStateProperty('pitched', pitched);
   }
 }
 
