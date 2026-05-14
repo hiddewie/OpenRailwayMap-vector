@@ -821,7 +821,14 @@ operators:
   - country: ES
     names:
       - 'Ferrocarrils de la Generalitat de Catalunya'
+      - 'FGC'
     color: '#75a700'
+
+  - country: ES
+    names:
+      - 'Ferrocarrils de la Generalitat Valenciana'
+      - 'FGV'
+    color: '#ffb20f'
 
   - country: ES
     names:
