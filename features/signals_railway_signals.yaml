@@ -5182,6 +5182,13 @@ features:
       - { tag: 'railway:signal:radio', value: 'DE-ESO:zugfunk-kanalhinweis' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
 
+  - description: Indusi state indicator (for TUZ)
+    country: DE
+    icon: [ default: 'de/tuz_indusimelder' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'DE-DB:tuz_indusimelder' }
+      - { tag: 'railway:signal:train_protection:form', value: 'light' }
+
   # --- DK --- #
 
   - description: Perronudkørselssignal
