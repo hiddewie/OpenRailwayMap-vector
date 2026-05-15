@@ -655,7 +655,7 @@ DO $do$ BEGIN
           "feature": "string",
           "deactivated": "boolean",
           "offset": "number",
-          "type": "stirng"
+          "type": "string"
         }
       }
     ]
