@@ -16,6 +16,38 @@ const knownStyles = [
 ];
 
 const defaultDate = (new Date()).getFullYear();
+/**
+ * Maximum view angle for which a feature will be shown on the map using a pitched view, in degrees.
+ */
+const pitchedVisibleAngle = 75;
+
+const filterPitchedFeatures = (azimuthProperty) =>
+  ['any',
+    ['==', ['global-state', 'pitched'], false],
+    ['all',
+      ['!=', ['get', azimuthProperty], null],
+      ['let', 'diff',
+        ['%',
+          ['+',
+            ['-', ['get', azimuthProperty], ['global-state', 'bearing']],
+            540,
+          ],
+          360,
+        ],
+        ['any',
+          ['all',
+            ['>=', ['var', 'diff'], 180 - pitchedVisibleAngle],
+            ['<=', ['var', 'diff'], 180 + pitchedVisibleAngle],
+          ],
+          ['all',
+            ['coalesce', ['get', 'direction_both'], false],
+            ['>=', ['%', ['+', ['var', 'diff'], 180], 360], 180 - pitchedVisibleAngle],
+            ['<=', ['%', ['+', ['var', 'diff'], 180], 360], 180 + pitchedVisibleAngle],
+          ],
+        ],
+      ],
+    ],
+  ];
 
 const themeSwitch = (light, dark) =>
   ['case',
@@ -3569,6 +3601,44 @@ const layers = {
     route,
     routeText,
     {
+      id: 'speed_railway_signal_anchor',
+      type: 'circle',
+      minzoom: 13,
+      source: 'openrailwaymap_speed',
+      'source-layer': 'speed_railway_signals',
+      filter: ['step', ['zoom'],
+        ['all',
+          ['==', ['get', 'type'], 'line'],
+          filterPitchedFeatures('azimuth'),
+        ],
+        14,
+        ['all',
+          ['any',
+            ['==', ['get', 'type'], 'line'],
+            ['==', ['get', 'type'], 'tram'],
+          ],
+          filterPitchedFeatures('azimuth'),
+        ],
+        16,
+        filterPitchedFeatures('azimuth'),
+      ],
+      paint: {
+        'circle-radius': 2,
+        'circle-color': colors.text.main,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
+        ],
+      },
+      layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'none',
+          'visible',
+        ],
+      },
+    },
+    {
       id: 'speed_railway_signal_direction',
       type: 'symbol',
       minzoom: 13,
@@ -3587,7 +3657,7 @@ const layers = {
           ['any',
             ['==', ['get', 'type'], 'line'],
             ['==', ['get', 'type'], 'tram'],
-          ]
+          ],
         ],
         16,
         ['all',
@@ -3609,6 +3679,10 @@ const layers = {
         ],
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'visible',
+          'none',
+        ],
         'icon-overlap': 'always',
         'icon-image': ["step", ["zoom"],
           ['case',
@@ -3642,6 +3716,7 @@ const layers = {
             ['all',
               ['!=', ['get', `feature${featureIndex}`], null],
               ['==', ['get', 'type'], 'line'],
+              filterPitchedFeatures('azimuth'),
             ],
             14,
             ['all',
@@ -3649,22 +3724,53 @@ const layers = {
               ['any',
                 ['==', ['get', 'type'], 'line'],
                 ['==', ['get', 'type'], 'tram'],
-              ]
+              ],
+              filterPitchedFeatures('azimuth'),
             ],
             16,
-            ['!=', ['get', `feature${featureIndex}`], null],
+            ['all',
+              ['!=', ['get', `feature${featureIndex}`], null],
+              filterPitchedFeatures('azimuth'),
+            ],
           ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex === 0
-              ? ['literal', [0, 0]]
-              : ['interpolate', ['linear'],
-                // Gap of 2 pixels for halo and spacing
-                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+            'icon-offset': ['step', ['zoom'],
+              ['interpolate', ['linear'],
+                ['+',
+                  featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                  2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                  ['case',
+                    ['==', ['global-state', 'pitched'], false], 0,
+                    ['+',
+                      ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                      4, // Signal anchor
+                    ],
+                  ],
+                ],
                 0, ['literal', [0, 0]],
                 1000, ['literal', [0, -1000]],
               ],
+              16,
+              ['interpolate', ['linear'],
+                ['+',
+                  featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                  2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                  ['case',
+                    ['==', ['global-state', 'pitched'], false], 0,
+                    ['+',
+                      ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                      4, // Signal anchor
+                      ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                      ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                    ],
+                  ],
+                ],
+                0, ['literal', [0, 0]],
+                1000, ['literal', [0, -1000]],
+              ],
+            ],
           },
         },
       ),
@@ -3674,19 +3780,49 @@ const layers = {
         minzoom: 13,
         source: 'openrailwaymap_speed',
         'source-layer': 'speed_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex === 0
-            ? ['literal', [0, 0]]
-            : ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
-              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
+          'icon-offset': ['step', ['zoom'],
+            ['interpolate', ['linear'],
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                ['case',
+                  ['==', ['global-state', 'pitched'], false], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                  ],
+                ],
+              ],
               0, ['literal', [0, 0]],
               1000, ['literal', [0, -1000]],
             ],
+            16,
+            ['interpolate', ['linear'],
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                ['case',
+                  ['==', ['global-state', 'pitched'], false], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                    ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                    ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                  ],
+                ],
+              ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+          ],
         }
       },
     ]),
@@ -3696,9 +3832,12 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_speed',
       'source-layer': 'speed_railway_signals',
-      filter: ['any',
-        ['!=', ['get', 'ref'], null],
-        ['!=', ['get', 'caption'], null],
+      filter: ['all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
@@ -3717,12 +3856,17 @@ const layers = {
         ],
         'text-font': font.regular,
         'text-size': 9,
-        'text-anchor': 'top',
+        'text-anchor': ['case',
+          ['==', ['global-state', 'pitched'], false], 'top',
+          'bottom',
+        ],
         'text-offset': ['interpolate', ['linear'],
-          // 2 pixel spacing under icon
-          ['/', ['+', ['get', 'offset0'], 2], 9],
-          0, ['literal', [0, 0]],
-          20, ['literal', [0, 20]],
+          ['case',
+            ['==', ['global-state', 'pitched'], false], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            -1,
+          ],
+          -20 * 9, ['literal', [0, -20]],
+          20 * 9, ['literal', [0, 20]],
         ],
       },
     },
@@ -3901,6 +4045,32 @@ const layers = {
       },
     },
     {
+      id: 'railway_signals_anchor',
+      type: 'circle',
+      minzoom: 13,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_signals',
+      filter: ['all',
+        ['!', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]]],
+        filterPitchedFeatures('azimuth'),
+      ],
+      paint: {
+        'circle-radius': 2,
+        'circle-color': colors.text.main,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
+        ],
+      },
+      layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'none',
+          'visible',
+        ],
+      },
+    },
+    {
       id: 'railway_signals_direction',
       type: 'symbol',
       minzoom: 13,
@@ -3912,7 +4082,7 @@ const layers = {
           ['!=', ['get', 'azimuth'], null],
           ['!=', ['get', 'feature0'], ''],
         ],
-        13,
+        16,
         ['all',
           ['!=', ['get', 'azimuth'], null],
           ['!=', ['get', 'feature0'], ''],
@@ -3932,6 +4102,10 @@ const layers = {
         ],
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'visible',
+          'none',
+        ],
         'icon-overlap': 'always',
         'icon-image': ["step", ["zoom"],
           ['case',
@@ -3966,18 +4140,26 @@ const layers = {
           filter: ['all',
             ['==', ['get', 'railway'], 'signal'],
             ['!=', ['get', `feature${featureIndex}`], null],
+            filterPitchedFeatures('azimuth'),
           ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
-            'icon-offset': featureIndex === 0
-              ? ['literal', [0, 0]]
-              : ['interpolate', ['linear'],
-                // Gap of 2 pixels for halo and spacing
-                ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
-                0, ['literal', [0, 0]],
-                1000, ['literal', [0, -1000]],
+            'icon-offset': ['interpolate', ['linear'],
+              ['+',
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
+                ['case',
+                  ['==', ['global-state', 'pitched'], false], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                  ],
+                ],
               ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
           },
         },
       ),
@@ -3988,19 +4170,29 @@ const layers = {
         maxzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex === 0
-            ? ['literal', [0, 0]]
-            : ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
-              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
-              0, ['literal', [0, 0]],
-              1000, ['literal', [0, -1000]],
+          'icon-offset': ['interpolate', ['linear'],
+            ['+',
+              featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+              2 * featureIndex, // Gap of 2 pixels for halo and spacing
+              ['case',
+                ['==', ['global-state', 'pitched'], false], 0,
+                ['+',
+                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                  4, // Signal anchor
+                ],
+              ],
             ],
+            0, ['literal', [0, 0]],
+            1000, ['literal', [0, -1000]],
+          ],
         }
       },
     ]),
@@ -4041,20 +4233,28 @@ const layers = {
           minzoom: 16,
           source: 'openrailwaymap_signals',
           'source-layer': 'signals_railway_signals',
-          filter: ['!=', ['get', `feature${featureIndex}`], null],
+          filter: ['all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            filterPitchedFeatures('azimuth'),
+          ],
           layout: {
             'symbol-z-order': 'source',
             'icon-overlap': 'always',
             'icon-anchor': 'center',
             'icon-offset': ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
               ['+',
-                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`],
+                featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+                2 * featureIndex, // Gap of 2 pixels for halo and spacing
                 ['case',
-                  ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16,
-                  0
+                  ['==', ['global-state', 'pitched'], false],
+                  ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                    ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                    ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                  ],
                 ],
-                2 * featureIndex
               ],
               0, ['literal', [0, 0]],
               1000, ['literal', [0, -1000]],
@@ -4068,19 +4268,32 @@ const layers = {
         minzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_signals',
-        filter: ['==', ['get', `deactivated${featureIndex}`], true],
+        filter: ['all',
+          ['==', ['get', `deactivated${featureIndex}`], true],
+          filterPitchedFeatures('azimuth'),
+        ],
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-image': 'general/signal-deactivated',
-          'icon-offset': featureIndex === 0
-            ? ['literal', [0, 0]]
-            : ['interpolate', ['linear'],
-              // Gap of 2 pixels for halo and spacing
-              ['+', ['get', `offset${featureIndex}`], 2 * featureIndex],
-              0, ['literal', [0, 0]],
-              1000, ['literal', [0, -1000]],
+          'icon-offset': ['interpolate', ['linear'],
+            ['+',
+              featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+              2 * featureIndex, // Gap of 2 pixels for halo and spacing
+              ['case',
+                ['==', ['global-state', 'pitched'], false],
+                ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
+                ['+',
+                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                  4, // Signal anchor
+                  ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                  ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                ],
+              ],
             ],
+            0, ['literal', [0, 0]],
+            1000, ['literal', [0, -1000]],
+          ],
         }
       },
     ]),
@@ -4096,6 +4309,7 @@ const layers = {
           ['!=', ['get', 'caption'], null],
         ],
         ['!=', ['get', 'feature0'], null],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
@@ -4115,12 +4329,17 @@ const layers = {
         ],
         'text-font': font.regular,
         'text-size': 9,
-        'text-anchor': 'top',
+        'text-anchor': ['case',
+          ['==', ['global-state', 'pitched'], false], 'top',
+          'bottom',
+        ],
         'text-offset': ['interpolate', ['linear'],
-          // 2 pixel spacing under icon
-          ['/', ['+', ['get', 'offset0'], 2], 9],
-          0, ['literal', [0, 0]],
-          20, ['literal', [0, 20]],
+          ['case',
+            ['==', ['global-state', 'pitched'], false], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            -1,
+          ],
+          -20 * 9, ['literal', [0, -20]],
+          20 * 9, ['literal', [0, 20]],
         ],
       },
     },
@@ -4424,6 +4643,29 @@ const layers = {
       },
     },
     {
+      id: 'electrification_signals_anchor',
+      type: 'circle',
+      minzoom: 13,
+      source: 'openrailwaymap_electrification',
+      'source-layer': 'electrification_signals',
+      filter: filterPitchedFeatures('azimuth'),
+      paint: {
+        'circle-radius': 2,
+        'circle-color': colors.text.main,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo
+        ],
+      },
+      layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'none',
+          'visible',
+        ],
+      },
+    },
+    {
       id: 'electrification_signals_direction',
       type: 'symbol',
       minzoom: 13,
@@ -4447,6 +4689,10 @@ const layers = {
         ],
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'visible',
+          'none',
+        ],
         'icon-overlap': 'always',
         'icon-image': ["step", ["zoom"],
           ['case',
@@ -4475,6 +4721,7 @@ const layers = {
         minzoom: 13,
         source: 'openrailwaymap_electrification',
         'source-layer': 'electrification_signals',
+        filter: filterPitchedFeatures('azimuth'),
         paint: {
           'text-color': colors.text.main,
           'text-halo-color': ['case',
@@ -4487,12 +4734,37 @@ const layers = {
         layout: {
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
-          'text-field': '{ref}',
-          'text-font': font.regular,
-          'text-size': 9,
-          'text-optional': true,
-          'text-anchor': 'top',
-          'text-offset': ['literal', [0, 1.5]],
+          'icon-offset': ['step', ['zoom'],
+            ['interpolate', ['linear'],
+              ['+',
+                ['case',
+                  ['==', ['global-state', 'pitched'], false], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                  ],
+                ],
+              ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+            16,
+            ['interpolate', ['linear'],
+              ['+',
+                ['case',
+                  ['==', ['global-state', 'pitched'], false], 0,
+                  ['+',
+                    ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                    4, // Signal anchor
+                    ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                    ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                  ],
+                ],
+              ],
+              0, ['literal', [0, 0]],
+              1000, ['literal', [0, -1000]],
+            ],
+          ],
         },
       },
     ),
@@ -4502,12 +4774,46 @@ const layers = {
       minzoom: 15,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
-      filter: ['==', ['get', 'deactivated0'], true],
+      filter: ['all',
+        ['==', ['get', 'deactivated0'], true],
+        filterPitchedFeatures('azimuth'),
+      ],
       layout: {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-image': 'general/signal-deactivated',
-      }
+        'icon-offset': ['step', ['zoom'],
+          ['interpolate', ['linear'],
+            ['+',
+              ['case',
+                ['==', ['global-state', 'pitched'], false], 0,
+                ['+',
+                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                  4, // Signal anchor
+                ],
+              ],
+            ],
+            0, ['literal', [0, 0]],
+            1000, ['literal', [0, -1000]],
+          ],
+          16,
+          ['interpolate', ['linear'],
+            ['+',
+              ['case',
+                ['==', ['global-state', 'pitched'], false], 0,
+                ['+',
+                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                  4, // Signal anchor
+                  ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
+                  ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
+                ],
+              ],
+            ],
+            0, ['literal', [0, 0]],
+            1000, ['literal', [0, -1000]],
+          ],
+        ],
+      },
     },
     {
       id: `electrification_signals_text`,
@@ -4515,9 +4821,12 @@ const layers = {
       minzoom: 16,
       source: 'openrailwaymap_electrification',
       'source-layer': 'electrification_signals',
-      filter: ['any',
-        ['!=', ['get', 'ref'], null],
-        ['!=', ['get', 'caption'], null],
+      filter: ['all',
+        ['any',
+          ['!=', ['get', 'ref'], null],
+          ['!=', ['get', 'caption'], null],
+        ],
+        filterPitchedFeatures('azimuth'),
       ],
       paint: {
         'text-color': colors.text.main,
@@ -4536,12 +4845,17 @@ const layers = {
         ],
         'text-font': font.regular,
         'text-size': 9,
-        'text-anchor': 'top',
+        'text-anchor': ['case',
+          ['==', ['global-state', 'pitched'], false], 'top',
+          'bottom',
+        ],
         'text-offset': ['interpolate', ['linear'],
-          // 2 pixel spacing under icon
-          ['/', ['+', ['get', 'offset0'], 2], 9],
-          0, ['literal', [0, 0]],
-          20, ['literal', [0, 20]],
+          ['case',
+            ['==', ['global-state', 'pitched'], false], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+            -1,
+          ],
+          -20 * 9, ['literal', [0, -20]],
+          20 * 9, ['literal', [0, 20]],
         ],
       },
     },
@@ -5990,6 +6304,12 @@ const makeStyle = selectedStyle => ({
     },
     theme: {
       default: 'light',
+    },
+    bearing: {
+      default: null,
+    },
+    pitched: {
+      default: false,
     },
     stationLowZoomLabel: {
       default: 'label',
