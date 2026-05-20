@@ -6,14 +6,19 @@ with open('static/features.json', 'r') as features_file:
 
 def localize_fields(fields, localized_fields, lang):
     loc = {}
+
     if lang is not None:
         for field, spec in localized_fields.items():
             value = fields[spec['field']] or {}
             key = spec['key'].replace('{lang}', lang)
+
+            localized_value = None
             if key in value:
-                loc[field] = value[key]
+                localized_value = value[key]
             elif spec['default'] in value:
-                loc[field] = value[spec['default']]
+                localized_value = value[spec['default']]
+
+            loc[field] = localized_value
 
     return fields | loc
 
