@@ -698,7 +698,6 @@ RETURN (
       operator_bright
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
-      AND name IS NOT NULL
   ) as tile
   WHERE way IS NOT NULL
 );
