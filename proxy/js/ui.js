@@ -109,6 +109,14 @@ function naturalSort(a, b) {
       : 0;
 }
 
+/**
+ * Pitch limit after which direction-dependent features will be hidden, in degrees.
+ */
+const pitchRotationLimit = 30;
+
+const pitchedView = (pitch) =>
+  (pitch ?? 0) > pitchRotationLimit;
+
 function facilitySearchUrl(type, term, language) {
   const url = new URL(`${location.origin}/api/facility`)
 
@@ -645,13 +653,14 @@ function determineDateParameter(hashDate) {
 function determineZoomCenterFromHash(hash) {
   const hashObject = hashToObject(hash);
   if ('view' in hashObject && typeof hashObject.view === 'string') {
-    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?$/);
+    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?(?:\/(?<pitch>-?[\d.]+))?$/);
     if (matches) {
       const groups = matches.groups
       return {
         center: [parseFloat(groups.longitude), parseFloat(groups.latitude)],
         zoom: parseFloat(groups.zoom),
         bearing: groups.bearing ?? 0.0,
+        pitch: groups.pitch ?? 0.0,
       }
     } else {
       return {};
@@ -769,7 +778,7 @@ function updateHillShadeOnMap() {
 function onStationLabelChange(stationlabel) {
   updateConfiguration('stationLowZoomLabel', stationlabel);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
   legendControl.updateLegend();
@@ -794,7 +803,7 @@ function customLocalization(language) {
 function configureElectrificationRailwayLine(electrification) {
   updateConfiguration('electrificationRailwayLine', electrification);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('electrificationRailwayLine', electrification);
   }
 
@@ -804,7 +813,7 @@ function configureElectrificationRailwayLine(electrification) {
 function configureTrackRailwayLine(track) {
   updateConfiguration('trackRailwayLine', track);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('trackRailwayLine', track);
   }
 
@@ -859,9 +868,11 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
     selectDate(defaultDate)
   }
 
-  map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
-  map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
-  map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
+    map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
+    map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  }
 
   onStyleChange();
 }
@@ -869,8 +880,10 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
 function onFutureInfrastructureChange(futureInfrastructure) {
   updateConfiguration('futureInfrastructure', futureInfrastructure);
 
-  map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
-  map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
+    map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+  }
 
   legendControl.updateLegend();
 }
@@ -1170,8 +1183,6 @@ const map = new maplibregl.Map({
   hash: 'view',
   minZoom: globalMinZoom,
   maxZoom: globalMaxZoom,
-  minPitch: 0,
-  maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
@@ -1255,10 +1266,13 @@ function addLanguageToSupportedSources(style, language) {
 
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
-function rewriteGlobalStateDefaults(style) {
+function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
+
+  style.state.bearing.default = bearing ?? 0;
+  style.state.pitched.default = pitchedView(pitch);
 
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
 
@@ -1303,7 +1317,7 @@ function onStyleChange() {
       transformStyle: (previous, next) => {
         rewriteStylePathsToOrigin(next)
         addLanguageToSupportedSources(next, language)
-        rewriteGlobalStateDefaults(next)
+        rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
         return next;
       },
     });
@@ -1326,8 +1340,11 @@ function onStyleChange() {
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
-  map.setGlobalStateProperty('allDates', selectedDate === 'all');
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
+    map.setGlobalStateProperty('allDates', selectedDate === 'all');
+  }
+
   onPageParametersChange();
 }
 
@@ -1853,7 +1870,13 @@ class LegendControl {
     if (!this.isLegendShown() || !zoom || !style || !legendData) {
       return;
     }
-    const mapGlobalState = this.map.getGlobalState();
+
+    // Do not include bearing and pitch in legend map state
+    const mapGlobalState = {
+      ...this.map.getGlobalState(),
+      bearing: 0.0,
+      pitched: false,
+    };
 
     const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
     const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
@@ -2215,7 +2238,7 @@ const styleControl = new StyleControl({
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
-  visualizePitch: false,
+  visualizePitch: true,
 })
 map.addControl(dateControl);
 map.addControl(styleControl);
@@ -2266,12 +2289,24 @@ const legendControl = new LegendControl({
 map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('bearing', bearing ?? 0);
+  }
+
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
   if (rotated && !rotatedShownOnIcon) {
     navigationControl._compassIcon.classList.add('rotated');
   } else if (!rotated && rotatedShownOnIcon) {
     navigationControl._compassIcon.classList.remove('rotated');
+  }
+}
+
+const onMapPitch = pitch => {
+  const pitched = pitchedView(pitch)
+  const pitchedState = (map.getGlobalState() ?? {}).pitched
+  if (pitched !== pitchedState && map.isStyleLoaded()) {
+    map.setGlobalStateProperty('pitched', pitched);
   }
 }
 
@@ -2403,13 +2438,13 @@ function popupContent(feature, abortController) {
   const colorProperty = featureCatalog.colorProperty || 'color';
 
   const propertiesFromView = featureCatalog.view;
-  if (!propertiesFromView) {
-    console.warn(`Feature catalog "${layerSource}" does not contain view information to fetch feature properties`, feature);
-    return;
-  }
+  const properties$ = propertiesFromView
+    ? fetchFeatureProperties(propertiesFromView)
+    : Promise.resolve(feature.properties);
+
   const popupContainer = createDomElement('div', 'loading');
 
-  fetchFeatureProperties(propertiesFromView)
+  properties$
     .then(properties => {
       const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
@@ -2714,11 +2749,14 @@ function popupContent(feature, abortController) {
   return popupContainer
 }
 
-map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
+map.on('rotateend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('pitch', () => onMapPitch(map.getPitch()));
+map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('styleimagemissing', event => generateImage([map, legendControl.legendMap], event.id));
 
 function formatTimespan(timespan) {
@@ -2874,3 +2912,4 @@ fetch(`${location.origin}/api/features/features.json`)
 updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
+onMapPitch(map.getPitch());

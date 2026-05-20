@@ -627,6 +627,14 @@ operators:
 
   - country: DE
     names:
+      - 'Eisenbahnen und Verkehrsbetriebe Elbe-Weser'
+      - 'Eisenbahnen und Verkehrsbetriebe Elbe-Weser GmbH'
+      - 'EVB'
+    color: '#004782'
+
+  - country: DE
+    names:
+      - 'SWEG Schienenwege'
       - 'SWEG Schienenwege GmbH'
     color: '#114499'
 
@@ -635,6 +643,16 @@ operators:
       - 'Usedomer Bäderbahn GmbH'
       - 'UBB Polska sp. z o.o.'
     color: '#114488'
+
+  - country: DE
+    names:
+      - 'BayernBahn Infra'
+    color: '#3d0e7b'
+
+  - country: DE
+    names:
+      - 'Rennsteigbahn GmbH & Co. KG'
+    color: '#050f08'
 
   - country: DE
     names:
@@ -803,7 +821,14 @@ operators:
   - country: ES
     names:
       - 'Ferrocarrils de la Generalitat de Catalunya'
+      - 'FGC'
     color: '#75a700'
+
+  - country: ES
+    names:
+      - 'Ferrocarrils de la Generalitat Valenciana'
+      - 'FGV'
+    color: '#ffb20f'
 
   - country: ES
     names:
