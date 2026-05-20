@@ -108,14 +108,14 @@ describe('home page', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
     // Open legend
-    cy.contains('Legend').click()
+    cy.contains('button.maplibregl-ctrl-legend', 'Legend').click()
 
     // TODO assert legend
     cy.wait(3000)
     cy.screenshot()
 
     // Close legend
-    cy.contains('Legend').click()
+    cy.contains('button.maplibregl-ctrl-legend', 'Legend').click()
   })
 
   it('search', () => {

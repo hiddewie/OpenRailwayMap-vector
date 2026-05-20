@@ -460,11 +460,11 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(style, zoom, lat, lon, date) {
+function newsLink(style, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
   selectStyle(style);
   selectDate(date ?? defaultDate);
-  map.jumpTo({zoom, center: {lat, lon}});
+  map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
 
 function showAbout() {
