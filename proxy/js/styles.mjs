@@ -4889,7 +4889,7 @@ const layers = {
       layout: {
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
-        'icon-image': ['concat', 'sdf:', ['get', 'feature0']],
+        'icon-image': ['concat', 'sdf:', ['get', 'feature']],
         'text-field': ['coalesce', ['get', 'ref'], ''],
         'text-font': font.regular,
         'text-size': 11,
