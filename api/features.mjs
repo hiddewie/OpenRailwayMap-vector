@@ -199,7 +199,7 @@ const railwayLineFeatures = {
         template: '%d A',
       },
     },
-    gauge_label: {
+    gauges: {
       name: 'Gauge',
     },
     loading_gauge: {

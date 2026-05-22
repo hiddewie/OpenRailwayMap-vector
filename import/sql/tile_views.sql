@@ -1,6 +1,5 @@
 --- Shared ---
 
--- TODO calculate labels in frontend
 CREATE OR REPLACE VIEW railway_line_view AS
   SELECT
     r.id,
@@ -43,7 +42,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
     gauge1,
     railway_to_int(gauge2) AS gaugeint2,
     gauge2,
-    gauge_label,
     loading_gauge,
     operator,
     COALESCE(
@@ -103,7 +101,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
       gauges[1] AS gauge0,
       gauges[2] AS gauge1,
       gauges[3] AS gauge2,
-      (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
       loading_gauge,
       operator,
       owner,
@@ -168,14 +165,13 @@ RETURN (
       future_voltage,
       future_frequency,
       future_maximum_current,
-      gauges,
+      array_to_string(gauges, ', ') as gauges,
       gaugeint0,
       gauge0,
       gaugeint1,
       gauge1,
       gaugeint2,
       gauge2,
-      gauge_label,
       loading_gauge,
       operator,
       operator_color,
@@ -271,7 +267,7 @@ DO $do$ BEGIN
           "gaugeint1": "number",
           "gauge2": "string",
           "gaugeint2": "number",
-          "gauge_label": "string",
+          "gauges": "string",
           "loading_gauge": "string",
           "track_class": "string",
           "operator": "string",
@@ -311,7 +307,6 @@ CREATE OR REPLACE VIEW railway_line_low AS
     maximum_current,
     gaugeint0,
     gauge0,
-    gauge_label,
     loading_gauge,
     track_class,
     operator,
@@ -1601,7 +1596,6 @@ RETURN (
       any_value(usage) as usage,
       gaugeint0,
       gauge0,
-      gauge_label,
       track_class,
       loading_gauge,
       max(rank) as rank
@@ -1613,7 +1607,6 @@ RETURN (
       name,
       gauge0,
       gaugeint0,
-      gauge_label,
       track_class,
       loading_gauge
     ORDER by
@@ -1634,8 +1627,7 @@ DO $do$ BEGIN
           "state": "string",
           "usage": "string",
           "gauge0": "string",
-          "gaugeint0": "number",
-          "gauge_label": "string"
+          "gaugeint0": "number"
         }
       }
     ]

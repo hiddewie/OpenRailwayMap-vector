@@ -790,7 +790,8 @@ Content-Type: application/json
 jsonpath "$.electrification_state" == "present"
 jsonpath "$.feature" == "rail"
 jsonpath "$.frequency" == 16.700000762939453
-jsonpath "$.gauge_label" == "1435"
+jsonpath "$.gauges" count == 1
+jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
 jsonpath "$.line_routes" count == 13
 jsonpath "$.line_routes[0].color" == "#80004D"

@@ -4943,7 +4943,7 @@ const layers = {
     hillshade,
     ...railwayLine(
       ['match', ['global-state', 'trackRailwayLine'],
-        'gauge', ['coalesce', ['get', 'gauge_label'], ''],
+        'gauge', ['coalesce', ['get', 'gauges'], ''],
         'loadingGauge', ['coalesce', ['get', 'loading_gauge'], ''],
         'trackClass', ['coalesce', ['get', 'track_class'], ''],
         '',

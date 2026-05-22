@@ -2885,7 +2885,7 @@ const legendData = {
               tunnel: false,
               gauge0: `${min}`,
               gaugeint0: min,
-              gauge_label: `${min}`,
+              gauges: `${min}`,
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -2999,7 +2999,7 @@ const legendData = {
               gaugeint0: 1435,
               gauge1: '1520',
               gaugeint1: 1520,
-              gauge_label: '',
+              gauges: '',
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -3021,7 +3021,7 @@ const legendData = {
               gaugeint1: 1520,
               gauge2: '1600',
               gaugeint2: 1600,
-              gauge_label: '',
+              gauges: '',
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -3039,7 +3039,7 @@ const legendData = {
               tunnel: false,
               gauge0: '1435',
               gaugeint0: 1435,
-              gauge_label: '',
+              gauges: '',
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -3059,7 +3059,7 @@ const legendData = {
               gaugeint0: 1435,
               gauge1: '1520',
               gaugeint1: 1520,
-              gauge_label: '',
+              gauges: '',
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -3081,7 +3081,7 @@ const legendData = {
               gaugeint1: 1520,
               gauge2: '1600',
               gaugeint2: 1600,
-              gauge_label: '',
+              gauges: '',
             },
             mapState: {
               trackRailwayLine: 'gauge',
@@ -3131,7 +3131,7 @@ const legendData = {
               tunnel: false,
               gauge0: '3500',
               gaugeint0: 3500,
-              gauge_label: '3500',
+              gauges: '3500',
               loading_gauge: null,
               track_class: null,
             },
