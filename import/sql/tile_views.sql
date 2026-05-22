@@ -361,7 +361,6 @@ RETURN (
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
-      osm_id,
       feature,
       ref,
       name,
@@ -383,9 +382,7 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean",
-          "ref": "string",
-          "name": "string"
+          "highspeed": "boolean"
         }
       }
     ]
@@ -1186,9 +1183,7 @@ RETURN (
       any_value(state) as state,
       any_value(usage) as usage,
       maxspeed,
-      ref,
-      name,
-      speed_label,
+      any_value(speed_label),
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1196,8 +1191,8 @@ RETURN (
       feature,
       ref,
       name,
-      speed_label,
-      maxspeed
+      maxspeed,
+      speed_label
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1216,8 +1211,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "name": "string",
           "maxspeed": "number",
           "speed_label": "string"
         }
@@ -1246,8 +1239,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      name,
       train_protection_rank,
       train_protection,
       train_protection_construction_rank,
@@ -1280,8 +1271,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "name": "string",
           "train_protection": "string",
           "train_protection_rank": "integer",
           "train_protection_construction": "string",
@@ -1393,8 +1382,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      name,
       electrification_state,
       electrification_label,
       voltage,
@@ -1429,8 +1416,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "name": "string",
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
@@ -1622,8 +1607,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      name,
       gaugeint0,
       gauge0,
       gauge_label,
@@ -1658,8 +1641,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "name": "string",
           "gauge0": "string",
           "gaugeint0": "number",
           "gauge_label": "string"
@@ -1688,8 +1669,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      name,
       operator,
       any_value(operator_color) as operator_color,
       any_value(operator_bright) as operator_bright,
@@ -1722,8 +1701,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "name": "string",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
@@ -1801,13 +1778,10 @@ RETURN (
       any_value(usage) as usage,
       highspeed,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-      ref,
-      name,
       max(rank) as rank
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
-      osm_id,
       feature,
       ref,
       name,
@@ -1830,9 +1804,7 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "route_count": "integer",
-          "ref": "string",
-          "name": "string"
+          "route_count": "integer"
         }
       }
     ]

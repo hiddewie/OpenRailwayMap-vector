@@ -2347,12 +2347,12 @@ const layers = {
           states: {
             present: undefined,
           },
-          filter: ['==', ['get', 'feature'], 'rail'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
           ],
           color: ['case',
+            ['==', ['get', 'feature'], 'ferry'], colors.styles.standard.ferry,
             ['get', 'highspeed'], colors.styles.standard.highspeed,
             colors.styles.standard.main,
           ],
@@ -2360,23 +2360,6 @@ const layers = {
             ['get', 'highspeed'], colors.hover.alternative,
             colors.hover.main,
           ],
-        },
-        {
-          id: 'railway_ferry_main_low',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'standard_railway_line_low',
-          sourceLayer: 'standard_railway_line_low',
-          states: {
-            present: undefined,
-          },
-          filter: ['==', ['get', 'feature'], 'ferry'],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
-          color: colors.styles.standard.ferry,
-          hoverColor: colors.hover.main,
         },
 
         // Medium zooms
