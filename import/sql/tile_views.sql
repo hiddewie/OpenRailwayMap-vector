@@ -698,6 +698,26 @@ RETURN (
       operator_bright
     FROM railway_text_stations
     WHERE way && ST_TileEnvelope(z, x, y)
+      -- conditionally include features based on zoom level
+      AND CASE
+        -- Zooms < 8 are handled in the low and medium zoom tiles
+        WHEN z < 9 THEN
+          state = 'present'
+            AND feature IN ('station', 'yard')
+            AND NOT (station IN ('light_rail', 'subway', 'monorail', 'funicular', 'miniature'))
+        WHEN z < 10 THEN
+          state = 'present'
+            AND feature IN ('station', 'yard', 'halt')
+            AND NOT (station IN ('light_rail', 'tram', 'subway', 'monorail', 'funicular', 'miniature'))
+        WHEN z < 11 THEN
+          state NOT IN ('disused', 'abandoned', 'razed')
+            AND NOT (station IN ('tram', 'funicular', 'miniature'))
+        WHEN z < 12 THEN
+          state NOT IN ('abandoned', 'razed')
+            AND NOT (station IN ('funicular', 'miniature'))
+        ELSE
+          true
+      END
   ) as tile
   WHERE way IS NOT NULL
 );
