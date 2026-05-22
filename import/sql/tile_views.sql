@@ -33,7 +33,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
     voltage,
     frequency,
     maximum_current,
-    electrification_label,
     future_voltage,
     future_frequency,
     future_maximum_current,
@@ -97,7 +96,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
       voltage,
       frequency,
       maximum_current,
-      railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
       future_voltage,
       future_frequency,
       future_maximum_current,
@@ -167,7 +165,6 @@ RETURN (
       voltage,
       frequency,
       maximum_current,
-      electrification_label,
       future_voltage,
       future_frequency,
       future_maximum_current,
@@ -268,7 +265,6 @@ DO $do$ BEGIN
           "future_frequency": "number",
           "future_voltage": "integer",
           "future_maximum_current": "integer",
-          "electrification_label": "string",
           "gauge0": "string",
           "gaugeint0": "number",
           "gauge1": "string",
@@ -310,7 +306,6 @@ CREATE OR REPLACE VIEW railway_line_low AS
     train_protection_construction_rank,
     train_protection_construction,
     electrification_state,
-    electrification_label,
     voltage,
     frequency,
     maximum_current,
@@ -1383,7 +1378,6 @@ RETURN (
       any_value(state) as state,
       any_value(usage) as usage,
       electrification_state,
-      electrification_label,
       voltage,
       frequency,
       maximum_current,
@@ -1395,7 +1389,6 @@ RETURN (
       ref,
       name,
       electrification_state,
-      electrification_label,
       voltage,
       frequency,
       maximum_current
@@ -1422,8 +1415,7 @@ DO $do$ BEGIN
           "maximum_current": "integer",
           "future_frequency": "number",
           "future_voltage": "integer",
-          "future_maximum_current": "integer",
-          "electrification_label": "string"
+          "future_maximum_current": "integer"
         }
       }
     ]
@@ -1782,6 +1774,7 @@ RETURN (
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
+      l.osm_id,
       feature,
       ref,
       name,
