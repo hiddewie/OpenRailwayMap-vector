@@ -217,9 +217,10 @@ osm2pgsql.process_way({
     ['tactile_paving'] = 'yes',
   },
   as_linestring = function ()
-    return way
+    return {
+      transform = function () return way end,
+    }
   end,
-
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platform_edge = {
@@ -233,7 +234,9 @@ osm2pgsql.process_way({
     ['public_transport'] = 'platform',
   },
   as_linestring = function ()
-    return way
+    return {
+      transform = function () return way end,
+    }
   end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
