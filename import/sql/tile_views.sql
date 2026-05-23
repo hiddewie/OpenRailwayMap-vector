@@ -1173,7 +1173,7 @@ RETURN (
       any_value(state) as state,
       any_value(usage) as usage,
       maxspeed,
-      any_value(speed_label),
+      speed_label,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
