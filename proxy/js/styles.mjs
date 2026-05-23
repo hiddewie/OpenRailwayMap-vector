@@ -340,54 +340,6 @@ const multi_construction_dashes = [0, 1, 1, 4];
 const gauge_dual_gauge_dashes = [4.5, 4.5];
 const gauge_multi_gauge_dashes = [0, 3, 3, 3];
 
-const color_gauge_0064 = '#006060';
-const color_gauge_0089 = '#008080';
-const color_gauge_0127 = '#00A0A0';
-const color_gauge_0184 = '#00C0C0';
-const color_gauge_0190 = '#00E0E0';
-const color_gauge_0260 = '#00FFFF';
-const color_gauge_0381 = '#80FFFF';
-const color_gauge_0500 = '#A0FFFF';
-const color_gauge_0597 = '#C0FFFF';
-const color_gauge_0600 = '#E0FFFF';
-const color_gauge_0610 = '#FFE0FF';
-const color_gauge_0700 = '#FFC0FF';
-const color_gauge_0750 = '#FFA0FF';
-const color_gauge_0760 = '#FF80FF';
-const color_gauge_0762 = '#FF60FF';
-const color_gauge_0785 = '#FF40FF';
-const color_gauge_0800 = '#FF00FF';
-const color_gauge_0891 = '#E000FF';
-const color_gauge_0900 = '#C000FF';
-const color_gauge_0914 = '#A000FF';
-const color_gauge_0950 = '#8000FF';
-const color_gauge_1000 = '#6000FF';
-const color_gauge_1009 = '#4000FF';
-const color_gauge_1050 = '#0000FF';
-const color_gauge_1067 = '#0000E0';
-const color_gauge_1100 = '#0000C0';
-const color_gauge_1200 = '#0000A0';
-const color_gauge_1372 = '#000080';
-const color_gauge_1422 = '#000060';
-const color_gauge_1432 = '#000040';
-const color_gauge_1435 = '#000000';
-const color_gauge_1440 = '#400000';
-const color_gauge_1445 = '#600000';
-const color_gauge_1450 = '#700000';
-const color_gauge_1458 = '#800000';
-const color_gauge_1495 = '#A00000';
-const color_gauge_1520 = '#C00000';
-const color_gauge_1522 = '#E00000';
-const color_gauge_1524 = '#FF0000';
-const color_gauge_1581 = '#FF6000';
-const color_gauge_1588 = '#FF8000';
-const color_gauge_1600 = '#FFA000';
-const color_gauge_1668 = '#FFC000';
-const color_gauge_1676 = '#FFE000';
-const color_gauge_1700 = '#FFFF00';
-const color_gauge_1800 = '#E0FF00';
-const color_gauge_1880 = '#C0FF00';
-const color_gauge_2000 = '#A0FF00';
 const color_gauge_miniature = '#80C0C0';
 const color_gauge_monorail = '#C0C080';
 const color_gauge_broad = '#FFC0C0';
@@ -464,60 +416,63 @@ const gaugeColor = (gaugeProperty, gaugeIntProperty) => ['case',
       ['==', ['get', gaugeProperty], null],
     ],
   ], color_gauge_miniature,
+  // Numeric gauge values
+  ['==', ['get', gaugeIntProperty], null], 'gray',
   // unknown high numeric gauge values
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>=', ['get', gaugeIntProperty], 3000]], color_gauge_unknown,
-  // colors for numeric gauge values
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 88, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 63]], color_gauge_0064,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 127, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 88]], color_gauge_0089,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 184, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 127]], color_gauge_0127,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 190, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 184]], color_gauge_0184,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 260, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 190]], color_gauge_0190,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 380, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 260]], color_gauge_0260,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 500, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 380]], color_gauge_0381,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 597, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 500]], color_gauge_0500,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 600, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 597]], color_gauge_0597,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 609, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 600]], color_gauge_0600,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 700, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 609]], color_gauge_0610,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 750, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 700]], color_gauge_0700,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 760, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 750]], color_gauge_0750,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 762, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 760]], color_gauge_0760,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 785, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 762]], color_gauge_0762,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 800, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 785]], color_gauge_0785,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 891, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 800]], color_gauge_0800,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 900, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 891]], color_gauge_0891,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 914, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 900]], color_gauge_0900,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 950, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 914]], color_gauge_0914,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1000, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 950]], color_gauge_0950,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1009, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1000]], color_gauge_1000,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1050, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1009]], color_gauge_1009,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1066, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1050]], color_gauge_1050,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1100, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1066]], color_gauge_1067,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1200, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1100]], color_gauge_1100,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1372, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1200]], color_gauge_1200,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1422, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1372]], color_gauge_1372,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1432, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1422]], color_gauge_1422,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1435, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1432]], color_gauge_1432,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1440, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1435]], color_gauge_1435,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1445, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1440]], color_gauge_1440,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1450, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1445]], color_gauge_1445,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1458, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1450]], color_gauge_1450,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1495, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1458]], color_gauge_1458,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1520, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1495]], color_gauge_1495,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1522, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1520]], color_gauge_1520,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1524, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1522]], color_gauge_1522,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1581, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1524]], color_gauge_1524,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1588, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1581]], color_gauge_1581,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1600, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1588]], color_gauge_1588,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1668, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1600]], color_gauge_1600,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1672, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1668]], color_gauge_1668,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1700, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1672]], color_gauge_1676,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1800, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1700]], color_gauge_1700,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 1880, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1800]], color_gauge_1800,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 2000, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 1880]], color_gauge_1880,
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 3000, ['get', gaugeIntProperty]], ['>=', ['get', gaugeIntProperty], 2000]], color_gauge_2000,
-  // color for unknown low numeric gauge values
-  ['all', ['!=', ['get', gaugeIntProperty], null], ['>', 63, ['get', gaugeIntProperty]], ['>', ['get', gaugeIntProperty], 0]], color_gauge_unknown,
-  'gray',
+  ['>=', ['get', gaugeIntProperty], 3000], color_gauge_unknown,
+  // unknown low numeric gauge values
+  ['>', 63, ['get', gaugeIntProperty]], color_gauge_unknown,
+  // interpolated colors for numeric gauge values
+  ['interpolate-hcl', ['linear'], ['get', gaugeIntProperty],
+    63, '#006060',
+    88, '#008080',
+    127, '#00A0A0',
+    184, '#00C0C0',
+    190, '#00E0E0',
+    260, '#00FFFF',
+    380, '#80FFFF',
+    500, '#A0FFFF',
+    597, '#C0FFFF',
+    600, '#E0FFFF',
+    609, '#FFE0FF',
+    700, '#FFC0FF',
+    750, '#FFA0FF',
+    760, '#FF80FF',
+    762, '#FF60FF',
+    785, '#FF40FF',
+    800, '#FF00FF',
+    891, '#E000FF',
+    900, '#C000FF',
+    914, '#A000FF',
+    950, '#8000FF',
+    1000, '#6000FF',
+    1009, '#4000FF',
+    1050, '#0000FF',
+    1066, '#0000E0',
+    1100, '#0000C0',
+    1200, '#0000A0',
+    1372, '#000080',
+    1422, '#000060',
+    1432, '#000040',
+    1435, '#000000',
+    1440, '#400000',
+    1445, '#600000',
+    1450, '#700000',
+    1458, '#800000',
+    1495, '#A00000',
+    1520, '#C00000',
+    1522, '#E00000',
+    1524, '#FF0000',
+    1581, '#FF6000',
+    1588, '#FF8000',
+    1600, '#FFA000',
+    1668, '#FFC000',
+    1672, '#FFE000',
+    1700, '#FFFF00',
+    1800, '#E0FF00',
+    1880, '#C0FF00',
+    2000, '#A0FF00',
+  ]
 ];
 
 const loadingGaugeFillColor = ['match', ['get', 'loading_gauge'],
@@ -2331,7 +2286,11 @@ const layers = {
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
         14,
-        ['coalesce', ['get', 'standard_label'], ''],
+        ['concat',
+          ['coalesce', ['get', 'ref'],''],
+          ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
+          ['coalesce', ['get', 'name'], ''],
+        ],
       ],
       [
         {
@@ -2343,12 +2302,12 @@ const layers = {
           states: {
             present: undefined,
           },
-          filter: ['==', ['get', 'feature'], 'rail'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
           ],
           color: ['case',
+            ['==', ['get', 'feature'], 'ferry'], colors.styles.standard.ferry,
             ['get', 'highspeed'], colors.styles.standard.highspeed,
             colors.styles.standard.main,
           ],
@@ -2356,23 +2315,6 @@ const layers = {
             ['get', 'highspeed'], colors.hover.alternative,
             colors.hover.main,
           ],
-        },
-        {
-          id: 'railway_ferry_main_low',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'standard_railway_line_low',
-          sourceLayer: 'standard_railway_line_low',
-          states: {
-            present: undefined,
-          },
-          filter: ['==', ['get', 'feature'], 'ferry'],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
-          color: colors.styles.standard.ferry,
-          hoverColor: colors.hover.main,
         },
 
         // Medium zooms
@@ -4327,7 +4269,21 @@ const layers = {
           ], ['concat', ['number-format', ['*', ['get', 'voltage'], ['get', 'maximum_current'], 0.000001], {'max-fraction-digits': 1}], ' MW'],
           '',
         ],
-        ['get', 'electrification_label'],
+        ['case',
+          ['==', ['get', 'voltage'], null], '',
+          ['==', ['get', 'voltage'], 0], '0V',
+          ['let', 'voltage_text',
+            ['case',
+              ['<', ['get', 'voltage'], 1000], ['concat', ['number-format', ['get', 'voltage'], {'max-fraction-digits': 0}], 'V'],
+              ['concat', ['number-format', ['/', ['get', 'voltage'], 1000.0], {'max-fraction-digits': 1}], 'kV'],
+            ],
+            ['case',
+              ['==', ['get', 'frequency'], 0], ['concat', ['var', 'voltage_text'], ' ='],
+              ['!=', ['get', 'frequency'], null], ['concat', ['var', 'voltage_text'], ' ', ['number-format', ['get', 'frequency'], {'max-fraction-digits': 2}], 'Hz'],
+              ['var', 'voltage_text'],
+            ]
+          ],
+        ],
       ],
       [
         {
@@ -4841,7 +4797,7 @@ const layers = {
     hillshade,
     ...railwayLine(
       ['match', ['global-state', 'trackRailwayLine'],
-        'gauge', ['coalesce', ['get', 'gauge_label'], ''],
+        'gauge', ['coalesce', ['get', 'gauges'], ''],
         'loadingGauge', ['coalesce', ['get', 'loading_gauge'], ''],
         'trackClass', ['coalesce', ['get', 'track_class'], ''],
         '',
@@ -5702,7 +5658,11 @@ const layers = {
       }
     })),
     ...railwayLine(
-      ['coalesce', ['get', 'standard_label'], ''],
+      ['concat',
+        ['coalesce', ['get', 'ref'],''],
+        ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
+        ['coalesce', ['get', 'name'], ''],
+      ],
       [
         {
           id: 'railway_line_low',

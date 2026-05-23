@@ -604,7 +604,7 @@ paths:
                   future_frequency:
                   future_maximum_current:
                   future_voltage:
-                  gauge_label: '1435'
+                  gauges: ['1435']
                   highspeed: false
                   line_routes: "9678583\x1E#BE1622\x1EDulwich Hill to Central"
                   loading_gauge:
