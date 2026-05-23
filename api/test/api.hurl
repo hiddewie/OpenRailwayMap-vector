@@ -659,6 +659,7 @@ jsonpath "$.ref" == "2"
 jsonpath "$.feature" == "platform_edge"
 jsonpath "$.tactile_paving" == null
 jsonpath "$.height" == null
+jsonpath "$.length" == 3.0000056
 jsonpath "$.osm_id" == 859918234
 jsonpath "$.osm_type" == "W"
 
