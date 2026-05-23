@@ -2286,7 +2286,11 @@ const layers = {
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
         14,
-        ['coalesce', ['get', 'standard_label'], ''],
+        ['concat',
+          ['coalesce', ['get', 'ref'],''],
+          ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
+          ['coalesce', ['get', 'name'], ''],
+        ],
       ],
       [
         {
@@ -2298,12 +2302,12 @@ const layers = {
           states: {
             present: undefined,
           },
-          filter: ['==', ['get', 'feature'], 'rail'],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             0, 0.5,
             7, 2,
           ],
           color: ['case',
+            ['==', ['get', 'feature'], 'ferry'], colors.styles.standard.ferry,
             ['get', 'highspeed'], colors.styles.standard.highspeed,
             colors.styles.standard.main,
           ],
@@ -2311,23 +2315,6 @@ const layers = {
             ['get', 'highspeed'], colors.hover.alternative,
             colors.hover.main,
           ],
-        },
-        {
-          id: 'railway_ferry_main_low',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'standard_railway_line_low',
-          sourceLayer: 'standard_railway_line_low',
-          states: {
-            present: undefined,
-          },
-          filter: ['==', ['get', 'feature'], 'ferry'],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
-          color: colors.styles.standard.ferry,
-          hoverColor: colors.hover.main,
         },
 
         // Medium zooms
@@ -4383,7 +4370,21 @@ const layers = {
           ], ['concat', ['number-format', ['*', ['get', 'voltage'], ['get', 'maximum_current'], 0.000001], {'max-fraction-digits': 1}], ' MW'],
           '',
         ],
-        ['get', 'electrification_label'],
+        ['case',
+          ['==', ['get', 'voltage'], null], '',
+          ['==', ['get', 'voltage'], 0], '0V',
+          ['let', 'voltage_text',
+            ['case',
+              ['<', ['get', 'voltage'], 1000], ['concat', ['number-format', ['get', 'voltage'], {'max-fraction-digits': 0}], 'V'],
+              ['concat', ['number-format', ['/', ['get', 'voltage'], 1000.0], {'max-fraction-digits': 1}], 'kV'],
+            ],
+            ['case',
+              ['==', ['get', 'frequency'], 0], ['concat', ['var', 'voltage_text'], ' ='],
+              ['!=', ['get', 'frequency'], null], ['concat', ['var', 'voltage_text'], ' ', ['number-format', ['get', 'frequency'], {'max-fraction-digits': 2}], 'Hz'],
+              ['var', 'voltage_text'],
+            ]
+          ],
+        ],
       ],
       [
         {
@@ -4897,7 +4898,7 @@ const layers = {
     hillshade,
     ...railwayLine(
       ['match', ['global-state', 'trackRailwayLine'],
-        'gauge', ['coalesce', ['get', 'gauge_label'], ''],
+        'gauge', ['coalesce', ['get', 'gauges'], ''],
         'loadingGauge', ['coalesce', ['get', 'loading_gauge'], ''],
         'trackClass', ['coalesce', ['get', 'track_class'], ''],
         '',
@@ -5790,7 +5791,11 @@ const layers = {
       }
     })),
     ...railwayLine(
-      ['coalesce', ['get', 'standard_label'], ''],
+      ['concat',
+        ['coalesce', ['get', 'ref'],''],
+        ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
+        ['coalesce', ['get', 'name'], ''],
+      ],
       [
         {
           id: 'railway_line_low',

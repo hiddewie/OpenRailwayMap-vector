@@ -1,6 +1,5 @@
 --- Shared ---
 
--- TODO calculate labels in frontend
 CREATE OR REPLACE VIEW railway_line_view AS
   SELECT
     r.id,
@@ -16,10 +15,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     highspeed,
     tunnel,
     bridge,
-    CASE
-      WHEN ref IS NOT NULL AND r.name IS NOT NULL THEN ref || ' ' || r.name
-      ELSE COALESCE(ref, r.name)
-    END AS standard_label,
+    r.name as name,
     ref,
     track_ref,
     track_class,
@@ -36,7 +32,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
     voltage,
     frequency,
     maximum_current,
-    electrification_label,
     future_voltage,
     future_frequency,
     future_maximum_current,
@@ -47,7 +42,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
     gauge1,
     railway_to_int(gauge2) AS gaugeint2,
     gauge2,
-    gauge_label,
     loading_gauge,
     operator,
     COALESCE(
@@ -100,7 +94,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
       voltage,
       frequency,
       maximum_current,
-      railway_electrification_label(COALESCE(voltage, future_voltage), COALESCE(frequency, future_frequency)) AS electrification_label,
       future_voltage,
       future_frequency,
       future_maximum_current,
@@ -108,7 +101,6 @@ CREATE OR REPLACE VIEW railway_line_view AS
       gauges[1] AS gauge0,
       gauges[2] AS gauge1,
       gauges[3] AS gauge2,
-      (select string_agg(gauge, ' | ') from unnest(gauges) as gauge where gauge ~ '^[0-9]+$') as gauge_label,
       loading_gauge,
       operator,
       owner,
@@ -154,7 +146,7 @@ RETURN (
       highspeed,
       tunnel,
       bridge,
-      standard_label,
+      name,
       ref,
       track_ref,
       track_class,
@@ -170,18 +162,16 @@ RETURN (
       voltage,
       frequency,
       maximum_current,
-      electrification_label,
       future_voltage,
       future_frequency,
       future_maximum_current,
-      gauges,
+      array_to_string(gauges, ', ') as gauges,
       gaugeint0,
       gauge0,
       gaugeint1,
       gauge1,
       gaugeint2,
       gauge2,
-      gauge_label,
       loading_gauge,
       operator,
       operator_color,
@@ -256,7 +246,7 @@ DO $do$ BEGIN
           "tunnel": "boolean",
           "bridge": "boolean",
           "ref": "string",
-          "standard_label": "string",
+          "name": "string",
           "track_ref": "string",
           "maxspeed": "number",
           "speed_label": "string",
@@ -271,14 +261,13 @@ DO $do$ BEGIN
           "future_frequency": "number",
           "future_voltage": "integer",
           "future_maximum_current": "integer",
-          "electrification_label": "string",
           "gauge0": "string",
           "gaugeint0": "number",
           "gauge1": "string",
           "gaugeint1": "number",
           "gauge2": "string",
           "gaugeint2": "number",
-          "gauge_label": "string",
+          "gauges": "string",
           "loading_gauge": "string",
           "track_class": "string",
           "operator": "string",
@@ -305,7 +294,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     usage,
     highspeed,
     ref,
-    standard_label,
+    name,
     speed_label,
     maxspeed,
     train_protection_rank,
@@ -313,13 +302,11 @@ CREATE OR REPLACE VIEW railway_line_low AS
     train_protection_construction_rank,
     train_protection_construction,
     electrification_state,
-    electrification_label,
     voltage,
     frequency,
     maximum_current,
     gaugeint0,
     gauge0,
-    gauge_label,
     loading_gauge,
     track_class,
     operator,
@@ -359,15 +346,14 @@ RETURN (
       any_value(usage) as usage,
       highspeed,
       ref,
-      standard_label,
+      name,
       max(rank) as rank
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
-      osm_id,
       feature,
       ref,
-      standard_label,
+      name,
       highspeed
     ORDER by
       rank NULLS LAST
@@ -386,9 +372,7 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean",
-          "ref": "string",
-          "standard_label": "string"
+          "highspeed": "boolean"
         }
       }
     ]
@@ -1189,8 +1173,6 @@ RETURN (
       any_value(state) as state,
       any_value(usage) as usage,
       maxspeed,
-      ref,
-      standard_label,
       speed_label,
       max(rank) as rank
     FROM railway_line_low
@@ -1198,9 +1180,9 @@ RETURN (
     GROUP BY
       feature,
       ref,
-      standard_label,
-      speed_label,
-      maxspeed
+      name,
+      maxspeed,
+      speed_label
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1219,8 +1201,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "standard_label": "string",
           "maxspeed": "number",
           "speed_label": "string"
         }
@@ -1249,8 +1229,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      standard_label,
       train_protection_rank,
       train_protection,
       train_protection_construction_rank,
@@ -1261,7 +1239,7 @@ RETURN (
     GROUP BY
       feature,
       ref,
-      standard_label,
+      name,
       train_protection_rank,
       train_protection,
       train_protection_construction_rank,
@@ -1283,8 +1261,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "standard_label": "string",
           "train_protection": "string",
           "train_protection_rank": "integer",
           "train_protection_construction": "string",
@@ -1396,10 +1372,7 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      standard_label,
       electrification_state,
-      electrification_label,
       voltage,
       frequency,
       maximum_current,
@@ -1409,9 +1382,8 @@ RETURN (
     GROUP BY
       feature,
       ref,
-      standard_label,
+      name,
       electrification_state,
-      electrification_label,
       voltage,
       frequency,
       maximum_current
@@ -1432,16 +1404,13 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "standard_label": "string",
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
           "maximum_current": "integer",
           "future_frequency": "number",
           "future_voltage": "integer",
-          "future_maximum_current": "integer",
-          "electrification_label": "string"
+          "future_maximum_current": "integer"
         }
       }
     ]
@@ -1625,11 +1594,8 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      standard_label,
       gaugeint0,
       gauge0,
-      gauge_label,
       track_class,
       loading_gauge,
       max(rank) as rank
@@ -1638,10 +1604,9 @@ RETURN (
     GROUP BY
       feature,
       ref,
-      standard_label,
+      name,
       gauge0,
       gaugeint0,
-      gauge_label,
       track_class,
       loading_gauge
     ORDER by
@@ -1661,11 +1626,8 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "standard_label": "string",
           "gauge0": "string",
-          "gaugeint0": "number",
-          "gauge_label": "string"
+          "gaugeint0": "number"
         }
       }
     ]
@@ -1691,8 +1653,6 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      ref,
-      standard_label,
       operator,
       any_value(operator_color) as operator_color,
       any_value(operator_bright) as operator_bright,
@@ -1704,7 +1664,7 @@ RETURN (
     GROUP BY
       feature,
       ref,
-      standard_label,
+      name,
       operator,
       primary_operator,
       owner
@@ -1725,8 +1685,6 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "ref": "string",
-          "standard_label": "string",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
@@ -1804,16 +1762,14 @@ RETURN (
       any_value(usage) as usage,
       highspeed,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-      ref,
-      standard_label,
       max(rank) as rank
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
     GROUP BY
-      osm_id,
+      l.osm_id,
       feature,
       ref,
-      standard_label,
+      name,
       highspeed
     ORDER by
       route_count NULLS FIRST,
@@ -1833,9 +1789,7 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "route_count": "integer",
-          "ref": "string",
-          "standard_label": "string"
+          "route_count": "integer"
         }
       }
     ]

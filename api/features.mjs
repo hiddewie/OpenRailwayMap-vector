@@ -106,7 +106,7 @@ const railwayLineFeatures = {
     name: 'railway_line_view',
     id_type: 'text',
   },
-  labelProperties: ['standard_label'],
+  labelProperties: ['ref', 'name'],
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     railway_lines.features.map(feature => [
@@ -199,7 +199,7 @@ const railwayLineFeatures = {
         template: '%d A',
       },
     },
-    gauge_label: {
+    gauges: {
       name: 'Gauge',
     },
     loading_gauge: {

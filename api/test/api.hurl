@@ -790,7 +790,8 @@ Content-Type: application/json
 jsonpath "$.electrification_state" == "present"
 jsonpath "$.feature" == "rail"
 jsonpath "$.frequency" == 16.700000762939453
-jsonpath "$.gauge_label" == "1435"
+jsonpath "$.gauges" count == 1
+jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
 jsonpath "$.line_routes" count == 13
 jsonpath "$.line_routes[0].color" == "#80004D"
@@ -801,8 +802,8 @@ jsonpath "$.operator[0]" == "DB InfraGO AG"
 jsonpath "$.osm_id" == 9933821
 jsonpath "$.osm_type" == "W"
 jsonpath "$.ref" == "6185"
+jsonpath "$.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.speed_label" == "140"
-jsonpath "$.standard_label" == "6185 Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.state" == "present"
 jsonpath "$.train_protection" == "lzb"
 jsonpath "$.usage" == "main"
