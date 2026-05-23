@@ -686,6 +686,12 @@ const features = {
           template: '%.2d m',
         },
       },
+      length: {
+        name: 'Length',
+        format: {
+          template: '%.0d m',
+        },
+      },
       tactile_paving: {
         name: 'Tactile paving',
       },
