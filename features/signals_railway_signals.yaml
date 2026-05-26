@@ -218,6 +218,7 @@ tags:
   - { tag: 'railway:signal:whistle:deactivated', title: 'Whistle deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road', title: 'Wrong road' }
   - { tag: 'railway:signal:wrong_road:form', title: 'Wrong road form' }
+  - { tag: 'railway:signal:wrong_road:type', title: 'Wrong road type' }
   - { tag: 'railway:signal:wrong_road:deactivated', title: 'Wrong road deactivated', type: boolean }
   - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
