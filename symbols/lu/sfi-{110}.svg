@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16">
+<path fill="#000000" d="M 0,0 H 12 V 16 H 0 Z"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="2" cy="2" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="2" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="8" cy="2" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="2" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="4" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="4" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="6" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="6" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="8" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="8" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="10" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="10" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="12" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="12" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="4" cy="14" r="0.9"/>
+<circle fill="#ffffff" stroke-width="0.2" stroke="#cccccc" cx="10" cy="14" r="0.9"/>
+</svg>

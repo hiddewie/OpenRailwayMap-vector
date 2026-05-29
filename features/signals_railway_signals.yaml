@@ -218,6 +218,7 @@ tags:
   - { tag: 'railway:signal:whistle:deactivated', title: 'Whistle deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road', title: 'Wrong road' }
   - { tag: 'railway:signal:wrong_road:form', title: 'Wrong road form' }
+  - { tag: 'railway:signal:wrong_road:type', title: 'Wrong road type' }
   - { tag: 'railway:signal:wrong_road:deactivated', title: 'Wrong road deactivated', type: boolean }
   - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
@@ -7406,61 +7407,421 @@ features:
 
   # --- LU --- #
 
-  - description: ESFA
+  - description: Main signal (SFP) (old style)
     country: LU
-    icon: [ default: 'lu/ESFA' ]
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'LU-CFL:SFP2', value: 'lu/sfp2-classic' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfp3-classic' }
+        default: 'lu/sfp1-classic'
+    tags:
+      - { tag: 'railway:signal:main', value: 'LU-CFL:SFP' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'classic' }
+
+  - description: Main signal (SFP)
+    country: LU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'LU-CFL:SFP2', value: 'lu/sfp2' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfp3' }
+        default: 'lu/sfp1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'LU-CFL:SFP' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Main signal (SFP) with integrated shunting signal (SFVb) (old style)
+    country: LU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'LU-CFL:SFP2', value: 'lu/sfpvb-sfp2-classic' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfpvb-sfp3-classic' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfpvb-sfvb2-classic' }
+        default: 'lu/sfpvb-sfp1-classic'
+    tags:
+      - { tag: 'railway:signal:main', value: 'LU-CFL:SFPVb' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:shape', value: 'classic' }
+
+  - description: Main signal (SFP) with integrated shunting signal (SFVb)
+    country: LU
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'LU-CFL:SFP2', value: 'lu/sfpvb-sfp2' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfpvb-sfp3' }
+          - { exact: 'LU-CFL:SFP3', value: 'lu/sfpvb-sfvb2' }
+        default: 'lu/sfpvb-sfp1'
+    tags:
+      - { tag: 'railway:signal:main', value: 'LU-CFL:SFPVb' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Authorisation signal (SFA)
+    country: LU
+    icon: [ default: 'lu/sfa1' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'LU-CFL:SFA' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Distant signal repeater (SFAv/R) (old style)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'LU-CFL:SFAv2', value: 'lu/sfav2-classic-repeated' }
+          - { exact: 'LU-CFL:SFAv3', value: 'lu/sfav3-classic-repeated' }
+        default: 'lu/sfav1-classic-repeated'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:SFAv' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shape', value: 'classic' }
+      - { tag: 'railway:signal:distant:repeated' }
+
+  - description: Distant signal repeater (SFAv/R)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'LU-CFL:SFAv2', value: 'lu/sfav2-repeated' }
+          - { exact: 'LU-CFL:SFAv3', value: 'lu/sfav3-repeated' }
+        default: 'lu/sfav1-repeated'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:SFAv' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:repeated' }
+
+  - description: Distant signal (SFAv) (old style)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'LU-CFL:SFAv2', value: 'lu/sfav2-classic' }
+          - { exact: 'LU-CFL:SFAv3', value: 'lu/sfav3-classic' }
+        default: 'lu/sfav1-classic'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:SFAv' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:shape', value: 'classic' }
+
+  - description: Distant signal (SFAv)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'LU-CFL:SFAv2', value: 'lu/sfav2' }
+          - { exact: 'LU-CFL:SFAv3', value: 'lu/sfav3' }
+        default: 'lu/sfav1'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:SFAv' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Shunting signal (SFVb) (old style)
+    country: LU
+    icon: [ default: 'lu/sfvb1-light-classic' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SFVb' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+      - { tag: 'railway:signal:minor:shape', value: 'classic' }
+
+  - description: Shunting signal (SFVb)
+    country: LU
+    icon: [ default: 'lu/sfvb1-light' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SFVb' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Shunting signal (SFVb) (semaphore)
+    country: LU
+    icon: [ default: 'lu/sfvb2-semaphore' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SFVb' }
+      - { tag: 'railway:signal:minor:form', value: 'semaphore' }
+
+  - description: Stop sign (SFVb1)
+    country: LU
+    icon: [ default: 'lu/sfvb1-sign' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SFVb1' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Advance line speed sign (SFAVI)
+    country: LU
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([1-9]0|1[0-6]0)$', value: 'lu/sfavi-sign-{}', example: 'lu/sfavi-sign-{100}' }
+        default: 'lu/sfavi-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'LU-CFL:SFAVI' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: Line speed sign (SFIVI)
+    country: LU
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([1-9]0|1[0-6]0)$', value: 'lu/sfivi-{}', example: 'lu/sfivi-{100}' }
+        default: 'lu/sfivi'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'LU-CFL:SFIVI' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Advance variable speed indicator (SFAvI)
+    country: LU
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([235-9]0|1[0-2]0)$', value: 'lu/sfavi-light-{}', example: 'lu/sfavi-light-{60}' }
+        default: 'lu/sfavi-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'LU-CFL:SFAvI' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Variable speed indicator (SFI)
+    country: LU
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([235-9]0|1[0-2]0)$', value: 'lu/sfi-{}', example: 'lu/sfi-{60}' }
+        default: 'lu/sfi-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'LU-CFL:SFI' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: Variable speed increase indicator (SFI/R)
+    country: LU
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([235-9]0|1[0-2]0)$', value: 'lu/sfi-r-light-{}', example: 'lu/sfi-r-light-{80}' }
+        default: 'lu/sfi-r-light-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'LU-CFL:SFI/R' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: Speed increase sign (SFI/R)
+    country: LU
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^([1-9]0|1[0-6]0)$', value: 'lu/sfi-r-sign-{}', example: 'lu/sfi-r-sign-{80}' }
+        default: 'lu/sfi-r-sign'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'LU-CFL:SFI/R' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Short route advance indicator (SFAvVo)
+    country: LU
+    icon: [ default: 'lu/sfavvo' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'LU-CFL:SFAvVo' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: Short route indicator (SFVo)
+    country: LU
+    icon: [ default: 'lu/sfvo' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'LU-CFL:SFVo' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: Start of opposite-track operation (SFCCI/O)
+    country: LU
+    icon: [ default: 'lu/sfcci-o' ]
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'LU-CFL:SFCCI/O' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: End of opposite-track operation (SFCCI/F) (light indicator)
+    country: LU
+    icon: [ default: 'lu/sfcci-f-light' ]
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'LU-CFL:SFCCI/F' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: End of opposite-track operation (SFCCI/F) (sign)
+    country: LU
+    icon: [ default: 'lu/sfcci-f-sign' ]
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'LU-CFL:SFCCI/F' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+
+  - description: End of catenary (ESFA)
+    country: LU
+    icon: [ default: 'lu/esfa' ]
     tags:
       - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFA' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenary' }
 
-  - description: ESFAp/TA
+  - description: Lower pantograph advance warning (ESFAp/A)
     country: LU
-    icon: [ default: 'lu/ESFAp_TA' ]
+    icon: [ default: 'lu/esfap-a' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TA' }
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/A' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
-  - description: ESFAp/TE
+  - description: Lower pantograph (ESFAp/E)
     country: LU
-    icon: [ default: 'lu/ESFAp_TE' ]
+    icon: [ default: 'lu/esfap-e' ]
     tags:
-      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TE' }
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/E' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
-  - description: ESFAp/TR
+  - description: Raise pantograph (ESFAp/R)
     country: LU
-    icon: [ default: 'lu/ESFAp_TR' ]
+    icon:
+      - default: 'lu/esfap-r'
+      - match: 'railway:signal:electricity:voltage'
+        cases:
+          - { exact: '25000', value: 'lu/erf103-{25000}', description: 'change to 25 kV' }
+        position: top
+    exampleIcon: 'lu/esfap-r'
     tags:
-      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/TR' }
+      - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFAp/R' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
-  - description: ESFCC/A
+  - description: Power off advance warning (ESFCC/A)
     country: LU
-    icon: [ default: 'lu/ESFCC_A' ]
+    icon: [ default: 'lu/esfcc-a' ]
     tags:
       - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/A' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
-  - description: ESFCC/E
+  - description: Power off (ESFCC/E)
     country: LU
-    icon: [ default: 'lu/ESFCC_E' ]
+    icon: [ default: 'lu/esfcc-e' ]
     tags:
       - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/E' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
-  - description: ESFCC/F
+  - description: Power on (ESFCC/F)
     country: LU
-    icon: [ default: 'lu/ESFCC_F' ]
+    icon: [ default: 'lu/esfcc-f' ]
     tags:
       - { tag: 'railway:signal:electricity', value: 'LU-CFL:ESFCC/F' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Level crossing marker board
+    country: LU
+    icon: [ default: 'lu/pn' ]
+    tags:
+      - { tag: 'railway:signal:crossing_info', value: 'LU-CFL:PN' }
+      - { tag: 'railway:signal:crossing_info:form', value: 'sign' }
+
+  - description: Stopping position marker
+    country: LU
+    icon:
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^[1-9]V$', value: 'lu/arret-{}', example: 'lu/arret-{6V}' }
+        default: 'lu/arret'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'LU-CFL:ArretV' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Chevron (RF1)
+    country: LU
+    icon: [ default: 'lu/rf1' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'LU-CFL:RF1' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Distant signal replacement board (RF3)
+    country: LU
+    icon: [ default: 'lu/rf3' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:RF3' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Mirliton (RF4) (square version)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:type'
+        cases:
+          - { exact: 'II', value: 'lu/rf4-dwarf-II' }
+          - { exact: 'III', value: 'lu/rf4-dwarf-III' }
+        default: 'lu/rf4-dwarf-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:RF4' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+      - { tag: 'railway:signal:distant:height', value: 'dwarf' }
+
+  - description: Mirliton (RF4)
+    country: LU
+    icon:
+      - match: 'railway:signal:distant:type'
+        cases:
+          - { exact: 'II', value: 'lu/rf4-normal-II' }
+          - { exact: 'III', value: 'lu/rf4-normal-III' }
+        default: 'lu/rf4-normal-I'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'LU-CFL:RF4' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Train stop announcement board (RF8)
+    country: LU
+    icon: [ default: 'lu/rf8' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'LU-CFL:RF8' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Change of default signal location (RF12)
+    country: LU
+    icon:
+      - match: 'railway:signal:wrong_road:type'
+        cases:
+          - { exact: 'signals_left', value: 'lu/rf12-left', description: 'left-hand side' }
+          - { exact: 'signals_right', value: 'lu/rf12-right', description: 'right-hand side' }
+        default: 'lu/rf12'
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'LU-CFL:RF12' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'sign' }
+
+  - description: End of switch area (RF30)
+    country: LU
+    icon: [ default: 'lu/rf30' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'LU-CFL:RF30' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: Stop for shunting movement (SFHM)
+    country: LU
+    icon: [ default: 'lu/sfhm' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'LU-CFL:SFHM' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
+  - description: Departure indicator (SFID)
+    country: LU
+    icon: [ default: 'lu/sfid2' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'LU-CFL:SFID' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Mobile stop sign (SMA)
+    country: LU
+    icon: [ default: 'lu/sma' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SMA' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Mobile advance stop sign (SMA)
+    country: LU
+    icon: [ default: 'lu/smav' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'LU-CFL:SMAv' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   # --- NL --- #
 
