@@ -343,7 +343,6 @@ local platform_edge = osm2pgsql.define_table({
     { column = 'way', type = 'linestring', not_null = true },
     { column = 'ref', sql_type = 'text' },
     { column = 'height', type = 'real' },
-    { column = 'length', type = 'real' },
     { column = 'tactile_paving', type = 'boolean' },
   },
 })
@@ -1542,12 +1541,10 @@ function osm2pgsql.process_way(object)
   end
 
   if tags.railway == 'platform_edge' then
-    local way = object:as_linestring():transform(3857)
     platform_edge:insert({
-      way = way,
+      way = object:as_linestring(),
       ref = tags.ref,
       height = tags.height,
-      length = way:length(),
       tactile_paving = tags.tactile_paving == 'yes' or nil,
     })
   end

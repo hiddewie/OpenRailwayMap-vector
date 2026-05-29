@@ -216,15 +216,13 @@ osm2pgsql.process_way({
     ['height'] = '0.4',
     ['tactile_paving'] = 'yes',
   },
-  as_linestring = function ()
-    return {
-      transform = function () return way end,
-    }
+  as_linestring = function()
+    return way
   end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platform_edge = {
-    { ref = '4', height = '0.4', length = 1, tactile_paving = true, way = way },
+    { ref = '4', height = '0.4', tactile_paving = true, way = way },
   },
 })
 
@@ -233,15 +231,13 @@ osm2pgsql.process_way({
     ['railway'] = 'platform_edge',
     ['public_transport'] = 'platform',
   },
-  as_linestring = function ()
-    return {
-      transform = function () return way end,
-    }
+  as_linestring = function()
+    return way
   end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   platform_edge = {
-    { length = 1, way = way },
+    { way = way },
   },
   -- Not imported as platform
 })
