@@ -6,22 +6,34 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 const pois = yaml.parse(fs.readFileSync('poi.yaml', 'utf8'))
 const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).references
 
+const trainProtectionTags = [...new Set(signals_railway_line.features.flatMap(feature => feature.tags).map(tag => tag.tag))].toSorted();
+
 /**
  * Template that builds Lua functions used in the Osm2Psql Lua import, and taking the YAML configuration into account
  */
 const lua = `
 function train_protection(tags, prefix)
+  -- Match a known system
   local systems = {}
   local rank = 0
   local has_systems = false
   ${signals_railway_line.features.map((feature, featureIndex) => `
   if ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then table.insert(systems, '${feature.train_protection}'); rank = math.max(rank, ${signals_railway_line.features.length - featureIndex}); has_systems = true end`).join('')}
-  
+
   if has_systems then
     return systems, rank
-  else
-    return nil, nil
   end
+
+  -- Match explicit no train protection system
+  local any_tag_set_to_no = ${trainProtectionTags.map(tag => `tags[prefix .. '${tag}'] == 'no'`).join(' or ')}
+  local all_tags_set_to_no_or_empty = ${trainProtectionTags.map(tag => `(tags[prefix .. '${tag}'] or 'no') == 'no'`).join(' and ')}
+  
+  if any_tag_set_to_no and all_tags_set_to_no_or_empty then
+    return 'none', 1  
+  end
+    
+  -- Unknown
+  return nil, nil
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
