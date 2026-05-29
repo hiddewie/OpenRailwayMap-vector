@@ -491,6 +491,15 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         type
       FROM speed_railway_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
+        -- conditionally include features based on zoom level
+        AND CASE
+          WHEN z < 14 THEN
+            type IN ('line')
+          WHEN z < 16 THEN
+            type IN ('line', 'tram')
+          ELSE
+            true
+        END
       ORDER BY rank NULLS FIRST
     ) as tile
     WHERE way IS NOT NULL
