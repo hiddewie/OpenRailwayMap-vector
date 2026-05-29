@@ -10,10 +10,18 @@ const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).
  * Template that builds Lua functions used in the Osm2Psql Lua import, and taking the YAML configuration into account
  */
 const lua = `
-function train_protection(tags, prefix)${signals_railway_line.features.map((feature, featureIndex) => `
-  if ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.train_protection}', ${signals_railway_line.features.length - featureIndex} end`).join('')}
+function train_protection(tags, prefix)
+  local systems = {}
+  local rank = 0
+  local has_systems = false
+  ${signals_railway_line.features.map((feature, featureIndex) => `
+  if ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then table.insert(systems, '${feature.train_protection}'); rank = math.max(rank, ${signals_railway_line.features.length - featureIndex}); has_systems = true end`).join('')}
   
-  return nil, 0
+  if has_systems then
+    return systems, rank
+  else
+    return nil, nil
+  end
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
