@@ -334,6 +334,8 @@ features:
     tags:
       - { tag: 'railway:twc', value: 'yes' }
 
+  # TODO negative matching
+
   - train_protection: none
     tags:
       - { tag: 'railway:pzb', value: 'no' }
