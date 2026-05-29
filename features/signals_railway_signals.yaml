@@ -8262,6 +8262,13 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'voltage_change' }
 
+  - description: block sign
+    country: NL
+    icon: [ default: 'nl/331' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'NL:331' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   # --- NZ --- #
 
   # crossing_hint
