@@ -37,7 +37,7 @@ function train_protection(tags, prefix)
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
-  { tag = '${tag.tag}', type = '${tag.type}' },`).join('')}
+  { tag = '${tag.tag}', type = '${tag.type ?? 'string'}' },`).join('')}
 }
 
 local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.variants || []), feature]).flatMap(feature => feature.tags).filter(tag => tag.tag === 'railway').flatMap(tag => tag.value ? [tag.value] : (tag.values ? tag.values : [])).map(tag => `
