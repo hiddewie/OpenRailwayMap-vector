@@ -28,8 +28,12 @@ function train_protection(tags, prefix)
   local any_tag_set_to_no = ${trainProtectionTags.map(tag => `tags[prefix .. '${tag}'] == 'no'`).join(' or ')}
   local all_tags_set_to_no_or_empty = ${trainProtectionTags.map(tag => `(tags[prefix .. '${tag}'] or 'no') == 'no'`).join(' and ')}
   
+  if tags['ref:FR:SNCF_Reseau'] == '229000,1,V2,117.287,140.835' then
+    print(any_tag_set_to_no, all_tags_set_to_no_or_empty, dump(tags))
+  end
+  
   if any_tag_set_to_no and all_tags_set_to_no_or_empty then
-    return 'none', 1  
+    return {'none'}, 1  
   end
     
   -- Unknown
