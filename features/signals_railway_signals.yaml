@@ -7825,6 +7825,23 @@ features:
 
   # --- NL --- #
 
+  - description: route
+    country: NL
+    exampleIcon: 'nl/252-all'
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'left', value: 'nl/252-left' }
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'through', value: 'nl/252-through' }
+      - match: 'railway:signal:route:states'
+        cases:
+          - { exact: 'right', value: 'nl/252-right' }
+    tags:
+      - { tag: 'railway:signal:route', value: 'NL:252' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: dwarf shunting signals
     country: NL
     icon: [ default: 'nl/main_light_dwarf_shunting' ]
