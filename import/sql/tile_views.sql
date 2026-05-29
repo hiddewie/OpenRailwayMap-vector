@@ -889,7 +889,7 @@ CREATE OR REPLACE VIEW standard_railway_platform_edges_view AS
     'platform_edge' as feature,
     ref,
     height,
-    length,
+    (st_length(st_transform(way, 3857)) * cos(radians(st_y(ST_Transform(ST_PointOnSurface(way), 4326)))))::real as length,
     tactile_paving
   FROM platform_edge;
 
