@@ -64,6 +64,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   railway_line = {
-    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"aws","tpws"}', train_protection_rank = 33, train_protection_construction = '{"etcs_2"}', train_protection_construction_rank = 66 },
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"aws","tpws"}', train_protection_rank = 33, train_protection_construction = 'etcs_2', train_protection_construction_rank = 66 },
   },
 })

@@ -1389,7 +1389,7 @@ function osm2pgsql.process_way(object)
         reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
         train_protection = to_sql_array(railway_train_protection),
         train_protection_rank = railway_train_protection_rank,
-        train_protection_construction = to_sql_array(train_protection_construction),
+        train_protection_construction = train_protection_construction[1],
         train_protection_construction_rank = train_protection_construction_rank,
         operator = split_semicolon_to_sql_array(tags['operator']),
         owner = tags.owner,

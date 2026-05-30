@@ -159,9 +159,7 @@ RETURN (
       train_protection[2] as train_protection1,
       train_protection[3] as train_protection2,
       train_protection_construction_rank,
-      train_protection_construction[1] as train_protection_construction0,
-      train_protection_construction[2] as train_protection_construction1,
-      train_protection_construction[3] as train_protection_construction2,
+      train_protection_construction,
       electrification_state,
       voltage,
       frequency,
@@ -258,9 +256,7 @@ DO $do$ BEGIN
           "train_protection1": "string",
           "train_protection2": "string",
           "train_protection_rank": "integer",
-          "train_protection_construction0": "string",
-          "train_protection_construction1": "string",
-          "train_protection_construction2": "string",
+          "train_protection_construction": "string",
           "train_protection_construction_rank": "integer",
           "electrification_state": "string",
           "frequency": "number",
@@ -1263,9 +1259,7 @@ RETURN (
       train_protection[2] as train_protection1,
       train_protection[3] as train_protection2,
       max(train_protection_construction_rank) as train_protection_construction_rank,
-      train_protection_construction[1] as train_protection_construction0,
-      train_protection_construction[2] as train_protection_construction1,
-      train_protection_construction[3] as train_protection_construction2,
+      train_protection_construction,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1296,9 +1290,7 @@ DO $do$ BEGIN
           "train_protection1": "string",
           "train_protection2": "string",
           "train_protection_rank": "integer",
-          "train_protection_construction0": "string",
-          "train_protection_construction1": "string",
-          "train_protection_construction2": "string",
+          "train_protection_construction": "string",
           "train_protection_construction_rank": "integer"
         }
       }

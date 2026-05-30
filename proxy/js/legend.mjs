@@ -1759,17 +1759,7 @@ const legendData = {
           [
             'feature',
             'state',
-            'train_protection_construction0',
-          ],
-          [
-            'feature',
-            'state',
-            'train_protection_construction1',
-          ],
-          [
-            'feature',
-            'state',
-            'train_protection_construction2',
+            'train_protection_construction',
           ],
         ],
         features: [
@@ -1787,9 +1777,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 1,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
             variants: [
@@ -1799,9 +1787,7 @@ const legendData = {
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
-                  train_protection_construction0: train_protection.train_protection,
-                  train_protection_construction1: null,
-                  train_protection_construction2: null,
+                  train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
                 }
               }
@@ -1821,9 +1807,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 0,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
           },
@@ -1845,15 +1829,7 @@ const legendData = {
           ],
           [
             'state',
-            'train_protection_construction0',
-          ],
-          [
-            'state',
-            'train_protection_construction1',
-          ],
-          [
-            'state',
-            'train_protection_construction2',
+            'train_protection_construction',
           ],
         ],
         features: [
@@ -1871,9 +1847,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 1,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
             variants: [
@@ -1883,9 +1857,7 @@ const legendData = {
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
-                  train_protection_construction0: train_protection.train_protection,
-                  train_protection_construction1: null,
-                  train_protection_construction2: null,
+                  train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
                 }
               }
@@ -1905,9 +1877,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 0,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
           },
@@ -1929,15 +1899,7 @@ const legendData = {
           ],
           [
             'state',
-            'train_protection_construction0',
-          ],
-          [
-            'state',
-            'train_protection_construction1',
-          ],
-          [
-            'state',
-            'train_protection_construction2',
+            'train_protection_construction',
           ],
         ],
         features: [
@@ -1955,9 +1917,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 1,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
             variants: [
@@ -1967,9 +1927,7 @@ const legendData = {
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
-                  train_protection_construction0: train_protection.train_protection,
-                  train_protection_construction1: null,
-                  train_protection_construction2: null,
+                  train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
                 }
               }
@@ -1989,9 +1947,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 0,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
           },
@@ -2009,9 +1965,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 1,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
           },
@@ -2029,9 +1983,7 @@ const legendData = {
               train_protection1: null,
               train_protection2: null,
               train_protection_rank: 1,
-              train_protection_construction0: null,
-              train_protection_construction1: null,
-              train_protection_construction2: null,
+              train_protection_construction: null,
               train_protection_construction_rank: 0,
             },
           },
