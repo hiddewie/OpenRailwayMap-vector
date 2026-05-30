@@ -3392,8 +3392,9 @@ const legendDataWithKeys = Object.fromEntries(
       countries,
       sourceLayers: Object.fromEntries(
         Object.entries(sourceLayers)
-          .map(([sourceLayer, {key, features}]) => [sourceLayer, {
+          .map(([sourceLayer, {key, matchKeys, features}]) => [sourceLayer, {
             key,
+            matchKeys,
             features: features.map(item => {
               const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
               const itemFeatureKeys = itemFeatures.map(itemFeature => key.map(keyPart => String(itemFeature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'));
