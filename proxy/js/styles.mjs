@@ -3806,8 +3806,7 @@ const layers = {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            construction: construction_dasharray,
-            proposed: proposed_dasharray,
+            present: undefined,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
