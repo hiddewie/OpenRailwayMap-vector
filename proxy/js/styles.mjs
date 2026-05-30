@@ -186,8 +186,6 @@ const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
 const present_dasharray = [1];
 
-// TODO clean up
-// const train_protection_construction_dasharray = [2, 8];
 const train_protection_construction_dasharray = [1, 2];
 
 // Turbo color map
@@ -3736,6 +3734,26 @@ const layers = {
       '',
       [
         {
+          id: 'railway_line_low_train_protection_construction',
+          minzoom: 0,
+          maxzoom: 7,
+          source: 'signals_railway_line_low',
+          sourceLayer: 'signals_railway_line_low',
+          states: {
+            present: train_protection_construction_dasharray,
+          },
+          filter: ['all',
+            ['!=', ['get', 'feature'], 'ferry'],
+            ['!=', null, ['get', 'train_protection_construction0']],
+          ],
+          sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
+          width: ["interpolate", ["exponential", 1.2], ["zoom"],
+            0, 2.5,
+            7, 4,
+          ],
+          color: trainProtectionColor('train_protection_construction0'),
+        },
+        {
           id: 'railway_line_low',
           minzoom: 0,
           maxzoom: 7,
@@ -3753,11 +3771,10 @@ const layers = {
           color: trainProtectionColor('train_protection0'),
         },
         {
-          id: 'railway_line_low_construction',
-          minzoom: 0,
-          maxzoom: 7,
-          source: 'signals_railway_line_low',
-          sourceLayer: 'signals_railway_line_low',
+          id: 'railway_line_med_train_protection_construction',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_low',
           states: {
             present: train_protection_construction_dasharray,
           },
@@ -3766,26 +3783,8 @@ const layers = {
             ['!=', null, ['get', 'train_protection_construction0']],
           ],
           sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
-          width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 0.5,
-            7, 2,
-          ],
+          width: 4,
           color: trainProtectionColor('train_protection_construction0'),
-        },
-        {
-          id: 'railway_line_med',
-          minzoom: 7,
-          maxzoom: 8,
-          source: 'openrailwaymap_low',
-          states: {
-            present: undefined,
-            construction: construction_dasharray,
-            proposed: proposed_dasharray,
-          },
-          filter: ['!=', ['get', 'feature'], 'ferry'],
-          sort: ['coalesce', ['get', 'train_protection_rank'], 0],
-          width: 2,
-          color: trainProtectionColor('train_protection0'),
         },
         {
           id: 'railway_line_med_construction',
@@ -3793,17 +3792,27 @@ const layers = {
           maxzoom: 8,
           source: 'openrailwaymap_low',
           states: {
-            present: train_protection_construction_dasharray,
-            construction: train_protection_construction_dasharray,
-            proposed: train_protection_construction_dasharray,
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
           },
-          filter: ['all',
-            ['!=', ['get', 'feature'], 'ferry'],
-            ['!=', null, ['get', 'train_protection_construction0']],
-          ],
-          sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
+          filter: ['!=', ['get', 'feature'], 'ferry'],
+          sort: ['coalesce', ['get', 'train_protection_rank'], 0],
           width: 2,
-          color: trainProtectionColor('train_protection_construction0'),
+          color: trainProtectionColor(['coalesce', 'train_protection_construction0', 'train_protection0']),
+        },
+        {
+          id: 'railway_line_med',
+          minzoom: 7,
+          maxzoom: 8,
+          source: 'openrailwaymap_low',
+          states: {
+            construction: construction_dasharray,
+            proposed: proposed_dasharray,
+          },
+          filter: ['!=', ['get', 'feature'], 'ferry'],
+          sort: ['coalesce', ['get', 'train_protection_rank'], 0],
+          width: 2,
+          color: trainProtectionColor('train_protection0'),
         },
         {
           id: 'railway_line_construction',
