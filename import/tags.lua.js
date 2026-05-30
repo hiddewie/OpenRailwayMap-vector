@@ -17,8 +17,9 @@ function train_protection(tags, prefix)
   local systems = {}
   local rank = 0
   local has_systems = false
+  local excluded = {}
   ${signals_railway_line.features.map((feature, featureIndex) => `
-  if ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then table.insert(systems, '${feature.train_protection}'); rank = math.max(rank, ${signals_railway_line.features.length - featureIndex + 1}); has_systems = true end`).join('')}
+  if (not excluded['${feature.train_protection}']) and ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then table.insert(systems, '${feature.train_protection}'); rank = math.max(rank, ${signals_railway_line.features.length - featureIndex + 1}); has_systems = true${feature.exclude ? `;${feature.exclude.map(exclude => ` excluded['${exclude}'] = true;`).join('')}`: ''} end`).join('')}
 
   if has_systems then
     return systems, rank

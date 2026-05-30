@@ -58,6 +58,10 @@ features:
   - train_protection: ktcs
     tags:
       - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
+    exclude:
+      - etcs
+      - etcs_1
+      - etcs_2
 
   - train_protection: etcs
     tags:
@@ -82,22 +86,32 @@ features:
   - train_protection: acses
     tags:
       - { tag: 'railway:acses', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: ases
     tags:
       - { tag: 'railway:ases', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: itcs
     tags:
       - { tag: 'railway:itcs', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: etms
     tags:
       - { tag: 'railway:etms', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: cbtc
     tags:
       - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto', 'RF', 'IL'] }
+    exclude:
+      - ptc
 
   - train_protection: ptc
     tags:

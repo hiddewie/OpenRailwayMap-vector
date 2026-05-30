@@ -45,6 +45,11 @@ properties:
                   type: string
                   description: A tag value
             additionalProperties: false
+        exclude:
+          type: array
+          description: Train protection systems to exclude from further detection
+          items:
+            type: string
       additionalProperties: false
   $schema:
     type: string
