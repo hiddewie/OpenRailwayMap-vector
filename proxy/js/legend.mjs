@@ -1744,19 +1744,31 @@ const legendData = {
           'feature',
           'state',
           'train_protection0',
-          'train_protection_construction0',
         ],
         matchKeys: [
           [
             'feature',
             'state',
             'train_protection1',
-            'train_protection_construction1',
           ],
           [
             'feature',
             'state',
             'train_protection2',
+          ],
+          [
+            'feature',
+            'state',
+            'train_protection_construction0',
+          ],
+          [
+            'feature',
+            'state',
+            'train_protection_construction1',
+          ],
+          [
+            'feature',
+            'state',
             'train_protection_construction2',
           ],
         ],
@@ -1783,7 +1795,7 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection0: null,
+                  train_protection0: 'unknown',
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
@@ -1821,17 +1833,26 @@ const legendData = {
         key: [
           'state',
           'train_protection0',
-          'train_protection_construction0',
         ],
         matchKeys: [
           [
             'state',
             'train_protection1',
-            'train_protection_construction1',
           ],
           [
             'state',
             'train_protection2',
+          ],
+          [
+            'state',
+            'train_protection_construction0',
+          ],
+          [
+            'state',
+            'train_protection_construction1',
+          ],
+          [
+            'state',
             'train_protection_construction2',
           ],
         ],
@@ -1858,7 +1879,7 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection0: null,
+                  train_protection0: 'unknown',
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
@@ -1896,17 +1917,26 @@ const legendData = {
         key: [
           'state',
           'train_protection0',
-          'train_protection_construction0',
         ],
         matchKeys: [
           [
             'state',
             'train_protection1',
-            'train_protection_construction1',
           ],
           [
             'state',
             'train_protection2',
+          ],
+          [
+            'state',
+            'train_protection_construction0',
+          ],
+          [
+            'state',
+            'train_protection_construction1',
+          ],
+          [
+            'state',
             'train_protection_construction2',
           ],
         ],
@@ -1933,7 +1963,7 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection0: null,
+                  train_protection0: 'unknown',
                   train_protection1: null,
                   train_protection2: null,
                   train_protection_rank: 0,
