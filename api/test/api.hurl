@@ -807,7 +807,9 @@ jsonpath "$.ref" == "6185"
 jsonpath "$.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.speed_label" == "140"
 jsonpath "$.state" == "present"
-jsonpath "$.train_protection" == "lzb"
+jsonpath "$.train_protection" count == 2
+jsonpath "$.train_protection[0]" == "lzb"
+jsonpath "$.train_protection[1]" == "pzb"
 jsonpath "$.usage" == "main"
 jsonpath "$.voltage" == 15000
 jsonpath "$.note" == null
