@@ -186,7 +186,9 @@ const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
 const present_dasharray = [1];
 
-const train_protection_construction_dasharray = [2, 8];
+// TODO clean up
+// const train_protection_construction_dasharray = [2, 8];
+const train_protection_construction_dasharray = [1, 2];
 
 // Turbo color map
 // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
@@ -3877,7 +3879,7 @@ const layers = {
           minzoom: 8,
           source: 'high',
           states: {
-            present: gauge_dual_gauge_dashes,
+            present: gauge_multi_gauge_dashes,
           },
           filter: ['all',
             ['!=', ['get', 'feature'], 'ferry'],
