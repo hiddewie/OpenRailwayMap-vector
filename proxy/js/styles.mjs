@@ -636,7 +636,7 @@ const railwayLine = (text, layers) => [
   // Tunnels
 
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
       Object.entries(states).map(([state, dash]) => ({
         id: `${id}_tunnel_casing_${state}`,
@@ -673,7 +673,7 @@ const railwayLine = (text, layers) => [
         },
       }))
     ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_tunnel_fill_${state}`,
       type: 'line',
@@ -707,11 +707,12 @@ const railwayLine = (text, layers) => [
           color,
         ],
         'line-width': width,
+        'line-gap-width': gapWidth ?? undefined,
         'line-dasharray': dash ?? undefined,
       },
     })),
   ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) => ({
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, states, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
@@ -749,10 +750,11 @@ const railwayLine = (text, layers) => [
     paint: {
       'line-color': colors.styles.standard.tunnelCover,
       'line-width': width,
+      'line-gap-width': gapWidth ?? undefined,
     },
   })),
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .flatMap(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(`${id}_tunnel_preferred_direction`,
         ['all',
@@ -779,7 +781,7 @@ const railwayLine = (text, layers) => [
   // Ground
 
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
       Object.entries(states).map(([state, dash]) => ({
         id: `${id}_casing_${state}`,
@@ -861,7 +863,7 @@ const railwayLine = (text, layers) => [
   // Bridges
 
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .filter(({states}) => 'present' in states)
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, sort}) => [
       {
@@ -936,7 +938,7 @@ const railwayLine = (text, layers) => [
       },
     ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) =>
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) =>
     Object.entries(states).map(([state, dash]) => ({
       id: `${id}_bridge_fill_${state}`,
       type: 'line',
@@ -970,6 +972,7 @@ const railwayLine = (text, layers) => [
           color,
         ],
         'line-width': width,
+        'line-gap-width': gapWidth ?? undefined,
         'line-dasharray': dash ?? undefined,
       },
     })),
@@ -978,7 +981,7 @@ const railwayLine = (text, layers) => [
   // Preferred direction
 
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .flatMap(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(
         `${id}_preferred_direction`,
@@ -1008,7 +1011,7 @@ const railwayLine = (text, layers) => [
   railwayKmText,
 
   ...layers
-    .filter(({casing}) => !casing)
+    .filter(({gapWidth}) => !gapWidth)
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, states}) => ({
       id: `${id}_text`,
       type: 'symbol',
@@ -3760,7 +3763,6 @@ const layers = {
           ],
           gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
-          casing: true,
         },
         {
           id: 'railway_line_low',
@@ -3795,7 +3797,6 @@ const layers = {
           width: 2,
           gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
-          casing: true,
         },
         {
           id: 'railway_line_med_construction',
@@ -3858,7 +3859,6 @@ const layers = {
           ],
           gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
-          casing: true,
         },
         {
           id: 'railway_line_high_multi_train_protection',
