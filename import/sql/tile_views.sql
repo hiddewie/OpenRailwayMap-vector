@@ -1237,7 +1237,6 @@ END $do$;
 
 --- Signals ---
 
-
 CREATE OR REPLACE FUNCTION signals_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1292,6 +1291,53 @@ DO $do$ BEGIN
           "train_protection_rank": "integer",
           "train_protection_construction": "string",
           "train_protection_construction_rank": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION signals_railway_line_low_construction(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'signals_railway_line_low_construction', 4096, 'way')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(st_linemerge(st_simplify(st_collect(way), 100000)), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      any_value(state) as state,
+      max(train_protection_construction_rank) as train_protection_construction_rank,
+      train_protection_construction
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
+      AND train_protection_construction IS NOT NULL
+    GROUP BY
+      ref,
+      name,
+      train_protection_construction
+    ORDER by
+      train_protection_construction_rank NULLS FIRST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low_construction IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_railway_line_low_construction",
+        "fields": {
+          "id": "string",
+          "state": "string",
+          "train_protection_construction": "string"
         }
       }
     ]

@@ -186,7 +186,7 @@ const construction_dasharray = [4.5, 4.5];
 const proposed_dasharray = [1, 4];
 const present_dasharray = [1];
 
-const train_protection_construction_dasharray = [1, 2];
+const train_protection_construction_dasharray = [0, 2, 2, 4];
 
 // Turbo color map
 // See https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/
@@ -524,7 +524,7 @@ const sources = {
   },
   signals_railway_line_low: {
     type: 'vector',
-    url: '/signals_railway_line_low',
+    url: '/signals_railway_line_low,signals_railway_line_low_construction',
     promoteId: 'id',
   },
   electrification_railway_line_low: {
@@ -817,7 +817,7 @@ const railwayLine = (text, layers) => [
         },
       }))
     ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, color, hoverColor, states, sort}) => [
+  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) => [
     ...Object.entries(states).map(([state, dash]) => ({
       id: `${id}_fill_${state}`,
       type: 'line',
@@ -852,6 +852,7 @@ const railwayLine = (text, layers) => [
           color,
         ],
         'line-width': width,
+        'line-gap-width': gapWidth ?? undefined,
         'line-dasharray': dash ?? undefined,
       },
     })),
@@ -3745,22 +3746,19 @@ const layers = {
       [
         {
           id: 'railway_line_low_train_protection_construction',
-          minzoom: 0,
+          minzoom: 5, // TODO also on source
           maxzoom: 7,
           source: 'signals_railway_line_low',
-          sourceLayer: 'signals_railway_line_low',
+          sourceLayer: 'signals_railway_line_low_construction',
           states: {
             present: train_protection_construction_dasharray,
           },
-          filter: ['all',
-            ['!=', ['get', 'feature'], 'ferry'],
-            ['!=', null, ['get', 'train_protection_construction']],
-          ],
           sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            0, 2.5,
-            7, 4,
+            0, 0.5,
+            7, 2,
           ],
+          gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
           casing: true,
         },
@@ -3794,7 +3792,8 @@ const layers = {
             ['!=', null, ['get', 'train_protection_construction']],
           ],
           sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
-          width: 4,
+          width: 2,
+          gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
           casing: true,
         },
@@ -3826,11 +3825,12 @@ const layers = {
           color: trainProtectionColor('train_protection0'),
         },
         {
-          id: 'railway_line_construction',
+          id: 'railway_line_construction_proposed',
           minzoom: 8,
           source: 'high',
           states: {
             construction: construction_dasharray,
+            proposed: proposed_dasharray,
           },
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
@@ -3853,36 +3853,40 @@ const layers = {
           ],
           sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
-            14, 4,
-            16, 5,
+            14, 2,
+            16, 3,
           ],
+          gapWidth: 2,
           color: trainProtectionColor('train_protection_construction'),
           casing: true,
         },
         {
-          id: 'railway_line_high',
+          id: 'railway_line_high_multi_train_protection',
           minzoom: 8,
           source: 'high',
           states: {
             present: undefined,
-            proposed: proposed_dasharray,
-            disused: disused_dasharray,
-            preserved: disused_dasharray,
           },
-          filter: ['!=', ['get', 'feature'], 'ferry'],
+          filter: ['all',
+            ['!=', ['get', 'feature'], 'ferry'],
+            ['!=', ['get', 'train_protection2'], null],
+          ],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor('train_protection0'),
+          color: trainProtectionColor('train_protection2'),
         },
         {
           id: 'railway_line_high_dual_train_protection',
           minzoom: 8,
           source: 'high',
           states: {
-            present: gauge_dual_gauge_dashes,
+            present: ['case',
+              ['!=', ['get', 'train_protection2'], null], ['literal', [3, 3]],
+              ['literal', [100, 0]],
+            ],
           },
           filter: ['all',
             ['!=', ['get', 'feature'], 'ferry'],
@@ -3896,22 +3900,25 @@ const layers = {
           color: trainProtectionColor('train_protection1'),
         },
         {
-          id: 'railway_line_high_multi_train_protection',
+          id: 'railway_line_high',
           minzoom: 8,
           source: 'high',
           states: {
-            present: gauge_multi_gauge_dashes,
+            present: ['case',
+              ['!=', ['get', 'train_protection2'], null], ['literal', [0, 2, 2, 2]],
+              ['!=', ['get', 'train_protection1'], null], ['literal', [3, 3]],
+              ['literal', [100, 0]],
+            ],
+            disused: disused_dasharray,
+            preserved: disused_dasharray,
           },
-          filter: ['all',
-            ['!=', ['get', 'feature'], 'ferry'],
-            ['!=', ['get', 'train_protection2'], null],
-          ],
+          filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
           width: ["interpolate", ["exponential", 1.2], ["zoom"],
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor('train_protection2'),
+          color: trainProtectionColor('train_protection0'),
         },
       ],
     ),
