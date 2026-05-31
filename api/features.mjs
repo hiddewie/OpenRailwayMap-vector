@@ -905,6 +905,9 @@ const features = {
       position: {
         name: 'Position',
       },
+      operator: {
+        name: 'Operator',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -1295,6 +1298,9 @@ const features = {
       },
       insulator: {
         name: 'Insulator',
+      },
+      operator: {
+        name: 'Operator',
       },
       note: {
         name: 'Note',
