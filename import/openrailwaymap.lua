@@ -441,6 +441,7 @@ local turntables = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'polygon', not_null = true },
     { column = 'feature', type = 'text' },
+    { column = 'diameter', type = 'text' },
   },
 })
 
@@ -1465,6 +1466,7 @@ function osm2pgsql.process_way(object)
     turntables:insert({
       way = object:as_polygon(),
       feature = tags.railway,
+      diameter = tags.diameter,
     })
   end
 

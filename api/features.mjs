@@ -604,7 +604,11 @@ const features = {
         type: 'polygon',
       },
     },
-    properties: {}
+    properties: {
+      diameter: {
+        name: 'Diameter',
+      },
+    },
   },
   'openrailwaymap_standard-standard_railway_platforms': {
     view: {
