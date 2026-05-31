@@ -1343,6 +1343,12 @@ const features = {
           template: '%s V',
         },
       },
+      frequency: {
+        name: 'Frequency',
+        format: {
+          template: '%.2d Hz',
+        },
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
