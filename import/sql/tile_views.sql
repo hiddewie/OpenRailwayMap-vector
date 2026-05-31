@@ -560,7 +560,16 @@ CREATE OR REPLACE VIEW standard_railway_turntables_view AS
     'W' as osm_type,
     way,
     feature,
-    diameter
+    diameter,
+    operator,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM turntables;
 
 CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)

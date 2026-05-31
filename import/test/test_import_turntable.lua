@@ -17,6 +17,9 @@ osm2pgsql.process_way({
   tags = {
     ['railway'] = 'turntable',
     ['diameter'] = '23m',
+    ['operator'] = 'operator',
+    ['note'] = 'note',
+    ['description'] = 'description',
   },
   as_polygon = function()
     return way
@@ -24,7 +27,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   turntables = {
-    { feature = 'turntable', diameter = '23m', way = way },
+    { feature = 'turntable', diameter = '23m', operator = 'operator', note = 'note', description = 'description', way = way },
   },
 })
 
