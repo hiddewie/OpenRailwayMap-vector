@@ -1375,7 +1375,7 @@ function osm2pgsql.process_way(object)
         usage = usage,
         rank = rank,
         highspeed = highspeed,
-        layer = tags['layer'],
+        layer = tonumber(tags['layer']),
         ref = tags['ref'],
         track_ref = tags['railway:track_ref'],
         name = name,

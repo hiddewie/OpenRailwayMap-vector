@@ -139,6 +139,9 @@ const railwayLineFeatures = {
     bridge: {
       name: 'Bridge',
     },
+    layer: {
+      name: 'Layer',
+    },
     ref: {
       name: 'Reference',
     },
