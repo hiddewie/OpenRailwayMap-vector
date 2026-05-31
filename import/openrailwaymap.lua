@@ -441,6 +441,16 @@ local turntables = osm2pgsql.define_table({
   columns = {
     { column = 'way', type = 'polygon', not_null = true },
     { column = 'feature', type = 'text' },
+    { column = 'diameter', type = 'text' },
+    { column = 'operator', type = 'text' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
   },
 })
 
@@ -1466,6 +1476,15 @@ function osm2pgsql.process_way(object)
     turntables:insert({
       way = object:as_polygon(),
       feature = tags.railway,
+      diameter = tags.diameter,
+      operator = tags.operator,
+      wikimedia_commons = wikimedia_commons,
+      wikimedia_commons_file = wikimedia_commons_file,
+      image = image,
+      mapillary = tags.mapillary,
+      wikipedia = tags.wikipedia,
+      note = tags.note,
+      description = tags.description,
     })
   end
 
