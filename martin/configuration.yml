@@ -21,6 +21,9 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
+  # Convert tiles to MVT when the client requests such tiles
+  convert_to_mvt: auto
+
   # No tables, see function sources below
   tables: {}
 
