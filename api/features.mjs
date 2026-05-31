@@ -559,6 +559,7 @@ const features = {
     features: {
       landuse: {
         name: 'Historical railway landuse',
+        type: 'polygon',
       },
     },
     properties: {
