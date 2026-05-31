@@ -1551,6 +1551,7 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     location,
     operator,
     voltage,
+    frequency,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
