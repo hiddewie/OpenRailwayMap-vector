@@ -562,6 +562,7 @@ const features = {
     features: {
       landuse: {
         name: 'Historical railway landuse',
+        type: 'polygon',
       },
     },
     properties: {
@@ -907,6 +908,9 @@ const features = {
       },
       position: {
         name: 'Position',
+      },
+      operator: {
+        name: 'Operator',
       },
       wikidata: {
         name: 'Wikidata',
@@ -1299,6 +1303,9 @@ const features = {
       insulator: {
         name: 'Insulator',
       },
+      operator: {
+        name: 'Operator',
+      },
       note: {
         name: 'Note',
         paragraph: true,
@@ -1337,6 +1344,12 @@ const features = {
         name: 'Voltage',
         format: {
           template: '%s V',
+        },
+      },
+      frequency: {
+        name: 'Frequency',
+        format: {
+          template: '%.2d Hz',
         },
       },
       wikidata: {

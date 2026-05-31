@@ -25,12 +25,13 @@ osm2pgsql.process_node({
     ['catenary_mast:attachment'] = 'attachment',
     ['tensioning'] = 'tensioning',
     ['insulator'] = 'insulator',
+    ['operator'] = 'operator',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   catenary = {
-    { id = '123-mast', structure = 'structure', tensioning = 'tensioning', ref = '22', feature = 'mast', supporting = 'supporting', transition = true, insulator = 'insulator', attachment = 'attachment' },
+    { id = '123-mast', structure = 'structure', tensioning = 'tensioning', ref = '22', feature = 'mast', supporting = 'supporting', transition = true, insulator = 'insulator', attachment = 'attachment', operator = 'operator' },
   },
 })
 
@@ -46,6 +47,7 @@ osm2pgsql.process_way({
     ['structure'] = 'structure',
     ['tensioning'] = 'tensioning',
     ['insulator'] = 'insulator',
+    ['operator'] = 'operator',
   },
   as_linestring = function ()
     return way
@@ -53,6 +55,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   catenary = {
-    { id = '123-portal', structure = 'structure', tensioning = 'tensioning', ref = '22', feature = 'portal', transition = true, insulator = 'insulator', way = way },
+    { id = '123-portal', structure = 'structure', tensioning = 'tensioning', ref = '22', feature = 'portal', transition = true, insulator = 'insulator', operator = 'operator', way = way },
   },
 })
