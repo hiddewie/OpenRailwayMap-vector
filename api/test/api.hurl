@@ -659,6 +659,8 @@ jsonpath "$.ref" == "2"
 jsonpath "$.feature" == "platform_edge"
 jsonpath "$.tactile_paving" == null
 jsonpath "$.height" == null
+jsonpath "$.length" > 152.7
+jsonpath "$.length" < 152.9
 jsonpath "$.osm_id" == 859918234
 jsonpath "$.osm_type" == "W"
 
@@ -763,13 +765,14 @@ jsonpath "$['railway:signal:speed_limit_distant:speed'][0]" == "?"
 jsonpath "$['railway:signal:speed_limit_distant:speed'][1]" == "off"
 
 # Turntable
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109012
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109013
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.osm_id" == 16109012
+jsonpath "$.osm_id" == 16109013
 jsonpath "$.osm_type" == "W"
 jsonpath "$.feature" == "turntable"
+jsonpath "$.diameter" == "23m"
 
 # Entrance
 GET {{base_url}}/feature/openrailwaymap_standard/standard_station_entrances/623932074
@@ -790,7 +793,8 @@ Content-Type: application/json
 jsonpath "$.electrification_state" == "present"
 jsonpath "$.feature" == "rail"
 jsonpath "$.frequency" == 16.700000762939453
-jsonpath "$.gauge_label" == "1435"
+jsonpath "$.gauges" count == 1
+jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
 jsonpath "$.line_routes" count == 13
 jsonpath "$.line_routes[0].color" == "#80004D"
@@ -801,8 +805,8 @@ jsonpath "$.operator[0]" == "DB InfraGO AG"
 jsonpath "$.osm_id" == 9933821
 jsonpath "$.osm_type" == "W"
 jsonpath "$.ref" == "6185"
+jsonpath "$.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.speed_label" == "140"
-jsonpath "$.standard_label" == "6185 Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.state" == "present"
 jsonpath "$.train_protection" == "lzb"
 jsonpath "$.usage" == "main"

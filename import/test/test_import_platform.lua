@@ -216,7 +216,7 @@ osm2pgsql.process_way({
     ['height'] = '0.4',
     ['tactile_paving'] = 'yes',
   },
-  as_linestring = function ()
+  as_linestring = function()
     return way
   end,
 })
@@ -231,7 +231,7 @@ osm2pgsql.process_way({
     ['railway'] = 'platform_edge',
     ['public_transport'] = 'platform',
   },
-  as_linestring = function ()
+  as_linestring = function()
     return way
   end,
 })

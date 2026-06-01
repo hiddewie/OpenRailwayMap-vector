@@ -17,12 +17,13 @@ osm2pgsql.process_node({
     ['railway:local_operated'] = 'yes',
     ['railway:switch:resetting'] = 'yes',
     ['railway:turnout_side'] = 'right',
+    ['operator'] = 'operator',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   railway_switches = {
-    { railway = 'switch' , ref = '22', type = 'curved', turnout_side = 'right', local_operated = true, resetting = true },
+    { railway = 'switch' , ref = '22', type = 'curved', turnout_side = 'right', local_operated = true, resetting = true, operator = 'operator' },
   },
 })
 
