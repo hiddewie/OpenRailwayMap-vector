@@ -2000,18 +2000,43 @@ operators:
 
   - country: PT
     names:
-      - 'Infraestruturas de Portugal, S.A.'
-    color: '#1ba89e'
+      - 'Infraestruturas de Portugal'
+    color: '#1E9D8B'
 
   - country: PT
     names:
       - 'Metro do Porto'
-    color: '#00305F'
+    color: '#001858'
 
   - country: PT
     names:
       - 'STCP'
-    color: 'rgb(0, 92, 185)'
+    color: '#005EB8' #3CDBC0
+
+  - country: PT
+    names:
+      - 'Metropolitano de Lisboa'
+    color: '#ff330d'
+
+  - country: PT
+    names:
+      - 'Carris'
+    color: '#ffd400'
+
+  - country: PT
+    names:
+      - 'Metro Transportes do Sul'
+    color: '#0f337f' #218fce
+
+  - country: PT
+    names:
+      - 'Comboios de Portugal'
+    color: '#388344'
+
+  - country: PT
+    names:
+      - 'Medway'
+    color: '#fbe494'
 
   # --- RO --- #
 
