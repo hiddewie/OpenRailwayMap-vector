@@ -2721,7 +2721,7 @@ operators:
       - 'Berkshire and Eastern Railroad'
     color: '#f68b1e'
 
-  - country: US
+ - country: US
     names:
       - 'Buffalo and Pittsburgh Railroad'
     color: '#f68b1e'
