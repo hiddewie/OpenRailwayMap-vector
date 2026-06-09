@@ -563,7 +563,17 @@ CREATE OR REPLACE VIEW standard_railway_turntables_view AS
     osm_id,
     'W' as osm_type,
     way,
-    feature
+    feature,
+    diameter,
+    operator,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
   FROM turntables;
 
 CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
@@ -1078,6 +1088,7 @@ CREATE OR REPLACE VIEW standard_railway_switch_view AS
     local_operated,
     resetting,
     position,
+    operator,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -1547,6 +1558,7 @@ CREATE OR REPLACE VIEW electrification_catenary_view AS
     tensioning,
     insulator,
     position,
+    operator,
     note,
     description
   FROM catenary;
@@ -1603,6 +1615,7 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     location,
     operator,
     voltage,
+    frequency,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,

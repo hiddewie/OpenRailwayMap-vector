@@ -559,6 +559,7 @@ const features = {
     features: {
       landuse: {
         name: 'Historical railway landuse',
+        type: 'polygon',
       },
     },
     properties: {
@@ -604,7 +605,38 @@ const features = {
         type: 'polygon',
       },
     },
-    properties: {}
+    properties: {
+      diameter: {
+        name: 'Diameter',
+      },
+      operator: {
+        name: 'Operator',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    },
   },
   'openrailwaymap_standard-standard_railway_platforms': {
     view: {
@@ -873,6 +905,9 @@ const features = {
       },
       position: {
         name: 'Position',
+      },
+      operator: {
+        name: 'Operator',
       },
       wikidata: {
         name: 'Wikidata',
@@ -1265,6 +1300,9 @@ const features = {
       insulator: {
         name: 'Insulator',
       },
+      operator: {
+        name: 'Operator',
+      },
       note: {
         name: 'Note',
         paragraph: true,
@@ -1303,6 +1341,12 @@ const features = {
         name: 'Voltage',
         format: {
           template: '%s V',
+        },
+      },
+      frequency: {
+        name: 'Frequency',
+        format: {
+          template: '%.2d Hz',
         },
       },
       wikidata: {

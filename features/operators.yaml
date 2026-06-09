@@ -837,6 +837,11 @@ operators:
 
   - country: ES
     names:
+      - 'Metro de Málaga'
+    color: '#e23527'
+
+  - country: ES
+    names:
       - 'TMB'
       - 'Transports Metropolitans de Barcelona'
     color: '#cc0018'
