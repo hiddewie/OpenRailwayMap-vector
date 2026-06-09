@@ -2515,12 +2515,12 @@ operators:
       - 'Maryland and Delaware Railroad'
     color: '#831536'
     
- - country: US
+  - country: US
     names:
       - 'Southwest Pennsylvania Railroad'
     color: '#831536'
 
- - country: US
+   country: US
     names:
       - 'Allegheny Valley Railroad'
     color: '#831536'   
@@ -2663,7 +2663,6 @@ operators:
       - 'Cuyahoga Valley Scenic Railroad'
     color: '#e53c36'  
   
-
   # --- US: Genesee & Wyoming subsidiaries --- #
   - country: US
     names:
@@ -2721,7 +2720,7 @@ operators:
       - 'Berkshire and Eastern Railroad'
     color: '#f68b1e'
 
- - country: US
+  - country: US
     names:
       - 'Buffalo and Pittsburgh Railroad'
     color: '#f68b1e'
