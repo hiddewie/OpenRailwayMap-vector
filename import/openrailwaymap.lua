@@ -184,7 +184,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
     { column = 'highspeed', type = 'boolean' },
-    { column = 'layer', type = 'text' },
+    { column = 'layer', type = 'integer' },
     { column = 'ref', type = 'text' },
     { column = 'track_ref', type = 'text' },
     { column = 'name', type = 'text' },

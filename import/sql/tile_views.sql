@@ -220,7 +220,7 @@ RETURN (
           true
       END
     ORDER by
-      layer,
+      coalesce(layer, 0),
       rank NULLS LAST,
       maxspeed NULLS FIRST
   ) as tile
