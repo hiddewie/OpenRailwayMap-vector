@@ -6,18 +6,39 @@ const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_sign
 const pois = yaml.parse(fs.readFileSync('poi.yaml', 'utf8'))
 const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).references
 
+const trainProtectionTags = [...new Set(signals_railway_line.features.flatMap(feature => feature.tags).map(tag => tag.tag))].toSorted();
+
 /**
  * Template that builds Lua functions used in the Osm2Psql Lua import, and taking the YAML configuration into account
  */
 const lua = `
-function train_protection(tags, prefix)${signals_railway_line.features.map((feature, featureIndex) => `
-  if ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then return '${feature.train_protection}', ${signals_railway_line.features.length - featureIndex} end`).join('')}
+function train_protection(tags, prefix)
+  -- Match a known system
+  local systems = {}
+  local rank = 0
+  local has_systems = false
+  local excluded = {}
+  ${signals_railway_line.features.map((feature, featureIndex) => `
+  if (not excluded['${feature.train_protection}']) and ${feature.tags.map(tag => `${tag.value ? `tags[prefix .. '${tag.tag}'] == '${tag.value}'`: `(${tag.values.map(value => `tags[prefix .. '${tag.tag}'] == '${value}'`).join(' or ')})`}`).join(' and ')} then table.insert(systems, '${feature.train_protection}'); rank = math.max(rank, ${signals_railway_line.features.length - featureIndex + 1}); has_systems = true${feature.exclude ? `;${feature.exclude.map(exclude => ` excluded['${exclude}'] = true;`).join('')}`: ''} end`).join('')}
+
+  if has_systems then
+    return systems, rank
+  end
+
+  -- Match explicit no train protection system
+  local any_tag_set_to_no = ${trainProtectionTags.map(tag => `tags[prefix .. '${tag}'] == 'no'`).join(' or ')}
+  local all_tags_set_to_no_or_empty = ${trainProtectionTags.map(tag => `(tags[prefix .. '${tag}'] or 'no') == 'no'`).join(' and ')}
   
-  return nil, 0
+  if any_tag_set_to_no and all_tags_set_to_no_or_empty then
+    return {'none'}, 1  
+  end
+    
+  -- Unknown
+  return nil, nil
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
-  { tag = '${tag.tag}', type = '${tag.type}' },`).join('')}
+  { tag = '${tag.tag}', type = '${tag.type ?? 'string'}' },`).join('')}
 }
 
 local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.variants || []), feature]).flatMap(feature => feature.tags).filter(tag => tag.tag === 'railway').flatMap(tag => tag.value ? [tag.value] : (tag.values ? tag.values : [])).map(tag => `

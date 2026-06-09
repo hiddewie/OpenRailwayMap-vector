@@ -1743,8 +1743,24 @@ const legendData = {
         key: [
           'feature',
           'state',
-          'train_protection',
-          'train_protection_construction',
+          'train_protection0',
+        ],
+        matchKeys: [
+          [
+            'feature',
+            'state',
+            'train_protection1',
+          ],
+          [
+            'feature',
+            'state',
+            'train_protection2',
+          ],
+          [
+            'feature',
+            'state',
+            'train_protection_construction',
+          ],
         ],
         features: [
           ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1757,7 +1773,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: train_protection.train_protection,
+              train_protection0: train_protection.train_protection,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 1,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1765,7 +1783,9 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection: null,
+                  train_protection0: 'unknown',
+                  train_protection1: null,
+                  train_protection2: null,
                   train_protection_rank: 0,
                   train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
@@ -1783,7 +1803,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: null,
+              train_protection0: null,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 0,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1794,8 +1816,21 @@ const legendData = {
       'openrailwaymap_low-railway_line_high': {
         key: [
           'state',
-          'train_protection',
-          'train_protection_construction',
+          'train_protection0',
+        ],
+        matchKeys: [
+          [
+            'state',
+            'train_protection1',
+          ],
+          [
+            'state',
+            'train_protection2',
+          ],
+          [
+            'state',
+            'train_protection_construction',
+          ],
         ],
         features: [
           ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1808,7 +1843,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: train_protection.train_protection,
+              train_protection0: train_protection.train_protection,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 1,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1816,7 +1853,9 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection: null,
+                  train_protection0: 'unknown',
+                  train_protection1: null,
+                  train_protection2: null,
                   train_protection_rank: 0,
                   train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
@@ -1834,7 +1873,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: null,
+              train_protection0: null,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 0,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1845,8 +1886,21 @@ const legendData = {
       'high-railway_line_high': {
         key: [
           'state',
-          'train_protection',
-          'train_protection_construction',
+          'train_protection0',
+        ],
+        matchKeys: [
+          [
+            'state',
+            'train_protection1',
+          ],
+          [
+            'state',
+            'train_protection2',
+          ],
+          [
+            'state',
+            'train_protection_construction',
+          ],
         ],
         features: [
           ...signals_railway_line.train_protections.map(train_protection => ({
@@ -1859,7 +1913,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: train_protection.train_protection,
+              train_protection0: train_protection.train_protection,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 1,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1867,7 +1923,9 @@ const legendData = {
             variants: [
               {
                 properties: {
-                  train_protection: null,
+                  train_protection0: 'unknown',
+                  train_protection1: null,
+                  train_protection2: null,
                   train_protection_rank: 0,
                   train_protection_construction: train_protection.train_protection,
                   train_protection_construction_rank: 1,
@@ -1885,7 +1943,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: null,
+              train_protection0: null,
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 0,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1901,7 +1961,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: 'etcs',
+              train_protection0: 'etcs',
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 1,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -1917,7 +1979,9 @@ const legendData = {
               service: null,
               bridge: false,
               tunnel: false,
-              train_protection: 'etcs',
+              train_protection0: 'etcs',
+              train_protection1: null,
+              train_protection2: null,
               train_protection_rank: 1,
               train_protection_construction: null,
               train_protection_construction_rank: 0,
@@ -3328,8 +3392,9 @@ const legendDataWithKeys = Object.fromEntries(
       countries,
       sourceLayers: Object.fromEntries(
         Object.entries(sourceLayers)
-          .map(([sourceLayer, {key, features}]) => [sourceLayer, {
+          .map(([sourceLayer, {key, matchKeys, features}]) => [sourceLayer, {
             key,
+            matchKeys,
             features: features.map(item => {
               const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
               const itemFeatureKeys = itemFeatures.map(itemFeature => key.map(keyPart => String(itemFeature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'));
