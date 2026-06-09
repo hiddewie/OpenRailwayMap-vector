@@ -30,13 +30,13 @@ jsonpath "$[9].name" == "Berlin Nordost"
 jsonpath "$[10].name" == "Berlin-Ruhleben"
 jsonpath "$[11].name" == "Berlin Greifswalder Straße"
 jsonpath "$[12].name" == "Berlin-Grünau"
-jsonpath "$[13].name" == "Berlin-Marienfelde Gbf"
-jsonpath "$[14].name" == "Berlin-Spandau"
-jsonpath "$[15].name" == "Spandau"
+jsonpath "$[13].name" == "Berlin-Spandau"
+jsonpath "$[14].name" == "Spandau"
+jsonpath "$[15].name" == "Berlin-Marienfelde Gbf"
 jsonpath "$[16].name" == "Berlin-Tempelhof"
-jsonpath "$[17].name" == "Berlin-Schönholz"
-jsonpath "$[18].name" == "Ostbahnhof"
-jsonpath "$[19].name" == "Berlin Ostbahnhof"
+jsonpath "$[17].name" == "Ostbahnhof"
+jsonpath "$[18].name" == "Berlin Ostbahnhof"
+jsonpath "$[19].name" == "Berlin-Schönholz"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -585,7 +585,7 @@ jsonpath "$.wikipedia" count == 1
 jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
 jsonpath "$.state" == "present"
 jsonpath "$.feature" == "halt"
-jsonpath "$.station_routes" count == 36
+jsonpath "$.station_routes" count == 38
 jsonpath "$.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
 jsonpath "$.station_routes[0].color" == "#33FF33"
 jsonpath "$.station_routes[0].route_id" == "28270"
@@ -640,7 +640,7 @@ jsonpath "$.bin" == true
 jsonpath "$.bench" == true
 jsonpath "$.departures_board" == null
 jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.platform_routes" count == 8
+jsonpath "$.platform_routes" count == 10
 jsonpath "$.platform_routes[0].label" == "RE2: Cottbus => Nauen"
 jsonpath "$.platform_routes[0].color" == "#FFE600"
 jsonpath "$.platform_routes[0].route_id" == "156479"
@@ -796,7 +796,7 @@ jsonpath "$.frequency" == 16.700000762939453
 jsonpath "$.gauges" count == 1
 jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
-jsonpath "$.line_routes" count == 13
+jsonpath "$.line_routes" count == 14
 jsonpath "$.line_routes[0].color" == "#80004D"
 jsonpath "$.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
 jsonpath "$.line_routes[0].route_id" == "373229"
