@@ -2322,7 +2322,7 @@ operators:
       - 'Metrolink'
     color: '#00aedb' 
     
-   - country: US
+  - country: US
     names:
       - 'Pennsylvania Northeastern Railroad'
     color: '#ff6600'  
