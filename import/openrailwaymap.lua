@@ -650,8 +650,9 @@ local substation = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'location', type = 'text' },
     { column = 'operator', type = 'text' },
-    { column = 'voltage', sql_type = 'text[]' },
+    { column = 'voltage', sql_type = 'integer[]' },
     { column = 'frequency', sql_type = 'real[]' },
+    { column = 'conversion', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -1095,6 +1096,29 @@ function stop_position_type(tags)
   else
     -- Default to train
     return 'train'
+  end
+end
+
+function format_voltage_frequency(voltage, frequency)
+  local voltage_text = voltage < 1000.0 and string.format('%.0dV', voltage) or string.format('%.1dkV', voltage / 1000.0)
+
+  if frequency == 0 then
+    return string.format("%s =", voltage_text)
+  else
+    return string.format("%s %.2d Hz", voltage_text, frequency)
+  end
+end
+
+function substation_voltage_frequency(voltage, frequency)
+  local voltages = map(split_semicolon(voltage), function(it) return tonumber(it) end)
+  local frequencies = map(split_semicolon(frequency), function(it) return tonumber(it) end)
+
+  if voltages and frequencies and #voltages == 2 and #frequencies == 2 then
+    -- conversion between source and destination
+    local conversion = string.format('%s ⇒ %s', format_voltage_frequency(voltages[1], frequencies[1]), format_voltage_frequency(voltages[2], frequencies[2]))
+    return nil, nil, conversion
+  else
+    return voltages, frequencies, nil
   end
 end
 
@@ -1594,6 +1618,8 @@ function osm2pgsql.process_way(object)
   end
 
   if tags.power == 'substation' and tags.substation == 'traction' then
+    local voltages, frequencies, conversion = substation_voltage_frequency(tags.voltage, tags.frequency)
+
     substation:insert({
       way = object:as_polygon(),
       feature = 'traction',
@@ -1601,8 +1627,9 @@ function osm2pgsql.process_way(object)
       ref = tags.ref,
       location = tags.location,
       operator = tags.operator,
-      voltage = split_semicolon_to_sql_array(tags.voltage),
-      frequency = to_sql_array(map(split_semicolon(tags.frequency), function(it) return tonumber(it) end)),
+      voltage = to_sql_array(voltages),
+      frequency = to_sql_array(frequencies),
+      conversion = conversion,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,

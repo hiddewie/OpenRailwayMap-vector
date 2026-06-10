@@ -40,6 +40,23 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   substation = {
-    { feature = 'traction', location = 'indoor', voltage = '{"400000","225000","63000"}', frequency = '{50,0}', name = 'name', ref = 'ref', operator = 'operator', way = way },
+    { feature = 'traction', location = 'indoor', voltage = '{400000,225000,63000}', frequency = '{50,0}', name = 'name', ref = 'ref', operator = 'operator', way = way },
+  },
+})
+
+osm2pgsql.process_way({
+  tags = {
+    ['power'] = 'substation',
+    ['substation'] = 'traction',
+    ['voltage'] = '400000;750',
+    ['frequency'] = '50;0',
+  },
+  as_polygon = function ()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  substation = {
+    { feature = 'traction', conversion = '400kV 50 Hz ⇒ 750V =', way = way },
   },
 })

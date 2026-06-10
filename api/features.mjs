@@ -1340,10 +1340,13 @@ const features = {
       operator: {
         name: 'Operator',
       },
+      conversion: {
+        name: 'Conversion',
+      },
       voltage: {
         name: 'Voltage',
         format: {
-          template: '%s V',
+          template: '%d V',
         },
       },
       frequency: {
