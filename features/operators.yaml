@@ -2001,7 +2001,7 @@ operators:
   - country: PT
     names:
       - 'Infraestruturas de Portugal'
-    color: '#1E9D8B'
+    color: '#1e9d8b'
 
   - country: PT
     names:
@@ -2011,22 +2011,22 @@ operators:
   - country: PT
     names:
       - 'STCP'
-    color: '#005EB8' #3CDBC0
+    color: '#005eb8'
 
   - country: PT
     names:
       - 'Metropolitano de Lisboa'
-    color: '#ff330d'
+    color: '#ff3300'
 
   - country: PT
     names:
       - 'Carris'
-    color: '#ffd400'
+    color: '#ffdd00'
 
   - country: PT
     names:
       - 'Metro Transportes do Sul'
-    color: '#0f337f' #218fce
+    color: '#0f337f'
 
   - country: PT
     names:
