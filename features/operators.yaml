@@ -3190,12 +3190,12 @@ operators:
       - 'Jacksonville Port Terminal Railroad'
     color: '#fcb900'
 
-   - country: US
+  - country: US
     names:
       - 'Wisconsin and Southern Railroad'
     color: '#fcb900'
 
-   - country: US
+  - country: US
     names:
       - 'Yellowstone Valley Railroad'
     color: '#fcb900'  
