@@ -2405,7 +2405,7 @@ function popupContent(feature, abortController) {
               console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
               return stringValue;
             } else {
-              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
+              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(stringValue);
               const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
               if (!lookedUpValue) {
                 console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);

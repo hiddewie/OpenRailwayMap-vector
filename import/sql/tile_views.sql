@@ -155,7 +155,9 @@ RETURN (
       maxspeed,
       speed_label,
       train_protection_rank,
-      train_protection,
+      train_protection[1] as train_protection0,
+      train_protection[2] as train_protection1,
+      train_protection[3] as train_protection2,
       train_protection_construction_rank,
       train_protection_construction,
       electrification_state,
@@ -220,7 +222,7 @@ RETURN (
           true
       END
     ORDER by
-      layer,
+      coalesce(layer, 0),
       rank NULLS LAST,
       maxspeed NULLS FIRST
   ) as tile
@@ -250,7 +252,9 @@ DO $do$ BEGIN
           "track_ref": "string",
           "maxspeed": "number",
           "speed_label": "string",
-          "train_protection": "string",
+          "train_protection0": "string",
+          "train_protection1": "string",
+          "train_protection2": "string",
           "train_protection_rank": "integer",
           "train_protection_construction": "string",
           "train_protection_construction_rank": "integer",
@@ -1244,7 +1248,6 @@ END $do$;
 
 --- Signals ---
 
-
 CREATE OR REPLACE FUNCTION signals_railway_line_low(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -1261,9 +1264,11 @@ RETURN (
       feature,
       any_value(state) as state,
       any_value(usage) as usage,
-      train_protection_rank,
-      train_protection,
-      train_protection_construction_rank,
+      max(train_protection_rank) as train_protection_rank,
+      train_protection[1] as train_protection0,
+      train_protection[2] as train_protection1,
+      train_protection[3] as train_protection2,
+      max(train_protection_construction_rank) as train_protection_construction_rank,
       train_protection_construction,
       max(rank) as rank
     FROM railway_line_low
@@ -1272,9 +1277,7 @@ RETURN (
       feature,
       ref,
       name,
-      train_protection_rank,
       train_protection,
-      train_protection_construction_rank,
       train_protection_construction
     ORDER by
       rank NULLS LAST
@@ -1293,10 +1296,59 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "train_protection": "string",
+          "train_protection0": "string",
+          "train_protection1": "string",
+          "train_protection2": "string",
           "train_protection_rank": "integer",
           "train_protection_construction": "string",
           "train_protection_construction_rank": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION signals_railway_line_low_construction(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'signals_railway_line_low_construction', 4096, 'way')
+  FROM (
+    SELECT
+      min(id) as id,
+      ST_AsMVTGeom(st_linemerge(st_simplify(st_collect(way), 100000)), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      any_value(state) as state,
+      max(train_protection_construction_rank) as train_protection_construction_rank,
+      train_protection_construction
+    FROM railway_line_low
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
+      AND train_protection_construction IS NOT NULL
+    GROUP BY
+      ref,
+      name,
+      train_protection_construction
+    ORDER by
+      train_protection_construction_rank NULLS FIRST
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low_construction IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_railway_line_low_construction",
+        "fields": {
+          "id": "string",
+          "state": "string",
+          "train_protection_construction": "string"
         }
       }
     ]
