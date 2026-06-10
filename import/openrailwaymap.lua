@@ -651,7 +651,7 @@ local substation = osm2pgsql.define_table({
     { column = 'location', type = 'text' },
     { column = 'operator', type = 'text' },
     { column = 'voltage', sql_type = 'text[]' },
-    { column = 'frequency', sql_type = 'text[]' },
+    { column = 'frequency', sql_type = 'real[]' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -765,8 +765,31 @@ function electrification_state(tags)
   return nil, nil, nil, nil, nil
 end
 
+-- Split a value and trim the parts
+function split_semicolon(value)
+  if not value then
+    return nil
+  end
+
+  local items = {}
+  local has_items = false
+  for part in string.gmatch(value, '[^;]+') do
+    local stripped_part = strip_prefix(part, ' ')
+    if stripped_part then
+      table.insert(items, stripped_part)
+      has_items = true
+    end
+  end
+
+  if has_items then
+    return items
+  else
+    return nil
+  end
+end
+
+-- Put the items in a table into a raw SQL array string (quoted and comma-delimited)
 function to_sql_array(items)
-  -- Put the items in a table into a raw SQL array string (quoted and comma-delimited)
   if not items then
     return nil
   end
@@ -778,8 +801,12 @@ function to_sql_array(items)
       result = result .. ','
     end
 
-    -- Raw SQL array syntax
-    result = result .. "\"" .. item:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
+    if type(item) == "number" then
+      result = result .. tostring(item)
+    else
+      -- Raw SQL array syntax
+      result = result .. "\"" .. item:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
+    end
   end
 
   return result .. '}'
@@ -787,22 +814,7 @@ end
 
 -- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
 function split_semicolon_to_sql_array(value)
-  if not value then
-    return nil
-  end
-
-  local items = {}
-
-  if value then
-    for part in string.gmatch(value, '[^;]+') do
-      local stripped_part = strip_prefix(part, ' ')
-      if stripped_part then
-        table.insert(items, stripped_part)
-      end
-    end
-  end
-
-  return to_sql_array(items)
+  return to_sql_array(split_semicolon(value))
 end
 
 local railway_state_tags = {
@@ -1590,7 +1602,7 @@ function osm2pgsql.process_way(object)
       location = tags.location,
       operator = tags.operator,
       voltage = split_semicolon_to_sql_array(tags.voltage),
-      frequency = split_semicolon_to_sql_array(tags.frequency),
+      frequency = to_sql_array(map(split_semicolon(tags.frequency), function(it) return tonumber(it) end)),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,

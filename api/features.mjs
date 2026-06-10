@@ -1349,7 +1349,7 @@ const features = {
       frequency: {
         name: 'Frequency',
         format: {
-          template: '%s Hz',
+          template: '%.2d Hz',
         },
       },
       wikidata: {
