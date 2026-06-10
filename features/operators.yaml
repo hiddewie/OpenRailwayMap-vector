@@ -2520,7 +2520,7 @@ operators:
       - 'Southwest Pennsylvania Railroad'
     color: '#831536'
 
-   country: US
+  - country: US
     names:
       - 'Allegheny Valley Railroad'
     color: '#831536'   
