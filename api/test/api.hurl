@@ -491,6 +491,19 @@ jsonpath "$.position[0]" == "11.6 (km)"
 jsonpath "$.structure" == "lattice"
 
 # Substation
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/62032242
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 62032242
+jsonpath "$.osm_type" == "W"
+jsonpath "$.voltage" count == 2
+jsonpath "$.voltage[0]" == 30000
+jsonpath "$.voltage[1]" == 750
+
+# Substation
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
 HTTP 200
 Content-Type: application/json
@@ -499,9 +512,7 @@ jsonpath "$.note" == null
 jsonpath "$.description" == null
 jsonpath "$.osm_id" == 320522867
 jsonpath "$.osm_type" == "W"
-jsonpath "$.voltage" count == 2
-jsonpath "$.voltage[0]" == "30000"
-jsonpath "$.voltage[1]" == "750"
+jsonpath "$.conversion" == "30kV 50 Hz ⇒ 750V ="
 
 # Railway crossing
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
