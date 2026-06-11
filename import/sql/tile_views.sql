@@ -1616,6 +1616,7 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     operator,
     voltage,
     frequency,
+    conversion,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,

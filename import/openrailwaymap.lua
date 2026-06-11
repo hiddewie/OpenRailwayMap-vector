@@ -650,8 +650,9 @@ local substation = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'location', type = 'text' },
     { column = 'operator', type = 'text' },
-    { column = 'voltage', sql_type = 'text[]' },
-    { column = 'frequency', sql_type = 'text[]' },
+    { column = 'voltage', sql_type = 'integer[]' },
+    { column = 'frequency', sql_type = 'real[]' },
+    { column = 'conversion', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -765,8 +766,31 @@ function electrification_state(tags)
   return nil, nil, nil, nil, nil
 end
 
+-- Split a value and trim the parts
+function split_semicolon(value)
+  if not value then
+    return nil
+  end
+
+  local items = {}
+  local has_items = false
+  for part in string.gmatch(value, '[^;]+') do
+    local stripped_part = strip_prefix(part, ' ')
+    if stripped_part then
+      table.insert(items, stripped_part)
+      has_items = true
+    end
+  end
+
+  if has_items then
+    return items
+  else
+    return nil
+  end
+end
+
+-- Put the items in a table into a raw SQL array string (quoted and comma-delimited)
 function to_sql_array(items)
-  -- Put the items in a table into a raw SQL array string (quoted and comma-delimited)
   if not items then
     return nil
   end
@@ -778,8 +802,12 @@ function to_sql_array(items)
       result = result .. ','
     end
 
-    -- Raw SQL array syntax
-    result = result .. "\"" .. item:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
+    if type(item) == "number" then
+      result = result .. tostring(item)
+    else
+      -- Raw SQL array syntax
+      result = result .. "\"" .. item:gsub("\\", "\\\\"):gsub("\"", "\\\"") .. "\""
+    end
   end
 
   return result .. '}'
@@ -787,22 +815,7 @@ end
 
 -- Split a value and turn it into a raw SQL array (quoted and comma-delimited)
 function split_semicolon_to_sql_array(value)
-  if not value then
-    return nil
-  end
-
-  local items = {}
-
-  if value then
-    for part in string.gmatch(value, '[^;]+') do
-      local stripped_part = strip_prefix(part, ' ')
-      if stripped_part then
-        table.insert(items, stripped_part)
-      end
-    end
-  end
-
-  return to_sql_array(items)
+  return to_sql_array(split_semicolon(value))
 end
 
 local railway_state_tags = {
@@ -1083,6 +1096,29 @@ function stop_position_type(tags)
   else
     -- Default to train
     return 'train'
+  end
+end
+
+function format_voltage_frequency(voltage, frequency)
+  local voltage_text = voltage < 1000.0 and string.format('%.0dV', voltage) or string.format('%.1dkV', voltage / 1000.0)
+
+  if frequency == 0 then
+    return string.format("%s =", voltage_text)
+  else
+    return string.format("%s %.2d Hz", voltage_text, frequency)
+  end
+end
+
+function substation_voltage_frequency(voltage, frequency)
+  local voltages = map(split_semicolon(voltage), function(it) return tonumber(it) end)
+  local frequencies = map(split_semicolon(frequency), function(it) return tonumber(it) end)
+
+  if voltages and frequencies and #voltages == 2 and #frequencies == 2 then
+    -- conversion between source and destination
+    local conversion = string.format('%s ⇒ %s', format_voltage_frequency(voltages[1], frequencies[1]), format_voltage_frequency(voltages[2], frequencies[2]))
+    return nil, nil, conversion
+  else
+    return voltages, frequencies, nil
   end
 end
 
@@ -1582,6 +1618,8 @@ function osm2pgsql.process_way(object)
   end
 
   if tags.power == 'substation' and tags.substation == 'traction' then
+    local voltages, frequencies, conversion = substation_voltage_frequency(tags.voltage, tags.frequency)
+
     substation:insert({
       way = object:as_polygon(),
       feature = 'traction',
@@ -1589,8 +1627,9 @@ function osm2pgsql.process_way(object)
       ref = tags.ref,
       location = tags.location,
       operator = tags.operator,
-      voltage = split_semicolon_to_sql_array(tags.voltage),
-      frequency = split_semicolon_to_sql_array(tags.frequency),
+      voltage = to_sql_array(voltages),
+      frequency = to_sql_array(frequencies),
+      conversion = conversion,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
