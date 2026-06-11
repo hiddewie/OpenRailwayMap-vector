@@ -139,6 +139,9 @@ const railwayLineFeatures = {
     bridge: {
       name: 'Bridge',
     },
+    layer: {
+      name: 'Layer',
+    },
     ref: {
       name: 'Reference',
     },
@@ -1337,16 +1340,19 @@ const features = {
       operator: {
         name: 'Operator',
       },
+      conversion: {
+        name: 'Conversion',
+      },
       voltage: {
         name: 'Voltage',
         format: {
-          template: '%s V',
+          template: '%d V',
         },
       },
       frequency: {
         name: 'Frequency',
         format: {
-          template: '%.2d Hz',
+          template: '%s Hz',
         },
       },
       wikidata: {

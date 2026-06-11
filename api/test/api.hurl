@@ -30,13 +30,13 @@ jsonpath "$[9].name" == "Berlin Nordost"
 jsonpath "$[10].name" == "Berlin-Ruhleben"
 jsonpath "$[11].name" == "Berlin Greifswalder Straße"
 jsonpath "$[12].name" == "Berlin-Grünau"
-jsonpath "$[13].name" == "Berlin-Marienfelde Gbf"
-jsonpath "$[14].name" == "Berlin-Spandau"
-jsonpath "$[15].name" == "Spandau"
+jsonpath "$[13].name" == "Berlin-Spandau"
+jsonpath "$[14].name" == "Spandau"
+jsonpath "$[15].name" == "Berlin-Marienfelde Gbf"
 jsonpath "$[16].name" == "Berlin-Tempelhof"
-jsonpath "$[17].name" == "Berlin-Schönholz"
-jsonpath "$[18].name" == "Ostbahnhof"
-jsonpath "$[19].name" == "Berlin Ostbahnhof"
+jsonpath "$[17].name" == "Ostbahnhof"
+jsonpath "$[18].name" == "Berlin Ostbahnhof"
+jsonpath "$[19].name" == "Berlin-Schönholz"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -491,6 +491,19 @@ jsonpath "$.position[0]" == "11.6 (km)"
 jsonpath "$.structure" == "lattice"
 
 # Substation
+GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/62032242
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 62032242
+jsonpath "$.osm_type" == "W"
+jsonpath "$.voltage" count == 2
+jsonpath "$.voltage[0]" == 30000
+jsonpath "$.voltage[1]" == 750
+
+# Substation
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
 HTTP 200
 Content-Type: application/json
@@ -499,9 +512,7 @@ jsonpath "$.note" == null
 jsonpath "$.description" == null
 jsonpath "$.osm_id" == 320522867
 jsonpath "$.osm_type" == "W"
-jsonpath "$.voltage" count == 2
-jsonpath "$.voltage[0]" == "30000"
-jsonpath "$.voltage[1]" == "750"
+jsonpath "$.conversion" == "30kV 50 Hz ⇒ 750V ="
 
 # Railway crossing
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
@@ -585,7 +596,7 @@ jsonpath "$.wikipedia" count == 1
 jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
 jsonpath "$.state" == "present"
 jsonpath "$.feature" == "halt"
-jsonpath "$.station_routes" count == 36
+jsonpath "$.station_routes" count == 38
 jsonpath "$.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
 jsonpath "$.station_routes[0].color" == "#33FF33"
 jsonpath "$.station_routes[0].route_id" == "28270"
@@ -640,7 +651,7 @@ jsonpath "$.bin" == true
 jsonpath "$.bench" == true
 jsonpath "$.departures_board" == null
 jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.platform_routes" count == 8
+jsonpath "$.platform_routes" count == 10
 jsonpath "$.platform_routes[0].label" == "RE2: Cottbus => Nauen"
 jsonpath "$.platform_routes[0].color" == "#FFE600"
 jsonpath "$.platform_routes[0].route_id" == "156479"
@@ -796,7 +807,7 @@ jsonpath "$.frequency" == 16.700000762939453
 jsonpath "$.gauges" count == 1
 jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
-jsonpath "$.line_routes" count == 13
+jsonpath "$.line_routes" count == 14
 jsonpath "$.line_routes[0].color" == "#80004D"
 jsonpath "$.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
 jsonpath "$.line_routes[0].route_id" == "373229"
@@ -808,7 +819,9 @@ jsonpath "$.ref" == "6185"
 jsonpath "$.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
 jsonpath "$.speed_label" == "140"
 jsonpath "$.state" == "present"
-jsonpath "$.train_protection" == "lzb"
+jsonpath "$.train_protection" count == 2
+jsonpath "$.train_protection[0]" == "lzb"
+jsonpath "$.train_protection[1]" == "pzb"
 jsonpath "$.usage" == "main"
 jsonpath "$.voltage" == 15000
 jsonpath "$.note" == null

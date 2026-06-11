@@ -837,6 +837,11 @@ operators:
 
   - country: ES
     names:
+      - 'Metro de Málaga'
+    color: '#e23527'
+
+  - country: ES
+    names:
       - 'TMB'
       - 'Transports Metropolitans de Barcelona'
     color: '#cc0018'
@@ -880,6 +885,12 @@ operators:
       - 'Keolis'
       - 'Keolis Lyon'
     color: 'rgb(0, 130, 150)'
+
+  - country: FR
+    names:
+      - 'Alstom SA'
+      - 'Alstom'
+    color: '#E31B23'
 
   # --- FI --- #
 
@@ -2000,18 +2011,43 @@ operators:
 
   - country: PT
     names:
-      - 'Infraestruturas de Portugal, S.A.'
-    color: '#1ba89e'
+      - 'Infraestruturas de Portugal'
+    color: '#1e9d8b'
 
   - country: PT
     names:
       - 'Metro do Porto'
-    color: '#00305F'
+    color: '#001858'
 
   - country: PT
     names:
       - 'STCP'
-    color: 'rgb(0, 92, 185)'
+    color: '#005eb8'
+
+  - country: PT
+    names:
+      - 'Metropolitano de Lisboa'
+    color: '#ff3300'
+
+  - country: PT
+    names:
+      - 'Carris'
+    color: '#ffdd00'
+
+  - country: PT
+    names:
+      - 'Metro Transportes do Sul'
+    color: '#0f337f'
+
+  - country: PT
+    names:
+      - 'Comboios de Portugal'
+    color: '#388344'
+
+  - country: PT
+    names:
+      - 'Medway'
+    color: '#fbe494'
 
   # --- RO --- #
 
@@ -2280,7 +2316,7 @@ operators:
       - 'CSX Transportation'
       - 'CSX'
       - 'CSXT'
-    color: '#003462'
+    color: '#144270'
 
   - country: US
     names:
@@ -2302,6 +2338,22 @@ operators:
 
   - country: US
     names:
+      - 'North County Transit District'
+    color: '#008b8b'
+    
+  - country: US
+    names:
+      - 'Southern California Regional Rail Authority'
+      - 'Metrolink'
+    color: '#00aedb' 
+    
+  - country: US
+    names:
+      - 'Pennsylvania Northeastern Railroad'
+    color: '#ff6600'  
+
+  - country: US
+    names:
       - 'South Florida Regional Transportation Authority'
     color: '#15718a'
 
@@ -2309,7 +2361,7 @@ operators:
     names:
       - 'Florida East Coast Railway'
       - 'FEC'
-    color: '#00f0ff'
+    color: '#003366'
 
   - country: US
     names:
@@ -2320,6 +2372,7 @@ operators:
     names:
       - 'Brightline Trains Florida LLC'
       - 'Brightline'
+      - 'Brightline West'
     color: '#ffdb00'
 
   - country: US
@@ -2344,6 +2397,31 @@ operators:
 
   - country: US
     names:
+      - 'New Mexico Rail Runner Express'
+    color: '#a70e13'
+
+  - country: US
+    names:
+      - 'Trinity Railway Express'
+    color: '#003e7c'
+
+  - country: US
+    names:
+      - 'TEXRail'
+    color: '#e91c2c' 
+
+  - country: US
+    names:
+      - 'Dallas Area Rapid Transit'
+    color: '#fff200'
+
+  - country: US
+    names:
+      - 'Washington Metropolitan Area Transit Authority'
+    color: '#3a2c26'    
+
+  - country: US
+    names:
       - 'New York & Atlantic Railway'
       - 'New York and Atlantic Railway'
     color: '#38553E'
@@ -2362,7 +2440,7 @@ operators:
     names:
       - 'Northern Indiana Commuter Transportation District'
       - 'NICTD'
-    color: '#F08322'
+    color: '#7f271f'
 
   - country: US
     names:
@@ -2459,9 +2537,29 @@ operators:
 
   - country: US
     names:
+      - 'Maryland and Delaware Railroad'
+    color: '#831536'
+    
+  - country: US
+    names:
+      - 'Southwest Pennsylvania Railroad'
+    color: '#831536'
+
+  - country: US
+    names:
+      - 'Allegheny Valley Railroad'
+    color: '#831536'   
+
+  - country: US
+    names:
       - 'Maryland Transit Administration'
-      - 'MARC'
     color: '#a4032f'
+
+  - country: US
+    names:
+      - 'Maryland Area Rail Commuter'
+      - 'MARC'
+    color: '#F17A24'
 
   - country: US
     names:
@@ -2508,6 +2606,88 @@ operators:
       - 'Belt Railway of Chicago'
     color: '#ffad09'
 
+  - country: US
+    names:
+      - 'Paducah and Louisville Railway'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Evansville Western Railway'
+    color: '#0b3c26'
+    
+  - country: US
+    names:
+      - 'Appalachian and Ohio Railroad'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Midway Southern Railway'
+    color: '#0b3c26'  
+    
+  - country: US
+    names:
+      - 'Louisville and Indiana Railroad'
+    color: '#ff3b21'
+
+  - country: US
+    names:
+      - 'SMS Rail Lines'
+    color: '#004b23'
+
+  - country: US
+    names:
+      - 'Aberdeen, Carolina and Western Railway'
+    color: '#b21f76'
+
+  - country: US
+    names:
+      - 'Southern Railroad of New Jersey'
+    color: '#ff3b21'
+
+  - country: US
+    names:
+      - 'Vermont Rail System'
+      - 'Vermont Railway'
+    color: '#d2262f'
+    
+  - country: US
+    names:
+      - 'Clarendon & Pittsford Railroad'
+      - 'Clarendon and Pittsford Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Green Mountain Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Washington County Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'New England Southern Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'New York and Ogdensburg Railway'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Saratoga Corinth and Hudson Railway'
+    color: '#1D2E24'
+
+  - country: US
+    names:
+      - 'Cuyahoga Valley Scenic Railroad'
+    color: '#e53c36'  
+  
   # --- US: Genesee & Wyoming subsidiaries --- #
   - country: US
     names:
@@ -2527,6 +2707,7 @@ operators:
   - country: US
     names:
       - 'Arizona and California Railroad'
+      - 'Arizona & California Railroad'
     color: '#f68b1e'
 
   - country: US
@@ -2587,6 +2768,7 @@ operators:
   - country: US
     names:
       - 'Central Oregon and Pacific Railroad'
+      - 'Central Oregon & Pacific Railroad'
     color: '#f68b1e'
 
   - country: US
@@ -2857,6 +3039,7 @@ operators:
   - country: US
     names:
       - 'Portland and Western Railroad'
+      - 'Portland & Western Railroad'
     color: '#f68b1e'
 
   - country: US
@@ -2973,6 +3156,11 @@ operators:
 
   - country: US
     names:
+      - 'Willamette & Pacific Railroad'
+    color: '#f68b1e'
+    
+  - country: US
+    names:
       - 'Wilmington Terminal Railroad'
     color: '#f68b1e'
 
@@ -3021,6 +3209,21 @@ operators:
     names:
       - 'Ithaca Central Railroad'
     color: '#fcb900'
+    
+  - country: US
+    names:
+      - 'Jacksonville Port Terminal Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Wisconsin and Southern Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Yellowstone Valley Railroad'
+    color: '#fcb900'  
 
   - country: US
     names:
@@ -3056,8 +3259,33 @@ operators:
   # --- US: Regional Rail subsidiaries --- #
   - country: US
     names:
+      - 'Burns Harbor Railroad'
+    color: '#efb635'
+  
+  - country: US
+    names:
+      - 'Carolina Coastal Railway'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Cincinnati Eastern Railroad'
+    color: '#efb635'
+  
+  - country: US
+    names:
+      - 'Commercial Transload of Minnesota'
+    color: '#efb635'
+    
+  - country: US
+    names:
       - 'East Penn Railroad'
     color: '#efb635'
+
+  - country: US
+    names:
+      - 'East Penn Railroad'
+    color: '#efb635'   
 
   - country: US
     names:
@@ -3076,14 +3304,49 @@ operators:
 
   - country: US
     names:
+      - 'Illinois Western Railroad'
+    color: '#efb635'
+  
+  - country: US
+    names:
+      - 'Indiana Eastern Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Massachusetts Central Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
       - 'Middletown and New Jersey Railroad'
     color: '#efb635'
 
   - country: US
     names:
+      - 'Minnesota Commercial Railway'
+    color: '#efb635'
+    
+  - country: US
+    names:
+      - 'Ohio South Central Railroad'
+    color: '#efb635'
+    
+  - country: US
+    names:
       - 'Port Manatee Railroad'
     color: '#efb635'
 
+  - country: US
+    names:
+      - 'South Point and Ohio Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Tyburn Railroad'
+    color: '#efb635' 
+    
   # --- UZ --- #
 
   - country: UZ
