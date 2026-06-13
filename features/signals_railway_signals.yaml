@@ -9780,7 +9780,19 @@ features:
 
   - description: Main signal
     country: US
-    icon: [ default: 'us/main' ]
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'us/main_dwarf_left' }
+        default: 'us/main_dwarf_right'
+    tags:
+      - { tag: 'railway:signal:main', any: ['US:main', 'US-ABS:main', 'US:GCOR:main'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:height', value: 'dwarf' }
+
+  - description: Main signal
+    country: US
+    icon: [ default: 'us/main_normal' ]
     tags:
       - { tag: 'railway:signal:main', any: ['US:main', 'US-ABS:main', 'US:GCOR:main'] }
       - { tag: 'railway:signal:main:form', value: 'light' }

@@ -2408,14 +2408,14 @@ function popupContent(feature, abortController) {
           if (!format) {
             return stringValue;
           } else if (format.template) {
-            return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
+            return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(stringValue).toFixed(Number(decimals)));
           } else if (format.lookup) {
             const lookupCatalog = features && features[format.lookup];
             if (!lookupCatalog) {
               console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
               return stringValue;
             } else {
-              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
+              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(stringValue);
               const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
               if (!lookedUpValue) {
                 console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
