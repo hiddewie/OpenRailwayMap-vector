@@ -2264,7 +2264,7 @@ class WakeLock {
           this.wakeLock = lock;
           console.info('Acquired wake lock')
         })
-        .catch(error => console.warn('Acquiring of wakelock failed', error));
+        .catch(error => console.warn('Acquiring of wake lock failed', error));
     }
   }
 
