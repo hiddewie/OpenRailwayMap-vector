@@ -570,8 +570,9 @@ const sources = {
   },
   high: {
     type: 'vector',
-    url: '/railway_line_high,railway_text_km',
+    url: '/railway_line_high',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_standard: {
     type: 'vector',

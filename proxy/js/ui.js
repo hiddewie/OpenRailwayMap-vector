@@ -1185,6 +1185,16 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   attributionControl: false,
   renderWorldCopies: false,
+  transformRequest: function(url, resourceType) {
+    if (resourceType === 'Tile' && url && url.startsWith('http://localhost:8000/railway_line_high')) {
+      return {
+        url,
+        headers: {
+          'Accept': 'application/vnd.maplibre-tile'
+        },
+      }
+    }
+  },
   ...(configuration.view || defaultConfiguration.view),
 });
 
