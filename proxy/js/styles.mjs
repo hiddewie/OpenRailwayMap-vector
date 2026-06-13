@@ -170,9 +170,11 @@ const turntable_casing_width = 2;
 
 const trainProtectionColor = field => ['case',
   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-  ...signals_railway_line.train_protections.flatMap(train_protection =>
-    [['==', ['get', field], train_protection.train_protection], train_protection.color]),
-  'grey',
+  ['match', field,
+    ...signals_railway_line.train_protections.flatMap(train_protection =>
+      [train_protection.train_protection, train_protection.color]),
+    'grey',
+  ],
 ];
 
 const railway_casing_add = 1;
@@ -3766,7 +3768,7 @@ const layers = {
             7, 2,
           ],
           gapWidth: 2,
-          color: trainProtectionColor('train_protection_construction'),
+          color: trainProtectionColor(['get', 'train_protection_construction']),
         },
         {
           id: 'railway_line_low',
@@ -3783,7 +3785,7 @@ const layers = {
             0, 0.5,
             7, 2,
           ],
-          color: trainProtectionColor('train_protection0'),
+          color: trainProtectionColor(['get', 'train_protection0']),
         },
         {
           id: 'railway_line_med_train_protection_construction',
@@ -3800,7 +3802,7 @@ const layers = {
           sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
           width: 2,
           gapWidth: 2,
-          color: trainProtectionColor('train_protection_construction'),
+          color: trainProtectionColor(['get', 'train_protection_construction']),
         },
         {
           id: 'railway_line_med_construction',
@@ -3814,7 +3816,7 @@ const layers = {
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
           width: 2,
-          color: trainProtectionColor(['coalesce', 'train_protection_construction', 'train_protection0']),
+          color: trainProtectionColor(['coalesce', ['get', 'train_protection_construction'], ['get', 'train_protection0']]),
         },
         {
           id: 'railway_line_med',
@@ -3827,7 +3829,7 @@ const layers = {
           filter: ['!=', ['get', 'feature'], 'ferry'],
           sort: ['coalesce', ['get', 'train_protection_rank'], 0],
           width: 2,
-          color: trainProtectionColor('train_protection0'),
+          color: trainProtectionColor(['get', 'train_protection0']),
         },
         {
           id: 'railway_line_construction_proposed',
@@ -3843,7 +3845,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor(['coalesce', 'train_protection_construction', 'train_protection0']),
+          color: trainProtectionColor(['coalesce', ['get', 'train_protection_construction'], ['get', 'train_protection0']]),
         },
         {
           id: 'railway_line_high_train_protection_construction',
@@ -3862,7 +3864,7 @@ const layers = {
             16, 3,
           ],
           gapWidth: 2,
-          color: trainProtectionColor('train_protection_construction'),
+          color: trainProtectionColor(['get', 'train_protection_construction']),
         },
         {
           id: 'railway_line_high_multi_train_protection',
@@ -3880,7 +3882,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor('train_protection2'),
+          color: trainProtectionColor(['get', 'train_protection2']),
         },
         {
           id: 'railway_line_high_dual_train_protection',
@@ -3901,7 +3903,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor('train_protection1'),
+          color: trainProtectionColor(['get', 'train_protection1']),
         },
         {
           id: 'railway_line_high',
@@ -3922,7 +3924,7 @@ const layers = {
             14, 2,
             16, 3,
           ],
-          color: trainProtectionColor('train_protection0'),
+          color: trainProtectionColor(['get', 'train_protection0']),
         },
       ],
     ),
