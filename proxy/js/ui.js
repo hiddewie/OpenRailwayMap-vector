@@ -2240,19 +2240,24 @@ const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: true,
 })
+const geolocateControl = new maplibregl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true,
+  showAccuracyCircle: false,
+  showUserLocation: true,
+})
+geolocateControl.on('trackuserlocationstart', () => {
+  console.info('acquire wake lock')
+})
+geolocateControl.on('trackuserlocationend', () =>  {
+  console.info('release wake lock')
+})
 map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
-map.addControl(
-  new maplibregl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true,
-    showAccuracyCircle: false,
-    showUserLocation: true,
-  })
-);
+map.addControl(geolocateControl);
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
