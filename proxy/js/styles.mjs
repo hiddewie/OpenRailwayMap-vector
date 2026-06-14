@@ -631,28 +631,31 @@ const searchResults = {
   },
 };
 
-const duplicateLayersForDashStates = ({ states, ...rest }) => {
+const duplicateLayersForDashStates = ({ id, states, ...rest }) => {
   const statesWithoutDash = Object.entries(states).filter(([_, dash]) => !dash).map(([state, _]) => state)
   const statesWithDash = Object.entries(states).filter(([_, dash]) => dash).map(([state, _]) => state)
 
   return [
     ...(statesWithoutDash.length > 0
-        ? [{
-          ...rest,
-          states: statesWithoutDash,
-          dash: undefined,
-        }]
-        : []
+      ? [{
+        ...rest,
+        id,
+        states: statesWithoutDash,
+        dash: undefined,
+      }]
+      : []
     ),
     ...(statesWithDash.length > 0
-        ? [{
-          states: statesWithDash,
-          dash: ['match', ['get', 'state'],
-            ...(statesWithDash.flatMap(state => [state, states[state]])),
-            undefined,
-          ],
-        }]
-        : []
+      ? [{
+        ...rest,
+        id: `${id}_dash`,
+        states: statesWithDash,
+        dash: ['match', ['get', 'state'],
+          ...(statesWithDash.flatMap(state => [state, ['literal', states[state]]])),
+          ['literal', [100, 0]],
+        ],
+      }]
+      : []
     ),
   ]
 }
