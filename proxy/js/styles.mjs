@@ -1970,22 +1970,21 @@ const layers = {
         ],
       },
     },
-    ...Object.entries({
-      present: present_dasharray,
-      disused: disused_dasharray,
-      abandoned: abandoned_dasharray,
-      preserved: disused_dasharray,
-      construction: construction_dasharray,
-      proposed: proposed_dasharray,
-    }).map(([state, dasharray]) => ({
-      id: `railway_grouped_stations_outline_${state}`,
+    {
+      id: `railway_grouped_stations_outline`,
       type: 'line',
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['==', ['get', 'state'], state],
         ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+        ['match', ['get', 'state'],
+          'construction', ['global-state', 'showConstructionInfrastructure'],
+          'proposed', ['global-state', 'showProposedInfrastructure'],
+          'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
+          true,
+        ],
       ],
       paint: {
         'line-color': ['case',
@@ -2008,20 +2007,22 @@ const layers = {
           'yard', 6,
           2,
         ],
-        'line-dasharray': dasharray,
+        'line-dasharray': ['match', ['get', 'state'],
+          'disused', ['literal', disused_dasharray],
+          'abandoned', ['literal', abandoned_dasharray],
+          'preserved', ['literal', disused_dasharray],
+          'construction', ['literal', construction_dasharray],
+          'proposed', ['literal', proposed_dasharray],
+          ['literal', present_dasharray],
+        ],
       },
       layout: {
         'visibility': ['case',
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
+          'visible',
         ],
-      }
-    })),
+      },
+    },
     ...historicalRailwayLine(
       ['step', ['zoom'],
         ['coalesce', ['get', 'ref'], ''],
@@ -5148,23 +5149,22 @@ const layers = {
         ],
       },
     },
-    ...Object.entries({
-      present: present_dasharray,
-      disused: disused_dasharray,
-      abandoned: abandoned_dasharray,
-      preserved: disused_dasharray,
-      construction: construction_dasharray,
-      proposed: proposed_dasharray,
-    }).map(([state, dasharray]) => ({
-      id: `railway_grouped_stations_outline_${state}`,
+    {
+      id: `railway_grouped_stations_outline`,
       type: 'line',
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
         ['!=', ['get', 'operator_color'], null],
-        ['==', ['get', 'state'], state],
         ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+        ['match', ['get', 'state'],
+          'construction', ['global-state', 'showConstructionInfrastructure'],
+          'proposed', ['global-state', 'showProposedInfrastructure'],
+          'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
+          true,
+        ],
       ],
       paint: {
         'line-color': ['case',
@@ -5179,19 +5179,16 @@ const layers = {
           'yard', 6,
           2,
         ],
-        'line-dasharray': dasharray,
-      },
-      layout: {
-        'visibility': ['case',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
+        'line-dasharray': ['match', ['get', 'state'],
+          'disused', ['literal', disused_dasharray],
+          'abandoned', ['literal', abandoned_dasharray],
+          'preserved', ['literal', disused_dasharray],
+          'construction', ['literal', construction_dasharray],
+          'proposed', ['literal', proposed_dasharray],
+          ['literal', present_dasharray],
         ],
-    }
-    })),
+      },
+    },
     ...railwayLine(
       ['coalesce', ['get', 'primary_operator'], ''],
       [
@@ -5814,22 +5811,21 @@ const layers = {
         ],
       },
     },
-    ...Object.entries({
-      present: present_dasharray,
-      disused: disused_dasharray,
-      abandoned: abandoned_dasharray,
-      preserved: disused_dasharray,
-      construction: construction_dasharray,
-      proposed: proposed_dasharray,
-    }).map(([state, dasharray]) => ({
-      id: `railway_grouped_stations_outline_${state}`,
+    {
+      id: `railway_grouped_stations_outline`,
       type: 'line',
       minzoom: 13,
       source: 'openrailwaymap_standard',
       'source-layer': 'standard_railway_grouped_stations',
       filter: ['all',
-        ['==', ['get', 'state'], state],
         ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+        ['match', ['get', 'state'],
+          'construction', ['global-state', 'showConstructionInfrastructure'],
+          'proposed', ['global-state', 'showProposedInfrastructure'],
+          'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
+          true,
+        ],
       ],
       paint: {
         'line-color': ['case',
@@ -5844,19 +5840,16 @@ const layers = {
           'yard', 6,
           2,
         ],
-        'line-dasharray': dasharray,
-      },
-      layout: {
-        'visibility': ['case',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
+        'line-dasharray': ['match', ['get', 'state'],
+          'disused', ['literal', disused_dasharray],
+          'abandoned', ['literal', abandoned_dasharray],
+          'preserved', ['literal', disused_dasharray],
+          'construction', ['literal', construction_dasharray],
+          'proposed', ['literal', proposed_dasharray],
+          ['literal', present_dasharray],
         ],
-      }
-    })),
+      },
+    },
     ...railwayLine(
       ['concat',
         ['coalesce', ['get', 'ref'],''],
