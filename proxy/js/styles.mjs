@@ -170,9 +170,11 @@ const turntable_casing_width = 2;
 
 const trainProtectionColor = field => ['case',
   ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-  ...signals_railway_line.train_protections.flatMap(train_protection =>
-    [['==', ['get', field], train_protection.train_protection], train_protection.color]),
-  'grey',
+  ['match', ['get', field],
+    ...signals_railway_line.train_protections.flatMap(train_protection =>
+      [train_protection.train_protection, train_protection.color]),
+    'grey',
+  ],
 ];
 
 const railway_casing_add = 1;
