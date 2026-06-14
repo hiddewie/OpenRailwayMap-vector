@@ -856,7 +856,7 @@ const railwayLine = (text, layers) => [
         'line-gap-width': gapWidth ?? undefined,
         'line-dasharray': dash ?? undefined,
       },
-    }),
+    })),
 
   // Bridges
 
@@ -937,7 +937,7 @@ const railwayLine = (text, layers) => [
     ]),
 
   ...layers.map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
-    id: `${id}_bridge_fill_${state}`,
+    id: `${id}_bridge_fill`,
     type: 'line',
     minzoom,
     maxzoom,
