@@ -2240,19 +2240,49 @@ const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: true,
 })
+const geolocateControl = new maplibregl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true,
+  showAccuracyCircle: false,
+  showUserLocation: true,
+})
+
+class WakeLock {
+  constructor() {
+    this.wakeLock = null;
+  }
+
+  acquire() {
+    if (navigator.wakeLock) {
+      navigator.wakeLock.request('screen')
+        .then(lock => {
+          if (this.wakeLock) {
+            this.wakeLock.release();
+          }
+          this.wakeLock = lock;
+          console.info('Acquired wake lock')
+        })
+        .catch(error => console.warn('Acquiring of wake lock failed', error));
+    }
+  }
+
+  release() {
+    if (this.wakeLock) {
+      this.wakeLock.release()
+      console.info('Released wake lock')
+    }
+  }
+}
+
+let wakeLock = new WakeLock()
+geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
+geolocateControl.on('trackuserlocationend', () => wakeLock.release())
 map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
-map.addControl(
-  new maplibregl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true,
-    showAccuracyCircle: false,
-    showUserLocation: true,
-  })
-);
+map.addControl(geolocateControl);
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
