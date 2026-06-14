@@ -637,52 +637,22 @@ const railwayLine = (text, layers) => [
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
-    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
-      Object.entries(states).map(([state, dash]) => ({
-        id: `${id}_tunnel_casing_${state}`,
-        type: 'line',
-        minzoom,
-        maxzoom,
-        source,
-        'source-layer': sourceLayer || 'railway_line_high',
-        filter: ['all',
-          ['==', ['get', 'state'], state],
-          ['==', ['get', 'tunnel'], true],
-          filter ?? true,
-        ].filter(it => it !== true),
-        layout: {
-          'visibility': ['case',
-            visibility ? ['==', visibility, false] : false, 'none',
-            ['<', ['global-state', 'date'], defaultDate], 'none',
-            state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-              : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-                : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                  : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                    : true, 'visible',
-            'none',
-          ],
-          'line-join': 'round',
-          'line-cap': dash ? 'butt' : 'round',
-          'line-sort-key': sort,
-        },
-        paint: {
-          'line-color': colors.casing,
-          'line-width': width,
-          'line-gap-width': railway_casing_add,
-          'line-dasharray': dash ?? undefined,
-        },
-      }))
-    ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) =>
-    Object.entries(states).map(([state, dash]) => ({
-      id: `${id}_tunnel_fill_${state}`,
+    .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, dash, sort}) => ({
+      id: `${id}_tunnel_casing`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        ['==', ['get', 'state'], state],
+        ['in', ['get', 'state'], ['literal', states]],
+        ['match', ['get', 'state'],
+          ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+          ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+          ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+          ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+          true,
+        ],
         ['==', ['get', 'tunnel'], true],
         filter ?? true,
       ].filter(it => it !== true),
@@ -690,29 +660,59 @@ const railwayLine = (text, layers) => [
         'visibility': ['case',
           visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
+          'visible',
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
         'line-sort-key': sort,
       },
       paint: {
-        'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
-          color,
-        ],
+        'line-color': colors.casing,
         'line-width': width,
-        'line-gap-width': gapWidth ?? undefined,
+        'line-gap-width': railway_casing_add,
         'line-dasharray': dash ?? undefined,
       },
     })),
-  ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, states, sort}) => ({
+  ...layers.map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
+    id: `${id}_tunnel_fill`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source,
+    'source-layer': sourceLayer || 'railway_line_high',
+    filter: ['all',
+      ['in', ['get', 'state'], ['literal', states]],
+      ['match', ['get', 'state'],
+        ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+        ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+        ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+        ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+        true,
+      ],
+      ['==', ['get', 'tunnel'], true],
+      filter ?? true,
+    ].filter(it => it !== true),
+    layout: {
+      'visibility': ['case',
+        visibility ? ['==', visibility, false] : false, 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        'visible',
+      ],
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
+        color,
+      ],
+      'line-width': width,
+      'line-gap-width': gapWidth ?? undefined,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
+  ...layers.map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, states, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
@@ -720,12 +720,13 @@ const railwayLine = (text, layers) => [
     source,
     'source-layer': sourceLayer || 'railway_line_high',
     filter: ['all',
-      ['any', ...Object.keys(states).map(state =>
-        state === 'construction' ? ['all', ['global-state', 'showConstructionInfrastructure'], ['==', ['get', 'state'], state]]
-          : state === 'proposed' ? ['all', ['global-state', 'showProposedInfrastructure'], ['==', ['get', 'state'], state]]
-          : state === 'abandoned' ? ['all', ['global-state', 'showAbandonedInfrastructure'], ['==', ['get', 'state'], state]]
-          : state === 'razed' ? ['all', ['global-state', 'showRazedInfrastructure'], ['==', ['get', 'state'], state]]
-          : ['==', ['get', 'state'], state])
+      ['in', ['get', 'state'], ['literal', states]],
+      ['match', ['get', 'state'],
+        ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+        ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+        ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+        ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+        true,
       ],
       ['==', ['get', 'tunnel'], true],
       ['>=',
@@ -755,22 +756,19 @@ const railwayLine = (text, layers) => [
   })),
   ...layers
     .filter(({gapWidth}) => !gapWidth)
-    .flatMap(({id, visibility, filter, color, states}) =>
+    .map(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(`${id}_tunnel_preferred_direction`,
         ['all',
           ['==', ['get', 'tunnel'], true],
-          ['any', ...Object.keys(states).map(state =>
-            state === 'construction' ? ['all', ['global-state', 'showConstructionInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'proposed' ? ['all', ['global-state', 'showProposedInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'abandoned' ? ['all', ['global-state', 'showAbandonedInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'razed' ? ['all', ['global-state', 'showRazedInfrastructure'], ['==', ['get', 'state'], state]]
-              : ['==', ['get', 'state'], state])
+          ['in', ['get', 'state'], ['literal', states]],
+          ['match', ['get', 'state'],
+            ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+            ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+            ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+            ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+            true,
           ],
-          ['any',
-            ['==', ['get', 'preferred_direction'], 'forward'],
-            ['==', ['get', 'preferred_direction'], 'backward'],
-            ['==', ['get', 'preferred_direction'], 'both'],
-          ],
+          ['in', ['get', 'preferred_direction'], ['literal', ['forward', 'backward', 'both']]],
           filter ?? true,
         ].filter(it => it !== true),
         color,
@@ -782,53 +780,22 @@ const railwayLine = (text, layers) => [
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
-    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, sort}) =>
-      Object.entries(states).map(([state, dash]) => ({
-        id: `${id}_casing_${state}`,
-        type: 'line',
-        minzoom,
-        maxzoom,
-        source,
-        'source-layer': sourceLayer || 'railway_line_high',
-        filter: ['all',
-          ['==', ['get', 'state'], state],
-          ['!=', ['get', 'bridge'], true],
-          ['!=', ['get', 'tunnel'], true],
-          filter ?? true,
-        ].filter(it => it !== true),
-        layout: {
-          'visibility': ['case',
-            visibility ? ['==', visibility, false] : false, 'none',
-            ['<', ['global-state', 'date'], defaultDate], 'none',
-            state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-              : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-                : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                  : state === 'razed' ? ['global-state', 'showAbandonedInfrastructure']
-                    : true, 'visible',
-            'none',
-          ],
-          'line-join': 'round',
-          'line-cap': 'butt',
-          'line-sort-key': sort,
-        },
-        paint: {
-          'line-color': colors.casing,
-          'line-width': width,
-          'line-gap-width': railway_casing_add,
-          'line-dasharray': dash ?? undefined,
-        },
-      }))
-    ),
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) => [
-    ...Object.entries(states).map(([state, dash]) => ({
-      id: `${id}_fill_${state}`,
+    .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, dash, sort}) => ({
+      id: `${id}_casing`,
       type: 'line',
       minzoom,
       maxzoom,
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        ['==', ['get', 'state'], state],
+        ['in', ['get', 'state'], ['literal', states]],
+        ['match', ['get', 'state'],
+          'construction', ['global-state', 'showConstructionInfrastructure'],
+          'proposed', ['global-state', 'showProposedInfrastructure'],
+          'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
+          true,
+        ],
         ['!=', ['get', 'bridge'], true],
         ['!=', ['get', 'tunnel'], true],
         filter ?? true,
@@ -837,12 +804,44 @@ const railwayLine = (text, layers) => [
         'visibility': ['case',
           visibility ? ['==', visibility, false] : false, 'none',
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
+          'visible',
+        ],
+        'line-join': 'round',
+        'line-cap': 'butt',
+        'line-sort-key': sort,
+      },
+      paint: {
+        'line-color': colors.casing,
+        'line-width': width,
+        'line-gap-width': railway_casing_add,
+        'line-dasharray': dash ?? undefined,
+      },
+    })),
+  ...layers.map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
+      id: `${id}_fill`,
+      type: 'line',
+      minzoom,
+      maxzoom,
+      source,
+      'source-layer': sourceLayer || 'railway_line_high',
+      filter: ['all',
+        ['in', ['get', 'state'], ['literal', states]],
+        ['match', ['get', 'state'],
+          'construction', ['global-state', 'showConstructionInfrastructure'],
+          'proposed', ['global-state', 'showProposedInfrastructure'],
+          'abandoned', ['global-state', 'showAbandonedInfrastructure'],
+          'razed', ['global-state', 'showRazedInfrastructure'],
+          true,
+        ],
+        ['!=', ['get', 'bridge'], true],
+        ['!=', ['get', 'tunnel'], true],
+        filter ?? true,
+      ].filter(it => it !== true),
+      layout: {
+        'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
+          'visible'
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
@@ -857,14 +856,13 @@ const railwayLine = (text, layers) => [
         'line-gap-width': gapWidth ?? undefined,
         'line-dasharray': dash ?? undefined,
       },
-    })),
-  ]),
+    }),
 
   // Bridges
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
-    .filter(({states}) => 'present' in states)
+    .filter(({states}) => states.includes('present'))
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, sort}) => [
       {
         id: `${id}_bridge_railing`,
@@ -938,45 +936,45 @@ const railwayLine = (text, layers) => [
       },
     ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, sort}) =>
-    Object.entries(states).map(([state, dash]) => ({
-      id: `${id}_bridge_fill_${state}`,
-      type: 'line',
-      minzoom,
-      maxzoom,
-      source,
-      'source-layer': sourceLayer || 'railway_line_high',
-      filter: ['all',
-        ['==', ['get', 'state'], state],
-        ['==', ['get', 'bridge'], true],
-        filter ?? true,
-      ].filter(it => it !== true),
-      layout: {
-        'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
-          ['<', ['global-state', 'date'], defaultDate], 'none',
-          state === 'construction' ? ['global-state', 'showConstructionInfrastructure']
-            : state === 'proposed' ? ['global-state', 'showProposedInfrastructure']
-              : state === 'abandoned' ? ['global-state', 'showAbandonedInfrastructure']
-                : state === 'razed' ? ['global-state', 'showRazedInfrastructure']
-                  : true, 'visible',
-          'none',
-        ],
-        'line-join': 'round',
-        'line-cap': dash ? 'butt' : 'round',
-        'line-sort-key': sort,
-      },
-      paint: {
-        'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
-          color,
-        ],
-        'line-width': width,
-        'line-gap-width': gapWidth ?? undefined,
-        'line-dasharray': dash ?? undefined,
-      },
-    })),
-  ),
+  ...layers.map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
+    id: `${id}_bridge_fill_${state}`,
+    type: 'line',
+    minzoom,
+    maxzoom,
+    source,
+    'source-layer': sourceLayer || 'railway_line_high',
+    filter: ['all',
+      ['in', ['get', 'state'], ['literal', states]],
+      ['match', ['get', 'state'],
+        ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+        ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+        ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+        ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+        true,
+      ],
+      ['==', ['get', 'bridge'], true],
+      filter ?? true,
+    ].filter(it => it !== true),
+    layout: {
+      'visibility': ['case',
+        visibility ? ['==', visibility, false] : false, 'none',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        'visible'
+      ],
+      'line-join': 'round',
+      'line-cap': dash ? 'butt' : 'round',
+      'line-sort-key': sort,
+    },
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], hoverColor || colors.hover.main,
+        color,
+      ],
+      'line-width': width,
+      'line-gap-width': gapWidth ?? undefined,
+      'line-dasharray': dash ?? undefined,
+    },
+  })),
 
   // Preferred direction
 
@@ -986,12 +984,13 @@ const railwayLine = (text, layers) => [
       preferredDirectionLayer(
         `${id}_preferred_direction`,
         ['all',
-          ['any', ...Object.keys(states).map(state =>
-            state === 'construction' ? ['all', ['global-state', 'showConstructionInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'proposed' ? ['all', ['global-state', 'showProposedInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'abandoned' ? ['all', ['global-state', 'showAbandonedInfrastructure'], ['==', ['get', 'state'], state]]
-              : state === 'razed' ? ['all', ['global-state', 'showRazedInfrastructure'], ['==', ['get', 'state'], state]]
-              : ['==', ['get', 'state'], state])
+          ['in', ['get', 'state'], ['literal', states]],
+          ['match', ['get', 'state'],
+            ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+            ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+            ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+            ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+            true,
           ],
           ['!=', ['get', 'tunnel'], true],
           ['any',
@@ -1012,7 +1011,7 @@ const railwayLine = (text, layers) => [
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
-    .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, states}) => ({
+    .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, states}) => ({
       id: `${id}_text`,
       type: 'symbol',
       minzoom,
@@ -1020,12 +1019,13 @@ const railwayLine = (text, layers) => [
       source,
       'source-layer': sourceLayer || 'railway_line_high',
       filter: ['all',
-        ['any', ...Object.keys(states).map(state =>
-          state === 'construction' ? ['all', ['global-state', 'showConstructionInfrastructure'], ['==', ['get', 'state'], state]]
-            : state === 'proposed' ? ['all', ['global-state', 'showProposedInfrastructure'], ['==', ['get', 'state'], state]]
-            : state === 'abandoned' ? ['all', ['global-state', 'showAbandonedInfrastructure'], ['==', ['get', 'state'], state]]
-            : state === 'razed' ? ['all', ['global-state', 'showRazedInfrastructure'], ['==', ['get', 'state'], state]]
-            : ['==', ['get', 'state'], state])
+        ['in', ['get', 'state'], ['literal', states]],
+        ['match', ['get', 'state'],
+          ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+          ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+          ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+          ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+          true,
         ],
         filter ?? true,
       ].filter(it => it !== true),
