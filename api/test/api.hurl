@@ -512,7 +512,7 @@ jsonpath "$.note" == null
 jsonpath "$.description" == null
 jsonpath "$.osm_id" == 320522867
 jsonpath "$.osm_type" == "W"
-jsonpath "$.conversion" == "30kV 50 Hz ⇒ 750V ="
+jsonpath "$.conversion" == "30.0 kV 50.00 Hz ⇒ 750 V ="
 
 # Railway crossing
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628

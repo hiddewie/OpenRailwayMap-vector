@@ -57,6 +57,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   substation = {
-    { feature = 'traction', conversion = '400kV 50 Hz ⇒ 750V =', way = way },
+    { feature = 'traction', conversion = '400.0 kV 50.00 Hz ⇒ 750 V =', way = way },
   },
 })
