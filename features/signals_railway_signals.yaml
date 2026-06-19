@@ -6824,7 +6824,7 @@ features:
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'block_marker' }
 
- - description: Shunting
+  - description: Shunting
     country: GB
     icon: [ default: 'gb/shunting' ]
     tags:
@@ -6838,7 +6838,7 @@ features:
       - { tag: 'railway:signal:shunting', value: 'GB-NR:limit' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-    - description: Distant
+  - description: Distant
     country: GB
     icon: [ default: 'gb/distant-light' ]
     tags:
