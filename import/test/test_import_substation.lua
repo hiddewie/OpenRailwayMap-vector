@@ -60,3 +60,20 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { feature = 'traction', conversion = '110 kV 50.10 Hz ⇒ 15 kV 16.70 Hz', way = way },
   },
 })
+
+osm2pgsql.process_way({
+  tags = {
+    ['power'] = 'substation',
+    ['substation'] = 'traction',
+    ['voltage'] = '110000.1;1500',
+    ['frequency'] = '50.1;16.7',
+  },
+  as_polygon = function ()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  substation = {
+    { feature = 'traction', conversion = '110 kV 50.10 Hz ⇒ 1.5 kV 16.70 Hz', way = way },
+  },
+})

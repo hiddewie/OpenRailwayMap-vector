@@ -1100,7 +1100,7 @@ function stop_position_type(tags)
 end
 
 function format_voltage_frequency(voltage, frequency)
-  local voltage_text = voltage < 1000.0 and string.format('%.0d V', voltage) or string.format('%.1d kV', voltage / 1000.0)
+  local voltage_text = (voltage < 1000 and string.format('%d V', voltage)) or (voltage < 10000 and string.format('%.1f kV', voltage / 1000.0)) or string.format('%.0f kV', voltage / 1000.0)
 
   if frequency == 0 then
     return string.format("%s =", voltage_text)
