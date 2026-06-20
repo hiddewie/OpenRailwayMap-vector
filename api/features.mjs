@@ -169,7 +169,7 @@ const railwayLineFeatures = {
     frequency: {
       name: 'Frequency',
       format: {
-        template: '%.2f Hz',
+        template: '%.2d Hz',
       },
     },
     voltage: {
@@ -187,7 +187,7 @@ const railwayLineFeatures = {
     future_frequency: {
       name: 'Future frequency',
       format: {
-        template: '%.2f Hz',
+        template: '%.2d Hz',
       },
     },
     future_voltage: {
@@ -661,7 +661,7 @@ const features = {
       height: {
         name: 'Height',
         format: {
-          template: '%.2f m',
+          template: '%.2d m',
         },
       },
       surface: {
@@ -718,13 +718,13 @@ const features = {
       height: {
         name: 'Height',
         format: {
-          template: '%.2f m',
+          template: '%.2d m',
         },
       },
       length: {
         name: 'Length',
         format: {
-          template: '%.0f m',
+          template: '%.0d m',
         },
       },
       tactile_paving: {
