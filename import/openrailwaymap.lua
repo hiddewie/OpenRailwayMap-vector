@@ -1110,7 +1110,14 @@ function format_voltage_frequency(voltage, frequency)
 end
 
 function substation_voltage_frequency(voltage, frequency)
-  local voltages = map(split_semicolon(voltage), function(it) return tonumber(it) end)
+  local voltages = map(split_semicolon(voltage), function(it)
+    local parsed = tonumber(it)
+    if parsed then
+      return math.floor(parsed)
+    else
+      return nil
+    end
+  end)
   local frequencies = map(split_semicolon(frequency), function(it) return tonumber(it) end)
 
   if voltages and frequencies and #voltages == 2 and #frequencies == 2 then
