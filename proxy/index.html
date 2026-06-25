@@ -20,8 +20,16 @@
     let FF_FOUC_FIX;
   </script>
 
-  <script src="js/maplibre-gl-6.0.0-17/maplibre-gl.js" defer></script>
-  <script src="js/ui.js" defer></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "./js/maplibre-gl-6.0.0-17/maplibre-gl.mjs",
+        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.0.0-17/maplibre-gl-shared.mjs",
+        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.0.0-17/maplibre-gl-worker.mjs"
+      }
+    }
+  </script>
+  <script src="js/ui.mjs" type="module" defer></script>
 
   <title>OpenRailwayMap</title>
 </head>
