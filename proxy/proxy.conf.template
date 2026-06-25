@@ -28,6 +28,11 @@ server {
   gzip_min_length 256;
   gzip_types application/atom+xml application/geo+json application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/rdf+xml application/rss+xml application/xhtml+xml application/xml font/eot font/otf font/ttf image/svg+xml text/css text/javascript text/html text/plain text/xml;
 
+  include mime.types;
+  types {
+    text/javascript mjs;
+  }
+
   location = / {
     root /etc/nginx/public;
     expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
