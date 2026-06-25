@@ -21,6 +21,8 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
+  reload_interval: ${POSTGRES_RELOAD_INTERVAL:-0s}
+
   # Convert tiles to MapLibre Tiles (MLT) when the client requests such tiles
   convert_to_mlt: auto
 
