@@ -214,3 +214,20 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { id = 'way-123-train', feature = 'station', state = 'present', map_reference = 'ref', references = { ['railway-ref'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
   },
 })
+
+osm2pgsql.process_relation({
+  id = 123,
+  type = 'relation',
+  tags = {
+    ['type'] = 'multipolygon',
+    ['railway'] = 'yard',
+  },
+  as_multipolygon = function()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'relation-123-train', way = way, name_tags = {}, station = 'train', state = 'present', references = {}, feature = 'yard' },
+  },
+})
