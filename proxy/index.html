@@ -11,17 +11,25 @@
   <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
   <link rel="manifest" href="manifest.json">
 
-  <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
-  <link rel="stylesheet" href="css/maplibre-gl-5.24/maplibre-gl.css">
-  <link rel="stylesheet" href="css/ui.css">
-
-  <script>
-    // See https://stackoverflow.com/a/64158043/711129
-    let FF_FOUC_FIX;
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "./js/maplibre-gl-6.0.0-17/maplibre-gl.mjs",
+        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.0.0-17/maplibre-gl-shared.mjs",
+        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.0.0-17/maplibre-gl-worker.mjs"
+      }
+    }
   </script>
 
-  <script src="js/maplibre-gl-5.24/maplibre-gl.js" defer></script>
-  <script src="js/ui.js" defer></script>
+  <link rel="modulepreload" href="./js/maplibre-gl-6.0.0-17/maplibre-gl.mjs" />
+  <link rel="modulepreload" href="./js/maplibre-gl-6.0.0-17/maplibre-gl-shared.mjs" />
+  <link rel="modulepreload" href="./js/maplibre-gl-6.0.0-17/maplibre-gl-worker.mjs" />
+  <link rel="preload" href="js/mapbox-gl/mapbox-gl-rtl-text.js" as="script" />
+  <link rel="preload" href="api/features/features.json" as="fetch" />
+
+  <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
+  <link rel="stylesheet" href="css/maplibre-gl-6.0.0-17/maplibre-gl.css">
+  <link rel="stylesheet" href="css/ui.css">
 
   <title>OpenRailwayMap</title>
 </head>
@@ -380,6 +388,9 @@
   <div id="background-map"></div>
   <div id="map"></div>
 </div>
+
+<script src="js/ui.mjs" type="module" defer></script>
+
 </body>
 
 </html>
