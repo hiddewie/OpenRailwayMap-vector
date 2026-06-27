@@ -572,7 +572,7 @@ const sources = {
   },
   high: {
     type: 'vector',
-    url: '/railway_line_high',
+    url: '/railway_line_high,railway_text_km',
     promoteId: 'id',
     encoding: 'mlt',
   },
