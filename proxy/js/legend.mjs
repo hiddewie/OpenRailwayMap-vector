@@ -1220,6 +1220,10 @@ const legendData = {
         key: [],
         features: [],
       },
+      "openrailwaymap_standard-standard_interlocking": {
+        key: [],
+        features: [],
+      },
       "openrailwaymap_standard-standard_railway_turntables": {
         key: [
           'feature',
