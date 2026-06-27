@@ -110,6 +110,11 @@ postgres:
       function: standard_railway_switch_ref
       minzoom: 17
 
+    standard_interlocking:
+      schema: public
+      function: standard_interlocking
+      minzoom: 13
+
     # --- Speed --- #
 
     speed_railway_line_low:
