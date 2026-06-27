@@ -8,7 +8,8 @@ FROM build-yaml AS build-styles
 
 RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
-  node /build/styles.mjs
+  node /build/styles.mjs \
+    > /build/style.json
 
 FROM build-yaml AS build-legend
 
@@ -62,7 +63,7 @@ COPY proxy/font /etc/nginx/public/font
 COPY proxy/ssl /etc/nginx/ssl
 
 COPY --from=build-styles \
-  /build /etc/nginx/public/style
+  /build/style.json /etc/nginx/public/style.json
 
 COPY --from=build-legend \
   /build/legend.json /etc/nginx/public/legend.json

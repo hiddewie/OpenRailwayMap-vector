@@ -6358,6 +6358,4 @@ const makeStyle = selectedStyle => ({
   },
 });
 
-knownStyles.forEach(style => {
-  fs.writeFileSync(`${style}.json`, JSON.stringify(makeStyle(style)));
-});
+console.log(JSON.stringify(makeStyle(style)));

@@ -102,48 +102,13 @@ jsonpath "$.project.name" == "OpenRailwayMap-vector"
 jsonpath "$.tags[*].key" includes "name"
 jsonpath "$.tags[*].key" includes "railway"
 
-# Styles
-GET {{base_url}}/style/standard.json
+# Style
+GET {{base_url}}/style.json
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap standard"
-
-GET {{base_url}}/style/speed.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap speed"
-
-GET {{base_url}}/style/signals.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap signals"
-
-GET {{base_url}}/style/electrification.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap electrification"
-
-GET {{base_url}}/style/track.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap track"
-
-GET {{base_url}}/style/operator.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap operator"
+jsonpath "$.name" == "OpenRailwayMap"
 
 # Legend data
 GET {{base_url}}/legend.json
