@@ -1190,6 +1190,65 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_interlocking_view AS
+  SELECT
+    i.osm_id as id,
+    i.osm_id,
+    'R' as osm_type,
+    way,
+    feature,
+    name,
+    name_tags,
+    "references",
+    operator,
+    owner,
+    network,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM interlocking_buffered ib
+  JOIN interlocking i
+    ON ib.interlocking_id = i.osm_id;
+
+CREATE OR REPLACE FUNCTION standard_interlocking(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
+    FROM standard_interlocking_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking",
+        "fields": {
+          "id": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Speed ---
 
 CREATE OR REPLACE FUNCTION speed_railway_line_low(z integer, x integer, y integer)

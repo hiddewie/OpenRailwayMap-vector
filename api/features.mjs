@@ -592,6 +592,75 @@ const features = {
     },
     properties: {}
   },
+  'openrailwaymap_standard-standard_interlocking': {
+    view: {
+      name: 'standard_interlocking_view',
+      id_type: 'numeric',
+    },
+    labelProperties: ['name'],
+    featureLinks: featureLinks.openstreetmap,
+    features: {
+      interlocking: {
+        name: 'Interlocking',
+        type: 'relation',
+      },
+      junction: {
+        name: 'Junction',
+        type: 'relation',
+      },
+    },
+    properties: {
+      references: {
+        name: 'References',
+        format: {
+          map: {
+            key: {
+              format: {
+                lookup: 'station_references',
+              },
+            },
+            value: {}
+          },
+        },
+      },
+      operator: {
+        name: 'Operator',
+      },
+      owner: {
+        name: 'Owner',
+      },
+      network: {
+        name: 'Network',
+      },
+      wikidata: {
+        name: 'Wikidata',
+        link: links.wikidata,
+      },
+      wikimedia_commons: {
+        name: 'Wikimedia',
+        link: links.wikimedia_commons,
+      },
+      mapillary: {
+        name: 'Mapillary',
+        link: links.mapillary,
+      },
+      wikipedia: {
+        name: 'Wikipedia',
+        link: links.wikipedia,
+        format: {
+          country_prefix: {}
+        },
+      },
+      note: {
+        name: 'Note',
+        paragraph: true,
+      },
+      description: {
+        name: 'Description',
+        paragraph: true,
+      },
+    }
+  },
   'openrailwaymap_standard-standard_railway_turntables': {
     view: {
       name: 'standard_railway_turntables_view',
