@@ -187,3 +187,42 @@ CREATE INDEX IF NOT EXISTS stop_area_groups_buffered_index
 
 CLUSTER stop_area_groups_buffered
   USING stop_area_groups_buffered_index;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
+  SELECT
+    interlocking_id,
+    ST_Buffer(ST_RemoveRepeatedPoints(ST_Collect(way)), 10) as way
+  FROM (
+    SELECT
+      interlocking_id,
+      s.way
+    FROM interlocking_switch "is"
+    JOIN railway_switches s
+      ON "is".switch_id = s.osm_id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
+    l.way
+    FROM interlocking_landuse il
+    JOIN landuse l
+      ON il.landuse_id = l.id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
+      b.way
+    FROM interlocking_signal_box isb
+    JOIN boxes b
+      ON isb.signal_box_id = b.id
+  ) elements
+  GROUP BY elements.interlocking_id;
+
+CREATE INDEX IF NOT EXISTS interlocking_buffered_index
+  ON interlocking_buffered
+    USING GIST(way);
+
+CLUSTER interlocking_buffered
+  USING interlocking_buffered_index;
