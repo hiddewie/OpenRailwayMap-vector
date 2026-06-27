@@ -1187,6 +1187,15 @@ const map = new maplibregl.Map({
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
 });
+map.setStyle(`${location.origin}/style.json`, {
+  validate: false,
+  transformStyle: (previous, next) => {
+    rewriteStylePathsToOrigin(next)
+    addLanguageToSupportedSources(next, language)
+    rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
+    return next;
+  },
+});
 
 function selectStyle(style) {
   if (selectedStyle !== style) {
@@ -1267,6 +1276,7 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style, bearing, pitch) {
+  style.state.style.default = selectedStyle;
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
@@ -1312,16 +1322,7 @@ function onStyleChange() {
 
   if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
-    map.setStyle(mapStyles[selectedStyle], {
-      validate: false,
-      transformStyle: (previous, next) => {
-        rewriteStylePathsToOrigin(next)
-        addLanguageToSupportedSources(next, language)
-        rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
-        return next;
-      },
-    });
-
+    map.setGlobalStateProperty('style', selectedStyle);
     hideSearchResults();
     routeControl.clearRoute();
   }

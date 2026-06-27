@@ -6310,6 +6310,9 @@ const makeStyle = selectedStyle => ({
   version: 8,
   layers: layers[selectedStyle],
   state: {
+    style: {
+      default: 'standard',
+    },
     date: {
       default: defaultDate,
     },
