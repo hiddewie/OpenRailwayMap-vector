@@ -1198,7 +1198,8 @@ const map = new Map({
   attributionControl: false,
   renderWorldCopies: false,
   transformRequest: function(url, resourceType) {
-    if (resourceType === 'Tile' && url && url.startsWith('http://localhost:8000/railway_line_high')) {
+    if (resourceType === 'Tile') {
+      // Request all tiles as MLT encoded
       return {
         url,
         headers: {
