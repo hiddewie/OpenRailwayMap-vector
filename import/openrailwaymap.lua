@@ -1770,6 +1770,39 @@ function osm2pgsql.process_relation(object)
       way = object:as_multipolygon(),
     })
   end
+
+  local station_feature, station_state, name = railway_feature_and_state(tags, railway_station_values)
+  if station_feature and tags.type == 'multipolygon' then
+    local position, position_exact, line_positions = find_position_tags(tags)
+
+    for station, _ in pairs(station_type(tags)) do
+      stations:insert({
+        id = string.format("%s-%d-%s", object.type, object.id, station),
+        way = object:as_multipolygon(),
+        feature = station_feature,
+        state = station_state,
+        name = name,
+        station = station,
+        name_tags = name_tags(tags),
+        map_reference = map_station_reference(tags),
+        references = station_references(tags),
+        operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
+        network = split_semicolon_to_sql_array(tags.network),
+        position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
+        yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
+        yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        wikimedia_commons_file = wikimedia_commons_file,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
+      })
+    end
+  end
 end
 
 function osm2pgsql.process_gen()

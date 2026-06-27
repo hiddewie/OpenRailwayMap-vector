@@ -174,7 +174,16 @@ operators:
 
   - country: BA
     names:
+      - 'Željeznice Republike Srpske'
+      - 'ŽRS'
+      - 'Желјезнице Републике Српске'
+      - 'ЖРС'
+    color: '#043bd7'
+
+  - country: BA
+    names:
       - 'Željeznice Federacije Bosne i Hercegovine'
+      - 'ŽFBH'
     color: 'rgb(247, 148, 30)'
 
   # --- BE --- #
@@ -2078,7 +2087,7 @@ operators:
 
   - country: RU
     names:
-      - 'Калининградский Железная Дорога'
+      - 'Калининградская Железная Дорога'
     color: '#ff3f72'
 
   - country: RU
@@ -2100,14 +2109,12 @@ operators:
 
   - country: RS
     names:
-      - 'Željeznice Republike Srpske'
-    color: '#043bd7'
-
-  - country: RS
-    names:
       - 'ЖС'
       - 'Железнице Србије'
-      - 'Zeleznice Srbije'
+      - 'Železnice Srbije' # These 3 above should be deprecated as ŽS has been split since 2015
+      - 'ИЖС'
+      - 'Инфраструктура железнице Србије'
+      - 'Infrastruktura železnice Srbije'
     color: '#ed1c24'
 
   - country: RS
