@@ -654,8 +654,7 @@ const duplicateLayersForDashStates = ({ id, states, ...rest }) => {
   ]
 }
 
-// TODO
-const railwayLine = (text, layers) => [
+const railwayLine = (style, text, layers) => [
 
   // Tunnels
 
@@ -685,9 +684,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
@@ -725,9 +725,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
@@ -775,9 +776,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': 'butt',
@@ -793,7 +795,9 @@ const railwayLine = (text, layers) => [
     .filter(({gapWidth}) => !gapWidth)
     .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
     .map(({id, visibility, filter, color, states}) =>
-      preferredDirectionLayer(`${id}_tunnel_preferred_direction`,
+      preferredDirectionLayer(
+        style,
+        `${id}_tunnel_preferred_direction`,
         ['all',
           ['==', ['get', 'tunnel'], true],
           ['in', ['get', 'state'], ['literal', states]],
@@ -841,9 +845,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': 'butt',
@@ -880,9 +885,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible'
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
@@ -926,9 +932,10 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
-            visibility ? ['==', visibility, false] : false, 'none',
+            ...(visibility ? [['==', visibility, false], 'none'] : []),
             ['<', ['global-state', 'date'], defaultDate], 'none',
-            'visible',
+            ['==', ['global-state', 'style'], style], 'visible',
+            'none',
           ],
           'line-join': 'round',
           'line-cap': 'butt',
@@ -961,9 +968,10 @@ const railwayLine = (text, layers) => [
         ].filter(it => it !== true),
         layout: {
           'visibility': ['case',
-            visibility ? ['==', visibility, false] : false, 'none',
+            ...(visibility ? [['==', visibility, false], 'none'] : []),
             ['<', ['global-state', 'date'], defaultDate], 'none',
-            'visible',
+            ['==', ['global-state', 'style'], style], 'visible',
+            'none',
           ],
           'line-join': 'round',
           'line-cap': 'butt',
@@ -1002,9 +1010,10 @@ const railwayLine = (text, layers) => [
       ].filter(it => it !== true),
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible'
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'line-join': 'round',
         'line-cap': dash ? 'butt' : 'round',
@@ -1028,6 +1037,7 @@ const railwayLine = (text, layers) => [
     .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
     .flatMap(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(
+        style,
         `${id}_preferred_direction`,
         ['all',
           ['in', ['get', 'state'], ['literal', states]],
@@ -1055,7 +1065,7 @@ const railwayLine = (text, layers) => [
 
   // Text layers
 
-  railwayKmText,
+  railwayKmText(style),
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
@@ -1090,9 +1100,10 @@ const railwayLine = (text, layers) => [
       },
       layout: {
         'visibility': ['case',
-          visibility ? ['==', visibility, false] : false, 'none',
+          ...(visibility ? [['==', visibility, false], 'none'] : []),
           ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
+          ['==', ['global-state', 'style'], style], 'visible',
+          'none',
         ],
         'symbol-z-order': 'source',
         'symbol-placement': 'line',
@@ -1106,7 +1117,7 @@ const railwayLine = (text, layers) => [
     })),
 ];
 
-const historicalRailwayLine = (text, layers) => [
+const historicalRailwayLine = (style, text, layers) => [
 
   // Tunnels
 
@@ -1125,7 +1136,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1158,7 +1169,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1191,7 +1202,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1226,7 +1237,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1262,7 +1273,7 @@ const historicalRailwayLine = (text, layers) => [
     layout: {
       'visibility': ['case',
         ['all',
-          ['==', ['global-state', 'style'], 'standard'],
+          ['==', ['global-state', 'style'], style],
           ['!', ['global-state', 'allDates']],
           ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
@@ -1297,7 +1308,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1331,7 +1342,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1365,7 +1376,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1401,7 +1412,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1446,7 +1457,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['any',
               ['global-state', 'allDates'],
               ['<', ['global-state', 'date'], defaultDate],
@@ -1486,7 +1497,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['any',
               ['global-state', 'allDates'],
               ['<', ['global-state', 'date'], defaultDate],
@@ -1522,7 +1533,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1557,7 +1568,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
-            ['==', ['global-state', 'style'], 'standard'],
+            ['==', ['global-state', 'style'], style],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1608,7 +1619,7 @@ const historicalRailwayLine = (text, layers) => [
     layout: {
       'visibility': ['case',
         ['all',
-          ['==', ['global-state', 'style'], 'standard'],
+          ['==', ['global-state', 'style'], style],
           ['any',
             ['global-state', 'allDates'],
             ['<', ['global-state', 'date'], defaultDate],
@@ -1629,7 +1640,7 @@ const historicalRailwayLine = (text, layers) => [
   })),
 ];
 
-const railwayKmText = {
+const railwayKmText = (style) => ({
   id: 'railway_text_km',
   type: 'symbol',
   minzoom: 10,
@@ -1646,7 +1657,8 @@ const railwayKmText = {
   layout: {
     'visibility': ['case',
       ['<', ['global-state', 'date'], defaultDate], 'none',
-      'visible',
+      ['==', ['global-state', 'style'], style], 'visible',
+      'none',
     ],
     'symbol-z-order': 'source',
     'text-field': ['step', ['zoom'],
@@ -1657,9 +1669,9 @@ const railwayKmText = {
     'text-font': ['FiraCode-Bold'],
     'text-size': 11,
   },
-};
+});
 
-const preferredDirectionLayer = (id, filter, color, visibility) => ({
+const preferredDirectionLayer = (style, id, filter, color, visibility) => ({
   id,
   type: 'symbol',
   minzoom: 15,
@@ -1681,7 +1693,8 @@ const preferredDirectionLayer = (id, filter, color, visibility) => ({
     'visibility': ['case',
       visibility ? ['==', visibility, false] : false, 'none',
       ['<', ['global-state', 'date'], defaultDate], 'none',
-      'visible',
+      ['==', ['global-state', 'style'], style], 'visible',
+      'none',
     ],
     'symbol-placement': 'line',
     'symbol-spacing': 750,
@@ -2039,6 +2052,7 @@ const layers = [
     },
   },
   ...historicalRailwayLine(
+    'standard',
     ['step', ['zoom'],
       ['coalesce', ['get', 'ref'], ''],
       11,
@@ -2366,6 +2380,7 @@ const layers = [
     },
   },
   ...railwayLine(
+    'standard',
     ['step', ['zoom'],
       ['coalesce', ['get', 'ref'], ''],
       14,
@@ -3545,6 +3560,7 @@ const layers = [
   // --- Speed --- //
 
   ...railwayLine(
+    'speed',
     ['coalesce', ['get', 'speed_label'], ''],
     [
       {
@@ -3841,6 +3857,7 @@ const layers = [
   // --- Train protection --- //
 
   ...railwayLine(
+    'signals',
     '',
     [
       {
@@ -4539,6 +4556,7 @@ const layers = [
  // --- Electrification --- //
 
   ...railwayLine(
+    'electrification',
     ['match', ['global-state', 'electrificationRailwayLine'],
       'maximumCurrent', ['case',
         ['!=', ['get', 'maximum_current'], null], ['concat', ['number-format', ['get', 'maximum_current'], {}], ' A'],
@@ -5130,6 +5148,7 @@ const layers = [
   // --- Track --- //
 
   ...railwayLine(
+    'track',
     ['match', ['global-state', 'trackRailwayLine'],
       'gauge', ['coalesce', ['get', 'gauges'], ''],
       'loadingGauge', ['coalesce', ['get', 'loading_gauge'], ''],
@@ -5334,6 +5353,7 @@ const layers = [
     },
   },
   ...railwayLine(
+    'operator',
     ['coalesce', ['get', 'primary_operator'], ''],
     [
       {
@@ -6057,6 +6077,7 @@ const layers = [
     },
   },
   ...railwayLine(
+    'operator',
     ['concat',
       ['coalesce', ['get', 'ref'],''],
       ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
