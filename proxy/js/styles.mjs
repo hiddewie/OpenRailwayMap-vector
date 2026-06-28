@@ -1712,7 +1712,7 @@ const preferredDirectionLayer = (style, id, filter, color, visibility) => ({
   },
 });
 
-const imageLayerWithOutline = (id, spriteExpression, layer) => [
+const imageLayerWithOutline = (style, id, spriteExpression, layer) => [
   {
     id: `${id}_outline`,
     ...layer,
@@ -1732,10 +1732,10 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     },
     layout: {
       ...(layer.layout || {}),
-      // TODO
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], style], 'visible',
+        'none',
       ],
       'icon-image': ['image', ['concat', 'sdf:', spriteExpression]],
     },
@@ -2928,6 +2928,7 @@ const layers = [
     },
   },
   ...imageLayerWithOutline(
+    'standard',
     `railway_symbols_outline`,
     ['get', 'feature'],
     {
@@ -3693,6 +3694,7 @@ const layers = [
   },
   ...[0, 1].flatMap(featureIndex => [
     ...imageLayerWithOutline(
+      'speed',
       `speed_railway_signals_${featureIndex}`,
       ['get', `feature${featureIndex}`],
       {
@@ -3705,10 +3707,6 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
-          'visibility': ['case',
-            ['==', ['global-state', 'style'], 'speed'], 'visible',
-            'none',
-          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-offset': ['step', ['zoom'],
@@ -4259,6 +4257,7 @@ const layers = [
   // Show at most 2 combined features
   ...[0, 1].flatMap(featureIndex => [
     ...imageLayerWithOutline(
+      'signals',
       `railway_signals_medium_${featureIndex}`,
       ['get', `feature${featureIndex}`],
       {
@@ -4273,10 +4272,6 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
-          'visibility': ['case',
-            ['==', ['global-state', 'style'], 'signals'], 'visible',
-            'visible',
-          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-offset': ['interpolate', ['linear'],
@@ -4368,6 +4363,7 @@ const layers = [
   },
   ...[0, 1, 2, 3, 4, 5].flatMap(featureIndex => [
     ...imageLayerWithOutline(
+      'signals',
       `railway_signals_high_${featureIndex}`,
       ['get', `feature${featureIndex}`],
       {
@@ -4380,10 +4376,6 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
-          'visibility': ['case',
-            ['==', ['global-state', 'style'], 'signals'], 'visible',
-            'visible',
-          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-anchor': 'center',
@@ -4916,6 +4908,7 @@ const layers = [
     },
   },
   ...imageLayerWithOutline(
+    'electrification',
     'electrification_signals',
     ['get', 'feature0'],
     {
@@ -4934,11 +4927,6 @@ const layers = [
         'text-halo-blur': 1,
       },
       layout: {
-        'visibility': ['case',
-          ['==', ['global-state', 'pitched'], false], 'none',
-          ['==', ['global-state', 'style'], 'electrification'], 'visible',
-          'none',
-        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-offset': ['step', ['zoom'],
@@ -5981,6 +5969,7 @@ const layers = [
     },
   },
   ...imageLayerWithOutline(
+    'operator',
     `operator_symbols_outline`,
     ['get', 'feature'],
     {
@@ -5989,10 +5978,6 @@ const layers = [
       source: 'openrailwaymap_operator',
       'source-layer': 'operator_railway_symbols',
       layout: {
-        'visibility': ['case',
-          ['==', ['global-state', 'style'], 'operator'], 'visible',
-          'none',
-        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
       },
