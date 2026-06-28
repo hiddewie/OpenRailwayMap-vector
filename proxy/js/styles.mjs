@@ -662,6 +662,7 @@ const duplicateLayersForDashStates = ({ id, states, ...rest }) => {
   ]
 }
 
+// TODO
 const railwayLine = (text, layers) => [
 
   // Tunnels
@@ -1132,6 +1133,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1164,6 +1166,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1196,6 +1199,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1230,6 +1234,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1265,6 +1270,7 @@ const historicalRailwayLine = (text, layers) => [
     layout: {
       'visibility': ['case',
         ['all',
+          ['==', ['global-state', 'style'], 'standard'],
           ['!', ['global-state', 'allDates']],
           ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
@@ -1299,6 +1305,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1332,6 +1339,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1365,6 +1373,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1400,6 +1409,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1444,6 +1454,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['any',
               ['global-state', 'allDates'],
               ['<', ['global-state', 'date'], defaultDate],
@@ -1483,6 +1494,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['any',
               ['global-state', 'allDates'],
               ['<', ['global-state', 'date'], defaultDate],
@@ -1518,6 +1530,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1552,6 +1565,7 @@ const historicalRailwayLine = (text, layers) => [
       layout: {
         'visibility': ['case',
           ['all',
+            ['==', ['global-state', 'style'], 'standard'],
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
           ], 'visible',
@@ -1602,6 +1616,7 @@ const historicalRailwayLine = (text, layers) => [
     layout: {
       'visibility': ['case',
         ['all',
+          ['==', ['global-state', 'style'], 'standard'],
           ['any',
             ['global-state', 'allDates'],
             ['<', ['global-state', 'date'], defaultDate],
@@ -1712,6 +1727,7 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
     },
     layout: {
       ...(layer.layout || {}),
+      // TODO
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
         'visible',
@@ -1871,6 +1887,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
+          ['==', ['global-state', 'style'], 'standard'],
           ['global-state', 'allDates'],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
@@ -1906,6 +1923,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
+          ['==', ['global-state', 'style'], 'standard'],
           ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
@@ -1928,7 +1946,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -1968,7 +1987,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2021,7 +2041,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2273,7 +2294,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2290,7 +2312,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'line-join': 'round',
     },
@@ -2323,7 +2346,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2336,7 +2360,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'line-join': 'round',
     },
@@ -2728,7 +2753,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': 'sdf:general/station-small',
@@ -2759,7 +2785,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
@@ -2801,7 +2828,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
@@ -2834,7 +2862,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2851,7 +2880,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2885,7 +2915,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
     },
   },
@@ -2920,7 +2951,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'text-field': ['coalesce', ['get', 'ref'], ''],
@@ -2954,7 +2986,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'text-field': '{name}',
       'text-font': font.regular,
@@ -2980,7 +3013,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'text-field': '{name}',
       'text-font': font.regular,
@@ -3008,7 +3042,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-placement': 'line',
       'text-field': '{ref}',
@@ -3047,7 +3082,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-overlap': 'always',
@@ -3088,7 +3124,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'symbol-placement': 'line',
@@ -3136,7 +3173,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'icon-overlap': 'always',
       'icon-image': ['image',
@@ -3228,7 +3266,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
@@ -3316,7 +3355,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'text-field': ['step', ['zoom'],
@@ -3392,7 +3432,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
@@ -3484,6 +3525,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
+          ['==', ['global-state', 'style'], 'standard'],
           ['global-state', 'openHistoricalMap'],
           ['any',
             ['global-state', 'allDates'],
@@ -3585,7 +3627,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'speed'], 'visible',
+        'none',
       ],
     },
   },
@@ -3614,7 +3657,10 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'pitched'], false], 'visible',
+        ['all',
+          ['==', ['global-state', 'pitched'], false],
+          ['==', ['global-state', 'style'], 'speed'],
+        ], 'visible',
         'none',
       ],
       'icon-overlap': 'always',
@@ -3651,6 +3697,10 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
+          'visibility': ['case',
+            ['==', ['global-state', 'style'], 'speed'], 'visible',
+            'none',
+          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-offset': ['step', ['zoom'],
@@ -3702,6 +3752,10 @@ const layers = [
         filterPitchedFeatures('azimuth'),
       ],
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'style'], 'speed'], 'visible',
+          'none',
+        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-image': 'general/signal-deactivated',
@@ -3766,6 +3820,10 @@ const layers = [
       'text-halo-blur': 1,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'speed'], 'visible',
+        'none',
+      ],
       'text-field': ['format',
         ['get', 'ref'], {},
         ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'caption'], null]], '\n', ''], {},
@@ -4051,6 +4109,12 @@ const layers = [
       'circle-stroke-color': 'white',
       'circle-stroke-width': 1,
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: 'signal_boxes_polygon',
@@ -4069,6 +4133,12 @@ const layers = [
       ],
       'fill-outline-color': 'white',
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: 'signal_boxes_polygon_outline',
@@ -4083,6 +4153,12 @@ const layers = [
     paint: {
       'line-color': 'white',
       'line-width': 1,
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
     },
   },
   {
@@ -4107,7 +4183,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
       ],
     },
   },
@@ -4144,7 +4221,10 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'pitched'], false], 'visible',
+        ['all',
+          ['==', ['global-state', 'style'], 'signals'],
+          ['==', ['global-state', 'pitched'], false],
+        ], 'visible',
         'none',
       ],
       'icon-overlap': 'always',
@@ -4184,6 +4264,10 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
+          'visibility': ['case',
+            ['==', ['global-state', 'style'], 'signals'], 'visible',
+            'visible',
+          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-offset': ['interpolate', ['linear'],
@@ -4216,6 +4300,10 @@ const layers = [
         filterPitchedFeatures('azimuth'),
       ],
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'style'], 'signals'], 'visible',
+          'visible',
+        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-image': 'general/signal-deactivated',
@@ -4253,6 +4341,10 @@ const layers = [
       'icon-halo-width': 1,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-overlap': 'always',
       'icon-image': ['case',
@@ -4279,6 +4371,10 @@ const layers = [
           filterPitchedFeatures('azimuth'),
         ],
         layout: {
+          'visibility': ['case',
+            ['==', ['global-state', 'style'], 'signals'], 'visible',
+            'visible',
+          ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
           'icon-anchor': 'center',
@@ -4314,6 +4410,10 @@ const layers = [
         filterPitchedFeatures('azimuth'),
       ],
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'style'], 'signals'], 'visible',
+          'visible',
+        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-image': 'general/signal-deactivated',
@@ -4362,6 +4462,10 @@ const layers = [
       'text-halo-blur': 1,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'text-field': ['format',
         ['get', 'ref'], {},
@@ -4401,6 +4505,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
       'text-field': '{ref}',
       'text-font': font.bold,
       'text-size': 11,
@@ -4426,6 +4534,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        'none',
+      ],
       'text-field': ['coalesce', ['get', 'name'], ['get', 'ref'], ''],
       'text-font': font.bold,
       'text-size': 11,
@@ -4604,6 +4716,12 @@ const layers = [
         colors.substation,
       ],
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: `electrification_substation_outline`,
@@ -4617,6 +4735,12 @@ const layers = [
         colors.halo,
       ],
       'line-width': 2,
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
     },
   },
   {
@@ -4635,6 +4759,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'icon-image': ['case',
         ['==', ['get', 'transition'], true], 'sdf:general/catenary-mast-transition',
         'sdf:general/catenary-mast',
@@ -4666,6 +4794,10 @@ const layers = [
       'text-halo-width': 2,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'text-field': '{ref}',
       'text-font': font.bold,
       'text-size': 11,
@@ -4691,6 +4823,12 @@ const layers = [
         15, 2.0,
       ],
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: 'electrification_signals_anchor',
@@ -4711,7 +4849,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
       ],
     },
   },
@@ -4740,7 +4879,10 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'pitched'], false], 'visible',
+        ['all',
+          ['==', ['global-state', 'pitched'], false],
+          ['==', ['global-state', 'style'], 'electrification'],
+        ], 'visible',
         'none',
       ],
       'icon-overlap': 'always',
@@ -4782,6 +4924,11 @@ const layers = [
         'text-halo-blur': 1,
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pitched'], false], 'none',
+          ['==', ['global-state', 'style'], 'electrification'], 'visible',
+          'none',
+        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
         'icon-offset': ['step', ['zoom'],
@@ -4829,6 +4976,10 @@ const layers = [
       filterPitchedFeatures('azimuth'),
     ],
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-overlap': 'always',
       'icon-image': 'general/signal-deactivated',
@@ -4888,6 +5039,10 @@ const layers = [
       'text-halo-blur': 1,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'text-field': ['format',
         ['get', 'ref'], {},
         ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'caption'], null]], '\n', ''], {},
@@ -4937,6 +5092,10 @@ const layers = [
       'text-halo-width': 2,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-overlap': 'always',
       'icon-image': ['concat', 'sdf:', ['get', 'feature']],
@@ -4964,6 +5123,10 @@ const layers = [
       'text-halo-width': 2,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        'none',
+      ],
       'text-field': '{name}',
       'text-font': font.bold,
       'text-size': 11,
@@ -5125,6 +5288,12 @@ const layers = [
         0.2,
       ],
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: `railway_grouped_stations_outline`,
@@ -5163,6 +5332,12 @@ const layers = [
         'construction', ['literal', construction_dasharray],
         'proposed', ['literal', proposed_dasharray],
         ['literal', present_dasharray],
+      ],
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
       ],
     },
   },
@@ -5233,6 +5408,12 @@ const layers = [
       'circle-stroke-color': 'white',
       'circle-stroke-width': 1,
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: 'signal_boxes_polygon',
@@ -5254,6 +5435,12 @@ const layers = [
       ],
       'fill-outline-color': 'white',
     },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
+    },
   },
   {
     id: 'signal_boxes_polygon_outline',
@@ -5271,6 +5458,12 @@ const layers = [
     paint: {
       'line-color': 'white',
       'line-width': 1,
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
     },
   },
   {
@@ -5294,6 +5487,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': 'sdf:general/station-small',
       'icon-overlap': 'always',
@@ -5330,6 +5527,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
       'icon-overlap': 'always',
@@ -5377,6 +5578,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
       'icon-overlap': 'always',
@@ -5436,6 +5641,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
         ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], 'past',
@@ -5510,6 +5719,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'text-field': ['step', ['zoom'],
         ['format',
@@ -5593,7 +5806,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
@@ -5669,6 +5883,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'text-field': '{ref}',
       'text-font': font.bold,
       'text-size': 11,
@@ -5698,6 +5916,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'text-field': '{name}',
       'text-font': font.bold,
       'text-size': 11,
@@ -5731,6 +5953,10 @@ const layers = [
       'text-halo-width': 2,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-overlap': 'always',
       'icon-image': ['concat', 'sdf:', ['get', 'feature']],
@@ -5751,6 +5977,10 @@ const layers = [
       source: 'openrailwaymap_operator',
       'source-layer': 'operator_railway_symbols',
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'style'], 'operator'], 'visible',
+          'none',
+        ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
       },
@@ -5780,6 +6010,12 @@ const layers = [
       'fill-opacity': ['case',
         ['boolean', ['feature-state', 'hover'], false], 0.3,
         0.2,
+      ],
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
       ],
     },
   },
@@ -5819,6 +6055,12 @@ const layers = [
         'construction', ['literal', construction_dasharray],
         'proposed', ['literal', proposed_dasharray],
         ['literal', present_dasharray],
+      ],
+    },
+    layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
       ],
     },
   },
@@ -5899,6 +6141,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': 'sdf:general/station-small',
       'icon-overlap': 'always',
@@ -5926,6 +6172,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
       'icon-overlap': 'always',
@@ -5964,6 +6214,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['get', 'station_size']]],
       'icon-overlap': 'always',
@@ -6045,6 +6299,10 @@ const layers = [
       ],
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
         ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], 'past',
@@ -6129,6 +6387,10 @@ const layers = [
       'text-halo-width': 1.5,
     },
     layout: {
+      'visibility': ['case',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
+      ],
       'symbol-z-order': 'source',
       'text-field': ['step', ['zoom'],
         ['format',
@@ -6203,7 +6465,8 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        'visible',
+        ['==', ['global-state', 'style'], 'route'], 'visible',
+        'none',
       ],
       'symbol-z-order': 'source',
       'icon-image': ['image', ['concat', 'sdf:general/station-', ['case',
