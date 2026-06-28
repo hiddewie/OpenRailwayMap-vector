@@ -40,10 +40,12 @@ const filterPitchedFeatures = (azimuthProperty) =>
   ];
 
 const themeSwitch = (light, dark) =>
-  ['case',
-    ['==', ['global-state', 'theme'], 'light'], light,
-    dark
-  ];
+  light === dark
+    ? light
+    : ['case',
+        ['==', ['global-state', 'theme'], 'light'], light,
+        dark
+      ];
 
 const colors = {
   text: {
