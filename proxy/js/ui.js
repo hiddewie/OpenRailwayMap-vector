@@ -1190,6 +1190,8 @@ const map = new maplibregl.Map({
 map.setStyle(`${location.origin}/style.json`, {
   validate: false,
   transformStyle: (previous, next) => {
+    const language = configuredLanguage();
+
     rewriteStylePathsToOrigin(next)
     addLanguageToSupportedSources(next, language)
     rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
@@ -1322,7 +1324,9 @@ function onStyleChange() {
 
   if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
     // Change styles
-    map.setGlobalStateProperty('style', selectedStyle);
+    if (map.isStyleLoaded()) {
+      map.setGlobalStateProperty('style', selectedStyle);
+    }
     hideSearchResults();
     routeControl.clearRoute();
   }
