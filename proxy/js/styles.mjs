@@ -5,16 +5,6 @@ const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protecti
 const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
 
-const knownStyles = [
-  'standard',
-  'speed',
-  'signals',
-  'electrification',
-  'track',
-  'operator',
-  'route',
-];
-
 const defaultDate = (new Date()).getFullYear();
 /**
  * Maximum view angle for which a feature will be shown on the map using a pitched view, in degrees.
