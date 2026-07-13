@@ -107,18 +107,17 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
     return nil, nil
   elseif speed and (not forward_speed) and (not backward_speed) then
     return speed_int(speed), speed
-  elseif speed then
-    return nil, nil
   end
 
+  local effective_forward_speed = forward_speed or speed
+  local effective_backward_speed = backward_speed or speed
+
   if preferred_direction == 'forward' then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' (' .. (backward_speed or '-') .. ')'
+    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' (' .. (effective_backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return speed_int(backward_speed), (backward_speed or '-') .. ' (' .. (forward_speed or '-') .. ')'
-  elseif preferred_direction == 'both' or (not preferred_direction) then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(effective_backward_speed), (effective_backward_speed or '-') .. ' (' .. (effective_forward_speed or '-') .. ')'
   else
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
   end
 end
 

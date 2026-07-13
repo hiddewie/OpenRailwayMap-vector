@@ -100,3 +100,38 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"acses","atc"}', train_protection_rank = 65 },
   },
 })
+
+-- Combined maxspeed and directional maxspeed tagging
+
+osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
+  tags = {
+    ['railway'] = 'rail',
+    ['maxspeed'] = '100',
+    ['maxspeed:forward'] = '120',
+  },
+  as_linestring = as_linestring_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  railway_line = {
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', maxspeed = 120, speed_label = '120 / 100' },
+  },
+})
+
+osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
+  tags = {
+    ['railway'] = 'rail',
+    ['maxspeed'] = '100',
+    ['maxspeed:backward'] = '80',
+    ['railway:preferred_direction'] = 'backward',
+  },
+  as_linestring = as_linestring_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  railway_line = {
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', preferred_direction = 'backward', maxspeed = 80, speed_label = '80 (100)' },
+  },
+})
