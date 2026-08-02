@@ -590,7 +590,7 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals_railway_signals,signals_signal_boxes',
+    url: '/signals_railway_signals,signals_signal_boxes/signals_railway_symbols',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
@@ -4441,6 +4441,47 @@ const layers = {
         'text-size': 11,
       }
     },
+    // ...imageLayerWithOutline(
+    //   `railway_symbols_outline`,
+    //   ['get', 'feature'],
+    //   {
+    //     type: 'symbol',
+    //     minzoom: 12,
+    //     source: 'openrailwaymap_standard',
+    //     'source-layer': 'standard_railway_symbols',
+    //     layout: {
+    //       'symbol-z-order': 'source',
+    //       'icon-overlap': 'always',
+    //     },
+    //   },
+    // ),
+    // {
+    //   id: 'railway_symbols_text',
+    //   type: 'symbol',
+    //   minzoom: 12,
+    //   source: 'openrailwaymap_standard',
+    //   'source-layer': 'standard_railway_symbols',
+    //   paint: {
+    //     'text-color': colors.styles.standard.symbols,
+    //     'text-halo-color': ['case',
+    //       ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+    //       colors.halo,
+    //     ],
+    //     'text-halo-width': 2,
+    //   },
+    //   layout: {
+    //     'visibility': ['case',
+    //       ['<', ['global-state', 'date'], defaultDate], 'none',
+    //       'visible',
+    //     ],
+    //     'symbol-z-order': 'source',
+    //     'text-field': ['coalesce', ['get', 'ref'], ''],
+    //     'text-font': font.regular,
+    //     'text-size': 11,
+    //     'text-padding': 15,
+    //     'text-offset': [0, 1.5],
+    //   },
+    // },
     routeStops,
     searchResults,
   ],

@@ -742,6 +742,19 @@ jsonpath "$['railway:signal:electricity:type']" == "end_of_catenary"
 jsonpath "$['railway:signal:electricity:form']" == "sign"
 jsonpath "$['railway:signal:electricity:turn_direction']" == "left"
 
+# POI (signals)
+GET {{base_url}}/feature/openrailwaymap_signals/signals_railway_symbols/way-1317749799
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.note" == null
+jsonpath "$.description" == "Ultraschall-, Lichtprofil- und Messbalken-Prüfung (ULM)"
+jsonpath "$.osm_id" == 1317749799
+jsonpath "$.osm_type" == "W"
+jsonpath "$.feature" == "general/defect_detector"
+jsonpath "$.name" == "ULM"
+jsonpath "$.ref" == null
+
 # Distant signal
 GET {{base_url}}/feature/openrailwaymap_signals/signals_railway_signals/9351388537
 HTTP 200

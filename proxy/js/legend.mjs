@@ -2023,6 +2023,27 @@ const legendData = {
           },
         ],
       },
+      "openrailwaymap_standard-signals_railway_symbols": {
+        key: [
+          'feature',
+        ],
+        features: poi.features
+          .filter(feature => feature.layer === 'signals')
+          .map(feature => ({
+            legend: feature.description,
+            type: 'point',
+            minzoom: feature.minzoom,
+            properties: {
+              feature: feature.feature,
+            },
+            variants: feature.variants ? feature.variants.map(variant => ({
+              legend: variant.description,
+              properties: {
+                feature: variant.feature,
+              },
+            })) : undefined,
+          })),
+      },
       "high-railway_text_km": {
         key: [],
         features: [
