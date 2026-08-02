@@ -130,6 +130,9 @@ const railwayLineFeatures = {
     highspeed: {
       name: 'High speed',
     },
+    rubber_tires: {
+      name: 'Rubber-tyred',
+    },
     preferred_direction: {
       name: 'Preferred direction',
     },
@@ -503,7 +506,10 @@ const features = {
         name: 'Service',
       },
       highspeed: {
-        name: 'Highspeed',
+        name: 'High speed',
+      },
+      rubber_tires: {
+        name: 'Rubber-tyred',
       },
       preferred_direction: {
         name: 'Preferred direction',
