@@ -961,9 +961,6 @@ const features = {
       derail: {
         name: 'Derailer',
       },
-      vacancy_detection: {
-        name: 'Vacancy detection',
-      },
     },
     properties: {
       feature0: {
@@ -1042,9 +1039,6 @@ const features = {
       },
       derail: {
         name: 'Derailer',
-      },
-      vacancy_detection: {
-        name: 'Vacancy detection',
       },
     },
     properties: {
@@ -1212,9 +1206,6 @@ const features = {
       },
       derail: {
         name: 'Derailer',
-      },
-      vacancy_detection: {
-        name: 'Vacancy detection',
       },
     },
     properties: {
