@@ -243,28 +243,24 @@ features:
     tags:
       - { tag: 'railway', value: 'car_shuttle' }
 
-  - description: 'Vacancy detection: insulated rail joint'
-    feature: 'general/vacancy-detection-insulated-rail-joint'
+  - description: Vacancy detection
     layer: signals
     minzoom: 13
+    feature: 'general/vacancy-detection-unknown'
     tags:
       - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
+    variants:
+      - description: Axle counter
+        feature: 'general/vacancy-detection-axle-counter'
+        tags:
+          - { tag: 'railway', value: 'vacancy_detection' }
+          - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
-  - description: 'Vacancy detection: axle counter'
-    feature: 'general/vacancy-detection-axle-counter'
-    layer: signals
-    minzoom: 13
-    tags:
-      - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
-
-  - description: Isolated track section
-    feature: 'general/isolated-track-section'
-    layer: electrification
-    minzoom: 14
-    tags:
-      - { tag: 'railway', value: 'isolated_track_section' }
+      - description: Isolated track section
+        feature: 'general/isolated-track-section'
+        tags:
+          - { tag: 'railway', value: 'vacancy_detection' }
+          - { tag: 'railway:vacancy_detection', value: 'isolated_track_section' }
 
   - description: Crossing
     feature: 'general/crossing'
