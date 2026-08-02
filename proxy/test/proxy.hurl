@@ -69,20 +69,27 @@ GET {{base_url}}/signals_railway_signals,signals_signal_boxes/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
+# Proxy without referrer is blocked
+GET {{base_url}}/railway_line_high
+HTTP 403
+
 # Proxy to API, cannot proxy
 GET {{base_url}}/api/test
 HTTP 404
 
 # Proxy to sprites
 GET {{base_url}}/sprite/symbols.json
+Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 GET {{base_url}}/sprite/symbols.png
+Referer: http://localhost:8000
 HTTP 200
 
 # Proxy to SDF sprites
 GET {{base_url}}/sdf_sprite/symbols.json
+Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 

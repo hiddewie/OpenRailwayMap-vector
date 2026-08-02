@@ -21,6 +21,8 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
+  reload_interval: ${POSTGRES_RELOAD_INTERVAL:-0s}
+
   # No tables, see function sources below
   tables: {}
 
