@@ -19,6 +19,7 @@ properties:
           description: The layer that the place of interest will be shown in
           enum:
             - standard
+            - signals
             - electrification
             - operator
         minzoom:
