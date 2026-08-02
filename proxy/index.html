@@ -21,15 +21,15 @@
     }
   </script>
 
-  <link rel="modulepreload" href="./js/maplibre-gl-6.1.0/maplibre-gl.mjs" />
-  <link rel="modulepreload" href="./js/maplibre-gl-6.1.0/maplibre-gl-shared.mjs" />
-  <link rel="modulepreload" href="./js/maplibre-gl-6.1.0/maplibre-gl-worker.mjs" />
-  <link rel="preload" href="js/mapbox-gl/mapbox-gl-rtl-text.js" as="script" />
-  <link rel="preload" href="api/features/features.json" as="fetch" />
-
   <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
   <link rel="stylesheet" href="css/maplibre-gl-6.1.0/maplibre-gl.css">
   <link rel="stylesheet" href="css/ui.css">
+
+  <script type="module">
+    import * as maplibregl from './js/maplibre-gl-6.1.0/maplibre-gl.mjs';
+    window.maplibregl = maplibregl;
+  </script>
+  <script src="js/ui.js" defer></script>
 
   <title>OpenRailwayMap</title>
 </head>
@@ -391,8 +391,6 @@
   <div id="background-map"></div>
   <div id="map"></div>
 </div>
-
-<script src="js/ui.mjs" type="module" defer></script>
 
 </body>
 
