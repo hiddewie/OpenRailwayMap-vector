@@ -277,3 +277,13 @@ references:
   - id: parent
     description: Parent
     tags: [ 'railway:ref:parent' ]
+
+  - id: xrois
+    description: XROIS
+    country: KR
+    tags: [ 'ref:XROIS' ]
+
+  - id: korail-ars
+    description: Korail ARS
+    country: KR
+    tags: [ 'ref:ARS' ]
