@@ -1193,7 +1193,7 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   attributionControl: false,
   renderWorldCopies: false,
-  transformRequest: function(url, resourceType) {
+  transformRequest: (url, resourceType) => {
     if (resourceType === 'Tile') {
       // Request all tiles as MLT encoded
       return {
