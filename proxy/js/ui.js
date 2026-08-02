@@ -1,17 +1,5 @@
-import {
-  setRTLTextPlugin,
-  Map,
-  LngLatBounds,
-  LngLat,
-  NavigationControl,
-  GeolocateControl,
-  AttributionControl,
-  ScaleControl,
-  Popup,
-} from 'maplibre-gl';
-
 // Add support for right-to-left languages like Arabic and Hebrew
-setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
+maplibregl.setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
 
 const searchBackdrop = document.getElementById('search-backdrop');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
@@ -206,7 +194,7 @@ function showSearchResults(results) {
     ? JSON.stringify(results.reduce(
       (bounds, result) =>
         bounds.extend({lat: result.longitude, lon: result.latitude}),
-      new LngLatBounds({lat: results[0].longitude, lon: results[0].latitude})
+      new maplibregl.LngLatBounds({lat: results[0].longitude, lon: results[0].latitude})
     ).toArray())
     : null;
 
@@ -1185,7 +1173,7 @@ const mapStyles = Object.fromEntries(
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
 
-const backgroundMap = new Map({
+const backgroundMap = new maplibregl.Map({
   container: 'background-map',
   style: buildBackgroundMapStyle(),
   attributionControl: false,
@@ -1198,7 +1186,7 @@ const backgroundMap = new Map({
 
 updateBackgroundMapContainer();
 
-const map = new Map({
+const map = new maplibregl.Map({
   container: 'map',
   hash: 'view',
   minZoom: globalMinZoom,
@@ -1842,7 +1830,7 @@ class LegendControl {
 
     const legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
     this.legendMapRoot = createDomElement('div', 'legend-map', legendMapContainer)
-    this.legendMap = new Map({
+    this.legendMap = new maplibregl.Map({
       container: this.legendMapRoot,
       zoom: 16,
       center: [0, 0],
@@ -2267,11 +2255,11 @@ const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
 });
-const navigationControl = new NavigationControl({
+const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
   visualizePitch: true,
 })
-const geolocateControl = new GeolocateControl({
+const geolocateControl = new maplibregl.GeolocateControl({
   positionOptions: {
     enableHighAccuracy: true
   },
@@ -2327,9 +2315,9 @@ const attributionOptions = {
   // The field below may be mutated to dynamically add the data freshness information to the existing control
   customAttribution: '<a href="https://maplibre.org/" target="_blank">MapLibre</a> | <a href="https://github.com/hiddewie/OpenRailwayMap-vector" target="_blank">&copy; OpenRailwayMap contributors</a> | <a href="https://www.openstreetmap.org/about" target="_blank">&copy; OpenStreetMap contributors</a>',
 }
-const attributionControl = new AttributionControl(attributionOptions)
+const attributionControl = new maplibregl.AttributionControl(attributionOptions)
 map.addControl(attributionControl, 'bottom-right');
-map.addControl(new ScaleControl({
+map.addControl(new maplibregl.ScaleControl({
   maxWidth: 150,
   unit: 'metric',
 }), 'bottom-right');
@@ -2883,8 +2871,8 @@ map.on('mousemove', event => {
 });
 
 function closestPointOnLine(point, line) {
-  const lngLatPoint = LngLat.convert(point)
-  let {closest0, closest1} = line.map(LngLat.convert).reduce((acc, cur) => {
+  const lngLatPoint = maplibregl.LngLat.convert(point)
+  let {closest0, closest1} = line.map(maplibregl.LngLat.convert).reduce((acc, cur) => {
     const d = lngLatPoint.distanceTo(cur)
     if (acc.closest0 == null || d < lngLatPoint.distanceTo(acc.closest0)) {
       return {closest0: cur, closest1: acc.closest0}
@@ -2944,7 +2932,7 @@ map.on('click', event => {
     }
 
     const abortController = new AbortController();
-    popup = new Popup({offset: popupOffsets})
+    popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
       .setDOMContent(popupContent(feature, abortController))
       .addTo(map);
