@@ -263,7 +263,7 @@ features:
 
   - train_protection: octys
     tags:
-      - { tag: 'railway:octys', value: 'yes' }
+      - { tag: 'railway:octys', values: ['yes', '1', '2', '3'] }
 
   - train_protection: ouragan
     tags:
