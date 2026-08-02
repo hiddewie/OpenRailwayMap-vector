@@ -63,7 +63,7 @@ View the [setup documentation](SETUP.md) for details.
 
 ## Deployment
 
-The [deployment documentation](deployment/README.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions), Cloudflare and a server running the software.
+The [deployment documentation](deployment/README.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions), Cloudflare and a server running the software. View [the usage policy of the OpenRailwayMap services](USAGE.md).
 
 ## License
 
