@@ -3797,7 +3797,7 @@ features:
 
   - description: Begegnungsverbot (So 5v)
     country: DE
-    icon: [ default: 'de/cv/so5a' ]
+    icon: [ default: 'de/cv/so5v' ]
     tags:
       - { tag: 'railway:signal:passing', value: 'DE-CV:so5v' }
       - { tag: 'railway:signal:passing:form', value: 'sign' }
@@ -4961,7 +4961,7 @@ features:
           - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-{40}' }
         default: 'de/bostrab/g5-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', values: ['DE-UESTRA:g5', 'DE-SRS:g5'] }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-UESTRA:g5', 'DE-SRS:g5'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: East German line speed signal "Eckentafel" (Lf 5)
