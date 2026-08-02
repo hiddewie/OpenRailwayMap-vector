@@ -6,6 +6,12 @@ proxy_cache_path /var/cache/nginx/
                  use_temp_path=off
                  keys_zone=cache:50m;
 
+map $http_referer $block_referrer {
+  # Block all requests without a referrer
+  "" 1;
+  default 0;
+}
+
 server {
   listen 8000 default_server;
   listen [::]:8000 ipv6only=on;
@@ -152,6 +158,10 @@ server {
     proxy_set_header X-Forwarded-Proto ${PUBLIC_PROTOCOL};
     proxy_read_timeout 600;
     proxy_redirect off;
+
+    if ($block_referrer) {
+      return 403;
+    }
 
     add_header X-Cache-Status $upstream_cache_status;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_TILES_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_TILES_STALE}";
