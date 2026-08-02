@@ -162,6 +162,45 @@ operators:
       - 'Transwa'
     color: '#ec4025'
 
+  - country: AU
+    names:
+      - 'BHP Billiton'
+      - 'BHP Iron Ore'
+    color: '#E25200'
+
+  - country: AU
+    names:
+      - 'Rio Tinto'
+    color: '#CD2C2C'
+
+  - country: AU
+    names:
+      - 'Hancock Prospecting'
+    color: '#86150F'
+
+  - country: AU
+    names:
+      - 'Fortescue'
+      - 'Fortescue Metal Group'
+    color: '#00c400'
+
+  - country: AU
+    names:
+      - 'Aurizon'
+      - 'Aurizon Operations'
+      - 'Aurizon Network'
+    color: '#FF9900'
+
+  - country: AU
+    names:
+      - 'Bowen Rail Company'
+    color: '#001a72'
+
+  - country: AU
+    names:
+      - 'Airtrain Citylink Limited'
+    color: '#00a9a5'
+
   # --- AZ --- #
 
   - country: AZ
