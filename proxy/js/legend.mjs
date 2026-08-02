@@ -2023,7 +2023,7 @@ const legendData = {
           },
         ],
       },
-      "openrailwaymap_standard-signals_railway_symbols": {
+      "openrailwaymap_signals-signals_railway_symbols": {
         key: [
           'feature',
         ],

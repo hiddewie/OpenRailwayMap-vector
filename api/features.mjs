@@ -1189,7 +1189,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-signals_railway_symbols': poiFeatures('signals'),
+  'openrailwaymap_signals-signals_railway_symbols': poiFeatures('signals'),
   'openrailwaymap_electrification-electrification_signals': {
     view: {
       name: 'electrification_signals_view',
