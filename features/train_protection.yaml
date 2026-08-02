@@ -16,12 +16,13 @@ train_protections:
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
   - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
+  - { train_protection: 'eatc', legend: 'Enhanced Automatic Train Control (E-ATC)', color: '#9c0b5d' }
   - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
   - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#43b54d' }
-  - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#43b54d' }
-  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#43b54d' }
+  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#0096d4' }
+  - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#0096d4' }
+  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#0096d4' }
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -120,6 +121,10 @@ features:
   - train_protection: atc
     tags:
       - { tag: 'railway:atc', values: ['yes', 'CS', 'new-CS', 'D', 'DS', 'keio', 'KS', 'NS', 'P', 'TD', 'WS'] }
+
+  - train_protection: eatc
+    tags:
+      - { tag: 'railway:eatc', value: 'yes' }
 
   - train_protection: asfa
     tags:
