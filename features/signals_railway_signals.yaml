@@ -2714,6 +2714,10 @@ features:
         cases:
           - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
         default: 'ch/fdv-n-533'
+      - match: 'railway:signal:distant:repeated'
+        cases:
+          - { value: 'ch/fdv-n-repeated' }
+        position: top
     tags:
       - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
