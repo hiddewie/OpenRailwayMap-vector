@@ -590,7 +590,7 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals_railway_signals,signals_signal_boxes/signals_railway_symbols',
+    url: '/signals_railway_signals,signals_signal_boxes,signals_railway_symbols',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
