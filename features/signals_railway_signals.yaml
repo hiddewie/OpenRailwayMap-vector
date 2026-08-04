@@ -3055,8 +3055,8 @@ features:
     icon:
       - match: 'railway:signal:stop:caption'
         cases:
-          - { regex: '^([0123](\.5)?|4)$', value: 'ch/fdv-578-{}', example: 'ch/fdv-578-{}' }
-        default: 'ch/fdv-578'
+          - { regex: '^(0.5|[123](\.5)?|4)$', value: 'ch/fdv-578-{}', example: 'ch/fdv-578-{}' }
+        default: 'ch/fdv-578-unkonwn'
     tags:
       - { tag: 'railway:signal:stop', value: 'CH-FDV:578' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
