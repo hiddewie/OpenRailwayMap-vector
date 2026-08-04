@@ -2693,6 +2693,31 @@ features:
 
   # --- CH --- #
 
+  - description: Vorsignal System L
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
+          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
+          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
+          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
+        default: 'ch/fdv-l-528'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Vorsignal System N
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
+        default: 'ch/fdv-n-533'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
   - description: Hauptsignal System L
     country: CH
     icon:
@@ -2746,31 +2771,6 @@ features:
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Vorsignal System L
-    country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
-          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
-          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
-          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
-        default: 'ch/fdv-l-528'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Vorsignal System N
-    country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
-        default: 'ch/fdv-n-533'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Fahrtstellungsmelder
     country: CH
