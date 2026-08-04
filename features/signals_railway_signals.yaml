@@ -3682,11 +3682,46 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Gleisabschluss, Weiterfahrt verboten (Sh 9)
+    country: DE
+    icon: [ default: 'de/vgf/sh9' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-VGF:sh9' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Vorfahrt beachten (Sh 13)
+    country: DE
+    icon: [ default: 'de/vgf/sh13' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-VGF:sh13' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: Hamburger Hochbahn Sh 3
     country: DE
     icon: [ default: 'de/hha/sh3' ]
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-HHA:sh3' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Nothalt (Sh 3d)
+    country: DE
+    icon: [ default: 'de/bostrab/sh3d' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh3d' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Eingeschränkter Nothalt (Sh 3e)
+    country: DE
+    icon: [ default: 'de/uestra/sh3e' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-UESTRA:sh3e' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Höchstwertanzeiger beachten (So 7)
+    country: DE
+    icon: [ default: 'de/uestra/so7' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-UESTRA:so7' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
   - description: tram signal "start of train protection" So 1
@@ -3759,6 +3794,76 @@ features:
     tags:
       - { tag: 'railway:signal:passing', value: 'DE-DVB:so5a' }
       - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (So 5v)
+    country: DE
+    icon: [ default: 'de/cv/so5v' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-CV:so5v' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, So 5a)
+    country: DE
+    icon: [ default: 'de/evag/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, So 5b)
+    country: DE
+    icon: [ default: 'de/evag/so5b' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:so5b' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, W 16)
+    country: DE
+    icon: [ default: 'de/evag/w16' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:w16' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Potsdam, So 5a)
+    country: DE
+    icon: [ default: 'de/vip/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-ViP:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Türschließkriterium (Potsdam, So 6)
+    country: DE
+    icon: [ default: 'de/vip/so6' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-ViP:so6' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: Folgefahrt verboten anfang (Potsdam, So 7)
+    country: DE
+    icon: [ default: 'de/vip/so7' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-ViP:so7' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Folgefahrt verboten ende (Potsdam, So 8)
+    country: DE
+    icon: [ default: 'de/vip/so8' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-ViP:so8' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Streckentrenner (Potsdam, St 7a)
+    country: DE
+    icon: [ default: 'de/vip/st7a' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'DE-ViP:st7a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Engstelle (Strausberg, So 8)
+    country: DE
+    icon: [ default: 'de/ste/so8' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-STE:so8' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: tram passing prohibited end sign So 6
     country: DE
@@ -3900,7 +4005,14 @@ features:
 
   - description: tram crossing light Bü
     country: DE
-    icon: [ default: 'de/bostrab/bü' ]
+    icon:
+      - default: 'de/bostrab/bü'
+      - match: 'railway:signal:crossing:repeated'
+        cases:
+          - { value: 'de/bostrab/bü3a', description: 'repeated' }
+      - match: 'railway:signal:crossing:shortened'
+        cases:
+          - { value: 'de/bostrab/bü3b', description: 'shortened' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-BOStrab:bü' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
@@ -4053,14 +4165,14 @@ features:
     icon:
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a1', value: 'de/bostrab/a1', description: 'close doors (A 1)' }
+          - { any: ['DE-BOStrab:a1', 'DE-HHA:a1'], value: 'de/bostrab/a1', description: 'close doors (A 1)' }
         position: bottom
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2', description: 'depart (A 2)' }
+          - { any: ['DE-BOStrab:a2', 'DE-HHA:a2'], value: 'de/bostrab/a2', description: 'depart (A 2)' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
+      - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2', 'DE-HHA:a'] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: crossing info sign
@@ -4530,7 +4642,7 @@ features:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-# The following is a copy of the standard Fahrsignal feature (below) for instances where it coincides with the Dresden-specific crossing signal So 25.
+  # The following is a copy of the standard Fahrsignal feature (below) for instances where it coincides with the Dresden-specific crossing signal So 25.
   - description: tram Fahrsignal
     country: DE
     exampleIcon: de/bostrab/f1-old
@@ -4629,6 +4741,11 @@ features:
         cases:
           - { exact: '?', value: 'de/bostrab/fahrsignal-empty', description: 'further, unidentified aspects' }
         position: bottom
+
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-BOStrab:so4', value: 'de/bostrab/so4', description: 'So 4' }
+        position: center
 
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
@@ -4795,7 +4912,7 @@ features:
       - { tag: 'railway:signal:speed_limit', any: [ 'DE-BOStrab:g2', 'DE-BOStrab:g2b' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: Tram signal G3
+  - description: Tram signal (G 3)
     country: DE
     type: tram
     icon: [ default: 'de/bostrab/g3' ]
@@ -4835,7 +4952,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Hannover tram speed limit G5
+  - description: Langsamfahrpunkt (G 5)
     country: DE
     type: tram
     icon:
@@ -4844,7 +4961,7 @@ features:
           - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-{40}' }
         default: 'de/bostrab/g5-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'DE-UESTRA:g5' }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-UESTRA:g5', 'DE-SRS:g5'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: East German line speed signal "Eckentafel" (Lf 5)
@@ -5162,6 +5279,13 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st25' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Zeichen für Begegnungserlaubnis
+    country: DE
+    icon: [ default: 'de/bostrab/st36' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-BOStrab:st36' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
   - description: DVB curve lubrication system ahead (So 11)
     country: DE
     icon: [ default: 'de/dvb/so11' ]
@@ -5173,8 +5297,8 @@ features:
     country: DE
     icon: [ default: 'de/rsag/so13' ]
     tags:
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-RSAG:so13' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: radio channel notice
     country: DE
