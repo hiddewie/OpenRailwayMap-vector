@@ -243,6 +243,13 @@ features:
     tags:
       - { tag: 'railway', value: 'car_shuttle' }
 
+  - description: Rotary car dumper
+    feature: 'general/car-dumper'
+    layer: standard
+    minzoom: 13
+    tags:
+      - { tag: 'railway', value: 'car_dumper' }
+
   - description: Vacancy detection
     layer: signals
     minzoom: 13
@@ -261,6 +268,13 @@ features:
         tags:
           - { tag: 'railway', value: 'vacancy_detection' }
           - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
+
+  - description: Isolated track section
+    feature: 'general/isolated-track-section'
+    layer: electrification
+    minzoom: 14
+    tags:
+      - { tag: 'railway', value: 'isolated_track_section' }
 
   - description: Crossing
     feature: 'general/crossing'
