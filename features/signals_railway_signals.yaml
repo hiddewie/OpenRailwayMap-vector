@@ -3075,6 +3075,13 @@ features:
       - { tag: 'railway:signal:stop', value: 'CH-FDV:580' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Ortsfestes Signal für Abfahrerlaubnis
+    country: CH
+    icon: [ default: 'ch/fdv-581' ]
+    tags:
+      - { tag: 'railway:signal:departure', value: 'CH-FDV:581' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
+
   # --- CZ --- #
 
   - description: Vlak se blíží k zastávce
