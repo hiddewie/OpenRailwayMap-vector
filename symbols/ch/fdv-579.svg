@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="400" height="440">
-  <path id="background" fill="#ffffff" stroke="#000000" stroke-width="35" d="M 17.5,422.5 V 144 L 200,21.098 L 382.5,144 V 422.5 Z"/>
-  <g id="text">
-    <path id="char_a" fill="#000000" d="M 211.2,103.4 249.4,203.8 H 226.5 L 218.4,181.3 H 181.1 L 173.1,203.8 H 150.6 L 188.7,103.4 Z M 213.2,165.3 200.0,127.5 186.3,165.3 Z"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="17.6" viewBox="0 0 16 17.6">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="35" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 17.480469 422.460938 L 17.480469 144.042969 L 200 21.09375 L 382.519531 144.042969 L 382.519531 422.460938 Z M 17.480469 422.460938 " transform="matrix(0.04, 0, 0, 0.04, 0, 0)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 8.449219 4.136719 L 9.976562 8.152344 L 9.058594 8.152344 L 8.734375 7.253906 L 7.242188 7.253906 L 6.925781 8.152344 L 6.023438 8.152344 L 7.546875 4.136719 Z M 8.527344 6.613281 L 8 5.101562 L 7.453125 6.613281 Z M 8.527344 6.613281 "/>
 </svg>
