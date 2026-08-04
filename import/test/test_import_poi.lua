@@ -551,13 +551,57 @@ osm2pgsql.process_node({
   id = 123,
   type = 'node',
   tags = {
+    ['railway'] = 'vacancy_detection',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-unknown', rank = 39, layer = 'signals', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'vacancy_detection',
+    ['railway:vacancy_detection'] = 'axle_counter',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-axle-counter', rank = 37, layer = 'signals', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'vacancy_detection',
+    ['railway:vacancy_detection'] = 'insulated_rail_joint',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-insulated-rail-joint', rank = 38, layer = 'signals', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
     ['railway'] = 'isolated_track_section',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/isolated-track-section', rank = 37, layer = 'electrification', minzoom = 14 },
+    { id = 'node-123', feature = 'general/isolated-track-section', rank = 40, layer = 'electrification', minzoom = 14 },
   },
 })
 
@@ -572,7 +616,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15, emergency_phone = '041/785302' },
+    { id = 'node-123', feature = 'general/level-crossing', rank = 44, layer = 'standard', minzoom = 15, emergency_phone = '041/785302' },
   },
 })
 
@@ -587,7 +631,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-light', rank = 40, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-light', rank = 43, layer = 'standard', minzoom = 15 },
   },
 })
 
@@ -602,7 +646,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-barrier', rank = 39, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-barrier', rank = 42, layer = 'standard', minzoom = 15 },
   },
 })
 
@@ -618,7 +662,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-light-barrier', rank = 38, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-light-barrier', rank = 41, layer = 'standard', minzoom = 15 },
   },
 })
 
@@ -632,7 +676,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/crossing', rank = 42, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/crossing', rank = 45, layer = 'standard', minzoom = 15 },
   },
 })
 
@@ -646,7 +690,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/hirail_access', rank = 43, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/hirail_access', rank = 46, layer = 'standard', minzoom = 16 },
   },
 })
 
@@ -660,7 +704,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/phone', rank = 44, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/phone', rank = 47, layer = 'standard', minzoom = 16 },
   },
 })
 
@@ -674,7 +718,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/buffer_stop', rank = 45, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/buffer_stop', rank = 48, layer = 'standard', minzoom = 16 },
   },
   signals = {
     {
@@ -693,7 +737,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/derail', rank = 46, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/derail', rank = 49, layer = 'standard', minzoom = 16 },
   },
   signals = {
     {
@@ -712,7 +756,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/retarder', rank = 47, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/retarder', rank = 50, layer = 'standard', minzoom = 16 },
   },
 })
 
@@ -1252,7 +1296,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/isolated-track-section', rank = 37, layer = 'electrification', minzoom = 14, way = polygon_way },
+    { id = 'way-123', feature = 'general/isolated-track-section', rank = 40, layer = 'electrification', minzoom = 14, way = polygon_way },
   },
 })
 
@@ -1266,7 +1310,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing', rank = 44, layer = 'standard', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1281,7 +1325,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-light', rank = 40, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-light', rank = 43, layer = 'standard', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1296,7 +1340,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-barrier', rank = 39, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-barrier', rank = 42, layer = 'standard', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1312,7 +1356,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-light-barrier', rank = 38, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-light-barrier', rank = 41, layer = 'standard', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1326,7 +1370,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/crossing', rank = 42, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/crossing', rank = 45, layer = 'standard', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1340,7 +1384,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/hirail_access', rank = 43, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/hirail_access', rank = 46, layer = 'standard', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1354,7 +1398,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/phone', rank = 44, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/phone', rank = 47, layer = 'standard', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1368,7 +1412,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/buffer_stop', rank = 45, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/buffer_stop', rank = 48, layer = 'standard', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1382,7 +1426,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/derail', rank = 46, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/derail', rank = 49, layer = 'standard', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1396,6 +1440,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/retarder', rank = 47, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/retarder', rank = 50, layer = 'standard', minzoom = 16, way = polygon_way },
   },
 })
