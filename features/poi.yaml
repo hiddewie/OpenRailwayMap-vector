@@ -256,11 +256,11 @@ features:
           - { tag: 'railway', value: 'vacancy_detection' }
           - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
-      - description: Isolated track section
-        feature: 'general/isolated-track-section'
+      - description: Insulated rail joint
+        feature: 'general/vacancy-detection-insulated-rail-joint'
         tags:
           - { tag: 'railway', value: 'vacancy_detection' }
-          - { tag: 'railway:vacancy_detection', value: 'isolated_track_section' }
+          - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
 
   - description: Crossing
     feature: 'general/crossing'
