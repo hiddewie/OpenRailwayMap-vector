@@ -3043,6 +3043,38 @@ features:
       - { tag: 'railway:signal:slope', value: 'CH-FDV:271' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
+  - description: Halteort für alle Reisezüge
+    country: CH
+    icon: [ default: 'ch/fdv-577' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:577' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Länge
+    country: CH
+    icon:
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^([0123](\.5)?|4)$', value: 'ch/fdv-578-{}', example: 'ch/fdv-578-{}' }
+        default: 'ch/fdv-578'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:578' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Achszahl
+    country: CH
+    icon: [ default: 'ch/fdv-579' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:579' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Zuglängentafel
+    country: CH
+    icon: [ default: 'ch/fdv-580' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:580' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   # --- CZ --- #
 
   - description: Vlak se blíží k zastávce
