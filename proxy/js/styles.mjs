@@ -4247,6 +4247,20 @@ const layers = {
         }
       },
     ]),
+    ...imageLayerWithOutline(
+      `railway_symbols_outline`,
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_symbols',
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
     {
       id: 'railway_signals_high_derail_buffer_stop',
       type: 'symbol',
@@ -4348,20 +4362,6 @@ const layers = {
         }
       },
     ]),
-    ...imageLayerWithOutline(
-      `railway_symbols_outline`,
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 13,
-        source: 'openrailwaymap_signals',
-        'source-layer': 'signals_railway_symbols',
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-        },
-      },
-    ),
     {
       id: 'railway_symbols_text',
       type: 'symbol',
