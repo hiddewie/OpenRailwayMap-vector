@@ -6999,7 +6999,7 @@ features:
       - match: 'railway:signal:main_repeated:states'
         cases:
           - { any: [ 'GB-NR:banner_green' ], value: 'gb/repeated-banner-green' }
-          - { regex: '^((?!GB-NR:banner_green).)*(GB-NR:banner_off)$', value: 'gb/repeated-banner-white' }
+          - { regex: '^((?!GB-NR:banner_green).)*(GB-NR:banner_on;GB-NR:banner_off|GB-NR:banner_off;GB-NR:banner_on|GB-NR:banner_off)$', value: 'gb/repeated-banner-white' }
         default: 'gb/repeated-banner-white'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
