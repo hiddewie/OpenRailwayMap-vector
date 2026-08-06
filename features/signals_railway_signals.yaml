@@ -7007,7 +7007,7 @@ features:
   
   - description: Repeated (semaphore banner)
     country: GB
-    icon: [ default: 'gb/repeated-banner-white' ]
+    icon: [ default: 'gb/repeated-banner-semaphore' ]
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
       - { tag: 'railway:signal:main_repeated:form', value: 'semaphore' }
