@@ -7006,6 +7006,13 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+  
+  - description: Repeated (semaphore banner)
+    country: GB
+    icon: [ default: 'gb/repeated-banner-white' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'semaphore' }
 
   - description: Repeated off
     country: GB
