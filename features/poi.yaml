@@ -250,6 +250,25 @@ features:
     tags:
       - { tag: 'railway', value: 'car_dumper' }
 
+  - description: Vacancy detection
+    layer: signals
+    minzoom: 13
+    feature: 'general/vacancy-detection-unknown'
+    tags:
+      - { tag: 'railway', value: 'vacancy_detection' }
+    variants:
+      - description: Axle counter
+        feature: 'general/vacancy-detection-axle-counter'
+        tags:
+          - { tag: 'railway', value: 'vacancy_detection' }
+          - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
+
+      - description: Insulated rail joint
+        feature: 'general/vacancy-detection-insulated-rail-joint'
+        tags:
+          - { tag: 'railway', value: 'vacancy_detection' }
+          - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
+
   - description: Isolated track section
     feature: 'general/isolated-track-section'
     layer: electrification

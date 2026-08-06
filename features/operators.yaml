@@ -639,6 +639,11 @@ operators:
 
   - country: DE
     names:
+      - 'Augsburger Localbahn'
+    color: '#fd6e22'
+
+  - country: DE
+    names:
       - 'DB RegioNetz Infrastruktur GmbH'
     color: '#ac21b6'
 
@@ -2385,17 +2390,17 @@ operators:
     names:
       - 'North County Transit District'
     color: '#008b8b'
-    
+
   - country: US
     names:
       - 'Southern California Regional Rail Authority'
       - 'Metrolink'
-    color: '#00aedb' 
-    
+    color: '#00aedb'
+
   - country: US
     names:
       - 'Pennsylvania Northeastern Railroad'
-    color: '#ff6600'  
+    color: '#ff6600'
 
   - country: US
     names:
@@ -2453,7 +2458,7 @@ operators:
   - country: US
     names:
       - 'TEXRail'
-    color: '#e91c2c' 
+    color: '#e91c2c'
 
   - country: US
     names:
@@ -2463,7 +2468,7 @@ operators:
   - country: US
     names:
       - 'Washington Metropolitan Area Transit Authority'
-    color: '#3a2c26'    
+    color: '#3a2c26'
 
   - country: US
     names:
@@ -2584,7 +2589,7 @@ operators:
     names:
       - 'Maryland and Delaware Railroad'
     color: '#831536'
-    
+
   - country: US
     names:
       - 'Southwest Pennsylvania Railroad'
@@ -2593,7 +2598,7 @@ operators:
   - country: US
     names:
       - 'Allegheny Valley Railroad'
-    color: '#831536'   
+    color: '#831536'
 
   - country: US
     names:
@@ -2660,7 +2665,7 @@ operators:
     names:
       - 'Evansville Western Railway'
     color: '#0b3c26'
-    
+
   - country: US
     names:
       - 'Appalachian and Ohio Railroad'
@@ -2669,8 +2674,8 @@ operators:
   - country: US
     names:
       - 'Midway Southern Railway'
-    color: '#0b3c26'  
-    
+    color: '#0b3c26'
+
   - country: US
     names:
       - 'Louisville and Indiana Railroad'
@@ -2696,7 +2701,7 @@ operators:
       - 'Vermont Rail System'
       - 'Vermont Railway'
     color: '#d2262f'
-    
+
   - country: US
     names:
       - 'Clarendon & Pittsford Railroad'
@@ -2731,8 +2736,8 @@ operators:
   - country: US
     names:
       - 'Cuyahoga Valley Scenic Railroad'
-    color: '#e53c36'  
-  
+    color: '#e53c36'
+
   # --- US: Genesee & Wyoming subsidiaries --- #
   - country: US
     names:
@@ -3203,7 +3208,7 @@ operators:
     names:
       - 'Willamette & Pacific Railroad'
     color: '#f68b1e'
-    
+
   - country: US
     names:
       - 'Wilmington Terminal Railroad'
@@ -3254,7 +3259,7 @@ operators:
     names:
       - 'Ithaca Central Railroad'
     color: '#fcb900'
-    
+
   - country: US
     names:
       - 'Jacksonville Port Terminal Railroad'
@@ -3268,7 +3273,7 @@ operators:
   - country: US
     names:
       - 'Yellowstone Valley Railroad'
-    color: '#fcb900'  
+    color: '#fcb900'
 
   - country: US
     names:
@@ -3306,7 +3311,7 @@ operators:
     names:
       - 'Burns Harbor Railroad'
     color: '#efb635'
-  
+
   - country: US
     names:
       - 'Carolina Coastal Railway'
@@ -3316,12 +3321,12 @@ operators:
     names:
       - 'Cincinnati Eastern Railroad'
     color: '#efb635'
-  
+
   - country: US
     names:
       - 'Commercial Transload of Minnesota'
     color: '#efb635'
-    
+
   - country: US
     names:
       - 'East Penn Railroad'
@@ -3330,7 +3335,7 @@ operators:
   - country: US
     names:
       - 'East Penn Railroad'
-    color: '#efb635'   
+    color: '#efb635'
 
   - country: US
     names:
@@ -3351,7 +3356,7 @@ operators:
     names:
       - 'Illinois Western Railroad'
     color: '#efb635'
-  
+
   - country: US
     names:
       - 'Indiana Eastern Railroad'
@@ -3371,12 +3376,12 @@ operators:
     names:
       - 'Minnesota Commercial Railway'
     color: '#efb635'
-    
+
   - country: US
     names:
       - 'Ohio South Central Railroad'
     color: '#efb635'
-    
+
   - country: US
     names:
       - 'Port Manatee Railroad'
@@ -3390,8 +3395,8 @@ operators:
   - country: US
     names:
       - 'Tyburn Railroad'
-    color: '#efb635' 
-    
+    color: '#efb635'
+
   # --- UZ --- #
 
   - country: UZ

@@ -220,7 +220,7 @@ CREATE OR REPLACE VIEW signal_direction_view AS
   ) as sl ON true
   WHERE
     (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-      OR railway IN ('derail', 'vacancy_detection');
+      OR railway = 'derail';
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_direction AS
@@ -259,7 +259,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     FROM signals s
     WHERE
       (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
-        OR railway IN ('derail', 'vacancy_detection')
+        OR railway = 'derail'
   ),
   -- Output a feature row for every feature
   signals_with_features_1 AS (
