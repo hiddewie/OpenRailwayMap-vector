@@ -610,14 +610,7 @@ const sources = {
   },
   dem: {
     type: 'raster-dem',
-    tiles: [
-      // See https://registry.opendata.aws/terrain-tiles/
-      'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
-    ],
-    attribution: '<a target="_blank" href="https://registry.opendata.aws/terrain-tiles/">Mapzen Terrain</a>',
-    encoding: 'terrarium',
-    tileSize: 256,
-    maxzoom: 15,
+    url: 'https://tiles.mapterhorn.com/tilejson.json'
   },
 };
 
