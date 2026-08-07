@@ -105,20 +105,30 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
     return nil, nil
   elseif (not speed) and (not forward_speed) and (not backward_speed) then
     return nil, nil
-  elseif speed and (not forward_speed) and (not backward_speed) then
-    return speed_int(speed), speed
-  elseif speed then
-    return nil, nil
   end
 
-  if preferred_direction == 'forward' then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' (' .. (backward_speed or '-') .. ')'
+  local effective_forward_speed = forward_speed or speed
+  local effective_backward_speed = backward_speed or speed
+
+  if effective_forward_speed == effective_backward_speed then
+    return speed_int(effective_forward_speed), effective_forward_speed
+  elseif preferred_direction == 'forward' then
+    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' (' .. (effective_backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return speed_int(backward_speed), (backward_speed or '-') .. ' (' .. (forward_speed or '-') .. ')'
-  elseif preferred_direction == 'both' or (not preferred_direction) then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(effective_backward_speed), (effective_backward_speed or '-') .. ' (' .. (effective_forward_speed or '-') .. ')'
   else
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    -- Use the maximum of the parsed values for the speed, without preferred direction
+    local effective_speed = speed_int(effective_forward_speed)
+    if effective_speed then
+      local parsed_backward_speed = speed_int(effective_backward_speed)
+      if parsed_backward_speed then
+        effective_speed = math.max(effective_speed, parsed_backward_speed)
+      end
+    else
+      effective_speed = speed_int(effective_backward_speed)
+    end
+
+    return effective_speed, (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
   end
 end
 
