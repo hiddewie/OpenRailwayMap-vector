@@ -220,7 +220,6 @@ tags:
   - { tag: 'railway:signal:wrong_road:form', title: 'Wrong road form' }
   - { tag: 'railway:signal:wrong_road:type', title: 'Wrong road type' }
   - { tag: 'railway:signal:wrong_road:deactivated', title: 'Wrong road deactivated', type: boolean }
-  - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
   - { tag: 'railway:signal:location', title: 'Location' }
@@ -279,20 +278,6 @@ types:
 # Feature matching happens from top to bottom, where earlier matches are shown "lower" on the pole if one
 #   node defines more than one signal.
 features:
-
-  # --- General --- #
-
-  - description: 'Vacancy detection: insulated rail joint'
-    icon: [ default: 'general/vacancy-detection-insulated-rail-joint' ]
-    tags:
-      - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
-
-  - description: 'Vacancy detection: axle counter'
-    icon: [ default: 'general/vacancy-detection-axle-counter' ]
-    tags:
-      - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
   # --- AT --- #
 

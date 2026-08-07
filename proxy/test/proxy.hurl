@@ -44,7 +44,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals_railway_signals,signals_signal_boxes
+GET {{base_url}}/signals_railway_signals,signals_signal_boxes,signals_railway_symbols
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
