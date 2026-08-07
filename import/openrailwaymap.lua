@@ -117,7 +117,18 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
   elseif preferred_direction == 'backward' then
     return speed_int(effective_backward_speed), (effective_backward_speed or '-') .. ' (' .. (effective_forward_speed or '-') .. ')'
   else
-    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
+    -- Use the maximum of the parsed values for the speed, without preferred direction
+    local effective_speed = speed_int(effective_forward_speed)
+    if effective_speed then
+      local parsed_backward_speed = speed_int(effective_backward_speed)
+      if parsed_backward_speed then
+        effective_speed = math.max(effective_speed, parsed_backward_speed)
+      end
+    else
+      effective_speed = speed_int(effective_backward_speed)
+    end
+
+    return effective_speed, (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
   end
 end
 
