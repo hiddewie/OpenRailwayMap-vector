@@ -590,7 +590,7 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals_railway_signals,signals_signal_boxes',
+    url: '/signals_railway_signals,signals_signal_boxes,signals_railway_symbols',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
@@ -4247,6 +4247,20 @@ const layers = {
         }
       },
     ]),
+    ...imageLayerWithOutline(
+      `railway_symbols_outline`,
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_symbols',
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),
     {
       id: 'railway_signals_high_derail_buffer_stop',
       type: 'symbol',
@@ -4348,6 +4362,29 @@ const layers = {
         }
       },
     ]),
+    {
+      id: 'railway_symbols_text',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_symbols',
+      paint: {
+        'text-color': colors.styles.standard.symbols,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'text-field': ['coalesce', ['get', 'ref'], ''],
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 15,
+        'text-offset': [0, 1.5],
+      },
+    },
     {
       id: `railway_signals_high_text`,
       type: 'symbol',
