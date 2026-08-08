@@ -610,7 +610,14 @@ const sources = {
   },
   dem: {
     type: 'raster-dem',
-    url: 'https://tiles.mapterhorn.com/tilejson.json'
+    tiles: [
+      // See https://github.com/mapterhorn/mapterhorn
+      'https://tiles.mapterhorn.com/{z}/{x}/{y}.webp'
+    ],
+    attribution: '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>',
+    encoding: 'terrarium',
+    tileSize: 512,
+    maxzoom: 15,
   },
 };
 
