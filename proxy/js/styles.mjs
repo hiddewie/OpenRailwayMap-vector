@@ -1740,9 +1740,9 @@ const hillshade = {
   paint: {
     'hillshade-method': 'combined',
     'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'],
-      8, 0.2,
-      12, 0.4,
-      15, 0.8,
+      8, 0.15,
+      12, 0.25,
+      15, 0.5,
     ],
   },
   layout: {
