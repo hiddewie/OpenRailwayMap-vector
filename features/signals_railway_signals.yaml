@@ -2678,6 +2678,67 @@ features:
 
   # --- CH --- #
 
+  - description: Vorsignal System L
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
+          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
+          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
+          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
+        default: 'ch/fdv-l-528'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Vorsignal System N
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
+        default: 'ch/fdv-n-533'
+      - match: 'railway:signal:distant:repeated'
+        cases:
+          - { value: 'ch/fdv-n-repeated' }
+        position: top
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Halteort für alle Reisezüge
+    country: CH
+    icon: [ default: 'ch/fdv-577' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:577' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Länge
+    country: CH
+    icon:
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^(0.5|[123](\.5)?|4)$', value: 'ch/fdv-578-{}', example: 'ch/fdv-578-{4}' }
+        default: 'ch/fdv-578-unknown'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:578' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Achszahl
+    country: CH
+    icon: [ default: 'ch/fdv-579' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:579' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Zuglängentafel
+    country: CH
+    icon: [ default: 'ch/fdv-580' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:580' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Hauptsignal System L
     country: CH
     icon:
@@ -2731,31 +2792,6 @@ features:
     tags:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
-
-  - description: Vorsignal System L
-    country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
-          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
-          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
-          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
-        default: 'ch/fdv-l-528'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Vorsignal System N
-    country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
-        default: 'ch/fdv-n-533'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
 
   - description: Fahrtstellungsmelder
     country: CH
@@ -3023,6 +3059,13 @@ features:
     tags:
       - { tag: 'railway:signal:slope', value: 'CH-FDV:271' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Ortsfestes Signal für Abfahrerlaubnis
+    country: CH
+    icon: [ default: 'ch/fdv-581' ]
+    tags:
+      - { tag: 'railway:signal:departure', value: 'CH-FDV:581' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
 
   # --- CZ --- #
 
@@ -6995,10 +7038,21 @@ features:
 
   - description: Repeated (banner)
     country: GB
-    icon: [ default: 'gb/repeated-banner' ]
+    icon:
+      - match: 'railway:signal:main_repeated:states'
+        cases:
+          - { any: [ 'GB-NR:banner_green' ], value: 'gb/repeated-banner-green' }
+        default: 'gb/repeated-banner-white'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+  
+  - description: Repeated (semaphore banner)
+    country: GB
+    icon: [ default: 'gb/repeated-banner-semaphore' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'semaphore' }
 
   - description: Repeated off
     country: GB
