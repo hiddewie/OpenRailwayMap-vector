@@ -582,7 +582,7 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals_railway_signals,signals_signal_boxes',
+    url: '/signals_railway_signals,signals_signal_boxes,signals_railway_symbols',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
@@ -4330,7 +4330,20 @@ const layers = [
       }
     },
   ]),
-  {
+  ...imageLayerWithOutline(
+      `railway_symbols_outline`,
+      ['get', 'feature'],
+      {
+        type: 'symbol',
+        minzoom: 13,
+        source: 'openrailwaymap_signals',
+        'source-layer': 'signals_railway_symbols',
+        layout: {
+          'symbol-z-order': 'source',
+          'icon-overlap': 'always',
+        },
+      },
+    ),{
     id: 'railway_signals_high_derail_buffer_stop',
     type: 'symbol',
     minzoom: 16,
@@ -4437,9 +4450,31 @@ const layers = [
           0, ['literal', [0, 0]],
           1000, ['literal', [0, -1000]],
         ],
-      }
+      }},
+    ]),
+    {
+      id: 'railway_symbols_text',
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_symbols',
+      paint: {
+        'text-color': colors.styles.standard.symbols,
+        'text-halo-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+          colors.halo,
+        ],
+        'text-halo-width': 2,
+      },
+      layout: {
+        'symbol-z-order': 'source',
+        'text-field': ['coalesce', ['get', 'ref'], ''],
+        'text-font': font.regular,
+        'text-size': 11,
+        'text-padding': 15,
+        'text-offset': [0, 1.5],
     },
-  ]),
+  },
   {
     id: `railway_signals_high_text`,
     type: 'symbol',
@@ -6004,7 +6039,17 @@ const layers = [
       ],
     ],
     paint: {
-      'fill-color': ['get', 'operator_color'],
+      'fill-color': ['case',
+          ['in', ['get', 'state'], ['literal', ['disused', 'abandoned', 'preserved', 'razed']]], colors.styles.standard.past,
+          ['in', ['get', 'state'], ['literal', ['construction', 'proposed']]], colors.styles.standard.future,
+          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
+          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
+          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
+          colors.styles.standard.main,
+        ],
       'fill-opacity': ['case',
         ['boolean', ['feature-state', 'hover'], false], 0.3,
         0.2,
@@ -6036,7 +6081,15 @@ const layers = [
     paint: {
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        ['get', 'operator_color'],
+        ['==', ['get', 'feature'], 'yard'], colors.styles.standard.yardText,
+          // Use outline color of feature, without taking state into account
+          ['==', ['get', 'station'], 'light_rail'], colors.styles.standard.light_rail,
+          ['==', ['get', 'station'], 'subway'], colors.styles.standard.subway,
+          ['==', ['get', 'station'], 'monorail'], colors.styles.standard.monorail,
+          ['==', ['get', 'station'], 'miniature'], colors.styles.standard.miniature,
+          ['==', ['get', 'station'], 'funicular'], colors.styles.standard.funicular,
+          ['==', ['get', 'station'], 'tram'], colors.styles.standard.tram,
+          colors.styles.standard.main,
       ],
       'line-opacity': ['match', ['get', 'feature'],
         'yard', 0.2,
