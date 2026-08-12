@@ -4331,19 +4331,21 @@ const layers = [
     },
   ]),
   ...imageLayerWithOutline(
-      `railway_symbols_outline`,
-      ['get', 'feature'],
-      {
-        type: 'symbol',
-        minzoom: 13,
-        source: 'openrailwaymap_signals',
-        'source-layer': 'signals_railway_symbols',
-        layout: {
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-        },
+    'signals',
+    `railway_symbols_outline`,
+    ['get', 'feature'],
+    {
+      type: 'symbol',
+      minzoom: 13,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_symbols',
+      layout: {
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
       },
-    ),{
+    },
+  ),
+  {
     id: 'railway_signals_high_derail_buffer_stop',
     type: 'symbol',
     minzoom: 16,
@@ -4467,6 +4469,10 @@ const layers = [
         'text-halo-width': 2,
       },
       layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'style'], 'signals'], 'visible',
+          'none',
+        ],
         'symbol-z-order': 'source',
         'text-field': ['coalesce', ['get', 'ref'], ''],
         'text-font': font.regular,
