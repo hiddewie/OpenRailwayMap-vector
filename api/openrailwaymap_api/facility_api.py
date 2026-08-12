@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from starlette.status import HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_ENTITY
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_CONTENT
 
 QUERY_PARAMETERS = ['q', 'name', 'ref']
 
@@ -28,13 +28,13 @@ class FacilityAPI:
         if search_args_count > 1:
             args = ', '.join(QUERY_PARAMETERS)
             raise HTTPException(
-                HTTP_422_UNPROCESSABLE_ENTITY,
+                HTTP_422_UNPROCESSABLE_CONTENT,
                 {'type': 'multiple_query_args', 'error': 'More than one argument with a search term provided.', 'detail': f'Provide only one of the following query parameters: {args}'}
             )
         elif search_args_count == 0:
             args = ', '.join(QUERY_PARAMETERS)
             raise HTTPException(
-                HTTP_422_UNPROCESSABLE_ENTITY,
+                HTTP_422_UNPROCESSABLE_CONTENT,
                 {'type': 'no_query_arg', 'error': 'No argument with a search term provided.', 'detail': f'Provide one of the following query parameters: {args}'}
             )
 

@@ -603,12 +603,12 @@ const sources = {
   dem: {
     type: 'raster-dem',
     tiles: [
-      // See https://registry.opendata.aws/terrain-tiles/
-      'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'
+      // See https://github.com/mapterhorn/mapterhorn
+      'https://tiles.mapterhorn.com/{z}/{x}/{y}.webp'
     ],
-    attribution: '<a target="_blank" href="https://registry.opendata.aws/terrain-tiles/">Mapzen Terrain</a>',
+    attribution: '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>',
     encoding: 'terrarium',
-    tileSize: 256,
+    tileSize: 512,
     maxzoom: 15,
   },
 };
@@ -1762,9 +1762,9 @@ const hillshade = {
   paint: {
     'hillshade-method': 'combined',
     'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'],
-      8, 0.2,
-      12, 0.4,
-      15, 0.8,
+      8, 0.15,
+      12, 0.25,
+      15, 0.5,
     ],
   },
   layout: {
