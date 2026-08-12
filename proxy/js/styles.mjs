@@ -662,7 +662,7 @@ const railwayLine = (style, text, layers) => [
     .filter(({gapWidth}) => !gapWidth)
     .flatMap(duplicateLayersForDashStates)
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, dash, sort}) => ({
-      id: `${id}_tunnel_casing`,
+      id: `${style}_${id}_tunnel_casing`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -703,7 +703,7 @@ const railwayLine = (style, text, layers) => [
   ...layers
     .flatMap(duplicateLayersForDashStates)
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
-      id: `${id}_tunnel_fill`,
+      id: `${style}_${id}_tunnel_fill`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -747,7 +747,7 @@ const railwayLine = (style, text, layers) => [
   ...layers
     .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, states, sort}) => ({
-      id: `${id}_tunnel_cover`,
+      id: `${style}_${id}_tunnel_cover`,
       type: 'line',
       minzoom: Math.max(minzoom, 8),
       maxzoom,
@@ -797,7 +797,7 @@ const railwayLine = (style, text, layers) => [
     .map(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(
         style,
-        `${id}_tunnel_preferred_direction`,
+        `${style}_${id}_tunnel_preferred_direction`,
         ['all',
           ['==', ['get', 'tunnel'], true],
           ['in', ['get', 'state'], ['literal', states]],
@@ -824,7 +824,7 @@ const railwayLine = (style, text, layers) => [
     .filter(({gapWidth}) => !gapWidth)
     .flatMap(duplicateLayersForDashStates)
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, states, dash, sort}) => ({
-      id: `${id}_casing`,
+      id: `${style}_${id}_casing`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -864,7 +864,7 @@ const railwayLine = (style, text, layers) => [
   ...layers
     .flatMap(duplicateLayersForDashStates)
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
-      id: `${id}_fill`,
+      id: `${style}_${id}_fill`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -912,7 +912,7 @@ const railwayLine = (style, text, layers) => [
     .filter(({states}) => Object.keys(states).includes('present'))
     .flatMap(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, sort}) => [
       {
-        id: `${id}_bridge_railing`,
+        id: `${style}_${id}_bridge_railing`,
         type: 'line',
         minzoom: Math.max(minzoom, 8),
         maxzoom,
@@ -948,7 +948,7 @@ const railwayLine = (style, text, layers) => [
         }
       },
       {
-        id: `${id}_bridge_casing`,
+        id: `${style}_${id}_bridge_casing`,
         type: 'line',
         minzoom: Math.max(minzoom, 8),
         maxzoom,
@@ -988,7 +988,7 @@ const railwayLine = (style, text, layers) => [
   ...layers
     .flatMap(duplicateLayersForDashStates)
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, width, gapWidth, color, hoverColor, states, dash, sort}) => ({
-      id: `${id}_bridge_fill`,
+      id: `${style}_${id}_bridge_fill`,
       type: 'line',
       minzoom,
       maxzoom,
@@ -1038,7 +1038,7 @@ const railwayLine = (style, text, layers) => [
     .flatMap(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(
         style,
-        `${id}_preferred_direction`,
+        `${style}_${id}_preferred_direction`,
         ['all',
           ['in', ['get', 'state'], ['literal', states]],
           states.includes('construction') || states.includes('proposed') || states.includes('abandoned') || states.includes('razed')
@@ -1071,7 +1071,7 @@ const railwayLine = (style, text, layers) => [
     .filter(({gapWidth}) => !gapWidth)
     .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
     .map(({id, minzoom, maxzoom, source, sourceLayer, visibility, filter, states}) => ({
-      id: `${id}_text`,
+      id: `${style}_${id}_text`,
       type: 'symbol',
       minzoom,
       maxzoom,
@@ -1641,7 +1641,7 @@ const historicalRailwayLine = (style, text, layers) => [
 ];
 
 const railwayKmText = (style) => ({
-  id: 'railway_text_km',
+  id: `${style}_railway_text_km`,
   type: 'symbol',
   minzoom: 10,
   source: 'high',
@@ -1958,7 +1958,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_grouped_stations',
+    id: 'standard_railway_grouped_stations',
     type: 'fill',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -1999,7 +1999,7 @@ const layers = [
     },
   },
   {
-    id: `railway_grouped_stations_outline`,
+    id: `standard_railway_grouped_stations_outline`,
     type: 'line',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -4332,7 +4332,7 @@ const layers = [
   ]),
   ...imageLayerWithOutline(
     'signals',
-    `railway_symbols_outline`,
+    `signals_railway_symbols_outline`,
     ['get', 'feature'],
     {
       type: 'symbol',
@@ -4455,7 +4455,7 @@ const layers = [
       }},
     ]),
     {
-      id: 'railway_symbols_text',
+      id: 'signals_railway_symbols_text',
       type: 'symbol',
       minzoom: 13,
       source: 'openrailwaymap_signals',
@@ -5306,7 +5306,7 @@ const layers = [
   // --- Operator --- //
 
   {
-    id: 'railway_grouped_stations',
+    id: 'operator_railway_grouped_stations',
     type: 'fill',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -5337,7 +5337,7 @@ const layers = [
     },
   },
   {
-    id: `railway_grouped_stations_outline`,
+    id: `operator_railway_grouped_stations_outline`,
     type: 'line',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -5432,7 +5432,7 @@ const layers = [
     ],
   ),
   {
-    id: 'signal_boxes_point',
+    id: 'operator_signal_boxes_point',
     type: 'circle',
     minzoom: 10,
     source: 'openrailwaymap_signals',
@@ -5458,7 +5458,7 @@ const layers = [
     },
   },
   {
-    id: 'signal_boxes_polygon',
+    id: 'operator_signal_boxes_polygon',
     type: 'fill',
     minzoom: 14,
     source: 'openrailwaymap_signals',
@@ -5485,7 +5485,7 @@ const layers = [
     },
   },
   {
-    id: 'signal_boxes_polygon_outline',
+    id: 'operator_signal_boxes_polygon_outline',
     type: 'line',
     minzoom: 14,
     source: 'openrailwaymap_signals',
@@ -5509,7 +5509,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_low1',
+    id: 'operator_railway_text_stations_low1',
     type: 'symbol',
     minzoom: 4,
     maxzoom: 5,
@@ -5539,7 +5539,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_low2',
+    id: 'operator_railway_text_stations_low2',
     type: 'symbol',
     minzoom: 5,
     maxzoom: 7,
@@ -5590,7 +5590,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_med',
+    id: 'operator_railway_text_stations_med',
     type: 'symbol',
     minzoom: 7,
     maxzoom: 8,
@@ -5644,7 +5644,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations',
+    id: 'operator_railway_text_stations',
     type: 'symbol',
     minzoom: 8,
     maxzoom: 13,
@@ -5731,7 +5731,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_high',
+    id: 'operator_railway_text_stations_high',
     type: 'symbol',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -5807,7 +5807,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_site_junction_high',
+    id: 'operator_railway_text_site_junction_high',
     type: 'symbol',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -5902,7 +5902,7 @@ const layers = [
     },
   },
   {
-    id: 'signal_boxes_text_medium',
+    id: 'operator_signal_boxes_text_medium',
     type: 'symbol',
     minzoom: 12,
     maxzoom: 15,
@@ -5936,7 +5936,7 @@ const layers = [
     }
   },
   {
-    id: 'signal_boxes_text_high',
+    id: 'operator_signal_boxes_text_high',
     type: 'symbol',
     minzoom: 15,
     source: 'openrailwaymap_signals',
@@ -6029,7 +6029,7 @@ const layers = [
   // --- Route --- //
 
   {
-    id: 'railway_grouped_stations',
+    id: 'route_railway_grouped_stations',
     type: 'fill',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -6069,7 +6069,7 @@ const layers = [
     },
   },
   {
-    id: `railway_grouped_stations_outline`,
+    id: `route_railway_grouped_stations_outline`,
     type: 'line',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -6122,7 +6122,7 @@ const layers = [
     },
   },
   ...railwayLine(
-    'operator',
+    'route',
     ['concat',
       ['coalesce', ['get', 'ref'],''],
       ['case', ['all', ['!=', ['get', 'ref'], null], ['!=', ['get', 'name'], null]], ' ', ''],
@@ -6184,7 +6184,7 @@ const layers = [
     ],
   ),
   {
-    id: 'railway_text_stations_low1',
+    id: 'route_railway_text_stations_low1',
     type: 'symbol',
     minzoom: 4,
     maxzoom: 5,
@@ -6209,7 +6209,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_low2',
+    id: 'route_railway_text_stations_low2',
     type: 'symbol',
     minzoom: 5,
     maxzoom: 7,
@@ -6251,7 +6251,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_med',
+    id: 'route_railway_text_stations_med',
     type: 'symbol',
     minzoom: 7,
     maxzoom: 8,
@@ -6296,7 +6296,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations',
+    id: 'route_railway_text_stations',
     type: 'symbol',
     minzoom: 8,
     maxzoom: 13,
@@ -6405,7 +6405,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_stations_high',
+    id: 'route_railway_text_stations_high',
     type: 'symbol',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -6491,7 +6491,7 @@ const layers = [
     },
   },
   {
-    id: 'railway_text_site_junction_high',
+    id: 'route_railway_text_site_junction_high',
     type: 'symbol',
     minzoom: 13,
     source: 'openrailwaymap_standard',
