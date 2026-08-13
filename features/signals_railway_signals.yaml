@@ -7046,7 +7046,7 @@ features:
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-  
+
   - description: Repeated (semaphore banner)
     country: GB
     icon: [ default: 'gb/repeated-banner-semaphore' ]
@@ -7523,6 +7523,68 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Announcement board (main)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-main-{}', example: 'it/announcement-main-{4}' }
+        default: 'it/announcement-main-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:MAIN' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (permissive)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-permissive-{}', example: 'it/announcement-permissive-{4}' }
+        default: 'it/announcement-permissive-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:PERMISSIVE' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (distant)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-distant-{}', example: 'it/announcement-distant-{4}' }
+        default: 'it/announcement-distant-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:DISTANT' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (stop)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2'], value: 'it/announcement-stop-{}', example: 'it/announcement-stop-{2}' }
+        default: 'it/announcement-stop-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:SM' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (location)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2'], value: 'it/announcement-location-{}', example: 'it/announcement-location-{2}' }
+        default: 'it/announcement-location-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:LM' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (level crossing without barriers)
+    country: IT
+    icon: [ default: 'it/announcement-lcwb' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:PROTECTION_LCWB' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   # --- JP --- #
 
