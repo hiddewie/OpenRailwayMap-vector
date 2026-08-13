@@ -7581,7 +7581,7 @@ features:
 
   - description: Announcement board (level crossing without barriers)
     country: IT
-    icon: [ default: 'it/announcement-lcwb' ]
+    icon: [ default: 'it/announcement-level-crossing-without-barriers' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'IT:PROTECTION_LCWB' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
