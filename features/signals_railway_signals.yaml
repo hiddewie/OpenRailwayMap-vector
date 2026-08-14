@@ -2964,7 +2964,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:712' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   - description: Einschaltsignal (light)
     country: CH
@@ -2972,7 +2972,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:713' }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   - description: Streckentrennung
     country: CH
