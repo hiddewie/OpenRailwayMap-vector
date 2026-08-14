@@ -2793,6 +2793,13 @@ features:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
+  - description: Merktafel für ein folgendes Einfahrsignal beim Signalsystem N
+    country: CH
+    icon: [ default: 'ch/fdv-568' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'CH-FDV:568' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
   - description: Fahrtstellungsmelder
     country: CH
     icon: [ default: 'ch/fdv-559' ]
