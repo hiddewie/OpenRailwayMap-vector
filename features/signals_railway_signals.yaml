@@ -3659,6 +3659,9 @@ features:
         cases:
           - { exact: 'normal', value: 'de/sh1-light-normal', description: 'normal height' }
         default: 'de/sh0-light-dwarf'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
@@ -4604,7 +4607,11 @@ features:
 
   - description: distant signals type Ks (repeated)
     country: DE
-    icon: [ default: 'de/ks-distant-repeated' ]
+    icon:
+      - default: 'de/ks-distant-repeated'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4612,7 +4619,11 @@ features:
 
   - description: distant signals type Ks (shortened)
     country: DE
-    icon: [ default: 'de/ks-distant-shortened' ]
+    icon:
+      - default: 'de/ks-distant-shortened'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4620,7 +4631,11 @@ features:
 
   - description: distant signals type Ks
     country: DE
-    icon: [ default: 'de/ks-distant' ]
+    icon:
+      - default: 'de/ks-distant'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4674,7 +4689,7 @@ features:
         cases:
           - { exact: 'DE-ESO:mastschild_rot-weiss', value: 'de/mastschild-rot-weiss' }
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
-          - { exact: 'DE-ESO:mastschild_schwartz-weiss', value: 'de/mastschild-schwartz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4846,7 +4861,7 @@ features:
         cases:
           - { exact: 'DE-ESO:mastschild_rot-weiss', value: 'de/mastschild-rot-weiss' }
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
-          - { exact: 'DE-ESO:mastschild_schwartz-weiss', value: 'de/mastschild-schwartz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4866,7 +4881,7 @@ features:
           - { exact: 'DE-ESO:mastschild_rot-weiss', value: 'de/mastschild-rot-weiss' }
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
           - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
-          - { exact: 'DE-ESO:mastschild_schwartz-weiss', value: 'de/mastschild-schwartz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4927,7 +4942,7 @@ features:
         cases:
           - { exact: 'DE-ESO:mastschild_rot-weiss', value: 'de/mastschild-rot-weiss' }
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
-          - { exact: 'DE-ESO:mastschild_schwartz-weiss', value: 'de/mastschild-schwartz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
