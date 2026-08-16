@@ -474,7 +474,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE center && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -527,7 +527,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE center && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -697,7 +697,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE center && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
       AND CASE
         -- Zooms < 8 are handled in the low and medium zoom tiles
