@@ -191,7 +191,6 @@ CLUSTER stop_area_groups_buffered
 CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
   SELECT
     interlocking_id as id,
-    exists(select facility_id from interlocking_facility if where elements.interlocking_id = if.interlocking_id) as has_facility,
     CASE
       WHEN bool_or(landuse) THEN ST_PointOnSurface(ST_RemoveRepeatedPoints(ST_Collect(way)))
       ELSE ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))))

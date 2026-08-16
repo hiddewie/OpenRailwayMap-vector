@@ -37,7 +37,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   interlocking = {
-    { feature = 'interlocking', name = "Shaw's Cove Interlocking", name_tags = {name = "Shaw's Cove Interlocking"}, references = {['railway-ref'] = 'SHAWS'} },
+    { feature = 'interlocking', name = "Shaw's Cove Interlocking", name_tags = {name = "Shaw's Cove Interlocking"}, references = {['railway-ref'] = 'SHAWS'}, has_facility = true },
   },
   interlocking_switch = {
     { switch_id = 1 },

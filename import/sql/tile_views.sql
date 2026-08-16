@@ -1197,7 +1197,7 @@ CREATE OR REPLACE VIEW standard_interlocking_view AS
     i.osm_id as id,
     i.osm_id,
     'R' as osm_type,
-    has_facility,
+    i.has_facility,
     center,
     buffered,
     feature,

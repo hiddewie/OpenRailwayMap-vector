@@ -680,6 +680,7 @@ local interlocking = osm2pgsql.define_table({
   ids = { type = 'relation', id_column = 'osm_id', create_index = 'primary_key' },
   columns = {
     { column = 'feature', type = 'text', not_null = true },
+    { column = 'has_facility', type = 'boolean', not_null = true },
     { column = 'name', type = 'text' },
     { column = 'name_tags', type = 'hstore' },
     { column = 'references', type = 'hstore' },
@@ -1900,6 +1901,7 @@ function osm2pgsql.process_relation(object)
 
   if tags.type == 'railway' and tags.railway == 'interlocking' then
     local has_members = false
+    local has_facility = false
     for _, member in ipairs(object.members) do
       if member.role == 'switch' and member.type == 'n' then
         interlocking_switch:insert({
@@ -1916,11 +1918,13 @@ function osm2pgsql.process_relation(object)
           facility_id = string.format("node-%d", member.ref),
         })
         has_members = true
+        has_facility = true
       elseif member.role == 'facility' and member.type == 'w' then
         interlocking_facility:insert({
           facility_id = string.format("way-%d", member.ref),
         })
         has_members = true
+        has_facility = true
       elseif member.role == 'signal_box' and member.type == 'n' then
         interlocking_signal_box:insert({
           signal_box_id = string.format("node-%d", member.ref),
@@ -1947,6 +1951,7 @@ function osm2pgsql.process_relation(object)
     if has_members then
       interlocking:insert({
         feature = 'interlocking',
+        has_facility = has_facility,
         name = tags.name,
         name_tags = name_tags(tags),
         references = station_references(tags),
