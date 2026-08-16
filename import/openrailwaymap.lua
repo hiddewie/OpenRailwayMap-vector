@@ -709,6 +709,18 @@ local interlocking_switch = osm2pgsql.define_table({
   },
 })
 
+local interlocking_signal = osm2pgsql.define_table({
+  name = 'interlocking_signal',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'signal_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'signal_id', method = 'btree' },
+  },
+})
+
 local interlocking_signal_box = osm2pgsql.define_table({
   name = 'interlocking_signal_box',
   ids = { type = 'relation', id_column = 'interlocking_id' },
@@ -1880,6 +1892,11 @@ function osm2pgsql.process_relation(object)
       if member.role == 'switch' and member.type == 'n' then
         interlocking_switch:insert({
           switch_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'signal' and member.type == 'n' then
+        interlocking_signal:insert({
+          signal_id = member.ref,
         })
         has_members = true
       elseif member.role == 'signal_box' and member.type == 'n' then

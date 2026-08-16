@@ -222,6 +222,16 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
 
     SELECT
       interlocking_id,
+      s.way,
+      false as landuse
+    FROM interlocking_signal is
+    JOIN signals s
+      ON is.signal_id = s.id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
       b.way,
       false as landuse
     FROM interlocking_signal_box isb

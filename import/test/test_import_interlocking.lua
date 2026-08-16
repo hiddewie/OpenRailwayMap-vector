@@ -27,6 +27,9 @@ osm2pgsql.process_relation({
     { type = 'n', ref = 10 },
     { type = 'w', ref = 11 },
     { type = 'r', ref = 12 },
+    { role = 'signal', type = 'n', ref = 13 },
+    { role = 'signal', type = 'w', ref = 14 },
+    { role = 'signal', type = 'r', ref = 15 },
   },
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
@@ -43,5 +46,8 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   interlocking_signal_box = {
     { signal_box_id = 'node-4' },
     { signal_box_id = 'way-5' },
+  },
+  interlocking_signal = {
+    { signal_id = 'node-13' },
   },
 })
