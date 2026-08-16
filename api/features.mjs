@@ -130,6 +130,9 @@ const railwayLineFeatures = {
     highspeed: {
       name: 'High speed',
     },
+    rubber_tires: {
+      name: 'Rubber-tyred',
+    },
     preferred_direction: {
       name: 'Preferred direction',
     },
@@ -503,7 +506,10 @@ const features = {
         name: 'Service',
       },
       highspeed: {
-        name: 'Highspeed',
+        name: 'High speed',
+      },
+      rubber_tires: {
+        name: 'Rubber-tyred',
       },
       preferred_direction: {
         name: 'Preferred direction',
@@ -1024,9 +1030,6 @@ const features = {
       derail: {
         name: 'Derailer',
       },
-      vacancy_detection: {
-        name: 'Vacancy detection',
-      },
     },
     properties: {
       feature0: {
@@ -1105,9 +1108,6 @@ const features = {
       },
       derail: {
         name: 'Derailer',
-      },
-      vacancy_detection: {
-        name: 'Vacancy detection',
       },
     },
     properties: {
@@ -1258,6 +1258,7 @@ const features = {
       },
     },
   },
+  'openrailwaymap_signals-signals_railway_symbols': poiFeatures('signals'),
   'openrailwaymap_electrification-electrification_signals': {
     view: {
       name: 'electrification_signals_view',
@@ -1274,9 +1275,6 @@ const features = {
       },
       derail: {
         name: 'Derailer',
-      },
-      vacancy_detection: {
-        name: 'Vacancy detection',
       },
     },
     properties: {

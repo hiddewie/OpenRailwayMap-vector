@@ -53,6 +53,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     owner,
     traffic_mode,
     radio,
+    rubber_tires,
     line_routes,
     route_count,
     wikidata,
@@ -110,6 +111,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
       END AS primary_operator,
       traffic_mode,
       radio,
+      rubber_tires,
       (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
       wikidata,
@@ -1490,6 +1492,47 @@ DO $do$ BEGIN
           "name": "string",
           "operator_color": "string",
           "operator_bright": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION signals_railway_symbols(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'signals_railway_symbols', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      feature,
+      ref
+    FROM poi_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND layer = 'signals'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION signals_railway_symbols IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "signals_railway_symbols",
+        "fields": {
+          "id": "string",
+          "feature": "string",
+          "ref": "string"
         }
       }
     ]

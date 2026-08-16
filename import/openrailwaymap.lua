@@ -105,20 +105,30 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
     return nil, nil
   elseif (not speed) and (not forward_speed) and (not backward_speed) then
     return nil, nil
-  elseif speed and (not forward_speed) and (not backward_speed) then
-    return speed_int(speed), speed
-  elseif speed then
-    return nil, nil
   end
 
-  if preferred_direction == 'forward' then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' (' .. (backward_speed or '-') .. ')'
+  local effective_forward_speed = forward_speed or speed
+  local effective_backward_speed = backward_speed or speed
+
+  if effective_forward_speed == effective_backward_speed then
+    return speed_int(effective_forward_speed), effective_forward_speed
+  elseif preferred_direction == 'forward' then
+    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' (' .. (effective_backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return speed_int(backward_speed), (backward_speed or '-') .. ' (' .. (forward_speed or '-') .. ')'
-  elseif preferred_direction == 'both' or (not preferred_direction) then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(effective_backward_speed), (effective_backward_speed or '-') .. ' (' .. (effective_forward_speed or '-') .. ')'
   else
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    -- Use the maximum of the parsed values for the speed, without preferred direction
+    local effective_speed = speed_int(effective_forward_speed)
+    if effective_speed then
+      local parsed_backward_speed = speed_int(effective_backward_speed)
+      if parsed_backward_speed then
+        effective_speed = math.max(effective_speed, parsed_backward_speed)
+      end
+    else
+      effective_speed = speed_int(effective_backward_speed)
+    end
+
+    return effective_speed, (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
   end
 end
 
@@ -213,6 +223,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'owner', sql_type = 'text' },
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
+    { column = 'rubber_tires', type = 'boolean' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -1189,7 +1200,7 @@ end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
-local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
+local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
@@ -1511,6 +1522,7 @@ function osm2pgsql.process_way(object)
         owner = tags.owner,
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
+        rubber_tires = tags.rubber_tires and tags.rubber_tires ~= 'no' or nil,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
