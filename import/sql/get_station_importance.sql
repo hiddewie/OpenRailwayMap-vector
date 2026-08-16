@@ -140,7 +140,7 @@ CREATE OR REPLACE VIEW stations_with_importance_view AS
       -- The square root and factor are made to align the importance factors of yards
       --   with stations. A 320 km yard is equivalent to a station with 140 routes.
       SQRT(
-        SUM(ST_Length(ST_Intersection(ST_Buffer(s.way, 50), l.way)))
+        SUM(ST_Length(ST_Transform(ST_Intersection(ST_Buffer(s.way, 50), l.way), 4326), false))
       ) / 4 AS importance
     FROM stations s
     JOIN railway_line l
