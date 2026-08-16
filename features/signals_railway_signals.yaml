@@ -4607,11 +4607,7 @@ features:
 
   - description: distant signals type Ks (repeated)
     country: DE
-    icon:
-      - default: 'de/ks-distant-repeated'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
+    icon: [ default: 'de/ks-distant-repeated' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4619,11 +4615,7 @@ features:
 
   - description: distant signals type Ks (shortened)
     country: DE
-    icon:
-      - default: 'de/ks-distant-shortened'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
+    icon: [ default: 'de/ks-distant-shortened' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4631,11 +4623,7 @@ features:
 
   - description: distant signals type Ks
     country: DE
-    icon:
-      - default: 'de/ks-distant'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
+    icon: [ default: 'de/ks-distant' ]
     tags:
       - { tag: 'railway:signal:distant', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
@@ -4880,7 +4868,6 @@ features:
         cases:
           # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
-          - { exact: 'DE-ESO:mastschild_gelb', value: 'de/mastschild-gelb-triangle' }
           - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
