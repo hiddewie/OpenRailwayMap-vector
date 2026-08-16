@@ -713,7 +713,7 @@ local interlocking_signal = osm2pgsql.define_table({
   name = 'interlocking_signal',
   ids = { type = 'relation', id_column = 'interlocking_id' },
   columns = {
-    { column = 'signal_id', sql_type = 'text', not_null = true },
+    { column = 'signal_id', sql_type = 'int8', not_null = true },
   },
   indexes = {
     { column = 'interlocking_id', method = 'btree' },

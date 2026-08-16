@@ -1197,6 +1197,7 @@ CREATE OR REPLACE VIEW standard_interlocking_view AS
     i.osm_id as id,
     i.osm_id,
     'R' as osm_type,
+    has_facility,
     center,
     buffered,
     feature,
@@ -1268,6 +1269,7 @@ RETURN (
       name
     FROM standard_interlocking_view
     WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND NOT has_facility
   ) as tile
   WHERE way IS NOT NULL
 );

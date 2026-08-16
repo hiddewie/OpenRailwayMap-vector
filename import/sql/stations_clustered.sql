@@ -191,6 +191,7 @@ CLUSTER stop_area_groups_buffered
 CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
   SELECT
     interlocking_id as id,
+    exists(select facility_id from interlocking_facility if where elements.interlocking_id = if.interlocking_id) as has_facility,
     CASE
       WHEN bool_or(landuse) THEN ST_PointOnSurface(ST_RemoveRepeatedPoints(ST_Collect(way)))
       ELSE ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))))
@@ -203,7 +204,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
       s.way,
-      false as landuse
+      false as landuse,
+      false as facility
     FROM interlocking_switch "is"
     JOIN railway_switches s
       ON "is".switch_id = s.osm_id
@@ -213,7 +215,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
     l.way,
-      true as landuse
+      true as landuse,
+      false as facility
     FROM interlocking_landuse il
     JOIN landuse l
       ON il.landuse_id = l.id
@@ -223,7 +226,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
       s.way,
-      false as landuse
+      false as landuse,
+      false as facility
     FROM interlocking_signal "is"
     JOIN signals s
       ON "is".signal_id = s.osm_id
@@ -233,7 +237,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
       b.way,
-      false as landuse
+      false as landuse,
+      false as facility
     FROM interlocking_signal_box isb
     JOIN boxes b
       ON isb.signal_box_id = b.id
