@@ -145,6 +145,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     ON ssa.stop_area_osm_id = sa.osm_id
   GROUP BY clustered.id;
 
+-- TODO removed center index
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
   ON grouped_stations_with_importance
     USING GIST(center);
@@ -203,7 +204,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
       s.way,
-      true as landuse
+      false as landuse
     FROM interlocking_switch "is"
     JOIN railway_switches s
       ON "is".switch_id = s.osm_id
@@ -213,7 +214,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
     SELECT
       interlocking_id,
     l.way,
-      false as landuse
+      true as landuse
     FROM interlocking_landuse il
     JOIN landuse l
       ON il.landuse_id = l.id
