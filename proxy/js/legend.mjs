@@ -1221,6 +1221,20 @@ const legendData = {
         features: [],
       },
       "openrailwaymap_standard-standard_interlocking": {
+        key: [
+          'feature',
+        ],
+        features: [
+          {
+            legend: 'Interlocking',
+            type: 'polygon',
+            properties: {
+              feature: 'interlocking',
+            },
+          },
+        ],
+      },
+      "openrailwaymap_standard-standard_interlocking_text": {
         key: [],
         features: [],
       },

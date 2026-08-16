@@ -1252,6 +1252,42 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION standard_interlocking_text(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking_text', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      name
+    FROM standard_interlocking_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking_text IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking_text",
+        "fields": {
+          "id": "integer",
+          "name": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Speed ---
 
 CREATE OR REPLACE FUNCTION speed_railway_line_low(z integer, x integer, y integer)

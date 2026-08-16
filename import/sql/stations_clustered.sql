@@ -145,7 +145,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     ON ssa.stop_area_osm_id = sa.osm_id
   GROUP BY clustered.id;
 
--- TODO removed center index
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
   ON grouped_stations_with_importance
     USING GIST(center);
