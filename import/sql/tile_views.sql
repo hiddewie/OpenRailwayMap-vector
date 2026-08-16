@@ -391,7 +391,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     gs.id,
     osm_ids as osm_id,
     osm_types as osm_type,
-    center as way,
+    center,
     buffered,
     map_reference,
     "references",
@@ -465,7 +465,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -474,7 +474,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE center && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -518,7 +518,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -527,7 +527,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE center && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -684,7 +684,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       state,
       feature,
@@ -697,7 +697,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE center && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
       AND CASE
         -- Zooms < 8 are handled in the low and medium zoom tiles
