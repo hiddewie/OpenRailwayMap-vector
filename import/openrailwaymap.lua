@@ -680,6 +680,7 @@ local interlocking = osm2pgsql.define_table({
   ids = { type = 'relation', id_column = 'osm_id', create_index = 'primary_key' },
   columns = {
     { column = 'feature', type = 'text', not_null = true },
+    { column = 'has_landuse', type = 'boolean', not_null = true },
     { column = 'name', type = 'text' },
     { column = 'name_tags', type = 'hstore' },
     { column = 'references', type = 'hstore' },
@@ -1723,7 +1724,6 @@ local route_values = osm2pgsql.make_check_values_func(vehicles)
 local route_stop_relation_roles = osm2pgsql.make_check_values_func({'stop', 'station', 'stop_exit_only', 'stop_entry_only', 'forward_stop', 'backward_stop', 'forward:stop', 'backward:stop', 'stop_position', 'halt'})
 local route_stop_values = osm2pgsql.make_check_values_func({'stop_exit_only', 'stop_entry_only'}) -- Values from route_stop_relation_roles indicating special stop positions
 local route_platform_relation_roles = osm2pgsql.make_check_values_func({'platform', 'platform_exit_only', 'platform_entry_only', 'forward:platform', 'backward:platform'})
-local interlocking_railway_values = osm2pgsql.make_check_values_func({'interlocking', 'junction'})
 function osm2pgsql.process_relation(object)
   local tags = object.tags
 
@@ -1875,9 +1875,9 @@ function osm2pgsql.process_relation(object)
     end
   end
 
-  local interlocking_type = interlocking_railway_values(tags.railway)
-  if tags.type == 'railway' and interlocking_type then
+  if tags.type == 'railway' and tags.railway == 'interlocking' then
     local has_members = false
+    local has_landuse = false
     for _, member in ipairs(object.members) do
       if member.role == 'switch' and member.type == 'n' then
         interlocking_switch:insert({
@@ -1899,6 +1899,7 @@ function osm2pgsql.process_relation(object)
           landuse_id = string.format("way-%d", member.ref),
         })
         has_members = true
+        has_landuse = true
       elseif member.role == 'landuse' and member.type == 'r' then
         interlocking_landuse:insert({
           landuse_id = string.format("relation-%d", member.ref),
@@ -1909,7 +1910,8 @@ function osm2pgsql.process_relation(object)
 
     if has_members then
       interlocking:insert({
-        feature = interlocking_type,
+        feature = 'interlocking',
+        has_landuse = has_landuse,
         name = tags.name,
         name_tags = name_tags(tags),
         references = station_references(tags),
