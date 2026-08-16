@@ -733,6 +733,18 @@ local interlocking_signal_box = osm2pgsql.define_table({
   },
 })
 
+local interlocking_facility = osm2pgsql.define_table({
+  name = 'interlocking_facility',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'facility_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'facility_id', method = 'btree' },
+  },
+})
+
 local interlocking_landuse = osm2pgsql.define_table({
   name = 'interlocking_landuse',
   ids = { type = 'relation', id_column = 'interlocking_id' },
@@ -1897,6 +1909,16 @@ function osm2pgsql.process_relation(object)
       elseif member.role == 'signal' and member.type == 'n' then
         interlocking_signal:insert({
           signal_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'facility' and member.type == 'n' then
+        interlocking_facility:insert({
+          facility_id = string.format("node-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'facility' and member.type == 'w' then
+        interlocking_facility:insert({
+          facility_id = string.format("way-%d", member.ref),
         })
         has_members = true
       elseif member.role == 'signal_box' and member.type == 'n' then
