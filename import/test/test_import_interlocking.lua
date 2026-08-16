@@ -31,7 +31,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   interlocking = {
-    { feature = 'interlocking', has_landuse = true, name = "Shaw's Cove Interlocking", name_tags = {name = "Shaw's Cove Interlocking"}, references = {['railway-ref'] = 'SHAWS'} },
+    { feature = 'interlocking', name = "Shaw's Cove Interlocking", name_tags = {name = "Shaw's Cove Interlocking"}, references = {['railway-ref'] = 'SHAWS'} },
   },
   interlocking_switch = {
     { switch_id = 1 },
@@ -43,23 +43,5 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   interlocking_signal_box = {
     { signal_box_id = 'node-4' },
     { signal_box_id = 'way-5' },
-  },
-})
-
-osm2pgsql.process_relation({
-  tags = {
-    ['type'] = 'railway',
-    ['railway'] = 'interlocking',
-  },
-  members = {
-    { role = 'switch', type = 'n', ref = 1 },
-  },
-})
-assert.eq(osm2pgsql.get_and_clear_imported_data(), {
-  interlocking = {
-    { feature = 'interlocking', has_landuse = false, name_tags = {}, references = {} },
-  },
-  interlocking_switch = {
-    { switch_id = 1 },
   },
 })

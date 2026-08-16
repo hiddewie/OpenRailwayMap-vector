@@ -1197,7 +1197,8 @@ CREATE OR REPLACE VIEW standard_interlocking_view AS
     i.osm_id as id,
     i.osm_id,
     'R' as osm_type,
-    way,
+    center,
+    buffered,
     feature,
     name,
     name_tags,
@@ -1215,7 +1216,7 @@ CREATE OR REPLACE VIEW standard_interlocking_view AS
     description
   FROM interlocking_buffered ib
   JOIN interlocking i
-    ON ib.interlocking_id = i.osm_id;
+    ON ib.id = i.osm_id;
 
 CREATE OR REPLACE FUNCTION standard_interlocking(z integer, x integer, y integer)
   RETURNS bytea
@@ -1229,9 +1230,9 @@ RETURN (
   FROM (
     SELECT
       id,
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
     FROM standard_interlocking_view
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );

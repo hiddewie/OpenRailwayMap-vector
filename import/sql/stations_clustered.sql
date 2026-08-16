@@ -190,12 +190,20 @@ CLUSTER stop_area_groups_buffered
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
   SELECT
-    interlocking_id,
-    ST_Buffer(ST_RemoveRepeatedPoints(ST_Collect(way)), 10) as way
+    interlocking_id as id,
+    CASE
+      WHEN bool_or(landuse) THEN ST_PointOnSurface(ST_RemoveRepeatedPoints(ST_Collect(way)))
+      ELSE ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))))
+    END as center,
+    CASE
+      WHEN bool_or(landuse) THEN ST_Buffer(ST_RemoveRepeatedPoints(ST_Collect(way)), 10)
+      ELSE ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 20)
+    END as buffered
   FROM (
     SELECT
       interlocking_id,
-      s.way
+      s.way,
+      true as landuse
     FROM interlocking_switch "is"
     JOIN railway_switches s
       ON "is".switch_id = s.osm_id
@@ -204,7 +212,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
 
     SELECT
       interlocking_id,
-    l.way
+    l.way,
+      false as landuse
     FROM interlocking_landuse il
     JOIN landuse l
       ON il.landuse_id = l.id
@@ -213,7 +222,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
 
     SELECT
       interlocking_id,
-      b.way
+      b.way,
+      false as landuse
     FROM interlocking_signal_box isb
     JOIN boxes b
       ON isb.signal_box_id = b.id
@@ -222,7 +232,11 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
 
 CREATE INDEX IF NOT EXISTS interlocking_buffered_index
   ON interlocking_buffered
-    USING GIST(way);
+    USING GIST(buffered);
+
+CREATE UNIQUE INDEX IF NOT EXISTS interlocking_id_index
+  ON interlocking_buffered
+    USING BTREE(id);
 
 CLUSTER interlocking_buffered
   USING interlocking_buffered_index;
