@@ -224,9 +224,9 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
       interlocking_id,
       s.way,
       false as landuse
-    FROM interlocking_signal is
+    FROM interlocking_signal "is"
     JOIN signals s
-      ON is.signal_id = s.id
+      ON "is".signal_id = s.osm_id
 
     UNION ALL
 
