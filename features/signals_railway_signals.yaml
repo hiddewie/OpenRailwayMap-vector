@@ -5344,19 +5344,81 @@ features:
 
   # --- DK --- #
 
-  - description: Perronudkørselssignal
+  - description: Indkørselssignal (I)
     country: DK
-    icon: [ default: 'dk/main-PU' ]
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-i-4', description: '4 lights' }
+        default: 'dk/main-i-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:I' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Stationsbloksignal for indkørsel (SI)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-i-4', description: '4 lights' }
+        default: 'dk/main-i-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:SI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Perronudkørselssignal (PU)
+    country: DK
+    icon: [ default: 'dk/main-pu' ]
     tags:
       - { tag: 'railway:signal:main', value: 'DK-SR:PU' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Stationsbloksignal for Udkørsel
+  - description: Stationsbloksignal for udkørsel (SU)
     country: DK
-    icon: [ default: 'dk/main-SU' ]
+    icon: [ default: 'dk/main-3' ]
     tags:
       - { tag: 'railway:signal:main', value: 'DK-SR:SU' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Udkørselssignal (U)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-3', description: '3 lights' }
+        default: 'dk/main-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:U' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Automatisk Mellembloksignal (AM)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-3', description: '3 lights' }
+        default: 'dk/main-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:AM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Fremskudt Signal (F)
+    country: DK
+    icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: '3', value: 'dk/distant-3', description: '3 lights' }
+        default: 'dk/distant-2'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DK-SR:F' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Dwarf (DV)
+    country: DK
+    icon: [ default: 'dk/shunting-dv' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'DK-SR:DV' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   # --- ES --- #
 
