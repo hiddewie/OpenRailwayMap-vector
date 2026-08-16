@@ -4850,6 +4850,7 @@ features:
           # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
           - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
           - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:main:form', value: 'light' }
