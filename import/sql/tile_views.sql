@@ -391,7 +391,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     gs.id,
     osm_ids as osm_id,
     osm_types as osm_type,
-    center as way,
+    center,
     buffered,
     map_reference,
     "references",
@@ -465,7 +465,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -474,7 +474,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -518,7 +518,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -527,7 +527,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -684,7 +684,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       state,
       feature,
@@ -697,7 +697,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
       AND CASE
         -- Zooms < 8 are handled in the low and medium zoom tiles
@@ -1185,6 +1185,104 @@ DO $do$ BEGIN
         "id": "standard_railway_grouped_station_areas",
         "fields": {
           "id": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW standard_interlocking_view AS
+  SELECT
+    i.osm_id as id,
+    i.osm_id,
+    'R' as osm_type,
+    i.has_facility,
+    center,
+    buffered,
+    feature,
+    name,
+    name_tags,
+    "references",
+    operator,
+    owner,
+    network,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM interlocking_buffered ib
+  JOIN interlocking i
+    ON ib.id = i.osm_id;
+
+CREATE OR REPLACE FUNCTION standard_interlocking(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
+    FROM standard_interlocking_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking",
+        "fields": {
+          "id": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_interlocking_text(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking_text', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      name
+    FROM standard_interlocking_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND NOT has_facility
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking_text IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking_text",
+        "fields": {
+          "id": "integer",
+          "name": "string"
         }
       }
     ]

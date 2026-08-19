@@ -90,6 +90,7 @@ const colors = {
       siding: themeSwitch('#000000', '#000000'),
       crossover: themeSwitch('#000000', '#000000'),
       yard: themeSwitch('#000000', '#000000'),
+      interlocking: themeSwitch('#7300ff', '#ddc3ff'),
       spur: themeSwitch('#87491d', '#87491d'),
       industrial: themeSwitch('#87491d', '#87491d'),
       ferry: themeSwitch('#1e81b0', '#1e81b0'),
@@ -569,7 +570,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
     metadata: {
       supports: ['language'],
@@ -1938,7 +1939,29 @@ const layers = [
     },
   },
   {
-    id: 'railway_grouped_station_areas',
+    id: `interlocking`,
+      type: 'line',
+      minzoom: 13,
+      source: 'openrailwaymap_standard',
+      'source-layer': 'standard_interlocking',
+      paint: {
+        'line-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          colors.styles.standard.interlocking,
+        ],
+        'line-opacity': 0.3,
+        'line-width': 6,
+      },
+      layout: {
+        'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
+          ['==', ['global-state', 'style'], 'standard'], 'visible',
+          'visible',
+        ],
+      },
+    },
+    {
+      id: 'railway_grouped_station_areas',
     type: 'line',
     minzoom: 13,
     source: 'openrailwaymap_standard',
@@ -3495,6 +3518,35 @@ const layers = [
     },
   },
   {
+    id: 'railway_text_interlocking',
+    type: 'symbol',
+    minzoom: 13,
+    source: 'openrailwaymap_standard',
+    'source-layer': 'standard_interlocking_text',
+    paint: {
+      'text-color': colors.styles.standard.interlocking,
+      'text-halo-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
+        colors.halo,
+      ],
+      'text-halo-width': 1.5,
+    },
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'none',
+      ],
+      'text-field': ['get', 'name'],
+      'text-font': font.bold,
+      'text-size': 11,
+      'text-padding': 10,
+      'text-max-width': 8,
+      'text-optional': true,
+      'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+    },
+  },
+  {
     id: 'historical_stations',
     type: 'symbol',
     minzoom: 12,
@@ -4336,7 +4388,7 @@ const layers = [
     ['get', 'feature'],
     {
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 16,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_symbols',
       layout: {
@@ -4457,7 +4509,7 @@ const layers = [
     {
       id: 'signals_railway_symbols_text',
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 16,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_symbols',
       paint: {

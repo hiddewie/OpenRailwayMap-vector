@@ -675,6 +675,89 @@ local substation = osm2pgsql.define_table({
   },
 })
 
+local interlocking = osm2pgsql.define_table({
+  name = 'interlocking',
+  ids = { type = 'relation', id_column = 'osm_id', create_index = 'primary_key' },
+  columns = {
+    { column = 'feature', type = 'text', not_null = true },
+    { column = 'has_facility', type = 'boolean', not_null = true },
+    { column = 'name', type = 'text' },
+    { column = 'name_tags', type = 'hstore' },
+    { column = 'references', type = 'hstore' },
+    { column = 'operator', sql_type = 'text[]' },
+    { column = 'owner', type = 'text' },
+    { column = 'network', sql_type = 'text[]' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
+  },
+})
+
+local interlocking_switch = osm2pgsql.define_table({
+  name = 'interlocking_switch',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'switch_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'switch_id', method = 'btree' },
+  },
+})
+
+local interlocking_signal = osm2pgsql.define_table({
+  name = 'interlocking_signal',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'signal_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'signal_id', method = 'btree' },
+  },
+})
+
+local interlocking_signal_box = osm2pgsql.define_table({
+  name = 'interlocking_signal_box',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'signal_box_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'signal_box_id', method = 'btree' },
+  },
+})
+
+local interlocking_facility = osm2pgsql.define_table({
+  name = 'interlocking_facility',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'facility_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'facility_id', method = 'btree' },
+  },
+})
+
+local interlocking_landuse = osm2pgsql.define_table({
+  name = 'interlocking_landuse',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'landuse_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'landuse_id', method = 'btree' },
+  },
+})
+
 local railway_line_states = {}
 -- ordered from lower to higher importance
 local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
@@ -1804,6 +1887,77 @@ function osm2pgsql.process_relation(object)
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        wikimedia_commons_file = wikimedia_commons_file,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
+      })
+    end
+  end
+
+  if tags.type == 'railway' and tags.railway == 'interlocking' then
+    local has_members = false
+    local has_facility = false
+    for _, member in ipairs(object.members) do
+      if member.role == 'switch' and member.type == 'n' then
+        interlocking_switch:insert({
+          switch_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'signal' and member.type == 'n' then
+        interlocking_signal:insert({
+          signal_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'facility' and member.type == 'n' then
+        interlocking_facility:insert({
+          facility_id = string.format("node-%d", member.ref),
+        })
+        has_members = true
+        has_facility = true
+      elseif member.role == 'facility' and member.type == 'w' then
+        interlocking_facility:insert({
+          facility_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+        has_facility = true
+      elseif member.role == 'signal_box' and member.type == 'n' then
+        interlocking_signal_box:insert({
+          signal_box_id = string.format("node-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'signal_box' and member.type == 'w' then
+        interlocking_signal_box:insert({
+          signal_box_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'landuse' and member.type == 'w' then
+        interlocking_landuse:insert({
+          landuse_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'landuse' and member.type == 'r' then
+        interlocking_landuse:insert({
+          landuse_id = string.format("relation-%d", member.ref),
+        })
+        has_members = true
+      end
+    end
+
+    if has_members then
+      interlocking:insert({
+        feature = 'interlocking',
+        has_facility = has_facility,
+        name = tags.name,
+        name_tags = name_tags(tags),
+        references = station_references(tags),
+        operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
+        network = split_semicolon_to_sql_array(tags.network),
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
