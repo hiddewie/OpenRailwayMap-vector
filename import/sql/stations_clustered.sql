@@ -145,10 +145,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     ON ssa.stop_area_osm_id = sa.osm_id
   GROUP BY clustered.id;
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
-  ON grouped_stations_with_importance
-    USING GIST(center);
-
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_buffered_index
   ON grouped_stations_with_importance
     USING GIST(buffered);
@@ -162,7 +158,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS grouped_stations_with_importance_id
     USING BTREE(id);
 
 CLUSTER grouped_stations_with_importance
-  USING grouped_stations_with_importance_center_index;
+  USING grouped_stations_with_importance_buffered_index;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   SELECT
