@@ -148,7 +148,7 @@ postgres:
       schema: public
       function: signals_signal_boxes
       minzoom: 8
-      maxzoom: 14
+      maxzoom: 16
 
     signals_railway_signals:
       schema: public
