@@ -557,7 +557,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/vacancy-detection-unknown', rank = 39, layer = 'signals', minzoom = 13 },
+    { id = 'node-123', feature = 'general/vacancy-detection-unknown', rank = 39, layer = 'signals', minzoom = 16 },
   },
 })
 
@@ -572,7 +572,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/vacancy-detection-axle-counter', rank = 37, layer = 'signals', minzoom = 13 },
+    { id = 'node-123', feature = 'general/vacancy-detection-axle-counter', rank = 37, layer = 'signals', minzoom = 16 },
   },
 })
 
@@ -587,7 +587,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/vacancy-detection-insulated-rail-joint', rank = 38, layer = 'signals', minzoom = 13 },
+    { id = 'node-123', feature = 'general/vacancy-detection-insulated-rail-joint', rank = 38, layer = 'signals', minzoom = 16 },
   },
 })
 
