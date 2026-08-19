@@ -6926,6 +6926,38 @@ features:
     tags:
       - { tag: 'railway:signal:whistle', value: 'GB-NR:continuous' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
+  
+  - description: Commencement of AWS Gap Board
+    country: GB
+    icon: [ default: 'gb/AWS-gap-start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_start' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+  
+  - description: Termination of AWS Gap Board
+    country: GB
+    icon: [ default: 'gb/AWS-gap-end' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+  
+  - description: Commencement of Special AWS Working Board
+    country: GB
+    icon: [ default: 'gb/AWS-SW-start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_special_start' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+  
+  - description: Termination of Special AWS Working Board
+    country: GB
+    icon: [ default: 'gb/AWS-SW-end' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_special_end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
 
   - description: Cab Signalling Start Warning Board
     country: GB
