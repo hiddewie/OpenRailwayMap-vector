@@ -252,7 +252,7 @@ features:
 
   - description: Vacancy detection
     layer: signals
-    minzoom: 13
+    minzoom: 16
     feature: 'general/vacancy-detection-unknown'
     tags:
       - { tag: 'railway', value: 'vacancy_detection' }
