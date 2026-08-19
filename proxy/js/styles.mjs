@@ -4359,7 +4359,7 @@ const layers = [
       layout: {
         'visibility': ['case',
           ['==', ['global-state', 'style'], 'signals'], 'visible',
-          'visible',
+          'none',
         ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
@@ -4481,7 +4481,7 @@ const layers = [
       layout: {
         'visibility': ['case',
           ['==', ['global-state', 'style'], 'signals'], 'visible',
-          'visible',
+          'none',
         ],
         'symbol-z-order': 'source',
         'icon-overlap': 'always',
