@@ -3659,6 +3659,9 @@ features:
         cases:
           - { exact: 'normal', value: 'de/sh1-light-normal', description: 'normal height' }
         default: 'de/sh0-light-dwarf'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
@@ -4652,6 +4655,10 @@ features:
           - { exact: 'DE-ESO:hp2', value: 'de/hp2-light' }
           - { exact: 'DE-ESO:hp1', value: 'de/hp1-light' }
         default: 'de/hp0-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4666,6 +4673,11 @@ features:
           - { exact: 'DE-ESO:hl3a', value: 'de/hl3a' }
           - { exact: 'DE-ESO:hl1', value: 'de/hl1' }
         default: 'de/hl0-main'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4831,7 +4843,14 @@ features:
 
   - description: main signals type Ks
     country: DE
-    icon: [ default: 'de/ks-main' ]
+    icon:
+      - default: 'de/ks-main'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4846,6 +4865,11 @@ features:
           - { exact: 'DE-ESO:hl12a', value: 'de/hl12a' }
           - { exact: 'DE-ESO:hl10', value: 'de/hl10' }
         default: 'de/hl0-combined'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4858,6 +4882,10 @@ features:
         cases:
           - { exact: 'DE-ESO:hp0', value: 'de/sv-hp0' }
         default: 'de/sv-sv0'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4871,14 +4899,22 @@ features:
 
   - description: main signals type Sk
     country: DE
-    icon: [ default: 'de/sk1-light' ]
+    icon:
+      - default: 'de/sk1-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_rot', value: 'de/mastschild-rot' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:sk' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: combined signals type Sk
     country: DE
-    icon: [ default: 'de/sk0-light' ]
+    icon:
+      - default: 'de/sk0-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_rot-gelb', value: 'de/mastschild-rot-gelb' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sk' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4890,6 +4926,11 @@ features:
         cases:
           - { value: 'de/ks-combined-shortened' }
         default: 'de/ks-combined'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
