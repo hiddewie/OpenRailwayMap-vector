@@ -148,7 +148,7 @@ postgres:
     signals_railway_symbols:
       schema: public
       function: signals_railway_symbols
-      minzoom: 13
+      minzoom: 16
 
     # --- Electrification --- #
 

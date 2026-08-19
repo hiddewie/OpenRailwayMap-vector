@@ -4252,7 +4252,7 @@ const layers = {
       ['get', 'feature'],
       {
         type: 'symbol',
-        minzoom: 13,
+        minzoom: 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'signals_railway_symbols',
         layout: {
@@ -4365,7 +4365,7 @@ const layers = {
     {
       id: 'railway_symbols_text',
       type: 'symbol',
-      minzoom: 13,
+      minzoom: 16,
       source: 'openrailwaymap_signals',
       'source-layer': 'signals_railway_symbols',
       paint: {
