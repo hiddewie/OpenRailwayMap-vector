@@ -23,20 +23,20 @@ jsonpath "$[2].name" == "Berlin Hauptbahnhof"
 jsonpath "$[3].name" == "Hauptbahnhof"
 jsonpath "$[4].name" == "Hauptbahnhof"
 jsonpath "$[5].name" == "Berlin Hauptbahnhof Tunnel (S-Bahn)"
-jsonpath "$[6].name" == "Berlin-Moabit"
-jsonpath "$[7].name" == "Berlin Hamburger und Lehrter Bahnhof"
-jsonpath "$[8].name" == "Berlin Südkreuz"
-jsonpath "$[9].name" == "Südkreuz (Ringbahn)"
-jsonpath "$[10].name" == "Südkreuz (Nord-Süd)"
-jsonpath "$[11].name" == "Berlin Nordost"
-jsonpath "$[12].name" == "Berlin-Ruhleben"
-jsonpath "$[13].name" == "Berlin Greifswalder Straße"
-jsonpath "$[14].name" == "Berlin-Grünau"
-jsonpath "$[15].name" == "Berlin-Spandau"
-jsonpath "$[16].name" == "Spandau"
-jsonpath "$[17].name" == "Berlin-Marienfelde Gbf"
-jsonpath "$[18].name" == "Berlin-Tempelhof"
-jsonpath "$[19].name" == "Ostbahnhof"
+jsonpath "$[6].name" == "Berlin Südkreuz"
+jsonpath "$[7].name" == "Südkreuz (Ringbahn)"
+jsonpath "$[8].name" == "Südkreuz (Nord-Süd)"
+jsonpath "$[9].name" == "Berlin-Spandau"
+jsonpath "$[10].name" == "Spandau"
+jsonpath "$[11].name" == "Ostbahnhof"
+jsonpath "$[12].name" == "Berlin Ostbahnhof"
+jsonpath "$[13].name" == "Berlin Gesundbrunnen"
+jsonpath "$[14].name" == "Gesundbrunnen"
+jsonpath "$[15].name" == "Berlin Alexanderplatz"
+jsonpath "$[16].name" == "Alexanderplatz"
+jsonpath "$[17].name" == "Berlin Friedrichstraße"
+jsonpath "$[18].name" == "Ostkreuz"
+jsonpath "$[19].name" == "S Friedrichstraße"
 
 # Facility request with language
 GET {{base_url}}/facility
@@ -826,3 +826,5 @@ jsonpath "$.usage" == "main"
 jsonpath "$.voltage" == 15000
 jsonpath "$.note" == null
 jsonpath "$.description" == null
+
+# No test for interlocking because no such features exist in the test data
