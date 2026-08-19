@@ -8,7 +8,6 @@ train_protections:
   - { train_protection: 'ctcs_2', legend: 'Chinese Train Control System (CTCS) level 2', color: 'hsl(190, 100%, 40%)' }
   - { train_protection: 'ctcs_3', legend: 'Chinese Train Control System (CTCS) level 3', color: 'hsl(190, 100%, 30%)' }
   - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#c54800' }
-  - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
   - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
@@ -47,7 +46,9 @@ train_protections:
   - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
   - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'hsl(155, 100%, 40%)' }
+  - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
+  - { train_protection: 'zst90', legend: 'ZST-90 (Zugstop)', color: 'hsl(70, 100%, 70%)' }
   - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
   - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'hsl(187, 100%, 40%)' }
   - { train_protection: 'twc', legend: 'Track Warrant Control (TWC)', color: '#884400' }
@@ -317,6 +318,10 @@ features:
   - train_protection: zsl90
     tags:
       - { tag: 'railway:zsl90', value: 'yes' }
+
+  - train_protection: zst90
+    tags:
+      - { tag: 'railway:zst90', value: 'yes' }
 
   - train_protection: zub
     tags:
