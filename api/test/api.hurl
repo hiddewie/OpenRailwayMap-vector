@@ -826,3 +826,5 @@ jsonpath "$.usage" == "main"
 jsonpath "$.voltage" == 15000
 jsonpath "$.note" == null
 jsonpath "$.description" == null
+
+# No test for interlocking because no such features exist in the test data
