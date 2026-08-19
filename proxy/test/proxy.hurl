@@ -34,7 +34,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions
+GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
@@ -109,48 +109,13 @@ jsonpath "$.project.name" == "OpenRailwayMap-vector"
 jsonpath "$.tags[*].key" includes "name"
 jsonpath "$.tags[*].key" includes "railway"
 
-# Styles
-GET {{base_url}}/style/standard.json
+# Style
+GET {{base_url}}/style.json
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap standard"
-
-GET {{base_url}}/style/speed.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap speed"
-
-GET {{base_url}}/style/signals.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap signals"
-
-GET {{base_url}}/style/electrification.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap electrification"
-
-GET {{base_url}}/style/track.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap track"
-
-GET {{base_url}}/style/operator.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap operator"
+jsonpath "$.name" == "OpenRailwayMap"
 
 # Legend data
 GET {{base_url}}/legend.json
