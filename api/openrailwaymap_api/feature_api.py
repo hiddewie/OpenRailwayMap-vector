@@ -58,13 +58,14 @@ class FeatureAPI:
         sql_query = f"""
             SELECT {', '.join(f'"{property}"' for property in properties if property)}
             FROM "{view_name}" 
-            WHERE id = $1::{view_id_type} 
+            WHERE id = $1 
         """
 
         async with self.database.acquire() as connection:
             statement = await connection.prepare(sql_query)
             async with connection.transaction():
-                async for record in statement.cursor(id):
+                cast_id = int(id) if view_id_type == 'numeric' else id
+                async for record in statement.cursor(cast_id):
                     return localize_fields(dict(record), localized_fields, lang)
                 else:
                     return None
