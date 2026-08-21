@@ -1940,33 +1940,33 @@ const layers = [
   },
   {
     id: `interlocking`,
-      type: 'line',
-      minzoom: 13,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_interlocking',
-      paint: {
-        'line-color': ['case',
-          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-          colors.styles.standard.interlocking,
-        ],
-        'line-opacity': 0.3,
-        'line-width': 6,
-      },
-      layout: {
-        'visibility': ['case',
-          ['<', ['global-state', 'date'], defaultDate], 'none',
-          ['==', ['global-state', 'style'], 'standard'], 'visible',
-          'visible',
-        ],
-      },
+    type: 'line',
+    minzoom: 13,
+    source: 'openrailwaymap_standard',
+    'source-layer': 'standard_interlocking',
+    paint: {
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+        colors.styles.standard.interlocking,
+      ],
+      'line-opacity': 0.3,
+      'line-width': 6,
     },
-    {
-      id: 'railway_grouped_station_areas',
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        'visible',
+      ],
+    },
+  },
+  {
+    id: 'railway_grouped_station_areas',
     type: 'line',
     minzoom: 13,
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_station_areas',
-    filter: ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+    filter: ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
     paint: {
       'line-color': colors.styles.standard.stationAreaGroup,
       'line-width': 2,
@@ -1987,7 +1987,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
-      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction']]]], // Yards only have an outline and sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction', 'crossover']]]], // Yards only have an outline and sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -2028,7 +2028,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -3352,7 +3352,7 @@ const layers = [
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
       ['!=', ['get', 'localized_name'], null],
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]],
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -3438,7 +3438,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
-      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]],
+      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -5365,7 +5365,7 @@ const layers = [
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
       ['!=', ['get', 'operator_color'], null],
-      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction']]]], // Yards only have an outline and sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction', 'crossover']]]], // Yards only have an outline and sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -5396,7 +5396,7 @@ const layers = [
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
       ['!=', ['get', 'operator_color'], null],
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -5791,7 +5791,7 @@ const layers = [
     filter: ['all',
       ['!=', ['get', 'localized_name'], null],
       ['!=', ['get', 'operator_color'], null],
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]],
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -5866,7 +5866,7 @@ const layers = [
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
       ['!=', ['get', 'operator_color'], null],
-      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]],
+      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -6087,7 +6087,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
-      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction']]]], // Yards only have an outline and sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction', 'crossover']]]], // Yards only have an outline and sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -6127,7 +6127,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]], // Sites and junctions show an icon
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -6464,7 +6464,7 @@ const layers = [
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
       ['!=', ['get', 'localized_name'], null],
-      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]]],
+      ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
@@ -6549,7 +6549,7 @@ const layers = [
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
-      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction']]],
+      ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]],
       ['match', ['get', 'state'],
         'construction', ['global-state', 'showConstructionInfrastructure'],
         'proposed', ['global-state', 'showProposedInfrastructure'],
