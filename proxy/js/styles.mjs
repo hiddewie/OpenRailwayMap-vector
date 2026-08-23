@@ -4010,7 +4010,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
+        ['==', ['global-state', 'stations'], 'station'], 'visible',
         'none',
       ],
     },
@@ -5141,7 +5141,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
+        ['==', ['global-state', 'stations'], 'station'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
