@@ -554,7 +554,6 @@ const knownStyles = {
     supportsDate: true,
     hasConfiguration: true,
     styleGlobalState: {
-      style: 'standard',
       tracks: 'usage',
       stations: 'station',
       pois: 'standard',
@@ -572,7 +571,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
-      style: 'speed',
       tracks: 'speed',
       stations: 'none',
       pois: 'none',
@@ -590,7 +588,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
-      style: 'signals',
       tracks: 'train_protection',
       stations: 'none',
       pois: 'signals',
@@ -608,7 +605,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: true,
     styleGlobalState: {
-      style: 'electrification',
       tracks: 'electrification',
       stations: 'none',
       pois: 'electrification',
@@ -626,7 +622,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: true,
     styleGlobalState: {
-      style: 'track',
       tracks: 'track',
       stations: 'none',
       pois: 'none',
@@ -644,7 +639,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
-      style: 'operator',
       tracks: 'operator',
       stations: 'operator',
       pois: 'operator',
@@ -662,7 +656,6 @@ const knownStyles = {
     supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
-      style: 'route',
       tracks: 'routes',
       stations: 'station',
       pois: 'none',
