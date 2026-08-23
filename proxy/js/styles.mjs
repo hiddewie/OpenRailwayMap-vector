@@ -1957,7 +1957,7 @@ const layers = [
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'stations'], 'station'], 'visible',
-        'visible',
+        'none',
       ],
     },
   },
