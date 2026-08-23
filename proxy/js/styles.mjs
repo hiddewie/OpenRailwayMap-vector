@@ -3558,7 +3558,8 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['==', ['global-state', 'substations'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -3578,7 +3579,8 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['==', ['global-state', 'substations'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -6033,7 +6035,15 @@ const makeStyle = () => ({
     turntables: {
       // Values: plain, none
       default: 'plain',
-    }
+    },
+    platforms: {
+      // Values: plain, none
+      default: 'plain',
+    },
+    substations: {
+      // Values: plain, none
+      default: 'none',
+    },
   },
 });
 
