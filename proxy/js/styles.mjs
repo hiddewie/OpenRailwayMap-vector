@@ -3683,7 +3683,7 @@ const layers = [
     },
   },
 
-  // Catenary masts
+  // Catenaries
 
   {
     id: 'electrification_catenary_mast',
@@ -3702,7 +3702,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
       'icon-image': ['case',
@@ -3737,7 +3737,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
       'text-field': '{ref}',
@@ -3767,7 +3767,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -5972,6 +5972,10 @@ const makeStyle = () => ({
     boxes: {
       // Values: plain, operator, none
       default: 'none',
+    },
+    catenaries: {
+      // Values: plain, none
+      default: 'plain',
     },
   },
 });
