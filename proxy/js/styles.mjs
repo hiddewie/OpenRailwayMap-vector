@@ -5390,7 +5390,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'substations'], 'plain'], 'visible',
         'none',
       ],
       'text-field': '{name}',
