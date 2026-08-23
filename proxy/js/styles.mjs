@@ -1971,7 +1971,6 @@ const layers = [
     minzoom: 13,
     source: 'openrailwaymap_standard',
     'source-layer': 'standard_railway_grouped_station_areas',
-    filter: ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
     paint: {
       'line-color': colors.styles.standard.stationAreaGroup,
       'line-width': 2,
@@ -1980,7 +1979,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]],
         'none',
       ],
     },
