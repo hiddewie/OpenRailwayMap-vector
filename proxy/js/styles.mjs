@@ -3420,7 +3420,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'turntables'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -3438,7 +3438,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'turntables'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -6029,6 +6029,10 @@ const makeStyle = () => ({
     pois: {
       // Values: standard, electrification, signals, operator, none
       default: 'standard',
+    },
+    turntables: {
+      // Values: plain, none
+      default: 'plain',
     }
   },
 });
