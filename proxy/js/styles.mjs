@@ -4010,7 +4010,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
         'none',
       ],
     },
