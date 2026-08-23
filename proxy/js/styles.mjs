@@ -2736,6 +2736,7 @@ const layers = [
 
       // High zooms
       // ensure that width interpolation matches medium zooms
+
       {
         id: 'railway_line_razed',
         minzoom: 12,
@@ -3309,7 +3310,7 @@ const layers = [
         ],
         color: gaugeColor('gauge0', 'gaugeint0'),
         visibility: ['all',
-          ['==', ['global-state', 'tracksRailwayLine'], 'gauge'],
+          ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
           ['==', ['global-state', 'tracks'], 'track'],
         ],
       },
@@ -3331,7 +3332,7 @@ const layers = [
         ],
         color: gaugeColor('gauge1', 'gaugeint1'),
         visibility: ['all',
-          ['==', ['global-state', 'tracksRailwayLine'], 'gauge'],
+          ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
           ['==', ['global-state', 'tracks'], 'track'],
         ],
       },
@@ -3353,7 +3354,7 @@ const layers = [
         ],
         color: gaugeColor('gauge2', 'gaugeint2'),
         visibility: ['all',
-          ['==', ['global-state', 'tracksRailwayLine'], 'gauge'],
+          ['==', ['global-state', 'trackRailwayLine'], 'gauge'],
           ['==', ['global-state', 'tracks'], 'track'],
         ],
       },
