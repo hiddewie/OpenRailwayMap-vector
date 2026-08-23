@@ -555,6 +555,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'standard',
+      tracks: 'usage',
       stations: 'station',
       pois: 'standard',
       turntables: 'plain',
@@ -572,6 +573,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'speed',
+      tracks: 'speed',
       stations: 'none',
       pois: 'none',
       turntables: 'none',
@@ -589,6 +591,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'signals',
+      tracks: 'train_protection',
       stations: 'none',
       pois: 'signals',
       turntables: 'none',
@@ -606,6 +609,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'electrification',
+      tracks: 'electrification',
       stations: 'none',
       pois: 'electrification',
       turntables: 'none',
@@ -623,6 +627,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'track',
+      tracks: 'track',
       stations: 'none',
       pois: 'none',
       turntables: 'none',
@@ -640,6 +645,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'operator',
+      tracks: 'operator',
       stations: 'operator',
       pois: 'operator',
       turntables: 'none',
@@ -657,6 +663,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'route',
+      tracks: 'routes',
       stations: 'station',
       pois: 'none',
       turntables: 'none',
@@ -1280,7 +1287,7 @@ const map = new maplibregl.Map({
   ...(configuration.view || defaultConfiguration.view),
 });
 map.setStyle(`${location.origin}/style.json`, {
-  validate: false,
+  validate: true,
   transformStyle: (previous, next) => {
     const language = configuredLanguage();
 
