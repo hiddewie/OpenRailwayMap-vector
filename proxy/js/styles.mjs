@@ -3462,7 +3462,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -3480,7 +3480,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
       'line-join': 'round',
@@ -3514,7 +3514,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
     },
@@ -3528,7 +3528,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
       'line-join': 'round',

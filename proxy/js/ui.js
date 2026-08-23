@@ -558,6 +558,7 @@ const knownStyles = {
       stations: 'station',
       pois: 'standard',
       turntables: 'plain',
+      platforms: 'plain',
     },
   },
   speed: {
@@ -569,6 +570,7 @@ const knownStyles = {
       stations: 'none',
       pois: 'none',
       turntables: 'none',
+      platforms: 'none',
     },
   },
   signals: {
@@ -580,6 +582,7 @@ const knownStyles = {
       stations: 'none',
       pois: 'signals',
       turntables: 'none',
+      platforms: 'none',
     },
   },
   electrification: {
@@ -591,6 +594,7 @@ const knownStyles = {
       stations: 'none',
       pois: 'electrification',
       turntables: 'none',
+      platforms: 'none',
     },
   },
   track: {
@@ -602,6 +606,7 @@ const knownStyles = {
       stations: 'none',
       pois: 'none',
       turntables: 'none',
+      platforms: 'none',
     },
   },
   operator: {
@@ -613,6 +618,7 @@ const knownStyles = {
       stations: 'operator',
       pois: 'operator',
       turntables: 'none',
+      platforms: 'none',
     },
   },
   route: {
@@ -624,6 +630,7 @@ const knownStyles = {
       stations: 'station',
       pois: 'none',
       turntables: 'none',
+      platforms: 'none',
     },
   },
 };
