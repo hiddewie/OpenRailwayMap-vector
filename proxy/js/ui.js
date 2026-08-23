@@ -1280,7 +1280,7 @@ const map = new maplibregl.Map({
   ...(configuration.view || defaultConfiguration.view),
 });
 map.setStyle(`${location.origin}/style.json`, {
-  validate: true,
+  validate: false,
   transformStyle: (previous, next) => {
     const language = configuredLanguage();
 
