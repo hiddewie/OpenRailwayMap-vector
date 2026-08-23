@@ -562,6 +562,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'none',
       catenaries: 'none',
+      switches: 'plain',
     },
   },
   speed: {
@@ -577,6 +578,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'none',
       catenaries: 'none',
+      switches: 'none',
     },
   },
   signals: {
@@ -592,6 +594,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'plain',
       catenaries: 'none',
+      switches: 'none',
     },
   },
   electrification: {
@@ -607,6 +610,7 @@ const knownStyles = {
       substations: 'plain',
       boxes: 'none',
       catenaries: 'plain',
+      switches: 'none',
     },
   },
   track: {
@@ -622,6 +626,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'none',
       catenaries: 'none',
+      switches: 'none',
     },
   },
   operator: {
@@ -637,6 +642,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'operator',
       catenaries: 'none',
+      switches: 'none',
     },
   },
   route: {
@@ -652,6 +658,7 @@ const knownStyles = {
       substations: 'none',
       boxes: 'none',
       catenaries: 'none',
+      switches: 'none',
     },
   },
 };

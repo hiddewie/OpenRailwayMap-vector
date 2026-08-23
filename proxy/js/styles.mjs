@@ -5238,7 +5238,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'switches'], 'plain'], 'visible',
         'none',
       ],
       'icon-overlap': 'always',
@@ -5974,6 +5974,10 @@ const makeStyle = () => ({
       default: 'none',
     },
     catenaries: {
+      // Values: plain, none
+      default: 'plain',
+    },
+    switches: {
       // Values: plain, none
       default: 'plain',
     },
