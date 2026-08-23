@@ -4075,7 +4075,7 @@ const layers = [
       'source-layer': 'standard_railway_symbols',
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'standard'], 'visible',
+          ['==', ['global-state', 'pois'], 'standard'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4100,7 +4100,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'pois'], 'standard'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4111,6 +4111,24 @@ const layers = [
       'text-offset': [0, 1.5],
     },
   },
+  ...imageLayerWithOutline(
+    `signals_railway_symbols_outline`,
+    ['get', 'feature'],
+    {
+      type: 'symbol',
+      minzoom: 16,
+      source: 'openrailwaymap_signals',
+      'source-layer': 'signals_railway_symbols',
+      layout: {
+        'visibility': ['case',
+          ['==', ['global-state', 'pois'], 'signals'], 'visible',
+          'none',
+        ],
+        'symbol-z-order': 'source',
+        'icon-overlap': 'always',
+      },
+    },
+  ),
   {
     id: `electrification_symbols`,
     type: 'symbol',
@@ -4140,7 +4158,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'pois'], 'electrification'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4183,7 +4201,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'operator'], 'visible',
+        ['==', ['global-state', 'pois'], 'operator'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4207,7 +4225,7 @@ const layers = [
       'source-layer': 'operator_railway_symbols',
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'operator'], 'visible',
+          ['==', ['global-state', 'pois'], 'operator'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4621,24 +4639,6 @@ const layers = [
       }
     },
   ]),
-  ...imageLayerWithOutline(
-    `signals_railway_symbols_outline`,
-    ['get', 'feature'],
-    {
-      type: 'symbol',
-      minzoom: 16,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'signals_railway_symbols',
-      layout: {
-        'visibility': ['case',
-          ['==', ['global-state', 'style'], 'signals'], 'visible',
-          'none',
-        ],
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-      },
-    },
-  ),
   {
     id: 'railway_signals_high_derail_buffer_stop',
     type: 'symbol',
@@ -6472,6 +6472,10 @@ const makeStyle = () => ({
       // Values: station, operator, none
       default: 'station',
     },
+    pois: {
+      // Values: standard, electrification, signals, operator, none
+      default: 'standard',
+    }
   },
 });
 
