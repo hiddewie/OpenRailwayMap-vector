@@ -4208,7 +4208,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        ['==', ['global-state', 'style'], 'speed'], 'visible',
+        ['==', ['global-state', 'signals'], 'speed'], 'visible',
         'none',
       ],
     },
@@ -4240,7 +4240,7 @@ const layers = [
       'visibility': ['case',
         ['all',
           ['==', ['global-state', 'pitched'], false],
-          ['==', ['global-state', 'style'], 'speed'],
+          ['==', ['global-state', 'signals'], 'speed'],
         ], 'visible',
         'none',
       ],
@@ -4279,7 +4279,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
-            ['==', ['global-state', 'style'], 'speed'], 'visible',
+            ['==', ['global-state', 'signals'], 'speed'], 'visible',
             'none',
           ],
           'symbol-z-order': 'source',
@@ -4334,7 +4334,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'speed'], 'visible',
+          ['==', ['global-state', 'signals'], 'speed'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4402,7 +4402,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'speed'], 'visible',
+        ['==', ['global-state', 'signals'], 'speed'], 'visible',
         'none',
       ],
       'text-field': ['format',
@@ -4450,7 +4450,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
     },
@@ -4489,7 +4489,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
-          ['==', ['global-state', 'style'], 'signals'],
+          ['==', ['global-state', 'signals'], 'signals'],
           ['==', ['global-state', 'pitched'], false],
         ], 'visible',
         'none',
@@ -4532,7 +4532,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
-            ['==', ['global-state', 'style'], 'signals'], 'visible',
+            ['==', ['global-state', 'signals'], 'signals'], 'visible',
             'none',
           ],
           'symbol-z-order': 'source',
@@ -4568,7 +4568,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'signals'], 'visible',
+          ['==', ['global-state', 'signals'], 'signals'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4609,7 +4609,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4639,7 +4639,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
-            ['==', ['global-state', 'style'], 'signals'], 'visible',
+            ['==', ['global-state', 'signals'], 'signals'], 'visible',
             'none',
           ],
           'symbol-z-order': 'source',
@@ -4678,7 +4678,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'signals'], 'visible',
+          ['==', ['global-state', 'signals'], 'signals'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4720,7 +4720,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4756,7 +4756,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'signals'], 'visible',
+        ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4801,7 +4801,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['==', ['global-state', 'pitched'], false], 'none',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
       ],
     },
@@ -4833,7 +4833,7 @@ const layers = [
       'visibility': ['case',
         ['all',
           ['==', ['global-state', 'pitched'], false],
-          ['==', ['global-state', 'style'], 'electrification'],
+          ['==', ['global-state', 'signals'], 'electrification'],
         ], 'visible',
         'none',
       ],
@@ -4877,7 +4877,7 @@ const layers = [
       },
       layout: {
         'visibility': ['case',
-          ['==', ['global-state', 'style'], 'electrification'], 'visible',
+          ['==', ['global-state', 'signals'], 'electrification'], 'visible',
           'none',
         ],
         'symbol-z-order': 'source',
@@ -4928,7 +4928,7 @@ const layers = [
     ],
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -4991,7 +4991,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
-        ['==', ['global-state', 'style'], 'electrification'], 'visible',
+        ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
       ],
       'text-field': ['format',
@@ -5980,6 +5980,10 @@ const makeStyle = () => ({
     switches: {
       // Values: plain, none
       default: 'plain',
+    },
+    signals: {
+      // Values: speed, signals, electrification, none
+      default: 'none',
     },
   },
 });
