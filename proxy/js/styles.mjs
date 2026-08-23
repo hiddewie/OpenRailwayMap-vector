@@ -6798,32 +6798,14 @@ const layers = [
     },
   },
 
-  // TODO remove everything below
-
-  // --- Standard --- //
-
-
-  // --- Speed --- //
-
-
-  // --- Train protection --- //
-
-
- // --- Electrification --- //
-
-
-  // --- Track --- //
-
-
-  // --- Operator --- //
-
-
-  // --- Route --- //
-
+  // Routes
 
   route,
   routeText,
   routeStops,
+
+  // Search results
+
   searchResults,
 ];
 
