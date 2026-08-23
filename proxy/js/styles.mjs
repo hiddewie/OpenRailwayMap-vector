@@ -5042,7 +5042,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -5069,7 +5069,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -5098,7 +5098,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
         'none',
       ],
       'symbol-placement': 'line',
@@ -5141,7 +5141,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
