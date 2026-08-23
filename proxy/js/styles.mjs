@@ -1956,7 +1956,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'stations'], 'station'], 'visible',
         'visible',
       ],
     },
@@ -5866,7 +5866,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'style'], 'standard'], 'visible',
+        ['==', ['global-state', 'stations'], 'station'], 'visible',
         'none',
       ],
       'text-field': ['get', 'name'],
