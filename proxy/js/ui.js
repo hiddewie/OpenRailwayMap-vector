@@ -555,6 +555,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'standard',
+      stations: 'station',
     },
   },
   speed: {
@@ -563,6 +564,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'speed',
+      stations: 'none',
     },
   },
   signals: {
@@ -571,6 +573,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'signals',
+      stations: 'none',
     },
   },
   electrification: {
@@ -579,6 +582,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'electrification',
+      stations: 'none',
     },
   },
   track: {
@@ -587,6 +591,7 @@ const knownStyles = {
     hasConfiguration: true,
     styleGlobalState: {
       style: 'track',
+      stations: 'none',
     },
   },
   operator: {
@@ -595,6 +600,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'operator',
+      stations: 'operator',
     },
   },
   route: {
@@ -603,6 +609,7 @@ const knownStyles = {
     hasConfiguration: false,
     styleGlobalState: {
       style: 'route',
+      stations: 'station',
     },
   },
 };
