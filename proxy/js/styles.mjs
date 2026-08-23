@@ -145,6 +145,7 @@ const colors = {
   catenary: themeSwitch('blue', '#a7c6fc'),
   substation: themeSwitch('hsl(152 100% 36.3%)', 'hsl(152 100% 25%)'),
   substationText: themeSwitch('hsl(152 100% 20.8%)', 'hsl(152 100% 50%)'),
+  signalBox: '#008206',
 };
 
 const font = {
@@ -3625,7 +3626,7 @@ const layers = [
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
         ['match', ['global-state', 'boxes'],
           'operator', ['get', 'operator_color'],
-          'plain', '#008206',
+          'plain', colors.signalBox,
           'black',
         ],
       ],
@@ -3661,7 +3662,7 @@ const layers = [
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
         ['match', ['global-state', 'boxes'],
           'operator', ['get', 'operator_color'],
-          'plain', '#008206',
+          'plain', colors.signalBox,
           'black',
         ],
       ],
