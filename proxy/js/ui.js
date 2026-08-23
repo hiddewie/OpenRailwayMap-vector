@@ -553,36 +553,57 @@ const knownStyles = {
     name: 'Infrastructure',
     supportsDate: true,
     hasConfiguration: true,
+    styleGlobalState: {
+      style: 'standard',
+    },
   },
   speed: {
     name: 'Speed',
     supportsDate: false,
     hasConfiguration: false,
+    styleGlobalState: {
+      style: 'speed',
+    },
   },
   signals: {
     name: 'Train protection',
     supportsDate: false,
     hasConfiguration: false,
+    styleGlobalState: {
+      style: 'signals',
+    },
   },
   electrification: {
     name: 'Electrification',
     supportsDate: false,
     hasConfiguration: true,
+    styleGlobalState: {
+      style: 'electrification',
+    },
   },
   track: {
     name: 'Track',
     supportsDate: false,
     hasConfiguration: true,
+    styleGlobalState: {
+      style: 'track',
+    },
   },
   operator: {
     name: 'Operator',
     supportsDate: false,
     hasConfiguration: false,
+    styleGlobalState: {
+      style: 'operator',
+    },
   },
   route: {
     name: 'Routes',
     supportsDate: false,
     hasConfiguration: false,
+    styleGlobalState: {
+      style: 'route',
+    },
   },
 };
 
@@ -1286,7 +1307,6 @@ function addLanguageToSupportedSources(style, language) {
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
 function rewriteGlobalStateDefaults(style, bearing, pitch) {
-  style.state.style.default = selectedStyle;
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
@@ -1310,6 +1330,13 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
 
   style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
+
+  // Style specific map global state
+  Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) => {
+    if (style.state[key]) {
+      style.state[key].default = value;
+    }
+  });
 }
 
 function toggleHillShadeLayer(style) {
@@ -1331,9 +1358,11 @@ function onStyleChange() {
   const language = configuredLanguage();
 
   if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
-    // Change styles
     if (map.isStyleLoaded()) {
-      map.setGlobalStateProperty('style', selectedStyle);
+      // Style specific map global state
+      Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
+        map.setGlobalStateProperty(key, value)
+      );
     }
     hideSearchResults();
     routeControl.clearRoute();
