@@ -7215,8 +7215,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
@@ -7242,8 +7246,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
