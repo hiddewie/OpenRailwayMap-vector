@@ -1835,6 +1835,28 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
+  
+  # --- AU-QLD-signs --- #
+  - description: AWS applies
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_Start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_applies' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+  
+  - description: AWS does not apply
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_End' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_does_not_apply' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+  
+  - description: Check AWS
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_check' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:check_AWS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   # --- AU-VIC-signs --- #
   - description: Conventional Block Marker
@@ -7215,8 +7237,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
@@ -7242,8 +7268,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
