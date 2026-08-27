@@ -180,6 +180,19 @@ for (const key in grouped) {
   }
 }
 
+// operator
+const operators = await readYamlFile('operators.yaml');
+operators.operators.forEach(operator => {
+  const country = operator.country;
+  operator.names.forEach(name => {
+    taginfo.tags.push({
+      key: 'operator',
+      value: name,
+      description: `[Operator] [${country}] ${name}`,
+    });
+  })
+})
+
 if (import.meta.url.endsWith(process.argv[1])) {
   console.log(JSON.stringify(taginfo, null, 2))
 }
