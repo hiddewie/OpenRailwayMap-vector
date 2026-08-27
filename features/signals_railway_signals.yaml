@@ -1835,6 +1835,28 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
+  
+  # --- AU-QLD-signs --- #
+  - description: AWS applies
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_Start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_applies' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+  
+  - description: AWS does not apply
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_End' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_does_not_apply' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+  
+  - description: Check AWS
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_check' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:check_AWS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   # --- AU-VIC-signs --- #
   - description: Conventional Block Marker
