@@ -2691,7 +2691,7 @@ const layers = [
       // ensure that width interpolation matches medium zooms
 
       {
-        id: 'railway_line_high_usage',
+        id: 'railway_line_high',
         minzoom: 8,
         source: 'high',
         states: {
@@ -2703,8 +2703,8 @@ const layers = [
           abandoned: abandoned_dasharray,
           disused: disused_dasharray,
         },
-        filter: ['match', ['global-state', 'tracks'],
-          'speed', ['!=', ['get', 'feature'], 'ferry'],
+        filter: ['case',
+          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'track']]], ['!=', ['get', 'feature'], 'ferry'],
           true,
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
