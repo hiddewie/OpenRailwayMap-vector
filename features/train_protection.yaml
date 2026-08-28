@@ -7,7 +7,7 @@ train_protections:
   - { train_protection: 'ctcs', legend: '列车运行监控记录 (LKJ)', color: 'hsl(10, 100%, 50%)' }
   - { train_protection: 'ctcs_2', legend: 'Chinese Train Control System (CTCS) level 2', color: 'hsl(190, 100%, 40%)' }
   - { train_protection: 'ctcs_3', legend: 'Chinese Train Control System (CTCS) level 3', color: 'hsl(190, 100%, 30%)' }
-  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#c54800' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#654321' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
   - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
@@ -21,7 +21,7 @@ train_protections:
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
   - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#0096d4' }
   - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#0096d4' }
-  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#0096d4' }
+  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#4fb8af' }
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -40,10 +40,10 @@ train_protections:
   - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
-  - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#b58a00' }
+  - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#ff7033' }
   - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
-  - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
+  - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#66cc33' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
   - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'hsl(155, 100%, 40%)' }
   - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
