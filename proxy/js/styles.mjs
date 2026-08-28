@@ -1729,7 +1729,7 @@ const preferredDirectionLayer = (id, filter, color, visibility) => ({
     'visibility': ['case',
       visibility ? ['==', visibility, false] : false, 'none',
       ['<', ['global-state', 'date'], defaultDate], 'none',
-      'none',
+      'visible',
     ],
     'symbol-placement': 'line',
     'symbol-spacing': 750,
