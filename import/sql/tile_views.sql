@@ -215,7 +215,8 @@ RETURN (
               feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
             )
         WHEN z < 12 THEN
-          (service IS NULL OR service IN ('spur', 'yard'))
+          state IN ('present', 'construction', 'proposed', 'disused')
+            AND (service IS NULL OR service IN ('spur', 'yard'))
             AND (
               feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
                 OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
