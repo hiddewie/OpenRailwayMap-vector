@@ -108,6 +108,9 @@ jsonpath "$.data_url" == "https://openrailwaymap.app/taginfo.json"
 jsonpath "$.project.name" == "OpenRailwayMap-vector"
 jsonpath "$.tags[*].key" includes "name"
 jsonpath "$.tags[*].key" includes "railway"
+jsonpath "$.tags[*].key" includes "operator"
+jsonpath "$.tags[*].description" includes "[Operator] [AM] Южно-Кавказская железная дорога"
+jsonpath "$.tags[*].key" includes "railway:signal:slope:caption"
 
 # Style
 GET {{base_url}}/style.json

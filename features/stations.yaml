@@ -154,9 +154,14 @@ references:
     tags: [ 'ref:FR:sncf:resarail' ]
 
   - id: fr-stif
-    description: STIF
+    description: IDFM
     country: FR
     tags: [ 'ref:FR:STIF' ]
+
+  - id: fr-idf-idfm
+    description: IDFM
+    country: FR
+    tags: [ 'gtfs:stop_id:FR-IDF-IDFM' ]
 
   - id: fr-uic8
     description: UIC8
