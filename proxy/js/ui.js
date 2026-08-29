@@ -2428,7 +2428,7 @@ const styleControl = new StyleControl({
       ],
     },
     {
-      name: 'Stations',
+      name: 'Operating sites',
       key: 'stations',
       values: [
         {
@@ -2501,7 +2501,7 @@ const styleControl = new StyleControl({
       ],
     },
     {
-      name: 'Places of interest',
+      name: 'Points of interest',
       key: 'pois',
       // TODO split into functional sections
       values: [

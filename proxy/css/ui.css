@@ -400,7 +400,7 @@ body {
   mask-position: center;
   mask-size: auto 2rem;
   mask-repeat: no-repeat;
-  margin: 0 auto;
+  margin: 0 auto 0.15rem auto;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button-icon.icon-tracks {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='800' height='800' viewBox='0 -0.5 17 17' xmlns='http://www.w3.org/2000/svg' class='si-glyph si-glyph-train-rail'%3E%3Cg fill='%23434343' fill-rule='evenodd'%3E%3Cpath d='M4.989 16h-.978l2-16h.978zM13.989 16h-.978l-2-16h.978z' class='si-glyph-fill'/%3E%3Cpath class='si-glyph-fill' d='M3 13h12v.916H3zM3 10h12v.916H3zM4 7h10v.916H4zM4 4h10v.916H4zM5 1h8v.916H5z'/%3E%3C/g%3E%3C/svg%3E");
@@ -418,7 +418,7 @@ body {
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button-icon.icon-signals {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11.301' height='24'%3E%3Cpath d='M5.656 0C2.531 0 0 2.5 0 5.59v13.14h.008C.176 21.668 2.64 24 5.656 24c3.004 0 5.469-2.332 5.637-5.27h.008V5.59C11.3 2.5 8.77 0 5.656 0m0 3.188c1.223 0 2.215 1 2.215 2.242 0 1.238-.992 2.246-2.215 2.246A2.23 2.23 0 0 1 3.434 5.43c0-1.242.988-2.242 2.222-2.242m0 6.484c1.223 0 2.215 1.008 2.215 2.246 0 1.242-.992 2.242-2.215 2.242-1.234 0-2.222-1-2.222-2.242 0-1.238.988-2.246 2.222-2.246m-.035 6.496c1.227 0 2.219 1 2.219 2.242 0 1.235-.992 2.246-2.219 2.246-1.223 0-2.215-1.011-2.215-2.246 0-1.242.992-2.242 2.215-2.242m0 0'/%3E%3C/svg%3E");
-  mask-size: auto 1.8rem;
+  mask-size: auto 1.7rem;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button-icon.icon-pois {
   mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='auto' height='16' viewBox='0 0 5120 5120'%3E%3Cg%3E%3Cpath d='M2270 3875V2630l145-72 145-73 145 73 145 72v2490h-580V3875z'/%3E%3Cpath d='M405 3034c-110-42-202-77-203-79-3-3 23-99 104-381l15-52 749-378c412-208 746-382 742-386-4-3-338-174-742-378s-739-375-743-380c-15-14-129-422-120-431 4-4 99-41 209-83l202-75 971 490 971 490 972-490 971-490 201 75c111 42 205 79 209 83 9 8-105 417-120 431-4 5-339 176-743 380s-738 375-742 378c-4 4 330 178 742 386l749 378 16 56c9 31 37 128 62 215s44 160 41 162c-2 3-97 39-210 81l-206 76-971-488-971-489-969 488c-533 268-972 487-977 487-5-1-99-35-209-76z'/%3E%3Cpath d='m2413 967-143-72V0h580v895l-144 73c-79 39-145 72-147 71-2 0-68-32-146-72z'/%3E%3C/g%3E%3C/svg%3E");

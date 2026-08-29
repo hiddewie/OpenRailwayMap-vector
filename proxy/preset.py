@@ -943,7 +943,7 @@ def presets_xml():
            author='Hidde Wieringa',
            version=environ.get('PRESET_VERSION', '1.0'),
            shortdescription='Railways',
-           description='OpenRailwayMap preset to tag railway infrastructure such as railway lines, stations, signals, switches and railway places of interest',
+           description='OpenRailwayMap preset to tag railway infrastructure such as railway lines, stations, signals, switches and railway points of interest',
            icon='symbols/general/station.svg',
            link='https://github.com/hiddewie/OpenRailwayMap-vector',
            ):
