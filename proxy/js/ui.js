@@ -1482,12 +1482,18 @@ class StyleControl {
       buttonIcon.title = name
 
       const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
-      values.forEach(({name, value}) => {
+      values.forEach(({name, value, disabled}) => {
         const valueButton = createDomElement('button', '', selectionContainer);
         valueButton.innerText = name
         valueButton.onclick = e => {
-          this.options.onStyleOptionChange(key, value);
           e.stopPropagation();
+
+          this.options.onStyleOptionChange(key, value);
+          if (disabled) {
+            button.classList.add('disabled')
+          } else {
+            button.classList.remove('disabled')
+          }
           // TODO mark option active
         }
       })
@@ -2429,6 +2435,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2443,6 +2450,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2457,6 +2465,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2480,6 +2489,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2507,6 +2517,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2521,6 +2532,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2539,6 +2551,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2553,6 +2566,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
@@ -2571,6 +2585,7 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
+          disabled: true,
         },
       ],
     },
