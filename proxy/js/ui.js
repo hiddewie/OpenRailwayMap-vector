@@ -1481,9 +1481,18 @@ class StyleControl {
       this.buttons[style] = button;
     });
 
-    Object.entries(knownStyles['standard'].styleGlobalState).forEach(([key]) => {
+    this.options.styleOptions.forEach(({name, key, values}) => {
       const button = createDomElement('button', '', buttonGroup);
-      button.innerText = key
+      const buttonLabel = createDomElement('span', '', button);
+      buttonLabel.innerText = name
+
+      values.forEach(({name, value}) => {
+        const valueButton = createDomElement('span', 'btn', button);
+        valueButton.innerText = name
+        valueButton.onclick = () => {
+          this.options.onStyleOptionChange(key, value);
+        }
+      })
     })
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
@@ -2345,6 +2354,12 @@ const dateControl = new DateControl({
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
+  onStyleOptionChange: (key, value) => {
+    if (map.isStyleLoaded()) {
+      map.setGlobalStateProperty(key, value);
+      // TODO persist in URL / browser state
+    }
+  },
   styleOptions: [
     {
       name: 'Tracks',
