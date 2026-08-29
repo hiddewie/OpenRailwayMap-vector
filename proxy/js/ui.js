@@ -1464,36 +1464,50 @@ class StyleControl {
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
     const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
-      const button = createDomElement('button', '', buttonGroup);
-      button.innerText = name
+    this.options.styleOptions.forEach(({name, icon, key, values}) => {
+      const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', buttonGroup);
       button.onclick = () => {
-        buttonGroup.classList.remove('active')
-        this.activateStyle(style);
-        this.options.onStyleChange(style)
+        if (button.classList.contains('active')) {
+          button.classList.remove('active')
+        } else {
+          buttonGroup.childNodes.forEach(child => child.classList.remove('active'))
+          button.classList.add('active')
+        }
       }
 
-      if (hasConfiguration) {
-        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-        layerConfigurationButton.onclick = () => showConfiguration(style)
-      }
-
-      this.buttons[style] = button;
-    });
-
-    this.options.styleOptions.forEach(({name, key, values}) => {
-      const button = createDomElement('button', '', buttonGroup);
-      const buttonLabel = createDomElement('span', '', button);
+      const buttonLabel = createDomElement('label', '', button);
       buttonLabel.innerText = name
 
+      const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
+      buttonIcon.title = name
+
+      const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
       values.forEach(({name, value}) => {
-        const valueButton = createDomElement('span', 'btn', button);
+        const valueButton = createDomElement('button', '', selectionContainer);
         valueButton.innerText = name
         valueButton.onclick = () => {
           this.options.onStyleOptionChange(key, value);
         }
       })
     })
+
+    // TODO presets
+    // Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
+    //   const button = createDomElement('button', '', buttonGroup);
+    //   button.innerText = name
+    //   button.onclick = () => {
+    //     buttonGroup.classList.remove('active')
+    //     this.activateStyle(style);
+    //     this.options.onStyleChange(style)
+    //   }
+    //
+    //   if (hasConfiguration) {
+    //     const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
+    //     layerConfigurationButton.onclick = () => showConfiguration(style)
+    //   }
+    //
+    //   this.buttons[style] = button;
+    // });
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
     container.onclick = () => {
@@ -2508,20 +2522,6 @@ const styleControl = new StyleControl({
       ],
     },
     {
-      name: 'Substations',
-      key: 'substations',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
       name: 'Boxes',
       key: 'boxes',
       values: [
@@ -2532,6 +2532,20 @@ const styleControl = new StyleControl({
         {
           name: 'Operator',
           value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Substations',
+      key: 'substations',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
         },
         {
           name: 'None',
