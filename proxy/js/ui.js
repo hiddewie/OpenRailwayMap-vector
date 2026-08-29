@@ -1485,8 +1485,10 @@ class StyleControl {
       values.forEach(({name, value}) => {
         const valueButton = createDomElement('button', '', selectionContainer);
         valueButton.innerText = name
-        valueButton.onclick = () => {
+        valueButton.onclick = e => {
           this.options.onStyleOptionChange(key, value);
+          e.stopPropagation();
+          // TODO mark option active
         }
       })
     })
@@ -2367,6 +2369,7 @@ const dateControl = new DateControl({
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
+  // TODO initial style configuration
   onStyleChange: selectStyle,
   onStyleOptionChange: (key, value) => {
     if (map.isStyleLoaded()) {

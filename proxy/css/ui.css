@@ -416,13 +416,17 @@ body {
 
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button > .maplibregl-ctrl-style-popup-container {
   display: none;
+  border: 2px solid rgba(var(--bs-success-rgb), .5);
+  border-top-color: #eee;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button.active > .maplibregl-ctrl-style-popup-container {
   display: block;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-container {
   position: absolute;
-  top: calc(4rem + 1px);
+  top: calc(4rem - 1px);
   left: 0;
   background: white;
 }
