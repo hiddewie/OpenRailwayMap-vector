@@ -1481,6 +1481,11 @@ class StyleControl {
       this.buttons[style] = button;
     });
 
+    Object.entries(knownStyles['standard'].styleGlobalState).forEach(([key]) => {
+      const button = createDomElement('button', '', buttonGroup);
+      button.innerText = key
+    })
+
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
     container.onclick = () => {
       buttonGroup.classList.toggle('active')
@@ -2340,6 +2345,204 @@ const dateControl = new DateControl({
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
   onStyleChange: selectStyle,
+  styleOptions: [
+    {
+      name: 'Tracks',
+      key: 'tracks',
+      values: [
+        {
+          name: 'Usage',
+          value: 'usage',
+        },
+        {
+          name: 'Speed',
+          value: 'speed',
+        },
+        {
+          name: 'Train protection',
+          value: 'train_protection',
+        },
+        {
+          // TODO split into voltage/frequency, max current, power
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          // TODO split into gauge, loading gauge, track class
+          name: 'Track',
+          value: 'track',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'Routes',
+          value: 'routes',
+        },
+      ],
+    },
+    {
+      name: 'Stations',
+      key: 'stations',
+      values: [
+        {
+          name: 'Modality',
+          value: 'station',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Platforms',
+      key: 'platforms',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Switches',
+      key: 'switches',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Signals',
+      key: 'signals',
+      // TODO split into functional sections
+      values: [
+        {
+          name: 'Speed',
+          value: 'speed',
+        },
+        {
+          name: 'Train protection',
+          value: 'signals',
+        },
+        {
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Places of interest',
+      key: 'pois',
+      // TODO split into functional sections
+      values: [
+        {
+          name: 'Standard',
+          value: 'standard',
+        },
+        {
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          name: 'Signals',
+          value: 'signals',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Turntables',
+      key: 'turntables',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Substations',
+      key: 'substations',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Boxes',
+      key: 'boxes',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+    {
+      name: 'Catenaries',
+      key: 'catenaries',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+        },
+      ],
+    },
+  ],
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
@@ -2384,7 +2587,8 @@ class WakeLock {
 let wakeLock = new WakeLock()
 geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
 geolocateControl.on('trackuserlocationend', () => wakeLock.release())
-map.addControl(dateControl);
+// TODO date control
+// map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
 map.addControl(geolocateControl);
