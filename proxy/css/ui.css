@@ -360,6 +360,9 @@ body {
   &.disabled .maplibregl-ctrl-style-popup-button-icon {
     background: #bbb;
   }
+  & label {
+    cursor: pointer;
+  }
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style-popup-button + .maplibregl-ctrl-style-popup-button {
   border-top: none;
@@ -458,10 +461,26 @@ body {
   right: -2px;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-container > button {
-  width: 8rem;
+  width: 9rem;
   height: auto;
   padding: .3rem .5rem;
   text-align: left;
+  color: #444;
+  position: relative;
+
+  & .active-indicator {
+    display: none;
+    position: absolute;
+    right: .5rem;
+    top: .7rem;
+    background: green;
+    height: .5rem;
+    width: .5rem;
+    border-radius: .5rem;
+  }
+  &.active .active-indicator {
+    display: inline-block;
+  }
 }
 
 /*.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style > button.active {*/

@@ -1484,18 +1484,25 @@ class StyleControl {
       const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
       values.forEach(({name, value, disabled}) => {
         const valueButton = createDomElement('button', '', selectionContainer);
-        valueButton.innerText = name
         valueButton.onclick = e => {
           e.stopPropagation();
 
-          this.options.onStyleOptionChange(key, value);
           if (disabled) {
             button.classList.add('disabled')
           } else {
             button.classList.remove('disabled')
           }
-          // TODO mark option active
+
+          selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
+          valueButton.classList.add('active');
+
+          this.options.onStyleOptionChange(key, value);
         }
+
+        const valueButtonLabel = createDomElement('label', '', valueButton);
+        valueButtonLabel.innerText = name;
+
+        createDomElement('span', 'active-indicator', valueButton);
       })
     })
 
