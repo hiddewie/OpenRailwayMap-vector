@@ -7393,19 +7393,6 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:function', value: 'block' }
 
-  - description: Sinyal blok antara elektrik
-    country: ID
-    icon:
-      - match: 'railway:signal:main:states'
-        cases:
-          - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-light-intermediate-3-aspects', description: '3 aspek' }
-        default: 'id/main-light-intermediate-2-aspects'
-        exampleIcon: 'id/main-light-intermediate-3-aspects'
-    tags:
-      - { tag: 'railway:signal:main', value: 'ID-KAI' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:function', value: 'intermediate' }
-
   - description: Sinyal utama sepur kiri
     country: ID
     icon:
