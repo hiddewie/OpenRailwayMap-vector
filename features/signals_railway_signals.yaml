@@ -7370,24 +7370,24 @@ features:
 
   - description: Sinyal langsir
     country: ID
+    exampleIcon: 'id/shunting-6b-7b'
     icon:
       - match: 'railway:signal:shunting:states'
         cases:
           - { all: ['ID-KAI:6B', 'ID-KAI:7B'], value: 'id/shunting-6b-7b' }
         default: 'id/shunting-6b'
-        exampleIcon: 'id/shunting-6b-7b'
     tags:
       - { tag: 'railway:signal:shunting', value: 'ID-KAI' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   - description: Sinyal blok elektrik
     country: ID
+    exampleIcon: 'id/main-light-block-3-aspects'
     icon:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-light-block-3-aspects', description: '3 aspek' }
         default: 'id/main-light-block-2-aspects'
-        exampleIcon: 'id/main-light-block-3-aspects'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -7395,37 +7395,37 @@ features:
 
   - description: Sinyal utama sepur kiri
     country: ID
+    exampleIcon: 'id/main-sign-8d'
     icon:
       - match: 'railway:signal:main:form'
         cases:
           - { exact: 'sign', value: 'id/main-sign-8d', description: 'Semboyan 8D' }
           - { exact: 'light', value: 'id/main-light-8d', description: 'Semboyan 8D' }
         default: 'id/main-sign-8d'
-        exampleIcon: 'id/main-sign-8d'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI' }
       - { tag: 'railway:signal:main:states', value: 'ID-KAI:8D' }
 
   - description: Sinyal utama elektrik
     country: ID
+    exampleIcon: 'id/main-light-3-aspects'
     icon:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-light-3-aspects', description: '3 aspek' }
         default: 'id/main-light-2-aspects'
-        exampleIcon: 'id/main-light-3-aspects'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Sinyal utama mekanik
     country: ID
+    exampleIcon: 'id/main-semaphore-2-arm'
     icon:
       - match: 'railway:signal:main:states'
         cases:
           - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-semaphore-2-arm', description: '2 lengan' }
         default: 'id/main-semaphore-1-arm'
-        exampleIcon: 'id/main-semaphore-2-arm'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI' }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }  
@@ -7454,13 +7454,13 @@ features:
 
   - description: Sinyal pengulang elektrik
     country: ID
+    exampleIcon: 'id/main-repeated-9c1-9c2-9c3'
     icon:
       - match: 'railway:signal:main_repeated:states'
         cases:
           - { all: ['ID-KAI:9C1', 'ID-KAI:9C2', 'ID-KAI:9C3'], value: 'id/main-repeated-9c1-9c2-9c3', description: 'Semboyan 9C1, 9C2, 9C3' }
           - { all: ['ID-KAI:9C1', 'ID-KAI:9C3'], value: 'id/main-repeated-9c1-9c3', description: 'Semboyan 9C1, 9C3' }
         default: 'id/main-repeated-9c2-9c3'
-        exampleIcon: 'id/main-repeated-9c1-9c2-9c3'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'ID-KAI' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
