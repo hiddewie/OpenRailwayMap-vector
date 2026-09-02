@@ -1462,15 +1462,15 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
-    const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
     this.options.styleOptions.forEach(({name, icon, key, values}) => {
-      const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', buttonGroup);
+      const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', styleContainer);
       button.onclick = () => {
         if (button.classList.contains('active')) {
           button.classList.remove('active')
         } else {
-          buttonGroup.childNodes.forEach(child => child.classList.remove('active'))
+          styleContainer.childNodes.forEach(child => child.classList.remove('active'))
           button.classList.add('active')
         }
       }
@@ -1505,6 +1505,10 @@ class StyleControl {
         createDomElement('span', 'active-indicator', valueButton);
       })
     })
+
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
+    presetContainer.innerHTML = '<button class="maplibregl-ctrl-style-popup-button"><label class="">Presets</label><span class="maplibregl-ctrl-style-popup-button-icon icon-tracks" title="Tracks"></span></button>'
+
 
     // TODO presets
     // Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {

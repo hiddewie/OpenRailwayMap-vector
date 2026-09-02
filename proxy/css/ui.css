@@ -329,7 +329,7 @@ body {
 
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style {
   position: relative;
-  margin-right: 48px;
+  margin-right: 110px;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style {
   display: flex;
@@ -392,7 +392,8 @@ body {
   font-size: .7rem;
 }
 
-.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button-icon {
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button-icon,
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-preset .maplibregl-ctrl-style-popup-button-icon {
   display: block;
   width: 2rem;
   height: 2rem;
@@ -481,6 +482,15 @@ body {
   &.active .active-indicator {
     display: inline-block;
   }
+}
+
+.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-preset {
+  position: absolute;
+  background: white;
+  top: -2px;
+  right: -4rem;
+  border: 2px solid var(--bs-primary);
+  color: rgb(var(--bs-primary));
 }
 
 /*.maplibregl-ctrl-group.maplibregl-ctrl-group-style .maplibregl-ctrl-style > button.active {*/
