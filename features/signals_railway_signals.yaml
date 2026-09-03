@@ -7399,12 +7399,11 @@ features:
     icon:
       - match: 'railway:signal:main:form'
         cases:
-          - { exact: 'sign', value: 'id/main-sign-8d', description: 'Semboyan 8D' }
-          - { exact: 'light', value: 'id/main-light-8d', description: 'Semboyan 8D' }
+          - { exact: 'sign', value: 'id/main-sign-8d', description: 'Tanda sinyal utama sepur kiri' }
+          - { exact: 'light', value: 'id/main-light-8d', description: 'Lampu sinyal utama sepur kiri' }
         default: 'id/main-sign-8d'
     tags:
-      - { tag: 'railway:signal:main', value: 'ID-KAI' }
-      - { tag: 'railway:signal:main:states', value: 'ID-KAI:8D' }
+      - { tag: 'railway:signal:main', value: 'ID-KAI:8D' }
 
   - description: Sinyal utama elektrik
     country: ID
@@ -7448,9 +7447,8 @@ features:
     country: ID
     icon: [ default: 'id/distant-sign-8c' ]
     tags:
-      - { tag: 'railway:signal:distant', value: 'ID-KAI' }
+      - { tag: 'railway:signal:distant', value: 'ID-KAI:8C' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
-      - { tag: 'railway:signal:distant:states', value: 'ID-KAI:8C' }
 
   - description: Sinyal pengulang elektrik
     country: ID
@@ -7469,45 +7467,34 @@ features:
     country: ID
     icon: [ default: 'id/wrong-road' ]
     tags:
-      - { tag: 'railway:signal:wrong_road', value: 'ID-KAI' }
+      - { tag: 'railway:signal:wrong_road', value: 'ID-KAI:9H' }
       - { tag: 'railway:signal:wrong_road:form', value: 'light' }
 
   - description: Penunjuk arah, kiri dan kanan
     country: ID
-    icon: [ default: 'id/route-right-left' ]
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { all: ['left', 'right'], value: 'id/route-left-right', description: 'Penunjuk arah ke kiri dan kanan' }
+          - { exact: 'left', value: 'id/route-left', description: 'Penunjuk arah ke kiri' }
+          - { exact: 'right', value: 'id/route-right', description: 'Penunjuk arah ke kanan' }
+        default: 'id/route-right-left'
     tags:
-      - { tag: 'railway:signal:route', value: 'ID-KAI' }
+      - { tag: 'railway:signal:route', value: 'ID-KAI:9G' }
       - { tag: 'railway:signal:route:form', value: 'light' }
-      - { tag: 'railway:signal:route:states', all: ['ID-KAI:9G-left', 'ID-KAI:9G-right'] }
-
-  - description: Penunjuk arah, kiri
-    country: ID
-    icon: [ default: 'id/route-left' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'ID-KAI' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-      - { tag: 'railway:signal:route:states', value: 'ID-KAI:9G-left' }
-
-  - description: Penunjuk arah, kanan
-    country: ID
-    icon: [ default: 'id/route-right' ]
-    tags:
-      - { tag: 'railway:signal:route', value: 'ID-KAI' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-      - { tag: 'railway:signal:route:states', value: 'ID-KAI:9G-right' }
 
   - description: Tanda bunyikan suling
     country: ID
     icon: [ default: 'id/whistle' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'ID-KAI' }
+      - { tag: 'railway:signal:whistle', value: 'ID-KAI:8K' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Tanda pindahkan channel radio
     country: ID
     icon: [ default: 'id/radio' ]
     tags:
-      - { tag: 'railway:signal:radio', value: 'ID-KAI' }
+      - { tag: 'railway:signal:radio', value: 'ID-KAI:8L' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
   
   # --- IT --- #
