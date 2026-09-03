@@ -1835,7 +1835,7 @@ features:
       - { tag: 'railway:signal:route_distant', value: 'AU:NSW:turnout_repeater' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
-  
+
   # --- AU-QLD-signs --- #
   - description: AWS applies
     country: AU
@@ -1843,14 +1843,14 @@ features:
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_applies' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-  
+
   - description: AWS does not apply
     country: AU
     icon: [ default: 'au/qld/signs/AWS_End' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_does_not_apply' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
-  
+
   - description: Check AWS
     country: AU
     icon: [ default: 'au/qld/signs/AWS_check' ]
@@ -7017,7 +7017,7 @@ features:
     tags:
       - { tag: 'railway:signal:whistle', value: 'GB-NR:continuous' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
-  
+
   - description: Commencement of AWS Gap Board
     country: GB
     icon: [ default: 'gb/AWS-gap-start' ]
@@ -7025,7 +7025,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_start' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
-  
+
   - description: Termination of AWS Gap Board
     country: GB
     icon: [ default: 'gb/AWS-gap-end' ]
@@ -7033,7 +7033,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_end' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'start' }
-  
+
   - description: Commencement of Special AWS Working Board
     country: GB
     icon: [ default: 'gb/AWS-SW-start' ]
@@ -7041,7 +7041,7 @@ features:
       - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_special_start' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:type', value: 'end' }
-  
+
   - description: Termination of Special AWS Working Board
     country: GB
     icon: [ default: 'gb/AWS-SW-end' ]
@@ -7401,7 +7401,7 @@ features:
         cases:
           - { exact: 'sign', value: 'id/main-sign-8d', description: 'Tanda sinyal utama sepur kiri' }
           - { exact: 'light', value: 'id/main-light-8d', description: 'Lampu sinyal utama sepur kiri' }
-        default: 'id/main-sign-8d'
+        default: 'id/main-sign-8d-default'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI:8D' }
 
@@ -7427,7 +7427,7 @@ features:
         default: 'id/main-semaphore-1-arm'
     tags:
       - { tag: 'railway:signal:main', value: 'ID-KAI' }
-      - { tag: 'railway:signal:main:form', value: 'semaphore' }  
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
   - description: Sinyal muka elektrik
     country: ID
@@ -7478,7 +7478,7 @@ features:
           - { all: ['left', 'right'], value: 'id/route-left-right', description: 'Penunjuk arah ke kiri dan kanan' }
           - { exact: 'left', value: 'id/route-left', description: 'Penunjuk arah ke kiri' }
           - { exact: 'right', value: 'id/route-right', description: 'Penunjuk arah ke kanan' }
-        default: 'id/route-right-left'
+        default: 'id/route-left-right-default'
     tags:
       - { tag: 'railway:signal:route', value: 'ID-KAI:9G' }
       - { tag: 'railway:signal:route:form', value: 'light' }
@@ -7496,7 +7496,7 @@ features:
     tags:
       - { tag: 'railway:signal:radio', value: 'ID-KAI:8L' }
       - { tag: 'railway:signal:radio:form', value: 'sign' }
-  
+
   # --- IT --- #
 
   - description: Route
