@@ -50,7 +50,7 @@ jsonpath "$" count == 2
 jsonpath "$[0].name" == "Ostbahnhof"
 jsonpath "$[0].localized_name" == "Ostbahnhof"
 jsonpath "$[1].name" == "Berlin Ostbahnhof"
-jsonpath "$[1].localized_name" == "Berlin Ostbahnhof railway station"
+jsonpath "$[1].localized_name" == "Berlin Eastern Station"
 
 # Facility request with limit
 GET {{base_url}}/facility
@@ -670,8 +670,8 @@ jsonpath "$.ref" == "2"
 jsonpath "$.feature" == "platform_edge"
 jsonpath "$.tactile_paving" == null
 jsonpath "$.height" == null
-jsonpath "$.length" > 152.7
-jsonpath "$.length" < 152.9
+jsonpath "$.length" > 152.2
+jsonpath "$.length" < 152.3
 jsonpath "$.osm_id" == 859918234
 jsonpath "$.osm_type" == "W"
 
@@ -686,16 +686,16 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.feature" == "general/owner-change"
 
 # POI (infrastructure)
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-1317749799
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-140374295
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == "Ultraschall-, Lichtprofil- und Messbalken-Prüfung (ULM)"
-jsonpath "$.osm_id" == 1317749799
+jsonpath "$.note" == "Container Terminal BeHaLa / City-GVZ Berlin"
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 140374295
 jsonpath "$.osm_type" == "W"
-jsonpath "$.feature" == "general/defect_detector"
-jsonpath "$.name" == "ULM"
+jsonpath "$.feature" == "general/container-terminal"
+jsonpath "$.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
 jsonpath "$.ref" == null
 
 # Speed signal
