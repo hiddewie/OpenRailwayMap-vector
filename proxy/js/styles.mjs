@@ -558,46 +558,55 @@ const sources = {
     type: 'vector',
     url: '/standard_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   speed_railway_line_low: {
     type: 'vector',
     url: '/speed_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   signals_railway_line_low: {
     type: 'vector',
     url: '/signals_railway_line_low,signals_railway_line_low_construction',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   electrification_railway_line_low: {
     type: 'vector',
     url: '/electrification_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   track_railway_line_low: {
     type: 'vector',
     url: '/track_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   operator_railway_line_low: {
     type: 'vector',
     url: '/operator_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   route_railway_line_low: {
     type: 'vector',
     url: '/route_railway_line_low',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_low: {
     type: 'vector',
     url: '/railway_line_high',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   standard_railway_text_stations_low: {
     type: 'vector',
     url: '/standard_railway_text_stations_low',
     promoteId: 'id',
+    encoding: 'mlt',
     metadata: {
       supports: ['language'],
     },
@@ -606,6 +615,7 @@ const sources = {
     type: 'vector',
     url: '/standard_railway_text_stations_med',
     promoteId: 'id',
+    encoding: 'mlt',
     metadata: {
       supports: ['language'],
     },
@@ -614,11 +624,13 @@ const sources = {
     type: 'vector',
     url: '/railway_line_high,railway_text_km',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_standard: {
     type: 'vector',
     url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
+    encoding: 'mlt',
     metadata: {
       supports: ['language'],
     },
@@ -627,21 +639,25 @@ const sources = {
     type: 'vector',
     url: '/speed_railway_signals',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: '/signals_railway_signals,signals_signal_boxes,signals_railway_symbols',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_electrification: {
     type: 'vector',
     url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_operator: {
     type: 'vector',
     url: '/operator_railway_symbols',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openhistoricalmap: {
     type: 'vector',
