@@ -686,16 +686,16 @@ jsonpath "$.osm_type" == "N"
 jsonpath "$.feature" == "general/owner-change"
 
 # POI (infrastructure)
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-1317749799
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-140374295
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == "Ultraschall-, Lichtprofil- und Messbalken-Prüfung (ULM)"
-jsonpath "$.osm_id" == 1317749799
+jsonpath "$.note" == "Container Terminal BeHaLa / City-GVZ Berlin"
+jsonpath "$.description" == null
+jsonpath "$.osm_id" == 140374295
 jsonpath "$.osm_type" == "W"
-jsonpath "$.feature" == "general/defect_detector"
-jsonpath "$.name" == "ULM"
+jsonpath "$.feature" == "general/container-terminal"
+jsonpath "$.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
 jsonpath "$.ref" == null
 
 # Speed signal
