@@ -1507,7 +1507,7 @@ class StyleControl {
     })
 
     const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
-    presetContainer.innerHTML = '<button class="maplibregl-ctrl-style-popup-button"><label class="">Presets</label><span class="maplibregl-ctrl-style-popup-button-icon icon-tracks" title="Tracks"></span></button>'
+    presetContainer.innerHTML = '<button class="maplibregl-ctrl-style-popup-button"><label class="">Presets</label><span class="maplibregl-ctrl-style-popup-button-icon icon-preset" title="Tracks"></span></button>'
 
 
     // TODO presets
