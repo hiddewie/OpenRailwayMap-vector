@@ -1121,6 +1121,21 @@ operators:
       - 'KAI'
     color: '#ee6b1e'
 
+  - country: ID
+    names:
+      - 'MRT Jakarta'
+    color: 'rgb(1, 74, 180)'
+
+  - country: ID
+    names:
+      - 'LRT Jakarta'
+    color: 'rgb(234, 27, 35)'
+
+  - country: ID
+    names:
+      - 'LRT Jabodebek'
+    color: 'rgb(225, 16, 4)'
+
   # --- IE --- #
 
   - country: IE
