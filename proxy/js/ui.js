@@ -1462,24 +1462,84 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
-    const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
-      const button = createDomElement('button', '', buttonGroup);
-      button.innerText = name
+    this.options.styleOptions.forEach(({name, icon, key, values}) => {
+      const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', styleContainer);
       button.onclick = () => {
-        buttonGroup.classList.remove('active')
-        this.activateStyle(style);
+        if (button.classList.contains('active')) {
+          button.classList.remove('active')
+        } else {
+          this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
+          button.classList.add('active')
+        }
+      }
+
+      const buttonLabel = createDomElement('label', '', button);
+      buttonLabel.innerText = name
+
+      const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
+      buttonIcon.title = name
+
+      const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
+      values.forEach(({name, value, disabled}) => {
+        const valueButton = createDomElement('button', '', selectionContainer);
+        valueButton.onclick = e => {
+          e.stopPropagation();
+
+          if (disabled) {
+            button.classList.add('disabled')
+          } else {
+            button.classList.remove('disabled')
+          }
+
+          selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
+          valueButton.classList.add('active');
+
+          this.options.onStyleOptionChange(key, value);
+        }
+
+        const valueButtonLabel = createDomElement('label', '', valueButton);
+        valueButtonLabel.innerText = name;
+
+        createDomElement('span', 'active-indicator', valueButton);
+      })
+    })
+
+    const presetButton = createDomElement('button', 'maplibregl-ctrl-style-popup-button', presetContainer);
+    presetButton.onclick = () => {
+      if (presetButton.classList.contains('active')) {
+        presetButton.classList.remove('active')
+      } else {
+        this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
+        presetButton.classList.add('active')
+      }
+    }
+
+    const presetButtonLabel = createDomElement('label', '', presetButton);
+    presetButtonLabel.innerText = 'Presets'
+
+    const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
+    presetButtonIcon.title = 'Presets'
+
+    const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
+    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
+      const valueButton = createDomElement('button', '', selectionContainer);
+      valueButton.onclick = e => {
+        e.stopPropagation();
+
+        selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
+        valueButton.classList.add('active');
+
         this.options.onStyleChange(style)
       }
 
-      if (hasConfiguration) {
-        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-        layerConfigurationButton.onclick = () => showConfiguration(style)
-      }
+      const valueButtonLabel = createDomElement('label', '', valueButton);
+      valueButtonLabel.innerText = name;
 
-      this.buttons[style] = button;
-    });
+      createDomElement('span', 'active-indicator', valueButton);
+    })
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
     container.onclick = () => {
@@ -1488,7 +1548,7 @@ class StyleControl {
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    this.activateStyle(selectedStyle);
+    // this.activateStyle(options.initialStyl);
 
     return this._container;
   }
@@ -2339,7 +2399,221 @@ const dateControl = new DateControl({
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
+  // TODO initial style configuration
   onStyleChange: selectStyle,
+  onStyleOptionChange: (key, value) => {
+    if (map.isStyleLoaded()) {
+      map.setGlobalStateProperty(key, value);
+      // TODO persist in URL / browser state
+    }
+  },
+  styleOptions: [
+    {
+      name: 'Tracks',
+      key: 'tracks',
+      values: [
+        {
+          name: 'Usage',
+          value: 'usage',
+        },
+        {
+          name: 'Speed',
+          value: 'speed',
+        },
+        {
+          name: 'Train protection',
+          value: 'train_protection',
+        },
+        {
+          // TODO split into voltage/frequency, max current, power
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          // TODO split into gauge, loading gauge, track class
+          name: 'Track',
+          value: 'track',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'Routes',
+          value: 'routes',
+        },
+      ],
+    },
+    {
+      name: 'Operating sites',
+      key: 'stations',
+      values: [
+        {
+          name: 'Modality',
+          value: 'station',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Platforms',
+      key: 'platforms',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Switches',
+      key: 'switches',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Signals',
+      key: 'signals',
+      // TODO split into functional sections
+      values: [
+        {
+          name: 'Speed',
+          value: 'speed',
+        },
+        {
+          name: 'Train protection',
+          value: 'signals',
+        },
+        {
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Points of interest',
+      key: 'pois',
+      // TODO split into functional sections
+      values: [
+        {
+          name: 'Standard',
+          value: 'standard',
+        },
+        {
+          name: 'Electrification',
+          value: 'electrification',
+        },
+        {
+          name: 'Signals',
+          value: 'signals',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Turntables',
+      key: 'turntables',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Boxes',
+      key: 'boxes',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Substations',
+      key: 'substations',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+    {
+      name: 'Catenaries',
+      key: 'catenaries',
+      values: [
+        {
+          name: 'Plain',
+          value: 'plain',
+        },
+        {
+          name: 'Operator',
+          value: 'operator',
+        },
+        {
+          name: 'None',
+          value: 'none',
+          disabled: true,
+        },
+      ],
+    },
+  ],
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
@@ -2384,7 +2658,8 @@ class WakeLock {
 let wakeLock = new WakeLock()
 geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
 geolocateControl.on('trackuserlocationend', () => wakeLock.release())
-map.addControl(dateControl);
+// TODO date control
+// map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
 map.addControl(geolocateControl);

@@ -4,7 +4,7 @@ type: object
 properties:
   features:
     type: array
-    description: Defines the places of interest on the map
+    description: Defines the points of interest on the map
     items:
       type: object
       properties:
