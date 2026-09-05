@@ -458,7 +458,6 @@ body {
             position: absolute;
             right: .5rem;
             top: .7rem;
-            background: green;
             height: .5rem;
             width: .5rem;
             border-radius: .5rem;
@@ -494,6 +493,10 @@ body {
         border: 2px solid rgba(var(--bs-success-rgb), .5);
       }
     }
+
+    & .active-indicator {
+      background: var(--bs-success);
+    }
   }
 
   & .maplibregl-ctrl-preset {
@@ -505,6 +508,10 @@ body {
       & > .maplibregl-ctrl-style-popup-container {
         border: 2px solid rgba(var(--bs-primary-rgb), .5);
       }
+    }
+
+    & .active-indicator {
+      background: var(--bs-primary);
     }
   }
 }
