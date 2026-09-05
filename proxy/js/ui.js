@@ -1463,6 +1463,7 @@ class StyleControl {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
     const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
     this.options.styleOptions.forEach(({name, icon, key, values}) => {
       const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', styleContainer);
@@ -1470,7 +1471,7 @@ class StyleControl {
         if (button.classList.contains('active')) {
           button.classList.remove('active')
         } else {
-          styleContainer.childNodes.forEach(child => child.classList.remove('active'))
+          this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
           button.classList.add('active')
         }
       }
@@ -1506,15 +1507,12 @@ class StyleControl {
       })
     })
 
-    // presetContainer.innerHTML = '<button class="maplibregl-ctrl-style-popup-button"><label class="">Presets</label><span class="maplibregl-ctrl-style-popup-button-icon icon-preset" title="Tracks"></span><div class="maplibregl-ctrl-style-popup-container"><button class=""><label class="">Usage</label><span class="active-indicator"></span></button><button class=""><label class="">Speed</label><span class="active-indicator"></span></button><button class=""><label class="">Train protection</label><span class="active-indicator"></span></button><button class=""><label class="">Electrification</label><span class="active-indicator"></span></button><button class=""><label class="">Track</label><span class="active-indicator"></span></button><button class=""><label class="">Operator</label><span class="active-indicator"></span></button><button class=""><label class="">Routes</label><span class="active-indicator"></span></button></div></button>'
-
-    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
     const presetButton = createDomElement('button', 'maplibregl-ctrl-style-popup-button', presetContainer);
     presetButton.onclick = () => {
       if (presetButton.classList.contains('active')) {
         presetButton.classList.remove('active')
       } else {
-        presetContainer.childNodes.forEach(child => child.classList.remove('active'))
+        this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
         presetButton.classList.add('active')
       }
     }
@@ -1531,12 +1529,6 @@ class StyleControl {
       valueButton.onclick = e => {
         e.stopPropagation();
 
-        // if (disabled) {
-        //   presetButton.classList.add('disabled')
-        // } else {
-        //   presetButton.classList.remove('disabled')
-        // }
-
         selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
         valueButton.classList.add('active');
 
@@ -1549,22 +1541,6 @@ class StyleControl {
       createDomElement('span', 'active-indicator', valueButton);
     })
 
-      // const button = createDomElement('button', '', buttonGroup);
-      // button.innerText = name
-      // button.onclick = () => {
-      //   buttonGroup.classList.remove('active')
-      //   this.activateStyle(style);
-      //   this.options.onStyleChange(style)
-      // }
-      //
-      // if (hasConfiguration) {
-      //   const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-      //   layerConfigurationButton.onclick = () => showConfiguration(style)
-      // }
-      //
-      // this.buttons[style] = button;
-    // });
-
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
     container.onclick = () => {
       buttonGroup.classList.toggle('active')
@@ -1572,7 +1548,7 @@ class StyleControl {
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    this.activateStyle(selectedStyle);
+    // this.activateStyle(options.initialStyl);
 
     return this._container;
   }
