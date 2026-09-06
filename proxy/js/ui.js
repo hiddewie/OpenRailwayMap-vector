@@ -1618,10 +1618,10 @@ class StyleControl {
             }
           });
 
-        if (!this._map.isStyleLoaded()) {
-          this._map.on('style.load', () => this._map.setGlobalStateProperty(selectedKey, selectedValue));
-        } else {
+        if (this._map.isStyleLoaded()) {
           this._map.setGlobalStateProperty(selectedKey, selectedValue);
+        } else {
+          this._map.on('style.load', () => this._map.setGlobalStateProperty(selectedKey, selectedValue));
         }
 
         this.currentStyle[selectedKey] = selectedValue;
