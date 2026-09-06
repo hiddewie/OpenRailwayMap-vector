@@ -548,6 +548,7 @@ function removeDomElement(node) {
 const globalMinZoom = 1;
 const globalMaxZoom = 20;
 
+// TODO rename styleGlobalState
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
@@ -693,6 +694,7 @@ function hashToObject(hash) {
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
   return {
+    // TODO other style keys
     style: updateStyleParameter(hashObject.style),
     date: determineDateParameter(hashObject.date),
   }
@@ -1294,7 +1296,7 @@ map.setStyle(`${location.origin}/style.json`, {
 function selectStyle(style) {
   if (selectedStyle !== style) {
     selectedStyle = style;
-    styleControl.onExternalStyleChange(style);
+    styleControl.selectPreset(style);
     onStyleChange();
   }
 }
@@ -1456,7 +1458,8 @@ const onDateChange = () => {
 class StyleControl {
   constructor(options) {
     this.options = options
-    this.buttons = {};
+    this.styleButtons = {}
+    this.presetButtons = {}
   }
 
   onAdd(map) {
@@ -1465,8 +1468,16 @@ class StyleControl {
     const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
     const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
-    this.options.styleOptions.forEach(({name, icon, key, values}) => {
-      const button = createDomElement('button', 'maplibregl-ctrl-style-popup-button', styleContainer);
+    const initialStyle = Object.fromEntries(
+      this.options.styleOptions
+        .map(({key, defaultValue}) => [key, this.options.initialSelection[key] ?? defaultValue])
+    );
+
+    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
+      const initialValue = initialStyle[key];
+      const initiallyDisabled = disabledValue && initialValue === disabledValue;
+
+      const button = createDomElement('button', `maplibregl-ctrl-style-popup-button${initiallyDisabled ? ' disabled' : ''}`, styleContainer);
       button.onclick = () => {
         if (button.classList.contains('active')) {
           button.classList.remove('active')
@@ -1483,20 +1494,12 @@ class StyleControl {
       buttonIcon.title = name
 
       const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
-      values.forEach(({name, value, disabled}) => {
-        const valueButton = createDomElement('button', '', selectionContainer);
+      this.styleButtons[key] = {};
+      values.forEach(({name, value}) => {
+        const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
         valueButton.onclick = e => {
           e.stopPropagation();
-
-          if (disabled) {
-            button.classList.add('disabled')
-          } else {
-            button.classList.remove('disabled')
-          }
-
-          selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
-          valueButton.classList.add('active');
-
+          this.selectStyleOption(key, value);
           this.options.onStyleOptionChange(key, value);
         }
 
@@ -1504,6 +1507,8 @@ class StyleControl {
         valueButtonLabel.innerText = name;
 
         createDomElement('span', 'active-indicator', valueButton);
+
+        this.styleButtons[key][value] = valueButton;
       })
     })
 
@@ -1524,21 +1529,23 @@ class StyleControl {
     presetButtonIcon.title = 'Presets'
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
-    Object.entries(this.options.presets).forEach(([style, {name, hasConfiguration}]) => {
-      const valueButton = createDomElement('button', style === this.options.initialSelection ? 'active' : '', selectionContainer);
+    Object.entries(this.options.presets).forEach(([preset, {name, hasConfiguration, styleGlobalState}]) => {
+      const presetActive = Object.keys(styleGlobalState)
+        .every(key => initialStyle[key] && styleGlobalState[key] && initialStyle[key] === styleGlobalState[key])
+
+      const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
       valueButton.onclick = e => {
         e.stopPropagation();
-
-        selectionContainer.childNodes.forEach(child => child.classList.remove('active'))
-        valueButton.classList.add('active');
-
-        this.options.onStyleChange(style)
+        this.selectPreset(preset);
+        this.options.onStyleChange(preset)
       }
 
       const valueButtonLabel = createDomElement('label', '', valueButton);
       valueButtonLabel.innerText = name;
 
       createDomElement('span', 'active-indicator', valueButton);
+
+      this.presetButtons[preset] = valueButton;
     })
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
@@ -1548,30 +1555,51 @@ class StyleControl {
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    // this.activateStyle(options.initialStyl);
-
     return this._container;
-  }
-
-  activateStyle(style) {
-    Object.entries(this.buttons).forEach(([buttonStyle, button]) => {
-      if (buttonStyle === style) {
-        button.classList.add('active')
-      } else {
-        button.classList.remove('active')
-      }
-    })
   }
 
   onRemove() {
     removeDomElement(this._container);
+
     this._map = undefined;
+    this.presetButtons = {};
+    this.styleButtons = {};
   }
 
-  onExternalStyleChange(style) {
-    const radio = this.buttons[style];
-    if (radio && !radio.checked) {
-      radio.checked = true;
+  selectPreset(selectedPreset) {
+    Object.entries(this.presetButtons).forEach(([preset, button]) => {
+      if (preset === selectedPreset) {
+        button.classList.add('active')
+      } else {
+        button.classList.remove('active')
+      }
+    });
+
+    const preset = this.options.presets;
+    if (preset[selectedPreset]) {
+      Object.entries(preset[selectedPreset].styleGlobalState)
+        .forEach(([key, value]) => this.selectStyleOption(key, value));
+    }
+  }
+
+  selectStyleOption(selectedKey, selectedValue) {
+    const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
+    if (styleOptions) {
+      const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
+
+      Object.entries(this.styleButtons[selectedKey]).forEach(([value, button]) => {
+        if (value === selectedValue) {
+          button.classList.add('active')
+
+          if (disabled) {
+            button.parentElement.parentElement.classList.add('disabled')
+          } else {
+            button.parentElement.parentElement.classList.remove('disabled')
+          }
+        } else {
+          button.classList.remove('active')
+        }
+      });
     }
   }
 }
@@ -2399,7 +2427,7 @@ const dateControl = new DateControl({
 });
 const styleControl = new StyleControl({
   // TODO initial style configuration
-  initialSelection: selectedStyle,
+  initialSelection: {},//selectedStyle,
   presets: knownStyles,
   onStyleChange: selectStyle,
   onStyleOptionChange: (key, value) => {
@@ -2412,6 +2440,7 @@ const styleControl = new StyleControl({
     {
       name: 'Tracks',
       key: 'tracks',
+      defaultValue: 'usage',
       values: [
         {
           name: 'Usage',
@@ -2448,6 +2477,8 @@ const styleControl = new StyleControl({
     {
       name: 'Operating sites',
       key: 'stations',
+      defaultValue: 'station',
+      disabledValue: 'none',
       values: [
         {
           name: 'Modality',
@@ -2460,13 +2491,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Platforms',
       key: 'platforms',
+      defaultValue: 'plain',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2475,13 +2507,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Switches',
       key: 'switches',
+      defaultValue: 'plain',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2490,7 +2523,6 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
@@ -2498,6 +2530,8 @@ const styleControl = new StyleControl({
       name: 'Signals',
       key: 'signals',
       // TODO split into functional sections
+      defaultValue: 'none',
+      disabledValue: 'none',
       values: [
         {
           name: 'Speed',
@@ -2514,7 +2548,6 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
@@ -2522,6 +2555,8 @@ const styleControl = new StyleControl({
       name: 'Points of interest',
       key: 'pois',
       // TODO split into functional sections
+      defaultValue: 'standard',
+      disabledValue: 'none',
       values: [
         {
           name: 'Standard',
@@ -2542,13 +2577,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Turntables',
       key: 'turntables',
+      defaultValue: 'plain',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2557,13 +2593,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Boxes',
       key: 'boxes',
+      defaultValue: 'none',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2576,13 +2613,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Substations',
       key: 'substations',
+      defaultValue: 'none',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2591,13 +2629,14 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },
     {
       name: 'Catenaries',
       key: 'catenaries',
+      defaultValue: 'none',
+      disabledValue: 'none',
       values: [
         {
           name: 'Plain',
@@ -2610,7 +2649,6 @@ const styleControl = new StyleControl({
         {
           name: 'None',
           value: 'none',
-          disabled: true,
         },
       ],
     },

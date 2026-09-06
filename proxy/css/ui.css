@@ -346,7 +346,7 @@ body {
       position: relative;
 
       &.disabled .maplibregl-ctrl-style-popup-button-icon {
-        background: #bbb;
+        background: #ddd;
       }
       & label {
         cursor: pointer;
@@ -354,18 +354,9 @@ body {
       & > label {
         font-size: .7rem;
       }
-      &:first-child {
-        /*border-top-left-radius: 4px;*/
-        /*border-bottom-left-radius: 4px;*/
-      }
-      &:last-child {
-        /*border-top-right-radius: 4px;*/
-        /*border-bottom-right-radius: 4px;*/
-
-        & > .maplibregl-ctrl-style-popup-container {
-          left: inherit;
-          right: -2px;
-        }
+      &:last-child > .maplibregl-ctrl-style-popup-container {
+        left: inherit;
+        right: -2px;
       }
       &.active {
         background-color: rgba(0, 0, 0, 0.05);
@@ -379,6 +370,17 @@ body {
 
         & > .maplibregl-ctrl-style-popup-container {
           display: block;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          display: block;
+          height: 2px;
+          background: #ddd;
+          bottom: -2px;
         }
       }
 
