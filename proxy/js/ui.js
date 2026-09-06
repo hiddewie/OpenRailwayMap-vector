@@ -460,9 +460,9 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(style, zoom, lat, lon, date, bearing, pitch) {
+function newsLink(preset, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
-  selectStyle(style);
+  selectPreset(preset);
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
@@ -758,6 +758,7 @@ function determineZoomCenterFromHash(hash) {
 
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
+  // TODO process style
   hashObject.style = style !== defaultStyle ? style : undefined;
   hashObject.date = dateControl.isActive() ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
@@ -858,7 +859,9 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  map.setGlobalStateProperty('hillshade', hillshadeVisible);
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('hillshade', hillshadeVisible);
+  }
 }
 
 function onStationLabelChange(stationlabel) {
@@ -1293,12 +1296,9 @@ map.setStyle(`${location.origin}/style.json`, {
   },
 });
 
-function selectStyle(style) {
-  if (selectedStyle !== style) {
-    selectedStyle = style;
-    styleControl.selectPreset(style);
-    onStyleChange();
-  }
+function selectPreset(preset) {
+  styleControl.selectPreset(preset);
+  onStyleChange();
 }
 
 function selectDate(date) {
@@ -1311,7 +1311,7 @@ function selectDate(date) {
 
 function onPageParametersChange() {
   // Update URL
-  const updatedHash = putParametersInHash(window.location.hash, selectedStyle, selectedDate);
+  const updatedHash = putParametersInHash(window.location.hash, styleControl.getCurrentStyle(), selectedDate);
   if (window.location.hash !== updatedHash) {
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
     window.history.replaceState(window.history.state, null, location);
@@ -1404,34 +1404,23 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   });
 }
 
-function toggleHillShadeLayer(style) {
-  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  const layer = style.layers.find(layer => layer.id === 'hillshade')
-  if (layer) {
-    layer.layout = {
-      ...layer.layout,
-      visibility: hillshadeVisible ? 'visible' : 'none'
-    }
-  }
-}
-
-let lastSetMapStyle = null;
-let lastSetMapLanguage = null;
+// let lastSetMapStyle = null;
+// let lastSetMapLanguage = null;
 function onStyleChange() {
   const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
+  const supportsDate = historicalInfrastructure === 'openhistoricalmap'; // TODO
   const language = configuredLanguage();
 
-  if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
-    if (map.isStyleLoaded()) {
-      // Style specific map global state
-      Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
-        map.setGlobalStateProperty(key, value)
-      );
-    }
-    hideSearchResults();
-    routeControl.clearRoute();
-  }
+  // if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
+  //   if (map.isStyleLoaded()) {
+  //     // Style specific map global state
+  //     Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
+  //       map.setGlobalStateProperty(key, value)
+  //     );
+  //   }
+  //   hideSearchResults();
+  //   routeControl.clearRoute();
+  // }
 
   if (supportsDate && !dateControl.isShown()) {
     dateControl.show();
@@ -1439,8 +1428,8 @@ function onStyleChange() {
     dateControl.hide();
   }
 
-  lastSetMapStyle = selectedStyle;
-  lastSetMapLanguage = language;
+  // lastSetMapStyle = selectedStyle;
+  // lastSetMapLanguage = language;
 
   legendControl.updateLegend()
   onPageParametersChange();
@@ -1458,6 +1447,16 @@ const onDateChange = () => {
 class StyleControl {
   constructor(options) {
     this.options = options
+    this.currentStyle = Object.fromEntries(
+      options.styleOptions
+        .map(({key, defaultValue}) => [key, options.initialSelection[key] ?? defaultValue])
+    );
+    this.currentPreset = Object.entries(this.options.presets)
+      .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
+        Object.keys(styleGlobalState)
+          .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
+      )
+      ?.[0] ?? null;
     this.styleButtons = {}
     this.presetButtons = {}
   }
@@ -1468,13 +1467,8 @@ class StyleControl {
     const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
     const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
-    const initialStyle = Object.fromEntries(
-      this.options.styleOptions
-        .map(({key, defaultValue}) => [key, this.options.initialSelection[key] ?? defaultValue])
-    );
-
     this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
-      const initialValue = initialStyle[key];
+      const initialValue = this.currentStyle[key];
       const initiallyDisabled = disabledValue && initialValue === disabledValue;
 
       const button = createDomElement('button', `maplibregl-ctrl-style-popup-button${initiallyDisabled ? ' disabled' : ''}`, styleContainer);
@@ -1499,8 +1493,11 @@ class StyleControl {
         const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
         valueButton.onclick = e => {
           e.stopPropagation();
-          this.selectStyleOption(key, value);
-          this.options.onStyleOptionChange(key, value);
+
+          if (this.currentStyle[key] !== value) {
+            this.selectStyleOptions({[key]: value});
+            this.options.onStyleChange({[key]: value});
+          }
         }
 
         const valueButtonLabel = createDomElement('label', '', valueButton);
@@ -1530,14 +1527,21 @@ class StyleControl {
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
     Object.entries(this.options.presets).forEach(([preset, {name, hasConfiguration, styleGlobalState}]) => {
-      const presetActive = Object.keys(styleGlobalState)
-        .every(key => initialStyle[key] && styleGlobalState[key] && initialStyle[key] === styleGlobalState[key])
-
+      const presetActive = this.currentPreset === preset;
       const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
       valueButton.onclick = e => {
         e.stopPropagation();
-        this.selectPreset(preset);
-        this.options.onStyleChange(preset)
+
+        const changes = Object.fromEntries(
+          Object.keys(styleGlobalState)
+            .filter(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] !== styleGlobalState[key])
+            .map(key => [key, styleGlobalState[key]])
+        );
+
+        if (Object.keys(changes).length > 0) {
+          this.selectPreset(preset);
+          this.options.onStyleChange(changes)
+        }
       }
 
       const valueButtonLabel = createDomElement('label', '', valueButton);
@@ -1562,45 +1566,85 @@ class StyleControl {
     removeDomElement(this._container);
 
     this._map = undefined;
+    this.currentStyle = {};
+    this.currentPreset = null;
     this.presetButtons = {};
     this.styleButtons = {};
   }
 
   selectPreset(selectedPreset) {
+    if (this.currentPreset === selectedPreset) {
+      return;
+    }
+
     Object.entries(this.presetButtons).forEach(([preset, button]) => {
-      if (preset === selectedPreset) {
+      if (selectedPreset && preset === selectedPreset) {
         button.classList.add('active')
       } else {
         button.classList.remove('active')
       }
     });
 
+    this.currentPreset = selectedPreset;
+
     const preset = this.options.presets;
-    if (preset[selectedPreset]) {
-      Object.entries(preset[selectedPreset].styleGlobalState)
-        .forEach(([key, value]) => this.selectStyleOption(key, value));
+    if (selectedPreset && preset[selectedPreset]) {
+      this.selectStyleOptions(preset[selectedPreset].styleGlobalState)
     }
   }
 
-  selectStyleOption(selectedKey, selectedValue) {
-    const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
-    if (styleOptions) {
-      const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
-
-      Object.entries(this.styleButtons[selectedKey]).forEach(([value, button]) => {
-        if (value === selectedValue) {
-          button.classList.add('active')
-
-          if (disabled) {
-            button.parentElement.parentElement.classList.add('disabled')
-          } else {
-            button.parentElement.parentElement.classList.remove('disabled')
-          }
-        } else {
-          button.classList.remove('active')
+  selectStyleOptions(options) {
+    Object.entries(options)
+      .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
+      .forEach(([selectedKey, selectedValue]) => {
+        const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
+        if (!styleOptions) {
+          return;
         }
-      });
+
+        const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
+        Object.entries(this.styleButtons[selectedKey])
+          .forEach(([value, button]) => {
+            if (value === selectedValue) {
+              button.classList.add('active')
+
+              if (disabled) {
+                button.parentElement.parentElement.classList.add('disabled')
+              } else {
+                button.parentElement.parentElement.classList.remove('disabled')
+              }
+            } else {
+              button.classList.remove('active')
+            }
+          });
+
+        if (!this._map.isStyleLoaded()) {
+          this._map.on('style.load', () => this._map.setGlobalStateProperty(selectedKey, selectedValue));
+        } else {
+          this._map.setGlobalStateProperty(selectedKey, selectedValue);
+        }
+
+        this.currentStyle[selectedKey] = selectedValue;
+      })
+
+    const newPreset = Object.entries(this.options.presets)
+      .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
+        Object.keys(styleGlobalState)
+          .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
+      )
+      ?.[0] ?? null;
+
+    if (this.currentPreset !== newPreset) {
+      this.selectPreset(newPreset);
     }
+  }
+
+  getCurrentStyle() {
+    return this.currentStyle;
+  }
+
+  getCurrentPreset() {
+    return this.currentPreset;
   }
 }
 
@@ -2429,13 +2473,8 @@ const styleControl = new StyleControl({
   // TODO initial style configuration
   initialSelection: {},//selectedStyle,
   presets: knownStyles,
-  onStyleChange: selectStyle,
-  onStyleOptionChange: (key, value) => {
-    if (map.isStyleLoaded()) {
-      map.setGlobalStateProperty(key, value);
-      // TODO persist in URL / browser state
-    }
-  },
+  // onStyleChange: selectPreset, // TODO
+  onStyleChange: (changes) => onStyleChange(),
   styleOptions: [
     {
       name: 'Tracks',
