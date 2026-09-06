@@ -1524,8 +1524,8 @@ class StyleControl {
     presetButtonIcon.title = 'Presets'
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
-    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
-      const valueButton = createDomElement('button', '', selectionContainer);
+    Object.entries(this.options.presets).forEach(([style, {name, hasConfiguration}]) => {
+      const valueButton = createDomElement('button', style === this.options.initialSelection ? 'active' : '', selectionContainer);
       valueButton.onclick = e => {
         e.stopPropagation();
 
@@ -2398,8 +2398,9 @@ const dateControl = new DateControl({
   onChange: selectDate,
 });
 const styleControl = new StyleControl({
-  initialSelection: selectedStyle,
   // TODO initial style configuration
+  initialSelection: selectedStyle,
+  presets: knownStyles,
   onStyleChange: selectStyle,
   onStyleOptionChange: (key, value) => {
     if (map.isStyleLoaded()) {
@@ -2658,8 +2659,7 @@ class WakeLock {
 let wakeLock = new WakeLock()
 geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
 geolocateControl.on('trackuserlocationend', () => wakeLock.release())
-// TODO date control
-// map.addControl(dateControl);
+map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
 map.addControl(geolocateControl);
