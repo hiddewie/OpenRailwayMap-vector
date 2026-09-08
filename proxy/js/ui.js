@@ -889,8 +889,6 @@ const styleElements = [
   },
 ];
 
-// TODO remove
-const defaultStyle = Object.keys(knownStyles)[0];
 const defaultDate = (new Date()).getFullYear();
 
 const knownThemes = [
@@ -912,17 +910,8 @@ function hashToObject(hash) {
 
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
-
-  // TODO migration from `style` preset parameter
-  //   updateStyleParameter(hashObject.style)
-  const style = Object.fromEntries(
-    styleElements
-      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
-      .map(({key}) => [key, hashObject[key]])
-  );
-
   return {
-    style,
+    style: updateStyleParameter(hashObject),
     date: determineDateParameter(hashObject.date),
   }
 }
@@ -930,29 +919,18 @@ function determineParametersFromHash(hash) {
 /**
  * Backwards conpatibility for existing links
  */
-function updateStyleParameter(hashStyle) {
-  switch (hashStyle) {
-    case 'gauge':
-      updateConfiguration('trackRailwayLine', 'gauge');
-      console.info('Updated hash parameters for gauge style to track style, and updated user configuration');
-      return 'track'
+function updateStyleParameter(hashObject) {
+  const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].styleGlobalState : {};
+  const hashStyle = Object.fromEntries(
+    styleElements
+      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
+      .map(({key}) => [key, hashObject[key]])
+  );
 
-    case 'loading_gauge':
-      updateConfiguration('trackRailwayLine', 'loadingGauge');
-      console.info('Updated hash parameters for gauge style to loading gauge style, and updated user configuration');
-      return 'track'
-
-    case 'track_class':
-      updateConfiguration('trackRailwayLine', 'trackClass');
-      console.info('Updated hash parameters for gauge style to track class style, and updated user configuration');
-      return 'track'
-  }
-
-  if (hashStyle && hashStyle in knownStyles) {
-    return hashStyle;
-  } else {
-    return defaultStyle;
-  }
+  return {
+    ...migratedStyle,
+    ...hashStyle,
+  };
 }
 
 function determineDateParameter(hashDate) {
@@ -984,13 +962,16 @@ function determineZoomCenterFromHash(hash) {
 }
 
 function putParametersInHash(hash, style, date) {
-  const hashObject = hashToObject(hash);
-  Object.entries(style)
-    .forEach(([key, value]) => {
-      // TODO skip style defaults
-      hashObject[key] = value
-    });
+  // Remove style as hash parameter
+  const { style: _, ...hashObject } = hashToObject(hash);
+
+  styleElements.forEach(({key, defaultValue}) => {
+    if (style[key]) {
+      hashObject[key] = style[key] === defaultValue ? undefined : style[key];
+    }
+  })
   hashObject.date = dateControl.isActive() ? date : undefined;
+
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
