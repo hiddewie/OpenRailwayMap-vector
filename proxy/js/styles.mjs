@@ -1781,7 +1781,6 @@ const imageLayerWithOutline = (id, spriteExpression, layer) => [
       ...(layer.layout || {}),
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-
         (layer.layout || {}).visibility || 'visible',
       ],
       'icon-image': ['image', spriteExpression],
@@ -1926,7 +1925,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
-          ['==', ['global-state', 'tracks'], 'usage'],
+          ['==', ['global-state', 'tracks'], 'usage'], // TODO
           ['global-state', 'allDates'],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
@@ -1962,7 +1961,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['all',
-          ['==', ['global-state', 'tracks'], 'usage'],
+          ['==', ['global-state', 'tracks'], 'usage'], // TODO
           ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
         ], 'visible',
@@ -2055,12 +2054,9 @@ const layers = [
       ],
     },
     layout: {
-      'visibility': ['match', ['global-state', 'stations'],
-        'station', ['case',
-          ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
-        ],
-        'operator', 'visible',
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
         'none',
       ],
     },
@@ -2119,12 +2115,9 @@ const layers = [
       ],
     },
     layout: {
-      'visibility': ['match', ['global-state', 'stations'],
-        'station', ['case',
-          ['<', ['global-state', 'date'], defaultDate], 'none',
-          'visible',
-        ],
-        'operator', 'visible',
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['in', ['global-state', 'stations'], ['literal', ['station', 'operator']]], 'visible',
         'none',
       ],
     },
@@ -3394,6 +3387,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['in', ['global-state', 'boxes'], ['literal', ['plain', 'operator']]], 'visible',
         'none',
       ],
@@ -3422,6 +3416,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['in', ['global-state', 'boxes'], ['literal', ['plain', 'operator']]], 'visible',
         'none',
       ],
@@ -3443,6 +3438,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['in', ['global-state', 'boxes'], ['literal', ['plain', 'operator']]], 'visible',
         'none',
       ],
@@ -3468,6 +3464,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
@@ -3503,6 +3500,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
@@ -3533,6 +3531,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'catenaries'], 'plain'], 'visible',
         'none',
       ],
@@ -3782,6 +3781,7 @@ const layers = [
       'source-layer': 'standard_railway_symbols',
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'pois'], 'standard'], 'visible',
           'none',
         ],
@@ -3828,6 +3828,7 @@ const layers = [
       'source-layer': 'signals_railway_symbols',
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'pois'], 'signals'], 'visible',
           'none',
         ],
@@ -3865,6 +3866,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'pois'], 'electrification'], 'visible',
         'none',
       ],
@@ -3908,6 +3910,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'pois'], 'operator'], 'visible',
         'none',
       ],
@@ -3932,6 +3935,7 @@ const layers = [
       'source-layer': 'operator_railway_symbols',
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'pois'], 'operator'], 'visible',
           'none',
         ],
@@ -3992,6 +3996,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['all',
           ['==', ['global-state', 'pitched'], false],
           ['==', ['global-state', 'signals'], 'speed'],
@@ -4033,6 +4038,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
+            ['<', ['global-state', 'date'], defaultDate], 'none',
             ['==', ['global-state', 'signals'], 'speed'], 'visible',
             'none',
           ],
@@ -4088,6 +4094,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'signals'], 'speed'], 'visible',
           'none',
         ],
@@ -4156,6 +4163,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'speed'], 'visible',
         'none',
       ],
@@ -4203,6 +4211,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'pitched'], false], 'none',
         ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
@@ -4242,6 +4251,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['all',
           ['==', ['global-state', 'signals'], 'signals'],
           ['==', ['global-state', 'pitched'], false],
@@ -4286,6 +4296,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
+            ['<', ['global-state', 'date'], defaultDate], 'none',
             ['==', ['global-state', 'signals'], 'signals'], 'visible',
             'none',
           ],
@@ -4322,6 +4333,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'signals'], 'signals'], 'visible',
           'none',
         ],
@@ -4363,6 +4375,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
@@ -4393,6 +4406,7 @@ const layers = [
         ],
         layout: {
           'visibility': ['case',
+            ['<', ['global-state', 'date'], defaultDate], 'none',
             ['==', ['global-state', 'signals'], 'signals'], 'visible',
             'none',
           ],
@@ -4432,6 +4446,7 @@ const layers = [
       ],
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'signals'], 'signals'], 'visible',
           'none',
         ],
@@ -4474,6 +4489,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
@@ -4510,6 +4526,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'signals'], 'visible',
         'none',
       ],
@@ -4554,6 +4571,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'pitched'], false], 'none',
         ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
@@ -4585,6 +4603,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['all',
           ['==', ['global-state', 'pitched'], false],
           ['==', ['global-state', 'signals'], 'electrification'],
@@ -4631,6 +4650,7 @@ const layers = [
       },
       layout: {
         'visibility': ['case',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
           ['==', ['global-state', 'signals'], 'electrification'], 'visible',
           'none',
         ],
@@ -4682,6 +4702,7 @@ const layers = [
     ],
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
       ],
@@ -4745,6 +4766,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'signals'], 'electrification'], 'visible',
         'none',
       ],
@@ -5060,6 +5082,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['in', ['global-state', 'boxes'], ['literal', ['plain', 'operator']]], 'visible',
         'none',
       ],
@@ -5104,6 +5127,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['in', ['global-state', 'boxes'], ['literal', ['plain', 'operator']]], 'visible',
         'none',
       ],
@@ -5132,6 +5156,7 @@ const layers = [
     },
     layout: {
       'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
         ['==', ['global-state', 'substations'], 'plain'], 'visible',
         'none',
       ],
