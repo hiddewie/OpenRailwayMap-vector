@@ -5631,9 +5631,6 @@ const makeStyle = () => ({
   version: 8,
   layers,
   state: {
-    style: {
-      default: 'standard',
-    },
     date: {
       default: defaultDate,
     },
