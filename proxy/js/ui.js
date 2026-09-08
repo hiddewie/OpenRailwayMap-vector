@@ -670,7 +670,225 @@ const knownStyles = {
     },
   },
 };
+const styleElements = [
+  {
+    name: 'Tracks',
+    key: 'tracks',
+    defaultValue: 'usage',
+    values: [
+      {
+        name: 'Usage',
+        value: 'usage',
+      },
+      {
+        name: 'Speed',
+        value: 'speed',
+      },
+      {
+        name: 'Train protection',
+        value: 'train_protection',
+      },
+      {
+        // TODO split into voltage/frequency, max current, power
+        name: 'Electrification',
+        value: 'electrification',
+      },
+      {
+        // TODO split into gauge, loading gauge, track class
+        name: 'Track',
+        value: 'track',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'Routes',
+        value: 'routes',
+      },
+    ],
+  },
+  {
+    name: 'Operating sites',
+    key: 'stations',
+    defaultValue: 'station',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Modality',
+        value: 'station',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Platforms',
+    key: 'platforms',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Switches',
+    key: 'switches',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Signals',
+    key: 'signals',
+    // TODO split into functional sections
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Speed',
+        value: 'speed',
+      },
+      {
+        name: 'Train protection',
+        value: 'signals',
+      },
+      {
+        name: 'Electrification',
+        value: 'electrification',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Points of interest',
+    key: 'pois',
+    // TODO split into functional sections
+    defaultValue: 'standard',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Standard',
+        value: 'standard',
+      },
+      {
+        name: 'Electrification',
+        value: 'electrification',
+      },
+      {
+        name: 'Signals',
+        value: 'signals',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Turntables',
+    key: 'turntables',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Boxes',
+    key: 'boxes',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Substations',
+    key: 'substations',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Catenaries',
+    key: 'catenaries',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+];
 
+// TODO remove
 const defaultStyle = Object.keys(knownStyles)[0];
 const defaultDate = (new Date()).getFullYear();
 
@@ -693,9 +911,17 @@ function hashToObject(hash) {
 
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
+
+  // TODO migration from `style` preset parameter
+  //   updateStyleParameter(hashObject.style)
+  const style = Object.fromEntries(
+    styleElements
+      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
+      .map(({key}) => [key, hashObject[key]])
+  );
+
   return {
-    // TODO other style keys
-    style: updateStyleParameter(hashObject.style),
+    style,
     date: determineDateParameter(hashObject.date),
   }
 }
@@ -758,8 +984,11 @@ function determineZoomCenterFromHash(hash) {
 
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
-  // TODO process style
-  hashObject.style = style !== defaultStyle ? style : undefined;
+  Object.entries(style)
+    .forEach(([key, value]) => {
+      // TODO skip style defaults
+      hashObject[key] = value
+    });
   hashObject.date = dateControl.isActive() ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
@@ -1371,6 +1600,7 @@ function addLanguageToSupportedSources(style, language) {
 
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
+// See https://github.com/maplibre/maplibre-gl-js/issues/7632 and https://github.com/maplibre/maplibre-gl-js/pull/8264
 function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
@@ -1397,7 +1627,7 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
 
   // Style specific map global state
-  Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) => {
+  Object.entries(selectedStyle).forEach(([key, value]) => {
     if (style.state[key]) {
       style.state[key].default = value;
     }
@@ -1594,38 +1824,49 @@ class StyleControl {
   }
 
   selectStyleOptions(options) {
-    Object.entries(options)
-      .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
-      .forEach(([selectedKey, selectedValue]) => {
-        const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
-        if (!styleOptions) {
-          return;
-        }
+    const mapGlobalStateChanges = Object.fromEntries(
+      Object.entries(options)
+        .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
+        .map(([selectedKey, selectedValue]) => {
+          const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
+          if (!styleOptions) {
+            return;
+          }
 
-        const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
-        Object.entries(this.styleButtons[selectedKey])
-          .forEach(([value, button]) => {
-            if (value === selectedValue) {
-              button.classList.add('active')
+          const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
+          Object.entries(this.styleButtons[selectedKey])
+            .forEach(([value, button]) => {
+              if (value === selectedValue) {
+                button.classList.add('active')
 
-              if (disabled) {
-                button.parentElement.parentElement.classList.add('disabled')
+                if (disabled) {
+                  button.parentElement.parentElement.classList.add('disabled')
+                } else {
+                  button.parentElement.parentElement.classList.remove('disabled')
+                }
               } else {
-                button.parentElement.parentElement.classList.remove('disabled')
+                button.classList.remove('active')
               }
-            } else {
-              button.classList.remove('active')
-            }
-          });
+            });
 
-        if (this._map.isStyleLoaded()) {
-          this._map.setGlobalStateProperty(selectedKey, selectedValue);
-        } else {
-          this._map.on('style.load', () => this._map.setGlobalStateProperty(selectedKey, selectedValue));
-        }
+          this.currentStyle[selectedKey] = selectedValue;
 
-        this.currentStyle[selectedKey] = selectedValue;
-      })
+          return [selectedKey, selectedValue]
+        })
+    );
+
+    // Ensure all map global state changes are processed at once
+    const mapGlobalStateChangesAsDefaults = Object.fromEntries(Object.entries(mapGlobalStateChanges).map(([key, value]) => [key, { default: value }]))
+    if (this._map.isStyleLoaded()) {
+      this._map.style.setGlobalState(mapGlobalStateChangesAsDefaults);
+      this._map._update(true);
+    } else {
+      // Once the style is marked as ready, a `data` event is triggered
+      this._map.once('data', e => {
+        this._map.style.setGlobalState(mapGlobalStateChangesAsDefaults);
+        this._map._update(true);
+      });
+    }
 
     const newPreset = Object.entries(this.options.presets)
       .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
@@ -2470,228 +2711,10 @@ const dateControl = new DateControl({
   onChange: selectDate,
 });
 const styleControl = new StyleControl({
-  // TODO initial style configuration
-  initialSelection: {},//selectedStyle,
+  initialSelection: selectedStyle,
   presets: knownStyles,
-  // onStyleChange: selectPreset, // TODO
-  onStyleChange: (changes) => onStyleChange(),
-  styleOptions: [
-    {
-      name: 'Tracks',
-      key: 'tracks',
-      defaultValue: 'usage',
-      values: [
-        {
-          name: 'Usage',
-          value: 'usage',
-        },
-        {
-          name: 'Speed',
-          value: 'speed',
-        },
-        {
-          name: 'Train protection',
-          value: 'train_protection',
-        },
-        {
-          // TODO split into voltage/frequency, max current, power
-          name: 'Electrification',
-          value: 'electrification',
-        },
-        {
-          // TODO split into gauge, loading gauge, track class
-          name: 'Track',
-          value: 'track',
-        },
-        {
-          name: 'Operator',
-          value: 'operator',
-        },
-        {
-          name: 'Routes',
-          value: 'routes',
-        },
-      ],
-    },
-    {
-      name: 'Operating sites',
-      key: 'stations',
-      defaultValue: 'station',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Modality',
-          value: 'station',
-        },
-        {
-          name: 'Operator',
-          value: 'operator',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Platforms',
-      key: 'platforms',
-      defaultValue: 'plain',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Switches',
-      key: 'switches',
-      defaultValue: 'plain',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Signals',
-      key: 'signals',
-      // TODO split into functional sections
-      defaultValue: 'none',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Speed',
-          value: 'speed',
-        },
-        {
-          name: 'Train protection',
-          value: 'signals',
-        },
-        {
-          name: 'Electrification',
-          value: 'electrification',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Points of interest',
-      key: 'pois',
-      // TODO split into functional sections
-      defaultValue: 'standard',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Standard',
-          value: 'standard',
-        },
-        {
-          name: 'Electrification',
-          value: 'electrification',
-        },
-        {
-          name: 'Signals',
-          value: 'signals',
-        },
-        {
-          name: 'Operator',
-          value: 'operator',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Turntables',
-      key: 'turntables',
-      defaultValue: 'plain',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Boxes',
-      key: 'boxes',
-      defaultValue: 'none',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'Operator',
-          value: 'operator',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Substations',
-      key: 'substations',
-      defaultValue: 'none',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-    {
-      name: 'Catenaries',
-      key: 'catenaries',
-      defaultValue: 'none',
-      disabledValue: 'none',
-      values: [
-        {
-          name: 'Plain',
-          value: 'plain',
-        },
-        {
-          name: 'Operator',
-          value: 'operator',
-        },
-        {
-          name: 'None',
-          value: 'none',
-        },
-      ],
-    },
-  ],
+  onStyleChange: changes => onStyleChange(),
+  styleOptions: styleElements,
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
