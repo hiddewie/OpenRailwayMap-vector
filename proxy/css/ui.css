@@ -568,7 +568,11 @@ body {
 }
 
 .maplibregl-ctrl-group.maplibregl-ctrl-date {
-  visibility: hidden;
+  display: none;
+
+  &.show {
+    display: block;
+  }
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-date button {
   display: inline-block;

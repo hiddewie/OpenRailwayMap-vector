@@ -74,6 +74,7 @@ window.addEventListener('languagechange', () => {
 
   const localization = configuration.localization ?? defaultConfiguration.localization;
   if (localization === 'automatic') {
+    // TODO process language in source
     onStyleChange();
   }
 })
@@ -1088,17 +1089,13 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('hillshade', hillshadeVisible);
-  }
+
+  updateGlobalMapState({ hillshade: hillshadeVisible });
 }
 
 function onStationLabelChange(stationlabel) {
   updateConfiguration('stationLowZoomLabel', stationlabel);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
-  }
+  updateGlobalMapState({ stationLowZoomLabel: stationlabel });
   legendControl.updateLegend();
 }
 
@@ -1120,21 +1117,13 @@ function customLocalization(language) {
 
 function configureElectrificationRailwayLine(electrification) {
   updateConfiguration('electrificationRailwayLine', electrification);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('electrificationRailwayLine', electrification);
-  }
-
+  updateGlobalMapState({ electrificationRailwayLine: electrification });
   legendControl.updateLegend()
 }
 
 function configureTrackRailwayLine(track) {
   updateConfiguration('trackRailwayLine', track);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('trackRailwayLine', track);
-  }
-
+  updateGlobalMapState({ trackRailwayLine: track });
   legendControl.updateLegend()
 }
 
@@ -1182,14 +1171,17 @@ function onEditorChange(editor) {
 function onHistoricalInfrastructureChange(historicalInfrastructure) {
   updateConfiguration('historicalInfrastructure', historicalInfrastructure);
 
-  if (historicalInfrastructure !== 'openhistoricalmap') {
-    selectDate(defaultDate)
-  }
+  updateGlobalMapState({
+    openHistoricalMap: historicalInfrastructure === 'openhistoricalmap',
+    showAbandonedInfrastructure: historicalInfrastructure === 'openstreetmap',
+    showRazedInfrastructure: historicalInfrastructure === 'openstreetmap',
+  });
 
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
-    map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
-    map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  if (historicalInfrastructure === 'openhistoricalmap') {
+    dateControl.show();
+  } else {
+    dateControl.hide();
+    selectDate(defaultDate)
   }
 
   onStyleChange();
@@ -1198,10 +1190,10 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
 function onFutureInfrastructureChange(futureInfrastructure) {
   updateConfiguration('futureInfrastructure', futureInfrastructure);
 
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
-    map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
-  }
+  updateGlobalMapState({
+    showConstructionInfrastructure: futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed',
+    showProposedInfrastructure: futureInfrastructure === 'construction-proposed',
+  });
 
   legendControl.updateLegend();
 }
@@ -1637,8 +1629,8 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
 // let lastSetMapStyle = null;
 // let lastSetMapLanguage = null;
 function onStyleChange() {
-  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  const supportsDate = historicalInfrastructure === 'openhistoricalmap'; // TODO
+  // const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  // const supportsDate = historicalInfrastructure === 'openhistoricalmap'; // TODO
   const language = configuredLanguage();
 
   // if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
@@ -1652,11 +1644,11 @@ function onStyleChange() {
   //   routeControl.clearRoute();
   // }
 
-  if (supportsDate && !dateControl.isShown()) {
-    dateControl.show();
-  } else if (!supportsDate && dateControl.isShown()) {
-    dateControl.hide();
-  }
+  // if (supportsDate && !dateControl.isShown()) {
+  //   dateControl.show();
+  // } else if (!supportsDate && dateControl.isShown()) {
+  //   dateControl.hide();
+  // }
 
   // lastSetMapStyle = selectedStyle;
   // lastSetMapLanguage = language;
@@ -1855,18 +1847,7 @@ class StyleControl {
         })
     );
 
-    // Ensure all map global state changes are processed at once
-    const mapGlobalStateChangesAsDefaults = Object.fromEntries(Object.entries(mapGlobalStateChanges).map(([key, value]) => [key, { default: value }]))
-    if (this._map.isStyleLoaded()) {
-      this._map.style.setGlobalState(mapGlobalStateChangesAsDefaults);
-      this._map._update(true);
-    } else {
-      // Once the style is marked as ready, a `data` event is triggered
-      this._map.once('data', e => {
-        this._map.style.setGlobalState(mapGlobalStateChangesAsDefaults);
-        this._map._update(true);
-      });
-    }
+    updateGlobalMapState(mapGlobalStateChanges);
 
     const newPreset = Object.entries(this.options.presets)
       .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
@@ -1896,7 +1877,8 @@ class DateControl {
 
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
+    this._container = createDomElement('div', `maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date${this.options.initiallyShown ? ' show' : ''}`);
+
     const container = createDomElement('button', '', this._container);
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
@@ -1986,15 +1968,15 @@ class DateControl {
   }
 
   isShown() {
-    return this._container.style.visibility === 'visible';
+    this._container.classList.has('show');
   }
 
   show() {
-    this._container.style.visibility = 'visible'
+    this._container.classList.add('show');
   }
 
   hide() {
-    this._container.style.visibility = 'hidden'
+    this._container.classList.remove('show');
   }
 
   isActive() {
@@ -2707,6 +2689,7 @@ class AboutControl {
 }
 
 const dateControl = new DateControl({
+  initiallyShown: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
   initialSelection: selectedDate,
   onChange: selectDate,
 });
@@ -2799,9 +2782,7 @@ const legendControl = new LegendControl({
 map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('bearing', bearing ?? 0);
-  }
+  updateGlobalMapState({ bearing: bearing ?? 0 });
 
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
@@ -2815,8 +2796,8 @@ const onMapRotate = bearing => {
 const onMapPitch = pitch => {
   const pitched = pitchedView(pitch)
   const pitchedState = (map.getGlobalState() ?? {}).pitched
-  if (pitched !== pitchedState && map.isStyleLoaded()) {
-    map.setGlobalStateProperty('pitched', pitched);
+  if (pitched !== pitchedState) {
+    updateGlobalMapState({ pitched });
   }
 }
 
@@ -3268,6 +3249,22 @@ map.on('rotateend', () => updateConfiguration('view', {center: map.getCenter(), 
 map.on('pitch', () => onMapPitch(map.getPitch()));
 map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.setMissingStyleImageResolver(async ids => await generateImage([map, legendControl.legendMap], ids));
+
+function updateGlobalMapState(changes) {
+  // Ensure all map global state changes are processed at once
+  const changesAsDefaults = Object.fromEntries(Object.entries(changes).map(([key, value]) => [key, { default: value }]))
+
+  if (map.isStyleLoaded()) {
+    map.style.setGlobalState(changesAsDefaults);
+    map._update(true);
+  } else {
+    // Once the style is marked as ready, a `data` event is triggered
+    map.once('data', () => {
+      map.style.setGlobalState(changesAsDefaults);
+      map._update(true);
+    });
+  }
+}
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
