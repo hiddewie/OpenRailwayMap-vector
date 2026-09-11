@@ -55,6 +55,17 @@ const aboutBackdrop = document.getElementById('about-backdrop');
 
 const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_};
 
+function objectsEqual(left, right, valueComparison) {
+  return left &&
+    right &&
+    Object.keys(left).length === Object.keys(right).length &&
+    Object.keys(left).every(key => right[key] && valueComparison(left[key], right[key]));
+}
+
+function setsEqual(left, right) {
+  return left && right && left.isSubsetOf(right) && right.isSubsetOf(left);
+}
+
 function getFlagEmoji(countryCode) {
   const codePoints = countryCode.toUpperCase()
     .split('')
@@ -2325,27 +2336,40 @@ class LegendControl {
     let keyedSourcesAndFeaturesInView = []
     if (legendConfiguration === 'inView') {
       const featuresInView = this.map.queryRenderedFeatures();
+
+      const activeLegendSections = Object.fromEntries(
+        Object.entries(legendData.sourceLayers)
+          .map(([sourceLayer, sections]) => [sourceLayer,
+            Object.entries(sections)
+              .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => mapGlobalState[key] === mapState[key]))
+              .map(([section, _]) => section)])
+      )
+
       const keyedFeaturesInView = featuresInView.flatMap(feature => {
         const layer = feature.layer
         const sourceLayer = `${layer.source}-${layer['source-layer']}`
+        const sourceLayerData = legendData.sourceLayers[sourceLayer] ?? {};
+        return activeLegendSections[sourceLayer].flatMap(section => {
+          const sourceLayerSectionData = legendData.sourceLayers[sourceLayer][section] ?? { key: [], features: [] };
 
-        const sourceLayerData = legendData.sourceLayers[sourceLayer] ?? {key: []}
-        const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
-        const matchKeys = (sourceLayerData.matchKeys ?? [])
-          .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+          const featureKey = (sourceLayerSectionData.key || [])
+            .map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
 
-        return [
-          {
-            sourceLayer,
-            featureKey,
-          },
-          ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
-        ]
+          const matchKeys = (sourceLayerSectionData.matchKeys ?? [])
+            .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+
+          return [
+            { sourceLayer, section, featureKey },
+            ...(matchKeys.map(matchKey => ({ sourceLayer, section, featureKey: matchKey })))
+          ]
+        });
       });
 
       keyedSourcesAndFeaturesInView = Object.fromEntries(
         Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
-          .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
+          .map(([sourceLayer, items]) => [sourceLayer, Object.fromEntries(
+            Object.entries(Object.groupBy(items, ({section}) => section))
+              .map(([section, sectionItems]) => [section, new Set(sectionItems.map(({featureKey}) => featureKey))]))])
       );
     }
 
@@ -2355,8 +2379,7 @@ class LegendControl {
       && this.legendState.legendConfiguration === legendConfiguration
       && this.legendState.legendCountry === legendCountry
       && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
-      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
-      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
+      && objectsEqual(this.legendState.keyedSourcesAndFeaturesInView, keyedSourcesAndFeaturesInView, (left, right) => objectsEqual(left, right, setsEqual))
     ) {
       return;
     }
@@ -2383,9 +2406,11 @@ class LegendControl {
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     const legendFeatureFilters = {
-      inView: (source, item) =>
-        keyedSourcesAndFeaturesInView[source] && (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey))),
-      country: legendCountry ? (_, item) => !item.country || item.country === legendCountry : (() => true),
+      inView: (source, section, item) =>
+        keyedSourcesAndFeaturesInView[source] &&
+        keyedSourcesAndFeaturesInView[source][section] &&
+        (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source][section].has(featureKey))),
+      country: legendCountry ? (_source, _section, item) => !item.country || item.country === legendCountry : (() => true),
     }
     const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
 
@@ -2496,34 +2521,36 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
-      const features = data
-        .filter(zoomFilter)
-        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => featureFilter(sourceName, item))
-        .flatMap(item => {
-          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
-            .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-            .flatMap((subItem, index, subItems) => ({
-              type: 'Feature',
-              geometry: {
-                type: subItem.type === 'line' || subItem.type === 'polygon'
-                  ? 'LineString'
-                  : 'Point',
-                coordinates:
-                  subItem.type === 'line' ? [
-                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-                    ] :
-                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-              },
-              properties: subItem.properties,
-            }));
-          entry++;
-          return itemFeatures;
-        });
+      const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
+      const features = Object.entries(data)
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .flatMap(([section, {features}]) => (features ?? [])
+          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key])) // TODO maybe remove?
+          .filter(item => featureFilter(sourceName, section, item))
+          .flatMap(item => {
+            const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+              .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+              .flatMap((subItem, index, subItems) => ({
+                type: 'Feature',
+                geometry: {
+                  type: subItem.type === 'line' || subItem.type === 'polygon'
+                    ? 'LineString'
+                    : 'Point',
+                  coordinates:
+                    subItem.type === 'line' ? [
+                        this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                        this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                      ] :
+                      subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                          this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                        : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                },
+                properties: subItem.properties,
+              }));
+            entry++;
+            return itemFeatures;
+          })
+        );
       done.add(sourceName);
 
       return [[sourceName, {
@@ -2541,37 +2568,39 @@ class LegendControl {
     const legendFeatures = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = legendLayerName
-      const applicable = layerVisibleAtZoom(zoom)(layer) && visibleLayers.has(layer.id);
+      const applicable = zoomFilter(layer) && visibleLayers.has(layer.id);
       if (done.has(sourceName) || !applicable) {
         return [];
       }
 
-      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
-      const features = data
-        .filter(zoomFilter)
-        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => featureFilter(sourceName, item))
-        .map(item => {
-          const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
-          const legend = [itemLegend, ...(item.variants ?? [])
-            .filter(variant => variant.legend)
-            .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
-            .map(variant => variant.legend)]
-            .join(', ');
+      const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
+      const features = Object.entries(data)
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .flatMap(([section, {features}]) => (features ?? [])
+          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+          .filter(item => featureFilter(sourceName, section, item))
+          .map(item => {
+            const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
+            const legend = [itemLegend, ...(item.variants ?? [])
+              .filter(variant => variant.legend)
+              .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
+              .map(variant => variant.legend)]
+              .join(', ');
 
-          const feature = {
-            type: 'Feature',
-            geometry: {
-              type: "Point",
-              coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
-            },
-            properties: {
-              legend,
-            },
-          };
-          entry++;
-          return feature;
-        });
+            const feature = {
+              type: 'Feature',
+              geometry: {
+                type: "Point",
+                coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
+              },
+              properties: {
+                legend,
+              },
+            };
+            entry++;
+            return feature;
+          })
+        );
       done.add(sourceName);
 
       return features;
