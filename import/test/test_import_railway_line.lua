@@ -37,13 +37,66 @@ end
 -- Railway lines
 
 osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
   tags = {
     ['railway'] = 'rail',
+    ['railway:radio'] = 'lte-r',
   },
   as_linestring = as_linestring_mock,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   railway_line = {
-    { tunnel = false, bridge = false, highspeed = false, rank = 40, train_protection_rank = 0, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection_construction_rank = 0 },
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', radio = 'lte-r' },
+  },
+})
+
+osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
+  tags = {
+    ['railway'] = 'rail',
+    ['railway:aws'] = 'yes',
+    ['railway:tpws'] = 'yes',
+    ['construction:railway:etcs'] = '3',
+  },
+  as_linestring = as_linestring_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  railway_line = {
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"aws","tpws"}', train_protection_rank = 34, train_protection_construction = 'etcs_2', train_protection_construction_rank = 68 },
+  },
+})
+
+osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
+  tags = {
+    ['railway'] = 'rail',
+    ['railway:ktcs'] = '2',
+    ['railway:etcs'] = '2',
+  },
+  as_linestring = as_linestring_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  railway_line = {
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"ktcs"}', train_protection_rank = 73 },
+  },
+})
+
+osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
+  tags = {
+    ['railway'] = 'rail',
+    ['railway:acses'] = 'yes',
+    ['railway:atc'] = 'yes',
+    ['railway:ptc'] = 'yes',
+  },
+  as_linestring = as_linestring_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  railway_line = {
+    { id = '123-0', tunnel = false, bridge = false, highspeed = false, rank = 40, way_length = 1, way = way, feature = 'rail', state = 'present', train_protection = '{"acses","atc"}', train_protection_rank = 67 },
   },
 })

@@ -6,51 +6,37 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 ## Development
 
-Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, replace `docker` with `podman` in the commands below.
+Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, see the Podman specific instructions below.
 
-Import the data:
+Start the services with:
 ```shell
-docker compose run --build import import
-```
-The import process will filter the file before importing it. The filtered file will be stored in the `data/filtered` directory, so future imports of the same data file can reuse the filtered data file.
-
-Start the tile server:
-```shell
-docker compose up --build --watch martin
+docker compose up --build --watch db import martin proxy api
 ```
 
-Prepare and start the API:
-```shell
-docker compose up --build --watch api
-```
+The command will start the database (service `db`), run the data import (service `import`), start the tile server Martin (service `martin`), start the API (service `api`) and the web server (service `proxy`). The import can take a few minutes depending on the amount of data to be imported.
 
-Start the web server:
-```shell
-docker compose up --build --watch martin-proxy
-```
+Docker Compose will automatically rebuild and restart the `martin` and `proxy` containers if relevant files are modified.
 
 The OpenRailwayMap is now available on http://localhost:8000.
-
-Docker Compose will automatically rebuild and restart the `martin` and `martin-proxy` containers if relevant files are modified.
 
 ### Making changes
 
 If changes are made to features, the materialized views in the database have to be refreshed:
 ```shell
-docker compose run --build import refresh
+docker compose run --no-deps --build --remove-orphans import refresh
 ```
 
 ### Updating the OSM data
 
 The OSM data file can be updated with:
 ```shell
-docker compose run --build import update
+docker compose run --no-deps --build --remove-orphans import update
 ```
 This command will request all updates in the region and process them into the OSM data file.
 
 After updating the data, run a new import:
 ```shell
-docker compose run --build import import
+docker compose run --no-deps --build --remove-orphans import import
 ```
 
 ### JOSM preset
@@ -74,34 +60,84 @@ SSL is supported by generating a trusted certificate, and installing it in the p
 - Create a file `compose.override.yaml` with 
   ```yaml
   services:
-    martin-proxy:
+    proxy:
       volumes:
         - './localhost.pem:/etc/nginx/ssl/certificate.pem'
         - './localhost-key.pem:/etc/nginx/ssl/key.pem'
   ```
 - Restart the proxy with:
   ```shell
-  docker compose up --build --watch martin-proxy
+  docker compose up --build --watch proxy
   ```
 
 The OpenRailwayMap is available on https://localhost, with SSL enabled and without browser warnings. 
 
 You can modify the TLS port 443 to port 8443 [in the Compose configuration](./compose.yaml), if you want the container to start without privileges, for example using Podman.
 
-## Tests
+### Podman
 
-Tests use [*hurl*](https://hurl.dev/docs/installation.html).
-
-Run tests against the API:
-
+Create a Docker context that uses Podman for building and running containers:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:5000/api api/test/api.hurl
+docker context create podman --docker host=unix://$XDG_RUNTIME_DIR/podman/podman.sock
+docker context use podman
 ```
 
-Run tests against the proxy:
+This will let Docker (Compose) use the Podman daemon to build and run containers, rootless.
 
+## Tests
+
+### Import tests
+
+The import tests verify the correctness of the Lua import configuration.
+
+Run the tests with:
 ```shell
-hurl --test --verbose --variable base_url=http://localhost:8000 proxy/test/proxy.hurl
+docker compose run --rm --build import-test
+```
+
+If the process exists successfully, the tests have succeeded. If not, the assertion error will be displayed.
+
+### Tile tests
+
+Tile tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the API:
+```shell
+docker compose run --build --no-deps api-test
+```
+
+### Proxy tests
+
+Proxy tests use [*hurl*](https://hurl.dev/docs/installation.html).
+
+Run tests against the proxy:
+```shell
+docker compose run --build --no-deps proxy-test
+```
+
+### UI tests
+
+UI tests use [*Cypress*](https://docs.cypress.io).
+
+Run the UI tests:
+```shell
+cd proxy/test/ui
+npm ci
+npx cypress run
+```
+
+Run the tests in interactive mode with:
+```shell
+npx cypress open
+```
+
+### Feature tests
+
+The feature tests validate the contents of the `features` directory, by matching the files against the JSON schema specification.
+
+Run the feature tests with:
+```shell
+docker compose run --rm --build feature-test
 ```
 
 ## Development
@@ -115,6 +151,9 @@ You can view the generated files:
 docker build --target build-signals --tag build-signals --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-signals /build/signal_features.sql | less
 
+docker build --target build-operators --tag build-operators --file import/Dockerfile . \
+  && docker run --rm --entrypoint cat build-operators /build/operators.sql | less
+
 docker build --target build-lua --tag build-lua --file import/Dockerfile . \
   && docker run --rm --entrypoint cat build-lua /build/tags.lua | less
 
@@ -123,4 +162,7 @@ docker build --target build-styles --tag build-styles --file proxy.Dockerfile . 
 
 docker build --target build-styles --tag build-styles --file proxy.Dockerfile . \
   && docker run --rm --entrypoint cat build-styles standard.json | jq . | less
+
+docker build --target build-features --tag build-features --file api.Dockerfile . \
+  && docker run --rm --entrypoint cat build-features features.json | jq . | less
 ```

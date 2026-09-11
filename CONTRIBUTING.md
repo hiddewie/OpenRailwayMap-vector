@@ -237,6 +237,57 @@ track_classes:
 
 Open a pull request where you provide details about the new track class. Ensure the pull request contains references to documentation and places on the map where the track class exists.
 
+## I want to add an operator
+
+Edit the file [`features/operators.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/operators.yaml).
+
+The file contains a list of operators. A single operator can have multiple names, for example when it operates across multiple countries. 
+
+The operator is associated with the country it is registered in.
+
+An operator has a color associated with it, used to display the operator on the map. Colors can use the form `#2d00e3`, `rgb(45, 0, 227)` or `hsl(252, 100%, 44.5%)`. Use the [colorpicker.dev](https://colorpicker.dev/#2d00e3) tool to assist in conversion of color formats.
+
+Add a new entry at a certain place in the list. The value is the `operator` tag value. For example:
+```yaml
+operators:
+  - country: NL
+    names:
+      - 'GVB'
+      - 'Gemeentelijk Vervoerbedrijf'
+    color: '#0863b5'
+
+  # ...
+```
+
+Open a pull request where you provide details about the new operator. Ensure the pull request contains references to documentation and places on the map where the operator exists.
+
+## I want to display an additional station reference
+
+Edit the file [`features/stations.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/stations.yaml).
+
+The file contains a section `references`, with a list of references and their description. Every reference has a description, and a list of tags containing values for that reference. If a reference is country-specific, add the country.
+
+To show the station reference on the map as identifier for stations that do not have the `railway:ref` tag, add `map: true`.
+
+Every reference has an `id` field that is used to technically identify the reference in the database, map popup and legend. The value is not important, as long as it is stable over time.
+
+Add a new entry at a certain place in the list. For example:
+```yaml
+references:
+  - id: ibnr
+    description: 'IBNR'
+    tags:
+      - 'ref:IBNR'
+      - 'ref:ibnr'
+
+  - id: fr-sncf-resarail 
+    description: 'SNCF RESARAIL'
+    country: FR
+    tags: [ 'ref:FR:sncf:resarail' ]
+```
+
+Open a pull request where you provide details about the new reference. Ensure the pull request contains references to documentation and places on the map where the reference is used.
+
 ## I want to improve the user interface
 
 The HTML, Javascript and CSS of the user interface are located in the [proxy](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/proxy) directory.
@@ -246,3 +297,7 @@ Open a pull request where you provide details about the new train protection sys
 ## I want to provide translations for a new language 
 
 At this moment the user interface and legend are solely available in English. This might change in the future.
+
+## I want to support OpenRailwayMap financially
+
+To support the operational costs of the OpenRailwayMap, financial support can be provided through [*Github Sponsors*](https://github.com/sponsors/hiddewie) or [*Buy Me a Coffee*](https://buymeacoffee.com/hiddewie).

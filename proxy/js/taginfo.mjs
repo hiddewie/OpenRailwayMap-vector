@@ -128,6 +128,14 @@ for (const station of stations.features) {
     icon_url: `${BASE_URL}/symbols/general/${station.feature}.svg`,
   });
 }
+for (const reference of stations.references) {
+  reference.tags.forEach(tag => {
+    taginfo.tags.push({
+      key: tag,
+      description: `[Station reference] "${reference.description}"`,
+    });
+  })
+}
 
 // loading_gauge
 const { track_classes } = await readYamlFile('track_class.yaml');
@@ -171,6 +179,19 @@ for (const key in grouped) {
     });
   }
 }
+
+// operator
+const operators = await readYamlFile('operators.yaml');
+operators.operators.forEach(operator => {
+  const country = operator.country;
+  operator.names.forEach(name => {
+    taginfo.tags.push({
+      key: 'operator',
+      value: name,
+      description: `[Operator] [${country}] ${name}`,
+    });
+  })
+})
 
 if (import.meta.url.endsWith(process.argv[1])) {
   console.log(JSON.stringify(taginfo, null, 2))

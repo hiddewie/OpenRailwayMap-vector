@@ -51,6 +51,7 @@ There are multiple ways to contribute to this project:
 - Providing icons for visualizing features on the map.
 - Providing user interface improvements.
 - Providing technical or user documentation.
+- Support OpenRailwayMap financially, through [*Github Sponsors*](https://github.com/sponsors/hiddewie) or [*Buy Me a Coffee*](https://buymeacoffee.com/hiddewie).
 
 View the [contribution documentation](CONTRIBUTING.md) for details.
 
@@ -62,7 +63,7 @@ View the [setup documentation](SETUP.md) for details.
 
 ## Deployment
 
-The [deployment documentation](deployment/README.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions), Cloudflare and a server running the software.
+The [deployment documentation](deployment/README.md) describes how the OpenRailwayMap is deployed to https://openrailwaymap.app using [Github Actions](https://docs.github.com/en/actions), Cloudflare and a server running the software. View [the usage policy of the OpenRailwayMap services](USAGE.md).
 
 ## License
 

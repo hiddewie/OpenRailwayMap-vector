@@ -13,7 +13,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
-    cy.get('.date-display').should('include.text', '1947')
+    cy.get('.date-display').should('have.value', '1947')
     cy.url().should('include', 'date=1947')
 
     cy.wait(3000)
@@ -37,17 +37,14 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
-    cy.url().should('include', 'style=gauge')
+    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
-    cy.url().should('include', 'style=loading_gauge')
-
-    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
-    cy.url().should('include', 'style=track_class')
+    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
     cy.screenshot()
@@ -70,7 +67,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.get('.maplibregl-ctrl-date input[type=range]').invoke('val', 1947).trigger('input').trigger('change')
-    cy.get('.date-display').should('include.text', '1947')
+    cy.get('.date-display').should('have.value', '1947')
     cy.url().should('include', 'date=1947')
 
     cy.wait(3000)
@@ -94,17 +91,14 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Gauge').click()
-    cy.url().should('include', 'style=gauge')
+    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Loading gauge').click()
-    cy.url().should('include', 'style=loading_gauge')
-
-    cy.contains('.maplibregl-ctrl-style button', 'Track class').click()
-    cy.url().should('include', 'style=track_class')
+    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
     cy.screenshot()
@@ -114,14 +108,14 @@ describe('home page', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
     // Open legend
-    cy.contains('Legend').click()
+    cy.contains('button.maplibregl-ctrl-legend', 'Legend').click()
 
     // TODO assert legend
     cy.wait(3000)
     cy.screenshot()
 
     // Close legend
-    cy.contains('Legend').click()
+    cy.contains('button.maplibregl-ctrl-legend', 'Legend').click()
   })
 
   it('search', () => {

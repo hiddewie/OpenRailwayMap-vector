@@ -21,6 +21,8 @@ postgres:
   # # You may set this to `false` to disable.
   auto_publish: false
 
+  reload_interval: ${POSTGRES_RELOAD_INTERVAL:-0s}
+
   # No tables, see function sources below
   tables: {}
 
@@ -108,6 +110,16 @@ postgres:
       function: standard_railway_switch_ref
       minzoom: 17
 
+    standard_interlocking:
+      schema: public
+      function: standard_interlocking
+      minzoom: 13
+
+    standard_interlocking_text:
+      schema: public
+      function: standard_interlocking_text
+      minzoom: 13
+
     # --- Speed --- #
 
     speed_railway_line_low:
@@ -122,6 +134,11 @@ postgres:
 
     # --- Signals --- #
 
+    signals_railway_line_low_construction:
+      schema: public
+      function: signals_railway_line_low_construction
+      maxzoom: 7
+
     signals_railway_line_low:
       schema: public
       function: signals_railway_line_low
@@ -131,12 +148,17 @@ postgres:
       schema: public
       function: signals_signal_boxes
       minzoom: 8
-      maxzoom: 14
+      maxzoom: 16
 
     signals_railway_signals:
       schema: public
       function: signals_railway_signals
       minzoom: 13
+
+    signals_railway_symbols:
+      schema: public
+      function: signals_railway_symbols
+      minzoom: 16
 
     # --- Electrification --- #
 
@@ -155,30 +177,21 @@ postgres:
       function: electrification_railway_symbols
       minzoom: 13
 
+    electrification_substation:
+      schema: public
+      function: electrification_substation
+      minzoom: 13
+
     electrification_catenary:
       schema: public
       function: electrification_catenary
       minzoom: 14
 
-    # --- Gauge --- #
+    # --- Track --- #
 
-    gauge_railway_line_low:
+    track_railway_line_low:
       schema: public
-      function: gauge_railway_line_low
-      maxzoom: 7
-
-    # --- Loading gauge --- #
-
-    loading_gauge_railway_line_low:
-      schema: public
-      function: loading_gauge_railway_line_low
-      maxzoom: 7
-
-    # --- Track class --- #
-
-    track_class_railway_line_low:
-      schema: public
-      function: track_class_railway_line_low
+      function: track_railway_line_low
       maxzoom: 7
 
     # --- Operator --- #
@@ -193,5 +206,9 @@ postgres:
       function: operator_railway_symbols
       minzoom: 13
 
-fonts:
-  - /config/fonts
+    # --- Route --- #
+
+    route_railway_line_low:
+      schema: public
+      function: route_railway_line_low
+      maxzoom: 7

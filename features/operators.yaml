@@ -1,0 +1,3469 @@
+# Mapping of known operators to their color and other metadata
+# Unknown operators will get assigned a generated color
+
+$schema: ./schema/operators.yaml
+
+operators:
+
+  # --- AE --- #
+
+  - country: AE
+    names:
+      - 'الاتحاد للقطارات'
+    color: 'rgb(193, 5, 5)'
+
+  # --- AL --- #
+
+  - country: AL
+    names:
+      - 'Hekurudha Shqiptare'
+    color: '#d90026'
+
+  # --- AM --- #
+
+  - country: AM
+    names:
+      - 'Южно-Кавказская железная дорога'
+      - 'Հարավկովկասյան երկաթուղի'
+      - 'Armenian Railway'
+    color: '#fb7d26'
+
+  # --- AO --- #
+
+  - country: AO
+    names:
+      - 'Empresa do Caminho de Ferro de Moçâmedes-E.P.'
+    color: 'rgb(242, 169, 0)'
+
+  - country: AO
+    names:
+      - 'Caminho de Ferro de Luanda E.P.'
+      - 'Caminho de Ferro de Luanda'
+    color: 'rgb(171, 23, 36)'
+
+  # --- AR --- #
+
+  - country: AR
+    names:
+      - 'Ferrocarriles Argentinos S.A. (FASA)'
+      - 'Trenes Argentinos'
+      - 'Trenes Argentinos Operadora Ferroviaria'
+    color: 'rgb(35, 45, 79)'
+
+  - country: AR
+    names:
+      - 'FerroExpreso Pampeano S.A. (FEPSA)'
+    color: 'rgb(208, 34, 37)'
+
+  - country: AR
+    names:
+      - 'Tren Patagónico S.A.'
+      - 'Tren Patagónico SA'
+      - 'Tren Patagónico'
+    color: '#006B57'
+
+  - country: AR
+    names:
+      - 'Ferro Sur Roca S.A.'
+    color: '#059cca'
+
+  # --- AT --- #
+
+  - country: AT
+    names:
+      - 'ÖBB-Infrastruktur AG'
+      - 'ÖBB'
+    color: '#ff0000'
+
+  - country: AT
+    names:
+      - 'Wiener Linien'
+    color: '#000050'
+
+  - country: AT
+    names:
+      - 'WLB' # Wiener Lokalbahnen
+    color: '#00548C'
+
+  - country: AT
+    names:
+      - 'NSB' # Neusiedler Seebahn
+    color: '#1b4679'
+
+  # --- AU --- #
+
+  - country: AU
+    names:
+      - 'Keolis Downer'
+    color: '#94d600'
+
+  - country: AU
+    names:
+      - 'Queensland Rail'
+      - 'QueenslandRail'
+    color: '#db1f26'
+
+  - country: AU
+    names:
+      - 'NSW Trains'
+      - 'NSW Trainlink'
+      - 'NSW TrainLink'
+    color: '#df4e21'
+
+  - country: AU
+    names:
+      - 'CountryLink'
+      - 'Countrylink'
+    color: '#00adc6'
+
+  - country: AU
+    names:
+      - 'RailCorp'
+    color: 'rgb(0, 53, 121)'
+
+  - country: AU
+    names:
+      - 'ARTC'
+      - 'Australian Rail Track Corporation'
+    color: '#027800' # Official color is gray
+
+  - country: AU
+    names:
+      - 'CityRail'
+    color: '#f79239'
+
+  - country: AU
+    names:
+      - 'V/Line'
+    color: '#803d99'
+
+  - country: AU
+    names:
+      - 'Public Transport Victoria - Metro'
+    color: '#2b008c'
+
+  - country: AU
+    names:
+      - 'Adelaide Metro'
+    color: '#ed1c24'
+
+  - country: AU
+    names:
+      - 'Transperth'
+    color: '#008635'
+
+  - country: AU
+    names:
+      - 'ARC Infrastructure'
+    color: '#003f6b'
+
+  - country: AU
+    names:
+      - 'Transwa'
+    color: '#ec4025'
+
+  - country: AU
+    names:
+      - 'BHP Billiton'
+      - 'BHP Iron Ore'
+    color: '#E25200'
+
+  - country: AU
+    names:
+      - 'Rio Tinto'
+    color: '#CD2C2C'
+
+  - country: AU
+    names:
+      - 'Hancock Prospecting'
+    color: '#86150F'
+
+  - country: AU
+    names:
+      - 'Fortescue'
+      - 'Fortescue Metal Group'
+    color: '#00c400'
+
+  - country: AU
+    names:
+      - 'Aurizon'
+      - 'Aurizon Operations'
+      - 'Aurizon Network'
+    color: '#FF9900'
+
+  - country: AU
+    names:
+      - 'Bowen Rail Company'
+    color: '#001a72'
+
+  - country: AU
+    names:
+      - 'Airtrain Citylink Limited'
+    color: '#00a9a5'
+
+  # --- AZ --- #
+
+  - country: AZ
+    names:
+      - '«Azərbaycan Dəmir Yolları» QSC'
+      - 'Azərbaycan Dövlət Dəmir Yolu'
+    color: '#143b6e'
+
+  # --- BA --- #
+
+  - country: BA
+    names:
+      - 'Željeznice Republike Srpske'
+      - 'ŽRS'
+      - 'Желјезнице Републике Српске'
+      - 'ЖРС'
+    color: '#043bd7'
+
+  - country: BA
+    names:
+      - 'Željeznice Federacije Bosne i Hercegovine'
+      - 'ŽFBH'
+    color: 'rgb(247, 148, 30)'
+
+  # --- BE --- #
+
+  - country: BE
+    names:
+      - 'NMBS/SNCB'
+    color: '#004979'
+
+  - country: BE
+    names:
+      - 'Infrabel'
+    color: '#02bcf0'
+
+  # --- BG --- #
+
+  - country: BG
+    names:
+      - 'НКЖИ'
+    color: '#1178bd'
+
+  - country: BG
+    names:
+      - 'БДЖ'
+      - 'BDZ'
+    color: '#158246'
+
+  # --- BO --- #
+
+  - country: BO
+    names:
+      - 'Ferroviaria Andina'
+      - 'Empresa Ferroviaria Andina SA'
+    color: '#ca8f05'
+
+  - country: BO
+    names:
+      - 'Ferroviaria Oriental'
+      - 'FCO'
+      - 'FO'
+    color: '#a74804'
+
+  # --- BR --- #
+
+  - country: BR
+    names:
+      - 'RUMO'
+      - 'Rumo S/A'
+      - 'Rumo S.A. Malha Paulista'
+    color: '#037a27'
+
+  - country: BR
+    names:
+      - 'MRS'
+      - 'MRS Logística S.A.'
+      - 'MRS Logística'
+    color: '#c6a305'
+
+  - country: BR
+    names:
+      - 'SuperVia'
+    color: '#9204a7'
+
+  - country: BR
+    names:
+      - 'MetrôRio'
+    color: '#0681c0'
+
+  - country: BR
+    names:
+      - 'EFVM'
+      - 'Vale'
+    color: 'rgb(0, 126, 122)'
+
+  # --- BY --- #
+
+  - country: BY
+    names:
+      - 'БЧ'
+    color: '#2d88e4'
+
+  # --- BD --- #
+
+  - country: BD
+    names:
+      - 'BR'
+      - 'Bangladesh Railway'
+      - 'বাংলাদেশ রেলওয়ে'
+      - 'বাংলাদেশ রেলওয়ে'
+    color: '#da0000'
+
+  # --- CA --- #
+
+  - country: CA
+    names:
+      - 'Canadian Pacific Kansas City'
+      - 'Canadien Pacifique Kansas City'
+      - 'CPKC'
+    color: '#C2002F'
+
+  - country: CA
+    names:
+      - 'Canadian National Railway'
+      - 'Canadien National'
+      - 'CN'
+    color: '#EF3037'
+
+  - country: CA
+    names:
+      - 'VIA Rail'
+      - 'VIA'
+    color: '#daae00'
+
+  - country: CA
+    names:
+      - 'GO Transit'
+    color: '#4a7729'
+
+  - country: CA
+    names:
+      - 'Ontario Northland Railway'
+    color: '#003366'
+
+  - country: CA
+    names:
+      - 'Toronto Transit Commission'
+    color: '#da251d'
+
+  # --- CA: Genesee & Wyoming subsidiaries --- #
+  - country: CA
+    names:
+      - 'Cape Breton and Central Nova Scotia Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Huron Central Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Goderich-Exeter Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Knob Lake and Timmins Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Ottawa Valley Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Quebec Gatineau Railway'
+      - 'Chemin de fer Québec-Gatineau'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Red Deer Railway'
+    color: '#f68b1e'
+
+  - country: CA
+    names:
+      - 'Western Labrador Rail Services'
+    color: '#f68b1e'
+
+  # --- CH --- #
+
+  - country: CH
+    names:
+      - 'SBB'
+      - 'CFF'
+      - 'FFS'
+      - 'SBB CFF FFS'
+    color: '#00a213'
+
+  - country: CH
+    names:
+      - 'RhB'
+    color: '#ca4140'
+
+  - country: CH
+    names:
+      - 'BLS'
+    color: '#ca9e40'
+
+  - country: CH
+    names:
+      - 'ZB'
+    color: '#ad2718'
+
+  - country: CH
+    names:
+      - 'VBZ'
+    color: 'rgb(5, 127, 172)'
+
+  - country: CH
+    names:
+      - 'SZU'
+    color: '#e62e25'
+
+  - country: CH
+    names:
+      - 'BVB'
+    color: '#e6eb00'
+
+  # --- CL --- #
+
+  - country: CL
+    names:
+      - 'FCAB'
+    color: '#04598b'
+
+  - country: CL
+    names:
+      - 'Ferronor'
+    color: '#c04d4a'
+
+  - country: CL
+    names:
+      - 'EFE Sur'
+      - 'FESUR'
+    color: 'rgb(234, 0, 41)'
+
+  # --- CM --- #
+
+  - country: CM
+    names:
+      - 'Camrail'
+      - 'CAMRAIL'
+    color: 'rgb(221, 0, 0)'
+
+  # --- CN --- #
+
+  # See https://en.wikipedia.org/wiki/China_Railway#Companies
+
+  - country: CN
+    names:
+      # China Railway Harbin Group
+      - '中国铁路哈尔滨局集团'
+    color: '#168cb4'
+
+  - country: CN
+    names:
+      # China Railway Shenyang Group
+      - '中国铁路沈阳局集团'
+      - '中国铁路沈阳局集团有限公司'
+    color: '#e30811'
+
+  - country: CN
+    names:
+      # China Railway Beijing Group
+      - '中国铁路北京局集团'
+    color: '#1f2288'
+
+  - country: CN
+    names:
+      # China Railway Hohhot Group
+      - '中国铁路呼和浩特局集团'
+    color: '#6bb82c'
+
+  - country: CN
+    names:
+      # China Railway Taiyuan Group
+      - '中国铁路太原局集团'
+    color: 'rgb(0, 126, 188)'
+
+  - country: CN
+    names:
+      # China Railway Jinan Group
+      - '中国铁路济南局集团'
+    color: '#bd541f'
+
+  - country: CN
+    names:
+      # China Railway Shanghai Group
+      - '中国铁路上海局集团'
+    color: '#2a3390'
+
+  - country: CN
+    names:
+      # China Railway Nanchang Group
+      - '中国铁路南昌局集团'
+    color: '#f85c11'
+
+  - country: CN
+    names:
+      # China Railway Guangzhou Group
+      - '中国铁路南昌局集团'
+      - '中国铁路广州局集团有限公司'
+    color: '#76c5f0'
+
+  - country: CN
+    names:
+      # China Railway Nanning Group
+      - '中国铁路南宁局集团'
+      - '南宁铁路局'
+      - '中国铁路南宁局集团有限公司'
+    color: '#2c1fbd'
+
+  - country: CN
+    names:
+      # China Railway Wuhan Group
+      - '中国铁路武汉局集团'
+    color: '#c5352d'
+
+  - country: CN
+    names:
+      # China Railway Zhengzhou Group
+      - '中国铁路郑州局集团'
+    color: '#84b725'
+
+  - country: CN
+    names:
+      # China Railway Chengdu Group
+      - '中国铁路成都局集团'
+      - '中国铁路成都局集团有限公司'
+    color: '#1fbdba'
+
+  - country: CN
+    names:
+      # China Railway Kunming Group
+      - '中国铁路昆明局集团'
+      - '中国铁路昆明局集团有限公司'
+    color: '#eb9021'
+
+  - country: CN
+    names:
+      # China Railway Qingzang Group
+      - '中国铁路青藏集团'
+    color: '#49af34'
+
+  - country: CN
+    names:
+      # China Railway Lanzhou Group
+      - '中国铁路兰州局集团'
+    color: '#bd1f1f'
+
+  - country: CN
+    names:
+      # China Railway Ürümqi Group
+      - '中国铁路乌鲁木齐局集团'
+    color: '#de0000'
+
+  - country: CN
+    names:
+      # China Railway Xi'an Group
+      - '中国铁路西安局集团'
+      - '中国铁路西安局集团有限公司'
+    color: '#bd9d1f'
+
+  # --- CR --- #
+
+  - country: CR
+    names:
+      - 'Incofer'
+      - 'INCOFER'
+    color: 'rgb(29, 39, 88)'
+
+  # --- CU --- #
+
+  - country: CU
+    names:
+      - 'Ferrocarriles de Cuba'
+      - 'FFCC'
+      - 'Ferrocarriles de Cuba (FFCC)'
+    color: '#0361b3'
+
+  # --- CZ --- #
+
+  - country: CZ
+    names:
+      - 'cz:SŽDC'
+      - 'cz:Správa Železnic'
+      - 'cz:SŽ'
+      - 'Správa železnic, s. o.'
+      - 'Správa železnic'
+      - 'SŽDC'
+      - 'SŽ'
+    color: '#ff5200'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik Ostrava'
+    color: '#1d61ff'
+
+  - country: CZ
+    names:
+      - 'cz:Vítkovice Doprava'
+    color: '#00841f'
+
+  # --- DE --- #
+
+  - country: DE
+    names:
+      - 'DB InfraGO AG'
+      - 'DB InfraGO'
+      - 'DB Netz AG'
+      - 'DB Netz'
+      - 'DB Station&Service AG'
+      - 'DB Station&Service'
+      - 'Deutsche Bahn'
+      - 'DB'
+    color: '#799400'
+
+  - country: DE
+    names:
+      - 'Albtal-Verkehrs-Gesellschaft mbH'
+    color: '#008833'
+
+  - country: DE
+    names:
+      - 'Augsburger Localbahn'
+    color: '#fd6e22'
+
+  - country: DE
+    names:
+      - 'DB RegioNetz Infrastruktur GmbH'
+    color: '#ac21b6'
+
+  - country: DE
+    names:
+      - 'Regio Infra Nord-Ost GmbH & Co. KG'
+    color: '#007733'
+
+  - country: DE
+    names:
+      - 'Deutsche Regionaleisenbahn'
+      - 'Deutsche Regionaleisenbahn GmbH'
+      - 'Bayerische Regionaleisenbahn'
+      - 'Bayerische Regionaleisenbahn GmbH'
+    color: '#e60073'
+
+  - country: DE
+    names:
+      - 'Thüringer Eisenbahn GmbH'
+      - 'ThE'
+    color: '#014601'
+
+  - country: DE
+    names:
+      - 'Schieneninfrastruktur Ost-Niedersachsen GmbH'
+    color: '#bd0040'
+
+  - country: DE
+    names:
+      - 'AKN Eisenbahn'
+      - 'AKN Eisenbahn GmbH'
+      - 'AKN'
+    color: '#0072bc'
+
+  - country: DE
+    names:
+      - 'Eisenbahnen und Verkehrsbetriebe Elbe-Weser'
+      - 'Eisenbahnen und Verkehrsbetriebe Elbe-Weser GmbH'
+      - 'EVB'
+    color: '#004782'
+
+  - country: DE
+    names:
+      - 'SWEG Schienenwege'
+      - 'SWEG Schienenwege GmbH'
+    color: '#114499'
+
+  - country: DE
+    names:
+      - 'Usedomer Bäderbahn GmbH'
+      - 'UBB Polska sp. z o.o.'
+    color: '#114488'
+
+  - country: DE
+    names:
+      - 'BayernBahn Infra'
+    color: '#3d0e7b'
+
+  - country: DE
+    names:
+      - 'Rennsteigbahn GmbH & Co. KG'
+    color: '#050f08'
+
+  - country: DE
+    names:
+      - 'Rhein-Neckar-Verkehr'
+    color: '#ee7700'
+
+  - country: DE
+    names:
+      - 'Berliner Verkehrsbetriebe'
+    color: '#f0d020'
+
+  - country: DE
+    names:
+      - 'Rostocker Straßenbahn AG'
+    color: '#005090'
+
+  - country: DE
+    names:
+      - 'SSB AG'
+      - 'Stuttgarter Straßenbahnen AG'
+      - 'Stuttgarter Straßenbahnen (SSB)'
+    color: '#ae8c00'
+
+  - country: DE
+    names:
+      - 'Verkehrsbetriebe Karlsruhe GmbH'
+    color: '#ffaa33'
+
+  - country: DE
+    names:
+      - 'VGF' # Verkehrsgesellschaft Frankfurt am Main
+    color: '#008080'
+
+  - country: DE
+    names:
+      - 'ÜSTRA'
+      - 'Überlandwerke und Straßenbahnen Hannover'
+    color: 'rgb(32, 172, 43)'
+
+  - country: DE
+    names:
+      - 'Magdeburger Verkehrsbetriebe GmbH & Co. KG'
+    color: 'rgb(1, 132, 68)'
+
+  - country: DE
+    names:
+      - 'Hallesche Verkehrs-AG'
+      - 'HAVAG'
+    color: '#0099d1'
+
+  - country: DE
+    names:
+      - 'Leipziegr Verkehrsbetriebe GmbH'
+      - 'Leipziger Verkehrsbetriebe'
+      - 'LVB'
+    color: '#ae8c00'
+
+  - country: DE
+    names:
+      - 'moBiel GmbH'
+    color: '#fa6400'
+
+  - country: DE
+    names:
+      - 'DVB'
+      - 'Dresdner Verkehrsbetriebe AG'
+    color: '#be9200'
+
+  - country: DE
+    names:
+      - 'MVG'
+      - 'Münchner Verkehrsgesellschaft'
+    color: '#0065cc'
+
+  - country: DE
+    names:
+      - 'VAG Verkehrs-Aktiengesellschaft Nürnberg'
+    color: '#b80012'
+
+  - country: DE
+    names:
+      - 'Ruhrbahn'
+    color: '#CFA730'
+
+  # --- DK --- #
+
+  - country: DK
+    names:
+      - 'Banedanmark'
+    color: '#1fbd93'
+
+  - country: DK
+    names:
+      - 'DSB'
+      - 'DSB S-tog'
+    color: '#b41730'
+
+  - country: DK
+    names:
+      - 'A/S Storebælt'
+    color: '#041639'
+
+  - country: DK
+    names:
+      - 'Lokaltog'
+    color: 'rgb(0, 39, 94)'
+
+  # --- DZ --- #
+
+  - country: DZ
+    names:
+      - 'الشركة الوطنية للنقل بالسكك الحديدية'
+      - 'Société Nationale des Transports Ferroviaires'
+      - 'Société nationale des transports ferroviaires'
+      - 'SNTF'
+    color: 'rgb(22, 78, 120)'
+
+  - country: DZ
+    names:
+      - 'SETRAM'
+      - 'سيترام'
+      - 'شركة استغلال الترامواي'
+    color: '#1da285'
+
+  # --- EE --- #
+
+  - country: EE
+    names:
+      - 'Edelaraudtee AS'
+    color: '#00a63c'
+
+  - country: EE
+    names:
+      - 'AS Eesti Raudtee'
+    color: '#75001f'
+
+  # --- EG --- #
+
+  - country: EG
+    names:
+      - 'الهيئة القومية لسكك حديد مصر'
+    color: '#ff0010'
+
+  # --- ES --- #
+
+  - country: ES
+    names:
+      - 'Renfe'
+      - 'Renfe Operadora'
+    color: 'rgb(129, 0, 94)'
+
+  - country: ES
+    names:
+      - 'Adif'
+      - 'Adif AV'
+      - 'ADIF'
+    color: '#007139'
+
+  - country: ES
+    names:
+      - 'Euskal Trenbide Sarea'
+      - 'Eusko Trenbideak – Ferrocarriles Vascos'
+      - 'Eusko Trenbideak – Ferrocarriles Vascos S.A.'
+    color: '#e93637'
+
+  - country: ES
+    names:
+      - 'Ferrocarrils de la Generalitat de Catalunya'
+      - 'FGC'
+    color: '#75a700'
+
+  - country: ES
+    names:
+      - 'Ferrocarrils de la Generalitat Valenciana'
+      - 'FGV'
+    color: '#ffb20f'
+
+  - country: ES
+    names:
+      - 'Metro de Madrid'
+    color: '#ed1c23'
+
+  - country: ES
+    names:
+      - 'Metro de Málaga'
+    color: '#e23527'
+
+  - country: ES
+    names:
+      - 'TMB'
+      - 'Transports Metropolitans de Barcelona'
+    color: '#cc0018'
+
+  # --- FR --- #
+
+  - country: FR
+    names:
+      - 'SNCF'
+      - 'SNCF Réseau'
+      - 'SNCF Gares & Connexions'
+    color: '#781e4e'
+
+  - country: FR
+    names:
+      - 'LISEA'
+    color: '#0E2C48'
+
+  - country: FR
+    names:
+      - 'TER Nouvelle-Aquitaine'
+    color: 'rgb(179, 45, 56)'
+
+  - country: FR
+    names:
+      - 'TER Bourgogne-Franche-Comté'
+    color: 'rgb(245, 197, 0)'
+
+  - country: FR
+    names:
+      - 'RATP'
+      - 'RATP Transilien SNCF Ile de France Mobilités'
+      - 'RATP Île de France Mobilités'
+      - 'RATP Ile de France Mobilités'
+      - 'RATP Cap Bièvre'
+      - 'RATP Dev'
+    color: '#4caa83'
+
+  - country: FR
+    names:
+      - 'Keolis'
+      - 'Keolis Lyon'
+    color: 'rgb(0, 130, 150)'
+
+  - country: FR
+    names:
+      - 'Alstom SA'
+      - 'Alstom'
+    color: '#E31B23'
+
+  # --- FI --- #
+
+  - country: FI
+    names:
+      - 'Väylävirasto'
+    color: '#009bff'
+
+  - country: FI
+    names:
+      - 'HKL-Raitioliikenne'
+      - 'HSL'
+    color: '#8c4798'
+
+  # --- GB --- #
+
+  - country: GB
+    names:
+      - 'Network Rail'
+    color: 'rgb(227, 81, 0)'
+
+  - country: GB
+    names:
+      - 'South Western Railway'
+    color: 'rgb(0, 146, 203)'
+
+  - country: GB
+    names:
+      - 'Great Western Railway'
+    color: '#0a493e'
+
+  - country: GB
+    names:
+      - 'Transport for Wales Rail'
+    color: '#900000'
+
+  - country: GB
+    names:
+      - 'West Midlands Trains (West Midlands Railway)'
+    color: '#e07709'
+
+  - country: GB
+    names:
+      - 'West Midlands Trains (London Northwestern Railway)'
+    color: '#00a862'
+
+  - country: GB
+    names:
+      - 'East Midlands Railway'
+    color: '#4c2f48'
+
+  - country: GB
+    names:
+      - 'London North Eastern Railway'
+    color: 'rgb(206, 19, 46)'
+
+  - country: GB
+    names:
+      - 'Greater Anglia'
+    color: '#84101f'
+
+  - country: GB
+    names:
+      - 'Govia Thameslink Railway (Great Northern)'
+    color: '#43165c'
+
+  - country: GB
+    names:
+      - 'Govia Thameslink Railway'
+      - 'Govia Thameslink Railway (Thameslink)'
+    color: '#ea3b8b'
+
+  - country: GB
+    names:
+      - 'Govia Thameslink Railway (Southern)'
+    color: '#033f2c'
+
+  - country: GB
+    names:
+      - 'Southeastern'
+    color: '#daae00'
+
+  - country: GB
+    names:
+      - 'Northern Trains'
+    color: 'rgb(38, 34, 98)'
+
+  - country: GB
+    names:
+      - 'ScotRail'
+    color: '#227330' # Logo color is too similar to Northern Trains color
+
+  - country: GB
+    names:
+      - 'Translink NI Railways'
+    color: 'rgb(8, 79, 92)'
+
+  - country: GB
+    names:
+      - 'London Underground'
+      - 'London Overground'
+      - 'Transport for London'
+      - 'TfL'
+    color: '#000099'
+
+  - country: GB
+    names:
+      - 'KeolisAmey Docklands Ltd'
+    color: '#00aac3'
+
+  - country: GB
+    names:
+      - 'Chiltern Railways'
+    color: '#daae00'
+
+  # --- GE --- #
+
+  - country: GE
+    names:
+      - 'სს "საქართველოს რკინიგზა"'
+    color: '#1a9d57'
+
+  # --- GR --- #
+
+  - country: GR
+    names:
+      - 'Οργανισμός Σιδηροδρόμων Ελλάδος'
+      - 'ΟΣΕ'
+      - 'Ο.Σ.Ε.'
+    color: '#f27e08'
+
+  # --- HR --- #
+
+  - country: HR
+    names:
+      - 'HŽ' # HŽ Putnički prijevoz
+      - 'HŽPP'
+    color: '#0093D0'
+
+  - country: HR
+    names:
+      - 'HŽ Infrastruktura'
+    color: '#30639b'
+
+  # --- HU --- #
+
+  - country: HU
+    names:
+      - 'MÁV'
+    color: '#2e5ea8'
+
+  - country: HU
+    names:
+      - 'GYSEV'
+      - 'GySEV'
+      - 'Raaberbahn'
+    color: '#00952c'
+
+  - country: HU
+    names:
+      - 'BKV'
+    color: 'rgb(12, 130, 128)'
+
+  # --- ID --- #
+
+  - country: ID
+    names:
+      - 'PT Kereta Api Indonesia (Persero)'
+      - 'PT Kereta Api Indonesia'
+      - 'PT Kereta Api Logistik'
+      - 'PT. Kereta Api Indonesia (Persero)'
+      - 'Kereta Api Indonesia'
+      - 'Kereta Api Indonesia (Persero)'
+      - 'PT KAI'
+      - 'KAI'
+    color: '#ee6b1e'
+
+  - country: ID
+    names:
+      - 'MRT Jakarta'
+    color: 'rgb(1, 74, 180)'
+
+  - country: ID
+    names:
+      - 'LRT Jakarta'
+    color: 'rgb(234, 27, 35)'
+
+  - country: ID
+    names:
+      - 'LRT Jabodebek'
+    color: 'rgb(225, 16, 4)'
+
+  # --- IE --- #
+
+  - country: IE
+    names:
+      - 'Iarnród Éireann'
+      - 'Irish Rail'
+    color: 'rgb(46, 133, 57)'
+
+  # --- IN --- #
+
+  # See https://en.wikipedia.org/wiki/Indian_Railways_organisational_structure#Zonal_management
+
+  - country: IN
+    names:
+      - 'IR'
+      - 'Indian Railways'
+    color: '#1d38b0'
+
+  - country: IN
+    names:
+      - 'WR'
+      - 'Western Railway'
+    color: '#1db072'
+
+  - country: IN
+    names:
+      - 'NWR'
+      - 'North Western Railway'
+    color: '#b0441d'
+
+  - country: IN
+    names:
+      - 'NER'
+      - 'North Eastern Railway'
+    color: '#b0721d'
+
+  - country: IN
+    names:
+      - 'NR'
+      - 'Northern Railway'
+    color: '#b01d66'
+
+  - country: IN
+    names:
+      - 'NFR'
+      - 'Northeast Frontier Railway'
+    color: '#1d81b0'
+
+  - country: IN
+    names:
+      - 'NCR'
+      - 'North Central Railway'
+    color: '#b905c6'
+
+  - country: IN
+    names:
+      - 'CR'
+      - 'Central Railway'
+    color: '#b08d1d'
+
+  - country: IN
+    names:
+      - 'ECR'
+      - 'East Central Railway'
+    color: '#1d53b0'
+
+  - country: IN
+    names:
+      - 'WCR'
+      - 'West Central Railway'
+    color: '#c60505'
+
+  - country: IN
+    names:
+      - 'SR'
+      - 'Southern Railway'
+    color: '#1db04e'
+
+  - country: IN
+    names:
+      - 'SWR'
+      # South Western Railway is used in GB
+    color: '#661db0'
+
+  - country: IN
+    names:
+      - 'SCR'
+      - 'South Central Railway'
+    color: '#a11db0'
+
+  - country: IN
+    names:
+      - 'SECR'
+      - 'South East Central Railway'
+    color: '#1db046'
+
+  - country: IN
+    names:
+      - 'ECoR'
+      - 'East Coast Railway'
+    color: '#b01d6b'
+
+  - country: IN
+    names:
+      - 'SER'
+      - 'South Eastern Railway'
+    color: '#b0811d'
+
+  - country: IN
+    names:
+      - 'ER'
+      - 'Eastern Railway'
+    color: '#1db050'
+
+  - country: IN
+    names:
+      - 'Delhi Metro Rail Corporation Limited'
+    color: '#c08828'
+
+  - country: IN
+    names:
+      - 'National Capital Region Transport Corporation'
+    color: 'rgb(28, 117, 188)'
+
+  # --- IQ --- #
+
+  - country: IQ
+    names:
+      - 'IRR'
+      - 'Iraqi Republic Railways الشركة العامة لسكك الحديد العراقية'
+      - 'الشركة العامة لسكك الحديد العراقية'
+    color: '#1a9d57'
+
+  # --- IT --- #
+
+  - country: IT
+    names:
+      - 'Rete Ferroviaria Italiana'
+    color: '#006a6a'
+
+  - country: IT
+    names:
+      - 'Gruppo Torinese Trasporti'
+    color: 'rgb(0, 114, 204)'
+
+  - country: IT
+    names:
+      - 'Terminali Italia'
+    color: '#e51937'
+
+  - country: IT
+    names:
+      - 'Ferrovienord'
+    color: '#af7b19'
+
+  - country: IT
+    names:
+      - 'ATAC'
+    color: 'rgb(130, 36, 51)'
+
+  - country: IT
+    names:
+      - 'ASTRAL'
+    color: '#00263d'
+
+  - country: IT
+    names:
+      - 'Ferrovia Vaticana'
+    color: '#c08828'
+
+  - country: IT
+    names:
+      - 'ATM'
+      - 'Azienda Trasporti Milanesi'
+    color: 'rgb(241, 73, 16)'
+
+  # --- JP --- #
+  # JR Companies
+  - country: JP
+    names:
+      # East Japan Railway Company
+      - '東日本旅客鉄道'
+      - '東日本旅客鉄道株式会社'
+      - '東日本旅客鉄道 (East Japan Railway)'
+    color: '#007903'
+
+  - country: JP
+    names:
+      # JR西日本 West Japan Railway Company
+      - '西日本旅客鉄道'
+      - '西日本旅客鉄道株式会社'
+      - 'JR西日本'
+    color: 'rgb(0, 101, 177)'
+
+  - country: JP
+    names:
+      # Shikoku Railway Company
+      - '四国旅客鉄道'
+      - 'JR四国'
+      - '四国旅客鉄道株式会社'
+    color: '#1cadca'
+
+  - country: JP
+    names:
+      # JR北海道- Hokkaido Railway Company
+      - '北海道旅客鉄道'
+    color: '#45B035'
+
+  - country: JP
+    names:
+      # ＪＲ東海 Central Japan Railway Company
+      - '東海旅客鉄道'
+      - '東海旅客鉄道 (JR Central)'
+      - '東海旅客鉄道株式会社'
+    color: 'rgb(248, 123, 34)'
+
+  - country: JP
+    names:
+      # Japan Freight Railway Company
+      - '日本貨物鉄道'
+      - 'JR貨物'
+    color: '#477897'
+
+  - country: JP
+    names:
+      # Kyushu Railway Company
+      - '九州旅客鉄道'
+      - 'JR Kyushu'
+      - 'JR九州'
+    color: '#DA2728'
+
+  # Kansai Region
+  - country: JP
+    names:
+      # Kintetsu railway
+      - '近畿日本鉄道'
+    color: '#0068b3'
+
+  - country: JP
+    names:
+      # Osaka Metro
+      - '大阪市高速電気軌道'
+      - '大阪メトロ'
+    color: '#1d2088'
+
+  - country: JP
+    names:
+      # HAPI-LINE Fukui railway
+      - 'ハピラインふくい'
+    color: '#e6378d'
+
+  - country: JP
+    names:
+      # Kyoto Tango Railway
+      - '京都丹後鉄道'
+    color: '#ec75a2'
+
+  - country: JP
+    names:
+      # Nankai Electric railway
+      - '南海電気鉄道'
+      - '南海鉄道'
+    color: '#ff9900'
+
+  - country: JP
+    names:
+      # Keihan Electric Railway Co., Ltd.
+      - '京阪電気鉄道'
+    color: '#011961'
+
+  - country: JP
+    names:
+      # Hankyu Corporation
+      - '阪急電鉄'
+    color: '#ca0124'
+
+  - country: JP
+    names:
+      # Hanshin Electric Railway
+      - '阪神電気鉄道'
+    color: '#007ca5'
+
+  - country: JP
+    names:
+      # Sanyo Electric Railway
+      - '山陽電気鉄道'
+    color: '#e42926'
+
+  - country: JP
+    names:
+      # Chizu Express Co., Ltd.
+      - '智頭急行'
+    color: '#021499'
+
+  - country: JP
+    names:
+      # Ibara Railway
+      - '井原鉄道'
+    color: '#2f62a1'
+
+  - country: JP
+    names:
+      # Kita-Osaka Kyuko Railway
+      - '北大阪急行電鉄'
+      - '北大阪急行電鉄株式会社'
+    color: '#9b0040'
+
+  - country: JP
+    names:
+      # Hankai Tramway Co., Ltd.
+      - '阪堺電気軌道'
+      - '阪堺電気軌道 (Hankai denki kidō)'
+    color: '#24997c'
+
+  # Chubu Region
+  - country: JP
+    names:
+      # Nagoya Railroad Co.,Ltd.
+      - '名古屋鉄道'
+    color: '#c10024'
+
+  - country: JP
+    names:
+      # Transportation Bureau City of Nagoya
+      - '名古屋市交通局'
+      - '名古屋市'
+    color: '#1e569b'
+
+  - country: JP
+    names:
+      # Echigo Tokimeki Railway Company
+      - 'えちごトキめき鉄道'
+    color: '#ee1528'
+
+  - country: JP
+    names:
+      # Toyama Chihou Tetsudo Inc.
+      - '富山地方鉄道'
+    color: '#a71e41'
+
+  - country: JP
+    names:
+      # Hokuetsu Express Corporation
+      - '北越急行'
+    color: '#073190'
+
+  # Hokkaido Region
+  - country: JP
+    names:
+      # Sapporo City Transportation Bureau
+      - '札幌市交通局'
+    color: '#2b75c0'
+
+  # Kyushu Region
+  - country: JP
+    names:
+      # Nishi-Nippon Railroad Co.,Ltd.
+      - '西日本鉄道'
+    color: '#004ea1'
+
+  - country: JP
+    names:
+      # Fukuoka City Transportation Bureau
+      - '福岡市交通局'
+    color: '#0074bf'
+
+  # Shikoku Region
+  - country: JP
+    names:
+      # Iyo Railway Co.,Ltd.
+      - '伊予鉄道'
+    color: '#eb6100'
+
+  - country: JP
+    names:
+      # Tosa Kuroshio Tetsudo Co.,Ltd.
+      - '土佐くろしお鉄道'
+    color: '#00a0e9'
+
+  - country: JP
+    names:
+      # Takamatsu-Kotohira Electric Railroad Co.,Ltd.
+      - '高松琴平電気鉄道'
+    color: '#39227c'
+
+  # Kanto Region　(except Tokyo)
+  - country: JP
+    names:
+      # Aoimori Railway Company
+      - '青い森鉄道'
+    color: '#6fc5e9'
+
+  - country: JP
+    names:
+      # Akita Nairiku Jukan Tetsudo Railway Co., Ltd.
+      - '秋田内陸縦貫鉄道'
+    color: '#243d5a'
+
+  - country: JP
+    names:
+      # Sanriku Railway Company
+      - '三陸鉄道'
+    color: '#ed6c00'
+
+  - country: JP
+    names:
+      # Kominato Railway Company
+      - '小湊鉄道'
+      - '小湊鐵道 (Kominato Railway)'
+    color: '#ff3700'
+
+  - country: JP
+    names:
+      # IGR Iwate Galaxy Railway Company
+      - 'アイジーアールいわて銀河鉄道'
+    color: '#264697'
+
+  - country: JP
+    names:
+      # Konan Railway Corporation
+      - '弘南鉄道'
+    color: '#e47d49'
+
+  # Tokyo Metropolitan
+  - country: JP
+    names:
+      # Keikyu Corporation
+      - '京浜急行電鉄'
+      - '京浜急行電鉄 (Keikyu Corporation)'
+    color: 'rgb(0, 150, 224)'
+
+  - country: JP
+    names:
+      # Tokyo Metro Co., Ltd.
+      - '東京地下鉄'
+    color: '#00467e'
+
+  - country: JP
+    names:
+      # Bureau of Transportation Tokyo Metropolitan Government
+      - '東京都交通局'
+      - '東京都交通局 (Tokyo Metropolitan Bureau of Transportation)'
+    color: '#1c1d1f'
+
+  - country: JP
+    names:
+      # Tobu Railway Co., Ltd.
+      - '東武鉄道'
+      - '東武鉄道 (Tobu Railway)'
+    color: '#005bae'
+
+  - country: JP
+    names:
+      # Seibu Railway Co.,Ltd.
+      - '西武鉄道'
+      - '西武鉄道株式会社'
+      - '西武鉄道 (Seibu Railway)'
+    color: '#3366cc'
+
+  - country: JP
+    names:
+      # Chichibu Railway Co.,Ltd.
+      - '秩父鉄道'
+    color: '#01479d'
+
+  - country: JP
+    names:
+      # Tokyu Railways
+      - '東急電鉄'
+      - '東京急行電鉄'
+    color: '#ee0011'
+
+  - country: JP
+    names:
+      # Odakyu Electric Railway Co., Ltd.
+      - '小田急電鉄'
+    color: '#1155cc'
+
+  - country: JP
+    names:
+      # Keio Corporation
+      - '京王電鉄'
+      - '京王電鉄 (Keio railway)'
+    color: 'rgb(214, 0, 127)'
+
+  - country: JP
+    names:
+      # Sagami Railway Co., Ltd.
+      - '相模鉄道'
+    color: '#0c0c34'
+
+  - country: JP
+    names:
+      # Hokuso Railway Co., Ltd.
+      - '北総鉄道'
+    color: '#12284d'
+
+  - country: JP
+    names:
+      # Keisei Electric Railway Co., Ltd.
+      - '京成電鉄'
+      - '京成電鉄株式会社'
+    color: '#0a3788'
+
+  - country: JP
+    names:
+      # Saitama Railway Co., Ltd.
+      - '埼玉高速鉄道'
+    color: '#2351a5'
+
+  - country: JP
+    names:
+      # Tokyo Tama Intercity Monorail Co., Ltd.
+      - '多摩都市モノレール'
+    color: '#2351a5'
+
+  - country: JP
+    names:
+      # Tokyo Monorail Co., Ltd.
+      - '東京モノレール'
+      - '東京モノレール株式会社'
+    color: '#005075'
+
+  - country: JP
+    names:
+      # Transportation Bureau, City of Yokohama
+      - '横浜市交通局'
+      - '横浜市'
+    color: '#006bad'
+
+  - country: JP
+    names:
+      # Enoshima Electric Railway Co., Ltd.
+      - '江ノ島電鉄'
+    color: '#388a0a'
+
+  - country: JP
+    names:
+      # Tokyo Waterfront Area Rapid Transit Inc.
+      - '東京臨海高速鉄道'
+    color: '#00418e'
+
+  - country: JP
+    names:
+      # Metropolitan Intercity Railway Company
+      - '首都圏新都市鉄道'
+    color: '#003b83'
+
+  # --- KG --- #
+
+  - country: KG
+    names:
+      - 'Кыргыз темир жолу'
+    color: '#0d6efd'
+
+  # --- KO --- #
+
+  - country: KO
+    names:
+      - 'Trainkos'
+    color: '#f46c2e'
+
+  - country: KO
+    names:
+      - 'INFRAKOS'
+    color: '#d12614'
+
+  # --- KP --- #
+
+  - country: KP
+    names:
+      - '조선민주주의인민공화국 철도성'
+    color: '#ed1c27'
+
+  # --- KR --- #
+
+  - country: KR
+    names:
+      # Korea Railroad Corporation
+      - '한국철도공사'
+    color: '#005bac'
+
+  - country: KR
+    names:
+      # SR is already used in IN
+      - '에스알'
+    color: '#4b2f48'
+
+  - country: KR
+    names:
+      # Seoul Metro
+      - '서울교통공사'
+    color: '#293896'
+
+  - country: KR
+    names:
+      - '공항철도주식회사'
+    color: '#0090d2'
+
+  - country: KR
+    names:
+      - '인천교통공사'
+    color: '#ff671f'
+
+  - country: KR
+    names:
+      - '서해철도주식회사'
+    color: '#8fc31f'
+
+  - country: KR
+    names:
+      - '네오트랜스주식회사'
+    color: '#d20f46'
+
+  - country: KR
+    names:
+      - '지티엑스에이운영주식회사'
+    color: '#ae283a'
+
+  - country: KR
+    names:
+      - '로템SRS'
+    color: '#ad0003'
+
+  - country: KR
+    names:
+      - '(주)우진메트로'
+      - '우진메트로양산'
+      - '우이신설경전철운영(주)'
+    color: '#95296f'
+
+  - country: KR
+    names:
+      - '김포골드라인SRS'
+    color: '#ad8605'
+
+  - country: KR
+    names:
+      - '용인에버라인운영(주)'
+    color: '#363995'
+
+  - country: KR
+    names:
+      - '부산교통공사'
+    color: '#2a5caa'
+
+  - country: KR
+    names:
+      - '부산·김해경전철주식회사'
+    color: '#324eb3'
+
+  - country: KR
+    names:
+      - '대구교통공사'
+    color: '#004ea2'
+
+  - country: KR
+    names:
+      - '대전교통공사'
+    color: '#00b74f'
+
+  # --- KZ --- #
+
+  - country: KZ
+    names:
+      - 'КТЖ'
+      - 'АО «КТЖ»'
+    color: '#009FCB'
+
+  # --- LT --- #
+
+  - country: LT
+    names:
+      - 'LTG Infra'
+    color: '#007749'
+
+  # --- LU --- #
+
+  - country: LU
+    names:
+      - 'CFL'
+    color: 'rgb(196, 16, 57)'
+
+  # --- MA --- #
+
+  - country: MA
+    names:
+      - 'ONCF'
+      - 'المكتب الوطني للسكك الحديدية'
+      - 'oncf'
+    color: 'rgb(237, 54, 72)'
+
+  # --- MD --- #
+
+  - country: MD
+    names:
+      - 'CFM'
+    color: '#1559ae'
+
+  # --- ME --- #
+
+  - country: ME
+    names:
+      - 'ŽICG'
+    color: '#e39d02'
+
+  - country: ME
+    names:
+      - 'ŽPCG'
+    color: 'rgb(216, 34, 52)'
+
+  # --- MK --- #
+
+  - country: MK
+    names:
+      - 'Makedonski Železnici'
+      - 'Македонски железници'
+      - 'Македонски Железници'
+      - 'ЖРСМ Инфраструктура'
+    color: '#2d2579'
+
+  # --- MM --- #
+
+  - country: MM
+    names:
+      - 'မြန်မာ့မီးရထားလုပ်ငန်း'
+      - 'Myanma Railways'
+      - 'Myanmar Railway'
+      - 'Myanmar Railways'
+      - 'MR'
+    color: '#00983a'
+
+  # --- MR --- #
+
+  - country: MR
+    names:
+      - 'الشركة الوطنية للصناعة والمناجم'
+      - 'SNIM'
+    color: '#0000ff'
+
+  # --- MY --- #
+
+  - country: MY
+    names:
+      - 'KTMB'
+      - 'KTM'
+      - 'Keretapi Tanah Melayu'
+      - 'Keretapi Tanah Melayu Berhad'
+    color: '#004e9b'
+
+  # --- MX --- #
+
+  - country: MX
+    names:
+      - 'Ferromex'
+    color: '#fa002e'
+
+  - country: MX
+    names:
+      - 'Ferrosur'
+    color: '#03897c'
+
+  - country: MX
+    names:
+      - 'Ferrovalle'
+    color: '#4ab378'
+
+  - country: MX
+    names:
+      - 'Sistema de Transporte Colectivo'
+    color: '#ff5000'
+
+  - country: MX
+    names:
+      - 'Ferroistmo'
+    color: '#b48a49'
+
+  - country: MX
+    names:
+      - 'Tren Maya'
+    color: 'rgb(59, 120, 97)'
+
+  # --- MZ --- #
+
+  - country: MZ
+    names:
+      - 'Caminhos de Ferro de Moçambique (CFM)'
+    color: '#0f6037'
+
+  # --- NL --- #
+
+  - country: NL
+    names:
+      - 'ProRail'
+    color: '#ff0000'
+
+  - country: NL
+    names:
+      - 'NS'
+      - 'Nederlandse Spoorwegen'
+      - 'NS Groep N.V.'
+    color: '#c29500'
+
+  - country: NL
+    names:
+      - 'Infraspeed'
+    color: '#f79138'
+
+  - country: NL
+    names:
+      - 'Arriva'
+    color: '#1e8f97'
+
+  - country: NL
+    names:
+      - 'HTM'
+    color: 'rgb(220, 41, 30)'
+
+  - country: NL
+    names:
+      - 'RET'
+    color: 'rgb(0, 71, 127)'
+
+  - country: NL
+    names:
+      - 'GVB'
+      - 'Gemeentelijk Vervoerbedrijf'
+    color: 'rgb(0, 159, 227)'
+
+  # --- NO --- #
+
+  - country: NO
+    names:
+      - 'Bane NOR'
+    color: 'rgb(30, 40, 105)'
+
+  # --- NZ --- #
+
+  - country: NZ
+    names:
+      - 'KiwiRail'
+    color: '#ed630c' # Official logo is gray
+
+  - country: NZ
+    names:
+      - 'Metlink'
+    color: '#a3b01d'
+
+  # --- PA --- #
+
+  - country: PA
+    names:
+      - 'Metro de Panamá S.A.'
+      - 'Metro de Panamá'
+      - 'Panama Metro'
+      - 'El Metro de Panamá'
+    color: '#033e86'
+
+  - country: PA
+    names:
+      - 'Panama Canal Authority'
+    color: '#a80011'
+
+  # --- PE --- #
+
+  - country: PE
+    names:
+      - 'Ferrocarril Central Andino S.A.'
+    color: '#bb7c24'
+
+  - country: PE
+    names:
+      - 'Ferrocarril Transandino S.A.'
+    color: 'rgb(10, 64, 111)'
+
+  - country: PE
+    names:
+      - 'Ferrocarril del Sur del Perú'
+    color: '#A09162'
+
+  - country: PE
+    names:
+      - 'AATE'
+    color: '#E4002B'
+
+  # --- PH --- #
+
+  - country: PH
+    names:
+      - 'Philippine National Railways'
+    color: '#c3a002'
+
+  # --- PK --- #
+
+  - country: PK
+    names:
+      - 'PR'
+      - 'Pakistan Railways'
+      - 'Pakistan Railway'
+      - 'پاکستان ریلویز'
+    color: '#3f790c'
+
+  # --- PL --- #
+
+  - country: PL
+    names:
+      - 'PKP Polskie Linie Kolejowe'
+    color: '#004d84'
+
+  - country: PL
+    names:
+      - 'Tramwaje Warszawskie'
+    color: 'rgb(228, 35, 19)'
+
+  - country: PL
+    names:
+      - 'Metro Warszawskie'
+    color: '#a28507'
+
+  - country: PL
+    names:
+      - 'Warszawska Kolej Dojazdowa'
+    color: '#00a213'
+
+  - country: PL
+    names:
+      - 'Tramwaje Śląskie'
+    color: '#C35817'
+
+  - country: PL
+    names:
+      - 'MPK Kraków'
+    color: 'rgb(193, 0, 51)'
+
+  - country: PL
+    names:
+      - 'MPK Poznań'
+    color: 'rgb(56, 145, 62)'
+
+  # --- PT --- #
+
+  - country: PT
+    names:
+      - 'Infraestruturas de Portugal'
+    color: '#1e9d8b'
+
+  - country: PT
+    names:
+      - 'Metro do Porto'
+    color: '#001858'
+
+  - country: PT
+    names:
+      - 'STCP'
+    color: '#005eb8'
+
+  - country: PT
+    names:
+      - 'Metropolitano de Lisboa'
+    color: '#ff3300'
+
+  - country: PT
+    names:
+      - 'Carris'
+    color: '#ffdd00'
+
+  - country: PT
+    names:
+      - 'Metro Transportes do Sul'
+    color: '#0f337f'
+
+  - country: PT
+    names:
+      - 'Comboios de Portugal'
+    color: '#388344'
+
+  - country: PT
+    names:
+      - 'Medway'
+    color: '#fbe494'
+
+  # --- RO --- #
+
+  - country: RO
+    names:
+      - 'CFR'
+    color: 'rgb(255, 87, 34)'
+
+  - country: RO
+    names:
+      - 'Metrorex'
+    color: '#1293ff'
+
+  - country: RO
+    names:
+      - 'STB'
+    color: 'rgb(9, 171, 79)'
+
+  # --- RU --- #
+
+  - country: RU
+    names:
+      - 'ОАО «РЖД»'
+      - 'ОАО "РЖД"'
+      - 'Свердловская дирекция инфраструктуры АО «РЖД»'
+      - 'ОАО «Российские железные дороги»'
+    color: '#c50d16'
+
+  - country: RU
+    names:
+      - 'Калининградская Железная Дорога'
+    color: '#ff3f72'
+
+  - country: RU
+    names:
+      - 'ГУП «Московский метрополитен»'
+    color: '#ac21b6'
+
+  - country: RU
+    names:
+      - 'МП "Маггортранс"'
+    color: '#0000CC'
+
+  - country: RU
+    names:
+      - 'ЕТТУ'
+    color: '#164c12'
+
+  # --- RS --- #
+
+  - country: RS
+    names:
+      - 'ЖС'
+      - 'Железнице Србије'
+      - 'Železnice Srbije' # These 3 above should be deprecated as ŽS has been split since 2015
+      - 'ИЖС'
+      - 'Инфраструктура железнице Србије'
+      - 'Infrastruktura železnice Srbije'
+    color: '#ed1c24'
+
+  - country: RS
+    names:
+      - 'ГСП Београд'
+    color: '#183866'
+
+  - country: RS
+    names:
+      - 'Srbija Voz'
+    color: '#0869B6'
+
+  # --- SA --- #
+
+  - country: SA
+    names:
+      - 'Saudi Arabia Railways'
+    color: 'rgb(0, 119, 139)'
+
+  # --- SE --- #
+
+  - country: SE
+    names:
+      - 'Trafikverket'
+    color: 'rgb(215, 0, 0)'
+
+  - country: SE
+    names:
+      - 'Göteborgs Spårvägar'
+    color: 'rgb(0, 51, 103)'
+
+  # --- SK --- #
+
+  - country: SK
+    names:
+      - 'ŽSR'
+      - 'Železnice Slovenskej republiky'
+    color: '#1b1849'
+
+  # --- SG --- #
+
+  - country: SG
+    names:
+      - 'SMRT'
+    color: 'rgb(234, 11, 42)'
+
+  - country: SG
+    names:
+      - 'SBS Transit'
+    color: '#781d7e'
+
+  # --- SL --- #
+
+  - country: SL
+    names:
+      - 'Slovenske železnice'
+    color: 'rgb(0, 161, 237)'
+
+  - country: SL
+    names:
+      - 'SŽ Infrastruktura'
+    color: '#eda800'
+
+  # --- SN --- #
+
+  - country: SN
+    names:
+      - 'SETER'
+    color: '#7D142F'
+
+  - country: SN
+    names:
+      - 'Chemins de fer du Sénégal'
+      - 'CFS'
+    color: '#019644'
+
+  - country: SN
+    names:
+      - 'Transrail S. A.'
+    color: '#4154a3'
+
+  # --- SY --- #
+
+  - country: SY
+    names:
+      - 'المؤسسة العامة للخطوط الحديدية'
+    color: 'rgb(0, 53, 140)'
+
+  # --- TH --- #
+
+  - country: TH
+    names:
+      - 'การรถไฟแห่งประเทศไทย'
+    color: '#782325'
+
+  # --- TN --- #
+
+  - country: TN
+    names:
+      - 'SNCFT'
+      - 'Socite Nationale des chemins de fer tunisien'
+      - 'الشركة الوطنية للسكك الحديدية التونسية'
+    color: '#16874b'
+
+  # --- TR --- #
+
+  - country: TR
+    names:
+      - 'TCDD'
+    color: '#e30613'
+
+  - country: TR
+    names:
+      - 'TCDD Taşımacılık'
+    color: '#16877a'
+
+  # --- TW --- #
+
+  - country: TW
+    names:
+      - '國營臺灣鐵路股份有限公司'
+    color: '#00509c'
+
+  - country: TW
+    names:
+      - '台灣高速鐵路股份有限公司'
+    color: '#ca4f0f'
+
+  - country: TW
+    names:
+      - '臺北大眾捷運股份有限公司'
+    color: '#4ab846'
+
+  - country: TW
+    names:
+      - '桃園大眾捷運股份有限公司'
+    color: '#971985'
+
+  - country: TW
+    names:
+      - '新北大眾捷運股份有限公司'
+    color: 'rgb(16, 135, 162)'
+
+  # --- UA --- #
+
+  - country: UA
+    names:
+      - 'Укрзалізниця'
+    color: '#118965'
+
+  - country: UA
+    names:
+      - 'КП «Одесміськелектротранс»'
+    color: '#bf0525'
+
+  - country: UA
+    names:
+      - 'ФГУП «КЖД»'
+      - 'Крымская железная дорога'
+    color: '#16874b'
+
+  # --- US --- #
+
+  - country: US
+    names:
+      - 'Amtrak'
+    color: '#004c6e'
+
+  - country: US
+    names:
+      - 'Metro-North Railroad'
+    color: '#08179C'
+
+  - country: US
+    names:
+      - 'Long Island Rail Road'
+    color: '#08179C'
+
+  - country: US
+    names:
+      - 'Staten Island Rapid Transit Operating Authority'
+    color: '#08179C'
+
+  - country: US
+    names:
+      - 'New York City Transit Authority'
+    color: '#0062cf'
+
+  - country: US
+    names:
+      - 'Massachusetts Bay Transportation Authority'
+    color: '#82076c'
+
+  - country: US
+    names:
+      - 'Consolidated Rail Corporation'
+    color: '#0079c1'
+
+  - country: US
+    names:
+      - 'Norfolk Southern Railway'
+    color: '#2b2b2a'
+
+  - country: US
+    names:
+      - 'CSX Transportation'
+      - 'CSX'
+      - 'CSXT'
+    color: '#144270'
+
+  - country: US
+    names:
+      - 'BNSF'
+      - 'BNSF Railway'
+    color: '#f85d13'
+
+  - country: US
+    names:
+      - 'Union Pacific Railroad'
+      - 'UP'
+    color: '#d1a700'
+
+  - country: US
+    names:
+      - 'Southeastern Pennsylvania Transportation Authority'
+      - 'SEPTA'
+    color: '#F14728'
+
+  - country: US
+    names:
+      - 'North County Transit District'
+    color: '#008b8b'
+
+  - country: US
+    names:
+      - 'Southern California Regional Rail Authority'
+      - 'Metrolink'
+    color: '#00aedb'
+
+  - country: US
+    names:
+      - 'Pennsylvania Northeastern Railroad'
+    color: '#ff6600'
+
+  - country: US
+    names:
+      - 'South Florida Regional Transportation Authority'
+    color: '#15718a'
+
+  - country: US
+    names:
+      - 'Florida East Coast Railway'
+      - 'FEC'
+    color: '#003366'
+
+  - country: US
+    names:
+      - 'SunRail'
+    color: '#f9a548'
+
+  - country: US
+    names:
+      - 'Brightline Trains Florida LLC'
+      - 'Brightline'
+      - 'Brightline West'
+    color: '#ffdb00'
+
+  - country: US
+    names:
+      - 'New Jersey Transit'
+    color: '#dd0752'
+
+  - country: US
+    names:
+      - 'New Jersey Transit Rail Operations'
+    color: '#dd0752'
+
+  - country: US
+    names:
+      - 'New Jersey Transit Light Rail Operations'
+    color: '#88b04b'
+
+  - country: US
+    names:
+      - 'New Jersey Transit Bus Operations'
+    color: '#c76808'
+
+  - country: US
+    names:
+      - 'New Mexico Rail Runner Express'
+    color: '#a70e13'
+
+  - country: US
+    names:
+      - 'Trinity Railway Express'
+    color: '#003e7c'
+
+  - country: US
+    names:
+      - 'TEXRail'
+    color: '#e91c2c'
+
+  - country: US
+    names:
+      - 'Dallas Area Rapid Transit'
+    color: '#fff200'
+
+  - country: US
+    names:
+      - 'Washington Metropolitan Area Transit Authority'
+    color: '#3a2c26'
+
+  - country: US
+    names:
+      - 'New York & Atlantic Railway'
+      - 'New York and Atlantic Railway'
+    color: '#38553E'
+
+  - country: US
+    names:
+      - 'Buckingham Branch Railroad'
+    color: '#de1c42'
+
+  - country: US
+    names:
+      - 'Metra'
+    color: '#0750A3'
+
+  - country: US
+    names:
+      - 'Northern Indiana Commuter Transportation District'
+      - 'NICTD'
+    color: '#7f271f'
+
+  - country: US
+    names:
+      - 'Chicago Transit Authority'
+    color: '#0b9444'
+
+  - country: US
+    names:
+      - 'Sonoma-Marin Area Rail Transit District'
+    color: 'rgb(229, 142, 26)'
+
+  - country: US
+    names:
+      - 'BART'
+    color: '#0099d8'
+
+  - country: US
+    names:
+      - 'San Francisco Municipal Railway'
+      - 'San Francisco Municipal Transportation Agency'
+    color: '#cd3545'
+
+  - country: US
+    names:
+      - 'Wheeling and Lake Erie Railway'
+    color: '#ff6900'
+
+  - country: US
+    names:
+      - 'R.J. Corman Railroad Group'
+    color: '#ff0000'
+
+  - country: US
+    names:
+      - 'New York, Susquehanna and Western Railway'
+    color: '#ffde21'
+
+  - country: US
+    names:
+      - 'Central New York Railroad'
+    color: '#ffde21'
+
+  - country: US
+    names:
+      - 'Massachusetts Coastal Railroad'
+    color: '#dca342'
+
+  - country: US
+    names:
+      - 'Housatonic Railroad'
+    color: '#4e6e19'
+
+  - country: US
+    names:
+      - 'Raritan Central Railway'
+    color: '#510007'
+
+  - country: US
+    names:
+      - 'Cape May Seashore Lines'
+    color: '#99262d'
+
+  - country: US
+    names:
+      - 'Winchester and Western Railroad'
+    color: '#c60751'
+
+  - country: US
+    names:
+      - 'Lake State Railway'
+    color: '#142e69'
+
+  - country: US
+    names:
+      - 'Reading Blue Mountain and Northern Railroad'
+    color: '#1c4c3c'
+
+  - country: US
+    names:
+      - 'Florida Gulf and Atlantic Railroad'
+      - 'Florida Gulf & Atlantic Railroad'
+    color: '#a5373a'
+
+  - country: US
+    names:
+      - 'South Central Florida Express'
+      - 'U.S. Sugar Railroad'
+    color: '#005942'
+
+  - country: US
+    names:
+      - 'Delmarva Central Railroad'
+    color: '#831536'
+
+  - country: US
+    names:
+      - 'Maryland and Delaware Railroad'
+    color: '#831536'
+
+  - country: US
+    names:
+      - 'Southwest Pennsylvania Railroad'
+    color: '#831536'
+
+  - country: US
+    names:
+      - 'Allegheny Valley Railroad'
+    color: '#831536'
+
+  - country: US
+    names:
+      - 'Maryland Transit Administration'
+    color: '#a4032f'
+
+  - country: US
+    names:
+      - 'Maryland Area Rail Commuter'
+      - 'MARC'
+    color: '#F17A24'
+
+  - country: US
+    names:
+      - 'Western New York and Pennsylvania Railroad'
+    color: '#f5a919'
+
+  - country: US
+    names:
+      - 'Virginia Railway Express'
+    color: '#ef3c40'
+
+  - country: US
+    names:
+      - 'Central New England Railroad'
+    color: '#32634e'
+
+  - country: US
+    names:
+      - 'Port Authority Trans-Hudson'
+    color: '#0096d4'
+
+  - country: US
+    names:
+      - 'Naugatuck Railroad'
+    color: '#f0522e'
+
+  - country: US
+    names:
+      - 'Morristown and Erie Railway'
+    color: '#eb000f'
+
+  - country: US
+    names:
+      - 'Shore Line East'
+    color: '#f03c40'
+
+  - country: US
+    names:
+      - 'Indiana Harbor Belt Railroad'
+    color: '#f47406'
+
+  - country: US
+    names:
+      - 'Belt Railway of Chicago'
+    color: '#ffad09'
+
+  - country: US
+    names:
+      - 'Paducah and Louisville Railway'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Evansville Western Railway'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Appalachian and Ohio Railroad'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Midway Southern Railway'
+    color: '#0b3c26'
+
+  - country: US
+    names:
+      - 'Louisville and Indiana Railroad'
+    color: '#ff3b21'
+
+  - country: US
+    names:
+      - 'SMS Rail Lines'
+    color: '#004b23'
+
+  - country: US
+    names:
+      - 'Aberdeen, Carolina and Western Railway'
+    color: '#b21f76'
+
+  - country: US
+    names:
+      - 'Southern Railroad of New Jersey'
+    color: '#ff3b21'
+
+  - country: US
+    names:
+      - 'Vermont Rail System'
+      - 'Vermont Railway'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Clarendon & Pittsford Railroad'
+      - 'Clarendon and Pittsford Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Green Mountain Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Washington County Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'New England Southern Railroad'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'New York and Ogdensburg Railway'
+    color: '#d2262f'
+
+  - country: US
+    names:
+      - 'Saratoga Corinth and Hudson Railway'
+    color: '#1D2E24'
+
+  - country: US
+    names:
+      - 'Cuyahoga Valley Scenic Railroad'
+    color: '#e53c36'
+
+  # --- US: Genesee & Wyoming subsidiaries --- #
+  - country: US
+    names:
+      - 'Alabama and Gulf Coast Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Aliquippa and Ohio River Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'AN Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Arizona and California Railroad'
+      - 'Arizona & California Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Arizona Eastern Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Arkansas, Louisiana and Mississippi Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Arkansas Midland Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Atlantic and Western Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Bauxite and Northern Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Bay Line Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Berkshire and Eastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Buffalo and Pittsburgh Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'California Northern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Carolina Piedmont Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Cascade and Columbia River Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Central Oregon and Pacific Railroad'
+      - 'Central Oregon & Pacific Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Central Railroad of Indiana'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Central Railroad of Indianapolis'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'CG Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Chattahoochee and Gulf Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Chattahoochee Industrial Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Chattooga and Chickamauga Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Chesapeake and Albemarle Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Chicago, Fort Wayne and Eastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Columbus and Chattahoochee Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Columbus and Greenville Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Columbus and Ohio River Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Commonwealth Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Conecuh Valley Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Connecticut Southern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Corpus Christi Terminal Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Dallas, Garland and Northeastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'East Tennessee Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Eastern Alabama Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'First Coast Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Fordyce and Princeton Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Galveston Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Georgia Central Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Georgia Southwestern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Goderich–Exeter Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Golden Isles Terminal Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Grand Rapids Eastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Heart of Georgia Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Hilton and Albany Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Huron and Eastern Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Illinois and Midland Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Indiana and Ohio Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Indiana Southern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Kiamichi Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'KWT Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Kyle Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Little Rock and Western Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Louisiana and Delta Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Luxapalila Valley Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Mahoning Valley Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Marquette Rail'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Maryland Midland Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Massena Terminal Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Michigan Shore Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Mid-Michigan Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Missouri and Northern Arkansas Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'New England Central Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'North Carolina and Virginia Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Ohio Central Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Ohio Southern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Olympia and Belmore Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Otter Tail Valley Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Pittsburgh and Ohio Central Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Point Comfort and Northern Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Portland and Western Railroad'
+      - 'Portland & Western Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Prescott and Northwestern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Providence and Worcester Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Puget Sound and Pacific Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Rapid City, Pierre and Eastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Riceboro Southern Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Rochester and Southern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'St. Lawrence & Atlantic Railroad'
+      - 'St. Lawrence and Atlantic Railroad Co.'
+      - 'Chemin de fer Saint-Laurent et Atlantique (Québec)'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'San Diego and Imperial Valley Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'San Joaquin Valley Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Savannah Port Terminal Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'South Carolina Central Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Tazewell and Peoria Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Texas Northeastern Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Three Notch Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Toledo, Peoria and Western Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Tomahawk Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Utah Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Valdosta Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Ventura County Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Warren and Saline River Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Warren and Trumbull Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Wellsboro and Corning Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Willamette & Pacific Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Wilmington Terminal Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Wiregrass Central Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'York Railway'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Youngstown and Austintown Railroad'
+    color: '#f68b1e'
+
+  - country: US
+    names:
+      - 'Youngstown Belt Railroad'
+    color: '#f68b1e'
+
+  # --- US: Watco Companies holdings --- #
+  - country: US
+    names:
+      - 'Watco'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Ann Arbor Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Great Lakes Central Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Grand Elk Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Ithaca Central Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Jacksonville Port Terminal Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Wisconsin and Southern Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Yellowstone Valley Railroad'
+    color: '#fcb900'
+
+  - country: US
+    names:
+      - 'Kanawha River Railroad'
+    color: '#fcb900'
+
+  # --- US: Chesapeake & Delaware subsidiaries --- #
+  - country: US
+    names:
+      - 'Belvidere and Delaware River Railway'
+    color: '#202a44'
+
+  - country: US
+    names:
+      - 'Black River and Western Railroad'
+    color: '#202a44'
+
+  - country: US
+    names:
+      - 'Delaware and Raritan River Railroad'
+    color: '#202a44'
+
+  - country: US
+    names:
+      - 'Dover and Delaware River Railroad'
+    color: '#202a44'
+
+  - country: US
+    names:
+      - 'Dover and Rockaway River Railroad'
+    color: '#202a44'
+
+  # --- US: Regional Rail subsidiaries --- #
+  - country: US
+    names:
+      - 'Burns Harbor Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Carolina Coastal Railway'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Cincinnati Eastern Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Commercial Transload of Minnesota'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'East Penn Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'East Penn Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Florida Central Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Florida Midland Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Florida Northern Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Illinois Western Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Indiana Eastern Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Massachusetts Central Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Middletown and New Jersey Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Minnesota Commercial Railway'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Ohio South Central Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Port Manatee Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'South Point and Ohio Railroad'
+    color: '#efb635'
+
+  - country: US
+    names:
+      - 'Tyburn Railroad'
+    color: '#efb635'
+
+  # --- UZ --- #
+
+  - country: UZ
+    names:
+      - 'O‘zbekiston temir yo‘llari'
+      - 'O‘zbekiston temir yo‘llari'
+    color: 'rgb(176, 140, 86)'
+
+  # --- VE --- #
+
+  - country: YE
+    names:
+      - 'Instituto Ferrocarriles del Estado (IFE)'
+      - 'Instituto Ferrocarriles del Estado IFE'
+      - 'IFE'
+    color: '#AE1E23'
+
+  # --- VN --- #
+
+  - country: VN
+    names:
+      - 'VNR'
+      - 'Vietnam Railway (VNR)'
+    color: '#006dae'
+
+  - country: VN
+    names:
+      - 'Đường Sắt Việt Nam'
+      - 'Đường sắt Việt Nam'
+    color: 'rgb(47, 164, 231)'
+
+  # --- ZA --- #
+
+  - country: ZA
+    names:
+      - 'Metrorail'
+    color: '#b38d03'
+
+  - country: ZA
+    names:
+      - 'Transnet'
+    color: '#e72528'
+
+  - country: ZA
+    names:
+      - 'Passenger Rail Agency of South Africa'
+      - 'PRASA'
+      - 'Prasa'
+    color: '#02a9e0'
+
+  - country: ZA
+    names:
+      - 'Gautrain'
+    color: 'rgb(0, 73, 144)'

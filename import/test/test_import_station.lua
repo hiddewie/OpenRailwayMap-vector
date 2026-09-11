@@ -10,17 +10,12 @@ local openrailwaymap = require('openrailwaymap')
 local way = {
   length = function () return 1 end,
 }
-local as_linestring_mock = function ()
-  return {
-    centroid = function ()
-      return way
-    end
-  }
-end
 
 -- Stations
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'station',
     name = 'name',
@@ -31,11 +26,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', railway_ref = 'ref', operator = 'operator', station = 'train', name_tags = { name = 'name' }, name = 'name' },
+    { id = 'node-123-train', feature = 'station', state = 'present', map_reference = 'ref', references = { ['railway-ref'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name' },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'halt',
   },
@@ -43,11 +40,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'halt', state = 'present', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'halt', state = 'present', station = 'train', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'tram_stop',
   },
@@ -55,11 +54,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {} },
+    { id = 'node-123-tram', feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'service_station',
   },
@@ -67,11 +68,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'service_station', state = 'present', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'service_station', state = 'present', station = 'train', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['preserved:railway'] = 'yard',
   },
@@ -79,11 +82,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'preserved', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'yard', state = 'preserved', station = 'train', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['railway'] = 'yard',
     ['railway:yard:purpose'] = 'transloading;manifest',
@@ -93,11 +98,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}' },
+    { id = 'node-123-train', feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}', references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['abandoned:railway'] = 'junction',
   },
@@ -105,11 +112,13 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'junction', state = 'abandoned', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'junction', state = 'abandoned', station = 'train', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['disused:railway'] = 'spur_junction',
   },
@@ -117,53 +126,138 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {}, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['proposed:railway'] = 'crossover',
+    ['proposed:name'] = 'name',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'crossover', state = 'proposed', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'crossover', state = 'proposed', station = 'train', name = 'name', name_tags = { ['proposed:name'] = 'name' }, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['construction:railway'] = 'site',
+    ['construction:name'] = 'name',
   },
   as_point = function () end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'site', state = 'construction', station = 'train', name_tags = {} },
+    { id = 'node-123-train', feature = 'site', state = 'construction', station = 'train', name = 'name', name_tags = { ['construction:name'] = 'name' }, references = {} },
   },
 })
 
 osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
   tags = {
     ['razed:railway'] = 'station',
   },
   as_point = function () end,
 })
-assert.eq(osm2pgsql.get_and_clear_imported_data(), {})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'razed', station = 'train', name_tags = {}, references = {} },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'station',
+    ['ref'] = 'ref',
+    ['railway:ref'] = 'railway_ref',
+    ['uic_ref'] = 'uic_ref',
+    ['ref:crs'] = 'ref:crs',
+    ['ref:ibnr'] = 'ref:ibnr',
+    ['iata'] = 'iata',
+    ['ref:IFOPT'] = 'ref:IFOPT',
+    ['ref:EU:PLC'] = 'ref:EU:PLC',
+    ['ref:FR:sncf:resarail'] = 'ref:FR:sncf:resarail',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'present', station = 'train', name_tags = {}, map_reference = 'railway_ref', references = {['ref'] = 'ref', ['railway-ref'] = 'railway_ref', ['uic'] = 'uic_ref', ['gb-crs'] = 'ref:crs', ['ibnr'] = 'ref:ibnr', ['iata'] = 'iata', ['ifopt'] = 'ref:IFOPT', ['eu-plc'] = 'ref:EU:PLC', ['fr-sncf-resarail'] = 'ref:FR:sncf:resarail' } },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'station',
+    ['ref:FR:STIF'] = '1234',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'present', station = 'train', name_tags = {}, references = { ['fr-stif'] = '1234' } },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'station',
+    ['gtfs:stop_id:FR-IDF-IDFM'] = 'IDFM:1234',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'present', station = 'train', name_tags = {}, references = { ['fr-idf-idfm'] = 'IDFM:1234' } },
+  },
+})
 
 osm2pgsql.process_way({
+  id = 123,
+  type = 'way',
   tags = {
     ['railway'] = 'station',
     name = 'name',
     ['railway:ref'] = 'ref',
     operator = 'operator',
   },
-  as_linestring = as_linestring_mock,
+  is_closed = true,
+  as_polygon = function () return way end,
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { feature = 'station', state = 'present', railway_ref = 'ref', operator = 'operator', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
+    { id = 'way-123-train', feature = 'station', state = 'present', map_reference = 'ref', references = { ['railway-ref'] = 'ref' }, operator = '{"operator"}', station = 'train', name_tags = { name = 'name' }, name = 'name', way = way },
+  },
+})
+
+osm2pgsql.process_relation({
+  id = 123,
+  type = 'relation',
+  tags = {
+    ['type'] = 'multipolygon',
+    ['railway'] = 'yard',
+  },
+  as_multipolygon = function()
+    return way
+  end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'relation-123-train', way = way, name_tags = {}, station = 'train', state = 'present', references = {}, feature = 'yard' },
   },
 })

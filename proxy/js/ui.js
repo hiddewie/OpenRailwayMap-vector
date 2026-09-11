@@ -10,6 +10,14 @@ const searchFacilityTermField = document.getElementById('facility-term');
 const searchMilestoneRefField = document.getElementById('milestone-ref');
 const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
+const configureGeneralTab = document.getElementById('configure-general');
+const configureStandardTab = document.getElementById('configure-standard');
+const configureElectrificationTab = document.getElementById('configure-electrification');
+  const configureTrackTab = document.getElementById('configure-track');
+const configureGeneralBody = document.getElementById('configure-general-body');
+const configureStandardBody = document.getElementById('configure-standard-body');
+const configureElectrificationBody = document.getElementById('configure-electrification-body');
+const configureTrackBody = document.getElementById('configure-track-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
@@ -22,26 +30,53 @@ const stationLabelReferenceControl = document.getElementById('stationLabelRefere
 const themeSystemControl = document.getElementById('themeSystem');
 const themeDarkControl = document.getElementById('themeDark');
 const themeLightControl = document.getElementById('themeLight');
+const historicalInfrastructureNoneControl = document.getElementById('historicalInfrastructureNone');
+const historicalInfrastructureOpenHistoricalMapControl = document.getElementById('historicalInfrastructureOpenHistoricalMap');
+const historicalInfrastructureOpenStreetMapControl = document.getElementById('historicalInfrastructureOpenStreetMap');
+const futureInfrastructureNoneControl = document.getElementById('futureInfrastructureNone');
+const futureInfrastructureConstructionControl = document.getElementById('futureInfrastructureConstruction');
+const futureInfrastructureConstructionProposedControl = document.getElementById('futureInfrastructureConstructionProposed');
 const editorIDControl =  document.getElementById('editorID');
 const editorJOSMControl =  document.getElementById('editorJOSM');
+const localizationDisabledControl =  document.getElementById('localizationDisabled');
+const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
+const localizationCustomControl =  document.getElementById('localizationCustom');
+const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
+const electrificationRailwayLineVoltageFrequencyControl = document.getElementById('electrificationRailwayLineVoltageFrequency')
+const electrificationRailwayLineMaximumCurrentControl = document.getElementById('electrificationRailwayLineMaximumCurrent')
+const electrificationRailwayLinePowerControl = document.getElementById('electrificationRailwayLinePower')
+const trackRailwayLineGaugeControl = document.getElementById('trackRailwayLineGauge')
+const trackRailwayLineLoadingGaugeControl = document.getElementById('trackRailwayLineLoadingGauge')
+const trackRailwayLineTrackClassControl = document.getElementById('trackRailwayLineTrackClass')
 const backgroundMapContainer = document.getElementById('background-map');
-const legend = document.getElementById('legend');
-const legendMapContainer = document.getElementById('legend-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
 const aboutBackdrop = document.getElementById('about-backdrop');
 
 const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_};
 
-const flagEmojiTranslations = {
-  EN: 'GB',
-}
 function getFlagEmoji(countryCode) {
-  const codePoints = (flagEmojiTranslations[countryCode.toUpperCase()] || countryCode.toUpperCase())
+  const codePoints = countryCode.toUpperCase()
     .split('')
     .map(char =>  127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
 }
+
+const emptyGeoJsonData = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
+let locale = new Intl.Locale(navigator.language);
+window.addEventListener('languagechange', () => {
+  locale = new Intl.Locale(navigator.language);
+  console.info(`Browser language changed to ${locale.language}`);
+
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    onStyleChange();
+  }
+})
 
 const icons = {
   railway: {
@@ -63,51 +98,60 @@ const icons = {
     node: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiI+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDEwMCUsIDEwMCUsIDEwMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMS44MjgxMjUgMC4zMjgxMjUgTCAxMC4xNzE4NzUgMC4zMjgxMjUgQyAxMSAwLjMyODEyNSAxMS42NzE4NzUgMSAxMS42NzE4NzUgMS44MjgxMjUgTCAxMS42NzE4NzUgMTAuMTcxODc1IEMgMTEuNjcxODc1IDExIDExIDExLjY3MTg3NSAxMC4xNzE4NzUgMTEuNjcxODc1IEwgMS44MjgxMjUgMTEuNjcxODc1IEMgMSAxMS42NzE4NzUgMC4zMjgxMjUgMTEgMC4zMjgxMjUgMTAuMTcxODc1IEwgMC4zMjgxMjUgMS44MjgxMjUgQyAwLjMyODEyNSAxIDEgMC4zMjgxMjUgMS44MjgxMjUgMC4zMjgxMjUgWiBNIDEuODI4MTI1IDAuMzI4MTI1ICIvPgo8cGF0aCBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9InJnYig3NC41MDk4MDQlLCA5MC4xOTYwNzglLCA3NC41MDk4MDQlKSIgZmlsbC1vcGFjaXR5PSIxIiBzdHJva2Utd2lkdGg9IjEwIiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlPSJyZ2IoMCUsIDAlLCAwJSkiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAxNTIgMTI4IEMgMTUyIDE0MS4yNSAxNDEuMjUgMTUyIDEyOCAxNTIgQyAxMTQuNzUgMTUyIDEwNCAxNDEuMjUgMTA0IDEyOCBDIDEwNCAxMTQuNzUgMTE0Ljc1IDEwNCAxMjggMTA0IEMgMTQxLjI1IDEwNCAxNTIgMTE0Ljc1IDE1MiAxMjggWiBNIDE1MiAxMjggIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjA0Njg3NSwgMCwgMCwgMC4wNDY4NzUsIDAsIDApIi8+CjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMTIiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2U9InJnYigwJSwgMCUsIDAlKSIgc3Ryb2tlLW9wYWNpdHk9IjEiIHN0cm9rZS1taXRlcmxpbWl0PSI0IiBkPSJNIDM5IDcgTCAyMTcgNyBDIDIzNC42NjY2NjcgNyAyNDkgMjEuMzMzMzMzIDI0OSAzOSBMIDI0OSAyMTcgQyAyNDkgMjM0LjY2NjY2NyAyMzQuNjY2NjY3IDI0OSAyMTcgMjQ5IEwgMzkgMjQ5IEMgMjEuMzMzMzMzIDI0OSA3IDIzNC42NjY2NjcgNyAyMTcgTCA3IDM5IEMgNyAyMS4zMzMzMzMgMjEuMzMzMzMzIDcgMzkgNyBaIE0gMzkgNyAiIHRyYW5zZm9ybT0ibWF0cml4KDAuMDQ2ODc1LCAwLCAwLCAwLjA0Njg3NSwgMCwgMCkiLz4KPC9zdmc+Cg==',
     way: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiI+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDEwMCUsIDEwMCUsIDEwMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMS44MjgxMjUgMC4zMjgxMjUgTCAxMC4xNzE4NzUgMC4zMjgxMjUgQyAxMSAwLjMyODEyNSAxMS42NzE4NzUgMSAxMS42NzE4NzUgMS44MjgxMjUgTCAxMS42NzE4NzUgMTAuMTcxODc1IEMgMTEuNjcxODc1IDExIDExIDExLjY3MTg3NSAxMC4xNzE4NzUgMTEuNjcxODc1IEwgMS44MjgxMjUgMTEuNjcxODc1IEMgMSAxMS42NzE4NzUgMC4zMjgxMjUgMTEgMC4zMjgxMjUgMTAuMTcxODc1IEwgMC4zMjgxMjUgMS44MjgxMjUgQyAwLjMyODEyNSAxIDEgMC4zMjgxMjUgMS44MjgxMjUgMC4zMjgxMjUgWiBNIDEuODI4MTI1IDAuMzI4MTI1ICIvPgo8cGF0aCBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjE2IiBzdHJva2UtbGluZWNhcD0iYnV0dCIgc3Ryb2tlLWxpbmVqb2luPSJtaXRlciIgc3Ryb2tlPSJyZ2IoODAlLCA4MCUsIDgwJSkiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZD0iTSAxNjkgNTggTCA1NyAxNDUgTCAxOTUgMTk5ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8cGF0aCBmaWxsLXJ1bGU9Im5vbnplcm8iIGZpbGw9InJnYigwJSwgMCUsIDAlKSIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNIDkuMDQ2ODc1IDIuNzE4NzUgQyA5LjA0Njg3NSAzLjMzOTg0NCA4LjU0Mjk2OSAzLjg0Mzc1IDcuOTIxODc1IDMuODQzNzUgQyA3LjMwMDc4MSAzLjg0Mzc1IDYuNzk2ODc1IDMuMzM5ODQ0IDYuNzk2ODc1IDIuNzE4NzUgQyA2Ljc5Njg3NSAyLjA5NzY1NiA3LjMwMDc4MSAxLjU5Mzc1IDcuOTIxODc1IDEuNTkzNzUgQyA4LjU0Mjk2OSAxLjU5Mzc1IDkuMDQ2ODc1IDIuMDk3NjU2IDkuMDQ2ODc1IDIuNzE4NzUgWiBNIDkuMDQ2ODc1IDIuNzE4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMy43OTY4NzUgNi43OTY4NzUgQyAzLjc5Njg3NSA3LjQxNzk2OSAzLjI5Mjk2OSA3LjkyMTg3NSAyLjY3MTg3NSA3LjkyMTg3NSBDIDIuMDUwNzgxIDcuOTIxODc1IDEuNTQ2ODc1IDcuNDE3OTY5IDEuNTQ2ODc1IDYuNzk2ODc1IEMgMS41NDY4NzUgNi4xNzU3ODEgMi4wNTA3ODEgNS42NzE4NzUgMi42NzE4NzUgNS42NzE4NzUgQyAzLjI5Mjk2OSA1LjY3MTg3NSAzLjc5Njg3NSA2LjE3NTc4MSAzLjc5Njg3NSA2Ljc5Njg3NSBaIE0gMy43OTY4NzUgNi43OTY4NzUgIi8+CjxwYXRoIGZpbGwtcnVsZT0ibm9uemVybyIgZmlsbD0icmdiKDAlLCAwJSwgMCUpIiBmaWxsLW9wYWNpdHk9IjEiIGQ9Ik0gMTAuMjY1NjI1IDkuMzI4MTI1IEMgMTAuMjY1NjI1IDkuOTQ5MjE5IDkuNzYxNzE5IDEwLjQ1MzEyNSA5LjE0MDYyNSAxMC40NTMxMjUgQyA4LjUxOTUzMSAxMC40NTMxMjUgOC4wMTU2MjUgOS45NDkyMTkgOC4wMTU2MjUgOS4zMjgxMjUgQyA4LjAxNTYyNSA4LjcwNzAzMSA4LjUxOTUzMSA4LjIwMzEyNSA5LjE0MDYyNSA4LjIwMzEyNSBDIDkuNzYxNzE5IDguMjAzMTI1IDEwLjI2NTYyNSA4LjcwNzAzMSAxMC4yNjU2MjUgOS4zMjgxMjUgWiBNIDEwLjI2NTYyNSA5LjMyODEyNSAiLz4KPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9ImJ1dHQiIHN0cm9rZS1saW5lam9pbj0ibWl0ZXIiIHN0cm9rZT0icmdiKDAlLCAwJSwgMCUpIiBzdHJva2Utb3BhY2l0eT0iMSIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGQ9Ik0gMzkgNyBMIDIxNyA3IEMgMjM0LjY2NjY2NyA3IDI0OSAyMS4zMzMzMzMgMjQ5IDM5IEwgMjQ5IDIxNyBDIDI0OSAyMzQuNjY2NjY3IDIzNC42NjY2NjcgMjQ5IDIxNyAyNDkgTCAzOSAyNDkgQyAyMS4zMzMzMzMgMjQ5IDcgMjM0LjY2NjY2NyA3IDIxNyBMIDcgMzkgQyA3IDIxLjMzMzMzMyAyMS4zMzMzMzMgNyAzOSA3IFogTSAzOSA3ICIgdHJhbnNmb3JtPSJtYXRyaXgoMC4wNDY4NzUsIDAsIDAsIDAuMDQ2ODc1LCAwLCAwKSIvPgo8L3N2Zz4K',
     relation: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgdmVyc2lvbj0iMS4wIiBoZWlnaHQ9IjI1NiIgd2lkdGg9IjI1NiI+PHRpdGxlPk9wZW5TdHJlZXRNYXAgcmVsYXRpb24gZWxlbWVudCBpY29uPC90aXRsZT48bWV0YWRhdGE+PHJkZjpSREY+PGNjOldvcmsgcmRmOmFib3V0PSIiPjxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PjxkYzp0eXBlIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiLz48ZGM6dGl0bGU+T3BlblN0cmVldE1hcCByZWxhdGlvbiBlbGVtZW50IGljb248L2RjOnRpdGxlPjxjYzpsaWNlbnNlIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbGljZW5zZXMvYnkvMy4wLyIvPjxkYzpkYXRlPjIwMTQtMDMtMTA8L2RjOmRhdGU+PGRjOmNyZWF0b3I+PGNjOkFnZW50PjxkYzp0aXRsZT5odHRwczovL3dpa2kub3BlbnN0cmVldG1hcC5vcmcvd2lraS9Vc2VyOk1vcmVzYnk8L2RjOnRpdGxlPjwvY2M6QWdlbnQ+PC9kYzpjcmVhdG9yPjwvY2M6V29yaz48Y2M6TGljZW5zZSByZGY6YWJvdXQ9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzMuMC8iPjxjYzpwZXJtaXRzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjUmVwcm9kdWN0aW9uIi8+PGNjOnBlcm1pdHMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNEaXN0cmlidXRpb24iLz48Y2M6cmVxdWlyZXMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNOb3RpY2UiLz48Y2M6cmVxdWlyZXMgcmRmOnJlc291cmNlPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyNBdHRyaWJ1dGlvbiIvPjxjYzpwZXJtaXRzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjRGVyaXZhdGl2ZVdvcmtzIi8+PGNjOnJlcXVpcmVzIHJkZjpyZXNvdXJjZT0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjU2hhcmVBbGlrZSIvPjwvY2M6TGljZW5zZT48L3JkZjpSREY+PC9tZXRhZGF0YT48Zz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjI0MiIgc3Ryb2tlPSJub25lIiBmaWxsPSJ3aGl0ZSIgcnk9IjMyIiB4PSI3IiB5PSI3Ii8+PGc+PHBhdGggZD0iTSAwNjggMDY4IEwgMTk2IDA2MiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PHBhdGggZD0iTSAwNjggMDY4IEwgMTk2IDE0MiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PHBhdGggZD0iTSAwNjggMDY4IEwgMDYyIDE5NiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlPSIjY2NjIi8+PGNpcmNsZSBjeD0iMTk2IiBjeT0iMDYyIiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iMTk2IiBjeT0iMTQyIiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iMDYyIiBjeT0iMTk2IiByPSIwMjQiIGZpbGw9ImJsYWNrIi8+PC9nPjxnPjxwYXRoIGQ9Ik0gMDY4IDA2OCBMIDE0MiAxOTYiIHN0cm9rZS13aWR0aD0iMTYiIHN0cm9rZT0iI2NjYyIvPjxjaXJjbGUgY3g9IjE0MiIgY3k9IjE5NiIgcj0iMDI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjA3MiIgY3k9IjA3MiIgcj0iMDMyIiBmaWxsPSIjYmVlNmJlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjgiLz48L2c+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyNDIiIHN0cm9rZT0iYmxhY2siIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMTIiIHJ5PSIzMiIgeD0iNyIgeT0iNyIvPjwvZz48L3N2Zz4K',
+  },
+}
+
+function naturalSort(a, b) {
+  return (a < b)
+    ? -1
+    : (a > b)
+      ? 1
+      : 0;
+}
+
+/**
+ * Pitch limit after which direction-dependent features will be hidden, in degrees.
+ */
+const pitchRotationLimit = 30;
+
+const pitchedView = (pitch) =>
+  (pitch ?? 0) > pitchRotationLimit;
+
+function facilitySearchUrl(type, term, language) {
+  const url = new URL(`${location.origin}/api/facility`)
+
+  if (language) {
+    url.searchParams.set('lang', language)
   }
-}
-
-function registerLastSearchResults(results) {
-  const data = {
-    type: 'FeatureCollection',
-    features: results.map(result => ({
-      type: 'Feature',
-      properties: result,
-      geometry: {
-        type: 'Point',
-        coordinates: [result.latitude, result.longitude],
-      },
-    })),
-  };
-  map.getSource('search').setData(data);
-}
-
-function facilitySearchQuery(type, term) {
-  const encoded = encodeURIComponent(term)
 
   switch (type) {
     case 'name':
-      return `name=${encoded}`;
+      url.searchParams.set('name', term)
+      break;
+
     case 'ref':
-      return `ref=${encoded}`;
-    case 'uic_ref':
-      return `uic_ref=${encoded}`;
+      url.searchParams.set('ref', term)
+      break;
+
     case 'all':
     default:
-      return `q=${encoded}`;
+      url.searchParams.set('q', term)
   }
+
+  return url
 }
 
-function searchForFacilities(type, term) {
+function searchForFacilities(type, term, language) {
   if (!term || term.length < 2) {
     hideSearchResults();
   } else {
-    const queryString = facilitySearchQuery(type, term)
-    fetch(`${location.origin}/api/facility?${queryString}`)
+    fetch(facilitySearchUrl(type, term, language))
       .then(result => result.json())
       .then(result => result.map(item => ({
         ...item,
-        label: item.name,
+        label: [...new Set([item.localized_name, item.name])].join(' • '),
         icon: icons.railway[item.railway] ?? null,
+        references: item.references || {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -130,6 +174,7 @@ function searchForMilestones(ref, position) {
         ...item,
         label: `Line ${item.line_ref} @ ${item.position}`,
         icon: icons.railway[item.railway] ?? null,
+        references: {},
       })))
       .then(result => {
         showSearchResults(result)
@@ -143,7 +188,7 @@ function searchForMilestones(ref, position) {
 }
 
 function showSearchResults(results) {
-  registerLastSearchResults(results);
+  searchControl.registerLastSearchResults(results);
 
   const bounds = results.length > 0
     ? JSON.stringify(results.reduce(
@@ -152,6 +197,7 @@ function showSearchResults(results) {
       new maplibregl.LngLatBounds({lat: results[0].longitude, lon: results[0].latitude})
     ).toArray())
     : null;
+
 
   searchResults.innerHTML = results.length === 0
     ? `
@@ -172,12 +218,22 @@ function showSearchResults(results) {
         </button>
       </div>
       <div class="list-group">
-        ${results.map(result =>
-      `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
+        ${results.map(result => {
+          const catalog = (features ?? {}).station_references ?? {}
+          const sortKey = value => (catalog.features[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+          const references = Object.entries(result.references)
+            .toSorted(([keyA, _a], [keyB, _b]) => 
+              naturalSort(sortKey(keyA), sortKey(keyB)))
+            .map(([key, ref]) => 
+              `<span class="badge bg-secondary small">${(catalog.features[key] ?? {}).name ?? key}: ${ref}</span>`)
+            .join(' ')
+
+          return `<a class="list-group-item list-group-item-action" href="javascript:hideSearchResults(); map.easeTo({center: [${result.latitude}, ${result.longitude}], zoom: 15}); hideSearch()">
             ${result.icon ? `${result.icon}` : ''}
             ${result.label}
+            ${references}
           </a>`
-    ).join('')}
+        }).join('')}
       </div>
     `;
   searchResults.style.display = 'block';
@@ -185,7 +241,7 @@ function showSearchResults(results) {
 
 function hideSearchResults() {
   searchResults.style.display = 'none';
-  registerLastSearchResults([]);
+  searchControl.registerLastSearchResults([]);
 }
 
 function showSearch() {
@@ -230,7 +286,17 @@ function viewSearchResultsOnMap(bounds) {
   });
 }
 
-function showConfiguration() {
+function showConfiguration(tab) {
+  if (tab === 'general') {
+    configureGeneral();
+  } else if (tab === 'standard') {
+    configureStandard();
+  } else if (tab === 'electrification') {
+    configureElectrification();
+  } else if (tab === 'track') {
+    configureTrack();
+  }
+
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
   backgroundOpacityControl.value = configuration.backgroundOpacity ?? defaultConfiguration.backgroundOpacity;
   if ((configuration.backgroundType ?? defaultConfiguration.backgroundType) === 'raster') {
@@ -255,6 +321,24 @@ function showConfiguration() {
     themeLightControl.checked = true;
   }
 
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  if (futureInfrastructure === 'none') {
+    futureInfrastructureNoneControl.checked = true;
+  } else if (futureInfrastructure === 'construction') {
+    futureInfrastructureConstructionControl.checked = true
+  } else if (futureInfrastructure === 'construction-proposed') {
+    futureInfrastructureConstructionProposedControl.checked = true;
+  }
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure;
+  if (historicalInfrastructure === 'none') {
+    historicalInfrastructureNoneControl.checked = true;
+  } else if (historicalInfrastructure === 'openhistoricalmap') {
+    historicalInfrastructureOpenHistoricalMapControl.checked = true
+  } else if (historicalInfrastructure === 'openstreetmap') {
+    historicalInfrastructureOpenStreetMapControl.checked = true;
+  }
+
   const editor = configuration.editor ?? defaultConfiguration.editor;
   if (editor === 'josm') {
     editorJOSMControl.checked = true;
@@ -269,6 +353,37 @@ function showConfiguration() {
     stationLabelNameControl.checked = true
   }
 
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    localizationAutomaticControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'disabled') {
+    localizationDisabledControl.checked = true;
+    localizationCustomLanguageControl.disabled = true;
+  } else if (localization === 'custom') {
+    localizationCustomControl.checked = true;
+    localizationCustomLanguageControl.disabled = false;
+  }
+  localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
+
+  const electrificationRailwayLine = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
+  if (electrificationRailwayLine === 'voltageFrequency') {
+    electrificationRailwayLineVoltageFrequencyControl.checked = true
+  } else if (electrificationRailwayLine === 'maximumCurrent') {
+    electrificationRailwayLineMaximumCurrentControl.checked = true
+  } else if (electrificationRailwayLine === 'power') {
+    electrificationRailwayLinePowerControl.checked = true
+  }
+
+  const trackRailwayLine = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
+  if (trackRailwayLine === 'gauge') {
+    trackRailwayLineGaugeControl.checked = true
+  } else if (trackRailwayLine === 'loadingGauge') {
+    trackRailwayLineLoadingGaugeControl.checked = true
+  } else if (trackRailwayLine === 'trackClass') {
+    trackRailwayLineTrackClassControl.checked = true
+  }
+
   configurationBackdrop.style.display = 'block';
 }
 
@@ -276,24 +391,52 @@ function hideConfiguration() {
   configurationBackdrop.style.display = 'none';
 }
 
-function hideLegend() {
-  legend.style.display = 'none';
+function configureGeneral() {
+  configureGeneralTab.classList.add('active');
+  configureStandardTab.classList.remove('active');
+  configureElectrificationTab.classList.remove('active');
+  configureTrackTab.classList.remove('active');
+
+  configureGeneralBody.style.display = 'block';
+  configureStandardBody.style.display = 'none';
+  configureElectrificationBody.style.display = 'none';
+  configureTrackBody.style.display = 'none';
 }
 
-function showLegend() {
-  legend.style.display = 'block';
+function configureStandard() {
+  configureGeneralTab.classList.remove('active');
+  configureStandardTab.classList.add('active');
+  configureElectrificationTab.classList.remove('active');
+  configureTrackTab.classList.remove('active');
+
+  configureGeneralBody.style.display = 'none';
+  configureStandardBody.style.display = 'block';
+  configureElectrificationBody.style.display = 'none';
+  configureTrackBody.style.display = 'none';
 }
 
-function isLegendShown() {
-  return legend.style.display === 'block';
+function configureElectrification() {
+  configureGeneralTab.classList.remove('active');
+  configureStandardTab.classList.remove('active');
+  configureElectrificationTab.classList.add('active');
+  configureTrackTab.classList.remove('active');
+
+  configureGeneralBody.style.display = 'none';
+  configureStandardBody.style.display = 'none';
+  configureElectrificationBody.style.display = 'block';
+  configureTrackBody.style.display = 'none';
 }
 
-function toggleLegend() {
-  if (isLegendShown()) {
-    hideLegend();
-  } else {
-    showLegend();
-  }
+function configureTrack() {
+  configureGeneralTab.classList.remove('active');
+  configureStandardTab.classList.remove('active');
+  configureElectrificationTab.classList.remove('active');
+  configureTrackTab.classList.add('active');
+
+  configureGeneralBody.style.display = 'none';
+  configureStandardBody.style.display = 'none';
+  configureElectrificationBody.style.display = 'none';
+  configureTrackBody.style.display = 'block';
 }
 
 function toggleNews() {
@@ -317,11 +460,11 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(style, zoom, lat, lon, date) {
+function newsLink(style, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
   selectStyle(style);
   selectDate(date ?? defaultDate);
-  map.jumpTo({zoom, center: {lat, lon}});
+  map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
 
 function showAbout() {
@@ -344,7 +487,7 @@ searchFacilitiesForm.addEventListener('submit', event => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  searchForFacilities(data.type, data.term)
+  searchForFacilities(data.type, data.term, configuredLanguage())
 })
 searchMilestonesForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -375,7 +518,7 @@ document.addEventListener('keydown', (event) => {
     hideConfiguration();
     hideNews();
     hideAbout();
-    hideLegend();
+    legendControl.hideLegend();
     if (popup) {
       popup.remove();
       popup = null;
@@ -385,8 +528,14 @@ document.addEventListener('keydown', (event) => {
 
 function createDomElement(tagName, className, container) {
   const el = window.document.createElement(tagName);
-  if (className !== undefined) el.className = className;
-  if (container) container.appendChild(el);
+
+  if (className !== undefined) {
+    el.className = className;
+  }
+  if (container) {
+    container.appendChild(el);
+  }
+
   return el;
 }
 
@@ -402,51 +551,121 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    styles: {
-      default: 'standard',
-      date: 'historical',
+    supportsDate: true,
+    hasConfiguration: true,
+    styleGlobalState: {
+      tracks: 'usage',
+      stations: 'station',
+      pois: 'standard',
+      turntables: 'plain',
+      platforms: 'plain',
+      substations: 'none',
+      boxes: 'none',
+      catenaries: 'none',
+      switches: 'plain',
+      signals: 'none',
     },
   },
   speed: {
     name: 'Speed',
-    styles: {
-      default: 'speed',
+    supportsDate: false,
+    hasConfiguration: false,
+    styleGlobalState: {
+      tracks: 'speed',
+      stations: 'none',
+      pois: 'none',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'none',
+      boxes: 'none',
+      catenaries: 'none',
+      switches: 'none',
+      signals: 'speed',
     },
   },
   signals: {
     name: 'Train protection',
-    styles: {
-      default: 'signals',
+    supportsDate: false,
+    hasConfiguration: false,
+    styleGlobalState: {
+      tracks: 'train_protection',
+      stations: 'none',
+      pois: 'signals',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'none',
+      boxes: 'plain',
+      catenaries: 'none',
+      switches: 'none',
+      signals: 'signals',
     },
   },
   electrification: {
     name: 'Electrification',
-    styles: {
-      default: 'electrification',
+    supportsDate: false,
+    hasConfiguration: true,
+    styleGlobalState: {
+      tracks: 'electrification',
+      stations: 'none',
+      pois: 'electrification',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'plain',
+      boxes: 'none',
+      catenaries: 'plain',
+      switches: 'none',
+      signals: 'electrification',
     },
   },
-  gauge: {
-    name: 'Gauge',
-    styles: {
-      default: 'gauge',
-    },
-  },
-  loading_gauge: {
-    name: 'Loading gauge',
-    styles: {
-      default: 'loading_gauge',
-    },
-  },
-  track_class: {
-    name: 'Track class',
-    styles: {
-      default: 'track_class',
+  track: {
+    name: 'Track',
+    supportsDate: false,
+    hasConfiguration: true,
+    styleGlobalState: {
+      tracks: 'track',
+      stations: 'none',
+      pois: 'none',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'none',
+      boxes: 'none',
+      catenaries: 'none',
+      switches: 'none',
+      signals: 'none',
     },
   },
   operator: {
     name: 'Operator',
-    styles: {
-      default: 'operator',
+    supportsDate: false,
+    hasConfiguration: false,
+    styleGlobalState: {
+      tracks: 'operator',
+      stations: 'operator',
+      pois: 'operator',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'none',
+      boxes: 'operator',
+      catenaries: 'none',
+      switches: 'none',
+      signals: 'none',
+    },
+  },
+  route: {
+    name: 'Routes',
+    supportsDate: false,
+    hasConfiguration: false,
+    styleGlobalState: {
+      tracks: 'routes',
+      stations: 'station',
+      pois: 'none',
+      turntables: 'none',
+      platforms: 'none',
+      substations: 'none',
+      boxes: 'none',
+      catenaries: 'none',
+      switches: 'none',
+      signals: 'none',
     },
   },
 };
@@ -458,12 +677,6 @@ const knownThemes = [
   'light',
   'dark',
 ]
-
-function layerHasDateFilter(layer) {
-  return layer.filter
-    && layer.filter[0] === 'let'
-    && layer.filter[1] === 'date'
-}
 
 function hashToObject(hash) {
   if (!hash) {
@@ -479,31 +692,59 @@ function hashToObject(hash) {
 
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
-
-  const style = (hashObject.style && hashObject.style in knownStyles)
-    ? hashObject.style
-    : defaultStyle;
-
-  const date = (hashObject.date && !isNaN(parseFloat(hashObject.date)))
-    ? parseFloat(hashObject.date)
-    : defaultDate;
-
   return {
-    style,
-    date,
+    style: updateStyleParameter(hashObject.style),
+    date: determineDateParameter(hashObject.date),
   }
+}
+
+/**
+ * Backwards conpatibility for existing links
+ */
+function updateStyleParameter(hashStyle) {
+  switch (hashStyle) {
+    case 'gauge':
+      updateConfiguration('trackRailwayLine', 'gauge');
+      console.info('Updated hash parameters for gauge style to track style, and updated user configuration');
+      return 'track'
+
+    case 'loading_gauge':
+      updateConfiguration('trackRailwayLine', 'loadingGauge');
+      console.info('Updated hash parameters for gauge style to loading gauge style, and updated user configuration');
+      return 'track'
+
+    case 'track_class':
+      updateConfiguration('trackRailwayLine', 'trackClass');
+      console.info('Updated hash parameters for gauge style to track class style, and updated user configuration');
+      return 'track'
+  }
+
+  if (hashStyle && hashStyle in knownStyles) {
+    return hashStyle;
+  } else {
+    return defaultStyle;
+  }
+}
+
+function determineDateParameter(hashDate) {
+  return hashDate === 'all'
+    ? 'all'
+    : (hashDate && !isNaN(parseFloat(hashDate)))
+      ? parseFloat(hashDate)
+      : defaultDate;
 }
 
 function determineZoomCenterFromHash(hash) {
   const hashObject = hashToObject(hash);
   if ('view' in hashObject && typeof hashObject.view === 'string') {
-    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?$/);
+    const matches = hashObject.view.match(/^(?<zoom>[\d.]+)\/(?<latitude>-?[\d.]+)\/(?<longitude>-?[\d.]+)(?:\/(?<bearing>-?[\d.]+))?(?:\/(?<pitch>-?[\d.]+))?$/);
     if (matches) {
       const groups = matches.groups
       return {
         center: [parseFloat(groups.longitude), parseFloat(groups.latitude)],
         zoom: parseFloat(groups.zoom),
         bearing: groups.bearing ?? 0.0,
+        pitch: groups.pitch ?? 0.0,
       }
     } else {
       return {};
@@ -516,11 +757,9 @@ function determineZoomCenterFromHash(hash) {
 function putParametersInHash(hash, style, date) {
   const hashObject = hashToObject(hash);
   hashObject.style = style !== defaultStyle ? style : undefined;
-  hashObject.date = knownStyles[style].styles.date && dateControl.active ? date : undefined;
+  hashObject.date = dateControl.isActive() ? date : undefined;
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
-
-let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 // Configuration //
 
@@ -617,17 +856,62 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  map.setLayoutProperty('hillshade', 'visibility', hillshadeVisible ? 'visible' : 'none')
+  map.setGlobalStateProperty('hillshade', hillshadeVisible);
 }
 
 function onStationLabelChange(stationlabel) {
   updateConfiguration('stationLowZoomLabel', stationlabel);
 
-  if (map.loaded()) {
+  if (map.isStyleLoaded()) {
     map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
   }
-  if (legendMap.loaded()) {
-    legendMap.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
+  legendControl.updateLegend();
+}
+
+function disableLocalization() {
+  updateConfiguration('localization', 'disabled');
+  onStyleChange();
+}
+
+function automaticLocalization() {
+  updateConfiguration('localization', 'automatic');
+  onStyleChange();
+}
+
+function customLocalization(language) {
+  updateConfiguration('localization', 'custom');
+  updateConfiguration('localizationCustomLanguage', language);
+  onStyleChange();
+}
+
+function configureElectrificationRailwayLine(electrification) {
+  updateConfiguration('electrificationRailwayLine', electrification);
+
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('electrificationRailwayLine', electrification);
+  }
+
+  legendControl.updateLegend()
+}
+
+function configureTrackRailwayLine(track) {
+  updateConfiguration('trackRailwayLine', track);
+
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('trackRailwayLine', track);
+  }
+
+  legendControl.updateLegend()
+}
+
+function configuredLanguage() {
+  const localization = configuration.localization ?? defaultConfiguration.localization;
+  if (localization === 'automatic') {
+    return locale.language;
+  } else if (localization === 'disabled') {
+    return null;
+  } else if (localization === 'custom') {
+    return configuration.localizationCustomLanguage;
   }
 }
 
@@ -653,13 +937,39 @@ function updateTheme() {
   if (map.loaded()) {
     map.setGlobalStateProperty('theme', resolvedTheme);
   }
-  if (legendMap.loaded()) {
-    legendMap.setGlobalStateProperty('theme', resolvedTheme);
-  }
+
+  legendControl.updateLegend();
 }
 
 function onEditorChange(editor) {
   updateConfiguration('editor', editor);
+}
+
+function onHistoricalInfrastructureChange(historicalInfrastructure) {
+  updateConfiguration('historicalInfrastructure', historicalInfrastructure);
+
+  if (historicalInfrastructure !== 'openhistoricalmap') {
+    selectDate(defaultDate)
+  }
+
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
+    map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
+    map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  }
+
+  onStyleChange();
+}
+
+function onFutureInfrastructureChange(futureInfrastructure) {
+  updateConfiguration('futureInfrastructure', futureInfrastructure);
+
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
+    map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
+  }
+
+  legendControl.updateLegend();
 }
 
 function updateBackgroundMapContainer() {
@@ -882,33 +1192,41 @@ async function composeImages(imageIds) {
 }
 
 const generatedImages = {};
-/**
- * Async function is not actually supported by Maplibre GL.
- * See https://github.com/mapbox/mapbox-gl-js/issues/9018 and https://maplibre.org/maplibre-gl-js/docs/examples/display-a-remote-svg-symbol/ (displays a warning)
- */
 async function generateImage(maps, ids) {
   const rawImageIds = ids.startsWith('sdf:') ? ids.substr(4) : ids
 
   // Ensure every image is generated only once
   if (!generatedImages[rawImageIds]) {
-    generatedImages[rawImageIds] = true;
+    generatedImages[rawImageIds] = new Promise((resolve, reject) => {
+      try {
+        const imageIds = rawImageIds.split('|')
+        if (!imageIds) {
+          console.warn(`Ignoring invalid missing image: ${rawImageIds}`);
+          resolve(false);
+          return;
+        }
 
-    const imageIds = rawImageIds.split('|')
-    if (!imageIds) {
-      console.warn(`ignoring invalid missing image: ${rawImageIds}`);
-      return;
-    }
+        console.info(`Generating image for ${rawImageIds}`)
 
-    console.info(`Generating image for ${rawImageIds}. MapLibre GL JS will log a warning below because it does not support async image loading yet.`)
+        // Compose the images together into a normal image and SDF image
+        composeImages(imageIds)
+          .then(({width, height, imageData, sdfImageData, pixelRatio}) => {
+            maps.forEach(map => {
+              map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
+              map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
+            })
 
-    // Compose the images together into a normal image and SDF image
-    const {width, height, imageData, sdfImageData, pixelRatio} = await composeImages(imageIds)
-
-    maps.forEach(map => {
-      map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
-      map.addImage(`sdf:${rawImageIds}`, {width, height, data: sdfImageData}, {pixelRatio, sdf: true});
+            resolve(true);
+          })
+          .catch(reject)
+      } catch (e) {
+        reject(e);
+      }
     })
   }
+
+  // The same image generation may be called concurrently. Ensure the subsequent calls while the image is being generated by the first call, wait for the generated image.
+  await generatedImages[rawImageIds]
 }
 
 const defaultConfiguration = {
@@ -918,39 +1236,26 @@ const defaultConfiguration = {
   backgroundType: 'raster',
   backgroundUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   theme: 'system',
+  historicalInfrastructure: 'openhistoricalmap',
+  futureInfrastructure: 'construction-proposed',
   editor: 'id',
   view: {},
-  stationLowZoomLabel: 'label'
+  stationLowZoomLabel: 'label',
+  localization: 'automatic',
+  electrificationRailwayLine: 'voltageFrequency',
+  trackRailwayLine: 'gauge',
+  legendConfiguration: 'all',
+  legendCountry: null,
 };
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-const coordinateFactor = legendZoom => Math.pow(2, 5 - legendZoom);
-
-const legendPointToMapPoint = (zoom, [x, y]) =>
-  [x * coordinateFactor(zoom), y * coordinateFactor(zoom)]
+let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 const mapStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
+  Object.keys(knownStyles)
     .map(style => [style, `${location.origin}/style/${style}.json`])
 );
-
-const legendStyles = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
-    .map(style => [style, `${location.origin}/style/legend-${style}.json`])
-);
-
-const legendMap = new maplibregl.Map({
-  container: 'legend-map',
-  zoom: 5,
-  center: [0, 0],
-  attributionControl: false,
-  interactive: false,
-  // See https://github.com/maplibre/maplibre-gl-js/issues/3503
-  maxCanvasSize: [Infinity, Infinity],
-});
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
@@ -970,11 +1275,20 @@ const map = new maplibregl.Map({
   hash: 'view',
   minZoom: globalMinZoom,
   maxZoom: globalMaxZoom,
-  minPitch: 0,
-  maxPitch: 0,
   attributionControl: false,
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
+});
+map.setStyle(`${location.origin}/style.json`, {
+  validate: false,
+  transformStyle: (previous, next) => {
+    const language = configuredLanguage();
+
+    rewriteStylePathsToOrigin(next)
+    addLanguageToSupportedSources(next, language)
+    rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
+    return next;
+  },
 });
 
 function selectStyle(style) {
@@ -1027,12 +1341,65 @@ function rewriteStylePathsToOrigin(style) {
     )
 }
 
+// Rewrite source URLs to append the language query parameter
+function addLanguageToSupportedSources(style, language) {
+  style.sources = Object.fromEntries(
+    Object.entries(style.sources)
+      .map(([key, source]) => {
+        if (source && source.url && ((source.metadata ?? {}).supports ?? []).includes('language')) {
+          const parsedUrl = new URL(source.url)
+
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          }
+
+          return [
+            key,
+            {
+              ...source,
+              url: parsedUrl.href,
+            }
+          ];
+        } else {
+          return [key, source]
+        }
+      })
+  )
+}
+
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
-function rewriteGlobalStateDefaults(style) {
-  style.state.date.default = selectedDate;
+function rewriteGlobalStateDefaults(style, bearing, pitch) {
+  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
+  style.state.allDates.default = selectedDate === 'all';
   style.state.theme.default = selectedTheme;
+
+  style.state.bearing.default = bearing ?? 0;
+  style.state.pitched.default = pitchedView(pitch);
+
   style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
+
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
+  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
+
+  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
+  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
+  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
+
+  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
+
+  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
+
+  style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
+
+  // Style specific map global state
+  Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) => {
+    if (style.state[key]) {
+      style.state[key].default = value;
+    }
+  });
 }
 
 function toggleHillShadeLayer(style) {
@@ -1047,38 +1414,21 @@ function toggleHillShadeLayer(style) {
 }
 
 let lastSetMapStyle = null;
-const onStyleChange = () => {
-  const supportsDate = knownStyles[selectedStyle].styles.date;
-  const dateActive = supportsDate && dateControl.active;
-  const mapStyle = dateActive
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
+let lastSetMapLanguage = null;
+function onStyleChange() {
+  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
+  const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
+  const language = configuredLanguage();
 
-  if (mapStyle !== lastSetMapStyle) {
-    lastSetMapStyle = mapStyle;
-
-    // Change styles
-    map.setStyle(mapStyles[mapStyle], {
-      validate: false,
-      transformStyle: (previous, next) => {
-        rewriteStylePathsToOrigin(next)
-        rewriteGlobalStateDefaults(next)
-        toggleHillShadeLayer(next)
-        return next;
-      },
-    });
-
-    legendMap.setStyle(legendStyles[mapStyle], {
-      validate: false,
-      // Do not calculate a diff because of the large structural layer differences causing a blocking performance hit
-      diff: false,
-      transformStyle: (previous, next) => {
-        rewriteStylePathsToOrigin(next)
-        rewriteGlobalStateDefaults(next)
-        onStylesheetChange(next);
-        return next;
-      },
-    });
+  if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
+    if (map.isStyleLoaded()) {
+      // Style specific map global state
+      Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
+        map.setGlobalStateProperty(key, value)
+      );
+    }
+    hideSearchResults();
+    routeControl.clearRoute();
   }
 
   if (supportsDate && !dateControl.isShown()) {
@@ -1087,11 +1437,19 @@ const onStyleChange = () => {
     dateControl.hide();
   }
 
+  lastSetMapStyle = selectedStyle;
+  lastSetMapLanguage = language;
+
+  legendControl.updateLegend()
   onPageParametersChange();
 }
 
 const onDateChange = () => {
-  map.setGlobalStateProperty('date', selectedDate);
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('date', selectedDate === 'all' ? defaultDate : selectedDate);
+    map.setGlobalStateProperty('allDates', selectedDate === 'all');
+  }
+
   onPageParametersChange();
 }
 
@@ -1106,13 +1464,18 @@ class StyleControl {
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
     const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name}]) => {
+    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
       const button = createDomElement('button', '', buttonGroup);
       button.innerText = name
       button.onclick = () => {
         buttonGroup.classList.remove('active')
         this.activateStyle(style);
         this.options.onStyleChange(style)
+      }
+
+      if (hasConfiguration) {
+        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
+        layerConfigurationButton.onclick = () => showConfiguration(style)
       }
 
       this.buttons[style] = button;
@@ -1165,31 +1528,74 @@ class DateControl {
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
     this.icon.onclick = () => {
+      this.allDates.classList.toggle('hide-mobile-show-desktop');
+      this.allDates.classList.toggle('show-mobile-hide-desktop');
+      this.label.classList.toggle('hide-mobile-show-desktop');
+      this.label.classList.toggle('show-mobile-hide-desktop');
       this.slider.classList.toggle('hide-mobile-show-desktop');
       this.slider.classList.toggle('show-mobile-hide-desktop');
       this.dateDisplay.classList.toggle('hide-mobile-show-desktop');
       this.dateDisplay.classList.toggle('show-mobile-hide-desktop');
     };
+
+    this.allDates = createDomElement('input', 'all-dates hide-mobile-show-desktop', this._container);
+    this.allDates.id = 'all-dates'
+    this.allDates.type = 'checkbox'
+    this.allDates.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .3rem;' // TODO
+    this.allDates.onchange = () => {
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
+    }
+
+    this.label = createDomElement('label', 'all-dates-label hide-mobile-show-desktop', this._container);
+    this.label.innerText = 'All time'
+    this.label.htmlFor = 'all-dates'
+    this.label.style = 'text-align: center;font-weight: bold;font-size: 0.9rem;vertical-align: middle;margin-right: .5rem;' // TODO
+
     this.slider = createDomElement('input', 'date-input hide-mobile-show-desktop', this._container);
+    this.slider.id = 'range'
     this.slider.type = 'range'
     this.slider.min = 1758
-    this.slider.max = (new Date()).getFullYear()
+    this.slider.max = defaultDate
     this.slider.step = 1
-    this.slider.valueAsNumber = this.options.initialSelection;
     this.slider.onchange = () => {
-      this.detectChanges();
-      this.updateDisplay();
-      this.options.onChange(this.slider.valueAsNumber);
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
+      this.options.onChange(this.showAllDates ? 'all' : this.showDate);
     }
     this.slider.oninput = () => {
-      this.detectChanges();
-      this.updateDisplay();
+      this.onExternalDateChange(this.allDates.checked ? 'all' : this.slider.valueAsNumber);
     }
-    this.dateDisplay = createDomElement('span', 'date-display hide-mobile-show-desktop', this._container);
-    this.active = null;
 
-    this.detectChanges();
-    this.updateDisplay();
+    this.dateDisplay = createDomElement('input', 'date-display hide-mobile-show-desktop', this._container);
+    this.dateDisplay.type = 'number'
+    this.dateDisplay.min = 1758
+    this.dateDisplay.max = defaultDate
+    this.dateDisplay.step = 1
+    this.dateDisplay.onchange = () => {
+      if (this.dateDisplay.type === 'number') {
+        const value = Math.min(
+          this.dateDisplay.max,
+          Math.max(this.dateDisplay.min, this.dateDisplay.valueAsNumber),
+        );
+        this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+        this.options.onChange(this.showAllDates ? 'all' : this.showDate);
+      } else {
+        const value = this.dateDisplay.value;
+        if (value === 'present') {
+          this.onExternalDateChange(this.allDates.checked ? 'all' : defaultDate);
+          this.options.onChange(this.showAllDates ? 'all' : defaultDate);
+        }
+      }
+    }
+    this.dateDisplay.oninput = () => {
+      const value = this.dateDisplay.valueAsNumber;
+      if (this.dateDisplay.min <= value && value <= this.dateDisplay.max) {
+        this.onExternalDateChange(this.allDates.checked ? 'all' : value);
+        this.options.onChange(this.allDates.checked ? 'all' : value);
+      }
+    }
+
+    this.onExternalDateChange(this.options.initialSelection);
 
     return this._container;
   }
@@ -1200,11 +1606,10 @@ class DateControl {
   }
 
   onExternalDateChange(date) {
-    if (date && this.slider.valueAsNumber !== date) {
-      this.slider.valueAsNumber = date;
-      this.detectChanges();
-      this.updateDisplay();
-    }
+    this.showAllDates = date === 'all';
+    this.showDate = (date === 'all' ? defaultDate : date) ?? defaultDate;
+
+    this.updateDisplay();
   }
 
   isShown() {
@@ -1219,42 +1624,140 @@ class DateControl {
     this._container.style.visibility = 'hidden'
   }
 
-  detectChanges() {
-    const previouslyActive = this.active;
-    this.active = this.slider.valueAsNumber !== defaultDate;
-
-    if (this.active === true && previouslyActive !== true) {
-      this.icon.classList.add('active')
-      this.dateDisplay.classList.add('active')
-      this.options.onActivation()
-    } else if (this.active === false && previouslyActive !== false) {
-      this.icon.classList.remove('active')
-      this.dateDisplay.classList.remove('active')
-      this.options.onDeactivation();
-    }
+  isActive() {
+    return this.showAllDates || (this.showDate ?? defaultDate) !== defaultDate;
   }
 
   updateDisplay() {
-    this.dateDisplay.innerText = this.active
-      ? this.slider.value
-      : 'present'
+    if (this.isActive()) {
+      this.icon.classList.add('active')
+      this.dateDisplay.classList.add('active')
+    } else {
+      this.icon.classList.remove('active')
+      this.dateDisplay.classList.remove('active')
+    }
+
+    if (this.showAllDates) {
+      this.allDates.checked = true;
+      this.slider.disabled = true;
+      // Leave the date slider value alone
+      this.dateDisplay.disabled = true;
+    } else {
+      this.allDates.checked = false;
+      this.slider.disabled = false;
+      this.slider.valueAsNumber = this.showDate ?? defaultDate;
+      this.slider.disabled = false;
+      this.dateDisplay.disabled = false;
+    }
+
+    if (this.showAllDates) {
+      this.dateDisplay.type = 'text'
+      this.dateDisplay.value = 'all';
+      this.dateDisplay.disabled = true;
+    } else if (this.showDate === defaultDate) {
+      this.dateDisplay.type = 'text'
+      this.dateDisplay.value = 'present';
+      this.dateDisplay.disabled = true;
+    } else {
+      this.dateDisplay.type = 'number'
+      this.dateDisplay.value = this.showDate;
+      this.dateDisplay.disabled = false;
+    }
   }
 }
 
 class SearchControl {
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-search');
     const button = createDomElement('button', 'maplibregl-ctrl-search', this._container);
     button.type = 'button';
     button.title = 'Search for places'
     button.onclick = _ => showSearch();
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Search'
 
+    this.hideResultsButton = createDomElement('button', 'maplibregl-ctrl-search-hide d-none', this._container);
+    this.hideResultsButton.type = 'button';
+    this.hideResultsButton.title = 'Hide search results from the map'
+    this.hideResultsButton.onclick = _ => hideSearchResults();
+    createDomElement('span', 'maplibregl-ctrl-icon', this.hideResultsButton);
+    const hideResultsButtonText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', this.hideResultsButton);
+    hideResultsButtonText.innerText = 'Hide search reults'
+
     return this._container;
+  }
+
+  registerLastSearchResults(results) {
+    const data = {
+      type: 'FeatureCollection',
+      features: results.map(result => ({
+        type: 'Feature',
+        properties: result,
+        geometry: {
+          type: 'Point',
+          coordinates: [result.latitude, result.longitude],
+        },
+      })),
+    };
+
+    const searchSource = this._map && this._map.getSource('search');
+    if (searchSource) {
+      searchSource.setData(data);
+    }
+
+    if (results.length > 0) {
+      this._container.classList.add('has-results')
+      this.hideResultsButton.classList.remove('d-none')
+    } else {
+      this._container.classList.remove('has-results')
+      this.hideResultsButton.classList.add('d-none')
+    }
+  }
+
+  onRemove() {
+    removeDomElement(this._container);
+    this._map = undefined;
+  }
+}
+
+class RouteControl {
+  onAdd(map) {
+    this._map = map;
+    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-route d-none');
+    const button = createDomElement('button', 'maplibregl-ctrl-route', this._container);
+    button.type = 'button';
+    button.title = 'Hide the route on the map'
+    button.onclick = _ => this.clearRoute();
+    createDomElement('span', 'maplibregl-ctrl-icon', button);
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
+    text.innerText = 'Hide route'
+
+    return this._container;
+  }
+
+  showRoute(routeId) {
+    const routeSource = this._map.getSource('route')
+    const routeStopsSource = this._map.getSource('route_stops')
+
+    if (routeSource && routeStopsSource) {
+      if (routeId) {
+        routeSource.setData(`${location.origin}/api/route/${routeId}`)
+        routeStopsSource.setData(`${location.origin}/api/route/stops/${routeId}`)
+
+        this._container.classList.remove('d-none');
+      } else {
+        routeSource.setData(emptyGeoJsonData);
+        routeStopsSource.setData(emptyGeoJsonData);
+
+        this._container.classList.add('d-none');
+      }
+    }
+  }
+
+  clearRoute() {
+    this.showRoute(null)
   }
 
   onRemove() {
@@ -1277,7 +1780,7 @@ class EditControl {
         const josmUrl = `http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`
         openJOSM(josmUrl)
       } else {
-        const domain = dateControl.active
+        const domain = selectedDate !== 'all' && selectedDate < defaultDate
           ? 'https://www.openhistoricalmap.org'
           : 'https://www.openstreetmap.org';
 
@@ -1302,7 +1805,7 @@ class ConfigurationControl {
     const button = createDomElement('button', 'maplibregl-ctrl-configuration', this._container);
     button.type = 'button';
     button.title = 'Configure the map'
-    button.onclick = _ => showConfiguration();
+    button.onclick = _ => showConfiguration('general')
     createDomElement('span', 'maplibregl-ctrl-icon', button);
 
     return this._container;
@@ -1317,36 +1820,457 @@ class ConfigurationControl {
 class LegendControl {
   constructor(options) {
     this.options = options;
+    this.map = null;
+    this._container = null;
+    this.legend = null;
+    this.legendMapContainer = null;
+    this.legendState = {
+      zoom: null,
+      style: null,
+      mapGlobalState: {},
+      legendConfiguration: this.options.initialLegendConfiguration,
+      legendCountry: this.options.initialLegendCountry,
+      keyedSourcesAndFeaturesInView: {},
+    };
+
+    this.generateLegendEventHandler = () => this.updateLegend();
   }
 
   onAdd(map) {
-    this._map = map;
+    this.map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group');
     const button = createDomElement('button', 'maplibregl-ctrl-legend', this._container);
     button.type = 'button';
     button.title = 'Show/hide map legend';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', '', button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'Legend'
 
-    button.onclick = () => this.options.onLegendToggle()
+    button.onclick = () => this.toggleLegend();
+
+    this.legendContainer = createDomElement('div', 'legend-container', this._container)
+    const legendMapConfiguration = createDomElement('form', 'legend-map-configuration', this.legendContainer)
+
+    const legendTitle = createDomElement('span', undefined, legendMapConfiguration)
+    legendTitle.innerText = 'Show'
+
+    const legendAll = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendAllControl = createDomElement('input', 'form-check-input', legendAll)
+    legendAllControl.type = 'radio'
+    legendAllControl.name = 'legendContent'
+    legendAllControl.value = 'all'
+    legendAllControl.id = 'legendContentAll'
+    legendAllControl.checked = this.options.initialLegendConfiguration === 'all'
+    const legendAllLabel = createDomElement('label', 'form-check-label', legendAll)
+    legendAllLabel.htmlFor = 'legendContentAll'
+    legendAllLabel.innerText = 'all'
+
+    const legendInView = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendInViewControl = createDomElement('input', 'form-check-input', legendInView)
+    legendInViewControl.type = 'radio'
+    legendInViewControl.name = 'legendContent'
+    legendInViewControl.value = 'inView'
+    legendInViewControl.id = 'legendContentInView'
+    legendInViewControl.checked = this.options.initialLegendConfiguration === 'inView'
+    const legendInViewLabel = createDomElement('label', 'form-check-label', legendInView)
+    legendInViewLabel.innerText = 'in view'
+    legendInViewLabel.htmlFor = 'legendContentInView'
+
+    const legendCountry = createDomElement('div', 'form-check form-check-inline', legendMapConfiguration)
+    const legendCountryControl = createDomElement('input', 'form-check-input', legendCountry)
+    legendCountryControl.type = 'radio'
+    legendCountryControl.name = 'legendContent'
+    legendCountryControl.value = 'country'
+    legendCountryControl.id = 'legendContentCountry'
+    legendCountryControl.checked = this.options.initialLegendConfiguration === 'country'
+    const legendCountryLabel = createDomElement('label', 'form-check-label', legendCountry)
+    legendCountryLabel.innerText = 'country: '
+    legendCountryLabel.htmlFor = 'legendContentCountry'
+
+    this.legendCountrySelection = createDomElement('select', 'form-select form-select-sm country-select', legendMapConfiguration)
+    this.legendCountrySelection.disabled = this.options.initialLegendConfiguration !== 'country';
+
+    legendAllControl.onchange = () => {
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
+      this.options.onLegendConfigurationChange('all', null)
+      this.generateLegendEventHandler()
+    }
+    legendInViewControl.onchange = () => {
+      this.legendCountrySelection.value = null
+      this.legendCountrySelection.disabled = 'disabled'
+      this.options.onLegendConfigurationChange('inView', null)
+      this.generateLegendEventHandler()
+    }
+    legendCountryControl.onchange = () => {
+      const firstCountryOption = this.legendCountrySelection.firstElementChild;
+      this.legendCountrySelection.value = firstCountryOption ? firstCountryOption.value : null;
+      this.legendCountrySelection.disabled = null
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
+      this.generateLegendEventHandler()
+    }
+    this.legendCountrySelection.onchange = () => {
+      this.options.onLegendConfigurationChange('country', this.legendCountrySelection.value)
+      this.generateLegendEventHandler()
+    }
+
+    const legendMapContainer = createDomElement('div', 'legend-map-container', this.legendContainer)
+    this.legendMapRoot = createDomElement('div', 'legend-map', legendMapContainer)
+    this.legendMap = new maplibregl.Map({
+      container: this.legendMapRoot,
+      zoom: 16,
+      center: [0, 0],
+      attributionControl: false,
+      interactive: false,
+      // See https://github.com/maplibre/maplibre-gl-js/issues/3503
+      maxCanvasSize: [Infinity, Infinity],
+    });
+    this.legendMap.setMissingStyleImageResolver(async ids => await generateImage([map, this.legendMap], ids));
+
+    fetch(`${origin}/legend.json`)
+      .then(response => response.json())
+      .then(legend => {
+        this.legend = legend
+        console.info('Loaded legend');
+
+        this.generateLegendEventHandler();
+      })
+      .catch(error => console.error('Error while fetching legend', error));
+
+    this.map.on('load', this.generateLegendEventHandler);
+    this.map.on('zoomend', this.generateLegendEventHandler);
+    this.map.on('moveend', this.generateLegendEventHandler);
+    this.map.on('styledata', this.generateLegendEventHandler);
 
     return this._container;
   }
 
+  hideLegend() {
+    this.legendContainer.style.display = 'none';
+  }
+
+  showLegend() {
+    this.legendContainer.style.display = 'block';
+    this.updateLegend();
+  }
+
+  isLegendShown() {
+    return this.legendContainer.style.display === 'block';
+  }
+
+  toggleLegend() {
+    if (this.isLegendShown()) {
+      this.hideLegend();
+    } else {
+      this.showLegend();
+    }
+  }
+
+  updateLegend() {
+    const zoom = Math.floor(this.map.getZoom());
+    const style = this.map.getStyle();
+    const legendData = this.legend;
+
+    // Ignore legend updates when data is not ready
+    if (!this.isLegendShown() || !zoom || !style || !legendData) {
+      return;
+    }
+
+    // Do not include bearing and pitch in legend map state
+    const mapGlobalState = {
+      ...this.map.getGlobalState(),
+      bearing: 0.0,
+      pitched: false,
+    };
+
+    const legendConfiguration = configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration;
+    const legendCountry = legendConfiguration === 'country' ? configuration.legendCountry ?? defaultConfiguration.legendCountry : null;
+
+    let keyedSourcesAndFeaturesInView = []
+    if (legendConfiguration === 'inView') {
+      const featuresInView = this.map.queryRenderedFeatures();
+      const keyedFeaturesInView = featuresInView.flatMap(feature => {
+        const layer = feature.layer
+        const sourceLayer = `${layer.source}-${layer['source-layer']}`
+
+        const sourceLayerData = legendData[selectedStyle].sourceLayers[sourceLayer] ?? {key: []}
+        const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
+        const matchKeys = (sourceLayerData.matchKeys ?? [])
+          .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+
+        return [
+          {
+            sourceLayer,
+            featureKey,
+          },
+          ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
+        ]
+      });
+
+      keyedSourcesAndFeaturesInView = Object.fromEntries(
+        Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
+          .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
+      );
+    }
+
+    // Verify if legend changed
+    if (this.legendState.zoom === zoom
+      && this.legendState.style === style.name
+      && this.legendState.legendConfiguration === legendConfiguration
+      && this.legendState.legendCountry === legendCountry
+      && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
+      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
+    ) {
+      return;
+    }
+    this.legendState = {
+      zoom,
+      style: style.name,
+      mapGlobalState: {...mapGlobalState},
+      legendConfiguration,
+      legendCountry,
+      keyedSourcesAndFeaturesInView,
+    };
+
+    const countries = legendData[selectedStyle].countries;
+    this.legendCountrySelection.replaceChildren([]);
+    countries.forEach(country => {
+      const option = createDomElement('option', undefined, this.legendCountrySelection)
+      option.value = country
+      option.innerText = `${country} ${getFlagEmoji(country)}`
+    })
+    this.legendCountrySelection.value = legendCountry;
+    this.legendCountrySelection.disabled = !(legendConfiguration === 'country' && countries.length > 0);
+
+    const layersOrder = this.map.getLayersOrder()
+    const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
+
+    const legendFeatureFilters = {
+      inView: (source, item) =>
+        keyedSourcesAndFeaturesInView[source] && (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey))),
+      country: legendCountry ? (_, item) => !item.country || item.country === legendCountry : (() => true),
+    }
+    const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
+
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle].sourceLayers, mapGlobalState, zoom, legendCountry, legendFeatureFilter)
+    this.legendMap.setStyle(legendStyle, {
+      validate: false,
+      transformStyle: (previous, next) => {
+        rewriteStylePathsToOrigin(next)
+        return next;
+      },
+    });
+
+    const numberOfLegendEntries = legendStyle.metadata.count;
+
+    this.legendMap.jumpTo({
+      center: this.legendPointToMapPoint([1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
+    });
+    this.legendMapRoot.style.height = `${numberOfLegendEntries * 27.5}px`;
+  }
+
   onRemove() {
-    removeDomElement(this._container);
-    this._map = undefined;
+    if (this._container) {
+      removeDomElement(this._container);
+      this._container = null;
+    }
+
+    this.map.off('load', this.generateLegendEventHandler);
+    this.map.off('zoomend', this.generateLegendEventHandler);
+    this.map.off('moveend', this.generateLegendEventHandler);
+    this.map.off('styledata', this.generateLegendEventHandler);
+
+    this.map = undefined;
+  }
+
+  legendPointToMapPoint([x, y]) {
+    return [x * Math.pow(2, -11), y * Math.pow(2, -11)]
+  }
+
+  makeLegendStyle(style, visibleLayers, legendData, state, zoom, country, featureFilter) {
+    const layerVisibleAtZoom = (zoom) =>
+      layer =>
+        ((layer.minzoom ?? globalMinZoom) <= zoom) && (zoom < (layer.maxzoom ?? (globalMaxZoom + 1)));
+
+    const sourceLayers = style.layers.filter(layer => layer.type !== 'hillshade');
+
+    const styleZoomLayers = sourceLayers
+      .filter(layer => visibleLayers.has(layer.id))
+      .filter(layerVisibleAtZoom(zoom))
+      .map(layer => ({...layer, layout: layer.layout ?? {}, paint: layer.paint ?? {}}))
+      .map(({
+              ['source-layer']: sourceLayer,
+              source,
+              layout: {['text-padding']: textPadding, ['text-offset']: textOffset, ['symbol-spacing']: symbolSpacing, ['symbol-placement']: symbolPlacement, ['icon-offset']: iconOffset, ...layoutRest},
+              minzoom,
+              maxzoom,
+              ...rest
+            }) => {
+        const resultLayout = {...layoutRest};
+        if (symbolPlacement === 'line') {
+          resultLayout['symbol-placement'] = 'line-center';
+        }
+
+        return {
+          ...rest,
+          source: `${source}-${sourceLayer}`,
+          layout: resultLayout,
+        };
+      })
+
+    const legendZoomLayer = {
+      type: 'symbol',
+      id: 'legend',
+      source: 'legend',
+      paint: {
+        'text-color': ['case',
+          ['==', ['global-state', 'theme'], 'light'], 'black',
+          'white'
+        ],
+        'text-halo-color': ['case',
+          ['==', ['global-state', 'theme'], 'light'], 'white',
+          '#333'
+        ],
+        'text-halo-width': 1,
+      },
+      layout: {
+        'text-field': '{legend}',
+        'text-size': 11,
+        'text-font': ['OpenRailwayMap-Regular'],
+        'text-anchor': 'left',
+        'text-max-width': 22,
+        'text-overlap': 'always',
+      },
+    };
+
+    const legendLayers = [...styleZoomLayers, legendZoomLayer];
+
+    const usedLegendSources = new Set([...legendLayers.map(layer => layer.source)])
+    const zoomFilter = layerVisibleAtZoom(zoom);
+
+    let entry = 0;
+    let done = new Set();
+
+    const featureSourceLayers = sourceLayers.flatMap(layer => {
+      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+      const sourceName = legendLayerName
+      const applicable = zoomFilter(layer) && visibleLayers.has(layer.id);
+      if (done.has(sourceName) || !usedLegendSources.has(sourceName) || !applicable) {
+        return [];
+      }
+
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
+      const features = data
+        .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => featureFilter(sourceName, item))
+        .flatMap(item => {
+          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+            .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+            .flatMap((subItem, index, subItems) => ({
+              type: 'Feature',
+              geometry: {
+                type: subItem.type === 'line' || subItem.type === 'polygon'
+                  ? 'LineString'
+                  : 'Point',
+                coordinates:
+                  subItem.type === 'line' ? [
+                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                    ] :
+                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+              },
+              properties: subItem.properties,
+            }));
+          entry++;
+          return itemFeatures;
+        });
+      done.add(sourceName);
+
+      return [[sourceName, {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features,
+        },
+      }]];
+    });
+
+    entry = 0;
+    done = new Set();
+
+    const legendFeatures = sourceLayers.flatMap(layer => {
+      const legendLayerName = `${layer.source}-${layer['source-layer']}`;
+      const sourceName = legendLayerName
+      const applicable = layerVisibleAtZoom(zoom)(layer) && visibleLayers.has(layer.id);
+      if (done.has(sourceName) || !applicable) {
+        return [];
+      }
+
+      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
+      const features = data
+        .filter(zoomFilter)
+        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+        .filter(item => featureFilter(sourceName, item))
+        .map(item => {
+          const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
+          const legend = [itemLegend, ...(item.variants ?? [])
+            .filter(variant => variant.legend)
+            .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
+            .map(variant => variant.legend)]
+            .join(', ');
+
+          const feature = {
+            type: 'Feature',
+            geometry: {
+              type: "Point",
+              coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
+            },
+            properties: {
+              legend,
+            },
+          };
+          entry++;
+          return feature;
+        });
+      done.add(sourceName);
+
+      return features;
+    })
+
+    const legendSourceLayer = ['legend', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: legendFeatures,
+      },
+    }]
+
+    const legendSources = Object.fromEntries(
+      [...featureSourceLayers, legendSourceLayer]
+    )
+
+    // Maplibre Style does not serialize the state with defaults
+    const stateWithDefaults = Object.fromEntries(
+      Object.entries(state)
+        .map(([name, value]) => [name, { default: value }]),
+    )
+
+    return {
+      ...style,
+      name: `${style.name} legend`,
+      layers: legendLayers,
+      sources: legendSources,
+      state: stateWithDefaults,
+      metadata: {
+        count: legendSources['legend'].data.features.length,
+      },
+    };
   }
 }
-
-// Cache for the number of items in the legend, per style and zoom level
-const legendEntriesCount = Object.fromEntries(
-  Object.values(knownStyles)
-    .flatMap(style => Object.values(style.styles))
-    .map(key => [key, {}])
-);
 
 class AboutControl {
   constructor(options) {
@@ -1362,8 +2286,7 @@ class AboutControl {
     button.type = 'button';
     button.title = 'Show/hide news';
     createDomElement('span', 'maplibregl-ctrl-icon', button);
-    const text = createDomElement('span', undefined, button);
-    text.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const text = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', button);
     text.innerText = 'News'
     createDomElement('span', 'news-marker', button);
 
@@ -1376,8 +2299,7 @@ class AboutControl {
     aboutButton.type = 'button';
     aboutButton.title = 'Show/hide about';
     createDomElement('span', 'maplibregl-ctrl-icon', aboutButton);
-    const aboutText = createDomElement('span', undefined, aboutButton);
-    aboutText.className = 'maplibregl-ctrl-icon-text d-none d-md-inline';
+    const aboutText = createDomElement('span', 'maplibregl-ctrl-icon-text d-none d-md-inline', aboutButton);
     aboutText.innerText = 'About'
 
     aboutButton.onclick = () => this.options.onAboutToggle();
@@ -1414,8 +2336,6 @@ class AboutControl {
 const dateControl = new DateControl({
   initialSelection: selectedDate,
   onChange: selectDate,
-  onActivation: () => onStyleChange(),
-  onDeactivation: () => onStyleChange(),
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
@@ -1423,25 +2343,58 @@ const styleControl = new StyleControl({
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
-  visualizePitch: false,
+  visualizePitch: true,
 })
+const geolocateControl = new maplibregl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true,
+  showAccuracyCircle: false,
+  showUserLocation: true,
+})
+
+class WakeLock {
+  constructor() {
+    this.wakeLock = null;
+  }
+
+  acquire() {
+    if (navigator.wakeLock) {
+      navigator.wakeLock.request('screen')
+        .then(lock => {
+          if (this.wakeLock) {
+            this.wakeLock.release();
+          }
+          this.wakeLock = lock;
+          console.info('Acquired wake lock')
+        })
+        .catch(error => console.warn('Acquiring of wake lock failed', error));
+    }
+  }
+
+  release() {
+    if (this.wakeLock) {
+      this.wakeLock.release()
+      console.info('Released wake lock')
+    }
+  }
+}
+
+let wakeLock = new WakeLock()
+geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
+geolocateControl.on('trackuserlocationend', () => wakeLock.release())
 map.addControl(dateControl);
 map.addControl(styleControl);
 map.addControl(navigationControl);
-map.addControl(
-  new maplibregl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true,
-    showAccuracyCircle: false,
-    showUserLocation: true,
-  })
-);
+map.addControl(geolocateControl);
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
 
-map.addControl(new SearchControl(), 'top-left');
+const searchControl = new SearchControl()
+map.addControl(searchControl, 'top-left');
+const routeControl = new RouteControl()
+map.addControl(routeControl, 'top-left');
 
 const attributionOptions = {
   compact: true,
@@ -1460,26 +2413,21 @@ const aboutControl = new AboutControl({
 });
 map.addControl(aboutControl, 'bottom-right');
 
-map.addControl(new LegendControl({
-  onLegendToggle: toggleLegend,
-}), 'bottom-left');
+const legendControl = new LegendControl({
+  initialLegendConfiguration: configuration.legendConfiguration ?? defaultConfiguration.legendConfiguration,
+  initialLegendCountry: configuration.legendCountry ?? defaultConfiguration.legendCountry,
+  onLegendConfigurationChange: (legendConfiguration, legendCountry) => {
+    updateConfiguration('legendConfiguration', legendConfiguration)
+    updateConfiguration('legendCountry', legendCountry)
+  }
+});
+map.addControl(legendControl, 'bottom-left');
 
-const onMapZoom = zoom => {
-  // Ensure the legend does not zoom below zoom 6 to ensure the coordinates the legend map uses
-  //   stay within the bounds of the earth.
-  const legendZoom = Math.max(Math.floor(zoom), 6);
-  const shownStyle = knownStyles[selectedStyle].styles.date && dateControl.active
-    ? knownStyles[selectedStyle].styles.date
-    : knownStyles[selectedStyle].styles.default
-  const numberOfLegendEntries = legendEntriesCount[shownStyle][legendZoom] ?? 100;
-
-  legendMap.jumpTo({
-    zoom: legendZoom,
-    center: legendPointToMapPoint(legendZoom, [1, -((numberOfLegendEntries - 1) / 2) * 0.6]),
-  });
-  legendMapContainer.style.height = `${numberOfLegendEntries * 27.5}px`;
-}
 const onMapRotate = bearing => {
+  if (map.isStyleLoaded()) {
+    map.setGlobalStateProperty('bearing', bearing ?? 0);
+  }
+
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
   if (rotated && !rotatedShownOnIcon) {
@@ -1489,14 +2437,12 @@ const onMapRotate = bearing => {
   }
 }
 
-const onStylesheetChange = styleSheet => {
-  const styleName = styleSheet.metadata.name;
-  styleSheet.layers.forEach(layer => {
-    if (layer.metadata && layer.metadata['legend:zoom'] && layer.metadata['legend:count']) {
-      legendEntriesCount[styleName][layer.metadata['legend:zoom']] = layer.metadata['legend:count']
-    }
-  })
-  onMapZoom(map.getZoom());
+const onMapPitch = pitch => {
+  const pitched = pitchedView(pitch)
+  const pitchedState = (map.getGlobalState() ?? {}).pitched
+  if (pitched !== pitchedState && map.isStyleLoaded()) {
+    map.setGlobalStateProperty('pitched', pitched);
+  }
 }
 
 function openJOSM(josmUrl, osmType, osmId) {
@@ -1508,36 +2454,34 @@ function openJOSM(josmUrl, osmType, osmId) {
     })
   }
 
-function popupContent(feature) {
+function popupContent(feature, abortController) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
-  const properties = feature.properties;
   const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
-  const featureCatalog = features && features[layerSource];
-  if (!featureCatalog) {
-    console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
-    return;
+  const fetchFeatureProperties = (view) => {
+    const supportsLocalization = view.localizedFields
+    const language = configuredLanguage()
+    const url = new URL(`${location.origin}/api/feature/${feature.source}${feature.sourceLayer ? `/${feature.sourceLayer}` : ''}/${feature.id}`)
+    if (supportsLocalization && language) {
+      url.searchParams.set('lang', language)
+    }
+
+    return fetch(url, {
+      signal: abortController.signal,
+    })
+      .then(response => response.json());
   }
 
-  const featureProperty = featureCatalog.featureProperty || 'feature';
-
+  // Build HTML content dynamically to avoid cross site scripting
   const constructCatalogKey = propertyValue => ({
     // Remove the variable part of the property, and icon position to get the key
-    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/, '') : propertyValue,
+    catalogKey: propertyValue && typeof propertyValue === 'string' ? propertyValue.replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '') : propertyValue,
     // Capture the variable part as well for display
     keyVariable: propertyValue && typeof propertyValue === 'string'
       ? propertyValue.match(/\{([^}]+)}/)?.[1]
       : null
   });
-  const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
-
-  const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
-  if (!featureContent) {
-    console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
-  }
-  const label = featureCatalog.labelProperty && properties[featureCatalog.labelProperty];
-  const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
 
   const determineDefaultOsmType = (properties, featureContent) => {
     if (properties.osm_type) {
@@ -1550,11 +2494,11 @@ function popupContent(feature) {
 
   const determineOsmFeatures = (properties, featureContent) => {
     const osmIds = properties.osm_id
-      ? String(properties.osm_id).split('\u001e')
+      ? (Array.isArray(properties.osm_id) ? properties.osm_id : [String(properties.osm_id)])
       : [];
     const defaultOsmType = determineDefaultOsmType(properties, featureContent);
     const osmTypes = properties.osm_type
-      ? String(properties.osm_type).split('\u001e')
+      ? (Array.isArray(properties.osm_type) ? properties.osm_type : [String(properties.osm_type)])
       : [];
 
     return osmIds.map((osm_id, index) => {
@@ -1569,220 +2513,386 @@ function popupContent(feature) {
     })
   }
 
-  const formatPropertyValue = (value, format) =>
-    String(value)
-      .split('\u001e')
-      .map(stringValue => {
-        if (!format) {
-          return stringValue;
-        } else if (format.template) {
-          return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(value).toFixed(Number(decimals)));
-        } else if (format.lookup) {
-          const lookupCatalog = features && features[format.lookup];
-          if (!lookupCatalog) {
-            console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
+  const formatPropertyValue = (value, format) => {
+    if (format && format.map) {
+      let sortKey = value => value;
+      if (format.map.key.format && format.map.key.format.lookup && features && features[format.map.key.format.lookup]) {
+        const catalog = features[format.map.key.format.lookup].features ?? {}
+        sortKey = value => (catalog[value] ?? {}).index ?? Number.MAX_SAFE_INTEGER;
+      }
+
+      return Object.entries(value)
+        .toSorted(([keyA, _a], [keyB, _b]) =>
+          naturalSort(sortKey(keyA), sortKey(keyB)))
+        .map(([key, value]) =>
+          [formatPropertyValue(key, format.map.key.format), formatPropertyValue(value, format.map.value.format)])
+    } else {
+      return (Array.isArray(value) ? value : [value])
+        .map(String)
+        .map(stringValue => {
+          if (!format) {
             return stringValue;
-          } else {
-            const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(value);
-            const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
-            if (!lookedUpValue) {
-              console.warn('Lookup catalog', format.lookup, 'did not contain value', value, 'for feature', feature);
+          } else if (format.template) {
+            return format.template.replace('%s', () => stringValue).replace(/%(\.(\d+))?d/, (_1, _2, decimals) => Number(stringValue).toFixed(Number(decimals)));
+          } else if (format.lookup) {
+            const lookupCatalog = features && features[format.lookup];
+            if (!lookupCatalog) {
+              console.warn('Lookup catalog', format.lookup, 'not found for feature', feature);
               return stringValue;
             } else {
-              return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              const {catalogKey: lookUpCatalogKey, keyVariable: lookUpKeyVariable} = constructCatalogKey(stringValue);
+              const lookedUpValue = lookupCatalog.features[lookUpCatalogKey];
+              if (!lookedUpValue) {
+                console.warn(`Lookup catalog ${format.lookup} did not contain key ${value} (catalog key ${lookUpCatalogKey}${lookUpKeyVariable ? ` with variable ${lookUpKeyVariable}`: ''}) for feature`, feature);
+                return stringValue;
+              } else {
+                return `${lookedUpValue.name}${lookUpKeyVariable ? ` (${lookUpKeyVariable})` : ''}${lookedUpValue.country ? ` ${getFlagEmoji(lookedUpValue.country)}` : ''}`;
+              }
             }
-          }
-        } else if (format.country_prefix) {
-          if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
-            return `${getFlagEmoji(stringValue.substr(0, 2))} ${stringValue.substr(3)}`;
+          } else if (format.country_prefix) {
+            if (stringValue && stringValue.length >= 3 && stringValue[2] == ':') {
+              return stringValue.substr(3);
+            } else {
+              return stringValue;
+            }
           } else {
             return stringValue;
           }
+        })
+        .join(', ');
+    }
+  }
+
+  const featureCatalog = features && features[layerSource];
+  if (!featureCatalog) {
+    console.warn(`Feature catalog "${layerSource}" not found for feature`, feature);
+    return;
+  }
+
+  const featureProperty = featureCatalog.featureProperty || 'feature';
+  const colorProperty = featureCatalog.colorProperty || 'color';
+
+  const propertiesFromView = featureCatalog.view;
+  const properties$ = propertiesFromView
+    ? fetchFeatureProperties(propertiesFromView)
+    : Promise.resolve(feature.properties);
+
+  const popupContainer = createDomElement('div', 'loading');
+
+  properties$
+    .then(properties => {
+      const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
+
+      const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
+      if (!featureContent) {
+        console.warn(`Could not determine feature description content for feature property "${featureProperty}" with key "${catalogKey}" in catalog "${layerSource}", feature:`, feature);
+      }
+      // Unique labels
+      const labels = [...new Set((featureCatalog.labelProperties || []).map(labelProperty => properties[labelProperty]).filter(it => it))];
+      const featureDescription = featureContent ? `${featureContent.name}${keyVariable ? ` (${keyVariable})` : ''}${featureContent.country ? ` ${getFlagEmoji(featureContent.country)}` : ''}` : null;
+      const color = properties[colorProperty];
+
+      const propertyValues = Object.entries(featureCatalog.properties || {})
+        .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
+        .map(([property, {name, format, link, paragraph, list, description}]) => {
+          const value = properties[property] === true
+            ? ''
+            : formatPropertyValue(properties[property], format)
+
+          const body = Array.isArray(value)
+            ? value
+            : [[null, value]]
+
+          return {
+            title: name,
+            value: properties[property],
+            body,
+            paragraph,
+            list,
+            link,
+            tooltip: description,
+          };
+        })
+
+      const osmFeatures = determineOsmFeatures(properties, featureContent);
+
+      popupContainer.classList.remove('loading')
+
+      // Build HTML content dynamically to avoid cross site scripting
+
+      const popupTitle = createDomElement('h5', undefined, popupContainer);
+      popupTitle.innerText = featureDescription;
+
+      if (properties.icon || labels.length > 0 || color) {
+        const popupLabel = createDomElement('h6', undefined, popupContainer);
+        if (properties.icon) {
+          const popupLabelSpan = createDomElement('span', undefined, popupLabel);
+          popupLabelSpan.title = properties.railway;
+          popupLabelSpan.innerText = properties.icon;
         } else {
-          return stringValue;
-        }
-      })
-      .join(', ');
-
-  const propertyValues = Object.entries(featureCatalog.properties || {})
-    .filter(([_, {paragraph}]) => !paragraph)
-    .filter(([property, {name, format, link}]) => (properties[property] !== undefined && properties[property] !== null && properties[property] !== '' && properties[property] !== false))
-    .map(([property, {name, format, link, paragraph, description}]) => ({
-      title: name,
-      value: properties[property],
-      body: properties[property] === true ? '' : formatPropertyValue(properties[property], format),
-      paragraph,
-      link,
-      tooltip: description,
-    }));
-
-  const osmFeatures = determineOsmFeatures(properties, featureContent);
-
-  // Build HTML content dynamically to avoid cross site scripting
-
-  const popupContainer = createDomElement('div');
-
-  const popupTitle = createDomElement('h5', undefined, popupContainer);
-  popupTitle.innerText = featureDescription;
-
-  if (properties.icon || label) {
-    const popupLabel = createDomElement('h6', undefined, popupContainer);
-    if (properties.icon) {
-      const popupLabelSpan = createDomElement('span', undefined, popupLabel);
-      popupLabelSpan.title = properties.railway;
-      popupLabelSpan.innerText = properties.icon;
-    } else {
-      popupLabel.innerText = label;
-    }
-  }
-
-  const popupOsmIds = createDomElement('h6', undefined, popupContainer);
-  osmFeatures.forEach(({id, type}) => {
-    const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
-
-    const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
-    osmIdButton.type = 'button'
-    osmIdButton.disabled = 'disabled';
-
-    const osmTypeContent = createDomElement('img', 'osm-type-icon', osmIdButton);
-    osmTypeContent.src = icons.osm[type];
-    osmTypeContent.alt = type;
-
-    const osmIdContent = createDomElement('code', undefined, osmIdButton);
-    osmIdContent.innerText = id;
-
-    const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
-    osmIdLink.title = 'View source'
-    osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
-    osmIdLink.target = '_blank'
-    osmIdLink.innerText = 'View'
-
-    if (editor === 'josm') {
-      const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
-      editButton.title = 'Edit Source'
-      editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
-      editButton.innerText = 'Edit'
-    } else {
-      const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
-      editButton.title = 'Edit Source'
-      editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
-      editButton.target = '_blank'
-      editButton.innerText = 'Edit'
-    }
-  })
-
-  // Images are not output as properties
-  if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
-    const popupImageContainer = createDomElement('p', undefined, popupContainer);
-
-    if (properties.wikidata) {
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://www.wikidata.org/wiki/${encodeURIComponent(properties.wikidata)}`
-      popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikidata: ${properties.wikidata}`
-
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = `/api/wikidata/${encodeURIComponent(properties.wikidata)}`
-      popupImage.title = properties.wikidata
-      popupImage.alt = `Wikidata: ${properties.wikidata}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
-    }
-
-    if (properties.wikimedia_commons_file) {
-      const sanitizedName = properties.wikimedia_commons_file.replaceAll(' ', '_');
-      const nameHash = MD5(sanitizedName)
-      const wikimediaUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${nameHash.substr(0, 1)}/${nameHash.substr(0, 2)}/${encodeURIComponent(sanitizedName)}/330px-${encodeURIComponent(sanitizedName)}`
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer)
-      popupImageLink.href = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(properties.wikimedia_commons_file)}#/media/File:${encodeURIComponent(properties.wikimedia_commons_file)}`
-      popupImageLink.target = '_blank'
-      popupImageLink.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
-
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = wikimediaUrl
-      popupImage.title = properties.wikimedia_commons_file
-      popupImage.alt = `Wikimedia Commons file: ${properties.wikimedia_commons_file}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
-    }
-
-    if (properties.image) {
-      const popupImageLink = createDomElement('a', undefined, popupImageContainer);
-      popupImageLink.href = properties.image
-      popupImageLink.target = '_blank'
-      popupImageLink.alt = `Image: ${properties.image}`
-
-      const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-      popupImage.src = properties.image
-      popupImage.title = properties.image
-      popupImage.alt = `Image: ${properties.image}`
-      popupImage.style.display = 'none' // Do not display images that cannot load
-      popupImage.onload = () => popupImage.style.display = 'block'
-    }
-  }
-
-  if (propertyValues.some(it => !it.paragraph)) {
-    const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
-    propertyValues
-      .filter(it => !it.paragraph)
-      .forEach(({title, body, value, link, tooltip}) => {
-        const popupValue = createDomElement('span', 'badge rounded-pill text-bg-light', popupValuesContainer);
-        if (tooltip) {
-          popupValue.title = tooltip;
-          popupValue.style.cursor = 'help';
-        }
-
-        const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
-        popupValueTitle.innerText = title;
-
-        if (body) {
-          if (link) {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            const popupValueColon = createDomElement('span', undefined, popupValueBody);
-            popupValueColon.innerText = ': ';
-            const popupValueLink = createDomElement('a', undefined, popupValueBody);
-            popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
-            popupValueLink.target = '_blank'
-            const popupValueText = createDomElement('span', undefined, popupValueLink);
-            popupValueText.innerText = body;
-          } else {
-            const popupValueBody = createDomElement('span', undefined, popupValue);
-            popupValueBody.innerText = `: ${body}`;
+          if (color) {
+            const itemColor = createDomElement('span', 'color-marker', popupLabel);
+            itemColor.style.backgroundColor = color;
+          }
+          if (labels.length > 0) {
+            const popupLabelLabel = createDomElement('span', undefined, popupLabel);
+            popupLabelLabel.innerText = labels.join(' • ');
           }
         }
-      })
-  }
+      }
 
-  if (propertyValues.some(it => it.paragraph)) {
-    const popupValuesContainer = createDomElement('div', undefined, popupContainer);
-    propertyValues
-      .filter(it => it.paragraph)
-      .forEach(({title, body}) => {
-        const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
+      const popupOsmIds = createDomElement('h6', undefined, popupContainer);
+      osmFeatures.forEach(({id, type}) => {
+        const osmIdContainer = createDomElement('div', 'btn-group btn-group-sm', popupOsmIds);
 
-        const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
-        popupValueTitle.innerText = title;
+        const osmIdButton = createDomElement('button', 'btn btn-outline-secondary', osmIdContainer);
+        osmIdButton.type = 'button'
+        osmIdButton.disabled = 'disabled';
 
-        if (body) {
-          // Paragraph bodies do not support links
-          const popupValueBody = createDomElement('span', undefined, popupParagraph);
-          popupValueBody.innerText = `: ${body}`;
+        const osmTypeContent = createDomElement('img', 'osm-type-icon', osmIdButton);
+        osmTypeContent.src = icons.osm[type];
+        osmTypeContent.alt = type;
+
+        const osmIdContent = createDomElement('code', undefined, osmIdButton);
+        osmIdContent.innerText = id;
+
+        const osmIdLink = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+        osmIdLink.title = 'View source'
+        osmIdLink.href = featureCatalog.featureLinks.view.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+        osmIdLink.target = '_blank'
+        osmIdLink.innerText = 'View'
+
+        if (editor === 'josm') {
+          const editButton = createDomElement('div', 'btn btn-outline-primary', osmIdContainer);
+          editButton.title = 'Edit Source'
+          editButton.onclick = () => openJOSM(`http://localhost:8111/load_and_zoom?left=${bounds.getWest()}&right=${bounds.getEast()}&top=${bounds.getNorth()}&bottom=${bounds.getSouth()}`, type, id)
+          editButton.innerText = 'Edit'
+        } else {
+          const editButton = createDomElement('a', 'btn btn-outline-primary', osmIdContainer);
+          editButton.title = 'Edit Source'
+          editButton.href = featureCatalog.featureLinks.edit.replace('{osm_type}', type).replace('{osm_id}', id).replace('{date}', String(selectedDate))
+          editButton.target = '_blank'
+          editButton.innerText = 'Edit'
         }
       })
-  }
+
+      // Images are not output as properties
+      if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
+        const popupImageContainer = createDomElement('p', undefined, popupContainer);
+
+        // Reused for both WikiData and WikiMedia Commons images
+        const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
+          const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+          popupImage.style.display = 'none' // Do not display images that cannot load
+          popupImage.onload = () => popupImage.style.display = 'block'
+
+          fetch(imageMetadataUrl, {
+            signal: abortController.signal,
+          })
+            .then(response => response.json())
+            .then(data => {
+              const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
+
+              popupImage.src = data.thumbnail_url
+              popupImage.title = description
+              popupImage.alt = description
+
+              popupImageLink.href = data.view_url
+              popupImageLink.title = description
+
+              if (data.license || data.attribution) {
+                const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
+                const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
+                popupImageAttributionCopyright.innerText = '©';
+                popupImageAttributionCopyright.onclick = e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  popupImageAttribution.classList.toggle('collapsed');
+                }
+
+                if (data.license) {
+                  const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
+                  if (data.license_url) {
+                    popupImageAttributionLicense.href = data.license_url;
+                    popupImageAttributionLicense.target = '_blank';
+                  }
+                  popupImageAttributionLicense.innerText = data.license;
+                }
+                if (data.attribution) {
+                  const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
+                  popupImageAttributionAttribution.innerText = data.attribution;
+                }
+              }
+            })
+            .catch(err => {
+              if (!abortController.signal.aborted) {
+                console.error('Error while fetching popup image', err);
+              } else {
+                // Ignore aborted request errors
+              }
+            });
+        }
+
+        if (properties.wikidata) {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
+          fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
+        }
+
+        if (properties.wikimedia_commons_file) {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
+          fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
+        }
+
+        if (properties.image) {
+          const popupImageLink = createDomElement('a', undefined, popupImageContainer);
+          popupImageLink.href = properties.image
+          popupImageLink.target = '_blank'
+          popupImageLink.title = `Image: ${properties.image}`
+
+          const popupImage = createDomElement('img', 'popup-image', popupImageLink);
+          popupImage.src = properties.image
+          popupImage.title = properties.image
+          popupImage.alt = `Image: ${properties.image}`
+          popupImage.style.display = 'none' // Do not display images that cannot load
+          popupImage.onload = () => popupImage.style.display = 'block'
+        }
+      }
+
+      if (propertyValues.some(it => !it.paragraph && !it.list)) {
+        const popupValuesContainer = createDomElement('h6', undefined, popupContainer);
+        propertyValues
+          .filter(it => !it.paragraph && !it.list)
+          .forEach(({title, body, value, link, tooltip}) => {
+            const popupValue = createDomElement('span', 'badge fw-normal text-bg-light', popupValuesContainer);
+            if (tooltip) {
+              popupValue.title = tooltip;
+              popupValue.style.cursor = 'help';
+            }
+
+            const containsAnyBodyValue = body.some(([_, bodyValue]) => bodyValue);
+            const popupValueTitle = createDomElement('span', 'fw-bold', popupValue);
+            popupValueTitle.innerText = `${title}${containsAnyBodyValue ? ': ' : ''}`;
+
+            let first = true
+            body.forEach(([key, bodyValue]) => {
+              if (bodyValue) {
+                if (first) {
+                  first = false;
+                } else {
+                  const popupValueKey = createDomElement('span', undefined, popupValue);
+                  popupValueKey.innerText = ' • ';
+                }
+
+                if (key) {
+                  const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+                  popupValueKey.innerText = `${key} `;
+                }
+                if (link) {
+                  const popupValueBody = createDomElement('span', undefined, popupValue);
+                  const popupValueLink = createDomElement('a', undefined, popupValueBody);
+                  popupValueLink.href = link.replace('%s', () => encodeURIComponent(String(value)))
+                  popupValueLink.target = '_blank'
+                  const popupValueText = createDomElement('span', undefined, popupValueLink);
+                  popupValueText.innerText = bodyValue;
+                } else {
+                  const popupValueBody = createDomElement('span', undefined, popupValue);
+                  popupValueBody.innerText = bodyValue;
+                }
+              }
+            })
+          })
+      }
+
+      if (propertyValues.some(it => it.paragraph)) {
+        const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+        propertyValues
+          .filter(it => it.paragraph)
+          .forEach(({title, body}) => {
+            const popupParagraph = createDomElement('p', undefined, popupValuesContainer);
+
+            const popupValueTitle = createDomElement('span', 'fw-bold', popupParagraph);
+            popupValueTitle.innerText = `${title}: `;
+
+            let first = true
+            body.forEach(([key, value]) => {
+              if (value) {
+                if (first) {
+                  first = false;
+                } else {
+                  const popupValueKey = createDomElement('span', undefined, popupParagraph);
+                  popupValueKey.innerText = ' • ';
+                }
+
+                if (key) {
+                  const popupValueKey = createDomElement('span', 'fw-bold', popupValue);
+                  popupValueKey.innerText = `${key} `;
+                }
+                if (value) {
+                  // Paragraph bodies do not support links
+                  const popupValueBody = createDomElement('span', undefined, popupParagraph);
+                  popupValueBody.innerText = value;
+                }
+              }
+            });
+          })
+      }
+
+      if (propertyValues.some(it => it.list)) {
+        const popupValuesContainer = createDomElement('div', undefined, popupContainer);
+        propertyValues
+          .filter(it => it.list)
+          .forEach(({title, value, list}) => {
+            const popupListHeader = createDomElement('span', 'fw-bold', popupValuesContainer);
+            popupListHeader.innerText = `${title} (${value.length}):`;
+
+            const popupList = createDomElement('ul', 'popup-content-list', popupValuesContainer);
+            value.forEach(group => {
+              const color = group[list.colorProperty]
+              const label = group[list.labelProperty]
+              const routeId = group[list.routeIdProperty]
+
+              const popupListItem = createDomElement('li', routeId ? 'link-item' : '', popupList);
+
+              if (color) {
+                const itemColor = createDomElement('span', 'color-marker', popupListItem);
+                itemColor.style.backgroundColor = color;
+              }
+              if (label) {
+                const itemLabel = createDomElement('span', undefined, popupListItem);
+                itemLabel.innerHTML = label;
+              }
+
+              if (routeId) {
+                popupListItem.onclick = () => routeControl.showRoute(routeId)
+              }
+            });
+          })
+      }
+    })
+    .catch(err => {
+      if (!abortController.signal.aborted) {
+        console.error('Error while fetching popup feature properties', err);
+      } else {
+        // Ignore aborted request errors
+      }
+    });
 
   return popupContainer
 }
 
-map.on('load', () => onMapZoom(map.getZoom()));
-map.on('zoomend', () => onMapZoom(map.getZoom()));
-map.on('move', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
-map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing()}));
+map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('moveend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('zoom', () => backgroundMap.jumpTo({center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));
+map.on('zoomend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.on('rotate', () => onMapRotate(map.getBearing()));
-map.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
-legendMap.on('styleimagemissing', event => generateImage([map, legendMap], event.id));
+map.on('rotateend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.on('pitch', () => onMapPitch(map.getPitch()));
+map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
+map.setMissingStyleImageResolver(async ids => await generateImage([map, legendControl.legendMap], ids));
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {
@@ -1805,11 +2915,14 @@ function formatTimespan(timespan) {
 fetch(`${origin}/api/replication_timestamp`)
   .then(response => response.json())
   .then(source => {
-    if (source.replication_timestamp) {
-      const timestamp = new Date(source.replication_timestamp)
-      const timespan = new Date().getTime() - timestamp.getTime();
+    if (source.import_timestamp && source.replication_timestamp) {
+      const importTimestamp = new Date(source.import_timestamp)
+      const replicationTimestamp = new Date(source.replication_timestamp)
 
-      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data updated <abbr title="${timestamp}">${formatTimespan(timespan)} ago</abbr>`
+      const importTimespan = new Date().getTime() - importTimestamp.getTime();
+      const replicationTimespan = new Date().getTime() - replicationTimestamp.getTime();
+
+      attributionOptions.customAttribution = `${attributionOptions.customAttribution} &mdash; data imported <abbr title="${importTimestamp}">${formatTimespan(importTimespan)} ago</abbr>, updated <abbr title="${replicationTimestamp}">${formatTimespan(replicationTimespan)} ago</abbr>`
 
       // Forcefully update the control, even if the map does not fire events.
       attributionControl._updateAttributions();
@@ -1904,15 +3017,20 @@ map.on('click', event => {
       popup.remove();
     }
 
+    const abortController = new AbortController();
     popup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setDOMContent(popupContent(feature))
+      .setDOMContent(popupContent(feature, abortController))
       .addTo(map);
+
+    popup.on('close', () => {
+      abortController.abort('Popup closed')
+    })
   }
 });
 
 let features = null;
-fetch(`${location.origin}/features.json`)
+fetch(`${location.origin}/api/features/features.json`)
   .then(result => {
     if (result.status === 200) {
       return result.json()
@@ -1929,3 +3047,4 @@ fetch(`${location.origin}/features.json`)
 updateTheme();
 onStyleChange();
 onMapRotate(map.getBearing());
+onMapPitch(map.getPitch());

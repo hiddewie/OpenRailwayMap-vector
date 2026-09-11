@@ -1,0 +1,71 @@
+import json
+
+with open('static/features.json', 'r') as features_file:
+    features = json.load(features_file)
+
+
+def localize_fields(fields, localized_fields, lang):
+    loc = {}
+
+    for field, spec in localized_fields.items():
+        value = fields[spec['field']] or {}
+        localized_value = value[spec['default']] if spec['default'] in value else None
+
+        if lang is not None:
+            key = spec['key'].replace('{lang}', lang)
+
+            if key in value:
+                localized_value = value[key]
+
+        loc[field] = localized_value
+
+    return fields | loc
+
+
+class FeatureAPI:
+    def __init__(self, database):
+        self.database = database
+
+    async def __call__(self, *, source, layer, id, lang = None):
+        return await self.feature_catalog_data(f'{source}-{layer}', id, lang)
+
+    async def feature_catalog_data(self, catalog_key, id, lang = None):
+        if catalog_key not in features:
+            return None
+        catalog = features[catalog_key]
+
+        if 'view' not in catalog:
+            return None
+        view_name = catalog['view']['name']
+        view_id_type = catalog['view']['id_type']
+        localized_fields = catalog['view']['localizedFields'] if 'localizedFields' in catalog['view'] else {}
+
+        if 'properties' not in catalog:
+            return None
+
+        # Combine all property references in the catalog for the view query
+        properties = (
+            {'osm_id', 'osm_type'} |
+            catalog['properties'].keys() |
+            {catalog['featureProperty'] if 'featureProperty' in catalog else 'feature'} |
+            {catalog['colorProperty'] if 'colorProperty' in catalog else None} |
+            set(catalog['labelProperties'] if 'labelProperties' in catalog else []) |
+            {field['field'] for field in localized_fields.values()}
+        ) - (
+            localized_fields.keys()
+        )
+
+        sql_query = f"""
+            SELECT {', '.join(f'"{property}"' for property in properties if property)}
+            FROM "{view_name}" 
+            WHERE id = $1 
+        """
+
+        async with self.database.acquire() as connection:
+            statement = await connection.prepare(sql_query)
+            async with connection.transaction():
+                cast_id = int(id) if view_id_type == 'numeric' else id
+                async for record in statement.cursor(cast_id):
+                    return localize_fields(dict(record), localized_fields, lang)
+                else:
+                    return None

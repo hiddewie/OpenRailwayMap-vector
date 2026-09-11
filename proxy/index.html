@@ -11,16 +11,24 @@
   <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
   <link rel="manifest" href="manifest.json">
 
-  <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
-  <link rel="stylesheet" href="css/maplibre-gl-5.11/maplibre-gl.css">
-  <link rel="stylesheet" href="css/ui.css">
-
-  <script>
-    // See https://stackoverflow.com/a/64158043/711129
-    let FF_FOUC_FIX;
+  <script type="importmap">
+    {
+      "imports": {
+        "maplibre-gl": "./js/maplibre-gl-6.1.0/maplibre-gl.mjs",
+        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.1.0/maplibre-gl-shared.mjs",
+        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.1.0/maplibre-gl-worker.mjs"
+      }
+    }
   </script>
 
-  <script src="js/maplibre-gl-5.11/maplibre-gl.js" defer></script>
+  <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
+  <link rel="stylesheet" href="css/maplibre-gl-6.1.0/maplibre-gl.css">
+  <link rel="stylesheet" href="css/ui.css">
+
+  <script type="module">
+    import * as maplibregl from './js/maplibre-gl-6.1.0/maplibre-gl.mjs';
+    window.maplibregl = maplibregl;
+  </script>
   <script src="js/ui.js" defer></script>
 
   <title>OpenRailwayMap</title>
@@ -58,10 +66,6 @@
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="type" id="search-ref" value="ref">
                 <label class="form-check-label" for="search-ref">Reference</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="type" id="search-uic-ref" value="uic_ref">
-                <label class="form-check-label" for="search-uic-ref">UIC reference</label>
               </div>
             </div>
           </div>
@@ -101,23 +105,39 @@
         <h5 class="modal-title">Map configuration</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hideConfiguration()"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-header">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a id="configure-general" class="nav-link active" href="javascript:configureGeneral()">General</a>
+          </li>
+          <li class="nav-item">
+            <a id="configure-standard" class="nav-link" href="javascript:configureStandard()">Infrastructure</a>
+          </li>
+          <li class="nav-item">
+            <a id="configure-electrification" class="nav-link" href="javascript:configureElectrification()">Electrification</a>
+          </li>
+          <li class="nav-item">
+            <a id="configure-track" class="nav-link" href="javascript:configureTrack()">Track</a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-body" id="configure-general-body">
         <form>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundSaturation" class="form-label">Background map saturation</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
               Control the saturation of the background map. The smallest value makes the map grayscale, while the largest value makes the map full color.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundOpacity" class="form-label">Background map opacity</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundOpacity" onchange="updateConfiguration('backgroundOpacity', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
               Control the opacity of the background map. The smallest value makes the map transparent, while the largest value makes the map opaque.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundUrl" class="form-label">Background map tile URL</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
@@ -136,7 +156,7 @@
               Vector tiles: A URL specifying a vector style. See <a href="https://wiki.openstreetmap.org/wiki/Vector_tiles#Providers" target="_blank">the wiki</a> for a list of vector tile providers, for example <code>https://tiles-eu.stadiamaps.com/styles/alidade_smooth.json?api_key=REGISTER_FOR_API_KEY</code> (<a href="https://client.stadiamaps.com/accounts/login/?next=/dashboard/" target="_blank">registration is required for Stadia Maps</a> to get an API key).
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label for="backgroundUrl" class="form-label">Background hill shade</label>
             <div class="mb-1">
               <div class="form-check form-check-inline">
@@ -152,7 +172,7 @@
               Control whether the background map shows the hillshade overlay.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
             <label class="form-label">Theme</label>
             <div>
               <div class="form-check form-check-inline">
@@ -172,7 +192,48 @@
               Control the theme of OpenRailwayMap. The default is to follow the system and browser preferences. A light or dark theme can also be configured.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
+            <label class="form-label">Future railway infrastructure</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureNone" value="none" checked onchange="onFutureInfrastructureChange('none');">
+                <label class="form-check-label" for="futureInfrastructureNone">None</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureConstruction" value="construction" onchange="onFutureInfrastructureChange('construction');">
+                <label class="form-check-label" for="futureInfrastructureConstruction">Under construction</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="future-infrastructure" id="futureInfrastructureConstructionProposed" value="construction-proposed" onchange="onFutureInfrastructureChange('construction-proposed');">
+                <label class="form-check-label" for="futureInfrastructureConstructionProposed">Under construction and proposed</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control which future infrastructure should be shown on the map.
+            </small>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Historical railway infrastructure</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureNone" value="none" checked onchange="onHistoricalInfrastructureChange('none');">
+                <label class="form-check-label" for="historicalInfrastructureNone">None</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureOpenHistoricalMap" value="openhistoricalmap" onchange="onHistoricalInfrastructureChange('openhistoricalmap');">
+                <label class="form-check-label" for="historicalInfrastructureOpenHistoricalMap">OpenHistoricalMap</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="historical-infrastructure" id="historicalInfrastructureOpenStreetMap" value="openstreetmap" onchange="onHistoricalInfrastructureChange('openstreetmap');">
+                <label class="form-check-label" for="historicalInfrastructureOpenStreetMap">OpenStreetMap</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how historical railway infrastructure should be shown on the map.<br>
+              <b>Note:</b> Tagging non-existing features in OpenStreetMap like demolished railways is <a target="_blank" href="https://wiki.openstreetmap.org/wiki/Demolished_railways">discouraged</a>. It is encouraged instead to use <a href="https://www.openhistoricalmap.org/" target="_blank">the OpenHistoricalMap</a> to create and maintain historical data.
+            </small>
+          </div>
+          <div class="mb-4">
             <label class="form-label">Editor</label>
             <div>
               <div class="form-check form-check-inline">
@@ -189,7 +250,34 @@
               <a href="https://josm.openstreetmap.de/" target="_blank">JOSM</a> is a local desktop application. Ensure that the option <a href="https://josm.openstreetmap.de/wiki/Help/Preferences/RemoteControl" target="_blank">Remote control</a> is enabled. The JOSM integration also works with compatible remote-controllable apps like <a href="https://merkaartor.be/" target="_blank">Merkaartor</a>.
             </small>
           </div>
-          <div class="mb-3">
+          <div class="mb-4">
+            <label class="form-label">Localization</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationDisabled" value="label" onchange="disableLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationDisabled">Disabled</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="localization" id="localizationAutomatic" value="name" checked onchange="automaticLocalization(); localizationCustomLanguageControl.disabled = true">
+                <label class="form-check-label" for="localizationAutomatic">Automatic</label>
+              </div>
+              <div class="form-check form-check-inline" style="margin-right: 0.3rem">
+                <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
+                <label class="form-check-label" for="localizationCustom">Custom: </label>
+              </div>
+              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
+                <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
+              </div>
+            </div>
+            <small class="form-text">
+              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-standard-body">
+        <form>
+          <div class="mb-4">
             <label class="form-label">Station labels</label>
             <div>
               <div class="form-check form-check-inline">
@@ -203,6 +291,54 @@
             </div>
             <small class="form-text">
               Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-electrification-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Railway lines</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineVoltageFrequency" value="voltageFrequency" checked onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineVoltageFrequency">Voltage and frequency</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLinePower" value="power" onchange="configureElectrificationRailwayLine(this.value)">
+                <label class="form-check-label" for="electrificationRailwayLinePower">Maximum power</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
+            </small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-body" id="configure-track-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Railway lines</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineGauge" value="gauge" checked onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineGauge">Gauge</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineLoadingGauge" value="loadingGauge" onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineLoadingGauge">Loading gauge</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineTrackClass" value="trackClass" onchange="configureTrackRailwayLine(this.value)">
+                <label class="form-check-label" for="trackRailwayLineTrackClass">Track class</label>
+              </div>
+            </div>
+            <small class="form-text">
+              Control how the railway lines are rendered: either using the gauge, the loading gauge or the track class.
             </small>
           </div>
         </form>
@@ -233,6 +369,9 @@
         <p>
           Documentation about the OpenStreetMap data can be found on the <a href="https://wiki.openstreetmap.org/wiki/OpenRailwayMap" target="_blank">OpenRailwayMap wiki pages</a>.
         </p>
+        <p>
+          Usage of the OpenRailwayMap services is subject to the <a href="https://github.com/hiddewie/OpenRailwayMap-vector/blob/master/USAGE.md" target="_blank">OpenRailwayMap usage policy</a>.
+        </p>
       </div>
     </div>
   </div>
@@ -247,9 +386,6 @@
       <div class="modal-body" id="news-content"></div>
     </div>
   </div>
-</div>
-<div id="legend">
-  <div id="legend-map"></div>
 </div>
 <div id="map-container">
   <div id="background-map"></div>

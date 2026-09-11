@@ -1,9 +1,13 @@
+$schema: ./schema/train_protection.yaml
+
 train_protections:
   - { train_protection: 'etcs', legend: 'European Train Control System (ETCS)', color: 'hsl(214, 100%, 70%)' }
   - { train_protection: 'etcs_1', legend: 'European Train Control System (ETCS) level 1', color: 'hsl(214, 100%, 50%)' }
   - { train_protection: 'etcs_2', legend: 'European Train Control System (ETCS) level 2', color: 'hsl(214, 100%, 40%)' }
-  - { train_protection: 'ctcs', legend: 'Chinese Train Control System (CTCS)', color: 'hsl(190, 100%, 40%)' }
-  - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
+  - { train_protection: 'ctcs', legend: '列车运行监控记录 (LKJ)', color: 'hsl(10, 100%, 50%)' }
+  - { train_protection: 'ctcs_2', legend: 'Chinese Train Control System (CTCS) level 2', color: 'hsl(190, 100%, 40%)' }
+  - { train_protection: 'ctcs_3', legend: 'Chinese Train Control System (CTCS) level 3', color: 'hsl(190, 100%, 30%)' }
+  - { train_protection: 'ktcs', legend: '한국형 열차제어시스템 (KTCS)', color: '#654321' }
   - { train_protection: 'ptc', legend: 'Positive train control (PTC)', color: '#cc0033' }
   - { train_protection: 'tvm', legend: 'Transmission Voie-Machine (TVM)', color: '#009966' }
   - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
@@ -11,12 +15,13 @@ train_protections:
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
   - { train_protection: 'atc', legend: 'Automatic train control (ATC)', color: '#6600cc' }
+  - { train_protection: 'eatc', legend: 'Enhanced Automatic Train Control (E-ATC)', color: '#9c0b5d' }
   - { train_protection: 'atb', legend: 'Automatische treinbeïnvloeding (ATB)', color: '#ff8c00' }
   - { train_protection: 'lzb', legend: 'Linienzugbeeinflussung (LZB)', color: 'red' }
   - { train_protection: 'pzb', legend: 'Punktförmige Zugbeeinflussung (PZB)', color: '#ffb900' }
-  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#43b54d' }
-  - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#43b54d' }
-  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#43b54d' }
+  - { train_protection: 'acses', legend: 'Advanced Civil Speed Enforcement System (ACSES)', color: '#0096d4' }
+  - { train_protection: 'ases', legend: 'Advanced Speed Enforcement System (ASES)', color: '#0096d4' }
+  - { train_protection: 'atms', legend: 'Advanced Train Management System (ATMS)', color: '#4fb8af' }
   - { train_protection: 'als', legend: 'Автоматическая локомотивная сигнализация (ALS)', color: 'hsl(284, 100%, 40%)' }
   - { train_protection: 'atp', legend: 'Automatic Train Protection (ATP)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'aws', legend: 'Automatic Warning System (AWS)', color: 'hsl(50, 100%, 40%)' }
@@ -35,18 +40,30 @@ train_protections:
   - { train_protection: 'saet', legend: 'Système d''Automatisation de l''Exploitation des Trains (SAET)', color: 'hsl(305, 100%, 40%)' }
   - { train_protection: 'shp', legend: 'Samoczynne Hamowanie Pociągu (SHP)', color: 'hsl(35, 100%, 40%)' }
   - { train_protection: 'ssc', legend: 'Sistema di Supporto alla Condotta (SSC)', color: 'hsl(155, 100%, 40%)' }
-  - { train_protection: 'tasc', legend: '定位置停止装置 (TASC)', color: 'hsl(155, 100%, 40%)' }
+  - { train_protection: 'ats', legend: 'Automatic Train Stop (ATS)', color: '#ff7033' }
+  - { train_protection: 'atacs', legend: 'Advanced Train Administration and Communications System (ATACS)', color: '#008e2d' }
   - { train_protection: 'tbl', legend: 'Transmissie Baken-Lokomotief (TBL)', color: 'hsl(305, 100%, 40%)' }
-  - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#ffcc00' }
+  - { train_protection: 'tmacs', legend: 'Train Management and Control System (TMACS)', color: '#66cc33' }
   - { train_protection: 'tpws', legend: 'Train Protection & Warning System (TPWS)', color: 'pink' }
   - { train_protection: 'zbs', legend: 'Zugbeeinflussung S-Bahn Berlin (ZBS)', color: 'hsl(155, 100%, 40%)' }
+  - { train_protection: 'zsi127', legend: 'ZSI 127', color: '#884400' }
   - { train_protection: 'zsl90', legend: 'Zugsicherung mit Linienleiter 1990 (ZSL 90)', color: 'pink' }
+  - { train_protection: 'zst90', legend: 'ZST-90 (Zugstop)', color: 'hsl(70, 100%, 70%)' }
   - { train_protection: 'zub', legend: 'Zugbeeinflussung (ZUB)', color: 'hsl(118, 100%, 30%)' }
   - { train_protection: 'satp', legend: 'Автоматическая блокировка (SATP)', color: 'hsl(187, 100%, 40%)' }
   - { train_protection: 'twc', legend: 'Track Warrant Control (TWC)', color: '#884400' }
+  # Matched when any of the train protection tags are set to 'no' and all train protection tags are either set to 'no' or missing
   - { train_protection: 'none', legend: 'No train protection', color: 'black' }
 
 features:
+
+  - train_protection: ktcs
+    tags:
+      - { tag: 'railway:ktcs', values: ['yes', '1', '2', 'M'] }
+    exclude:
+      - etcs
+      - etcs_1
+      - etcs_2
 
   - train_protection: etcs
     tags:
@@ -71,22 +88,32 @@ features:
   - train_protection: acses
     tags:
       - { tag: 'railway:acses', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: ases
     tags:
       - { tag: 'railway:ases', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: itcs
     tags:
       - { tag: 'railway:itcs', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: etms
     tags:
       - { tag: 'railway:etms', value: 'yes' }
+    exclude:
+      - ptc
 
   - train_protection: cbtc
     tags:
-      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto'] }
+      - { tag: 'railway:cbtc', values: ['yes', 'uto', 'sto', 'dto', 'RF', 'IL'] }
+    exclude:
+      - ptc
 
   - train_protection: ptc
     tags:
@@ -94,7 +121,11 @@ features:
 
   - train_protection: atc
     tags:
-      - { tag: 'railway:atc', value: 'yes' }
+      - { tag: 'railway:atc', values: ['yes', 'CS', 'new-CS', 'D', 'DS', 'keio', 'KS', 'NS', 'P', 'TD', 'WS'] }
+
+  - train_protection: eatc
+    tags:
+      - { tag: 'railway:eatc', value: 'yes' }
 
   - train_protection: asfa
     tags:
@@ -210,7 +241,15 @@ features:
 
   - train_protection: ctcs
     tags:
-      - { tag: 'railway:ctcs', values: ['yes', '0', '1', '2', '3D', '4'] }
+      - { tag: 'railway:ctcs', values: ['yes', '0', '1'] }
+
+  - train_protection: ctcs_2
+    tags:
+      - { tag: 'railway:ctcs', values: ['2'] }
+
+  - train_protection: ctcs_3
+    tags:
+      - { tag: 'railway:ctcs', values: ['3', '3D', '4'] }
 
   - train_protection: ebicab
     tags:
@@ -230,7 +269,7 @@ features:
 
   - train_protection: octys
     tags:
-      - { tag: 'railway:octys', value: 'yes' }
+      - { tag: 'railway:octys', values: ['yes', '1', '2', '3'] }
 
   - train_protection: ouragan
     tags:
@@ -252,9 +291,13 @@ features:
     tags:
       - { tag: 'railway:ssc', value: 'yes' }
 
-  - train_protection: tasc
+  - train_protection: ats
     tags:
-      - { tag: 'railway:tasc', value: 'yes' }
+      - { tag: 'railway:ats', values: ['yes', 'B', 'Dx', 'S', 'S1', 'S2', 'S1;S2', 'Sx', 'P', 'Ps'] }
+
+  - train_protection: atacs
+    tags:
+      - { tag: 'railway:atacs', value: 'yes' }
 
   - train_protection: tbl
     tags:
@@ -275,6 +318,10 @@ features:
   - train_protection: zsl90
     tags:
       - { tag: 'railway:zsl90', value: 'yes' }
+
+  - train_protection: zst90
+    tags:
+      - { tag: 'railway:zst90', value: 'yes' }
 
   - train_protection: zub
     tags:
@@ -311,60 +358,3 @@ features:
   - train_protection: twc
     tags:
       - { tag: 'railway:twc', value: 'yes' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:pzb', value: 'no' }
-      - { tag: 'railway:lzb', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:atb', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:atc', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:atc', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:etms', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:ptc', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:scmt', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:asfa', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:kvb', value: 'no' }
-      - { tag: 'railway:tvm', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:ls', value: 'no' }
-      - { tag: 'railway:etcs', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:zsi127', value: 'no' }
-
-  - train_protection: none
-    tags:
-      - { tag: 'railway:jkv', value: 'no' }

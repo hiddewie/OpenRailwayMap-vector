@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="24" viewBox="0 0 20 24">
+<path fill="#ffffff" d="m 17,0 h 3 v 24 h -3 z"/>
+<path fill="#000000" d="m 17,0 l 3,3 v -3 z m 0,3 v 3 l 3,3 v -3 z m 0,6 v 3 l 3,3 v -3 z m 0,6 v 3 l 3,3 v -3 z m 0,6 v 3 h 3 z"/>
+</svg>

@@ -1,6 +1,14 @@
--- Refresh materialized view of stations and their importance
+BEGIN;
 
-REFRESH MATERIALIZED VIEW stations_clustered;
-REFRESH MATERIALIZED VIEW stations_with_route_count;
-REFRESH MATERIALIZED VIEW grouped_stations_with_route_count;
-REFRESH MATERIALIZED VIEW stop_area_groups_buffered;
+TRUNCATE stations_with_importance;
+
+INSERT INTO stations_with_importance (station_id, way, importance)
+  SELECT
+    s.id,
+    ST_Centroid(s.way),
+    siv.importance
+  FROM stations_with_importance_view siv
+  JOIN stations s
+    ON s.id = siv.id;
+
+COMMIT;
