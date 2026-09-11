@@ -184,6 +184,9 @@ const sourceLayers = {
 
   "standard_railway_line_low-standard_railway_line_low": {
     usage: {
+      mapState: {
+        tracks: 'usage',
+      },
       key: [
         'highspeed',
         'feature',
@@ -248,6 +251,9 @@ const sourceLayers = {
   },
   'speed_railway_line_low-speed_railway_line_low': {
     speed: {
+      mapState: {
+        tracks: 'speed',
+      },
       key: [],
       features: [
         ...speedLegends.map(speed => ({
@@ -279,7 +285,9 @@ const sourceLayers = {
   },
   'signals_railway_line_low-signals_railway_line_low': {
     train_protection: {
-
+      mapState: {
+        tracks: 'train_protection',
+      },
       key: [
         'feature',
         'state',
@@ -356,6 +364,9 @@ const sourceLayers = {
   },
   'operator_railway_line_low-operator_railway_line_low': {
     operator: {
+      mapState: {
+        tracks: 'operator',
+      },
       key: [
         'primary_operator',
       ],
@@ -397,6 +408,7 @@ const sourceLayers = {
   'track_railway_line_low-track_railway_line_low': {
     gauge: {
       mapState: {
+        tracks: 'track',
         trackRailwayLine: 'gauge',
       },
       key: [],
@@ -485,6 +497,7 @@ const sourceLayers = {
     },
     loading_gauge: {
       mapState: {
+        tracks: 'track',
         trackRailwayLine: 'loadingGauge',
       },
       key: [],
@@ -506,6 +519,7 @@ const sourceLayers = {
     },
     track_class: {
       mapState: {
+        tracks: 'track',
         trackRailwayLine: 'trackClass',
       },
       key: [],
@@ -546,6 +560,7 @@ const sourceLayers = {
   'electrification_railway_line_low-electrification_railway_line_low': {
     voltage_frequency: {
       mapState: {
+        tracks: 'electrification',
         electrificationRailwayLine: 'voltageFrequency',
       },
       key: [],
@@ -569,6 +584,7 @@ const sourceLayers = {
     },
     maximum_current: {
       mapState: {
+        tracks: 'electrification',
         electrificationRailwayLine: 'maximumCurrent',
       },
       key: [],
@@ -591,6 +607,7 @@ const sourceLayers = {
     },
     power: {
       mapState: {
+        tracks: 'electrification',
         electrificationRailwayLine: 'power',
       },
       key: [],
@@ -613,6 +630,9 @@ const sourceLayers = {
       ],
     },
     electrification: {
+      mapState: {
+        tracks: 'electrification',
+      },
       key: [],
       features: [
         {
@@ -2319,6 +2339,9 @@ const sourceLayers = {
   },
   'openhistoricalmap-transport_lines': {
     usage: {
+      mapState: {
+        tracks: 'usage',
+      },
       key: [
         'highspeed',
         'type',
@@ -2332,6 +2355,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 5,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'yes',
             usage: 'main',
@@ -2347,6 +2371,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 5,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: 'main',
@@ -2380,6 +2405,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 7,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: 'branch',
@@ -2395,6 +2421,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: 'industrial',
@@ -2410,6 +2437,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'narrow_gauge',
             highspeed: 'no',
             usage: null,
@@ -2425,6 +2453,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'subway',
             highspeed: 'no',
             usage: null,
@@ -2440,6 +2469,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'light_rail',
             highspeed: 'no',
             usage: null,
@@ -2455,6 +2485,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'tram',
             highspeed: 'no',
             usage: null,
@@ -2470,6 +2501,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'monorail',
             highspeed: 'no',
             usage: null,
@@ -2485,6 +2517,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 12,
           properties: {
+            class: 'railway',
             type: 'miniature',
             highspeed: 'no',
             usage: null,
@@ -2500,6 +2533,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: null,
@@ -2515,6 +2549,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: null,
@@ -2530,6 +2565,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: null,
@@ -2545,6 +2581,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: null,
@@ -2560,6 +2597,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'preserved',
             highspeed: 'no',
             usage: null,
@@ -2575,6 +2613,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: 'test',
@@ -2590,6 +2629,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 9,
           properties: {
+            class: 'railway',
             type: 'rail',
             highspeed: 'no',
             usage: 'military',
@@ -2605,6 +2645,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'construction',
             highspeed: 'no',
             usage: null,
@@ -2620,6 +2661,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 10,
           properties: {
+            class: 'railway',
             type: 'proposed',
             highspeed: 'no',
             usage: null,
@@ -2635,6 +2677,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 11,
           properties: {
+            class: 'railway',
             type: 'disused',
             highspeed: 'no',
             usage: null,
@@ -2650,6 +2693,7 @@ const sourceLayers = {
           type: 'line',
           minzoom: 11,
           properties: {
+            class: 'railway',
             type: 'abandoned',
             highspeed: 'no',
             usage: null,
@@ -2662,7 +2706,242 @@ const sourceLayers = {
         },
       ],
     },
-    // TODO other track styles
+    speed: {
+      mapState: {
+        tracks: 'speed',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    train_protection: {
+      mapState: {
+        tracks: 'train_protection',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    voltage_frequency: {
+      mapState: {
+        tracks: 'electrification',
+        electrificationRailwayLine: 'voltageFrequency',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    maximum_current: {
+      mapState: {
+        tracks: 'electrification',
+        electrificationRailwayLine: 'maximumCurrent',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    power: {
+      mapState: {
+        tracks: 'electrification',
+        electrificationRailwayLine: 'power',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    gauge: {
+      mapState: {
+        tracks: 'track',
+        trackRailwayLine: 'gauge',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    loading_gauge: {
+      mapState: {
+        tracks: 'track',
+        trackRailwayLine: 'loadingGauge',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    track_class: {
+      mapState: {
+        tracks: 'track',
+        trackRailwayLine: 'trackClass',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    operator: {
+      mapState: {
+        tracks: 'operator',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    routes: {
+      mapState: {
+        tracks: 'routes',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
   },
 
   // Milestones
