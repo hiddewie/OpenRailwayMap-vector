@@ -3162,7 +3162,7 @@ const sourceLayers = {
           legend: 'signal direction',
           type: 'point',
           properties: {
-            feature0: 'does-not-exist',
+            feature0: 'general/invisible',
             type: 'line',
             azimuth: 135.5,
             deactivated0: false,
@@ -3251,7 +3251,7 @@ const sourceLayers = {
           legend: 'signal direction',
           type: 'point',
           properties: {
-            feature0: 'does-not-exist',
+            feature0: 'general/invisible',
             railway: 'signal',
             type: 'line',
             azimuth: 135.5,
@@ -3323,7 +3323,7 @@ const sourceLayers = {
           legend: 'signal direction',
           type: 'point',
           properties: {
-            feature: 'does-not-exist',
+            feature: 'general/invisible',
             type: 'line',
             azimuth: 135.5,
             deactivated: false,
