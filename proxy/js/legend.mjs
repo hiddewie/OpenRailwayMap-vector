@@ -3024,10 +3024,8 @@ const sourceLayers = {
           variants: (feature.variants || []).map(variant => ({
             legend: variant.description,
             properties: variant.example,
-            // TODO
             mapState: variant.mapState,
           })),
-          // TODO
           mapState: feature.mapState,
         })),
     },
@@ -3051,10 +3049,8 @@ const sourceLayers = {
           variants: (feature.variants || []).map(variant => ({
             legend: variant.description,
             properties: variant.example,
-            // TODO
             mapState: variant.mapState,
           })),
-          // TODO
           mapState: feature.mapState,
         })),
     },
@@ -3070,22 +3066,22 @@ const sourceLayers = {
           legend: feature.description,
           type: 'point',
           minzoom: feature.minzoom,
+          maxzoom: feature.highZoomPolygon ? 13 : undefined,
           properties: {
             ...feature.example,
             railway: feature.feature,
           },
-          // TODO
           mapState: feature.mapState,
         },
         ...(feature.variants || []).map(variant => ({
           legend: `${feature.description}: ${variant.description}`,
           type: 'point',
           minzoom: variant.minzoom ?? feature.minzoom,
+          maxzoom: feature.highZoomPolygon ? 13 : undefined,
           properties: {
             ...feature.example,
             ...variant.example,
           },
-          // TODO
           mapState: variant.mapState,
         })),
       ]),
@@ -3125,15 +3121,40 @@ const sourceLayers = {
     },
   },
   "openrailwaymap_standard-standard_railway_grouped_stations": {
-    grouped_stations: {
-      key: [],
-      features: [],
+    stations: {
+      key: [
+        'railway',
+        'state',
+      ],
+      features: stations.features
+        .filter(feature => feature.highZoomPolygon)
+        .map(feature => ({
+          legend: feature.description,
+          type: 'polygon',
+          minzoom: feature.minzoom,
+          properties: {
+            ...feature.example,
+            railway: feature.feature,
+          },
+          variants: (feature.variants || []).map(variant => ({
+            legend: variant.description,
+            properties: variant.example,
+            mapState: variant.mapState,
+          })),
+          mapState: feature.mapState,
+        })),
     },
   },
   "openrailwaymap_standard-standard_railway_grouped_station_areas": {
-    grouped_station_areas: {
+    stations: {
       key: [],
-      features: [],
+      features: [
+        {
+          legend: 'Stop area group',
+          type: 'polygon',
+          properties: {},
+        }
+      ],
     },
   },
   "openrailwaymap_standard-standard_interlocking": {
