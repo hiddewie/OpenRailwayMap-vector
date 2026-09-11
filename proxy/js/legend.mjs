@@ -3172,7 +3172,7 @@ const sourceLayers = {
 
   // Platforms
   "openrailwaymap_standard-standard_railway_platforms": {
-    paltforms: {
+    platforms: {
       key: [],
       features: [
         {
@@ -3865,9 +3865,6 @@ const sourceLayers = {
 
   "openrailwaymap_electrification-electrification_catenary": {
     catenary: {
-      mapState: {
-        catenaries: 'plain',
-      },
       key: [
         'feature',
       ],
