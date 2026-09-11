@@ -41,6 +41,19 @@ const speedLegends = [
   360
 ];
 
+const routeLegends = [
+  0,
+  1,
+  2,
+  3,
+  4,
+  6,
+  10,
+  16,
+  20,
+  25
+];
+
 const electrificationLegends = {
   voltageFrequency: [
     { legend: '> 25 kV ~', voltage: 25000, frequency: 60 },
@@ -1199,8 +1212,21 @@ const sourceLayers = {
         tracks: 'routes',
       },
       key: [],
-      // TODO route legend
-      features: []
+      features: [
+        ...routeLegends.map(routeCount => ({
+          legend: `${routeCount} routes`,
+          type: 'line',
+          properties: {
+            route_count: routeCount,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        })),
+      ]
     },
   },
   'high-railway_line_high': {
@@ -2333,7 +2359,19 @@ const sourceLayers = {
       },
       key: [],
       features: [
-        // TODO route legend
+        ...routeLegends.map(routeCount => ({
+          legend: `${routeCount} routes`,
+          type: 'line',
+          properties: {
+            route_count: routeCount,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        })),
       ],
     },
   },
