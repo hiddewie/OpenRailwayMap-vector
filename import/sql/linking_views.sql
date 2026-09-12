@@ -23,7 +23,18 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_stop_areas AS
     FROM stop_areas sa
   ) sa
   JOIN stations s
-    ON s.osm_id = station_osm_id AND s.osm_type = 'W';
+    ON s.osm_id = station_osm_id AND s.osm_type = 'W'
+
+  UNION
+
+  SELECT
+    s.id as station_id,
+    sa.osm_id as stop_area_osm_id
+  FROM stop_areas sa
+  JOIN stop_area_route_stops sars
+    ON sa.osm_id = sars.stop_area_id
+  JOIN stations s
+    ON sars.route_stop_id = s.osm_id AND s.feature = 'tram_stop' and s.osm_type = 'N';
 
 CREATE INDEX IF NOT EXISTS stations_stop_areas_station_id
   ON stations_stop_areas
