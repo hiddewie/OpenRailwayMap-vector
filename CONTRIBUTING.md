@@ -288,6 +288,22 @@ references:
 
 Open a pull request where you provide details about the new reference. Ensure the pull request contains references to documentation and places on the map where the reference is used.
 
+## I want to display additional workrules
+
+Edit the file [`features/workrules.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/workrules.yaml).
+
+The file contains a list of workrules. Each workrule has a name, a country and a tag value.
+
+Add a new entry at a certain place in the list. For example:
+```yaml
+features:
+  - name: 'CROR'
+    country: 'CA'
+    value: 'CA:CROR'
+```
+
+Open a pull request where you provide details about the new workrule entry. Ensure the pull request contains references to documentation and places on the map where the reference is used.
+
 ## I want to improve the user interface
 
 The HTML, Javascript and CSS of the user interface are located in the [proxy](https://github.com/hiddewie/OpenRailwayMap-vector/tree/master/proxy) directory.

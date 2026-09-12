@@ -135,6 +135,9 @@ const railwayLineFeatures = {
     },
     workrules: {
       name: 'Workrules',
+      format: {
+        lookup: 'workrules',
+      }
     },
     preferred_direction: {
       name: 'Preferred direction',
@@ -1621,6 +1624,15 @@ const features = {
       1: {
         name: 'yes',
         index: 1,
+      },
+    },
+  },
+
+  workrules: {
+    features: {
+      'SE:H': {
+        name: 'SE:H !',
+        country: 'SE',
       },
     },
   },

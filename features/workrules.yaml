@@ -1,0 +1,183 @@
+$schema: ./schema/workrules.yaml
+
+workrules:
+
+  # --- AT --- #
+
+  - name: 'StrabVO'
+    country: 'AT'
+    value: 'AT:StrabVO'
+
+  # --- CA --- #
+
+  - name: 'CROR'
+    country: 'CA'
+    value: 'CA-CROR'
+
+  - name: 'CROR'
+    country: 'CA'
+    value: 'CA:CROR'
+
+  # --- DE --- #
+
+  - name: 'EBO'
+    country: 'DE'
+    value: 'DB:EBO'
+
+  - name: 'BOA'
+    country: 'DE'
+    value: 'DE-BW:BOA'
+
+  - name: 'LSeilbG'
+    country: 'DE'
+    value: 'DE-BW:LSeilbG'
+
+  - name: 'EBOA'
+    country: 'DE'
+    value: 'DE-BY:EBOA'
+
+  - name: 'HEisenbG'
+    country: 'DE'
+    value: 'DE-HE:HEisenbG'
+
+  - name: 'MV BOA'
+    country: 'DE'
+    value: 'DE-MV:BOA'
+
+  - name: 'NI BOA'
+    country: 'DE'
+    value: 'DE-NI:BOA'
+
+  - name: 'NW BOA'
+    country: 'DE'
+    value: 'DE-NW:BOA'
+
+  - name: 'SN BOA'
+    country: 'DE'
+    value: 'DE-SN:BOA'
+
+  - name: 'ABABauV SH'
+    country: 'DE'
+    value: 'DE:ABABauV SH'
+
+  - name: 'BOA'
+    country: 'DE'
+    value: 'DE:BOA'
+
+  - name: 'BOP'
+    country: 'DE'
+    value: 'DE:BOP'
+
+  - name: 'BOStrab'
+    country: 'DE'
+    value: 'DE:BOStrab'
+
+  - name: 'EBO'
+    country: 'DE'
+    value: 'DE:EBO'
+
+  - name: 'ESBO'
+    country: 'DE'
+    value: 'DE:ESBO'
+
+  # --- DK --- #
+
+  - name: 'ORF'
+    country: 'DK'
+    value: 'DK:ORF'
+
+  - name: 'ORS'
+    country: 'DK'
+    value: 'DK:ORS'
+
+  - name: 'SR75'
+    country: 'DK'
+    value: 'DK:SR75'
+
+  # --- KR --- #
+
+  - name: 'RSA'
+    country: 'KR'
+    value: 'KR:RSA'
+
+  - name: 'TTA'
+    country: 'KR'
+    value: 'KR:TTA'
+
+  - name: 'URA'
+    country: 'KR'
+    value: 'KR:URA'
+
+  # --- PL --- #
+
+  - name: 'DSDiK'
+    country: 'PL'
+    value: 'PL:DSDiK'
+
+  - name: 'Ir-1'
+    country: 'PL'
+    value: 'PL:Ir-1'
+
+  - name: 'PKM-01'
+    country: 'PL'
+    value: 'PL:PKM-01'
+
+  - name: 'PKPLHS'
+    country: 'PL'
+    value: 'PL:PKPLHS'
+
+  - name: 'SKM_R-1'
+    country: 'PL'
+    value: 'PL:SKM_R-1'
+
+  - name: 'SKPL'
+    country: 'PL'
+    value: 'PL:SKPL'
+
+  - name: 'WKD_R-1'
+    country: 'PL'
+    value: 'PL:WKD_R-1'
+
+  # --- SE --- #
+
+  - name: 'E2'
+    country: 'SE'
+    value: 'SE:E2'
+
+  - name: 'E3'
+    country: 'SE'
+    value: 'SE:E3'
+
+  - name: 'F'
+    country: 'SE'
+    value: 'SE:F'
+
+  - name: 'H'
+    country: 'SE'
+    value: 'SE:H'
+
+  - name: 'M'
+    country: 'SE'
+    value: 'SE:M'
+
+  - name: 'R'
+    country: 'SE'
+    value: 'SE:R'
+
+  - name: 'S'
+    country: 'SE'
+    value: 'SE:S'
+
+  # --- US --- #
+
+  - name: 'CSX'
+    country: 'US'
+    value: 'US:CSX'
+
+  - name: 'GCOR'
+    country: 'US'
+    value: 'US:GCOR'
+
+  - name: 'NORAC'
+    country: 'US'
+    value: 'US:NORAC'
