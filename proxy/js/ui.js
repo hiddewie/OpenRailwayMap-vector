@@ -1641,6 +1641,14 @@ class StyleControl {
     const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
     const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
+    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
+    container.onclick = () => {
+      styleContainer.classList.toggle('active')
+      presetContainer.classList.toggle('active')
+    };
+    const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
+    icon.title = 'Select map style'
+
     this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
       const initialValue = this.currentStyle[key];
       const initiallyDisabled = disabledValue && initialValue === disabledValue;
@@ -1655,13 +1663,17 @@ class StyleControl {
         }
       }
 
-      const buttonLabel = createDomElement('label', '', button);
+      const buttonLabel = createDomElement('label', 'd-none d-md-inline-block', button);
       buttonLabel.innerText = name
 
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
 
       const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
+
+      const buttonLabelSelectionContainer = createDomElement('label', 'd-md-none', selectionContainer);
+      buttonLabelSelectionContainer.innerText = name
+
       this.styleButtons[key] = {};
       values.forEach(({name, value}) => {
         const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
@@ -1693,13 +1705,17 @@ class StyleControl {
       }
     }
 
-    const presetButtonLabel = createDomElement('label', '', presetButton);
+    const presetButtonLabel = createDomElement('label', 'd-none d-md-inline-block', presetButton);
     presetButtonLabel.innerText = 'Presets'
 
     const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
     presetButtonIcon.title = 'Presets'
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
+
+    const presetButtonLabelSelectionContainer = createDomElement('label', 'd-md-none', selectionContainer);
+    presetButtonLabelSelectionContainer.innerText = 'Presets'
+
     Object.entries(this.options.presets).forEach(([preset, {name, styleGlobalState}]) => {
       const presetActive = this.currentPreset === preset;
       const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
@@ -1725,13 +1741,6 @@ class StyleControl {
 
       this.presetButtons[preset] = valueButton;
     })
-
-    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
-    container.onclick = () => {
-      buttonGroup.classList.toggle('active')
-    };
-    const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
-    icon.title = 'Select map style'
 
     return this._container;
   }
