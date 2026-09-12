@@ -4,9 +4,13 @@ workrules:
 
   # --- AT --- #
 
-  - name: 'StrabVO'
+  - name: 'Straßenbahnverordnung'
     country: 'AT'
     value: 'AT:StrabVO'
+
+  - name: 'Eisenbahnbau- und -betriebsverordnung'
+    country: 'AT'
+    value: 'AT:EisbBBV'
 
   # --- CA --- #
 
@@ -20,11 +24,11 @@ workrules:
 
   # --- DE --- #
 
-  - name: 'EBO'
+  - name: 'Eisenbahn-Bau- und Betriebsordnung'
     country: 'DE'
-    value: 'DB:EBO'
+    value: 'DE:EBO'
 
-  - name: 'BOA'
+  - name: 'BOA Baden-Württemberg'
     country: 'DE'
     value: 'DE-BW:BOA'
 
@@ -32,57 +36,89 @@ workrules:
     country: 'DE'
     value: 'DE-BW:LSeilbG'
 
-  - name: 'EBOA'
+  - name: 'Kleinbahngesetz'
+    country: 'DE'
+    value: 'DE-BE:KleinbahnG'
+
+  - name: 'EBOA Bavaria'
     country: 'DE'
     value: 'DE-BY:EBOA'
 
-  - name: 'HEisenbG'
+  - name: 'BOA Brandenburg'
+    country: 'DE'
+    value: 'DE-BB:BOA'
+
+  - name: 'BOA Bremen'
+    country: 'DE'
+    value: 'DE-HB:BOA'
+
+  - name: 'BOA Hamburg'
+    country: 'DE'
+    value: 'DE-HH:BOA'
+
+  - name: 'Hessisches Eisenbahngesetz'
     country: 'DE'
     value: 'DE-HE:HEisenbG'
 
-  - name: 'MV BOA'
+  - name: 'BOA Mecklenburg-Vorpommern'
     country: 'DE'
     value: 'DE-MV:BOA'
 
-  - name: 'NI BOA'
+  - name: 'BOA Niedersachsen'
     country: 'DE'
     value: 'DE-NI:BOA'
 
-  - name: 'NW BOA'
+  - name: 'BOA Nordrhein-Westfalen'
     country: 'DE'
     value: 'DE-NW:BOA'
 
-  - name: 'SN BOA'
+  - name: 'BOA Rheinland-Pfalz'
+    country: 'DE'
+    value: 'DE-RP:BOA'
+
+  - name: 'EBOA Saarland'
+    country: 'DE'
+    value: 'DE-SL:EBOA'
+
+  - name: 'BOA Saxony'
     country: 'DE'
     value: 'DE-SN:BOA'
+
+  - name: 'BOA Saxony-Anhalt'
+    country: 'DE'
+    value: 'DE-ST:BOA'
+
+  - name: 'BOA Schleswig-Holstein'
+    country: 'DE'
+    value: 'DE-SH:BOA'
+
+  - name: 'BOA Thüringen'
+    country: 'DE'
+    value: 'DE-TH:BOA'
 
   - name: 'ABABauV SH'
     country: 'DE'
     value: 'DE:ABABauV SH'
 
-  - name: 'BOA'
-    country: 'DE'
-    value: 'DE:BOA'
-
-  - name: 'BOP'
+  - name: 'Bau- und Betriebsordnung für Pioniereisenbahnen'
     country: 'DE'
     value: 'DE:BOP'
 
-  - name: 'BOStrab'
+  - name: 'Bau- und Betriebsordnung Straßenbahnen'
     country: 'DE'
     value: 'DE:BOStrab'
 
-  - name: 'EBO'
-    country: 'DE'
-    value: 'DE:EBO'
-
-  - name: 'ESBO'
+  - name: 'Eisenbahn-Bau- und Betriebsordnung für Schmalspurbahnen'
     country: 'DE'
     value: 'DE:ESBO'
 
+  - name: 'Albtal-Verkehrsgesellschaft mbH'
+    country: 'DE'
+    value: 'DE:AVG-SbV'
+
   # --- DK --- #
 
-  - name: 'ORF'
+  - name: 'Operationelle Regler for Fjernbanen'
     country: 'DK'
     value: 'DK:ORF'
 
@@ -90,51 +126,51 @@ workrules:
     country: 'DK'
     value: 'DK:ORS'
 
-  - name: 'SR75'
+  - name: 'Sikkerhedsreglement'
     country: 'DK'
     value: 'DK:SR75'
 
   # --- KR --- #
 
-  - name: 'RSA'
+  - name: '철도사업법 (Railroad Service Act)'
     country: 'KR'
     value: 'KR:RSA'
 
-  - name: 'TTA'
+  - name: '도시철도법 (Urban Railroad Act)'
     country: 'KR'
     value: 'KR:TTA'
 
-  - name: 'URA'
+  - name: '궤도운송법 (Tramway Transportation Act)'
     country: 'KR'
     value: 'KR:URA'
 
   # --- PL --- #
 
-  - name: 'DSDiK'
+  - name: 'REGULAMIN SIECI Województwa Dolnośląskiego Dolnośląskiej Służby Dróg i Kolei we Wrocławiu'
     country: 'PL'
     value: 'PL:DSDiK'
 
-  - name: 'Ir-1'
+  - name: 'Instrukcja o prowadzeniu ruchu pociągów Ir-1'
     country: 'PL'
     value: 'PL:Ir-1'
 
-  - name: 'PKM-01'
+  - name: 'PKM-01 Instrukcja o prowadzeniu ruchu pociągów'
     country: 'PL'
     value: 'PL:PKM-01'
 
-  - name: 'PKPLHS'
+  - name: 'Regulamin przewozu przesyłek towarowych PKP LHS.'
     country: 'PL'
     value: 'PL:PKPLHS'
 
-  - name: 'SKM_R-1'
+  - name: 'SKM r-1 INSTRUKCJA o prowadzeniu ruchu pociągów'
     country: 'PL'
     value: 'PL:SKM_R-1'
 
-  - name: 'SKPL'
+  - name: 'Regulamin Przewozów SKPL'
     country: 'PL'
     value: 'PL:SKPL'
 
-  - name: 'WKD_R-1'
+  - name: 'Regulamin przewozu osób, rzeczy i zwierząt'
     country: 'PL'
     value: 'PL:WKD_R-1'
 
