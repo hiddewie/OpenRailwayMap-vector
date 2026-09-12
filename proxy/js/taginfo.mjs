@@ -85,6 +85,16 @@ for (const feature of tracks.features) {
   });
 }
 
+// work rules
+const workrules = await readYamlFile('workrules.yaml');
+for (const feature of workrules.workrules) {
+  taginfo.tags.push({
+    key: 'workrules',
+    value: feature.value,
+    description: `[Workrules] [${feature.country}] ${feature.name}`,
+  });
+}
+
 // signals_railway_signals
 const signals = await readYamlFile('signals_railway_signals.yaml');
 for (const tag of signals.tags) {
