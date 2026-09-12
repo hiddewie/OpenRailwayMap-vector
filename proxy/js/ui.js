@@ -2494,7 +2494,7 @@ class LegendControl {
         .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
         .flatMap(([section, {features}]) => (features ?? [])
           .filter(zoomFilter)
-          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key])) // TODO maybe remove?
+          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
           .filter(item => featureFilter(sourceName, section, item))
           .flatMap(item => {
             const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
