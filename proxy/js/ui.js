@@ -564,7 +564,6 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    supportsDate: true,
     hasConfiguration: true,
     styleGlobalState: {
       tracks: 'usage',
@@ -581,7 +580,6 @@ const knownStyles = {
   },
   speed: {
     name: 'Speed',
-    supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
       tracks: 'speed',
@@ -598,7 +596,6 @@ const knownStyles = {
   },
   signals: {
     name: 'Train protection',
-    supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
       tracks: 'train_protection',
@@ -615,7 +612,6 @@ const knownStyles = {
   },
   electrification: {
     name: 'Electrification',
-    supportsDate: false,
     hasConfiguration: true,
     styleGlobalState: {
       tracks: 'electrification',
@@ -632,7 +628,6 @@ const knownStyles = {
   },
   track: {
     name: 'Track',
-    supportsDate: false,
     hasConfiguration: true,
     styleGlobalState: {
       tracks: 'track',
@@ -649,7 +644,6 @@ const knownStyles = {
   },
   operator: {
     name: 'Operator',
-    supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
       tracks: 'operator',
@@ -666,7 +660,6 @@ const knownStyles = {
   },
   route: {
     name: 'Routes',
-    supportsDate: false,
     hasConfiguration: false,
     styleGlobalState: {
       tracks: 'routes',
@@ -1618,33 +1611,7 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   });
 }
 
-// let lastSetMapStyle = null;
-// let lastSetMapLanguage = null;
 function onStyleChange() {
-  // const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  // const supportsDate = historicalInfrastructure === 'openhistoricalmap'; // TODO
-  const language = configuredLanguage();
-
-  // if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
-  //   if (map.isStyleLoaded()) {
-  //     // Style specific map global state
-  //     Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
-  //       map.setGlobalStateProperty(key, value)
-  //     );
-  //   }
-  //   hideSearchResults();
-  //   routeControl.clearRoute();
-  // }
-
-  // if (supportsDate && !dateControl.isShown()) {
-  //   dateControl.show();
-  // } else if (!supportsDate && dateControl.isShown()) {
-  //   dateControl.hide();
-  // }
-
-  // lastSetMapStyle = selectedStyle;
-  // lastSetMapLanguage = language;
-
   legendControl.updateLegend()
   onPageParametersChange();
 }
