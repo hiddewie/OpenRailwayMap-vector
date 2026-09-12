@@ -344,7 +344,7 @@ describe('home page', () => {
   })
 
   it('switching presets (dark mode)', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.get('.maplibregl-ctrl-configuration').click()
     cy.contains('Map configuration').should('be.visible')
@@ -410,7 +410,7 @@ describe('home page', () => {
   })
 
   it('legend', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     // Open legend
     cy.contains('button.maplibregl-ctrl-legend', 'Legend').click()
@@ -424,7 +424,7 @@ describe('home page', () => {
   })
 
   it('search', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.get('button').contains('Search').click()
 
@@ -437,7 +437,7 @@ describe('home page', () => {
   })
 
   it('search, show on map', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.get('button').contains('Search').click()
 
@@ -450,7 +450,7 @@ describe('home page', () => {
   })
 
   it('settings', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.get('.maplibregl-ctrl-configuration').click()
 
@@ -459,7 +459,7 @@ describe('home page', () => {
   })
 
   it('news', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.get('.maplibregl-ctrl-news').click()
 
