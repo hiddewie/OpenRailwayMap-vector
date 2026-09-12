@@ -338,10 +338,11 @@ body {
   position: relative;
   display: flex;
   margin-right: 3rem;
+  margin-left: 8rem;
   background: none;
   box-shadow: none;
 
-  @media (max-width: 767px) {
+  @media (max-width: 919px) {
     flex-direction: column;
     margin-right: 10px;
     background: var(--bs-body-bg);
@@ -355,7 +356,7 @@ body {
     background: var(--bs-body-bg);
     border-radius: 4px;
 
-    @media (max-width: 767px) {
+    @media (max-width: 919px) {
       position: absolute;
       right: 0;
       flex-direction: column;
@@ -380,9 +381,13 @@ body {
       & > label {
         cursor: pointer;
         font-size: .7rem;
+
+        @media (max-width: 919px) {
+          display: none;
+        }
       }
       &:last-child > .maplibregl-ctrl-style-popup-container {
-        @media (min-width: 768px) {
+        @media (min-width: 920px) {
           left: inherit;
           right: -2px;
         }
@@ -391,18 +396,18 @@ body {
         background-color: rgba(0, 0, 0, 0.05);
 
         &:first-child {
-          @media (min-width: 768px) {
+          @media (min-width: 920px) {
             border-bottom-left-radius: 0;
           }
-          @media (max-width: 767px) {
+          @media (max-width: 919px) {
             border-top-left-radius: 0;
           }
         }
         &:last-child {
-          @media (min-width: 768px) {
+          @media (min-width: 920px) {
             border-bottom-right-radius: 0;
           }
-          @media (max-width: 767px) {
+          @media (max-width: 919px) {
             border-bottom-left-radius: 0;
           }
         }
@@ -417,13 +422,13 @@ body {
           display: block;
           background: rgb(var(--color-popup-active-separator));
 
-          @media (min-width: 768px) {
+          @media (min-width: 920px) {
             left: 0;
             right: 0;
             height: 2px;
             bottom: -2px;
           }
-          @media (max-width: 767px) {
+          @media (max-width: 919px) {
             top: 0;
             bottom: 0;
             width: 2px;
@@ -492,18 +497,17 @@ body {
       & > .maplibregl-ctrl-style-popup-container {
         position: absolute;
         display: none;
-        z-index: 1000;
         background: var(--bs-body-bg);
         border-top-color: #eee;
         cursor: initial;
 
-        @media (min-width: 768px) {
+        @media (min-width: 920px) {
           top: calc(4rem + 1px);
           left: -2px;
           border-bottom-right-radius: 4px;
           border-bottom-left-radius: 4px;
         }
-        @media (max-width: 767px) {
+        @media (max-width: 919px) {
           border-top-left-radius: 4px;
           border-bottom-left-radius: 4px;
           right: 3rem;
@@ -512,6 +516,10 @@ body {
 
         & > label {
           border-bottom: 1px solid #ddd;
+
+          @media (min-width: 920px) {
+            display: none;
+          }
         }
 
         & > button {
@@ -543,7 +551,7 @@ body {
     }
 
     & .maplibregl-ctrl-style-popup-button + .maplibregl-ctrl-style-popup-button {
-      @media (min-width: 768px) {
+      @media (min-width: 920px) {
         border-top: none;
         border-left: 1px solid #ddd;
       }
@@ -553,24 +561,24 @@ body {
     }
 
     &:has(> .maplibregl-ctrl-style-popup-button:first-child.active) {
-      @media (min-width: 768px) {
+      @media (min-width: 920px) {
         border-bottom-left-radius: 0;
       }
-      @media (max-width: 767px) {
+      @media (max-width: 919px) {
         border-top-left-radius: 0;
       }
     }
     &:has(> .maplibregl-ctrl-style-popup-button:last-child.active) {
-      @media (min-width: 768px) {
+      @media (min-width: 920px) {
         border-bottom-right-radius: 0;
       }
-      @media (max-width: 767px) {
+      @media (max-width: 919px) {
         border-bottom-left-radius: 0;
       }
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 919px) {
     & > button {
       border-radius: 4px;
       box-shadow: 0 0 0 2px rgba(var(--color-style), .4);
@@ -598,10 +606,10 @@ body {
       background: rgb(var(--color-style));
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 919px) {
       right: 1.5rem;
       flex-wrap: wrap;
-      top: 20px;
+      top: 59px;
     }
   }
 
@@ -620,10 +628,16 @@ body {
       background: rgb(var(--color-preset));
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 919px) {
       margin-right: 1rem;
       right: 1.5rem;
-      top: -39px;
+      top: 0;
+    }
+  }
+
+  & .maplibregl-ctrl-style-toggle {
+    @media (min-width: 920px) {
+      display: none;
     }
   }
 }
@@ -638,7 +652,7 @@ body {
 
 .maplibregl-ctrl-group.maplibregl-ctrl-date {
   display: none;
-  margin-left: 4rem;
+  margin-left: 5rem;
 
   &.show {
     display: block;
@@ -648,7 +662,10 @@ body {
   display: inline-block;
 }
 .maplibregl-ctrl-group.maplibregl-ctrl-date .date-input {
-  width: 200px;
+  min-width: 100px;
+  max-width: 200px;
+  width: auto;
+  field-sizing: content;
   padding: 0;
   margin: 0 .3rem 0 0;
   vertical-align: middle;

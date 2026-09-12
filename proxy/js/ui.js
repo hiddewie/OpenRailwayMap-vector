@@ -1640,7 +1640,7 @@ class StyleControl {
     const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
     const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
-    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
+    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle', this._container);
     container.onclick = () => {
       styleContainer.classList.toggle('active')
       presetContainer.classList.toggle('active')
@@ -1662,7 +1662,7 @@ class StyleControl {
         }
       }
 
-      const buttonLabel = createDomElement('label', 'd-none d-md-inline-block', button);
+      const buttonLabel = createDomElement('label', '', button);
       buttonLabel.innerText = name
 
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
@@ -1670,7 +1670,7 @@ class StyleControl {
 
       const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
 
-      const buttonLabelSelectionContainer = createDomElement('label', 'd-md-none', selectionContainer);
+      const buttonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
       buttonLabelSelectionContainer.innerText = name
 
       this.styleButtons[key] = {};
@@ -1704,7 +1704,7 @@ class StyleControl {
       }
     }
 
-    const presetButtonLabel = createDomElement('label', 'd-none d-md-inline-block', presetButton);
+    const presetButtonLabel = createDomElement('label', '', presetButton);
     presetButtonLabel.innerText = 'Presets'
 
     const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
@@ -1712,7 +1712,7 @@ class StyleControl {
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
 
-    const presetButtonLabelSelectionContainer = createDomElement('label', 'd-md-none', selectionContainer);
+    const presetButtonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
     presetButtonLabelSelectionContainer.innerText = 'Presets'
 
     Object.entries(this.options.presets).forEach(([preset, {name, style}]) => {
