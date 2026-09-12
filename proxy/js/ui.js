@@ -564,7 +564,6 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    hasConfiguration: true,
     styleGlobalState: {
       tracks: 'usage',
       stations: 'station',
@@ -580,7 +579,6 @@ const knownStyles = {
   },
   speed: {
     name: 'Speed',
-    hasConfiguration: false,
     styleGlobalState: {
       tracks: 'speed',
       stations: 'none',
@@ -596,7 +594,6 @@ const knownStyles = {
   },
   signals: {
     name: 'Train protection',
-    hasConfiguration: false,
     styleGlobalState: {
       tracks: 'train_protection',
       stations: 'none',
@@ -612,7 +609,6 @@ const knownStyles = {
   },
   electrification: {
     name: 'Electrification',
-    hasConfiguration: true,
     styleGlobalState: {
       tracks: 'electrification',
       stations: 'none',
@@ -628,7 +624,6 @@ const knownStyles = {
   },
   track: {
     name: 'Track',
-    hasConfiguration: true,
     styleGlobalState: {
       tracks: 'track',
       stations: 'none',
@@ -644,7 +639,6 @@ const knownStyles = {
   },
   operator: {
     name: 'Operator',
-    hasConfiguration: false,
     styleGlobalState: {
       tracks: 'operator',
       stations: 'operator',
@@ -660,7 +654,6 @@ const knownStyles = {
   },
   route: {
     name: 'Routes',
-    hasConfiguration: false,
     styleGlobalState: {
       tracks: 'routes',
       stations: 'station',
@@ -1633,7 +1626,7 @@ class StyleControl {
         .map(({key, defaultValue}) => [key, options.initialSelection[key] ?? defaultValue])
     );
     this.currentPreset = Object.entries(this.options.presets)
-      .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
+      .find(([preset, {name, styleGlobalState}]) =>
         Object.keys(styleGlobalState)
           .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
       )
@@ -1707,7 +1700,7 @@ class StyleControl {
     presetButtonIcon.title = 'Presets'
 
     const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
-    Object.entries(this.options.presets).forEach(([preset, {name, hasConfiguration, styleGlobalState}]) => {
+    Object.entries(this.options.presets).forEach(([preset, {name, styleGlobalState}]) => {
       const presetActive = this.currentPreset === preset;
       const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
       valueButton.onclick = e => {
@@ -1809,7 +1802,7 @@ class StyleControl {
     updateGlobalMapState(mapGlobalStateChanges);
 
     const newPreset = Object.entries(this.options.presets)
-      .find(([preset, {name, hasConfiguration, styleGlobalState}]) =>
+      .find(([preset, {name, styleGlobalState}]) =>
         Object.keys(styleGlobalState)
           .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
       )
