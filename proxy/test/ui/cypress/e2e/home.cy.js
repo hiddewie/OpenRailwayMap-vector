@@ -6,6 +6,8 @@ describe('home page', () => {
   it('switching style (light mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
+    cy.contains('.maplibregl-ctrl-preset button', 'Presets').click()
+
     cy.contains('.maplibregl-ctrl-preset button', 'Infrastructure').click()
     cy.url().should('not.include', 'style=standard')
 
@@ -72,6 +74,8 @@ describe('home page', () => {
 
     cy.wait(3000)
     cy.screenshot()
+
+    cy.contains('.maplibregl-ctrl-preset button', 'Presets').click()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Speed').click()
     cy.url().should('include', 'style=speed')
