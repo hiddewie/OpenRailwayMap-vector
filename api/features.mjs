@@ -133,6 +133,9 @@ const railwayLineFeatures = {
     rubber_tires: {
       name: 'Rubber-tyred',
     },
+    workrules: {
+      name: 'Workrules',
+    },
     preferred_direction: {
       name: 'Preferred direction',
     },
@@ -580,6 +583,9 @@ const features = {
       },
       rubber_tires: {
         name: 'Rubber-tyred',
+      },
+      workrules: {
+        name: 'Workrules',
       },
       preferred_direction: {
         name: 'Preferred direction',
