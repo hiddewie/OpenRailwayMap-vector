@@ -3,13 +3,13 @@
  * but there is no wait to make cypress wait for map load events.
  */
 describe('home page', () => {
-  it('switching style (light mode)', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024&')
+  it('switching presets (light mode)', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
 
     cy.contains('.maplibregl-ctrl-preset button', 'Presets').click()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Infrastructure').click()
-    cy.url().should('not.include', 'tracks=usage')
+    cy.url().should('not.include', 'tracks=')
 
     cy.wait(3000)
     cy.screenshot()
@@ -62,7 +62,288 @@ describe('home page', () => {
     cy.screenshot()
   })
 
-  it('switching style (dark mode)', () => {
+  it('switching style, tracks', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Usage')
+      .click()
+
+    cy.url().should('not.include', 'tracks=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Speed')
+      .click()
+
+    cy.url().should('include', 'tracks=speed')
+
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Train protection')
+      .click()
+
+    cy.url().should('include', 'tracks=train_protection')
+
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Electrification')
+      .click()
+
+    cy.url().should('include', 'tracks=electrification')
+
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Track')
+      .click()
+
+    cy.url().should('include', 'tracks=track')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Operator')
+      .click()
+
+    cy.url().should('include', 'tracks=operator')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Routes')
+      .click()
+
+    cy.url().should('include', 'tracks=routes')
+  })
+
+  it('switching style, operating sites', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+      .contains('button', 'Modality')
+      .click()
+
+    cy.url().should('not.include', 'stations=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+      .contains('button', 'Operator')
+      .click()
+
+    cy.url().should('include', 'stations=operator')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('include', 'stations=none')
+  })
+
+  it('switching style, platforms', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Platforms')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Platforms')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('not.include', 'platforms=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Platforms')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('include', 'platforms=none')
+  })
+
+  it('switching style, switches', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Switches')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Switches')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('not.include', 'switches=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Switches')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('include', 'switches=none')
+  })
+
+  it('switching style, signals', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Speed')
+      .click()
+
+    cy.url().should('include', 'signals=speed')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Train protection')
+      .click()
+
+    cy.url().should('include', 'signals=signals')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Electrification')
+      .click()
+
+    cy.url().should('include', 'signals=electrification')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('not.include', 'signals=')
+  })
+
+  it('switching style, points of interest', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Standard')
+      .click()
+
+    cy.url().should('not.include', 'pois=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Electrification')
+      .click()
+
+    cy.url().should('include', 'pois=electrification')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Signals')
+      .click()
+
+    cy.url().should('include', 'pois=signals')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Operator')
+      .click()
+
+    cy.url().should('include', 'pois=operator')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('include', 'pois=none')
+  })
+
+  it('switching style, turntables', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('not.include', 'turntables=')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('include', 'turntables=none')
+  })
+
+  it('switching style, turntables', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('include', 'boxes=plain')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')
+      .contains('button', 'Operator')
+      .click()
+
+    cy.url().should('include', 'boxes=operator')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('not.include', 'boxes=')
+  })
+
+  it('switching style, substations', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Substations')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Substations')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('include', 'substations=plain')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Substations')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('not.include', 'substations=')
+  })
+
+  it('switching style, catenaries', () => {
+    cy.visit('/#view=9.88/52.5134/13.4024')
+
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Catenaries')
+    button.click()
+    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Catenaries')
+      .contains('button', 'Plain')
+      .click()
+
+    cy.url().should('include', 'catenaries=plain')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Catenaries')
+      .contains('button', 'Operator')
+      .click()
+
+    cy.url().should('include', 'catenaries=operator')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Catenaries')
+      .contains('button', 'None')
+      .click()
+
+    cy.url().should('not.include', 'catenaries=')
+  })
+
+  it('switching presets (dark mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
     cy.get('.maplibregl-ctrl-configuration').click()
@@ -73,7 +354,7 @@ describe('home page', () => {
 
     cy.get('#configuration-backdrop .btn-close').click()
     cy.contains('Map configuration').should('not.be.visible')
-    cy.url().should('not.include', 'tracks=usage')
+    cy.url().should('not.include', 'tracks=')
 
     cy.wait(3000)
     cy.screenshot()
