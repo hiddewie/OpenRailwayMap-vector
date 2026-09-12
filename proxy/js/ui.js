@@ -560,11 +560,10 @@ function removeDomElement(node) {
 const globalMinZoom = 1;
 const globalMaxZoom = 20;
 
-// TODO rename styleGlobalState
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    styleGlobalState: {
+    style: {
       tracks: 'usage',
       stations: 'station',
       pois: 'standard',
@@ -579,7 +578,7 @@ const knownStyles = {
   },
   speed: {
     name: 'Speed',
-    styleGlobalState: {
+    style: {
       tracks: 'speed',
       stations: 'none',
       pois: 'none',
@@ -594,7 +593,7 @@ const knownStyles = {
   },
   signals: {
     name: 'Train protection',
-    styleGlobalState: {
+    style: {
       tracks: 'train_protection',
       stations: 'none',
       pois: 'signals',
@@ -609,7 +608,7 @@ const knownStyles = {
   },
   electrification: {
     name: 'Electrification',
-    styleGlobalState: {
+    style: {
       tracks: 'electrification',
       stations: 'none',
       pois: 'electrification',
@@ -624,7 +623,7 @@ const knownStyles = {
   },
   track: {
     name: 'Track',
-    styleGlobalState: {
+    style: {
       tracks: 'track',
       stations: 'none',
       pois: 'none',
@@ -639,7 +638,7 @@ const knownStyles = {
   },
   operator: {
     name: 'Operator',
-    styleGlobalState: {
+    style: {
       tracks: 'operator',
       stations: 'operator',
       pois: 'operator',
@@ -654,7 +653,7 @@ const knownStyles = {
   },
   route: {
     name: 'Routes',
-    styleGlobalState: {
+    style: {
       tracks: 'routes',
       stations: 'station',
       pois: 'none',
@@ -917,7 +916,7 @@ function determineParametersFromHash(hash) {
  * Backwards conpatibility for existing links
  */
 function updateStyleParameter(hashObject) {
-  const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].styleGlobalState : {};
+  const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].style : {};
   const hashStyle = Object.fromEntries(
     styleElements
       .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
@@ -1626,9 +1625,9 @@ class StyleControl {
         .map(({key, defaultValue}) => [key, options.initialSelection[key] ?? defaultValue])
     );
     this.currentPreset = Object.entries(this.options.presets)
-      .find(([preset, {name, styleGlobalState}]) =>
-        Object.keys(styleGlobalState)
-          .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
+      .find(([preset, {name, style}]) =>
+        Object.keys(style)
+          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
       )
       ?.[0] ?? null;
     this.styleButtons = {}
@@ -1716,16 +1715,16 @@ class StyleControl {
     const presetButtonLabelSelectionContainer = createDomElement('label', 'd-md-none', selectionContainer);
     presetButtonLabelSelectionContainer.innerText = 'Presets'
 
-    Object.entries(this.options.presets).forEach(([preset, {name, styleGlobalState}]) => {
+    Object.entries(this.options.presets).forEach(([preset, {name, style}]) => {
       const presetActive = this.currentPreset === preset;
       const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
       valueButton.onclick = e => {
         e.stopPropagation();
 
         const changes = Object.fromEntries(
-          Object.keys(styleGlobalState)
-            .filter(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] !== styleGlobalState[key])
-            .map(key => [key, styleGlobalState[key]])
+          Object.keys(style)
+            .filter(key => this.currentStyle[key] && style[key] && this.currentStyle[key] !== style[key])
+            .map(key => [key, style[key]])
         );
 
         if (Object.keys(changes).length > 0) {
@@ -1772,7 +1771,7 @@ class StyleControl {
 
     const preset = this.options.presets;
     if (selectedPreset && preset[selectedPreset]) {
-      this.selectStyleOptions(preset[selectedPreset].styleGlobalState)
+      this.selectStyleOptions(preset[selectedPreset].style)
     }
   }
 
@@ -1811,9 +1810,9 @@ class StyleControl {
     updateGlobalMapState(mapGlobalStateChanges);
 
     const newPreset = Object.entries(this.options.presets)
-      .find(([preset, {name, styleGlobalState}]) =>
-        Object.keys(styleGlobalState)
-          .every(key => this.currentStyle[key] && styleGlobalState[key] && this.currentStyle[key] === styleGlobalState[key])
+      .find(([preset, {name, style}]) =>
+        Object.keys(style)
+          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
       )
       ?.[0] ?? null;
 
