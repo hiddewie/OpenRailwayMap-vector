@@ -3,10 +3,10 @@
  * but there is no wait to make cypress wait for map load events.
  */
 describe('home page', () => {
-  it('switching layers (light mode)', () => {
+  it('switching style (light mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
-    cy.contains('.maplibregl-ctrl-style button', 'Infrastructure').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Infrastructure').click()
     cy.url().should('not.include', 'style=standard')
 
     cy.wait(3000)
@@ -19,38 +19,38 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Speed').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Train protection').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Electrification').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Track').click()
     cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Operator').click()
     cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
     cy.screenshot()
   })
 
-  it('switching layers (dark mode)', () => {
+  it('switching style (dark mode)', () => {
     cy.visit('/#view=9.88/52.5134/13.4024&')
 
     cy.get('.maplibregl-ctrl-configuration').click()
@@ -73,31 +73,31 @@ describe('home page', () => {
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Speed').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Speed').click()
     cy.url().should('include', 'style=speed')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Train protection').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Train protection').click()
     cy.url().should('include', 'style=signals')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Electrification').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
     cy.url().should('include', 'style=electrification')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Track').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Track').click()
     cy.url().should('include', 'style=track')
 
     cy.wait(3000)
     cy.screenshot()
 
-    cy.contains('.maplibregl-ctrl-style button', 'Operator').click()
+    cy.contains('.maplibregl-ctrl-preset button', 'Operator').click()
     cy.url().should('include', 'style=operator')
 
     cy.wait(3000)
