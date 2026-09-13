@@ -14,7 +14,8 @@ class WikidataAPI:
     async def wikidata_image(self, *, id):
         file_name, error = await self.wikidata_image_file(id)
         if error:
-            return Response(content=error, status_code=404, media_type='text/plain')
+            return None
+
         return await self.wikimedia_commons_image(
             file_name=file_name,
             base_view_url=f'https://www.wikidata.org/wiki/{id}',

@@ -41,7 +41,9 @@ class FeatureAPI:
             wikidata_ids = catalog_data['wikidata'] if type(catalog_data['wikidata']) == list else [catalog_data['wikidata']]
             for id in wikidata_ids:
                 try:
-                    images.append(await self.wikidata_api.wikidata_image(id=id))
+                    image = await self.wikidata_api.wikidata_image(id=id)
+                    if image:
+                        images.append(image)
                 except Exception as error:
                     logger.error(f'Error while fetching Wikidata for {catalog_data['wikidata']}', error)
 
