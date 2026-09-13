@@ -32,24 +32,26 @@ class FeatureAPI:
 
     async def __call__(self, *, source, layer, id, lang=None):
         catalog_data = await self.feature_catalog_data(f'{source}-{layer}', id, lang)
+        if not catalog_data:
+            return None
+
         images = []
 
-        if catalog_data:
-            if 'wikidata' in catalog_data and catalog_data['wikidata']:
-                wikidata_ids = catalog_data['wikidata'] if type(catalog_data['wikidata']) == list else [catalog_data['wikidata']]
-                for id in wikidata_ids:
-                    try:
-                        images.append(await self.wikidata_api.wikidata_image(id=id))
-                    except Exception as error:
-                        logger.error(f'Error while fetching Wikidata for {catalog_data['wikidata']}', error)
+        if 'wikidata' in catalog_data and catalog_data['wikidata']:
+            wikidata_ids = catalog_data['wikidata'] if type(catalog_data['wikidata']) == list else [catalog_data['wikidata']]
+            for id in wikidata_ids:
+                try:
+                    images.append(await self.wikidata_api.wikidata_image(id=id))
+                except Exception as error:
+                    logger.error(f'Error while fetching Wikidata for {catalog_data['wikidata']}', error)
 
-            if 'wikimedia_commons_file' in catalog_data and catalog_data['wikimedia_commons_file']:
-                wikimedia_commons_files = catalog_data['wikimedia_commons_file'] if type(catalog_data['wikimedia_commons_file']) == list else [catalog_data['wikimedia_commons_file']]
-                for file in wikimedia_commons_files:
-                    try:
-                        images.append(await self.wikidata_api.wikimedia_commons_file(file_name=file))
-                    except Exception as error:
-                        logger.error(f'Error while fetching Wikimedia Commons file for {catalog_data['wikimedia_commons_file']}', error)
+        if 'wikimedia_commons_file' in catalog_data and catalog_data['wikimedia_commons_file']:
+            wikimedia_commons_files = catalog_data['wikimedia_commons_file'] if type(catalog_data['wikimedia_commons_file']) == list else [catalog_data['wikimedia_commons_file']]
+            for file in wikimedia_commons_files:
+                try:
+                    images.append(await self.wikidata_api.wikimedia_commons_file(file_name=file))
+                except Exception as error:
+                    logger.error(f'Error while fetching Wikimedia Commons file for {catalog_data['wikimedia_commons_file']}', error)
 
         return {
             'properties': catalog_data,
