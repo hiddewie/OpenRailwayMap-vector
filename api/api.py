@@ -2,6 +2,7 @@ import contextlib
 import os
 from typing import Annotated
 import sys
+import logging
 
 import asyncpg
 from fastapi import FastAPI, Query, Response, HTTPException
@@ -22,6 +23,8 @@ DEFAULT_HTTP_HEADERS = {
   'User-Agent': f'OpenRailwayMap API (https://openrailwaymap.app), httpx {httpx.__version__}, Python {sys.version}'
 }
 
+logger = logging.getLogger(__name__)
+
 async def set_connection_codecs(conn):
     await conn.set_builtin_type_codec('hstore', codec_name='pg_contrib.hstore')
 
@@ -36,22 +39,22 @@ async def lifespan(app):
             max_size=20,
             init=set_connection_codecs,
     ) as pool:
-        print('Connected to database')
+        logger.info('Connected to database')
         app.state.database = pool
 
         async with httpx.AsyncClient(timeout=3.0, headers=DEFAULT_HTTP_HEADERS) as http_client:
-            print('Created HTTP client')
+            logger.info('Created HTTP client')
             app.state.http_client = http_client
 
             yield
 
             app.state.http_client = None
 
-            print('Closed HTTP client')
+            logger.info('Closed HTTP client')
 
         app.state.database = None
 
-    print('Disconnected from database')
+    logger.info('Disconnected from database')
 
 
 app = FastAPI(
@@ -144,7 +147,7 @@ async def feature_source_layer(
         id: str,
         lang: Annotated[str | None, Query()] = None,
 ):
-    api = FeatureAPI(app.state.database)
+    api = FeatureAPI(app.state.database, WikidataAPI(app.state.http_client))
     response = await api(source=source, layer=layer, id=id, lang=lang)
 
     if response is None:

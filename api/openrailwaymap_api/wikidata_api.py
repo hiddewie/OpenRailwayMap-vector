@@ -15,12 +15,20 @@ class WikidataAPI:
         file_name, error = await self.wikidata_image_file(id)
         if error:
             return Response(content=error, status_code=404, media_type='text/plain')
-        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://www.wikidata.org/wiki/{id}')
+        return await self.wikimedia_commons_image(
+            file_name=file_name,
+            base_view_url=f'https://www.wikidata.org/wiki/{id}',
+            description=f'Image ${file_name} from Wikidata {id}',
+        )
 
     async def wikimedia_commons_file(self, *, file_name):
-        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}')
+        return await self.wikimedia_commons_image(
+            file_name=file_name,
+            base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}',
+            description=f'Image ${file_name} from Wikimedia Commons',
+        )
 
-    async def wikimedia_commons_image(self, *, file_name, base_view_url):
+    async def wikimedia_commons_image(self, *, file_name, base_view_url, description):
         sanitized_name = file_name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
@@ -28,9 +36,10 @@ class WikidataAPI:
 
         view_url = f"{base_view_url}#/media/File:{sanitized_name}"
         attribution, license, license_url, image_description = await self.wikimedia_file_attribution(file_name)
+        full_description = f'{description}: {image_description}' if image_description else description
         return {
             'file_name': sanitized_name,
-            'description': image_description,
+            'description': full_description,
             'view_url': view_url,
             'thumbnail_url': thumbnail_url,
             'attribution': attribution,
