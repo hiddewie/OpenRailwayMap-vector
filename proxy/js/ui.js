@@ -85,8 +85,7 @@ window.addEventListener('languagechange', () => {
 
   const localization = configuration.localization ?? defaultConfiguration.localization;
   if (localization === 'automatic') {
-    // TODO process language in source
-    onStyleChange();
+    languageControl.selectLanguage(configuredLanguage());
   }
 })
 
@@ -1078,18 +1077,18 @@ function onStationLabelChange(stationlabel) {
 
 function disableLocalization() {
   updateConfiguration('localization', 'disabled');
-  onStyleChange();
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function automaticLocalization() {
   updateConfiguration('localization', 'automatic');
-  onStyleChange();
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
-  onStyleChange();
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function configureElectrificationRailwayLine(electrification) {
@@ -1827,6 +1826,55 @@ class StyleControl {
 
   getCurrentPreset() {
     return this.currentPreset;
+  }
+}
+
+class LanguageControl {
+  constructor(options) {
+    this.selectedLanguage = options.initialLanguage;
+  }
+
+  onAdd(map) {
+    this._map = map;
+  }
+
+  onRemove() {
+    this._map = undefined;
+  }
+
+  selectLanguage(language) {
+    if (!this._map) {
+      return;
+    }
+
+    if (language === this.selectedLanguage) {
+      return;
+    }
+
+    const style = this._map.getStyle();
+    if (!style) {
+      return;
+    }
+
+    const sourcesWithMetadata = Object.entries(style.sources)
+      .filter(([_, source]) => source.type === 'vector' && source.url && ((source.metadata ?? {}).supports ?? []).includes('language'))
+      .map(([id, _]) => id)
+      .forEach(sourceId => {
+        const source = this._map.getSource(sourceId);
+        if (source) {
+          const parsedUrl = new URL(source.url)
+
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          } else {
+            parsedUrl.searchParams.delete('lang')
+          }
+
+          source.setUrl(parsedUrl.href);
+        }
+      })
+
+    this.selectedLanguage = language;
   }
 }
 
@@ -2691,6 +2739,9 @@ const geolocateControl = new maplibregl.GeolocateControl({
   showAccuracyCircle: false,
   showUserLocation: true,
 })
+const languageControl = new LanguageControl({
+  initialLanguage: configuredLanguage(),
+});
 
 class WakeLock {
   constructor() {
@@ -2728,6 +2779,7 @@ map.addControl(navigationControl);
 map.addControl(geolocateControl);
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
+map.addControl(languageControl);
 
 const searchControl = new SearchControl()
 map.addControl(searchControl, 'top-left');
