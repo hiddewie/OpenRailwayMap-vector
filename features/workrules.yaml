@@ -14,11 +14,11 @@ workrules:
 
   # --- CA --- #
 
-  - name: 'CROR'
+  - name: 'Canadian Rail Operating Rules'
     country: 'CA'
     value: 'CA-CROR'
 
-  - name: 'CROR'
+  - name: 'Canadian Rail Operating Rules'
     country: 'CA'
     value: 'CA:CROR'
 
