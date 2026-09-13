@@ -297,7 +297,7 @@ The file contains a list of workrules. Each workrule has a name, a country and a
 Add a new entry at a certain place in the list. For example:
 ```yaml
 features:
-  - name: 'CROR'
+  - name: 'Canadian Rail Operating Rules'
     country: 'CA'
     value: 'CA:CROR'
 ```
