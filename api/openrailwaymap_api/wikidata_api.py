@@ -14,28 +14,40 @@ class WikidataAPI:
     async def wikidata_image(self, *, id):
         file_name, error = await self.wikidata_image_file(id)
         if error:
-            return Response(content=error, status_code=404, media_type='text/plain')
-        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://www.wikidata.org/wiki/{id}')
+            return None
+
+        return await self.wikimedia_commons_image(
+            file_name=file_name,
+            base_view_url=f'https://www.wikidata.org/wiki/{id}',
+            description=f'Image {file_name} from Wikidata {id}',
+        )
 
     async def wikimedia_commons_file(self, *, file_name):
-        return await self.wikimedia_commons_image(file_name=file_name, base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}')
+        return await self.wikimedia_commons_image(
+            file_name=file_name,
+            base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}',
+            description=f'Image {file_name} from Wikimedia Commons',
+        )
 
-    async def wikimedia_commons_image(self, *, file_name, base_view_url):
+    async def wikimedia_commons_image(self, *, file_name, base_view_url, description):
         sanitized_name = file_name.replace(' ', '_')
         name_hash = hashlib.md5(sanitized_name.encode()).hexdigest()
 
         thumbnail_url = f"https://upload.wikimedia.org/wikipedia/commons/thumb/{name_hash[0:1]}/{name_hash[0:2]}/{sanitized_name}/330px-{sanitized_name}"
 
         view_url = f"{base_view_url}#/media/File:{sanitized_name}"
-        attribution, license, license_url, image_description = await self.wikimedia_file_attribution(file_name)
+        attribution, license, license_url, image_description, width, height = await self.wikimedia_file_metadata(file_name)
+        full_description = f'{description}: {image_description}' if image_description else description
         return {
             'file_name': sanitized_name,
-            'description': image_description,
+            'description': full_description,
             'view_url': view_url,
             'thumbnail_url': thumbnail_url,
             'attribution': attribution,
             'license': license,
             'license_url': license_url,
+            'width': width,
+            'height': height,
         }
 
     async def wikidata_image_file(self, id):
@@ -73,27 +85,31 @@ class WikidataAPI:
 
         return best_statement['value']['content'], None
 
-    async def wikimedia_file_attribution(self, file_name):
+    async def wikimedia_file_metadata(self, file_name):
         url = "https://www.wikidata.org/w/api.php"
         params = {
             'action': 'query',
             'prop': 'imageinfo',
-            'iiprop': 'extmetadata',
+            'iiprop': 'extmetadata|size',
             'titles': f'File:{file_name}',
             'format': 'json',
         }
 
         response = await self.http_client.get(url, params=params)
         if not response:
-            return None, None, None, None
+            return None, None, None, None, None, None
         if response.status_code != 200:
-            return None, None, None, None
+            return None, None, None, None, None, None
 
         data = response.json()
 
+        imageinfo = self.dig(data, ['query', 'pages', '-1', 'imageinfo', 0])
+        width = self.dig(imageinfo, ['width'])
+        height = self.dig(imageinfo, ['height'])
+
         metadata = self.dig(data, ['query', 'pages', '-1', 'imageinfo', 0, 'extmetadata'])
         if not metadata:
-            return None, None, None, None
+            return None, None, None, None, width, height
 
         attribution = self.dig(metadata, ['Attribution', 'value'])
         artist = self.dig(metadata, ['Artist', 'value'])
@@ -106,7 +122,9 @@ class WikidataAPI:
             strip_tags(resolved_attribution), \
                 self.dig(metadata, ['LicenseShortName', 'value']), \
                 self.dig(metadata, ['LicenseUrl', 'value']), \
-                self.dig(metadata, ['ImageDescription', 'value'])
+                self.dig(metadata, ['ImageDescription', 'value']), \
+                width, \
+                height
 
     def dig(self, item, path):
         if not item:

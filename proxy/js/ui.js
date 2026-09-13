@@ -2911,12 +2911,15 @@ function popupContent(feature, abortController) {
   const propertiesFromView = featureCatalog.view;
   const properties$ = propertiesFromView
     ? fetchFeatureProperties(propertiesFromView)
-    : Promise.resolve(feature.properties);
+    : Promise.resolve({
+      properties: feature.properties,
+      images: []
+    });
 
   const popupContainer = createDomElement('div', 'loading');
 
   properties$
-    .then(properties => {
+    .then(({properties, images}) => {
       const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
       const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
@@ -3013,75 +3016,54 @@ function popupContent(feature, abortController) {
       })
 
       // Images are not output as properties
-      if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
+      if (images || properties.image) {
         const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
-        // Reused for both WikiData and WikiMedia Commons images
-        const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
+        (images ?? []).forEach(image => {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
           const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-          popupImage.style.display = 'none' // Do not display images that cannot load
-          popupImage.onload = () => popupImage.style.display = 'block'
+          if (image.width && image.height) {
+            // If image size information is available, set it on the image to reduce popup resizing
+            popupImage.style.width = '240px';
+            popupImage.style.height = `${240 * image.height / image.width}px`;
+          } else {
+            popupImage.style.display = 'none' // Do not display images that cannot load
+            popupImage.onload = () => popupImage.style.display = 'block'
+          }
 
-          fetch(imageMetadataUrl, {
-            signal: abortController.signal,
-          })
-            .then(response => response.json())
-            .then(data => {
-              const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
+          popupImage.src = image.thumbnail_url
+          popupImage.title = image.description
+          popupImage.alt = image.description
 
-              popupImage.src = data.thumbnail_url
-              popupImage.title = description
-              popupImage.alt = description
+          popupImageLink.href = image.view_url
+          popupImageLink.title = image.description
 
-              popupImageLink.href = data.view_url
-              popupImageLink.title = description
+          if (image.license || image.attribution) {
+            const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
+            const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
+            popupImageAttributionCopyright.innerText = '©';
+            popupImageAttributionCopyright.onclick = e => {
+              e.preventDefault();
+              e.stopPropagation();
+              popupImageAttribution.classList.toggle('collapsed');
+            }
 
-              if (data.license || data.attribution) {
-                const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
-                const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
-                popupImageAttributionCopyright.innerText = '©';
-                popupImageAttributionCopyright.onclick = e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  popupImageAttribution.classList.toggle('collapsed');
-                }
-
-                if (data.license) {
-                  const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
-                  if (data.license_url) {
-                    popupImageAttributionLicense.href = data.license_url;
-                    popupImageAttributionLicense.target = '_blank';
-                  }
-                  popupImageAttributionLicense.innerText = data.license;
-                }
-                if (data.attribution) {
-                  const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
-                  popupImageAttributionAttribution.innerText = data.attribution;
-                }
+            if (image.license) {
+              const popupImageAttributionLicense = createDomElement(image.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
+              if (image.license_url) {
+                popupImageAttributionLicense.href = image.license_url;
+                popupImageAttributionLicense.target = '_blank';
               }
-            })
-            .catch(err => {
-              if (!abortController.signal.aborted) {
-                console.error('Error while fetching popup image', err);
-              } else {
-                // Ignore aborted request errors
-              }
-            });
-        }
-
-        if (properties.wikidata) {
-          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-          popupImageLink.target = '_blank'
-
-          fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
-        }
-
-        if (properties.wikimedia_commons_file) {
-          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-          popupImageLink.target = '_blank'
-
-          fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
-        }
+              popupImageAttributionLicense.innerText = image.license;
+            }
+            if (image.attribution) {
+              const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
+              popupImageAttributionAttribution.innerText = image.attribution;
+            }
+          }
+        })
 
         if (properties.image) {
           const popupImageLink = createDomElement('a', undefined, popupImageContainer);
