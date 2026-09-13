@@ -3,6 +3,7 @@ $schema: ./schema/stations.yaml
 features:
   - description: Station
     feature: station
+    highZoomPolygon: true
     example:
       label: Gd
       name: Gouda
@@ -47,25 +48,30 @@ features:
   - description: Halt
     feature: halt
     minzoom: 10
+    highZoomPolygon: true
     example:
       name: Deventer
       station_size: small
       feature: halt
       state: present
+      station: light_rail
 
   - description: Tram stop
     feature: tram_stop
     minzoom: 13
+    highZoomPolygon: true
     example:
       name: Llacuna
       count: 2
       station_size: small
       feature: tram_stop
       state: present
+      station: tram
 
   - description: Service station
     feature: service_station
     minzoom: 10
+    highZoomPolygon: true
     example:
       name: Wiederitzsch
       station_size: small
@@ -75,6 +81,7 @@ features:
   - description: Railway yard
     feature: yard
     minzoom: 8
+    highZoomPolygon: true
     example:
       label: KCM
       name: Murray
@@ -85,6 +92,7 @@ features:
   - description: Junction
     feature: junction
     minzoom: 10
+    highZoomPolygon: false
     example:
       label: Han
       name: Haanrade
@@ -95,6 +103,7 @@ features:
   - description: Spur junction
     feature: spur_junction
     minzoom: 10
+    highZoomPolygon: false
     example:
       name: Neusüdende
       station_size: small
@@ -104,6 +113,7 @@ features:
   - description: Railway site
     feature: site
     minzoom: 10
+    highZoomPolygon: false
     example:
       name: Pápateszér
       station_size: small
@@ -113,6 +123,7 @@ features:
   - description: Crossover
     feature: crossover
     minzoom: 10
+    highZoomPolygon: false
     example:
       name: Przemiarki
       station_size: small
