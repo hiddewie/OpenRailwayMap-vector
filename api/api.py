@@ -102,22 +102,6 @@ async def milestone(
     return await api(ref=ref, position=position, limit=limit)
 
 
-@app.get("/api/wikidata/{id}")
-async def wikidata(
-        id: str
-):
-    api = WikidataAPI(app.state.http_client)
-    return await api.wikidata_image(id=id)
-
-
-@app.get("/api/wikimedia/{file_name}")
-async def wikimedia(
-        file_name: str
-):
-    api = WikidataAPI(app.state.http_client)
-    return await api.wikimedia_commons_file(file_name=file_name)
-
-
 @app.get("/api/route/{osm_id}")
 async def route(
         osm_id: int

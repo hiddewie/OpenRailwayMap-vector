@@ -420,39 +420,6 @@ Content-Type: application/geo+json
 jsonpath "$.type" == "FeatureCollection"
 jsonpath "$.features" count == 0
 
-# Non existing WikiData image
-GET {{base_url}}/wikidata/Q0
-HTTP 404
-Content-Type: text/plain; charset=utf-8
-[Asserts]
-body == "Response from Wikidata API had status 400"
-
-# WikiData image with metadata
-GET {{base_url}}/wikidata/Q660045
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.file_name" == "2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.description" == "Image 2012-03-06 Berlin Ostkreuz vom Treptower.jpg from Wikidata Q660045: Berlin, <a href=\"https://en.wikipedia.org/wiki/Ostkreuz\" class=\"extiw\" title=\"en:Ostkreuz\">Ostkreuz</a>"
-jsonpath "$.view_url" == "https://www.wikidata.org/wiki/Q660045#/media/File:2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg/330px-2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.attribution" == "Wo st 01 / Wikimedia Commons"
-jsonpath "$.license" == "CC BY-SA 3.0 de"
-jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
-
-# WikiMedia image with metadata
-GET {{base_url}}/wikimedia/U-Bahnhof%20Wuhletal.jpg
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.file_name" == "U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.description" == "Image U-Bahnhof Wuhletal.jpg from Wikimedia Commons: U-Bahnhof Wuhletal (station du métro de Berlin, Allemagne)"
-jsonpath "$.view_url" == "https://commons.wikimedia.org/wiki/File:U-Bahnhof%20Wuhletal.jpg#/media/File:U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/U-Bahnhof_Wuhletal.jpg/330px-U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.attribution" == "Molgreen, Own work"
-jsonpath "$.license" == "CC BY-SA 4.0"
-jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
-
 # Features
 GET {{base_url}}/features/features.json
 HTTP 200
