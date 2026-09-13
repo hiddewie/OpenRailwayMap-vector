@@ -7,6 +7,7 @@ const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml',
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
+const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 
@@ -132,6 +133,12 @@ const railwayLineFeatures = {
     },
     rubber_tires: {
       name: 'Rubber-tyred',
+    },
+    workrules: {
+      name: 'Workrules',
+      format: {
+        lookup: 'workrules',
+      }
     },
     preferred_direction: {
       name: 'Preferred direction',
@@ -580,6 +587,9 @@ const features = {
       },
       rubber_tires: {
         name: 'Rubber-tyred',
+      },
+      workrules: {
+        name: 'Workrules',
       },
       preferred_direction: {
         name: 'Preferred direction',
@@ -1617,6 +1627,11 @@ const features = {
         index: 1,
       },
     },
+  },
+
+  workrules: {
+    features: Object.fromEntries(workrules.workrules
+      .map(({name, country, value}) => [value, { name, country }])),
   },
 };
 
