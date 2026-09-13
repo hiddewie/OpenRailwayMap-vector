@@ -5614,6 +5614,48 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
+  - description: Señal tipo Adif de 5 focos
+    country: ES
+    icon: [ default: 'es/Adif-5' ]
+    tags:
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos
+    country: ES
+    icon: [ default: 'es/Adif-4' ]
+    tags:
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos en disposición 2+2
+    country: ES
+    icon: [ default: 'es/Adif-2+2' ]
+    tags:
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      
+  - description: Señal tipo Adif de retroceso de 4 focos
+    country: ES
+    icon: [ default: 'es/Adif-2+2-retroceso' ]
+    tags:
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos con cartelón "P"
+    country: ES
+    icon: [ default: 'es/Renfe-3+P' ]
+    tags:
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos y luz blanca
+    country: ES
+    icon: [ default: 'es/Renfe-3+1' ]
+    tags:
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # --- ETCS --- #
 
   # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
