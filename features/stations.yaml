@@ -22,7 +22,7 @@ features:
           label: HMEL
           name: Melle
           station_size: small
-      - description: disused, abandoned
+      - description: disused, abandoned, preserved
         minzoom: 10
         example:
           name: "جرسيف"
