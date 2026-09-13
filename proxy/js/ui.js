@@ -1836,9 +1836,12 @@ class LanguageControl {
 
   onAdd(map) {
     this._map = map;
+    return createDomElement('div', 'd-none');
   }
 
   onRemove() {
+    removeDomElement(this._container);
+
     this._map = undefined;
   }
 
@@ -2775,11 +2778,11 @@ geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
 geolocateControl.on('trackuserlocationend', () => wakeLock.release())
 map.addControl(dateControl);
 map.addControl(styleControl);
+map.addControl(languageControl);
 map.addControl(navigationControl);
 map.addControl(geolocateControl);
 map.addControl(new EditControl());
 map.addControl(new ConfigurationControl());
-map.addControl(languageControl);
 
 const searchControl = new SearchControl()
 map.addControl(searchControl, 'top-left');
