@@ -3024,8 +3024,14 @@ function popupContent(feature, abortController) {
           popupImageLink.target = '_blank'
 
           const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-          popupImage.style.display = 'none' // Do not display images that cannot load
-          popupImage.onload = () => popupImage.style.display = 'block'
+          if (image.width && image.height) {
+            // If image size information is available, set it on the image to reduce popup resizing
+            popupImage.style.width = '240px';
+            popupImage.style.height = `${240 * image.height / image.width}px`;
+          } else {
+            popupImage.style.display = 'none' // Do not display images that cannot load
+            popupImage.onload = () => popupImage.style.display = 'block'
+          }
 
           popupImage.src = image.thumbnail_url
           popupImage.title = image.description

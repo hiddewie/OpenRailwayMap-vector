@@ -18,14 +18,14 @@ class WikidataAPI:
         return await self.wikimedia_commons_image(
             file_name=file_name,
             base_view_url=f'https://www.wikidata.org/wiki/{id}',
-            description=f'Image ${file_name} from Wikidata {id}',
+            description=f'Image {file_name} from Wikidata {id}',
         )
 
     async def wikimedia_commons_file(self, *, file_name):
         return await self.wikimedia_commons_image(
             file_name=file_name,
             base_view_url=f'https://commons.wikimedia.org/wiki/File:{quote(file_name)}',
-            description=f'Image ${file_name} from Wikimedia Commons',
+            description=f'Image {file_name} from Wikimedia Commons',
         )
 
     async def wikimedia_commons_image(self, *, file_name, base_view_url, description):
