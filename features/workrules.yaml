@@ -1,0 +1,235 @@
+$schema: ./schema/workrules.yaml
+
+workrules:
+
+  # --- AT --- #
+
+  - name: 'Straßenbahnverordnung'
+    country: 'AT'
+    value: 'AT:StrabVO'
+
+  - name: 'Eisenbahnbau- und -betriebsverordnung'
+    country: 'AT'
+    value: 'AT:EisbBBV'
+
+  # --- CA --- #
+
+  - name: 'Canadian Rail Operating Rules'
+    country: 'CA'
+    value: 'CA-CROR'
+
+  - name: 'Canadian Rail Operating Rules'
+    country: 'CA'
+    value: 'CA:CROR'
+
+  # --- DE --- #
+
+  - name: 'Eisenbahn-Bau- und Betriebsordnung'
+    country: 'DE'
+    value: 'DE:EBO'
+
+  - name: 'BOA Baden-Württemberg'
+    country: 'DE'
+    value: 'DE-BW:BOA'
+
+  - name: 'LSeilbG'
+    country: 'DE'
+    value: 'DE-BW:LSeilbG'
+
+  - name: 'Kleinbahngesetz'
+    country: 'DE'
+    value: 'DE-BE:KleinbahnG'
+
+  - name: 'EBOA Bavaria'
+    country: 'DE'
+    value: 'DE-BY:EBOA'
+
+  - name: 'BOA Brandenburg'
+    country: 'DE'
+    value: 'DE-BB:BOA'
+
+  - name: 'BOA Bremen'
+    country: 'DE'
+    value: 'DE-HB:BOA'
+
+  - name: 'BOA Hamburg'
+    country: 'DE'
+    value: 'DE-HH:BOA'
+
+  - name: 'Hessisches Eisenbahngesetz'
+    country: 'DE'
+    value: 'DE-HE:HEisenbG'
+
+  - name: 'BOA Mecklenburg-Vorpommern'
+    country: 'DE'
+    value: 'DE-MV:BOA'
+
+  - name: 'BOA Niedersachsen'
+    country: 'DE'
+    value: 'DE-NI:BOA'
+
+  - name: 'BOA Nordrhein-Westfalen'
+    country: 'DE'
+    value: 'DE-NW:BOA'
+
+  - name: 'BOA Rheinland-Pfalz'
+    country: 'DE'
+    value: 'DE-RP:BOA'
+
+  - name: 'EBOA Saarland'
+    country: 'DE'
+    value: 'DE-SL:EBOA'
+
+  - name: 'BOA Saxony'
+    country: 'DE'
+    value: 'DE-SN:BOA'
+
+  - name: 'BOA Saxony-Anhalt'
+    country: 'DE'
+    value: 'DE-ST:BOA'
+
+  - name: 'BOA Schleswig-Holstein'
+    country: 'DE'
+    value: 'DE-SH:BOA'
+
+  - name: 'BOA Thüringen'
+    country: 'DE'
+    value: 'DE-TH:BOA'
+
+  - name: 'ABABauV SH'
+    country: 'DE'
+    value: 'DE:ABABauV SH'
+
+  - name: 'Bau- und Betriebsordnung für Pioniereisenbahnen'
+    country: 'DE'
+    value: 'DE:BOP'
+
+  - name: 'Bau- und Betriebsordnung Straßenbahnen'
+    country: 'DE'
+    value: 'DE:BOStrab'
+
+  - name: 'Eisenbahn-Bau- und Betriebsordnung für Schmalspurbahnen'
+    country: 'DE'
+    value: 'DE:ESBO'
+
+  - name: 'Albtal-Verkehrsgesellschaft mbH'
+    country: 'DE'
+    value: 'DE:AVG-SbV'
+
+  # --- DK --- #
+
+  - name: 'Operationelle Regler for Fjernbanen'
+    country: 'DK'
+    value: 'DK:ORF'
+
+  - name: 'ORS'
+    country: 'DK'
+    value: 'DK:ORS'
+
+  - name: 'Sikkerhedsreglement'
+    country: 'DK'
+    value: 'DK:SR75'
+
+  # --- KR --- #
+
+  - name: '철도사업법 (Railroad Service Act)'
+    country: 'KR'
+    value: 'KR:RSA'
+
+  - name: '도시철도법 (Urban Railroad Act)'
+    country: 'KR'
+    value: 'KR:TTA'
+
+  - name: '궤도운송법 (Tramway Transportation Act)'
+    country: 'KR'
+    value: 'KR:URA'
+
+  # --- PL --- #
+
+  - name: 'REGULAMIN SIECI Województwa Dolnośląskiego Dolnośląskiej Służby Dróg i Kolei we Wrocławiu'
+    country: 'PL'
+    value: 'PL:DSDiK'
+
+  - name: 'Instrukcja o prowadzeniu ruchu pociągów Ir-1'
+    country: 'PL'
+    value: 'PL:Ir-1'
+
+  - name: 'PKM-01 Instrukcja o prowadzeniu ruchu pociągów'
+    country: 'PL'
+    value: 'PL:PKM-01'
+
+  - name: 'Regulamin przewozu przesyłek towarowych PKP LHS.'
+    country: 'PL'
+    value: 'PL:PKPLHS'
+
+  - name: 'SKM r-1 INSTRUKCJA o prowadzeniu ruchu pociągów'
+    country: 'PL'
+    value: 'PL:SKM_R-1'
+
+  - name: 'Regulamin Przewozów SKPL'
+    country: 'PL'
+    value: 'PL:SKPL'
+
+  - name: 'Regulamin przewozu osób, rzeczy i zwierząt'
+    country: 'PL'
+    value: 'PL:WKD_R-1'
+
+  # --- SE --- #
+
+  - name: 'E2'
+    country: 'SE'
+    value: 'SE:E2'
+
+  - name: 'E3'
+    country: 'SE'
+    value: 'SE:E3'
+
+  - name: 'F'
+    country: 'SE'
+    value: 'SE:F'
+
+  - name: 'H'
+    country: 'SE'
+    value: 'SE:H'
+
+  - name: 'M'
+    country: 'SE'
+    value: 'SE:M'
+
+  - name: 'R'
+    country: 'SE'
+    value: 'SE:R'
+
+  - name: 'S'
+    country: 'SE'
+    value: 'SE:S'
+
+  # --- US --- #
+
+  - name: 'CSX Transportation'
+    country: 'US'
+    value: 'US:CSX'
+
+  - name: 'General Code of Operating Rules'
+    country: 'US'
+    value: 'US:GCOR'
+
+  - name: 'Long Island Rail Road'
+    country: 'US'
+    value: 'US:LIRR'
+
+  - name: 'Metro-North Railroad'
+    country: 'US'
+    value: 'US:MNR'
+
+  - name: 'Norfolk Southern Railway'
+    country: 'US'
+    value: 'US:NS'
+
+  - name: 'Chicago Operating Rules Association'
+    country: 'US'
+    value: 'US:CORA'
+
+  - name: 'Northeast Operating Rules Advisory Committee'
+    country: 'US'
+    value: 'US:NORAC'
