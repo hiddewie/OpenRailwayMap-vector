@@ -206,14 +206,30 @@ workrules:
 
   # --- US --- #
 
-  - name: 'CSX'
+  - name: 'CSX Transportation'
     country: 'US'
     value: 'US:CSX'
 
-  - name: 'GCOR'
+  - name: 'General Code of Operating Rules'
     country: 'US'
     value: 'US:GCOR'
 
-  - name: 'NORAC'
+  - name: 'Long Island Rail Road'
+    country: 'US'
+    value: 'US:LIRR'
+
+  - name: 'Metro-North Railroad'
+    country: 'US'
+    value: 'US:MNR'
+
+  - name: 'Norfolk Southern Railway'
+    country: 'US'
+    value: 'US:NS'
+
+  - name: 'Chicago Operating Rules Association'
+    country: 'US'
+    value: 'US:CORA'
+
+  - name: 'Northeast Operating Rules Advisory Committee'
     country: 'US'
     value: 'US:NORAC'
