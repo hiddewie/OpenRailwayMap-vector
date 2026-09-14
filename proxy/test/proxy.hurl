@@ -116,6 +116,7 @@ jsonpath "$.tags[*].key" includes "railway:signal:slope:caption"
 GET {{base_url}}/style.json
 HTTP 200
 Content-Type: application/json
+Access-Control-Allow-Origin: *
 [Asserts]
 jsonpath "$.version" == 8
 jsonpath "$.name" == "OpenRailwayMap"
@@ -124,3 +125,4 @@ jsonpath "$.name" == "OpenRailwayMap"
 GET {{base_url}}/legend.json
 HTTP 200
 Content-Type: application/json
+Access-Control-Allow-Origin: *

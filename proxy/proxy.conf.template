@@ -91,18 +91,21 @@ server {
   location /style {
     root /etc/nginx/public;
     expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Access-Control-Allow-Origin "*" always;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /font {
     root /etc/nginx/public;
     expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Access-Control-Allow-Origin "*" always;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
   location /legend.json {
     root /etc/nginx/public;
     expires ${CLIENT_CACHE_TTL_ASSETS_FRESH}s;
+    add_header Access-Control-Allow-Origin "*" always;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_ASSETS_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_ASSETS_STALE}";
   }
 
@@ -145,6 +148,7 @@ server {
     proxy_set_header X-Forwarded-Proto ${PUBLIC_PROTOCOL};
     proxy_read_timeout 600;
     proxy_redirect off;
+    add_header Access-Control-Allow-Origin "*" always;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_API_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_API_STALE}";
   }
 
