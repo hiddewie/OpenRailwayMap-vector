@@ -37,6 +37,26 @@ The API has been adapted from [the OpenRailwayMap API](https://github.com/OpenRa
 
 The API documentation can be found at https://openrailwaymap.app/api.html. You can also view [the raw OpenAPI specification](proxy/api/openapi.yaml).
 
+## Overlays
+
+A GeoJSON file can be drawn on top of the map, for example a proposal for new infrastructure. Paste it into the overlay field of the configuration, or put it in the page URL as `#overlay-base64=<base64>` (URL-encoded base64 of the GeoJSON text, or of its gzip, which keeps the link short; the field does that). The overlay is part of the page URL, so links to it can be shared, and nothing needs to be hosted.
+
+Each feature names in its `layer` property the tile layer whose style it wants, and carries the properties that layer's style keys on, so it is drawn by the map's own style and looks like the tiled data, including in the popup shown when it is clicked. For example a proposed track, a station and a platform:
+
+```json
+{
+  "type": "FeatureCollection",
+  "hides": [123456, 123457],
+  "features": [
+    {"type": "Feature", "properties": {"layer": "railway_line_high", "feature": "rail", "state": "proposed", "usage": "main", "highspeed": false, "name": "New line"}, "geometry": {"type": "LineString", "coordinates": [[4.9, 52.37], [4.95, 52.38]]}},
+    {"type": "Feature", "properties": {"layer": "standard_railway_grouped_stations", "feature": "station", "state": "proposed", "station_size": "medium", "name": "New station", "label": "New station"}, "geometry": {"type": "Polygon", "coordinates": [[[4.92, 52.374], [4.93, 52.374], [4.93, 52.376], [4.92, 52.376], [4.92, 52.374]]]}},
+    {"type": "Feature", "properties": {"layer": "standard_railway_platforms", "feature": "platform", "state": "proposed"}, "geometry": {"type": "Polygon", "coordinates": [[[4.921, 52.3745], [4.929, 52.3745], [4.929, 52.3748], [4.921, 52.3748], [4.921, 52.3745]]]}}
+  ]
+}
+```
+
+The tile layers and their properties are those of the [Martin tile functions](martin/configuration.yml); `railway_line_high` (tracks), `standard_railway_grouped_stations` and `standard_railway_text_stations` (stations) and `standard_railway_platforms` are the useful ones. The optional top-level `hides` lists OSM way ids of existing tracks the overlay replaces; they are not drawn.
+
 ## Mapping presets
 
 Presets for [JOSM](https://josm.openstreetmap.de/) and [Vespucci](https://vespucci.io/) are generated for mapping assistance. The preset is available for download on https://openrailwaymap.app/preset.zip. The preset is also available directly from the [Tagging Presets register in JOSM Preferences](https://josm.openstreetmap.de/wiki/Help/Preferences/TaggingPresetPreference). [Vespucci](https://vespucci.io/help/en/Presets/) can use the same presets for mobile mapping.
