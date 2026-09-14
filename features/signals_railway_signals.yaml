@@ -5656,6 +5656,35 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Silbar
+    country: ES
+    icon: [ default: 'es/FI15A' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Silbar (anulable)
+    country: ES
+    icon: [ default: 'es/FI15Abis' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15Abis' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Proximidad a un apeadero
+    country: ES
+    icon: [ default: 'es/FI15B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI15B' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Proximidad al eje de un apeadero
+    country: ES
+    icon: [ default: 'es/FI15C' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI15C' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+
   # --- ETCS --- #
 
   # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
