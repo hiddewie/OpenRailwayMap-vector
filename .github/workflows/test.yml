@@ -1,164 +1,63 @@
 name: Test
 
 on:
-  workflow_dispatch: ~
   push:
-    branches:
-      - master
-  pull_request: ~
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref_name != 'master' }}
+  cancel-in-progress: true
 
 jobs:
-  test:
+  check:
     name: Build and test
-
-    strategy:
-      matrix:
-        runs-on:
-          - ubuntu-24.04
-          - ubuntu-24.04-arm
-      fail-fast: false
-
-    runs-on: ${{ matrix.runs-on }}
-
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v6
+      # Free the runner disk for the Nix store (as hackage-server does).
+      - uses: wimpysworld/nothing-but-nix@main
         with:
-          node-version: 24
+          hatchet-protocol: rampage
+          nix-permission-edict: true
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+      # The integration test runs the stack in a systemd-nspawn container inside
+      # the build sandbox, which needs the uid-range feature.
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            extra-experimental-features = nix-command flakes auto-allocate-uids cgroups
+            extra-system-features = uid-range
+            auto-allocate-uids = true
+            use-cgroups = true
 
-      - name: Get Date
-        id: get-date
-        shell: bash
+      - name: Build packages and hosts
         run: |
-          echo "date=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+          nix build --print-build-logs --no-link \
+            .#generated .#orm-import .#orm-martin .#orm-api \
+            .#nixosConfigurations.container-x86_64-linux.config.system.build.toplevel \
+            .#nixosConfigurations.image-x86_64-linux.config.system.build.toplevel
 
-      - name: Cache data
-        uses: actions/cache@v4
-        id: cache-data
-        with:
-          path: |
-            data/berlin.osm.pbf
-            data/filtered/berlin.osm.pbf
-          key: data-${{ steps.get-date.outputs.date }}-berlin
-          enableCrossOsArchive: true
-
-      - name: Download Berlin
-        if: ${{ steps.cache-data.outputs.cache-hit != 'true' }}
+      - name: Unit tests, schema validation, formatting
         run: |
-          curl --location --fail --output data/berlin.osm.pbf https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
+          nix build --print-build-logs --no-link \
+            .#checks.x86_64-linux.import-test \
+            .#checks.x86_64-linux.feature-test \
+            .#checks.x86_64-linux.formatting
 
-      - name: Build containers
-        uses: docker/bake-action@v6
-        with:
-          load: true
-          targets: db,import,import-test,api,martin,proxy
-          set: |
-            db.cache-from=type=gha,scope=db-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('db.cache-to=type=gha,mode=max,scope=db-{0}', runner.arch) || '' }}
-            import.cache-from=type=gha,scope=import-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('import.cache-to=type=gha,mode=max,scope=import-{0}', runner.arch) || '' }}
-            import-test.cache-from=type=gha,scope=import-test-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('import-test.cache-to=type=gha,mode=max,scope=import-test-{0}', runner.arch) || '' }}
-            api.cache-from=type=gha,scope=api-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('api.cache-to=type=gha,mode=max,scope=api-{0}', runner.arch) || '' }}
-            martin.cache-from=type=gha,scope=martin-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('martin.cache-to=type=gha,mode=max,scope=martin-{0}', runner.arch) || '' }}
-            proxy.cache-from=type=gha,scope=proxy-${{ runner.arch }}
-            ${{ github.ref_name == 'master' && format('proxy.cache-to=type=gha,mode=max,scope=proxy-{0}', runner.arch) || '' }}
-
-      - name: Start database
-        run: |
-          docker compose up --wait db
-
-      - name: Run import tests
-        run: |
-          docker compose run --rm import-test
-
-      - name: Import data
-        env:
-          OSM2PGSQL_DATAFILE: berlin.osm.pbf
-        run: |
-          docker compose run --rm --no-deps import import
-
-      - name: Start API
-        run: |
-          docker compose up --wait --no-deps api
-
-      - name: Run API tests
-        run: |
-          docker compose run --no-deps api-test
-
-      - name: Start tile server
-        run: |
-          docker compose up --wait --no-deps martin
-
-      - name: Start proxy
-        run: |
-          docker compose up --wait --no-deps proxy
-
-      - name: Run proxy tests
-        run: |
-          docker compose run --no-deps proxy-test
-
-      - name: Download preset
-        if: always()
-        run: |
-          curl -sSf -o preset.zip http://localhost:8000/preset.zip
+      - name: Integration test (NixOS container with Berlin data, API, proxy and UI test suites)
+        run: nix build --print-build-logs --no-link .#checks.x86_64-linux.container-test
 
       - name: Store preset
-        uses: actions/upload-artifact@v6
-        if: always()
+        run: |
+          nix build --no-link --print-out-paths .#generated > generated.path
+          cp "$(cat generated.path)/preset.zip" preset.zip
+      - uses: actions/upload-artifact@v4
         with:
-          name: ${{ runner.arch }}-presets
+          name: preset
           path: preset.zip
-          if-no-files-found: warn
-
-      - name: Run UI tests
-        uses: cypress-io/github-action@v7
-        with:
-          working-directory: proxy/test/ui
-          browser: firefox
-
-      - name: Store screenshots
-        uses: actions/upload-artifact@v6
-        if: always()
-        with:
-          name: ${{ runner.arch }}-screenshots
-          path: proxy/test/ui/cypress/screenshots
-          if-no-files-found: warn
-
-      - name: Print logs
-        if: always()
-        run: |
-          docker compose logs
-
-  feature-test:
-    name: Feature test
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Run feature tests
-        run: |
-          docker compose run --rm --build feature-test

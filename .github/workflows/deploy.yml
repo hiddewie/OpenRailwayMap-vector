@@ -1,0 +1,49 @@
+name: Deploy
+
+# Continuous deployment: after the tests pass on master, rebuild the
+# production host from this revision over SSH. The host is a NixOS machine
+# with this flake's `production` configuration (see nix/production.nix and
+# nix/README.md); the daily OSM data update runs on the host itself.
+#
+# Secrets: DEPLOY_HOST (hostname or IP), DEPLOY_SSH_KEY (private key for root).
+
+on:
+  workflow_run:
+    workflows: [ Test ]
+    branches: [ master ]
+    types: [ completed ]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+
+      - name: SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Build and switch
+        run: |
+          nix run nixpkgs#nixos-rebuild -- switch \
+            --flake ".#production-x86_64-linux" \
+            --target-host "root@${{ secrets.DEPLOY_HOST }}" \
+            --use-substitutes
