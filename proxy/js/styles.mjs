@@ -2930,9 +2930,13 @@ const layers = [
           ],
           'speed', speedColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
-          'routes', ['match', ['coalesce', ['get', 'route_count']],
+          'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
             turboColorMap(['get', 'route_count'], 0, 25, 0.5),
+          ],
+          'passenger_lines', ['match', ['coalesce', ['get', 'passenger_lines'], 0],
+            0, 'gray',
+            turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           colors.styles.standard.unknown,
         ],
@@ -2948,7 +2952,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'routes']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'routes', 'passenger_lines']]],
       },
       {
         id: 'railway_line_construction_proposed',
@@ -5755,7 +5759,7 @@ const makeStyle = () => ({
       default: 'none',
     },
     tracks: {
-      // Values: usage, speed, train_protection, electrification, track, operator, routes
+      // Values: usage, speed, train_protection, electrification, track, operator, routes, passenger_lines
       default: 'usage',
     },
   },

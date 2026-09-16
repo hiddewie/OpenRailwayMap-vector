@@ -54,6 +54,16 @@ const routeLegends = [
   25
 ];
 
+const passengerLineLegends = [
+  0,
+  1,
+  2,
+  3,
+  4,
+  6,
+  10,
+];
+
 const electrificationLegends = {
   voltageFrequency: [
     { legend: '> 25 kV ~', voltage: 25000, frequency: 60 },
@@ -2373,6 +2383,25 @@ const sourceLayers = {
           },
         })),
       ],
+    },
+    passenger_lines: {
+      mapState: {
+        tracks: 'passenger_lines',
+      },
+      key: [],
+      features: passengerLineLegends.map(passengerLines => ({
+        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          passenger_lines: passengerLines,
+        },
+      }))
     },
   },
   'openhistoricalmap-transport_lines': {
