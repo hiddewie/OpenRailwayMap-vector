@@ -131,6 +131,9 @@ const railwayLineFeatures = {
     highspeed: {
       name: 'High speed',
     },
+    preserved: {
+      name: 'Preserved',
+    },
     rubber_tires: {
       name: 'Rubber-tyred',
     },
@@ -603,6 +606,9 @@ const features = {
       },
       highspeed: {
         name: 'High speed',
+      },
+      preserved: {
+        name: 'Preserved',
       },
       rubber_tires: {
         name: 'Rubber-tyred',
