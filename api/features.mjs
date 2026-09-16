@@ -620,6 +620,12 @@ const features = {
       },
     },
   },
+  'openhistoricalmap-route_lines': {
+    labelProperties: [],
+    featureLinks: featureLinks.openhistoricalmap,
+    features: {},
+    properties: {}
+  },
   'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
     labelProperties: ['name'],
