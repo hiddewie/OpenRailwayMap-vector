@@ -143,6 +143,9 @@ const railwayLineFeatures = {
         lookup: 'workrules',
       }
     },
+    passenger_lines: {
+      name: 'Passenger lines',
+    },
     preferred_direction: {
       name: 'Preferred direction',
     },
@@ -596,6 +599,9 @@ const features = {
       },
       workrules: {
         name: 'Workrules',
+      },
+      passenger_lines: {
+        name: 'Passenger lines',
       },
       preferred_direction: {
         name: 'Preferred direction',
