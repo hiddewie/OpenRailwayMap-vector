@@ -2381,6 +2381,7 @@ const layers = [
         minzoom: 12,
         visibility: ['==', ['global-state', 'tracks'], 'routes'],
         filter: ['any',
+          // Exclude non-railway routes
           ...['subway', 'tram', 'light_rail', 'train']
             .map(modality => ['!=', ['get', `route_${modality}_1_name`], null]),
         ],

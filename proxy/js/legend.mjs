@@ -1214,7 +1214,7 @@ const sourceLayers = {
       key: [],
       features: [
         ...routeLegends.map(routeCount => ({
-          legend: `${routeCount} route${routeCount === 1 ? '' : 's'} (historical)`,
+          legend: `${routeCount} route${routeCount === 1 ? '' : 's'}`,
           type: 'line',
           properties: {
             route_count: routeCount,
@@ -2964,7 +2964,7 @@ const sourceLayers = {
       key: [],
       features: [
         {
-          legend: '0 routes',
+          legend: '0 routes (historical)',
           type: 'line',
           properties: {
             class: 'railway',
@@ -2995,7 +2995,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '2 routes',
+          legend: '2 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3003,7 +3003,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '3 routes',
+          legend: '3 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3011,7 +3011,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '4 routes',
+          legend: '4 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3019,7 +3019,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '6 routes',
+          legend: '6 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3028,7 +3028,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '10 routes',
+          legend: '10 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3037,7 +3037,7 @@ const sourceLayers = {
           },
         },
         {
-          legend: '16 routes',
+          legend: '16 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
@@ -3048,14 +3048,14 @@ const sourceLayers = {
           },
         },
         {
-          legend: '20 routes',
+          legend: '24 routes (historical)',
           type: 'line',
           properties: {
             route_subway_1_name: 'name',
-            route_subway_5_name: 'name',
-            route_tram_5_name: 'name',
-            route_train_5_name: 'name',
-            route_light_rail_5_name: 'name',
+            route_subway_6_name: 'name',
+            route_tram_6_name: 'name',
+            route_train_6_name: 'name',
+            route_light_rail_6_name: 'name',
           },
         },
       ],
