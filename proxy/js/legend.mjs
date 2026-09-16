@@ -1214,7 +1214,7 @@ const sourceLayers = {
       key: [],
       features: [
         ...routeLegends.map(routeCount => ({
-          legend: `${routeCount} route${routeCount == 1 ? '' : 's'}`,
+          legend: `${routeCount} route${routeCount === 1 ? '' : 's'} (historical)`,
           type: 'line',
           properties: {
             route_count: routeCount,
@@ -2957,9 +2957,6 @@ const sourceLayers = {
         },
       ],
     },
-    // Routes, see OpenHistoricalMap route_lines source
-  },
-  "openhistoricalmap-route_lines": {
     routes: {
       mapState: {
         tracks: 'routes',
@@ -2969,8 +2966,27 @@ const sourceLayers = {
         {
           legend: '0 routes',
           type: 'line',
-          properties: {},
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+          },
         },
+        // Rest of route entries, see OpenHistoricalMap route_lines source
+      ],
+    },
+  },
+  "openhistoricalmap-route_lines": {
+    routes: {
+      mapState: {
+        tracks: 'routes',
+      },
+      key: [],
+      features: [
+        // 0 routes in railway lines
         {
           legend: '1 route',
           type: 'line',
@@ -2982,6 +2998,7 @@ const sourceLayers = {
           legend: '2 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_2_name: 'name',
           },
         },
@@ -2989,6 +3006,7 @@ const sourceLayers = {
           legend: '3 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_3_name: 'name',
           },
         },
@@ -2996,6 +3014,7 @@ const sourceLayers = {
           legend: '4 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_4_name: 'name',
           },
         },
@@ -3003,6 +3022,7 @@ const sourceLayers = {
           legend: '6 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_4_name: 'name',
             route_tram_2_name: 'name',
           },
@@ -3011,6 +3031,7 @@ const sourceLayers = {
           legend: '10 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_5_name: 'name',
             route_tram_5_name: 'name',
           },
@@ -3019,6 +3040,7 @@ const sourceLayers = {
           legend: '16 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_5_name: 'name',
             route_tram_5_name: 'name',
             route_train_5_name: 'name',
@@ -3029,6 +3051,7 @@ const sourceLayers = {
           legend: '20 routes',
           type: 'line',
           properties: {
+            route_subway_1_name: 'name',
             route_subway_5_name: 'name',
             route_tram_5_name: 'name',
             route_train_5_name: 'name',
@@ -3167,7 +3190,7 @@ const sourceLayers = {
       ],
       features: [
         {
-          legend: 'Railway landuse',
+          legend: 'Railway landuse (historical)',
           type: 'polygon',
           properties: {
             class: 'landuse',

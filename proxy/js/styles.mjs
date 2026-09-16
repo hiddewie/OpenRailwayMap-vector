@@ -2117,51 +2117,8 @@ const layers = [
     ],
     [
       {
-        id: 'railway_route',
-        sourceLayer: 'route_lines',
-        minzoom: 12,
-        visibility: ['==', ['global-state', 'tracks'], 'routes'],
-        // See https://github.com/OpenHistoricalMap/ohm-deploy/blob/c9cfe3e38508d6867438fca31884b40e23a649a1/images/tiler-imposm/queries/ohm_mviews/routes_03_mv.sql, routes are available up to 6 per modality
-        color: turboColorMap(['+',
-          ['case',
-            ['!=', ['get', 'route_subway_5_name'], null], 5,
-            ['!=', ['get', 'route_subway_4_name'], null], 4,
-            ['!=', ['get', 'route_subway_3_name'], null], 3,
-            ['!=', ['get', 'route_subway_2_name'], null], 2,
-            ['!=', ['get', 'route_subway_1_name'], null], 1,
-            0
-          ],
-          ['case',
-            ['!=', ['get', 'route_tram_5_name'], null], 5,
-            ['!=', ['get', 'route_tram_4_name'], null], 4,
-            ['!=', ['get', 'route_tram_3_name'], null], 3,
-            ['!=', ['get', 'route_tram_2_name'], null], 2,
-            ['!=', ['get', 'route_tram_1_name'], null], 1,
-            0
-          ],
-          ['case',
-            ['!=', ['get', 'route_light_rail_5_name'], null], 5,
-            ['!=', ['get', 'route_light_rail_4_name'], null], 4,
-            ['!=', ['get', 'route_light_rail_3_name'], null], 3,
-            ['!=', ['get', 'route_light_rail_2_name'], null], 2,
-            ['!=', ['get', 'route_light_rail_1_name'], null], 1,
-            0
-          ],
-          ['case',
-            ['!=', ['get', 'route_train_5_name'], null], 5,
-            ['!=', ['get', 'route_train_4_name'], null], 4,
-            ['!=', ['get', 'route_train_3_name'], null], 3,
-            ['!=', ['get', 'route_train_2_name'], null], 2,
-            ['!=', ['get', 'route_train_1_name'], null], 1,
-            0
-          ],
-        ], 0, 20, 0.5),
-        width: 2,
-      },
-      {
         id: 'railway_line_historical_miniature_funicular',
         minzoom: 12,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['miniature', 'funicular']]]
@@ -2179,7 +2136,6 @@ const layers = [
       {
         id: 'railway_line_historical_disused_abandoned',
         minzoom: 11,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['disused', 'abandoned']]]
@@ -2202,13 +2158,6 @@ const layers = [
       {
         id: 'railway_line_historical_construction_proposed',
         minzoom: 10,
-        visibility: ['all',
-          ['any',
-            ['global-state', 'showConstructionInfrastructure'],
-            ['global-state', 'showProposedInfrastructure'],
-          ],
-          ['!=', ['global-state', 'tracks'], 'routes'],
-        ],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['construction', 'proposed']]],
@@ -2228,11 +2177,14 @@ const layers = [
           ['literal', present_dasharray],
         ],
         width: 1.5,
+        visibility: ['any',
+          ['global-state', 'showConstructionInfrastructure'],
+          ['global-state', 'showProposedInfrastructure'],
+        ],
       },
       {
         id: 'railway_line_historical_narrow_gauge',
         minzoom: 10,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'narrow_gauge'],
@@ -2250,7 +2202,6 @@ const layers = [
       {
         id: 'railway_line_historical_service',
         minzoom: 10,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2281,7 +2232,6 @@ const layers = [
       {
         id: 'railway_line_historical_light_rail',
         minzoom: 9,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['any',
@@ -2306,7 +2256,6 @@ const layers = [
       {
         id: 'railway_line_historical_test_military',
         minzoom: 9,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2332,7 +2281,6 @@ const layers = [
       {
         id: 'railway_line_historical_tourism',
         minzoom: 9,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['any',
@@ -2352,7 +2300,6 @@ const layers = [
       {
         id: 'railway_line_historical_industrial',
         minzoom: 9,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'usage'], 'industrial'],
@@ -2374,7 +2321,6 @@ const layers = [
       {
         id: 'railway_line_historical_branch',
         minzoom: 7,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2393,7 +2339,6 @@ const layers = [
       {
         id: 'railway_line_historical_main',
         minzoom: 5,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2419,7 +2364,6 @@ const layers = [
       {
         id: 'railway_line_historical_ferry',
         minzoom: 5,
-        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'ferry'],
@@ -2429,6 +2373,26 @@ const layers = [
           'usage', colors.styles.standard.ferry,
           'gray',
         ],
+        width: 2,
+      },
+      {
+        id: 'railway_route',
+        sourceLayer: 'route_lines',
+        minzoom: 12,
+        visibility: ['==', ['global-state', 'tracks'], 'routes'],
+        filter: ['any',
+          ...['subway', 'tram', 'light_rail', 'train']
+            .map(modality => ['!=', ['get', `route_${modality}_1_name`], null]),
+        ],
+        // See https://github.com/OpenHistoricalMap/ohm-deploy/blob/c9cfe3e38508d6867438fca31884b40e23a649a1/images/tiler-imposm/queries/ohm_mviews/routes_03_mv.sql, routes are available up to 6 per modality
+        color: turboColorMap(['+',
+          ...['subway', 'tram', 'light_rail', 'train']
+            .map(modality => ['case',
+              ...[6, 5, 4, 3, 2, 1]
+                .flatMap(i => [['!=', ['get', `route_${modality}_${i}_name`], null], i]),
+              0
+            ]),
+        ], 0, 24, 0.5),
         width: 2,
       },
     ],
