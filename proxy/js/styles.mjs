@@ -2393,7 +2393,7 @@ const layers = [
                 .flatMap(i => [['!=', ['get', `route_${modality}_${i}_name`], null], i]),
               0
             ]),
-        ], 0, 24, 0.5),
+        ], 0.8, 20, 0.3),
         width: 2,
       },
     ],
