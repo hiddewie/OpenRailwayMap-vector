@@ -76,15 +76,15 @@ class FeatureAPI:
 
         # Combine all property references in the catalog for the view query
         properties = (
-           {'osm_id', 'osm_type'} |
-           catalog['properties'].keys() |
-           {catalog['featureProperty'] if 'featureProperty' in catalog else 'feature'} |
-           {catalog['colorProperty'] if 'colorProperty' in catalog else None} |
-           set(catalog['labelProperties'] if 'labelProperties' in catalog else []) |
-           {field['field'] for field in localized_fields.values()}
-       ) - (
-           localized_fields.keys()
-       )
+            {'osm_id', 'osm_type'} |
+            catalog['properties'].keys() |
+            {catalog['featureProperty'] if 'featureProperty' in catalog else 'feature'} |
+            {catalog['colorProperty'] if 'colorProperty' in catalog else None} |
+            set(catalog['labelProperties'] if 'labelProperties' in catalog else []) |
+            {field['field'] for field in localized_fields.values()}
+        ) - (
+            localized_fields.keys()
+        )
 
         sql_query = f"""
             SELECT {', '.join(f'"{property}"' for property in properties if property)}
