@@ -189,7 +189,8 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
-      route_count
+      route_count,
+      passenger_lines
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -289,7 +290,8 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
-          "route_count": "integer"
+          "route_count": "integer",
+          "passenger_lines": "integer"
         }
       }
     ]
