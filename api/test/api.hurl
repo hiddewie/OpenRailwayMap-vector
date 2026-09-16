@@ -807,6 +807,7 @@ jsonpath "$.frequency" == 16.700000762939453
 jsonpath "$.gauges" count == 1
 jsonpath "$.gauges[0]" == "1435"
 jsonpath "$.highspeed" == true
+jsonpath "$.preserved" == false
 jsonpath "$.line_routes" count == 14
 jsonpath "$.line_routes[0].color" == "#80004D"
 jsonpath "$.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
