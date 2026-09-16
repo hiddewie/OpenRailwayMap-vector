@@ -1158,14 +1158,14 @@ const historicalRailwayLine = (text, layers) => [
 
   // Tunnels
 
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort, dash}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, sort, dash}) => [
     {
       id: `${id}_tunnel_casing`,
       type: 'line',
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1175,7 +1175,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1195,7 +1195,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
         ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1207,7 +1207,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1222,14 +1222,14 @@ const historicalRailwayLine = (text, layers) => [
       },
     }
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, color, hoverColor, sort, dash}) => [
     {
       id: `${id}_tunnel_fill`,
       type: 'line',
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['==', ['get', 'tunnel'], 1],
         filter ?? true,
@@ -1239,7 +1239,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1261,7 +1261,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
         ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1273,7 +1273,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1290,13 +1290,13 @@ const historicalRailwayLine = (text, layers) => [
       },
     }
   ]),
-  ...layers.map(({id, minzoom, maxzoom, filter, width, sort}) => ({
+  ...layers.map(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, sort}) => ({
     id: `${id}_tunnel_cover`,
     type: 'line',
     minzoom: Math.max(minzoom, 8),
     maxzoom,
     source: 'openhistoricalmap',
-    'source-layer': 'transport_lines',
+    'source-layer': sourceLayer ?? 'transport_lines',
     filter: ['all',
       ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
       ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1309,7 +1309,7 @@ const historicalRailwayLine = (text, layers) => [
           ['!', ['global-state', 'allDates']],
           ['<', ['global-state', 'date'], defaultDate],
           ['global-state', 'openHistoricalMap'],
-        ], 'visible',
+        ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
         'none',
       ],
       'line-join': 'round',
@@ -1324,14 +1324,14 @@ const historicalRailwayLine = (text, layers) => [
 
   // Ground
 
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort, dash}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, sort, dash}) => [
     {
       id: `${id}_casing`,
       type: 'line',
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
@@ -1342,7 +1342,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1362,7 +1362,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
         ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1375,7 +1375,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1390,14 +1390,14 @@ const historicalRailwayLine = (text, layers) => [
       },
     }
   ]),
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, color, hoverColor, sort, dash}) => [
     {
       id: `${id}_fill`,
       type: 'line',
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['!=', ['get', 'bridge'], 1],
         ['!=', ['get', 'tunnel'], 1],
@@ -1408,7 +1408,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1430,7 +1430,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
         ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1443,7 +1443,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1463,14 +1463,14 @@ const historicalRailwayLine = (text, layers) => [
 
   // Bridges
 
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, sort}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, sort}) => [
     {
       id: `${id}_bridge_railing`,
       type: 'line',
       minzoom: Math.max(minzoom, 8),
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['any',
           ['global-state', 'allDates'],
@@ -1490,7 +1490,7 @@ const historicalRailwayLine = (text, layers) => [
               ['<', ['global-state', 'date'], defaultDate],
             ],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1509,7 +1509,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom: Math.max(minzoom, 8),
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['any',
           ['global-state', 'allDates'],
@@ -1529,7 +1529,7 @@ const historicalRailwayLine = (text, layers) => [
               ['<', ['global-state', 'date'], defaultDate],
             ],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1544,14 +1544,14 @@ const historicalRailwayLine = (text, layers) => [
     },
   ]),
 
-  ...layers.flatMap(({id, minzoom, maxzoom, filter, width, color, hoverColor, sort, dash}) => [
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter, width, color, hoverColor, sort, dash}) => [
     {
       id: `${id}_bridge_fill`,
       type: 'line',
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['==', ['get', 'bridge'], 1],
         filter ?? true,
@@ -1561,7 +1561,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['global-state', 'allDates'],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1583,7 +1583,7 @@ const historicalRailwayLine = (text, layers) => [
       minzoom,
       maxzoom,
       source: 'openhistoricalmap',
-      'source-layer': 'transport_lines',
+      'source-layer': sourceLayer ?? 'transport_lines',
       filter: ['all',
         ['<=', ['floor', ['coalesce', ['get', 'start_decdate'], 0.0]], ['global-state', 'date']],
         ['<=', ['global-state', 'date'], ['coalesce', ['get', 'end_decdate'], 9999.0]],
@@ -1595,7 +1595,7 @@ const historicalRailwayLine = (text, layers) => [
           ['all',
             ['<', ['global-state', 'date'], defaultDate],
             ['global-state', 'openHistoricalMap'],
-          ], 'visible',
+          ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
           'none',
         ],
         'line-join': 'round',
@@ -1615,13 +1615,13 @@ const historicalRailwayLine = (text, layers) => [
 
   // Text layers
 
-  ...layers.flatMap(({id, minzoom, maxzoom, filter}) => ({
+  ...layers.flatMap(({id, sourceLayer, minzoom, maxzoom, visibility, filter}) => ({
     id: `${id}_text`,
     type: 'symbol',
     minzoom,
     maxzoom,
     source: 'openhistoricalmap',
-    'source-layer': 'transport_lines',
+    'source-layer': sourceLayer ?? 'transport_lines',
     filter: ['all',
       ['any',
         ['global-state', 'allDates'],
@@ -1648,7 +1648,7 @@ const historicalRailwayLine = (text, layers) => [
             ['<', ['global-state', 'date'], defaultDate],
           ],
           ['global-state', 'openHistoricalMap'],
-        ], 'visible',
+        ], visibility ? ['case', visibility, 'visible', 'none'] : 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
@@ -2117,8 +2117,51 @@ const layers = [
     ],
     [
       {
+        id: 'railway_route',
+        sourceLayer: 'route_lines',
+        minzoom: 12,
+        visibility: ['==', ['global-state', 'tracks'], 'routes'],
+        // See https://github.com/OpenHistoricalMap/ohm-deploy/blob/c9cfe3e38508d6867438fca31884b40e23a649a1/images/tiler-imposm/queries/ohm_mviews/routes_03_mv.sql, routes are available up to 6 per modality
+        color: turboColorMap(['+',
+          ['case',
+            ['!=', ['get', 'route_subway_5_name'], null], 5,
+            ['!=', ['get', 'route_subway_4_name'], null], 4,
+            ['!=', ['get', 'route_subway_3_name'], null], 3,
+            ['!=', ['get', 'route_subway_2_name'], null], 2,
+            ['!=', ['get', 'route_subway_1_name'], null], 1,
+            0
+          ],
+          ['case',
+            ['!=', ['get', 'route_tram_5_name'], null], 5,
+            ['!=', ['get', 'route_tram_4_name'], null], 4,
+            ['!=', ['get', 'route_tram_3_name'], null], 3,
+            ['!=', ['get', 'route_tram_2_name'], null], 2,
+            ['!=', ['get', 'route_tram_1_name'], null], 1,
+            0
+          ],
+          ['case',
+            ['!=', ['get', 'route_light_rail_5_name'], null], 5,
+            ['!=', ['get', 'route_light_rail_4_name'], null], 4,
+            ['!=', ['get', 'route_light_rail_3_name'], null], 3,
+            ['!=', ['get', 'route_light_rail_2_name'], null], 2,
+            ['!=', ['get', 'route_light_rail_1_name'], null], 1,
+            0
+          ],
+          ['case',
+            ['!=', ['get', 'route_train_5_name'], null], 5,
+            ['!=', ['get', 'route_train_4_name'], null], 4,
+            ['!=', ['get', 'route_train_3_name'], null], 3,
+            ['!=', ['get', 'route_train_2_name'], null], 2,
+            ['!=', ['get', 'route_train_1_name'], null], 1,
+            0
+          ],
+        ], 0, 20, 0.5),
+        width: 2,
+      },
+      {
         id: 'railway_line_historical_miniature_funicular',
         minzoom: 12,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['miniature', 'funicular']]]
@@ -2136,6 +2179,7 @@ const layers = [
       {
         id: 'railway_line_historical_disused_abandoned',
         minzoom: 11,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['disused', 'abandoned']]]
@@ -2158,6 +2202,13 @@ const layers = [
       {
         id: 'railway_line_historical_construction_proposed',
         minzoom: 10,
+        visibility: ['all',
+          ['any',
+            ['global-state', 'showConstructionInfrastructure'],
+            ['global-state', 'showProposedInfrastructure'],
+          ],
+          ['!=', ['global-state', 'tracks'], 'routes'],
+        ],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['in', ['get', 'type'], ['literal', ['construction', 'proposed']]],
@@ -2177,14 +2228,11 @@ const layers = [
           ['literal', present_dasharray],
         ],
         width: 1.5,
-        visibility: ['any',
-          ['global-state', 'showConstructionInfrastructure'],
-          ['global-state', 'showProposedInfrastructure'],
-        ],
       },
       {
         id: 'railway_line_historical_narrow_gauge',
         minzoom: 10,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'narrow_gauge'],
@@ -2202,6 +2250,7 @@ const layers = [
       {
         id: 'railway_line_historical_service',
         minzoom: 10,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2232,6 +2281,7 @@ const layers = [
       {
         id: 'railway_line_historical_light_rail',
         minzoom: 9,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['any',
@@ -2256,6 +2306,7 @@ const layers = [
       {
         id: 'railway_line_historical_test_military',
         minzoom: 9,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2281,6 +2332,7 @@ const layers = [
       {
         id: 'railway_line_historical_tourism',
         minzoom: 9,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['any',
@@ -2300,6 +2352,7 @@ const layers = [
       {
         id: 'railway_line_historical_industrial',
         minzoom: 9,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'usage'], 'industrial'],
@@ -2321,6 +2374,7 @@ const layers = [
       {
         id: 'railway_line_historical_branch',
         minzoom: 7,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2339,6 +2393,7 @@ const layers = [
       {
         id: 'railway_line_historical_main',
         minzoom: 5,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'rail'],
@@ -2364,6 +2419,7 @@ const layers = [
       {
         id: 'railway_line_historical_ferry',
         minzoom: 5,
+        visibility: ['!=', ['global-state', 'tracks'], 'routes'],
         filter: ['all',
           ['==', ['get', 'class'], 'railway'],
           ['==', ['get', 'type'], 'ferry'],
