@@ -5,7 +5,7 @@
    viewBox="0 0 16 13.161291"
    version="1.1"
    id="svg20"
-   sodipodi:docname="Adif-2+2.svg"
+   sodipodi:docname="Adif-2+2-back.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,7 +24,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="44.636116"
      inkscape:cx="6.608998"
-     inkscape:cy="5.0519629"
+     inkscape:cy="6.8442336"
      inkscape:window-width="1920"
      inkscape:window-height="1014"
      inkscape:window-x="0"
@@ -164,7 +164,7 @@
      fill-opacity="1"
      d="m 5.445312,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-6"
-     inkscape:label="n_rojo"
+     inkscape:label="n_blanco1"
      style="display:none;fill:#000000" />
   <path
      fill-rule="nonzero"
@@ -172,7 +172,7 @@
      fill-opacity="1"
      d="m 14.734375,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-8"
-     inkscape:label="n_verde"
+     inkscape:label="n_rojo"
      style="display:none;fill:#000000" />
   <path
      fill-rule="nonzero"
@@ -180,7 +180,7 @@
      fill-opacity="1"
      d="m 5.445313,9.871093 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-9"
-     inkscape:label="n_blanco"
+     inkscape:label="n_blanco3"
      style="display:none;fill:#000000" />
   <path
      fill-rule="nonzero"
@@ -188,7 +188,7 @@
      fill-opacity="1"
      d="m 14.734375,9.871094 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-0"
-     inkscape:label="n_amarillo"
+     inkscape:label="n_blanco4"
      style="display:none;fill:#000000" />
   <path
      fill-rule="nonzero"
@@ -196,30 +196,30 @@
      fill-opacity="1"
      d="m 5.445312,3.289062 c 0,1.15625 -0.9375,2.089844 -2.089843,2.089844 -1.15625,0 -2.089844,-0.933594 -2.089844,-2.089844 0,-1.152343 0.933594,-2.089843 2.089844,-2.089843 1.152343,0 2.089843,0.9375 2.089843,2.089843 z m 0,0"
      id="path15"
-     inkscape:label="rojo"
-     style="display:inline" />
+     inkscape:label="blanco1"
+     style="display:none;fill:#ffffff" />
   <path
      fill-rule="nonzero"
      fill="#ffffff"
      fill-opacity="1"
      d="m 5.445312,9.871094 c 0,1.15625 -0.9375,2.089844 -2.089843,2.089844 -1.15625,0 -2.089844,-0.933594 -2.089844,-2.089844 0,-1.15625 0.933594,-2.089844 2.089844,-2.089844 1.152343,0 2.089843,0.933594 2.089843,2.089844 z m 0,0"
      id="path20"
-     inkscape:label="blanco"
-     style="display:inline" />
+     inkscape:label="blanco3"
+     style="display:none" />
   <path
      fill-rule="nonzero"
      fill="#ffff00"
      fill-opacity="1"
      d="m 14.734375,9.871094 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.15625 0.9375,-2.089844 2.089843,-2.089844 1.15625,0 2.089844,0.933594 2.089844,2.089844 z m 0,0"
      id="path10"
-     inkscape:label="amarillo"
-     style="display:inline" />
+     inkscape:label="blanco4"
+     style="display:none;fill:#ffffff" />
   <path
      fill-rule="nonzero"
      fill="#00ff00"
      fill-opacity="1"
      d="m 14.734375,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5"
-     inkscape:label="verde"
-     style="display:inline" />
+     inkscape:label="rojo"
+     style="display:none;fill:#ff0000" />
 </svg>

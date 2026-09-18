@@ -5,7 +5,7 @@
    viewBox="0 0 16 13.161291"
    version="1.1"
    id="svg20"
-   sodipodi:docname="Adif-2+2.svg"
+   sodipodi:docname="2+2-FF7-2.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -34,7 +34,7 @@
   <g
      id="g20"
      inkscape:label="foco"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -66,7 +66,7 @@
      id="g20-6"
      inkscape:label="foco"
      transform="translate(0,6.582031)"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -98,7 +98,7 @@
      id="g20-2"
      inkscape:label="foco"
      transform="translate(9.289062)"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -130,7 +130,7 @@
      id="g20-9"
      inkscape:label="foco"
      transform="translate(9.289062,6.582031)"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -164,62 +164,62 @@
      fill-opacity="1"
      d="m 5.445312,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-6"
-     inkscape:label="n_rojo"
-     style="display:none;fill:#000000" />
+     inkscape:label="n_blanco1"
+     style="display:inline;fill:#000000" />
   <path
      fill-rule="nonzero"
      fill="#00ff00"
      fill-opacity="1"
      d="m 14.734375,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-8"
-     inkscape:label="n_verde"
-     style="display:none;fill:#000000" />
+     inkscape:label="n_rojo"
+     style="display:inline;fill:#000000" />
   <path
      fill-rule="nonzero"
      fill="#00ff00"
      fill-opacity="1"
      d="m 5.445313,9.871093 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-9"
-     inkscape:label="n_blanco"
-     style="display:none;fill:#000000" />
+     inkscape:label="n_blanco3"
+     style="display:inline;fill:#000000" />
   <path
      fill-rule="nonzero"
      fill="#00ff00"
      fill-opacity="1"
      d="m 14.734375,9.871094 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5-0"
-     inkscape:label="n_amarillo"
-     style="display:none;fill:#000000" />
+     inkscape:label="n_blanco4"
+     style="display:inline;fill:#000000" />
   <path
      fill-rule="nonzero"
      fill="#ff0000"
      fill-opacity="1"
      d="m 5.445312,3.289062 c 0,1.15625 -0.9375,2.089844 -2.089843,2.089844 -1.15625,0 -2.089844,-0.933594 -2.089844,-2.089844 0,-1.152343 0.933594,-2.089843 2.089844,-2.089843 1.152343,0 2.089843,0.9375 2.089843,2.089843 z m 0,0"
      id="path15"
-     inkscape:label="rojo"
-     style="display:inline" />
+     inkscape:label="blanco1"
+     style="display:none;fill:#ffffff" />
   <path
      fill-rule="nonzero"
      fill="#ffffff"
      fill-opacity="1"
      d="m 5.445312,9.871094 c 0,1.15625 -0.9375,2.089844 -2.089843,2.089844 -1.15625,0 -2.089844,-0.933594 -2.089844,-2.089844 0,-1.15625 0.933594,-2.089844 2.089844,-2.089844 1.152343,0 2.089843,0.933594 2.089843,2.089844 z m 0,0"
      id="path20"
-     inkscape:label="blanco"
-     style="display:inline" />
+     inkscape:label="blanco3"
+     style="display:none" />
   <path
      fill-rule="nonzero"
      fill="#ffff00"
      fill-opacity="1"
      d="m 14.734375,9.871094 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.15625 0.9375,-2.089844 2.089843,-2.089844 1.15625,0 2.089844,0.933594 2.089844,2.089844 z m 0,0"
      id="path10"
-     inkscape:label="amarillo"
-     style="display:inline" />
+     inkscape:label="blanco4"
+     style="display:none;fill:#ffffff" />
   <path
      fill-rule="nonzero"
      fill="#00ff00"
      fill-opacity="1"
      d="m 14.734375,3.289062 c 0,1.15625 -0.933594,2.089844 -2.089844,2.089844 -1.152343,0 -2.089843,-0.933594 -2.089843,-2.089844 0,-1.152343 0.9375,-2.089843 2.089843,-2.089843 1.15625,0 2.089844,0.9375 2.089844,2.089843 z m 0,0"
      id="path5"
-     inkscape:label="verde"
-     style="display:inline" />
+     inkscape:label="rojo"
+     style="display:inline;fill:#ff0000" />
 </svg>

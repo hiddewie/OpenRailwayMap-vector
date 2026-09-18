@@ -5,7 +5,7 @@
    viewBox="0 0 16 31.384617"
    version="1.1"
    id="svg10"
-   sodipodi:docname="Adif-2.svg"
+   sodipodi:docname="2-FF7A.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -34,7 +34,7 @@
   <g
      id="g10"
      inkscape:label="foco"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -66,7 +66,7 @@
      id="g10-6"
      transform="translate(0,15.691406)"
      inkscape:label="foco"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -78,8 +78,7 @@
        fill="#27292b"
        fill-opacity="1"
        d="M 0.214844,0.214844 H 15.785156 V 15.476562 H 0.214844 Z m 0,0"
-       id="path2-5"
-       style="display:inline" />
+       id="path2-5" />
     <path
        fill-rule="nonzero"
        fill="#000000"
@@ -110,7 +109,7 @@
      d="m 12.984375,23.539062 c 0,2.753907 -2.230469,4.984376 -4.984375,4.984376 -2.753906,0 -4.984375,-2.230469 -4.984375,-4.984376 0,-2.753906 2.230469,-4.984374 4.984375,-4.984374 2.753906,0 4.984375,2.230468 4.984375,4.984374 z m 0,0"
      id="path10"
      inkscape:label="blanco"
-     style="display:inline" />
+     style="display:none" />
   <path
      fill-rule="nonzero"
      fill="#ffffff"
@@ -118,7 +117,7 @@
      d="m 12.984375,23.539062 c 0,2.753907 -2.230469,4.984376 -4.984375,4.984376 -2.753906,0 -4.984375,-2.230469 -4.984375,-4.984376 0,-2.753906 2.230469,-4.984374 4.984375,-4.984374 2.753906,0 4.984375,2.230468 4.984375,4.984374 z m 0,0"
      id="path10-9"
      inkscape:label="n_blanco"
-     style="display:none;fill:#000000" />
+     style="display:inline;fill:#000000" />
   <path
      fill-rule="nonzero"
      fill="#ff0000"

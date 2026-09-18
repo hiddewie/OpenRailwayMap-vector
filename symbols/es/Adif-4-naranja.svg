@@ -5,7 +5,7 @@
    viewBox="0 0 16 32.640004"
    version="1.1"
    id="svg22"
-   sodipodi:docname="Adif-4.svg"
+   sodipodi:docname="Adif-4-naranja.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,10 +23,10 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="25.735292"
-     inkscape:cx="8.0045722"
-     inkscape:cy="16.320002"
+     inkscape:cx="8.0045721"
+     inkscape:cy="16.33943"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
+     inkscape:window-height="1014"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -36,7 +36,8 @@
      fill="rgb(100%, 100%, 100%)"
      fill-opacity="1"
      d="M 0.320312 0 L 15.679688 0 C 15.855469 0 16 0.113281 16 0.253906 L 16 32.382812 C 16 32.527344 15.855469 32.640625 15.679688 32.640625 L 0.320312 32.640625 C 0.144531 32.640625 0 32.527344 0 32.382812 L 0 0.253906 C 0 0.113281 0.144531 0 0.320312 0 Z M 0.320312 0 "
-     id="path1" />
+     id="path1"
+     style="fill:#ec6b1e;fill-opacity:1" />
   <path
      fill-rule="nonzero"
      fill="rgb(15.294118%, 16.078431%, 16.862745%)"

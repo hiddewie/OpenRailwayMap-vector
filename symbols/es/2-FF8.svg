@@ -5,7 +5,7 @@
    viewBox="0 0 16 31.384617"
    version="1.1"
    id="svg10"
-   sodipodi:docname="Adif-2.svg"
+   sodipodi:docname="2-FF8.svg"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -34,7 +34,7 @@
   <g
      id="g10"
      inkscape:label="foco"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -66,7 +66,7 @@
      id="g10-6"
      transform="translate(0,15.691406)"
      inkscape:label="foco"
-     style="display:inline">
+     style="display:none">
     <path
        fill-rule="nonzero"
        fill="#bababa"
@@ -78,8 +78,7 @@
        fill="#27292b"
        fill-opacity="1"
        d="M 0.214844,0.214844 H 15.785156 V 15.476562 H 0.214844 Z m 0,0"
-       id="path2-5"
-       style="display:inline" />
+       id="path2-5" />
     <path
        fill-rule="nonzero"
        fill="#000000"
