@@ -5618,6 +5618,7 @@ features:
     country: ES
     icon: [ default: 'es/Adif-5' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
@@ -5625,6 +5626,7 @@ features:
     country: ES
     icon: [ default: 'es/Adif-4' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
@@ -5632,6 +5634,7 @@ features:
     country: ES
     icon: [ default: 'es/Adif-2+2' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       
@@ -5639,6 +5642,7 @@ features:
     country: ES
     icon: [ default: 'es/Adif-2+2-retroceso' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
@@ -5646,6 +5650,7 @@ features:
     country: ES
     icon: [ default: 'es/Renfe-3+P' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
@@ -5653,6 +5658,7 @@ features:
     country: ES
     icon: [ default: 'es/Renfe-3+1' ]
     tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
