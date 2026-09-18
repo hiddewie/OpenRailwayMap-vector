@@ -331,6 +331,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     operator_bright,
     primary_operator,
     owner,
+    passenger_lines,
     rank
   FROM railway_line_view
   WHERE
@@ -1837,6 +1838,7 @@ RETURN (
       gauge0,
       track_class,
       loading_gauge,
+      passenger_lines,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1847,7 +1849,8 @@ RETURN (
       gauge0,
       gaugeint0,
       track_class,
-      loading_gauge
+      loading_gauge,
+      passenger_lines
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1866,7 +1869,8 @@ DO $do$ BEGIN
           "state": "string",
           "usage": "string",
           "gauge0": "string",
-          "gaugeint0": "number"
+          "gaugeint0": "number",
+          "passenger_lines": "number"
         }
       }
     ]
