@@ -7613,9 +7613,15 @@ features:
         default: 'it/combined-1v'
       - match: 'railway:signal:combined:states'
         cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/1v-Y' }
-          - { exact: 'G', value: 'it/1v-G' }
-        default: 'it/1v-R'
+          - { any: [ '(Y)', 'Y' ], value: "it/1v-Y" }
+          - { exact: 'G', value: "it/1v-G" }
+        default: "it/1v-R"
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-1v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:1V' }
@@ -7637,6 +7643,12 @@ features:
           - { any: [ '(Y)', 'Y' ], value: 'it/2v-Y' }
           - { exact: 'G', value: 'it/2v-G' }
         default: 'it/2v-R'
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-2v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
@@ -7660,11 +7672,16 @@ features:
           - { any: [ '(Y)', 'Y' ], value: 'it/3v-Y' }
           - { exact: 'G', value: 'it/3v-G' }
         default: 'it/3v-R'
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-3v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:shape', value: 'square' }
 
   - description: Avviso (1 light)
     country: IT
