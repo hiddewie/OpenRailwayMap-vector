@@ -703,7 +703,7 @@ const styleElements = [
         value: 'routes',
       },
       {
-        name: 'Passenger lines',
+        name: 'Number of tracks',
         value: 'passenger_lines',
       },
     ],

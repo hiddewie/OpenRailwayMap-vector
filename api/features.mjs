@@ -144,7 +144,7 @@ const railwayLineFeatures = {
       }
     },
     passenger_lines: {
-      name: 'Passenger lines',
+      name: 'Number of tracks',
     },
     preferred_direction: {
       name: 'Preferred direction',
@@ -601,7 +601,7 @@ const features = {
         name: 'Workrules',
       },
       passenger_lines: {
-        name: 'Passenger lines',
+        name: 'Number of tracks',
       },
       preferred_direction: {
         name: 'Preferred direction',
