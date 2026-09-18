@@ -573,8 +573,7 @@ const sourceLayers = {
   'electrification_railway_line_low-electrification_railway_line_low': {
     voltage_frequency: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'voltageFrequency',
+        tracks: 'voltage_frequency',
       },
       key: [],
       features: [
@@ -597,8 +596,7 @@ const sourceLayers = {
     },
     maximum_current: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'maximumCurrent',
+        tracks: 'maximum_current',
       },
       key: [],
       features: [
@@ -620,8 +618,7 @@ const sourceLayers = {
     },
     power: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'power',
+        tracks: 'power',
       },
       key: [],
       features: [
@@ -886,8 +883,7 @@ const sourceLayers = {
     },
     voltage_frequency: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'voltageFrequency',
+        tracks: 'voltage_frequency',
       },
       key: [],
       features: [
@@ -910,8 +906,7 @@ const sourceLayers = {
     },
     maximum_current: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'maximumCurrent',
+        tracks: 'maximum_current',
       },
       key: [],
       features: [
@@ -933,8 +928,7 @@ const sourceLayers = {
     },
     power: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'power',
+        tracks: 'power',
       },
       key: [],
       features: [
@@ -1895,8 +1889,7 @@ const sourceLayers = {
     },
     voltage_frequency: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'voltageFrequency',
+        tracks: 'voltage_frequency',
       },
       key: [],
       features: [
@@ -1919,8 +1912,7 @@ const sourceLayers = {
     },
     maximum_current: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'maximumCurrent',
+        tracks: 'maximum_current',
       },
       key: [],
       features: [
@@ -1942,8 +1934,7 @@ const sourceLayers = {
     },
     power: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'power',
+        tracks: 'power',
       },
       key: [],
       features: [
@@ -2792,8 +2783,7 @@ const sourceLayers = {
     },
     voltage_frequency: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'voltageFrequency',
+        tracks: 'voltage_frequency',
       },
       key: [],
       features: [
@@ -2816,8 +2806,7 @@ const sourceLayers = {
     },
     maximum_current: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'maximumCurrent',
+        tracks: 'maximum_current',
       },
       key: [],
       features: [
@@ -2840,8 +2829,7 @@ const sourceLayers = {
     },
     power: {
       mapState: {
-        tracks: 'electrification',
-        electrificationRailwayLine: 'power',
+        tracks: 'power',
       },
       key: [],
       features: [
