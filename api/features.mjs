@@ -516,6 +516,25 @@ const interlockingFeatures = {
   }
 };
 
+const openHistoricalMapRouteModalities = [
+  {
+    modality: 'subway',
+    name: 'Subway',
+  },
+  {
+    modality: 'tram',
+    name: 'Tram',
+  },
+  {
+    modality: 'light_rail',
+    name: 'Light rail',
+  },
+  {
+    modality: 'train',
+    name: 'Train',
+  },
+];
+
 // TODO move examples here
 // TODO add icon
 const features = {
@@ -631,6 +650,17 @@ const features = {
         name: 'Until',
       },
     },
+  },
+  'openhistoricalmap-route_lines': {
+    labelProperties: [],
+    featureLinks: featureLinks.openhistoricalmap,
+    features: {},
+    properties: Object.fromEntries(
+      openHistoricalMapRouteModalities
+        .flatMap(({modality, name}) => [6, 5, 4, 3, 2, 1]
+          .map(i => [`route_${modality}_${i}_name`, {
+            name: `${name} route`,
+          }]))),
   },
   'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
