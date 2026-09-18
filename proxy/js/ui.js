@@ -608,7 +608,7 @@ const knownStyles = {
   electrification: {
     name: 'Electrification',
     style: {
-      tracks: 'electrification',
+      tracks: 'voltage_frequency',
       stations: 'none',
       pois: 'electrification',
       turntables: 'none',
@@ -685,9 +685,16 @@ const styleElements = [
         value: 'train_protection',
       },
       {
-        // TODO split into voltage/frequency, max current, power
-        name: 'Electrification',
-        value: 'electrification',
+        name: 'Voltage & frequency',
+        value: 'voltage_frequency',
+      },
+      {
+        name: 'Maximum current',
+        value: 'maximum_current',
+      },
+      {
+        name: 'Electrical power',
+        value: 'power',
       },
       {
         // TODO split into gauge, loading gauge, track class
