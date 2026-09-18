@@ -5616,7 +5616,17 @@ features:
 
   - description: Señal tipo Adif de 5 focos
     country: ES
-    icon: [ default: 'es/Adif-5' ]
+    icon: 
+      - match: 'railway:signal:main:shape'
+        cases:
+          - { exact: 'ES-Adif:5', value: 'es/Adif-FF-5' }
+        default: 'es/Adif-FF-5'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', ES-RCF:FF3A], value: 'es/5-FF1A' } 
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/5-FF5A' }
+        default: 'es/5-FF7CD'
+    exampleIcon: 'es/Adif-5'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
@@ -5666,28 +5676,32 @@ features:
     country: ES
     icon: [ default: 'es/FI15A' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:whistle:shape', value: 'ES-RCF:FI15A' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Silbar (anulable)
     country: ES
     icon: [ default: 'es/FI15Abis' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15Abis' }
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI'}
+      - { tag: 'railway:signal:whistle:shape', value: 'ES-RCF:FI15Abis' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Proximidad a un apeadero
     country: ES
     icon: [ default: 'es/FI15B' ]
     tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FI15B' }
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15B' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
   - description: Proximidad al eje de un apeadero
     country: ES
     icon: [ default: 'es/FI15C' ]
     tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FI15C' }
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
 
