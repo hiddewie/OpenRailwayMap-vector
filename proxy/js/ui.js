@@ -888,8 +888,6 @@ function determineParametersFromHash(hash) {
  * Backwards conpatibility for existing links
  */
 function updateStyleParameter(hashObject) {
-  // TODO migrate electrification configuration electrificationRailwayLine to style
-  // configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine
   const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].style : {};
   const hashStyle = Object.fromEntries(
     styleElements
@@ -897,9 +895,24 @@ function updateStyleParameter(hashObject) {
       .map(({key}) => [key, hashObject[key]])
   );
 
+  const styleOverrides = {}
+  // Compatibility style override for URLs containing electrification style with configuration to show maximum current or power
+  if (configuration.electrificationRailwayLine) {
+    if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'maximumCurrent') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to maximum_current`)
+      styleOverrides.tracks = 'maximum_current'
+    } else if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'power') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to power`)
+      styleOverrides.tracks = 'power'
+    }
+
+    updateConfiguration('electrificationRailwayLine', undefined);
+  }
+
   return {
     ...migratedStyle,
     ...hashStyle,
+    ...styleOverrides,
   };
 }
 
@@ -989,7 +1002,12 @@ function storeConfiguration(localStorage, configuration) {
 }
 
 function updateConfiguration(name, value) {
-  configuration[name] = value;
+  if (value) {
+    configuration[name] = value;
+  } else {
+    delete configuration[name];
+  }
+
   storeConfiguration(localStorage, configuration);
 }
 
