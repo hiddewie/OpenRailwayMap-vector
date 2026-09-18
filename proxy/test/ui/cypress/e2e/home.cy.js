@@ -38,7 +38,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
-    cy.url().should('include', 'tracks=electrification')
+    cy.url().should('include', 'tracks=voltage_frequency')
 
     cy.wait(3000)
     cy.screenshot()
@@ -396,7 +396,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
-    cy.url().should('include', 'tracks=electrification')
+    cy.url().should('include', 'tracks=voltage_frequency')
 
     cy.wait(3000)
     cy.screenshot()
