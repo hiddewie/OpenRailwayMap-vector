@@ -516,7 +516,7 @@ const knownStyles = {
     style: {
       tracks: 'speed',
       stations: 'none',
-      pois: ['none'],
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -561,7 +561,7 @@ const knownStyles = {
     style: {
       tracks: 'gauge',
       stations: 'none',
-      pois: ['none'],
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -591,7 +591,7 @@ const knownStyles = {
     style: {
       tracks: 'routes',
       stations: 'station',
-      pois: ['none'],
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -1633,6 +1633,7 @@ class StyleControl {
       )
       ?.[0] ?? null;
     this.styleButtons = {}
+    this.styleValueButtons = {}
     this.presetButtons = {}
   }
 
@@ -1675,7 +1676,8 @@ class StyleControl {
       const buttonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
       buttonLabelSelectionContainer.innerText = name
 
-      this.styleButtons[key] = {};
+      this.styleButtons[key] = button;
+      this.styleValueButtons[key] = {};
       values.forEach(({name, value}) => {
         const valueButton = createDomElement('button', (multiple ? initialValue.some(it => it === value) : initialValue === value) ? 'active' : '', selectionContainer);
         valueButton.onclick = e => {
@@ -1703,7 +1705,7 @@ class StyleControl {
 
         createDomElement('span', 'active-indicator', valueButton);
 
-        this.styleButtons[key][value] = valueButton;
+        this.styleValueButtons[key][value] = valueButton;
       })
     })
 
@@ -1736,7 +1738,7 @@ class StyleControl {
 
         const changes = Object.fromEntries(
           Object.keys(style)
-            .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? !setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] !== style[key]))
+            .filter(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? !setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] !== style[key]))
             .map(key => [key, style[key]])
         );
 
@@ -1765,6 +1767,7 @@ class StyleControl {
     this.currentPreset = null;
     this.presetButtons = {};
     this.styleButtons = {};
+    this.styleValueButtons = {};
   }
 
   selectPreset(selectedPreset) {
@@ -1800,17 +1803,17 @@ class StyleControl {
             return [];
           }
 
-          const disabled = styleOptions.multiple ? selectedValue.length === 0 : styleOptions.disabledValue && selectedValue === styleOptions.disabledValue;
-          Object.entries(this.styleButtons[selectedKey])
+          const disabled = styleOptions.multiple ? selectedValue.length === 0 : (styleOptions.disabledValue && selectedValue === styleOptions.disabledValue);
+          if (disabled) {
+            this.styleButtons[selectedKey].classList.add('disabled')
+          } else {
+            this.styleButtons[selectedKey].classList.remove('disabled')
+          }
+
+          Object.entries(this.styleValueButtons[selectedKey])
             .forEach(([value, button]) => {
               if (styleOptions.multiple ? selectedValue.some(it => it === value) : value === selectedValue) {
                 button.classList.add('active')
-
-                if (disabled) {
-                  button.parentElement.parentElement.classList.add('disabled')
-                } else {
-                  button.parentElement.parentElement.classList.remove('disabled')
-                }
               } else {
                 button.classList.remove('active')
               }
