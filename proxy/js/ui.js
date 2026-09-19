@@ -886,11 +886,13 @@ function updateStyleParameter(hashObject) {
       .map(({key, values, multiple}) => {
         if (hashObject[key]) {
           if (multiple) {
-            const split = hashObject[key].split(',').map(it => it.trim())
-            const match = values.filter(({value}) => split.some(element => element === value)).map(({value}) => value)
-            return match.length > 0
-              ? [key, match]
-              : null;
+            if (!hashObject[key].match(/\[[a-z_,]*\]/)) {
+              return null;
+            } else {
+              const split = hashObject[key].slice(1, -1).split(',').map(it => it.trim())
+              const match = values.filter(({value}) => split.some(element => element === value)).map(({value}) => value)
+              return [key, match];
+            }
           } else {
             return values.some(({value}) => hashObject[key] === value)
               ? [key, hashObject[key]]
@@ -977,7 +979,11 @@ function putParametersInHash(hash, style, date) {
   })
   hashObject.date = dateControl.isActive() ? date : undefined;
 
-  return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
+  const hashContent = Object.entries(hashObject)
+    .filter(([_, value]) => value)
+    .map(([key, value]) => `${key}=${Array.isArray(value) ? `[${value.join(',')}]` : value}`)
+    .join('&');
+  return `#${hashContent}`;
 }
 
 // Configuration //
