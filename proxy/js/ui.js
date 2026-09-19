@@ -738,25 +738,41 @@ const styleElements = [
   {
     name: 'Points of interest',
     key: 'pois',
-    // TODO split into functional sections
-    defaultValue: 'standard',
+    defaultValue: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
     disabledValue: 'none',
+    multiple: true,
     values: [
       {
-        name: 'Standard',
-        value: 'standard',
+        name: 'Radio',
+        value: 'radio',
       },
       {
-        name: 'Electrification',
-        value: 'electrification',
+        name: 'Facility',
+        value: 'facility',
       },
       {
-        name: 'Signals',
-        value: 'signals',
+        name: 'Equipment',
+        value: 'equipment',
       },
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Vacancy detection',
+        value: 'vacancy_detection',
+      },
+      {
+        name: 'Electrical equipment',
+        value: 'electrical_equipment',
+      },
+      {
+        name: 'Level crossing',
+        value: 'level_crossing',
+      },
+      {
+        name: 'Train protection',
+        value: 'train_protection',
       },
       {
         name: 'None',
