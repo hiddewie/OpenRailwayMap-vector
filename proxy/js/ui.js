@@ -501,7 +501,7 @@ const knownStyles = {
     style: {
       tracks: 'usage',
       stations: 'station',
-      pois: 'standard',
+      pois: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
       turntables: 'plain',
       platforms: 'plain',
       substations: 'none',
@@ -516,7 +516,7 @@ const knownStyles = {
     style: {
       tracks: 'speed',
       stations: 'none',
-      pois: 'none',
+      pois: ['none'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -531,7 +531,7 @@ const knownStyles = {
     style: {
       tracks: 'train_protection',
       stations: 'none',
-      pois: 'signals',
+      pois: ['vacancy_detection', 'train_protection'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -546,7 +546,7 @@ const knownStyles = {
     style: {
       tracks: 'voltage_frequency',
       stations: 'none',
-      pois: 'electrification',
+      pois: ['electrical_equipment'],
       turntables: 'none',
       platforms: 'none',
       substations: 'plain',
@@ -561,7 +561,7 @@ const knownStyles = {
     style: {
       tracks: 'gauge',
       stations: 'none',
-      pois: 'none',
+      pois: ['none'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -576,7 +576,7 @@ const knownStyles = {
     style: {
       tracks: 'operator',
       stations: 'operator',
-      pois: 'operator',
+      pois: ['operator'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -591,7 +591,7 @@ const knownStyles = {
     style: {
       tracks: 'routes',
       stations: 'station',
-      pois: 'none',
+      pois: ['none'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -888,8 +888,24 @@ function updateStyleParameter(hashObject) {
   const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].style : {};
   const hashStyle = Object.fromEntries(
     styleElements
-      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
-      .map(({key}) => [key, hashObject[key]])
+      .map(({key, values, multiple}) => {
+        if (hashObject[key]) {
+          if (multiple) {
+            const split = hashObject[key].split(',').map(it => it.trim())
+            const match = values.filter(({value}) => split.some(element => element === value)).map(({value}) => value)
+            return match.length > 0
+              ? [key, match]
+              : null;
+          } else {
+            return values.some(({value}) => hashObject[key] === value)
+              ? [key, hashObject[key]]
+              : null;
+          }
+        } else {
+          return null;
+        }
+      })
+      .filter(it => it)
   );
 
   const styleOverrides = {}
