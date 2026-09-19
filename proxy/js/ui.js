@@ -675,6 +675,10 @@ const styleElements = [
         name: 'Routes',
         value: 'routes',
       },
+      {
+        name: 'Number of tracks',
+        value: 'passenger_lines',
+      },
     ],
   },
   {

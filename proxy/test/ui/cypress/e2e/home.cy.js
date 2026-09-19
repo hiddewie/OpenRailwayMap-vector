@@ -124,6 +124,12 @@ describe('home page', () => {
       .click()
 
     cy.url().should('include', 'tracks=routes')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Number of tracks')
+      .click()
+
+    cy.url().should('include', 'tracks=passenger_lines')
   })
 
   it('switching style, operating sites', () => {
