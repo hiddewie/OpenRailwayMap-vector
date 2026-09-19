@@ -12,10 +12,8 @@ const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const configureGeneralTab = document.getElementById('configure-general');
 const configureStandardTab = document.getElementById('configure-standard');
-  const configureTrackTab = document.getElementById('configure-track');
 const configureGeneralBody = document.getElementById('configure-general-body');
 const configureStandardBody = document.getElementById('configure-standard-body');
-const configureTrackBody = document.getElementById('configure-track-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
@@ -40,9 +38,6 @@ const localizationDisabledControl =  document.getElementById('localizationDisabl
 const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
-const trackRailwayLineGaugeControl = document.getElementById('trackRailwayLineGauge')
-const trackRailwayLineLoadingGaugeControl = document.getElementById('trackRailwayLineLoadingGauge')
-const trackRailwayLineTrackClassControl = document.getElementById('trackRailwayLineTrackClass')
 const backgroundMapContainer = document.getElementById('background-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
@@ -297,8 +292,6 @@ function showConfiguration(tab) {
     configureGeneral();
   } else if (tab === 'standard') {
     configureStandard();
-  } else if (tab === 'track') {
-    configureTrack();
   }
 
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
@@ -370,15 +363,6 @@ function showConfiguration(tab) {
   }
   localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
 
-  const trackRailwayLine = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
-  if (trackRailwayLine === 'gauge') {
-    trackRailwayLineGaugeControl.checked = true
-  } else if (trackRailwayLine === 'loadingGauge') {
-    trackRailwayLineLoadingGaugeControl.checked = true
-  } else if (trackRailwayLine === 'trackClass') {
-    trackRailwayLineTrackClassControl.checked = true
-  }
-
   configurationBackdrop.style.display = 'block';
 }
 
@@ -389,31 +373,17 @@ function hideConfiguration() {
 function configureGeneral() {
   configureGeneralTab.classList.add('active');
   configureStandardTab.classList.remove('active');
-  configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'block';
   configureStandardBody.style.display = 'none';
-  configureTrackBody.style.display = 'none';
 }
 
 function configureStandard() {
   configureGeneralTab.classList.remove('active');
   configureStandardTab.classList.add('active');
-  configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'none';
   configureStandardBody.style.display = 'block';
-  configureTrackBody.style.display = 'none';
-}
-
-function configureTrack() {
-  configureGeneralTab.classList.remove('active');
-  configureStandardTab.classList.remove('active');
-  configureTrackTab.classList.add('active');
-
-  configureGeneralBody.style.display = 'none';
-  configureStandardBody.style.display = 'none';
-  configureTrackBody.style.display = 'block';
 }
 
 function toggleNews() {
@@ -589,7 +559,7 @@ const knownStyles = {
   track: {
     name: 'Track',
     style: {
-      tracks: 'track',
+      tracks: 'gauge',
       stations: 'none',
       pois: 'none',
       turntables: 'none',
@@ -663,9 +633,16 @@ const styleElements = [
         value: 'power',
       },
       {
-        // TODO split into gauge, loading gauge, track class
-        name: 'Track',
-        value: 'track',
+        name: 'Track gauge',
+        value: 'gauge',
+      },
+      {
+        name: 'Loading gauge',
+        value: 'loading_gauge',
+      },
+      {
+        name: 'Track class',
+        value: 'track_class',
       },
       {
         name: 'Operator',
@@ -900,6 +877,7 @@ function updateStyleParameter(hashObject) {
   );
 
   const styleOverrides = {}
+
   // Compatibility style override for URLs containing electrification style with configuration to show maximum current or power
   if (configuration.electrificationRailwayLine) {
     if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'maximumCurrent') {
@@ -911,6 +889,19 @@ function updateStyleParameter(hashObject) {
     }
 
     updateConfiguration('electrificationRailwayLine', undefined);
+  }
+
+  // Compatibility style override for URLs containing track style with configuration to show loading gauge or track class
+  if (configuration.trackRailwayLine) {
+    if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'trackClass') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to track_class`)
+      styleOverrides.tracks = 'track_class'
+    } else if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'loadingGauge') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to loading_gauge`)
+      styleOverrides.tracks = 'loading_gauge'
+    }
+
+    updateConfiguration('trackRailwayLine', undefined);
   }
 
   return {
@@ -1086,12 +1077,6 @@ function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
   languageControl.selectLanguage(configuredLanguage());
-}
-
-function configureTrackRailwayLine(track) {
-  updateConfiguration('trackRailwayLine', track);
-  updateGlobalMapState({ trackRailwayLine: track });
-  legendControl.updateLegend()
 }
 
 function configuredLanguage() {
@@ -1435,8 +1420,6 @@ const defaultConfiguration = {
   view: {},
   stationLowZoomLabel: 'label',
   localization: 'automatic',
-  electrificationRailwayLine: 'voltageFrequency',
-  trackRailwayLine: 'gauge',
   legendConfiguration: 'all',
   legendCountry: null,
 };
@@ -1580,10 +1563,6 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
 
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
-
-  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
-
-  style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
 
   // Style specific map global state
   Object.entries(selectedStyle).forEach(([key, value]) => {
