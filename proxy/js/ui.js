@@ -877,6 +877,7 @@ function updateStyleParameter(hashObject) {
   );
 
   const styleOverrides = {}
+
   // Compatibility style override for URLs containing electrification style with configuration to show maximum current or power
   if (configuration.electrificationRailwayLine) {
     if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'maximumCurrent') {
@@ -890,7 +891,18 @@ function updateStyleParameter(hashObject) {
     updateConfiguration('electrificationRailwayLine', undefined);
   }
 
-  // TODO handle trackRailwayLine
+  // Compatibility style override for URLs containing track style with configuration to show loading gauge or track class
+  if (configuration.trackRailwayLine) {
+    if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'trackClass') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to track_class`)
+      styleOverrides.tracks = 'track_class'
+    } else if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'loadingGauge') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to loading_gauge`)
+      styleOverrides.tracks = 'loading_gauge'
+    }
+
+    updateConfiguration('trackRailwayLine', undefined);
+  }
 
   return {
     ...migratedStyle,
