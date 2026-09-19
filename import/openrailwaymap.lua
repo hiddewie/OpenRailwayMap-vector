@@ -253,7 +253,7 @@ local pois = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
-    { column = 'layer', type = 'text' },
+    { column = 'type', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
     { column = 'position', sql_type = 'text[]' },

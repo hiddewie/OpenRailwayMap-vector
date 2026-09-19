@@ -617,7 +617,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
+    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
     metadata: {
       supports: ['language'],
@@ -630,17 +630,17 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/signals_railway_signals,signals_signal_boxes,signals_railway_symbols',
+    url: '/signals_railway_signals,signals_signal_boxes',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
     type: 'vector',
-    url: '/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation',
+    url: '/electrification_signals,electrification_catenary,electrification_substation',
     promoteId: 'id',
   },
-  openrailwaymap_operator: {
+  openrailwaymap_points_of_interest: {
     type: 'vector',
-    url: '/operator_railway_symbols',
+    url: '/points_of_interest',
     promoteId: 'id',
   },
   openhistoricalmap: {
@@ -3787,8 +3787,8 @@ const layers = [
     {
       type: 'symbol',
       minzoom: 12,
-      source: 'openrailwaymap_standard',
-      'source-layer': 'standard_railway_symbols',
+      source: 'openrailwaymap_points_of_interest',
+      'source-layer': 'points_of_interest',
       layout: {
         'visibility': ['case',
           ['<', ['global-state', 'date'], defaultDate], 'none',
@@ -3804,8 +3804,8 @@ const layers = [
     id: 'railway_symbols_text',
     type: 'symbol',
     minzoom: 12,
-    source: 'openrailwaymap_standard',
-    'source-layer': 'standard_railway_symbols',
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest',
     paint: {
       'text-color': colors.styles.standard.symbols,
       'text-halo-color': ['case',
@@ -3834,8 +3834,8 @@ const layers = [
     {
       type: 'symbol',
       minzoom: 16,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'signals_railway_symbols',
+      source: 'openrailwaymap_points_of_interest',
+      'source-layer': 'points_of_interest',
       layout: {
         'visibility': ['case',
           ['<', ['global-state', 'date'], defaultDate], 'none',
@@ -3851,8 +3851,8 @@ const layers = [
     id: `electrification_symbols`,
     type: 'symbol',
     minzoom: 13,
-    source: 'openrailwaymap_electrification',
-    'source-layer': 'electrification_railway_symbols',
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest',
     paint: {
       'icon-color': colors.styles.standard.symbols,
       'icon-halo-color': ['case',
@@ -3895,8 +3895,8 @@ const layers = [
     id: `operator_symbols`,
     type: 'symbol',
     minzoom: 10,
-    source: 'openrailwaymap_operator',
-    'source-layer': 'operator_railway_symbols',
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest',
     paint: {
       'icon-color': colors.styles.standard.symbols,
       'icon-halo-color': ['case',
@@ -3941,8 +3941,8 @@ const layers = [
     {
       type: 'symbol',
       minzoom: 10,
-      source: 'openrailwaymap_operator',
-      'source-layer': 'operator_railway_symbols',
+      source: 'openrailwaymap_points_of_interest',
+      'source-layer': 'points_of_interest',
       layout: {
         'visibility': ['case',
           ['<', ['global-state', 'date'], defaultDate], 'none',
@@ -4487,8 +4487,8 @@ const layers = [
     id: 'signals_railway_symbols_text',
     type: 'symbol',
     minzoom: 16,
-    source: 'openrailwaymap_signals',
-    'source-layer': 'signals_railway_symbols',
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest',
     paint: {
       'text-color': colors.styles.standard.symbols,
       'text-halo-color': ['case',
@@ -4500,7 +4500,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'signals'], 'signals'], 'visible',
+        ['==', ['global-state', 'pois'], 'signals'], 'visible',
         'none',
       ],
       'symbol-z-order': 'source',
