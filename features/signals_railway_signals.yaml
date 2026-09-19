@@ -5631,7 +5631,10 @@ features:
 
   - description: Señal tipo Adif de 4 focos
     country: ES
-    icon: [ default: 'es/Adif-4' ]
+    icon:
+      - default: 'es/Adif-FF-4'
+      - default: 'es/4-FF8'
+    exampleIcon: 'es/Adif-4'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
@@ -5639,7 +5642,10 @@ features:
 
   - description: Señal tipo Adif de 4 focos en disposición 2+2
     country: ES
-    icon: [ default: 'es/Adif-2+2' ]
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF8A'
+    exampleIcon: 'es/Adif-2+2'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
