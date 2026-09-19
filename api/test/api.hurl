@@ -420,39 +420,6 @@ Content-Type: application/geo+json
 jsonpath "$.type" == "FeatureCollection"
 jsonpath "$.features" count == 0
 
-# Non existing WikiData image
-GET {{base_url}}/wikidata/Q0
-HTTP 404
-Content-Type: text/plain; charset=utf-8
-[Asserts]
-body == "Response from Wikidata API had status 400"
-
-# WikiData image with metadata
-GET {{base_url}}/wikidata/Q660045
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.file_name" == "2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.description" == "Berlin, <a href=\"https://en.wikipedia.org/wiki/Ostkreuz\" class=\"extiw\" title=\"en:Ostkreuz\">Ostkreuz</a>"
-jsonpath "$.view_url" == "https://www.wikidata.org/wiki/Q660045#/media/File:2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg/330px-2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg"
-jsonpath "$.attribution" == "Wo st 01 / Wikimedia Commons"
-jsonpath "$.license" == "CC BY-SA 3.0 de"
-jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
-
-# WikiMedia image with metadata
-GET {{base_url}}/wikimedia/U-Bahnhof%20Wuhletal.jpg
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.file_name" == "U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.description" == "U-Bahnhof Wuhletal (station du métro de Berlin, Allemagne)"
-jsonpath "$.view_url" == "https://commons.wikimedia.org/wiki/File:U-Bahnhof%20Wuhletal.jpg#/media/File:U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.thumbnail_url" == "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/U-Bahnhof_Wuhletal.jpg/330px-U-Bahnhof_Wuhletal.jpg"
-jsonpath "$.attribution" == "Molgreen, Own work"
-jsonpath "$.license" == "CC BY-SA 4.0"
-jsonpath "$.license_url" == "https://creativecommons.org/licenses/by-sa/4.0"
-
 # Features
 GET {{base_url}}/features/features.json
 HTTP 200
@@ -467,142 +434,142 @@ GET {{base_url}}/feature/openrailwaymap_signals/signals_signal_boxes/way-4853643
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.osm_id" == 485364317
-jsonpath "$.osm_type" == "W"
-jsonpath "$.feature" == "signal_box"
-jsonpath "$.name" == "Biesdorfer Kreuz ESTW-A"
-jsonpath "$.operator" == "DB InfraGO"
-jsonpath "$.ref" == "BBIK"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.osm_id" == 485364317
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.feature" == "signal_box"
+jsonpath "$.properties.name" == "Biesdorfer Kreuz ESTW-A"
+jsonpath "$.properties.operator" == "DB InfraGO"
+jsonpath "$.properties.ref" == "BBIK"
 
 # Catenary mast
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12329861010-mast
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 12329861010
-jsonpath "$.osm_type" == "N"
-jsonpath "$.feature" == "mast"
-jsonpath "$.supporting" == "cantilever"
-jsonpath "$.position" count == 1
-jsonpath "$.position[0]" == "11.6 (km)"
-jsonpath "$.structure" == "lattice"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 12329861010
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.feature" == "mast"
+jsonpath "$.properties.supporting" == "cantilever"
+jsonpath "$.properties.position" count == 1
+jsonpath "$.properties.position[0]" == "11.6 (km)"
+jsonpath "$.properties.structure" == "lattice"
 
 # Substation
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/62032242
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 62032242
-jsonpath "$.osm_type" == "W"
-jsonpath "$.voltage" count == 2
-jsonpath "$.voltage[0]" == 30000
-jsonpath "$.voltage[1]" == 750
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 62032242
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.voltage" count == 2
+jsonpath "$.properties.voltage[0]" == 30000
+jsonpath "$.properties.voltage[1]" == 750
 
 # Substation
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 320522867
-jsonpath "$.osm_type" == "W"
-jsonpath "$.conversion" == "30 kV 50.00 Hz ⇒ 750 V ="
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 320522867
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.conversion" == "30 kV 50.00 Hz ⇒ 750 V ="
 
 # Railway crossing
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 2101295628
-jsonpath "$.osm_type" == "N"
-jsonpath "$.railway" == "railway_crossing"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 2101295628
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.railway" == "railway_crossing"
 
 # Switch
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2614563600
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 2614563600
-jsonpath "$.osm_type" == "N"
-jsonpath "$.railway" == "switch"
-jsonpath "$.ref" == "W3"
-jsonpath "$.resetting" == true
-jsonpath "$.local_operated" == true
-jsonpath "$.type" == "default"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 2614563600
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.railway" == "switch"
+jsonpath "$.properties.ref" == "W3"
+jsonpath "$.properties.resetting" == true
+jsonpath "$.properties.local_operated" == true
+jsonpath "$.properties.type" == "default"
 
 # Railway position
 GET {{base_url}}/feature/high/railway_text_km/260827078-1
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == "Bei den DB-Open-Data nicht genau erkennbar welcher von beiden der 3.255 und welcher der 3.256 ist, daher beide 3.256"
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 260827078
-jsonpath "$.osm_type" == "N"
-jsonpath "$.pos" == "3.2"
-jsonpath "$.pos_exact" == "3.256"
-jsonpath "$.railway" == "crossing"
+jsonpath "$.properties.note" == "Bei den DB-Open-Data nicht genau erkennbar welcher von beiden der 3.255 und welcher der 3.256 ist, daher beide 3.256"
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 260827078
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.pos" == "3.2"
+jsonpath "$.properties.pos_exact" == "3.256"
+jsonpath "$.properties.railway" == "crossing"
 
 # Stop position
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_stop_positions/1615531689
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.osm_id" == 1615531689
-jsonpath "$.osm_type" == "N"
-jsonpath "$.type" == "tram"
-jsonpath "$.local_ref" == "14"
-jsonpath "$.ref" == null
-jsonpath "$.name" == "S+U Alexanderplatz/Dircksenstraße"
-jsonpath "$.stop_position_routes" count == 4
-jsonpath "$.stop_position_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
-jsonpath "$.stop_position_routes[0].color" == "#33FF33"
-jsonpath "$.stop_position_routes[0].route_id" == "28270"
+jsonpath "$.properties.osm_id" == 1615531689
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.type" == "tram"
+jsonpath "$.properties.local_ref" == "14"
+jsonpath "$.properties.ref" == null
+jsonpath "$.properties.name" == "S+U Alexanderplatz/Dircksenstraße"
+jsonpath "$.properties.stop_position_routes" count == 4
+jsonpath "$.properties.stop_position_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.properties.stop_position_routes[0].color" == "#33FF33"
+jsonpath "$.properties.stop_position_routes[0].route_id" == "28270"
 
 # Station
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" count == 1
-jsonpath "$.note[0]" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
-jsonpath "$.description" == null
-jsonpath "$.station" == "train"
-jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.localized_name" == "Berlin Alexanderplatz"
-jsonpath "$.yard_hump" == null
-jsonpath "$.wikidata" count == 1
-jsonpath "$.wikidata[0]" == "Q698497"
-jsonpath "$.network" count == 1
-jsonpath "$.network[0]" == "Verkehrsverbund Berlin-Brandenburg"
-jsonpath "$.osm_id" count == 1
-jsonpath "$.osm_id[0]" == 30217208
-jsonpath "$.osm_type" count == 1
-jsonpath "$.osm_type[0]" == "N"
-jsonpath "$.references.uic" == "8089001"
-jsonpath "$.references.station" == "53"
-jsonpath "$.references.railway-ref" == "BALE"
-jsonpath "$.wikipedia" count == 1
-jsonpath "$.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
-jsonpath "$.state" == "present"
-jsonpath "$.feature" == "halt"
-jsonpath "$.station_routes" count == 38
-jsonpath "$.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
-jsonpath "$.station_routes[0].color" == "#33FF33"
-jsonpath "$.station_routes[0].route_id" == "28270"
-jsonpath "$.position" == null
-jsonpath "$.operator" count == 1
-jsonpath "$.operator[0]" == "DB InfraGO AG"
+jsonpath "$.properties.note" count == 1
+jsonpath "$.properties.note[0]" == "Berlin Alexanderplatz (Fernbahngleise) ist von der S-Bahn-Station unabhängig und nur ein Haltepunkt, da es keine einzige Weiche gibt."
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.station" == "train"
+jsonpath "$.properties.name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.localized_name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.yard_hump" == null
+jsonpath "$.properties.wikidata" count == 1
+jsonpath "$.properties.wikidata[0]" == "Q698497"
+jsonpath "$.properties.network" count == 1
+jsonpath "$.properties.network[0]" == "Verkehrsverbund Berlin-Brandenburg"
+jsonpath "$.properties.osm_id" count == 1
+jsonpath "$.properties.osm_id[0]" == 30217208
+jsonpath "$.properties.osm_type" count == 1
+jsonpath "$.properties.osm_type[0]" == "N"
+jsonpath "$.properties.references.uic" == "8089001"
+jsonpath "$.properties.references.station" == "53"
+jsonpath "$.properties.references.railway-ref" == "BALE"
+jsonpath "$.properties.wikipedia" count == 1
+jsonpath "$.properties.wikipedia[0]" == "de:Bahnhof Berlin Alexanderplatz"
+jsonpath "$.properties.state" == "present"
+jsonpath "$.properties.feature" == "halt"
+jsonpath "$.properties.station_routes" count == 38
+jsonpath "$.properties.station_routes[0].label" == "Tram M2: S+U Alexanderplatz => Heinersdorf"
+jsonpath "$.properties.station_routes[0].color" == "#33FF33"
+jsonpath "$.properties.station_routes[0].route_id" == "28270"
+jsonpath "$.properties.position" == null
+jsonpath "$.properties.operator" count == 1
+jsonpath "$.properties.operator[0]" == "DB InfraGO AG"
 
 # Station with localized name
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
@@ -611,8 +578,8 @@ lang: ja
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.localized_name" == "ベルリン・アレクサンダー広場"
+jsonpath "$.properties.name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.localized_name" == "ベルリン・アレクサンダー広場"
 
 # Station with not defined localization
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
@@ -621,8 +588,8 @@ lang: nf
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.localized_name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.localized_name" == "Berlin Alexanderplatz"
 
 # Stop area group
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_grouped_station_areas/7721002
@@ -631,200 +598,201 @@ lang: nf
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.osm_id" == 7721002
-jsonpath "$.osm_type" == "R"
-jsonpath "$.feature" == "station_area_group"
+jsonpath "$.properties.osm_id" == 7721002
+jsonpath "$.properties.osm_type" == "R"
+jsonpath "$.properties.feature" == "station_area_group"
 
 # Platform
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platforms/relation-3637413
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.ref" count == 2
-jsonpath "$.ref[0]" == "1"
-jsonpath "$.ref[1]" == "2"
-jsonpath "$.surface" == "paving_stones"
-jsonpath "$.wheelchair" == true
-jsonpath "$.lit" == true
-jsonpath "$.shelter" == null
-jsonpath "$.bin" == true
-jsonpath "$.bench" == true
-jsonpath "$.departures_board" == null
-jsonpath "$.name" == "Berlin Alexanderplatz"
-jsonpath "$.platform_routes" count == 10
-jsonpath "$.platform_routes[0].label" == "RE2: Cottbus => Nauen"
-jsonpath "$.platform_routes[0].color" == "#FFE600"
-jsonpath "$.platform_routes[0].route_id" == "156479"
-jsonpath "$.feature" == "platform"
-jsonpath "$.height" == null
-jsonpath "$.tactile_paving" == true
-jsonpath "$.osm_id" == 3637413
-jsonpath "$.osm_type" == "R"
+jsonpath "$.properties.ref" count == 2
+jsonpath "$.properties.ref[0]" == "1"
+jsonpath "$.properties.ref[1]" == "2"
+jsonpath "$.properties.surface" == "paving_stones"
+jsonpath "$.properties.wheelchair" == true
+jsonpath "$.properties.lit" == true
+jsonpath "$.properties.shelter" == null
+jsonpath "$.properties.bin" == true
+jsonpath "$.properties.bench" == true
+jsonpath "$.properties.departures_board" == null
+jsonpath "$.properties.name" == "Berlin Alexanderplatz"
+jsonpath "$.properties.platform_routes" count == 10
+jsonpath "$.properties.platform_routes[0].label" == "RE2: Cottbus => Nauen"
+jsonpath "$.properties.platform_routes[0].color" == "#FFE600"
+jsonpath "$.properties.platform_routes[0].route_id" == "156479"
+jsonpath "$.properties.feature" == "platform"
+jsonpath "$.properties.height" == null
+jsonpath "$.properties.tactile_paving" == true
+jsonpath "$.properties.osm_id" == 3637413
+jsonpath "$.properties.osm_type" == "R"
 
 # Platform edge
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platform_edges/859918234
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.ref" == "2"
-jsonpath "$.feature" == "platform_edge"
-jsonpath "$.tactile_paving" == null
-jsonpath "$.height" == null
-jsonpath "$.length" > 152.2
-jsonpath "$.length" < 152.3
-jsonpath "$.osm_id" == 859918234
-jsonpath "$.osm_type" == "W"
+jsonpath "$.properties.ref" == "2"
+jsonpath "$.properties.feature" == "platform_edge"
+jsonpath "$.properties.tactile_paving" == null
+jsonpath "$.properties.height" == null
+jsonpath "$.properties.length" > 152.2
+jsonpath "$.properties.length" < 152.3
+jsonpath "$.properties.osm_id" == 859918234
+jsonpath "$.properties.osm_type" == "W"
 
 # POI (operator)
 GET {{base_url}}/feature/openrailwaymap_operator/operator_railway_symbols/node-560099842
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.osm_id" == 560099842
-jsonpath "$.osm_type" == "N"
-jsonpath "$.feature" == "general/owner-change"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.osm_id" == 560099842
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.feature" == "general/owner-change"
 
 # POI (infrastructure)
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-140374295
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == "Container Terminal BeHaLa / City-GVZ Berlin"
-jsonpath "$.description" == null
-jsonpath "$.osm_id" == 140374295
-jsonpath "$.osm_type" == "W"
-jsonpath "$.feature" == "general/container-terminal"
-jsonpath "$.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
-jsonpath "$.ref" == null
+jsonpath "$.properties.note" == "Container Terminal BeHaLa / City-GVZ Berlin"
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" == 140374295
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.feature" == "general/container-terminal"
+jsonpath "$.properties.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
+jsonpath "$.properties.ref" == null
 
 # Speed signal
 GET {{base_url}}/feature/openrailwaymap_speed/speed_railway_signals/10719824502
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.osm_id" == 10719824502
-jsonpath "$.osm_type" == "N"
-jsonpath "$.ref" == "08ZV819"
-jsonpath "$.direction_both" == false
-jsonpath "$.railway" == "signal"
-jsonpath "$.feature0" == "de/zs3-sign-up-{40}"
-jsonpath "$['railway:signal:position']" == "right"
-jsonpath "$['railway:signal:speed_limit']" == "DE-ESO:zs3"
-jsonpath "$['railway:signal:speed_limit:form']" == "sign"
-jsonpath "$['railway:signal:speed_limit:speed']" count == 1
-jsonpath "$['railway:signal:speed_limit:speed'][0]" == "40"
-jsonpath "$['railway:signal:combined']" == "DE-ESO:ks"
-jsonpath "$['railway:signal:combined:form']" == "light"
-jsonpath "$['railway:signal:combined:height']" == "normal"
-jsonpath "$['railway:signal:combined:function']" == "intermediate"
-jsonpath "$['railway:signal:minor']" == "DE-ESO:sh1"
-jsonpath "$['railway:signal:minor:form']" == "light"
-jsonpath "$['railway:signal:traversable']" == "DE-ESO:mastschild_rot-weiss"
-jsonpath "$['railway:signal:traversable:type']" == "written_default_speed;dictated_default_speed"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.osm_id" == 10719824502
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.ref" == "08ZV819"
+jsonpath "$.properties.direction_both" == false
+jsonpath "$.properties.railway" == "signal"
+jsonpath "$.properties.feature0" == "de/zs3-sign-up-{40}"
+jsonpath "$.properties['railway:signal:position']" == "right"
+jsonpath "$.properties['railway:signal:speed_limit']" == "DE-ESO:zs3"
+jsonpath "$.properties['railway:signal:speed_limit:form']" == "sign"
+jsonpath "$.properties['railway:signal:speed_limit:speed']" count == 1
+jsonpath "$.properties['railway:signal:speed_limit:speed'][0]" == "40"
+jsonpath "$.properties['railway:signal:combined']" == "DE-ESO:ks"
+jsonpath "$.properties['railway:signal:combined:form']" == "light"
+jsonpath "$.properties['railway:signal:combined:height']" == "normal"
+jsonpath "$.properties['railway:signal:combined:function']" == "intermediate"
+jsonpath "$.properties['railway:signal:minor']" == "DE-ESO:sh1"
+jsonpath "$.properties['railway:signal:minor:form']" == "light"
+jsonpath "$.properties['railway:signal:traversable']" == "DE-ESO:mastschild_rot-weiss"
+jsonpath "$.properties['railway:signal:traversable:type']" == "written_default_speed;dictated_default_speed"
 
 # Electrification signal
 GET {{base_url}}/feature/openrailwaymap_electrification/electrification_signals/10720881143
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.osm_id" == 10720881143
-jsonpath "$.osm_type" == "N"
-jsonpath "$.ref" == null
-jsonpath "$.direction_both" == false
-jsonpath "$.railway" == "signal"
-jsonpath "$.feature0" == "de/el6-left"
-jsonpath "$['railway:signal:position']" == "right"
-jsonpath "$['railway:signal:electricity']" == "DE-ESO:el6"
-jsonpath "$['railway:signal:electricity:type']" == "end_of_catenary"
-jsonpath "$['railway:signal:electricity:form']" == "sign"
-jsonpath "$['railway:signal:electricity:turn_direction']" == "left"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.osm_id" == 10720881143
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.ref" == null
+jsonpath "$.properties.direction_both" == false
+jsonpath "$.properties.railway" == "signal"
+jsonpath "$.properties.feature0" == "de/el6-left"
+jsonpath "$.properties['railway:signal:position']" == "right"
+jsonpath "$.properties['railway:signal:electricity']" == "DE-ESO:el6"
+jsonpath "$.properties['railway:signal:electricity:type']" == "end_of_catenary"
+jsonpath "$.properties['railway:signal:electricity:form']" == "sign"
+jsonpath "$.properties['railway:signal:electricity:turn_direction']" == "left"
 
 # Distant signal
 GET {{base_url}}/feature/openrailwaymap_signals/signals_railway_signals/9351388537
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.note" == null
-jsonpath "$.osm_id" == 9351388537
-jsonpath "$.osm_type" == "N"
-jsonpath "$.ref" == null
-jsonpath "$.direction_both" == false
-jsonpath "$.railway" == "signal"
-jsonpath "$.feature0" == "de/zs2v-{T}"
-jsonpath "$['railway:signal:distant']" == "DE-ESO:ks"
-jsonpath "$['railway:signal:distant:form']" == "light"
-jsonpath "$['railway:signal:distant:height']" == "normal"
-jsonpath "$['railway:signal:distant:repeated']" == true
-jsonpath "$['railway:signal:distant:states']" count == 2
-jsonpath "$['railway:signal:distant:states'][0]" == "DE-ESO:ks1"
-jsonpath "$['railway:signal:distant:states'][1]" == "DE-ESO:ks2"
-jsonpath "$['railway:signal:position']" == "right"
-jsonpath "$['railway:signal:route_distant']" == "DE-ESO:zs2v"
-jsonpath "$['railway:signal:route_distant:form']" == "light"
-jsonpath "$['railway:signal:route_distant:states']" count == 4
-jsonpath "$['railway:signal:route_distant:states'][0]" == "R"
-jsonpath "$['railway:signal:route_distant:states'][1]" == "S"
-jsonpath "$['railway:signal:route_distant:states'][2]" == "T"
-jsonpath "$['railway:signal:route_distant:states'][3]" == "off"
-jsonpath "$['railway:signal:speed_limit_distant']" == "DE-ESO:zs3v"
-jsonpath "$['railway:signal:speed_limit_distant:form']" == "light"
-jsonpath "$['railway:signal:speed_limit_distant:speed']" count == 2
-jsonpath "$['railway:signal:speed_limit_distant:speed'][0]" == "?"
-jsonpath "$['railway:signal:speed_limit_distant:speed'][1]" == "off"
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.osm_id" == 9351388537
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.ref" == null
+jsonpath "$.properties.direction_both" == false
+jsonpath "$.properties.railway" == "signal"
+jsonpath "$.properties.feature0" == "de/zs2v-{T}"
+jsonpath "$.properties['railway:signal:distant']" == "DE-ESO:ks"
+jsonpath "$.properties['railway:signal:distant:form']" == "light"
+jsonpath "$.properties['railway:signal:distant:height']" == "normal"
+jsonpath "$.properties['railway:signal:distant:repeated']" == true
+jsonpath "$.properties['railway:signal:distant:states']" count == 2
+jsonpath "$.properties['railway:signal:distant:states'][0]" == "DE-ESO:ks1"
+jsonpath "$.properties['railway:signal:distant:states'][1]" == "DE-ESO:ks2"
+jsonpath "$.properties['railway:signal:position']" == "right"
+jsonpath "$.properties['railway:signal:route_distant']" == "DE-ESO:zs2v"
+jsonpath "$.properties['railway:signal:route_distant:form']" == "light"
+jsonpath "$.properties['railway:signal:route_distant:states']" count == 4
+jsonpath "$.properties['railway:signal:route_distant:states'][0]" == "R"
+jsonpath "$.properties['railway:signal:route_distant:states'][1]" == "S"
+jsonpath "$.properties['railway:signal:route_distant:states'][2]" == "T"
+jsonpath "$.properties['railway:signal:route_distant:states'][3]" == "off"
+jsonpath "$.properties['railway:signal:speed_limit_distant']" == "DE-ESO:zs3v"
+jsonpath "$.properties['railway:signal:speed_limit_distant:form']" == "light"
+jsonpath "$.properties['railway:signal:speed_limit_distant:speed']" count == 2
+jsonpath "$.properties['railway:signal:speed_limit_distant:speed'][0]" == "?"
+jsonpath "$.properties['railway:signal:speed_limit_distant:speed'][1]" == "off"
 
 # Turntable
 GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109013
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.osm_id" == 16109013
-jsonpath "$.osm_type" == "W"
-jsonpath "$.feature" == "turntable"
-jsonpath "$.diameter" == "23m"
+jsonpath "$.properties.osm_id" == 16109013
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.feature" == "turntable"
+jsonpath "$.properties.diameter" == "23m"
 
 # Entrance
 GET {{base_url}}/feature/openrailwaymap_standard/standard_station_entrances/623932074
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.osm_id" == 623932074
-jsonpath "$.osm_type" == "N"
-jsonpath "$.type" == "subway"
-jsonpath "$.name" == "Yorckstraße"
-jsonpath "$.ref" == "E"
+jsonpath "$.properties.osm_id" == 623932074
+jsonpath "$.properties.osm_type" == "N"
+jsonpath "$.properties.type" == "subway"
+jsonpath "$.properties.name" == "Yorckstraße"
+jsonpath "$.properties.ref" == "E"
 
 # Railway line
 GET {{base_url}}/feature/high/railway_line_high/9933821-0
 HTTP 200
 Content-Type: application/json
 [Asserts]
-jsonpath "$.electrification_state" == "present"
-jsonpath "$.feature" == "rail"
-jsonpath "$.frequency" == 16.700000762939453
-jsonpath "$.gauges" count == 1
-jsonpath "$.gauges[0]" == "1435"
-jsonpath "$.highspeed" == true
-jsonpath "$.line_routes" count == 14
-jsonpath "$.line_routes[0].color" == "#80004D"
-jsonpath "$.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
-jsonpath "$.line_routes[0].route_id" == "373229"
-jsonpath "$.operator" count == 1
-jsonpath "$.operator[0]" == "DB InfraGO AG"
-jsonpath "$.osm_id" == 9933821
-jsonpath "$.osm_type" == "W"
-jsonpath "$.ref" == "6185"
-jsonpath "$.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
-jsonpath "$.speed_label" == "140"
-jsonpath "$.state" == "present"
-jsonpath "$.train_protection" count == 2
-jsonpath "$.train_protection[0]" == "lzb"
-jsonpath "$.train_protection[1]" == "pzb"
-jsonpath "$.usage" == "main"
-jsonpath "$.voltage" == 15000
-jsonpath "$.note" == null
-jsonpath "$.description" == null
+jsonpath "$.properties.electrification_state" == "present"
+jsonpath "$.properties.feature" == "rail"
+jsonpath "$.properties.frequency" == 16.700000762939453
+jsonpath "$.properties.gauges" count == 1
+jsonpath "$.properties.gauges[0]" == "1435"
+jsonpath "$.properties.highspeed" == true
+jsonpath "$.properties.preserved" == false
+jsonpath "$.properties.line_routes" count == 14
+jsonpath "$.properties.line_routes[0].color" == "#80004D"
+jsonpath "$.properties.line_routes[0].label" == "RE4: Falkenberg (Elster) => Stendal Hauptbahnhof"
+jsonpath "$.properties.line_routes[0].route_id" == "373229"
+jsonpath "$.properties.operator" count == 1
+jsonpath "$.properties.operator[0]" == "DB InfraGO AG"
+jsonpath "$.properties.osm_id" == 9933821
+jsonpath "$.properties.osm_type" == "W"
+jsonpath "$.properties.ref" == "6185"
+jsonpath "$.properties.name" == "Schnellfahrstrecke Oebisfelde–Spandau"
+jsonpath "$.properties.speed_label" == "140"
+jsonpath "$.properties.state" == "present"
+jsonpath "$.properties.train_protection" count == 2
+jsonpath "$.properties.train_protection[0]" == "lzb"
+jsonpath "$.properties.train_protection[1]" == "pzb"
+jsonpath "$.properties.usage" == "main"
+jsonpath "$.properties.voltage" == 15000
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
 
 # No test for interlocking because no such features exist in the test data

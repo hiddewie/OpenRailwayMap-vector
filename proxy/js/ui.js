@@ -12,12 +12,8 @@ const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const configureGeneralTab = document.getElementById('configure-general');
 const configureStandardTab = document.getElementById('configure-standard');
-const configureElectrificationTab = document.getElementById('configure-electrification');
-  const configureTrackTab = document.getElementById('configure-track');
 const configureGeneralBody = document.getElementById('configure-general-body');
 const configureStandardBody = document.getElementById('configure-standard-body');
-const configureElectrificationBody = document.getElementById('configure-electrification-body');
-const configureTrackBody = document.getElementById('configure-track-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
@@ -42,18 +38,23 @@ const localizationDisabledControl =  document.getElementById('localizationDisabl
 const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
-const electrificationRailwayLineVoltageFrequencyControl = document.getElementById('electrificationRailwayLineVoltageFrequency')
-const electrificationRailwayLineMaximumCurrentControl = document.getElementById('electrificationRailwayLineMaximumCurrent')
-const electrificationRailwayLinePowerControl = document.getElementById('electrificationRailwayLinePower')
-const trackRailwayLineGaugeControl = document.getElementById('trackRailwayLineGauge')
-const trackRailwayLineLoadingGaugeControl = document.getElementById('trackRailwayLineLoadingGauge')
-const trackRailwayLineTrackClassControl = document.getElementById('trackRailwayLineTrackClass')
 const backgroundMapContainer = document.getElementById('background-map');
 const newsBackdrop = document.getElementById('news-backdrop');
 const newsContent = document.getElementById('news-content');
 const aboutBackdrop = document.getElementById('about-backdrop');
 
 const MD5 = function(d){var r = M(V(Y(X(d),8*d.length)));return r.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_};
+
+function objectsEqual(left, right, valueComparison) {
+  return left &&
+    right &&
+    Object.keys(left).length === Object.keys(right).length &&
+    Object.keys(left).every(key => right[key] && valueComparison(left[key], right[key]));
+}
+
+function setsEqual(left, right) {
+  return left && right && left.isSubsetOf(right) && right.isSubsetOf(left);
+}
 
 function getFlagEmoji(countryCode) {
   const codePoints = countryCode.toUpperCase()
@@ -74,7 +75,7 @@ window.addEventListener('languagechange', () => {
 
   const localization = configuration.localization ?? defaultConfiguration.localization;
   if (localization === 'automatic') {
-    onStyleChange();
+    languageControl.selectLanguage(configuredLanguage());
   }
 })
 
@@ -291,10 +292,6 @@ function showConfiguration(tab) {
     configureGeneral();
   } else if (tab === 'standard') {
     configureStandard();
-  } else if (tab === 'electrification') {
-    configureElectrification();
-  } else if (tab === 'track') {
-    configureTrack();
   }
 
   backgroundSaturationControl.value = configuration.backgroundSaturation ?? defaultConfiguration.backgroundSaturation;
@@ -366,24 +363,6 @@ function showConfiguration(tab) {
   }
   localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
 
-  const electrificationRailwayLine = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
-  if (electrificationRailwayLine === 'voltageFrequency') {
-    electrificationRailwayLineVoltageFrequencyControl.checked = true
-  } else if (electrificationRailwayLine === 'maximumCurrent') {
-    electrificationRailwayLineMaximumCurrentControl.checked = true
-  } else if (electrificationRailwayLine === 'power') {
-    electrificationRailwayLinePowerControl.checked = true
-  }
-
-  const trackRailwayLine = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
-  if (trackRailwayLine === 'gauge') {
-    trackRailwayLineGaugeControl.checked = true
-  } else if (trackRailwayLine === 'loadingGauge') {
-    trackRailwayLineLoadingGaugeControl.checked = true
-  } else if (trackRailwayLine === 'trackClass') {
-    trackRailwayLineTrackClassControl.checked = true
-  }
-
   configurationBackdrop.style.display = 'block';
 }
 
@@ -394,49 +373,17 @@ function hideConfiguration() {
 function configureGeneral() {
   configureGeneralTab.classList.add('active');
   configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.remove('active');
-  configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'block';
   configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'none';
-  configureTrackBody.style.display = 'none';
 }
 
 function configureStandard() {
   configureGeneralTab.classList.remove('active');
   configureStandardTab.classList.add('active');
-  configureElectrificationTab.classList.remove('active');
-  configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'none';
   configureStandardBody.style.display = 'block';
-  configureElectrificationBody.style.display = 'none';
-  configureTrackBody.style.display = 'none';
-}
-
-function configureElectrification() {
-  configureGeneralTab.classList.remove('active');
-  configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.add('active');
-  configureTrackTab.classList.remove('active');
-
-  configureGeneralBody.style.display = 'none';
-  configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'block';
-  configureTrackBody.style.display = 'none';
-}
-
-function configureTrack() {
-  configureGeneralTab.classList.remove('active');
-  configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.remove('active');
-  configureTrackTab.classList.add('active');
-
-  configureGeneralBody.style.display = 'none';
-  configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'none';
-  configureTrackBody.style.display = 'block';
 }
 
 function toggleNews() {
@@ -460,9 +407,9 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(style, zoom, lat, lon, date, bearing, pitch) {
+function newsLink(preset, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
-  selectStyle(style);
+  selectPreset(preset);
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
@@ -551,9 +498,7 @@ const globalMaxZoom = 20;
 const knownStyles = {
   standard: {
     name: 'Infrastructure',
-    supportsDate: true,
-    hasConfiguration: true,
-    styleGlobalState: {
+    style: {
       tracks: 'usage',
       stations: 'station',
       pois: 'standard',
@@ -568,9 +513,7 @@ const knownStyles = {
   },
   speed: {
     name: 'Speed',
-    supportsDate: false,
-    hasConfiguration: false,
-    styleGlobalState: {
+    style: {
       tracks: 'speed',
       stations: 'none',
       pois: 'none',
@@ -585,9 +528,7 @@ const knownStyles = {
   },
   signals: {
     name: 'Train protection',
-    supportsDate: false,
-    hasConfiguration: false,
-    styleGlobalState: {
+    style: {
       tracks: 'train_protection',
       stations: 'none',
       pois: 'signals',
@@ -602,10 +543,8 @@ const knownStyles = {
   },
   electrification: {
     name: 'Electrification',
-    supportsDate: false,
-    hasConfiguration: true,
-    styleGlobalState: {
-      tracks: 'electrification',
+    style: {
+      tracks: 'voltage_frequency',
       stations: 'none',
       pois: 'electrification',
       turntables: 'none',
@@ -619,10 +558,8 @@ const knownStyles = {
   },
   track: {
     name: 'Track',
-    supportsDate: false,
-    hasConfiguration: true,
-    styleGlobalState: {
-      tracks: 'track',
+    style: {
+      tracks: 'gauge',
       stations: 'none',
       pois: 'none',
       turntables: 'none',
@@ -636,9 +573,7 @@ const knownStyles = {
   },
   operator: {
     name: 'Operator',
-    supportsDate: false,
-    hasConfiguration: false,
-    styleGlobalState: {
+    style: {
       tracks: 'operator',
       stations: 'operator',
       pois: 'operator',
@@ -653,9 +588,7 @@ const knownStyles = {
   },
   route: {
     name: 'Routes',
-    supportsDate: false,
-    hasConfiguration: false,
-    styleGlobalState: {
+    style: {
       tracks: 'routes',
       stations: 'station',
       pois: 'none',
@@ -669,8 +602,242 @@ const knownStyles = {
     },
   },
 };
+const styleElements = [
+  {
+    name: 'Tracks',
+    key: 'tracks',
+    defaultValue: 'usage',
+    values: [
+      {
+        name: 'Usage',
+        value: 'usage',
+      },
+      {
+        name: 'Speed',
+        value: 'speed',
+      },
+      {
+        name: 'Train protection',
+        value: 'train_protection',
+      },
+      {
+        name: 'Voltage & frequency',
+        value: 'voltage_frequency',
+      },
+      {
+        name: 'Maximum current',
+        value: 'maximum_current',
+      },
+      {
+        name: 'Electrical power',
+        value: 'power',
+      },
+      {
+        name: 'Track gauge',
+        value: 'gauge',
+      },
+      {
+        name: 'Loading gauge',
+        value: 'loading_gauge',
+      },
+      {
+        name: 'Track class',
+        value: 'track_class',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'Routes',
+        value: 'routes',
+      },
+      {
+        name: 'Number of tracks',
+        value: 'passenger_lines',
+      },
+    ],
+  },
+  {
+    name: 'Operating sites',
+    key: 'stations',
+    defaultValue: 'station',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Modality',
+        value: 'station',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Platforms',
+    key: 'platforms',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Switches',
+    key: 'switches',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Signals',
+    key: 'signals',
+    // TODO split into functional sections
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Speed',
+        value: 'speed',
+      },
+      {
+        name: 'Train protection',
+        value: 'signals',
+      },
+      {
+        name: 'Electrification',
+        value: 'electrification',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Points of interest',
+    key: 'pois',
+    // TODO split into functional sections
+    defaultValue: 'standard',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Standard',
+        value: 'standard',
+      },
+      {
+        name: 'Electrification',
+        value: 'electrification',
+      },
+      {
+        name: 'Signals',
+        value: 'signals',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Turntables',
+    key: 'turntables',
+    defaultValue: 'plain',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Boxes',
+    key: 'boxes',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Substations',
+    key: 'substations',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+  {
+    name: 'Catenaries',
+    key: 'catenaries',
+    defaultValue: 'none',
+    disabledValue: 'none',
+    values: [
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'None',
+        value: 'none',
+      },
+    ],
+  },
+];
 
-const defaultStyle = Object.keys(knownStyles)[0];
 const defaultDate = (new Date()).getFullYear();
 
 const knownThemes = [
@@ -693,7 +860,7 @@ function hashToObject(hash) {
 function determineParametersFromHash(hash) {
   const hashObject = hashToObject(hash);
   return {
-    style: updateStyleParameter(hashObject.style),
+    style: updateStyleParameter(hashObject),
     date: determineDateParameter(hashObject.date),
   }
 }
@@ -701,29 +868,47 @@ function determineParametersFromHash(hash) {
 /**
  * Backwards conpatibility for existing links
  */
-function updateStyleParameter(hashStyle) {
-  switch (hashStyle) {
-    case 'gauge':
-      updateConfiguration('trackRailwayLine', 'gauge');
-      console.info('Updated hash parameters for gauge style to track style, and updated user configuration');
-      return 'track'
+function updateStyleParameter(hashObject) {
+  const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].style : {};
+  const hashStyle = Object.fromEntries(
+    styleElements
+      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
+      .map(({key}) => [key, hashObject[key]])
+  );
 
-    case 'loading_gauge':
-      updateConfiguration('trackRailwayLine', 'loadingGauge');
-      console.info('Updated hash parameters for gauge style to loading gauge style, and updated user configuration');
-      return 'track'
+  const styleOverrides = {}
 
-    case 'track_class':
-      updateConfiguration('trackRailwayLine', 'trackClass');
-      console.info('Updated hash parameters for gauge style to track class style, and updated user configuration');
-      return 'track'
+  // Compatibility style override for URLs containing electrification style with configuration to show maximum current or power
+  if (configuration.electrificationRailwayLine) {
+    if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'maximumCurrent') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to maximum_current`)
+      styleOverrides.tracks = 'maximum_current'
+    } else if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'power') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to power`)
+      styleOverrides.tracks = 'power'
+    }
+
+    updateConfiguration('electrificationRailwayLine', undefined);
   }
 
-  if (hashStyle && hashStyle in knownStyles) {
-    return hashStyle;
-  } else {
-    return defaultStyle;
+  // Compatibility style override for URLs containing track style with configuration to show loading gauge or track class
+  if (configuration.trackRailwayLine) {
+    if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'trackClass') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to track_class`)
+      styleOverrides.tracks = 'track_class'
+    } else if ((hashObject.style === 'tracks' || hashObject.tracks === 'gauge') && configuration.trackRailwayLine === 'loadingGauge') {
+      console.info(`Migrated tracks style with configuration ${configuration.trackRailwayLine} to loading_gauge`)
+      styleOverrides.tracks = 'loading_gauge'
+    }
+
+    updateConfiguration('trackRailwayLine', undefined);
   }
+
+  return {
+    ...migratedStyle,
+    ...hashStyle,
+    ...styleOverrides,
+  };
 }
 
 function determineDateParameter(hashDate) {
@@ -755,9 +940,16 @@ function determineZoomCenterFromHash(hash) {
 }
 
 function putParametersInHash(hash, style, date) {
-  const hashObject = hashToObject(hash);
-  hashObject.style = style !== defaultStyle ? style : undefined;
+  // Remove style as hash parameter
+  const { style: _, ...hashObject } = hashToObject(hash);
+
+  styleElements.forEach(({key, defaultValue}) => {
+    if (style[key]) {
+      hashObject[key] = style[key] === defaultValue ? undefined : style[key];
+    }
+  })
   hashObject.date = dateControl.isActive() ? date : undefined;
+
   return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
 }
 
@@ -805,7 +997,12 @@ function storeConfiguration(localStorage, configuration) {
 }
 
 function updateConfiguration(name, value) {
-  configuration[name] = value;
+  if (value) {
+    configuration[name] = value;
+  } else {
+    delete configuration[name];
+  }
+
   storeConfiguration(localStorage, configuration);
 }
 
@@ -856,52 +1053,30 @@ function disableHillShade() {
 
 function updateHillShadeOnMap() {
   const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  map.setGlobalStateProperty('hillshade', hillshadeVisible);
+
+  updateGlobalMapState({ hillshade: hillshadeVisible });
 }
 
 function onStationLabelChange(stationlabel) {
   updateConfiguration('stationLowZoomLabel', stationlabel);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('stationLowZoomLabel', stationlabel);
-  }
+  updateGlobalMapState({ stationLowZoomLabel: stationlabel });
   legendControl.updateLegend();
 }
 
 function disableLocalization() {
   updateConfiguration('localization', 'disabled');
-  onStyleChange();
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function automaticLocalization() {
   updateConfiguration('localization', 'automatic');
-  onStyleChange();
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
-  onStyleChange();
-}
-
-function configureElectrificationRailwayLine(electrification) {
-  updateConfiguration('electrificationRailwayLine', electrification);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('electrificationRailwayLine', electrification);
-  }
-
-  legendControl.updateLegend()
-}
-
-function configureTrackRailwayLine(track) {
-  updateConfiguration('trackRailwayLine', track);
-
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('trackRailwayLine', track);
-  }
-
-  legendControl.updateLegend()
+  languageControl.selectLanguage(configuredLanguage());
 }
 
 function configuredLanguage() {
@@ -948,14 +1123,17 @@ function onEditorChange(editor) {
 function onHistoricalInfrastructureChange(historicalInfrastructure) {
   updateConfiguration('historicalInfrastructure', historicalInfrastructure);
 
-  if (historicalInfrastructure !== 'openhistoricalmap') {
-    selectDate(defaultDate)
-  }
+  updateGlobalMapState({
+    openHistoricalMap: historicalInfrastructure === 'openhistoricalmap',
+    showAbandonedInfrastructure: historicalInfrastructure === 'openstreetmap',
+    showRazedInfrastructure: historicalInfrastructure === 'openstreetmap',
+  });
 
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('openHistoricalMap', historicalInfrastructure === 'openhistoricalmap');
-    map.setGlobalStateProperty('showAbandonedInfrastructure', historicalInfrastructure === 'openstreetmap');
-    map.setGlobalStateProperty('showRazedInfrastructure', historicalInfrastructure === 'openstreetmap');
+  if (historicalInfrastructure === 'openhistoricalmap') {
+    dateControl.show();
+  } else {
+    dateControl.hide();
+    selectDate(defaultDate)
   }
 
   onStyleChange();
@@ -964,10 +1142,10 @@ function onHistoricalInfrastructureChange(historicalInfrastructure) {
 function onFutureInfrastructureChange(futureInfrastructure) {
   updateConfiguration('futureInfrastructure', futureInfrastructure);
 
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('showConstructionInfrastructure', futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed');
-    map.setGlobalStateProperty('showProposedInfrastructure', futureInfrastructure === 'construction-proposed');
-  }
+  updateGlobalMapState({
+    showConstructionInfrastructure: futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed',
+    showProposedInfrastructure: futureInfrastructure === 'construction-proposed',
+  });
 
   legendControl.updateLegend();
 }
@@ -1242,8 +1420,6 @@ const defaultConfiguration = {
   view: {},
   stationLowZoomLabel: 'label',
   localization: 'automatic',
-  electrificationRailwayLine: 'voltageFrequency',
-  trackRailwayLine: 'gauge',
   legendConfiguration: 'all',
   legendCountry: null,
 };
@@ -1291,12 +1467,9 @@ map.setStyle(`${location.origin}/style.json`, {
   },
 });
 
-function selectStyle(style) {
-  if (selectedStyle !== style) {
-    selectedStyle = style;
-    styleControl.onExternalStyleChange(style);
-    onStyleChange();
-  }
+function selectPreset(preset) {
+  styleControl.selectPreset(preset);
+  onStyleChange();
 }
 
 function selectDate(date) {
@@ -1309,7 +1482,7 @@ function selectDate(date) {
 
 function onPageParametersChange() {
   // Update URL
-  const updatedHash = putParametersInHash(window.location.hash, selectedStyle, selectedDate);
+  const updatedHash = putParametersInHash(window.location.hash, styleControl.getCurrentStyle(), selectedDate);
   if (window.location.hash !== updatedHash) {
     const location = window.location.href.replace(/(#.+)?$/, updatedHash);
     window.history.replaceState(window.history.state, null, location);
@@ -1369,6 +1542,7 @@ function addLanguageToSupportedSources(style, language) {
 
 // Provide global state defaults as configured by the user
 // Subsequent global state changes are applied directly to the map with setGlobalStateProperty
+// See https://github.com/maplibre/maplibre-gl-js/issues/7632 and https://github.com/maplibre/maplibre-gl-js/pull/8264
 function rewriteGlobalStateDefaults(style, bearing, pitch) {
   style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
   style.state.allDates.default = selectedDate === 'all';
@@ -1390,56 +1564,15 @@ function rewriteGlobalStateDefaults(style, bearing, pitch) {
 
   style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
 
-  style.state.electrificationRailwayLine.default = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
-
-  style.state.trackRailwayLine.default = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
-
   // Style specific map global state
-  Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) => {
+  Object.entries(selectedStyle).forEach(([key, value]) => {
     if (style.state[key]) {
       style.state[key].default = value;
     }
   });
 }
 
-function toggleHillShadeLayer(style) {
-  const hillshadeVisible = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade
-  const layer = style.layers.find(layer => layer.id === 'hillshade')
-  if (layer) {
-    layer.layout = {
-      ...layer.layout,
-      visibility: hillshadeVisible ? 'visible' : 'none'
-    }
-  }
-}
-
-let lastSetMapStyle = null;
-let lastSetMapLanguage = null;
 function onStyleChange() {
-  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  const supportsDate = knownStyles[selectedStyle].supportsDate && historicalInfrastructure === 'openhistoricalmap';
-  const language = configuredLanguage();
-
-  if (selectedStyle !== lastSetMapStyle || language != lastSetMapLanguage) {
-    if (map.isStyleLoaded()) {
-      // Style specific map global state
-      Object.entries(knownStyles[selectedStyle].styleGlobalState).forEach(([key, value]) =>
-        map.setGlobalStateProperty(key, value)
-      );
-    }
-    hideSearchResults();
-    routeControl.clearRoute();
-  }
-
-  if (supportsDate && !dateControl.isShown()) {
-    dateControl.show();
-  } else if (!supportsDate && dateControl.isShown()) {
-    dateControl.hide();
-  }
-
-  lastSetMapStyle = selectedStyle;
-  lastSetMapLanguage = language;
-
   legendControl.updateLegend()
   onPageParametersChange();
 }
@@ -1456,63 +1589,265 @@ const onDateChange = () => {
 class StyleControl {
   constructor(options) {
     this.options = options
-    this.buttons = {};
+    this.currentStyle = Object.fromEntries(
+      options.styleOptions
+        .map(({key, defaultValue}) => [key, options.initialSelection[key] ?? defaultValue])
+    );
+    this.currentPreset = Object.entries(this.options.presets)
+      .find(([preset, {name, style}]) =>
+        Object.keys(style)
+          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+      )
+      ?.[0] ?? null;
+    this.styleButtons = {}
+    this.presetButtons = {}
   }
 
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
-    const buttonGroup = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
 
-    Object.entries(knownStyles).forEach(([style, {name, hasConfiguration}]) => {
-      const button = createDomElement('button', '', buttonGroup);
-      button.innerText = name
-      button.onclick = () => {
-        buttonGroup.classList.remove('active')
-        this.activateStyle(style);
-        this.options.onStyleChange(style)
-      }
-
-      if (hasConfiguration) {
-        const layerConfigurationButton = createDomElement('button', 'layer-configuration', button);
-        layerConfigurationButton.onclick = () => showConfiguration(style)
-      }
-
-      this.buttons[style] = button;
-    });
-
-    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle d-md-none', this._container);
+    const container = createDomElement('button', 'maplibregl-ctrl-style-toggle', this._container);
     container.onclick = () => {
-      buttonGroup.classList.toggle('active')
+      styleContainer.classList.toggle('active')
+      presetContainer.classList.toggle('active')
     };
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    this.activateStyle(selectedStyle);
+    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
+      const initialValue = this.currentStyle[key];
+      const initiallyDisabled = disabledValue && initialValue === disabledValue;
+
+      const button = createDomElement('button', `maplibregl-ctrl-style-popup-button${initiallyDisabled ? ' disabled' : ''}`, styleContainer);
+      button.onclick = () => {
+        if (button.classList.contains('active')) {
+          button.classList.remove('active')
+        } else {
+          this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
+          button.classList.add('active')
+        }
+      }
+
+      const buttonLabel = createDomElement('label', '', button);
+      buttonLabel.innerText = name
+
+      const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
+      buttonIcon.title = name
+
+      const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
+
+      const buttonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
+      buttonLabelSelectionContainer.innerText = name
+
+      this.styleButtons[key] = {};
+      values.forEach(({name, value}) => {
+        const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
+        valueButton.onclick = e => {
+          e.stopPropagation();
+
+          if (this.currentStyle[key] !== value) {
+            this.selectStyleOptions({[key]: value});
+            this.options.onStyleChange({[key]: value});
+          }
+        }
+
+        const valueButtonLabel = createDomElement('label', '', valueButton);
+        valueButtonLabel.innerText = name;
+
+        createDomElement('span', 'active-indicator', valueButton);
+
+        this.styleButtons[key][value] = valueButton;
+      })
+    })
+
+    const presetButton = createDomElement('button', 'maplibregl-ctrl-style-popup-button', presetContainer);
+    presetButton.onclick = () => {
+      if (presetButton.classList.contains('active')) {
+        presetButton.classList.remove('active')
+      } else {
+        this._container.querySelectorAll('.maplibregl-ctrl-style-popup-button.active').forEach(activeButton => activeButton.classList.remove('active'))
+        presetButton.classList.add('active')
+      }
+    }
+
+    const presetButtonLabel = createDomElement('label', '', presetButton);
+    presetButtonLabel.innerText = 'Presets'
+
+    const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
+    presetButtonIcon.title = 'Presets'
+
+    const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', presetButton);
+
+    const presetButtonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
+    presetButtonLabelSelectionContainer.innerText = 'Presets'
+
+    Object.entries(this.options.presets).forEach(([preset, {name, style}]) => {
+      const presetActive = this.currentPreset === preset;
+      const valueButton = createDomElement('button', presetActive ? 'active' : '', selectionContainer);
+      valueButton.onclick = e => {
+        e.stopPropagation();
+
+        const changes = Object.fromEntries(
+          Object.keys(style)
+            .filter(key => this.currentStyle[key] && style[key] && this.currentStyle[key] !== style[key])
+            .map(key => [key, style[key]])
+        );
+
+        if (Object.keys(changes).length > 0) {
+          this.selectPreset(preset);
+          this.options.onStyleChange(changes)
+        }
+      }
+
+      const valueButtonLabel = createDomElement('label', '', valueButton);
+      valueButtonLabel.innerText = name;
+
+      createDomElement('span', 'active-indicator', valueButton);
+
+      this.presetButtons[preset] = valueButton;
+    })
 
     return this._container;
   }
 
-  activateStyle(style) {
-    Object.entries(this.buttons).forEach(([buttonStyle, button]) => {
-      if (buttonStyle === style) {
+  onRemove() {
+    removeDomElement(this._container);
+
+    this._map = undefined;
+    this.currentStyle = {};
+    this.currentPreset = null;
+    this.presetButtons = {};
+    this.styleButtons = {};
+  }
+
+  selectPreset(selectedPreset) {
+    if (this.currentPreset === selectedPreset) {
+      return;
+    }
+
+    Object.entries(this.presetButtons).forEach(([preset, button]) => {
+      if (selectedPreset && preset === selectedPreset) {
         button.classList.add('active')
       } else {
         button.classList.remove('active')
       }
-    })
+    });
+
+    this.currentPreset = selectedPreset;
+
+    const preset = this.options.presets;
+    if (selectedPreset && preset[selectedPreset]) {
+      this.selectStyleOptions(preset[selectedPreset].style)
+    }
+  }
+
+  selectStyleOptions(options) {
+    const mapGlobalStateChanges = Object.fromEntries(
+      Object.entries(options)
+        .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
+        .map(([selectedKey, selectedValue]) => {
+          const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
+          if (!styleOptions) {
+            return;
+          }
+
+          const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
+          Object.entries(this.styleButtons[selectedKey])
+            .forEach(([value, button]) => {
+              if (value === selectedValue) {
+                button.classList.add('active')
+
+                if (disabled) {
+                  button.parentElement.parentElement.classList.add('disabled')
+                } else {
+                  button.parentElement.parentElement.classList.remove('disabled')
+                }
+              } else {
+                button.classList.remove('active')
+              }
+            });
+
+          this.currentStyle[selectedKey] = selectedValue;
+
+          return [selectedKey, selectedValue]
+        })
+    );
+
+    updateGlobalMapState(mapGlobalStateChanges);
+
+    const newPreset = Object.entries(this.options.presets)
+      .find(([preset, {name, style}]) =>
+        Object.keys(style)
+          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+      )
+      ?.[0] ?? null;
+
+    if (this.currentPreset !== newPreset) {
+      this.selectPreset(newPreset);
+    }
+  }
+
+  getCurrentStyle() {
+    return this.currentStyle;
+  }
+
+  getCurrentPreset() {
+    return this.currentPreset;
+  }
+}
+
+class LanguageControl {
+  constructor(options) {
+    this.selectedLanguage = options.initialLanguage;
+  }
+
+  onAdd(map) {
+    this._map = map;
+    return createDomElement('div', 'd-none');
   }
 
   onRemove() {
     removeDomElement(this._container);
+
     this._map = undefined;
   }
 
-  onExternalStyleChange(style) {
-    const radio = this.buttons[style];
-    if (radio && !radio.checked) {
-      radio.checked = true;
+  selectLanguage(language) {
+    if (!this._map) {
+      return;
     }
+
+    if (language === this.selectedLanguage) {
+      return;
+    }
+
+    const style = this._map.getStyle();
+    if (!style) {
+      return;
+    }
+
+    const sourcesWithMetadata = Object.entries(style.sources)
+      .filter(([_, source]) => source.type === 'vector' && source.url && ((source.metadata ?? {}).supports ?? []).includes('language'))
+      .map(([id, _]) => id)
+      .forEach(sourceId => {
+        const source = this._map.getSource(sourceId);
+        if (source) {
+          const parsedUrl = new URL(source.url)
+
+          if (language) {
+            parsedUrl.searchParams.set('lang', language)
+          } else {
+            parsedUrl.searchParams.delete('lang')
+          }
+
+          source.setUrl(parsedUrl.href);
+        }
+      })
+
+    this.selectedLanguage = language;
   }
 }
 
@@ -1523,7 +1858,8 @@ class DateControl {
 
   onAdd(map) {
     this._map = map;
-    this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date');
+    this._container = createDomElement('div', `maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-date${this.options.initiallyShown ? ' show' : ''}`);
+
     const container = createDomElement('button', '', this._container);
     this.icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     this.icon.title = 'Toggle date selection'
@@ -1613,15 +1949,15 @@ class DateControl {
   }
 
   isShown() {
-    return this._container.style.visibility === 'visible';
+    this._container.classList.has('show');
   }
 
   show() {
-    this._container.style.visibility = 'visible'
+    this._container.classList.add('show');
   }
 
   hide() {
-    this._container.style.visibility = 'hidden'
+    this._container.classList.remove('show');
   }
 
   isActive() {
@@ -1989,27 +2325,40 @@ class LegendControl {
     let keyedSourcesAndFeaturesInView = []
     if (legendConfiguration === 'inView') {
       const featuresInView = this.map.queryRenderedFeatures();
+
+      const activeLegendSections = Object.fromEntries(
+        Object.entries(legendData.sourceLayers)
+          .map(([sourceLayer, sections]) => [sourceLayer,
+            Object.entries(sections)
+              .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => mapGlobalState[key] === mapState[key]))
+              .map(([section, _]) => section)])
+      )
+
       const keyedFeaturesInView = featuresInView.flatMap(feature => {
         const layer = feature.layer
         const sourceLayer = `${layer.source}-${layer['source-layer']}`
+        const sourceLayerData = legendData.sourceLayers[sourceLayer] ?? {};
+        return activeLegendSections[sourceLayer].flatMap(section => {
+          const sourceLayerSectionData = legendData.sourceLayers[sourceLayer][section] ?? { key: [], features: [] };
 
-        const sourceLayerData = legendData[selectedStyle].sourceLayers[sourceLayer] ?? {key: []}
-        const featureKey = (sourceLayerData ?? {key: []}).key.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
-        const matchKeys = (sourceLayerData.matchKeys ?? [])
-          .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+          const featureKey = (sourceLayerSectionData.key || [])
+            .map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e');
 
-        return [
-          {
-            sourceLayer,
-            featureKey,
-          },
-          ...(matchKeys.map(matchKey => ({sourceLayer, featureKey: matchKey})))
-        ]
+          const matchKeys = (sourceLayerSectionData.matchKeys ?? [])
+            .map(matchKey => matchKey.map(keyPart => String(feature.properties[keyPart] ?? '').replace(/\{[^}]+}/, '{}').replace(/@([^|]+|$)/g, '')).join('\u001e'))
+
+          return [
+            { sourceLayer, section, featureKey },
+            ...(matchKeys.map(matchKey => ({ sourceLayer, section, featureKey: matchKey })))
+          ]
+        });
       });
 
       keyedSourcesAndFeaturesInView = Object.fromEntries(
         Object.entries(Object.groupBy(keyedFeaturesInView, ({sourceLayer}) => sourceLayer))
-          .map(([sourceLayer, items]) => [sourceLayer, new Set(items.map(({featureKey}) => featureKey))])
+          .map(([sourceLayer, items]) => [sourceLayer, Object.fromEntries(
+            Object.entries(Object.groupBy(items, ({section}) => section))
+              .map(([section, sectionItems]) => [section, new Set(sectionItems.map(({featureKey}) => featureKey))]))])
       );
     }
 
@@ -2019,8 +2368,7 @@ class LegendControl {
       && this.legendState.legendConfiguration === legendConfiguration
       && this.legendState.legendCountry === legendCountry
       && Object.keys(mapGlobalState).map(key => this.legendState.mapGlobalState[key] === mapGlobalState[key]).every(it => it)
-      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).length === Object.keys(keyedSourcesAndFeaturesInView).length
-      && Object.keys(this.legendState.keyedSourcesAndFeaturesInView).every((value, index) => keyedSourcesAndFeaturesInView[index] && value.isSubsetOf(keyedSourcesAndFeaturesInView[index]) && new value.isSupersetOf(keyedSourcesAndFeaturesInView[index]))
+      && objectsEqual(this.legendState.keyedSourcesAndFeaturesInView, keyedSourcesAndFeaturesInView, (left, right) => objectsEqual(left, right, setsEqual))
     ) {
       return;
     }
@@ -2033,7 +2381,7 @@ class LegendControl {
       keyedSourcesAndFeaturesInView,
     };
 
-    const countries = legendData[selectedStyle].countries;
+    const countries = legendData.countries;
     this.legendCountrySelection.replaceChildren([]);
     countries.forEach(country => {
       const option = createDomElement('option', undefined, this.legendCountrySelection)
@@ -2047,13 +2395,15 @@ class LegendControl {
     const visibleLayers = new Set([...layersOrder.filter(layer => !this.map.getLayer(layer).isHidden())])
 
     const legendFeatureFilters = {
-      inView: (source, item) =>
-        keyedSourcesAndFeaturesInView[source] && (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source].has(featureKey))),
-      country: legendCountry ? (_, item) => !item.country || item.country === legendCountry : (() => true),
+      inView: (source, section, item) =>
+        keyedSourcesAndFeaturesInView[source] &&
+        keyedSourcesAndFeaturesInView[source][section] &&
+        (item.keys.length === 0 || item.keys.some(featureKey => keyedSourcesAndFeaturesInView[source][section].has(featureKey))),
+      country: legendCountry ? (_source, _section, item) => !item.country || item.country === legendCountry : (() => true),
     }
     const legendFeatureFilter = legendFeatureFilters[legendConfiguration] ?? (() => true);
 
-    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData[selectedStyle].sourceLayers, mapGlobalState, zoom, legendCountry, legendFeatureFilter)
+    const legendStyle = this.makeLegendStyle(style, visibleLayers, legendData.sourceLayers, mapGlobalState, zoom, legendCountry, legendFeatureFilter)
     this.legendMap.setStyle(legendStyle, {
       validate: false,
       transformStyle: (previous, next) => {
@@ -2160,34 +2510,37 @@ class LegendControl {
         return [];
       }
 
-      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
-      const features = data
-        .filter(zoomFilter)
-        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => featureFilter(sourceName, item))
-        .flatMap(item => {
-          const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
-            .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-            .flatMap((subItem, index, subItems) => ({
-              type: 'Feature',
-              geometry: {
-                type: subItem.type === 'line' || subItem.type === 'polygon'
-                  ? 'LineString'
-                  : 'Point',
-                coordinates:
-                  subItem.type === 'line' ? [
-                      this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-                      this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-                    ] :
-                    subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
-                        this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
-                      : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
-              },
-              properties: subItem.properties,
-            }));
-          entry++;
-          return itemFeatures;
-        });
+      const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
+      const features = Object.entries(data)
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .flatMap(([section, {features}]) => (features ?? [])
+          .filter(zoomFilter)
+          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+          .filter(item => featureFilter(sourceName, section, item))
+          .flatMap(item => {
+            const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
+              .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+              .flatMap((subItem, index, subItems) => ({
+                type: 'Feature',
+                geometry: {
+                  type: subItem.type === 'line' || subItem.type === 'polygon'
+                    ? 'LineString'
+                    : 'Point',
+                  coordinates:
+                    subItem.type === 'line' ? [
+                        this.legendPointToMapPoint([index / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                        this.legendPointToMapPoint([(index + 1) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                      ] :
+                      subItem.type === 'polygon' ? Array.from({length: 20 + 1}, (_, i) => i * Math.PI * 2 / 20).map(phi =>
+                          this.legendPointToMapPoint([Math.cos(phi) * 0.1 + (index + 0.5) / subItems.length * 1.5 - 2.5, Math.sin(phi) * 0.1 - entry * 0.6]))
+                        : this.legendPointToMapPoint([(index + 0.5) / subItems.length * 1.5 - 2.5, -entry * 0.6]),
+                },
+                properties: subItem.properties,
+              }));
+            entry++;
+            return itemFeatures;
+          })
+        );
       done.add(sourceName);
 
       return [[sourceName, {
@@ -2205,37 +2558,40 @@ class LegendControl {
     const legendFeatures = sourceLayers.flatMap(layer => {
       const legendLayerName = `${layer.source}-${layer['source-layer']}`;
       const sourceName = legendLayerName
-      const applicable = layerVisibleAtZoom(zoom)(layer) && visibleLayers.has(layer.id);
+      const applicable = zoomFilter(layer) && visibleLayers.has(layer.id);
       if (done.has(sourceName) || !applicable) {
         return [];
       }
 
-      const data = applicable ? ((legendData[legendLayerName] ?? {}).features ?? []) : [];
-      const features = data
-        .filter(zoomFilter)
-        .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
-        .filter(item => featureFilter(sourceName, item))
-        .map(item => {
-          const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
-          const legend = [itemLegend, ...(item.variants ?? [])
-            .filter(variant => variant.legend)
-            .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
-            .map(variant => variant.legend)]
-            .join(', ');
+      const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
+      const features = Object.entries(data)
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .flatMap(([section, {features}]) => (features ?? [])
+          .filter(zoomFilter)
+          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+          .filter(item => featureFilter(sourceName, section, item))
+          .map(item => {
+            const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
+            const legend = [itemLegend, ...(item.variants ?? [])
+              .filter(variant => variant.legend)
+              .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
+              .map(variant => variant.legend)]
+              .join(', ');
 
-          const feature = {
-            type: 'Feature',
-            geometry: {
-              type: "Point",
-              coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
-            },
-            properties: {
-              legend,
-            },
-          };
-          entry++;
-          return feature;
-        });
+            const feature = {
+              type: 'Feature',
+              geometry: {
+                type: "Point",
+                coordinates: this.legendPointToMapPoint([-0.5, -entry * 0.6]),
+              },
+              properties: {
+                legend,
+              },
+            };
+            entry++;
+            return feature;
+          })
+        );
       done.add(sourceName);
 
       return features;
@@ -2334,12 +2690,15 @@ class AboutControl {
 }
 
 const dateControl = new DateControl({
+  initiallyShown: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
   initialSelection: selectedDate,
   onChange: selectDate,
 });
 const styleControl = new StyleControl({
   initialSelection: selectedStyle,
-  onStyleChange: selectStyle,
+  presets: knownStyles,
+  onStyleChange: changes => onStyleChange(),
+  styleOptions: styleElements,
 });
 const navigationControl = new maplibregl.NavigationControl({
   showCompass: true,
@@ -2353,6 +2712,9 @@ const geolocateControl = new maplibregl.GeolocateControl({
   showAccuracyCircle: false,
   showUserLocation: true,
 })
+const languageControl = new LanguageControl({
+  initialLanguage: configuredLanguage(),
+});
 
 class WakeLock {
   constructor() {
@@ -2386,6 +2748,7 @@ geolocateControl.on('trackuserlocationstart', () => wakeLock.acquire())
 geolocateControl.on('trackuserlocationend', () => wakeLock.release())
 map.addControl(dateControl);
 map.addControl(styleControl);
+map.addControl(languageControl);
 map.addControl(navigationControl);
 map.addControl(geolocateControl);
 map.addControl(new EditControl());
@@ -2424,9 +2787,7 @@ const legendControl = new LegendControl({
 map.addControl(legendControl, 'bottom-left');
 
 const onMapRotate = bearing => {
-  if (map.isStyleLoaded()) {
-    map.setGlobalStateProperty('bearing', bearing ?? 0);
-  }
+  updateGlobalMapState({ bearing: bearing ?? 0 });
 
   const rotated = Math.abs(bearing) >= 1;
   const rotatedShownOnIcon = navigationControl._compassIcon.classList.contains('rotated');
@@ -2440,8 +2801,8 @@ const onMapRotate = bearing => {
 const onMapPitch = pitch => {
   const pitched = pitchedView(pitch)
   const pitchedState = (map.getGlobalState() ?? {}).pitched
-  if (pitched !== pitchedState && map.isStyleLoaded()) {
-    map.setGlobalStateProperty('pitched', pitched);
+  if (pitched !== pitchedState) {
+    updateGlobalMapState({ pitched });
   }
 }
 
@@ -2575,12 +2936,15 @@ function popupContent(feature, abortController) {
   const propertiesFromView = featureCatalog.view;
   const properties$ = propertiesFromView
     ? fetchFeatureProperties(propertiesFromView)
-    : Promise.resolve(feature.properties);
+    : Promise.resolve({
+      properties: feature.properties,
+      images: []
+    });
 
   const popupContainer = createDomElement('div', 'loading');
 
   properties$
-    .then(properties => {
+    .then(({properties, images}) => {
       const {catalogKey, keyVariable} = constructCatalogKey(properties[featureProperty]);
 
       const featureContent = featureCatalog.features && featureCatalog.features[catalogKey];
@@ -2677,75 +3041,54 @@ function popupContent(feature, abortController) {
       })
 
       // Images are not output as properties
-      if (properties.wikidata || properties.wikimedia_commons_file || properties.image) {
+      if (images || properties.image) {
         const popupImageContainer = createDomElement('p', undefined, popupContainer);
 
-        // Reused for both WikiData and WikiMedia Commons images
-        const fetchAndRenderImage = (popupImageLink, imageMetadataUrl) => {
+        (images ?? []).forEach(image => {
+          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
+          popupImageLink.target = '_blank'
+
           const popupImage = createDomElement('img', 'popup-image', popupImageLink);
-          popupImage.style.display = 'none' // Do not display images that cannot load
-          popupImage.onload = () => popupImage.style.display = 'block'
+          if (image.width && image.height) {
+            // If image size information is available, set it on the image to reduce popup resizing
+            popupImage.style.width = '240px';
+            popupImage.style.height = `${240 * image.height / image.width}px`;
+          } else {
+            popupImage.style.display = 'none' // Do not display images that cannot load
+            popupImage.onload = () => popupImage.style.display = 'block'
+          }
 
-          fetch(imageMetadataUrl, {
-            signal: abortController.signal,
-          })
-            .then(response => response.json())
-            .then(data => {
-              const description = `Image ${data.file_name} from Wikidata ${properties.wikidata}${data.description ? `: ${data.description}` : ''}`
+          popupImage.src = image.thumbnail_url
+          popupImage.title = image.description
+          popupImage.alt = image.description
 
-              popupImage.src = data.thumbnail_url
-              popupImage.title = description
-              popupImage.alt = description
+          popupImageLink.href = image.view_url
+          popupImageLink.title = image.description
 
-              popupImageLink.href = data.view_url
-              popupImageLink.title = description
+          if (image.license || image.attribution) {
+            const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
+            const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
+            popupImageAttributionCopyright.innerText = '©';
+            popupImageAttributionCopyright.onclick = e => {
+              e.preventDefault();
+              e.stopPropagation();
+              popupImageAttribution.classList.toggle('collapsed');
+            }
 
-              if (data.license || data.attribution) {
-                const popupImageAttribution = createDomElement('span', 'popup-image-attribution collapsed', popupImageLink);
-                const popupImageAttributionCopyright = createDomElement('span', 'popup-image-attribution-copyright', popupImageAttribution);
-                popupImageAttributionCopyright.innerText = '©';
-                popupImageAttributionCopyright.onclick = e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  popupImageAttribution.classList.toggle('collapsed');
-                }
-
-                if (data.license) {
-                  const popupImageAttributionLicense = createDomElement(data.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
-                  if (data.license_url) {
-                    popupImageAttributionLicense.href = data.license_url;
-                    popupImageAttributionLicense.target = '_blank';
-                  }
-                  popupImageAttributionLicense.innerText = data.license;
-                }
-                if (data.attribution) {
-                  const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
-                  popupImageAttributionAttribution.innerText = data.attribution;
-                }
+            if (image.license) {
+              const popupImageAttributionLicense = createDomElement(image.license_url ? 'a' : 'span', 'hide-collapsed', popupImageAttribution);
+              if (image.license_url) {
+                popupImageAttributionLicense.href = image.license_url;
+                popupImageAttributionLicense.target = '_blank';
               }
-            })
-            .catch(err => {
-              if (!abortController.signal.aborted) {
-                console.error('Error while fetching popup image', err);
-              } else {
-                // Ignore aborted request errors
-              }
-            });
-        }
-
-        if (properties.wikidata) {
-          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-          popupImageLink.target = '_blank'
-
-          fetchAndRenderImage(popupImageLink, `/api/wikidata/${encodeURIComponent(properties.wikidata)}`);
-        }
-
-        if (properties.wikimedia_commons_file) {
-          const popupImageLink = createDomElement('a', 'popup-image-link', popupImageContainer)
-          popupImageLink.target = '_blank'
-
-          fetchAndRenderImage(popupImageLink, `/api/wikimedia/${encodeURIComponent(properties.wikimedia_commons_file)}`);
-        }
+              popupImageAttributionLicense.innerText = image.license;
+            }
+            if (image.attribution) {
+              const popupImageAttributionAttribution = createDomElement('span', 'hide-collapsed', popupImageAttribution);
+              popupImageAttributionAttribution.innerText = image.attribution;
+            }
+          }
+        })
 
         if (properties.image) {
           const popupImageLink = createDomElement('a', undefined, popupImageContainer);
@@ -2893,6 +3236,22 @@ map.on('rotateend', () => updateConfiguration('view', {center: map.getCenter(), 
 map.on('pitch', () => onMapPitch(map.getPitch()));
 map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch()}));
 map.setMissingStyleImageResolver(async ids => await generateImage([map, legendControl.legendMap], ids));
+
+function updateGlobalMapState(changes) {
+  // Ensure all map global state changes are processed at once
+  const changesAsDefaults = Object.fromEntries(Object.entries(changes).map(([key, value]) => [key, { default: value }]))
+
+  if (map.isStyleLoaded()) {
+    map.style.setGlobalState(changesAsDefaults);
+    map._update(true);
+  } else {
+    // Once the style is marked as ready, a `data` event is triggered
+    map.once('data', () => {
+      map.style.setGlobalState(changesAsDefaults);
+      map._update(true);
+    });
+  }
+}
 
 function formatTimespan(timespan) {
   if (timespan < 60 * 1000) {

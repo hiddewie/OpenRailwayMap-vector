@@ -662,6 +662,7 @@ operators:
 
   - country: DE
     names:
+      - 'Thüringer Eisenbahn'
       - 'Thüringer Eisenbahn GmbH'
       - 'ThE'
     color: '#014601'

@@ -7,6 +7,7 @@ const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml',
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
+const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 
@@ -130,8 +131,20 @@ const railwayLineFeatures = {
     highspeed: {
       name: 'High speed',
     },
+    preserved: {
+      name: 'Preserved',
+    },
     rubber_tires: {
       name: 'Rubber-tyred',
+    },
+    workrules: {
+      name: 'Workrules',
+      format: {
+        lookup: 'workrules',
+      }
+    },
+    passenger_lines: {
+      name: 'Number of tracks',
     },
     preferred_direction: {
       name: 'Preferred direction',
@@ -503,6 +516,25 @@ const interlockingFeatures = {
   }
 };
 
+const openHistoricalMapRouteModalities = [
+  {
+    modality: 'subway',
+    name: 'Subway',
+  },
+  {
+    modality: 'tram',
+    name: 'Tram',
+  },
+  {
+    modality: 'light_rail',
+    name: 'Light rail',
+  },
+  {
+    modality: 'train',
+    name: 'Train',
+  },
+];
+
 // TODO move examples here
 // TODO add icon
 const features = {
@@ -578,8 +610,17 @@ const features = {
       highspeed: {
         name: 'High speed',
       },
+      preserved: {
+        name: 'Preserved',
+      },
       rubber_tires: {
         name: 'Rubber-tyred',
+      },
+      workrules: {
+        name: 'Workrules',
+      },
+      passenger_lines: {
+        name: 'Number of tracks',
       },
       preferred_direction: {
         name: 'Preferred direction',
@@ -609,6 +650,17 @@ const features = {
         name: 'Until',
       },
     },
+  },
+  'openhistoricalmap-route_lines': {
+    labelProperties: [],
+    featureLinks: featureLinks.openhistoricalmap,
+    features: {},
+    properties: Object.fromEntries(
+      openHistoricalMapRouteModalities
+        .flatMap(({modality, name}) => [6, 5, 4, 3, 2, 1]
+          .map(i => [`route_${modality}_${i}_name`, {
+            name: `${name} route`,
+          }]))),
   },
   'openhistoricalmap-transport_points_centroids': {
     featureProperty: 'type',
@@ -1617,6 +1669,11 @@ const features = {
         index: 1,
       },
     },
+  },
+
+  workrules: {
+    features: Object.fromEntries(workrules.workrules
+      .map(({name, country, value}) => [value, { name, country }])),
   },
 };
 

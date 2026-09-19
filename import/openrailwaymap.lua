@@ -194,6 +194,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
     { column = 'highspeed', type = 'boolean' },
+    { column = 'preserved', type = 'boolean', not_null = true },
     { column = 'layer', type = 'integer' },
     { column = 'ref', type = 'text' },
     { column = 'track_ref', type = 'text' },
@@ -224,6 +225,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
     { column = 'rubber_tires', type = 'boolean' },
+    { column = 'workrules', sql_type = 'text[]' },
+    { column = 'passenger_lines', type = 'integer' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -760,7 +763,7 @@ local interlocking_landuse = osm2pgsql.define_table({
 
 local railway_line_states = {}
 -- ordered from lower to higher importance
-local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
+local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction'}
 for index, state in ipairs(states) do
   railway_line_states[state] = {
     state = state,
@@ -786,12 +789,13 @@ function railway_line_state(tags)
   local mapped_railway = railway_line_states[railway]
   if mapped_railway then
     return mapped_railway.state,
-      tags[mapped_railway.railway] or (tags['railway:preserved'] == 'yes' and tags['railway']) or tags[railway] or 'rail',
+      tags[mapped_railway.railway] or tags[railway] or 'rail',
       tags[mapped_railway.usage] or usage,
       tags[mapped_railway.service] or service,
       tags[mapped_railway.name] or name,
       tags[mapped_railway.gauge] or gauge,
       highspeed,
+      preserved,
       mapped_railway.rank
   else
 
@@ -818,7 +822,7 @@ function railway_line_state(tags)
     else rank = 10
     end
 
-    return 'present', railway, usage, service, name, gauge, highspeed, rank
+    return 'present', railway, usage, service, name, gauge, highspeed, preserved, rank
   end
 end
 
@@ -1484,7 +1488,7 @@ function osm2pgsql.process_way(object)
   local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
 
   if railway_values(tags.railway) then
-    local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
+    local state, feature, usage, service, state_name, gauge, highspeed, preserved, rank = railway_line_state(tags)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags, '')
     local train_protection_construction, train_protection_construction_rank = tag_functions.train_protection(tags, 'construction:')
 
@@ -1517,6 +1521,7 @@ function osm2pgsql.process_way(object)
         usage = usage,
         rank = rank,
         highspeed = highspeed,
+        preserved = preserved,
         layer = tags['layer'],
         ref = tags['ref'],
         track_ref = tags['railway:track_ref'],
@@ -1548,6 +1553,8 @@ function osm2pgsql.process_way(object)
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
         rubber_tires = tags.rubber_tires and tags.rubber_tires ~= 'no' or nil,
+        workrules = split_semicolon_to_sql_array(tags['workrules']),
+        passenger_lines = tags['passenger_lines'],
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,

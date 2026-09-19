@@ -23,7 +23,7 @@ local as_polygon_mock = function ()
   }
 end
 
--- Places of interest
+-- Points of interest
 
 osm2pgsql.process_node({
   id = 123,
@@ -761,7 +761,7 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
 })
 
 
--- Places of interest
+-- Points of interest
 
 osm2pgsql.process_way({
   id = 123,

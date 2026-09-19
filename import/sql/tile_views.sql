@@ -13,6 +13,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     usage,
     service,
     highspeed,
+    preserved,
     tunnel,
     bridge,
     r.name as name,
@@ -54,6 +55,8 @@ CREATE OR REPLACE VIEW railway_line_view AS
     traffic_mode,
     radio,
     rubber_tires,
+    workrules,
+    passenger_lines,
     line_routes,
     route_count,
     wikidata,
@@ -76,6 +79,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
       service,
       rank,
       highspeed,
+      preserved,
       reporting_marks,
       layer,
       bridge,
@@ -112,6 +116,8 @@ CREATE OR REPLACE VIEW railway_line_view AS
       traffic_mode,
       radio,
       rubber_tires,
+      workrules,
+      passenger_lines,
       (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
       wikidata,
@@ -146,6 +152,7 @@ RETURN (
       usage,
       service,
       highspeed,
+      preserved,
       tunnel,
       bridge,
       name,
@@ -182,7 +189,8 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
-      route_count
+      route_count,
+      passenger_lines
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -282,7 +290,8 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
-          "route_count": "integer"
+          "route_count": "integer",
+          "passenger_lines": "integer"
         }
       }
     ]
@@ -300,6 +309,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     state,
     usage,
     highspeed,
+    preserved,
     ref,
     name,
     speed_label,
@@ -321,6 +331,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     operator_bright,
     primary_operator,
     owner,
+    passenger_lines,
     rank
   FROM railway_line_view
   WHERE
@@ -1827,6 +1838,7 @@ RETURN (
       gauge0,
       track_class,
       loading_gauge,
+      passenger_lines,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1837,7 +1849,8 @@ RETURN (
       gauge0,
       gaugeint0,
       track_class,
-      loading_gauge
+      loading_gauge,
+      passenger_lines
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1856,7 +1869,8 @@ DO $do$ BEGIN
           "state": "string",
           "usage": "string",
           "gauge0": "string",
-          "gaugeint0": "number"
+          "gaugeint0": "number",
+          "passenger_lines": "number"
         }
       }
     ]
