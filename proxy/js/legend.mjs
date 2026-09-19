@@ -3842,27 +3842,28 @@ const sourceLayers = {
   // POIs
 
   "openrailwaymap_points_of_interest-points_of_interest": {
-    // TODO
-    standard: {
+    pois: {
       key: [
         'feature',
       ],
-      features: poi.features
-        .filter(feature => feature.layer === 'standard')
-        .map(feature => ({
-          legend: feature.description,
-          type: 'point',
-          minzoom: feature.minzoom,
+      features: poi.features.map(feature => ({
+        legend: feature.description,
+        type: 'point',
+        minzoom: feature.minzoom,
+        properties: {
+          feature: feature.feature,
+          type: feature.type,
+        },
+        variants: feature.variants ? feature.variants.map(variant => ({
+          legend: variant.description,
           properties: {
-            feature: feature.feature,
+            feature: variant.feature,
           },
-          variants: feature.variants ? feature.variants.map(variant => ({
-            legend: variant.description,
-            properties: {
-              feature: variant.feature,
-            },
-          })) : undefined,
-        })),
+        })) : undefined,
+        mapState: {
+          pois: feature.type,
+        },
+      })),
     },
   },
 

@@ -2561,14 +2561,14 @@ class LegendControl {
 
       const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
       const features = Object.entries(data)
-        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(mapState[key]) : state[key] === mapState[key]))
         .flatMap(([section, {features}]) => (features ?? [])
           .filter(zoomFilter)
-          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+          .filter(item => Object.keys(item.mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(item.mapState[key]) : state[key] === item.mapState[key]))
           .filter(item => featureFilter(sourceName, section, item))
           .flatMap(item => {
             const itemFeatures = [item, ...(item.variants ?? []).map(subItem => ({...item, ...subItem, properties: {...item.properties, ...subItem.properties}}))]
-              .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+              .filter(item => Object.keys(item.mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(item.mapState[key]) : state[key] === item.mapState[key]))
               .flatMap((subItem, index, subItems) => ({
                 type: 'Feature',
                 geometry: {
@@ -2614,16 +2614,16 @@ class LegendControl {
 
       const data = applicable ? (legendData[legendLayerName] ?? {}) : [];
       const features = Object.entries(data)
-        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => state[key] === mapState[key]))
+        .filter(([section, {mapState}]) => Object.keys(mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(mapState[key]) : state[key] === mapState[key]))
         .flatMap(([section, {features}]) => (features ?? [])
           .filter(zoomFilter)
-          .filter(item => Object.keys(item.mapState || {}).every(key => state[key] === item.mapState[key]))
+          .filter(item => Object.keys(item.mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(item.mapState[key]) : state[key] === item.mapState[key]))
           .filter(item => featureFilter(sourceName, section, item))
           .map(item => {
             const itemLegend = (country || !item.country) ? item.legend : `(${item.country}) ${item.legend}`
             const legend = [itemLegend, ...(item.variants ?? [])
               .filter(variant => variant.legend)
-              .filter(variant => Object.keys(variant.mapState || {}).every(key => state[key] === variant.mapState[key]))
+              .filter(variant => Object.keys(variant.mapState || {}).every(key => Array.isArray(state[key]) ? state[key].includes(variant.mapState[key]) : state[key] === variant.mapState[key]))
               .map(variant => variant.legend)]
               .join(', ');
 
