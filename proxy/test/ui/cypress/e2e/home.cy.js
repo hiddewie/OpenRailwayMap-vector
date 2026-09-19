@@ -44,7 +44,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Track').click()
-    cy.url().should('include', 'tracks=track')
+    cy.url().should('include', 'tracks=gauge')
 
     cy.wait(3000)
     cy.screenshot()
@@ -108,10 +108,22 @@ describe('home page', () => {
     cy.url().should('include', 'tracks=power')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
-      .contains('button', 'Track')
+      .contains('button', 'Track gauge')
       .click()
 
-    cy.url().should('include', 'tracks=track')
+    cy.url().should('include', 'tracks=gauge')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Loading gauge')
+      .click()
+
+    cy.url().should('include', 'tracks=loading_gauge')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Track class')
+      .click()
+
+    cy.url().should('include', 'tracks=track_class')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
       .contains('button', 'Operator')
@@ -408,7 +420,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Track').click()
-    cy.url().should('include', 'tracks=track')
+    cy.url().should('include', 'tracks=gauge')
 
     cy.wait(3000)
     cy.screenshot()

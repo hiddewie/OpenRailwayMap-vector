@@ -431,8 +431,7 @@ const sourceLayers = {
   'track_railway_line_low-track_railway_line_low': {
     gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'gauge',
+        tracks: 'gauge',
       },
       key: [],
       features: [
@@ -520,8 +519,7 @@ const sourceLayers = {
     },
     loading_gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'loadingGauge',
+        tracks: 'loading_gauge',
       },
       key: [],
       features: [
@@ -542,8 +540,7 @@ const sourceLayers = {
     },
     track_class: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'trackClass',
+        tracks: 'track_class',
       },
       key: [],
       features: [
@@ -1055,8 +1052,7 @@ const sourceLayers = {
     },
     gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'gauge',
+        tracks: 'gauge',
       },
       key: [],
       features: [
@@ -1140,12 +1136,28 @@ const sourceLayers = {
             gaugeint0: null,
           },
         },
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            gauge0: '3500',
+            gaugeint0: 3500,
+            label: '3500',
+            loading_gauge: null,
+            track_class: null,
+          },
+        },
       ]
     },
     loading_gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'loadingGauge',
+        tracks: 'loading_gauge',
       },
       key: [],
       features: [
@@ -1162,12 +1174,28 @@ const sourceLayers = {
             tunnel: false,
           },
         })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            gauge0: '3500',
+            gaugeint0: 3500,
+            label: '3500',
+            loading_gauge: null,
+            track_class: null,
+          },
+        },
       ]
     },
     track_class: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'trackClass',
+        tracks: 'track_class',
       },
       key: [],
       features: [
@@ -1184,14 +1212,6 @@ const sourceLayers = {
             tunnel: false,
           },
         })),
-      ]
-    },
-    unknown: {
-      mapState: {
-        tracks: 'track',
-      },
-      key: [],
-      features: [
         {
           legend: '(unknown)',
           type: 'line',
@@ -2056,8 +2076,7 @@ const sourceLayers = {
     },
     gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'gauge',
+        tracks: 'gauge',
       },
       key: [],
       features: [
@@ -2242,12 +2261,28 @@ const sourceLayers = {
             gauges: '',
           },
         },
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            gauge0: '3500',
+            gaugeint0: 3500,
+            gauges: '3500',
+            loading_gauge: null,
+            track_class: null,
+          },
+        },
       ],
     },
     loading_gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'loadingGauge',
+        tracks: 'loading_gauge',
       },
       key: [],
       features: [
@@ -2264,12 +2299,28 @@ const sourceLayers = {
             tunnel: false,
           },
         })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+            gauge0: '3500',
+            gaugeint0: 3500,
+            gauges: '3500',
+            loading_gauge: null,
+            track_class: null,
+          },
+        },
       ],
     },
     track_class: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'trackClass',
+        tracks: 'track_class',
       },
       key: [],
       features: [
@@ -2286,14 +2337,6 @@ const sourceLayers = {
             tunnel: false,
           },
         })),
-      ],
-    },
-    track: {
-      mapState: {
-        tracks: 'track',
-      },
-      key: [],
-      features: [
         {
           legend: '(unknown)',
           type: 'line',
@@ -2881,8 +2924,7 @@ const sourceLayers = {
     },
     gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'gauge',
+        tracks: 'gauge',
       },
       key: [],
       features: [
@@ -2905,8 +2947,7 @@ const sourceLayers = {
     },
     loading_gauge: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'loadingGauge',
+        tracks: 'loading_gauge',
       },
       key: [],
       features: [
@@ -2929,8 +2970,7 @@ const sourceLayers = {
     },
     track_class: {
       mapState: {
-        tracks: 'track',
-        trackRailwayLine: 'trackClass',
+        tracks: 'track_class',
       },
       key: [],
       features: [
