@@ -5658,7 +5658,7 @@ features:
 
   - description: Señal tipo Renfe de 3 focos con cartelón "P"
     country: ES
-    icon: [ default: 'es/Renfe-3+P' ]
+    icon: [ default: 'es/Renfe-3+P-FF7B' ]
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
@@ -5666,7 +5666,7 @@ features:
 
   - description: Señal tipo Renfe de 3 focos y luz blanca
     country: ES
-    icon: [ default: 'es/Renfe-3+1' ]
+    icon: [ default: 'es/Renfe-3+1-FF8B' ]
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
@@ -5701,7 +5701,6 @@ features:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
       - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
-
 
   # --- ETCS --- #
 
