@@ -5676,16 +5676,14 @@ features:
     country: ES
     icon: [ default: 'es/FI15A' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI' }
-      - { tag: 'railway:signal:whistle:shape', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Silbar (anulable)
     country: ES
     icon: [ default: 'es/FI15Abis' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI'}
-      - { tag: 'railway:signal:whistle:shape', value: 'ES-RCF:FI15Abis' }
+      - { tag: 'railway:signal:whistle', value: 'FI15Abis'}
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Proximidad a un apeadero
