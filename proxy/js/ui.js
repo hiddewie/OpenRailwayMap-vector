@@ -1671,7 +1671,7 @@ class StyleControl {
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
 
-      const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
+      const selectionContainer = createDomElement('div', `maplibregl-ctrl-style-popup-container${multiple ? ' multiple' : ''}`, button);
 
       const buttonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
       buttonLabelSelectionContainer.innerText = name
