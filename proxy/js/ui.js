@@ -933,6 +933,21 @@ function updateStyleParameter(hashObject) {
     updateConfiguration('trackRailwayLine', undefined);
   }
 
+  // Compatibility style override for URLs containing POI style
+  if (hashObject.pois === 'electrification') {
+    console.info(`Migrated POIs style from electrification to electrical_equipment`)
+    styleOverrides.pois = ['electrical_equipment']
+  } else if (hashObject.pois === 'signals') {
+    console.info(`Migrated POIs style from signals to vacancy_detection and train_protection`)
+    styleOverrides.pois = ['vacancy_detection', 'train_protection']
+  } else if (hashObject.pois === 'operator') {
+    console.info(`Migrated POIs style for operator`)
+    styleOverrides.pois = ['operator']
+  } else if (hashObject.pois === 'none') {
+    console.info(`Migrated POIs style for none`)
+    styleOverrides.pois = []
+  }
+
   return {
     ...migratedStyle,
     ...hashStyle,
