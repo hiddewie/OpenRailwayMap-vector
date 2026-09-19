@@ -739,7 +739,6 @@ const styleElements = [
     name: 'Points of interest',
     key: 'pois',
     defaultValue: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
-    disabledValue: 'none',
     multiple: true,
     values: [
       {
@@ -773,10 +772,6 @@ const styleElements = [
       {
         name: 'Train protection',
         value: 'train_protection',
-      },
-      {
-        name: 'None',
-        value: 'none',
       },
     ],
   },
@@ -975,9 +970,9 @@ function putParametersInHash(hash, style, date) {
   // Remove style as hash parameter
   const { style: _, ...hashObject } = hashToObject(hash);
 
-  styleElements.forEach(({key, defaultValue}) => {
+  styleElements.forEach(({key, defaultValue, multiple}) => {
     if (style[key]) {
-      hashObject[key] = style[key] === defaultValue ? undefined : style[key];
+      hashObject[key] = (multiple ? setsEqual(new Set(style[key]), new Set(defaultValue)) : style[key] === defaultValue) ? undefined : style[key];
     }
   })
   hashObject.date = dateControl.isActive() ? date : undefined;
@@ -1628,7 +1623,7 @@ class StyleControl {
     this.currentPreset = Object.entries(this.options.presets)
       .find(([preset, {name, style}]) =>
         Object.keys(style)
-          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+          .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] === style[key]))
       )
       ?.[0] ?? null;
     this.styleButtons = {}
@@ -1649,9 +1644,9 @@ class StyleControl {
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
+    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue, multiple}) => {
       const initialValue = this.currentStyle[key];
-      const initiallyDisabled = disabledValue && initialValue === disabledValue;
+      const initiallyDisabled = multiple ? initialValue.length === 0 : (disabledValue && initialValue === disabledValue);
 
       const button = createDomElement('button', `maplibregl-ctrl-style-popup-button${initiallyDisabled ? ' disabled' : ''}`, styleContainer);
       button.onclick = () => {
@@ -1676,13 +1671,24 @@ class StyleControl {
 
       this.styleButtons[key] = {};
       values.forEach(({name, value}) => {
-        const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
+        const valueButton = createDomElement('button', (multiple ? initialValue.some(it => it === value) : initialValue === value) ? 'active' : '', selectionContainer);
         valueButton.onclick = e => {
           e.stopPropagation();
 
-          if (this.currentStyle[key] !== value) {
-            this.selectStyleOptions({[key]: value});
-            this.options.onStyleChange({[key]: value});
+          if (multiple) {
+            const currentValue = this.currentStyle[key] ?? [];
+            if (currentValue.some(it => it === value)) {
+              this.selectStyleOptions({[key]: currentValue.filter(it => it !== value)});
+              this.options.onStyleChange({[key]: currentValue.filter(it => it !== value)});
+            } else {
+              this.selectStyleOptions({[key]: currentValue.concat([value])});
+              this.options.onStyleChange({[key]: currentValue.concat([value])});
+            }
+          } else {
+            if (this.currentStyle[key] !== value) {
+              this.selectStyleOptions({[key]: value});
+              this.options.onStyleChange({[key]: value});
+            }
           }
         }
 
@@ -1724,7 +1730,7 @@ class StyleControl {
 
         const changes = Object.fromEntries(
           Object.keys(style)
-            .filter(key => this.currentStyle[key] && style[key] && this.currentStyle[key] !== style[key])
+            .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? !setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] !== style[key]))
             .map(key => [key, style[key]])
         );
 
@@ -1779,17 +1785,19 @@ class StyleControl {
   selectStyleOptions(options) {
     const mapGlobalStateChanges = Object.fromEntries(
       Object.entries(options)
-        .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
-        .map(([selectedKey, selectedValue]) => {
+        .flatMap(([selectedKey, selectedValue]) => {
           const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
           if (!styleOptions) {
-            return;
+            return [];
+          }
+          if (styleOptions.multiple ? setsEqual(new Set(this.currentStyle[selectedKey]), new Set(selectedValue)) : this.currentStyle[selectedKey] === selectedValue) {
+            return [];
           }
 
-          const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
+          const disabled = styleOptions.multiple ? selectedValue.length === 0 : styleOptions.disabledValue && selectedValue === styleOptions.disabledValue;
           Object.entries(this.styleButtons[selectedKey])
             .forEach(([value, button]) => {
-              if (value === selectedValue) {
+              if (styleOptions.multiple ? selectedValue.some(it => it === value) : value === selectedValue) {
                 button.classList.add('active')
 
                 if (disabled) {
@@ -1804,7 +1812,7 @@ class StyleControl {
 
           this.currentStyle[selectedKey] = selectedValue;
 
-          return [selectedKey, selectedValue]
+          return [[selectedKey, selectedValue]]
         })
     );
 
@@ -1813,7 +1821,7 @@ class StyleControl {
     const newPreset = Object.entries(this.options.presets)
       .find(([preset, {name, style}]) =>
         Object.keys(style)
-          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+          .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] === style[key]))
       )
       ?.[0] ?? null;
 
