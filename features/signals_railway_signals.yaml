@@ -5616,11 +5616,8 @@ features:
 
   - description: Señal tipo Adif de 5 focos
     country: ES
-    icon: 
-      - match: 'railway:signal:main:shape'
-        cases:
-          - { exact: 'ES-Adif:5', value: 'es/Adif-FF-5' }
-        default: 'es/Adif-FF-5'
+    icon:
+      - default: 'es/Adif-FF-5'
       - match: 'railway:signal:main:states'
         cases:
           - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/5-FF1A' }
