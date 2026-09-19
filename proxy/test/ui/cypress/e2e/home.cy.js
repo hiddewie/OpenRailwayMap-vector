@@ -38,7 +38,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
-    cy.url().should('include', 'tracks=electrification')
+    cy.url().should('include', 'tracks=voltage_frequency')
 
     cy.wait(3000)
     cy.screenshot()
@@ -90,11 +90,22 @@ describe('home page', () => {
 
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
-      .contains('button', 'Electrification')
+      .contains('button', 'Voltage & frequency')
       .click()
 
-    cy.url().should('include', 'tracks=electrification')
+    cy.url().should('include', 'tracks=voltage_frequency')
 
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Maximum current')
+      .click()
+
+    cy.url().should('include', 'tracks=maximum_current')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
+      .contains('button', 'Electrical power')
+      .click()
+
+    cy.url().should('include', 'tracks=power')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Tracks')
       .contains('button', 'Track')
@@ -385,7 +396,7 @@ describe('home page', () => {
     cy.screenshot()
 
     cy.contains('.maplibregl-ctrl-preset button', 'Electrification').click()
-    cy.url().should('include', 'tracks=electrification')
+    cy.url().should('include', 'tracks=voltage_frequency')
 
     cy.wait(3000)
     cy.screenshot()

@@ -12,11 +12,9 @@ const searchResults = document.getElementById('search-results');
 const configurationBackdrop = document.getElementById('configuration-backdrop');
 const configureGeneralTab = document.getElementById('configure-general');
 const configureStandardTab = document.getElementById('configure-standard');
-const configureElectrificationTab = document.getElementById('configure-electrification');
   const configureTrackTab = document.getElementById('configure-track');
 const configureGeneralBody = document.getElementById('configure-general-body');
 const configureStandardBody = document.getElementById('configure-standard-body');
-const configureElectrificationBody = document.getElementById('configure-electrification-body');
 const configureTrackBody = document.getElementById('configure-track-body');
 const backgroundSaturationControl = document.getElementById('backgroundSaturation');
 const backgroundOpacityControl = document.getElementById('backgroundOpacity');
@@ -42,9 +40,6 @@ const localizationDisabledControl =  document.getElementById('localizationDisabl
 const localizationAutomaticControl =  document.getElementById('localizationAutomatic');
 const localizationCustomControl =  document.getElementById('localizationCustom');
 const localizationCustomLanguageControl =  document.getElementById('localizationCustomLanguage');
-const electrificationRailwayLineVoltageFrequencyControl = document.getElementById('electrificationRailwayLineVoltageFrequency')
-const electrificationRailwayLineMaximumCurrentControl = document.getElementById('electrificationRailwayLineMaximumCurrent')
-const electrificationRailwayLinePowerControl = document.getElementById('electrificationRailwayLinePower')
 const trackRailwayLineGaugeControl = document.getElementById('trackRailwayLineGauge')
 const trackRailwayLineLoadingGaugeControl = document.getElementById('trackRailwayLineLoadingGauge')
 const trackRailwayLineTrackClassControl = document.getElementById('trackRailwayLineTrackClass')
@@ -302,8 +297,6 @@ function showConfiguration(tab) {
     configureGeneral();
   } else if (tab === 'standard') {
     configureStandard();
-  } else if (tab === 'electrification') {
-    configureElectrification();
   } else if (tab === 'track') {
     configureTrack();
   }
@@ -377,15 +370,6 @@ function showConfiguration(tab) {
   }
   localizationCustomLanguageControl.value = configuration.localizationCustomLanguage ?? locale.language;
 
-  const electrificationRailwayLine = configuration.electrificationRailwayLine ?? defaultConfiguration.electrificationRailwayLine;
-  if (electrificationRailwayLine === 'voltageFrequency') {
-    electrificationRailwayLineVoltageFrequencyControl.checked = true
-  } else if (electrificationRailwayLine === 'maximumCurrent') {
-    electrificationRailwayLineMaximumCurrentControl.checked = true
-  } else if (electrificationRailwayLine === 'power') {
-    electrificationRailwayLinePowerControl.checked = true
-  }
-
   const trackRailwayLine = configuration.trackRailwayLine ?? defaultConfiguration.trackRailwayLine;
   if (trackRailwayLine === 'gauge') {
     trackRailwayLineGaugeControl.checked = true
@@ -405,48 +389,30 @@ function hideConfiguration() {
 function configureGeneral() {
   configureGeneralTab.classList.add('active');
   configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.remove('active');
   configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'block';
   configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'none';
   configureTrackBody.style.display = 'none';
 }
 
 function configureStandard() {
   configureGeneralTab.classList.remove('active');
   configureStandardTab.classList.add('active');
-  configureElectrificationTab.classList.remove('active');
   configureTrackTab.classList.remove('active');
 
   configureGeneralBody.style.display = 'none';
   configureStandardBody.style.display = 'block';
-  configureElectrificationBody.style.display = 'none';
-  configureTrackBody.style.display = 'none';
-}
-
-function configureElectrification() {
-  configureGeneralTab.classList.remove('active');
-  configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.add('active');
-  configureTrackTab.classList.remove('active');
-
-  configureGeneralBody.style.display = 'none';
-  configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'block';
   configureTrackBody.style.display = 'none';
 }
 
 function configureTrack() {
   configureGeneralTab.classList.remove('active');
   configureStandardTab.classList.remove('active');
-  configureElectrificationTab.classList.remove('active');
   configureTrackTab.classList.add('active');
 
   configureGeneralBody.style.display = 'none';
   configureStandardBody.style.display = 'none';
-  configureElectrificationBody.style.display = 'none';
   configureTrackBody.style.display = 'block';
 }
 
@@ -608,7 +574,7 @@ const knownStyles = {
   electrification: {
     name: 'Electrification',
     style: {
-      tracks: 'electrification',
+      tracks: 'voltage_frequency',
       stations: 'none',
       pois: 'electrification',
       turntables: 'none',
@@ -685,9 +651,16 @@ const styleElements = [
         value: 'train_protection',
       },
       {
-        // TODO split into voltage/frequency, max current, power
-        name: 'Electrification',
-        value: 'electrification',
+        name: 'Voltage & frequency',
+        value: 'voltage_frequency',
+      },
+      {
+        name: 'Maximum current',
+        value: 'maximum_current',
+      },
+      {
+        name: 'Electrical power',
+        value: 'power',
       },
       {
         // TODO split into gauge, loading gauge, track class
@@ -922,9 +895,24 @@ function updateStyleParameter(hashObject) {
       .map(({key}) => [key, hashObject[key]])
   );
 
+  const styleOverrides = {}
+  // Compatibility style override for URLs containing electrification style with configuration to show maximum current or power
+  if (configuration.electrificationRailwayLine) {
+    if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'maximumCurrent') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to maximum_current`)
+      styleOverrides.tracks = 'maximum_current'
+    } else if ((hashObject.style === 'electrification' || hashObject.tracks === 'voltage_frequency') && configuration.electrificationRailwayLine === 'power') {
+      console.info(`Migrated electrification tracks style with configuration ${configuration.electrificationRailwayLine} to power`)
+      styleOverrides.tracks = 'power'
+    }
+
+    updateConfiguration('electrificationRailwayLine', undefined);
+  }
+
   return {
     ...migratedStyle,
     ...hashStyle,
+    ...styleOverrides,
   };
 }
 
@@ -1014,7 +1002,12 @@ function storeConfiguration(localStorage, configuration) {
 }
 
 function updateConfiguration(name, value) {
-  configuration[name] = value;
+  if (value) {
+    configuration[name] = value;
+  } else {
+    delete configuration[name];
+  }
+
   storeConfiguration(localStorage, configuration);
 }
 
@@ -1089,12 +1082,6 @@ function customLocalization(language) {
   updateConfiguration('localization', 'custom');
   updateConfiguration('localizationCustomLanguage', language);
   languageControl.selectLanguage(configuredLanguage());
-}
-
-function configureElectrificationRailwayLine(electrification) {
-  updateConfiguration('electrificationRailwayLine', electrification);
-  updateGlobalMapState({ electrificationRailwayLine: electrification });
-  legendControl.updateLegend()
 }
 
 function configureTrackRailwayLine(track) {
