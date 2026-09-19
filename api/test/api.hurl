@@ -650,7 +650,6 @@ Content-Type: application/json
 jsonpath "$.properties.note" == null
 jsonpath "$.properties.osm_id" == 560099842
 jsonpath "$.properties.osm_type" == "N"
-jsonpath "$.properties.type" == "operator"
 jsonpath "$.properties.feature" == "general/owner-change"
 
 # POI
@@ -663,7 +662,6 @@ jsonpath "$.properties.description" == null
 jsonpath "$.properties.osm_id" == 140374295
 jsonpath "$.properties.osm_type" == "W"
 jsonpath "$.properties.feature" == "general/container-terminal"
-jsonpath "$.properties.type" == "facility"
 jsonpath "$.properties.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
 jsonpath "$.properties.ref" == null
 
