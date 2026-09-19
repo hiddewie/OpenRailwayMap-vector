@@ -286,6 +286,7 @@ const railwayLineFeatures = {
   },
 };
 
+// TODO legend
 const poiFeatures = layer => ({
   view: {
     name: 'poi_view',
@@ -949,7 +950,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_symbols': poiFeatures('standard'),
+  'points_of_interest-points_of_interest': poiFeatures('standard'),
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
@@ -1313,7 +1314,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_signals-signals_railway_symbols': poiFeatures('signals'),
   'openrailwaymap_electrification-electrification_signals': {
     view: {
       name: 'electrification_signals_view',
@@ -1384,7 +1384,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_railway_symbols': poiFeatures('electrification'),
   'openrailwaymap_electrification-electrification_catenary': {
     view: {
       name: 'electrification_catenary_view',
@@ -1506,7 +1505,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_operator-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
 

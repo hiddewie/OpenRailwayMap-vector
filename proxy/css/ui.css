@@ -541,11 +541,13 @@ body {
             top: .7rem;
             height: .5rem;
             width: .5rem;
-            border-radius: .5rem;
           }
           &.active .active-indicator {
             display: inline-block;
           }
+        }
+        &:not(.multiple) > button .active-indicator {
+          border-radius: .5rem;
         }
       }
     }

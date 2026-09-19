@@ -80,9 +80,9 @@ postgres:
       function: standard_railway_grouped_station_areas
       minzoom: 13
 
-    standard_railway_symbols:
+    points_of_interest:
       schema: public
-      function: standard_railway_symbols
+      function: points_of_interest
       minzoom: 10
 
     standard_station_entrances:
@@ -155,11 +155,6 @@ postgres:
       function: signals_railway_signals
       minzoom: 13
 
-    signals_railway_symbols:
-      schema: public
-      function: signals_railway_symbols
-      minzoom: 16
-
     # --- Electrification --- #
 
     electrification_railway_line_low:
@@ -170,11 +165,6 @@ postgres:
     electrification_signals:
       schema: public
       function: electrification_signals
-      minzoom: 13
-
-    electrification_railway_symbols:
-      schema: public
-      function: electrification_railway_symbols
       minzoom: 13
 
     electrification_substation:
@@ -200,11 +190,6 @@ postgres:
       schema: public
       function: operator_railway_line_low
       maxzoom: 7
-
-    operator_railway_symbols:
-      schema: public
-      function: operator_railway_symbols
-      minzoom: 13
 
     # --- Route --- #
 

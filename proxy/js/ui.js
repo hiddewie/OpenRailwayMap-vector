@@ -501,7 +501,7 @@ const knownStyles = {
     style: {
       tracks: 'usage',
       stations: 'station',
-      pois: 'standard',
+      pois: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
       turntables: 'plain',
       platforms: 'plain',
       substations: 'none',
@@ -516,7 +516,7 @@ const knownStyles = {
     style: {
       tracks: 'speed',
       stations: 'none',
-      pois: 'none',
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -531,7 +531,7 @@ const knownStyles = {
     style: {
       tracks: 'train_protection',
       stations: 'none',
-      pois: 'signals',
+      pois: ['vacancy_detection', 'train_protection'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -546,7 +546,7 @@ const knownStyles = {
     style: {
       tracks: 'voltage_frequency',
       stations: 'none',
-      pois: 'electrification',
+      pois: ['electrical_equipment'],
       turntables: 'none',
       platforms: 'none',
       substations: 'plain',
@@ -561,7 +561,7 @@ const knownStyles = {
     style: {
       tracks: 'gauge',
       stations: 'none',
-      pois: 'none',
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -576,7 +576,7 @@ const knownStyles = {
     style: {
       tracks: 'operator',
       stations: 'operator',
-      pois: 'operator',
+      pois: ['operator'],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -591,7 +591,7 @@ const knownStyles = {
     style: {
       tracks: 'routes',
       stations: 'station',
-      pois: 'none',
+      pois: [],
       turntables: 'none',
       platforms: 'none',
       substations: 'none',
@@ -738,29 +738,40 @@ const styleElements = [
   {
     name: 'Points of interest',
     key: 'pois',
-    // TODO split into functional sections
-    defaultValue: 'standard',
-    disabledValue: 'none',
+    defaultValue: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
+    multiple: true,
     values: [
       {
-        name: 'Standard',
-        value: 'standard',
+        name: 'Radio',
+        value: 'radio',
       },
       {
-        name: 'Electrification',
-        value: 'electrification',
+        name: 'Facility',
+        value: 'facility',
       },
       {
-        name: 'Signals',
-        value: 'signals',
+        name: 'Equipment',
+        value: 'equipment',
       },
       {
         name: 'Operator',
         value: 'operator',
       },
       {
-        name: 'None',
-        value: 'none',
+        name: 'Vacancy detection',
+        value: 'vacancy_detection',
+      },
+      {
+        name: 'Electrical equipment',
+        value: 'electrical_equipment',
+      },
+      {
+        name: 'Level crossing',
+        value: 'level_crossing',
+      },
+      {
+        name: 'Train protection',
+        value: 'train_protection',
       },
     ],
   },
@@ -872,8 +883,26 @@ function updateStyleParameter(hashObject) {
   const migratedStyle = hashObject.style && knownStyles[hashObject.style] ? knownStyles[hashObject.style].style : {};
   const hashStyle = Object.fromEntries(
     styleElements
-      .filter((({key, values}) => hashObject[key] && values.some(({value}) => hashObject[key] === value)))
-      .map(({key}) => [key, hashObject[key]])
+      .map(({key, values, multiple}) => {
+        if (hashObject[key]) {
+          if (multiple) {
+            if (!hashObject[key].match(/\[[a-z_,]*\]/)) {
+              return null;
+            } else {
+              const split = hashObject[key].slice(1, -1).split(',').map(it => it.trim())
+              const match = values.filter(({value}) => split.some(element => element === value)).map(({value}) => value)
+              return [key, match];
+            }
+          } else {
+            return values.some(({value}) => hashObject[key] === value)
+              ? [key, hashObject[key]]
+              : null;
+          }
+        } else {
+          return null;
+        }
+      })
+      .filter(it => it)
   );
 
   const styleOverrides = {}
@@ -943,14 +972,18 @@ function putParametersInHash(hash, style, date) {
   // Remove style as hash parameter
   const { style: _, ...hashObject } = hashToObject(hash);
 
-  styleElements.forEach(({key, defaultValue}) => {
+  styleElements.forEach(({key, defaultValue, multiple}) => {
     if (style[key]) {
-      hashObject[key] = style[key] === defaultValue ? undefined : style[key];
+      hashObject[key] = (multiple ? setsEqual(new Set(style[key]), new Set(defaultValue)) : style[key] === defaultValue) ? undefined : style[key];
     }
   })
   hashObject.date = dateControl.isActive() ? date : undefined;
 
-  return `#${Object.entries(hashObject).filter(([_, value]) => value).map(([key, value]) => `${key}=${value}`).join('&')}`;
+  const hashContent = Object.entries(hashObject)
+    .filter(([_, value]) => value)
+    .map(([key, value]) => `${key}=${Array.isArray(value) ? `[${value.join(',')}]` : value}`)
+    .join('&');
+  return `#${hashContent}`;
 }
 
 // Configuration //
@@ -1596,10 +1629,11 @@ class StyleControl {
     this.currentPreset = Object.entries(this.options.presets)
       .find(([preset, {name, style}]) =>
         Object.keys(style)
-          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+          .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] === style[key]))
       )
       ?.[0] ?? null;
     this.styleButtons = {}
+    this.styleValueButtons = {}
     this.presetButtons = {}
   }
 
@@ -1617,9 +1651,9 @@ class StyleControl {
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
 
-    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue}) => {
+    this.options.styleOptions.forEach(({name, icon, key, values, defaultValue, disabledValue, multiple}) => {
       const initialValue = this.currentStyle[key];
-      const initiallyDisabled = disabledValue && initialValue === disabledValue;
+      const initiallyDisabled = multiple ? initialValue.length === 0 : (disabledValue && initialValue === disabledValue);
 
       const button = createDomElement('button', `maplibregl-ctrl-style-popup-button${initiallyDisabled ? ' disabled' : ''}`, styleContainer);
       button.onclick = () => {
@@ -1637,20 +1671,32 @@ class StyleControl {
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
 
-      const selectionContainer = createDomElement('div', 'maplibregl-ctrl-style-popup-container', button);
+      const selectionContainer = createDomElement('div', `maplibregl-ctrl-style-popup-container${multiple ? ' multiple' : ''}`, button);
 
       const buttonLabelSelectionContainer = createDomElement('label', '', selectionContainer);
       buttonLabelSelectionContainer.innerText = name
 
-      this.styleButtons[key] = {};
+      this.styleButtons[key] = button;
+      this.styleValueButtons[key] = {};
       values.forEach(({name, value}) => {
-        const valueButton = createDomElement('button', initialValue === value ? 'active' : '', selectionContainer);
+        const valueButton = createDomElement('button', (multiple ? initialValue.some(it => it === value) : initialValue === value) ? 'active' : '', selectionContainer);
         valueButton.onclick = e => {
           e.stopPropagation();
 
-          if (this.currentStyle[key] !== value) {
-            this.selectStyleOptions({[key]: value});
-            this.options.onStyleChange({[key]: value});
+          if (multiple) {
+            const currentValue = this.currentStyle[key] ?? [];
+            if (currentValue.some(it => it === value)) {
+              this.selectStyleOptions({[key]: currentValue.filter(it => it !== value)});
+              this.options.onStyleChange({[key]: currentValue.filter(it => it !== value)});
+            } else {
+              this.selectStyleOptions({[key]: currentValue.concat([value])});
+              this.options.onStyleChange({[key]: currentValue.concat([value])});
+            }
+          } else {
+            if (this.currentStyle[key] !== value) {
+              this.selectStyleOptions({[key]: value});
+              this.options.onStyleChange({[key]: value});
+            }
           }
         }
 
@@ -1659,7 +1705,7 @@ class StyleControl {
 
         createDomElement('span', 'active-indicator', valueButton);
 
-        this.styleButtons[key][value] = valueButton;
+        this.styleValueButtons[key][value] = valueButton;
       })
     })
 
@@ -1692,7 +1738,7 @@ class StyleControl {
 
         const changes = Object.fromEntries(
           Object.keys(style)
-            .filter(key => this.currentStyle[key] && style[key] && this.currentStyle[key] !== style[key])
+            .filter(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? !setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] !== style[key]))
             .map(key => [key, style[key]])
         );
 
@@ -1721,6 +1767,7 @@ class StyleControl {
     this.currentPreset = null;
     this.presetButtons = {};
     this.styleButtons = {};
+    this.styleValueButtons = {};
   }
 
   selectPreset(selectedPreset) {
@@ -1747,24 +1794,26 @@ class StyleControl {
   selectStyleOptions(options) {
     const mapGlobalStateChanges = Object.fromEntries(
       Object.entries(options)
-        .filter(([selectedKey, selectedValue]) => this.currentStyle[selectedKey] !== selectedValue)
-        .map(([selectedKey, selectedValue]) => {
+        .flatMap(([selectedKey, selectedValue]) => {
           const styleOptions = this.options.styleOptions.find(({key}) => key === selectedKey);
           if (!styleOptions) {
-            return;
+            return [];
+          }
+          if (styleOptions.multiple ? setsEqual(new Set(this.currentStyle[selectedKey]), new Set(selectedValue)) : this.currentStyle[selectedKey] === selectedValue) {
+            return [];
           }
 
-          const disabled = styleOptions.disabledValue && selectedValue === styleOptions.disabledValue
-          Object.entries(this.styleButtons[selectedKey])
-            .forEach(([value, button]) => {
-              if (value === selectedValue) {
-                button.classList.add('active')
+          const disabled = styleOptions.multiple ? selectedValue.length === 0 : (styleOptions.disabledValue && selectedValue === styleOptions.disabledValue);
+          if (disabled) {
+            this.styleButtons[selectedKey].classList.add('disabled')
+          } else {
+            this.styleButtons[selectedKey].classList.remove('disabled')
+          }
 
-                if (disabled) {
-                  button.parentElement.parentElement.classList.add('disabled')
-                } else {
-                  button.parentElement.parentElement.classList.remove('disabled')
-                }
+          Object.entries(this.styleValueButtons[selectedKey])
+            .forEach(([value, button]) => {
+              if (styleOptions.multiple ? selectedValue.some(it => it === value) : value === selectedValue) {
+                button.classList.add('active')
               } else {
                 button.classList.remove('active')
               }
@@ -1772,7 +1821,7 @@ class StyleControl {
 
           this.currentStyle[selectedKey] = selectedValue;
 
-          return [selectedKey, selectedValue]
+          return [[selectedKey, selectedValue]]
         })
     );
 
@@ -1781,7 +1830,7 @@ class StyleControl {
     const newPreset = Object.entries(this.options.presets)
       .find(([preset, {name, style}]) =>
         Object.keys(style)
-          .every(key => this.currentStyle[key] && style[key] && this.currentStyle[key] === style[key])
+          .every(key => this.currentStyle[key] && style[key] && (this.options.styleOptions.find(it => it.key === key).multiple ? setsEqual(new Set(style[key]), new Set(this.currentStyle[key])) : this.currentStyle[key] === style[key]))
       )
       ?.[0] ?? null;
 
