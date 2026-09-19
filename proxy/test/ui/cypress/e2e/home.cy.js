@@ -290,19 +290,19 @@ describe('home page', () => {
       .contains('button', 'Electrical equipment')
       .click()
 
-    cy.url().should('include', 'pois=[level_crossing,train_protection,radio,vacancy_detection,operator,electrical_equipment]')
+    cy.url().should('include', 'pois=[level_crossing,train_protection,radio,operator,vacancy_detection,electrical_equipment]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
       .contains('button', 'Level crossing')
       .click()
 
-    cy.url().should('include', 'pois=[train_protection,radio,vacancy_detection,operator,electrical_equipment]')
+    cy.url().should('include', 'pois=[train_protection,radio,operator,vacancy_detection,electrical_equipment]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
       .contains('button', 'Train protection')
       .click()
 
-    cy.url().should('include', 'pois=[radio,vacancy_detection,operator,electrical_equipment]')
+    cy.url().should('include', 'pois=[radio,operator,vacancy_detection,electrical_equipment]')
   })
 
   it('switching style, turntables', () => {
