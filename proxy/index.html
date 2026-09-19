@@ -114,9 +114,6 @@
             <a id="configure-standard" class="nav-link" href="javascript:configureStandard()">Infrastructure</a>
           </li>
           <li class="nav-item">
-            <a id="configure-electrification" class="nav-link" href="javascript:configureElectrification()">Electrification</a>
-          </li>
-          <li class="nav-item">
             <a id="configure-track" class="nav-link" href="javascript:configureTrack()">Track</a>
           </li>
         </ul>
@@ -291,30 +288,6 @@
             </div>
             <small class="form-text">
               Control how stations are labeled on the map for zooms 5 to 10. From zoom 10 onwards, the names are always shown.
-            </small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-body" id="configure-electrification-body">
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Railway lines</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineVoltageFrequency" value="voltageFrequency" checked onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLineVoltageFrequency">Voltage and frequency</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLinePower" value="power" onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLinePower">Maximum power</label>
-              </div>
-            </div>
-            <small class="form-text">
-              Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
             </small>
           </div>
         </form>
