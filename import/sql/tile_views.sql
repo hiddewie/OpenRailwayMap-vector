@@ -811,6 +811,7 @@ CREATE OR REPLACE VIEW poi_view AS
     osm_type,
     feature,
     ref,
+    operator,
     name,
     minzoom,
     type,

@@ -3841,7 +3841,7 @@ const sourceLayers = {
 
   // POIs
 
-  "points_of_interest-points_of_interest": {
+  "openrailwaymap_points_of_interest-points_of_interest": {
     // TODO
     standard: {
       key: [

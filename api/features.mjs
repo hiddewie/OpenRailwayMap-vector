@@ -286,8 +286,7 @@ const railwayLineFeatures = {
   },
 };
 
-// TODO legend
-const poiFeatures = layer => ({
+const poiFeatures = {
   view: {
     name: 'poi_view',
     id_type: 'text',
@@ -296,7 +295,6 @@ const poiFeatures = layer => ({
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     poi.features
-      .filter(feature => feature.layer === layer)
       .flatMap(feature =>
         [
           [feature.feature, {name: feature.description}]
@@ -308,6 +306,9 @@ const poiFeatures = layer => ({
   properties: {
     ref: {
       name: 'Reference',
+    },
+    operator: {
+      name: 'Operator',
     },
     position: {
       name: 'Position',
@@ -350,7 +351,7 @@ const poiFeatures = layer => ({
       paragraph: true,
     },
   },
-})
+};
 
 // TODO move tram / metro stops to stations
 const stationFeatures = {
@@ -950,7 +951,7 @@ const features = {
       },
     },
   },
-  'points_of_interest-points_of_interest': poiFeatures('standard'),
+  'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
