@@ -5647,12 +5647,12 @@ features:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
       - { tag: 'railway:signal:main:form', value: 'light' }
-      
+
   - description: Señal tipo Adif de retroceso de 4 focos
     country: ES
     icon: [ default: 'es/Adif-2+2-retroceso' ]
     tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF' }
       - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
