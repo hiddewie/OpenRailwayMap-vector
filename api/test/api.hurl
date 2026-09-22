@@ -642,8 +642,8 @@ jsonpath "$.properties.length" < 152.3
 jsonpath "$.properties.osm_id" == 859918234
 jsonpath "$.properties.osm_type" == "W"
 
-# POI (operator)
-GET {{base_url}}/feature/openrailwaymap_operator/operator_railway_symbols/node-560099842
+# POI
+GET {{base_url}}/feature/openrailwaymap_points_of_interest/points_of_interest/node-560099842
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -652,8 +652,8 @@ jsonpath "$.properties.osm_id" == 560099842
 jsonpath "$.properties.osm_type" == "N"
 jsonpath "$.properties.feature" == "general/owner-change"
 
-# POI (infrastructure)
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_symbols/way-140374295
+# POI
+GET {{base_url}}/feature/openrailwaymap_points_of_interest/points_of_interest/way-140374295
 HTTP 200
 Content-Type: application/json
 [Asserts]

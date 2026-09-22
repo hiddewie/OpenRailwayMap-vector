@@ -1721,12 +1721,6 @@ operators:
 
   - country: KR
     names:
-      # SR is already used in IN
-      - '에스알'
-    color: '#4b2f48'
-
-  - country: KR
-    names:
       # Seoul Metro
       - '서울교통공사'
     color: '#293896'
@@ -1765,8 +1759,12 @@ operators:
     names:
       - '(주)우진메트로'
       - '우진메트로양산'
-      - '우이신설경전철운영(주)'
     color: '#95296f'
+
+  - country: KR
+    names:
+      - '우이신설 도시철도'
+    color: '#b7c450'
 
   - country: KR
     names:

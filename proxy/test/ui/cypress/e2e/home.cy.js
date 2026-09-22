@@ -250,34 +250,59 @@ describe('home page', () => {
     button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
-      .contains('button', 'Standard')
+      .contains('button', 'Radio')
+      .click()
+
+    cy.url().should('include', 'pois=[facility,equipment,level_crossing,train_protection]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Radio')
       .click()
 
     cy.url().should('not.include', 'pois=')
 
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
-      .contains('button', 'Electrification')
-      .click()
-
-    cy.url().should('include', 'pois=electrification')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
-      .contains('button', 'Signals')
+      .contains('button', 'Facility')
       .click()
 
-    cy.url().should('include', 'pois=signals')
+    cy.url().should('include', 'pois=[equipment,level_crossing,train_protection,radio]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Equipment')
+      .click()
+
+    cy.url().should('include', 'pois=[level_crossing,train_protection,radio]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
       .contains('button', 'Operator')
       .click()
 
-    cy.url().should('include', 'pois=operator')
+    cy.url().should('include', 'pois=[level_crossing,train_protection,radio,operator]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
-      .contains('button', 'None')
+      .contains('button', 'Vacancy detection')
       .click()
 
-    cy.url().should('include', 'pois=none')
+    cy.url().should('include', 'pois=[level_crossing,train_protection,radio,operator,vacancy_detection]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Electrical equipment')
+      .click()
+
+    cy.url().should('include', 'pois=[level_crossing,train_protection,radio,operator,vacancy_detection,electrical_equipment]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Level crossing')
+      .click()
+
+    cy.url().should('include', 'pois=[train_protection,radio,operator,vacancy_detection,electrical_equipment]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Points of interest')
+      .contains('button', 'Train protection')
+      .click()
+
+    cy.url().should('include', 'pois=[radio,operator,vacancy_detection,electrical_equipment]')
   })
 
   it('switching style, turntables', () => {
