@@ -253,9 +253,10 @@ local pois = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
-    { column = 'layer', type = 'text' },
+    { column = 'type', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
+    { column = 'operator', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'radio', type = 'text' },
     { column = 'emergency_phone', type = 'text' },
@@ -1301,7 +1302,7 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
-    local feature, rank, minzoom, layer = tag_functions.poi(tags)
+    local feature, rank, minzoom, type = tag_functions.poi(tags)
 
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
@@ -1309,9 +1310,10 @@ function osm2pgsql.process_node(object)
       feature = feature,
       rank = rank,
       minzoom = minzoom,
-      layer = layer,
+      type = type,
       name = tags.name,
       ref = tags.ref,
+      operator = tags.operator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],
@@ -1663,7 +1665,7 @@ function osm2pgsql.process_way(object)
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
-    local feature, rank, minzoom, layer = tag_functions.poi(tags)
+    local feature, rank, minzoom, type = tag_functions.poi(tags)
     local position, position_exact, line_positions = find_position_tags(tags)
 
     pois:insert({
@@ -1672,9 +1674,10 @@ function osm2pgsql.process_way(object)
       feature = feature,
       rank = rank,
       minzoom = minzoom,
-      layer = layer,
+      type = type,
       name = tags.name,
       ref = tags.ref,
+      operator = tags.operator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],

@@ -286,7 +286,7 @@ const railwayLineFeatures = {
   },
 };
 
-const poiFeatures = layer => ({
+const poiFeatures = {
   view: {
     name: 'poi_view',
     id_type: 'text',
@@ -295,7 +295,6 @@ const poiFeatures = layer => ({
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     poi.features
-      .filter(feature => feature.layer === layer)
       .flatMap(feature =>
         [
           [feature.feature, {name: feature.description}]
@@ -307,6 +306,9 @@ const poiFeatures = layer => ({
   properties: {
     ref: {
       name: 'Reference',
+    },
+    operator: {
+      name: 'Operator',
     },
     position: {
       name: 'Position',
@@ -349,7 +351,7 @@ const poiFeatures = layer => ({
       paragraph: true,
     },
   },
-})
+};
 
 // TODO move tram / metro stops to stations
 const stationFeatures = {
@@ -949,7 +951,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_symbols': poiFeatures('standard'),
+  'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
@@ -1313,7 +1315,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_signals-signals_railway_symbols': poiFeatures('signals'),
   'openrailwaymap_electrification-electrification_signals': {
     view: {
       name: 'electrification_signals_view',
@@ -1384,7 +1385,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_railway_symbols': poiFeatures('electrification'),
   'openrailwaymap_electrification-electrification_catenary': {
     view: {
       name: 'electrification_catenary_view',
@@ -1506,7 +1506,6 @@ const features = {
       },
     },
   },
-  'openrailwaymap_operator-operator_railway_symbols': poiFeatures('operator'),
 
   // Search results
 
