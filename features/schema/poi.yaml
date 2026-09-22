@@ -14,14 +14,18 @@ properties:
         feature:
           type: string
           description: The icon used to show the place of interest
-        layer:
+        type:
           type: string
-          description: The layer that the place of interest will be shown in
+          description: The type of the feature
           enum:
-            - standard
-            - signals
-            - electrification
+            - radio
+            - facility
+            - equipment
             - operator
+            - vacancy_detection
+            - electrical_equipment
+            - level_crossing
+            - train_protection
         minzoom:
           type: number
           minimum: 1
