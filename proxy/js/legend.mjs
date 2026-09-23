@@ -10,10 +10,11 @@ const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
-
-const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant'))
-const signals_railway_signals = all_signals.features.filter(feature => !feature.tags.find(tag => tag.tag === 'railway:signal:speed_limit' || tag.tag === 'railway:signal:speed_limit_distant' || tag.tag === 'railway:signal:electricity'))
-const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => tag.tag === 'railway:signal:electricity'))
+const signal_categories = Object.fromEntries(
+  Object.entries(Object.groupBy(signal_types, type => type.category))
+    .map(([category, types]) => [category, types.map(type => type.type)])
+)
+const signal_features = all_signals.features;
 
 const speedLegends = [
   10,
@@ -188,9 +189,7 @@ const signalFeatures = (feature) =>
     }));
 
 const countries = [...new Set([
-  ...speed_railway_signals.map(feature => feature.country).filter(it => it),
-  ...signals_railway_signals.map(feature => feature.country).filter(it => it),
-  ...electrification_signals.map(feature => feature.country).filter(it => it),
+  ...signal_features.map(feature => feature.country).filter(it => it),
   ...operators.operators.map(operator => operator.country).filter(it => it),
 ])].toSorted()
 
@@ -3603,125 +3602,89 @@ const sourceLayers = {
 
   // Signals
 
-  'openrailwaymap_speed-speed_railway_signals': {
-    speed: {
-      key: [
-        'feature0',
-      ],
-      matchKeys: [
-        [
-          'feature1',
+  'openrailwaymap_signals-railway_signals': {
+    ...Object.fromEntries(
+      Object.entries(signal_categories).map(([category, types]) => [`signals_${category}`, {
+        mapState: {
+          signals: category,
+        },
+        key: [
+          'railway',
+          'feature0',
         ],
-      ],
-      features: [
-        ...speed_railway_signals.flatMap(feature =>
-          signalFeatures(feature).map(iconFeature => ({
-            legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
-            type: 'point',
-            country: feature.country,
-            properties: {
-              feature0: iconFeature.icon,
-              type: 'line',
-              azimuth: null,
-              deactivated0: false,
-              direction_both: false,
-            },
-            variants: iconFeature.variants.map(variant => ({
-              legend: variant.legend,
-              properties: {
-                feature0: variant.icon,
-              },
-            })),
-          }))),
-        {
-          legend: 'signal direction',
-          type: 'point',
-          properties: {
-            feature0: 'general/invisible',
-            type: 'line',
-            azimuth: 135.5,
-            deactivated0: false,
-            direction_both: false,
-          },
-          variants: [
-            {
-              legend: '(both)',
-              properties: {
-                direction_both: true,
-              },
-            },
+        matchKeys: [
+          [
+            'railway',
+            'feature1',
           ],
-        },
-        {
-          legend: '(deactivated)',
-          type: 'point',
-          properties: {
-            feature0: 'pl/w21-{40}',
-            type: 'line',
-            azimuth: null,
-            deactivated0: true,
-            direction_both: false,
-          },
-        },
-        ...signal_types.filter(type => type.layer === 'speed').map(type => ({
-          legend: `unknown signal (${type.type})`,
-          type: 'point',
-          properties: {
-            feature0: `general/signal-unknown-${type.type}`,
-            type: 'line',
-            azimuth: null,
-            deactivated0: false,
-            direction_both: false,
-          },
-        })),
-      ],
-    },
-  },
-  'openrailwaymap_signals-signals_railway_signals': {
-    signals: {
-      key: [
-        'railway',
-        'feature0',
-      ],
-      matchKeys: [
-        [
-          'railway',
-          'feature1',
+          [
+            'railway',
+            'feature2',
+          ],
+          [
+            'railway',
+            'feature3',
+          ],
+          [
+            'railway',
+            'feature4',
+          ],
+          [
+            'railway',
+            'feature5',
+          ],
+          [
+            'railway',
+            'feature6',
+          ],
+          [
+            'railway',
+            'feature7',
+          ],
+          [
+            'railway',
+            'feature8',
+          ],
+          [
+            'railway',
+            'feature9',
+          ],
+          [
+            'railway',
+            'feature10',
+          ],
+          [
+            'railway',
+            'feature11',
+          ],
         ],
-        [
-          'railway',
-          'feature2',
-        ],
-        [
-          'railway',
-          'feature3',
-        ],
-        [
-          'railway',
-          'feature4',
-        ],
-      ],
-      features: [
-        ...signals_railway_signals.flatMap(feature =>
-          signalFeatures(feature).map(iconFeature => ({
-            legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
-            type: 'point',
-            country: feature.country,
-            properties: {
-              feature0: iconFeature.icon,
-              railway: 'signal',
-              type: 'line',
-              azimuth: null,
-              deactivated0: false,
-              direction_both: false,
-            },
-            variants: iconFeature.variants.map(variant => ({
-              legend: variant.legend,
+        features: signal_features
+          .filter(feature => types.some(type => feature.tags.some(it => it.tag === `railway:signal:${type}`)))
+          .flatMap(feature =>
+            signalFeatures(feature).map(iconFeature => ({
+              legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
+              type: 'point',
+              country: feature.country,
               properties: {
-                feature0: variant.icon,
+                feature0: iconFeature.icon,
+                railway: 'signal',
+                type: 'line',
+                azimuth: null,
+                deactivated0: false,
+                direction_both: false,
               },
-            })),
-          }))),
+              variants: iconFeature.variants.map(variant => ({
+                legend: variant.legend,
+                properties: {
+                  feature0: variant.icon,
+                },
+              })),
+            }))),
+      }]),
+    ),
+    general: {
+      key: [],
+      features: [
         {
           legend: 'signal direction',
           type: 'point',
@@ -3754,11 +3717,68 @@ const sourceLayers = {
             direction_both: false,
           },
         },
-        ...signal_types.filter(type => type.layer === 'signals').map(type => ({
-          legend: `unknown signal (${type.type})`,
+      ],
+    },
+    ...Object.fromEntries(
+      Object.entries(signal_categories).map(([category, types]) => [`unknown_${category}`, {
+        mapState: {
+          signals: category,
+        },
+        key: [
+          'railway',
+          'feature0',
+        ],
+        matchKeys: [
+          [
+            'railway',
+            'feature1',
+          ],
+          [
+            'railway',
+            'feature2',
+          ],
+          [
+            'railway',
+            'feature3',
+          ],
+          [
+            'railway',
+            'feature4',
+          ],
+          [
+            'railway',
+            'feature5',
+          ],
+          [
+            'railway',
+            'feature6',
+          ],
+          [
+            'railway',
+            'feature7',
+          ],
+          [
+            'railway',
+            'feature8',
+          ],
+          [
+            'railway',
+            'feature9',
+          ],
+          [
+            'railway',
+            'feature10',
+          ],
+          [
+            'railway',
+            'feature11',
+          ],
+        ],
+        features: types.map(type => ({
+          legend: `unknown signal (${type})`,
           type: 'point',
           properties: {
-            feature0: `general/signal-unknown-${type.type}`,
+            feature0: `general/signal-unknown-${type}`,
             railway: 'signal',
             type: 'line',
             azimuth: null,
@@ -3766,77 +3786,8 @@ const sourceLayers = {
             direction_both: false,
           },
         })),
-      ],
-    },
-  },
-  'openrailwaymap_electrification-electrification_signals': {
-    electrification: {
-      key: [
-        'feature',
-      ],
-      features: [
-        ...electrification_signals.flatMap(feature =>
-          signalFeatures(feature).map(iconFeature => ({
-            legend: `${feature.description}${iconFeature.legend ? ` ${iconFeature.legend}` : ''}`,
-            type: 'point',
-            country: feature.country,
-            properties: {
-              feature: iconFeature.icon,
-              type: 'line',
-              azimuth: null,
-              deactivated: false,
-              direction_both: false,
-            },
-            variants: iconFeature.variants.map(variant => ({
-              legend: variant.legend,
-              properties: {
-                feature: variant.icon,
-              },
-            })),
-          }))),
-        {
-          legend: 'signal direction',
-          type: 'point',
-          properties: {
-            feature: 'general/invisible',
-            type: 'line',
-            azimuth: 135.5,
-            deactivated: false,
-            direction_both: false,
-          },
-          variants: [
-            {
-              legend: '(both)',
-              properties: {
-                direction_both: true,
-              },
-            },
-          ],
-        },
-        {
-          legend: '(deactivated)',
-          type: 'point',
-          properties: {
-            feature: 'de/el6',
-            type: 'line',
-            azimuth: null,
-            deactivated: true,
-            direction_both: false,
-          },
-        },
-        ...signal_types.filter(type => type.layer === 'electrification').map(type => ({
-          legend: `unknown signal (${type.type})`,
-          type: 'point',
-          properties: {
-            feature: `general/signal-unknown-${type.type}`,
-            type: 'line',
-            azimuth: null,
-            deactivated: false,
-            direction_both: false,
-          },
-        })),
-      ],
-    },
+      }]),
+    ),
   },
 
   // POIs
