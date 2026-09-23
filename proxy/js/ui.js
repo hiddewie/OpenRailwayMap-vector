@@ -729,12 +729,12 @@ const styleElements = [
         value: 'speed',
       },
       {
-        name: 'Electricity',
-        value: 'electricity',
-      },
-      {
         name: 'Train protection',
         value: 'train_protection',
+      },
+      {
+        name: 'Electricity',
+        value: 'electricity',
       },
       {
         name: 'Station',
