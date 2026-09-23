@@ -5102,7 +5102,7 @@ const makeStyle = () => ({
       default: 'plain',
     },
     signals: {
-      // Values: main, distant, electricity, train_protection, station, radio, shunting, other
+      // Values: main, distant, speed, train_protection, electricity, station, radio, shunting, other
       default: [],
     },
     tracks: {
