@@ -245,11 +245,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalTypes === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.type}', '${feature.rank}'])` : 'NULL'}
+              THEN ${feature.signalTypes === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}'])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.type}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -267,8 +267,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
       GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
       feature_${type.type}[6] as type,
       feature_${type.type}[7]::boolean as deactivated,
-      feature_${type.type}[8] as category,
-      feature_${type.type}[9]::INT as rank
+      feature_${type.type}[8]::INT as rank,
+      '${type.category}' as category
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
   `).join(`
