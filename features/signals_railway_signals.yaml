@@ -226,48 +226,48 @@ tags:
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
-# Every type is shown in a certain layer
+# Every type belongs to a certain category of signals that can be selected in the UI
 types:
-  - { type: main, layer: signals }
-  - { type: combined, layer: signals }
-  - { type: distant, layer: signals }
-  - { type: train_protection, layer: signals }
-  - { type: main_repeated, layer: signals }
-  - { type: speed_limit, layer: speed }
-  - { type: speed_limit_distant, layer: speed }
-  - { type: minor, layer: signals }
-  - { type: minor_distant, layer: signals }
-  - { type: passing, layer: signals }
-  - { type: shunting, layer: signals }
-  - { type: shunting_route, layer: signals }
-  - { type: radio, layer: signals }
-  - { type: stop, layer: signals }
-  - { type: stop_distant, layer: signals }
-  - { type: stop_demand, layer: signals }
-  - { type: station_distant, layer: signals }
-  - { type: crossing, layer: signals }
-  - { type: crossing_distant, layer: signals }
-  - { type: crossing_info, layer: signals }
-  - { type: crossing_hint, layer: signals }
-  - { type: ring, layer: signals }
-  - { type: whistle, layer: signals }
-  - { type: electricity, layer: electrification }
-  - { type: departure, layer: signals }
-  - { type: switch, layer: signals }
-  - { type: resetting_switch, layer: signals }
-  - { type: resetting_switch_distant, layer: signals }
-  - { type: humping, layer: signals }
-  - { type: snowplow, layer: signals }
-  - { type: wrong_road, layer: signals }
-  - { type: short_route, layer: signals }
-  - { type: route, layer: signals }
-  - { type: route_distant, layer: signals }
-  - { type: brake_test, layer: signals }
-  - { type: helper_engine, layer: signals }
-  - { type: steam_locomotive, layer: signals }
-  - { type: fouling_point, layer: signals }
-  - { type: preheating, layer: signals }
-  - { type: slope, layer: signals }
+  - { type: main, category: main }
+  - { type: combined, category: main }
+  - { type: distant, category: distant }
+  - { type: train_protection, category: train_protection }
+  - { type: main_repeated, category: distant }
+  - { type: speed_limit, category: speed }
+  - { type: speed_limit_distant, category: speed }
+  - { type: minor, category: other }
+  - { type: minor_distant, category: other }
+  - { type: passing, category: other }
+  - { type: shunting, category: shunting }
+  - { type: shunting_route, category: shunting }
+  - { type: radio, category: radio }
+  - { type: stop, category: station }
+  - { type: stop_distant, category: station }
+  - { type: stop_demand, category: other }
+  - { type: station_distant, category: station }
+  - { type: crossing, category: other }
+  - { type: crossing_distant, category: other }
+  - { type: crossing_info, category: other }
+  - { type: crossing_hint, category: other }
+  - { type: ring, category: other }
+  - { type: whistle, category: other }
+  - { type: electricity, category: electricity }
+  - { type: departure, category: station }
+  - { type: switch, category: other }
+  - { type: resetting_switch, category: other }
+  - { type: resetting_switch_distant, category: other }
+  - { type: humping, category: shunting }
+  - { type: snowplow, category: other }
+  - { type: wrong_road, category: other }
+  - { type: short_route, category: other }
+  - { type: route, category: other }
+  - { type: route_distant, category: other }
+  - { type: brake_test, category: other }
+  - { type: helper_engine, category: other }
+  - { type: steam_locomotive, category: other }
+  - { type: fouling_point, category: other }
+  - { type: preheating, category: other }
+  - { type: slope, category: other }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
