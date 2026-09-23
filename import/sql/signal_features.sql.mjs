@@ -32,7 +32,7 @@ const signalsWithSignalType = await promiseResultsOrErrors(
     // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
     .map(feature => ({
       ...feature,
-      signalTypes: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type
+      signalType: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type,
     }))
     // Determine icon dimensions
     .map(async feature => ({
@@ -245,7 +245,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalTypes === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}'])` : 'NULL'}
+              THEN ${feature.signalType === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}'])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
