@@ -538,7 +538,7 @@ const knownStyles = {
       boxes: 'plain',
       catenaries: 'none',
       switches: 'none',
-      signals: ['signals'],
+      signals: ['main', 'distant', 'train_protection', 'station', 'radio', 'shunting', 'other'],
     },
   },
   electrification: {
@@ -723,6 +723,10 @@ const styleElements = [
       {
         name: 'Distant',
         value: 'distant',
+      },
+      {
+        name: 'Speed',
+        value: 'speed',
       },
       {
         name: 'Electricity',
