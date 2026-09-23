@@ -5589,8 +5589,8 @@ const makeStyle = () => ({
       default: 'plain',
     },
     signals: {
-      // Values: speed, signals, electrification, none
-      default: 'none',
+      // Values: main, distant, electricity, train_protection, station, radio, shunting, other
+      default: [],
     },
     tracks: {
       // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, track, operator, routes, passenger_lines
