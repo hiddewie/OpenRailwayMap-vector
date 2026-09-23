@@ -32,12 +32,8 @@ const signalsWithSignalType = await promiseResultsOrErrors(
     // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
     .map(feature => ({
       ...feature,
-      signalTypes: Object.fromEntries(
-        layers.map(layer =>
-          [layer, signals_railway_signals.types.filter(type => type.layer === layer).find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type]
-        )
-      )})
-    )
+      signalTypes: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type
+    }))
     // Determine icon dimensions
     .map(async feature => ({
       ...feature,
@@ -249,11 +245,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalTypes[type.layer] === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.layer}', '${feature.rank}'])` : 'NULL'}
+              THEN ${feature.signalTypes === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${type.type}', '${feature.rank}'])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.layer}', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', '${type.type}', NULL]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -271,7 +267,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
       feature_${type.type}[6] as type,
       feature_${type.type}[7]::boolean as deactivated,
-      feature_${type.type}[8]::signal_layer as layer,
+      feature_${type.type}[8] as category,
       feature_${type.type}[9]::INT as rank
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
@@ -286,7 +282,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       17.1 as icon_height,
       NULL as type,
       false as deactivated,
-      'signals' as layer,
+      'other' as category,
       NULL as rank
     FROM signals_with_features_0
     WHERE railway = 'signal'
@@ -296,13 +292,13 @@ CREATE OR REPLACE VIEW signal_features_view AS
   SELECT
     signal_id,
     any_value(type) as type,
-    layer,
+    array_agg(category ORDER BY rank ASC NULLS LAST) as category,
     array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
     array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
     array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
     MAX(rank) as rank
   FROM signals_with_features_1 sf
-  GROUP BY signal_id, layer;
+  GROUP BY signal_id;
 
 -- Use the view directly such that the query in the view can be updated
 CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
@@ -317,154 +313,85 @@ CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
 
 CLUSTER signal_features
   USING signal_features_signal_id_index;
-  
-CREATE OR REPLACE VIEW signals_railway_signals_view AS
-  SELECT
-    osm_id as id,
-    way,
-    osm_id,
-    'N' as osm_type,
-    rank,
-    railway,
-    sd.direction_both,
-    ref,
-    caption,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    sd.azimuth,${signals_railway_signals.tags.map(tag => `
-    "${tag.tag}",`).join('')}
-    features[1] as feature0,
-    features[2] as feature1,
-    features[3] as feature2,
-    features[4] as feature3,
-    features[5] as feature4,
-    features[6] as feature5,
-    deactivated[1] as deactivated0,
-    deactivated[2] as deactivated1,
-    deactivated[3] as deactivated2,
-    deactivated[4] as deactivated3,
-    deactivated[5] as deactivated4,
-    deactivated[6] as deactivated5,
-    CEIL(icon_height[1] / 2) as offset0,
-    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
-    type
-  FROM signals s
-  JOIN signal_features sf
-    ON s.osm_id = sf.signal_id
-  JOIN signal_direction sd
-    ON s.osm_id = sd.signal_id
-  WHERE layer = 'signals';
-  
-CREATE OR REPLACE VIEW speed_railway_signals_view AS
-  SELECT
-    osm_id as id,
-    way,
-    osm_id,
-    'N' as osm_type,
-    rank,
-    railway,
-    sd.direction_both,
-    ref,
-    caption,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    sd.azimuth,${signals_railway_signals.tags.map(tag => `
-    "${tag.tag}",`).join('')}
-    features[1] as feature0,
-    features[2] as feature1,
-    features[3] as feature2,
-    features[4] as feature3,
-    features[5] as feature4,
-    features[6] as feature5,
-    deactivated[1] as deactivated0,
-    deactivated[2] as deactivated1,
-    deactivated[3] as deactivated2,
-    deactivated[4] as deactivated3,
-    deactivated[5] as deactivated4,
-    deactivated[6] as deactivated5,
-    CEIL(icon_height[1] / 2) as offset0,
-    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
-    type
-  FROM signals s
-  JOIN signal_features sf
-    ON s.osm_id = sf.signal_id
-  JOIN signal_direction sd
-    ON s.osm_id = sd.signal_id
-  WHERE layer = 'speed';
-  
-CREATE OR REPLACE VIEW electrification_signals_view AS
-  SELECT
-    osm_id as id,
-    way,
-    osm_id,
-    'N' as osm_type,
-    rank,
-    railway,
-    sd.direction_both,
-    ref,
-    caption,
-    position,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description,
-    sd.azimuth,${signals_railway_signals.tags.map(tag => `
-    "${tag.tag}",`).join('')}
-    features[1] as feature0,
-    features[2] as feature1,
-    features[3] as feature2,
-    features[4] as feature3,
-    features[5] as feature4,
-    features[6] as feature5,
-    deactivated[1] as deactivated0,
-    deactivated[2] as deactivated1,
-    deactivated[3] as deactivated2,
-    deactivated[4] as deactivated3,
-    deactivated[5] as deactivated4,
-    deactivated[6] as deactivated5,
-    CEIL(icon_height[1] / 2) as offset0,
-    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
-    type
-  FROM signals s
-  JOIN signal_features sf
-    ON s.osm_id = sf.signal_id
-  JOIN signal_direction sd
-    ON s.osm_id = sd.signal_id
-  WHERE layer = 'electrification';
 
---- Speed ---
+CREATE OR REPLACE VIEW railway_signals_view AS
+  SELECT
+    osm_id as id,
+    way,
+    osm_id,
+    'N' as osm_type,
+    rank,
+    railway,
+    sd.direction_both,
+    ref,
+    caption,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    sd.azimuth,${signals_railway_signals.tags.map(tag => `
+    "${tag.tag}",`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    features[6] as feature5,
+    features[7] as feature6,
+    features[8] as feature7,
+    features[9] as feature8,
+    features[10] as feature9,
+    features[11] as feature10,
+    features[12] as feature11,
+    category[1] as category0,
+    category[2] as category1,
+    category[3] as category2,
+    category[4] as category3,
+    category[5] as category4,
+    category[6] as category5,
+    category[7] as category6,
+    category[8] as category7,
+    category[9] as category8,
+    category[10] as category9,
+    category[11] as category10,
+    category[12] as category11,
+    deactivated[1] as deactivated0,
+    deactivated[2] as deactivated1,
+    deactivated[3] as deactivated2,
+    deactivated[4] as deactivated3,
+    deactivated[5] as deactivated4,
+    deactivated[6] as deactivated5,
+    deactivated[7] as deactivated6,
+    deactivated[8] as deactivated7,
+    deactivated[9] as deactivated8,
+    deactivated[10] as deactivated9,
+    deactivated[11] as deactivated10,
+    deactivated[12] as deactivated11,
+    CEIL(icon_height[1] / 2) as offset0,
+    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] / 2) as offset6,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] / 2) as offset7,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] / 2) as offset8,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] / 2) as offset9,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] + icon_height[11] / 2) as offset10,
+    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] + icon_height[11] + icon_height[12] / 2) as offset11,
+    type
+  FROM signals s
+  JOIN signal_features sf
+    ON s.osm_id = sf.signal_id
+  JOIN signal_direction sd
+    ON s.osm_id = sd.signal_id;
 
-CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -472,7 +399,7 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
   PARALLEL SAFE
   RETURN (
     SELECT
-      ST_AsMVT(tile, 'speed_railway_signals', 4096, 'way')
+      ST_AsMVT(tile, 'railway_signals', 4096, 'way')
     FROM (
       SELECT
         id,
@@ -484,12 +411,54 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
         direction_both,
         feature0,
         feature1,
+        feature2,
+        feature3,
+        feature4,
+        feature5,
+        feature6,
+        feature7,
+        feature8,
+        feature9,
+        feature10,
+        feature11,
+        category0,
+        category1,
+        category2,
+        category3,
+        category4,
+        category5,
+        category6,
+        category7,
+        category8,
+        category9,
+        category10,
+        category11,
         deactivated0,
         deactivated1,
+        deactivated2,
+        deactivated3,
+        deactivated4,
+        deactivated5,
+        deactivated6,
+        deactivated7,
+        deactivated8,
+        deactivated9,
+        deactivated10,
+        deactivated11,
         offset0,
         offset1,
+        offset2,
+        offset3,
+        offset4,
+        offset5,
+        offset6,
+        offset7,
+        offset8,
+        offset9,
+        offset10,
+        offset11,
         type
-      FROM speed_railway_signals_view
+      FROM railway_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
         -- conditionally include features based on zoom level
         AND CASE
@@ -506,84 +475,11 @@ CREATE OR REPLACE FUNCTION speed_railway_signals(z integer, x integer, y integer
   );
 
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION speed_railway_signals IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION railway_signals IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "speed_railway_signals",
-        "fields": {
-          "id": "integer",
-          "railway": "string",
-          "ref": "string",
-          "caption": "string",
-          "azimuth": "number",
-          "direction_both": "boolean",
-          "feature0": "string",
-          "feature1": "string",
-          "deactivated0": "boolean",
-          "deactivated1": "boolean",
-          "offset0": "number",
-          "offset1": "number",
-          "type": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
---- Signals ---
-
-CREATE OR REPLACE FUNCTION signals_railway_signals(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-  RETURN (
-    SELECT
-      ST_AsMVT(tile, 'signals_railway_signals', 4096, 'way')
-    FROM (
-      SELECT
-        id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        railway,
-        ref,
-        caption,
-        azimuth,
-        direction_both,
-        feature0,
-        feature1,
-        feature2,
-        feature3,
-        feature4,
-        feature5,
-        deactivated0,
-        deactivated1,
-        deactivated2,
-        deactivated3,
-        deactivated4,
-        deactivated5,
-        offset0,
-        offset1,
-        offset2,
-        offset3,
-        offset4,
-        offset5,
-        type
-      FROM signals_railway_signals_view
-      WHERE way && ST_TileEnvelope(z, x, y)
-      ORDER BY rank NULLS FIRST
-    ) as tile
-    WHERE way IS NOT NULL
-  );
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION signals_railway_signals IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "signals_railway_signals",
+        "id": "railway_signals",
         "fields": {
           "id": "integer",
           "railway": "string",
@@ -597,73 +493,48 @@ DO $do$ BEGIN
           "feature3": "string",
           "feature4": "string",
           "feature5": "string",
+          "feature6": "string",
+          "feature7": "string",
+          "feature8": "string",
+          "feature9": "string",
+          "feature10": "string",
+          "feature11": "string",
+          "category0": "string",
+          "category1": "string",
+          "category2": "string",
+          "category3": "string",
+          "category4": "string",
+          "category5": "string",
+          "category6": "string",
+          "category7": "string",
+          "category8": "string",
+          "category9": "string",
+          "category10": "string",
+          "category11": "string",
           "deactivated0": "boolean",
           "deactivated1": "boolean",
           "deactivated2": "boolean",
           "deactivated3": "boolean",
           "deactivated4": "boolean",
           "deactivated5": "boolean",
+          "deactivated6": "boolean",
+          "deactivated7": "boolean",
+          "deactivated8": "boolean",
+          "deactivated9": "boolean",
+          "deactivated10": "boolean",
+          "deactivated11": "boolean",
           "offset0": "number",
           "offset1": "number",
           "offset2": "number",
           "offset3": "number",
           "offset4": "number",
           "offset5": "number",
-          "type": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
---- Electrification ---
-
-CREATE OR REPLACE FUNCTION electrification_signals(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-  RETURN (
-    SELECT
-      ST_AsMVT(tile, 'electrification_signals', 4096, 'way')
-    FROM (
-      SELECT
-        id,
-        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-        railway,
-        azimuth,
-        direction_both,
-        ref,
-        caption,
-        feature0,
-        deactivated0,
-        offset0,
-        type
-      FROM electrification_signals_view
-      WHERE way && ST_TileEnvelope(z, x, y)
-      ORDER BY rank NULLS FIRST
-    ) as tile
-    WHERE way IS NOT NULL
-  );
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION electrification_signals IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "electrification_signals",
-        "fields": {
-          "id": "integer",
-          "railway": "string",
-          "azimuth": "number",
-          "direction_both": "boolean",
-          "ref": "string",
-          "caption": "string",
-          "feature": "string",
-          "deactivated": "boolean",
-          "offset": "number",
+          "offset6": "number",
+          "offset7": "number",
+          "offset8": "number",
+          "offset9": "number",
+          "offset10": "number",
+          "offset11": "number",
           "type": "string"
         }
       }
