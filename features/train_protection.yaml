@@ -13,7 +13,7 @@ train_protections:
   - { train_protection: 'kvb', legend: 'Contrôle de vitesse par balises (KVB)', color: '#66cc33' }
   - { train_protection: 'kvbp', legend: 'Contrôle de vitesse par balise permanent (KVBP)', color: '#376f1c' }
   - { train_protection: 'kcvb', legend: 'Contrôle Continu de Vitesse sur les Branches (KCVB)', color: '#6931c3' }
-  - { train_protection: 'kcvp', legend: 'Contrôle continu de la vitesse pour les prolongements (KCVP)', color: '#1c5e6f' }
+  - { train_protection: 'kcvp', legend: 'Contrôle continu de la vitesse pour les prolongements (KCVP)', color: '#cd3636' }
   - { train_protection: 'nexteo', legend: 'Nouveau système d''EXploitation des Trains Est-Ouest (NEXTEO)', color: '#9133cc' }
   - { train_protection: 'asfa', legend: 'Anuncio de Señales y Frenado Automático (ASFA)', color: '#ff9092' }
   - { train_protection: 'scmt', legend: 'Sistema Controllo Marcia Treno (SCMT)', color: '#dd11ff' }
