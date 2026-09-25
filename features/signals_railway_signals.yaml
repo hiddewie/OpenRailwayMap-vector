@@ -5633,7 +5633,11 @@ features:
     country: ES
     icon:
       - default: 'es/Adif-FF-4'
-      - default: 'es/4-FF8'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/4-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/4-FF5A' }
+        default: 'es/4-FF71A'
     exampleIcon: 'es/Adif-4'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
