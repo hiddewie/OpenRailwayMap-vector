@@ -39,14 +39,20 @@ properties:
       properties:
         type:
           type: string
-          description: The type of tag, sometimes named category
-        layer:
+          description: The type of signal
+        category:
           type: string
-          description: The layer that features using this type are shown in.
+          description: The category that this type of signals belongs to.
           enum:
-            - signals
+            - main
+            - distant
             - speed
-            - electrification
+            - train_protection
+            - electricity
+            - station
+            - radio
+            - shunting
+            - other
       additionalProperties: false
   features:
     type: array

@@ -127,11 +127,6 @@ postgres:
       function: speed_railway_line_low
       maxzoom: 7
 
-    speed_railway_signals:
-      schema: public
-      function: speed_railway_signals
-      minzoom: 13
-
     # --- Signals --- #
 
     signals_railway_line_low_construction:
@@ -150,9 +145,9 @@ postgres:
       minzoom: 8
       maxzoom: 16
 
-    signals_railway_signals:
+    railway_signals:
       schema: public
-      function: signals_railway_signals
+      function: railway_signals
       minzoom: 13
 
     # --- Electrification --- #
@@ -161,11 +156,6 @@ postgres:
       schema: public
       function: electrification_railway_line_low
       maxzoom: 7
-
-    electrification_signals:
-      schema: public
-      function: electrification_signals
-      minzoom: 13
 
     electrification_substation:
       schema: public

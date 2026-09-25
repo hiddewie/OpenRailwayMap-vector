@@ -508,7 +508,7 @@ const knownStyles = {
       boxes: 'none',
       catenaries: 'none',
       switches: 'plain',
-      signals: 'none',
+      signals: [],
     },
   },
   speed: {
@@ -523,7 +523,7 @@ const knownStyles = {
       boxes: 'none',
       catenaries: 'none',
       switches: 'none',
-      signals: 'speed',
+      signals: ['speed'],
     },
   },
   signals: {
@@ -538,7 +538,7 @@ const knownStyles = {
       boxes: 'plain',
       catenaries: 'none',
       switches: 'none',
-      signals: 'signals',
+      signals: ['main', 'distant', 'train_protection', 'station', 'radio', 'shunting', 'other'],
     },
   },
   electrification: {
@@ -553,7 +553,7 @@ const knownStyles = {
       boxes: 'none',
       catenaries: 'plain',
       switches: 'none',
-      signals: 'electrification',
+      signals: ['electricity'],
     },
   },
   track: {
@@ -568,7 +568,7 @@ const knownStyles = {
       boxes: 'none',
       catenaries: 'none',
       switches: 'none',
-      signals: 'none',
+      signals: [],
     },
   },
   operator: {
@@ -583,7 +583,7 @@ const knownStyles = {
       boxes: 'operator',
       catenaries: 'none',
       switches: 'none',
-      signals: 'none',
+      signals: [],
     },
   },
   route: {
@@ -598,7 +598,7 @@ const knownStyles = {
       boxes: 'none',
       catenaries: 'none',
       switches: 'none',
-      signals: 'none',
+      signals: [],
     },
   },
 };
@@ -713,25 +713,44 @@ const styleElements = [
   {
     name: 'Signals',
     key: 'signals',
-    // TODO split into functional sections
-    defaultValue: 'none',
-    disabledValue: 'none',
+    defaultValue: [],
+    multiple: true,
     values: [
+      {
+        name: 'Main',
+        value: 'main',
+      },
+      {
+        name: 'Distant',
+        value: 'distant',
+      },
       {
         name: 'Speed',
         value: 'speed',
       },
       {
         name: 'Train protection',
-        value: 'signals',
+        value: 'train_protection',
       },
       {
-        name: 'Electrification',
-        value: 'electrification',
+        name: 'Electricity',
+        value: 'electricity',
       },
       {
-        name: 'None',
-        value: 'none',
+        name: 'Station',
+        value: 'station',
+      },
+      {
+        name: 'Radio',
+        value: 'radio',
+      },
+      {
+        name: 'Shunting',
+        value: 'shunting',
+      },
+      {
+        name: 'Other',
+        value: 'other',
       },
     ],
   },
