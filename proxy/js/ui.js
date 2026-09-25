@@ -19,6 +19,7 @@ const backgroundOpacityControl = document.getElementById('backgroundOpacity');
 const backgroundTypeRasterControl = document.getElementById('backgroundTypeRaster');
 const backgroundTypeVectorControl = document.getElementById('backgroundTypeVector');
 const backgroundUrlControl = document.getElementById('backgroundUrl');
+const overlayJsonControl = document.getElementById('overlayJson');
 const backgroundHillShadeDisabledControl = document.getElementById('backgroundHillShadeDisabled');
 const backgroundHillShadeEnabledControl = document.getElementById('backgroundHillShadeEnabled');
 const stationLabelNameControl = document.getElementById('stationLabelName');
@@ -302,6 +303,8 @@ function showConfiguration(tab) {
     backgroundTypeVectorControl.checked = true;
   }
   backgroundUrlControl.value = configuration.backgroundUrl ?? defaultConfiguration.backgroundUrl;
+  overlayJsonControl.value = '';
+  loadOverlay(overlay).then(data => { overlayJsonControl.value = data ? JSON.stringify(data) : ''; });
 
   if (configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade) {
     backgroundHillShadeEnabledControl.checked = true
@@ -873,6 +876,7 @@ function determineParametersFromHash(hash) {
   return {
     style: updateStyleParameter(hashObject),
     date: determineDateParameter(hashObject.date),
+    overlay: determineOverlayParameter(hashObject),
   }
 }
 
@@ -955,6 +959,14 @@ function updateStyleParameter(hashObject) {
   };
 }
 
+/**
+ * The overlay: `{base64}` for `overlay-base64=<GeoJSON>` (the file in the link, base64 of the
+ * UTF-8 text or of its gzip), or null.
+ */
+function determineOverlayParameter(hashObject) {
+  return hashObject['overlay-base64'] ? {base64: decodeURIComponent(hashObject['overlay-base64'])} : null;
+}
+
 function determineDateParameter(hashDate) {
   return hashDate === 'all'
     ? 'all'
@@ -993,6 +1005,7 @@ function putParametersInHash(hash, style, date) {
     }
   })
   hashObject.date = dateControl.isActive() ? date : undefined;
+  hashObject['overlay-base64'] = overlay?.base64 ? encodeURIComponent(overlay.base64) : undefined;
 
   const hashContent = Object.entries(hashObject)
     .filter(([_, value]) => value)
@@ -1474,7 +1487,7 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
+let {style: selectedStyle, date: selectedDate, overlay} = determineParametersFromHash(window.location.hash)
 
 const mapStyles = Object.fromEntries(
   Object.keys(knownStyles)
@@ -1503,17 +1516,28 @@ const map = new maplibregl.Map({
   renderWorldCopies: false,
   ...(configuration.view || defaultConfiguration.view),
 });
-map.setStyle(`${location.origin}/style.json`, {
-  validate: false,
-  transformStyle: (previous, next) => {
-    const language = configuredLanguage();
+function loadMapStyle(overlayData, diff = true) {
+  map.setStyle(`${location.origin}/style.json`, {
+    validate: false,
+    diff,
+    transformStyle: (previous, next) => {
+      const language = configuredLanguage();
 
-    rewriteStylePathsToOrigin(next)
-    addLanguageToSupportedSources(next, language)
-    rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
-    return next;
-  },
-});
+      rewriteStylePathsToOrigin(next)
+      addLanguageToSupportedSources(next, language)
+      rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
+      if (overlayData) {
+        addOverlayToStyle(next, overlayData)
+      }
+      return next;
+    },
+  });
+}
+if (overlay) {
+  loadOverlay(overlay).then(data => loadMapStyle(data));
+} else {
+  loadMapStyle(null);
+}
 
 function selectPreset(preset) {
   styleControl.selectPreset(preset);
@@ -2882,7 +2906,11 @@ function openJOSM(josmUrl, osmType, osmId) {
 function popupContent(feature, abortController) {
   const bounds = map.getBounds();
   const editor = configuration.editor ?? defaultConfiguration.editor;
-  const layerSource = `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
+  // an overlay feature is described by the catalog of the tile layer it names
+  const overlaid = feature.source === overlaySourceId;
+  const layerSource = overlaid
+    ? Object.keys(features ?? {}).find(key => key.endsWith(`-${feature.properties.layer}`))
+    : `${feature.source}${feature.sourceLayer ? `-${feature.sourceLayer}` : ''}`;
 
   const fetchFeatureProperties = (view) => {
     const supportsLocalization = view.localizedFields
@@ -2998,7 +3026,7 @@ function popupContent(feature, abortController) {
   const colorProperty = featureCatalog.colorProperty || 'color';
 
   const propertiesFromView = featureCatalog.view;
-  const properties$ = propertiesFromView
+  const properties$ = propertiesFromView && !overlaid
     ? fetchFeatureProperties(propertiesFromView)
     : Promise.resolve({
       properties: feature.properties,
@@ -3289,6 +3317,202 @@ function popupContent(feature, abortController) {
     });
 
   return popupContainer
+}
+
+
+// Overlay //
+
+// A GeoJSON overlay drawn on top of the map, carried in the page URL as `#overlay-base64=<GeoJSON>`
+// (base64 of its text or of its gzip; the configuration has a field to paste it into, which gzips
+// it). Each feature names, in its `layer` property, the tile layer whose style it
+// wants (for example `railway_line_high` for a track, `standard_railway_grouped_stations` for a
+// station or `standard_railway_platforms` for a platform), and carries the properties that layer's
+// style keys on, so it is drawn by copies of the style's own layers and looks like the tiled data.
+// The collection may also list OSM way ids in a top-level `hides` member: those tracks are hidden,
+// for overlays that replace existing infrastructure.
+//
+// The overlay is put into the style as it loads (see loadMapStyle), not with addLayer/setFilter
+// calls afterwards: MapLibre serializes the whole style to validate each of those, which with the
+// hundreds of layers involved takes seconds.
+const overlaySourceId = 'overlay';
+
+/**
+ * The pasted GeoJSON becomes the overlay: gzipped and base64 encoded into the page URL
+ */
+async function setOverlayJson(text) {
+  let data = null;
+  if (text.trim()) {
+    try {
+      data = JSON.parse(text);
+      overlayJsonControl.setCustomValidity('');
+    } catch (exception) {
+      overlayJsonControl.setCustomValidity(`Not valid JSON: ${exception.message}`);
+      overlayJsonControl.reportValidity();
+      return;
+    }
+  }
+  overlay = data ? {base64: await encodeOverlayBase64(data)} : null;
+  onPageParametersChange();
+  // the style is loaded anew with the overlay in it
+  loadMapStyle(data, false);
+}
+
+async function encodeOverlayBase64(data) {
+  const gzipped = new Blob([new TextEncoder().encode(JSON.stringify(data))]).stream().pipeThrough(new CompressionStream('gzip'));
+  const bytes = new Uint8Array(await new Response(gzipped).arrayBuffer());
+  return btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(''));
+}
+
+async function decodeOverlayBase64(base64) {
+  const bytes = Uint8Array.from(atob(base64), character => character.charCodeAt(0));
+  const gzipped = bytes.length > 2 && bytes[0] === 0x1f && bytes[1] === 0x8b;
+  const text = gzipped
+    ? await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text()
+    : new TextDecoder().decode(bytes);
+  return JSON.parse(text);
+}
+
+/**
+ * The overlay's GeoJSON, or null without an overlay or when it cannot be loaded
+ */
+async function loadOverlay(overlay) {
+  if (!overlay) {
+    return null;
+  }
+  try {
+    const data = await decodeOverlayBase64(overlay.base64);
+    console.info('Loaded overlay from the URL');
+    return data;
+  } catch (error) {
+    console.error('Error during loading of overlay from the URL', error);
+    return null;
+  }
+}
+
+// Whether a layer filter can be true for a feature: the filter is evaluated with the feature's
+// properties, and anything depending on the map's state (`global-state`, `zoom`) counts as
+// unknown, so that layers for other map styles are kept. Returns true, false or null (unknown).
+function filterMayMatch(filter, feature) {
+  const U = Symbol('unknown');   // distinct from null, which a missing property evaluates to
+  const evaluate = expression => {
+    if (!Array.isArray(expression) || typeof expression[0] !== 'string') {
+      return expression;
+    }
+    const [operator, ...args] = expression;
+    switch (operator) {
+      case 'literal': return args[0];
+      case 'get': return args.length === 1 ? (feature.properties?.[args[0]] ?? null) : U;
+      case 'has': return args.length === 1 ? (args[0] in (feature.properties ?? {})) : U;
+      case 'geometry-type': return feature.geometry?.type ?? U;
+      case '!': { const v = evaluate(args[0]); return v === U ? U : !v; }
+      case 'all': {
+        let result = true;
+        for (const arg of args) {
+          const v = evaluate(arg);
+          if (v === false) return false;
+          if (v === U) result = U;
+        }
+        return result;
+      }
+      case 'any': {
+        let result = false;
+        for (const arg of args) {
+          const v = evaluate(arg);
+          if (v === true) return true;
+          if (v === U) result = U;
+        }
+        return result;
+      }
+      case '==': case '!=': {
+        const [l, r] = [evaluate(args[0]), evaluate(args[1])];
+        if (l === U || r === U) return U;
+        return operator === '==' ? l === r : l !== r;
+      }
+      case '<': case '<=': case '>': case '>=': {
+        const [l, r] = [evaluate(args[0]), evaluate(args[1])];
+        if (l === U || r === U || l === null || r === null) return U;
+        return operator === '<' ? l < r : operator === '<=' ? l <= r : operator === '>' ? l > r : l >= r;
+      }
+      case 'in': {
+        const [needle, haystack] = [evaluate(args[0]), evaluate(args[1])];
+        if (needle === U || haystack === U) return U;
+        return Array.isArray(haystack) ? haystack.includes(needle) : typeof haystack === 'string' ? haystack.includes(needle) : false;
+      }
+      case 'match': {
+        const input = evaluate(args[0]);
+        if (input === U) return U;
+        for (let i = 1; i + 1 < args.length; i += 2) {
+          const labels = Array.isArray(args[i]) ? args[i] : [args[i]];
+          if (labels.includes(input)) return evaluate(args[i + 1]);
+        }
+        return evaluate(args[args.length - 1]);
+      }
+      case 'case': {
+        for (let i = 0; i + 1 < args.length; i += 2) {
+          const condition = evaluate(args[i]);
+          if (condition === U) return U;
+          if (condition) return evaluate(args[i + 1]);
+        }
+        return evaluate(args[args.length - 1]);
+      }
+      case 'coalesce': {
+        for (const arg of args) {
+          const v = evaluate(arg);
+          if (v === U) return U;
+          if (v !== null && v !== undefined) return v;
+        }
+        return null;
+      }
+      default: return U;   // global-state, zoom, interpolate, ...
+    }
+  };
+  const result = evaluate(filter ?? true);
+  return result === U ? U : !!result;
+}
+
+function addOverlayToStyle(style, data) {
+  style.sources[overlaySourceId] = {
+    type: 'geojson',
+    data,
+    generateId: true,
+  };
+
+  const featuresByLayer = new Map();
+  (data.features ?? []).forEach(feature => {
+    const layer = feature.properties?.layer;
+    if (layer) {
+      featuresByLayer.set(layer, [...(featuresByLayer.get(layer) ?? []), feature]);
+    }
+  });
+
+  // tile features of railway lines have ids `<way id>-<segment>`
+  const hides = Array.isArray(data.hides) ? data.hides.map(id => Number(id)).filter(id => !isNaN(id)) : [];
+  const wayIdOfFeature = ['to-number', ['slice', ['to-string', ['get', 'id']], 0, ['index-of', '-', ['to-string', ['get', 'id']]]]];
+  const notHidden = ['!', ['in', wayIdOfFeature, ['literal', hides]]];
+
+  style.layers = style.layers.flatMap(layer => {
+    const sourceLayer = layer['source-layer'];
+    if (!sourceLayer) {
+      return [layer];
+    }
+    const layers = [layer];
+    // a copy of every style layer drawing a wanted tile layer that some feature can pass the
+    // filter of (every layer costs rendering time, so the many that cannot are left out), right
+    // after its original
+    const features = featuresByLayer.get(sourceLayer);
+    if (features && features.some(feature => filterMayMatch(layer.filter, feature) !== false)) {
+      const copy = JSON.parse(JSON.stringify(layer));
+      copy.id = `${overlaySourceId}-${layer.id}`;
+      copy.source = overlaySourceId;
+      delete copy['source-layer'];
+      copy.filter = ['all', ['==', ['get', 'layer'], sourceLayer], layer.filter ?? true];
+      layers.push(copy);
+    }
+    if (hides.length > 0 && sourceLayer === 'railway_line_high') {
+      layer.filter = ['all', layer.filter ?? true, notHidden];
+    }
+    return layers;
+  });
 }
 
 map.on('move', () => backgroundMap.jumpTo({ center: map.getCenter(), zoom: map.getZoom(), bearing: map.getBearing(), pitch: map.getPitch() }));

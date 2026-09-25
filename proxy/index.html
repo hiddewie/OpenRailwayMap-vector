@@ -118,6 +118,13 @@
       <div class="modal-body" id="configure-general-body">
         <form>
           <div class="mb-4">
+            <label for="overlayJson" class="form-label">Overlay</label>
+            <textarea class="form-control font-monospace" id="overlayJson" rows="4" spellcheck="false" placeholder='{"type": "FeatureCollection", "features": [...]}' onchange="setOverlayJson(this.value)"></textarea>
+            <small class="form-text text-muted">
+              GeoJSON drawn on top of the map, for example a proposal. It is compressed into the page URL (<code>#overlay-base64=</code>), so the link can be shared. See <a href="https://github.com/hiddewie/OpenRailwayMap-vector#overlays" target="_blank">the documentation</a> for the format.
+            </small>
+          </div>
+          <div class="mb-4">
             <label for="backgroundSaturation" class="form-label">Background map saturation</label>
             <input type="range" min="0.0" max="1.0" step="0.05" class="form-range" id="backgroundSaturation" onchange="updateConfiguration('backgroundSaturation', parseFloat(this.value)); updateBackgroundMapContainer();">
             <small class="form-text">
