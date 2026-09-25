@@ -5640,28 +5640,31 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Señal de retroceso de 4 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF7-2'
+    exampleIcon: 'es/Adif-2+2-retroceso'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
   - description: Señal tipo Adif de 4 focos en disposición 2+2
     country: ES
     icon:
       - default: 'es/Adif-FF-2+2'
-      - default: 'es/2+2-FF8A'
+      - default: 'es/2+2-FF7'
     exampleIcon: 'es/Adif-2+2'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Señal tipo Adif de retroceso de 4 focos
-    country: ES
-    icon: [ default: 'es/Adif-2+2-retroceso' ]
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'ES-RCF' }
-      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
   - description: Señal tipo Renfe de 3 focos con cartelón "P"
     country: ES
-    icon: [ default: 'es/Renfe-3+P-FF7B' ]
+    icon: [ default: 'es/Renfe-3+P-FF1A' ]
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
