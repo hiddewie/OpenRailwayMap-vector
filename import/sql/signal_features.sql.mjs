@@ -291,7 +291,10 @@ CREATE OR REPLACE VIEW signal_features_view AS
   -- Group features by signal, and aggregate the results
   SELECT
     signal_id,
-    any_value(type) as type,
+    CASE
+      WHEN 'line' = ANY(array_agg(type)) THEN 'line'
+      WHEN 'tram' = ANY(array_agg(type)) THEN 'tram'
+    END as type,
     array_agg(category ORDER BY rank ASC NULLS LAST) as category,
     array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
     array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
@@ -372,6 +375,18 @@ CREATE OR REPLACE VIEW railway_signals_view AS
     deactivated[10] as deactivated9,
     deactivated[11] as deactivated10,
     deactivated[12] as deactivated11,
+    icon_height[1] as icon_height0,
+    icon_height[2] as icon_height1,
+    icon_height[3] as icon_height2,
+    icon_height[4] as icon_height3,
+    icon_height[5] as icon_height4,
+    icon_height[6] as icon_height5,
+    icon_height[7] as icon_height6,
+    icon_height[8] as icon_height7,
+    icon_height[9] as icon_height8,
+    icon_height[10] as icon_height9,
+    icon_height[11] as icon_height10,
+    icon_height[12] as icon_height11,
     CEIL(icon_height[1] / 2) as offset0,
     CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
     CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
@@ -445,6 +460,18 @@ CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
         deactivated9,
         deactivated10,
         deactivated11,
+        icon_height0,
+        icon_height1,
+        icon_height2,
+        icon_height3,
+        icon_height4,
+        icon_height5,
+        icon_height6,
+        icon_height7,
+        icon_height8,
+        icon_height9,
+        icon_height10,
+        icon_height11,
         offset0,
         offset1,
         offset2,
@@ -463,9 +490,7 @@ CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
         -- conditionally include features based on zoom level
         AND CASE
           WHEN z < 14 THEN
-            type IN ('line')
-          WHEN z < 16 THEN
-            type IN ('line', 'tram')
+            type IS NULL OR type NOT IN ('tram')
           ELSE
             true
         END
@@ -523,6 +548,18 @@ DO $do$ BEGIN
           "deactivated9": "boolean",
           "deactivated10": "boolean",
           "deactivated11": "boolean",
+          "icon_height0": "number",
+          "icon_height1": "number",
+          "icon_height2": "number",
+          "icon_height3": "number",
+          "icon_height4": "number",
+          "icon_height5": "number",
+          "icon_height6": "number",
+          "icon_height7": "number",
+          "icon_height8": "number",
+          "icon_height9": "number",
+          "icon_height10": "number",
+          "icon_height11": "number",
           "offset0": "number",
           "offset1": "number",
           "offset2": "number",
