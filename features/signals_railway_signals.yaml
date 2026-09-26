@@ -5548,7 +5548,13 @@ features:
 
   - description: Señal tipo Renfe de 3 focos con cartelón "P"
     country: ES
-    icon: [ default: 'es/Renfe-3+P-FF1A' ]
+    icon:
+      - default: 'es/Renfe-3+P-FF'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3+P-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3+P-FF5A' }
+        default: 'es/Renfe-3+P-FF1A'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
