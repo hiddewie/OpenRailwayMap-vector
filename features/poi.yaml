@@ -3,21 +3,21 @@ $schema: ./schema/poi.yaml
 features:
   - description: Border crossing
     feature: 'general/border'
-    layer: operator
+    type: operator
     minzoom: 10
     tags:
       - { tag: 'railway', value: 'border' }
 
   - description: Owner change
     feature: 'general/owner-change'
-    layer: operator
+    type: operator
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'owner_change' }
 
   - description: Radio mast
     feature: 'general/radio-mast'
-    layer: standard
+    type: radio
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'radio' }
@@ -31,90 +31,90 @@ features:
 
   - description: Container terminal
     feature: 'general/container-terminal'
-    layer: standard
+    type: facility
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'container_terminal' }
 
   - description: Ferry terminal
     feature: 'general/ferry-terminal'
-    layer: standard
+    type: facility
     minzoom: 12
     tags:
       - { tag: 'railway', value: 'ferry_terminal' }
 
   - description: Lubricator
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/lubricator'
     tags:
       - { tag: 'railway', value: 'lubricator' }
 
   - description: Fuel
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/fuel'
     tags:
       - { tag: 'railway', value: 'fuel' }
 
   - description: Sand store
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/sand_store'
     tags:
       - { tag: 'railway', value: 'sand_store' }
 
   - description: Defect detector
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/defect_detector'
     tags:
       - { tag: 'railway', value: 'defect_detector' }
 
   - description: Automatic equipment identification
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/aei'
     tags:
       - { tag: 'railway', value: 'aei' }
 
   - description: Hump
-    layer: standard
+    type: facility
     minzoom: 13
     feature: 'general/hump_yard'
     tags:
       - { tag: 'railway', value: 'hump_yard' }
 
   - description: Loading gauge
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/loading_gauge'
     tags:
       - { tag: 'railway', value: 'loading_gauge' }
 
   - description: Preheating
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/preheating'
     tags:
       - { tag: 'railway', value: 'preheating' }
 
   - description: Compressed air supply
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/compressed_air_supply'
     tags:
       - { tag: 'railway', value: 'compressed_air_supply' }
 
   - description: Waste disposal
-    layer: standard
+    type: equipment
     minzoom: 13
     feature: 'general/waste_disposal'
     tags:
       - { tag: 'railway', value: 'waste_disposal' }
 
   - description: Coaling facility
-    layer: standard
+    type: facility
     minzoom: 13
     feature: 'general/coaling_facility'
     tags:
@@ -122,14 +122,14 @@ features:
 
   - description: Wash
     feature: 'general/wash'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'wash' }
 
   - description: Water tower
     feature: 'general/water_tower'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'water_tower' }
@@ -141,20 +141,20 @@ features:
 
   - description: Workshop
     feature: 'general/workshop'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'workshop' }
 
   - description: Engine shed
     feature: 'general/engine_shed'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'engine_shed' }
 
   - description: Railway museum
-    layer: standard
+    type: facility
     minzoom: 13
     feature: 'general/museum'
     tags:
@@ -168,90 +168,90 @@ features:
 
   - description: Power supply
     feature: 'general/power_supply'
-    layer: electrification
+    type: equipment
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'power_supply' }
 
   - description: Rolling highway
     feature: 'general/rolling_highway'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'rolling_highway' }
 
   - description: Pit
     feature: 'general/pit'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'pit' }
 
   - description: Loading rack
     feature: 'general/loading-rack'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'loading_rack' }
 
   - description: Loading ramp
     feature: 'general/loading-ramp'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'loading_ramp' }
 
   - description: Loading tower
     feature: 'general/loading-tower'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'loading_tower' }
 
   - description: Unloading hole
     feature: 'general/unloading-hole'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'unloading_hole' }
 
   - description: Weigh bridge
     feature: 'general/track-scale'
-    layer: standard
+    type: equipment
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'track_scale' }
 
   - description: Transporter car
     feature: 'general/carrier-truck-pit'
-    layer: standard
+    type: equipment
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'carrier_truck_pit' }
 
   - description: Bogie exchange
     feature: 'general/gauge-conversion'
-    layer: standard
+    type: equipment
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'gauge_conversion' }
 
   - description: Car shuttle
     feature: 'general/car-shuttle'
-    layer: standard
+    type: facility
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'car_shuttle' }
 
   - description: Rotary car dumper
     feature: 'general/car-dumper'
-    layer: standard
+    type: equipment
     minzoom: 13
     tags:
       - { tag: 'railway', value: 'car_dumper' }
 
   - description: Vacancy detection
-    layer: signals
+    type: vacancy_detection
     minzoom: 16
     feature: 'general/vacancy-detection-unknown'
     tags:
@@ -271,14 +271,14 @@ features:
 
   - description: Isolated track section
     feature: 'general/isolated-track-section'
-    layer: electrification
+    type: electrical_equipment
     minzoom: 14
     tags:
       - { tag: 'railway', value: 'isolated_track_section' }
 
   - description: Crossing
     feature: 'general/crossing'
-    layer: standard
+    type: level_crossing
     minzoom: 15
     tags:
       - { tag: 'railway', value: 'crossing' }
@@ -308,14 +308,14 @@ features:
           - { tag: 'railway', value: 'level_crossing' }
 
   - description: Hi-rail vehicle access point
-    layer: standard
+    type: facility
     minzoom: 16
     feature: 'general/hirail_access'
     tags:
       - { tag: 'railway', value: 'hirail_access' }
 
   - description: Phone
-    layer: standard
+    type: equipment
     minzoom: 16
     feature: 'general/phone'
     tags:
@@ -323,21 +323,21 @@ features:
 
   - description: Buffer stop
     feature: 'general/buffer_stop'
-    layer: standard
+    type: train_protection
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'buffer_stop' }
 
   - description: Derailer
     feature: 'general/derail'
-    layer: standard
+    type: train_protection
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'derail' }
 
   - description: Retarder
     feature: 'general/retarder'
-    layer: standard
+    type: equipment
     minzoom: 16
     tags:
       - { tag: 'railway', value: 'rail_brake' }

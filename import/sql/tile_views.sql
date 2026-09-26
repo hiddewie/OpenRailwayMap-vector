@@ -811,9 +811,10 @@ CREATE OR REPLACE VIEW poi_view AS
     osm_type,
     feature,
     ref,
+    operator,
     name,
     minzoom,
-    layer,
+    type,
     rank,
     position,
     radio,
@@ -828,7 +829,7 @@ CREATE OR REPLACE VIEW poi_view AS
     description
   FROM pois;
 
-CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION points_of_interest(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -836,31 +837,32 @@ CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'points_of_interest', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
+      type,
       ref
     FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
-      AND layer = 'standard'
     ORDER BY rank DESC
   ) as tile
   WHERE way IS NOT NULL
 );
 
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION standard_railway_symbols IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION points_of_interest IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "standard_railway_symbols",
+        "id": "points_of_interest",
         "fields": {
           "id": "string",
           "feature": "string",
+          "type": "string",
           "ref": "string"
         }
       }
@@ -1550,47 +1552,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION signals_railway_symbols(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'signals_railway_symbols', 4096, 'way')
-  FROM (
-    SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
-      feature,
-      ref
-    FROM poi_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'signals'
-    ORDER BY rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION signals_railway_symbols IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "signals_railway_symbols",
-        "fields": {
-          "id": "string",
-          "feature": "string",
-          "ref": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
 --- Electrification ---
 
 CREATE OR REPLACE FUNCTION electrification_railway_line_low(z integer, x integer, y integer)
@@ -1648,47 +1609,6 @@ DO $do$ BEGIN
           "future_frequency": "number",
           "future_voltage": "integer",
           "future_maximum_current": "integer"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
-  FROM (
-    SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
-      feature,
-      ref
-    FROM poi_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'electrification'
-    ORDER BY rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION electrification_railway_symbols IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "electrification_railway_symbols",
-        "fields": {
-          "id": "string",
-          "feature": "string",
-          "ref": "string"
         }
       }
     ]
@@ -1933,47 +1853,6 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
-  FROM (
-    SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
-      feature,
-      ref
-    FROM poi_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'operator'
-    ORDER BY rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION operator_railway_symbols IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "operator_railway_symbols",
-        "fields": {
-          "id": "string",
-          "feature": "string",
-          "ref": "string"
         }
       }
     ]

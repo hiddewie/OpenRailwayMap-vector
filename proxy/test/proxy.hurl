@@ -34,7 +34,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
+GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
@@ -44,17 +44,17 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals_railway_signals,signals_signal_boxes,signals_railway_symbols
+GET {{base_url}}/signals_railway_signals,signals_signal_boxes
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation
+GET {{base_url}}/electrification_signals,electrification_catenary,electrification_substation
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/operator_railway_symbols
+GET {{base_url}}/points_of_interest
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json

@@ -4,12 +4,12 @@ WORKDIR /build
 
 RUN npm install yaml
 
-RUN --mount=type=bind,source=import/tags.lua.js,target=tags.lua.js \
+RUN --mount=type=bind,source=import/tags.lua.mjs,target=tags.lua.mjs \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/poi.yaml,target=poi.yaml \
   --mount=type=bind,source=features/stations.yaml,target=stations.yaml \
-  node tags.lua.js \
+  node tags.lua.mjs \
     > /build/tags.lua
 
 FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-signals
@@ -18,10 +18,10 @@ WORKDIR /build
 
 RUN npm install yaml
 
-RUN --mount=type=bind,source=import/sql/signal_features.sql.js,target=signal_features.sql.js \
+RUN --mount=type=bind,source=import/sql/signal_features.sql.mjs,target=signal_features.sql.mjs \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=symbols,target=symbols \
-  node signal_features.sql.js \
+  node signal_features.sql.mjs \
     > /build/signal_features.sql
 
 FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-operators
@@ -30,9 +30,9 @@ WORKDIR /build
 
 RUN npm install yaml
 
-RUN --mount=type=bind,source=import/sql/operators.sql.js,target=operators.sql.js \
+RUN --mount=type=bind,source=import/sql/operators.sql.mjs,target=operators.sql.mjs \
   --mount=type=bind,source=features/operators.yaml,target=operators.yaml \
-  node operators.sql.js \
+  node operators.sql.mjs \
     > /build/operators.sql
 
 FROM debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a AS test

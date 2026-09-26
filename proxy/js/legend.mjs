@@ -3841,96 +3841,29 @@ const sourceLayers = {
 
   // POIs
 
-  "openrailwaymap_standard-standard_railway_symbols": {
-    standard: {
+  "openrailwaymap_points_of_interest-points_of_interest": {
+    pois: {
       key: [
         'feature',
       ],
-      features: poi.features
-        .filter(feature => feature.layer === 'standard')
-        .map(feature => ({
-          legend: feature.description,
-          type: 'point',
-          minzoom: feature.minzoom,
+      features: poi.features.map(feature => ({
+        legend: feature.description,
+        type: 'point',
+        minzoom: feature.minzoom,
+        properties: {
+          feature: feature.feature,
+          type: feature.type,
+        },
+        variants: feature.variants ? feature.variants.map(variant => ({
+          legend: variant.description,
           properties: {
-            feature: feature.feature,
+            feature: variant.feature,
           },
-          variants: feature.variants ? feature.variants.map(variant => ({
-            legend: variant.description,
-            properties: {
-              feature: variant.feature,
-            },
-          })) : undefined,
-        })),
-    },
-  },
-  "openrailwaymap_signals-signals_railway_symbols": {
-    signals: {
-      key: [
-        'feature',
-      ],
-      features: poi.features
-        .filter(feature => feature.layer === 'signals')
-        .map(feature => ({
-          legend: feature.description,
-          type: 'point',
-          minzoom: feature.minzoom,
-          properties: {
-            feature: feature.feature,
-          },
-          variants: feature.variants ? feature.variants.map(variant => ({
-            legend: variant.description,
-            properties: {
-              feature: variant.feature,
-            },
-          })) : undefined,
-        })),
-    },
-  },
-  "openrailwaymap_electrification-electrification_railway_symbols": {
-    electrification: {
-      key: [
-        'feature',
-      ],
-      features: poi.features
-        .filter(feature => feature.layer === 'electrification')
-        .map(feature => ({
-          legend: feature.description,
-          type: 'point',
-          minzoom: feature.minzoom,
-          properties: {
-            feature: feature.feature,
-          },
-          variants: feature.variants ? feature.variants.map(variant => ({
-            legend: variant.description,
-            properties: {
-              feature: variant.feature,
-            },
-          })) : undefined,
-        })),
-    },
-  },
-  "openrailwaymap_operator-operator_railway_symbols": {
-    operator: {
-      key: [
-        'feature',
-      ],
-      features: poi.features
-        .filter(feature => feature.layer === 'operator')
-        .map(feature => ({
-          legend: feature.description,
-          type: 'point',
-          minzoom: feature.minzoom,
-          properties: {
-            feature: feature.feature,
-          },
-          variants: feature.variants ? feature.variants.map(variant => ({
-            legend: variant.description,
-            properties: {
-              feature: variant.feature,
-            },
-          })) : undefined,
-        })),
+        })) : undefined,
+        mapState: {
+          pois: feature.type,
+        },
+      })),
     },
   },
 
