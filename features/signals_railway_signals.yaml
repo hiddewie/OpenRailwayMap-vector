@@ -5492,6 +5492,124 @@ features:
 
   # --- ES --- #
 
+  ## Señales de 5, 4, 3 y 2 focos (FFxx) ##
+
+  - description: Señal tipo Adif de 5 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-5'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/5-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/5-FF5A' }
+        default: 'es/5-FF7CD'
+    exampleIcon: 'es/Adif-5'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-4'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/4-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/4-FF5A' }
+        default: 'es/4-FF1A'
+    exampleIcon: 'es/Adif-4'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal de retroceso de 4 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF7-2'
+    exampleIcon: 'es/Adif-2+2-retroceso'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos en disposición 2+2
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF7'
+    exampleIcon: 'es/Adif-2+2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos con cartelón "P"
+    country: ES
+    icon:
+      - default: 'es/Renfe-3+P-FF'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3+P-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3+P-FF5A' }
+        default: 'es/Renfe-3+P-FF1A'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos y luz blanca
+    country: ES
+    icon: [ default: 'es/Renfe-3+1-FF8B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal de maniobras de 2 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2' 
+      - default: 'es/2-FF7A' 
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  ## Cartelones (FIxx)
+
+  - description: Silbar
+    country: ES
+    icon: [ default: 'es/FI15A' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Silbar (anulable)
+    country: ES
+    icon: [ default: 'es/FI15Abis' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'FI15Abis'}
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Proximidad a un apeadero
+    country: ES
+    icon: [ default: 'es/FI15B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15B' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Proximidad al eje de un apeadero
+    country: ES
+    icon: [ default: 'es/FI15C' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
   - description: flecha ascendente
     country: ES
     icon: [ default: 'es/FI11A' ]
