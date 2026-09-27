@@ -4017,7 +4017,7 @@ const layers = [
                 ['==', ['global-state', 'pitched'], false],
                 ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
                 ['+',
-                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                  ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
                   ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
                   ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
@@ -4070,7 +4070,7 @@ const layers = [
               ['==', ['global-state', 'pitched'], false],
               ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
               ['+',
-                ['get', 'offset0'], // Icon is shown above anchor in pitched view
+                ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                 4, // Signal anchor
                 ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
                 ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
@@ -4130,7 +4130,7 @@ const layers = [
       ],
       'text-offset': ['interpolate', ['linear'],
         ['case',
-          ['==', ['global-state', 'pitched'], false], ['+', ['get', 'offset0'], 2], // 2 pixel spacing under icon
+          ['==', ['global-state', 'pitched'], false], ['+', ['/', ['get', 'icon_height0'], 2], 2], // 2 pixel spacing under icon
           -1,
         ],
         -20 * 9, ['literal', [0, -20]],
