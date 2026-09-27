@@ -39,7 +39,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals_railway_signals
+GET {{base_url}}/railway_signals
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
