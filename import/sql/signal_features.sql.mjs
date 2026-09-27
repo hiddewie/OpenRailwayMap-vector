@@ -387,18 +387,6 @@ CREATE OR REPLACE VIEW railway_signals_view AS
     icon_height[10] as icon_height9,
     icon_height[11] as icon_height10,
     icon_height[12] as icon_height11,
-    CEIL(icon_height[1] / 2) as offset0,
-    CEIL(icon_height[1] / 2 + icon_height[2] / 2) as offset1,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] / 2) as offset2,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] / 2) as offset3,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] / 2) as offset4,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] / 2) as offset5,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] / 2) as offset6,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] / 2) as offset7,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] / 2) as offset8,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] / 2) as offset9,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] + icon_height[11] / 2) as offset10,
-    CEIL(icon_height[1] / 2 + icon_height[2] + icon_height[3] + icon_height[4] + icon_height[5] + icon_height[6] + icon_height[7] + icon_height[8] + icon_height[9] + icon_height[10] + icon_height[11] + icon_height[12] / 2) as offset11,
     type
   FROM signals s
   JOIN signal_features sf
@@ -472,18 +460,6 @@ CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
         icon_height9,
         icon_height10,
         icon_height11,
-        offset0,
-        offset1,
-        offset2,
-        offset3,
-        offset4,
-        offset5,
-        offset6,
-        offset7,
-        offset8,
-        offset9,
-        offset10,
-        offset11,
         type
       FROM railway_signals_view
       WHERE way && ST_TileEnvelope(z, x, y)
@@ -560,18 +536,6 @@ DO $do$ BEGIN
           "icon_height9": "number",
           "icon_height10": "number",
           "icon_height11": "number",
-          "offset0": "number",
-          "offset1": "number",
-          "offset2": "number",
-          "offset3": "number",
-          "offset4": "number",
-          "offset5": "number",
-          "offset6": "number",
-          "offset7": "number",
-          "offset8": "number",
-          "offset9": "number",
-          "offset10": "number",
-          "offset11": "number",
           "type": "string"
         }
       }
