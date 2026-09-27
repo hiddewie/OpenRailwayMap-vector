@@ -967,6 +967,21 @@ function updateStyleParameter(hashObject) {
     styleOverrides.pois = []
   }
 
+  // Compatibility style override for URLs containing signals style
+  if (hashObject.signals === 'speed') {
+    console.info(`Migrated signals style for speed`)
+    styleOverrides.signals = ['speed']
+  } else if (hashObject.signals === 'signals') {
+    console.info(`Migrated signals style from signals to main, distant, train_protection, station, radio, shunting and other`)
+    styleOverrides.signals = ['main', 'distant', 'train_protection', 'station', 'radio', 'shunting', 'other']
+  } else if (hashObject.signals === 'electrification') {
+    console.info(`Migrated signals style from electrification to electricity`)
+    styleOverrides.signals = ['electricity']
+  } else if (hashObject.signals === 'none') {
+    console.info(`Migrated signals style for none`)
+    styleOverrides.signals = []
+  }
+
   return {
     ...migratedStyle,
     ...hashStyle,
