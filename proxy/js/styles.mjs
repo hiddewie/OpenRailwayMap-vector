@@ -5581,8 +5581,8 @@ const makeStyle = () => ({
       default: 'none',
     },
     catenaries: {
-      // Values: plain, none
-      default: 'plain',
+      // Values: plain, operator, none
+      default: 'none',
     },
     switches: {
       // Values: plain, none
