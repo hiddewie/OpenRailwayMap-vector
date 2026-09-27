@@ -44,7 +44,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals_signal_boxes
+GET {{base_url}}/railway_signals,signals_signal_boxes
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
@@ -60,12 +60,12 @@ HTTP 200
 Content-Type: application/json
 
 # (local URLs)
-GET {{base_url}}/signals_signal_boxes/14/8803/5371
+GET {{base_url}}/railway_signals,signals_signal_boxes/14/8803/5371
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/x-protobuf
 
-GET {{base_url}}/signals_signal_boxes/18/140807/85974
+GET {{base_url}}/railway_signals,signals_signal_boxes/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
