@@ -530,6 +530,8 @@ const trackLabel = {
   operator:  ['coalesce', ['get', 'primary_operator'], ''],
 }
 
+const signalFeatureIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
 const sources = {
   search: {
     type: 'geojson',
@@ -3836,6 +3838,12 @@ const layers = [
     'source-layer': 'railway_signals',
     filter: ['all',
       ['!', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]]],
+      ['any',
+        ...signalFeatureIndices.map(featureIndex => ['all',
+          ['!=', ['get', `feature${featureIndex}`], null],
+          ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+        ]),
+      ],
       filterPitchedFeatures('azimuth'),
     ],
     paint: {
@@ -3866,12 +3874,22 @@ const layers = [
       ['all',
         ['==', ['get', 'railway'], 'signal'],
         ['!=', ['get', 'azimuth'], null],
-        ['!=', ['get', 'feature0'], ''],
+        ['any',
+          ...signalFeatureIndices.map(featureIndex => ['all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+          ]),
+        ],
       ],
       16,
       ['all',
         ['!=', ['get', 'azimuth'], null],
-        ['!=', ['get', 'feature0'], ''],
+        ['any',
+          ...signalFeatureIndices.map(featureIndex => ['all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+          ]),
+        ],
       ],
     ],
     paint: {
@@ -3916,86 +3934,6 @@ const layers = [
       'icon-rotation-alignment': 'map',
     },
   },
-  // Show at most 2 combined features
-  ...[0, 1].flatMap(featureIndex => [
-    ...imageLayerWithOutline(
-      `railway_signals_medium_${featureIndex}`,
-      ['get', `feature${featureIndex}`],
-      {
-        type: 'symbol',
-        minzoom: 13,
-        maxzoom: 16,
-        source: 'openrailwaymap_signals',
-        'source-layer': 'railway_signals',
-        filter: ['all',
-          ['==', ['get', 'railway'], 'signal'],
-          ['!=', ['get', `feature${featureIndex}`], null],
-          filterPitchedFeatures('azimuth'),
-        ],
-        layout: {
-          'visibility': ['case',
-            ['<', ['global-state', 'date'], defaultDate], 'none',
-            ['>', ['length', ['global-state', 'signals']], 0], 'visible',
-            'none',
-          ],
-          'symbol-z-order': 'source',
-          'icon-overlap': 'always',
-          'icon-offset': ['interpolate', ['linear'],
-            ['+',
-              featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
-              2 * featureIndex, // Gap of 2 pixels for halo and spacing
-              ['case',
-                ['==', ['global-state', 'pitched'], false], 0,
-                ['+',
-                  ['get', 'offset0'], // Icon is shown above anchor in pitched view
-                  4, // Signal anchor
-                ],
-              ],
-            ],
-            0, ['literal', [0, 0]],
-            1000, ['literal', [0, -1000]],
-          ],
-        },
-      },
-    ),
-    {
-      id: `railway_signals_medium_deactivated_${featureIndex}`,
-      type: 'symbol',
-      minzoom: 13,
-      maxzoom: 16,
-      source: 'openrailwaymap_signals',
-      'source-layer': 'railway_signals',
-      filter: ['all',
-        ['==', ['get', `deactivated${featureIndex}`], true],
-        filterPitchedFeatures('azimuth'),
-      ],
-      layout: {
-        'visibility': ['case',
-          ['<', ['global-state', 'date'], defaultDate], 'none',
-          ['>', ['length', ['global-state', 'signals']], 0], 'visible',
-          'none',
-        ],
-        'symbol-z-order': 'source',
-        'icon-overlap': 'always',
-        'icon-image': 'general/signal-deactivated',
-        'icon-offset': ['interpolate', ['linear'],
-          ['+',
-            featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
-            2 * featureIndex, // Gap of 2 pixels for halo and spacing
-            ['case',
-              ['==', ['global-state', 'pitched'], false], 0,
-              ['+',
-                ['get', 'offset0'], // Icon is shown above anchor in pitched view
-                4, // Signal anchor
-              ],
-            ],
-          ],
-          0, ['literal', [0, 0]],
-          1000, ['literal', [0, -1000]],
-        ],
-      }
-    },
-  ]),
   {
     id: 'railway_signals_high_derail_buffer_stop',
     type: 'symbol',
@@ -4029,18 +3967,28 @@ const layers = [
       'icon-rotation-alignment': 'map',
     },
   },
-  ...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].flatMap(featureIndex => [
+  ...signalFeatureIndices.flatMap(featureIndex => [
     ...imageLayerWithOutline(
       `railway_signals_high_${featureIndex}`,
       ['get', `feature${featureIndex}`],
       {
         type: 'symbol',
-        minzoom: 16,
+        minzoom: featureIndex < 2 ? 13 : 16,
         source: 'openrailwaymap_signals',
         'source-layer': 'railway_signals',
-        filter: ['all',
-          ['!=', ['get', `feature${featureIndex}`], null],
-          filterPitchedFeatures('azimuth'),
+        filter: ['step', ['zoom'],
+          ['all',
+            ['==', ['get', 'railway'], 'signal'],
+            ['!=', ['get', `feature${featureIndex}`], null],
+            ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+            filterPitchedFeatures('azimuth'),
+          ],
+          16,
+          ['all',
+            ['!=', ['get', `feature${featureIndex}`], null],
+            ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+            filterPitchedFeatures('azimuth'),
+          ],
         ],
         layout: {
           'visibility': ['case',
@@ -4050,10 +3998,20 @@ const layers = [
           ],
           'symbol-z-order': 'source',
           'icon-overlap': 'always',
-          'icon-anchor': 'center',
           'icon-offset': ['interpolate', ['linear'],
             ['+',
-              featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+              featureIndex === 0 ? 0 : ['+',
+                ...Array.from(Array(featureIndex), (_, i) =>
+                  ['case',
+                    ['all',
+                      ['!=', ['get', `feature${i}`], null],
+                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ], i === 0 ? ['/', ['get', `icon_height${i}`], 2] : ['get', `icon_height${i}`],
+                    // i === featureIndex - 1 ? ['/', ['get', `icon_height${i}`], 2] :
+                    0,
+                  ]),
+                ['/', ['get', `icon_height${featureIndex}`], 2],
+              ], // Offset from previous icons
               2 * featureIndex, // Gap of 2 pixels for halo and spacing
               ['case',
                 ['==', ['global-state', 'pitched'], false],
@@ -4075,10 +4033,12 @@ const layers = [
     {
       id: `railway_signals_high_deactivated_${featureIndex}`,
       type: 'symbol',
-      minzoom: 16,
+      minzoom: featureIndex < 2 ? 13 : 16,
       source: 'openrailwaymap_signals',
       'source-layer': 'railway_signals',
       filter: ['all',
+        ['!=', ['get', `feature${featureIndex}`], null],
+        ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
         ['==', ['get', `deactivated${featureIndex}`], true],
         filterPitchedFeatures('azimuth'),
       ],
@@ -4093,7 +4053,18 @@ const layers = [
         'icon-image': 'general/signal-deactivated',
         'icon-offset': ['interpolate', ['linear'],
           ['+',
-            featureIndex === 0 ? 0 : ['get', `offset${featureIndex}`], // Offset from previous icons
+            featureIndex === 0 ? 0 : ['+',
+              ...Array.from(Array(featureIndex), (_, i) =>
+                ['case',
+                  ['all',
+                    ['!=', ['get', `feature${i}`], null],
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                  ], i === 0 ? ['/', ['get', `icon_height${i}`], 2] : ['get', `icon_height${i}`],
+                  // i === featureIndex - 1 ? ['/', ['get', `icon_height${i}`], 2] :
+                  0,
+                ]),
+              ['/', ['get', `icon_height${featureIndex}`], 2],
+            ], // Offset from previous icons
             2 * featureIndex, // Gap of 2 pixels for halo and spacing
             ['case',
               ['==', ['global-state', 'pitched'], false],
@@ -4122,7 +4093,12 @@ const layers = [
         ['!=', ['get', 'ref'], null],
         ['!=', ['get', 'caption'], null],
       ],
-      ['!=', ['get', 'feature0'], null],
+      ['any',
+        ...signalFeatureIndices.map(featureIndex => ['all',
+          ['!=', ['get', `feature${featureIndex}`], null],
+          ['in', ['get', `category${featureIndex}`], ['global-state', 'signals']],
+        ]),
+      ],
       filterPitchedFeatures('azimuth'),
     ],
     paint: {
