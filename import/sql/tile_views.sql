@@ -57,6 +57,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     rubber_tires,
     workrules,
     passenger_lines,
+    rack,
     line_routes,
     route_count,
     wikidata,
@@ -118,6 +119,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
       rubber_tires,
       workrules,
       passenger_lines,
+      rack,
       (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
       wikidata,
@@ -190,7 +192,8 @@ RETURN (
       primary_operator,
       owner,
       route_count,
-      passenger_lines
+      passenger_lines,
+      rack
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -291,7 +294,8 @@ DO $do$ BEGIN
           "primary_operator": "string",
           "owner": "string",
           "route_count": "integer",
-          "passenger_lines": "integer"
+          "passenger_lines": "integer",
+          "rack": "string"
         }
       }
     ]
