@@ -137,6 +137,12 @@ const railwayLineFeatures = {
     rubber_tires: {
       name: 'Rubber-tyred',
     },
+    rack: {
+      name: 'Rack',
+      format: {
+        lookup: 'rack',
+      }
+    },
     workrules: {
       name: 'Workrules',
       format: {
@@ -1674,6 +1680,29 @@ const features = {
     features: Object.fromEntries(workrules.workrules
       .map(({name, country, value}) => [value, { name, country }])),
   },
+
+  rack: {
+    features: {
+      yes: {
+        name: 'Present',
+      },
+      abt: {
+        name: 'Abt',
+      },
+      strub: {
+        name: 'Strub',
+      },
+      riggenbach: {
+        name: 'Riggenbach',
+      },
+      locher: {
+        name: 'Locher',
+      },
+      von_roll: {
+        name: 'Von Roll',
+      },
+    }
+  }
 };
 
 if (import.meta.url.endsWith(process.argv[1])) {
