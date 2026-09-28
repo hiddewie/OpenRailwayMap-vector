@@ -1069,12 +1069,56 @@ const railwayLine = (text, layers) => [
       },
     })),
 
+  // Rack
+
+  ...layers
+    .filter(({gapWidth}) => !gapWidth)
+    .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
+    .map(({id, visibility, filter, color, states}) => ({
+      id: `${id}_rack`,
+      type: 'symbol',
+      minzoom: 14,
+      source: 'high',
+      'source-layer': 'railway_line_high',
+      filter: ['all',
+        ['in', ['get', 'state'], ['literal', states]],
+        states.includes('construction') || states.includes('proposed') || states.includes('abandoned') || states.includes('razed')
+          ? ['match', ['get', 'state'],
+            ...(states.includes('construction') ? ['construction', ['global-state', 'showConstructionInfrastructure']] : []),
+            ...(states.includes('proposed') ? ['proposed', ['global-state', 'showProposedInfrastructure']] : []),
+            ...(states.includes('abandoned') ? ['abandoned', ['global-state', 'showAbandonedInfrastructure']] : []),
+            ...(states.includes('razed') ? ['razed', ['global-state', 'showRazedInfrastructure']] : []),
+            true,
+          ]
+          : true,
+        ['!=', ['get', 'rack'], null],
+        filter ?? true,
+      ].filter(it => it !== true),
+      paint: {
+        'icon-color': ['case',
+          ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
+          color,
+        ],
+      },
+      layout: {
+        'visibility': ['case',
+          visibility ? ['==', visibility, false] : false, 'none',
+          ['<', ['global-state', 'date'], defaultDate], 'none',
+          'visible',
+        ],
+        'symbol-placement': 'line',
+        'symbol-spacing': 10,
+        'icon-overlap': 'always',
+        'icon-image': 'sdf:general/line-rack',
+      },
+    })),
+
   // Preferred direction
 
   ...layers
     .filter(({gapWidth}) => !gapWidth)
     .map(({states, ...rest}) => ({ ...rest, states: Object.keys(states) }))
-    .flatMap(({id, visibility, filter, color, states}) =>
+    .map(({id, visibility, filter, color, states}) =>
       preferredDirectionLayer(
         `${id}_preferred_direction`,
         ['all',
@@ -1089,11 +1133,7 @@ const railwayLine = (text, layers) => [
             ]
             : true,
           ['!=', ['get', 'tunnel'], true],
-          ['any',
-            ['==', ['get', 'preferred_direction'], 'forward'],
-            ['==', ['get', 'preferred_direction'], 'backward'],
-            ['==', ['get', 'preferred_direction'], 'both'],
-          ],
+          ['in', ['get', 'preferred_direction'], ['literal', ['forward', 'backward', 'both']]],
           filter ?? true,
         ].filter(it => it !== true),
         color,
