@@ -1630,6 +1630,25 @@ const sourceLayers = {
           },
         },
         {
+          legend: 'Rack',
+          type: 'line',
+          minzoom: 14,
+          properties: {
+            highspeed: false,
+            feature: 'rail',
+            state: 'present',
+            usage: null,
+            service: 'siding',
+            tunnel: false,
+            bridge: false,
+            ref: null,
+            name: null,
+            rack: 'yes',
+            track_ref: null,
+            way_length: 1.0,
+          },
+        },
+        {
           legend: 'Ferry',
           type: 'line',
           properties: {
