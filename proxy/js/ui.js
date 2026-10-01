@@ -1536,7 +1536,7 @@ const map = new maplibregl.Map({
   attributionControl: false,
   renderWorldCopies: false,
   transformRequest: (url, resourceType) => {
-    if (resourceType === 'Tile') {
+    if (resourceType === 'Tile' && url && url.startsWith(location.origin)) {
       // Request all tiles as MLT encoded
       return {
         url,
