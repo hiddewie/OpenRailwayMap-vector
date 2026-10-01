@@ -666,7 +666,7 @@ jsonpath "$.properties.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
 jsonpath "$.properties.ref" == null
 
 # Speed signal
-GET {{base_url}}/feature/openrailwaymap_speed/speed_railway_signals/10719824502
+GET {{base_url}}/feature/openrailwaymap_signals/railway_signals/10719824502
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -676,7 +676,9 @@ jsonpath "$.properties.osm_type" == "N"
 jsonpath "$.properties.ref" == "08ZV819"
 jsonpath "$.properties.direction_both" == false
 jsonpath "$.properties.railway" == "signal"
-jsonpath "$.properties.feature0" == "de/zs3-sign-up-{40}"
+jsonpath "$.properties.feature0" == "de/sh1-light-dwarf"
+jsonpath "$.properties.feature1" == "de/ks-combined"
+jsonpath "$.properties.feature2" == "de/zs3-sign-up-{40}"
 jsonpath "$.properties['railway:signal:position']" == "right"
 jsonpath "$.properties['railway:signal:speed_limit']" == "DE-ESO:zs3"
 jsonpath "$.properties['railway:signal:speed_limit:form']" == "sign"
@@ -692,7 +694,7 @@ jsonpath "$.properties['railway:signal:traversable']" == "DE-ESO:mastschild_rot-
 jsonpath "$.properties['railway:signal:traversable:type']" == "written_default_speed;dictated_default_speed"
 
 # Electrification signal
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_signals/10720881143
+GET {{base_url}}/feature/openrailwaymap_signals/railway_signals/10720881143
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -710,7 +712,7 @@ jsonpath "$.properties['railway:signal:electricity:form']" == "sign"
 jsonpath "$.properties['railway:signal:electricity:turn_direction']" == "left"
 
 # Distant signal
-GET {{base_url}}/feature/openrailwaymap_signals/signals_railway_signals/9351388537
+GET {{base_url}}/feature/openrailwaymap_signals/railway_signals/9351388537
 HTTP 200
 Content-Type: application/json
 [Asserts]

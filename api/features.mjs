@@ -10,10 +10,7 @@ const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', '
 const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
-
-const speed_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'speed' && `railway:signal:${type.type}` === tag.tag)))
-const signals_railway_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'signals' && `railway:signal:${type.type}` === tag.tag)))
-const electrification_signals = all_signals.features.filter(feature => feature.tags.find(tag => all_signals.types.some(type => type.layer === 'electrification' && `railway:signal:${type.type}` === tag.tag)))
+const signal_features = all_signals.features
 
 // TODO add links to documentation
 
@@ -1070,9 +1067,9 @@ const features = {
       },
     },
   },
-  'openrailwaymap_speed-speed_railway_signals': {
+  'openrailwaymap_signals-railway_signals': {
     view: {
-      name: 'speed_railway_signals_view',
+      name: 'railway_signals_view',
       id_type: 'numeric',
     },
     featureProperty: 'railway',
@@ -1092,116 +1089,73 @@ const features = {
       feature0: {
         name: 'Primary signal',
         format: {
-          lookup: 'speed_railway_signals',
+          lookup: 'railway_signals',
         },
       },
       feature1: {
         name: 'Secondary signal',
         format: {
-          lookup: 'speed_railway_signals',
-        },
-      },
-      ref: {
-        name: 'Reference',
-      },
-      caption: {
-        name: 'Caption',
-      },
-      type: {
-        name: 'Type',
-      },
-      deactivated0: {
-        name: 'Primary deactivated',
-      },
-      deactivated1: {
-        name: 'Secondary deactivated',
-      },
-      direction_both: {
-        name: 'Both directions',
-      },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
-      position: {
-        name: 'Position',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
-  'openrailwaymap_signals-signals_railway_signals': {
-    view: {
-      name: 'signals_railway_signals_view',
-      id_type: 'numeric',
-    },
-    featureProperty: 'railway',
-    featureLinks: featureLinks.openstreetmap,
-    features: {
-      signal: {
-        name: 'Signal',
-      },
-      buffer_stop: {
-        name: 'Buffer stop',
-      },
-      derail: {
-        name: 'Derailer',
-      },
-    },
-    properties: {
-      feature0: {
-        name: 'Primary signal',
-        format: {
-          lookup: 'signals_railway_signals',
-        },
-      },
-      feature1: {
-        name: 'Secondary signal',
-        format: {
-          lookup: 'signals_railway_signals',
+          lookup: 'railway_signals',
         },
       },
       feature2: {
         name: 'Tertiary signal',
         format: {
-          lookup: 'signals_railway_signals',
+          lookup: 'railway_signals',
         },
       },
       feature3: {
         name: 'Quaternary signal',
         format: {
-          lookup: 'signals_railway_signals',
+          lookup: 'railway_signals',
         },
       },
       feature4: {
         name: 'Quinary signal',
         format: {
-          lookup: 'signals_railway_signals',
+          lookup: 'railway_signals',
         },
       },
       feature5: {
         name: 'Senary signal',
         format: {
-          lookup: 'signals_railway_signals',
+          lookup: 'railway_signals',
+        },
+      },
+      feature6: {
+        name: 'Septenary signal',
+        format: {
+          lookup: 'railway_signals',
+        },
+      },
+      feature7: {
+        name: 'Octonary signal',
+        format: {
+          lookup: 'railway_signals',
+        },
+      },
+      feature8: {
+        name: 'Nonary signal',
+        format: {
+          lookup: 'railway_signals',
+        },
+      },
+      feature9: {
+        name: 'Decenary signal',
+        format: {
+          lookup: 'railway_signals',
+        },
+      },
+      feature10: {
+        name: 'Undenary signal',
+        format: {
+          lookup: 'railway_signals',
+        },
+      },
+      feature11: {
+        name: 'Duodenary signal',
+        format: {
+          lookup: 'railway_signals',
         },
       },
       ref: {
@@ -1227,6 +1181,27 @@ const features = {
       },
       deactivated4: {
         name: 'Quinary deactivated',
+      },
+      deactivated5: {
+        name: 'Senary deactivated',
+      },
+      deactivated6: {
+        name: 'Septenary deactivated',
+      },
+      deactivated7: {
+        name: 'Octonary deactivated',
+      },
+      deactivated8: {
+        name: 'Nonary deactivated',
+      },
+      deactivated9: {
+        name: 'Decenary deactivated',
+      },
+      deactivated10: {
+        name: 'Undenary deactivated',
+      },
+      deactivated11: {
+        name: 'Duodenary deactivated',
       },
       direction_both: {
         name: 'Both directions',
@@ -1288,76 +1263,6 @@ const features = {
       },
       operator: {
         name: 'Operator',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
-  'openrailwaymap_electrification-electrification_signals': {
-    view: {
-      name: 'electrification_signals_view',
-      id_type: 'numeric',
-    },
-    featureProperty: 'railway',
-    featureLinks: featureLinks.openstreetmap,
-    features: {
-      signal: {
-        name: 'Signal',
-      },
-      buffer_stop: {
-        name: 'Buffer stop',
-      },
-      derail: {
-        name: 'Derailer',
-      },
-    },
-    properties: {
-      feature0: {
-        name: 'Signal',
-        format: {
-          lookup: 'electrification_signals',
-        },
-      },
-      direction_both: {
-        name: 'Both directions',
-      },
-      ref: {
-        name: 'Reference',
-      },
-      caption: {
-        name: 'Caption',
-      },
-      type: {
-        name: 'Type',
-      },
-      deactivated0: {
-        name: 'Deactivated',
-      },
-      ...Object.fromEntries(all_signals.tags.map(tag => [tag.tag, { name: tag.title, description: tag.description, format: tag.format }])),
-      position: {
-        name: 'Position',
       },
       wikidata: {
         name: 'Wikidata',
@@ -1620,14 +1525,8 @@ const features = {
       },
     ])),
   },
-  speed_railway_signals: {
-    features: generateSignalFeatures(speed_railway_signals, signal_types.filter(type => type.layer === 'speed')),
-  },
-  signals_railway_signals: {
-    features: generateSignalFeatures(signals_railway_signals, signal_types.filter(type => type.layer === 'signals')),
-  },
-  electrification_signals: {
-    features: generateSignalFeatures(electrification_signals, signal_types.filter(type => type.layer === 'electrification')),
+  railway_signals: {
+    features: generateSignalFeatures(signal_features, signal_types),
   },
   station_references: {
     features: Object.fromEntries(
