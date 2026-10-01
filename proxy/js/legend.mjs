@@ -576,6 +576,25 @@ const sourceLayers = {
         },
       ],
     },
+    passenger_lines: {
+      mapState: {
+        tracks: 'passenger_lines',
+      },
+      key: [],
+      features: passengerLineLegends.map(passengerLines => ({
+        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          passenger_lines: passengerLines,
+        },
+      }))
+    },
   },
   'electrification_railway_line_low-electrification_railway_line_low': {
     voltage_frequency: {
@@ -1251,6 +1270,25 @@ const sourceLayers = {
           },
         })),
       ]
+    },
+    passenger_lines: {
+      mapState: {
+        tracks: 'passenger_lines',
+      },
+      key: [],
+      features: passengerLineLegends.map(passengerLines => ({
+        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          passenger_lines: passengerLines,
+        },
+      }))
     },
   },
   'high-railway_line_high': {
