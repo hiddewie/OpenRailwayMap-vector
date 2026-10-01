@@ -218,28 +218,58 @@ describe('home page', () => {
     button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Main')
+      .click()
+
+    cy.url().should('include', 'signals=[main]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Distant')
+      .click()
+
+    cy.url().should('include', 'signals=[main,distant]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
       .contains('button', 'Speed')
       .click()
 
-    cy.url().should('include', 'signals=speed')
+    cy.url().should('include', 'signals=[main,distant,speed]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
       .contains('button', 'Train protection')
       .click()
 
-    cy.url().should('include', 'signals=signals')
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
-      .contains('button', 'Electrification')
+      .contains('button', 'Electricity')
       .click()
 
-    cy.url().should('include', 'signals=electrification')
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection,electricity]')
 
     cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
-      .contains('button', 'None')
+      .contains('button', 'Station')
       .click()
 
-    cy.url().should('not.include', 'signals=')
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection,electricity,station]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Radio')
+      .click()
+
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection,electricity,station,radio]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Shunting')
+      .click()
+
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection,electricity,station,radio,shunting]')
+
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Signals')
+      .contains('button', 'Other')
+      .click()
+
+    cy.url().should('include', 'signals=[main,distant,speed,train_protection,electricity,station,radio,shunting,other]')
   })
 
   it('switching style, points of interest', () => {
