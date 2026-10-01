@@ -36,6 +36,7 @@ tags:
   - { tag: 'railway:signal:departure:states', title: 'Departure states', type: array }
   - { tag: 'railway:signal:departure:substitute_signal', title: 'Departure substitute signal', type: array }
   - { tag: 'railway:signal:departure:deactivated', title: 'Departure deactivated', type: boolean }
+  - { tag: 'railway:signal:departure:countdown', title: 'Departure countdown', type: boolean }
   - { tag: 'railway:signal:danger', title: 'Danger' }
   - { tag: 'railway:signal:danger:form', title: 'Danger form' }
   - { tag: 'railway:signal:distant', title: 'Distant' }
