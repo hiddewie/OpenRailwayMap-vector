@@ -23,7 +23,7 @@ local as_polygon_mock = function ()
   }
 end
 
--- Places of interest
+-- Points of interest
 
 osm2pgsql.process_node({
   id = 123,
@@ -35,7 +35,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/border', rank = 1, layer = 'operator', minzoom = 10 },
+    { id = 'node-123', feature = 'general/border', rank = 1, type = 'operator', minzoom = 10 },
   },
 })
 
@@ -49,7 +49,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/owner-change', rank = 2, layer = 'operator', minzoom = 12 },
+    { id = 'node-123', feature = 'general/owner-change', rank = 2, type = 'operator', minzoom = 12 },
   },
 })
 
@@ -64,7 +64,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12 },
+    { id = 'node-123', feature = 'general/radio-antenna', rank = 3, type = 'radio', minzoom = 12 },
   },
 })
 
@@ -79,7 +79,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/radio-mast', rank = 4, layer = 'standard', minzoom = 12 },
+    { id = 'node-123', feature = 'general/radio-mast', rank = 4, type = 'radio', minzoom = 12 },
   },
 })
 
@@ -94,7 +94,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/radio-mast', rank = 4, layer = 'standard', minzoom = 12 },
+    { id = 'node-123', feature = 'general/radio-mast', rank = 4, type = 'radio', minzoom = 12 },
   },
 })
 
@@ -108,7 +108,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/container-terminal', rank = 5, layer = 'standard', minzoom = 12 },
+    { id = 'node-123', feature = 'general/container-terminal', rank = 5, type = 'facility', minzoom = 12 },
   },
 })
 
@@ -122,7 +122,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/ferry-terminal', rank = 6, layer = 'standard', minzoom = 12 },
+    { id = 'node-123', feature = 'general/ferry-terminal', rank = 6, type = 'facility', minzoom = 12 },
   },
 })
 
@@ -136,7 +136,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/lubricator', rank = 7, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/lubricator', rank = 7, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -150,7 +150,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/fuel', rank = 8, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/fuel', rank = 8, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -164,7 +164,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/sand_store', rank = 9, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/sand_store', rank = 9, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -178,7 +178,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/defect_detector', rank = 10, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/defect_detector', rank = 10, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -192,7 +192,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/aei', rank = 11, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/aei', rank = 11, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -206,7 +206,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/hump_yard', rank = 12, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/hump_yard', rank = 12, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -220,7 +220,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/loading_gauge', rank = 13, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/loading_gauge', rank = 13, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -234,7 +234,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/preheating', rank = 14, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/preheating', rank = 14, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -248,7 +248,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/compressed_air_supply', rank = 15, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/compressed_air_supply', rank = 15, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -262,7 +262,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/waste_disposal', rank = 16, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/waste_disposal', rank = 16, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -276,7 +276,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/coaling_facility', rank = 17, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/coaling_facility', rank = 17, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -290,7 +290,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/wash', rank = 18, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/wash', rank = 18, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -304,7 +304,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/water_crane', rank = 19, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/water_crane', rank = 19, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -318,7 +318,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/water_tower', rank = 20, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/water_tower', rank = 20, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -332,7 +332,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/workshop', rank = 21, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/workshop', rank = 21, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -346,7 +346,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/engine_shed', rank = 22, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/engine_shed', rank = 22, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -361,7 +361,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/museum-rail-transport', rank = 23, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/museum-rail-transport', rank = 23, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -375,7 +375,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/museum', rank = 24, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/museum', rank = 24, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -389,7 +389,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/power_supply', rank = 25, layer = 'electrification', minzoom = 13 },
+    { id = 'node-123', feature = 'general/power_supply', rank = 25, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -403,7 +403,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/rolling_highway', rank = 26, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/rolling_highway', rank = 26, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -417,7 +417,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/pit', rank = 27, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/pit', rank = 27, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -431,7 +431,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/loading-rack', rank = 28, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/loading-rack', rank = 28, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -445,7 +445,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/loading-ramp', rank = 29, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/loading-ramp', rank = 29, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -459,7 +459,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/loading-tower', rank = 30, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/loading-tower', rank = 30, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -473,7 +473,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/unloading-hole', rank = 31, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/unloading-hole', rank = 31, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -487,7 +487,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/track-scale', rank = 32, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/track-scale', rank = 32, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -501,7 +501,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/carrier-truck-pit', rank = 33, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/carrier-truck-pit', rank = 33, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -515,7 +515,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/gauge-conversion', rank = 34, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/gauge-conversion', rank = 34, type = 'equipment', minzoom = 13 },
   },
 })
 
@@ -529,7 +529,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/car-shuttle', rank = 35, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/car-shuttle', rank = 35, type = 'facility', minzoom = 13 },
   },
 })
 
@@ -543,7 +543,51 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/car-dumper', rank = 36, layer = 'standard', minzoom = 13 },
+    { id = 'node-123', feature = 'general/car-dumper', rank = 36, type = 'equipment', minzoom = 13 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'vacancy_detection',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-unknown', rank = 39, type = 'vacancy_detection', minzoom = 16 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'vacancy_detection',
+    ['railway:vacancy_detection'] = 'axle_counter',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-axle-counter', rank = 37, type = 'vacancy_detection', minzoom = 16 },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'vacancy_detection',
+    ['railway:vacancy_detection'] = 'insulated_rail_joint',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { id = 'node-123', feature = 'general/vacancy-detection-insulated-rail-joint', rank = 38, type = 'vacancy_detection', minzoom = 16 },
   },
 })
 
@@ -557,7 +601,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/isolated-track-section', rank = 37, layer = 'electrification', minzoom = 14 },
+    { id = 'node-123', feature = 'general/isolated-track-section', rank = 40, type = 'electrical_equipment', minzoom = 14 },
   },
 })
 
@@ -572,7 +616,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15, emergency_phone = '041/785302' },
+    { id = 'node-123', feature = 'general/level-crossing', rank = 44, type = 'level_crossing', minzoom = 15, emergency_phone = '041/785302' },
   },
 })
 
@@ -587,7 +631,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-light', rank = 40, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-light', rank = 43, type = 'level_crossing', minzoom = 15 },
   },
 })
 
@@ -602,7 +646,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-barrier', rank = 39, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-barrier', rank = 42, type = 'level_crossing', minzoom = 15 },
   },
 })
 
@@ -618,7 +662,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/level-crossing-light-barrier', rank = 38, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/level-crossing-light-barrier', rank = 41, type = 'level_crossing', minzoom = 15 },
   },
 })
 
@@ -632,7 +676,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/crossing', rank = 42, layer = 'standard', minzoom = 15 },
+    { id = 'node-123', feature = 'general/crossing', rank = 45, type = 'level_crossing', minzoom = 15 },
   },
 })
 
@@ -646,7 +690,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/hirail_access', rank = 43, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/hirail_access', rank = 46, type = 'facility', minzoom = 16 },
   },
 })
 
@@ -660,7 +704,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/phone', rank = 44, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/phone', rank = 47, type = 'equipment', minzoom = 16 },
   },
 })
 
@@ -674,7 +718,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/buffer_stop', rank = 45, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/buffer_stop', rank = 48, type = 'train_protection', minzoom = 16 },
   },
   signals = {
     {
@@ -693,7 +737,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/derail', rank = 46, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/derail', rank = 49, type = 'train_protection', minzoom = 16 },
   },
   signals = {
     {
@@ -712,12 +756,12 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'node-123', feature = 'general/retarder', rank = 47, layer = 'standard', minzoom = 16 },
+    { id = 'node-123', feature = 'general/retarder', rank = 50, type = 'equipment', minzoom = 16 },
   },
 })
 
 
--- Places of interest
+-- Points of interest
 
 osm2pgsql.process_way({
   id = 123,
@@ -729,7 +773,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/border', rank = 1, layer = 'operator', minzoom = 10, way = polygon_way },
+    { id = 'way-123', feature = 'general/border', rank = 1, type = 'operator', minzoom = 10, way = polygon_way },
   },
 })
 
@@ -743,7 +787,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/owner-change', rank = 2, layer = 'operator', minzoom = 12, way = polygon_way },
+    { id = 'way-123', feature = 'general/owner-change', rank = 2, type = 'operator', minzoom = 12, way = polygon_way },
   },
 })
 
@@ -759,7 +803,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/radio-antenna', rank = 3, layer = 'standard', minzoom = 12, way = polygon_way, radio = 'lte-r' },
+    { id = 'way-123', feature = 'general/radio-antenna', rank = 3, type = 'radio', minzoom = 12, way = polygon_way, radio = 'lte-r' },
   },
 })
 
@@ -774,7 +818,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/radio-mast', rank = 4, layer = 'standard', minzoom = 12, way = polygon_way },
+    { id = 'way-123', feature = 'general/radio-mast', rank = 4, type = 'radio', minzoom = 12, way = polygon_way },
   },
 })
 
@@ -789,7 +833,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/radio-mast', rank = 4, layer = 'standard', minzoom = 12, way = polygon_way },
+    { id = 'way-123', feature = 'general/radio-mast', rank = 4, type = 'radio', minzoom = 12, way = polygon_way },
   },
 })
 
@@ -803,7 +847,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/container-terminal', rank = 5, layer = 'standard', minzoom = 12, way = polygon_way },
+    { id = 'way-123', feature = 'general/container-terminal', rank = 5, type = 'facility', minzoom = 12, way = polygon_way },
   },
 })
 
@@ -817,7 +861,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/ferry-terminal', rank = 6, layer = 'standard', minzoom = 12, way = polygon_way },
+    { id = 'way-123', feature = 'general/ferry-terminal', rank = 6, type = 'facility', minzoom = 12, way = polygon_way },
   },
 })
 
@@ -831,7 +875,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/lubricator', rank = 7, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/lubricator', rank = 7, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -845,7 +889,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/fuel', rank = 8, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/fuel', rank = 8, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -859,7 +903,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/sand_store', rank = 9, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/sand_store', rank = 9, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -873,7 +917,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/defect_detector', rank = 10, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/defect_detector', rank = 10, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -887,7 +931,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/aei', rank = 11, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/aei', rank = 11, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -901,7 +945,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/hump_yard', rank = 12, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/hump_yard', rank = 12, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -915,7 +959,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/loading_gauge', rank = 13, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/loading_gauge', rank = 13, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -929,7 +973,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/preheating', rank = 14, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/preheating', rank = 14, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -943,7 +987,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/compressed_air_supply', rank = 15, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/compressed_air_supply', rank = 15, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -957,7 +1001,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/waste_disposal', rank = 16, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/waste_disposal', rank = 16, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -971,7 +1015,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/coaling_facility', rank = 17, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/coaling_facility', rank = 17, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -985,7 +1029,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/wash', rank = 18, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/wash', rank = 18, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -999,7 +1043,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/water_crane', rank = 19, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/water_crane', rank = 19, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1013,7 +1057,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/water_tower', rank = 20, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/water_tower', rank = 20, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1027,7 +1071,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/workshop', rank = 21, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/workshop', rank = 21, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1041,7 +1085,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/engine_shed', rank = 22, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/engine_shed', rank = 22, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1056,7 +1100,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/museum-rail-transport', rank = 23, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/museum-rail-transport', rank = 23, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1070,7 +1114,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/museum', rank = 24, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/museum', rank = 24, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1084,7 +1128,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/power_supply', rank = 25, layer = 'electrification', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/power_supply', rank = 25, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1098,7 +1142,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/rolling_highway', rank = 26, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/rolling_highway', rank = 26, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1112,7 +1156,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/pit', rank = 27, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/pit', rank = 27, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1126,7 +1170,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/loading-rack', rank = 28, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/loading-rack', rank = 28, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1140,7 +1184,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/loading-ramp', rank = 29, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/loading-ramp', rank = 29, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1154,7 +1198,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/loading-tower', rank = 30, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/loading-tower', rank = 30, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1168,7 +1212,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/unloading-hole', rank = 31, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/unloading-hole', rank = 31, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1182,7 +1226,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/track-scale', rank = 32, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/track-scale', rank = 32, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1196,7 +1240,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/carrier-truck-pit', rank = 33, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/carrier-truck-pit', rank = 33, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1210,7 +1254,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/gauge-conversion', rank = 34, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/gauge-conversion', rank = 34, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1224,7 +1268,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/car-shuttle', rank = 35, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/car-shuttle', rank = 35, type = 'facility', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1238,7 +1282,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/car-dumper', rank = 36, layer = 'standard', minzoom = 13, way = polygon_way },
+    { id = 'way-123', feature = 'general/car-dumper', rank = 36, type = 'equipment', minzoom = 13, way = polygon_way },
   },
 })
 
@@ -1252,7 +1296,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/isolated-track-section', rank = 37, layer = 'electrification', minzoom = 14, way = polygon_way },
+    { id = 'way-123', feature = 'general/isolated-track-section', rank = 40, type = 'electrical_equipment', minzoom = 14, way = polygon_way },
   },
 })
 
@@ -1266,7 +1310,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing', rank = 41, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing', rank = 44, type = 'level_crossing', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1281,7 +1325,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-light', rank = 40, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-light', rank = 43, type = 'level_crossing', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1296,7 +1340,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-barrier', rank = 39, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-barrier', rank = 42, type = 'level_crossing', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1312,7 +1356,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/level-crossing-light-barrier', rank = 38, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/level-crossing-light-barrier', rank = 41, type = 'level_crossing', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1326,7 +1370,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/crossing', rank = 42, layer = 'standard', minzoom = 15, way = polygon_way },
+    { id = 'way-123', feature = 'general/crossing', rank = 45, type = 'level_crossing', minzoom = 15, way = polygon_way },
   },
 })
 
@@ -1340,7 +1384,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/hirail_access', rank = 43, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/hirail_access', rank = 46, type = 'facility', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1354,7 +1398,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/phone', rank = 44, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/phone', rank = 47, type = 'equipment', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1368,7 +1412,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/buffer_stop', rank = 45, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/buffer_stop', rank = 48, type = 'train_protection', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1382,7 +1426,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/derail', rank = 46, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/derail', rank = 49, type = 'train_protection', minzoom = 16, way = polygon_way },
   },
 })
 
@@ -1396,6 +1440,6 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', feature = 'general/retarder', rank = 47, layer = 'standard', minzoom = 16, way = polygon_way },
+    { id = 'way-123', feature = 'general/retarder', rank = 50, type = 'equipment', minzoom = 16, way = polygon_way },
   },
 })

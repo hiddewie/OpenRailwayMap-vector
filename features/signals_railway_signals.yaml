@@ -220,55 +220,54 @@ tags:
   - { tag: 'railway:signal:wrong_road:form', title: 'Wrong road form' }
   - { tag: 'railway:signal:wrong_road:type', title: 'Wrong road type' }
   - { tag: 'railway:signal:wrong_road:deactivated', title: 'Wrong road deactivated', type: boolean }
-  - { tag: 'railway:vacancy_detection', title: 'Vacancy detection' }
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
   - { tag: 'railway:signal:location', title: 'Location' }
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
-# Every type is shown in a certain layer
+# Every type belongs to a certain category of signals that can be selected in the UI
 types:
-  - { type: main, layer: signals }
-  - { type: combined, layer: signals }
-  - { type: distant, layer: signals }
-  - { type: train_protection, layer: signals }
-  - { type: main_repeated, layer: signals }
-  - { type: speed_limit, layer: speed }
-  - { type: speed_limit_distant, layer: speed }
-  - { type: minor, layer: signals }
-  - { type: minor_distant, layer: signals }
-  - { type: passing, layer: signals }
-  - { type: shunting, layer: signals }
-  - { type: shunting_route, layer: signals }
-  - { type: radio, layer: signals }
-  - { type: stop, layer: signals }
-  - { type: stop_distant, layer: signals }
-  - { type: stop_demand, layer: signals }
-  - { type: station_distant, layer: signals }
-  - { type: crossing, layer: signals }
-  - { type: crossing_distant, layer: signals }
-  - { type: crossing_info, layer: signals }
-  - { type: crossing_hint, layer: signals }
-  - { type: ring, layer: signals }
-  - { type: whistle, layer: signals }
-  - { type: electricity, layer: electrification }
-  - { type: departure, layer: signals }
-  - { type: switch, layer: signals }
-  - { type: resetting_switch, layer: signals }
-  - { type: resetting_switch_distant, layer: signals }
-  - { type: humping, layer: signals }
-  - { type: snowplow, layer: signals }
-  - { type: wrong_road, layer: signals }
-  - { type: short_route, layer: signals }
-  - { type: route, layer: signals }
-  - { type: route_distant, layer: signals }
-  - { type: brake_test, layer: signals }
-  - { type: helper_engine, layer: signals }
-  - { type: steam_locomotive, layer: signals }
-  - { type: fouling_point, layer: signals }
-  - { type: preheating, layer: signals }
-  - { type: slope, layer: signals }
+  - { type: main, category: main }
+  - { type: combined, category: main }
+  - { type: distant, category: distant }
+  - { type: train_protection, category: train_protection }
+  - { type: main_repeated, category: distant }
+  - { type: speed_limit, category: speed }
+  - { type: speed_limit_distant, category: speed }
+  - { type: minor, category: other }
+  - { type: minor_distant, category: other }
+  - { type: passing, category: other }
+  - { type: shunting, category: shunting }
+  - { type: shunting_route, category: shunting }
+  - { type: radio, category: radio }
+  - { type: stop, category: station }
+  - { type: stop_distant, category: station }
+  - { type: stop_demand, category: other }
+  - { type: station_distant, category: station }
+  - { type: crossing, category: other }
+  - { type: crossing_distant, category: other }
+  - { type: crossing_info, category: other }
+  - { type: crossing_hint, category: other }
+  - { type: ring, category: other }
+  - { type: whistle, category: other }
+  - { type: electricity, category: electricity }
+  - { type: departure, category: station }
+  - { type: switch, category: other }
+  - { type: resetting_switch, category: other }
+  - { type: resetting_switch_distant, category: other }
+  - { type: humping, category: shunting }
+  - { type: snowplow, category: other }
+  - { type: wrong_road, category: other }
+  - { type: short_route, category: other }
+  - { type: route, category: other }
+  - { type: route_distant, category: other }
+  - { type: brake_test, category: other }
+  - { type: helper_engine, category: other }
+  - { type: steam_locomotive, category: other }
+  - { type: fouling_point, category: other }
+  - { type: preheating, category: other }
+  - { type: slope, category: other }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
@@ -279,20 +278,6 @@ types:
 # Feature matching happens from top to bottom, where earlier matches are shown "lower" on the pole if one
 #   node defines more than one signal.
 features:
-
-  # --- General --- #
-
-  - description: 'Vacancy detection: insulated rail joint'
-    icon: [ default: 'general/vacancy-detection-insulated-rail-joint' ]
-    tags:
-      - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'insulated_rail_joint' }
-
-  - description: 'Vacancy detection: axle counter'
-    icon: [ default: 'general/vacancy-detection-axle-counter' ]
-    tags:
-      - { tag: 'railway', value: 'vacancy_detection' }
-      - { tag: 'railway:vacancy_detection', value: 'axle_counter' }
 
   # --- AT --- #
 
@@ -1851,6 +1836,28 @@ features:
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
       - { tag: 'railway:signal:route_distant:shape', value: 'feather' }
 
+  # --- AU-QLD-signs --- #
+  - description: AWS applies
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_Start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_applies' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: AWS does not apply
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_End' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:AWS_does_not_apply' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Check AWS
+    country: AU
+    icon: [ default: 'au/qld/signs/AWS_check' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'AU:QLD:check_AWS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
   # --- AU-VIC-signs --- #
   - description: Conventional Block Marker
     country: AU
@@ -2693,6 +2700,67 @@ features:
 
   # --- CH --- #
 
+  - description: Vorsignal System L
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
+          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
+          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
+          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
+        default: 'ch/fdv-l-528'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Vorsignal System N
+    country: CH
+    icon:
+      - match: 'railway:signal:distant:states'
+        cases:
+          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
+        default: 'ch/fdv-n-533'
+      - match: 'railway:signal:distant:repeated'
+        cases:
+          - { value: 'ch/fdv-n-repeated' }
+        position: top
+    tags:
+      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Halteort für alle Reisezüge
+    country: CH
+    icon: [ default: 'ch/fdv-577' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:577' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Länge
+    country: CH
+    icon:
+      - match: 'railway:signal:stop:caption'
+        cases:
+          - { regex: '^(0.5|[123](\.5)?|4)$', value: 'ch/fdv-578-{}', example: 'ch/fdv-578-{4}' }
+        default: 'ch/fdv-578-unknown'
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:578' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Halteort für Reisezüge einer bestimmten Achszahl
+    country: CH
+    icon: [ default: 'ch/fdv-579' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:579' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Zuglängentafel
+    country: CH
+    icon: [ default: 'ch/fdv-580' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'CH-FDV:580' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
   - description: Hauptsignal System L
     country: CH
     icon:
@@ -2747,30 +2815,12 @@ features:
       - { tag: 'railway:signal:combined', value: 'CH-FDV:n' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
 
-  - description: Vorsignal System L
+  - description: Merktafel für ein folgendes Einfahrsignal beim Signalsystem N
     country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { exact: 'CH-FDV:538', value: 'ch/fdv-l-538' }
-          - { exact: 'CH-FDV:536', value: 'ch/fdv-l-536' }
-          - { exact: 'CH-FDV:529', value: 'ch/fdv-l-529' }
-          - { exact: 'CH-FDV:534', value: 'ch/fdv-l-534' }
-        default: 'ch/fdv-l-528'
+    icon: [ default: 'ch/fdv-568' ]
     tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:l' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-
-  - description: Vorsignal System N
-    country: CH
-    icon:
-      - match: 'railway:signal:distant:states'
-        cases:
-          - { any: [ 'CH-FDV:522', 'CH-FDV:521' ], value: 'ch/fdv-n-521' }
-        default: 'ch/fdv-n-533'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'CH-FDV:n' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:station_distant', value: 'CH-FDV:568' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Fahrtstellungsmelder
     country: CH
@@ -2943,7 +2993,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:712' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   - description: Einschaltsignal (light)
     country: CH
@@ -2951,7 +3001,7 @@ features:
     tags:
       - { tag: 'railway:signal:electricity', value: 'CH-FDV:713' }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
-      - { tag: 'railway:signal:electricity:type', value: 'power_off' }
+      - { tag: 'railway:signal:electricity:type', value: 'power_on' }
 
   - description: Streckentrennung
     country: CH
@@ -3038,6 +3088,13 @@ features:
     tags:
       - { tag: 'railway:signal:slope', value: 'CH-FDV:271' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  - description: Ortsfestes Signal für Abfahrerlaubnis
+    country: CH
+    icon: [ default: 'ch/fdv-581' ]
+    tags:
+      - { tag: 'railway:signal:departure', value: 'CH-FDV:581' }
+      - { tag: 'railway:signal:departure:form', value: 'light' }
 
   # --- CZ --- #
 
@@ -3631,6 +3688,9 @@ features:
         cases:
           - { exact: 'normal', value: 'de/sh1-light-normal', description: 'normal height' }
         default: 'de/sh0-light-dwarf'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-ESO:sh' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
@@ -3682,11 +3742,46 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh2' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Gleisabschluss, Weiterfahrt verboten (Sh 9)
+    country: DE
+    icon: [ default: 'de/vgf/sh9' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-VGF:sh9' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Vorfahrt beachten (Sh 13)
+    country: DE
+    icon: [ default: 'de/vgf/sh13' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-VGF:sh13' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: Hamburger Hochbahn Sh 3
     country: DE
     icon: [ default: 'de/hha/sh3' ]
     tags:
       - { tag: 'railway:signal:minor', value: 'DE-HHA:sh3' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Nothalt (Sh 3d)
+    country: DE
+    icon: [ default: 'de/bostrab/sh3d' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-BOStrab:sh3d' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Eingeschränkter Nothalt (Sh 3e)
+    country: DE
+    icon: [ default: 'de/uestra/sh3e' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-UESTRA:sh3e' }
+      - { tag: 'railway:signal:minor:form', value: 'light' }
+
+  - description: Höchstwertanzeiger beachten (So 7)
+    country: DE
+    icon: [ default: 'de/uestra/so7' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-UESTRA:so7' }
       - { tag: 'railway:signal:minor:form', value: 'light' }
 
   - description: tram signal "start of train protection" So 1
@@ -3759,6 +3854,76 @@ features:
     tags:
       - { tag: 'railway:signal:passing', value: 'DE-DVB:so5a' }
       - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (So 5v)
+    country: DE
+    icon: [ default: 'de/cv/so5v' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-CV:so5v' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, So 5a)
+    country: DE
+    icon: [ default: 'de/evag/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, So 5b)
+    country: DE
+    icon: [ default: 'de/evag/so5b' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:so5b' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Erfurt, W 16)
+    country: DE
+    icon: [ default: 'de/evag/w16' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-EVAG:w16' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Begegnungsverbot (Potsdam, So 5a)
+    country: DE
+    icon: [ default: 'de/vip/so5a' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-ViP:so5a' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
+  - description: Türschließkriterium (Potsdam, So 6)
+    country: DE
+    icon: [ default: 'de/vip/so6' ]
+    tags:
+      - { tag: 'railway:signal:switch', value: 'DE-ViP:so6' }
+      - { tag: 'railway:signal:switch:form', value: 'sign' }
+
+  - description: Folgefahrt verboten anfang (Potsdam, So 7)
+    country: DE
+    icon: [ default: 'de/vip/so7' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-ViP:so7' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Folgefahrt verboten ende (Potsdam, So 8)
+    country: DE
+    icon: [ default: 'de/vip/so8' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-ViP:so8' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
+  - description: Streckentrenner (Potsdam, St 7a)
+    country: DE
+    icon: [ default: 'de/vip/st7a' ]
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'DE-ViP:st7a' }
+      - { tag: 'railway:signal:electricity:form', value: 'sign' }
+
+  - description: Engstelle (Strausberg, So 8)
+    country: DE
+    icon: [ default: 'de/ste/so8' ]
+    tags:
+      - { tag: 'railway:signal:minor', value: 'DE-STE:so8' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: tram passing prohibited end sign So 6
     country: DE
@@ -3900,7 +4065,14 @@ features:
 
   - description: tram crossing light Bü
     country: DE
-    icon: [ default: 'de/bostrab/bü' ]
+    icon:
+      - default: 'de/bostrab/bü'
+      - match: 'railway:signal:crossing:repeated'
+        cases:
+          - { value: 'de/bostrab/bü3a', description: 'repeated' }
+      - match: 'railway:signal:crossing:shortened'
+        cases:
+          - { value: 'de/bostrab/bü3b', description: 'shortened' }
     tags:
       - { tag: 'railway:signal:crossing', value: 'DE-BOStrab:bü' }
       - { tag: 'railway:signal:crossing:form', value: 'light' }
@@ -4053,14 +4225,14 @@ features:
     icon:
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a1', value: 'de/bostrab/a1', description: 'close doors (A 1)' }
+          - { any: ['DE-BOStrab:a1', 'DE-HHA:a1'], value: 'de/bostrab/a1', description: 'close doors (A 1)' }
         position: bottom
       - match: 'railway:signal:departure:states'
         cases:
-          - { exact: 'DE-BOStrab:a2', value: 'de/bostrab/a2', description: 'depart (A 2)' }
+          - { any: ['DE-BOStrab:a2', 'DE-HHA:a2'], value: 'de/bostrab/a2', description: 'depart (A 2)' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2' ] }
+      - { tag: 'railway:signal:departure', any: [ 'DE-BOStrab:a', 'DE-BOStrab:a1', 'DE-BOStrab:a2', 'DE-HHA:a'] }
       - { tag: 'railway:signal:departure:form', value: 'light' }
 
   - description: crossing info sign
@@ -4512,6 +4684,10 @@ features:
           - { exact: 'DE-ESO:hp2', value: 'de/hp2-light' }
           - { exact: 'DE-ESO:hp1', value: 'de/hp1-light' }
         default: 'de/hp0-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hp' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4526,11 +4702,16 @@ features:
           - { exact: 'DE-ESO:hl3a', value: 'de/hl3a' }
           - { exact: 'DE-ESO:hl1', value: 'de/hl1' }
         default: 'de/hl0-main'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-# The following is a copy of the standard Fahrsignal feature (below) for instances where it coincides with the Dresden-specific crossing signal So 25.
+  # The following is a copy of the standard Fahrsignal feature (below) for instances where it coincides with the Dresden-specific crossing signal So 25.
   - description: tram Fahrsignal
     country: DE
     exampleIcon: de/bostrab/f1-old
@@ -4630,6 +4811,11 @@ features:
           - { exact: '?', value: 'de/bostrab/fahrsignal-empty', description: 'further, unidentified aspects' }
         position: bottom
 
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-BOStrab:so4', value: 'de/bostrab/so4', description: 'So 4' }
+        position: center
+
     tags:
       - { tag: 'railway:signal:main', any: [ 'DE-AVG:f', 'DE-BOStrab:f' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4686,7 +4872,14 @@ features:
 
   - description: main signals type Ks
     country: DE
-    icon: [ default: 'de/ks-main' ]
+    icon:
+      - default: 'de/ks-main'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss-punkte', value: 'de/mastschild-schwarz-weiss-punkte' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -4701,6 +4894,11 @@ features:
           - { exact: 'DE-ESO:hl12a', value: 'de/hl12a' }
           - { exact: 'DE-ESO:hl10', value: 'de/hl10' }
         default: 'de/hl0-combined'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:hl' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4713,6 +4911,10 @@ features:
         cases:
           - { exact: 'DE-ESO:hp0', value: 'de/sv-hp0' }
         default: 'de/sv-sv0'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sv' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4726,14 +4928,22 @@ features:
 
   - description: main signals type Sk
     country: DE
-    icon: [ default: 'de/sk1-light' ]
+    icon:
+      - default: 'de/sk1-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_rot', value: 'de/mastschild-rot' }
     tags:
       - { tag: 'railway:signal:main', value: 'DE-ESO:sk' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: combined signals type Sk
     country: DE
-    icon: [ default: 'de/sk0-light' ]
+    icon:
+      - default: 'de/sk0-light'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'DE-ESO:mastschild_rot-gelb', value: 'de/mastschild-rot-gelb' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:sk' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4745,6 +4955,11 @@ features:
         cases:
           - { value: 'de/ks-combined-shortened' }
         default: 'de/ks-combined'
+      - match: 'railway:signal:traversable'
+        cases:
+          # DE-ESO:mastschild_rot-weiss is not rendered, it is the default
+          - { exact: 'DE-ESO:mastschild_gelb-weiss', value: 'de/mastschild-gelb-weiss' }
+          - { exact: 'DE-ESO:mastschild_schwarz-weiss', value: 'de/mastschild-schwarz-weiss' }
     tags:
       - { tag: 'railway:signal:combined', value: 'DE-ESO:ks' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
@@ -4795,7 +5010,7 @@ features:
       - { tag: 'railway:signal:speed_limit', any: [ 'DE-BOStrab:g2', 'DE-BOStrab:g2b' ] }
       - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
-  - description: Tram signal G3
+  - description: Tram signal (G 3)
     country: DE
     type: tram
     icon: [ default: 'de/bostrab/g3' ]
@@ -4835,7 +5050,7 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'DE-DVB:g5' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Hannover tram speed limit G5
+  - description: Langsamfahrpunkt (G 5)
     country: DE
     type: tram
     icon:
@@ -4844,7 +5059,7 @@ features:
           - { regex: '^(5|[1-6][05])$', value: 'de/bostrab/g5-{}', example: 'de/bostrab/g5-{40}' }
         default: 'de/bostrab/g5-empty'
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'DE-UESTRA:g5' }
+      - { tag: 'railway:signal:speed_limit', any: ['DE-UESTRA:g5', 'DE-SRS:g5'] }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: East German line speed signal "Eckentafel" (Lf 5)
@@ -5162,6 +5377,13 @@ features:
       - { tag: 'railway:signal:minor', value: 'DE-BOStrab:st25' }
       - { tag: 'railway:signal:minor:form', value: 'sign' }
 
+  - description: Zeichen für Begegnungserlaubnis
+    country: DE
+    icon: [ default: 'de/bostrab/st36' ]
+    tags:
+      - { tag: 'railway:signal:passing', value: 'DE-BOStrab:st36' }
+      - { tag: 'railway:signal:passing:form', value: 'sign' }
+
   - description: DVB curve lubrication system ahead (So 11)
     country: DE
     icon: [ default: 'de/dvb/so11' ]
@@ -5173,8 +5395,8 @@ features:
     country: DE
     icon: [ default: 'de/rsag/so13' ]
     tags:
-      - { tag: 'railway:signal:minor:form', value: 'sign' }
       - { tag: 'railway:signal:minor', value: 'DE-RSAG:so13' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
 
   - description: radio channel notice
     country: DE
@@ -5192,19 +5414,81 @@ features:
 
   # --- DK --- #
 
-  - description: Perronudkørselssignal
+  - description: Indkørselssignal (I)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-I-4', description: '4 lights' }
+        default: 'dk/main-I-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:I' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Stationsbloksignal for indkørsel (SI)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-SI-4', description: '4 lights' }
+        default: 'dk/main-SI-3'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:SI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Perronudkørselssignal (PU)
     country: DK
     icon: [ default: 'dk/main-PU' ]
     tags:
       - { tag: 'railway:signal:main', value: 'DK-SR:PU' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
-  - description: Stationsbloksignal for Udkørsel
+  - description: Stationsbloksignal for udkørsel (SU)
     country: DK
-    icon: [ default: 'dk/main-SU' ]
+    icon: [ default: 'dk/main-SU-3' ]
     tags:
       - { tag: 'railway:signal:main', value: 'DK-SR:SU' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Udkørselssignal (U)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-U-3', description: '3 lights' }
+        default: 'dk/main-U-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:U' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Automatisk Mellembloksignal (AM)
+    country: DK
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'DK-SR:KI', value: 'dk/main-AM-3', description: '3 lights' }
+        default: 'dk/main-AM-2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'DK-SR:AM' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Fremskudt Signal (F)
+    country: DK
+    icon:
+      - match: 'railway:signal:distant:shape'
+        cases:
+          - { exact: '3', value: 'dk/distant-3', description: '3 lights' }
+        default: 'dk/distant-2'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'DK-SR:F' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Dwarf (DV)
+    country: DK
+    icon: [ default: 'dk/shunting-DV' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'DK-SR:DV' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
 
   # --- ES --- #
 
@@ -5329,6 +5613,97 @@ features:
       - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14J' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Señal tipo Adif de 5 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-5'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/5-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/5-FF5A' }
+        default: 'es/5-FF7CD'
+    exampleIcon: 'es/Adif-5'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-4'
+      - default: 'es/4-FF8'
+    exampleIcon: 'es/Adif-4'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos en disposición 2+2
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF8A'
+    exampleIcon: 'es/Adif-2+2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de retroceso de 4 focos
+    country: ES
+    icon: [ default: 'es/Adif-2+2-retroceso' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF' }
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos con cartelón "P"
+    country: ES
+    icon: [ default: 'es/Renfe-3+P-FF7B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos y luz blanca
+    country: ES
+    icon: [ default: 'es/Renfe-3+1-FF8B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Silbar
+    country: ES
+    icon: [ default: 'es/FI15A' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Silbar (anulable)
+    country: ES
+    icon: [ default: 'es/FI15Abis' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'FI15Abis'}
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Proximidad a un apeadero
+    country: ES
+    icon: [ default: 'es/FI15B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15B' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Proximidad al eje de un apeadero
+    country: ES
+    icon: [ default: 'es/FI15C' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
 
   # --- ETCS --- #
 
@@ -6734,6 +7109,38 @@ features:
       - { tag: 'railway:signal:whistle', value: 'GB-NR:continuous' }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
+  - description: Commencement of AWS Gap Board
+    country: GB
+    icon: [ default: 'gb/AWS-gap-start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_start' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+
+  - description: Termination of AWS Gap Board
+    country: GB
+    icon: [ default: 'gb/AWS-gap-end' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_gap_end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
+  - description: Commencement of Special AWS Working Board
+    country: GB
+    icon: [ default: 'gb/AWS-SW-start' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_special_start' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'end' }
+
+  - description: Termination of Special AWS Working Board
+    country: GB
+    icon: [ default: 'gb/AWS-SW-end' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'GB-NR:AWS_special_end' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:train_protection:type', value: 'start' }
+
   - description: Cab Signalling Start Warning Board
     country: GB
     icon:
@@ -6886,10 +7293,21 @@ features:
 
   - description: Repeated (banner)
     country: GB
-    icon: [ default: 'gb/repeated-banner' ]
+    icon:
+      - match: 'railway:signal:main_repeated:states'
+        cases:
+          - { any: [ 'GB-NR:banner_green' ], value: 'gb/repeated-banner-green' }
+        default: 'gb/repeated-banner-white'
     tags:
       - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Repeated (semaphore banner)
+    country: GB
+    icon: [ default: 'gb/repeated-banner-semaphore' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'GB-NR:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'semaphore' }
 
   - description: Repeated off
     country: GB
@@ -6910,8 +7328,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
@@ -6937,8 +7359,12 @@ features:
     icon:
       - match: 'railway:signal:route:states'
         cases:
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-123456' }
+          - { all: [ 'position_1', 'position_2', 'position_3', 'position_4', 'position_5' ], value: 'gb/route-feather-12345' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-12456' }
           - { all: [ 'position_1', 'position_2', 'position_3', 'position_4' ], value: 'gb/route-feather-1234' }
           - { all: [ 'position_1', 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-1456' }
+          - { all: [ 'position_1', 'position_2', 'position_4', 'position_5' ], value: 'gb/route-feather-1245' }
           - { all: [ 'position_1', 'position_4', 'position_5' ], value: 'gb/route-feather-145' }
           - { all: [ 'position_4', 'position_5', 'position_6' ], value: 'gb/route-feather-456' }
           - { all: [ 'position_1', 'position_2', 'position_3' ], value: 'gb/route-feather-123' }
@@ -7030,6 +7456,137 @@ features:
     tags:
       - { tag: 'railway:signal:slope', value: 'GB-NR:gradient' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
+
+  # --- ID --- #
+
+  - description: Sinyal langsir
+    country: ID
+    exampleIcon: 'id/shunting-6b-7b'
+    icon:
+      - match: 'railway:signal:shunting:states'
+        cases:
+          - { all: ['ID-KAI:6B', 'ID-KAI:7B'], value: 'id/shunting-6b-7b' }
+        default: 'id/shunting-6b'
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ID-KAI' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Sinyal blok elektrik
+    country: ID
+    exampleIcon: 'id/main-light-block-3-aspects'
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-light-block-3-aspects', description: '3 aspek' }
+        default: 'id/main-light-block-2-aspects'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ID-KAI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:function', value: 'block' }
+
+  - description: Sinyal utama sepur kiri
+    country: ID
+    exampleIcon: 'id/main-sign-8d'
+    icon:
+      - match: 'railway:signal:main:form'
+        cases:
+          - { exact: 'sign', value: 'id/main-sign-8d', description: 'Tanda sinyal utama sepur kiri' }
+          - { exact: 'light', value: 'id/main-light-8d', description: 'Lampu sinyal utama sepur kiri' }
+        default: 'id/main-sign-8d-default'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ID-KAI:8D' }
+
+  - description: Sinyal utama elektrik
+    country: ID
+    exampleIcon: 'id/main-light-3-aspects'
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-light-3-aspects', description: '3 aspek' }
+        default: 'id/main-light-2-aspects'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ID-KAI' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Sinyal utama mekanik
+    country: ID
+    exampleIcon: 'id/main-semaphore-2-arm'
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { all: ['ID-KAI:5', 'ID-KAI:6', 'ID-KAI:7'], value: 'id/main-semaphore-2-arm', description: '2 lengan' }
+        default: 'id/main-semaphore-1-arm'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ID-KAI' }
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+
+  - description: Sinyal muka elektrik
+    country: ID
+    icon: [ default: 'id/distant-light' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'ID-KAI' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Sinyal muka mekanik
+    country: ID
+    icon: [ default: 'id/distant-semaphore' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'ID-KAI' }
+      - { tag: 'railway:signal:distant:form', value: 'semaphore' }
+
+  - description: Sinyal muka jalur kiri
+    country: ID
+    icon: [ default: 'id/distant-sign-8c' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'ID-KAI:8C' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Sinyal pengulang elektrik
+    country: ID
+    exampleIcon: 'id/main-repeated-9c1-9c2-9c3'
+    icon:
+      - match: 'railway:signal:main_repeated:states'
+        cases:
+          - { all: ['ID-KAI:9C1', 'ID-KAI:9C2', 'ID-KAI:9C3'], value: 'id/main-repeated-9c1-9c2-9c3', description: 'Semboyan 9C1, 9C2, 9C3' }
+          - { all: ['ID-KAI:9C1', 'ID-KAI:9C3'], value: 'id/main-repeated-9c1-9c3', description: 'Semboyan 9C1, 9C3' }
+        default: 'id/main-repeated-9c2-9c3'
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'ID-KAI' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+
+  - description: Sinyal pindah sepur kiri
+    country: ID
+    icon: [ default: 'id/wrong-road' ]
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'ID-KAI:9H' }
+      - { tag: 'railway:signal:wrong_road:form', value: 'light' }
+
+  - description: Penunjuk arah, kiri dan kanan
+    country: ID
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { all: ['left', 'right'], value: 'id/route-left-right', description: 'Penunjuk arah ke kiri dan kanan' }
+          - { exact: 'left', value: 'id/route-left', description: 'Penunjuk arah ke kiri' }
+          - { exact: 'right', value: 'id/route-right', description: 'Penunjuk arah ke kanan' }
+        default: 'id/route-left-right-default'
+    tags:
+      - { tag: 'railway:signal:route', value: 'ID-KAI:9G' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Tanda bunyikan suling
+    country: ID
+    icon: [ default: 'id/whistle' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ID-KAI:8K' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Tanda pindahkan channel radio
+    country: ID
+    icon: [ default: 'id/radio' ]
+    tags:
+      - { tag: 'railway:signal:radio', value: 'ID-KAI:8L' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   # --- IT --- #
 
@@ -7147,9 +7704,15 @@ features:
         default: 'it/combined-1v'
       - match: 'railway:signal:combined:states'
         cases:
-          - { any: [ '(Y)', 'Y' ], value: 'it/1v-Y' }
-          - { exact: 'G', value: 'it/1v-G' }
-        default: 'it/1v-R'
+          - { any: [ '(Y)', 'Y' ], value: "it/1v-Y" }
+          - { exact: 'G', value: "it/1v-G" }
+        default: "it/1v-R"
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-1v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:1V' }
@@ -7171,6 +7734,12 @@ features:
           - { any: [ '(Y)', 'Y' ], value: 'it/2v-Y' }
           - { exact: 'G', value: 'it/2v-G' }
         default: 'it/2v-R'
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-2v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:2V' }
@@ -7194,11 +7763,16 @@ features:
           - { any: [ '(Y)', 'Y' ], value: 'it/3v-Y' }
           - { exact: 'G', value: 'it/3v-G' }
         default: 'it/3v-R'
+      - match: 'railway:signal:combined:substitute_signal'
+        cases:
+          - { all: ['IT:AVA', 'IT:AVV'], value: 'it/AVV-AVA', description: 'Avvio & Avanzamento' }
+          - { exact: 'IT:AVA', value: 'it/AVA', description: 'Avanzamento' }
+          - { exact: 'IT:AVV', value: 'it/AVV', description: 'Avvio' }
+        position: 'bottom'
     exampleIcon: 'it/combined-3v-example'
     tags:
       - { tag: 'railway:signal:combined', value: 'IT:3V' }
       - { tag: 'railway:signal:combined:form', value: 'light' }
-      - { tag: 'railway:signal:combined:shape', value: 'square' }
 
   - description: Avviso (1 light)
     country: IT
@@ -7360,6 +7934,68 @@ features:
     tags:
       - { tag: 'railway:signal:crossing', value: 'IT:PL' }
       - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Announcement board (main)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-main-{}', example: 'it/announcement-main-{4}' }
+        default: 'it/announcement-main-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:MAIN' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (permissive)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-permissive-{}', example: 'it/announcement-permissive-{4}' }
+        default: 'it/announcement-permissive-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:PERMISSIVE' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (distant)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2', '3', '4', '5', '6', '7'], value: 'it/announcement-distant-{}', example: 'it/announcement-distant-{4}' }
+        default: 'it/announcement-distant-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:DISTANT' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (stop)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2'], value: 'it/announcement-stop-{}', example: 'it/announcement-stop-{2}' }
+        default: 'it/announcement-stop-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:SM' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (location)
+    country: IT
+    icon:
+      - match: 'railway:signal:distant:distance'
+        cases:
+          - { any: ['1', '2'], value: 'it/announcement-location-{}', example: 'it/announcement-location-{2}' }
+        default: 'it/announcement-location-{1}'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:LM' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Announcement board (level crossing without barriers)
+    country: IT
+    icon: [ default: 'it/announcement-level-crossing-without-barriers' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IT:PROTECTION_LCWB' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
 
   # --- JP --- #
 

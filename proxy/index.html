@@ -14,19 +14,19 @@
   <script type="importmap">
     {
       "imports": {
-        "maplibre-gl": "./js/maplibre-gl-6.1.0/maplibre-gl.mjs",
-        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.1.0/maplibre-gl-shared.mjs",
-        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.1.0/maplibre-gl-worker.mjs"
+        "maplibre-gl": "./js/maplibre-gl-6.9.1/maplibre-gl.mjs",
+        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.9.1/maplibre-gl-shared.mjs",
+        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.9.1/maplibre-gl-worker.mjs"
       }
     }
   </script>
 
   <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
-  <link rel="stylesheet" href="css/maplibre-gl-6.1.0/maplibre-gl.css">
+  <link rel="stylesheet" href="css/maplibre-gl-6.9.1/maplibre-gl.css">
   <link rel="stylesheet" href="css/ui.css">
 
   <script type="module">
-    import * as maplibregl from './js/maplibre-gl-6.1.0/maplibre-gl.mjs';
+    import * as maplibregl from './js/maplibre-gl-6.9.1/maplibre-gl.mjs';
     window.maplibregl = maplibregl;
   </script>
   <script src="js/ui.js" defer></script>
@@ -112,12 +112,6 @@
           </li>
           <li class="nav-item">
             <a id="configure-standard" class="nav-link" href="javascript:configureStandard()">Infrastructure</a>
-          </li>
-          <li class="nav-item">
-            <a id="configure-electrification" class="nav-link" href="javascript:configureElectrification()">Electrification</a>
-          </li>
-          <li class="nav-item">
-            <a id="configure-track" class="nav-link" href="javascript:configureTrack()">Track</a>
           </li>
         </ul>
       </div>
@@ -295,54 +289,6 @@
           </div>
         </form>
       </div>
-      <div class="modal-body" id="configure-electrification-body">
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Railway lines</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineVoltageFrequency" value="voltageFrequency" checked onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLineVoltageFrequency">Voltage and frequency</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLineMaximumCurrent" value="maximumCurrent" onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLineMaximumCurrent">Maximum current</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="electrificationRailwayLine" id="electrificationRailwayLinePower" value="power" onchange="configureElectrificationRailwayLine(this.value)">
-                <label class="form-check-label" for="electrificationRailwayLinePower">Maximum power</label>
-              </div>
-            </div>
-            <small class="form-text">
-              Control how the railway lines are rendered: either using the voltage and frequency combination, using the maximum current or using the maximum transmitted power.
-            </small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-body" id="configure-track-body">
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Railway lines</label>
-            <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineGauge" value="gauge" checked onchange="configureTrackRailwayLine(this.value)">
-                <label class="form-check-label" for="trackRailwayLineGauge">Gauge</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineLoadingGauge" value="loadingGauge" onchange="configureTrackRailwayLine(this.value)">
-                <label class="form-check-label" for="trackRailwayLineLoadingGauge">Loading gauge</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="trackRailwayLine" id="trackRailwayLineTrackClass" value="trackClass" onchange="configureTrackRailwayLine(this.value)">
-                <label class="form-check-label" for="trackRailwayLineTrackClass">Track class</label>
-              </div>
-            </div>
-            <small class="form-text">
-              Control how the railway lines are rendered: either using the gauge, the loading gauge or the track class.
-            </small>
-          </div>
-        </form>
-      </div>
     </div>
   </div>
 </div>
@@ -370,7 +316,7 @@
           Documentation about the OpenStreetMap data can be found on the <a href="https://wiki.openstreetmap.org/wiki/OpenRailwayMap" target="_blank">OpenRailwayMap wiki pages</a>.
         </p>
         <p>
-          Usage of the OpenRailwayMap services is subject to <a href="https://github.com/hiddewie/OpenRailwayMap-vector/blob/master/USAGE.md" target="_blank">OpenRailwayMap the usage policy</a>.
+          Usage of the OpenRailwayMap services is subject to the <a href="https://github.com/hiddewie/OpenRailwayMap-vector/blob/master/USAGE.md" target="_blank">OpenRailwayMap usage policy</a>.
         </p>
       </div>
     </div>

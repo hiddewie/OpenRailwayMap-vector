@@ -197,6 +197,36 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   },
 })
 
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'station',
+    ['ref:FR:STIF'] = '1234',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'present', station = 'train', name_tags = {}, references = { ['fr-stif'] = '1234' } },
+  },
+})
+
+osm2pgsql.process_node({
+  id = 123,
+  type = 'node',
+  tags = {
+    ['railway'] = 'station',
+    ['gtfs:stop_id:FR-IDF-IDFM'] = 'IDFM:1234',
+  },
+  as_point = function () end,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  stations = {
+    { id = 'node-123-train', feature = 'station', state = 'present', station = 'train', name_tags = {}, references = { ['fr-idf-idfm'] = 'IDFM:1234' } },
+  },
+})
+
 osm2pgsql.process_way({
   id = 123,
   type = 'way',

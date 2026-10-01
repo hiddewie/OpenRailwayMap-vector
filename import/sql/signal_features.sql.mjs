@@ -1,0 +1,548 @@
+import fs from 'fs'
+import yaml from 'yaml'
+
+const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
+
+const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
+
+async function promiseResultsOrErrors(promises) {
+  const results = await Promise.allSettled(promises);
+  if (results.every(it => it.status === 'fulfilled')) {
+    return results.map(it => it.value)
+  } else {
+    throw new Error(`Failed to resolve promises: ${results.filter(it => it.status === 'rejected').map(it => it.reason).join(', ')}`)
+  }
+}
+
+async function parseSvgDimensions(feature) {
+  const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
+  // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
+  const matches = svg.match(/<svg .*width="([^"]+)".*height="([^"]+)".*>/)
+  if (!matches) {
+    throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
+  }
+  return {
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2]),
+  }
+}
+
+const signalsWithSignalType = await promiseResultsOrErrors(
+  signals_railway_signals.features
+    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
+    .map(feature => ({
+      ...feature,
+      signalType: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type,
+    }))
+    // Determine icon dimensions
+    .map(async feature => ({
+      ...feature,
+      feature: feature.feature,
+      icon: await promiseResultsOrErrors(feature.icon.map(async icon => ({
+        ...icon,
+        cases: icon.cases
+          ? await promiseResultsOrErrors(icon.cases.map(async iconCase => ({
+              ...iconCase,
+              dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
+            })))
+          : undefined,
+        dimensions: icon.default ? await parseSvgDimensions(icon.default) : undefined,
+      }))),
+    }))
+);
+
+const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
+  [tag.tag, tag.type]))
+
+function matchTagValueSql(tag, value) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `'${value}' = ANY("${tag}")`
+    case 'boolean':
+      if (value) {
+        throw new Error(`Value given for boolean tag '${tag}' ('${value}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" = '${value}'`
+  }
+}
+
+function matchTagValuesSql(tag, values) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      const sqlArray = `ARRAY[${values.map(value => `'${value}'`).join(', ')}]`
+      return `${sqlArray} <@ "${tag}" AND ${sqlArray} @> "${tag}"`
+    default:
+      throw new Error(`values matching cannot be used for non-array tag '${tag}' ('${values}')`)
+  }
+}
+
+function matchTagAllValuesSql(tag, values) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] <@ "${tag}"`
+    case 'boolean':
+      if (values) {
+        throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `false`
+  }
+}
+
+function matchTagAnyValueSql(tag, values) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] && "${tag}"`
+    case 'boolean':
+      if (values) {
+        throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" IN (${values.map(value => `'${value}'`).join(', ')})`
+  }
+}
+
+function matchTagRegexSql(tag, regex) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `'${regex}' ~!@# ANY("${tag}")`
+    case 'boolean':
+      if (regex) {
+        throw new Error(`Regex given for boolean tag '${tag}' ('${regex}')`)
+      }
+      return `"${tag}"`
+    default:
+      return `"${tag}" ~ '${regex}'`
+  }
+}
+
+function stringSql(tag, matchCase) {
+  switch (tagTypes[tag]) {
+    case 'array':
+      return `(select match from (select regexp_substr(match, '${matchCase.regex}') as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
+    case 'boolean':
+      return `"${tag}"`
+    default:
+      if (matchCase.regex) {
+        return `regexp_substr("${tag}", '${matchCase.regex}', 1, 1, '', 1)`
+      } else {
+        return `"${tag}"`
+      }
+  }
+}
+
+function matchFeatureTagsSql(tags) {
+  return tags.map(tag =>
+    tag.value ? matchTagValueSql(tag.tag, tag.value)
+      : tag.all ? matchTagAllValuesSql(tag.tag, tag.all)
+        : tag.values ? matchTagValuesSql(tag.tag, tag.values)
+          : matchTagAnyValueSql(tag.tag, tag.any)
+  ).join(' AND ')
+}
+
+function matchIconCase(tag, iconCase) {
+  if (iconCase.regex) {
+    return matchTagRegexSql(tag, iconCase.regex)
+  } else if (iconCase.all) {
+    return matchTagAllValuesSql(tag, iconCase.all)
+  } else if (iconCase.any) {
+    return matchTagAnyValueSql(tag, iconCase.any)
+  } else {
+    return matchTagValueSql(tag, iconCase.exact);
+  }
+}
+
+function iconCaseSql(iconCase, matchTag, position) {
+  if (iconCase.value.includes('{}')) {
+    return `ARRAY[CONCAT('${iconCase.value.replace(/\{}.*$/, '{')}', ${stringSql(matchTag, iconCase)}, '${iconCase.value.replace(/^.*\{}/, '}')}${position ? `@${position}` : ''}'), ${stringSql(matchTag, iconCase)}, '${(position ?? 'center') === 'center' ? iconCase.dimensions.height : 0}', '${['top', 'bottom'].includes(position) ? iconCase.dimensions.height : 0}', '${['left', 'right'].includes(position) ? iconCase.dimensions.height : 0}']`
+  } else {
+    return `ARRAY['${iconCase.value}${position ? `@${position}` : ''}', NULL, '${(position ?? 'center') === 'center' ? iconCase.dimensions.height : 0}', '${['top', 'bottom'].includes(position) ? iconCase.dimensions.height : 0}', '${['left', 'right'].includes(position) ? iconCase.dimensions.height : 0}']`
+  }
+}
+
+function featureIconSql(icon) {
+  const defaultIconSql = icon.default ? `ARRAY['${icon.default}${icon.position ? `@${icon.position}` : ''}', NULL, '${(icon.position ?? 'center') === 'center' ? icon.dimensions.height : 0}', '${['top', 'bottom'].includes(icon.position) ? icon.dimensions.height : 0}', '${['left', 'right'].includes(icon.position) ? icon.dimensions.height : 0}']` : 'NULL'
+
+  if (icon.match) {
+    return `CASE ${icon.cases.map(iconCase => `
+                    WHEN ${matchIconCase(icon.match, iconCase)} THEN ${iconCaseSql(iconCase, icon.match, icon.position)}`).join('')}
+                    ${icon.default ? `ELSE ${defaultIconSql}` : ''}
+                  END`
+  } else {
+    return defaultIconSql
+  }
+}
+
+function featureIconsSql(icons) {
+  if (icons.length === 1) {
+    // Avoid complex SQL for the single icon case
+    return featureIconSql(icons[0])
+  } else {
+    return `(
+                SELECT ARRAY[string_agg(icon[1], '|'), string_agg(COALESCE(icon[2], ''), '|'), MAX(icon[3]::numeric)::text, SUM(icon[4]::numeric)::text, MAX(icon[5]::numeric)::text]
+                FROM (
+                  ${icons.map(icon => `SELECT ${featureIconSql(icon)} as icon`).join(`
+                  UNION ALL
+                  `)}
+                ) icons
+                WHERE icon[1] IS NOT NULL
+              )`
+  }
+}
+
+/**
+ * Template that builds the SQL view taking the YAML configuration into account
+ */
+const sql = `
+CREATE OR REPLACE VIEW signal_direction_view AS
+  SELECT
+    s.osm_id as signal_id,
+    (signal_direction = 'both') as direction_both,
+    degrees(ST_Azimuth(
+      st_lineinterpolatepoint(sl.way, greatest(0, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) - 0.01)),
+      st_lineinterpolatepoint(sl.way, least(1, st_linelocatepoint(sl.way, ST_ClosestPoint(sl.way, s.way)) + 0.01))
+    )) + (CASE WHEN signal_direction = 'backward' THEN 180.0 ELSE 0.0 END) as azimuth
+  FROM signals s
+  LEFT JOIN LATERAL (
+    SELECT line.way as way
+    FROM railway_line line
+    WHERE st_dwithin(s.way, line.way, 10) AND line.feature IN ('rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'monorail', 'miniature', 'funicular')
+    ORDER BY s.way <-> line.way
+    LIMIT 1
+  ) as sl ON true
+  WHERE
+    (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
+      OR railway = 'derail';
+
+-- Use the view directly such that the query in the view can be updated
+CREATE MATERIALIZED VIEW IF NOT EXISTS signal_direction AS
+  SELECT
+    *
+  FROM
+    signal_direction_view;
+
+CREATE INDEX IF NOT EXISTS signal_direction_signal_id_index
+  ON signal_direction
+    USING btree(signal_id);
+
+CLUSTER signal_direction
+  USING signal_direction_signal_id_index;
+    
+-- Table with functional signal features
+CREATE OR REPLACE VIEW signal_features_view AS
+  -- For every type of signal, generate the feature and related metadata
+  WITH signals_with_features_0 AS (
+    SELECT
+      osm_id as signal_id,
+      railway,
+      ${signals_railway_signals.types.map(type => `
+      CASE 
+        WHEN "railway:signal:${type.type}" IS NOT NULL THEN
+          CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+            -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+            WHEN ${matchFeatureTagsSql(feature.tags)}
+              THEN ${feature.signalType === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}'])` : 'NULL'}
+            `).join('')}
+            -- Unknown signal (${type.type})
+            ELSE
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL]
+        END
+      END as feature_${type.type}`).join(',')}
+    FROM signals s
+    WHERE
+      (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
+        OR railway = 'derail'
+  ),
+  -- Output a feature row for every feature
+  signals_with_features_1 AS (
+    ${signals_railway_signals.types.map(type => `
+    SELECT
+      signal_id,
+      feature_${type.type}[1] as feature,
+      feature_${type.type}[2] as feature_variable,
+      GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
+      feature_${type.type}[6] as type,
+      feature_${type.type}[7]::boolean as deactivated,
+      feature_${type.type}[8]::INT as rank,
+      '${type.category}' as category
+    FROM signals_with_features_0
+    WHERE feature_${type.type} IS NOT NULL
+  `).join(`
+    UNION ALL
+  `)}
+    UNION ALL
+    SELECT
+      signal_id,
+      'general/signal-unknown' as feature,
+      NULL as feature_variable,
+      17.1 as icon_height,
+      NULL as type,
+      false as deactivated,
+      NULL as rank,
+      'other' as category
+    FROM signals_with_features_0
+    WHERE railway = 'signal'
+      AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
+  )
+  -- Group features by signal, and aggregate the results
+  SELECT
+    signal_id,
+    CASE
+      WHEN 'line' = ANY(array_agg(type)) THEN 'line'
+      WHEN 'tram' = ANY(array_agg(type)) THEN 'tram'
+    END as type,
+    array_agg(category ORDER BY rank ASC NULLS LAST) as category,
+    array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
+    array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
+    array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
+    MAX(rank) as rank
+  FROM signals_with_features_1 sf
+  GROUP BY signal_id;
+
+-- Use the view directly such that the query in the view can be updated
+CREATE MATERIALIZED VIEW IF NOT EXISTS signal_features AS
+  SELECT
+    *
+  FROM
+    signal_features_view;
+
+CREATE INDEX IF NOT EXISTS signal_features_signal_id_index
+  ON signal_features
+    USING btree(signal_id);
+
+CLUSTER signal_features
+  USING signal_features_signal_id_index;
+
+CREATE OR REPLACE VIEW railway_signals_view AS
+  SELECT
+    osm_id as id,
+    way,
+    osm_id,
+    'N' as osm_type,
+    rank,
+    railway,
+    sd.direction_both,
+    ref,
+    caption,
+    position,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description,
+    sd.azimuth,${signals_railway_signals.tags.map(tag => `
+    "${tag.tag}",`).join('')}
+    features[1] as feature0,
+    features[2] as feature1,
+    features[3] as feature2,
+    features[4] as feature3,
+    features[5] as feature4,
+    features[6] as feature5,
+    features[7] as feature6,
+    features[8] as feature7,
+    features[9] as feature8,
+    features[10] as feature9,
+    features[11] as feature10,
+    features[12] as feature11,
+    category[1] as category0,
+    category[2] as category1,
+    category[3] as category2,
+    category[4] as category3,
+    category[5] as category4,
+    category[6] as category5,
+    category[7] as category6,
+    category[8] as category7,
+    category[9] as category8,
+    category[10] as category9,
+    category[11] as category10,
+    category[12] as category11,
+    deactivated[1] as deactivated0,
+    deactivated[2] as deactivated1,
+    deactivated[3] as deactivated2,
+    deactivated[4] as deactivated3,
+    deactivated[5] as deactivated4,
+    deactivated[6] as deactivated5,
+    deactivated[7] as deactivated6,
+    deactivated[8] as deactivated7,
+    deactivated[9] as deactivated8,
+    deactivated[10] as deactivated9,
+    deactivated[11] as deactivated10,
+    deactivated[12] as deactivated11,
+    icon_height[1] as icon_height0,
+    icon_height[2] as icon_height1,
+    icon_height[3] as icon_height2,
+    icon_height[4] as icon_height3,
+    icon_height[5] as icon_height4,
+    icon_height[6] as icon_height5,
+    icon_height[7] as icon_height6,
+    icon_height[8] as icon_height7,
+    icon_height[9] as icon_height8,
+    icon_height[10] as icon_height9,
+    icon_height[11] as icon_height10,
+    icon_height[12] as icon_height11,
+    type
+  FROM signals s
+  JOIN signal_features sf
+    ON s.osm_id = sf.signal_id
+  JOIN signal_direction sd
+    ON s.osm_id = sd.signal_id;
+
+CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+  RETURN (
+    SELECT
+      ST_AsMVT(tile, 'railway_signals', 4096, 'way')
+    FROM (
+      SELECT
+        id,
+        ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+        railway,
+        ref,
+        caption,
+        azimuth,
+        direction_both,
+        feature0,
+        feature1,
+        feature2,
+        feature3,
+        feature4,
+        feature5,
+        feature6,
+        feature7,
+        feature8,
+        feature9,
+        feature10,
+        feature11,
+        category0,
+        category1,
+        category2,
+        category3,
+        category4,
+        category5,
+        category6,
+        category7,
+        category8,
+        category9,
+        category10,
+        category11,
+        deactivated0,
+        deactivated1,
+        deactivated2,
+        deactivated3,
+        deactivated4,
+        deactivated5,
+        deactivated6,
+        deactivated7,
+        deactivated8,
+        deactivated9,
+        deactivated10,
+        deactivated11,
+        icon_height0,
+        icon_height1,
+        icon_height2,
+        icon_height3,
+        icon_height4,
+        icon_height5,
+        icon_height6,
+        icon_height7,
+        icon_height8,
+        icon_height9,
+        icon_height10,
+        icon_height11,
+        type
+      FROM railway_signals_view
+      WHERE way && ST_TileEnvelope(z, x, y)
+        -- conditionally include features based on zoom level
+        AND CASE
+          WHEN z < 14 THEN
+            type IS NULL OR type NOT IN ('tram')
+          ELSE
+            true
+        END
+      ORDER BY rank NULLS FIRST
+    ) as tile
+    WHERE way IS NOT NULL
+  );
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_signals IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_signals",
+        "fields": {
+          "id": "integer",
+          "railway": "string",
+          "ref": "string",
+          "caption": "string",
+          "azimuth": "number",
+          "direction_both": "boolean",
+          "feature0": "string",
+          "feature1": "string",
+          "feature2": "string",
+          "feature3": "string",
+          "feature4": "string",
+          "feature5": "string",
+          "feature6": "string",
+          "feature7": "string",
+          "feature8": "string",
+          "feature9": "string",
+          "feature10": "string",
+          "feature11": "string",
+          "category0": "string",
+          "category1": "string",
+          "category2": "string",
+          "category3": "string",
+          "category4": "string",
+          "category5": "string",
+          "category6": "string",
+          "category7": "string",
+          "category8": "string",
+          "category9": "string",
+          "category10": "string",
+          "category11": "string",
+          "deactivated0": "boolean",
+          "deactivated1": "boolean",
+          "deactivated2": "boolean",
+          "deactivated3": "boolean",
+          "deactivated4": "boolean",
+          "deactivated5": "boolean",
+          "deactivated6": "boolean",
+          "deactivated7": "boolean",
+          "deactivated8": "boolean",
+          "deactivated9": "boolean",
+          "deactivated10": "boolean",
+          "deactivated11": "boolean",
+          "icon_height0": "number",
+          "icon_height1": "number",
+          "icon_height2": "number",
+          "icon_height3": "number",
+          "icon_height4": "number",
+          "icon_height5": "number",
+          "icon_height6": "number",
+          "icon_height7": "number",
+          "icon_height8": "number",
+          "icon_height9": "number",
+          "icon_height10": "number",
+          "icon_height11": "number",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+`
+
+console.log(sql);

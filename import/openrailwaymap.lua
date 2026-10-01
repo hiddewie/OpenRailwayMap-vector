@@ -105,20 +105,30 @@ function dominant_speed_label(state, preferred_direction, speed, forward_speed, 
     return nil, nil
   elseif (not speed) and (not forward_speed) and (not backward_speed) then
     return nil, nil
-  elseif speed and (not forward_speed) and (not backward_speed) then
-    return speed_int(speed), speed
-  elseif speed then
-    return nil, nil
   end
 
-  if preferred_direction == 'forward' then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' (' .. (backward_speed or '-') .. ')'
+  local effective_forward_speed = forward_speed or speed
+  local effective_backward_speed = backward_speed or speed
+
+  if effective_forward_speed == effective_backward_speed then
+    return speed_int(effective_forward_speed), effective_forward_speed
+  elseif preferred_direction == 'forward' then
+    return speed_int(effective_forward_speed), (effective_forward_speed or '-') .. ' (' .. (effective_backward_speed or '-') .. ')'
   elseif preferred_direction == 'backward' then
-    return speed_int(backward_speed), (backward_speed or '-') .. ' (' .. (forward_speed or '-') .. ')'
-  elseif preferred_direction == 'both' or (not preferred_direction) then
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    return speed_int(effective_backward_speed), (effective_backward_speed or '-') .. ' (' .. (effective_forward_speed or '-') .. ')'
   else
-    return speed_int(forward_speed), (forward_speed or '-') .. ' / ' .. (backward_speed or '-')
+    -- Use the maximum of the parsed values for the speed, without preferred direction
+    local effective_speed = speed_int(effective_forward_speed)
+    if effective_speed then
+      local parsed_backward_speed = speed_int(effective_backward_speed)
+      if parsed_backward_speed then
+        effective_speed = math.max(effective_speed, parsed_backward_speed)
+      end
+    else
+      effective_speed = speed_int(effective_backward_speed)
+    end
+
+    return effective_speed, (effective_forward_speed or '-') .. ' / ' .. (effective_backward_speed or '-')
   end
 end
 
@@ -184,6 +194,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'service', type = 'text' },
     { column = 'usage', type = 'text' },
     { column = 'highspeed', type = 'boolean' },
+    { column = 'preserved', type = 'boolean', not_null = true },
     { column = 'layer', type = 'integer' },
     { column = 'ref', type = 'text' },
     { column = 'track_ref', type = 'text' },
@@ -214,6 +225,9 @@ local railway_line = osm2pgsql.define_table({
     { column = 'traffic_mode', type = 'text' },
     { column = 'radio', type = 'text' },
     { column = 'rubber_tires', type = 'boolean' },
+    { column = 'workrules', sql_type = 'text[]' },
+    { column = 'passenger_lines', type = 'integer' },
+    { column = 'rack', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -240,9 +254,10 @@ local pois = osm2pgsql.define_table({
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
-    { column = 'layer', type = 'text' },
+    { column = 'type', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'ref', type = 'text' },
+    { column = 'operator', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'radio', type = 'text' },
     { column = 'emergency_phone', type = 'text' },
@@ -665,9 +680,92 @@ local substation = osm2pgsql.define_table({
   },
 })
 
+local interlocking = osm2pgsql.define_table({
+  name = 'interlocking',
+  ids = { type = 'relation', id_column = 'osm_id', create_index = 'primary_key' },
+  columns = {
+    { column = 'feature', type = 'text', not_null = true },
+    { column = 'has_facility', type = 'boolean', not_null = true },
+    { column = 'name', type = 'text' },
+    { column = 'name_tags', type = 'hstore' },
+    { column = 'references', type = 'hstore' },
+    { column = 'operator', sql_type = 'text[]' },
+    { column = 'owner', type = 'text' },
+    { column = 'network', sql_type = 'text[]' },
+    { column = 'wikidata', type = 'text' },
+    { column = 'wikimedia_commons', type = 'text' },
+    { column = 'wikimedia_commons_file', type = 'text' },
+    { column = 'image', type = 'text' },
+    { column = 'mapillary', type = 'text' },
+    { column = 'wikipedia', type = 'text' },
+    { column = 'note', type = 'text' },
+    { column = 'description', type = 'text' },
+  },
+})
+
+local interlocking_switch = osm2pgsql.define_table({
+  name = 'interlocking_switch',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'switch_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'switch_id', method = 'btree' },
+  },
+})
+
+local interlocking_signal = osm2pgsql.define_table({
+  name = 'interlocking_signal',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'signal_id', sql_type = 'int8', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'signal_id', method = 'btree' },
+  },
+})
+
+local interlocking_signal_box = osm2pgsql.define_table({
+  name = 'interlocking_signal_box',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'signal_box_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'signal_box_id', method = 'btree' },
+  },
+})
+
+local interlocking_facility = osm2pgsql.define_table({
+  name = 'interlocking_facility',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'facility_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'facility_id', method = 'btree' },
+  },
+})
+
+local interlocking_landuse = osm2pgsql.define_table({
+  name = 'interlocking_landuse',
+  ids = { type = 'relation', id_column = 'interlocking_id' },
+  columns = {
+    { column = 'landuse_id', sql_type = 'text', not_null = true },
+  },
+  indexes = {
+    { column = 'interlocking_id', method = 'btree' },
+    { column = 'landuse_id', method = 'btree' },
+  },
+})
+
 local railway_line_states = {}
 -- ordered from lower to higher importance
-local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction', 'preserved'}
+local states = {'razed', 'abandoned', 'disused', 'proposed', 'construction'}
 for index, state in ipairs(states) do
   railway_line_states[state] = {
     state = state,
@@ -693,12 +791,13 @@ function railway_line_state(tags)
   local mapped_railway = railway_line_states[railway]
   if mapped_railway then
     return mapped_railway.state,
-      tags[mapped_railway.railway] or (tags['railway:preserved'] == 'yes' and tags['railway']) or tags[railway] or 'rail',
+      tags[mapped_railway.railway] or tags[railway] or 'rail',
       tags[mapped_railway.usage] or usage,
       tags[mapped_railway.service] or service,
       tags[mapped_railway.name] or name,
       tags[mapped_railway.gauge] or gauge,
       highspeed,
+      preserved,
       mapped_railway.rank
   else
 
@@ -725,7 +824,7 @@ function railway_line_state(tags)
     else rank = 10
     end
 
-    return 'present', railway, usage, service, name, gauge, highspeed, rank
+    return 'present', railway, usage, service, name, gauge, highspeed, preserved, rank
   end
 end
 
@@ -1132,7 +1231,7 @@ end
 
 local railway_station_values = osm2pgsql.make_check_values_func({'station', 'halt', 'tram_stop', 'service_station', 'yard', 'junction', 'spur_junction', 'crossover', 'site'})
 local railway_poi_values = osm2pgsql.make_check_values_func(tag_functions.poi_railway_values)
-local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail', 'vacancy_detection'})
+local railway_signal_values = osm2pgsql.make_check_values_func({'signal', 'buffer_stop', 'derail'})
 local railway_position_values = osm2pgsql.make_check_values_func({'milestone', 'level_crossing', 'crossing'})
 local railway_switch_values = osm2pgsql.make_check_values_func({'switch', 'railway_crossing'})
 local railway_box_values = osm2pgsql.make_check_values_func({'signal_box', 'crossing_box', 'blockpost'})
@@ -1204,7 +1303,7 @@ function osm2pgsql.process_node(object)
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
-    local feature, rank, minzoom, layer = tag_functions.poi(tags)
+    local feature, rank, minzoom, type = tag_functions.poi(tags)
 
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
@@ -1212,9 +1311,10 @@ function osm2pgsql.process_node(object)
       feature = feature,
       rank = rank,
       minzoom = minzoom,
-      layer = layer,
+      type = type,
       name = tags.name,
       ref = tags.ref,
+      operator = tags.operator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],
@@ -1391,7 +1491,7 @@ function osm2pgsql.process_way(object)
   local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
 
   if railway_values(tags.railway) then
-    local state, feature, usage, service, state_name, gauge, highspeed, rank = railway_line_state(tags)
+    local state, feature, usage, service, state_name, gauge, highspeed, preserved, rank = railway_line_state(tags)
     local railway_train_protection, railway_train_protection_rank = tag_functions.train_protection(tags, '')
     local train_protection_construction, train_protection_construction_rank = tag_functions.train_protection(tags, 'construction:')
 
@@ -1424,6 +1524,7 @@ function osm2pgsql.process_way(object)
         usage = usage,
         rank = rank,
         highspeed = highspeed,
+        preserved = preserved,
         layer = tags['layer'],
         ref = tags['ref'],
         track_ref = tags['railway:track_ref'],
@@ -1455,6 +1556,9 @@ function osm2pgsql.process_way(object)
         traffic_mode = tags['railway:traffic_mode'],
         radio = tags['railway:radio'],
         rubber_tires = tags.rubber_tires and tags.rubber_tires ~= 'no' or nil,
+        workrules = split_semicolon_to_sql_array(tags['workrules']),
+        passenger_lines = tags['passenger_lines'],
+        rack = tags['rack'] ~= 'no' and tags['rack'] or nil,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
@@ -1563,7 +1667,7 @@ function osm2pgsql.process_way(object)
   end
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
-    local feature, rank, minzoom, layer = tag_functions.poi(tags)
+    local feature, rank, minzoom, type = tag_functions.poi(tags)
     local position, position_exact, line_positions = find_position_tags(tags)
 
     pois:insert({
@@ -1572,9 +1676,10 @@ function osm2pgsql.process_way(object)
       feature = feature,
       rank = rank,
       minzoom = minzoom,
-      layer = layer,
+      type = type,
       name = tags.name,
       ref = tags.ref,
+      operator = tags.operator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],
@@ -1794,6 +1899,77 @@ function osm2pgsql.process_relation(object)
         position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
         yard_purpose = split_semicolon_to_sql_array(tags['railway:yard:purpose']),
         yard_hump = tags['railway:yard:hump'] == 'yes' or nil,
+        wikidata = tags.wikidata,
+        wikimedia_commons = wikimedia_commons,
+        wikimedia_commons_file = wikimedia_commons_file,
+        image = image,
+        mapillary = tags.mapillary,
+        wikipedia = tags.wikipedia,
+        note = tags.note,
+        description = tags.description,
+      })
+    end
+  end
+
+  if tags.type == 'railway' and tags.railway == 'interlocking' then
+    local has_members = false
+    local has_facility = false
+    for _, member in ipairs(object.members) do
+      if member.role == 'switch' and member.type == 'n' then
+        interlocking_switch:insert({
+          switch_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'signal' and member.type == 'n' then
+        interlocking_signal:insert({
+          signal_id = member.ref,
+        })
+        has_members = true
+      elseif member.role == 'facility' and member.type == 'n' then
+        interlocking_facility:insert({
+          facility_id = string.format("node-%d", member.ref),
+        })
+        has_members = true
+        has_facility = true
+      elseif member.role == 'facility' and member.type == 'w' then
+        interlocking_facility:insert({
+          facility_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+        has_facility = true
+      elseif member.role == 'signal_box' and member.type == 'n' then
+        interlocking_signal_box:insert({
+          signal_box_id = string.format("node-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'signal_box' and member.type == 'w' then
+        interlocking_signal_box:insert({
+          signal_box_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'landuse' and member.type == 'w' then
+        interlocking_landuse:insert({
+          landuse_id = string.format("way-%d", member.ref),
+        })
+        has_members = true
+      elseif member.role == 'landuse' and member.type == 'r' then
+        interlocking_landuse:insert({
+          landuse_id = string.format("relation-%d", member.ref),
+        })
+        has_members = true
+      end
+    end
+
+    if has_members then
+      interlocking:insert({
+        feature = 'interlocking',
+        has_facility = has_facility,
+        name = tags.name,
+        name_tags = name_tags(tags),
+        references = station_references(tags),
+        operator = split_semicolon_to_sql_array(tags.operator),
+        owner = tags.owner,
+        network = split_semicolon_to_sql_array(tags.network),
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,

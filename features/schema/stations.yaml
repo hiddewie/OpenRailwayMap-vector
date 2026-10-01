@@ -22,6 +22,9 @@ properties:
           minimum: 1
           maximum: 20
           description: The minimum zoom that this station should be shown from
+        highZoomPolygon:
+          type: boolean
+          description: Whether this station is shown using a polygon for high zooms
         mapState:
           type: object
           description: Map state to match to determine if the feature should be shown in the legend

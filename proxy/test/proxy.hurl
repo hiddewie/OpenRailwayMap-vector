@@ -34,38 +34,38 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_symbols,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions
+GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/speed_railway_signals
+GET {{base_url}}/railway_signals
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/signals_railway_signals,signals_signal_boxes
+GET {{base_url}}/railway_signals,signals_signal_boxes
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/electrification_signals,electrification_catenary,electrification_railway_symbols,electrification_substation
+GET {{base_url}}/electrification_catenary,electrification_substation
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/operator_railway_symbols
+GET {{base_url}}/points_of_interest
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 # (local URLs)
-GET {{base_url}}/signals_railway_signals,signals_signal_boxes/14/8803/5371
+GET {{base_url}}/railway_signals,signals_signal_boxes/14/8803/5371
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/x-protobuf
 
-GET {{base_url}}/signals_railway_signals,signals_signal_boxes/18/140807/85974
+GET {{base_url}}/railway_signals,signals_signal_boxes/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
@@ -108,49 +108,17 @@ jsonpath "$.data_url" == "https://openrailwaymap.app/taginfo.json"
 jsonpath "$.project.name" == "OpenRailwayMap-vector"
 jsonpath "$.tags[*].key" includes "name"
 jsonpath "$.tags[*].key" includes "railway"
+jsonpath "$.tags[*].key" includes "operator"
+jsonpath "$.tags[*].description" includes "[Operator] [AM] Южно-Кавказская железная дорога"
+jsonpath "$.tags[*].key" includes "railway:signal:slope:caption"
 
-# Styles
-GET {{base_url}}/style/standard.json
+# Style
+GET {{base_url}}/style.json
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap standard"
-
-GET {{base_url}}/style/speed.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap speed"
-
-GET {{base_url}}/style/signals.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap signals"
-
-GET {{base_url}}/style/electrification.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap electrification"
-
-GET {{base_url}}/style/track.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap track"
-
-GET {{base_url}}/style/operator.json
-HTTP 200
-Content-Type: application/json
-[Asserts]
-jsonpath "$.version" == 8
-jsonpath "$.name" == "OpenRailwayMap operator"
+jsonpath "$.name" == "OpenRailwayMap"
 
 # Legend data
 GET {{base_url}}/legend.json

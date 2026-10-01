@@ -145,10 +145,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS grouped_stations_with_importance AS
     ON ssa.stop_area_osm_id = sa.osm_id
   GROUP BY clustered.id;
 
-CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_center_index
-  ON grouped_stations_with_importance
-    USING GIST(center);
-
 CREATE INDEX IF NOT EXISTS grouped_stations_with_importance_buffered_index
   ON grouped_stations_with_importance
     USING GIST(buffered);
@@ -162,7 +158,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS grouped_stations_with_importance_id
     USING BTREE(id);
 
 CLUSTER grouped_stations_with_importance
-  USING grouped_stations_with_importance_center_index;
+  USING grouped_stations_with_importance_buffered_index;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS stop_area_groups_buffered AS
   SELECT
@@ -187,3 +183,70 @@ CREATE INDEX IF NOT EXISTS stop_area_groups_buffered_index
 
 CLUSTER stop_area_groups_buffered
   USING stop_area_groups_buffered_index;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS interlocking_buffered AS
+  SELECT
+    interlocking_id as id,
+    CASE
+      WHEN bool_or(landuse) THEN ST_PointOnSurface(ST_RemoveRepeatedPoints(ST_Collect(way)))
+      ELSE ST_Centroid(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))))
+    END as center,
+    CASE
+      WHEN bool_or(landuse) THEN ST_Buffer(ST_RemoveRepeatedPoints(ST_Collect(way)), 10)
+      ELSE ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 20)
+    END as buffered
+  FROM (
+    SELECT
+      interlocking_id,
+      s.way,
+      false as landuse,
+      false as facility
+    FROM interlocking_switch "is"
+    JOIN railway_switches s
+      ON "is".switch_id = s.osm_id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
+    l.way,
+      true as landuse,
+      false as facility
+    FROM interlocking_landuse il
+    JOIN landuse l
+      ON il.landuse_id = l.id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
+      s.way,
+      false as landuse,
+      false as facility
+    FROM interlocking_signal "is"
+    JOIN signals s
+      ON "is".signal_id = s.osm_id
+
+    UNION ALL
+
+    SELECT
+      interlocking_id,
+      b.way,
+      false as landuse,
+      false as facility
+    FROM interlocking_signal_box isb
+    JOIN boxes b
+      ON isb.signal_box_id = b.id
+  ) elements
+  GROUP BY elements.interlocking_id;
+
+CREATE INDEX IF NOT EXISTS interlocking_buffered_index
+  ON interlocking_buffered
+    USING GIST(buffered);
+
+CREATE UNIQUE INDEX IF NOT EXISTS interlocking_id_index
+  ON interlocking_buffered
+    USING BTREE(id);
+
+CLUSTER interlocking_buffered
+  USING interlocking_buffered_index;

@@ -13,6 +13,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     usage,
     service,
     highspeed,
+    preserved,
     tunnel,
     bridge,
     r.name as name,
@@ -54,6 +55,9 @@ CREATE OR REPLACE VIEW railway_line_view AS
     traffic_mode,
     radio,
     rubber_tires,
+    workrules,
+    passenger_lines,
+    rack,
     line_routes,
     route_count,
     wikidata,
@@ -76,6 +80,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
       service,
       rank,
       highspeed,
+      preserved,
       reporting_marks,
       layer,
       bridge,
@@ -112,6 +117,9 @@ CREATE OR REPLACE VIEW railway_line_view AS
       traffic_mode,
       radio,
       rubber_tires,
+      workrules,
+      passenger_lines,
+      rack,
       (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
       wikidata,
@@ -146,6 +154,7 @@ RETURN (
       usage,
       service,
       highspeed,
+      preserved,
       tunnel,
       bridge,
       name,
@@ -182,7 +191,9 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
-      route_count
+      route_count,
+      passenger_lines,
+      rack
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -215,7 +226,8 @@ RETURN (
               feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail', 'monorail', 'subway', 'tram')
             )
         WHEN z < 12 THEN
-          (service IS NULL OR service IN ('spur', 'yard'))
+          state IN ('present', 'construction', 'proposed', 'disused')
+            AND (service IS NULL OR service IN ('spur', 'yard'))
             AND (
               feature IN ('rail', 'ferry', 'narrow_gauge', 'light_rail')
                 OR (feature IN ('monorail', 'subway', 'tram') AND service IS NULL)
@@ -281,7 +293,9 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
-          "route_count": "integer"
+          "route_count": "integer",
+          "passenger_lines": "integer",
+          "rack": "string"
         }
       }
     ]
@@ -299,6 +313,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     state,
     usage,
     highspeed,
+    preserved,
     ref,
     name,
     speed_label,
@@ -320,6 +335,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     operator_bright,
     primary_operator,
     owner,
+    passenger_lines,
     rank
   FROM railway_line_view
   WHERE
@@ -391,7 +407,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     gs.id,
     osm_ids as osm_id,
     osm_types as osm_type,
-    center as way,
+    center,
     buffered,
     map_reference,
     "references",
@@ -465,7 +481,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_low', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -474,7 +490,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -518,7 +534,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations_med', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       map_reference as label,
       name,
@@ -527,7 +543,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
@@ -684,7 +700,7 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_text_stations', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       state,
       feature,
@@ -697,7 +713,7 @@ RETURN (
       operator_color,
       operator_bright
     FROM railway_text_stations
-    WHERE way && ST_TileEnvelope(z, x, y)
+    WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
       AND CASE
         -- Zooms < 8 are handled in the low and medium zoom tiles
@@ -799,9 +815,10 @@ CREATE OR REPLACE VIEW poi_view AS
     osm_type,
     feature,
     ref,
+    operator,
     name,
     minzoom,
-    layer,
+    type,
     rank,
     position,
     radio,
@@ -816,7 +833,7 @@ CREATE OR REPLACE VIEW poi_view AS
     description
   FROM pois;
 
-CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y integer)
+CREATE OR REPLACE FUNCTION points_of_interest(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
   IMMUTABLE
@@ -824,31 +841,32 @@ CREATE OR REPLACE FUNCTION standard_railway_symbols(z integer, x integer, y inte
   PARALLEL SAFE
 RETURN (
   SELECT
-    ST_AsMVT(tile, 'standard_railway_symbols', 4096, 'way')
+    ST_AsMVT(tile, 'points_of_interest', 4096, 'way')
   FROM (
     SELECT
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
+      type,
       ref
     FROM poi_view
     WHERE way && ST_TileEnvelope(z, x, y)
       AND z >= minzoom
-      AND layer = 'standard'
     ORDER BY rank DESC
   ) as tile
   WHERE way IS NOT NULL
 );
 
 DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION standard_railway_symbols IS $tj$' || $$
+  EXECUTE 'COMMENT ON FUNCTION points_of_interest IS $tj$' || $$
   {
     "vector_layers": [
       {
-        "id": "standard_railway_symbols",
+        "id": "points_of_interest",
         "fields": {
           "id": "string",
           "feature": "string",
+          "type": "string",
           "ref": "string"
         }
       }
@@ -1192,6 +1210,104 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE VIEW standard_interlocking_view AS
+  SELECT
+    i.osm_id as id,
+    i.osm_id,
+    'R' as osm_type,
+    i.has_facility,
+    center,
+    buffered,
+    feature,
+    name,
+    name_tags,
+    "references",
+    operator,
+    owner,
+    network,
+    wikidata,
+    wikimedia_commons,
+    wikimedia_commons_file,
+    image,
+    mapillary,
+    wikipedia,
+    note,
+    description
+  FROM interlocking_buffered ib
+  JOIN interlocking i
+    ON ib.id = i.osm_id;
+
+CREATE OR REPLACE FUNCTION standard_interlocking(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way
+    FROM standard_interlocking_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking",
+        "fields": {
+          "id": "integer"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION standard_interlocking_text(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'standard_interlocking_text', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      name
+    FROM standard_interlocking_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND NOT has_facility
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION standard_interlocking_text IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "standard_interlocking_text",
+        "fields": {
+          "id": "integer",
+          "name": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 --- Speed ---
 
 CREATE OR REPLACE FUNCTION speed_railway_line_low(z integer, x integer, y integer)
@@ -1504,47 +1620,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE FUNCTION electrification_railway_symbols(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'electrification_railway_symbols', 4096, 'way')
-  FROM (
-    SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
-      feature,
-      ref
-    FROM poi_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'electrification'
-    ORDER BY rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION electrification_railway_symbols IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "electrification_railway_symbols",
-        "fields": {
-          "id": "string",
-          "feature": "string",
-          "ref": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
 CREATE OR REPLACE VIEW electrification_catenary_view AS
   SELECT
     id,
@@ -1687,6 +1762,7 @@ RETURN (
       gauge0,
       track_class,
       loading_gauge,
+      passenger_lines,
       max(rank) as rank
     FROM railway_line_low
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -1697,7 +1773,8 @@ RETURN (
       gauge0,
       gaugeint0,
       track_class,
-      loading_gauge
+      loading_gauge,
+      passenger_lines
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1716,7 +1793,8 @@ DO $do$ BEGIN
           "state": "string",
           "usage": "string",
           "gauge0": "string",
-          "gaugeint0": "number"
+          "gaugeint0": "number",
+          "passenger_lines": "number"
         }
       }
     ]
@@ -1779,47 +1857,6 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE FUNCTION operator_railway_symbols(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'operator_railway_symbols', 4096, 'way')
-  FROM (
-    SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      id,
-      feature,
-      ref
-    FROM poi_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND z >= minzoom
-      AND layer = 'operator'
-    ORDER BY rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION operator_railway_symbols IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "operator_railway_symbols",
-        "fields": {
-          "id": "string",
-          "feature": "string",
-          "ref": "string"
         }
       }
     ]

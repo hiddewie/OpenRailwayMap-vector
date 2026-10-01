@@ -486,35 +486,6 @@ paths:
           description: |
             Bad request: invalid parameter values
 
-  /api/wikidata/{entity}:
-    get:
-      operationId: wikidataImage
-      summary: Find the image from Wikidata
-      description: |
-        The Wikidata image endpoint returns the URL of the image thumbnail for a given Wikidata entity.
-      tags:
-        - wikidata
-      parameters:
-        - name: entity
-          required: true
-          in: path
-          schema:
-            type: string
-            example: 'Q2655858'
-          description: |
-            The Wikidata entity ID
-      responses:
-        '404':
-          description: Entity not found
-          content:
-            text/plain:
-              schema:
-                type: string
-                description: The reason that the entity was not found
-        '307':
-          description: |
-            Location of the Wikikdata thumbnail image
-
   /api/route/{osm_id}:
     get:
       operationId: route
@@ -597,40 +568,57 @@ paths:
                 description: The properties of the feature. The properties are defined in the source and layer feature definition.
                 example:
                   # Railway line
-                  bridge: false
-                  description:
-                  electrification_state: present
-                  frequency: 0
-                  future_frequency:
-                  future_maximum_current:
-                  future_voltage:
-                  gauges: ['1435']
-                  highspeed: false
-                  line_routes: "9678583\x1E#BE1622\x1EDulwich Hill to Central"
-                  loading_gauge:
-                  mapillary:
-                  maximum_current:
-                  note:
-                  operator: Transdev Sydney Light Rail
-                  owner:
-                  preferred_direction: forward
-                  radio:
-                  ref:
-                  reporting_marks:
-                  service:
-                  speed_label: '60'
-                  state: present
-                  track_class:
-                  track_ref:
-                  traffic_mode:
-                  train_protection: atc
-                  train_protection_construction:
-                  tunnel: false
-                  usage:
-                  voltage: 750
-                  wikidata: Q14543324
-                  wikimedia_commons:
-                  wikipedia:
+                  properties:
+                    bridge: false
+                    description:
+                    electrification_state: present
+                    frequency: 0
+                    future_frequency:
+                    future_maximum_current:
+                    future_voltage:
+                    gauges: ['1435']
+                    highspeed: false
+                    line_routes: "9678583\x1E#BE1622\x1EDulwich Hill to Central"
+                    loading_gauge:
+                    mapillary:
+                    maximum_current:
+                    note:
+                    operator: Transdev Sydney Light Rail
+                    owner:
+                    preferred_direction: forward
+                    radio:
+                    ref:
+                    reporting_marks:
+                    service:
+                    speed_label: '60'
+                    state: present
+                    track_class:
+                    track_ref:
+                    traffic_mode:
+                    train_protection: atc
+                    train_protection_construction:
+                    tunnel: false
+                    usage:
+                    voltage: 750
+                    wikidata: Q14543324
+                    wikimedia_commons:
+                    wikipedia:
+                  images:
+                    - file_name: '2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg'
+                      description: 'Image 2012-03-06 Berlin Ostkreuz vom Treptower.jpg from Wikidata Q660045: Berlin, <a href=\"https://en.wikipedia.org/wiki/Ostkreuz" class="extiw" title="en:Ostkreuz">Ostkreuz</a>'
+                      view_url: 'https://www.wikidata.org/wiki/Q660045#/media/File:2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg'
+                      thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg/330px-2012-03-06_Berlin_Ostkreuz_vom_Treptower.jpg'
+                      attribution: 'Wo st 01 / Wikimedia Commons'
+                      license: 'CC BY-SA 3.0 de'
+                      license_url: 'https://creativecommons.org/licenses/by-sa/3.0/de/deed.en'
+                    - file_name: 'Bahnhof_Wuhletal.jpg'
+                      description: 'Image U-Bahnhof Wuhletal.jpg from Wikimedia Commons: U-Bahnhof Wuhletal (station du métro de Berlin, Allemagne)'
+                      view_url: 'https://commons.wikimedia.org/wiki/File:U-Bahnhof%20Wuhletal.jpg#/media/File:U-Bahnhof_Wuhletal.jpg'
+                      thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/U-Bahnhof_Wuhletal.jpg/330px-U-Bahnhof_Wuhletal.jpg'
+                      attribution: 'Molgreen, Own work'
+                      license: 'CC BY-SA 4.0'
+                      license_url: 'https://creativecommons.org/licenses/by-sa/4.0'
+
         '404':
           description: |
             The source, layer or feature could not be found
