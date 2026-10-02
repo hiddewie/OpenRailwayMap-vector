@@ -659,7 +659,7 @@ const styleElements = [
     ],
   },
   {
-    name: 'Operating sites',
+    name: 'Stations',
     key: 'stations',
     defaultValue: 'station',
     disabledValue: 'none',
