@@ -1714,9 +1714,6 @@ class StyleControl {
         }
       }
 
-      const buttonLabel = createDomElement('label', '', button);
-      buttonLabel.innerText = name
-
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
 
@@ -1767,9 +1764,6 @@ class StyleControl {
         presetButton.classList.add('active')
       }
     }
-
-    const presetButtonLabel = createDomElement('label', '', presetButton);
-    presetButtonLabel.innerText = 'Presets'
 
     const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
     presetButtonIcon.title = 'Presets'
