@@ -337,14 +337,13 @@ body {
 
   position: relative;
   display: flex;
-  margin-right: 3rem;
+  margin-right: 10px;
   margin-left: 8rem;
   background: none;
   box-shadow: none;
 
   @media (max-width: 919px) {
     flex-direction: column;
-    margin-right: 10px;
     background: var(--bs-body-bg);
   }
 
@@ -352,18 +351,19 @@ body {
   & .maplibregl-ctrl-preset {
     display: flex;
     flex-direction: row;
+    margin-right: 1rem;
     font-size: .9rem;
     background: var(--bs-body-bg);
     border-radius: 4px;
+
+    &:not(.active) {
+      visibility: hidden;
+    }
 
     @media (max-width: 919px) {
       position: absolute;
       right: 0;
       flex-direction: column;
-
-      &:not(.active) {
-        display: none;
-      }
     }
 
     & > .maplibregl-ctrl-style-popup-button {
@@ -580,21 +580,18 @@ body {
     }
   }
 
-  @media (max-width: 919px) {
-    & > button {
-      border-radius: 4px;
-      box-shadow: 0 0 0 2px rgba(var(--color-style), .4);
-      background: var(--bs-body-bg);
+  & > button {
+    border-radius: 4px;
+    box-shadow: 0 0 0 2px rgba(var(--color-style), .4);
+    background: var(--bs-body-bg);
 
-      &:not(:disabled):hover {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
+    &:not(:disabled):hover {
+      background-color: #eee;
     }
   }
 
   & .maplibregl-ctrl-style {
     box-shadow: 0 0 0 2px rgba(var(--color-style), .5);
-    margin-right: 1rem;
 
     & > .maplibregl-ctrl-style-popup-button {
       color: rgb(var(--color-style));
@@ -631,15 +628,8 @@ body {
     }
 
     @media (max-width: 919px) {
-      margin-right: 1rem;
       right: 1.5rem;
       top: 0;
-    }
-  }
-
-  & .maplibregl-ctrl-style-toggle {
-    @media (min-width: 920px) {
-      display: none;
     }
   }
 }
