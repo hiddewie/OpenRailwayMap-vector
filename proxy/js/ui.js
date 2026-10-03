@@ -1535,6 +1535,17 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   attributionControl: false,
   renderWorldCopies: false,
+  transformRequest: (url, resourceType) => {
+    if (resourceType === 'Tile' && url && url.startsWith(location.origin)) {
+      // Request all tiles as MLT encoded
+      return {
+        url,
+        headers: {
+          'Accept': 'application/vnd.maplibre-tile'
+        },
+      }
+    }
+  },
   ...(configuration.view || defaultConfiguration.view),
 });
 map.setStyle(`${location.origin}/style.json`, {
