@@ -7591,17 +7591,6 @@ features:
 
   # --- IT --- #
 
-  - description: Route
-    country: IT
-    icon:
-      - match: 'railway:signal:route:states'
-        cases:
-          - { regex: '^[1-4]$', value: 'it/route-{}', example: 'it/route-{4}' }
-        default: 'it/route-unknown'
-    tags:
-      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
   - description: Indicatori di partenza (Avvio)
     country: IT
     icon: [ default: 'it/PAR-AVV' ]
@@ -7616,6 +7605,41 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'IT:PAR' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
+
+  - description: Route
+    country: IT
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^[1-4]$', value: 'it/route-{}', example: 'it/route-{4}' }
+        default: 'it/route-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
+  - description: Triangle speed limit
+    country: IT
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { exact: '30', value: 'it/tri-30', description: '30 km/h' }
+          - { exact: '60', value: 'it/tri-60', description: '60 km/h' }
+        default: 'it/tri-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT:TRI' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Rappel
+    country: IT
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { exact: '100', value: 'it/rappel-100', description: '100 km/h' }
+          - { exact: '60', value: 'it/rappel-60', description: '60 km/h' }
+        default: 'it/rappel-30'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT:RAP' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: 1ª categoria (1 light)
     country: IT
@@ -7812,29 +7836,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  - description: Triangle speed limit
-    country: IT
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { exact: '30', value: 'it/tri-30', description: '30 km/h' }
-          - { exact: '60', value: 'it/tri-60', description: '60 km/h' }
-        default: 'it/tri-unknown'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IT:TRI' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Rappel
-    country: IT
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { exact: '100', value: 'it/rappel-100', description: '100 km/h' }
-          - { exact: '60', value: 'it/rappel-60', description: '60 km/h' }
-        default: 'it/rappel-30'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IT:RAP' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+  
 
   - description: Speed limit
     country: IT
