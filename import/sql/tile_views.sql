@@ -810,6 +810,7 @@ END $do$;
 CREATE OR REPLACE VIEW poi_view AS
   SELECT
     way,
+    center,
     id,
     osm_id,
     osm_type,
@@ -844,7 +845,7 @@ RETURN (
     ST_AsMVT(tile, 'points_of_interest', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
       type,

@@ -250,7 +250,8 @@ local pois = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', type = 'text', not_null = true },
-    { column = 'way', type = 'point', not_null = true },
+    { column = 'way', type = 'geometry', not_null = true },
+    { column = 'center', type = 'point', not_null = true },
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
@@ -1670,9 +1671,11 @@ function osm2pgsql.process_way(object)
     local feature, rank, minzoom, type = tag_functions.poi(tags)
     local position, position_exact, line_positions = find_position_tags(tags)
 
+    local way = object:as_polygon()
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
-      way = object:as_polygon():centroid(),
+      way = way,
+      center = way:centroid(),
       feature = feature,
       rank = rank,
       minzoom = minzoom,
