@@ -8562,6 +8562,14 @@ features:
         cases:
           - { regex: '^(4|6|8|13)0$', value: 'nl/main_light_bridge_speed_limit-{}', example: 'nl/main_light_bridge_speed_limit-{60}' }
         default: 'nl/main_light_bridge_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
       - { tag: 'railway:signal:main:form', value: 'light' }
@@ -8578,6 +8586,14 @@ features:
         cases:
           - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
         default: 'nl/main_distant_light_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
     tags:
       - { tag: 'railway:signal:main', value: 'NL' }
       - { tag: 'railway:signal:main:form', value: 'light' }
