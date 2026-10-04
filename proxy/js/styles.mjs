@@ -4,6 +4,7 @@ import yaml from 'yaml'
 const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
 const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const defaultDate = (new Date()).getFullYear();
 /**
@@ -485,10 +486,9 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
 ];
 
 const radioColor = ['match', ['get', 'radio'],
-  'gsm-r', 'red',
-  'analogue', 'green',
-  'lte-r', 'blue',
-  'virve', 'purple',
+  ...radio.radio.flatMap(({value, color}) =>
+    [value, color]
+  ),
   colors.styles.standard.unknown,
 ];
 
@@ -536,7 +536,12 @@ const trackLabel = {
   loadingGauge: ['coalesce', ['get', 'loading_gauge'], ''],
   trackClass: ['coalesce', ['get', 'track_class'], ''],
   operator:  ['coalesce', ['get', 'primary_operator'], ''],
-  radio:  ['coalesce', ['get', 'radio'], ''],
+  radio: ['match', ['get', 'radio'],
+    ...radio.radio.flatMap(({value, name}) =>
+      [value, name]
+    ),
+    '',
+  ],
 }
 
 const signalFeatureIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
