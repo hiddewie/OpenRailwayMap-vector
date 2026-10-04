@@ -955,6 +955,7 @@ const features = {
     },
   },
   'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
+  'openrailwaymap_points_of_interest-points_of_interest_areas': poiFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',

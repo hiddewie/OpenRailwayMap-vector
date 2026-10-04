@@ -821,6 +821,45 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
+CREATE OR REPLACE FUNCTION points_of_interest_areas(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'points_of_interest_areas', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      type
+    FROM poi_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND osm_type = 'W'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION points_of_interest_areas IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "points_of_interest_areas",
+        "fields": {
+          "id": "string",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
 CREATE OR REPLACE VIEW standard_railway_platforms_view AS
   SELECT
     id,

@@ -638,7 +638,7 @@ const sources = {
   },
   openrailwaymap_points_of_interest: {
     type: 'vector',
-    url: '/points_of_interest',
+    url: '/points_of_interest,points_of_interest_areas',
     promoteId: 'id',
   },
   openhistoricalmap: {
@@ -1992,6 +1992,46 @@ const layers = [
     },
   },
 
+  // POI polygons
+
+  {
+    id: 'railway_pois_polygon',
+    type: 'fill',
+    minzoom: 10,
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest_areas',
+    filter: ['in', ['get', 'type'], ['global-state', 'pois']],
+    paint: {
+      'fill-color': colors.styles.standard.turntable.fill,
+    },
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['>', ['length', ['global-state', 'pois']], 0], 'visible',
+        'none',
+      ],
+    },
+  },
+  {
+    id: 'railway_pois_polygon_outline',
+    type: 'line',
+    minzoom: 15,
+    source: 'openrailwaymap_points_of_interest',
+    'source-layer': 'points_of_interest_areas',
+    filter: ['in', ['get', 'type'], ['global-state', 'pois']],
+    paint: {
+      'line-color': colors.styles.standard.turntable.casing,
+      'line-width': turntable_casing_width,
+    },
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['>', ['length', ['global-state', 'pois']], 0], 'visible',
+        'none',
+      ],
+    },
+  },
+
   // Interlocking
 
   {
@@ -3328,46 +3368,6 @@ const layers = [
       },
     ],
   ),
-
-  // Turntables
-
-  // TODO POI polygon styles
-
-  {
-    id: 'railway_turntables_fill',
-    type: 'fill',
-    minzoom: 10,
-    source: 'openrailwaymap_standard',
-    'source-layer': 'standard_railway_turntables',
-    paint: {
-      'fill-color': colors.styles.standard.turntable.fill,
-    },
-    layout: {
-      'visibility': ['case',
-        ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'turntables'], 'plain'], 'visible',
-        'none',
-      ],
-    },
-  },
-  {
-    id: 'railway_turntables_casing',
-    type: 'line',
-    minzoom: 15,
-    source: 'openrailwaymap_standard',
-    'source-layer': 'standard_railway_turntables',
-    paint: {
-      'line-color': colors.styles.standard.turntable.casing,
-      'line-width': turntable_casing_width,
-    },
-    layout: {
-      'visibility': ['case',
-        ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'turntables'], 'plain'], 'visible',
-        'none',
-      ],
-    },
-  },
 
   // Substations
 
