@@ -489,7 +489,7 @@ const radioColor = ['match', ['get', 'radio'],
   ...radio.radio.flatMap(({value, color}) =>
     [value, color]
   ),
-  colors.styles.standard.unknown,
+  'gray',
 ];
 
 const trackLabel = {
