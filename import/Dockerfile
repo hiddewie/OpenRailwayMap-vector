@@ -86,6 +86,7 @@ RUN apt-get update \
     ca-certificates \
     curl \
     gnupg \
+    osm2pgsql \
     osmium-tool \
     pyosmium \
     gdal-bin \
@@ -94,14 +95,8 @@ RUN apt-get update \
     python3-requests \
     unzip \
     postgresql-client \
-    liblua5.3 \
-    libpotrace-dev \
-    libopencv-dev \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean
-
-COPY --from=build-osm2pgsql /usr/local/bin/osm2pgsql /usr/local/bin/osm2pgsql
-COPY --from=build-osm2pgsql /usr/local/bin/osm2pgsql-gen /usr/local/bin/osm2pgsql-gen
 
 RUN mkdir -p /openrailwaymap
 WORKDIR /openrailwaymap
