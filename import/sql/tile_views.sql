@@ -769,6 +769,7 @@ CREATE OR REPLACE VIEW poi_view AS
     position,
     radio,
     emergency_phone,
+    diameter,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
