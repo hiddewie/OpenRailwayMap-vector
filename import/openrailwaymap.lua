@@ -1287,10 +1287,12 @@ function osm2pgsql.process_node(object)
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
     local feature, rank, minzoom, type = tag_functions.poi(tags)
+    local center = object:as_point()
 
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
-      way = object:as_point(),
+      way = center,
+      center = center,
       feature = feature,
       rank = rank,
       minzoom = minzoom,
