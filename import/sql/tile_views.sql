@@ -296,7 +296,8 @@ DO $do$ BEGIN
           "owner": "string",
           "route_count": "integer",
           "passenger_lines": "integer",
-          "rack": "string"
+          "rack": "string",
+          "radio": "string"
         }
       }
     ]
@@ -398,7 +399,8 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean"
+          "highspeed": "boolean",
+          "radio": "string"
         }
       }
     ]
