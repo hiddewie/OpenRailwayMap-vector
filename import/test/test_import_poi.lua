@@ -1443,3 +1443,33 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { id = 'way-123', feature = 'general/retarder', rank = 50, type = 'equipment', minzoom = 16, way = polygon_way },
   },
 })
+
+-- Turntables
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'turntable',
+    ['diameter'] = '23m',
+    ['operator'] = 'operator',
+    ['note'] = 'note',
+    ['description'] = 'description',
+  },
+  as_polygon = as_polygon_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'turntable', diameter = '23m', operator = 'operator', note = 'note', description = 'description', way = way },
+  },
+})
+
+osm2pgsql.process_way({
+  tags = {
+    ['railway'] = 'traverser',
+  },
+  as_polygon = as_polygon_mock,
+})
+assert.eq(osm2pgsql.get_and_clear_imported_data(), {
+  pois = {
+    { feature = 'traverser', way = way },
+  },
+})

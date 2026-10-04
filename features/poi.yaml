@@ -8,12 +8,19 @@ features:
     tags:
       - { tag: 'railway', value: 'border' }
 
-  - description: Owner change
-    feature: 'general/owner-change'
-    type: operator
-    minzoom: 12
+  - description: Turntable
+    feature: 'general/turntable'
+    type: facility
+    minzoom: 10
     tags:
-      - { tag: 'railway', value: 'owner_change' }
+      - { tag: 'railway', value: 'turntable' }
+
+  - description: Traverser
+    feature: 'general/traverser'
+    type: facility
+    minzoom: 10
+    tags:
+      - { tag: 'railway', value: 'traverser' }
 
   - description: Radio mast
     feature: 'general/radio-mast'

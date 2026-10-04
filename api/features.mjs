@@ -727,7 +727,7 @@ const features = {
   },
   'openrailwaymap_standard-standard_interlocking': interlockingFeatures,
   'openrailwaymap_standard-standard_interlocking_text': interlockingFeatures,
-  'openrailwaymap_standard-standard_railway_turntables': {
+  'openrailwaymap_standard-standard_railway_turntables': { // TODO remove
     view: {
       name: 'standard_railway_turntables_view',
       id_type: 'numeric',

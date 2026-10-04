@@ -100,6 +100,7 @@ const colors = {
         bridge: themeSwitch('#000000', '#ddd'),
       },
       tunnelCover: themeSwitch('rgba(255, 255, 255, 50%)', 'rgba(0, 0, 0, 25%)'),
+      // TODO polygon POI style
       turntable: {
         fill: themeSwitch('#ababab', '#ababab'),
         casing: themeSwitch('#808080', '#808080'),
@@ -619,7 +620,7 @@ const sources = {
   },
   openrailwaymap_standard: {
     type: 'vector',
-    url: '/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
+    url: '/standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
     metadata: {
       supports: ['language'],
@@ -3330,6 +3331,8 @@ const layers = [
 
   // Turntables
 
+  // TODO POI polygon styles
+
   {
     id: 'railway_turntables_fill',
     type: 'fill',
@@ -5092,10 +5095,6 @@ const makeStyle = () => ({
     pois: {
       // Values: radio, facility, equipment, operator, vacancy_detection, electrical_equipment, level_crossing, train_protection
       default: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
-    },
-    turntables: {
-      // Values: plain, none
-      default: 'plain',
     },
     platforms: {
       // Values: plain, none

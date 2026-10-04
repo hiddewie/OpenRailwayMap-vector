@@ -575,61 +575,6 @@ DO $do$ BEGIN
   $$::json || '$tj$';
 END $do$;
 
-CREATE OR REPLACE VIEW standard_railway_turntables_view AS
-  SELECT
-    osm_id as id,
-    osm_id,
-    'W' as osm_type,
-    way,
-    feature,
-    diameter,
-    operator,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM turntables;
-
-CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way')
-  FROM (
-    SELECT
-      id,
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature
-    FROM standard_railway_turntables_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "standard_railway_turntables",
-        "fields": {
-          "id": "integer",
-          "feature": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
 CREATE OR REPLACE VIEW standard_station_entrances_view AS
   SELECT
     osm_id as id,
