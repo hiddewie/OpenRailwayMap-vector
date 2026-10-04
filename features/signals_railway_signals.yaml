@@ -8538,6 +8538,21 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: distant with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      # TODO
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
+        default: 'nl/speed_limit_distant_light-empty'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NL' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
   - description: distant speed limit (light)
     country: NL
     type: line
@@ -8549,6 +8564,37 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: main on bridge with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      # TODO
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
+        default: 'nl/speed_limit_distant_light-empty'
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:position', value: 'bridge' }
+
+  - description: main with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      # TODO
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
+        default: 'nl/speed_limit_distant_light-empty'
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: speed limit (light)
     country: NL
