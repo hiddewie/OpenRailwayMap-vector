@@ -751,7 +751,7 @@ Content-Type: application/json
 [Asserts]
 jsonpath "$.properties.osm_id" == 16109013
 jsonpath "$.properties.osm_type" == "W"
-jsonpath "$.properties.feature" == "turntable"
+jsonpath "$.properties.feature" == "general/turntable"
 jsonpath "$.properties.diameter" == "23m"
 
 # Entrance
