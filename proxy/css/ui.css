@@ -356,8 +356,15 @@ body {
     background: var(--bs-body-bg);
     border-radius: 4px;
 
-    &:not(.active) {
-      visibility: hidden;
+    @media (max-width: 919px) {
+      &.hide-mobile-show-desktop {
+        visibility: hidden;
+      }
+    }
+    @media (min-width: 920px) {
+      &.show-mobile-hide-desktop {
+        visibility: hidden;
+      }
     }
 
     @media (max-width: 919px) {
