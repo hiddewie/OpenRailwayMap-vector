@@ -1,3 +1,25 @@
+FROM ubuntu AS build-osm2pgsql
+
+RUN apt-get update && apt-get install -y make cmake g++ libboost-dev \
+                                   libexpat1-dev zlib1g-dev libpotrace-dev \
+                                   libopencv-dev libbz2-dev libpq-dev libproj-dev lua5.3 liblua5.3-dev \
+                                   pandoc nlohmann-json3-dev pyosmium
+
+RUN apt-get install -y git less
+
+WORKDIR /build
+
+# https://github.com/osm2pgsql-dev/osm2pgsql.git
+RUN git clone --depth 1 -b grouped-linemerge --single-branch https://github.com/leijurv/osm2pgsql.git
+
+WORKDIR /build/osm2pgsql/build
+RUN cmake ..
+RUN make install
+
+WORKDIR /build/osm2pgsql
+
+RUN osm2pgsql --version
+
 FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-lua
 
 WORKDIR /build
@@ -64,7 +86,6 @@ RUN apt-get update \
     ca-certificates \
     curl \
     gnupg \
-    osm2pgsql \
     osmium-tool \
     pyosmium \
     gdal-bin \
@@ -73,8 +94,11 @@ RUN apt-get update \
     python3-requests \
     unzip \
     postgresql-client \
+    liblua5.3 \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean
+
+COPY --from=build-osm2pgsql /usr/local/bin/osm2pgsql /usr/local/bin/osm2pgsql
 
 RUN mkdir -p /openrailwaymap
 WORKDIR /openrailwaymap
