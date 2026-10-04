@@ -95,10 +95,13 @@ RUN apt-get update \
     unzip \
     postgresql-client \
     liblua5.3 \
+    libpotrace-dev \
+    libopencv-dev \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean
 
 COPY --from=build-osm2pgsql /usr/local/bin/osm2pgsql /usr/local/bin/osm2pgsql
+COPY --from=build-osm2pgsql /usr/local/bin/osm2pgsql-gen /usr/local/bin/osm2pgsql-gen
 
 RUN mkdir -p /openrailwaymap
 WORKDIR /openrailwaymap
