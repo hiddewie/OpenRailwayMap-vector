@@ -8481,6 +8481,188 @@ features:
       - { tag: 'railway:signal:route', value: 'NL:252' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
+  - description: L signal
+    country: NL
+    icon: [ default: 'nl/276' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'L', 'off' ] }
+
+  - description: H signal
+    country: NL
+    icon: [ default: 'nl/277' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'H', 'off' ] }
+
+  - description: X/G signal
+    country: NL
+    icon: [ default: 'nl/279' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'X', 'G', 'off' ] }
+
+  - description: distant speed limit distant (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-{80}' }
+        default: 'nl/313-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: speed limit (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-{70}' }
+        default: 'nl/314-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: speed limit increase (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-{130}' }
+        default: 'nl/316-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: distant with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/distant_light_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
+        default: 'nl/main_distant_light_speed_limit-unknown'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NL' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: main on bridge with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/main_light_bridge_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^(4|6|8|13)0$', value: 'nl/main_light_bridge_speed_limit-{}', example: 'nl/main_light_bridge_speed_limit-{60}' }
+        default: 'nl/main_light_bridge_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:position', value: 'bridge' }
+
+  - description: main with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/main_light_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
+        default: 'nl/main_distant_light_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
+        default: 'nl/speed_limit_light-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: tunnel distant speed limit
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-{80}' }
+        default: 'nl/286-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: tunnel entry speed limit
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-{40}' }
+        default: 'nl/281-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-{40}' }
+        default: 'nl/282-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (light)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-{40}' }
+        default: 'nl/282a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
   - description: dwarf shunting signals
     country: NL
     icon: [ default: 'nl/main_light_dwarf_shunting' ]
@@ -8699,138 +8881,6 @@ features:
     tags:
       - { tag: 'railway:signal:station_distant', value: 'NL:305' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
-
-  - description: L signal
-    country: NL
-    icon: [ default: 'nl/276' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'L', 'off' ] }
-
-  - description: H signal
-    country: NL
-    icon: [ default: 'nl/277' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'H', 'off' ] }
-
-  - description: X/G signal
-    country: NL
-    icon: [ default: 'nl/279' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'X', 'G', 'off' ] }
-
-  - description: distant speed limit distant (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-{80}' }
-        default: 'nl/313-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-
-  - description: speed limit (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-{70}' }
-        default: 'nl/314-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: speed limit increase (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-{130}' }
-        default: 'nl/316-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: distant speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
-        default: 'nl/speed_limit_distant_light-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
-
-  - description: speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
-        default: 'nl/speed_limit_light-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-  - description: tunnel distant speed limit
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-{80}' }
-        default: 'nl/286-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-
-  - description: tunnel entry speed limit
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-{40}' }
-        default: 'nl/281-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: advisory speed (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-{40}' }
-        default: 'nl/282-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: advisory speed (light)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-{40}' }
-        default: 'nl/282a-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: power off
     country: NL

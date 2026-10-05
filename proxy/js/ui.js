@@ -649,10 +649,14 @@ const styleElements = [
         name: 'Number of tracks',
         value: 'passenger_lines',
       },
+      {
+        name: 'Radio',
+        value: 'radio',
+      },
     ],
   },
   {
-    name: 'Operating sites',
+    name: 'Stations',
     key: 'stations',
     defaultValue: 'station',
     disabledValue: 'none',
@@ -1666,13 +1670,15 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
-    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
-    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
+    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style hide-mobile-show-desktop', this._container);
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset hide-mobile-show-desktop', this._container);
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle', this._container);
     container.onclick = () => {
-      styleContainer.classList.toggle('active')
-      presetContainer.classList.toggle('active')
+      styleContainer.classList.toggle('hide-mobile-show-desktop')
+      presetContainer.classList.toggle('hide-mobile-show-desktop')
+      styleContainer.classList.toggle('show-mobile-hide-desktop')
+      presetContainer.classList.toggle('show-mobile-hide-desktop')
     };
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
@@ -1690,9 +1696,6 @@ class StyleControl {
           button.classList.add('active')
         }
       }
-
-      const buttonLabel = createDomElement('label', '', button);
-      buttonLabel.innerText = name
 
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
@@ -1744,9 +1747,6 @@ class StyleControl {
         presetButton.classList.add('active')
       }
     }
-
-    const presetButtonLabel = createDomElement('label', '', presetButton);
-    presetButtonLabel.innerText = 'Presets'
 
     const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
     presetButtonIcon.title = 'Presets'
