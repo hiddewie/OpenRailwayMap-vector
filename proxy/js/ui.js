@@ -502,7 +502,6 @@ const knownStyles = {
       tracks: 'usage',
       stations: 'station',
       pois: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
-      turntables: 'plain',
       platforms: 'plain',
       substations: 'none',
       boxes: 'none',
@@ -517,7 +516,6 @@ const knownStyles = {
       tracks: 'speed',
       stations: 'none',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -532,7 +530,6 @@ const knownStyles = {
       tracks: 'train_protection',
       stations: 'none',
       pois: ['vacancy_detection', 'train_protection'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'plain',
@@ -547,7 +544,6 @@ const knownStyles = {
       tracks: 'voltage_frequency',
       stations: 'none',
       pois: ['electrical_equipment'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'plain',
       boxes: 'none',
@@ -562,7 +558,6 @@ const knownStyles = {
       tracks: 'gauge',
       stations: 'none',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -577,7 +572,6 @@ const knownStyles = {
       tracks: 'operator',
       stations: 'operator',
       pois: ['operator'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'operator',
@@ -592,7 +586,6 @@ const knownStyles = {
       tracks: 'routes',
       stations: 'station',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -656,10 +649,14 @@ const styleElements = [
         name: 'Number of tracks',
         value: 'passenger_lines',
       },
+      {
+        name: 'Radio',
+        value: 'radio',
+      },
     ],
   },
   {
-    name: 'Operating sites',
+    name: 'Stations',
     key: 'stations',
     defaultValue: 'station',
     disabledValue: 'none',
@@ -791,22 +788,6 @@ const styleElements = [
       {
         name: 'Train protection',
         value: 'train_protection',
-      },
-    ],
-  },
-  {
-    name: 'Turntables',
-    key: 'turntables',
-    defaultValue: 'plain',
-    disabledValue: 'none',
-    values: [
-      {
-        name: 'Plain',
-        value: 'plain',
-      },
-      {
-        name: 'None',
-        value: 'none',
       },
     ],
   },
@@ -1689,13 +1670,15 @@ class StyleControl {
   onAdd(map) {
     this._map = map;
     this._container = createDomElement('div', 'maplibregl-ctrl maplibregl-ctrl-group maplibregl-ctrl-group-style');
-    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style', this._container);
-    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset', this._container);
+    const styleContainer = createDomElement('div', 'maplibregl-ctrl-style hide-mobile-show-desktop', this._container);
+    const presetContainer = createDomElement('div', 'maplibregl-ctrl-preset hide-mobile-show-desktop', this._container);
 
     const container = createDomElement('button', 'maplibregl-ctrl-style-toggle', this._container);
     container.onclick = () => {
-      styleContainer.classList.toggle('active')
-      presetContainer.classList.toggle('active')
+      styleContainer.classList.toggle('hide-mobile-show-desktop')
+      presetContainer.classList.toggle('hide-mobile-show-desktop')
+      styleContainer.classList.toggle('show-mobile-hide-desktop')
+      presetContainer.classList.toggle('show-mobile-hide-desktop')
     };
     const icon = createDomElement('span', 'maplibregl-ctrl-icon', container);
     icon.title = 'Select map style'
@@ -1713,9 +1696,6 @@ class StyleControl {
           button.classList.add('active')
         }
       }
-
-      const buttonLabel = createDomElement('label', '', button);
-      buttonLabel.innerText = name
 
       const buttonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-${key}`, button);
       buttonIcon.title = name
@@ -1767,9 +1747,6 @@ class StyleControl {
         presetButton.classList.add('active')
       }
     }
-
-    const presetButtonLabel = createDomElement('label', '', presetButton);
-    presetButtonLabel.innerText = 'Presets'
 
     const presetButtonIcon = createDomElement('span', `maplibregl-ctrl-style-popup-button-icon icon-preset`, presetButton);
     presetButtonIcon.title = 'Presets'

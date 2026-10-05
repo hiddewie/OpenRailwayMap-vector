@@ -60,11 +60,6 @@ postgres:
       minzoom: 7
       maxzoom: 8
 
-    standard_railway_turntables:
-      schema: public
-      function: standard_railway_turntables
-      minzoom: 10
-
     standard_railway_text_stations:
       schema: public
       function: standard_railway_text_stations
@@ -83,6 +78,11 @@ postgres:
     points_of_interest:
       schema: public
       function: points_of_interest
+      minzoom: 10
+
+    points_of_interest_areas:
+      schema: public
+      function: points_of_interest_areas
       minzoom: 10
 
     standard_station_entrances:

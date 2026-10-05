@@ -8,6 +8,7 @@ const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
 const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_features = all_signals.features
@@ -133,6 +134,12 @@ const railwayLineFeatures = {
     },
     rubber_tires: {
       name: 'Rubber-tyred',
+    },
+    rack: {
+      name: 'Rack',
+      format: {
+        lookup: 'rack',
+      }
     },
     workrules: {
       name: 'Workrules',
@@ -319,6 +326,9 @@ const poiFeatures = {
     emergency_phone: {
       name: 'Emergency phone',
       link: links.telephone,
+    },
+    diameter: {
+      name: 'Diameter',
     },
     wikidata: {
       name: 'Wikidata',
@@ -721,55 +731,6 @@ const features = {
   },
   'openrailwaymap_standard-standard_interlocking': interlockingFeatures,
   'openrailwaymap_standard-standard_interlocking_text': interlockingFeatures,
-  'openrailwaymap_standard-standard_railway_turntables': {
-    view: {
-      name: 'standard_railway_turntables_view',
-      id_type: 'numeric',
-    },
-    featureLinks: featureLinks.openstreetmap,
-    features: {
-      turntable: {
-        name: 'Turntable',
-        type: 'polygon',
-      },
-      traverser: {
-        name: 'Transfer table',
-        type: 'polygon',
-      },
-    },
-    properties: {
-      diameter: {
-        name: 'Diameter',
-      },
-      operator: {
-        name: 'Operator',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
   'openrailwaymap_standard-standard_railway_platforms': {
     view: {
       name: 'standard_railway_platforms_view',
@@ -949,6 +910,7 @@ const features = {
     },
   },
   'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
+  'openrailwaymap_points_of_interest-points_of_interest_areas': poiFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
@@ -1537,23 +1499,11 @@ const features = {
     ),
   },
   radio: {
-    features: {
-      'gsm-r': {
-        name: 'GSM-R',
-      },
-      'analogue': {
-        name: 'Analogue',
-      },
-      'lte-r': {
-        name: 'LTE-R',
-      },
-      'virve': {
-        name: 'VIRVE',
-      },
-      'trs': {
-        name: 'TRS',
-      },
-    },
+    features: Object.fromEntries(
+      radio.radio
+        .map(({value, name}) =>
+          [value, { name }])
+    ),
   },
 
   boolean: {
@@ -1573,6 +1523,29 @@ const features = {
     features: Object.fromEntries(workrules.workrules
       .map(({name, country, value}) => [value, { name, country }])),
   },
+
+  rack: {
+    features: {
+      yes: {
+        name: 'Present',
+      },
+      abt: {
+        name: 'Abt',
+      },
+      strub: {
+        name: 'Strub',
+      },
+      riggenbach: {
+        name: 'Riggenbach',
+      },
+      locher: {
+        name: 'Locher',
+      },
+      von_roll: {
+        name: 'Von Roll',
+      },
+    }
+  }
 };
 
 if (import.meta.url.endsWith(process.argv[1])) {

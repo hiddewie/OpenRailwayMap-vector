@@ -227,6 +227,7 @@ local railway_line = osm2pgsql.define_table({
     { column = 'rubber_tires', type = 'boolean' },
     { column = 'workrules', sql_type = 'text[]' },
     { column = 'passenger_lines', type = 'integer' },
+    { column = 'rack', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -249,7 +250,8 @@ local pois = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id', type = 'text', not_null = true },
-    { column = 'way', type = 'point', not_null = true },
+    { column = 'way', type = 'geometry', not_null = true },
+    { column = 'center', type = 'point', not_null = true },
     { column = 'feature', type = 'text' },
     { column = 'rank', type = 'integer' },
     { column = 'minzoom', type = 'integer' },
@@ -260,6 +262,7 @@ local pois = osm2pgsql.define_table({
     { column = 'position', sql_type = 'text[]' },
     { column = 'radio', type = 'text' },
     { column = 'emergency_phone', type = 'text' },
+    { column = 'diameter', type = 'text' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
     { column = 'wikimedia_commons_file', type = 'text' },
@@ -447,25 +450,6 @@ local boxes = osm2pgsql.define_table({
   indexes = {
     { column = 'id', method = 'btree', unique = true },
     { column = 'way', method = 'gist' },
-  },
-})
-
-local turntables = osm2pgsql.define_table({
-  name = 'turntables',
-  ids = { type = 'way', id_column = 'osm_id', create_index = 'primary_key' },
-  columns = {
-    { column = 'way', type = 'polygon', not_null = true },
-    { column = 'feature', type = 'text' },
-    { column = 'diameter', type = 'text' },
-    { column = 'operator', type = 'text' },
-    { column = 'wikidata', type = 'text' },
-    { column = 'wikimedia_commons', type = 'text' },
-    { column = 'wikimedia_commons_file', type = 'text' },
-    { column = 'image', type = 'text' },
-    { column = 'mapillary', type = 'text' },
-    { column = 'wikipedia', type = 'text' },
-    { column = 'note', type = 'text' },
-    { column = 'description', type = 'text' },
   },
 })
 
@@ -1303,10 +1287,12 @@ function osm2pgsql.process_node(object)
 
   if railway_poi_values(tags.railway) or tags['tourism'] == 'museum' then
     local feature, rank, minzoom, type = tag_functions.poi(tags)
+    local center = object:as_point()
 
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
-      way = object:as_point(),
+      way = center,
+      center = center,
       feature = feature,
       rank = rank,
       minzoom = minzoom,
@@ -1317,6 +1303,7 @@ function osm2pgsql.process_node(object)
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],
+      diameter = tags.diameter,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
@@ -1484,7 +1471,6 @@ end
 
 local max_segment_length = 10000
 local railway_values = osm2pgsql.make_check_values_func({'rail', 'tram', 'light_rail', 'subway', 'narrow_gauge', 'disused', 'abandoned', 'razed', 'construction', 'proposed', 'preserved', 'monorail', 'miniature', 'funicular', 'ferry'})
-local railway_turntable_values = osm2pgsql.make_check_values_func({'turntable', 'traverser'})
 function osm2pgsql.process_way(object)
   local tags = object.tags
   local wikimedia_commons, wikimedia_commons_file, image = wikimedia_commons_or_image(tags.wikimedia_commons, tags.image)
@@ -1557,6 +1543,7 @@ function osm2pgsql.process_way(object)
         rubber_tires = tags.rubber_tires and tags.rubber_tires ~= 'no' or nil,
         workrules = split_semicolon_to_sql_array(tags['workrules']),
         passenger_lines = tags['passenger_lines'],
+        rack = tags['rack'] ~= 'no' and tags['rack'] or nil,
         wikidata = tags.wikidata,
         wikimedia_commons = wikimedia_commons,
         wikimedia_commons_file = wikimedia_commons_file,
@@ -1623,22 +1610,6 @@ function osm2pgsql.process_way(object)
     })
   end
 
-  if railway_turntable_values(tags.railway) then
-    turntables:insert({
-      way = object:as_polygon(),
-      feature = tags.railway,
-      diameter = tags.diameter,
-      operator = tags.operator,
-      wikimedia_commons = wikimedia_commons,
-      wikimedia_commons_file = wikimedia_commons_file,
-      image = image,
-      mapillary = tags.mapillary,
-      wikipedia = tags.wikipedia,
-      note = tags.note,
-      description = tags.description,
-    })
-  end
-
   if railway_box_values(tags.railway) then
     local polygon = object:as_polygon():transform(3857)
     local position, position_exact, line_positions = find_position_tags(tags)
@@ -1668,9 +1639,11 @@ function osm2pgsql.process_way(object)
     local feature, rank, minzoom, type = tag_functions.poi(tags)
     local position, position_exact, line_positions = find_position_tags(tags)
 
+    local way = object:as_polygon()
     pois:insert({
       id = string.format("%s-%d", object.type, object.id),
-      way = object:as_polygon():centroid(),
+      way = way,
+      center = way:centroid(),
       feature = feature,
       rank = rank,
       minzoom = minzoom,
@@ -1681,6 +1654,7 @@ function osm2pgsql.process_way(object)
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       radio = tags['railway:radio'],
       emergency_phone = tags['emergency:phone'],
+      diameter = tags.diameter,
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,

@@ -144,26 +144,26 @@ describe('home page', () => {
     cy.url().should('include', 'tracks=passenger_lines')
   })
 
-  it('switching style, operating sites', () => {
+  it('switching style, stations', () => {
     cy.visit('/#view=9.88/52.5134/13.4024')
 
-    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Stations')
     button.click()
     button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
 
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Stations')
       .contains('button', 'Modality')
       .click()
 
     cy.url().should('not.include', 'stations=')
 
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Stations')
       .contains('button', 'Operator')
       .click()
 
     cy.url().should('include', 'stations=operator')
 
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Operating sites')
+    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Stations')
       .contains('button', 'None')
       .click()
 
@@ -335,27 +335,7 @@ describe('home page', () => {
     cy.url().should('include', 'pois=[radio,operator,vacancy_detection,electrical_equipment]')
   })
 
-  it('switching style, turntables', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024')
-
-    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-    button.click()
-    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
-
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-      .contains('button', 'Plain')
-      .click()
-
-    cy.url().should('not.include', 'turntables=')
-
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-      .contains('button', 'None')
-      .click()
-
-    cy.url().should('include', 'turntables=none')
-  })
-
-  it('switching style, turntables', () => {
+  it('switching style, boxes', () => {
     cy.visit('/#view=9.88/52.5134/13.4024')
 
     const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')

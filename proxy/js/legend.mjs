@@ -8,6 +8,7 @@ const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'u
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_categories = Object.fromEntries(
@@ -269,6 +270,27 @@ const sourceLayers = {
           }
         },
       ],
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
+        },
+      }))
     },
   },
   'speed_railway_line_low-speed_railway_line_low': {
@@ -574,6 +596,25 @@ const sourceLayers = {
           },
         },
       ],
+    },
+    passenger_lines: {
+      mapState: {
+        tracks: 'passenger_lines',
+      },
+      key: [],
+      features: passengerLineLegends.map(passengerLines => ({
+        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          passenger_lines: passengerLines,
+        },
+      }))
     },
   },
   'electrification_railway_line_low-electrification_railway_line_low': {
@@ -1251,6 +1292,46 @@ const sourceLayers = {
         })),
       ]
     },
+    passenger_lines: {
+      mapState: {
+        tracks: 'passenger_lines',
+      },
+      key: [],
+      features: passengerLineLegends.map(passengerLines => ({
+        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          passenger_lines: passengerLines,
+        },
+      }))
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
+        },
+      }))
+    },
   },
   'high-railway_line_high': {
     usage: {
@@ -1587,6 +1668,25 @@ const sourceLayers = {
             ref: 'T1',
             name: 'Name',
             track_ref: '8b',
+            way_length: 1.0,
+          },
+        },
+        {
+          legend: 'Rack',
+          type: 'line',
+          minzoom: 14,
+          properties: {
+            highspeed: false,
+            feature: 'rail',
+            state: 'present',
+            usage: null,
+            service: 'siding',
+            tunnel: false,
+            bridge: false,
+            ref: null,
+            name: null,
+            rack: 'yes',
+            track_ref: null,
             way_length: 1.0,
           },
         },
@@ -2433,6 +2533,27 @@ const sourceLayers = {
           bridge: false,
           tunnel: false,
           passenger_lines: passengerLines,
+        },
+      }))
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
         },
       }))
     },
@@ -3815,33 +3936,6 @@ const sourceLayers = {
           pois: feature.type,
         },
       })),
-    },
-  },
-
-  // Turntables
-
-  "openrailwaymap_standard-standard_railway_turntables": {
-    turntables: {
-      key: [
-        'feature',
-      ],
-      features: [
-        {
-          legend: 'Turntable',
-          type: 'polygon',
-          properties: {
-            feature: 'turntable'
-          },
-          variants: [
-            {
-              legend: 'Transfer table',
-              properties: {
-                feature: 'traverser',
-              }
-            }
-          ]
-        },
-      ],
     },
   },
 

@@ -8,6 +8,20 @@ features:
     tags:
       - { tag: 'railway', value: 'border' }
 
+  - description: Turntable
+    feature: 'general/turntable'
+    type: facility
+    minzoom: 10
+    tags:
+      - { tag: 'railway', value: 'turntable' }
+
+  - description: Traverser
+    feature: 'general/traverser'
+    type: facility
+    minzoom: 10
+    tags:
+      - { tag: 'railway', value: 'traverser' }
+
   - description: Owner change
     feature: 'general/owner-change'
     type: operator

@@ -57,6 +57,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
     rubber_tires,
     workrules,
     passenger_lines,
+    rack,
     line_routes,
     route_count,
     wikidata,
@@ -118,6 +119,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
       rubber_tires,
       workrules,
       passenger_lines,
+      rack,
       (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
       (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
       wikidata,
@@ -190,7 +192,9 @@ RETURN (
       primary_operator,
       owner,
       route_count,
-      passenger_lines
+      passenger_lines,
+      rack,
+      radio
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -291,7 +295,9 @@ DO $do$ BEGIN
           "primary_operator": "string",
           "owner": "string",
           "route_count": "integer",
-          "passenger_lines": "integer"
+          "passenger_lines": "integer",
+          "rack": "string",
+          "radio": "string"
         }
       }
     ]
@@ -332,6 +338,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     primary_operator,
     owner,
     passenger_lines,
+    radio,
     rank
   FROM railway_line_view
   WHERE
@@ -365,6 +372,7 @@ RETURN (
       highspeed,
       ref,
       name,
+      radio,
       max(rank) as rank
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -372,7 +380,8 @@ RETURN (
       feature,
       ref,
       name,
-      highspeed
+      highspeed,
+      radio
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -390,7 +399,8 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean"
+          "highspeed": "boolean",
+          "radio": "string"
         }
       }
     ]
@@ -564,61 +574,6 @@ DO $do$ BEGIN
           "station_size": "string",
           "operator_color": "string",
           "operator_bright": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE VIEW standard_railway_turntables_view AS
-  SELECT
-    osm_id as id,
-    osm_id,
-    'W' as osm_type,
-    way,
-    feature,
-    diameter,
-    operator,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM turntables;
-
-CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way')
-  FROM (
-    SELECT
-      id,
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature
-    FROM standard_railway_turntables_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "standard_railway_turntables",
-        "fields": {
-          "id": "integer",
-          "feature": "string"
         }
       }
     ]
@@ -806,6 +761,7 @@ END $do$;
 CREATE OR REPLACE VIEW poi_view AS
   SELECT
     way,
+    center,
     id,
     osm_id,
     osm_type,
@@ -819,6 +775,7 @@ CREATE OR REPLACE VIEW poi_view AS
     position,
     radio,
     emergency_phone,
+    diameter,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -840,7 +797,7 @@ RETURN (
     ST_AsMVT(tile, 'points_of_interest', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
       type,
@@ -864,6 +821,45 @@ DO $do$ BEGIN
           "feature": "string",
           "type": "string",
           "ref": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION points_of_interest_areas(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'points_of_interest_areas', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      type
+    FROM poi_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND osm_type = 'W'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION points_of_interest_areas IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "points_of_interest_areas",
+        "fields": {
+          "id": "string",
+          "type": "string"
         }
       }
     ]
