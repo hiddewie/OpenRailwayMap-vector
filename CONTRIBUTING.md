@@ -302,23 +302,7 @@ features:
     value: 'CA:CROR'
 ```
 
-Open a pull request where you provide details about the new workrule entry. Ensure the pull request contains references to documentation and places on the map where the workrule is used.
-
-## I want to display a radio system
-
-Edit the file [`features/radio.yaml`](https://github.com/hiddewie/OpenRailwayMap-vector/edit/master/features/radio.yaml).
-
-The file contains a list of radio systems. Each radio system has a name, a tag value and a color.
-
-Add a new entry at the end of the list. For example:
-```yaml
-radio:
-  - name: 'VIRVE'
-    value: 'virve'
-    color: 'hsl(10, 100%, 40%)'
-```
-
-Open a pull request where you provide details about the new radio system. Ensure the pull request contains references to documentation and places on the map where the radio system is used.
+Open a pull request where you provide details about the new workrule entry. Ensure the pull request contains references to documentation and places on the map where the reference is used.
 
 ## I want to improve the user interface
 

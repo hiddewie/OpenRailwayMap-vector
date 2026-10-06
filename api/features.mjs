@@ -8,7 +8,6 @@ const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
 const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
-const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_features = all_signals.features
@@ -1544,11 +1543,23 @@ const features = {
     ),
   },
   radio: {
-    features: Object.fromEntries(
-      radio.radio
-        .map(({value, name}) =>
-          [value, { name }])
-    ),
+    features: {
+      'gsm-r': {
+        name: 'GSM-R',
+      },
+      'analogue': {
+        name: 'Analogue',
+      },
+      'lte-r': {
+        name: 'LTE-R',
+      },
+      'virve': {
+        name: 'VIRVE',
+      },
+      'trs': {
+        name: 'TRS',
+      },
+    },
   },
 
   boolean: {

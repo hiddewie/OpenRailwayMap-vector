@@ -193,8 +193,7 @@ RETURN (
       owner,
       route_count,
       passenger_lines,
-      rack,
-      radio
+      rack
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -296,8 +295,7 @@ DO $do$ BEGIN
           "owner": "string",
           "route_count": "integer",
           "passenger_lines": "integer",
-          "rack": "string",
-          "radio": "string"
+          "rack": "string"
         }
       }
     ]
@@ -338,7 +336,6 @@ CREATE OR REPLACE VIEW railway_line_low AS
     primary_operator,
     owner,
     passenger_lines,
-    radio,
     rank
   FROM railway_line_view
   WHERE
@@ -372,7 +369,6 @@ RETURN (
       highspeed,
       ref,
       name,
-      radio,
       max(rank) as rank
     FROM railway_line_low l
     WHERE way && ST_TileEnvelope(z, x, y)
@@ -380,8 +376,7 @@ RETURN (
       feature,
       ref,
       name,
-      highspeed,
-      radio
+      highspeed
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -399,8 +394,7 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean",
-          "radio": "string"
+          "highspeed": "boolean"
         }
       }
     ]
