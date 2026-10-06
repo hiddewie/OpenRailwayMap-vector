@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="14"
+   height="14"
+   viewBox="0 0 14 14"
+   sodipodi:docname="SIGNAL-FIXED-DANGER.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="15.693615"
+     inkscape:cx="7.00922"
+     inkscape:cy="9.3987269"
+     inkscape:window-width="1680"
+     inkscape:window-height="987"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1">
+    <image
+       width="14"
+       height="14"
+       preserveAspectRatio="none"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAAAXNSR0IArs4c6QAAAARnQU1BAACx&#10;jwv8YQUAAAA5UExURQAAAAAJCQABASUsLGIqKmMqKiYsLLspKfQODrwoKCYtLf8AAPUNDWYpKQAK&#10;CvUMDAALC74oKCctLQSEcJYAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAFBh&#10;aW50Lk5FVCA1LjEuMTITAUd0AAAAuGVYSWZJSSoACAAAAAUAGgEFAAEAAABKAAAAGwEFAAEAAABS&#10;AAAAKAEDAAEAAAADAAAAMQECABEAAABaAAAAaYcEAAEAAABsAAAAAAAAAJ6TAADoAwAAnpMAAOgD&#10;AABQYWludC5ORVQgNS4xLjEyAAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlgAA&#10;AAAAAAACAAEAAgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAAAj+/4FDaycrQAAAEpJREFUGFedzEEO&#10;gCAMRNEpoJZCAbn/YZVkolvjX/UlzeBHIjxWIaZtDwQQD9VsBCRpKdUb2Ra7DxKWaz8ncU+Z+3yn&#10;gPF8fg64AJeBAZdyCcOCAAAAAElFTkSuQmCC&#10;"
+       id="image1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#363636;stroke-width:0.342194;stroke-opacity:1"
+       id="rect1"
+       width="14"
+       height="14"
+       x="2.7755576e-16"
+       y="-4.0245585e-16" />
+    <ellipse
+       style="fill:#cd0808;fill-opacity:1;stroke:#232323;stroke-width:0.455462;stroke-opacity:1"
+       id="path1-6"
+       cx="6.9310861"
+       cy="6.8741584"
+       rx="3.1028793"
+       ry="3.0673554" />
+  </g>
+</svg>

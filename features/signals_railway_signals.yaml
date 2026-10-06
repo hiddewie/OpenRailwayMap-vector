@@ -5493,132 +5493,6 @@ features:
 
   # --- ES --- #
 
-  ## Señales de 5, 4, 3 y 2 focos (FFxx) ##
-
-  - description: Señal tipo Adif de 5 focos
-    country: ES
-    icon:
-      - default: 'es/Adif-FF-5'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/5-FF1A' }
-          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/5-FF5A' }
-        default: 'es/5-FF7CD'
-    exampleIcon: 'es/Adif-5'
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Señal tipo Adif de 4 focos
-    country: ES
-    icon:
-      - default: 'es/Adif-FF-4'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/4-FF1A' }
-          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/4-FF5A' }
-        default: 'es/4-FF1A'
-    exampleIcon: 'es/Adif-4'
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Señal de retroceso de 4 focos
-    country: ES
-    icon:
-      - default: 'es/Adif-FF-2+2'
-      - default: 'es/2+2-FF7-2'
-    exampleIcon: 'es/Adif-2+2-retroceso'
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Señal tipo Adif de 4 focos en disposición 2+2
-    country: ES
-    icon:
-      - default: 'es/Adif-FF-2+2'
-      - default: 'es/2+2-FF7'
-    exampleIcon: 'es/Adif-2+2'
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Señal tipo Renfe de 3 focos con cartelón "P"
-    country: ES
-    icon:
-      - default: 'es/Renfe-3+P-FF'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3+P-FF1A' }
-          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3+P-FF5A' }
-        default: 'es/Renfe-3+P-FF1A'
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Señal tipo Renfe de 3 focos y luz blanca
-    country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  - description: Señal de maniobras de 2 focos
-    country: ES
-    icon:
-      - default: 'es/Adif-FF-2' 
-      - default: 'es/2-FF7A' 
-    tags:
-      - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2' }
-      - { tag: 'railway:signal:shunting:form', value: 'light' }
-
-  - description: Señal tipo Renfe de 3 focos y luz blanca
-    country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
-  ## Cartelones (FIxx)
-
-  - description: Silbar
-    country: ES
-    icon: [ default: 'es/FI15A' ]
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: Silbar (anulable)
-    country: ES
-    icon: [ default: 'es/FI15Abis' ]
-    tags:
-      - { tag: 'railway:signal:whistle', value: 'FI15Abis'}
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
-
-  - description: Proximidad a un apeadero
-    country: ES
-    icon: [ default: 'es/FI15B' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15B' }
-      - { tag: 'railway:signal:main:form', value: 'sign' }
-
-  - description: Proximidad al eje de un apeadero
-    country: ES
-    icon: [ default: 'es/FI15C' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
-      - { tag: 'railway:signal:main:form', value: 'sign' }
-
   - description: flecha ascendente
     country: ES
     icon: [ default: 'es/FI11A' ]
@@ -5740,6 +5614,97 @@ features:
       - { tag: 'railway:signal:electricity', value: 'ES-RCF:FI14J' }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_on' }
+
+  - description: Señal tipo Adif de 5 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-5'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/5-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/5-FF5A' }
+        default: 'es/5-FF7CD'
+    exampleIcon: 'es/Adif-5'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:5' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-4'
+      - default: 'es/4-FF8'
+    exampleIcon: 'es/Adif-4'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:4' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de 4 focos en disposición 2+2
+    country: ES
+    icon:
+      - default: 'es/Adif-FF-2+2'
+      - default: 'es/2+2-FF8A'
+    exampleIcon: 'es/Adif-2+2'
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Adif de retroceso de 4 focos
+    country: ES
+    icon: [ default: 'es/Adif-2+2-retroceso' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'ES-RCF' }
+      - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2+2' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos con cartelón "P"
+    country: ES
+    icon: [ default: 'es/Renfe-3+P-FF7B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+P' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Señal tipo Renfe de 3 focos y luz blanca
+    country: ES
+    icon: [ default: 'es/Renfe-3+1-FF8B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Silbar
+    country: ES
+    icon: [ default: 'es/FI15A' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'ES-RCF:FI15A' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Silbar (anulable)
+    country: ES
+    icon: [ default: 'es/FI15Abis' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'FI15Abis'}
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Proximidad a un apeadero
+    country: ES
+    icon: [ default: 'es/FI15B' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15B' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Proximidad al eje de un apeadero
+    country: ES
+    icon: [ default: 'es/FI15C' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'ES-RCF:FI' }
+      - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
 
   # --- ETCS --- #
 
@@ -7122,6 +7087,778 @@ features:
       - { tag: 'railway:signal:shunting', value: 'FR:D' }
       - { tag: 'railway:signal:shunting:form', any: [ 'sign', 'light' ] }
 
+  # --- IE --- #
+
+  - description: Whistle board
+    country: IE
+    icon: [ default: 'ie/WHISTLE-BOARD' ]
+    tags:
+      - { tag: 'railway:signal:whistle', value: 'IE:board' }
+      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+
+  - description: Vegitation sign
+    country: IE
+    icon: [ default: 'ie/VEG' ]
+    tags:
+      - { tag: 'railway:signal:vegitation', value: 'IE:board' }
+
+  - description: Limited clearance sign
+    country: IE
+    icon: [ default: 'ie/LIMITED CLEARANCE' ]
+    tags:
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+      - { tag: 'railway:limited_clearance', value: 'IE'}
+
+  - description: Lineside phone
+    country: IE
+    icon: [ default: 'ie/PHONE' ]
+    tags:
+      - { tag: 'amenity', value: 'telephone' }
+      - { tag: 'operator', value: 'Irish Rail'}
+
+  - description: Level crossing road barriers
+    country: IE
+    icon: [ default: 'ie/LC-ROAD' ]
+    tags: 
+      - { tag: 'crossing:light', value: 'yes'}
+      - { tag: 'railway', value: 'level_crossing'}
+      - { tag: 'country', value: 'IE'}
+
+  - description: Level crossing manual gates
+    country: IE
+    icon: [ default: 'ie/LC-NO-GATE' ]
+    tags: 
+      - { tag: 'railway', value: 'level_crossing'}
+      - { tag: 'crossing:barrier', value: 'gate'}
+      - { tag: 'country', value: 'IE'}
+  
+  - description: Level crossing pedestrian gates
+    country: IE
+    icon: [ default: 'ie/LC-PD' ]
+    tags: 
+      - { tag: 'railway', value: 'level_crossing'}
+      - { tag: 'crossing:barrier', value: 'no'}
+      - { tag: 'country', value: 'IE'}
+
+  - description: Shunting
+    country: IE
+    icon: [ default: 'ie/SHUNT-SIGNAL' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'IE-IE:shunting' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Two aspect main
+    country: IE
+    icon: [ default: 'ie/SIGNAL-2ASPECT-HOME' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'red;green' }
+
+  - description: Two aspect distant
+    country: IE
+    icon: [ default: 'ie/SIGNAL-2ASPECT-DISTANT' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:states', value: 'green;yellow' }
+
+  - description: Three aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
+
+  - description: Three aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:repeater', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'red;red;amber' }
+
+  - description: Three aspect main
+    country: IE
+    icon: [ default: 'ie/SIGNAL-3ASPECT' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'red;amber;green' }
+
+  - description: Four aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:repeater', value: 'IE-IE:repeater' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'amber;green;amber;red' }
+
+  - description: Four aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
+
+  - description: Fixed danger
+    country: IE
+    icon: [ default: 'ie/SIGNAL-FIXED-DANGER' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'red' }
+
+  - description: single aspect multi
+    country: IE
+    icon: [ default: 'ie/SIGNAL-MULTI' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'IE-IE:single' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Signal disused
+    country: IE
+    icon: [ default: 'ie/SIGNAL-DISUSED' ]
+    tags:
+      - { tag: 'disused:railway', value: 'signal'}
+
+  - description: Banner repeater
+    country: IE
+    icon: [ default: 'ie/BR' ]
+    tags: 
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:banner' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+  - description: Speed 5
+    country: IE
+    icon: [ default: 'ie/SPEED-5-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '5' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 10
+    country: IE
+    icon: [ default: 'ie/SPEED-10-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '10' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 15
+    country: IE
+    icon: [ default: 'ie/SPEED-15-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '15' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 20
+    country: IE
+    icon: [ default: 'ie/SPEED-20-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '20' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+  
+  - description: Speed 25
+    country: IE
+    icon: [ default: 'ie/SPEED-25-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '25' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+    
+  - description: Speed 30
+    country: IE
+    icon: [ default: 'ie/SPEED-30-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '30' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 35
+    country: IE
+    icon: [ default: 'ie/SPEED-35-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '35' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 40
+    country: IE
+    icon: [ default: 'ie/SPEED-40-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '40' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 45
+    country: IE
+    icon: [ default: 'ie/SPEED-45-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '45' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 50
+    country: IE
+    icon: [ default: 'ie/SPEED-50-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '50' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 55
+    country: IE
+    icon: [ default: 'ie/SPEED-55-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '55' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 60
+    country: IE
+    icon: [ default: 'ie/SPEED-60-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '60' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 65
+    country: IE
+    icon: [ default: 'ie/SPEED-65-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '65' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 70
+    country: IE
+    icon: [ default: 'ie/SPEED-70-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '70' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 75
+    country: IE
+    icon: [ default: 'ie/SPEED-75-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '75' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 80
+    country: IE
+    icon: [ default: 'ie/SPEED-80-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '80' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 85
+    country: IE
+    icon: [ default: 'ie/SPEED-85-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '85' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+  
+  - description: Speed 90
+    country: IE
+    icon: [ default: 'ie/SPEED-90-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '90' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 95
+    country: IE
+    icon: [ default: 'ie/SPEED-95-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '95' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 100
+    country: IE
+    icon: [ default: 'ie/SPEED-100-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '100' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 105
+    country: IE
+    icon: [ default: 'ie/SPEED-105-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '105' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 110
+    country: IE
+    icon: [ default: 'ie/SPEED-110-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '110' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 115
+    country: IE
+    icon: [ default: 'ie/SPEED-115-MPH' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '115' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 5 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-5-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '5' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 10 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-10-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '10' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 15 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-15-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '15' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 20 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-20-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '20' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 25 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-25-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '25' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 30 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-30-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '30' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 35 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-35-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '35' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 40 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-40-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '40' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 45 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-45-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '45' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 50 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-50-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '50' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 55 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-55-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '55' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+  
+  - description: Speed 60 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-60-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '60' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 65 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-65-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '65' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 70 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-70-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '70' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 75 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-75-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '75' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 80 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-80-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '80' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 85 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-85-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '85' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 90 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-90-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '90' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 95 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-95-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '95' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 100 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-100-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '100' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+    
+  - description: Speed 105 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-105-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '105' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Speed 110 warning
+    country: IE
+    icon: [ 'ie/SPEED-110-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '110' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+  
+  - description: Speed 115 warning
+    country: IE
+    icon: [ default: 'ie/SPEED-115-WARNING' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
+      - { tag: 'railway:signal:speed_limit:speed', value: '115' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: EMU sign
+    country: IE
+    icon: [ 'ie/EMU-TRAINS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:EMU' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: No EMU sign
+    country: IE
+    icon: [ 'ie/NO-EMU-TRAINS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_EMU' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ATP
+    country: IE
+    icon: [ 'ie/ATP' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:ATP' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: No ATP
+    country: IE
+    icon: [ 'ie/NO-ATP' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ATP' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: CAWS C1
+    country: IE
+    icon: [ 'ie/CAWS-C1' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:CAWS_C1' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: CAWS C2
+    country: IE
+    icon: [ 'ie/CAWS-C2' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:CAWS_C2' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: No CAWS
+    country: IE
+    icon: [ 'ie/NO-CAWS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_CAWS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETS
+    country: IE
+    icon: [ 'ie/ETS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: No ETS
+    country: IE
+    icon: [ 'ie/NO-ETS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ETS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS L0
+    country: IE
+    icon: [ 'ie/ETCS-L0' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETCS_L0' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS L1
+    country: IE
+    icon: [ 'ie/ETCS-L1' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETCS_L1' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: No ETCS
+    country: IE
+    icon: [ 'ie/NO-ETCS' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ETCS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: ETCS limit of shunt
+    country: IE
+    icon: [ 'ie/ETCS-LOS']
+
+  - description: Radio CH61
+    country: IE
+    icon: [ 'ie/RADIO-CH61' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH61' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Radio CH63
+    country: IE
+    icon: [ 'ie/RADIO-CH63' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH63' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+  
+  - description: Radio CH71
+    country: IE
+    icon: [ 'ie/RADIO-CH71' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH71' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Radio CH75
+    country: IE
+    icon: [ 'ie/RADIO-CH75' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH75' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+
+  - description: Substation
+    country: IE
+    icon: [ 'ie/SUB-STATION' ]
+    tags:
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:substation' }
+
+  - description: Speed left
+    country: IE
+    icon: [ 'ie/SPEED-ARROW-LEFT' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
+      - { tag: 'railway:signal:speed_limit:turn_direction', value: 'left' }
+
+  - description: Speed right
+    country: IE
+    icon: [ 'ie/SPEED-ARROW-RIGHT' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
+      - { tag: 'railway:signal:speed_limit:turn_direction', value: 'right' }
+
+  - description: feather left
+    country: IE
+    icon: [ 'ie/FEATHER-LEFT' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'left' }
+
+  - description: feather right
+    country: IE
+    icon: [ 'ie/FEATHER-RIGHT' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'right' }
+
+  - description: feather left2
+    country: IE
+    icon: [ 'ie/FEATHER-LEFT-X2' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'left,left' }
+
+  - description: feather left3
+    country: IE
+    icon: [ 'ie/FEATHER-LEFT-X3' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'left,left,left' }
+
+  - description: feather right2
+    country: IE
+    icon: [ 'ie/FEATHER-RIGHT-X2' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'right,right' }
+
+  - description: feather right3
+    country: IE
+    icon: [ 'ie/FEATHER-RIGHT-X3' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: 'right,right,right' }
+
+  - description: feather left right
+    country: IE
+    icon: [ 'ie/FEATHER-LEFT-RIGHT' ]
+    tags:
+      - { tag: 'railway:signal:route', value: 'junction' }
+      - { tag: 'railway:signal:main:turn_direction', value: [ 'left,right', 'right,left' ] }
+
+  - description: Junction signals (theatre)
+    country: IE
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^[ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789]$', value: 'ie/route-theatre-{}', example: 'ie/route-theatre-{U}' }
+        default: 'ie/route-theatre-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'IE-IE:junction' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:design', value: 'theatre' }
+
+  - description: call on
+    country: IE
+    icon: [ 'ie/CALL ON' ]
+    tags:
+      - { tag: 'railway:signal:function:call_on', value: 'IE-IE:call_on' }
+
+  - description: semaphore HOME
+    country: IE
+    icon: [ 'ie/SEMAPHORE-HOME' ]
+    tags: 
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:semaphore_home' }
+
+  - description: semaphore DISTANT
+    country: IE
+    icon: [ 'ie/SEMAPHORE-DISTANT' ]
+    tags:
+      - { tag: 'railway:signal:main:form', value: 'semaphore' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:semaphore_distant' }
+
+  - description: Stop Board
+    country: IE
+    icon: [ 'ie/STOP-BOARD' ]
+    tags:
+      - { tag: 'railway:signal:stop', value: 'IE-IE:stop' }
+      - { tag: 'railway:signal:stop:form', value: 'sign' }
+
+  - description: Tunnel number 1
+    country: IE
+    icon: [ 'ie/TUNNEL NUMBER 1' ]
+    tags:
+      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
+      - { tag: 'railway:signal:tunnel_number:number', value: '1' }
+      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+
+  - description: Tunnel number 2
+    country: IE
+    icon: [ 'ie/TUNNEL NUMBER 2' ]
+    tags:
+      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
+      - { tag: 'railway:signal:tunnel_number:number', value: '2' }
+      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+  
+  - description: Tunnel number 3
+    country: IE
+    icon: [ 'ie/TUNNEL NUMBER 3' ]
+    tags:
+      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
+      - { tag: 'railway:signal:tunnel_number:number', value: '3' }
+      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+
+  - description: info board
+    country: IE
+    icon: [ 'ie/INFO-BOARD' ]
+    tags:
+      - { tag: 'railway', value: 'IE-IE:info_board' }
+
+  - description: Mile post
+    country: IE
+    icon: [ 'ie/MILE-POST' ]
+    tags:
+      - { tag: 'railway', value: 'milestone' }
+
   # --- GB --- #
 
   - description: Whistle stencil
@@ -7390,6 +8127,8 @@ features:
       - { tag: 'railway:signal:route:form', value: 'light' }
       - { tag: 'railway:signal:route:design', value: 'feather;theatre' }
 
+
+
   - description: Junction signals (feather)
     country: GB
     icon:
@@ -7626,6 +8365,17 @@ features:
 
   # --- IT --- #
 
+  - description: Route
+    country: IT
+    icon:
+      - match: 'railway:signal:route:states'
+        cases:
+          - { regex: '^[1-4]$', value: 'it/route-{}', example: 'it/route-{4}' }
+        default: 'it/route-unknown'
+    tags:
+      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+
   - description: Indicatori di partenza (Avvio)
     country: IT
     icon: [ default: 'it/PAR-AVV' ]
@@ -7640,41 +8390,6 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'IT:PAR' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
-
-  - description: Route
-    country: IT
-    icon:
-      - match: 'railway:signal:route:states'
-        cases:
-          - { regex: '^[1-4]$', value: 'it/route-{}', example: 'it/route-{4}' }
-        default: 'it/route-unknown'
-    tags:
-      - { tag: 'railway:signal:route', value: 'IT:ROUTE' }
-      - { tag: 'railway:signal:route:form', value: 'light' }
-
-  - description: Triangle speed limit
-    country: IT
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { exact: '30', value: 'it/tri-30', description: '30 km/h' }
-          - { exact: '60', value: 'it/tri-60', description: '60 km/h' }
-        default: 'it/tri-unknown'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IT:TRI' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Rappel
-    country: IT
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { exact: '100', value: 'it/rappel-100', description: '100 km/h' }
-          - { exact: '60', value: 'it/rappel-60', description: '60 km/h' }
-        default: 'it/rappel-30'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IT:RAP' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: 1ª categoria (1 light)
     country: IT
@@ -7871,7 +8586,29 @@ features:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  
+  - description: Triangle speed limit
+    country: IT
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { exact: '30', value: 'it/tri-30', description: '30 km/h' }
+          - { exact: '60', value: 'it/tri-60', description: '60 km/h' }
+        default: 'it/tri-unknown'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT:TRI' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Rappel
+    country: IT
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { exact: '100', value: 'it/rappel-100', description: '100 km/h' }
+          - { exact: '60', value: 'it/rappel-60', description: '60 km/h' }
+        default: 'it/rappel-30'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'IT:RAP' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: Speed limit
     country: IT
@@ -8516,188 +9253,6 @@ features:
       - { tag: 'railway:signal:route', value: 'NL:252' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
-  - description: L signal
-    country: NL
-    icon: [ default: 'nl/276' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'L', 'off' ] }
-
-  - description: H signal
-    country: NL
-    icon: [ default: 'nl/277' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'H', 'off' ] }
-
-  - description: X/G signal
-    country: NL
-    icon: [ default: 'nl/279' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit:states', all: [ 'X', 'G', 'off' ] }
-
-  - description: distant speed limit distant (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-{80}' }
-        default: 'nl/313-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-
-  - description: speed limit (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-{70}' }
-        default: 'nl/314-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: speed limit increase (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-{130}' }
-        default: 'nl/316-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: distant with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/distant_light_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
-        default: 'nl/main_distant_light_speed_limit-unknown'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'NL' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-  - description: main on bridge with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/main_light_bridge_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_light_bridge_speed_limit-{}', example: 'nl/main_light_bridge_speed_limit-{60}' }
-        default: 'nl/main_light_bridge_speed_limit-unknown'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
-        position: bottom
-      - match: 'railway:signal:danger'
-        cases:
-          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'NL' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:position', value: 'bridge' }
-
-  - description: main with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/main_light_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
-        default: 'nl/main_distant_light_speed_limit-unknown'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
-        position: bottom
-      - match: 'railway:signal:danger'
-        cases:
-          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'NL' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-  - description: speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
-        default: 'nl/speed_limit_light-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-  - description: tunnel distant speed limit
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit_distant:speed'
-        cases:
-          - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-{80}' }
-        default: 'nl/286-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
-      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
-
-  - description: tunnel entry speed limit
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-{40}' }
-        default: 'nl/281-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: advisory speed (sign)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-{40}' }
-        default: 'nl/282-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: advisory speed (light)
-    country: NL
-    type: line
-    icon:
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-{40}' }
-        default: 'nl/282a-empty'
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
   - description: dwarf shunting signals
     country: NL
     icon: [ default: 'nl/main_light_dwarf_shunting' ]
@@ -8916,6 +9471,138 @@ features:
     tags:
       - { tag: 'railway:signal:station_distant', value: 'NL:305' }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: L signal
+    country: NL
+    icon: [ default: 'nl/276' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'L', 'off' ] }
+
+  - description: H signal
+    country: NL
+    icon: [ default: 'nl/277' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'H', 'off' ] }
+
+  - description: X/G signal
+    country: NL
+    icon: [ default: 'nl/279' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit:states', all: [ 'X', 'G', 'off' ] }
+
+  - description: distant speed limit distant (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-4]0|125$', value: 'nl/313-{}', example: 'nl/313-{80}' }
+        default: 'nl/313-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:313' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: speed limit (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-46]0|[12]5|125$', value: 'nl/314-{}', example: 'nl/314-{70}' }
+        default: 'nl/314-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:314' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: speed limit increase (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[3-9]0|1[0-46]0|125$', value: 'nl/316-{}', example: 'nl/316-{130}' }
+        default: 'nl/316-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: distant speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_distant_light-{}', example: 'nl/speed_limit_distant_light-{60}' }
+        default: 'nl/speed_limit_distant_light-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
+        default: 'nl/speed_limit_light-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: tunnel distant speed limit
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^80$', value: 'nl/286-{}', example: 'nl/286-{80}' }
+        default: 'nl/286-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'NL:286' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+
+  - description: tunnel entry speed limit
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^[3-8]0$', value: 'nl/281-{}', example: 'nl/281-{40}' }
+        default: 'nl/281-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:281' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (sign)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282-{}', example: 'nl/282-{40}' }
+        default: 'nl/282-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: advisory speed (light)
+    country: NL
+    type: line
+    icon:
+      - match: 'railway:signal:speed_limit:speed'
+        cases:
+          - { regex: '^15|35|[4-9]0|120$', value: 'nl/282a-{}', example: 'nl/282a-{40}' }
+        default: 'nl/282a-empty'
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'NL:282' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
 
   - description: power off
     country: NL
