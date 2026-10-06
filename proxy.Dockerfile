@@ -1,26 +1,26 @@
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-yaml
+FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-node-modules
 
 WORKDIR /build
 
-RUN npm install yaml@2.8.1
+RUN --mount=type=bind,source=package.json,target=package.json \
+  --mount=type=bind,source=package-lock.json,target=package-lock.json \
+  npm ci --ignore-scripts
 
-FROM build-yaml AS build-styles
+FROM build-node-modules AS build-styles
 
 RUN --mount=type=bind,source=proxy/js/styles.mjs,target=styles.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/styles.mjs \
     > /build/style.json
 
-FROM build-yaml AS build-legend
+FROM build-node-modules AS build-legend
 
 RUN --mount=type=bind,source=proxy/js/legend.mjs,target=legend.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/legend.mjs \
     > /build/legend.json
 
-FROM build-yaml AS build-taginfo
-
-RUN npm install chroma-js@3.1.2
+FROM build-node-modules AS build-taginfo
 
 RUN --mount=type=bind,source=proxy,target=proxy \
   --mount=type=bind,source=features,target=features \
@@ -73,6 +73,9 @@ COPY --from=build-taginfo \
 
 COPY --from=build-preset \
   /build/preset.zip /etc/nginx/public/preset.zip
+
+COPY --from=build-node-modules \
+  /build/node_modules/@maplibre/maplibre-gl-style-spec /etc/nginx/public/js/node_modules/@maplibre/maplibre-gl-style-spec
 
 ENTRYPOINT ["/with-news-hash.sh"]
 CMD ["nginx", "-g", "daemon off;"]

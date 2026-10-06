@@ -2,3 +2,5 @@
 !proxy
 !features
 !symbols
+!package.json
+!package-lock.json
