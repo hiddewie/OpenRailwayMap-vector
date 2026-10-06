@@ -745,13 +745,13 @@ jsonpath "$.properties['railway:signal:speed_limit_distant:speed'][0]" == "?"
 jsonpath "$.properties['railway:signal:speed_limit_distant:speed'][1]" == "off"
 
 # Turntable
-GET {{base_url}}/feature/openrailwaymap_points_of_interest/points_of_interest/way-16109013
+GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_turntables/16109013
 HTTP 200
 Content-Type: application/json
 [Asserts]
 jsonpath "$.properties.osm_id" == 16109013
 jsonpath "$.properties.osm_type" == "W"
-jsonpath "$.properties.feature" == "general/turntable"
+jsonpath "$.properties.feature" == "turntable"
 jsonpath "$.properties.diameter" == "23m"
 
 # Entrance

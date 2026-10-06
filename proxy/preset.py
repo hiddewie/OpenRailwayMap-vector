@@ -597,6 +597,24 @@ def preset_items_pois():
         preset_items_poi(variant)
 
 
+def preset_items_turntables():
+  preset_items_poi({
+    'description': 'Turntable',
+    'feature': 'general/turntable',
+    'tags': [
+      {'tag': 'railway', 'value': 'turntable'},
+    ],
+  })
+
+  preset_items_poi({
+    'description': 'Traverser',
+    'feature': 'general/traverser',
+    'tags': [
+      {'tag': 'railway', 'value': 'traverser'},
+    ],
+  })
+
+
 def preset_items_stations():
   for item in stations['features']:
     for feature in all_states(item['description']):
@@ -941,6 +959,7 @@ def presets_xml():
       preset_items_railway_lines()
       preset_items_signals()
       preset_items_pois()
+      preset_items_turntables()
       preset_items_stations()
       preset_items_signal_boxes()
       preset_items_switches()
