@@ -7164,13 +7164,14 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:states', value: 'green;amber' }
 
-  - description: Three aspect repeater
-    country: IE
-    icon: [ default: 'ie/SIGNAL_3ASPECT_REPEATER' ]
-    tags:
+- description: Three aspect repeater
+  country: IE
+  icon: [ default: 'ie/SIGNAL_3ASPECT_REPEATER' ]
+  tags:
     - { tag: 'railway:signal:repeater:form', value: 'light' }
-    - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-    - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
+    - all:
+        - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+        - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
 
   - description: Three aspect main
     country: IE
@@ -7180,13 +7181,14 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:states', value: 'red;amber;green' }
 
-  - description: Four aspect repeater
-    country: IE
-    icon: [ default: 'ie/SIGNAL_4ASPECT_REPEATER' ]
-    tags:
+- description: Four aspect repeater
+  country: IE
+  icon: [ default: 'ie/SIGNAL_4ASPECT_REPEATER' ]
+  tags:
     - { tag: 'railway:signal:repeater:form', value: 'light' }
-    - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-    - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
+    - all:
+        - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+        - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
 
   - description: Fixed danger
     country: IE
