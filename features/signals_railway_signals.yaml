@@ -7672,6 +7672,9 @@ features:
   - description: ETCS limit of shunt
     country: IE
     icon: [ default: 'ie/ETCS-LOS']
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETCS_LOS' }
+      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Radio CH61
     country: IE
