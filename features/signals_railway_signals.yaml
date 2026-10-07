@@ -7087,6 +7087,7 @@ features:
       - { tag: 'railway:signal:shunting', value: 'FR:D' }
       - { tag: 'railway:signal:shunting:form', any: [ 'sign', 'light' ] }
 
+
   # --- IE --- #
 
   - description: Whistle board
@@ -7161,23 +7162,15 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:states', value: 'green;yellow' }
+      - { tag: 'railway:signal:distant:states', value: 'green;amber' }
 
   - description: Three aspect repeater
     country: IE
-    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
+    icon: [ default: 'ie/SIGNAL_3ASPECT_REPEATER' ]
     tags:
-      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
-
-  - description: Three aspect repeater
-    country: IE
-    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
-    tags:
-      - { tag: 'railway:signal:repeater', value: 'IE-IE:main' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'red;red;amber' }
+    - { tag: 'railway:signal:repeater:form', value: 'light' }
+    - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+    - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
 
   - description: Three aspect main
     country: IE
@@ -7189,19 +7182,11 @@ features:
 
   - description: Four aspect repeater
     country: IE
-    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    icon: [ default: 'ie/SIGNAL_4ASPECT_REPEATER' ]
     tags:
-      - { tag: 'railway:signal:repeater', value: 'IE-IE:repeater' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'amber;green;amber;red' }
-
-  - description: Four aspect repeater
-    country: IE
-    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:main' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
+    - { tag: 'railway:signal:repeater:form', value: 'light' }
+    - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+    - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
 
   - description: Fixed danger
     country: IE
@@ -7584,7 +7569,7 @@ features:
 
   - description: Speed 110 warning
     country: IE
-    icon: [ 'ie/SPEED-110-WARNING' ]
+    icon: [ default: 'ie/SPEED-110-WARNING' ]
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
       - { tag: 'railway:signal:speed_limit:speed', value: '110' }
@@ -7600,189 +7585,189 @@ features:
 
   - description: EMU sign
     country: IE
-    icon: [ 'ie/EMU-TRAINS' ]
+    icon: [ default: 'ie/EMU-TRAINS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:EMU' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: No EMU sign
     country: IE
-    icon: [ 'ie/NO-EMU-TRAINS' ]
+    icon: [ default: 'ie/NO-EMU-TRAINS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_EMU' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ATP
     country: IE
-    icon: [ 'ie/ATP' ]
+    icon: [ default: 'ie/ATP' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: No ATP
     country: IE
-    icon: [ 'ie/NO-ATP' ]
+    icon: [ default: 'ie/NO-ATP' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ATP' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: CAWS C1
     country: IE
-    icon: [ 'ie/CAWS-C1' ]
+    icon: [ default: 'ie/CAWS-C1' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:CAWS_C1' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: CAWS C2
     country: IE
-    icon: [ 'ie/CAWS-C2' ]
+    icon: [ default: 'ie/CAWS-C2' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:CAWS_C2' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: No CAWS
     country: IE
-    icon: [ 'ie/NO-CAWS' ]
+    icon: [ default: 'ie/NO-CAWS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_CAWS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETS
     country: IE
-    icon: [ 'ie/ETS' ]
+    icon: [ default: 'ie/ETS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: No ETS
     country: IE
-    icon: [ 'ie/NO-ETS' ]
+    icon: [ default: 'ie/NO-ETS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ETS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETCS L0
     country: IE
-    icon: [ 'ie/ETCS-L0' ]
+    icon: [ default: 'ie/ETCS-L0' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETCS_L0' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETCS L1
     country: IE
-    icon: [ 'ie/ETCS-L1' ]
+    icon: [ default: 'ie/ETCS-L1' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:ETCS_L1' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: No ETCS
     country: IE
-    icon: [ 'ie/NO-ETCS' ]
+    icon: [ default: 'ie/NO-ETCS' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:no_ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: ETCS limit of shunt
     country: IE
-    icon: [ 'ie/ETCS-LOS']
+    icon: [ default: 'ie/ETCS-LOS']
 
   - description: Radio CH61
     country: IE
-    icon: [ 'ie/RADIO-CH61' ]
+    icon: [ default: 'ie/RADIO-CH61' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH61' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Radio CH63
     country: IE
-    icon: [ 'ie/RADIO-CH63' ]
+    icon: [ default: 'ie/RADIO-CH63' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH63' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
   
   - description: Radio CH71
     country: IE
-    icon: [ 'ie/RADIO-CH71' ]
+    icon: [ default: 'ie/RADIO-CH71' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH71' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Radio CH75
     country: IE
-    icon: [ 'ie/RADIO-CH75' ]
+    icon: [ default: 'ie/RADIO-CH75' ]
     tags:
       - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH75' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
   - description: Substation
     country: IE
-    icon: [ 'ie/SUB-STATION' ]
+    icon: [ default: 'ie/SUB-STATION' ]
     tags:
       - { tag: 'railway:signal:main:form', value: 'sign' }
       - { tag: 'railway:signal:main', value: 'IE-IE:substation' }
 
   - description: Speed left
     country: IE
-    icon: [ 'ie/SPEED-ARROW-LEFT' ]
+    icon: [ default: 'ie/SPEED-ARROW-LEFT' ]
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
       - { tag: 'railway:signal:speed_limit:turn_direction', value: 'left' }
 
   - description: Speed right
     country: IE
-    icon: [ 'ie/SPEED-ARROW-RIGHT' ]
+    icon: [ default: 'ie/SPEED-ARROW-RIGHT' ]
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
       - { tag: 'railway:signal:speed_limit:turn_direction', value: 'right' }
 
   - description: feather left
     country: IE
-    icon: [ 'ie/FEATHER-LEFT' ]
+    icon: [ default: 'ie/FEATHER-LEFT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'left' }
 
   - description: feather right
     country: IE
-    icon: [ 'ie/FEATHER-RIGHT' ]
+    icon: [ default: 'ie/FEATHER-RIGHT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'right' }
 
   - description: feather left2
     country: IE
-    icon: [ 'ie/FEATHER-LEFT-X2' ]
+    icon: [ default: 'ie/FEATHER-LEFT-X2' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'left,left' }
 
   - description: feather left3
     country: IE
-    icon: [ 'ie/FEATHER-LEFT-X3' ]
+    icon: [ default: 'ie/FEATHER-LEFT-X3' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'left,left,left' }
 
   - description: feather right2
     country: IE
-    icon: [ 'ie/FEATHER-RIGHT-X2' ]
+    icon: [ default: 'ie/FEATHER-RIGHT-X2' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'right,right' }
 
   - description: feather right3
     country: IE
-    icon: [ 'ie/FEATHER-RIGHT-X3' ]
+    icon: [ default: 'ie/FEATHER-RIGHT-X3' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
       - { tag: 'railway:signal:main:turn_direction', value: 'right,right,right' }
 
   - description: feather left right
     country: IE
-    icon: [ 'ie/FEATHER-LEFT-RIGHT' ]
+    icon: [ default: 'ie/FEATHER-LEFT-RIGHT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: [ 'left,right', 'right,left' ] }
+      - { tag: 'railway:signal:main:turn_direction', any: [ 'left,right', 'right,left' ] }
 
   - description: Junction signals (theatre)
     country: IE
@@ -7798,34 +7783,34 @@ features:
 
   - description: call on
     country: IE
-    icon: [ 'ie/CALL ON' ]
+    icon: [ default: 'ie/CALL ON' ]
     tags:
       - { tag: 'railway:signal:function:call_on', value: 'IE-IE:call_on' }
 
   - description: semaphore HOME
     country: IE
-    icon: [ 'ie/SEMAPHORE-HOME' ]
+    icon: [ default: 'ie/SEMAPHORE-HOME' ]
     tags: 
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
       - { tag: 'railway:signal:main', value: 'IE-IE:semaphore_home' }
 
   - description: semaphore DISTANT
     country: IE
-    icon: [ 'ie/SEMAPHORE-DISTANT' ]
+    icon: [ default: 'ie/SEMAPHORE-DISTANT' ]
     tags:
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
       - { tag: 'railway:signal:main', value: 'IE-IE:semaphore_distant' }
 
   - description: Stop Board
     country: IE
-    icon: [ 'ie/STOP-BOARD' ]
+    icon: [ default: 'ie/STOP-BOARD' ]
     tags:
       - { tag: 'railway:signal:stop', value: 'IE-IE:stop' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
   - description: Tunnel number 1
     country: IE
-    icon: [ 'ie/TUNNEL NUMBER 1' ]
+    icon: [ default: 'ie/TUNNEL NUMBER 1' ]
     tags:
       - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
       - { tag: 'railway:signal:tunnel_number:number', value: '1' }
@@ -7833,7 +7818,7 @@ features:
 
   - description: Tunnel number 2
     country: IE
-    icon: [ 'ie/TUNNEL NUMBER 2' ]
+    icon: [ default: 'ie/TUNNEL NUMBER 2' ]
     tags:
       - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
       - { tag: 'railway:signal:tunnel_number:number', value: '2' }
@@ -7841,7 +7826,7 @@ features:
   
   - description: Tunnel number 3
     country: IE
-    icon: [ 'ie/TUNNEL NUMBER 3' ]
+    icon: [ default: 'ie/TUNNEL NUMBER 3' ]
     tags:
       - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
       - { tag: 'railway:signal:tunnel_number:number', value: '3' }
@@ -7849,15 +7834,22 @@ features:
 
   - description: info board
     country: IE
-    icon: [ 'ie/INFO-BOARD' ]
+    icon: [ default: 'ie/INFO-BOARD' ]
     tags:
       - { tag: 'railway', value: 'IE-IE:info_board' }
 
   - description: Mile post
     country: IE
-    icon: [ 'ie/MILE-POST' ]
+    icon: [ default: 'ie/MILE-POST' ]
     tags:
       - { tag: 'railway', value: 'milestone' }
+
+  - description: Limit of Shunt
+    country: IE
+    icon: [ default: 'ie/LOS' ]
+    tags:
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:limit_of_shunt' }
 
   # --- GB --- #
 
