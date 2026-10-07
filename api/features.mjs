@@ -326,6 +326,9 @@ const poiFeatures = {
       name: 'Emergency phone',
       link: links.telephone,
     },
+    diameter: {
+      name: 'Diameter',
+    },
     wikidata: {
       name: 'Wikidata',
       link: links.wikidata,
@@ -727,55 +730,6 @@ const features = {
   },
   'openrailwaymap_standard-standard_interlocking': interlockingFeatures,
   'openrailwaymap_standard-standard_interlocking_text': interlockingFeatures,
-  'openrailwaymap_standard-standard_railway_turntables': {
-    view: {
-      name: 'standard_railway_turntables_view',
-      id_type: 'numeric',
-    },
-    featureLinks: featureLinks.openstreetmap,
-    features: {
-      turntable: {
-        name: 'Turntable',
-        type: 'polygon',
-      },
-      traverser: {
-        name: 'Transfer table',
-        type: 'polygon',
-      },
-    },
-    properties: {
-      diameter: {
-        name: 'Diameter',
-      },
-      operator: {
-        name: 'Operator',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
   'openrailwaymap_standard-standard_railway_platforms': {
     view: {
       name: 'standard_railway_platforms_view',
@@ -955,6 +909,7 @@ const features = {
     },
   },
   'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
+  'openrailwaymap_points_of_interest-points_of_interest_areas': poiFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
