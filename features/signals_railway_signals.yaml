@@ -7164,14 +7164,13 @@ features:
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:states', value: 'green;amber' }
 
-- description: Three aspect repeater
-  country: IE
-  icon: [ default: 'ie/SIGNAL_3ASPECT_REPEATER' ]
-  tags:
-    - { tag: 'railway:signal:repeater:form', value: 'light' }
-    - all:
-        - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-        - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
+  - description: Three aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
 
   - description: Three aspect main
     country: IE
@@ -7181,14 +7180,21 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:states', value: 'red;amber;green' }
 
-- description: Four aspect repeater
-  country: IE
-  icon: [ default: 'ie/SIGNAL_4ASPECT_REPEATER' ]
-  tags:
-    - { tag: 'railway:signal:repeater:form', value: 'light' }
-    - all:
-        - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-        - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
+  - description: Four aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:repeater', value: 'IE-IE:repeater' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'amber;green;amber;red' }
+
+  - description: Four aspect repeater
+    country: IE
+    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:repeater:form', value: 'light' }
+      - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
 
   - description: Fixed danger
     country: IE
