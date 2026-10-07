@@ -357,28 +357,14 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      highspeed,
-      ref,
-      name,
-      max(rank) as rank
-    FROM railway_line_low l
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
+      'present' as state,
+      'main 'as usage,
       highspeed
-    ORDER by
-      rank NULLS LAST
+    FROM railway_line_merged l
+    WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
