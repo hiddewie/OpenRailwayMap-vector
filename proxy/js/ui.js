@@ -656,6 +656,10 @@ const styleElements = [
         name: 'Number of tracks',
         value: 'passenger_lines',
       },
+      {
+        name: 'Radio',
+        value: 'radio',
+      },
     ],
   },
   {

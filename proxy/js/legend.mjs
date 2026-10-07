@@ -8,6 +8,7 @@ const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'u
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_categories = Object.fromEntries(
@@ -269,6 +270,27 @@ const sourceLayers = {
           }
         },
       ],
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
+        },
+      }))
     },
   },
   'speed_railway_line_low-speed_railway_line_low': {
@@ -1286,6 +1308,27 @@ const sourceLayers = {
           bridge: false,
           tunnel: false,
           passenger_lines: passengerLines,
+        },
+      }))
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
         },
       }))
     },
@@ -2490,6 +2533,27 @@ const sourceLayers = {
           bridge: false,
           tunnel: false,
           passenger_lines: passengerLines,
+        },
+      }))
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
         },
       }))
     },

@@ -4,6 +4,7 @@ import yaml from 'yaml'
 const signals_railway_line = yaml.parse(fs.readFileSync('features/train_protection.yaml', 'utf8'))
 const loading_gauges = yaml.parse(fs.readFileSync('features/loading_gauge.yaml', 'utf8'))
 const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const defaultDate = (new Date()).getFullYear();
 /**
@@ -484,6 +485,13 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   'gray',
 ];
 
+const radioColor = ['match', ['get', 'radio'],
+  ...radio.radio.flatMap(({value, color}) =>
+    [value, color]
+  ),
+  'gray',
+];
+
 const trackLabel = {
   ref: ['coalesce', ['get', 'ref'], ''],
   refName: ['concat',
@@ -528,6 +536,12 @@ const trackLabel = {
   loadingGauge: ['coalesce', ['get', 'loading_gauge'], ''],
   trackClass: ['coalesce', ['get', 'track_class'], ''],
   operator:  ['coalesce', ['get', 'primary_operator'], ''],
+  radio: ['match', ['get', 'radio'],
+    ...radio.radio.flatMap(({value, name}) =>
+      [value, name]
+    ),
+    '',
+  ],
 }
 
 const signalFeatureIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -2550,6 +2564,7 @@ const layers = [
         'operator', trackLabel.operator,
         'routes', trackLabel.ref,
         'passenger_lines', trackLabel.ref,
+        'radio', trackLabel.radio,
         '',
       ],
       14,
@@ -2566,6 +2581,7 @@ const layers = [
         'operator', trackLabel.operator,
         'routes', trackLabel.refName,
         'passenger_lines', trackLabel.refName,
+        'radio', trackLabel.radio,
         '',
       ],
     ],
@@ -2585,16 +2601,23 @@ const layers = [
           0, 0.5,
           7, 2,
         ],
-        color: ['case',
-          ['==', ['get', 'feature'], 'ferry'], colors.styles.standard.ferry,
-          ['get', 'highspeed'], colors.styles.standard.highspeed,
-          colors.styles.standard.main,
+        color: ['match', ['global-state', 'tracks'],
+          'usage', ['case',
+            ['==', ['get', 'feature'], 'ferry'], colors.styles.standard.ferry,
+            ['get', 'highspeed'], colors.styles.standard.highspeed,
+            colors.styles.standard.main,
+          ],
+          'radio', radioColor,
+          colors.styles.standard.unknown,
         ],
-        hoverColor: ['case',
-          ['get', 'highspeed'], colors.hover.alternative,
-          colors.hover.main,
+        hoverColor: ['match', ['global-state', 'tracks'],
+          'usage', ['case',
+            ['get', 'highspeed'], colors.hover.alternative,
+            colors.hover.main,
+          ],
+          colors.hover.main
         ],
-        visibility: ['==', ['global-state', 'tracks'], 'usage'],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'radio']]],
       },
       {
         id: 'speed_low',
@@ -2778,6 +2801,7 @@ const layers = [
             0, 'gray',
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
+          'radio', radioColor,
           'black',
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -2788,7 +2812,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines', 'radio']]],
       },
       {
         id: 'train_protection_line_med_train_protection_construction',
@@ -2997,6 +3021,7 @@ const layers = [
             0, 'gray',
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
+          'radio', radioColor,
           colors.styles.standard.unknown,
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -3011,7 +3036,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines', 'radio']]],
       },
       {
         id: 'railway_line_construction_proposed',
