@@ -23,6 +23,9 @@ postgres:
 
   reload_interval: ${POSTGRES_RELOAD_INTERVAL:-0s}
 
+  # Convert tiles to MapLibre Tiles (MLT) when the client requests such tiles
+  convert_to_mlt: auto
+
   # No tables, see function sources below
   tables: {}
 
