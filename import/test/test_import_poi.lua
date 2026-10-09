@@ -787,7 +787,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', way = polygon_way, center = point_way, feature = 'general/turntable', diameter = '23m', rank = 2, type = 'facility', minzoom = 10, operator = 'operator', note = 'note', description = 'description' },
+    { id = 'way-123', way = polygon_way, center = point_way, feature = 'general/turntable', diameter = '23m', rank = 2, type = 'facility', minzoom = 14, operator = 'operator', note = 'note', description = 'description' },
   },
 })
 
@@ -801,7 +801,7 @@ osm2pgsql.process_way({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   pois = {
-    { id = 'way-123', way = polygon_way, center = point_way, feature = 'general/traverser', rank = 3, type = 'facility', minzoom = 10 },
+    { id = 'way-123', way = polygon_way, center = point_way, feature = 'general/traverser', rank = 3, type = 'facility', minzoom = 14 },
   },
 })
 
