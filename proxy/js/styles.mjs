@@ -647,7 +647,12 @@ const sources = {
   },
   openrailwaymap_signals: {
     type: 'vector',
-    url: '/railway_signals,signals_signal_boxes',
+    url: '/railway_signals',
+    promoteId: 'id',
+  },
+  openrailwaymap_boxes: {
+    type: 'vector',
+    url: '/signals_signal_boxes',
     promoteId: 'id',
   },
   openrailwaymap_electrification: {
@@ -3449,7 +3454,7 @@ const layers = [
     id: 'signal_boxes_point',
     type: 'circle',
     minzoom: 10,
-    source: 'openrailwaymap_signals',
+    source: 'openrailwaymap_boxes',
     'source-layer': 'signals_signal_boxes',
     filter: ['==', ["geometry-type"], 'Point'],
     paint: {
@@ -3477,7 +3482,7 @@ const layers = [
     id: 'signal_boxes_polygon',
     type: 'fill',
     minzoom: 14,
-    source: 'openrailwaymap_signals',
+    source: 'openrailwaymap_boxes',
     'source-layer': 'signals_signal_boxes',
     filter: ['any',
       ['==', ["geometry-type"], 'Polygon'],
@@ -3506,7 +3511,7 @@ const layers = [
     id: 'signal_boxes_polygon_outline',
     type: 'line',
     minzoom: 14,
-    source: 'openrailwaymap_signals',
+    source: 'openrailwaymap_boxes',
     'source-layer': 'signals_signal_boxes',
     filter: ['any',
       ['==', ["geometry-type"], 'Polygon'],
@@ -4474,7 +4479,7 @@ const layers = [
     type: 'symbol',
     minzoom: 12,
     maxzoom: 15,
-    source: 'openrailwaymap_signals',
+    source: 'openrailwaymap_boxes',
     'source-layer': 'signals_signal_boxes',
     filter: ['!=', ['get', 'ref'], null],
     paint: {
@@ -4516,7 +4521,7 @@ const layers = [
     id: 'signal_boxes_text_high',
     type: 'symbol',
     minzoom: 15,
-    source: 'openrailwaymap_signals',
+    source: 'openrailwaymap_boxes',
     'source-layer': 'signals_signal_boxes',
     filter: ['any',
       ['!=', ['get', 'name'], null],

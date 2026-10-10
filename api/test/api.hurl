@@ -430,7 +430,7 @@ GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
 HTTP 404
 
 # Signal box
-GET {{base_url}}/feature/openrailwaymap_signals/signals_signal_boxes/way-485364317
+GET {{base_url}}/feature/signals_signal_boxes/signals_signal_boxes/way-485364317
 HTTP 200
 Content-Type: application/json
 [Asserts]

@@ -3348,7 +3348,7 @@ const sourceLayers = {
 
   // Boxes
 
-  'openrailwaymap_signals-signals_signal_boxes': {
+  'openrailwaymap_boxes-signals_signal_boxes': {
     boxes: {
       key: [
         'feature',

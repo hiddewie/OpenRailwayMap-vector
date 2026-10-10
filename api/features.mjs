@@ -1197,7 +1197,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_signals-signals_signal_boxes': {
+  'openrailwaymap_boxes-signals_signal_boxes': {
     view: {
       name: 'signal_boxes_view',
       id_type: 'text',
