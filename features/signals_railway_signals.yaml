@@ -5579,14 +5579,6 @@ features:
       - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-  - description: Señal tipo Renfe de 3 focos y luz blanca
-    country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-
   ## Cartelones (FIxx)
 
   - description: Silbar
