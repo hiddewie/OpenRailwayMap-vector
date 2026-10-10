@@ -224,6 +224,11 @@ tags:
   - { tag: 'railway:signal:regime', title: 'Signal regime' }
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
   - { tag: 'railway:signal:location', title: 'Location' }
+  - { tag: 'railway:signal:vegitation', title: 'Vegitation board', type: boolean }
+  - { tag: 'railway:signal:vegitation:form', title: 'Vegitation board form' }
+  - { tag: 'railway:signal:tunnel', title: 'Tunnel', type: boolean }
+  - { tag: 'railway:signal:tunnel:form', title: 'Tunnel form' }
+  - { tag: 'railway:signal:tunnel:number', title: 'Tunnel number'}
 
 # A mapping of every type of signal that is imported
 # Every type that is known in the tag array above should also be present here
@@ -269,6 +274,8 @@ types:
   - { type: fouling_point, category: other }
   - { type: preheating, category: other }
   - { type: slope, category: other }
+  - { type: vegitation, category: other }
+  - { type: tunnel, category: other }
 
 # The features below define a certain signal.
 # For every type of feature, the feature will be determined.
@@ -7094,27 +7101,25 @@ features:
     country: IE
     icon: [ default: 'ie/WHISTLE-BOARD' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'IE:board' }
-      - { tag: 'railway:signal:whistle:form', value: 'sign' }
+      - { tag: 'railway:signal:whistle', value: 'IE-IE:whistle' }
 
   - description: Vegitation sign
     country: IE
     icon: [ default: 'ie/VEG' ]
     tags:
-      - { tag: 'railway:signal:vegitation', value: 'IE:board' }
+      - { tag: 'railway:signal:vegitation', value: 'IE-IE:vegitation' }
 
   - description: Limited clearance sign
     country: IE
     icon: [ default: 'ie/LIMITED CLEARANCE' ]
     tags:
-      - { tag: 'railway:signal:main:form', value: 'sign' }
-      - { tag: 'railway:limited_clearance', value: 'IE'}
+      - { tag: 'railway', value: 'IE-IE:limited_clearance' }
 
   - description: Lineside phone
     country: IE
     icon: [ default: 'ie/PHONE' ]
     tags:
-      - { tag: 'amenity', value: 'telephone' }
+      - { tag: 'railway', value: 'phone' }
       - { tag: 'operator', value: 'Irish Rail'}
 
   - description: Level crossing road barriers
@@ -7156,21 +7161,56 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:states', value: 'red;green' }
 
-  - description: Two aspect distant
+  - description: Two aspect repeater
     country: IE
     icon: [ default: 'ie/SIGNAL-2ASPECT-DISTANT' ]
-    tags:
+    all:
       - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater'}
       - { tag: 'railway:signal:distant:form', value: 'light' }
       - { tag: 'railway:signal:distant:states', value: 'green;amber' }
+      - { tag: 'railway:signal:distant:states', value: 'green;yellow'}
+      - { tag: 'railway:signal:main_repeated:states', value: 'green;amber' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'green;yellow' }
+      - { tag: 'railway:signal:main:repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'green;amber' }
+      - { tag: 'railway:signal:main:states', value: 'green;yellow' }
 
   - description: Three aspect repeater
     country: IE
     icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER' ]
-    tags:
-      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'red;amber;green' }
+    all:
+      - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater'}
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:states', value: 'red;green;amber' }
+      - { tag: 'railway:signal:distant:states', value: 'red;green;yellow'}
+      - { tag: 'railway:signal:main_repeated:states', value: 'red;green;amber' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'red;green;yellow' }
+      - { tag: 'railway:signal:main:repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'red;green;amber' }
+      - { tag: 'railway:signal:main:states', value: 'red;green;yellow' }
+
+  - description: Three aspect repeater form 2
+    country: IE
+    icon: [ default: 'ie/SIGNAL-3ASPECT-REPEATER_2' ]
+    all:
+      - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater'}
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:states', value: 'amber;green;amber' }
+      - { tag: 'railway:signal:distant:states', value: 'yellow;green;yellow'}
+      - { tag: 'railway:signal:main_repeated:states', value: 'amber;green;amber' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'yellow;green;yellow' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'amber;green;amber' }
+      - { tag: 'railway:signal:main:states', value: 'yellow;green;yellow' }
 
   - description: Three aspect main
     country: IE
@@ -7178,23 +7218,37 @@ features:
     tags:
       - { tag: 'railway:signal:main', value: 'IE-IE:main' }
       - { tag: 'railway:signal:main:form', value: 'light' }
+      
+    all:
       - { tag: 'railway:signal:main:states', value: 'red;amber;green' }
+      - { tag: 'railway:signal:main:states', value: 'red;yellow;green' }
 
-  - description: Four aspect repeater
+  - description: Two aspect distant
     country: IE
     icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
-    tags:
-      - { tag: 'railway:signal:repeater', value: 'IE-IE:repeater' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'amber;green;amber;red' }
+    all:
+      - { tag: 'railway:signal:distant', value: 'IE-IE:distant' }
+      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:repeater'}
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:states', value: 'green;amber;red;amber' }
+      - { tag: 'railway:signal:distant:states', value: 'green;yellow;red;yellow' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'green;amber;red;amber' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'green;yellow;red;yellow' }
+      - { tag: 'railway:signal:main:repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:states', value: 'green;amber;red;amber' }
+      - { tag: 'railway:signal:main:states', value: 'green;yellow;red;yellow' }
 
-  - description: Four aspect repeater
+  - description: Four aspect main
     country: IE
-    icon: [ default: 'ie/SIGNAL-4ASPECT-REPEATER' ]
+    icon: [ default: 'ie/SIGNAL-4ASPECT' ]
     tags:
-      - { tag: 'railway:signal:main_repeated', value: 'IE-IE:main' }
-      - { tag: 'railway:signal:repeater:form', value: 'light' }
-      - { tag: 'railway:signal:repeater:states', value: 'green;amber;red;amber' }
+      - { tag: 'railway:signal:main', value: 'IE-IE:main' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:main:states', value: 'red;amber;green;amber' }
+      - { tag: 'railway:signal:main:states', value: 'red;yellow;green;yellow' }
 
   - description: Fixed danger
     country: IE
@@ -7222,374 +7276,31 @@ features:
     icon: [ default: 'ie/BR' ]
     tags: 
       - { tag: 'railway:signal:main_repeated', value: 'IE-IE:banner' }
+    all:
       - { tag: 'railway:signal:main_repeated:form', value: 'light' }
-  - description: Speed 5
-    country: IE
-    icon: [ default: 'ie/SPEED-5-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '5' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'sign' }
 
-  - description: Speed 10
+  - description: Speed restriction sign
     country: IE
-    icon: [ default: 'ie/SPEED-10-MPH' ]
+    icon:
+    - match: 'railway:signal:speed_limit:speed'
+      cases:
+        - { regex: '^(5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100|105|110|115)$', value: 'ie/SPEED-LIMIT-{}', example: 'ie/SPEED-LIMIT-{15}' }
+      default: 'ie/SPEED-LIMIT-UNKNOWN'
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '10' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+    - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
+    - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: Speed 15
+  - description: Speed restriction warning sign
     country: IE
-    icon: [ default: 'ie/SPEED-15-MPH' ]
+    icon:
+    - match: 'railway:signal:speed_limit_distant:speed'
+      cases:
+        - { regex: '^(5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100|105|110|115|)$', value: 'ie/SPEED-LIMIT-WARNING-{}', example: 'ie/SPEED-LIMIT-WARNING-{15}' }
+      default: 'ie/SPEED-LIMIT-WARNING-UNKNOWN'
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '15' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 20
-    country: IE
-    icon: [ default: 'ie/SPEED-20-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '20' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-  
-  - description: Speed 25
-    country: IE
-    icon: [ default: 'ie/SPEED-25-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '25' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-    
-  - description: Speed 30
-    country: IE
-    icon: [ default: 'ie/SPEED-30-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '30' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 35
-    country: IE
-    icon: [ default: 'ie/SPEED-35-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '35' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 40
-    country: IE
-    icon: [ default: 'ie/SPEED-40-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '40' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 45
-    country: IE
-    icon: [ default: 'ie/SPEED-45-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '45' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 50
-    country: IE
-    icon: [ default: 'ie/SPEED-50-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '50' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 55
-    country: IE
-    icon: [ default: 'ie/SPEED-55-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '55' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 60
-    country: IE
-    icon: [ default: 'ie/SPEED-60-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '60' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 65
-    country: IE
-    icon: [ default: 'ie/SPEED-65-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '65' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 70
-    country: IE
-    icon: [ default: 'ie/SPEED-70-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '70' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 75
-    country: IE
-    icon: [ default: 'ie/SPEED-75-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '75' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 80
-    country: IE
-    icon: [ default: 'ie/SPEED-80-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '80' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 85
-    country: IE
-    icon: [ default: 'ie/SPEED-85-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '85' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-  
-  - description: Speed 90
-    country: IE
-    icon: [ default: 'ie/SPEED-90-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '90' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 95
-    country: IE
-    icon: [ default: 'ie/SPEED-95-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '95' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 100
-    country: IE
-    icon: [ default: 'ie/SPEED-100-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '100' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 105
-    country: IE
-    icon: [ default: 'ie/SPEED-105-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '105' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 110
-    country: IE
-    icon: [ default: 'ie/SPEED-110-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '110' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 115
-    country: IE
-    icon: [ default: 'ie/SPEED-115-MPH' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '115' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 5 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-5-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '5' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 10 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-10-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '10' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 15 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-15-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '15' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 20 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-20-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '20' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 25 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-25-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '25' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 30 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-30-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '30' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 35 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-35-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '35' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 40 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-40-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '40' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 45 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-45-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '45' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 50 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-50-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '50' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 55 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-55-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '55' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-  
-  - description: Speed 60 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-60-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '60' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 65 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-65-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '65' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 70 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-70-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '70' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 75 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-75-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '75' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 80 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-80-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '80' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 85 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-85-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '85' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 90 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-90-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '90' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 95 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-95-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '95' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 100 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-100-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '100' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-    
-  - description: Speed 105 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-105-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '105' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-
-  - description: Speed 110 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-110-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '110' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
-  
-  - description: Speed 115 warning
-    country: IE
-    icon: [ default: 'ie/SPEED-115-WARNING' ]
-    tags:
-      - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_warning' }
-      - { tag: 'railway:signal:speed_limit:speed', value: '115' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+    - { tag: 'railway:signal:speed_limit_distant', value: 'IE-IE:speed_limit_distant' }
+    - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: EMU sign
     country: IE
@@ -7686,29 +7397,29 @@ features:
     country: IE
     icon: [ default: 'ie/RADIO-CH61' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH61' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:radio', value: 'IE-IE:radio_CH61' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   - description: Radio CH63
     country: IE
     icon: [ default: 'ie/RADIO-CH63' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH63' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:radio', value: 'IE-IE:radio_CH63' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
   
   - description: Radio CH71
     country: IE
     icon: [ default: 'ie/RADIO-CH71' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH71' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:radio', value: 'IE-IE:radio_CH71' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   - description: Radio CH75
     country: IE
     icon: [ default: 'ie/RADIO-CH75' ]
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'IE-IE:radio_CH75' }
-      - { tag: 'railway:signal:train_protection:form', value: 'sign' }
+      - { tag: 'railway:signal:radio', value: 'IE-IE:radio_CH75' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
 
   - description: Substation
     country: IE
@@ -7723,6 +7434,7 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
       - { tag: 'railway:signal:speed_limit:turn_direction', value: 'left' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Speed right
     country: IE
@@ -7730,55 +7442,74 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'IE-IE:speed_limit' }
       - { tag: 'railway:signal:speed_limit:turn_direction', value: 'right' }
-
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
   - description: feather left
     country: IE
     icon: [ default: 'ie/FEATHER-LEFT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'left' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'left' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_1' }
 
   - description: feather right
     country: IE
     icon: [ default: 'ie/FEATHER-RIGHT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'right' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'right' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_1' }
 
   - description: feather left2
     country: IE
     icon: [ default: 'ie/FEATHER-LEFT-X2' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'left,left' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'left,left' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_2' }
 
   - description: feather left3
     country: IE
     icon: [ default: 'ie/FEATHER-LEFT-X3' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'left,left,left' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'left,left,left' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_3' }
 
   - description: feather right2
     country: IE
     icon: [ default: 'ie/FEATHER-RIGHT-X2' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'right,right' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'right,right' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_2' }
 
   - description: feather right3
     country: IE
     icon: [ default: 'ie/FEATHER-RIGHT-X3' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', value: 'right,right,right' }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+    all:
+      - { tag: 'railway:signal:route:turn_direction', value: 'right,right,right' }
+      - { tag: 'railway:signal:route:turn_direction', value: 'off;position_3' }
 
   - description: feather left right
     country: IE
     icon: [ default: 'ie/FEATHER-LEFT-RIGHT' ]
     tags:
       - { tag: 'railway:signal:route', value: 'junction' }
-      - { tag: 'railway:signal:main:turn_direction', any: [ 'left,right', 'right,left' ] }
+      - { tag: 'railway:signal:route:form', value: 'light' }
+      - { tag: 'railway:signal:route:turn_direction', any: [ 'left,right', 'right,left' ] }
 
   - description: Junction signals (theatre)
     country: IE
@@ -7823,25 +7554,33 @@ features:
     country: IE
     icon: [ default: 'ie/TUNNEL NUMBER 1' ]
     tags:
-      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
-      - { tag: 'railway:signal:tunnel_number:number', value: '1' }
-      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+      - { tag: 'railway:signal:tunnel', value: 'IE-IE:tunnel' }
+      - { tag: 'railway:signal:tunnel:number', value: '1' }
+      - { tag: 'railway:signal:tunnel:form', value: 'sign' }
 
   - description: Tunnel number 2
     country: IE
     icon: [ default: 'ie/TUNNEL NUMBER 2' ]
     tags:
-      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
-      - { tag: 'railway:signal:tunnel_number:number', value: '2' }
-      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+      - { tag: 'railway:signal:tunnel', value: 'IE-IE:tunnel' }
+      - { tag: 'railway:signal:tunnel:number', value: '2' }
+      - { tag: 'railway:signal:tunnel:form', value: 'sign' }
   
   - description: Tunnel number 3
     country: IE
     icon: [ default: 'ie/TUNNEL NUMBER 3' ]
     tags:
-      - { tag: 'railway:signal:tunnel_number', value: 'IE-IE:tunnel_number' }
-      - { tag: 'railway:signal:tunnel_number:number', value: '3' }
-      - { tag: 'railway:signal:tunnel_number:form', value: 'sign' }
+      - { tag: 'railway:signal:tunnel', value: 'IE-IE:tunnel' }
+      - { tag: 'railway:signal:tunnel:number', value: '3' }
+      - { tag: 'railway:signal:tunnel:form', value: 'sign' }
+    
+  - description: Tunnel number 4
+    country: IE
+    icon: [ default: 'ie/TUNNEL NUMBER 4' ]
+    tags:
+      - { tag: 'railway:signal:tunnel', value: 'IE-IE:tunnel' }
+      - { tag: 'railway:signal:tunnel:number', value: '4' }
+      - { tag: 'railway:signal:tunnel:form', value: 'sign' }
 
   - description: info board
     country: IE
