@@ -430,7 +430,7 @@ GET {{base_url}}/feature/layer-does-not-exist/source-does-not-exist/404
 HTTP 404
 
 # Signal box
-GET {{base_url}}/feature/openrailwaymap_signals/signals_signal_boxes/way-485364317
+GET {{base_url}}/feature/openrailwaymap_boxes/signals_signal_boxes/way-485364317
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -443,7 +443,7 @@ jsonpath "$.properties.operator" == "DB InfraGO"
 jsonpath "$.properties.ref" == "BBIK"
 
 # Catenary mast
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12329861010-mast
+GET {{base_url}}/feature/openrailwaymap_catenary/electrification_catenary/12329861010-mast
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -458,7 +458,7 @@ jsonpath "$.properties.position[0]" == "11.6 (km)"
 jsonpath "$.properties.structure" == "lattice"
 
 # Substation
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/62032242
+GET {{base_url}}/feature/openrailwaymap_substation/electrification_substation/62032242
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -471,7 +471,7 @@ jsonpath "$.properties.voltage[0]" == 30000
 jsonpath "$.properties.voltage[1]" == 750
 
 # Substation
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
+GET {{base_url}}/feature/openrailwaymap_substation/electrification_substation/320522867
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -482,7 +482,7 @@ jsonpath "$.properties.osm_type" == "W"
 jsonpath "$.properties.conversion" == "30 kV 50.00 Hz ⇒ 750 V ="
 
 # Railway crossing
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2101295628
+GET {{base_url}}/feature/openrailwaymap_switches/standard_railway_switch_ref/2101295628
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -493,7 +493,7 @@ jsonpath "$.properties.osm_type" == "N"
 jsonpath "$.properties.railway" == "railway_crossing"
 
 # Switch
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_switch_ref/2614563600
+GET {{base_url}}/feature/openrailwaymap_switches/standard_railway_switch_ref/2614563600
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -521,7 +521,7 @@ jsonpath "$.properties.pos_exact" == "3.256"
 jsonpath "$.properties.railway" == "crossing"
 
 # Stop position
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_stop_positions/1615531689
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_stop_positions/1615531689
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -537,7 +537,7 @@ jsonpath "$.properties.stop_position_routes[0].color" == "#33FF33"
 jsonpath "$.properties.stop_position_routes[0].route_id" == "28270"
 
 # Station
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_text_stations/node-30217208-train-train-halt
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -572,7 +572,7 @@ jsonpath "$.properties.operator" count == 1
 jsonpath "$.properties.operator[0]" == "DB InfraGO AG"
 
 # Station with localized name
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_text_stations/node-30217208-train-train-halt
 [QueryStringParams]
 lang: ja
 HTTP 200
@@ -582,7 +582,7 @@ jsonpath "$.properties.name" == "Berlin Alexanderplatz"
 jsonpath "$.properties.localized_name" == "ベルリン・アレクサンダー広場"
 
 # Station with not defined localization
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_text_stations/node-30217208-train-train-halt
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_text_stations/node-30217208-train-train-halt
 [QueryStringParams]
 lang: nf
 HTTP 200
@@ -592,7 +592,7 @@ jsonpath "$.properties.name" == "Berlin Alexanderplatz"
 jsonpath "$.properties.localized_name" == "Berlin Alexanderplatz"
 
 # Stop area group
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_grouped_station_areas/7721002
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_grouped_station_areas/7721002
 [QueryStringParams]
 lang: nf
 HTTP 200
@@ -603,7 +603,7 @@ jsonpath "$.properties.osm_type" == "R"
 jsonpath "$.properties.feature" == "station_area_group"
 
 # Platform
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platforms/relation-3637413
+GET {{base_url}}/feature/openrailwaymap_platforms/standard_railway_platforms/relation-3637413
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -629,7 +629,7 @@ jsonpath "$.properties.osm_id" == 3637413
 jsonpath "$.properties.osm_type" == "R"
 
 # Platform edge
-GET {{base_url}}/feature/openrailwaymap_standard/standard_railway_platform_edges/859918234
+GET {{base_url}}/feature/openrailwaymap_platforms/standard_railway_platform_edges/859918234
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -755,7 +755,7 @@ jsonpath "$.properties.feature" == "general/turntable"
 jsonpath "$.properties.diameter" == "23m"
 
 # Entrance
-GET {{base_url}}/feature/openrailwaymap_standard/standard_station_entrances/623932074
+GET {{base_url}}/feature/openrailwaymap_stations/standard_station_entrances/623932074
 HTTP 200
 Content-Type: application/json
 [Asserts]

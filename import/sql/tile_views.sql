@@ -554,6 +554,7 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
