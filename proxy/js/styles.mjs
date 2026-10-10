@@ -134,9 +134,6 @@ const colors = {
       platform: themeSwitch('#aaa', '#aaa'),
       stationAreaGroup: themeSwitch('black', 'white'),
     },
-    signals: {
-      bufferStopDerailer: themeSwitch('#BF1A1D', '#E75454'),
-    },
   },
   km: {
     text: themeSwitch('hsl(268, 100%, 40%)', 'hsl(268, 5%, 86%)'),
@@ -3905,7 +3902,10 @@ const layers = [
     source: 'openrailwaymap_signals',
     'source-layer': 'railway_signals',
     filter: ['all',
-      ['!', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]]],
+      ['!', ['all',
+        ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+        ['in', 'train_protection', ['global-state', 'pois']],
+      ]],
       ['any',
         ...signalFeatureIndices.map(featureIndex => ['all',
           ['!=', ['get', `feature${featureIndex}`], null],
@@ -4002,40 +4002,6 @@ const layers = [
       'icon-rotation-alignment': 'map',
     },
   },
-  {
-    id: 'railway_signals_high_derail_buffer_stop',
-    type: 'symbol',
-    minzoom: 16,
-    source: 'openrailwaymap_signals',
-    'source-layer': 'railway_signals',
-    filter: ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
-    paint: {
-      'icon-color': colors.styles.signals.bufferStopDerailer,
-      'icon-halo-color': ['case',
-        ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
-        colors.halo,
-      ],
-      'icon-halo-width': 1,
-    },
-    layout: {
-      'visibility': ['case',
-        ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['in', 'train_protection', ['global-state', 'pois']], 'none',
-        ['>', ['length', ['global-state', 'signals']], 0], 'visible',
-        'none',
-      ],
-      'symbol-z-order': 'source',
-      'icon-overlap': 'always',
-      'icon-image': ['case',
-        ['==', ['get', 'railway'], 'derail'], 'sdf:general/derail',
-        ['==', ['get', 'railway'], 'buffer_stop'], 'sdf:general/buffer_stop-signal',
-        ''
-      ],
-      'icon-rotate': ['get', 'azimuth'],
-      'icon-keep-upright': true,
-      'icon-rotation-alignment': 'map',
-    },
-  },
   ...signalFeatureIndices.flatMap(featureIndex => [
     ...imageLayerWithOutline(
       `railway_signals_high_${featureIndex}`,
@@ -4084,9 +4050,21 @@ const layers = [
               2 * featureIndex, // Gap of 2 pixels for halo and spacing
               ['case',
                 ['==', ['global-state', 'pitched'], false],
-                ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
+                ['case',
+                  ['all',
+                    ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+                    ['in', 'train_protection', ['global-state', 'pois']],
+                  ], 16,
+                  0
+                ], // Derail and buffer stop icons
                 ['+',
-                  ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 4, 0], // Derail and buffer stop icons
+                  ['case',
+                    ['all',
+                      ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+                      ['in', 'train_protection', ['global-state', 'pois']],
+                    ], 4,
+                    0
+                  ], // Derail and buffer stop icons
                   ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
                   ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
@@ -4138,9 +4116,21 @@ const layers = [
             2 * featureIndex, // Gap of 2 pixels for halo and spacing
             ['case',
               ['==', ['global-state', 'pitched'], false],
-              ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
+               ['case',
+                ['all',
+                  ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+                  ['in', 'train_protection', ['global-state', 'pois']],
+                ], 16,
+                0
+              ], // Derail and buffer stop icons
               ['+',
-                ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 4, 0], // Derail and buffer stop icons
+                ['case',
+                  ['all',
+                    ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+                    ['in', 'train_protection', ['global-state', 'pois']],
+                  ], 4,
+                  0
+                ], // Derail and buffer stop icons
                 ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                 4, // Signal anchor
                 ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
