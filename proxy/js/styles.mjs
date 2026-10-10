@@ -655,9 +655,14 @@ const sources = {
     url: '/signals_signal_boxes',
     promoteId: 'id',
   },
-  openrailwaymap_electrification: {
+  openrailwaymap_catenary: {
     type: 'vector',
-    url: '/electrification_catenary,electrification_substation',
+    url: '/electrification_catenary',
+    promoteId: 'id',
+  },
+  openrailwaymap_substation: {
+    type: 'vector',
+    url: '/electrification_substation',
     promoteId: 'id',
   },
   openrailwaymap_points_of_interest: {
@@ -3410,7 +3415,7 @@ const layers = [
     id: 'electrification_substation',
     type: 'fill',
     minzoom: 13,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_substation',
     'source-layer': 'electrification_substation',
     paint: {
       'fill-color': ['case',
@@ -3430,7 +3435,7 @@ const layers = [
     id: `electrification_substation_outline`,
     type: 'line',
     minzoom: 13,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_substation',
     'source-layer': 'electrification_substation',
     paint: {
       'line-color': ['case',
@@ -3536,7 +3541,7 @@ const layers = [
     id: 'electrification_catenary_mast',
     type: 'symbol',
     minzoom: 14,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_catenary',
     'source-layer': 'electrification_catenary',
     filter: ['==', ['get', 'feature'], 'mast'],
     paint: {
@@ -3569,7 +3574,7 @@ const layers = [
     id: 'electrification_catenary_mast_text',
     type: 'symbol',
     minzoom: 17,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_catenary',
     'source-layer': 'electrification_catenary',
     filter: ['all',
       ['==', ['get', 'feature'], 'mast'],
@@ -3601,7 +3606,7 @@ const layers = [
     id: 'electrification_catenary_portal',
     type: 'line',
     minzoom: 14,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_catenary',
     'source-layer': 'electrification_catenary',
     filter: ['==', ['get', 'feature'], 'portal'],
     paint: {
@@ -4568,7 +4573,7 @@ const layers = [
     id: 'electrification_substation_text',
     type: 'symbol',
     minzoom: 13,
-    source: 'openrailwaymap_electrification',
+    source: 'openrailwaymap_substation',
     'source-layer': 'electrification_substation',
     filter: ['!=', ['get', 'name'], null],
     paint: {

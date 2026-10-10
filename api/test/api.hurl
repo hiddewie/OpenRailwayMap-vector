@@ -443,7 +443,7 @@ jsonpath "$.properties.operator" == "DB InfraGO"
 jsonpath "$.properties.ref" == "BBIK"
 
 # Catenary mast
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_catenary/12329861010-mast
+GET {{base_url}}/feature/openrailwaymap_catenary/electrification_catenary/12329861010-mast
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -458,7 +458,7 @@ jsonpath "$.properties.position[0]" == "11.6 (km)"
 jsonpath "$.properties.structure" == "lattice"
 
 # Substation
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/62032242
+GET {{base_url}}/feature/openrailwaymap_substation/electrification_substation/62032242
 HTTP 200
 Content-Type: application/json
 [Asserts]
@@ -471,7 +471,7 @@ jsonpath "$.properties.voltage[0]" == 30000
 jsonpath "$.properties.voltage[1]" == 750
 
 # Substation
-GET {{base_url}}/feature/openrailwaymap_electrification/electrification_substation/320522867
+GET {{base_url}}/feature/openrailwaymap_substation/electrification_substation/320522867
 HTTP 200
 Content-Type: application/json
 [Asserts]

@@ -1251,7 +1251,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_catenary': {
+  'openrailwaymap_catenary-electrification_catenary': {
     view: {
       name: 'electrification_catenary_view',
       id_type: 'text',
@@ -1304,7 +1304,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_substation': {
+  'openrailwaymap_substation-electrification_substation': {
     view: {
       name: 'electrification_substation_view',
       id_type: 'numeric',

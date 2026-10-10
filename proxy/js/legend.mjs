@@ -3387,7 +3387,7 @@ const sourceLayers = {
 
   // Substations
 
-  "openrailwaymap_electrification-electrification_substation": {
+  "openrailwaymap_substation-electrification_substation": {
     substations: {
       key: [
         'feature',
@@ -3406,7 +3406,7 @@ const sourceLayers = {
 
   // Catenaries
 
-  "openrailwaymap_electrification-electrification_catenary": {
+  "openrailwaymap_catenary-electrification_catenary": {
     catenary: {
       key: [
         'feature',
