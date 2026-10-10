@@ -606,11 +606,6 @@ const sources = {
     url: '/route_railway_line_low',
     promoteId: 'id',
   },
-  openrailwaymap_low: {
-    type: 'vector',
-    url: '/railway_line_high',
-    promoteId: 'id',
-  },
   standard_railway_text_stations_low: {
     type: 'vector',
     url: '/standard_railway_text_stations_low',
@@ -2805,7 +2800,7 @@ const layers = [
         id: 'railway_line_med',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_low',
+        source: 'high',
         states: {
           present: undefined,
           construction: construction_dasharray,
@@ -2859,7 +2854,7 @@ const layers = [
         id: 'train_protection_line_med_train_protection_construction',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_low',
+        source: 'high',
         states: {
           present: train_protection_construction_dasharray,
         },
@@ -2877,7 +2872,7 @@ const layers = [
         id: 'train_protection_line_med_construction',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_low',
+        source: 'high',
         states: {
           construction: construction_dasharray,
           proposed: proposed_dasharray,
@@ -2892,7 +2887,7 @@ const layers = [
         id: 'train_protection_line_med',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_low',
+        source: 'high',
         states: {
           present: undefined,
         },
@@ -2906,7 +2901,7 @@ const layers = [
         id: 'electrification_line_med',
         minzoom: 7,
         maxzoom: 8,
-        source: 'openrailwaymap_low',
+        source: 'high',
         states: {
           present: undefined,
         },
