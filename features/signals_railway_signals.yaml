@@ -5563,7 +5563,14 @@ features:
 
   - description: Señal tipo Renfe de 3 focos y luz blanca
     country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
+    icon:
+      - default: 'es/Renfe-3+1-FF'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3+1-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3+1-FF5A' }
+        default: 'es/Renfe-3+1-FF1A'
+    exampleIcon: 'es/Renfe-3+1'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
