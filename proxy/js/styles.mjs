@@ -4020,6 +4020,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['in', 'train_protection', ['global-state', 'pois']], 'none',
         ['>', ['length', ['global-state', 'signals']], 0], 'visible',
         'none',
       ],
@@ -4085,6 +4086,7 @@ const layers = [
                 ['==', ['global-state', 'pitched'], false],
                 ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
                 ['+',
+                  ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 4, 0], // Derail and buffer stop icons
                   ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
                   ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
@@ -4138,6 +4140,7 @@ const layers = [
               ['==', ['global-state', 'pitched'], false],
               ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 16, 0], // Derail and buffer stop icons
               ['+',
+                ['case', ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]], 4, 0], // Derail and buffer stop icons
                 ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                 4, // Signal anchor
                 ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
