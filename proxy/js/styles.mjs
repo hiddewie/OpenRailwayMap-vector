@@ -4055,7 +4055,7 @@ const layers = [
                     ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
                     ['in', 'train_protection', ['global-state', 'pois']],
                   ], 16,
-                  0
+                  0,
                 ], // Derail and buffer stop icons
                 ['+',
                   ['case',
@@ -4063,7 +4063,7 @@ const layers = [
                       ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
                       ['in', 'train_protection', ['global-state', 'pois']],
                     ], 4,
-                    0
+                    0,
                   ], // Derail and buffer stop icons
                   ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
                   4, // Signal anchor
@@ -4121,7 +4121,7 @@ const layers = [
                   ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
                   ['in', 'train_protection', ['global-state', 'pois']],
                 ], 16,
-                0
+                0,
               ], // Derail and buffer stop icons
               ['+',
                 ['case',
@@ -4191,8 +4191,25 @@ const layers = [
       ],
       'text-offset': ['interpolate', ['linear'],
         ['case',
-          ['==', ['global-state', 'pitched'], false], ['+', ['/', ['get', 'icon_height0'], 2], 2], // 2 pixel spacing under icon
-          -1,
+          ['==', ['global-state', 'pitched'], false],
+          ['+',
+            ['/', ['get', 'icon_height0'], 2],
+            ['case',
+              ['all', // Derail and buffer stop icons
+                ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+                ['in', 'train_protection', ['global-state', 'pois']],
+              ], 2,
+              0,
+            ],
+            2, // 2 pixel spacing under icon
+          ],
+          ['case',
+            ['all', // Derail and buffer stop icons
+              ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
+              ['in', 'train_protection', ['global-state', 'pois']],
+            ], -5,
+            -1,
+          ],
         ],
         -20 * 9, ['literal', [0, -20]],
         20 * 9, ['literal', [0, 20]],
