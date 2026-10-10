@@ -2719,7 +2719,7 @@ const sourceLayers = {
         })),
     },
   },
-  "openrailwaymap_standard-standard_railway_text_stations": {
+  "openrailwaymap_stations-standard_railway_text_stations": {
     stations: {
       key: [
         'railway',
@@ -2784,7 +2784,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_grouped_stations": {
+  "openrailwaymap_stations-standard_railway_grouped_stations": {
     stations: {
       key: [
         'railway',
@@ -2809,7 +2809,7 @@ const sourceLayers = {
         })),
     },
   },
-  "openrailwaymap_standard-standard_railway_grouped_station_areas": {
+  "openrailwaymap_stations-standard_railway_grouped_station_areas": {
     stations: {
       key: [],
       features: [
@@ -2821,7 +2821,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_interlocking": {
+  "openrailwaymap_stations-standard_interlocking": {
     interlocking: {
       key: [
         'feature',
@@ -2837,13 +2837,13 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_interlocking_text": {
+  "openrailwaymap_stations-standard_interlocking_text": {
     interlocking: {
       key: [],
       features: [],
     },
   },
-  "openrailwaymap_standard-standard_station_entrances": {
+  "openrailwaymap_stations-standard_station_entrances": {
     station_entrances: {
       key: [],
       features: [
@@ -2856,7 +2856,7 @@ const sourceLayers = {
   },
 
   // Platforms
-  "openrailwaymap_standard-standard_railway_platforms": {
+  "openrailwaymap_platforms-standard_railway_platforms": {
     platforms: {
       key: [],
       features: [
@@ -2870,7 +2870,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_platform_edges": {
+  "openrailwaymap_platforms-standard_railway_platform_edges": {
     platform_edges: {
       key: [],
       features: [
@@ -2884,7 +2884,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_stop_positions": {
+  "openrailwaymap_stations-standard_railway_stop_positions": {
     stop_positions: {
       key: [
         'type',
@@ -2941,7 +2941,7 @@ const sourceLayers = {
 
   // Switches
 
-  "openrailwaymap_standard-standard_railway_switch_ref": {
+  "openrailwaymap_switches-standard_railway_switch_ref": {
     switches: {
       key: [
         'railway',

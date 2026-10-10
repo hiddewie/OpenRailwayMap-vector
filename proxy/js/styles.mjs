@@ -627,13 +627,23 @@ const sources = {
     url: '/railway_line_high,railway_text_km',
     promoteId: 'id',
   },
-  openrailwaymap_standard: {
+  openrailwaymap_stations: {
     type: 'vector',
-    url: '/standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
+    url: '/standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_station_entrances,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
     metadata: {
       supports: ['language'],
     },
+  },
+  openrailwaymap_switches: {
+    type: 'vector',
+    url: '/standard_railway_switch_ref',
+    promoteId: 'id',
+  },
+  openrailwaymap_platforms: {
+    type: 'vector',
+    url: '/standard_railway_platforms,standard_railway_platform_edges',
+    promoteId: 'id',
   },
   openrailwaymap_signals: {
     type: 'vector',
@@ -2047,7 +2057,7 @@ const layers = [
     id: `interlocking`,
     type: 'line',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_interlocking',
     paint: {
       'line-color': ['case',
@@ -2072,7 +2082,7 @@ const layers = [
     id: 'railway_grouped_station_areas',
     type: 'line',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_grouped_station_areas',
     paint: {
       'line-color': colors.styles.standard.stationAreaGroup,
@@ -2091,7 +2101,7 @@ const layers = [
     id: 'railway_grouped_stations',
     type: 'fill',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
       ['!', ['in', ['get', 'feature'], ['literal', ['yard', 'site', 'junction', 'spur_junction', 'crossover']]]], // Yards only have an outline and sites, junctions and crossovers show an icon
@@ -2136,7 +2146,7 @@ const layers = [
     id: 'railway_grouped_stations_outline',
     type: 'line',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_grouped_stations',
     filter: ['all',
       ['!', ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]]], // Sites, junctions and crossovers show an icon
@@ -2200,7 +2210,7 @@ const layers = [
     id: 'railway_platforms_polygon',
     type: 'fill',
     minzoom: 15,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platforms',
     filter: ['any',
       ['==', ["geometry-type"], 'Polygon'],
@@ -2221,7 +2231,7 @@ const layers = [
     id: 'railway_platforms_polygon_outline',
     type: 'line',
     minzoom: 15,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platforms',
     filter: ['any',
       ['==', ["geometry-type"], 'Polygon'],
@@ -2247,7 +2257,7 @@ const layers = [
     id: 'railway_platforms_line',
     type: 'line',
     minzoom: 15,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platforms',
     filter: ['==', ["geometry-type"], 'LineString'],
     paint: {
@@ -2273,7 +2283,7 @@ const layers = [
     id: 'railway_platforms_edges',
     type: 'line',
     minzoom: 17,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platform_edges',
     layout: {
       'visibility': ['case',
@@ -3807,7 +3817,7 @@ const layers = [
     id: 'railway_stop_positions',
     type: 'circle',
     minzoom: 16,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_stop_positions',
     paint: {
       'circle-radius': ['interpolate', ['linear'], ['zoom'],
@@ -4208,7 +4218,7 @@ const layers = [
     id: 'railway_platforms_polygon_text',
     type: 'symbol',
     minzoom: 17,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platforms',
     filter: ['all',
       ['any',
@@ -4241,7 +4251,7 @@ const layers = [
     id: 'railway_platforms_line_text',
     type: 'symbol',
     minzoom: 17,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platforms',
     filter: ['==', ["geometry-type"], 'LineString'],
     paint: {
@@ -4269,7 +4279,7 @@ const layers = [
     id: 'standard_railway_platform_edges_text',
     type: 'symbol',
     minzoom: 17,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_platforms',
     'source-layer': 'standard_railway_platform_edges',
     filter: ['!=', ['get', 'ref'], null],
     paint: {
@@ -4301,7 +4311,7 @@ const layers = [
     id: 'standard_station_entrances',
     type: 'symbol',
     minzoom: 16,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_station_entrances',
     paint: {
       'icon-color': colors.styles.standard.subway,
@@ -4390,7 +4400,7 @@ const layers = [
     id: `railway_switch`,
     type: 'symbol',
     minzoom: 17,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_switches',
     'source-layer': 'standard_railway_switch_ref',
     paint: {
       'icon-color': ['case',
@@ -4585,7 +4595,7 @@ const layers = [
     type: 'symbol',
     minzoom: 8,
     maxzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_text_stations',
     filter: ['match', ['get', 'state'],
       'construction', ['global-state', 'showConstructionInfrastructure'],
@@ -4721,7 +4731,7 @@ const layers = [
     id: 'railway_text_stations_high',
     type: 'symbol',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
       ['!=', ['get', 'localized_name'], null],
@@ -4823,7 +4833,7 @@ const layers = [
     id: 'railway_text_site_junction_high',
     type: 'symbol',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_railway_text_stations',
     filter: ['all',
       ['in', ['get', 'feature'], ['literal', ['site', 'junction', 'spur_junction', 'crossover']]],
@@ -4942,7 +4952,7 @@ const layers = [
     id: 'railway_text_interlocking',
     type: 'symbol',
     minzoom: 13,
-    source: 'openrailwaymap_standard',
+    source: 'openrailwaymap_stations',
     'source-layer': 'standard_interlocking_text',
     paint: {
       'text-color': colors.styles.standard.interlocking,
