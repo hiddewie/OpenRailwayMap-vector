@@ -665,6 +665,22 @@ jsonpath "$.properties.feature" == "general/container-terminal"
 jsonpath "$.properties.name" == "Container Terminal BeHaLa / City-GVZ Berlin"
 jsonpath "$.properties.ref" == null
 
+# Level crossing
+GET {{base_url}}/feature/openrailwaymap_points_of_interest/level_crossings_grouped/node-1456269485
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.properties.note" == null
+jsonpath "$.properties.description" == null
+jsonpath "$.properties.osm_id" count == 2
+jsonpath "$.properties.osm_id[0]" == 1456269485
+jsonpath "$.properties.osm_id[1]" == 1456269487
+jsonpath "$.properties.osm_type" count == 2
+jsonpath "$.properties.osm_type[0]" == "N"
+jsonpath "$.properties.osm_type[1]" == "N"
+jsonpath "$.properties.feature" == "general/level-crossing"
+jsonpath "$.properties.ref" == null
+
 # Speed signal
 GET {{base_url}}/feature/openrailwaymap_signals/railway_signals/10719824502
 HTTP 200
