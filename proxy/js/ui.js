@@ -407,9 +407,13 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(preset, zoom, lat, lon, date, bearing, pitch) {
+function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
-  selectPreset(preset);
+  if (typeof presetOrStyle === 'string') {
+    selectPreset(preset);
+  } else if (typeof presetOrStyle === 'object') {
+    selectedStyle(presetOrStyle)
+  }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
