@@ -299,6 +299,7 @@ const poiFeatures = {
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     poi.features
+      .filter(feature => feature.type !== 'level_crossing')
       .flatMap(feature =>
         [
           [feature.feature, {name: feature.description}]
@@ -323,13 +324,67 @@ const poiFeatures = {
         lookup: 'radio',
       },
     },
-    // TODO remove from POI
+    diameter: {
+      name: 'Diameter',
+    },
+    wikidata: {
+      name: 'Wikidata',
+      link: links.wikidata,
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia',
+      link: links.wikimedia_commons,
+    },
+    mapillary: {
+      name: 'Mapillary',
+      link: links.mapillary,
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+      link: links.wikipedia,
+      format: {
+        country_prefix: {}
+      },
+    },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
+  },
+};
+
+const levelCrossingFeatures = {
+  view: {
+    name: 'level_crossings_grouped_view',
+    id_type: 'text',
+  },
+  labelProperties: ['ref'],
+  featureLinks: featureLinks.openstreetmap,
+  features: Object.fromEntries(
+    poi.features
+      .filter(feature => feature.type === 'level_crossing')
+      .flatMap(feature =>
+        [
+          [feature.feature, {name: feature.description}]
+        ].concat(
+          (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+        )
+      )
+  ),
+  properties: {
+    operator: {
+      name: 'Operator',
+    },
+    position: {
+      name: 'Position',
+    },
     emergency_phone: {
       name: 'Emergency phone',
       link: links.telephone,
-    },
-    diameter: {
-      name: 'Diameter',
     },
     wikidata: {
       name: 'Wikidata',
@@ -911,6 +966,8 @@ const features = {
   },
   'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
   'openrailwaymap_points_of_interest-points_of_interest_areas': poiFeatures,
+  'openrailwaymap_points_of_interest-level_crossings_grouped': levelCrossingFeatures,
+  'openrailwaymap_points_of_interest-level_crossings_grouped_buffered': levelCrossingFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
