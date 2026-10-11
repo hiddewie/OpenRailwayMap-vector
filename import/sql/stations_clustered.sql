@@ -255,12 +255,25 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
   WITH clusters AS (
     SELECT
       id,
-      ST_ClusterDBSCAN(way, 25, 1) OVER (PARTITION BY ref, feature) AS cluster_id,
+      ST_ClusterDBSCAN(way, 100, 1) OVER (PARTITION BY ref, feature) AS cluster_id,
       way,
       ref,
       feature
     FROM pois
     WHERE type = 'level_crossing'
+      AND ref IS NOT NULL
+
+    UNION ALL
+
+    SELECT
+      id,
+      ST_ClusterDBSCAN(way, 10, 1) OVER (PARTITION BY feature) AS cluster_id,
+      way,
+      ref,
+      feature
+    FROM pois
+    WHERE type = 'level_crossing'
+      AND ref IS NULL
   )
   SELECT
     MIN(id) as id,
@@ -271,6 +284,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
     ref,
     feature
   FROM clusters
+  -- Cluster IDs can be duplicated between null and non-null references, but grouping by ref distinguishes the groups
   GROUP BY cluster_id, ref, feature;
 
 CREATE INDEX IF NOT EXISTS level_crossings_buffered_index
