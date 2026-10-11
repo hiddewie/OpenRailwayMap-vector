@@ -768,9 +768,9 @@ const features = {
   },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
-  'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
-  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
-  'openrailwaymap_standard-standard_railway_grouped_station_areas': {
+  'openrailwaymap_stations-standard_railway_text_stations': stationFeatures,
+  'openrailwaymap_stations-standard_railway_grouped_stations': stationFeatures,
+  'openrailwaymap_stations-standard_railway_grouped_station_areas': {
     view: {
       name: 'standard_railway_grouped_station_areas_view',
       id_type: 'numeric',
@@ -784,9 +784,9 @@ const features = {
     },
     properties: {}
   },
-  'openrailwaymap_standard-standard_interlocking': interlockingFeatures,
-  'openrailwaymap_standard-standard_interlocking_text': interlockingFeatures,
-  'openrailwaymap_standard-standard_railway_platforms': {
+  'openrailwaymap_stations-standard_interlocking': interlockingFeatures,
+  'openrailwaymap_stations-standard_interlocking_text': interlockingFeatures,
+  'openrailwaymap_platforms-standard_railway_platforms': {
     view: {
       name: 'standard_railway_platforms_view',
       id_type: 'text',
@@ -846,7 +846,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_railway_platform_edges': {
+  'openrailwaymap_platforms-standard_railway_platform_edges': {
     view: {
       name: 'standard_railway_platform_edges_view',
       id_type: 'numeric',
@@ -877,7 +877,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_railway_stop_positions': {
+  'openrailwaymap_stations-standard_railway_stop_positions': {
     view: {
       name: 'standard_railway_stop_positions_view',
       id_type: 'numeric',
@@ -916,7 +916,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_station_entrances': {
+  'openrailwaymap_stations-standard_station_entrances': {
     view: {
       name: 'standard_station_entrances_view',
       id_type: 'numeric',
@@ -1025,7 +1025,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_switch_ref': {
+  'openrailwaymap_switches-standard_railway_switch_ref': {
     view: {
       name: 'standard_railway_switch_view',
       id_type: 'numeric',
@@ -1255,7 +1255,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_signals-signals_signal_boxes': {
+  'openrailwaymap_boxes-signals_signal_boxes': {
     view: {
       name: 'signal_boxes_view',
       id_type: 'text',
@@ -1309,7 +1309,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_catenary': {
+  'openrailwaymap_catenary-electrification_catenary': {
     view: {
       name: 'electrification_catenary_view',
       id_type: 'text',
@@ -1362,7 +1362,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_substation': {
+  'openrailwaymap_substation-electrification_substation': {
     view: {
       name: 'electrification_substation_view',
       id_type: 'numeric',
