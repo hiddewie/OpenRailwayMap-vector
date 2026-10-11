@@ -879,6 +879,7 @@ CREATE OR REPLACE VIEW level_crossings_grouped_view AS
     array_agg(osm_type ORDER BY osm_id) as osm_types,
     any_value(lcg.feature) as feature,
     any_value(lcg.ref) as ref,
+    any_value(lcg.count) as count,
     nullif(array_remove(array_agg(DISTINCT operator), null), '{}'::text[]) as operator,
     nullif(array_remove(array_agg(DISTINCT name), null), '{}'::text[]) as name,
     min(minzoom) as minzoom,
@@ -910,7 +911,7 @@ RETURN (
     ST_AsMVT(tile, 'level_crossings_grouped', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       ref,
       feature
@@ -952,6 +953,7 @@ RETURN (
       id
     FROM level_crossings_grouped_view
     WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND count > 1
   ) as tile
   WHERE way IS NOT NULL
 );

@@ -268,6 +268,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
     array_agg(id) as level_crossing_ids,
     ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 10) AS buffered,
     ST_Centroid(ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 10)) as center,
+    COUNT(id) as count,
     ref,
     feature
   FROM clusters
