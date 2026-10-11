@@ -85,6 +85,16 @@ postgres:
       function: points_of_interest_areas
       minzoom: 10
 
+    level_crossings_grouped:
+      schema: public
+      function: level_crossings_grouped
+      minzoom: 15
+
+    level_crossings_grouped_buffered:
+      schema: public
+      function: level_crossings_grouped_buffered
+      minzoom: 16
+
     standard_station_entrances:
       schema: public
       function: standard_station_entrances

@@ -323,6 +323,7 @@ const poiFeatures = {
         lookup: 'radio',
       },
     },
+    // TODO remove from POI
     emergency_phone: {
       name: 'Emergency phone',
       link: links.telephone,
