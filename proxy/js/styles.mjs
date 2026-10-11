@@ -133,6 +133,7 @@ const colors = {
       symbols: themeSwitch('black', 'white'),
       platform: themeSwitch('#aaa', '#aaa'),
       stationAreaGroup: themeSwitch('black', 'white'),
+      levelCrossing: 'red',
     },
   },
   km: {
@@ -2064,9 +2065,15 @@ const layers = [
     source: 'openrailwaymap_points_of_interest',
     'source-layer': 'level_crossings_grouped_buffered',
     paint: {
-      'line-color': 'red',
+      'line-color': ['case',
+        ['boolean', ['feature-state', 'hover'], false], colors.hover.alternative,
+        colors.styles.standard.levelCrossing,
+      ],
       'line-width': 6,
-      'line-opacity': 0.2,
+      'line-opacity': ['case',
+        ['boolean', ['feature-state', 'hover'], false], 0.3,
+        0.2,
+      ],
     },
     layout: {
       'visibility': ['case',
