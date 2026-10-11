@@ -267,7 +267,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
 
     SELECT
       id,
-      ST_ClusterDBSCAN(way, 10, 1) OVER (PARTITION BY feature) AS cluster_id,
+      ST_ClusterDBSCAN(way, 20, 1) OVER (PARTITION BY feature) AS cluster_id,
       way,
       ref,
       feature
