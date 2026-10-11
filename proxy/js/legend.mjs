@@ -3345,6 +3345,10 @@ const sourceLayers = {
       })),
     },
   },
+  // Covered by points_of_interest
+  "openrailwaymap_points_of_interest-points_of_interest_areas": {},
+  "openrailwaymap_points_of_interest-level_crossings_grouped": {},
+  "openrailwaymap_points_of_interest-level_crossings_grouped_buffered": {},
 
   // Boxes
 
