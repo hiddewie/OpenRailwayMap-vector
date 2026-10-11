@@ -786,8 +786,8 @@ CREATE OR REPLACE VIEW poi_view AS
     description
   FROM pois
   WHERE
-    -- Level crossings grouped by reference are covered by level_crossings_grouped_view
-    NOT (type = 'level_crossing' AND ref IS NOT NULL);
+    -- Level crossings grouped are covered by level_crossings_grouped_view
+    type != 'level_crossing';
 
 CREATE OR REPLACE FUNCTION points_of_interest(z integer, x integer, y integer)
   RETURNS bytea

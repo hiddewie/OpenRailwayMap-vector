@@ -261,7 +261,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
       feature
     FROM pois
     WHERE type = 'level_crossing'
-      AND ref IS NOT NULL
   )
   SELECT
     MIN(id) as id,
