@@ -59,6 +59,16 @@ Install Docker
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
+Configure Docker to use a `local` driver with log rotation. In `/etc/docker/daemon.json`:
+```json
+{
+  "log-driver": "local",
+  "log-opts": {
+    "max-size": "1g"
+  }
+}
+```
+
 Verify Docker works
 ```shell
 docker run hello-world
@@ -191,6 +201,7 @@ Restart=always
 RestartSec=5
 ExecStart=/home/openrailwaymap/OpenRailwayMap-vector/deployment/start.sh
 User=openrailwaymap
+StandardOutput=null
 
 [Install]
 WantedBy=multi-user.target
