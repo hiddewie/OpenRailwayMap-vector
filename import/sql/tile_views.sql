@@ -874,13 +874,13 @@ END $do$;
 CREATE OR REPLACE VIEW level_crossings_grouped_view AS
   SELECT
     lcg.id as id,
-    any_value(lcg.buffered) as buffered,
-    any_value(lcg.center) as center,
+    lcg.buffered,
+    lcg.center,
     array_agg(osm_id ORDER BY osm_id) as osm_id,
     array_agg(osm_type ORDER BY osm_id) as osm_type,
-    any_value(lcg.feature) as feature,
-    any_value(lcg.ref) as ref,
-    any_value(lcg.count) as count,
+    lcg.feature,
+    lcg.ref,
+    lcg.count,
     nullif(array_remove(array_agg(DISTINCT operator), null), '{}'::text[]) as operator,
     nullif(array_remove(array_agg(DISTINCT name), null), '{}'::text[]) as name,
     min(minzoom) as minzoom,
@@ -899,7 +899,7 @@ CREATE OR REPLACE VIEW level_crossings_grouped_view AS
   FROM level_crossings_grouped lcg
   JOIN pois p
     ON p.id = ANY(lcg.level_crossing_ids)
-  GROUP BY lcg.id;
+  GROUP BY lcg.id, lcg.buffered, lcg.center, lcg.feature, lcg.ref, lcg.count;
 
 CREATE OR REPLACE FUNCTION level_crossings_grouped(z integer, x integer, y integer)
   RETURNS bytea
