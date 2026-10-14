@@ -5588,6 +5588,14 @@ features:
 
   ## Señales fijas indicadoras (FIxx)
 
+  - description: Indicadora de salida
+    country: ES
+    icon: [ default: 'es/FI2A' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'ES-RCF:FI2' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'ES-RCF:FI2A;ES-RCF:FI2B' }
+
   - description: Silbar
     country: ES
     icon: [ default: 'es/FI15A' ]
