@@ -250,3 +250,50 @@ CREATE UNIQUE INDEX IF NOT EXISTS interlocking_id_index
 
 CLUSTER interlocking_buffered
   USING interlocking_buffered_index;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS level_crossings_grouped AS
+  WITH clusters AS (
+    SELECT
+      id,
+      ST_ClusterDBSCAN(way, 150, 1) OVER (PARTITION BY ref, feature) AS cluster_id,
+      way,
+      ref,
+      feature
+    FROM pois
+    WHERE type = 'level_crossing'
+      AND ref IS NOT NULL
+
+    UNION ALL
+
+    SELECT
+      id,
+      ST_ClusterDBSCAN(way, 25, 1) OVER (PARTITION BY feature) AS cluster_id,
+      way,
+      ref,
+      feature
+    FROM pois
+    WHERE type = 'level_crossing'
+      AND ref IS NULL
+  )
+  SELECT
+    MIN(id) as id,
+    array_agg(id) as level_crossing_ids,
+    ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 10) AS buffered,
+    ST_Centroid(ST_Buffer(ST_ConvexHull(ST_RemoveRepeatedPoints(ST_Collect(way))), 10)) as center,
+    COUNT(id) as count,
+    ref,
+    feature
+  FROM clusters
+  -- Cluster IDs can be duplicated between null and non-null references, but grouping by ref distinguishes the groups
+  GROUP BY cluster_id, ref, feature;
+
+CREATE INDEX IF NOT EXISTS level_crossings_buffered_index
+  ON level_crossings_grouped
+    USING GIST(buffered);
+
+CREATE UNIQUE INDEX IF NOT EXISTS level_crossings_id_index
+  ON level_crossings_grouped
+    USING BTREE(id);
+
+CLUSTER level_crossings_grouped
+  USING level_crossings_buffered_index;

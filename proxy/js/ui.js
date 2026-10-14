@@ -407,9 +407,13 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(preset, zoom, lat, lon, date, bearing, pitch) {
+function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
-  selectPreset(preset);
+  if (typeof presetOrStyle === 'string') {
+    selectPreset(preset);
+  } else if (typeof presetOrStyle === 'object') {
+    selectedStyle(presetOrStyle)
+  }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
@@ -3452,12 +3456,19 @@ map.on('click', event => {
     }
 
     const abortController = new AbortController();
-    popup = new maplibregl.Popup({offset: popupOffsets})
+    const content = popupContent(feature, abortController);
+    const openedPopup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setDOMContent(popupContent(feature, abortController))
+      .setDOMContent(content)
       .addTo(map);
+    popup = openedPopup;
+
+    // The popup anchor is chosen from the popup size, which grows once the content has loaded.
+    const contentResizeObserver = new ResizeObserver(() => openedPopup.setOffset(popupOffsets));
+    contentResizeObserver.observe(content);
 
     popup.on('close', () => {
+      contentResizeObserver.disconnect();
       abortController.abort('Popup closed')
     })
   }

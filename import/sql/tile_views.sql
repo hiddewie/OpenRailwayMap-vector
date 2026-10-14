@@ -554,6 +554,7 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
@@ -784,7 +785,10 @@ CREATE OR REPLACE VIEW poi_view AS
     wikipedia,
     note,
     description
-  FROM pois;
+  FROM pois
+  WHERE
+    -- Level crossings grouped are covered by level_crossings_grouped_view
+    type != 'level_crossing';
 
 CREATE OR REPLACE FUNCTION points_of_interest(z integer, x integer, y integer)
   RETURNS bytea
@@ -860,6 +864,109 @@ DO $do$ BEGIN
         "fields": {
           "id": "string",
           "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW level_crossings_grouped_view AS
+  SELECT
+    lcg.id as id,
+    lcg.buffered,
+    lcg.center,
+    array_agg(osm_id ORDER BY osm_id) as osm_id,
+    array_agg(osm_type ORDER BY osm_id) as osm_type,
+    lcg.feature,
+    lcg.ref,
+    lcg.count,
+    nullif(array_remove(array_agg(DISTINCT operator), null), '{}'::text[]) as operator,
+    nullif(array_remove(array_agg(DISTINCT name), null), '{}'::text[]) as name,
+    min(minzoom) as minzoom,
+    nullif(array_remove(array_agg(DISTINCT type), null), '{}'::text[]) as type,
+    min(rank) as rank,
+    nullif(array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(position, U&'\001E')), U&'\001E'), U&'\001E'), null), '{}'::text[]) as position,
+    nullif(array_remove(array_agg(DISTINCT emergency_phone), null), '{}'::text[]) as emergency_phone,
+    nullif(array_remove(array_agg(DISTINCT wikidata), null), '{}'::text[]) as wikidata,
+    nullif(array_remove(array_agg(DISTINCT wikimedia_commons), null), '{}'::text[]) as wikimedia_commons,
+    nullif(array_remove(array_agg(DISTINCT wikimedia_commons_file), null), '{}'::text[]) as wikimedia_commons_file,
+    nullif(array_remove(array_agg(DISTINCT image), null), '{}'::text[]) as image,
+    nullif(array_remove(array_agg(DISTINCT mapillary), null), '{}'::text[]) as mapillary,
+    nullif(array_remove(array_agg(DISTINCT wikipedia), null), '{}'::text[]) as wikipedia,
+    nullif(array_remove(array_agg(DISTINCT note), null), '{}'::text[]) as note,
+    nullif(array_remove(array_agg(DISTINCT description), null), '{}'::text[]) as description
+  FROM level_crossings_grouped lcg
+  JOIN pois p
+    ON p.id = ANY(lcg.level_crossing_ids)
+  GROUP BY lcg.id, lcg.buffered, lcg.center, lcg.feature, lcg.ref, lcg.count;
+
+CREATE OR REPLACE FUNCTION level_crossings_grouped(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'level_crossings_grouped', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ref,
+      feature
+    FROM level_crossings_grouped_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION level_crossings_grouped IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "level_crossings_grouped",
+        "fields": {
+          "id": "string",
+          "ref": "string",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION level_crossings_grouped_buffered(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'level_crossings_grouped_buffered', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id
+    FROM level_crossings_grouped_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND count > 1
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION level_crossings_grouped_buffered IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "level_crossings_grouped_buffered",
+        "fields": {
+          "id": "string"
         }
       }
     ]
