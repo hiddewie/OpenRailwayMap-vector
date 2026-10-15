@@ -193,7 +193,8 @@ RETURN (
       owner,
       route_count,
       passenger_lines,
-      rack
+      rack,
+      radio
     FROM railway_line_view
     WHERE
       way && ST_TileEnvelope(z, x, y)
@@ -295,7 +296,8 @@ DO $do$ BEGIN
           "owner": "string",
           "route_count": "integer",
           "passenger_lines": "integer",
-          "rack": "string"
+          "rack": "string",
+          "radio": "string"
         }
       }
     ]
@@ -336,6 +338,7 @@ CREATE OR REPLACE VIEW railway_line_low AS
     primary_operator,
     owner,
     passenger_lines,
+    radio,
     rank
   FROM railway_line_view
   WHERE
@@ -362,7 +365,8 @@ RETURN (
       feature,
       'present' as state,
       'main 'as usage,
-      highspeed
+      highspeed,
+      radio
     FROM railway_line_merged l
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -380,7 +384,8 @@ DO $do$ BEGIN
           "feature": "string",
           "state": "string",
           "usage": "string",
-          "highspeed": "boolean"
+          "highspeed": "boolean",
+          "radio": "string"
         }
       }
     ]
@@ -534,6 +539,7 @@ RETURN (
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
       AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
   ) as tile
@@ -554,61 +560,6 @@ DO $do$ BEGIN
           "station_size": "string",
           "operator_color": "string",
           "operator_bright": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE VIEW standard_railway_turntables_view AS
-  SELECT
-    osm_id as id,
-    osm_id,
-    'W' as osm_type,
-    way,
-    feature,
-    diameter,
-    operator,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM turntables;
-
-CREATE OR REPLACE FUNCTION standard_railway_turntables(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'standard_railway_turntables', 4096, 'way')
-  FROM (
-    SELECT
-      id,
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      feature
-    FROM standard_railway_turntables_view
-    WHERE way && ST_TileEnvelope(z, x, y)
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION standard_railway_turntables IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "standard_railway_turntables",
-        "fields": {
-          "id": "integer",
-          "feature": "string"
         }
       }
     ]
@@ -796,6 +747,7 @@ END $do$;
 CREATE OR REPLACE VIEW poi_view AS
   SELECT
     way,
+    center,
     id,
     osm_id,
     osm_type,
@@ -809,6 +761,7 @@ CREATE OR REPLACE VIEW poi_view AS
     position,
     radio,
     emergency_phone,
+    diameter,
     wikidata,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -817,7 +770,10 @@ CREATE OR REPLACE VIEW poi_view AS
     wikipedia,
     note,
     description
-  FROM pois;
+  FROM pois
+  WHERE
+    -- Level crossings grouped are covered by level_crossings_grouped_view
+    type != 'level_crossing';
 
 CREATE OR REPLACE FUNCTION points_of_interest(z integer, x integer, y integer)
   RETURNS bytea
@@ -830,7 +786,7 @@ RETURN (
     ST_AsMVT(tile, 'points_of_interest', 4096, 'way')
   FROM (
     SELECT
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       id,
       feature,
       type,
@@ -854,6 +810,148 @@ DO $do$ BEGIN
           "feature": "string",
           "type": "string",
           "ref": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION points_of_interest_areas(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'points_of_interest_areas', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      type
+    FROM poi_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND z >= minzoom
+      AND osm_type = 'W'
+    ORDER BY rank DESC
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION points_of_interest_areas IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "points_of_interest_areas",
+        "fields": {
+          "id": "string",
+          "type": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE VIEW level_crossings_grouped_view AS
+  SELECT
+    lcg.id as id,
+    lcg.buffered,
+    lcg.center,
+    array_agg(osm_id ORDER BY osm_id) as osm_id,
+    array_agg(osm_type ORDER BY osm_id) as osm_type,
+    lcg.feature,
+    lcg.ref,
+    lcg.count,
+    nullif(array_remove(array_agg(DISTINCT operator), null), '{}'::text[]) as operator,
+    nullif(array_remove(array_agg(DISTINCT name), null), '{}'::text[]) as name,
+    min(minzoom) as minzoom,
+    nullif(array_remove(array_agg(DISTINCT type), null), '{}'::text[]) as type,
+    min(rank) as rank,
+    nullif(array_remove(string_to_array(array_to_string(array_agg(DISTINCT array_to_string(position, U&'\001E')), U&'\001E'), U&'\001E'), null), '{}'::text[]) as position,
+    nullif(array_remove(array_agg(DISTINCT emergency_phone), null), '{}'::text[]) as emergency_phone,
+    nullif(array_remove(array_agg(DISTINCT wikidata), null), '{}'::text[]) as wikidata,
+    nullif(array_remove(array_agg(DISTINCT wikimedia_commons), null), '{}'::text[]) as wikimedia_commons,
+    nullif(array_remove(array_agg(DISTINCT wikimedia_commons_file), null), '{}'::text[]) as wikimedia_commons_file,
+    nullif(array_remove(array_agg(DISTINCT image), null), '{}'::text[]) as image,
+    nullif(array_remove(array_agg(DISTINCT mapillary), null), '{}'::text[]) as mapillary,
+    nullif(array_remove(array_agg(DISTINCT wikipedia), null), '{}'::text[]) as wikipedia,
+    nullif(array_remove(array_agg(DISTINCT note), null), '{}'::text[]) as note,
+    nullif(array_remove(array_agg(DISTINCT description), null), '{}'::text[]) as description
+  FROM level_crossings_grouped lcg
+  JOIN pois p
+    ON p.id = ANY(lcg.level_crossing_ids)
+  GROUP BY lcg.id, lcg.buffered, lcg.center, lcg.feature, lcg.ref, lcg.count;
+
+CREATE OR REPLACE FUNCTION level_crossings_grouped(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'level_crossings_grouped', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(center, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ref,
+      feature
+    FROM level_crossings_grouped_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION level_crossings_grouped IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "level_crossings_grouped",
+        "fields": {
+          "id": "string",
+          "ref": "string",
+          "feature": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;
+
+CREATE OR REPLACE FUNCTION level_crossings_grouped_buffered(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'level_crossings_grouped_buffered', 4096, 'way')
+  FROM (
+    SELECT
+      ST_AsMVTGeom(buffered, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id
+    FROM level_crossings_grouped_view
+    WHERE buffered && ST_TileEnvelope(z, x, y)
+      AND count > 1
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION level_crossings_grouped_buffered IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "level_crossings_grouped_buffered",
+        "fields": {
+          "id": "string"
         }
       }
     ]

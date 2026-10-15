@@ -19,7 +19,7 @@ HTTP 200
 Content-Type: application/json
 
 # Proxy to tiles
-GET {{base_url}}/railway_line_high
+GET {{base_url}}/railway_line_high,railway_text_km
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
@@ -34,7 +34,7 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/standard_railway_turntables,standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_railway_switch_ref,standard_station_entrances,standard_railway_platforms,standard_railway_platform_edges,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
+GET {{base_url}}/standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_station_entrances,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
@@ -44,33 +44,38 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/railway_signals,signals_signal_boxes
+GET {{base_url}}/signals_signal_boxes
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/electrification_catenary,electrification_substation
+GET {{base_url}}/electrification_catenary
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
-GET {{base_url}}/points_of_interest
+GET {{base_url}}/electrification_substation
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
+GET {{base_url}}/points_of_interest,points_of_interest_areas,level_crossings_grouped,level_crossings_grouped_buffered
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
 # (local URLs)
-GET {{base_url}}/railway_signals,signals_signal_boxes/14/8803/5371
+GET {{base_url}}/railway_signals/14/8803/5371
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/x-protobuf
 
-GET {{base_url}}/railway_signals,signals_signal_boxes/18/140807/85974
+GET {{base_url}}/railway_signals/18/140807/85974
 Referer: http://localhost:8000
 HTTP 204
 
 # Proxy without referrer is blocked
-GET {{base_url}}/railway_line_high
+GET {{base_url}}/railway_line_high,railway_text_km
 HTTP 403
 
 # Proxy to API, cannot proxy

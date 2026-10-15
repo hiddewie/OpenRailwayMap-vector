@@ -8,6 +8,7 @@ const track_classes = yaml.parse(fs.readFileSync('features/track_class.yaml', 'u
 const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const operators = yaml.parse(fs.readFileSync('features/operators.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_categories = Object.fromEntries(
@@ -269,6 +270,27 @@ const sourceLayers = {
           }
         },
       ],
+    },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
+        },
+      }))
     },
   },
   'speed_railway_line_low-speed_railway_line_low': {
@@ -716,578 +738,6 @@ const sourceLayers = {
           },
         },
       ],
-    },
-  },
-  'openrailwaymap_low-railway_line_high': {
-    usage: {
-      mapState: {
-        tracks: 'usage',
-      },
-      key: [
-        'highspeed',
-        'feature',
-        'state',
-        'usage',
-        'service',
-      ],
-      features: [
-        {
-          legend: 'Highspeed main line',
-          type: 'line',
-          properties: {
-            highspeed: true,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            tunnel: false,
-            bridge: false,
-            ref: 'H1',
-            name: 'Name',
-            track_ref: '8b',
-            way_length: 1.0,
-          },
-        },
-        {
-          legend: 'Main line',
-          type: 'line',
-          properties: {
-            highspeed: false,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            tunnel: false,
-            bridge: false,
-            ref: 'L1',
-            name: 'Name',
-            track_ref: '8b',
-            way_length: 1.0,
-          },
-        },
-        {
-          legend: 'Branch line',
-          type: 'line',
-          properties: {
-            highspeed: false,
-            feature: 'rail',
-            state: 'present',
-            usage: 'branch',
-            service: null,
-            tunnel: false,
-            bridge: false,
-            ref: 'B1',
-            name: 'Name',
-            track_ref: '8b',
-            way_length: 1.0,
-          },
-        },
-        {
-          legend: 'Ferry',
-          type: 'line',
-          properties: {
-            highspeed: false,
-            feature: 'ferry',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            tunnel: false,
-            bridge: false,
-            ref: 'F1',
-            name: 'Ship',
-            track_ref: null,
-            way_length: 1.0,
-          },
-        },
-      ]
-    },
-    speed: {
-      mapState: {
-        tracks: 'speed',
-      },
-      key: [],
-      features: [
-        ...speedLegends.map(speed => ({
-          legend: `${speed} km/h`,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            tunnel: false,
-            bridge: false,
-            maxspeed: speed,
-          },
-        })),
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            tunnel: false,
-            bridge: false,
-            maxspeed: null,
-          },
-        },
-      ],
-    },
-    train_protection: {
-      mapState: {
-        tracks: 'train_protection',
-      },
-      key: [
-        'state',
-        'train_protection0',
-      ],
-      matchKeys: [
-        [
-          'state',
-          'train_protection1',
-        ],
-        [
-          'state',
-          'train_protection2',
-        ],
-        [
-          'state',
-          'train_protection_construction',
-        ],
-      ],
-      features: [
-        ...signals_railway_line.train_protections.map(train_protection => ({
-          legend: train_protection.legend,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            train_protection0: train_protection.train_protection,
-            train_protection1: null,
-            train_protection2: null,
-            train_protection_rank: 1,
-            train_protection_construction: null,
-            train_protection_construction_rank: 0,
-          },
-          variants: [
-            {
-              properties: {
-                train_protection0: 'unknown',
-                train_protection1: null,
-                train_protection2: null,
-                train_protection_rank: 0,
-                train_protection_construction: train_protection.train_protection,
-                train_protection_construction_rank: 1,
-              }
-            }
-          ],
-        })),
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            train_protection0: null,
-            train_protection1: null,
-            train_protection2: null,
-            train_protection_rank: 0,
-            train_protection_construction: null,
-            train_protection_construction_rank: 0,
-          },
-        },
-      ]
-    },
-    voltage_frequency: {
-      mapState: {
-        tracks: 'voltage_frequency',
-      },
-      key: [],
-      features: [
-        ...electrificationLegends.voltageFrequency.map(({legend, voltage, frequency}) => ({
-          legend,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: 'present',
-            voltage,
-            frequency,
-          },
-        })),
-      ],
-    },
-    maximum_current: {
-      mapState: {
-        tracks: 'maximum_current',
-      },
-      key: [],
-      features: [
-        ...electrificationLegends.maximumCurrent.map(({maximumCurrent}) => ({
-          legend: `${maximumCurrent} A`,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: 'present',
-            maximum_current: maximumCurrent,
-          },
-        })),
-      ],
-    },
-    power: {
-      mapState: {
-        tracks: 'power',
-      },
-      key: [],
-      features: [
-        ...electrificationLegends.power.map(({legend, maximumCurrent, voltage}) => ({
-          legend,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: 'present',
-            voltage: voltage,
-            maximum_current: maximumCurrent,
-          },
-        })),
-      ],
-    },
-    electrification: {
-      mapState: {
-        tracks: 'electrification',
-      },
-      key: [],
-      features: [
-        {
-          legend: 'Not electrified',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: 'no',
-            voltage: null,
-            frequency: null,
-          },
-        },
-        {
-          legend: 'De-electrified / abandoned railway',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: 'abandoned',
-            voltage: null,
-            frequency: null,
-          },
-        },
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            electrification_state: null,
-            voltage: null,
-            frequency: null,
-          },
-        },
-      ],
-    },
-    operator: {
-      mapState: {
-        tracks: 'operator',
-      },
-      key: [
-        'primary_operator',
-      ],
-      features: [
-        ...operators.operators.map(operator => ({
-          legend: operator.names.join(', '),
-          type: 'line',
-          country: operator.country,
-          properties: {
-            operator: operator.names[0],
-            primary_operator: operator.names[0],
-            operator_color: operator.color,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-          },
-        })),
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            operator: null,
-            primary_operator: null,
-            operator_color: null,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-          },
-        },
-      ]
-    },
-    gauge: {
-      mapState: {
-        tracks: 'gauge',
-      },
-      key: [],
-      features: [
-        ...gaugeLegends.map(({min, legend}) => ({
-          legend,
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: `${min}`,
-            gaugeint0: min,
-            label: `${min}`,
-          },
-        })),
-        {
-          legend: 'Monorail',
-          type: 'line',
-          properties: {
-            feature: 'monorail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: 'monorail',
-            gaugeint0: null,
-          },
-        },
-        {
-          legend: 'Narrow',
-          type: 'line',
-          properties: {
-            feature: 'narrow_gauge',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: 'standard',
-            gaugeint0: null,
-          },
-          variants: [
-            {
-              type: 'line',
-              properties: {
-                feature: 'rail',
-                gauge0: 'narrow',
-              },
-            },
-          ],
-        },
-        {
-          legend: 'Broad',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: 'broad',
-            gaugeint0: null,
-          },
-        },
-        {
-          legend: 'Standard',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: 'standard',
-            gaugeint0: null,
-          },
-        },
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: null,
-            gaugeint0: null,
-            label: null,
-            loading_gauge: null,
-            track_class: null,
-          },
-        },
-      ]
-    },
-    loading_gauge: {
-      mapState: {
-        tracks: 'loading_gauge',
-      },
-      key: [],
-      features: [
-        ...loading_gauges.loading_gauges.map(loading_gauge => ({
-          legend: loading_gauge.legend,
-          type: 'line',
-          properties: {
-            loading_gauge: loading_gauge.value,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-          },
-        })),
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: null,
-            gaugeint0: null,
-            label: null,
-            loading_gauge: null,
-            track_class: null,
-          },
-        },
-      ]
-    },
-    track_class: {
-      mapState: {
-        tracks: 'track_class',
-      },
-      key: [],
-      features: [
-        ...track_classes.track_classes.map(track_class => ({
-          legend: track_class.value,
-          type: 'line',
-          properties: {
-            track_class: track_class.value,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-          },
-        })),
-        {
-          legend: '(unknown)',
-          type: 'line',
-          properties: {
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-            gauge0: null,
-            gaugeint0: null,
-            label: null,
-            loading_gauge: null,
-            track_class: null,
-          },
-        },
-      ]
-    },
-    routes: {
-      mapState: {
-        tracks: 'routes',
-      },
-      key: [],
-      features: [
-        ...routeLegends.map(routeCount => ({
-          legend: `${routeCount} route${routeCount === 1 ? '' : 's'}`,
-          type: 'line',
-          properties: {
-            route_count: routeCount,
-            feature: 'rail',
-            state: 'present',
-            usage: 'main',
-            service: null,
-            bridge: false,
-            tunnel: false,
-          },
-        })),
-      ]
-    },
-    passenger_lines: {
-      mapState: {
-        tracks: 'passenger_lines',
-      },
-      key: [],
-      features: passengerLineLegends.map(passengerLines => ({
-        legend: `${passengerLines} line${passengerLines === 1 ? '' : 's'}`,
-        type: 'line',
-        properties: {
-          feature: 'rail',
-          state: 'present',
-          usage: 'main',
-          service: null,
-          bridge: false,
-          tunnel: false,
-          passenger_lines: passengerLines,
-        },
-      }))
     },
   },
   'high-railway_line_high': {
@@ -2493,6 +1943,27 @@ const sourceLayers = {
         },
       }))
     },
+    radio: {
+      mapState: {
+        tracks: 'radio',
+      },
+      key: [
+        'radio',
+      ],
+      features: radio.radio.map(({value, name}) => ({
+        legend: name,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          radio: value,
+        },
+      }))
+    },
   },
   'openhistoricalmap-transport_lines': {
     usage: {
@@ -3248,7 +2719,7 @@ const sourceLayers = {
         })),
     },
   },
-  "openrailwaymap_standard-standard_railway_text_stations": {
+  "openrailwaymap_stations-standard_railway_text_stations": {
     stations: {
       key: [
         'railway',
@@ -3313,7 +2784,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_grouped_stations": {
+  "openrailwaymap_stations-standard_railway_grouped_stations": {
     stations: {
       key: [
         'railway',
@@ -3338,7 +2809,7 @@ const sourceLayers = {
         })),
     },
   },
-  "openrailwaymap_standard-standard_railway_grouped_station_areas": {
+  "openrailwaymap_stations-standard_railway_grouped_station_areas": {
     stations: {
       key: [],
       features: [
@@ -3350,7 +2821,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_interlocking": {
+  "openrailwaymap_stations-standard_interlocking": {
     interlocking: {
       key: [
         'feature',
@@ -3366,13 +2837,13 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_interlocking_text": {
+  "openrailwaymap_stations-standard_interlocking_text": {
     interlocking: {
       key: [],
       features: [],
     },
   },
-  "openrailwaymap_standard-standard_station_entrances": {
+  "openrailwaymap_stations-standard_station_entrances": {
     station_entrances: {
       key: [],
       features: [
@@ -3385,7 +2856,7 @@ const sourceLayers = {
   },
 
   // Platforms
-  "openrailwaymap_standard-standard_railway_platforms": {
+  "openrailwaymap_platforms-standard_railway_platforms": {
     platforms: {
       key: [],
       features: [
@@ -3399,7 +2870,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_platform_edges": {
+  "openrailwaymap_platforms-standard_railway_platform_edges": {
     platform_edges: {
       key: [],
       features: [
@@ -3413,7 +2884,7 @@ const sourceLayers = {
       ],
     },
   },
-  "openrailwaymap_standard-standard_railway_stop_positions": {
+  "openrailwaymap_stations-standard_railway_stop_positions": {
     stop_positions: {
       key: [
         'type',
@@ -3470,7 +2941,7 @@ const sourceLayers = {
 
   // Switches
 
-  "openrailwaymap_standard-standard_railway_switch_ref": {
+  "openrailwaymap_switches-standard_railway_switch_ref": {
     switches: {
       key: [
         'railway',
@@ -3874,37 +3345,14 @@ const sourceLayers = {
       })),
     },
   },
-
-  // Turntables
-
-  "openrailwaymap_standard-standard_railway_turntables": {
-    turntables: {
-      key: [
-        'feature',
-      ],
-      features: [
-        {
-          legend: 'Turntable',
-          type: 'polygon',
-          properties: {
-            feature: 'turntable'
-          },
-          variants: [
-            {
-              legend: 'Transfer table',
-              properties: {
-                feature: 'traverser',
-              }
-            }
-          ]
-        },
-      ],
-    },
-  },
+  // Covered by points_of_interest
+  "openrailwaymap_points_of_interest-points_of_interest_areas": {},
+  "openrailwaymap_points_of_interest-level_crossings_grouped": {},
+  "openrailwaymap_points_of_interest-level_crossings_grouped_buffered": {},
 
   // Boxes
 
-  'openrailwaymap_signals-signals_signal_boxes': {
+  'openrailwaymap_boxes-signals_signal_boxes': {
     boxes: {
       key: [
         'feature',
@@ -3943,7 +3391,7 @@ const sourceLayers = {
 
   // Substations
 
-  "openrailwaymap_electrification-electrification_substation": {
+  "openrailwaymap_substation-electrification_substation": {
     substations: {
       key: [
         'feature',
@@ -3962,7 +3410,7 @@ const sourceLayers = {
 
   // Catenaries
 
-  "openrailwaymap_electrification-electrification_catenary": {
+  "openrailwaymap_catenary-electrification_catenary": {
     catenary: {
       key: [
         'feature',

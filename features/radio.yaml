@@ -1,0 +1,22 @@
+$schema: ./schema/radio.yaml
+
+radio:
+  - name: 'GSM-R'
+    value: 'gsm-r'
+    color: 'hsl(190, 100%, 40%)'
+
+  - name: 'Analogue'
+    value: 'analogue'
+    color: 'hsl(280, 100%, 40%)'
+
+  - name: 'LTE-R'
+    value: 'lte-r'
+    color: 'hsl(120, 100%, 40%)'
+
+  - name: 'VIRVE'
+    value: 'virve'
+    color: 'hsl(10, 100%, 40%)'
+
+  - name: 'TRS'
+    value: 'trs'
+    color: 'hsl(40, 100%, 40%)'

@@ -151,8 +151,6 @@
     { "key": "railway", "value": "signal_box" },
     { "key": "railway", "value": "subway_entrance" },
     { "key": "railway", "value": "train_station_entrance" },
-    { "key": "railway", "value": "traverser" },
-    { "key": "railway", "value": "turntable" },
     { "key": "tourism", "value": "museum" },
     { "key": "museum", "value": "railway" }
   ]

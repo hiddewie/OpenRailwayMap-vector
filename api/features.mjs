@@ -8,6 +8,7 @@ const poi = yaml.parse(fs.readFileSync('features/poi.yaml', 'utf8'))
 const stations = yaml.parse(fs.readFileSync('features/stations.yaml', 'utf8'))
 const railway_lines = yaml.parse(fs.readFileSync('features/railway_line.yaml', 'utf8'))
 const workrules = yaml.parse(fs.readFileSync('features/workrules.yaml', 'utf8'))
+const radio = yaml.parse(fs.readFileSync('features/radio.yaml', 'utf8'))
 
 const signal_types = all_signals.types;
 const signal_features = all_signals.features
@@ -298,6 +299,7 @@ const poiFeatures = {
   featureLinks: featureLinks.openstreetmap,
   features: Object.fromEntries(
     poi.features
+      .filter(feature => feature.type !== 'level_crossing')
       .flatMap(feature =>
         [
           [feature.feature, {name: feature.description}]
@@ -321,6 +323,64 @@ const poiFeatures = {
       format: {
         lookup: 'radio',
       },
+    },
+    diameter: {
+      name: 'Diameter',
+    },
+    wikidata: {
+      name: 'Wikidata',
+      link: links.wikidata,
+    },
+    wikimedia_commons: {
+      name: 'Wikimedia',
+      link: links.wikimedia_commons,
+    },
+    mapillary: {
+      name: 'Mapillary',
+      link: links.mapillary,
+    },
+    wikipedia: {
+      name: 'Wikipedia',
+      link: links.wikipedia,
+      format: {
+        country_prefix: {}
+      },
+    },
+    note: {
+      name: 'Note',
+      paragraph: true,
+    },
+    description: {
+      name: 'Description',
+      paragraph: true,
+    },
+  },
+};
+
+const levelCrossingFeatures = {
+  view: {
+    name: 'level_crossings_grouped_view',
+    id_type: 'text',
+  },
+  labelProperties: ['ref'],
+  featureLinks: featureLinks.openstreetmap,
+  features: Object.fromEntries(
+    poi.features
+      .filter(feature => feature.type === 'level_crossing')
+      .flatMap(feature =>
+        [
+          [feature.feature, {name: feature.description}]
+        ].concat(
+          (feature.variants || []).map(variant => [variant.feature, {name: `${feature.description}${variant.description ? ` (${variant.description})` : ''}`}])
+        )
+      )
+  ),
+  properties: {
+    operator: {
+      name: 'Operator',
+    },
+    position: {
+      name: 'Position',
     },
     emergency_phone: {
       name: 'Emergency phone',
@@ -544,7 +604,6 @@ const openHistoricalMapRouteModalities = [
 // TODO add icon
 const features = {
   'high-railway_line_high': railwayLineFeatures,
-  'openrailwaymap_low-railway_line_high': railwayLineFeatures,
   'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
   'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
   'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
@@ -709,9 +768,9 @@ const features = {
   },
   'standard_railway_text_stations_low-standard_railway_text_stations_low': stationFeatures,
   'standard_railway_text_stations_med-standard_railway_text_stations_med': stationFeatures,
-  'openrailwaymap_standard-standard_railway_text_stations': stationFeatures,
-  'openrailwaymap_standard-standard_railway_grouped_stations': stationFeatures,
-  'openrailwaymap_standard-standard_railway_grouped_station_areas': {
+  'openrailwaymap_stations-standard_railway_text_stations': stationFeatures,
+  'openrailwaymap_stations-standard_railway_grouped_stations': stationFeatures,
+  'openrailwaymap_stations-standard_railway_grouped_station_areas': {
     view: {
       name: 'standard_railway_grouped_station_areas_view',
       id_type: 'numeric',
@@ -725,58 +784,9 @@ const features = {
     },
     properties: {}
   },
-  'openrailwaymap_standard-standard_interlocking': interlockingFeatures,
-  'openrailwaymap_standard-standard_interlocking_text': interlockingFeatures,
-  'openrailwaymap_standard-standard_railway_turntables': {
-    view: {
-      name: 'standard_railway_turntables_view',
-      id_type: 'numeric',
-    },
-    featureLinks: featureLinks.openstreetmap,
-    features: {
-      turntable: {
-        name: 'Turntable',
-        type: 'polygon',
-      },
-      traverser: {
-        name: 'Transfer table',
-        type: 'polygon',
-      },
-    },
-    properties: {
-      diameter: {
-        name: 'Diameter',
-      },
-      operator: {
-        name: 'Operator',
-      },
-      wikidata: {
-        name: 'Wikidata',
-        link: links.wikidata,
-      },
-      wikimedia_commons: {
-        name: 'Wikimedia',
-        link: links.wikimedia_commons,
-      },
-      mapillary: {
-        name: 'Mapillary',
-        link: links.mapillary,
-      },
-      wikipedia: {
-        name: 'Wikipedia',
-        link: links.wikipedia,
-      },
-      note: {
-        name: 'Note',
-        paragraph: true,
-      },
-      description: {
-        name: 'Description',
-        paragraph: true,
-      },
-    },
-  },
-  'openrailwaymap_standard-standard_railway_platforms': {
+  'openrailwaymap_stations-standard_interlocking': interlockingFeatures,
+  'openrailwaymap_stations-standard_interlocking_text': interlockingFeatures,
+  'openrailwaymap_platforms-standard_railway_platforms': {
     view: {
       name: 'standard_railway_platforms_view',
       id_type: 'text',
@@ -836,7 +846,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_railway_platform_edges': {
+  'openrailwaymap_platforms-standard_railway_platform_edges': {
     view: {
       name: 'standard_railway_platform_edges_view',
       id_type: 'numeric',
@@ -867,7 +877,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_railway_stop_positions': {
+  'openrailwaymap_stations-standard_railway_stop_positions': {
     view: {
       name: 'standard_railway_stop_positions_view',
       id_type: 'numeric',
@@ -906,7 +916,7 @@ const features = {
       },
     }
   },
-  'openrailwaymap_standard-standard_station_entrances': {
+  'openrailwaymap_stations-standard_station_entrances': {
     view: {
       name: 'standard_station_entrances_view',
       id_type: 'numeric',
@@ -955,6 +965,9 @@ const features = {
     },
   },
   'openrailwaymap_points_of_interest-points_of_interest': poiFeatures,
+  'openrailwaymap_points_of_interest-points_of_interest_areas': poiFeatures,
+  'openrailwaymap_points_of_interest-level_crossings_grouped': levelCrossingFeatures,
+  'openrailwaymap_points_of_interest-level_crossings_grouped_buffered': levelCrossingFeatures,
   "high-railway_text_km": {
     view: {
       name: 'railway_text_km_view',
@@ -1012,7 +1025,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_standard-standard_railway_switch_ref': {
+  'openrailwaymap_switches-standard_railway_switch_ref': {
     view: {
       name: 'standard_railway_switch_view',
       id_type: 'numeric',
@@ -1242,7 +1255,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_signals-signals_signal_boxes': {
+  'openrailwaymap_boxes-signals_signal_boxes': {
     view: {
       name: 'signal_boxes_view',
       id_type: 'text',
@@ -1296,7 +1309,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_catenary': {
+  'openrailwaymap_catenary-electrification_catenary': {
     view: {
       name: 'electrification_catenary_view',
       id_type: 'text',
@@ -1349,7 +1362,7 @@ const features = {
       },
     },
   },
-  'openrailwaymap_electrification-electrification_substation': {
+  'openrailwaymap_substation-electrification_substation': {
     view: {
       name: 'electrification_substation_view',
       id_type: 'numeric',
@@ -1543,23 +1556,11 @@ const features = {
     ),
   },
   radio: {
-    features: {
-      'gsm-r': {
-        name: 'GSM-R',
-      },
-      'analogue': {
-        name: 'Analogue',
-      },
-      'lte-r': {
-        name: 'LTE-R',
-      },
-      'virve': {
-        name: 'VIRVE',
-      },
-      'trs': {
-        name: 'TRS',
-      },
-    },
+    features: Object.fromEntries(
+      radio.radio
+        .map(({value, name}) =>
+          [value, { name }])
+    ),
   },
 
   boolean: {
