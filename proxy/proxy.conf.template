@@ -174,5 +174,7 @@ server {
 
   location / {
     return 404;
+
+    add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_NOT_FOUND}" always;
   }
 }
