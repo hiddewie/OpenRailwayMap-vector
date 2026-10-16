@@ -171,4 +171,8 @@ server {
     add_header X-Cache-Status $upstream_cache_status;
     add_header Cache-Control "public, max-age=${CLIENT_CACHE_TTL_TILES_FRESH}, stale-if-error=${CLIENT_CACHE_TTL_TILES_STALE}";
   }
+
+  location / {
+    return 404;
+  }
 }
