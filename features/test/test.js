@@ -19,7 +19,7 @@ fs.readdirSync('.').forEach(file => {
       if (valid) {
         console.info(`File ${file} validated by schema ${schemaFile} is valid.`)
       } else {
-        const formattedErrors = validate.errors.map(({instancePath, keyword, message, params}) => `- Path ${instancePath} [${keyword}]: ${message} (details: ${JSON.stringify(params)})`)
+        const formattedErrors = validate.errors.map(({instancePath, keyword, message, params}) => ` · Path ${instancePath} [${keyword}]: ${message} (details: ${JSON.stringify(params)})`)
         console.error(`File ${file} validated by schema ${schemaFile} is invalid:\n${formattedErrors.join('\n')}`)
         allValid = false
       }
