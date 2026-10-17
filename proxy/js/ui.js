@@ -1168,19 +1168,20 @@ function onThemeChange(theme) {
   updateTheme();
 }
 
-let selectedTheme;
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
 
-  selectedTheme = resolvedTheme;
+  if (selectedTheme !== resolvedTheme) {
+    selectedTheme = resolvedTheme;
 
-  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+    document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
 
-  if (map.loaded()) {
-    map.setGlobalStateProperty('theme', resolvedTheme);
+    if (map.loaded()) {
+      map.setGlobalStateProperty('theme', resolvedTheme);
+    }
+
+    legendControl.updateLegend();
   }
-
-  legendControl.updateLegend();
 }
 
 function onEditorChange(editor) {
@@ -1493,12 +1494,8 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
+let selectedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme);
 let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
-
-const mapStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/${style}.json`])
-);
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
@@ -1529,8 +1526,22 @@ map.setStyle(`${location.origin}/style.json`, {
 
     rewriteStylePathsToOrigin(next)
     addLanguageToSupportedSources(next, language)
-    rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
     return next;
+  },
+  globalState: {
+    date: selectedDate === 'all' ? defaultDate : selectedDate,
+    allDates: selectedDate === 'all',
+    theme: selectedTheme,
+    bearing: map.getBearing() ?? 0,
+    pitched: pitchedView(map.getPitch() ?? 0),
+    stationLowZoomLabel: configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel,
+    openHistoricalMap: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
+    showAbandonedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
+    showRazedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
+    showConstructionInfrastructure: ['construction', 'construction-proposed'].includes(configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure),
+    showProposedInfrastructure: (configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure) === 'construction-proposed',
+    hillshade: configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade,
+    ...selectedStyle,
   },
 });
 
@@ -1605,38 +1616,6 @@ function addLanguageToSupportedSources(style, language) {
         }
       })
   )
-}
-
-// Provide global state defaults as configured by the user
-// Subsequent global state changes are applied directly to the map with setGlobalStateProperty
-// See https://github.com/maplibre/maplibre-gl-js/issues/7632 and https://github.com/maplibre/maplibre-gl-js/pull/8264
-function rewriteGlobalStateDefaults(style, bearing, pitch) {
-  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
-  style.state.allDates.default = selectedDate === 'all';
-  style.state.theme.default = selectedTheme;
-
-  style.state.bearing.default = bearing ?? 0;
-  style.state.pitched.default = pitchedView(pitch);
-
-  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
-
-  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
-  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-
-  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
-  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
-  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
-
-  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
-
-  // Style specific map global state
-  Object.entries(selectedStyle).forEach(([key, value]) => {
-    if (style.state[key]) {
-      style.state[key].default = value;
-    }
-  });
 }
 
 function onStyleChange() {
@@ -3317,16 +3296,13 @@ map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), z
 map.setMissingStyleImageResolver(async ids => await generateImage([map, legendControl.legendMap], ids));
 
 function updateGlobalMapState(changes) {
-  // Ensure all map global state changes are processed at once
-  const changesAsDefaults = Object.fromEntries(Object.entries(changes).map(([key, value]) => [key, { default: value }]))
-
   if (map.isStyleLoaded()) {
-    map.style.setGlobalState(changesAsDefaults);
+    map.style._setGlobalStateValues(changes);
     map._update(true);
   } else {
     // Once the style is marked as ready, a `data` event is triggered
     map.once('data', () => {
-      map.style.setGlobalState(changesAsDefaults);
+      map.style._setGlobalStateValues(changes);
       map._update(true);
     });
   }
