@@ -2,11 +2,15 @@ FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40
 
 WORKDIR /build
 
-RUN npm install yaml@2.8.1
+RUN \
+  --mount=type=bind,source=package.json,target=package.json \
+  --mount=type=bind,source=package-lock.json,target=package-lock.json \
+  npm ci --ignore-scripts
 
 FROM build-yaml AS build-features
 
-RUN --mount=type=bind,source=api/features.mjs,target=features.mjs \
+RUN \
+  --mount=type=bind,source=api/features.mjs,target=features.mjs \
   --mount=type=bind,source=features,target=features \
   node /build/features.mjs \
     > /build/features.json

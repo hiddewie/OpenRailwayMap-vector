@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "description": "npm dependencies of OpenRailwayMap-vector, installed with `npm ci`. Build-time: `yaml` and `chroma-js` for the generator scripts in import/, proxy/js/ and api/. In the browser: the MapLibre style spec for proxy/js/overlay.mjs, at the version MapLibre GL JS 6.9.1 is built with, which the proxy image serves from js/node_modules.",
+  "dependencies": {
+    "@maplibre/maplibre-gl-style-spec": "26.4.2"
+  },
+  "devDependencies": {
+    "chroma-js": "3.1.2",
+    "yaml": "2.8.1"
+  }
+}

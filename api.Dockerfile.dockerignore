@@ -3,3 +3,5 @@
 !api/openrailwaymap_api
 !api/features.mjs
 !features
+!package.json
+!package-lock.json

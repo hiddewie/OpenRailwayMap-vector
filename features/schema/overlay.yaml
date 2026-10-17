@@ -1,0 +1,44 @@
+"$id": "https://openrailwaymap.app/schema/overlay.yaml"
+# draft-07, as the GeoJSON schema it extends
+"$schema": "http://json-schema.org/draft-07/schema#"
+title: OpenRailwayMap overlay
+description: >-
+  A GeoJSON FeatureCollection extended, in the standard-compliant way (a foreign member, RFC 7946
+  section 6.1), with a `hides` field.
+
+  An overlay describes a patch to a vector tile map, such as a proposal for new infrastructure.
+  Each feature is added to the tile layer (`source-layer`) named by its `layer` property, with the
+  properties that layer's features have; features without `layer` are not added. The existing
+  features listed in `hides` are removed.
+
+  Since it is valid GeoJSON, any GeoJSON tool can show the added features; it just ignores `hides`.
+
+  Note: members besides `type`, `features` and `hides` are ignored by the current implementation.
+allOf:
+  - "$ref": "https://geojson.org/schema/FeatureCollection.json"
+  - type: object
+    properties:
+      hides:
+        type: object
+        description: >-
+          The existing features the overlay replaces, which are removed, by tile layer.
+        additionalProperties:
+          description: >-
+            The member name is the name of the tile layer. The member value is the ids of the
+            features removed from that tile layer, as the map identifies features (e.g. a vector
+            tile feature id, or an id property).
+          anyOf:
+            - type: array
+              description: >-
+                Integers, for a tile layer whose features are identified by number.
+              items:
+                type: integer
+            - type: array
+              description: >-
+                Strings, for a tile layer whose features are identified by string.
+              items:
+                type: string
+        examples:
+          - railway_line_high:
+              - 123456
+              - 123457

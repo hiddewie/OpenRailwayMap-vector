@@ -2,9 +2,13 @@ FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40
 
 WORKDIR /build
 
-RUN npm install yaml
+RUN \
+  --mount=type=bind,source=package.json,target=package.json \
+  --mount=type=bind,source=package-lock.json,target=package-lock.json \
+  npm ci --ignore-scripts
 
-RUN --mount=type=bind,source=import/tags.lua.mjs,target=tags.lua.mjs \
+RUN \
+  --mount=type=bind,source=import/tags.lua.mjs,target=tags.lua.mjs \
   --mount=type=bind,source=features/train_protection.yaml,target=train_protection.yaml \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/poi.yaml,target=poi.yaml \
@@ -16,9 +20,13 @@ FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40
 
 WORKDIR /build
 
-RUN npm install yaml
+RUN \
+  --mount=type=bind,source=package.json,target=package.json \
+  --mount=type=bind,source=package-lock.json,target=package-lock.json \
+  npm ci --ignore-scripts
 
-RUN --mount=type=bind,source=import/sql/signal_features.sql.mjs,target=signal_features.sql.mjs \
+RUN \
+  --mount=type=bind,source=import/sql/signal_features.sql.mjs,target=signal_features.sql.mjs \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=symbols,target=symbols \
   node signal_features.sql.mjs \
@@ -28,9 +36,13 @@ FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40
 
 WORKDIR /build
 
-RUN npm install yaml
+RUN \
+  --mount=type=bind,source=package.json,target=package.json \
+  --mount=type=bind,source=package-lock.json,target=package-lock.json \
+  npm ci --ignore-scripts
 
-RUN --mount=type=bind,source=import/sql/operators.sql.mjs,target=operators.sql.mjs \
+RUN \
+  --mount=type=bind,source=import/sql/operators.sql.mjs,target=operators.sql.mjs \
   --mount=type=bind,source=features/operators.yaml,target=operators.yaml \
   node operators.sql.mjs \
     > /build/operators.sql
