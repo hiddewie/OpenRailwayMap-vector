@@ -1171,17 +1171,15 @@ function onThemeChange(theme) {
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
 
-  if (selectedTheme !== resolvedTheme) {
-    selectedTheme = resolvedTheme;
+  selectedTheme = resolvedTheme;
 
-    document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+  document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
 
-    if (map.loaded()) {
-      map.setGlobalStateProperty('theme', resolvedTheme);
-    }
-
-    legendControl.updateLegend();
+  if (map.loaded()) {
+    map.setGlobalStateProperty('theme', resolvedTheme);
   }
+
+  legendControl.updateLegend();
 }
 
 function onEditorChange(editor) {
@@ -1495,6 +1493,7 @@ let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
 let selectedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme);
+
 let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 const backgroundMap = new maplibregl.Map({
