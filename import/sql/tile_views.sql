@@ -491,7 +491,7 @@ RETURN (
       id,
       map_reference as label,
       name,
-      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
+      COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
       operator_bright
@@ -544,7 +544,7 @@ RETURN (
       id,
       map_reference as label,
       name,
-      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
+      COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
       operator_bright
@@ -660,7 +660,7 @@ RETURN (
       station_size,
       map_reference as label,
       name,
-      COALESCE(name_tags['name:' || (query->>'lang')::text], name) as localized_name,
+      COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       count,
       operator_color,
       operator_bright
