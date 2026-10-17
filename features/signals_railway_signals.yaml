@@ -5493,7 +5493,7 @@ features:
 
   # --- ES --- #
 
-  ## Señales de 5, 4, 3 y 2 focos (FFxx) ##
+  ## Señales fijas fundamentales de 5, 4, 3 y 2 focos (FFxx) ##
 
   - description: Señal tipo Adif de 5 focos
     country: ES
@@ -5563,7 +5563,14 @@ features:
 
   - description: Señal tipo Renfe de 3 focos y luz blanca
     country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
+    icon:
+      - default: 'es/Renfe-3+1-FF'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3+1-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3+1-FF5A' }
+        default: 'es/Renfe-3+1-FF1A'
+    exampleIcon: 'es/Renfe-3+1'
     tags:
       - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
@@ -5579,15 +5586,15 @@ features:
       - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2' }
       - { tag: 'railway:signal:shunting:form', value: 'light' }
 
-  - description: Señal tipo Renfe de 3 focos y luz blanca
-    country: ES
-    icon: [ default: 'es/Renfe-3+1-FF8B' ]
-    tags:
-      - { tag: 'railway:signal:main', value: 'ES-RCF:FF' }
-      - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
+  ## Señales fijas indicadoras (FIxx)
 
-  ## Cartelones (FIxx)
+  - description: Indicadora de salida
+    country: ES
+    icon: [ default: 'es/FI2A' ]
+    tags:
+      - { tag: 'railway:signal:main_repeated', value: 'ES-RCF:FI2' }
+      - { tag: 'railway:signal:main_repeated:form', value: 'light' }
+      - { tag: 'railway:signal:main_repeated:states', value: 'ES-RCF:FI2A;ES-RCF:FI2B' }
 
   - description: Silbar
     country: ES
@@ -5619,56 +5626,56 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'ES-RCF:FI15C' }
       - { tag: 'railway:signal:main:form', value: 'sign' }
 
-  - description: flecha ascendente
+  - description: Indicadora de rasante (rampa)
     country: ES
     icon: [ default: 'es/FI11A' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: línea horizontal
+  - description: Indicadora de rasante (horizontal)
     country: ES
     icon: [ default: 'es/FI11B' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: flecha descendente
+  - description: Indicadora de rasante (pendiente)
     country: ES
     icon: [ default: 'es/FI11C' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI11C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: rampa media ascendente entre 9 y 15 mm/m
+  - description: Rampa media ascendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12A' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12A' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: rampa media ascendente entre 16 y 25 mm/m
+  - description: Rampa media ascendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12B' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12B' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: rampa media descendente entre 9 y 15 mm/m
+  - description: Rampa media descendente entre 9 y 15 mm/m
     country: ES
     icon: [ default: 'es/FI12C' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12C' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: rampa media descendente entre 16 y 25 mm/m
+  - description: Rampa media descendente entre 16 y 25 mm/m
     country: ES
     icon: [ default: 'es/FI12D' ]
     tags:
       - { tag: 'railway:signal:slope', value: 'ES-RCF:FI12D' }
       - { tag: 'railway:signal:slope:form', value: 'sign' }
 
-  - description: end of catenary
+  - description: Fin de catenaria
     country: ES
     # TODO add turn direction
     icon: [ default: 'es/FI14A' ]
@@ -5677,7 +5684,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'end_of_catenaxy' }
 
-  - description: power off shortly
+  - description: Cierre parcial del regulador
     country: ES
     icon: [ default: 'es/FI14C' ]
     tags:
@@ -5685,7 +5692,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
-  - description: power off shortly (full)
+  - description: Cierre total del regulador
     country: ES
     icon: [ default: 'es/FI14D' ]
     tags:
@@ -5693,7 +5700,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_shortly' }
 
-  - description: pantograph down
+  - description: Bajar pantógrafos
     country: ES
     icon: [ default: 'es/FI14E' ]
     tags:
@@ -5701,7 +5708,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down' }
 
-  - description: pantograph up
+  - description: Subir pantógrafos
     country: ES
     icon: [ default: 'es/FI14F' ]
     tags:
@@ -5709,7 +5716,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_up' }
 
-  - description: pantograph down announcement
+  - description: Anuncio de bajada de pantógrafo
     country: ES
     icon: [ default: 'es/FI14G' ]
     tags:
@@ -5717,7 +5724,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'pantograph_down_advance' }
 
-  - description: power off announcement
+  - description: Anuncio de zona neutra
     country: ES
     icon: [ default: 'es/FI14H' ]
     tags:
@@ -5725,7 +5732,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off_advance' }
 
-  - description: power off
+  - description: Inicio de zona neutra
     country: ES
     icon: [ default: 'es/FI14I' ]
     tags:
@@ -5733,7 +5740,7 @@ features:
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
       - { tag: 'railway:signal:electricity:type', value: 'power_off' }
 
-  - description: power on
+  - description: Fin de zona neutra
     country: ES
     icon: [ default: 'es/FI14J' ]
     tags:

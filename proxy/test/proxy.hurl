@@ -88,15 +88,42 @@ Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
 
+GET {{base_url}}/sprite/symbols@2x.json
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
 GET {{base_url}}/sprite/symbols.png
 Referer: http://localhost:8000
 HTTP 200
+Content-Type: image/png
+
+GET {{base_url}}/sprite/symbols@2x.png
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: image/png
 
 # Proxy to SDF sprites
 GET {{base_url}}/sdf_sprite/symbols.json
 Referer: http://localhost:8000
 HTTP 200
 Content-Type: application/json
+
+GET {{base_url}}/sdf_sprite/symbols@2x.json
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: application/json
+
+# Proxy to SDF sprites
+GET {{base_url}}/sdf_sprite/symbols.png
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: image/png
+
+GET {{base_url}}/sdf_sprite/symbols@2x.png
+Referer: http://localhost:8000
+HTTP 200
+Content-Type: image/png
 
 # JOSM preset
 GET {{base_url}}/preset.zip
