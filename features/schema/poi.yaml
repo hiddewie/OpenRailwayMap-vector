@@ -1,5 +1,4 @@
-"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
-"$schema": "https://json-schema.org/draft/2020-12/schema"
+"$id": "https://openrailwaymap.app/schema/poi.yaml"
 type: object
 properties:
   features:
