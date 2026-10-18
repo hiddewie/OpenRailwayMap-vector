@@ -259,12 +259,12 @@
                 <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
                 <label class="form-check-label" for="localizationCustom">Custom: </label>
               </div>
-              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
+              <div class="form-check form-check-inline" style="padding-left: 0; width: 6rem">
                 <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
               </div>
             </div>
             <small class="form-text">
-              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+              Control whether localization is enabled and what languages are used. When specifying custom languages, use one or more language codes separated by a comma in order of preference as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>de, jp, en</code> for German, Japanese and English.
             </small>
           </div>
         </form>
