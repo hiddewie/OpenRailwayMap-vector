@@ -364,10 +364,10 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
       'present' as state,
-      'main 'as usage,
+      'main' as usage,
       highspeed,
       radio
-    FROM railway_line_merged l
+    FROM railway_line_low_grouped l
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
@@ -1405,22 +1405,16 @@ RETURN (
     ST_AsMVT(tile, 'speed_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
+      'present' as state,
+      'main' as usage,
       maxspeed,
-      speed_label,
-      max(rank) as rank
-    FROM railway_line_low
+      '' as speed_label,
+      rank
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      maxspeed,
-      speed_label
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1461,26 +1455,20 @@ RETURN (
     ST_AsMVT(tile, 'signals_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      max(train_protection_rank) as train_protection_rank,
+      'present' as state,
+      'main' as usage,
+      0 as train_protection_rank,
       train_protection[1] as train_protection0,
       train_protection[2] as train_protection1,
       train_protection[3] as train_protection2,
-      max(train_protection_construction_rank) as train_protection_construction_rank,
+      0 as train_protection_construction_rank,
       train_protection_construction,
-      max(rank) as rank
-    FROM railway_line_low
+      rank
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      train_protection,
-      train_protection_construction
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1522,19 +1510,15 @@ RETURN (
     ST_AsMVT(tile, 'signals_railway_line_low_construction', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_linemerge(st_simplify(st_collect(way), 100000)), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      any_value(state) as state,
-      max(train_protection_construction_rank) as train_protection_construction_rank,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      'present' as state,
+      0 as train_protection_construction_rank,
       train_protection_construction
-    FROM railway_line_low
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature != 'ferry'
       AND train_protection_construction IS NOT NULL
-    GROUP BY
-      ref,
-      name,
-      train_protection_construction
     ORDER by
       train_protection_construction_rank NULLS FIRST
   ) as tile
@@ -1653,26 +1637,18 @@ RETURN (
     ST_AsMVT(tile, 'electrification_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
+      'present' as state,
+      'main' as usage,
       electrification_state,
       voltage,
       frequency,
       maximum_current,
-      max(rank) as rank
-    FROM railway_line_low
+      rank
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      electrification_state,
-      voltage,
-      frequency,
-      maximum_current
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1837,28 +1813,19 @@ RETURN (
     ST_AsMVT(tile, 'track_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      gaugeint0,
+      'present' as state,
+      'main' as usage,
       gauge0,
+      gaugeint0,
       track_class,
       loading_gauge,
       passenger_lines,
-      max(rank) as rank
-    FROM railway_line_low
+      rank
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      gauge0,
-      gaugeint0,
-      track_class,
-      loading_gauge,
-      passenger_lines
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1899,26 +1866,23 @@ RETURN (
     ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      l.id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      operator,
-      any_value(operator_color) as operator_color,
-      any_value(operator_bright) as operator_bright,
+      'present' as state,
+      'main' usage,
+      COALESCE(
+        ro.color,
+        'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
+      ) as operator_color,
+      coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
       primary_operator,
-      owner,
-      max(rank) as rank
-    FROM railway_line_low
+      null as owner,
+      rank
+    FROM railway_line_low_grouped l
+    LEFT JOIN railway_operator ro
+      ON ro.name = primary_operator
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      operator,
-      primary_operator,
-      owner
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1961,28 +1925,18 @@ RETURN (
     ST_AsMVT(tile, 'route_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
+      'present' as state,
+      'main' as usage,
       highspeed,
-      (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-      max(rank) as rank
-    FROM railway_line_low l
+      route_count,
+      rank
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      l.osm_id,
-      feature,
-      ref,
-      name,
-      highspeed
     ORDER by
-      route_count NULLS FIRST,
+      route_count,
       rank NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
