@@ -150,13 +150,22 @@ const colors = {
 
 const font = {
   regular: [
-    'OpenRailwayMap-Regular',
+    'Helvetica-Neue',
+    'Arial',
+    'Helvetica',
+    'sans-serif',
   ],
   bold: [
-    'OpenRailwayMap-Bold',
+    'Helvetica Neue-Bold',
+    'Arial-Bold',
+    'Helvetica-Bold',
+    'sans-serif-Bold',
   ],
   italic: [
-    'OpenRailwayMap-Italic',
+    'Helvetica Neue-Italic',
+    'Arial-Italic',
+    'Helvetica-Italic',
+    'sans-serif-Italic',
   ],
 }
 
@@ -1753,7 +1762,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['FiraCode-Bold'],
+    'text-font': ['FiraCode-Bold', 'monospace-Bold', 'monospace'],
     'text-size': 11,
   },
 };
@@ -5158,7 +5167,6 @@ const layers = [
 const makeStyle = () => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
-  glyphs: '/font/{fontstack}/{range}.pbf',
   metadata: {},
   name: `OpenRailwayMap`,
   sources,
