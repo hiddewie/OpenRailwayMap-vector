@@ -156,13 +156,13 @@ const font = {
     'sans-serif',
   ],
   bold: [
-    'Helvetica Neue-Bold',
+    'Helvetica-Neue-Bold',
     'Arial-Bold',
     'Helvetica-Bold',
     'sans-serif-Bold',
   ],
   italic: [
-    'Helvetica Neue-Italic',
+    'Helvetica-Neue-Italic',
     'Arial-Italic',
     'Helvetica-Italic',
     'sans-serif-Italic',
