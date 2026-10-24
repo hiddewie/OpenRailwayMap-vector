@@ -229,7 +229,6 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
       state,
-      usage,
       highspeed,
       radio
     FROM railway_line_low_grouped l
@@ -248,7 +247,6 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "highspeed": "boolean",
           "radio": "string"
         }
@@ -1274,12 +1272,10 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      usage,
-      maxspeed,
-      '' as speed_label,
-      rank
+      maxspeed
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1297,9 +1293,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
-          "maxspeed": "number",
-          "speed_label": "string"
+          "maxspeed": "number"
         }
       }
     ]
@@ -1325,17 +1319,14 @@ RETURN (
       feature,
       state,
       usage,
-      0 as train_protection_rank,
-      train_protection[1] as train_protection0,
-      train_protection[2] as train_protection1,
-      train_protection[3] as train_protection2,
-      0 as train_protection_construction_rank,
+      train_protection0,
       train_protection_construction,
       rank
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      train_protection_rank DESC
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1350,13 +1341,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
-          "train_protection0": "string",
-          "train_protection1": "string",
-          "train_protection2": "string",
-          "train_protection_rank": "integer",
-          "train_protection_construction": "string",
-          "train_protection_construction_rank": "integer"
+          "train_protection0": "string"
         }
       }
     ]
@@ -1378,14 +1363,13 @@ RETURN (
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       state,
-      0 as train_protection_construction_rank,
       train_protection_construction
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature != 'ferry'
       AND train_protection_construction IS NOT NULL
     ORDER by
-      train_protection_construction_rank NULLS FIRST
+      train_protection_construction_rank DESC
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1506,16 +1490,16 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      usage,
       electrification_state,
       voltage,
       frequency,
-      maximum_current,
-      rank
+      maximum_current
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      voltage NULLS FIRST,
+      frequency NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1530,14 +1514,10 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
-          "maximum_current": "integer",
-          "future_frequency": "number",
-          "future_voltage": "integer",
-          "future_maximum_current": "integer"
+          "maximum_current": "integer"
         }
       }
     ]
@@ -1687,12 +1667,12 @@ RETURN (
       gaugeint0,
       track_class,
       loading_gauge,
-      passenger_lines,
-      rank
+      passenger_lines
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      gaugeint0 NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1710,6 +1690,8 @@ DO $do$ BEGIN
           "usage": "string",
           "gauge0": "string",
           "gaugeint0": "number",
+          "track_class": "string",
+          "loading_gauge": "string",
           "passenger_lines": "number"
         }
       }
@@ -1735,18 +1717,8 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      usage,
-      COALESCE(
-        ro.color,
-        'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
-      ) as operator_color,
-      coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
-      primary_operator,
-      null as owner,
-      rank
+      operator_color
     FROM railway_line_low_grouped l
-    LEFT JOIN railway_operator ro
-      ON ro.name = primary_operator
     WHERE way && ST_TileEnvelope(z, x, y)
     ORDER by
       rank NULLS LAST
@@ -1764,12 +1736,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
-          "operator": "string",
-          "operator_color": "string",
-          "operator_bright": "string",
-          "primary_operator": "string",
-          "owner": "string"
+          "operator_color": "string"
         }
       }
     ]
@@ -1794,15 +1761,10 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
       state,
-      usage,
-      highspeed,
-      route_count,
-      rank
+      route_count
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    ORDER by
-      route_count,
-      rank NULLS LAST
+    ORDER by route_count
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1817,7 +1779,6 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "route_count": "integer"
         }
       }

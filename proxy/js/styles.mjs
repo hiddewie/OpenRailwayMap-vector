@@ -2639,6 +2639,8 @@ const layers = [
 
   ...railwayLine(
     ['step', ['zoom'],
+      '',
+      7,
       ['match', ['global-state', 'tracks'],
         'usage', trackLabel.ref,
         'speed', trackLabel.speed,
@@ -2716,7 +2718,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2727,14 +2728,13 @@ const layers = [
       },
       {
         id: 'train_protection_line_low_train_protection_construction',
-        minzoom: 5, // TODO also on source
+        minzoom: 5,
         maxzoom: 7,
         source: 'signals_railway_line_low',
         sourceLayer: 'signals_railway_line_low_construction',
         states: {
           present: train_protection_construction_dasharray,
         },
-        sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2752,8 +2752,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
-        sort: ['coalesce', ['get', 'train_protection_rank'], 0],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2770,7 +2768,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2792,7 +2789,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,

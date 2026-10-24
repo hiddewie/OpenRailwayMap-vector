@@ -142,6 +142,7 @@ postgres:
     signals_railway_line_low_construction:
       schema: public
       function: signals_railway_line_low_construction
+      minzoom: 5
       maxzoom: 7
 
     signals_railway_line_low:

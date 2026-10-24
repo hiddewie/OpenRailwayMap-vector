@@ -164,8 +164,10 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     radio,
     maxspeed,
     speed_label,
-    train_protection,
+    train_protection[1] as train_protection0,
+    max(train_protection_rank) as train_protection_rank,
     train_protection_construction,
+    max(train_protection_construction_rank) as train_protection_construction_rank,
     electrification_state,
     voltage,
     frequency,
@@ -175,7 +177,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     track_class,
     loading_gauge,
     passenger_lines,
-    primary_operator,
+    operator_color,
     route_count,
     max(rank) as rank
   FROM railway_line_view l
@@ -192,7 +194,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     radio,
     maxspeed,
     speed_label,
-    train_protection,
+    train_protection0,
     train_protection_construction,
     electrification_state,
     voltage,
@@ -203,7 +205,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     track_class,
     loading_gauge,
     passenger_lines,
-    primary_operator,
+    operator_color,
     route_count;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS railway_line_low_grouped AS
