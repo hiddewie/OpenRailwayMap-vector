@@ -1318,10 +1318,7 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      usage,
-      train_protection0,
-      train_protection_construction,
-      rank
+      train_protection0
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature != 'ferry'

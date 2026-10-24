@@ -607,6 +607,7 @@ const features = {
   'standard_railway_line_low-standard_railway_line_low': railwayLineFeatures,
   'speed_railway_line_low-speed_railway_line_low': railwayLineFeatures,
   'signals_railway_line_low-signals_railway_line_low': railwayLineFeatures,
+  'signals_railway_line_low-signals_railway_line_low_construction': railwayLineFeatures,
   'electrification_railway_line_low-electrification_railway_line_low': railwayLineFeatures,
   'track_railway_line_low-track_railway_line_low': railwayLineFeatures,
   'operator_railway_line_low-operator_railway_line_low': railwayLineFeatures,
