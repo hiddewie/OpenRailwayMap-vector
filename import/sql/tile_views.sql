@@ -295,6 +295,8 @@ DO $do$ BEGIN
           "gauges": "string",
           "loading_gauge": "string",
           "track_class": "string",
+          "axle_load": "number",
+          "metre_load": "number",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
@@ -338,6 +340,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
     gauge0,
     loading_gauge,
     track_class,
+    axle_load,
+    metre_load,
     operator,
     operator_color,
     operator_bright,
@@ -1866,6 +1870,8 @@ RETURN (
       gaugeint0,
       gauge0,
       track_class,
+      axle_load,
+      metre_load,
       loading_gauge,
       passenger_lines,
       max(rank) as rank
@@ -1878,6 +1884,8 @@ RETURN (
       gauge0,
       gaugeint0,
       track_class,
+      axle_load,
+      metre_load,
       loading_gauge,
       passenger_lines
     ORDER by
@@ -1899,7 +1907,9 @@ DO $do$ BEGIN
           "usage": "string",
           "gauge0": "string",
           "gaugeint0": "number",
-          "passenger_lines": "number"
+          "passenger_lines": "number",
+          "axle_load": "number",
+          "metre_load": "number"
         }
       }
     ]

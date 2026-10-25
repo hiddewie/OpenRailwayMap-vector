@@ -642,6 +642,14 @@ const styleElements = [
         value: 'track_class',
       },
       {
+        name: 'Axle load',
+        value: 'axle_load',
+      },
+      {
+        name: 'Metre load',
+        value: 'metre_load',
+      },
+      {
         name: 'Operator',
         value: 'operator',
       },
