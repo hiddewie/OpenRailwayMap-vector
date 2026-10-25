@@ -493,6 +493,11 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   'gray',
 ];
 
+const platformHeightColor = ['case',
+  ['!=', ['get', 'height'], null], turboColorMap(['get', 'height'], 0, 1.3, 1.0),
+  'grey',
+];
+
 const radioColor = ['match', ['get', 'radio'],
   ...radio.radio.flatMap(({value, color}) =>
     [value, color]
@@ -2259,12 +2264,15 @@ const layers = [
       ['==', ["geometry-type"], 'MultiPolygon'],
     ],
     paint: {
-      'fill-color': colors.styles.standard.platform,
+      'fill-color': ['match', ['global-state', 'platforms'],
+        'height', platformHeightColor,
+        colors.styles.standard.platform,
+      ],
     },
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
     },
@@ -2282,7 +2290,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'line-join': 'round',
@@ -2291,7 +2299,10 @@ const layers = [
       'line-width': 2,
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.platform,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.platform,
+        ],
       ],
     },
   },
@@ -2305,7 +2316,10 @@ const layers = [
     paint: {
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.platform,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.platform,
+        ],
       ],
       'line-width': ['interpolate', ['linear'], ['zoom'],
         15, 2,
@@ -2316,7 +2330,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
     },
@@ -2330,13 +2344,14 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'line-join': 'round',
     },
     paint: {
       'line-width': 3,
+      // TODO
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
         colors.styles.standard.track.halo,
@@ -4340,7 +4355,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -4367,7 +4382,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -4396,7 +4411,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'symbol-placement': 'line',
@@ -5228,7 +5243,7 @@ const makeStyle = () => ({
       default: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
     },
     platforms: {
-      // Values: plain, none
+      // Values: plain, height, none
       default: 'plain',
     },
     substations: {

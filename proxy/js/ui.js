@@ -690,6 +690,10 @@ const styleElements = [
         value: 'plain',
       },
       {
+        name: 'Height',
+        value: 'height',
+      },
+      {
         name: 'None',
         value: 'none',
       },
