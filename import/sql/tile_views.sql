@@ -1318,12 +1318,14 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      train_protection0
+      train_protection0,
+      train_protection_construction
     FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
       AND feature != 'ferry'
     ORDER by
-      train_protection_rank DESC
+      train_protection_rank DESC,
+      train_protection_construction_rank DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1338,48 +1340,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "train_protection0": "string"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE FUNCTION signals_railway_line_low_construction(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'signals_railway_line_low_construction', 4096, 'way')
-  FROM (
-    SELECT
-      id,
-      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      state,
-      train_protection_construction
-    FROM railway_line_low_grouped
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND feature != 'ferry'
-      AND train_protection_construction IS NOT NULL
-    ORDER by
-      train_protection_construction_rank DESC
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low_construction IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "signals_railway_line_low_construction",
-        "fields": {
-          "id": "string",
-          "state": "string",
+          "train_protection0": "string",
           "train_protection_construction": "string"
         }
       }

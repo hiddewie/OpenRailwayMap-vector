@@ -348,6 +348,11 @@ const sourceLayers = {
           'state',
           'train_protection2',
         ],
+        [
+          'feature',
+          'state',
+          'train_protection_construction',
+        ],
       ],
       features: [
         ...signals_railway_line.train_protections.map(train_protection => ({
@@ -364,7 +369,21 @@ const sourceLayers = {
             train_protection1: null,
             train_protection2: null,
             train_protection_rank: 1,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
           },
+          variants: [
+            {
+              properties: {
+                train_protection0: 'unknown',
+                train_protection1: null,
+                train_protection2: null,
+                train_protection_rank: 0,
+                train_protection_construction: train_protection.train_protection,
+                train_protection_construction_rank: 1,
+              }
+            }
+          ],
         })),
         {
           legend: '(unknown)',
@@ -380,15 +399,11 @@ const sourceLayers = {
             train_protection1: null,
             train_protection2: null,
             train_protection_rank: 0,
+            train_protection_construction: null,
+            train_protection_construction_rank: 0,
           },
         },
       ]
-    },
-  },
-  'signals_railway_line_low-signals_railway_line_low_construction': {
-    train_protection: {
-      key: [],
-      features: [],
     },
   },
   'operator_railway_line_low-operator_railway_line_low': {

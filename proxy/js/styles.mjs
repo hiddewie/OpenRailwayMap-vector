@@ -590,7 +590,7 @@ const sources = {
   },
   signals_railway_line_low: {
     type: 'vector',
-    url: '/signals_railway_line_low,signals_railway_line_low_construction',
+    url: '/signals_railway_line_low',
     promoteId: 'id',
   },
   electrification_railway_line_low: {
@@ -2731,10 +2731,11 @@ const layers = [
         minzoom: 5,
         maxzoom: 7,
         source: 'signals_railway_line_low',
-        sourceLayer: 'signals_railway_line_low_construction',
+        sourceLayer: 'signals_railway_line_low',
         states: {
           present: train_protection_construction_dasharray,
         },
+        filter: ['!=', ['get', 'train_protection_construction'], null],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
