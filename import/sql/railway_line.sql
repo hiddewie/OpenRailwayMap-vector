@@ -153,7 +153,7 @@ CREATE OR REPLACE VIEW railway_line_view AS
 CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
   SELECT
     MIN(l.id) AS id,
-    ST_Simplify((ST_Dump(ST_LineMerge(ST_Collect(way)))).geom, 10000) AS way,
+    ST_Simplify((ST_Dump(ST_LineMerge(ST_Collect(way)))).geom, 1000) AS way,
     feature,
     'present' as state,
     'main' as usage,
