@@ -493,11 +493,11 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   'gray',
 ];
 const axleLoadFillColor = ['case',
-  ['!=', ['get', 'axle_load'], null], turboColorMap(['get', 'axle_load'], 1, 30, .1),
+  ['!=', ['get', 'axle_load'], null], turboColorMap(['get', 'axle_load'], 10, 30, 1.0),
   'gray',
 ];
 const metreLoadFillColor = ['case',
-  ['!=', ['get', 'metre_load'], null], turboColorMap(['get', 'metre_load'], 1, 30, .1),
+  ['!=', ['get', 'metre_load'], null], turboColorMap(['get', 'metre_load'], 3, 12, 1.0),
   'gray',
 ];
 
