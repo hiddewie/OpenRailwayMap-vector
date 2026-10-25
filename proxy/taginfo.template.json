@@ -143,7 +143,6 @@
     { "key": "railway:switch" },
     { "key": "railway:turnout_side" },
 
-    { "key": "public_transport" },
     { "key": "railway:radio" },
     { "key": "railway:vacancy_detection" },
     { "key": "railway", "value": "blockpost" },
@@ -152,6 +151,10 @@
     { "key": "railway", "value": "subway_entrance" },
     { "key": "railway", "value": "train_station_entrance" },
     { "key": "tourism", "value": "museum" },
-    { "key": "museum", "value": "railway" }
+    { "key": "museum", "value": "railway" },
+    { "key": "public_transport", "value": "stop_position" },
+    { "key": "public_transport", "value": "platform" },
+    { "key": "public_transport", "value": "stop_area" },
+    { "key": "public_transport", "value": "stop_area_group" }
   ]
 }
