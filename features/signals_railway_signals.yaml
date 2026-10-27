@@ -8122,16 +8122,6 @@ features:
       - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
 
-  - description: Caisson LGV
-    country: FR
-    exampleIcon: 'fr/boxes/examples/LGV'
-    icon: 
-      - default: 'fr/boxes/medium'
-      - default: 'fr/boxes/medium/LGV'
-    tags:
-      - { tag: 'railway:signal:electricity', value: 'FR:LGV' }
-      - { tag: 'railway:signal:electricity:form', value: 'light' }
-
   # SACEM
 
   - description: Signal d'annulation
