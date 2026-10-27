@@ -194,6 +194,52 @@ function featureIconsSql(icons) {
   }
 }
 
+// SQL string literal
+function sqlString(value) {
+  return `'${value.replaceAll("'", "''")}'`
+}
+
+// Computed captions (features[].caption): a caption built from a number found
+// in a tag, used when the signal has no explicit caption tag
+const captionFeatures = signalsWithSignalType.filter(feature => feature.caption)
+
+// Number at the start of a tag value ("118.761" or "118,761", optionally
+// followed by other ';' separated values), or NULL. Values with a unit prefix
+// (mi:, pkm:) do not match.
+function captionNumberSql(tag) {
+  return `replace(substring("${tag}" from '^ *(-?[0-9]+([.,][0-9]+)?) *(;|$)'), ',', '.')::numeric`
+}
+
+function captionValueSql(feature) {
+  const caption = feature.caption
+  const parts = caption.template.split('{}')
+  if (parts.length !== 2) {
+    throw new Error(`Caption template of feature ${feature.description} must contain {} exactly once: "${caption.template}"`)
+  }
+
+  const number = `COALESCE(${[caption.tag].flat().map(captionNumberSql).join(', ')})`
+  const rounding = caption.rounding ?? 'round'
+  if (!['round', 'truncate'].includes(rounding)) {
+    throw new Error(`Caption rounding of feature ${feature.description} must be round or truncate: "${rounding}"`)
+  }
+  const rounded = caption.decimals !== undefined ? `${rounding === 'truncate' ? 'trunc' : 'round'}(${number}, ${caption.decimals})` : number
+  const text = caption.decimalSeparator ? `replace(${rounded}::text, '.', ${sqlString(caption.decimalSeparator)})` : `${rounded}::text`
+  return `${sqlString(parts[0])} || ${text} || ${sqlString(parts[1])}`
+}
+
+// The explicit caption tag wins; otherwise the first matching feature with a
+// computed caption provides it
+function captionSql() {
+  if (captionFeatures.length === 0) {
+    return 's.caption'
+  }
+
+  return `COALESCE(s.caption, CASE${captionFeatures.map(feature => `
+      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
+      WHEN ${matchFeatureTagsSql(feature.tags)} THEN ${captionValueSql(feature)}`).join('')}
+    END)`
+}
+
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -327,7 +373,7 @@ CREATE OR REPLACE VIEW railway_signals_view AS
     railway,
     sd.direction_both,
     ref,
-    caption,
+    ${captionSql()} as caption,
     position,
     wikidata,
     wikimedia_commons,
