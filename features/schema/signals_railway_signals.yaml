@@ -71,6 +71,39 @@ properties:
           enum:
             - line
             - tram
+        caption:
+          type: object
+          description: Builds the caption shown next to the signal from a number found in a tag. An explicit caption tag on the signal always takes precedence.
+          properties:
+            tag:
+              description: The tag holding the number, or a list of tags tried in order. Only the first value of a semicolon separated list is used; values with a unit prefix (mi:, pkm:) are ignored.
+              oneOf:
+                - type: string
+                - type: array
+                  items:
+                    type: string
+            template:
+              type: string
+              description: The caption, where {} is replaced by the number
+            decimals:
+              type: integer
+              minimum: 0
+              description: Shows the number with this many decimals. Without it, the number is shown as tagged.
+            rounding:
+              type: string
+              enum:
+                - round
+                - truncate
+              default: round
+              description: How extra decimals are dropped, rounded to the nearest value or truncated
+            decimalSeparator:
+              type: string
+              default: '.'
+              description: The decimal separator shown in the caption
+          required:
+            - tag
+            - template
+          additionalProperties: false
         exampleIcon:
           type: string
           description: Used when a complex icon is used, to show a representative example of this feature using a single icon.
