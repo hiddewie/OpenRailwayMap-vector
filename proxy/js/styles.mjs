@@ -492,6 +492,14 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   ),
   'gray',
 ];
+const axleLoadFillColor = ['case',
+  ['!=', ['get', 'axle_load'], null], turboColorMap(['get', 'axle_load'], 10, 30, 1.0),
+  'gray',
+];
+const metreLoadFillColor = ['case',
+  ['!=', ['get', 'metre_load'], null], turboColorMap(['get', 'metre_load'], 3, 12, 1.0),
+  'gray',
+];
 
 const radioColor = ['match', ['get', 'radio'],
   ...radio.radio.flatMap(({value, color}) =>
@@ -543,6 +551,14 @@ const trackLabel = {
   gauge: ['coalesce', ['get', 'gauges'], ''],
   loadingGauge: ['coalesce', ['get', 'loading_gauge'], ''],
   trackClass: ['coalesce', ['get', 'track_class'], ''],
+  axleLoad: ['case',
+    ['!=', ['get', 'axle_load'], null], ['number-format', ['get', 'axle_load'], {'max-fraction-digits': 1}],
+    ''
+  ],
+  metreLoad: ['case',
+    ['!=', ['get', 'metre_load'], null], ['number-format', ['get', 'metre_load'], {'max-fraction-digits': 1}],
+    ''
+  ],
   operator:  ['coalesce', ['get', 'primary_operator'], ''],
   radio: ['match', ['get', 'radio'],
     ...radio.radio.flatMap(({value, name}) =>
@@ -2649,6 +2665,8 @@ const layers = [
         'gauge', trackLabel.gauge,
         'loading_gauge', trackLabel.loadingGauge,
         'track_class', trackLabel.trackClass,
+        'axle_load', trackLabel.axleLoad,
+        'metre_load', trackLabel.metreLoad,
         'operator', trackLabel.operator,
         'routes', trackLabel.ref,
         'passenger_lines', trackLabel.ref,
@@ -2666,6 +2684,8 @@ const layers = [
         'gauge', trackLabel.gauge,
         'loading_gauge', trackLabel.loadingGauge,
         'track_class', trackLabel.trackClass,
+        'axle_load', trackLabel.axleLoad,
+        'metre_load', trackLabel.metreLoad,
         'operator', trackLabel.operator,
         'routes', trackLabel.refName,
         'passenger_lines', trackLabel.refName,
@@ -2801,13 +2821,15 @@ const layers = [
           'gauge', gaugeColor('gauge0', 'gaugeint0'),
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'passenger_lines', ['match', ['coalesce', ['get', 'passenger_lines'], 0],
             0, 'gray',
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           colors.styles.standard.unknown,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['gauge', 'loading_gauge', 'track_class', 'passenger_lines']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'passenger_lines']]],
       },
       {
         id: 'operator_line_low',
@@ -2860,7 +2882,7 @@ const layers = [
         },
         width: 2,
         filter: ['case',
-          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'gauge', 'loading_gauge', 'track_class',
+          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load',
           'operator', 'routes', 'passenger_lines']]], ['!=', ['get', 'feature'], 'ferry'],
           true,
         ],
@@ -2880,6 +2902,8 @@ const layers = [
           'gauge', gaugeColor('gauge0', 'gaugeint0'),
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
@@ -2900,7 +2924,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'operator', 'routes', 'passenger_lines', 'radio']]],
       },
       {
         id: 'train_protection_line_med_train_protection_construction',
@@ -2984,7 +3008,7 @@ const layers = [
           disused: disused_dasharray,
         },
         filter: ['case',
-          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'loading_gauge', 'track_class']]], ['!=', ['get', 'feature'], 'ferry'],
+          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'loading_gauge', 'track_class', 'axle_load', 'metre_load']]], ['!=', ['get', 'feature'], 'ferry'],
           true,
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -3100,6 +3124,8 @@ const layers = [
           'speed', speedColor,
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
@@ -3124,7 +3150,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'routes', 'passenger_lines', 'radio']]],
       },
       {
         id: 'railway_line_construction_proposed',
@@ -5252,7 +5278,7 @@ const makeStyle = () => ({
       default: [],
     },
     tracks: {
-      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, track, operator, routes, passenger_lines
+      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, gauge, loading_gauge, track_class, axle_load, metre_load, operator, routes, passenger_lines
       default: 'usage',
     },
   },
