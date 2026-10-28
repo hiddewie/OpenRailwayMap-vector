@@ -26,6 +26,8 @@ RETURN (
       ref,
       track_ref,
       track_class,
+      axle_load,
+      metre_load,
       preferred_direction,
       rank,
       maxspeed,
@@ -154,6 +156,8 @@ DO $do$ BEGIN
           "gauges": "string",
           "loading_gauge": "string",
           "track_class": "string",
+          "axle_load": "number",
+          "metre_load": "number",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
@@ -197,6 +201,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
     gauge0,
     loading_gauge,
     track_class,
+    axle_load,
+    metre_load,
     operator,
     operator_color,
     operator_bright,
@@ -1624,6 +1630,8 @@ RETURN (
       gauge0,
       gaugeint0,
       track_class,
+      axle_load,
+      metre_load,
       loading_gauge,
       passenger_lines
     FROM railway_line_low_grouped
@@ -1650,7 +1658,9 @@ DO $do$ BEGIN
           "gaugeint0": "number",
           "track_class": "string",
           "loading_gauge": "string",
-          "passenger_lines": "number"
+          "passenger_lines": "number",
+          "axle_load": "number",
+          "metre_load": "number"
         }
       }
     ]
