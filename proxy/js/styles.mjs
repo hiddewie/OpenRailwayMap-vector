@@ -2336,6 +2336,26 @@ const layers = [
     },
   },
   {
+    id: 'railway_platforms_edges_border',
+    type: 'line',
+    minzoom: 17,
+    source: 'openrailwaymap_platforms',
+    'source-layer': 'standard_railway_platform_edges',
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
+        'none',
+      ],
+      'line-join': 'round',
+    },
+    paint: {
+      'line-width': 2,
+      'line-gap-width': 3,
+      'line-color': colors.halo,
+    },
+  },
+  {
     id: 'railway_platforms_edges',
     type: 'line',
     minzoom: 17,
@@ -2351,10 +2371,12 @@ const layers = [
     },
     paint: {
       'line-width': 3,
-      // TODO
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.track.halo,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.track.halo,
+        ],
       ],
     },
   },
