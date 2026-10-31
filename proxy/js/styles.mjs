@@ -5210,24 +5210,25 @@ const makeStyle = () => ({
     "Noto-Sans-Regular": [
       {
         "url": "/font/NotoSans-Regular.ttf",
-        "unicode-range": ["U+0020-052F"]
+        "unicode-range": ["U+0020-052F"],
       }
     ],
     "Noto-Sans-Bold": [
       {
         "url": "/font/NotoSans-Bold.ttf",
-        "unicode-range": ["U+0020-052F"]
+        "unicode-range": ["U+0020-052F"],
       }
     ],
     "Noto-Sans-Italic": [
       {
         "url": "/font/NotoSans-Italic.ttf",
-        "unicode-range": ["U+0020-052F"]
+        "unicode-range": ["U+0020-052F"],
       }
     ],
     "Fira-Code-Bold": [
       {
         "url": "/font/FiraCode-Bold.ttf",
+        "unicode-range": ["U+0020-052F"],
       }
     ],
   },
