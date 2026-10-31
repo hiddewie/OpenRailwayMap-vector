@@ -177,7 +177,11 @@ const font = {
     'sans-serif-Italic',
   ],
   monospaceBold: [
+    // Bundled as web font
     'Fira-Code-Bold',
+    // Fall back system fonts
+    'monospace-Bold',
+    'monospace',
   ],
 }
 
