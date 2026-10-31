@@ -1,27 +1,27 @@
 $schema: ./schema/track_class.yaml
 
 track_classes:
-  - { value: 'A', color: 'hsl(248, 100%, 40%)' }
-  - { value: 'B1', color: 'hsl(220, 100%, 40%)' }
-  - { value: 'B2', color: 'hsl(200, 100%, 40%)' }
-  - { value: 'C1', color: 'hsl(190, 100%, 40%)' }
-  - { value: 'C2', color: 'hsl(180, 100%, 40%)' }
-  - { value: 'C3', color: 'hsl(160, 100%, 40%)' }
-  - { value: 'C3L', color: 'hsl(140, 100%, 40%)' }
-  - { value: 'C4', color: 'hsl(120, 100%, 40%)' }
-  - { value: 'CE', color: 'hsl(100, 100%, 40%)' }
-  - { value: 'CM2', color: 'hsl(80, 100%, 40%)' }
-  - { value: 'CM3', color: 'hsl(60, 100%, 40%)' }
-  - { value: 'CM4', color: 'hsl(40, 100%, 40%)' }
-  - { value: 'D', color: 'hsl(10, 100%, 40%)' }
-  - { value: 'D2', color: 'hsl(30, 100%, 40%)' }
-  - { value: 'D3', color: 'hsl(20, 100%, 40%)' }
-  - { value: 'D4', color: 'hsl(10, 100%, 40%)' }
-  - { value: 'D4L', color: 'hsl(0, 100%, 40%)' }
-  - { value: 'E4', color: 'hsl(340, 100%, 40%)' }
-  - { value: 'E5', color: 'hsl(320, 100%, 40%)' }
-  - { value: 'F', color: 'hsl(300, 100%, 40%)' }
-  - { value: 'G', color: 'hsl(280, 100%, 40%)' }
+  - { value: 'A', color: 'hsl(248, 100%, 40%)', axle_load: 16.0, metre_load: 5.0 }
+  - { value: 'B1', color: 'hsl(220, 100%, 40%)', axle_load: 18.0, metre_load: 5.0 }
+  - { value: 'B2', color: 'hsl(200, 100%, 40%)', axle_load: 18.0, metre_load: 6.4 }
+  - { value: 'C1', color: 'hsl(190, 100%, 40%)', axle_load: 20.0 }
+  - { value: 'C2', color: 'hsl(180, 100%, 40%)', axle_load: 20.0, metre_load: 6.4 }
+  - { value: 'C3', color: 'hsl(160, 100%, 40%)', axle_load: 20.0, metre_load: 7.2 }
+  - { value: 'C3L', color: 'hsl(140, 100%, 40%)', axle_load: 20.0, metre_load: 7.2 }
+  - { value: 'C4', color: 'hsl(120, 100%, 40%)', axle_load: 20.0, metre_load: 8.0 }
+  - { value: 'CE', color: 'hsl(100, 100%, 40%)', axle_load: 20.0, metre_load: 6.4 }
+  - { value: 'CM2', color: 'hsl(80, 100%, 40%)', axle_load: 21.0, metre_load: 6.4 }
+  - { value: 'CM3', color: 'hsl(60, 100%, 40%)', axle_load: 21.0, metre_load: 7.2 }
+  - { value: 'CM4', color: 'hsl(40, 100%, 40%)', axle_load: 21.0, metre_load: 8.0 }
+  - { value: 'D', color: 'hsl(10, 100%, 40%)', axle_load: 22.5 }
+  - { value: 'D2', color: 'hsl(30, 100%, 40%)', axle_load: 22.5, metre_load: 6.4 }
+  - { value: 'D3', color: 'hsl(20, 100%, 40%)', axle_load: 22.5, metre_load: 7.2 }
+  - { value: 'D4', color: 'hsl(10, 100%, 40%)', axle_load: 22.5, metre_load: 8.0 }
+  - { value: 'D4L', color: 'hsl(0, 100%, 40%)', axle_load: 22.5, metre_load: 8.0 }
+  - { value: 'E4', color: 'hsl(340, 100%, 40%)', axle_load: 25.0, metre_load: 8.0 }
+  - { value: 'E5', color: 'hsl(320, 100%, 40%)', axle_load: 25.0, metre_load: 8.8 }
+  - { value: 'F', color: 'hsl(300, 100%, 40%)', axle_load: 27.5 }
+  - { value: 'G', color: 'hsl(280, 100%, 40%)', axle_load: 30.0 }
   - { value: '1', color: 'hsl(240, 100%, 40%)' }
   - { value: '2', color: 'hsl(210, 100%, 40%)' }
   - { value: '3', color: 'hsl(180, 100%, 40%)' }

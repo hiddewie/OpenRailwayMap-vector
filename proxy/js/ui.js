@@ -410,9 +410,9 @@ function hideNews() {
 function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
   if (typeof presetOrStyle === 'string') {
-    selectPreset(preset);
+    selectPreset(presetOrStyle);
   } else if (typeof presetOrStyle === 'object') {
-    selectedStyle(presetOrStyle)
+    selectStyle(presetOrStyle)
   }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
@@ -640,6 +640,14 @@ const styleElements = [
       {
         name: 'Track class',
         value: 'track_class',
+      },
+      {
+        name: 'Axle load',
+        value: 'axle_load',
+      },
+      {
+        name: 'Metre load',
+        value: 'metre_load',
       },
       {
         name: 'Operator',
@@ -1366,7 +1374,7 @@ function layoutImages(images) {
         break;
 
       case 'left':
-        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.x = globalOffset.x - image.image.data.width
         image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
         globalOffset.x = Math.min(globalOffset.x, image.offset.x)
         globalOffset.y = Math.min(globalOffset.y, image.offset.y)
@@ -1554,6 +1562,11 @@ map.setStyle(`${location.origin}/style.json`, {
 
 function selectPreset(preset) {
   styleControl.selectPreset(preset);
+  onStyleChange();
+}
+
+function selectStyle(style) {
+  styleControl.selectStyleOptions(style);
   onStyleChange();
 }
 
