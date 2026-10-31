@@ -150,22 +150,34 @@ const colors = {
 
 const font = {
   regular: [
+    // Bundled as web font
+    'Noto-Sans-Regular',
+    // Fall back system fonts
     'Helvetica-Neue',
     'Arial',
     'Helvetica',
     'sans-serif',
   ],
   bold: [
+    // Bundled as web font
+    'Noto-Sans-Bold',
+    // Fall back system fonts
     'Helvetica-Neue-Bold',
     'Arial-Bold',
     'Helvetica-Bold',
     'sans-serif-Bold',
   ],
   italic: [
+    // Bundled as web font
+    'Noto-Sans-Italic',
+    // Fall back system fonts
     'Helvetica-Neue-Italic',
     'Arial-Italic',
     'Helvetica-Italic',
     'sans-serif-Italic',
+  ],
+  monospaceBold: [
+    'Fira-Code-Bold',
   ],
 }
 
@@ -1778,7 +1790,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['FiraCode-Bold', 'monospace-Bold', 'monospace'],
+    'text-font': font.monospaceBold,
     'text-size': 11,
   },
 };
@@ -5190,6 +5202,31 @@ const layers = [
 const makeStyle = () => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
+  ['font-faces']: {
+    "Noto-Sans-Regular": [
+      {
+        "url": "http://localhost:8000/font/NotoSans-Regular.ttf",
+        "unicode-range": ["U+0020-052F"]
+      }
+    ],
+    "Noto-Sans-Bold": [
+      {
+        "url": "http://localhost:8000/font/NotoSans-Bold.ttf",
+        "unicode-range": ["U+0020-052F"]
+      }
+    ],
+    "Noto-Sans-Italic": [
+      {
+        "url": "http://localhost:8000/font/NotoSans-Italic.ttf",
+        "unicode-range": ["U+0020-052F"]
+      }
+    ],
+    "Fira-Code-Bold": [
+      {
+        "url": "http://localhost:8000/font/FiraCode-Bold.ttf",
+      }
+    ],
+  },
   metadata: {},
   name: `OpenRailwayMap`,
   sources,
