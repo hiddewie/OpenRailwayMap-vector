@@ -665,6 +665,10 @@ const styleElements = [
         name: 'Radio',
         value: 'radio',
       },
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
     ],
   },
   {
@@ -696,6 +700,10 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Height',
+        value: 'height',
       },
       {
         name: 'None',
