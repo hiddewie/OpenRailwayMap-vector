@@ -657,6 +657,10 @@ const styleElements = [
         name: 'Radio',
         value: 'radio',
       },
+      {
+        name: 'Plain',
+        value: 'plain',
+      },
     ],
   },
   {

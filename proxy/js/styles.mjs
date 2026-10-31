@@ -134,6 +134,7 @@ const colors = {
       platform: themeSwitch('#aaa', '#aaa'),
       stationAreaGroup: themeSwitch('black', 'white'),
       levelCrossing: 'red',
+      plain: themeSwitch('#666', '#ccc'),
     },
   },
   km: {
@@ -2690,6 +2691,7 @@ const layers = [
         'routes', trackLabel.ref,
         'passenger_lines', trackLabel.ref,
         'radio', trackLabel.radio,
+        'plain', trackLabel.ref,
         '',
       ],
       14,
@@ -2707,6 +2709,7 @@ const layers = [
         'routes', trackLabel.refName,
         'passenger_lines', trackLabel.refName,
         'radio', trackLabel.radio,
+        'plain', trackLabel.ref,
         '',
       ],
     ],
@@ -2733,6 +2736,7 @@ const layers = [
             colors.styles.standard.main,
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           colors.styles.standard.unknown,
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -2742,7 +2746,7 @@ const layers = [
           ],
           colors.hover.main
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'radio', 'plain']]],
       },
       {
         id: 'speed_low',
@@ -2927,6 +2931,7 @@ const layers = [
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           'black',
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -2937,7 +2942,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'train_protection_line_med_train_protection_construction',
@@ -3147,6 +3152,7 @@ const layers = [
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           colors.styles.standard.unknown,
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -3161,7 +3167,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'railway_line_construction_proposed',
@@ -5289,7 +5295,7 @@ const makeStyle = () => ({
       default: [],
     },
     tracks: {
-      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, track, operator, routes, passenger_lines
+      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, track, operator, routes, passenger_lines, plain
       default: 'usage',
     },
   },
