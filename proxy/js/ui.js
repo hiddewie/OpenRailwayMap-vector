@@ -1600,9 +1600,17 @@ function rewriteStylePathsToOrigin(style) {
       ])
   )
 
-  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
-    ? `${location.origin}${style.glyphs}`
-    : style.glyphs
+  style['font-faces'] = style['font-faces'] && Object.fromEntries(
+    Object.entries(style['font-faces'])
+      .map(([key, fontFaces]) => [
+        key,
+        fontFaces.map(fontFace =>
+          fontFace && fontFace.url && fontFace.url.startsWith('/')
+            ? ({...fontFace, url: `${location.origin}${fontFace.url}`})
+            : fontFace
+        )
+      ])
+  )
 
   style.sprite = style.sprite
     .map(sprite =>
