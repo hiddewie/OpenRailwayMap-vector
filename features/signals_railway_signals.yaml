@@ -7920,8 +7920,6 @@ features:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-
-
   - description: Speed limit
     country: IT
     icon:
