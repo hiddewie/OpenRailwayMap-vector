@@ -52,6 +52,11 @@ properties:
             - radio
             - shunting
             - other
+        subtypes:
+          type: array
+          description: Subkeys "railway:signal:<type>:<subtype>" carrying their own signal. A node shows one feature per subtype in addition to the one of the type.
+          items:
+            type: string
       additionalProperties: false
   features:
     type: array
@@ -74,6 +79,10 @@ properties:
         exampleIcon:
           type: string
           description: Used when a complex icon is used, to show a representative example of this feature using a single icon.
+        inline:
+          type: boolean
+          default: false
+          description: Draws the feature side by side with the other inline features of a node, whatever their category, two per row (left first in feature order), instead of stacking it. A deactivated feature only shares a row with other deactivated features. A row is filtered under the category of its first feature.
         icon:
           type: array
           description: Determines the icon used to show the feature on the map
