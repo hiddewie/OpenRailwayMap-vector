@@ -1192,9 +1192,6 @@ const features = {
       ref: {
         name: 'Reference',
       },
-      caption: {
-        name: 'Caption',
-      },
       type: {
         name: 'Type',
       },
