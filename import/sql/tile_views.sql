@@ -864,7 +864,8 @@ RETURN (
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform' as feature,
-      name
+      name,
+      height
     FROM standard_railway_platforms_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -879,7 +880,8 @@ DO $do$ BEGIN
         "id": "standard_railway_platforms",
         "fields": {
           "id": "string",
-          "name": "string"
+          "name": "string",
+          "height": "number"
         }
       }
     ]
@@ -913,7 +915,8 @@ RETURN (
     SELECT
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      ref
+      ref,
+      height
     FROM standard_railway_platform_edges_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -928,7 +931,8 @@ DO $do$ BEGIN
         "id": "standard_railway_platform_edges",
         "fields": {
           "id": "integer",
-          "ref": "string"
+          "ref": "string",
+          "height": "number"
         }
       }
     ]
