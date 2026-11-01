@@ -1,6 +1,3 @@
-// Add support for right-to-left languages like Arabic and Hebrew
-maplibregl.setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
-
 const searchBackdrop = document.getElementById('search-backdrop');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
 const searchMilestonesTab = document.getElementById('search-milestones-tab');
@@ -410,9 +407,9 @@ function hideNews() {
 function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
   if (typeof presetOrStyle === 'string') {
-    selectPreset(preset);
+    selectPreset(presetOrStyle);
   } else if (typeof presetOrStyle === 'object') {
-    selectedStyle(presetOrStyle)
+    selectStyle(presetOrStyle)
   }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
@@ -642,6 +639,14 @@ const styleElements = [
         value: 'track_class',
       },
       {
+        name: 'Axle load',
+        value: 'axle_load',
+      },
+      {
+        name: 'Metre load',
+        value: 'metre_load',
+      },
+      {
         name: 'Operator',
         value: 'operator',
       },
@@ -656,6 +661,10 @@ const styleElements = [
       {
         name: 'Radio',
         value: 'radio',
+      },
+      {
+        name: 'Plain',
+        value: 'plain',
       },
     ],
   },
@@ -688,6 +697,10 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Height',
+        value: 'height',
       },
       {
         name: 'None',
@@ -1359,7 +1372,7 @@ function layoutImages(images, gap) {
         break;
 
       case 'left':
-        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.x = globalOffset.x - image.image.data.width
         image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
         globalOffset.x = Math.min(globalOffset.x, image.offset.x)
         globalOffset.y = Math.min(globalOffset.y, image.offset.y)
@@ -1565,6 +1578,11 @@ function selectPreset(preset) {
   onStyleChange();
 }
 
+function selectStyle(style) {
+  styleControl.selectStyleOptions(style);
+  onStyleChange();
+}
+
 function selectDate(date) {
   if (selectedDate !== date) {
     selectedDate = date;
@@ -1595,9 +1613,17 @@ function rewriteStylePathsToOrigin(style) {
       ])
   )
 
-  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
-    ? `${location.origin}${style.glyphs}`
-    : style.glyphs
+  style['font-faces'] = style['font-faces'] && Object.fromEntries(
+    Object.entries(style['font-faces'])
+      .map(([key, fontFaces]) => [
+        key,
+        fontFaces.map(fontFace =>
+          fontFace && fontFace.url && fontFace.url.startsWith('/')
+            ? ({...fontFace, url: `${location.origin}${fontFace.url}`})
+            : fontFace
+        )
+      ])
+  )
 
   style.sprite = style.sprite
     .map(sprite =>

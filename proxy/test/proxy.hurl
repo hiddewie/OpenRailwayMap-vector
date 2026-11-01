@@ -156,3 +156,16 @@ jsonpath "$.name" == "OpenRailwayMap"
 GET {{base_url}}/legend.json
 HTTP 200
 Content-Type: application/json
+
+# Web fonts
+GET {{base_url}}/font/FiraCode-Bold.ttf
+HTTP 200
+
+GET {{base_url}}/font/NotoSans-Bold.ttf
+HTTP 200
+
+GET {{base_url}}/font/NotoSans-Regular.ttf
+HTTP 200
+
+GET {{base_url}}/font/NotoSans-Italic.ttf
+HTTP 200

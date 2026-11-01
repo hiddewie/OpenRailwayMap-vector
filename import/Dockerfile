@@ -9,6 +9,7 @@ RUN --mount=type=bind,source=import/tags.lua.mjs,target=tags.lua.mjs \
   --mount=type=bind,source=features/signals_railway_signals.yaml,target=signals_railway_signals.yaml \
   --mount=type=bind,source=features/poi.yaml,target=poi.yaml \
   --mount=type=bind,source=features/stations.yaml,target=stations.yaml \
+  --mount=type=bind,source=features/track_class.yaml,target=track_class.yaml \
   node tags.lua.mjs \
     > /build/tags.lua
 

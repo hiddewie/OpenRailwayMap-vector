@@ -136,11 +136,11 @@ workrules:
     country: 'KR'
     value: 'KR:RSA'
 
-  - name: '도시철도법 (Urban Railroad Act)'
+  - name: '궤도운송법 (Tramway Transportation Act)'
     country: 'KR'
     value: 'KR:TTA'
 
-  - name: '궤도운송법 (Tramway Transportation Act)'
+  - name: '도시철도법 (Urban Railroad Act)'
     country: 'KR'
     value: 'KR:URA'
 

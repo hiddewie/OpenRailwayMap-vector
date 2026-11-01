@@ -134,6 +134,7 @@ const colors = {
       platform: themeSwitch('#aaa', '#aaa'),
       stationAreaGroup: themeSwitch('black', 'white'),
       levelCrossing: 'red',
+      plain: themeSwitch('#666', '#ccc'),
     },
   },
   km: {
@@ -150,22 +151,38 @@ const colors = {
 
 const font = {
   regular: [
+    // Bundled as web font
+    'Noto-Sans-Regular',
+    // Fall back system fonts
     'Helvetica-Neue',
     'Arial',
     'Helvetica',
     'sans-serif',
   ],
   bold: [
+    // Bundled as web font
+    'Noto-Sans-Bold',
+    // Fall back system fonts
     'Helvetica-Neue-Bold',
     'Arial-Bold',
     'Helvetica-Bold',
     'sans-serif-Bold',
   ],
   italic: [
+    // Bundled as web font
+    'Noto-Sans-Italic',
+    // Fall back system fonts
     'Helvetica-Neue-Italic',
     'Arial-Italic',
     'Helvetica-Italic',
     'sans-serif-Italic',
+  ],
+  monospaceBold: [
+    // Bundled as web font
+    'Fira-Code-Bold',
+    // Fall back system fonts
+    'monospace-Bold',
+    'monospace',
   ],
 }
 
@@ -492,6 +509,19 @@ const trackClassFillColor = ['match', ['get', 'track_class'],
   ),
   'gray',
 ];
+const axleLoadFillColor = ['case',
+  ['!=', ['get', 'axle_load'], null], turboColorMap(['get', 'axle_load'], 10, 30, 1.0),
+  'gray',
+];
+const metreLoadFillColor = ['case',
+  ['!=', ['get', 'metre_load'], null], turboColorMap(['get', 'metre_load'], 3, 12, 1.0),
+  'gray',
+];
+
+const platformHeightColor = ['case',
+  ['!=', ['get', 'height'], null], turboColorMap(['get', 'height'], 0, 1.3, 1.0),
+  'grey',
+];
 
 const radioColor = ['match', ['get', 'radio'],
   ...radio.radio.flatMap(({value, color}) =>
@@ -543,6 +573,14 @@ const trackLabel = {
   gauge: ['coalesce', ['get', 'gauges'], ''],
   loadingGauge: ['coalesce', ['get', 'loading_gauge'], ''],
   trackClass: ['coalesce', ['get', 'track_class'], ''],
+  axleLoad: ['case',
+    ['!=', ['get', 'axle_load'], null], ['number-format', ['get', 'axle_load'], {'max-fraction-digits': 1}],
+    ''
+  ],
+  metreLoad: ['case',
+    ['!=', ['get', 'metre_load'], null], ['number-format', ['get', 'metre_load'], {'max-fraction-digits': 1}],
+    ''
+  ],
   operator:  ['coalesce', ['get', 'primary_operator'], ''],
   radio: ['match', ['get', 'radio'],
     ...radio.radio.flatMap(({value, name}) =>
@@ -590,7 +628,7 @@ const sources = {
   },
   signals_railway_line_low: {
     type: 'vector',
-    url: '/signals_railway_line_low,signals_railway_line_low_construction',
+    url: '/signals_railway_line_low',
     promoteId: 'id',
   },
   electrification_railway_line_low: {
@@ -1762,7 +1800,7 @@ const railwayKmText = {
       13,
       ['get', 'pos'],
     ],
-    'text-font': ['FiraCode-Bold', 'monospace-Bold', 'monospace'],
+    'text-font': font.monospaceBold,
     'text-size': 11,
   },
 };
@@ -2259,12 +2297,15 @@ const layers = [
       ['==', ["geometry-type"], 'MultiPolygon'],
     ],
     paint: {
-      'fill-color': colors.styles.standard.platform,
+      'fill-color': ['match', ['global-state', 'platforms'],
+        'height', platformHeightColor,
+        colors.styles.standard.platform,
+      ],
     },
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
     },
@@ -2282,7 +2323,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'line-join': 'round',
@@ -2291,7 +2332,10 @@ const layers = [
       'line-width': 2,
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.platform,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.platform,
+        ],
       ],
     },
   },
@@ -2305,7 +2349,10 @@ const layers = [
     paint: {
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.platform,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.platform,
+        ],
       ],
       'line-width': ['interpolate', ['linear'], ['zoom'],
         15, 2,
@@ -2316,9 +2363,29 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
+    },
+  },
+  {
+    id: 'railway_platforms_edges_border',
+    type: 'line',
+    minzoom: 17,
+    source: 'openrailwaymap_platforms',
+    'source-layer': 'standard_railway_platform_edges',
+    layout: {
+      'visibility': ['case',
+        ['<', ['global-state', 'date'], defaultDate], 'none',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
+        'none',
+      ],
+      'line-join': 'round',
+    },
+    paint: {
+      'line-width': 2,
+      'line-gap-width': 3,
+      'line-color': colors.halo,
     },
   },
   {
@@ -2330,7 +2397,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'line-join': 'round',
@@ -2339,7 +2406,10 @@ const layers = [
       'line-width': 3,
       'line-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.styles.standard.track.halo,
+        ['match', ['global-state', 'platforms'],
+          'height', platformHeightColor,
+          colors.styles.standard.track.halo,
+        ],
       ],
     },
   },
@@ -2639,6 +2709,8 @@ const layers = [
 
   ...railwayLine(
     ['step', ['zoom'],
+      '',
+      7,
       ['match', ['global-state', 'tracks'],
         'usage', trackLabel.ref,
         'speed', trackLabel.speed,
@@ -2649,10 +2721,13 @@ const layers = [
         'gauge', trackLabel.gauge,
         'loading_gauge', trackLabel.loadingGauge,
         'track_class', trackLabel.trackClass,
+        'axle_load', trackLabel.axleLoad,
+        'metre_load', trackLabel.metreLoad,
         'operator', trackLabel.operator,
         'routes', trackLabel.ref,
         'passenger_lines', trackLabel.ref,
         'radio', trackLabel.radio,
+        'plain', trackLabel.ref,
         '',
       ],
       14,
@@ -2666,10 +2741,13 @@ const layers = [
         'gauge', trackLabel.gauge,
         'loading_gauge', trackLabel.loadingGauge,
         'track_class', trackLabel.trackClass,
+        'axle_load', trackLabel.axleLoad,
+        'metre_load', trackLabel.metreLoad,
         'operator', trackLabel.operator,
         'routes', trackLabel.refName,
         'passenger_lines', trackLabel.refName,
         'radio', trackLabel.radio,
+        'plain', trackLabel.ref,
         '',
       ],
     ],
@@ -2696,6 +2774,7 @@ const layers = [
             colors.styles.standard.main,
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           colors.styles.standard.unknown,
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -2705,7 +2784,7 @@ const layers = [
           ],
           colors.hover.main
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'radio', 'plain']]],
       },
       {
         id: 'speed_low',
@@ -2716,7 +2795,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2727,14 +2805,14 @@ const layers = [
       },
       {
         id: 'train_protection_line_low_train_protection_construction',
-        minzoom: 5, // TODO also on source
+        minzoom: 5,
         maxzoom: 7,
         source: 'signals_railway_line_low',
-        sourceLayer: 'signals_railway_line_low_construction',
+        sourceLayer: 'signals_railway_line_low',
         states: {
           present: train_protection_construction_dasharray,
         },
-        sort: ['coalesce', ['get', 'train_protection_construction_rank'], 0],
+        filter: ['!=', ['get', 'train_protection_construction'], null],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2752,8 +2830,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
-        sort: ['coalesce', ['get', 'train_protection_rank'], 0],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2770,7 +2846,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2792,7 +2867,6 @@ const layers = [
         states: {
           present: undefined,
         },
-        filter: ['!=', ['get', 'feature'], 'ferry'],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
           0, 0.5,
           7, 2,
@@ -2801,13 +2875,15 @@ const layers = [
           'gauge', gaugeColor('gauge0', 'gaugeint0'),
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'passenger_lines', ['match', ['coalesce', ['get', 'passenger_lines'], 0],
             0, 'gray',
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           colors.styles.standard.unknown,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['gauge', 'loading_gauge', 'track_class', 'passenger_lines']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'passenger_lines']]],
       },
       {
         id: 'operator_line_low',
@@ -2860,7 +2936,7 @@ const layers = [
         },
         width: 2,
         filter: ['case',
-          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'gauge', 'loading_gauge', 'track_class',
+          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load',
           'operator', 'routes', 'passenger_lines']]], ['!=', ['get', 'feature'], 'ferry'],
           true,
         ],
@@ -2880,6 +2956,8 @@ const layers = [
           'gauge', gaugeColor('gauge0', 'gaugeint0'),
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
@@ -2890,6 +2968,7 @@ const layers = [
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           'black',
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -2900,7 +2979,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'operator', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'operator', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'train_protection_line_med_train_protection_construction',
@@ -2984,7 +3063,7 @@ const layers = [
           disused: disused_dasharray,
         },
         filter: ['case',
-          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'loading_gauge', 'track_class']]], ['!=', ['get', 'feature'], 'ferry'],
+          ['in', ['global-state', 'tracks'], ['literal', ['speed', 'loading_gauge', 'track_class', 'axle_load', 'metre_load']]], ['!=', ['get', 'feature'], 'ferry'],
           true,
         ],
         width: ["interpolate", ["exponential", 1.2], ["zoom"],
@@ -3100,6 +3179,8 @@ const layers = [
           'speed', speedColor,
           'loading_gauge', loadingGaugeFillColor,
           'track_class', trackClassFillColor,
+          'axle_load', axleLoadFillColor,
+          'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
@@ -3110,6 +3191,7 @@ const layers = [
             turboColorMap(['get', 'passenger_lines'], 0.8, 12, 0.3),
           ],
           'radio', radioColor,
+          'plain', colors.styles.standard.plain,
           colors.styles.standard.unknown,
         ],
         hoverColor: ['match', ['global-state', 'tracks'],
@@ -3124,7 +3206,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'routes', 'passenger_lines', 'radio']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'railway_line_construction_proposed',
@@ -4340,7 +4422,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -4367,7 +4449,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -4396,7 +4478,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'platforms'], 'plain'], 'visible',
+        ['in', ['global-state', 'platforms'], ['literal', ['plain', 'height']]], 'visible',
         'none',
       ],
       'symbol-placement': 'line',
@@ -5167,6 +5249,32 @@ const layers = [
 const makeStyle = () => ({
   center: [12.55, 51.14], // default
   zoom: 3.75, // default
+  ['font-faces']: {
+    "Noto-Sans-Regular": [
+      {
+        "url": "/font/NotoSans-Regular.ttf",
+        "unicode-range": ["U+0020-052F"],
+      }
+    ],
+    "Noto-Sans-Bold": [
+      {
+        "url": "/font/NotoSans-Bold.ttf",
+        "unicode-range": ["U+0020-052F"],
+      }
+    ],
+    "Noto-Sans-Italic": [
+      {
+        "url": "/font/NotoSans-Italic.ttf",
+        "unicode-range": ["U+0020-052F"],
+      }
+    ],
+    "Fira-Code-Bold": [
+      {
+        "url": "/font/FiraCode-Bold.ttf",
+        "unicode-range": ["U+0020-052F"],
+      }
+    ],
+  },
   metadata: {},
   name: `OpenRailwayMap`,
   sources,
@@ -5228,7 +5336,7 @@ const makeStyle = () => ({
       default: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
     },
     platforms: {
-      // Values: plain, none
+      // Values: plain, height, none
       default: 'plain',
     },
     substations: {
@@ -5252,7 +5360,7 @@ const makeStyle = () => ({
       default: [],
     },
     tracks: {
-      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, track, operator, routes, passenger_lines
+      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, gauge, loading_gauge, track_class, axle_load, metre_load, operator, routes, passenger_lines, plain
       default: 'usage',
     },
   },
