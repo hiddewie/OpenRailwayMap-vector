@@ -9399,6 +9399,601 @@ features:
       - { tag: 'railway:signal:distant', value: 'FR:mirliton' }
       - { tag: 'railway:signal:distant:form', value: 'sign' }
 
+  # FR legacy tagging (temporary)
+  # Signals still carrying the former tagging keep a basic icon with a red
+  # FIX ME plate, so that they stay visible and mappers are prompted to fix
+  # them. Each feature matches a legacy value only; the hand-written features
+  # come first, then one feature per legacy value found in the OSM data,
+  # drawn with the icon of its replacement. Remove this block once the
+  # migration challenge is done (maproulette.org/browse/challenges/57319).
+
+  - description: Chevron pointe en haut (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/chevron_up'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
+      - { tag: 'railway:signal:speed_limit:pointing', value: 'upwards' }
+
+  - description: Chevron pointe en haut (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/chevron_up'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:CHEVRON_HAUT' }
+
+  - description: Chevron pointe en bas (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/chevron_down'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit', any: ['FR:CHEVRON', 'FR:CHEVRON_BAS', 'FR:Chevron'] }
+
+  - description: Carré mécanique (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signals/C-mech'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CARRE' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Carré (à corriger)
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc', 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/H' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc', 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/F' }
+        default: 'fr/signals/C'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/aspects/H-RR-A' }
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc' ], value: 'fr/signals/aspects/H-RR' }
+          - { any: [ 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/aspects/F-R-A' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc' ], value: 'fr/signals/aspects/F-R' }
+        default: 'fr/signals/aspects/C-C'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: ['FR:CARRE', 'FR:C'] }
+
+  - description: Carré violet mécanique (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signals/Cv-mech'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
+  - description: Carré violet (à corriger)
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc', 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/H' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc', 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/F' }
+        default: 'fr/signals/C'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc', 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/aspects/H-Cv' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc', 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/aspects/F-Cv' }
+        default: 'fr/signals/aspects/C-Cv'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Carré violet (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signals/A'
+      - default: 'fr/signals/aspects/A-Cv'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:CV' }
+
+  - description: Sémaphore (à corriger)
+    country: FR
+    icon:
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc', 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/H' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc', 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/F' }
+        default: 'fr/signals/C'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: [ 'FR:RR', 'FR:(RR)', 'FR:RRc', 'FR:RR+A', 'FR:RR+(A)', 'FR:(RR)+A', 'FR:(RR)+(A)', 'FR:RR(A)', 'FR:RRc(A)', 'FR:RR(Ac)', 'FR:RRc(Ac)' ], value: 'fr/signals/aspects/H-S' }
+          - { any: [ 'FR:R', 'FR:(R)', 'FR:Rc', 'FR:R+A', 'FR:R+(A)', 'FR:(R)+A', 'FR:(R)+(A)', 'FR:R(A)', 'FR:Rc(A)', 'FR:R(Ac)', 'FR:Rc(Ac)' ], value: 'fr/signals/aspects/F-S' }
+        default: 'fr/signals/aspects/C-S'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: ['FR:Sémaphore', 'FR:S'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
+  - description: Pancarte Z (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/Z'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit', any: ['FR:Z', 'FR:marker'] }
+
+  - description: Pancarte R (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/R'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:R' }
+
+  - description: Pancarte Km (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/Km'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:KM' }
+
+  - description: TIV-D Mobile (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TIV-D_diamond_switchable'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant:mobile' }
+
+  - description: TIV-D Mobile (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TIV-D_diamond_switchable'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_MOB' }
+
+  - description: TIV-R Mobile (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TIV-R'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-R' }
+
+  - description: TIV-D Fixe du type ordinaire (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TIV-D_square'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant',  any: ['FR:TIV-D', 'FR:TIV-D_FIXE'] }
+
+  - description: TIV-D Fixe de type B (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TIV-D_B'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_B' }
+
+  - description: TIV-D Fixe de type C (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TIV-D_C'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D_C_FIXE' }
+
+  - description: Tableau P (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/P'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:P' }
+
+  - description: Signal à distance "Coupez Courant" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/distant_neutral_section'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:SECT' }
+
+  - description: Signal d'exécution "Coupez Courant" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/neutral_section'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:CC_EXE' }
+
+  - description: Signal de fin de parcours "Coupez Courant" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/end_of_neutral_section'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:CC_FIN' }
+
+  - description: Signal à distance "Baissez Panto" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/distant_lower_pantograph'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_DIS' }
+
+  - description: Signal d'exécution "Baissez Panto" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/lower_pantograph'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_EXE' }
+
+  - description: Signal de fin de parcours "Baissez Panto" (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/raise_pantograph'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:BP_FIN' }
+
+  - description: Signal Fin de Caténaire (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/end_of_catenary'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:electricity', value: 'FR:FIN_CAT' }
+
+  - description: Tableau TECS (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TECS'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:transition' }
+      - { tag: 'railway:signal:wrong_road:entry', value: 'FR:TECS' }
+
+  - description: Tableau TECS (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TECS'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:TECS' }
+
+  - description: Tableau TSCS (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TSCS'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:transition' }
+      - { tag: 'railway:signal:wrong_road:exit', value: 'FR:TSCS' }
+
+  - description: Tableau TSCS (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/TSCS'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:wrong_road', value: 'FR:TSCS' }
+
+  - description: Signal à distance CAB (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/cab_signalling_advance'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:CAB_DIS', 'FR:pancarte_CAB_entrée'] }
+
+  - description: Signal d'entrée CAB (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/cab_signalling_entry'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:CAB_R', 'FR:CAB_EXE'] }
+
+  - description: Signal de sortie CAB (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/cab_signalling_exit'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:CAB_S', 'FR:CAB_FIN', 'FR:pancarte_CAB_sortie' ] }
+
+  - description: Jalon de manœuvre (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/shunting_marker_left'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:JAL_MAN' }
+
+  - description: Jalon de manœuvre (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/shunting_marker_left'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'FR:jalon_de_manoeuvre_TVM' }
+
+  - description: Repère d'arrêt TVM (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TVM_stop_marker_left'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:train_protection', any: ['FR:REP_TVM', 'FR:marker', 'FR:repère_arrêt_TVM', 'FR:repère_arrêt_ETCS;FR:repère_arrêt_TVM'] }
+
+  - description: Approche d'un établissement (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/facility_approach'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:facility_distant', value: 'FR:facility_approach' }
+
+  - description: Approche d'un établissement (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/facility_approach'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:station_distant', any: ['FR:APPROCHE_ETS', 'FR:facility_approach'] }
+
+  - description: Limite d'un établissement (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/facility_boundary'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:station', any: ['FR:LIMITE_ETS', 'FR:facility_boundary'] }
+
+  - description: Pancarte POSTE (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/POSTE'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'FR:POSTE' }
+
+  - description: Pancarte à distance ARRÊT (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/distant_arret'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop_distant', value: 'FR:ARRET_A' }
+
+  - description: Pancarte ARRÊT des Trains du Chantier (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/stop_atc'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:ATC' }
+
+  - description: Pancarte ARRÊT des Trains du Chantier (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/stop_atc'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ATC' }
+
+  - description: Pancarte TT (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TT'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', any: ['FR:TT', 'FR:ARRET_TT'] }
+
+  - description: Pancarte TTL (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TTL'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TTL' }
+
+  - description: Pancarte ...V (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/V_empty'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_V' }
+
+  - description: Pancarte TGV 1 (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TGV_1'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', any: ['FR:ARRET_TGV1', 'FR:ARRET_TGV'] }
+
+  - description: Pancarte TGV 2 (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/TGV_2'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:ARRET_TGV2' }
+
+  - description: Tableau D (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/D'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['FR:D', 'FR:DEPOT'] }
+
+  - description: Tableau D (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/D'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting_route', value: 'FR:D' }
+
+  - description: Tableau G (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/G'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:route', value: 'FR:tableau_G' }
+
+  - description: Tableau G (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/boards/G'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:G' }
+
+  - description: Tableau à distance Heurtoir (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/distant_buffer_stop'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:HEURTOIR_A' }
+
+  - description: Pancarte H (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/H'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:pancarte_Heurtoir' }
+
+  - description: Pancarte Imp (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/Imp'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', any: ['FR:IMP', 'FR:pancarte_Imp'] }
+
+  - description: Pancarte LM (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/LM'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:pancarte_LM' }
+
+  - description: Pancarte LM (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/LM'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:stop', value: 'FR:LM' }
+
+  - description: Pancarte S (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/whistle'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:whistle', any: ['FR:SIFFLER', 'FR:pancarte_S'] }
+
+  - description: Pancarte PN (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/crossing_info'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:crossing_info', value: 'FR:pancarte_PN' }
+
+  - description: Pancarte Gabarit Réduit (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/reduced_clearance'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:GABARIT' }
+
+  - description: Pancarte Gabarit Réduit (à corriger)
+    country: FR
+    icon:
+      - default: 'fr/signs/reduced_clearance'
+      - default: 'fr/_fixme'
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:minor', value: 'FR:reduced_clearance' }
+
   # --- GB --- #
 
   - description: Whistle stencil
