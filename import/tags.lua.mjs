@@ -7,6 +7,12 @@ const pois = yaml.parse(fs.readFileSync('poi.yaml', 'utf8'))
 const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).references
 const track_classes = yaml.parse(fs.readFileSync('track_class.yaml', 'utf8')).track_classes
 
+// Tags read by computed captions (features[].caption) that are not declared
+// signal tags: imported as plain strings so the SQL views can read them
+const declaredSignalTags = new Set(signals_railway_signals.tags.map(tag => tag.tag))
+const captionSourceTags = [...new Set(signals_railway_signals.features.flatMap(feature => feature.caption ? [feature.caption.tag].flat() : []))]
+  .filter(tag => !declaredSignalTags.has(tag))
+
 const trainProtectionTags = [...new Set(signals_railway_line.features.flatMap(feature => feature.tags).map(tag => tag.tag))].toSorted();
 
 /**
@@ -39,7 +45,8 @@ function train_protection(tags, prefix)
 end
 
 local signal_tags = {${signals_railway_signals.tags.map(tag => `
-  { tag = '${tag.tag}', type = '${tag.type ?? 'string'}' },`).join('')}
+  { tag = '${tag.tag}', type = '${tag.type ?? 'string'}' },`).join('')}${captionSourceTags.map(tag => `
+  { tag = '${tag}', type = 'string' },`).join('')}
 }
 
 local poi_railway_values = {${pois.features.flatMap(feature => [...(feature.variants || []), feature]).flatMap(feature => feature.tags).filter(tag => tag.tag === 'railway').flatMap(tag => tag.value ? [tag.value] : (tag.values ? tag.values : [])).map(tag => `
