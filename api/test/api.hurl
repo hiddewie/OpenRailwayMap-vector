@@ -52,6 +52,20 @@ jsonpath "$[0].localized_name" == "Ostbahnhof"
 jsonpath "$[1].name" == "Berlin Ostbahnhof"
 jsonpath "$[1].localized_name" == "Berlin Eastern Station"
 
+# Facility request with language
+GET {{base_url}}/facility
+[QueryStringParams]
+name: Berlin Ostbahnhof
+lang: nf, ja, en
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$" count == 2
+jsonpath "$[0].name" == "Ostbahnhof"
+jsonpath "$[0].localized_name" == "Ostbahnhof"
+jsonpath "$[1].name" == "Berlin Ostbahnhof"
+jsonpath "$[1].localized_name" == "ベルリン・東駅"
+
 # Facility request with limit
 GET {{base_url}}/facility
 [QueryStringParams]
@@ -591,10 +605,19 @@ Content-Type: application/json
 jsonpath "$.properties.name" == "Berlin Alexanderplatz"
 jsonpath "$.properties.localized_name" == "Berlin Alexanderplatz"
 
+# Station with multiple localization languages
+GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_text_stations/node-3419894993-train-train-station
+[QueryStringParams]
+lang: nf, en, ja
+HTTP 200
+Content-Type: application/json
+[Asserts]
+jsonpath "$.properties.name" == "Berlin Ostbahnhof"
+jsonpath "$.properties.localized_name" == "Berlin Eastern Station"
+
 # Stop area group
 GET {{base_url}}/feature/openrailwaymap_stations/standard_railway_grouped_station_areas/7721002
 [QueryStringParams]
-lang: nf
 HTTP 200
 Content-Type: application/json
 [Asserts]

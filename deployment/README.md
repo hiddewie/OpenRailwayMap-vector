@@ -182,6 +182,7 @@ services:
       CLIENT_CACHE_TTL_API_STALE: 604800
       CLIENT_CACHE_TTL_TILES_FRESH: 8182
       CLIENT_CACHE_TTL_TILES_STALE: 604800
+      CLIENT_CACHE_TTL_NOT_FOUND: 600
     volumes:
       - '/etc/nginx/ssl/certificate.pem:/etc/nginx/ssl/certificate.pem'
       - '/etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem'

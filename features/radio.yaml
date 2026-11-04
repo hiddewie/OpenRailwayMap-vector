@@ -20,3 +20,11 @@ radio:
   - name: 'TRS'
     value: 'trs'
     color: 'hsl(40, 100%, 40%)'
+
+  - name: 'AAR VHF Band'
+    value: 'US:AAR'
+    color: '#FF3344'
+
+  - name: 'TETRA'
+    value: 'tetra'
+    color: '#00E5FF'

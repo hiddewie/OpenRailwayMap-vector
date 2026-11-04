@@ -597,22 +597,124 @@ operators:
 
   # --- CZ --- #
 
+  ## National (celostátní) railway operators
   - country: CZ
     names:
-      - 'cz:SŽDC'
-      - 'cz:Správa Železnic'
-      - 'cz:SŽ'
-      - 'Správa železnic, s. o.'
+      - 'České dráhy'
+      - 'České dráhy, a. s.'
+      - 'ČD'
+      - 'České dráhy, a.s.'
+      - 'cz:ČD'
+    color: '#00a0dc'
+
+  - country: CZ
+    names:
       - 'Správa železnic'
       - 'SŽDC'
       - 'SŽ'
+      - 'cz:SŽDC'
+      - 'Správa železniční dopravní cesty'
+      - 'Správa Železnic'
+      - 'Správa železnic s.o.'
     color: '#ff5200'
+
+  ## Regional (regionální) railway operators
+  - country: CZ
+    names:
+      - 'AŽD Praha'
+      - 'AŽD Praha s.r.o.'
+      - 'cz:AŽD'
+    color: '#eed575'
+
+  - country: CZ
+    names:
+      - 'Gepard Infra'
+      - 'Gepard expres'
+    color: '#eee300'
+
+  - country: CZ
+    names:
+      - 'KŽC Doprava'
+      - 'cz:KŽC'
+    color: '#000000'
+
+  - country: CZ
+    names:
+      - 'cz:PKP CARGO INTERNATIONAL'
+    color: '#d0da29'
+
+  - country: CZ
+    names:
+      - 'SART'
+      - 'cz:SART'
+    color: '#222f59'
+
+  ## Local (místní) railway operators
+  - country: CZ
+    names:
+      - 'Dr. ZENKL'
+    color: '#ffb400'
+
+  - country: CZ
+    names:
+      - 'Railway Capital'
+      - 'cz:Railway Capital'
+    color: '#2b4a98'
+
+  ## Test (zkušební) railway operators
+  - country: CZ
+    names:
+      - 'Výzkumný Ústav Železniční'
+    color: '#005396'
+
+  ### CZ Logistics test tracks (operated for CZ LOKO) do not have an operator assigned as of 2026/10/19
+
+  ## Municipal tram/metro/funicular network operators
+  - country: CZ
+    names:
+      - 'Dopravní podnik hl. m. Prahy'
+      - 'cz:DPP'
+      - 'DPP'
+      - 'Dopravní podnik hlavního města Prahy'
+      - 'DPP, a.s.'
+    color: '#da261b'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik Karlovy Vary, a. s.'
+    color: '#62ae49'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik měst Liberce a Jablonce nad Nisou'
+    color: '#f49305'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik měst Mostu a Litvínova'
+    color: '#ab8d3f'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik města Brna'
+    color: '#a90000'
+
+  - country: CZ
+    names:
+      - 'Dopravní podnik města Olomouce'
+    color: '#222d5a'
 
   - country: CZ
     names:
       - 'Dopravní podnik Ostrava'
     color: '#1d61ff'
 
+  - country: CZ
+    names:
+      - 'Plzeňské městské dopravní podniky'
+    color: '#f5cd32'
+
+  ## Other operators
   - country: CZ
     names:
       - 'cz:Vítkovice Doprava'

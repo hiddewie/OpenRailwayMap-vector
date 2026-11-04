@@ -66,6 +66,25 @@ const passengerLineLegends = [
   10,
 ];
 
+const axleLoadLegends = [
+  10,
+  15,
+  20,
+  22.5,
+  25,
+  30,
+  35,
+];
+
+const metreLoadLegends = [
+  3,
+  5,
+  7,
+  9,
+  11,
+  13,
+];
+
 const electrificationLegends = {
   voltageFrequency: [
     { legend: '> 25 kV ~', voltage: 25000, frequency: 60 },
@@ -596,6 +615,44 @@ const sourceLayers = {
           },
         },
       ],
+    },
+    axle_load: {
+      mapState: {
+        tracks: 'axle_load',
+      },
+      key: [],
+      features: axleLoadLegends.map(axleLoad => ({
+        legend: `${axleLoad}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          axle_load: axleLoad,
+        },
+      }))
+    },
+    metre_load: {
+      mapState: {
+        tracks: 'metre_load',
+      },
+      key: [],
+      features: metreLoadLegends.map(metreLoad => ({
+        legend: `${metreLoad}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          metre_load: metreLoad,
+        },
+      }))
     },
     passenger_lines: {
       mapState: {
@@ -1923,6 +1980,44 @@ const sourceLayers = {
           },
         })),
       ],
+    },
+    axle_load: {
+      mapState: {
+        tracks: 'axle_load',
+      },
+      key: [],
+      features: axleLoadLegends.map(axleLoad => ({
+        legend: `${axleLoad}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          axle_load: axleLoad,
+        },
+      }))
+    },
+    metre_load: {
+      mapState: {
+        tracks: 'metre_load',
+      },
+      key: [],
+      features: metreLoadLegends.map(metreLoad => ({
+        legend: `${metreLoad}`,
+        type: 'line',
+        properties: {
+          feature: 'rail',
+          state: 'present',
+          usage: 'main',
+          service: null,
+          bridge: false,
+          tunnel: false,
+          metre_load: metreLoad,
+        },
+      }))
     },
     passenger_lines: {
       mapState: {
