@@ -5618,6 +5618,21 @@ features:
       - { tag: 'railway:signal:main:shape', value: 'ES-Renfe:3+1' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+  - description: Señal tipo Renfe de 3 focos (avanzada)
+    country: ES
+    icon:
+      - default: 'es/Renfe-3-FF'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { any: ['ES-RCF:FF1A', 'ES-RCF:FF2', 'ES-RCF:FF3A'], value: 'es/Renfe-3-FF1A' }
+          - { any: ['ES-RCF:FF5A', 'ES-RCF:FF6'], value: 'es/Renfe-3-FF5A' }
+        default: 'es/Renfe-3-FF1A'
+    exampleIcon: 'es/Renfe-3'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'ES-RCF:FF' }
+      - { tag: 'railway:signal:distant:shape', value: 'ES-Renfe:3' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
   - description: Señal de maniobras de 2 focos
     country: ES
     icon:
