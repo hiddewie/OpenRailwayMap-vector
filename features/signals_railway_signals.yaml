@@ -505,7 +505,7 @@ types:
   - { type: minor_distant, category: other }
   - { type: passing, category: other }
   - { type: shunting, category: shunting }
-  - { type: shunting_route, category: shunting, subtypes: [buffer_stop, dead_end, depot, short_block, stabling] }
+  - { type: shunting_route, category: shunting }
   - { type: radio, category: radio, subtypes: [channel, mode] }
   - { type: stop, category: station, subtypes: [any, conventional, suburban, regional, highspeed, accessibility] }
   - { type: stop_distant, category: station }
@@ -8029,16 +8029,20 @@ features:
       - { tag: 'railway:signal:shunting_route:depot', value: 'FR:D' }
       - { tag: 'railway:signal:shunting_route:depot:form', value: 'board' }
 
-  - description: Caisson D
+  - description: Caisson D / G
     country: FR
-    inline: true
     exampleIcon: 'fr/boxes/examples/D'
     icon:
-      - default: 'fr/boxes/single'
-      - default: 'fr/boxes/single/D'
+      - match: 'railway:signal:shunting_route:depot'
+        cases:
+          - { exact: 'FR:D', value: 'fr/boxes/single/D' } # with background from fr/boxes/single
+        position: right
+      - match: 'railway:signal:shunting_route:stabling'
+        cases:
+          - { exact: 'FR:G', value: 'fr/boxes/single/G' } # with background from fr/boxes/single
+        position: right
     tags:
       - { tag: 'railway:signal:shunting_route', value: 'FR:destination' }
-      - { tag: 'railway:signal:shunting_route:depot', value: 'FR:D' }
       - { tag: 'railway:signal:shunting_route:depot:form', value: 'light' }
 
   - description: Pancarte G
@@ -8057,17 +8061,17 @@ features:
       - { tag: 'railway:signal:shunting_route:stabling', value: 'FR:G' }
       - { tag: 'railway:signal:shunting_route:stabling:form', value: 'board' }
 
-  - description: Caisson G
-    country: FR
-    inline: true
-    exampleIcon: 'fr/boxes/examples/G'
-    icon:
-      - default: 'fr/boxes/single'
-      - default: 'fr/boxes/single/G'
-    tags:
-      - { tag: 'railway:signal:shunting_route', value: 'FR:destination' }
-      - { tag: 'railway:signal:shunting_route:stabling', value: 'FR:G' }
-      - { tag: 'railway:signal:shunting_route:stabling:form', value: 'light' }
+#  - description: Caisson G
+#    country: FR
+##    inline: true
+#    exampleIcon: 'fr/boxes/examples/G'
+#    icon:
+#      - default: 'fr/boxes/single'
+#      - default: 'fr/boxes/single/G'
+#    tags:
+#      - { tag: 'railway:signal:shunting_route', value: 'FR:destination' }
+#      - { tag: 'railway:signal:shunting_route:stabling', value: 'FR:G' }
+#      - { tag: 'railway:signal:shunting_route:stabling:form', value: 'light' }
 
   - description: Tableau TECS
     country: FR
