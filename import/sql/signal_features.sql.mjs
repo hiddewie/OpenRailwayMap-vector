@@ -97,21 +97,21 @@ const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
 function matchTagValueSql(tag, value) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `'${value}' = ANY("${tag}")`
+      return `${sqlString(value)} = ANY("${tag}")`
     case 'boolean':
       if (value) {
         throw new Error(`Value given for boolean tag '${tag}' ('${value}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" = '${value}'`
+      return `"${tag}" = ${sqlString(value)}`
   }
 }
 
 function matchTagValuesSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      const sqlArray = `ARRAY[${values.map(value => `'${value}'`).join(', ')}]`
+      const sqlArray = `ARRAY[${values.map(sqlString).join(', ')}]`
       return `${sqlArray} <@ "${tag}" AND ${sqlArray} @> "${tag}"`
     default:
       throw new Error(`values matching cannot be used for non-array tag '${tag}' ('${values}')`)
@@ -121,7 +121,7 @@ function matchTagValuesSql(tag, values) {
 function matchTagAllValuesSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] <@ "${tag}"`
+      return `ARRAY[${values.map(sqlString).join(', ')}] <@ "${tag}"`
     case 'boolean':
       if (values) {
         throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
@@ -135,40 +135,40 @@ function matchTagAllValuesSql(tag, values) {
 function matchTagAnyValueSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] && "${tag}"`
+      return `ARRAY[${values.map(sqlString).join(', ')}] && "${tag}"`
     case 'boolean':
       if (values) {
         throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" IN (${values.map(value => `'${value}'`).join(', ')})`
+      return `"${tag}" IN (${values.map(sqlString).join(', ')})`
   }
 }
 
 function matchTagRegexSql(tag, regex) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `'${regex}' ~!@# ANY("${tag}")`
+      return `${sqlString(regex)} ~!@# ANY("${tag}")`
     case 'boolean':
       if (regex) {
         throw new Error(`Regex given for boolean tag '${tag}' ('${regex}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" ~ '${regex}'`
+      return `"${tag}" ~ ${sqlString(regex)}`
   }
 }
 
 function stringSql(tag, matchCase) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `(select match from (select regexp_substr(match, '${matchCase.regex}') as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
+      return `(select match from (select regexp_substr(match, ${sqlString(matchCase.regex)}) as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
     case 'boolean':
       return `"${tag}"`
     default:
       if (matchCase.regex) {
-        return `regexp_substr("${tag}", '${matchCase.regex}', 1, 1, '', 1)`
+        return `regexp_substr("${tag}", ${sqlString(matchCase.regex)}, 1, 1, '', 1)`
       } else {
         return `"${tag}"`
       }
