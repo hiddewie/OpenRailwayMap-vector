@@ -22,16 +22,14 @@ async function promiseResultsOrErrors(promises) {
 
 async function parseSvgDimensions(feature) {
   const svg = await fs.promises.readFile(`symbols/${feature}.svg`, 'utf8')
-  // Only the attributes of the root <svg> element: inner elements (rect, image...) can have their own width/height
-  const root = svg.match(/<svg\b[^>]*>/)?.[0]
-  const width = root?.match(/\swidth="([^"]+)"/)
-  const height = root?.match(/\sheight="([^"]+)"/)
-  if (!width || !height) {
+  // Crude way of parsing SVG width/height. But given that all SVG icons are compressed and similar SVG content, this works fine.
+  const matches = svg.match(/<svg [^>]*width="([^"]+)"[^>]*height="([^"]+)"[^>]*>/)
+  if (!matches) {
     throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
   }
   return {
-    width: parseFloat(width[1]),
-    height: parseFloat(height[1]),
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2]),
   }
 }
 
@@ -400,9 +398,10 @@ CREATE OR REPLACE VIEW signal_features_view AS
       END as type,
       deactivated,
       MIN(rank) as rank,
+      caption,
       (array_agg(category ORDER BY rank))[1] as category
     FROM signals_with_features_2
-    GROUP BY signal_id, inline, deactivated, row_index
+    GROUP BY signal_id, inline, deactivated, row_index, caption
   )
   -- Group features by signal, and aggregate the results
   SELECT
