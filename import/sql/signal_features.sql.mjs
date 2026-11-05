@@ -245,11 +245,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalType === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}'])` : 'NULL'}
+              THEN ${feature.signalType === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}', "railway:signal:${type.type}:caption"])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${type.type})
             ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL]
+              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${type.type}:deactivated"::text, NULL, "railway:signal:${type.type}:caption"]
         END
       END as feature_${type.type}`).join(',')}
     FROM signals s
@@ -268,6 +268,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${type.type}[6] as type,
       feature_${type.type}[7]::boolean as deactivated,
       feature_${type.type}[8]::INT as rank,
+      feature_${type.type}[9] as caption,
       '${type.category}' as category
     FROM signals_with_features_0
     WHERE feature_${type.type} IS NOT NULL
@@ -283,6 +284,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       NULL as type,
       false as deactivated,
       NULL as rank,
+      NULL as caption,
       'other' as category
     FROM signals_with_features_0
     WHERE railway = 'signal'
@@ -299,7 +301,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
     array_agg(feature ORDER BY rank ASC NULLS LAST) as features,
     array_agg(deactivated ORDER BY rank ASC NULLS LAST) as deactivated,
     array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
-    MAX(rank) as rank
+    MAX(rank) as rank,
+    nullif(array_remove(array_agg(caption ORDER BY rank ASC NULLS LAST), null), '{}'::text[]) as caption
   FROM signals_with_features_1 sf
   GROUP BY signal_id;
 
@@ -327,7 +330,7 @@ CREATE OR REPLACE VIEW railway_signals_view AS
     railway,
     sd.direction_both,
     ref,
-    caption,
+    nullif(array_remove(array_cat(ARRAY["railway:signal:caption"], sf.caption), null), '{}'::text[]) as caption,
     position,
     wikidata,
     wikimedia_commons,
@@ -409,7 +412,7 @@ CREATE OR REPLACE FUNCTION railway_signals(z integer, x integer, y integer)
         ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
         railway,
         ref,
-        caption,
+        array_to_string(caption, '\n') AS caption,
         azimuth,
         direction_both,
         feature0,
