@@ -1,6 +1,6 @@
 -- Views for railway lines, materialized for more efficient queries
 
-CREATE MATERIALIZED VIEW line_route_count AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS line_route_count AS
   SELECT
     count(*) AS route_count,
     l.id AS id
