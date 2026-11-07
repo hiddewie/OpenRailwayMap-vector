@@ -20,8 +20,10 @@ jobs:
       matrix:
         include:
           - platform: linux/amd64
+            name: amd64
             runner: ubuntu-24.04
           - platform: linux/arm64
+            name: arm64
             runner: ubuntu-24.04-arm
 
     runs-on: ${{ matrix.runner }}
@@ -38,11 +40,11 @@ jobs:
 
       - name: Prepare directories
         env:
-          platform: ${{ matrix.platform }}
+          platform: ${{ matrix.name }}
         run: |
           mkdir -p /tmp/images
-          echo "TARFILE=${platform//\//-}.tar" >> $GITHUB_ENV
-          echo "TAG=$TMP_LOCAL_IMAGE:${platform//\//-}" >> $GITHUB_ENV
+          echo "TARFILE=$name.tar" >> $GITHUB_ENV
+          echo "TAG=$TMP_LOCAL_IMAGE:$name" >> $GITHUB_ENV
 
       - name: Build image
         run: |
@@ -56,7 +58,7 @@ jobs:
       - name: Upload image
         uses: actions/upload-artifact@v7
         with:
-          name: images-${{ matrix.platform }}
+          name: images-${{ matrix.name }}
           path: /tmp/images/${{ env.TARFILE }}
           if-no-files-found: error
           retention-days: 1
@@ -79,7 +81,7 @@ jobs:
       - name: Download images
         uses: actions/download-artifact@v7
         with:
-          artifact-ids: images-linux/amd64,images-linux/arm64
+          artifact-ids: images-amd64,images-arm64
           path: /tmp/images
 
       - name: Load images
