@@ -79,7 +79,7 @@ jobs:
       - name: Download images
         uses: actions/download-artifact@v7
         with:
-          artifact-ids: images-amd64,images-arm64
+          pattern: images-*
           path: /tmp/images
 
       - name: Load images
