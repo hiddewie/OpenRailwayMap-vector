@@ -32,8 +32,8 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg1" />
   <path
-     style="font-weight:300;font-size:17.6972px;line-height:1;font-family:Inter;-inkscape-font-specification:'Inter Light';font-variant-ligatures:no-contextual;fill:#ffffff;stroke:#ffffff;stroke-width:0.448524;paint-order:stroke fill markers"
-     d="M 1.9000563,41.562141 V 28.69145 H 3.075261 v 5.901162 H 10.37787 V 28.69145 h 1.175205 V 41.562141 H 10.37787 v -5.91373 H 3.075261 v 5.91373 z"
+     style="font-weight:300;font-size:17.6972px;line-height:1;font-family:Inter;-inkscape-font-specification:'Inter Light';font-variant-ligatures:no-contextual;fill:#ffffff;stroke:#ffffff;stroke-width:0.355212;paint-order:stroke fill markers"
+     d="m 2.9041686,41.370656 v -10.19305 h 0.9307131 v 4.673474 h 5.7833614 v -4.673474 h 0.9307129 v 10.19305 H 9.6182431 V 36.687229 H 3.8348817 v 4.683427 z"
      id="text1"
      aria-label="H" />
 </svg>

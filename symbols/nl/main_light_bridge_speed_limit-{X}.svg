@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="23.496958"
+   height="29"
+   viewBox="0 0 23.496958 29"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="main_light_bridge_speed_limit-{X}.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="33.275862"
+     inkscape:cx="11.750259"
+     inkscape:cy="14.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1128"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     style="font-weight:300;font-size:18.545px;line-height:1;font-family:Inter;-inkscape-font-specification:'Inter Light';font-variant-ligatures:no-contextual;fill:#ffffff;stroke:#ffffff;stroke-width:0.381669;paint-order:stroke fill markers"
+     d="m 13.934489,9.023872 3.032192,4.754177 h 0.06952 l 3.032192,-4.754177 h 1.181859 L 17.726064,14.5 l 3.524188,5.476128 h -1.18186 l -3.032192,-4.7007 h -0.06952 l -3.032192,4.7007 h -1.18186 L 16.330294,14.5 12.752628,9.023872 Z"
+     id="text1"
+     aria-label="X" />
+</svg>
