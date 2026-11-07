@@ -19,11 +19,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - platform: linux/amd64
-            name: amd64
+          - name: amd64
             runner: ubuntu-24.04
-          - platform: linux/arm64
-            name: arm64
+          - name: arm64
             runner: ubuntu-24.04-arm
 
     runs-on: ${{ matrix.runner }}
@@ -40,7 +38,7 @@ jobs:
 
       - name: Prepare directories
         env:
-          platform: ${{ matrix.name }}
+          name: ${{ matrix.name }}
         run: |
           mkdir -p /tmp/images
           echo "TARFILE=$name.tar" >> $GITHUB_ENV
