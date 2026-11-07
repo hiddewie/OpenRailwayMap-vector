@@ -2988,6 +2988,20 @@ features:
 
   # --- CH --- #
 
+  - description: Bahnhofanfangtafel
+    country: CH
+    icon: [ default: 'ch/fdv-267' ]
+    tags:
+      - { tag: 'railway:signal:station', value: 'CH-FDV:267' }
+      - { tag: 'railway:signal:station:form', value: 'sign' }
+
+  - description: Bahnhofendtafel
+    country: CH
+    icon: [ default: 'ch/fdv-268' ]
+    tags:
+      - { tag: 'railway:signal:station', value: 'CH-FDV:268' }
+      - { tag: 'railway:signal:station:form', value: 'sign' }
+
   - description: Vorsignal System L
     country: CH
     icon:
@@ -3383,20 +3397,6 @@ features:
     tags:
       - { tag: 'railway:signal:departure', value: 'CH-FDV:581' }
       - { tag: 'railway:signal:departure:form', value: 'light' }
-
-  - description: Bahnhofanfangtafel
-    country: CH
-    icon: [ default: 'ch/fdv-267' ]
-    tags:
-      - { tag: 'railway:signal:station', value: 'CH-FDV:267' }
-      - { tag: 'railway:signal:station:form', value: 'sign' }
-
-  - description: Bahnhofendtafel
-    country: CH
-    icon: [ default: 'ch/fdv-268' ]
-    tags:
-      - { tag: 'railway:signal:station', value: 'CH-FDV:268' }
-      - { tag: 'railway:signal:station:form', value: 'sign' }
 
   # --- CZ --- #
 
