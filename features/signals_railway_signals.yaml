@@ -296,6 +296,7 @@ types:
   - { type: stop, category: station }
   - { type: stop_distant, category: station }
   - { type: stop_demand, category: other }
+  - { type: station, category: station }
   - { type: station_distant, category: station }
   - { type: crossing, category: other }
   - { type: crossing_distant, category: other }
