@@ -84,8 +84,8 @@ jobs:
 
       - name: Load images
         run: |
-          for image in /tmp/images/*.tar; do
-            docker load -i $image
+          for image in /tmp/images-*/*.tar; do
+            docker load -i "$image"
           done
 
       - name: Push images to local registry
