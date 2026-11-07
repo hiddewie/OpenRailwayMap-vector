@@ -8,6 +8,12 @@ Download an OpenStreetMap data file, for example from https://download.geofabrik
 
 Ensure [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) is installed. In case of Podman, see the Podman specific instructions below.
 
+Ensure you are authenticated to the Github Package registry:
+```shell
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u USERNAME --password-stdin
+```
+with `USERNAME` replaced with your Github username and your personal Github token stored in the environment variable `GITHUB_TOKEN`.
+
 Start the services with:
 ```shell
 docker compose up --build --watch db import martin proxy api
