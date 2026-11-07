@@ -84,7 +84,7 @@ jobs:
 
       - name: Load images
         run: |
-          for image in /tmp/images-*/*.tar; do
+          for image in /tmp/images/images-*/*.tar; do
             docker load -i "$image"
           done
 
