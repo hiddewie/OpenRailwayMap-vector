@@ -1275,8 +1275,7 @@ function transposeSdfImageData(context, images, width, height) {
   return imageData
 }
 
-// The ID of a composed image (a row of features) may itself contain positions: only the last one counts
-const imageMatcher = /^(?<id>.+?)(@(?<position>center|bottom|top|right|left))?$/
+const imageMatcher = /^(?<id>[^@]+)(@(?<position>center|bottom|top|right|left))?$/
 function loadImages(imageIds) {
   return imageIds.map(imageId => {
     const parsed = imageId.match(imageMatcher)
@@ -1308,7 +1307,7 @@ function loadImages(imageIds) {
   });
 }
 
-function layoutImages(images, gap) {
+function layoutImages(images) {
   // Ignore position of first image
   // The width and height will grow as more images are composed
   let width = images[0].image.data.width
@@ -1363,11 +1362,11 @@ function layoutImages(images, gap) {
         break;
 
       case 'right':
-        image.offset.x = globalOffset.x + width + gap
+        image.offset.x = globalOffset.x + width
         image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
         globalOffset.x = Math.min(globalOffset.x, image.offset.x)
         globalOffset.y = Math.min(globalOffset.y, image.offset.y)
-        width = width + gap + image.image.data.width
+        width = width + image.image.data.width
         height = Math.max(height, image.image.data.height)
         break;
 
@@ -1415,11 +1414,10 @@ function layoutImages(images, gap) {
 
 /**
  * Given a list of maplibre images, this function merges them into into a single image by composing the images on top of each other.
- * The gap (in pixels of the displayed image) separates the images placed on the right.
  */
-async function composeImages(imageIds, gap = 0) {
+async function composeImages(imageIds) {
   const loadedImages = loadImages(imageIds)
-  const { width, height, images } = layoutImages(loadedImages, gap * loadedImages[0].image.pixelRatio);
+  const { width, height, images } = layoutImages(loadedImages);
 
   const canvas = document.createElement("canvas");
   const context = canvas.getContext('2d')
@@ -1450,11 +1448,6 @@ async function composeImages(imageIds, gap = 0) {
   };
 }
 
-// Separator of the features drawn side by side in one row, each of them a composed image (see import/sql/signal_features.sql.mjs)
-const rowSeparator = '||'
-// Gap between the features of a row, like the vertical gap between stacked features
-const rowGap = 2
-
 const generatedImages = {};
 async function generateImage(maps, ids) {
   const rawImageIds = ids.startsWith('sdf:') ? ids.substr(4) : ids
@@ -1463,10 +1456,7 @@ async function generateImage(maps, ids) {
   if (!generatedImages[rawImageIds]) {
     generatedImages[rawImageIds] = new Promise((resolve, reject) => {
       try {
-        const rowImageIds = rawImageIds.split(rowSeparator)
-        const imageIds = rowImageIds.length > 1
-          ? rowImageIds.map((id, index) => index === 0 ? id : `${id}@right`)
-          : rawImageIds.split('|')
+        const imageIds = rawImageIds.split('|')
         if (!imageIds) {
           console.warn(`Ignoring invalid missing image: ${rawImageIds}`);
           resolve(false);
@@ -1475,14 +1465,8 @@ async function generateImage(maps, ids) {
 
         console.info(`Generating image for ${rawImageIds}`)
 
-        // A row first needs every feature image composed on its own
-        const rowImages = rowImageIds.length > 1
-          ? Promise.all(rowImageIds.filter(id => !map.getImage(id)).map(id => generateImage(maps, id)))
-          : Promise.resolve()
-
         // Compose the images together into a normal image and SDF image
-        rowImages
-          .then(() => composeImages(imageIds, rowImageIds.length > 1 ? rowGap : 0))
+        composeImages(imageIds)
           .then(({width, height, imageData, sdfImageData, pixelRatio}) => {
             maps.forEach(map => {
               map.addImage(rawImageIds, {width, height, data: imageData}, {pixelRatio, sdf: false});
@@ -2989,8 +2973,6 @@ function popupContent(feature, abortController) {
     } else {
       return (Array.isArray(value) ? value : [value])
         .map(String)
-        // Features drawn side by side are looked up one by one
-        .flatMap(stringValue => format && format.lookup ? stringValue.split(rowSeparator) : [stringValue])
         .map(stringValue => {
           if (!format) {
             return stringValue;
