@@ -234,6 +234,18 @@ const railwayLineFeatures = {
     track_class: {
       name: 'Track class',
     },
+    axle_load: {
+      name: 'Axle load',
+      format: {
+        template: '%.1d',
+      },
+    },
+    metre_load: {
+      name: 'Metre load',
+      format: {
+        template: '%.1d',
+      },
+    },
     reporting_marks: {
       name: 'Reporting marks',
     },
@@ -1179,9 +1191,6 @@ const features = {
       },
       ref: {
         name: 'Reference',
-      },
-      caption: {
-        name: 'Caption',
       },
       type: {
         name: 'Type',

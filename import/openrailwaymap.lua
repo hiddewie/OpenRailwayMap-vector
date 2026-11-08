@@ -143,37 +143,6 @@ function wikimedia_commons_or_image(wikimedia_commons, image)
     return wikimedia_commons_not_file, image_wikimedia_commons_file or wikimedia_commons_file, image_https
 end
 
-function signal_caption(tags)
-  return tags['railway:signal:crossing_info:caption']
-    or tags['railway:signal:stop:caption']
-    or tags['railway:signal:crossing_hint:caption']
-    or tags['railway:signal:station_distant:caption']
-    or tags['railway:signal:crossing_distant:caption']
-    or tags['railway:signal:speed_limit:caption']
-    or tags['railway:signal:crossing:caption']
-    or tags['railway:signal:passing:caption']
-    or tags['railway:signal:automatic_marker:caption']
-    or tags['railway:signal:whistle:caption']
-    or tags['railway:signal:caption']
-    or tags['railway:signal:minor:caption']
-    or tags['railway:signal:main:caption']
-    or tags['railway:signal:main_repeated:caption']
-    or tags['railway:signal:distant:caption']
-    or tags['railway:signal:electricity:caption']
-    or tags['railway:signal:shunting:caption']
-    or tags['railway:signal:fouling_point:caption']
-    or tags['railway:signal:workrules:caption']
-    or tags['railway:signal:resetting_switch:caption']
-    or tags['railway:signal:switch:caption']
-    or tags['railway:signal:route:caption']
-    or tags['railway:signal:dual_mode:caption']
-    or tags['railway:signal:train_protection:caption']
-    or tags['railway:signal:train_protection:main:caption']
-    or tags['railway:signal:train_protection:system_change:caption']
-    or tags['railway:signal:slope:caption']
-    or tags['railway:signal:radio:frequency']
-end
-
 -- Table definitions --
 
 -- Note on primary keys:
@@ -215,6 +184,8 @@ local railway_line = osm2pgsql.define_table({
     { column = 'gauges', sql_type = 'text[]' },
     { column = 'loading_gauge', type = 'text' },
     { column = 'track_class', type = 'text' },
+    { column = 'axle_load', type = 'real' },
+    { column = 'metre_load', type = 'real' },
     { column = 'reporting_marks', sql_type = 'text[]' },
     { column = 'train_protection', sql_type = 'text[]' },
     { column = 'train_protection_rank', type = 'smallint' },
@@ -392,7 +363,6 @@ local signal_columns = {
   { column = 'railway', type = 'text' },
   { column = 'ref', type = 'text' },
   { column = 'signal_direction', type = 'text' },
-  { column = 'caption', type = 'text' },
   { column = 'position', sql_type = 'text[]' },
   { column = 'wikidata', type = 'text' },
   { column = 'wikimedia_commons', type = 'text' },
@@ -1370,7 +1340,6 @@ function osm2pgsql.process_node(object)
       railway = tags.railway,
       ref = tags.ref,
       signal_direction = tags['railway:signal:direction'],
-      caption = signal_caption(tags),
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -1531,6 +1500,8 @@ function osm2pgsql.process_way(object)
         gauges = split_semicolon_to_sql_array(gauge),
         loading_gauge = tags['loading_gauge'],
         track_class = tags['railway:track_class'],
+        axle_load = tags['axle_load'] or (tags['railway:track_class'] and tag_functions.track_class_axle_load[tags['railway:track_class']]),
+        metre_load = tags['metre_load'] or (tags['railway:track_class'] and tag_functions.track_class_metre_load[tags['railway:track_class']]),
         reporting_marks = split_semicolon_to_sql_array(tags['reporting_marks']),
         train_protection = to_sql_array(railway_train_protection),
         train_protection_rank = railway_train_protection_rank,

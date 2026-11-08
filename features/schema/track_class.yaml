@@ -12,6 +12,12 @@ properties:
         color:
           type: string
           description: The color used to show the track class on the map
+        axle_load:
+          type: number
+          description: The axle load for this track class
+        metre_load:
+          type: number
+          description: The metre load for this track class
       additionalProperties: false
   $schema:
     type: string
