@@ -5,10 +5,9 @@ name: Build PostGIS image
 
 on:
   workflow_dispatch: ~
-  push: ~
 
 env:
-  TMP_LOCAL_IMAGE: localhost:5000/user/app
+  TMP_LOCAL_IMAGE: localhost:5000/${{ github.repository_owner }}/postgis
   REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/postgis
   REGISTRY_TAG: 19rc1-3.7-alpine
 
