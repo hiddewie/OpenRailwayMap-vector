@@ -651,6 +651,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'Routes',
         value: 'routes',
       },
@@ -681,6 +685,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -791,6 +799,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'Vacancy detection',
         value: 'vacancy_detection',
       },
@@ -821,6 +833,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -857,6 +873,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',

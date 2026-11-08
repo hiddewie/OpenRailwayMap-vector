@@ -5328,11 +5328,11 @@ const makeStyle = () => ({
       default: false,
     },
     stations: {
-      // Values: station, operator, none
+      // Values: station, operator, owner, none
       default: 'station',
     },
     pois: {
-      // Values: radio, facility, equipment, operator, vacancy_detection, electrical_equipment, level_crossing, train_protection
+      // Values: radio, facility, equipment, operator, owner, vacancy_detection, electrical_equipment, level_crossing, train_protection
       default: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
     },
     platforms: {
@@ -5344,11 +5344,11 @@ const makeStyle = () => ({
       default: 'none',
     },
     boxes: {
-      // Values: plain, operator, none
+      // Values: plain, operator, owner, none
       default: 'none',
     },
     catenaries: {
-      // Values: plain, operator, none
+      // Values: plain, operator, owner, none
       default: 'none',
     },
     switches: {
@@ -5360,7 +5360,7 @@ const makeStyle = () => ({
       default: [],
     },
     tracks: {
-      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, gauge, loading_gauge, track_class, axle_load, metre_load, operator, routes, passenger_lines, plain
+      // Values: usage, speed, train_protection, voltage_frequency, maximum_current, power, gauge, loading_gauge, track_class, axle_load, metre_load, operator, owner, routes, passenger_lines, plain
       default: 'usage',
     },
   },
