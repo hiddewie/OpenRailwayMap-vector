@@ -29,15 +29,6 @@ async function parseSvgDimensions(feature) {
 // carrying their own signal, so that one node can show a feature per subtype.
 const subtypesOfType = Object.fromEntries(signals_railway_signals.types.map(type => [type.type, type.subtypes ?? []]))
 
-// Declared subtype of a feature for a type, or null
-function featureSubtype(feature, type) {
-  const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
-  if (subtypes.length > 1) {
-    throw new Error(`Feature ${feature.description} has several subtypes of type ${type}: ${subtypes.join(', ')}`)
-  }
-  return subtypes[0] ?? null
-}
-
 // Validate declared tags for type and subtype
 for (const [type, subtypes] of Object.entries(subtypesOfType)) {
   const tag = `railway:signal:${type}`
@@ -73,10 +64,27 @@ const featureColumns = signals_railway_signals.types.flatMap(type => [
 
 const signalsWithSignalType = await promiseResultsOrErrors(
   signals_railway_signals.features
-    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
-    .map(feature => ({
+    // Determine a signal type and subtype such that combined matching does not try to match other signal types for the same feature
+    .map(feature => {
+      const type = signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type
+      if (!type) {
+        throw new Error(`Feature '${feature.description}' has no type`)
+      }
+      const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
+      if (subtypes.length > 1) {
+        throw new Error(`Feature '${feature.description}' has several subtypes of type ${type}: ${subtypes.join(', ')}`)
+      }
+
+      return {
+        ...feature,
+        signalType: type,
+        signalSubtype: subtypes.length > 0 ? subtypes[0] : null,
+      };
+    })
+    // Determine feature rank
+    .map((feature, index) => ({
       ...feature,
-      signalType: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type,
+      rank: index,
     }))
     // Determine icon dimensions
     .map(async feature => ({
@@ -286,7 +294,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       ${featureColumns.map(column => `
       CASE
         WHEN "railway:signal:${column.type}" IS NOT NULL${column.subtype ? ` AND "railway:signal:${column.type}:${column.subtype}" IS NOT NULL` : ''} THEN
-          CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && featureSubtype(feature, column.type) === column.subtype).map(feature => `
+          CASE ${signalsWithSignalType.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && feature.signalSubtype === column.subtype).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
               THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, '${feature.rank}', "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"])` : 'NULL'}
