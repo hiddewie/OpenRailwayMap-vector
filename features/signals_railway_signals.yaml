@@ -232,7 +232,7 @@ types:
   - { type: main, category: main }
   - { type: combined, category: main }
   - { type: distant, category: distant }
-  - { type: train_protection, category: train_protection }
+  - { type: train_protection, category: train_protection, subtypes: [main, system_change] }
   - { type: main_repeated, category: distant }
   - { type: speed_limit, category: speed }
   - { type: speed_limit_distant, category: speed }
@@ -5579,8 +5579,8 @@ features:
   - description: Señal de maniobras de 2 focos
     country: ES
     icon:
-      - default: 'es/Adif-FF-2' 
-      - default: 'es/2-FF7A' 
+      - default: 'es/Adif-FF-2'
+      - default: 'es/2-FF7A'
     tags:
       - { tag: 'railway:signal:shunting', value: 'ES-RCF:FF' }
       - { tag: 'railway:signal:shunting:shape', value: 'ES-Adif:2' }
@@ -7878,7 +7878,7 @@ features:
       - { tag: 'railway:signal:distant', value: 'IT:2V' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
 
-  
+
 
   - description: Speed limit
     country: IT
