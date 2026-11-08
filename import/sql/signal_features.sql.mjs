@@ -28,8 +28,8 @@ async function parseSvgDimensions(feature) {
     throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
   }
   return {
-    width: parseFloat(width[1]),
-    height: parseFloat(height[1]),
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2]),
   }
 }
 
