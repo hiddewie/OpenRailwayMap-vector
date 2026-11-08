@@ -1,6 +1,6 @@
 # This image is a replacement for postgis/postgis, until issue https://github.com/postgis/docker-postgis/issues/216 is resolved.
 # See .github/workflows/build-postgis.yml for the workflow that builds the image.
-FROM hiddewie/postgis:19rc1-3.7-alpine
+FROM ghcr.io/hiddewie/postgis:19rc1-3.7-alpine
 
 USER root
 RUN mkdir -p /data/postgresql && chown postgres:postgres /data/postgresql
