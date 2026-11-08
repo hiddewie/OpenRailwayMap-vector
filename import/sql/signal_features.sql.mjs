@@ -283,11 +283,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && featureSubtype(feature, column.type) === column.subtype).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}:deactivated"::text, '${feature.rank}', '${feature.inline === true}', "railway:signal:${type.type}:caption"])` : 'NULL'}
+              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}:deactivated"::text, '${feature.rank}', '${feature.inline === true}', "railway:signal:${column.type}:caption"])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${column.type}), left to the subtype columns when a subtype key is present
             ${column.subtype || subtypesOfType[column.type].length === 0 ? 'ELSE' : `WHEN ${subtypesOfType[column.type].map(subtype => `"railway:signal:${column.type}:${subtype}" IS NULL`).join(' AND ')} THEN`}
-              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL, 'false', "railway:signal:${type.type}:caption"]
+              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL, 'false', "railway:signal:${column.type}:caption"]
         END
       END as feature_${column.name}`).join(',')}
     FROM signals s
@@ -307,7 +307,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${column.name}[7]::boolean as deactivated,
       feature_${column.name}[8]::INT as rank,
       feature_${column.name}[9]::boolean as inline,
-      feature_${type.type}[9] as caption,
+      feature_${column.name}[10] as caption,
       '${column.category}' as category
     FROM signals_with_features_0
     WHERE feature_${column.name} IS NOT NULL
@@ -352,9 +352,10 @@ CREATE OR REPLACE VIEW signal_features_view AS
       END as type,
       deactivated,
       MIN(rank) as rank,
+      caption,
       (array_agg(category ORDER BY rank))[1] as category
     FROM signals_with_features_2
-    GROUP BY signal_id, inline, deactivated, row_index
+    GROUP BY signal_id, inline, deactivated, row_index, caption
   )
   -- Group features by signal, and aggregate the results
   SELECT
