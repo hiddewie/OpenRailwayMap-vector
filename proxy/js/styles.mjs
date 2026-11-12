@@ -5332,7 +5332,7 @@ const makeStyle = () => ({
       default: 'station',
     },
     pois: {
-      // Values: radio, facility, equipment, operator, owner, vacancy_detection, electrical_equipment, level_crossing, train_protection
+      // Values: radio, facility, equipment, operator, vacancy_detection, electrical_equipment, level_crossing, train_protection
       default: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
     },
     platforms: {

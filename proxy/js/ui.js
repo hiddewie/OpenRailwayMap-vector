@@ -799,10 +799,6 @@ const styleElements = [
         value: 'operator',
       },
       {
-        name: 'Owner',
-        value: 'owner',
-      },
-      {
         name: 'Vacancy detection',
         value: 'vacancy_detection',
       },

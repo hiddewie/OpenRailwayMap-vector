@@ -311,6 +311,11 @@ CREATE OR REPLACE VIEW railway_text_stations AS
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189) as operator_bright,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikidata,
     wikimedia_commons,
@@ -326,6 +331,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
   FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
+  LEFT JOIN railway_operator ro2
+    ON ro.name = owner
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -348,7 +355,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -375,7 +384,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -401,7 +412,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -428,7 +441,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -517,7 +532,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       count,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
@@ -561,6 +578,8 @@ DO $do$ BEGIN
           "localized_name": "string",
           "operator_color": "string",
           "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string",
           "count": "integer"
         }
       }
@@ -586,7 +605,9 @@ RETURN (
       state,
       station,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -605,7 +626,9 @@ DO $do$ BEGIN
           "state": "string",
           "station": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1377,6 +1400,12 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
       'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikimedia_commons,
     wikimedia_commons_file,
