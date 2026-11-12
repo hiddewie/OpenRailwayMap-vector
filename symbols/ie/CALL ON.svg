@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="18"
+   height="4"
+   viewBox="0 0 18 4"
+   sodipodi:docname="CALL ON.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="47.11"
+     inkscape:cx="6.9624284"
+     inkscape:cy="2.0059435"
+     inkscape:window-width="1680"
+     inkscape:window-height="987"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1">
+    <image
+       width="18"
+       height="4"
+       preserveAspectRatio="none"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAEBAMAAABxb3LiAAAAAXNSR0IArs4c6QAAAARnQU1BAACx&#10;jwv8YQUAAAAwUExURf+nACobAEApAAAAABUNAAYDAAEAAOuZAB0SABMMABgPAP2lABELACAUAPqj&#10;APukALJdQtsAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCA1&#10;LjEuMTITAUd0AAAAuGVYSWZJSSoACAAAAAUAGgEFAAEAAABKAAAAGwEFAAEAAABSAAAAKAEDAAEA&#10;AAADAAAAMQECABEAAABaAAAAaYcEAAEAAABsAAAAAAAAAKOTAADoAwAAo5MAAOgDAABQYWludC5O&#10;RVQgNS4xLjEyAAADAACQBwAEAAAAMDIzMAGgAwABAAAAAQAAAAWgBAABAAAAlgAAAAAAAAACAAEA&#10;AgAEAAAAUjk4AAIABwAEAAAAMDEwMAAAAAAHd36etszaFAAAAB9JREFUGNNjQAZCxgau6WBWZ+bq&#10;mOtgFh//BwYGBgYASrIE/8jbZEgAAAAASUVORK5CYII=&#10;"
+       id="image1" />
+    <rect
+       style="fill:#fba400;stroke:#292929;stroke-width:1.067;stroke-opacity:0;fill-opacity:1"
+       id="rect1"
+       width="18"
+       height="4"
+       x="0"
+       y="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.66667px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#000000;fill-opacity:1;stroke:#292929;stroke-width:1.067;stroke-opacity:0"
+       x="2.9080875"
+       y="2.9505413"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="2.9080875"
+         y="2.9505413">CALL ON</tspan></text>
+  </g>
+</svg>

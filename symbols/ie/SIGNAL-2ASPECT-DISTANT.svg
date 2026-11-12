@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="14"
+   height="20"
+   viewBox="0 0 14 20"
+   sodipodi:docname="SIGNAL-2ASPECT-DISTANT.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="28.15"
+     inkscape:cx="6.9982238"
+     inkscape:cy="10"
+     inkscape:window-width="1680"
+     inkscape:window-height="987"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#363636;stroke-width:0.409;stroke-opacity:1"
+       id="rect1"
+       width="14"
+       height="20"
+       x="0"
+       y="0" />
+    <ellipse
+       style="fill:#dd7003;fill-opacity:1;stroke:#363636;stroke-width:0.455462;stroke-opacity:1"
+       id="path1"
+       cx="6.9626999"
+       cy="15.133215"
+       rx="3.1028793"
+       ry="3.0673554" />
+    <ellipse
+       style="fill:#333333;fill-opacity:1;stroke:#232323;stroke-width:0.455462;stroke-opacity:1"
+       id="path1-6"
+       cx="7"
+       cy="6.9326448"
+       rx="3.1028793"
+       ry="3.0673554" />
+  </g>
+</svg>
