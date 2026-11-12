@@ -101,6 +101,8 @@ tags:
   - { tag: 'railway:signal:electricity:installation', title: 'Electricity installation' }
   - { tag: 'railway:signal:electricity:ref', title: 'Electricity signal reference' }
   - { tag: 'railway:signal:electricity:transition', title: 'Electricity transition' }
+  - { tag: 'railway:signal:electricity:transition:caption', title: 'Electricity transition caption' }
+  - { tag: 'railway:signal:electricity:transition:deactivated', title: 'Electricity transition deactivated', type: boolean }
   - { tag: 'railway:signal:electricity:transition:form', title: 'Electricity transition form' }
   - { tag: 'railway:signal:electricity:transition:ref', title: 'Electricity transition reference' }
   - { tag: 'railway:signal:electricity:turn_direction', title: 'Electricity turn direction' }
@@ -189,6 +191,8 @@ tags:
   - { tag: 'railway:signal:radio', title: 'Radio' }
   - { tag: 'railway:signal:radio:caption', title: 'Radio caption' }
   - { tag: 'railway:signal:radio:channel', title: 'Radio channel' }
+  - { tag: 'railway:signal:radio:channel:caption', title: 'Radio channel caption' }
+  - { tag: 'railway:signal:radio:channel:deactivated', title: 'Radio channel deactivated', type: boolean }
   - { tag: 'railway:signal:radio:channel:form', title: 'Radio channel form' }
   - { tag: 'railway:signal:radio:channel:ref', title: 'Radio channel reference' }
   - { tag: 'railway:signal:radio:channel:type', title: 'Radio channel type' }
@@ -196,6 +200,8 @@ tags:
   - { tag: 'railway:signal:radio:form', title: 'Radio form' }
   - { tag: 'railway:signal:radio:frequency', title: 'Radio frequency' }
   - { tag: 'railway:signal:radio:mode', title: 'Radio mode' }
+  - { tag: 'railway:signal:radio:mode:caption', title: 'Radio mode caption' }
+  - { tag: 'railway:signal:radio:mode:deactivated', title: 'Radio mode deactivated', type: boolean }
   - { tag: 'railway:signal:radio:mode:form', title: 'Radio mode form' }
   - { tag: 'railway:signal:radio:mode:ref', title: 'Radio mode reference' }
   - { tag: 'railway:signal:radio:mode:type', title: 'Radio mode type' }
@@ -304,11 +310,15 @@ tags:
   - { tag: 'railway:signal:speed_limit:deactivated', title: 'Speed limit deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:form', title: 'Speed limit form' }
   - { tag: 'railway:signal:speed_limit:freight', title: 'Speed limit freight' }
+  - { tag: 'railway:signal:speed_limit:freight:caption', title: 'Speed limit freight caption' }
+  - { tag: 'railway:signal:speed_limit:freight:deactivated', title: 'Speed limit freight deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:freight:form', title: 'Speed limit freight form' }
   - { tag: 'railway:signal:speed_limit:freight:function', title: 'Speed limit freight function' }
   - { tag: 'railway:signal:speed_limit:freight:ref', title: 'Speed limit freight reference' }
   - { tag: 'railway:signal:speed_limit:freight:speed', title: 'Speed limit freight speed' }
   - { tag: 'railway:signal:speed_limit:marker', title: 'Speed limit marker' }
+  - { tag: 'railway:signal:speed_limit:marker:caption', title: 'Speed limit marker caption' }
+  - { tag: 'railway:signal:speed_limit:marker:deactivated', title: 'Speed limit marker deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:marker:form', title: 'Speed limit marker form' }
   - { tag: 'railway:signal:speed_limit:marker:function', title: 'Speed limit marker function' }
   - { tag: 'railway:signal:speed_limit:marker:ref', title: 'Speed limit marker reference' }
@@ -317,15 +327,21 @@ tags:
   - { tag: 'railway:signal:speed_limit:speed', title: 'Speed limit speed', type: array }
   - { tag: 'railway:signal:speed_limit:states', title: 'Speed limit states', type: array }
   - { tag: 'railway:signal:speed_limit:switch', title: 'Speed limit switch' }
+  - { tag: 'railway:signal:speed_limit:switch:caption', title: 'Speed limit switch caption' }
+  - { tag: 'railway:signal:speed_limit:switch:deactivated', title: 'Speed limit switch deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:switch:form', title: 'Speed limit switch form' }
   - { tag: 'railway:signal:speed_limit:switch:ref', title: 'Speed limit switch reference' }
   - { tag: 'railway:signal:speed_limit:switch:type', title: 'Speed limit switch type' }
   - { tag: 'railway:signal:speed_limit:switchable', title: 'Speed limit switchable' }
+  - { tag: 'railway:signal:speed_limit:switchable:caption', title: 'Speed limit switchable caption' }
+  - { tag: 'railway:signal:speed_limit:switchable:deactivated', title: 'Speed limit switchable deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:switchable:form', title: 'Speed limit switchable form' }
   - { tag: 'railway:signal:speed_limit:switchable:ref', title: 'Speed limit switchable reference' }
   - { tag: 'railway:signal:speed_limit:switchable:speed', title: 'Speed limit switchable speed' }
   - { tag: 'railway:signal:speed_limit:switchable:states', title: 'Speed limit switchable states', type: array }
   - { tag: 'railway:signal:speed_limit:transition', title: 'Speed limit transition' }
+  - { tag: 'railway:signal:speed_limit:transition:caption', title: 'Speed limit transition caption' }
+  - { tag: 'railway:signal:speed_limit:transition:deactivated', title: 'Speed limit transition deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit:transition:form', title: 'Speed limit transition form' }
   - { tag: 'railway:signal:speed_limit:transition:ref', title: 'Speed limit transition reference' }
   - { tag: 'railway:signal:speed_limit:turn_direction', title: 'Speed limit diverging direction', type: array }
@@ -335,20 +351,28 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:deactivated', title: 'Speed limit distant deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:distance', title: 'Speed limit distant distance' }
   - { tag: 'railway:signal:speed_limit_distant:fast', title: 'Speed limit distant fast' }
+  - { tag: 'railway:signal:speed_limit_distant:fast:caption', title: 'Speed limit distant fast caption' }
+  - { tag: 'railway:signal:speed_limit_distant:fast:deactivated', title: 'Speed limit distant fast deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:fast:form', title: 'Speed limit distant fast form' }
   - { tag: 'railway:signal:speed_limit_distant:fast:ref', title: 'Speed limit distant fast reference' }
   - { tag: 'railway:signal:speed_limit_distant:fast:speed', title: 'Speed limit distant fast speed' }
   - { tag: 'railway:signal:speed_limit_distant:fixed', title: 'Speed limit distant fixed' }
+  - { tag: 'railway:signal:speed_limit_distant:fixed:caption', title: 'Speed limit distant fixed caption' }
+  - { tag: 'railway:signal:speed_limit_distant:fixed:deactivated', title: 'Speed limit distant fixed deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:fixed:form', title: 'Speed limit distant fixed form' }
   - { tag: 'railway:signal:speed_limit_distant:fixed:ref', title: 'Speed limit distant fixed reference' }
   - { tag: 'railway:signal:speed_limit_distant:fixed:speed', title: 'Speed limit distant fixed speed' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
   - { tag: 'railway:signal:speed_limit_distant:freight', title: 'Speed limit distant freight' }
+  - { tag: 'railway:signal:speed_limit_distant:freight:caption', title: 'Speed limit distant freight caption' }
+  - { tag: 'railway:signal:speed_limit_distant:freight:deactivated', title: 'Speed limit distant freight deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:freight:form', title: 'Speed limit distant freight form' }
   - { tag: 'railway:signal:speed_limit_distant:freight:ref', title: 'Speed limit distant freight reference' }
   - { tag: 'railway:signal:speed_limit_distant:freight:speed', title: 'Speed limit distant freight speed' }
   - { tag: 'railway:signal:speed_limit_distant:mobile', title: 'Speed limit distant mobile', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:railcar', title: 'Speed limit distant railcar' }
+  - { tag: 'railway:signal:speed_limit_distant:railcar:caption', title: 'Speed limit distant railcar caption' }
+  - { tag: 'railway:signal:speed_limit_distant:railcar:deactivated', title: 'Speed limit distant railcar deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:railcar:form', title: 'Speed limit distant railcar form' }
   - { tag: 'railway:signal:speed_limit_distant:railcar:ref', title: 'Speed limit distant railcar reference' }
   - { tag: 'railway:signal:speed_limit_distant:railcar:speed', title: 'Speed limit distant railcar speed' }
@@ -359,6 +383,8 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:shortened', title: 'Speed limit distant shortened', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:speed', title: 'Speed limit distant speed', type: array }
   - { tag: 'railway:signal:speed_limit_distant:switchable', title: 'Speed limit distant switchable' }
+  - { tag: 'railway:signal:speed_limit_distant:switchable:caption', title: 'Speed limit distant switchable caption' }
+  - { tag: 'railway:signal:speed_limit_distant:switchable:deactivated', title: 'Speed limit distant switchable deactivated', type: boolean }
   - { tag: 'railway:signal:speed_limit_distant:switchable:form', title: 'Speed limit distant switchable form' }
   - { tag: 'railway:signal:speed_limit_distant:switchable:ref', title: 'Speed limit distant switchable reference' }
   - { tag: 'railway:signal:speed_limit_distant:switchable:speed', title: 'Speed limit distant switchable speed' }
@@ -387,9 +413,13 @@ tags:
   - { tag: 'railway:signal:steam_locomotive:form', title: 'Steam locomotive form' }
   - { tag: 'railway:signal:stop', title: 'Stop' }
   - { tag: 'railway:signal:stop:accessibility', title: 'Stop accessibility' }
+  - { tag: 'railway:signal:stop:accessibility:caption', title: 'Stop accessibility caption' }
+  - { tag: 'railway:signal:stop:accessibility:deactivated', title: 'Stop accessibility deactivated', type: boolean }
   - { tag: 'railway:signal:stop:accessibility:form', title: 'Stop accessibility form' }
   - { tag: 'railway:signal:stop:accessibility:ref', title: 'Stop accessibility reference' }
   - { tag: 'railway:signal:stop:any', title: 'Stop any' }
+  - { tag: 'railway:signal:stop:any:caption', title: 'Stop any caption' }
+  - { tag: 'railway:signal:stop:any:deactivated', title: 'Stop any deactivated', type: boolean }
   - { tag: 'railway:signal:stop:any:form', title: 'Stop any form' }
   - { tag: 'railway:signal:stop:any:length', title: 'Stop any length' }
   - { tag: 'railway:signal:stop:any:ref', title: 'Stop any reference' }
@@ -398,6 +428,8 @@ tags:
   - { tag: 'railway:signal:stop:caption', title: 'Stop caption' }
   - { tag: 'railway:signal:stop:carriages', title: 'Stop carriages', type: array }
   - { tag: 'railway:signal:stop:conventional', title: 'Stop conventional' }
+  - { tag: 'railway:signal:stop:conventional:caption', title: 'Stop conventional caption' }
+  - { tag: 'railway:signal:stop:conventional:deactivated', title: 'Stop conventional deactivated', type: boolean }
   - { tag: 'railway:signal:stop:conventional:for', title: 'Stop conventional for' }
   - { tag: 'railway:signal:stop:conventional:form', title: 'Stop conventional form' }
   - { tag: 'railway:signal:stop:conventional:number', title: 'Stop conventional number' }
@@ -408,6 +440,8 @@ tags:
   - { tag: 'railway:signal:stop:for', title: 'Stop for' }
   - { tag: 'railway:signal:stop:form', title: 'Stop form' }
   - { tag: 'railway:signal:stop:highspeed', title: 'Stop highspeed' }
+  - { tag: 'railway:signal:stop:highspeed:caption', title: 'Stop highspeed caption' }
+  - { tag: 'railway:signal:stop:highspeed:deactivated', title: 'Stop highspeed deactivated', type: boolean }
   - { tag: 'railway:signal:stop:highspeed:for', title: 'Stop highspeed for' }
   - { tag: 'railway:signal:stop:highspeed:form', title: 'Stop highspeed form' }
   - { tag: 'railway:signal:stop:highspeed:ref', title: 'Stop highspeed reference' }
@@ -415,6 +449,8 @@ tags:
   - { tag: 'railway:signal:stop:highspeed:type', title: 'Stop highspeed type' }
   - { tag: 'railway:signal:stop:ref', title: 'Stop signal reference' }
   - { tag: 'railway:signal:stop:regional', title: 'Stop regional' }
+  - { tag: 'railway:signal:stop:regional:caption', title: 'Stop regional caption' }
+  - { tag: 'railway:signal:stop:regional:deactivated', title: 'Stop regional deactivated', type: boolean }
   - { tag: 'railway:signal:stop:regional:for', title: 'Stop regional for' }
   - { tag: 'railway:signal:stop:regional:form', title: 'Stop regional form' }
   - { tag: 'railway:signal:stop:regional:ref', title: 'Stop regional reference' }
@@ -422,6 +458,8 @@ tags:
   - { tag: 'railway:signal:stop:regional:unit_number', title: 'Stop regional unit number' }
   - { tag: 'railway:signal:stop:states', title: 'Stop states', type: array }
   - { tag: 'railway:signal:stop:suburban', title: 'Stop suburban' }
+  - { tag: 'railway:signal:stop:suburban:caption', title: 'Stop suburban caption' }
+  - { tag: 'railway:signal:stop:suburban:deactivated', title: 'Stop suburban deactivated', type: boolean }
   - { tag: 'railway:signal:stop:suburban:for', title: 'Stop suburban for' }
   - { tag: 'railway:signal:stop:suburban:form', title: 'Stop suburban form' }
   - { tag: 'railway:signal:stop:suburban:ref', title: 'Stop suburban reference' }
@@ -433,12 +471,11 @@ tags:
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_distant', title: 'Stop distant' }
   - { tag: 'railway:signal:stop_distant:caption', title: 'Stop distant caption' }
-  - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated' }
+  - { tag: 'railway:signal:stop_distant:caption', title: 'Stop distant caption' }
+  - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated', type: boolean }
   - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated', type: boolean }
   - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
-  - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
   - { tag: 'railway:signal:stop_distant:for', title: 'Stop distant for' }
-  - { tag: 'railway:signal:stop_distant:form', title: 'Stop distant form' }
   - { tag: 'railway:signal:stop_distant:form', title: 'Stop distant form' }
   - { tag: 'railway:signal:stop_distant:ref', title: 'Stop distant reference' }
   - { tag: 'railway:signal:structure', title: 'Structure' }
@@ -500,9 +537,13 @@ tags:
   - { tag: 'railway:signal:wrong_road:caption', title: 'Wrong road caption' }
   - { tag: 'railway:signal:wrong_road:deactivated', title: 'Wrong road deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road:entry', title: 'Wrong road entry' }
+  - { tag: 'railway:signal:wrong_road:entry:caption', title: 'Wrong road entry caption' }
+  - { tag: 'railway:signal:wrong_road:entry:deactivated', title: 'Wrong road entry deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road:entry:form', title: 'Wrong road entry form' }
   - { tag: 'railway:signal:wrong_road:entry:ref', title: 'Wrong road entry reference' }
   - { tag: 'railway:signal:wrong_road:exit', title: 'Wrong road exit' }
+  - { tag: 'railway:signal:wrong_road:exit:caption', title: 'Wrong road exit caption' }
+  - { tag: 'railway:signal:wrong_road:exit:deactivated', title: 'Wrong road exit deactivated', type: boolean }
   - { tag: 'railway:signal:wrong_road:exit:form', title: 'Wrong road exit form' }
   - { tag: 'railway:signal:wrong_road:exit:ref', title: 'Wrong road exit reference' }
   - { tag: 'railway:signal:wrong_road:form', title: 'Wrong road form' }
