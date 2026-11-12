@@ -184,7 +184,7 @@ tags:
   - { tag: 'railway:signal:position', title: 'Position', description: 'Position of the signal in the direction facing the signal' }
   - { tag: 'railway:signal:preheating', title: 'Preheating' }
   - { tag: 'railway:signal:preheating:caption', title: 'Preheating caption' }
-  - { tag: 'railway:signal:preheating:deactivated', title: 'Preheating deactivated' }
+  - { tag: 'railway:signal:preheating:deactivated', title: 'Preheating deactivated', type: boolean }
   - { tag: 'railway:signal:preheating:form', title: 'Preheating form' }
   - { tag: 'railway:signal:radio', title: 'Radio' }
   - { tag: 'railway:signal:radio:caption', title: 'Radio caption' }
