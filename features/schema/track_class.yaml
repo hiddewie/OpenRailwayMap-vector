@@ -1,5 +1,4 @@
-"$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
-"$schema": "https://json-schema.org/draft/2020-12/schema"
+"$id": "https://openrailwaymap.app/schema/track_class.yaml"
 type: object
 properties:
   track_classes:
@@ -13,6 +12,12 @@ properties:
         color:
           type: string
           description: The color used to show the track class on the map
+        axle_load:
+          type: number
+          description: The axle load for this track class
+        metre_load:
+          type: number
+          description: The metre load for this track class
       additionalProperties: false
   $schema:
     type: string

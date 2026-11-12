@@ -335,27 +335,7 @@ describe('home page', () => {
     cy.url().should('include', 'pois=[radio,operator,vacancy_detection,electrical_equipment]')
   })
 
-  it('switching style, turntables', () => {
-    cy.visit('/#view=9.88/52.5134/13.4024')
-
-    const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-    button.click()
-    button.get('.maplibregl-ctrl-style-popup-container').should('be.visible')
-
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-      .contains('button', 'Plain')
-      .click()
-
-    cy.url().should('not.include', 'turntables=')
-
-    cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Turntables')
-      .contains('button', 'None')
-      .click()
-
-    cy.url().should('include', 'turntables=none')
-  })
-
-  it('switching style, turntables', () => {
+  it('switching style, boxes', () => {
     cy.visit('/#view=9.88/52.5134/13.4024')
 
     const button = cy.contains('.maplibregl-ctrl-style .maplibregl-ctrl-style-popup-button', 'Boxes')

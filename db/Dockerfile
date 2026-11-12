@@ -1,4 +1,10 @@
-FROM imresamu/postgis:18-3.6-alpine@sha256:5603f164abe087bf3c3bf779f1e47a0e17ff197b594730c55e55bfd2d288f79a
+# This image is a replacement for postgis/postgis, until issue https://github.com/postgis/docker-postgis/issues/216 is resolved.
+# See .github/workflows/build-postgis.yml for the workflow that builds the image.
+FROM ghcr.io/hiddewie/postgis:19rc1-3.7-alpine
+
+USER root
+RUN mkdir -p /data/postgresql && chown postgres:postgres /data/postgresql
+USER postgres
 
 COPY tune-postgis.sh /docker-entrypoint-initdb.d/tune-postgis.sh
 COPY operators.sql /docker-entrypoint-initdb.d/operators.sql

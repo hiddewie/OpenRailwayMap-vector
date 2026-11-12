@@ -85,6 +85,7 @@ services:
       CLIENT_CACHE_TTL_API_STALE: '0'
       CLIENT_CACHE_TTL_TILES_FRESH: '0'
       CLIENT_CACHE_TTL_TILES_STALE: '0'
+      CLIENT_CACHE_TTL_NOT_FOUND: '0'
     develop:
       watch:
         - action: rebuild

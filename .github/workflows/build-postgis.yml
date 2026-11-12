@@ -1,0 +1,108 @@
+# This workflow builds postgis/postgis for multiple architectures, until issue https://github.com/postgis/docker-postgis/issues/216 is resolved.
+# Uses https://github.com/reneleonhardt/docker-postgis/commit/9b81657fbf9520d696de2d4305e7781b6fc7ec2b published to a package.
+
+name: Build PostGIS image
+
+on:
+  workflow_dispatch: ~
+
+env:
+  TMP_LOCAL_IMAGE: localhost:5000/${{ github.repository_owner }}/postgis
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/postgis
+  REGISTRY_TAG: 19rc1-3.7-alpine
+
+jobs:
+  build:
+    name: Build
+
+    strategy:
+      matrix:
+        include:
+          - name: amd64
+            runner: ubuntu-24.04
+          - name: arm64
+            runner: ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          repository: reneleonhardt/docker-postgis
+          ref: 9b81657fbf9520d696de2d4305e7781b6fc7ec2b
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Prepare directories
+        env:
+          name: ${{ matrix.name }}
+        run: |
+          mkdir -p /tmp/images
+          echo "TARFILE=$name.tar" >> $GITHUB_ENV
+          echo "TAG=$TMP_LOCAL_IMAGE:$name" >> $GITHUB_ENV
+
+      - name: Build image
+        run: |
+          make image 19rc1 3.7 alpine
+
+      - name: Save image
+        run: |
+          docker tag postgis/postgis:19rc1-3.7-alpine "$TAG"
+          docker save "$TAG" > "/tmp/images/$TARFILE"
+
+      - name: Upload image
+        uses: actions/upload-artifact@v7
+        with:
+          name: images-${{ matrix.name }}
+          path: /tmp/images/${{ env.TARFILE }}
+          if-no-files-found: error
+          retention-days: 1
+
+  push:
+    name: Push
+
+    runs-on: ubuntu-24.04
+
+    needs:
+      - build
+
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+
+    steps:
+      - name: Download images
+        uses: actions/download-artifact@v7
+        with:
+          pattern: images-*
+          path: /tmp/images
+
+      - name: Load images
+        run: |
+          for image in /tmp/images/images-*/*.tar; do
+            docker load -i "$image"
+          done
+
+      - name: Push images to local registry
+        run: |
+          docker push -a "$TMP_LOCAL_IMAGE"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create manifest list and push
+        run: |
+          docker buildx imagetools create -t "$REGISTRY_IMAGE:$REGISTRY_TAG" \
+            $(docker image ls --format '{{.Repository}}:{{.Tag}}' "$TMP_LOCAL_IMAGE" | tr '\n' ' ')
+
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect "$REGISTRY_IMAGE:$REGISTRY_TAG"

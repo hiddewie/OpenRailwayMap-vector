@@ -1,5 +1,4 @@
 "$id": "https://openrailwaymap.app/schema/signals_railway_signals.yaml"
-"$schema": "https://json-schema.org/draft/2020-12/schema"
 type: object
 properties:
   tags:
@@ -53,6 +52,11 @@ properties:
             - radio
             - shunting
             - other
+        subtypes:
+          type: array
+          description: Subkeys "railway:signal:<type>:<subtype>" carrying their own signal. A node shows one feature per subtype in addition to the one of the type.
+          items:
+            type: string
       additionalProperties: false
   features:
     type: array

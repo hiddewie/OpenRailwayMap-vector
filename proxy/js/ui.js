@@ -1,6 +1,3 @@
-// Add support for right-to-left languages like Arabic and Hebrew
-maplibregl.setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
-
 const searchBackdrop = document.getElementById('search-backdrop');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
 const searchMilestonesTab = document.getElementById('search-milestones-tab');
@@ -407,9 +404,13 @@ function hideNews() {
   newsBackdrop.style.display = 'none';
 }
 
-function newsLink(preset, zoom, lat, lon, date, bearing, pitch) {
+function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
-  selectPreset(preset);
+  if (typeof presetOrStyle === 'string') {
+    selectPreset(presetOrStyle);
+  } else if (typeof presetOrStyle === 'object') {
+    selectStyle(presetOrStyle)
+  }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
 }
@@ -502,7 +503,6 @@ const knownStyles = {
       tracks: 'usage',
       stations: 'station',
       pois: ['radio', 'facility', 'equipment', 'level_crossing', 'train_protection'],
-      turntables: 'plain',
       platforms: 'plain',
       substations: 'none',
       boxes: 'none',
@@ -517,7 +517,6 @@ const knownStyles = {
       tracks: 'speed',
       stations: 'none',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -532,7 +531,6 @@ const knownStyles = {
       tracks: 'train_protection',
       stations: 'none',
       pois: ['vacancy_detection', 'train_protection'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'plain',
@@ -547,7 +545,6 @@ const knownStyles = {
       tracks: 'voltage_frequency',
       stations: 'none',
       pois: ['electrical_equipment'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'plain',
       boxes: 'none',
@@ -562,7 +559,6 @@ const knownStyles = {
       tracks: 'gauge',
       stations: 'none',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -577,7 +573,6 @@ const knownStyles = {
       tracks: 'operator',
       stations: 'operator',
       pois: ['operator'],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'operator',
@@ -592,7 +587,6 @@ const knownStyles = {
       tracks: 'routes',
       stations: 'station',
       pois: [],
-      turntables: 'none',
       platforms: 'none',
       substations: 'none',
       boxes: 'none',
@@ -645,6 +639,14 @@ const styleElements = [
         value: 'track_class',
       },
       {
+        name: 'Axle load',
+        value: 'axle_load',
+      },
+      {
+        name: 'Metre load',
+        value: 'metre_load',
+      },
+      {
         name: 'Operator',
         value: 'operator',
       },
@@ -659,6 +661,10 @@ const styleElements = [
       {
         name: 'Radio',
         value: 'radio',
+      },
+      {
+        name: 'Plain',
+        value: 'plain',
       },
     ],
   },
@@ -691,6 +697,10 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Height',
+        value: 'height',
       },
       {
         name: 'None',
@@ -795,22 +805,6 @@ const styleElements = [
       {
         name: 'Train protection',
         value: 'train_protection',
-      },
-    ],
-  },
-  {
-    name: 'Turntables',
-    key: 'turntables',
-    defaultValue: 'plain',
-    disabledValue: 'none',
-    values: [
-      {
-        name: 'Plain',
-        value: 'plain',
-      },
-      {
-        name: 'None',
-        value: 'none',
       },
     ],
   },
@@ -1187,7 +1181,6 @@ function onThemeChange(theme) {
   updateTheme();
 }
 
-let selectedTheme;
 function updateTheme() {
   const resolvedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme)
 
@@ -1378,7 +1371,7 @@ function layoutImages(images) {
         break;
 
       case 'left':
-        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.x = globalOffset.x - image.image.data.width
         image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
         globalOffset.x = Math.min(globalOffset.x, image.offset.x)
         globalOffset.y = Math.min(globalOffset.y, image.offset.y)
@@ -1512,12 +1505,9 @@ const defaultConfiguration = {
 let configuration = readConfiguration(localStorage);
 configuration = migrateConfiguration(localStorage, configuration);
 
-let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
+let selectedTheme = resolveTheme(configuration.theme ?? defaultConfiguration.theme);
 
-const mapStyles = Object.fromEntries(
-  Object.keys(knownStyles)
-    .map(style => [style, `${location.origin}/style/${style}.json`])
-);
+let {style: selectedStyle, date: selectedDate} = determineParametersFromHash(window.location.hash)
 
 const backgroundMap = new maplibregl.Map({
   container: 'background-map',
@@ -1548,13 +1538,32 @@ map.setStyle(`${location.origin}/style.json`, {
 
     rewriteStylePathsToOrigin(next)
     addLanguageToSupportedSources(next, language)
-    rewriteGlobalStateDefaults(next, map.getBearing(), map.getPitch())
     return next;
+  },
+  globalState: {
+    date: selectedDate === 'all' ? defaultDate : selectedDate,
+    allDates: selectedDate === 'all',
+    theme: selectedTheme,
+    bearing: map.getBearing() ?? 0,
+    pitched: pitchedView(map.getPitch() ?? 0),
+    stationLowZoomLabel: configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel,
+    openHistoricalMap: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
+    showAbandonedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
+    showRazedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
+    showConstructionInfrastructure: ['construction', 'construction-proposed'].includes(configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure),
+    showProposedInfrastructure: (configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure) === 'construction-proposed',
+    hillshade: configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade,
+    ...selectedStyle,
   },
 });
 
 function selectPreset(preset) {
   styleControl.selectPreset(preset);
+  onStyleChange();
+}
+
+function selectStyle(style) {
+  styleControl.selectStyleOptions(style);
   onStyleChange();
 }
 
@@ -1588,9 +1597,17 @@ function rewriteStylePathsToOrigin(style) {
       ])
   )
 
-  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
-    ? `${location.origin}${style.glyphs}`
-    : style.glyphs
+  style['font-faces'] = style['font-faces'] && Object.fromEntries(
+    Object.entries(style['font-faces'])
+      .map(([key, fontFaces]) => [
+        key,
+        fontFaces.map(fontFace =>
+          fontFace && fontFace.url && fontFace.url.startsWith('/')
+            ? ({...fontFace, url: `${location.origin}${fontFace.url}`})
+            : fontFace
+        )
+      ])
+  )
 
   style.sprite = style.sprite
     .map(sprite =>
@@ -1624,38 +1641,6 @@ function addLanguageToSupportedSources(style, language) {
         }
       })
   )
-}
-
-// Provide global state defaults as configured by the user
-// Subsequent global state changes are applied directly to the map with setGlobalStateProperty
-// See https://github.com/maplibre/maplibre-gl-js/issues/7632 and https://github.com/maplibre/maplibre-gl-js/pull/8264
-function rewriteGlobalStateDefaults(style, bearing, pitch) {
-  style.state.date.default = selectedDate === 'all' ? defaultDate : selectedDate;
-  style.state.allDates.default = selectedDate === 'all';
-  style.state.theme.default = selectedTheme;
-
-  style.state.bearing.default = bearing ?? 0;
-  style.state.pitched.default = pitchedView(pitch);
-
-  style.state.stationLowZoomLabel.default = configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel;
-
-  const historicalInfrastructure = configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure
-  style.state.openHistoricalMap.default = historicalInfrastructure === 'openhistoricalmap';
-  style.state.showAbandonedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-  style.state.showRazedInfrastructure.default = historicalInfrastructure === 'openstreetmap';
-
-  const futureInfrastructure = configuration.futureInfrastructure ?? defaultConfiguration.futureInfrastructure;
-  style.state.showConstructionInfrastructure.default = futureInfrastructure === 'construction' || futureInfrastructure === 'construction-proposed';
-  style.state.showProposedInfrastructure.default = futureInfrastructure === 'construction-proposed';
-
-  style.state.hillshade.default = configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade;
-
-  // Style specific map global state
-  Object.entries(selectedStyle).forEach(([key, value]) => {
-    if (style.state[key]) {
-      style.state[key].default = value;
-    }
-  });
 }
 
 function onStyleChange() {
@@ -3336,16 +3321,13 @@ map.on('pitchend', () => updateConfiguration('view', {center: map.getCenter(), z
 map.setMissingStyleImageResolver(async ids => await generateImage([map, legendControl.legendMap], ids));
 
 function updateGlobalMapState(changes) {
-  // Ensure all map global state changes are processed at once
-  const changesAsDefaults = Object.fromEntries(Object.entries(changes).map(([key, value]) => [key, { default: value }]))
-
   if (map.isStyleLoaded()) {
-    map.style.setGlobalState(changesAsDefaults);
+    map.style._setGlobalStateValues(changes);
     map._update(true);
   } else {
     // Once the style is marked as ready, a `data` event is triggered
     map.once('data', () => {
-      map.style.setGlobalState(changesAsDefaults);
+      map.style._setGlobalStateValues(changes);
       map._update(true);
     });
   }
@@ -3475,12 +3457,19 @@ map.on('click', event => {
     }
 
     const abortController = new AbortController();
-    popup = new maplibregl.Popup({offset: popupOffsets})
+    const content = popupContent(feature, abortController);
+    const openedPopup = new maplibregl.Popup({offset: popupOffsets})
       .setLngLat(coordinates)
-      .setDOMContent(popupContent(feature, abortController))
+      .setDOMContent(content)
       .addTo(map);
+    popup = openedPopup;
+
+    // The popup anchor is chosen from the popup size, which grows once the content has loaded.
+    const contentResizeObserver = new ResizeObserver(() => openedPopup.setOffset(popupOffsets));
+    contentResizeObserver.observe(content);
 
     popup.on('close', () => {
+      contentResizeObserver.disconnect();
       abortController.abort('Popup closed')
     })
   }
