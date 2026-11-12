@@ -256,6 +256,9 @@ tags:
   - { tag: 'railway:signal:shunting:deactivated', title: 'Shunting deactivated', type: boolean }
   - { tag: 'railway:signal:shunting:for', title: 'Shunting for' }
   - { tag: 'railway:signal:shunting:form', title: 'Shunting form' }
+  - { tag: 'railway:signal:shunting:states', title: 'Shunting states', type: array }
+  - { tag: 'railway:signal:shunting:shape', title: 'Shunting shape' }
+  - { tag: 'railway:signal:shunting:type', title: 'Shunting type' }
   - { tag: 'railway:signal:shunting:height', title: 'Shunting height' }
   - { tag: 'railway:signal:shunting:ref', title: 'Shunting signal reference' }
   - { tag: 'railway:signal:shunting:repeated', title: 'Shunting repeated', type: boolean }
@@ -340,6 +343,7 @@ tags:
   - { tag: 'railway:signal:speed_limit_distant:fixed:ref', title: 'Speed limit distant fixed reference' }
   - { tag: 'railway:signal:speed_limit_distant:fixed:speed', title: 'Speed limit distant fixed speed' }
   - { tag: 'railway:signal:speed_limit_distant:form', title: 'Speed limit distant form' }
+  - { tag: 'railway:signal:speed_limit_distant:type', title: 'Speed limit distant type' }
   - { tag: 'railway:signal:speed_limit_distant:freight', title: 'Speed limit distant freight' }
   - { tag: 'railway:signal:speed_limit_distant:freight:form', title: 'Speed limit distant freight form' }
   - { tag: 'railway:signal:speed_limit_distant:freight:ref', title: 'Speed limit distant freight reference' }
@@ -364,6 +368,11 @@ tags:
   - { tag: 'railway:signal:station:deactivated', title: 'Station deactivated', type: boolean }
   - { tag: 'railway:signal:station:form', title: 'Station form' }
   - { tag: 'railway:signal:station:ref', title: 'Station reference' }
+  - { tag: 'railway:signal:station:caption', title: 'Station caption' }
+  - { tag: 'railway:signal:station', title: 'Station' }
+  - { tag: 'railway:signal:station:form', title: 'Station form' }
+  - { tag: 'railway:signal:station:type', title: 'Station type' }
+  - { tag: 'railway:signal:station:deactivated', title: 'Station deactivated', type: boolean }
   - { tag: 'railway:signal:station:caption', title: 'Station caption' }
   - { tag: 'railway:signal:station_distant', title: 'Station distant' }
   - { tag: 'railway:signal:station_distant:caption', title: 'Station distant caption' }
@@ -423,6 +432,9 @@ tags:
   - { tag: 'railway:signal:stop_demand:deactivated', title: 'Stop demand deactivated', type: boolean }
   - { tag: 'railway:signal:stop_demand:form', title: 'Stop demand form' }
   - { tag: 'railway:signal:stop_distant', title: 'Stop distant' }
+  - { tag: 'railway:signal:stop_distant:form', title: 'Stop distant form' }
+  - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
+  - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated', type: boolean }
   - { tag: 'railway:signal:stop_distant:caption', title: 'Stop distant caption' }
   - { tag: 'railway:signal:stop_distant:deactivated', title: 'Stop distant deactivated' }
   - { tag: 'railway:signal:stop_distant:distance', title: 'Stop distant distance' }
@@ -441,6 +453,10 @@ tags:
   - { tag: 'railway:signal:switch:form', title: 'Switch form' }
   - { tag: 'railway:signal:switch:ref', title: 'Switch reference' }
   - { tag: 'railway:signal:switch:states', title: 'Switch states', type: array }
+  - { tag: 'railway:signal:switch:shape', title: 'Switch shape' }
+  - { tag: 'railway:signal:switch:turn_direction', title: 'Switch turn direction' }
+  - { tag: 'railway:signal:switch:deactivated', title: 'Switch deactivated', type: boolean }
+  - { tag: 'railway:signal:switch:caption', title: 'Switch caption' }
   - { tag: 'railway:signal:train_protection', title: 'Train protection' }
   - { tag: 'railway:signal:train_protection:block_marker:type', title: 'Type of block marker' }
   - { tag: 'railway:signal:train_protection:caption', title: 'Train protection caption' }
@@ -456,6 +472,7 @@ tags:
   - { tag: 'railway:signal:train_protection:main:type', title: 'Train protection main type' }
   - { tag: 'railway:signal:train_protection:ref', title: 'Train protection reference' }
   - { tag: 'railway:signal:train_protection:shape', title: 'Train protection shape' }
+  - { tag: 'railway:signal:train_protection:main:deactivated', title: 'Train protection main deactivated', type: boolean }
   - { tag: 'railway:signal:train_protection:system_change', title: 'Train protection system change' }
   - { tag: 'railway:signal:train_protection:system_change:caption', title: 'Train protection system change caption' }
   - { tag: 'railway:signal:train_protection:system_change:form', title: 'Train protection system change form' }
@@ -468,6 +485,7 @@ tags:
   - { tag: 'railway:signal:train_protection_distant:form', title: 'Train protection distant form' }
   - { tag: 'railway:signal:train_protection_distant:ref', title: 'Train protection distant reference' }
   - { tag: 'railway:signal:train_protection_distant:caption', title: 'Train protection distant caption' }
+  - { tag: 'railway:signal:train_protection:system_change:deactivated', title: 'Train protection system change deactivated', type: boolean }
   - { tag: 'railway:signal:traversable', title: 'Traversable' }
   - { tag: 'railway:signal:traversable:form', title: 'Traversable form' }
   - { tag: 'railway:signal:traversable:type', title: 'Traversable type' }
@@ -510,6 +528,7 @@ types:
   - { type: stop, category: station, subtypes: [any, conventional, suburban, regional, highspeed, accessibility] }
   - { type: stop_distant, category: station }
   - { type: stop_demand, category: other }
+  - { type: station, category: station }
   - { type: station_distant, category: station }
   - { type: crossing, category: other }
   - { type: crossing_distant, category: other }
@@ -1556,6 +1575,241 @@ features:
       - { tag: 'railway:signal:main', value: 'AU:LightRail:SI' }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
+
+  # --- AU-WA-signals --- #
+  - description: Approach Signal (Auto)
+    country: AU
+    icon: [ default: 'au/wa/signals/approach-auto' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:WA:approach' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:distant:type', value: 'staggered' }
+
+  - description: Approach Signal (Home)
+    country: AU
+    icon: [ default: 'au/wa/signals/approach-home' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:WA:approach' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+
+  - description: Shunt Signal
+    country: AU
+    icon: [ default: 'au/wa/signals/shunt' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:WA:shunt' }
+      - { tag: 'railway:signal:shunting:form', value: 'light' }
+
+  - description: Self Restoring Points (SRP) Indicator (Facing, Left)
+    country: AU
+    icon:
+      - match: 'railway:signal:switch:states'
+        cases:
+          - { exact: 'white', value: 'au/wa/signals/srp/white_left_down', description: 'white' }
+        default: 'au/wa/signals/srp/coloured_left_down'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:WA:PI' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+      - { tag: 'railway:signal:switch:turn_direction', value: 'left' }
+      - { tag: 'railway:signal:switch:shape', value: 'point_down' }
+
+  - description: Self Restoring Points (SRP) Indicator (Facing, Right)
+    country: AU
+    icon:
+      - match: 'railway:signal:switch:states'
+        cases:
+          - { exact: 'white', value: 'au/wa/signals/srp/white_right_down', description: 'white' }
+        default: 'au/wa/signals/srp/coloured_right_down'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:WA:PI' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+      - { tag: 'railway:signal:switch:turn_direction', value: 'right' }
+      - { tag: 'railway:signal:switch:shape', value: 'point_down' }
+
+  - description: Self Restoring Points (SRP) Indicator (Trailing, Left)
+    country: AU
+    icon:
+      - match: 'railway:signal:switch:states'
+        cases:
+          - { exact: 'white', value: 'au/wa/signals/srp/white_left_up', description: 'white' }
+        default: 'au/wa/signals/srp/coloured_left_up'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:WA:PI' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+      - { tag: 'railway:signal:switch:turn_direction', value: 'left' }
+      - { tag: 'railway:signal:switch:shape', value: 'point_up' }
+
+  - description: Self Restoring Points (SRP) Indicator (Trailing, Right)
+    country: AU
+    icon:
+      - match: 'railway:signal:switch:states'
+        cases:
+          - { exact: 'white', value: 'au/wa/signals/srp/white_right_up', description: 'white' }
+        default: 'au/wa/signals/srp/coloured_right_up'
+    tags:
+      - { tag: 'railway:signal:switch', value: 'AU:WA:PI' }
+      - { tag: 'railway:signal:switch:form', value: 'light' }
+      - { tag: 'railway:signal:switch:turn_direction', value: 'right' }
+      - { tag: 'railway:signal:switch:shape', value: 'point_up' }
+
+  - description: Low Speed Light
+    country: AU
+    icon: [ default: 'au/wa/signals/low_speed' ]
+    tags:
+      - { tag: 'railway:signal:short_route', value: 'AU:WA:low_speed' }
+      - { tag: 'railway:signal:short_route:form', value: 'light' }
+
+  - description: Driver's Proceed Indicator (DPI)
+    country: AU
+    icon: [ default: 'au/wa/signals/dpi' ]
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'AU:WA:DPI' }
+      - { tag: 'railway:signal:crossing:form', value: 'light' }
+
+  # --- AU-WA-signs --- #
+  - description: Approach Sign
+    country: AU
+    icon: [ default: 'au/wa/signs/approach-sign' ]
+    tags:
+      - { tag: 'railway:signal:distant', value: 'AU:WA:approach_sign' }
+      - { tag: 'railway:signal:distant:form', value: 'sign' }
+
+  - description: Commencement of Train Order Territory
+    country: AU
+    icon: [ default: 'au/wa/signs/start_TOW' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:WA:start_TOW' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End of Train Order Territory
+    country: AU
+    icon: [ default: 'au/wa/signs/end_TOW' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:WA:end_TOW' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Commencement of Axle Counters
+    country: AU
+    icon: [ default: 'au/wa/signs/start_AXC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:WA:start_AXC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: End of Axle Counters
+    country: AU
+    icon: [ default: 'au/wa/signs/end_AXC' ]
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'yes' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'AU:WA:end_AXC' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: Limit of Shunt (PTA)
+    country: AU
+    icon: [ default: 'au/wa/signs/limit_of_shunt_black' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:WA:shunting_limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:shunting:type', value: 'black' }
+
+  - description: Limit of Shunt (ARC)
+    country: AU
+    icon: [ default: 'au/wa/signs/limit_of_shunt_yellow' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'AU:WA:shunting_limit' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+      - { tag: 'railway:signal:shunting:type', value: 'yellow' }
+
+  - description: Station Limits (PTA)
+    country: AU
+    icon: [ default: 'au/wa/signs/station_limits_black' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:WA:YL' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:station_distant:type', value: 'black' }
+
+  - description: Station Limits (ARC)
+    country: AU
+    icon: [ default: 'au/wa/signs/station_limits_yellow' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:WA:YL' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:station_distant:type', value: 'yellow' }
+
+  - description: Train Order Working Crossing Station
+    country: AU
+    icon: [ default: 'au/wa/signs/TOW_crossing' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:WA:TOW_crossing' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Train Order Working Non-crossing Station
+    country: AU
+    icon: [ default: 'au/wa/signs/TOW_non_crossing' ]
+    tags:
+      - { tag: 'railway:signal:station_distant', value: 'AU:WA:TOW_non_crossing' }
+      - { tag: 'railway:signal:station_distant:form', value: 'sign' }
+
+  - description: Level Crossing/Bridge Indicator Sign
+    country: AU
+    icon: [ default: 'au/wa/signs/crossing_info' ]
+    tags:
+      - { tag: 'railway:signal:crossing_info', value: 'AU:WA:crossing_info' }
+      - { tag: 'railway:signal:crossing_info:form', value: 'sign' }
+
+  - description: Predictor
+    country: AU
+    icon: [ default: 'au/wa/signs/predictor' ]
+    tags:
+      - { tag: 'railway:signal:crossing_hint', value: 'AU:WA:predictor' }
+      - { tag: 'railway:signal:crossing_hint:form', value: 'sign' }
+
+  - description: XING
+    country: AU
+    icon: [ default: 'au/wa/signs/speed_plate_XING' ]
+    tags:
+      - { tag: 'railway:signal:crossing', value: 'AU:WA:XING' }
+      - { tag: 'railway:signal:crossing:form', value: 'sign' }
+
+  - description: Self Restoring Points (SRP) Plate
+    country: AU
+    icon: [ default: 'au/wa/signs/speed_plate_SRP' ]
+    tags:
+      - { tag: 'railway:signal:resetting_switch', value: 'AU:WA:SRP' }
+      - { tag: 'railway:signal:resetting_switch:form', value: 'sign' }
+
+  - description: Radio Call
+    country: AU
+    icon: [ default: 'au/wa/signs/radio' ]
+    tags:
+      - { tag: 'railway:signal:radio', value: 'AU:WA:radio' }
+      - { tag: 'railway:signal:radio:form', value: 'sign' }
+
+  - description: No Standing Beyond This Point
+    country: AU
+    icon: [ default: 'au/wa/signs/standing' ]
+    tags:
+      - { tag: 'railway:signal:fouling_point', value: 'AU:WA:standing' }
+      - { tag: 'railway:signal:fouling_point:form', value: 'sign' }
+
+  - description: Speed Restriction Warning (PTA)
+    country: AU
+    icon: [ default: 'au/wa/signs/speed_warning_black' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AU:WA:warning' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant:type', value: 'black' }
+
+  - description: Speed Restriction Warning (ARC)
+    country: AU
+    icon: [ default: 'au/wa/signs/speed_warning_yellow' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'AU:WA:warning' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
+      - { tag: 'railway:signal:speed_limit_distant:type', value: 'yellow' }
+
+
   # --- AU-NSW-signs --- #
 
   - description: Alert
@@ -1688,7 +1942,7 @@ features:
     country: AU
     icon: [ default: 'au/nsw/signs/location' ]
     tags:
-      - { tag: 'railway:signal:station_distant', any: ['AU:NSW:location', 'AU:VIC:location'] }
+      - { tag: 'railway:signal:station_distant', any: ['AU:NSW:location', 'AU:VIC:location', 'AU:WA:location'] }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: No Whistle
@@ -1818,7 +2072,7 @@ features:
     country: AU
     icon: [ default: 'au/nsw/signs/whistle' ]
     tags:
-      - { tag: 'railway:signal:whistle', value: 'AU:NSW:whistle' }
+      - { tag: 'railway:signal:whistle', any: ['AU:NSW:whistle', 'AU:WA:whistle'] }
       - { tag: 'railway:signal:whistle:form', value: 'sign' }
 
   - description: Yard Limit
@@ -2067,7 +2321,7 @@ features:
           - { exact: 'G', value: 'au/nsw/signals/main/searchlight/G', description: 'G' }
         default: 'au/nsw/signals/main/searchlight/unknown'
     tags:
-      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main', any: ['AU:NSW:main', AU:WA:main] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'searchlight' }
 
@@ -2083,7 +2337,7 @@ features:
           - { exact: 'G', value: 'au/nsw/signals/main/multi-unit/G', description: 'G' }
         default: 'au/nsw/signals/main/multi-unit/unknown'
     tags:
-      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main', any: ['AU:NSW:main', AU:WA:main] }
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   - description: Main Signal (semaphore)
@@ -2095,7 +2349,7 @@ features:
           - { any: ['GR', 'G', 'R'], value: 'au/nsw/signals/main/semaphore/GR', description: 'Lower quadrant' }
         default: 'au/nsw/signals/main/semaphore/unknown'
     tags:
-      - { tag: 'railway:signal:main', value: 'AU:NSW:main' }
+      - { tag: 'railway:signal:main', any: ['AU:NSW:main', AU:WA:main] }
       - { tag: 'railway:signal:main:form', value: 'semaphore' }
 
   - description: Turnout Repeater
@@ -2268,7 +2522,7 @@ features:
     country: AU
     icon: [ default: 'au/vic/signs/station' ]
     tags:
-      - { tag: 'railway:signal:station_distant', value: 'AU:VIC:station' }
+      - { tag: 'railway:signal:station_distant', any: ['AU:VIC:station', 'AU:WA:station'] }
       - { tag: 'railway:signal:station_distant:form', value: 'sign' }
 
   - description: Baulks
@@ -2558,7 +2812,7 @@ features:
           - { regex: '^([A-Z1-4])$', value: 'au/route_indicator/{}', example: 'au/route_indicator/{A}' }
         default: 'au/route_indicator/unknown'
     tags:
-      - { tag: 'railway:signal:route', any: ['AU:MNWSW:route_indicator', 'AU:NSW:theatre_box', 'AU:VIC:theatre_box', 'AU:VIC:lamp','AU:VIC:sign', 'AU:LightRail:route_indicator', 'NZ:route_indicator'] }
+      - { tag: 'railway:signal:route', any: ['AU:MNWSW:route_indicator', 'AU:NSW:theatre_box', 'AU:WA:theatre_box', 'AU:VIC:theatre_box', 'AU:VIC:lamp','AU:VIC:sign', 'AU:LightRail:route_indicator', 'NZ:route_indicator'] }
       - { tag: 'railway:signal:route:form', any: ['light', 'sign'] }
 
   # --- BE --- #
@@ -2977,6 +3231,20 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
 
   # --- CH --- #
+
+  - description: Bahnhofanfangtafel
+    country: CH
+    icon: [ default: 'ch/fdv-267' ]
+    tags:
+      - { tag: 'railway:signal:station', value: 'CH-FDV:267' }
+      - { tag: 'railway:signal:station:form', value: 'sign' }
+
+  - description: Bahnhofendtafel
+    country: CH
+    icon: [ default: 'ch/fdv-268' ]
+    tags:
+      - { tag: 'railway:signal:station', value: 'CH-FDV:268' }
+      - { tag: 'railway:signal:station:form', value: 'sign' }
 
   - description: Vorsignal System L
     country: CH
@@ -6025,45 +6293,37 @@ features:
 
   # See https://wiki.openstreetmap.org/wiki/Proposal:Unified_ETCS_Signals_(railway)
 
-  - description: ETCS marker
-    icon:
-      - match: 'railway:signal:position'
-        cases:
-          - { exact: 'left', value: 'etcs/stop_marker-right' }
-          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
-        default: 'etcs/stop_marker-left'
-      - match: 'railway:signal:train_protection:system_change'
-        cases:
-          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
-      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
-      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
-
-  - description: ETCS marker
-    icon:
-      - match: 'railway:signal:position'
-        cases:
-          - { exact: 'left', value: 'etcs/location_marker-right' }
-          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
-        default: 'etcs/location_marker-left'
-      - match: 'railway:signal:train_protection:system_change'
-        cases:
-          - { exact: 'ETCS:level_transition', value: 'etcs/level_transition' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
-      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
-      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
-
-  - description: ETCS marker
+  - description: ETCS level transition
     icon:
       - default: 'etcs/level_transition'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
       - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
       - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: ETCS stop marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+
+  - description: ETCS location marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/location_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/location_marker-down' }
+        default: 'etcs/location_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:location_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
 
   - description: Distant begin of neutral section
     icon: [ default: 'etcs/power_off_advance' ]
@@ -11759,6 +12019,68 @@ features:
       - { tag: 'railway:signal:route', value: 'NL:252' }
       - { tag: 'railway:signal:route:form', value: 'light' }
 
+  - description: main on bridge with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/main_light_bridge_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { regex: '^(4|6|8|13|L|H|X|G)$', value: 'nl/main_light_bridge_speed_limit-{}', example: 'nl/main_light_bridge_speed_limit-{6}' }
+        default: 'nl/main_light_bridge_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+      - { tag: 'railway:signal:position', value: 'bridge' }
+
+  - description: main with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/main_light_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { regex: '^(4|6|8|13|L|H|X|G)$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{6}' }
+        default: 'nl/main_distant_light_speed_limit-unknown'
+      - match: 'railway:signal:traversable'
+        cases:
+          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
+        position: bottom
+      - match: 'railway:signal:danger'
+        cases:
+          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'NL' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
+  - description: distant with speed limit (light)
+    country: NL
+    type: line
+    icon:
+      - default: 'nl/distant_light_speed_limit-empty'
+      - match: 'railway:signal:speed_limit:states'
+        cases:
+          - { regex: '^(4|6|8|13)$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{6}' }
+        default: 'nl/main_distant_light_speed_limit-unknown'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NL' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+
   - description: L signal
     country: NL
     icon: [ default: 'nl/276' ]
@@ -11819,75 +12141,13 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'NL:316' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
-  - description: distant with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/distant_light_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
-        default: 'nl/main_distant_light_speed_limit-unknown'
-    tags:
-      - { tag: 'railway:signal:distant', value: 'NL' }
-      - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
-  - description: main on bridge with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/main_light_bridge_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_light_bridge_speed_limit-{}', example: 'nl/main_light_bridge_speed_limit-{60}' }
-        default: 'nl/main_light_bridge_speed_limit-unknown'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
-        position: bottom
-      - match: 'railway:signal:danger'
-        cases:
-          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'NL' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-      - { tag: 'railway:signal:position', value: 'bridge' }
-
-  - description: main with speed limit (light)
-    country: NL
-    type: line
-    icon:
-      - default: 'nl/main_light_speed_limit-empty'
-      - match: 'railway:signal:speed_limit:speed'
-        cases:
-          - { regex: '^(4|6|8|13)0$', value: 'nl/main_distant_light_speed_limit-{}', example: 'nl/main_distant_light_speed_limit-{60}' }
-        default: 'nl/main_distant_light_speed_limit-unknown'
-      - match: 'railway:signal:traversable'
-        cases:
-          - { exact: 'NL:291c', value: 'nl/291c', description: 'P-sein' }
-        position: bottom
-      - match: 'railway:signal:danger'
-        cases:
-          - { exact: 'NL:251aI', value: 'nl/251aI', description: 'bijzonder gevaarpunt' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'NL' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:speed_limit', value: 'NL' }
-      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
-
   - description: speed limit (light)
     country: NL
     type: line
     icon:
       - match: 'railway:signal:speed_limit:speed'
         cases:
-          - { regex: '^[1-9]0|1[0-9]0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
+          - { regex: '^(4|6|8|13)0$', value: 'nl/speed_limit_light-{}', example: 'nl/speed_limit_light-{60}' }
         default: 'nl/speed_limit_light-empty'
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'NL' }

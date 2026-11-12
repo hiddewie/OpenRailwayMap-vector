@@ -3,14 +3,6 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
-const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
-
-// Separator of the features of one row in the feature value, see generateImage() in proxy/js/ui.js
-const ROW_SEPARATOR = '||'
-
-// Inline features (features[].inline) of one node are drawn side by side, at most this many per row
-const INLINE_ROW_LENGTH = 2
-
 async function promiseResultsOrErrors(promises) {
   const results = await Promise.allSettled(promises);
   if (results.every(it => it.status === 'fulfilled')) {
@@ -37,24 +29,29 @@ async function parseSvgDimensions(feature) {
 // carrying their own signal, so that one node can show a feature per subtype.
 const subtypesOfType = Object.fromEntries(signals_railway_signals.types.map(type => [type.type, type.subtypes ?? []]))
 
-// Declared subtype of a feature for a type, or null
-function featureSubtype(feature, type) {
-  const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
-  if (subtypes.length > 1) {
-    throw new Error(`Feature ${feature.description} has several subtypes of type ${type}: ${subtypes.join(', ')}`)
-  }
-  return subtypes[0] ?? null
-}
-
-// Subtypes must be declared tags drawn by at least one feature
+// Validate declared tags for type and subtype
 for (const [type, subtypes] of Object.entries(subtypesOfType)) {
+  const tag = `railway:signal:${type}`
+  if (!signals_railway_signals.tags.some(it => it.tag === tag)) {
+    throw new Error(`Signal type ${type} does not have tag ${tag} declared.`)
+  }
+  if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:deactivated`) || signals_railway_signals.tags.find(it => it.tag === `${tag}:deactivated`).type !== 'boolean') {
+    throw new Error(`Signal type ${type} does not have tag ${tag}:deactivated declared and with a boolean type.`)
+  }
+  if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:caption`)) {
+    throw new Error(`Signal type ${type} does not have tag ${tag}:caption declared.`)
+  }
+
   for (const subtype of subtypes) {
     const tag = `railway:signal:${type}:${subtype}`
     if (!signals_railway_signals.tags.some(it => it.tag === tag)) {
-      throw new Error(`Subtype ${subtype} of type ${type}: tag ${tag} is not declared`)
+      throw new Error(`Signal type ${type} does not have tag ${tag} declared.`)
     }
-    if (!signals_railway_signals.features.some(feature => feature.tags.some(it => it.tag === tag))) {
-      throw new Error(`Subtype ${subtype} of type ${type}: no feature uses tag ${tag}`)
+    if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:deactivated`) || signals_railway_signals.tags.find(it => it.tag === `${tag}:deactivated`).type !== 'boolean') {
+      throw new Error(`Signal type ${type} does not have tag ${tag}:deactivated declared and with a boolean type.`)
+    }
+    if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:caption`)) {
+      throw new Error(`Signal type ${type} does not have tag ${tag}:caption declared.`)
     }
   }
 }
@@ -67,10 +64,27 @@ const featureColumns = signals_railway_signals.types.flatMap(type => [
 
 const signalsWithSignalType = await promiseResultsOrErrors(
   signals_railway_signals.features
-    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
-    .map(feature => ({
+    // Determine a signal type and subtype such that combined matching does not try to match other signal types for the same feature
+    .map(feature => {
+      const type = signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type
+      if (!type) {
+        throw new Error(`Feature '${feature.description}' has no type`)
+      }
+      const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
+      if (subtypes.length > 1) {
+        throw new Error(`Feature '${feature.description}' has several subtypes of type ${type}: ${subtypes.join(', ')}`)
+      }
+
+      return {
+        ...feature,
+        signalType: type,
+        signalSubtype: subtypes.length > 0 ? subtypes[0] : null,
+      };
+    })
+    // Determine feature rank
+    .map((feature, index) => ({
       ...feature,
-      signalType: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type,
+      rank: index,
     }))
     // Determine icon dimensions
     .map(async feature => ({
@@ -80,9 +94,9 @@ const signalsWithSignalType = await promiseResultsOrErrors(
         ...icon,
         cases: icon.cases
           ? await promiseResultsOrErrors(icon.cases.map(async iconCase => ({
-              ...iconCase,
-              dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
-            })))
+            ...iconCase,
+            dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
+          })))
           : undefined,
         dimensions: icon.default ? await parseSvgDimensions(icon.default) : undefined,
       }))),
@@ -95,21 +109,21 @@ const tagTypes = Object.fromEntries(signals_railway_signals.tags.map(tag =>
 function matchTagValueSql(tag, value) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `${sqlString(value)} = ANY("${tag}")`
+      return `'${value}' = ANY("${tag}")`
     case 'boolean':
       if (value) {
         throw new Error(`Value given for boolean tag '${tag}' ('${value}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" = ${sqlString(value)}`
+      return `"${tag}" = '${value}'`
   }
 }
 
 function matchTagValuesSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      const sqlArray = `ARRAY[${values.map(sqlString).join(', ')}]`
+      const sqlArray = `ARRAY[${values.map(value => `'${value}'`).join(', ')}]`
       return `${sqlArray} <@ "${tag}" AND ${sqlArray} @> "${tag}"`
     default:
       throw new Error(`values matching cannot be used for non-array tag '${tag}' ('${values}')`)
@@ -119,7 +133,7 @@ function matchTagValuesSql(tag, values) {
 function matchTagAllValuesSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `ARRAY[${values.map(sqlString).join(', ')}] <@ "${tag}"`
+      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] <@ "${tag}"`
     case 'boolean':
       if (values) {
         throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
@@ -133,40 +147,40 @@ function matchTagAllValuesSql(tag, values) {
 function matchTagAnyValueSql(tag, values) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `ARRAY[${values.map(sqlString).join(', ')}] && "${tag}"`
+      return `ARRAY[${values.map(value => `'${value}'`).join(', ')}] && "${tag}"`
     case 'boolean':
       if (values) {
         throw new Error(`Values given for boolean tag '${tag}' ('${values}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" IN (${values.map(sqlString).join(', ')})`
+      return `"${tag}" IN (${values.map(value => `'${value}'`).join(', ')})`
   }
 }
 
 function matchTagRegexSql(tag, regex) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `${sqlString(regex)} ~!@# ANY("${tag}")`
+      return `'${regex}' ~!@# ANY("${tag}")`
     case 'boolean':
       if (regex) {
         throw new Error(`Regex given for boolean tag '${tag}' ('${regex}')`)
       }
       return `"${tag}"`
     default:
-      return `"${tag}" ~ ${sqlString(regex)}`
+      return `"${tag}" ~ '${regex}'`
   }
 }
 
 function stringSql(tag, matchCase) {
   switch (tagTypes[tag]) {
     case 'array':
-      return `(select match from (select regexp_substr(match, ${sqlString(matchCase.regex)}) as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
+      return `(select match from (select regexp_substr(match, '${matchCase.regex}') as match from (select unnest("${tag}") as match) matches1) matches2 where match is not null order by length(match) desc, match desc limit 1)`
     case 'boolean':
       return `"${tag}"`
     default:
       if (matchCase.regex) {
-        return `regexp_substr("${tag}", ${sqlString(matchCase.regex)}, 1, 1, '', 1)`
+        return `regexp_substr("${tag}", '${matchCase.regex}', 1, 1, '', 1)`
       } else {
         return `"${tag}"`
       }
@@ -232,52 +246,6 @@ function featureIconsSql(icons) {
   }
 }
 
-// SQL string literal
-function sqlString(value) {
-  return `'${value.replaceAll("'", "''")}'`
-}
-
-// Computed captions (features[].caption): a caption built from a number found
-// in a tag, used when the signal has no explicit caption tag
-const captionFeatures = signalsWithSignalType.filter(feature => feature.caption)
-
-// Number at the start of a tag value ("118.761" or "118,761", optionally
-// followed by other ';' separated values), or NULL. Values with a unit prefix
-// (mi:, pkm:) do not match.
-function captionNumberSql(tag) {
-  return `replace(substring("${tag}" from '^ *(-?[0-9]+([.,][0-9]+)?) *(;|$)'), ',', '.')::numeric`
-}
-
-function captionValueSql(feature) {
-  const caption = feature.caption
-  const parts = caption.template.split('{}')
-  if (parts.length !== 2) {
-    throw new Error(`Caption template of feature ${feature.description} must contain {} exactly once: "${caption.template}"`)
-  }
-
-  const number = `COALESCE(${[caption.tag].flat().map(captionNumberSql).join(', ')})`
-  const rounding = caption.rounding ?? 'round'
-  if (!['round', 'truncate'].includes(rounding)) {
-    throw new Error(`Caption rounding of feature ${feature.description} must be round or truncate: "${rounding}"`)
-  }
-  const rounded = caption.decimals !== undefined ? `${rounding === 'truncate' ? 'trunc' : 'round'}(${number}, ${caption.decimals})` : number
-  const text = caption.decimalSeparator ? `replace(${rounded}::text, '.', ${sqlString(caption.decimalSeparator)})` : `${rounded}::text`
-  return `${sqlString(parts[0])} || ${text} || ${sqlString(parts[1])}`
-}
-
-// The explicit caption tag wins; otherwise the first matching feature with a
-// computed caption provides it
-function captionSql() {
-  if (captionFeatures.length === 0) {
-    return 's.caption'
-  }
-
-  return `COALESCE(s.caption, CASE${captionFeatures.map(feature => `
-      -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
-      WHEN ${matchFeatureTagsSql(feature.tags)} THEN ${captionValueSql(feature)}`).join('')}
-    END)`
-}
-
 /**
  * Template that builds the SQL view taking the YAML configuration into account
  */
@@ -326,14 +294,14 @@ CREATE OR REPLACE VIEW signal_features_view AS
       ${featureColumns.map(column => `
       CASE
         WHEN "railway:signal:${column.type}" IS NOT NULL${column.subtype ? ` AND "railway:signal:${column.type}:${column.subtype}" IS NOT NULL` : ''} THEN
-          CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && featureSubtype(feature, column.type) === column.subtype).map(feature => `
+          CASE ${signalsWithSignalType.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && feature.signalSubtype === column.subtype).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}:deactivated"::text, '${feature.rank}', '${feature.inline === true}', "railway:signal:${column.type}:caption"])` : 'NULL'}
+              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, '${feature.rank}', "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${column.type}), left to the subtype columns when a subtype key is present
             ${column.subtype || subtypesOfType[column.type].length === 0 ? 'ELSE' : `WHEN ${subtypesOfType[column.type].map(subtype => `"railway:signal:${column.type}:${subtype}" IS NULL`).join(' AND ')} THEN`}
-              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, 'false', NULL, 'false', "railway:signal:${column.type}:caption"]
+              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"]
         END
       END as feature_${column.name}`).join(',')}
     FROM signals s
@@ -344,20 +312,19 @@ CREATE OR REPLACE VIEW signal_features_view AS
   -- Output a feature row for every feature
   signals_with_features_1 AS (
     ${featureColumns.map(column => `
-    SELECT
-      signal_id,
-      feature_${column.name}[1] as feature,
-      feature_${column.name}[2] as feature_variable,
-      GREATEST(feature_${column.name}[3]::REAL + feature_${column.name}[4]::REAL, feature_${column.name}[5]::REAL) as icon_height,
-      feature_${column.name}[6] as type,
-      feature_${column.name}[7]::boolean as deactivated,
-      feature_${column.name}[8]::INT as rank,
-      feature_${column.name}[9]::boolean as inline,
-      feature_${column.name}[10] as caption,
-      '${column.category}' as category
-    FROM signals_with_features_0
-    WHERE feature_${column.name} IS NOT NULL
-  `).join(`
+  SELECT
+    signal_id,
+    feature_${column.name}[1] as feature,
+    feature_${column.name}[2] as feature_variable,
+    GREATEST(feature_${column.name}[3]::REAL + feature_${column.name}[4]::REAL, feature_${column.name}[5]::REAL) as icon_height,
+    feature_${column.name}[6] as type,
+    feature_${column.name}[7]::boolean as deactivated,
+    feature_${column.name}[8]::INT as rank,
+    feature_${column.name}[9] as caption,
+    '${column.category}' as category
+  FROM signals_with_features_0
+  WHERE feature_${column.name} IS NOT NULL
+`).join(`
     UNION ALL
   `)}
     UNION ALL
@@ -369,39 +336,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
       NULL as type,
       false as deactivated,
       NULL as rank,
-      false as inline,
       NULL as caption,
       'other' as category
     FROM signals_with_features_0
     WHERE railway = 'signal'
       AND ${featureColumns.map(column => `feature_${column.name} IS NULL`).join(' AND ')}
-  ),
-  -- Number the rows of inline features, per deactivation; every other feature is its own row
-  signals_with_features_2 AS (
-    SELECT
-      *,
-      CASE
-        WHEN inline THEN (row_number() OVER (PARTITION BY signal_id, inline, deactivated ORDER BY rank) - 1) / ${INLINE_ROW_LENGTH}
-        ELSE -row_number() OVER (PARTITION BY signal_id ORDER BY rank)
-      END as row_index
-    FROM signals_with_features_1
-  ),
-  -- Merge the features of a row into one feature, drawn side by side
-  signals_with_features_3 AS (
-    SELECT
-      signal_id,
-      string_agg(feature, '${ROW_SEPARATOR}' ORDER BY rank) as feature,
-      MAX(icon_height) as icon_height,
-      CASE
-        WHEN bool_or(type = 'line') THEN 'line'
-        WHEN bool_or(type = 'tram') THEN 'tram'
-      END as type,
-      deactivated,
-      MIN(rank) as rank,
-      caption,
-      (array_agg(category ORDER BY rank))[1] as category
-    FROM signals_with_features_2
-    GROUP BY signal_id, inline, deactivated, row_index, caption
   )
   -- Group features by signal, and aggregate the results
   SELECT
@@ -416,7 +355,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
     MAX(rank) as rank,
     nullif(array_remove(array_agg(caption ORDER BY rank ASC NULLS LAST), null), '{}'::text[]) as caption
-  FROM signals_with_features_3 sf
+  FROM signals_with_features_1 sf
   GROUP BY signal_id;
 
 -- Use the view directly such that the query in the view can be updated
