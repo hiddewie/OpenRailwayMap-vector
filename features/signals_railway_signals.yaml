@@ -590,7 +590,6 @@ types:
   - { type: lightbox, category: other }
   - { type: servicing, category: other }
   - { type: servicing_distant, category: other }
-  - { type: station, category: station }
   - { type: train_protection_distant, category: train_protection }
   - { type: route_info, category: other }
   - { type: structure, category: other }
