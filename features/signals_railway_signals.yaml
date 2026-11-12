@@ -553,8 +553,6 @@ types:
   - { type: fouling_point, category: other }
   - { type: preheating, category: other }
   - { type: slope, category: other }
-
-  # FR: type mapping
   - { type: bimode, category: electricity }
   - { type: facility, category: station }
   - { type: facility_distant, category: station }
